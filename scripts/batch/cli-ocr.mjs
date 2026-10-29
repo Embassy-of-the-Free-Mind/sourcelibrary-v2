@@ -100,6 +100,11 @@
  * call (call_id, call_pages, call_position, per_call) and the call's agy usage, and the kept-read variant names the
  * call's page count, so a 1/call read and an N/call read never stand in for each other. A one-page remainder is read
  * on the one-page prompt.
+ * With `--correct-prompt` (#7701 arm C) the block is a CORRECTION of N consecutive drafted pages: the template up to
+ * its one-page correction paragraph, then each page's draft between DRAFT n START / DRAFT n END and the same three
+ * answers per page (agy-cli.mjs correctBlockPrompt), split by the same markers. Each page's meta is a correct-mode meta
+ * (mode, lane, draft) pointing at the whole prompt sent, so `apply` runs every correct-mode guard page by page,
+ * unchanged. A page with no draft is not sent and breaks the run.
  *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
@@ -119,7 +124,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -162,7 +167,9 @@ if (STAGE === 'read' && OVER_STORED && !GPU_DRAFT) { console.error('--over-store
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
-if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT) { console.error('--per-call is for a plain read; --correct-prompt carries one draft per call'); process.exit(2); }
+// --per-call with --correct-prompt (#7701 arm C): N drafts and their images in one call (agy-cli.mjs correctBlockPrompt);
+// the template must carry the one-page correction paragraph that prompt replaces, or nothing is read.
+if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT && !correctBlockPrompt(fs.readFileSync(CORRECT_PROMPT, 'utf8'), ['a', 'b'])) { console.error(`--per-call with --correct-prompt: ${CORRECT_PROMPT} has no one-page correction paragraph to rebuild as a block`); process.exit(2); }
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
@@ -202,7 +209,7 @@ const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts
 // draft), the image bytes, and the mode. `readReuseKey` rebuilds it from a kept meta for reads kept before readers
 // stamped their own.
 // A read made N pages a call (#7522) carries the call's page count in its variant: it never stands in for a 1/call read.
-const variantOf = (mode, lane, promptVariant, callPages = 1) => (mode === 'correct' ? `correct:${lane}` : callPages > 1 ? `${promptVariant}:per_call=${callPages}` : promptVariant ?? null);
+const variantOf = (mode, lane, promptVariant, callPages = 1) => (mode === 'correct' ? `correct:${lane}${callPages > 1 ? `:per_call=${callPages}` : ''}` : callPages > 1 ? `${promptVariant}:per_call=${callPages}` : promptVariant ?? null);
 const readReuseKey = (m) => (m.cli === CLI ? reuseHash({ field: 'ocr', prompt: m.prompt_sent_hash, input: m.image_sha256, variant: variantOf(m.mode, m.lane, m.prompt_variant, m.call_pages ?? 1) }) : null);
 const FRESH = wantsFresh();
 // --reuse-only (#7075): hand back kept reads, never call the model. Used by scripts/lib/kept-read-reuse.mjs before a
@@ -266,6 +273,8 @@ if (STAGE === 'read') {
   // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
   await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(arg('job')), pages });
   let quotaUntil = 0, reused = 0;
+  // What a correction read records of the draft it was sent (apply checks it against the stored OCR / the GPU draft file).
+  const draftMeta = (p) => ({ ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${p.id}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at });
   // `from`: the block call (#7522) whose refusal or guard sent this page to be read alone, recorded in its meta.
   const readOne = async (p, from = null) => {
     const key = p.id;
@@ -341,7 +350,7 @@ if (STAGE === 'read') {
       image_url: src, image_bytes: buf.length, image_sha256: imageSha,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
-      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${key}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
+      ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: draftMeta(p) }),
     };
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify(meta, null, 1));
     // Kept the moment it is paid for (#7075); best effort, never fails the read.
@@ -352,17 +361,23 @@ if (STAGE === 'read') {
   const fetchImage = async (p) => {
     const src = getPageSource(p);
     if (!src) return { error: 'has no usable image' };
-    const res = await fetch(src);
-    if (!res.ok) return { error: `image HTTP ${res.status}` };
-    const buf = Buffer.from(await res.arrayBuffer());
-    return { src, buf, sha: createHash('sha256').update(buf).digest('hex') };
+    // A GPU draft is corrected against the image it was made from (--image-dir), as readOne does.
+    const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
+    if (local && !fs.existsSync(local)) return { error: 'not in --image-dir' };
+    const res = local ? null : await fetch(src);
+    if (res && !res.ok) return { error: `image HTTP ${res.status}` };
+    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    const sha = createHash('sha256').update(buf).digest('hex');
+    if (p.ocr?.source === 'gpu' && sha !== p.ocr.gpu.image_sha256) return { error: 'the GPU draft was made from other image bytes' };
+    return { src, buf, sha };
   };
-  const blockPrompt = (n) => base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT });
-  const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(null, null, PROMPT_VARIANT, n) });
+  // Correct mode (#7701 arm C): the block carries each page's draft, so the prompt is the group's, not the count's.
+  const blockPrompt = (n, group) => (CORRECT_PROMPT ? correctBlockPrompt(base, group.map((q) => q.ocr.data)) : base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT }));
+  const blockReuseKey = (sent, imageSha, n) => reuseHash({ field: 'ocr', prompt: contentHash(sent), input: imageSha, variant: variantOf(CORRECT_PROMPT ? 'correct' : null, LANE, PROMPT_VARIANT, n) });
   /** One block call. Returns the pages to read again one per call ([] when every page was kept), or null when the call was refused whole. */
   const readBlock = async (group, imgs, attempt) => {
     const n = group.length, first = group[0], last = group[n - 1];
-    const sent = blockPrompt(n);
+    const sent = blockPrompt(n, group);
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     fs.mkdirSync(path.join(OUT, 'prompts'), { recursive: true });
@@ -402,10 +417,13 @@ if (STAGE === 'read') {
     const redo = [];
     for (const [i, p] of group.entries()) {
       const text = texts[i];
-      const chatter = ocrReadProblem(text, { header: true });
+      // A correction's UNCHANGED / CONTAIN answer is not a transcription: no chatter or cut-text check (readOne: the same).
+      const answer = CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(text);
+      const chatter = answer ? null : ocrReadProblem(text, { header: !CORRECT_PROMPT || p.ocr?.source === 'gpu' });
       const guard = checkWrittenText(text, { kind: 'ocr' }).verdict;
       // A page of the block that reads as chatter or a cut text is read again alone, not written from this call.
-      if (chatter || guard === 'truncated') { redo.push(p); continue; }
+      if (chatter || (!answer && guard === 'truncated')) { redo.push(p); continue; }
+      if (p.ocr?.source === 'gpu') fs.writeFileSync(path.join(OUT, `${p.id}.draft.txt`), p.ocr.data);
       fs.writeFileSync(path.join(OUT, `${p.id}.raw.txt`), text);
       fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
       const meta = {
@@ -414,7 +432,8 @@ if (STAGE === 'read') {
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
         prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
         wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)),
-        prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
+        prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
+        ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
       };
       fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify(meta, null, 1));
       // Kept the moment it is paid for (#7075), keyed on this call's page count; best effort, never fails the read.
@@ -433,7 +452,7 @@ if (STAGE === 'read') {
     }
     // A block's kept reads are used only when every page of it has one at this page count; otherwise the block is called.
     if (!FRESH) {
-      const sent = blockPrompt(group.length);
+      const sent = blockPrompt(group.length, group);
       const hits = [];
       for (const [i, p] of group.entries()) hits.push(await findRead({ page_id: p.id, book_id: p.book_id, field: 'ocr', model: MODEL, prompt_hash: blockReuseKey(sent, imgs[i].sha, group.length), derive: readReuseKey }));
       if (hits.every(Boolean)) {
@@ -457,10 +476,12 @@ if (STAGE === 'read') {
     const runs = [];
     for (const p of [...pages].sort((a, b) => order.get(a.id) - order.get(b.id))) {
       if (isRead(p)) { console.log(`  ${p.page_number} already read`); continue; }
+      // Correct mode: a page with no draft is not corrected, and it breaks the run (its neighbours are not consecutive).
+      if (CORRECT_PROMPT && !p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has no draft to correct; skipped`); runs.push([]); continue; }
       const run = runs[runs.length - 1], prev = run?.[run.length - 1];
       if (prev && prev.book_id === p.book_id && prev.page_number + 1 === p.page_number) run.push(p); else runs.push([p]);
     }
-    groups = runs.flatMap((run) => Array.from({ length: Math.ceil(run.length / PER_CALL) }, (_, i) => run.slice(i * PER_CALL, (i + 1) * PER_CALL)));
+    groups = runs.filter((run) => run.length).flatMap((run) => Array.from({ length: Math.ceil(run.length / PER_CALL) }, (_, i) => run.slice(i * PER_CALL, (i + 1) * PER_CALL)));
     console.log(`--per-call=${PER_CALL}: ${groups.length} calls planned (${groups.filter((g) => g.length > 1).length} of several pages)`);
   }
   const queue = [...groups];
@@ -488,6 +509,13 @@ const MARK_STALE = arg('mark-stale');
 // --first-read-only (#7701): write a plain read only while the page still has no OCR (a first read, never a re-read).
 // --print-only (#7701): write a plain read only when its own <script> tag says printed (the lane is print only).
 const FIRST_READ_ONLY = process.argv.includes('--first-read-only');
+// --diff-guard=gpu-draft (#7701, the Latin arm-c cell): on the unread GPU-draft path, run #7695's put-back guards against
+// the GPU draft (the --over-stored path runs them against the stored text it replaces).
+const DIFF_GUARD_DRAFT = arg('diff-guard') === 'gpu-draft';
+if (arg('diff-guard') && !DIFF_GUARD_DRAFT) { console.error('--diff-guard: the only value is gpu-draft'); process.exit(2); }
+// --emit-written=FILE (#7701): one JSON line {page_id, text} for every page this apply writes (or, dry run, would write):
+// the exact text, after every guard and put-back, so an eval judges what the lane writes.
+const EMIT_WRITTEN = arg('emit-written');
 const PRINT_ONLY = process.argv.includes('--print-only');
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
@@ -612,38 +640,41 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     change = { change_share: Number(share.toFixed(4)), change_measure: 'T3 #7263: share of the draft\'s folded words not kept (difflib blocks)', check_flag: share >= CHECK_FLAG_SHARE, check_threshold: CHECK_FLAG_SHARE };
     if (change.check_flag) tally.check_flagged = (tally.check_flagged || 0) + 1;
     (tally.change_shares ??= {})[m.page_id ?? m.key] = change.change_share;
-    if (over) {
+    if (over || DIFF_GUARD_DRAFT) {
+      // #7701 (--diff-guard=gpu-draft, the Latin arm-c cell on UNREAD pages): the same guards against the GPU draft itself,
+      // the only reading there is; a page they refuse stays unread.
+      const ref = over ? page.ocr.data : draft, stands = over ? 'the stored text stands' : 'the page stays unread';
       // #7567 arm c over a stored draft: the plain read's 40% shared-words floor against the text it replaces (E5 wrote
       // through it), then the E3 guards against that stored text: the long-s pass, and every flip-risk change (a number, a
       // negation, an abbreviation expanded into another word) PUT BACK to the stored reading. Production has no image
       // check, and put-back is the safe direction: E5's image check gave the stored reading back on 78 of 198 changed
       // numbers, 28 of 171 negations, 1 of 23 expansions, so a put-back keeps a known misread about as often as it saves one.
-      const was = longWords(page.ocr.data), now = longWords(text);
+      const was = longWords(ref), now = longWords(text);
       const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
-      if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+      if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the ${over ? 'stored read' : 'GPU draft'}: check by eye`); continue; }
       const lang = LANG_OF((await bookOf(page.book_id))?.language);
-      const ls = longSPass(text, { lang, convention: page.ocr.data });
-      const { flags } = correctionDiffs(page.ocr.data, ls.text, { lang });
+      const ls = longSPass(text, { lang, convention: ref });
+      const { flags } = correctionDiffs(ref, ls.text, { lang });
       // A put-back splices the stored span over the corrected one. A span that holds a tag (a number flag on a running
       // head moved into <header>/<sig>/<page-num>) splices tags across each other: the pilot wrote `<sig>E.</header>` on
       // 30 of 84 put-back pages (by eye, #7567). Such a page is not written: the stored text stands.
       const tagIn = (t, [x, y]) => /[<>]/.test(String(t).slice(x, y));
-      if (flags.some((f) => tagIn(page.ocr.data, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, the stored text stands'); continue; }
+      if (flags.some((f) => tagIn(ref, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, ' + stands); continue; }
       // Only a like-for-like substitution (the same number of words a side) is spliced back. A one-sided or uneven hunk
       // put back deleted a printed heading the stored text lacked (CAP. XIII) and doubled a phrase the corrector had
       // re-aligned (by eye, pilot 2026-10-29): such a page is not written.
       const nWords = (s) => String(s).split(/\s+/).filter(Boolean).length;
-      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the stored text stands'); continue; }
-      const back = applyDiffVerdicts(page.ocr.data, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
+      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, ' + stands); continue; }
+      const back = applyDiffVerdicts(ref, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
       const tagShape = (t) => (String(t).match(/<\/?[a-z-]+/g) || []).join(' ');
-      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: the stored text stands'); continue; }
+      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: ' + stands); continue; }
       text = back.text;
       const kinds = {}; for (const f of flags) kinds[f.kind] = (kinds[f.kind] || 0) + 1;
-      change.diff_guard = { against: 'stored', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
+      change.diff_guard = { against: over ? 'stored' : 'gpu-draft', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
       const g = (tally.diff_guard ??= { pages_flagged: 0, put_back: 0, negation: 0, number: 0, expansion: 0, long_s_tells: 0 });
       if (flags.length) g.pages_flagged++;
       g.put_back += back.reverted; g.long_s_tells += ls.tells.length; for (const [k, n] of Object.entries(kinds)) g[k] += n;
-      if (text.trim() === page.ocr.data.trim()) { skip(m, 'every change was put back by the diff guard: the stored text stands'); continue; }
+      if (text.trim() === ref.trim()) { skip(m, 'every change was put back by the diff guard: ' + stands); continue; }
     }
   } else if (correct) {
     if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
@@ -709,6 +740,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const detectedImages = parseDetectedImages(text);
   console.log(`  ${APPLY ? 'WRITE' : 'would write'} p.${page.page_number} (${page.ocr?.model ?? 'no OCR'} -> ${m.model}, ${text.length} chars)`);
   if (yat) { tally.yatags_hits += yat.hits; tally.yatags_kept += yat.kept; tally.yatags_reverted += yat.reverted; }
+  if (EMIT_WRITTEN) fs.appendFileSync(EMIT_WRITTEN, JSON.stringify({ page_id: page.id, book_id: page.book_id, page_number: page.page_number, text, apply: APPLY }) + '\n');
   if (!APPLY) { tally.written++; continue; }
   // Through the one page-text writer (#7058): the whole prior `ocr` goes to page_revisions with this run's id, the write
   // is compare-and-set on the text read above, and scripts/maintenance/revert-run.mjs --run-id <run> undoes the run.

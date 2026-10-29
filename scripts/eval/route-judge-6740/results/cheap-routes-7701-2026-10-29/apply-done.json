@@ -1,0 +1,26 @@
+{
+ "de-blank-r2\tagy-flash-low@4": {
+  "pages": 19,
+  "lane": "agy-first-read-7701",
+  "exit": 0,
+  "summary": "written: 19   skipped: {}   run cli-ocr-20261029211736-636418"
+ },
+ "fr-blank-r2\tagy-flash-low@4": {
+  "pages": 22,
+  "lane": "agy-first-read-7701",
+  "exit": 0,
+  "summary": "written: 22   skipped: {}   run cli-ocr-20261029211744-636457"
+ },
+ "fr-blank-r2\tagy-flash-low": {
+  "pages": 2,
+  "lane": "agy-first-read-7701",
+  "exit": 0,
+  "summary": "written: 2   skipped: {}   run cli-ocr-20261029211752-636506"
+ },
+ "la-armc\tpero>agy-flash-low": {
+  "pages": 18,
+  "lane": "pero-agy-first-read-7701",
+  "exit": 0,
+  "summary": "written: 18   skipped: {}   run cli-ocr-20261029211753-636541"
+ }
+}

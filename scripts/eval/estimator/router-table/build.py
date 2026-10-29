@@ -172,18 +172,45 @@ def expand_by_script(P):
             if pl and not any(r['id'] == pl['route'] for r in routes): routes.append(dict(id=pl['route'], stage=pl['stage'], evidence=[]))
             pages = round(pw * share) if share else 0
             if not any(r['evidence'] for r in routes) and not pages: continue
-            c2 = {k: v for k, v in cell.items() if k not in ('pilot', 'pilot_book_group', 'routes', 'pages_waiting') and not (s == 'manuscript' and k == 'v1')}
+            c2 = {k: v for k, v in cell.items() if k not in ('pilot', 'pilot_book_group', 'routes', 'pages_waiting', 'paired') and not (s == 'manuscript' and k == 'v1')}
+            # paired evidence (#7701): the same score cut to this script type, where its by-script file holds that pair
+            pr = [dict(pe, score=bs(pe['score']), cell=f"{pe['cell']}|{s}") for pe in cell.get('paired', [])]
+            pr = [pe for pe in pr if os.path.exists(pe['score']) and pe['pair'] in files.setdefault(pe['score'], json.load(open(pe['score'])))['cells'].get(pe['cell'], {}).get('paired', {})]
+            if pr: c2['paired'] = pr
             out.append(dict(c2, id=f"{cell['id']}/{s}", base=cell['id'], script=s, title=f"{cell['title']} [{s}]", routes=routes, pages_waiting=pages,
                             pages_waiting_share=share, **({'planned': pl} if pl else {})))
     return out
 
 
+def paired_draws(c, N, rng, scale=1.0):
+    """PAIRED evidence (#7701): two routes judged on the SAME pages. c = {both, a_only, b_only, neither} accepted-page
+    counts; Dirichlet(1 + scale x counts) over the four outcomes; returns N draws of acc_a - acc_b = p(a_only) - p(b_only).
+    Two arms that share pages share the page's difficulty, so their difference is far tighter than two independent
+    Beta posteriors say: #7701's German read@4 and read@4>correct had identical k/n (23/24) and the independent gate
+    still refused the cheaper one at 0.08."""
+    al = [1 + scale * c[k] for k in ('both', 'a_only', 'b_only', 'neither')]
+    out = []
+    for _ in range(N):
+        g = [rng.gammavariate(a, 1) for a in al]; s = sum(g)
+        out.append((g[1] - g[2]) / s)
+    return out
+
+
+def within_p(r, best, within):
+    """P(acc_r >= acc_best - within): from the paired draws when r and best were judged on the same pages, else from
+    their two independent posteriors (the rule before #7701)."""
+    pd = r.get('_pd', {}).get(best['id'])
+    if pd is not None: return sum(d >= -within for d in pd) / len(pd)
+    return sum(u >= v - within for u, v in zip(r['_d'], best['_d'])) / len(best['_d'])
+
+
 def gate(M, P, wt_max, within):
     """The quality gate: measured routes with P(acc >= acc_best - within) >= switch.p and wrong text <= the bar.
     With switch.bar = opus, acc_best is the best measured Opus route's (the best measured route's when no Opus route is
-    measured) and only the other routes are candidates."""
+    measured) and only the other routes are candidates. A route judged on the same pages as acc_best's route is
+    compared PAIRED (within_p; the cell's `paired` entries in rules.json)."""
     best = max([r for r in M if is_bar(r, P)] or M, key=lambda r: r['mean'])
-    ok = [r for r in M if not is_bar(r, P) and sum(u >= v - within for u, v in zip(r['_d'], best['_d'])) / len(best['_d']) >= P['switch']['p']
+    ok = [r for r in M if not is_bar(r, P) and within_p(r, best, within) >= P['switch']['p']
           and r['wrate'] <= wt_max(best)]
     return best, ok
 
@@ -307,6 +334,16 @@ def main():
         # Derek 11:54Z: in a manuscript or unknown-script cell a route with too few judged pages of that type is not
         # measured (it would decide on print's prior); the cell says UNTESTED / HOLD below
         few = lambda r: cell.get('script') in ('manuscript', 'unknown') and r['n'] < P['script_split']['min_manuscript_pages']
+        # paired evidence (#7701): {routes: [a, b], score, cell, pair}: the score's cells[cell].paired[pair] counts of the
+        # pages both routes were judged on (both / a_only / b_only / neither accepted), scaled by books / pages as above
+        for pe in cell.get('paired', []):
+            ra, rb = (next((r for r in rs if r['id'] == i), None) for i in pe['routes'])
+            if not (ra and rb): continue
+            c = _scores.setdefault(pe['score'], json.load(open(pe['score'])))['cells'][pe['cell']]['paired'][pe['pair']]
+            sc = min(1, c['books'] / c['n']) if P['cluster_by_book'] else 1
+            pd = paired_draws(c, N, random.Random(f"{P['seed']}:{cell['id']}:{ra['id']}|{rb['id']}"), sc)
+            ra.setdefault('_pd', {})[rb['id']] = pd; rb.setdefault('_pd', {})[ra['id']] = [-d for d in pd]
+            ra.setdefault('paired', {})[rb['id']] = rb.setdefault('paired', {})[ra['id']] = f"{c['a_only']} vs {c['b_only']} of {c['n']} paired"
         cur = next(r for r in rs if r['id'] == cell['current']); M = [r for r in rs if r['tested'] and not few(r)]
         dec, pk = decide(cell, M, cur, P, steady, wt_abs)
         # Derek 11:54Z: too little manuscript evidence says so, never inherits print numbers; an unknown-script cell
@@ -340,7 +377,7 @@ def main():
         if bars and alts:
             bb, aa = max(bars, key=lambda r: r['mean']), max(alts, key=lambda r: r['mean']); w = P['switch']['within']
             vs_bar = dict(bar=bb['id'], bar_mean=bb['mean'], alt=aa['id'], alt_mean=aa['mean'], gap=aa['mean'] - bb['mean'],
-                          p_within=sum(u >= v - w for u, v in zip(aa['_d'], bb['_d'])) / N, alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
+                          p_within=within_p(aa, bb, w), alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
         rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=dec, route=pk['id'], vs_bar=vs_bar,
                          decision_flat_price=f"{dflat} {pflat['id']}", decision_other_prior=other_prior,
                          other_wrong_text_bar=None if alt[0] == dec and alt[1] is pk else f"{alt[0]} {alt[1]['id']}",
