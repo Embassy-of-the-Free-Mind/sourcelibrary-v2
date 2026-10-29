@@ -129,12 +129,12 @@ export function newTotals() {
 
 /** One batch of page ids. `opts.beforeWrite(page)` is a test seam: it runs between the read and the write. */
 export async function processBatch(db, ids, totals, out, { apply = APPLY, runId = RUN_ID, beforeWrite } = {}) {
-  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, book_id: 1, 'translation.data': 1, 'translation.text': 1, 'translation.text_from': 1, 'translation.prompt_version': 1 } }).toArray();
+  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, book_id: 1, 'translation.data': 1, 'translation.text': 1, 'translation.text_from': 1, 'translation.prompt_version': 1, 'ocr.data': 1 } }).toArray();
   for (const page of pages) {
     const t = page.translation;
     if (!t || typeof t.data !== 'string' || !t.data) { totals.no_data++; continue; }
     if (translationTextIsCurrent(t) && t.text_from?.parser_version === PARSER_VERSION) { totals.already++; continue; }
-    const layers = translationLayers(t.data, { promptVersion: t.prompt_version });
+    const layers = translationLayers(t.data, { promptVersion: t.prompt_version, ocr: page.ocr?.data ?? null });
     const m = measure(t.data, layers);
     const textBytes = BSON.calculateObjectSize({ text: layers.text, text_from: layers.text_from });
     const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers, run_id: runId });

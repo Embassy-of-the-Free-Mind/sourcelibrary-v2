@@ -34,7 +34,10 @@ import { contentHash } from './write-provenance.mjs';
 
 /** Bump when annotation-layer.mjs changes what `text` or the annotations are for the same input. */
 // /2 (2026-10-28): a <gloss> closing a <term> from inside is a definition; a bare leading number is not list numbering.
-export const PARSER_VERSION = 'annotation-layer/2';
+// /3 (2026-10-29): the legacy syntaxes the reader hides — every [[label: …]], bracketed image paragraphs, plain
+//    "Summary:" lines, preambles, fences, label headings, free-text vocabulary sections — leave `text`; single-bracket
+//    interpolations stay in `text` under an 'interp' mark span.
+export const PARSER_VERSION = 'annotation-layer/3';
 export const ANNOTATIONS_COLLECTION = 'page_annotations';
 
 /** The annotation source of an inline (tags-in-the-translation) page: `inline-v<prompt_version>`. */
@@ -44,7 +47,7 @@ export function inlineSource(promptVersion) {
 }
 
 /** The fields kept per annotation: the anchor flattened, plus what renderMarkup needs to rebuild it. */
-const KEEP = ['kind', 'tag', 'attrs', 'malformed', 'scope', 'attach', 'gap', 'glossary', 'term', 'suspect'];
+const KEEP = ['kind', 'tag', 'attrs', 'malformed', 'scope', 'attach', 'gap', 'glossary', 'term', 'suspect', 'printed'];
 function storedAnnotation(a) {
   const out = { type: a.type };
   if (a.anchor) {
@@ -68,14 +71,15 @@ export function parserAnnotation(s) {
 /**
  * Parse one stored translation into what is written beside it.
  * @param {string} data translation.data as it will be (or is) stored
- * @param {{ promptVersion?: string|number|null, source?: string }} [opts]
+ * @param {{ promptVersion?: string|number|null, source?: string, ocr?: string|null }} [opts]
+ *   ocr: the page's transcription, when the caller has it: flags interpolations whose brackets the source prints.
  * @returns {{ text: string, text_from: object, annotations: object[], source: string, data_hash: string }}
  */
-export function translationLayers(data, { promptVersion = null, source } = {}) {
+export function translationLayers(data, { promptVersion = null, source, ocr = null } = {}) {
   const raw = String(data ?? '');
   const data_hash = contentHash(raw);
   const src = source || inlineSource(promptVersion);
-  const split = splitAnnotations(raw, { source: src });
+  const split = splitAnnotations(raw, { source: src, ocr });
   const annotations = split.annotations.map(({ source: _s, ...a }) => storedAnnotation(a));
   return {
     text: split.text,
