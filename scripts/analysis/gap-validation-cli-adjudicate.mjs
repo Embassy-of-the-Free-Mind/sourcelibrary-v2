@@ -94,8 +94,7 @@ function runOne(w) {
       try {
         const env = JSON.parse(out);
         row.usage = env.usage; row.num_turns = env.num_turns; row.raw = env.result;
-        const m = String(env.result || '').match(/\{[\s\S]*\}/);
-        Object.assign(row, m ? JSON.parse(m[0]) : { translation_verdict: 'FAIL', fail: 'no JSON in reply' });
+        Object.assign(row, parseVerdict(String(env.result || '')) ?? { translation_verdict: 'FAIL', fail: 'no JSON in reply' });
       } catch (e) {
         Object.assign(row, { translation_verdict: 'FAIL', fail: `exit ${code}: ${(err || out).slice(0, 300)}` });
       }
@@ -103,6 +102,17 @@ function runOne(w) {
       resolve(row);
     });
   });
+}
+
+// Sonnet's reply is JSON, but it often drops the closing quote of the last string
+// ("...is weak.}"): 106 of 1,000 replies on 2026-10-29. Parse strictly, then close it.
+function parseVerdict(text) {
+  const a = text.indexOf('{'), b = text.lastIndexOf('}');
+  if (a < 0 || b < a) return null;
+  for (const t of [text.slice(a, b + 1), text.slice(a, b) + '"}', text.slice(a, b) + '"]}']) {
+    try { const o = JSON.parse(t); if (o.translation_verdict) return o; } catch { /* next */ }
+  }
+  return null;
 }
 
 let i = 0, n = 0;
@@ -114,7 +124,9 @@ async function worker() {
     console.log(`${new Date().toISOString().slice(11, 19)} ${n}/${todo.length} ${r.okey} ${r.translation_verdict} ${r.composition_era ?? ''} ${r.wall_s}s${r.fail ? ' ' + r.fail.slice(0, 120) : ''}`);
     if (WEEK_CAP && n % 20 === 0) {
       const wk = weekly();
-      if (wk == null) { if (++blind >= 3) { console.log('meter unreadable three times running; stopping'); process.exit(4); } }
+      if (wk == null) { // the meter 429s in bursts: wait it out, stop only after ~30 min unreadable
+        if (++blind >= 10) { console.log('meter unreadable ten times running; stopping'); process.exit(4); }
+        console.log(`meter unreadable (${blind}); waiting 3 min`); await new Promise(r => setTimeout(r, 180_000)); }
       else { blind = 0; console.log(`meter ${ACCOUNT} weekly ${wk}%`); if (wk >= WEEK_CAP) { console.log(`weekly ${wk}% >= cap ${WEEK_CAP}; stopping`); process.exit(3); } }
     }
     if (r.fail && /limit|quota|rate|hit your/i.test(r.fail)) { console.log('usage limit reached; stopping (resume later, done rows are kept)'); process.exit(3); }
