@@ -131,18 +131,6 @@ export const PARTNERS_HTML = `
     <div>
       <p class="lede">Every page can be traced to the scan it was read from and the model that read it.</p>
       <p>Each book names the library that holds the original, with a link to its scan and, where the library gives one, its rights statement. Each transcription and translation records the model that produced it; since 28 September 2026 it also records the exact prompt, the settings, the run and the image or text it was made from, with a hash of the output. When a page is corrected or re-read, the earlier version is kept.</p>
-      <table class="ledger">
-        <tr><td>Public books that name the library holding the original</td><td class="n">70,968 of 70,970</td></tr>
-        <tr><td>…with a link back to the original scan</td><td class="n">95%</td></tr>
-        <tr><td>Transcribed pages that name the model that read them</td><td class="n">96%</td></tr>
-        <tr><td>Translated pages that name the model that translated them</td><td class="n">99.5%</td></tr>
-        <tr><td>Pages with the full record (prompt, settings, run, source): transcriptions, translations</td><td class="n">34%, 31%</td></tr>
-        <tr><td>Earlier versions of pages kept</td><td class="n">3.8 million</td></tr>
-        <tr><td>Books whose holding library states the scan's rights, recorded with where it was read</td><td class="n">42%</td></tr>
-        <tr><td>Books with a rights record of any kind: stated, assumed at import, or the library is silent</td><td class="n">99.7%</td></tr>
-        <tr><td>Books whose catalogue details cite their source</td><td class="n">70%</td></tr>
-      </table>
-      <p class="note">Measured 29 October 2026: books over all public books, pages from a random draw of 60,000. Pages read before 28 September carry the model and prompt version but not the full record. Another 32% of books are recorded as public domain by our importer's assumption rather than a library's statement; for 26% the library's manifest states nothing, or could not be read, and the record says so.</p>
     </div>
   </div>
 </section>
