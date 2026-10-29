@@ -735,7 +735,14 @@ export function ScanViewer({
    * Wheel, depending on what is on:
    * lens up        → dial the lens's magnification (what a loupe's focus does)
    * ctrl/⌘         → zoom the scan, which is what a trackpad pinch sends
-   * vertical wheel → zoom the scan at the cursor (when wheelZooms)
+   * zoomed         → nothing: the wheel or two-finger scroll PANS the enlarged
+   *                  page natively, the way it does in any document viewer.
+   *                  Zooming here left no way down a page short of dragging it
+   *                  (EFM, 2026-10-29: "you should be able to pan").
+   * vertical wheel → zoom the scan at the cursor, on a fitted page (when
+   *                  wheelZooms, and never inside a partner's iframe: there the
+   *                  wheel has to scroll the host page, or the part of the
+   *                  frame below the host's header stays out of reach)
    * otherwise      → nothing, so a sideways or shift-scroll pans natively;
    *                  a zoomed page also pans by dragging
    */
@@ -757,7 +764,9 @@ export function ScanViewer({
       queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
       return;
     }
-    if (wheelZooms && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+    if (zoomed) return;
+    const framed = typeof window !== 'undefined' && window.self !== window.top;
+    if (wheelZooms && !framed && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
       // Scroll deltas run larger than pinch deltas (a mouse notch is ~100px,
       // in line mode ~3 lines), so normalise to pixels and cap each event:

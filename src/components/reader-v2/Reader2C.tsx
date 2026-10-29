@@ -2182,7 +2182,7 @@ function BookSearchPanel({
 }
 
 function Filmstrip({
-  pageList, currentPageId, compact, innerRef, onPrev, onNext, onGoTo,
+  pageList, currentPageId, compact, innerRef, onPrev, onNext, onGoTo, onPageShape,
 }: {
   pageList: Page[];
   currentPageId: string;
@@ -2191,6 +2191,8 @@ function Filmstrip({
   onPrev: () => void;
   onNext: () => void;
   onGoTo: (pageId: string) => void;
+  /** Each loaded thumbnail's shape, so the reader can arrange its panes by the book's shape. */
+  onPageShape?: (pageId: string, ratio: number) => void;
 }) {
   const strings = getReaderStrings(useLocale());
   // Arrows match the thumbnail image exactly and share its top edge; the row
@@ -2279,7 +2281,7 @@ function Filmstrip({
                 {thumb && (
                   <FramedImg frame={frame} fit="cover" wrapperClassName="relative w-full h-full"
                     src={thumb} alt="" loading="lazy" decoding="async"
-                    onShownSize={onThumbLoad}
+                    onShownSize={(w, h) => { onThumbLoad(w, h); if (w && h) onPageShape?.(p.id, w / h); }}
                     onError={e => swapToFallback(e.currentTarget, fallback)}
                     className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
                     style={{ opacity: isCurrent ? 1 : 0.72 }} />
@@ -3380,6 +3382,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     const ratio = size.w / size.h;
     setScanRatio(prev => (Math.abs(prev - ratio) > 0.005 ? ratio : prev));
   }, []);
+  // The BOOK's shape, for the desktop arrangement: the median of the page
+  // shapes seen so far (filmstrip thumbnails, mostly). Deciding the stacked
+  // layout from the current page alone flipped the whole reader to the stacked
+  // arrangement and back at a single unsplit spread in a book of single pages
+  // (EFM, 2026-10-29: "a horizontal viewer in the middle of the book"). Null
+  // until a shape is known; the current page's shape stands in until then.
+  const pageShapes = useRef<{ bookId: string; byPage: Map<string, number> }>({ bookId: '', byPage: new Map() });
+  const [bookRatio, setBookRatio] = useState<number | null>(null);
+  const bookId = r.book.id;
+  const notePageShape = useCallback((pageId: string, ratio: number) => {
+    if (!ratio || !Number.isFinite(ratio)) return;
+    const s = pageShapes.current;
+    if (s.bookId !== bookId) { s.bookId = bookId; s.byPage = new Map(); }
+    s.byPage.set(pageId, ratio);
+    const sorted = [...s.byPage.values()].sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    setBookRatio(prev => (prev != null && Math.abs(prev - median) < 0.005 ? prev : median));
+  }, [bookId]);
+  useEffect(() => { setBookRatio(null); }, [bookId]);
+  const layoutRatio = bookRatio ?? scanRatio;
   // Take over from WIDE_LEAF_PREPAINT_SCRIPT: start from the shape it measured
   // and remove its mark from <html>, in one commit before the next paint, so
   // the layout it set up does not flicker as the reader's own takes its place.
@@ -3463,8 +3485,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // A wide leaf in one of three side-by-side columns is a strip a few lines
   // tall floating in an empty pane. On the desktop it gets the full width
   // instead, with the text panes in a row beneath it: the scan row is as tall
-  // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H. Decided
-  // per page from the loaded image, like the phone pane (#5352).
+  // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H (#5352).
+  // Whether to stack is decided by the BOOK's shape (layoutRatio, above), so
+  // one unsplit spread does not rearrange the reader mid-book; the row height
+  // still follows the page on screen.
   //
   // The rule itself is in globals.css (`main.rv2-panes[data-wide-leaf]`), fed
   // by these variables, because it has to work before this component is
@@ -3476,7 +3500,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // which readers took for a scan that failed to load. With a text pane
   // beside it, drop the column; the phone layout already shrinks it to a line.
   const scanPaneShown = r.views.scan && (!!scan.display || !!witness || textPaneCount === 0);
-  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && layoutRatio >= WIDE_LEAF_RATIO;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3506,7 +3530,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const scanPaneWidth = scanPaneShown && textPaneCount > 0 && !stackWideLeaf && panesBox
     ? Math.round(Math.min(
         panesBox.w * SCAN_PANE_MAX_SHARE,
-        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
+        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * layoutRatio + SCAN_PANE_CHROME_X),
       ))
     : null;
 
@@ -4142,6 +4166,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
               onPrev={r.goPrev}
               onNext={r.goNext}
               onGoTo={r.goToPage}
+              onPageShape={notePageShape}
             />
             )}
           </div>
