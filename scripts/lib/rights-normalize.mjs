@@ -25,7 +25,7 @@
  *   terms_text            a free-text usage statement the manifest carries
  *   raw                   the manifest fields verbatim (capped), never folded
  *   status                stated | assumed-by-importer | manifest-silent | fetch-failed | no-manifest | stated-from-import
- *   source                iiif-manifest | oai-mets | importer-license-field | importer-captured-manifest-field
+ *   source                iiif-manifest | oai-mets | ia-metadata | importer-license-field | importer-captured-manifest-field
  *   manifest_url, read_at, http_status, error
  */
 
@@ -389,6 +389,35 @@ export function readMetsRights(xml) {
     class_from: from,
     attribution_required: owner ? stripHtml(owner[1]) : null,
     attribution_from: owner ? 'mets.dv:owner' : null,
+    terms_text: null,
+    raw,
+    status: r ? 'stated' : 'manifest-silent',
+  };
+}
+
+/**
+ * Internet Archive item metadata (https://archive.org/metadata/<id>/metadata -> `result`).
+ * The archive's own fields, in order of strength: `licenseurl` (a licence URI), `rights`
+ * (free text), `possible-copyright-status` (the archive's determination, e.g. NOT_IN_COPYRIGHT,
+ * with `copyright-region`). The last is the archive's statement, not the contributing
+ * library's, and its field name is hedged: class_from and raw carry it verbatim.
+ * Silent -> 'manifest-silent'; the caller decides whether that replaces an importer default.
+ */
+export function readIaRights(meta) {
+  const m = meta || {};
+  const one = (v) => (Array.isArray(v) ? v[0] : v);
+  const licenseurl = one(m.licenseurl), rights = one(m.rights), pcs = one(m['possible-copyright-status']), region = one(m['copyright-region']);
+  const raw = { licenseurl: licenseurl || undefined, rights: rights ? String(rights).slice(0, 2000) : undefined, possible_copyright_status: pcs || undefined, copyright_region: region || undefined, contributor: one(m.contributor) || undefined };
+  let r = null, from = null;
+  if (typeof licenseurl === 'string') { r = classifyUri(licenseurl); from = r ? 'ia.metadata.licenseurl' : null; }
+  if (!r && typeof rights === 'string') { r = classifyToken(stripHtml(rights)); from = r ? 'ia.metadata.rights' : null; }
+  if (!r && typeof pcs === 'string' && /^NOT_IN_COPYRIGHT$/i.test(pcs.trim())) { r = { class: 'public-domain', statement_uri: null }; from = `ia.metadata.possible-copyright-status (NOT_IN_COPYRIGHT${region ? `, region ${region}` : ''})`; }
+  return {
+    class: r ? r.class : 'unknown',
+    statement_uri: r?.statement_uri || (typeof licenseurl === 'string' ? licenseurl : null),
+    class_from: from,
+    attribution_required: null,
+    attribution_from: null,
     terms_text: null,
     raw,
     status: r ? 'stated' : 'manifest-silent',
