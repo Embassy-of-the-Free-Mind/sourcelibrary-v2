@@ -222,7 +222,7 @@ async function bphBookIds() {
     const ids = new Set();
     for (const coll of ['books', 'deleted_books']) {
       const cur = c.db(process.env.MONGODB_DB || 'bookstore').collection(coll)
-        .find({ 'image_source.provider': 'bph' }, { projection: { id: 1 } });
+        .find({ 'image_source.provider': 'bph' }, { projection: { id: 1 } }).batchSize(1000);
       // R2 keys use the book's `id`; 16K books have a re-minted `_id`, so take both.
       for await (const b of cur) { if (b.id) ids.add(String(b.id)); ids.add(String(b._id)); }
     }
