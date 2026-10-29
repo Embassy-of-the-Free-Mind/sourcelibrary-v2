@@ -13,14 +13,14 @@ superseded_by: null
 issue: [7263, 6740, 6560]
 router_evidence: "none — a production-pass rolling audit (judge B span leaf checks of written pages, 18 pages), not a blind route comparison; the cell's router evidence is the tibetan-yigdzin router test (#7263)"
 ---
-# Tibetan Flash-low correction, wave 3 (#7263, #6740)
+## 2026-10-28 · Tibetan Flash-low correction, wave 3 (#7263, #6740)
 
 PRIOR ART: `2026-10-26-tibetan-flash-correct-wave2-6740.md` (the rule, the guards, the Derge check, the rolling audit and
 diff-QA, all reused unchanged). Code: `scripts/eval/tibetan-correct-6560/pass/` (`run-volume.sh` read stage,
 `apply-volume.sh` + `derge-guard.mjs` = the wave-2 apply, `diffqa.mjs`, `leafcheck.mjs`, `rescore.mjs`).
 Results: `results/tibetan-correct-6560/pass-wave3-7263/`, tranche files `results/tibetan-correct-6560/diffqa-6740/w3*`.
 
-## What ran
+### What ran
 - **Frame:** the next Kangyur volumes in `volume-ids.mjs order`, skipping every volume already corrected. All are visible and held only by the #4523 translation hold.
   - That is Thadrak rGyud 'bum Ga … Tsa and rNying rgyud Ka/Kha/Ga: 21 volumes, about 8.6K Yigdzin pages.
 - **Reads:** agy `gemini-3.8-flash-low` on the second pool (`AGY_HOME=/root/.agy-james`, `AGY_POOL_SHARED=1`), with the #6560 CORR request.
@@ -36,7 +36,7 @@ Results: `results/tibetan-correct-6560/pass-wave3-7263/`, tranche files `results
   - Kept-read reuse did not dedupe across boxes (3 of 416 pages), because the image bytes differ across boxes (Cloudflare Polish, `import-kept-reads.mjs` header).
   - No page was written twice by two reads of the same draft. The apply refuses a page whose draft is no longer stored. Pages one host's guards refused were sometimes written by the other host's fresh read (about 170 pages: 130 written by cloudlayer on gex45 volumes, 42 the other way).
 
-## Written
+### Written
 | | gex45 | cloudlayer |
 |---|---|---|
 | pages written | 4,356 | 3,534 |
@@ -47,7 +47,7 @@ Results: `results/tibetan-correct-6560/pass-wave3-7263/`, tranche files `results
 
 Per volume: `pass-wave3-7263/written-by-volume.md`.
 
-## Diff-QA (`diffqa.mjs spans`)
+### Diff-QA (`diffqa.mjs spans`)
 - 7,626 pages changed, carrying 55,824 spans:
   - **LOW: 17,419**, auto-accepted;
   - **RISKY: 38,405**, queued and not accepted.
@@ -63,7 +63,7 @@ Per volume: `pass-wave3-7263/written-by-volume.md`.
 - **List rows for `merge`:** `diffqa.mjs list --run=<run id>` (drafts from `page_revisions`).
 - No tranche was judged here: this box's Claude account was at 78% and then 86% of its week.
 
-## Rolling audits (10 seeded written pages per ~4K, judge B with tiles, Opus, controls)
+### Rolling audits (10 seeded written pages per ~4K, judge B with tiles, Opus, controls)
 | audit | written so far | pages judged | pass (re-score) | fixed / introduced (severe) | pages with severe introduced | controls | rule |
 |---|---|---|---|---|---|---|---|
 | 1 (10-28 16:45Z) | 3,847 | 10 | 8 | 51 (1) / 14 (3) | 1 | 18/20 | continue |
@@ -79,6 +79,6 @@ Per volume: `pass-wave3-7263/written-by-volume.md`.
   - ནྲི→ནྲྀ and ཧ→ཧཱ: mantra respellings.
 - All 5 control misses were "unclear". On rNying rgyud Ka p.363 the judge reported neither reading's phrase on the leaf. I checked it by eye: the text is the right leaf, so there is nothing to contain.
 
-## Undo
+### Undo
 - Each run: `node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id <run> [--apply]`. Run ids are in `pass-wave3-7263/runs.json`.
 - The restores are runs `diffqa-6740-w3-audit1-restore` and `diffqa-6740-w3-audit2-restore` (`restores.json`).
