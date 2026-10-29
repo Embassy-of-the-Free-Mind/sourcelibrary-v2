@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-dfd090-p157",
+  "substratum": "census",
+  "title": "開元釋教錄·卷十九上~卷二十 (vol 10)",
+  "probe_chars": 187,
+  "source": "Kanripo",
+  "work": "KR6s0093",
+  "work_title": "開元釋教錄-唐-智昇",
+  "juan": "19,20",
+  "url": "https://github.com/kanripo/KR6s0093",
+  "etext_chars": 53147,
+  "window_chars": 243,
+  "overlap": 0.769,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

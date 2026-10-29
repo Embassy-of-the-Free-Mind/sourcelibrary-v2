@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1bd0f2-p84",
+  "substratum": "census",
+  "title": "詩經世本古義·卷二十一~卷二十三之下 (vol 17)",
+  "probe_chars": 239,
+  "source": "Kanripo",
+  "work": "KR1c0041",
+  "work_title": "詩經世本古義-明-何楷",
+  "juan": "21,22,23",
+  "url": "https://github.com/kanripo/KR1c0041",
+  "etext_chars": 53124,
+  "window_chars": 254,
+  "overlap": 0.58,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

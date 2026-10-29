@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e3fd86-p33",
+  "substratum": "inflight",
+  "title": "類證普濟本事方·卷九~卷十 (vol 3)",
+  "probe_chars": 134,
+  "source": "Kanripo",
+  "work": "KR3e0032",
+  "work_title": "類證普濟本事方-宋-許叔微",
+  "juan": "9,10",
+  "url": "https://github.com/kanripo/KR3e0032",
+  "etext_chars": 10773,
+  "window_chars": 130,
+  "overlap": 0.786,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

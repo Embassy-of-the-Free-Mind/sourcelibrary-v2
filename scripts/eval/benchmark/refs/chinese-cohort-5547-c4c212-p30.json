@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-c4c212-p30",
+  "substratum": "inflight",
+  "title": "尚書精義·卷四十九~卷五十 (vol 15)",
+  "probe_chars": 161,
+  "source": "Kanripo",
+  "work": "KR1b0018",
+  "work_title": "尚書精義-宋-黃倫",
+  "juan": "49,50",
+  "url": "https://github.com/kanripo/KR1b0018",
+  "etext_chars": 12259,
+  "window_chars": 242,
+  "overlap": 0.739,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "chinese-cohort-5547-169696-p20",
+  "substratum": "census",
+  "title": "六藝之一錄·卷一百七十七~卷一百八十 (vol 81)",
+  "probe_chars": 9151,
+  "source": "Kanripo",
+  "work": "KR3h0070",
+  "work_title": "六藝之一錄-清-倪濤",
+  "juan": "177,178,179,180",
+  "url": "https://github.com/kanripo/KR3h0070",
+  "etext_chars": 44703,
+  "window_chars": 13680,
+  "overlap": 0,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01",
+  "reason": "overlap 0.00 < 0.35: page is not (cleanly) in this e-text"
+}

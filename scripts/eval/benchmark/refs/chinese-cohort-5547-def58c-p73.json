@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-def58c-p73",
+  "substratum": "census",
+  "title": "周禮訂義·卷十四~卷十五 (vol 41)",
+  "probe_chars": 159,
+  "source": "Kanripo",
+  "work": "KR1d0010",
+  "work_title": "周禮訂義-宋-王與之",
+  "juan": "14,15",
+  "url": "https://github.com/kanripo/KR1d0010",
+  "etext_chars": 21381,
+  "window_chars": 231,
+  "overlap": 0.813,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-155f3b-p62",
+  "substratum": "inflight",
+  "title": "圖書編·卷五十九 (vol 47)",
+  "probe_chars": 171,
+  "source": "Kanripo",
+  "work": "KR3k0050",
+  "work_title": "圖書編-明-章潢",
+  "juan": "59",
+  "url": "https://github.com/kanripo/KR3k0050",
+  "etext_chars": 10794,
+  "window_chars": 177,
+  "overlap": 0.792,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

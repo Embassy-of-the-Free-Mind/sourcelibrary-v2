@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-5cc12c-p42",
+  "substratum": "inflight",
+  "title": "周易口義·說卦 (vol 16)",
+  "probe_chars": 138,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1a0012",
+  "work_title": "周易口義-宋-胡瑗",
+  "juan": 13,
+  "url": "https://github.com/kanripo/KR1a0012/blob/WYG/KR1a0012_013.txt",
+  "etext_chars": 9133,
+  "window_chars": 202,
+  "overlap": 0.896,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

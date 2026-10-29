@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-157705-p33",
+  "substratum": "inflight",
+  "title": "圖書編·卷一百十四 (vol 87)",
+  "probe_chars": 165,
+  "source": "Kanripo",
+  "work": "KR3k0050",
+  "work_title": "圖書編-明-章潢",
+  "juan": "114",
+  "url": "https://github.com/kanripo/KR3k0050",
+  "etext_chars": 11146,
+  "window_chars": 175,
+  "overlap": 0.818,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

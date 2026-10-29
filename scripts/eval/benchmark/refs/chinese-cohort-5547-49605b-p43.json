@@ -1,0 +1,20 @@
+{
+  "slug": "chinese-cohort-5547-49605b-p43",
+  "substratum": "inflight",
+  "title": "急就篇·卷一 (vol 1)",
+  "probe_chars": 115,
+  "witness": "WYG",
+  "wide": true,
+  "source": "Kanripo",
+  "work": "KR1j0017",
+  "work_title": "急就篇-漢-史游",
+  "juan": 1,
+  "url": "https://github.com/kanripo/KR1j0017/blob/WYG/KR1j0017_001.txt",
+  "etext_chars": 6089,
+  "window_chars": 127,
+  "overlap": 0.857,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

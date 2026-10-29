@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e51f37-p122",
+  "substratum": "census",
+  "title": "御纂朱子全書·卷七~卷八 (vol 5)",
+  "probe_chars": 157,
+  "source": "Kanripo",
+  "work": "KR3a0108",
+  "work_title": "御纂朱子全書-宋-朱熹",
+  "juan": "7,8",
+  "url": "https://github.com/kanripo/KR3a0108",
+  "etext_chars": 22567,
+  "window_chars": 242,
+  "overlap": 0.73,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

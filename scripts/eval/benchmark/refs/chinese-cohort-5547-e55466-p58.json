@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-e55466-p58",
+  "substratum": "census",
+  "title": "欽定授時通考·卷六十五~卷六十七 (vol 54)",
+  "probe_chars": 136,
+  "source": "Kanripo",
+  "work": "KR3d0010",
+  "work_title": "欽定授時通考-清-鄂爾泰",
+  "juan": "65,66,67",
+  "url": "https://github.com/kanripo/KR3d0010",
+  "etext_chars": 15640,
+  "window_chars": 142,
+  "overlap": 0.714,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}

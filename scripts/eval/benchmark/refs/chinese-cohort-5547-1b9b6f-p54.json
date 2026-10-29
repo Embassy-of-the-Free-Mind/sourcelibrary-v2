@@ -1,0 +1,18 @@
+{
+  "slug": "chinese-cohort-5547-1b9b6f-p54",
+  "substratum": "census",
+  "title": "春秋事義全考·卷十五~卷十六 (vol 10)",
+  "probe_chars": 124,
+  "source": "Kanripo",
+  "work": "KR1e0083",
+  "work_title": "春秋事義全考-明-姜寶",
+  "juan": "15,16",
+  "url": "https://github.com/kanripo/KR1e0083",
+  "etext_chars": 23051,
+  "window_chars": 165,
+  "overlap": 0.833,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
+}
