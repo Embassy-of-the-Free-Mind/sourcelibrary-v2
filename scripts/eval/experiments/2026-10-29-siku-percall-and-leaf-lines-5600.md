@@ -1,6 +1,6 @@
 ---
 stage: translation
-measure: [judged, cost]
+measure: [judged]
 languages: [lzh]
 scripts: [Hani]
 canons: [chinese-classics]
@@ -11,6 +11,7 @@ status: adopted
 decision: "B fails its quota bar, so D was not run and nothing goes to the router table; #7503 owns the 4/call switch. The leaf lines (C) go to the lane's 1/call reader via --instructions-file (lane-local)."
 superseded_by: null
 issue: [5600, 7503]
+router_evidence: "none — the brief adds the zh-siku-first-tr cell only if 4/call passes; it failed its quota bar (0.53 calls / page, bar < 0.5), and the leaf-line arm is a prompt change on the existing route, not a new route (#5600)"
 ---
 PRIOR ART: `scripts/eval/agy-per-call-7503/` and `2026-10-27-agy-pages-per-call-siku-7503.md` (#7518), which ran the
 same question on 60 pages with a token index only. `2026-10-27-caseless-block-drift-guard-7503.md` is the Han guard.
