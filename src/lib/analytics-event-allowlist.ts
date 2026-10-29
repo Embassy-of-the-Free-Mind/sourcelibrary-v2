@@ -49,6 +49,11 @@ export const ALLOWED_EVENTS = new Set([
   // Recording only the control would silently merge two funnels with different
   // pages and different conversion odds.
   'give_nav_click',
+  // giving_banner_view / giving_banner_dismiss: the year-end appeal on book
+  // pages (src/components/donate/GivingSeasonBanner.tsx). A view is logged once
+  // per time it appears, so view → give_nav_click(source=book_banner) → donate_click
+  // is its funnel, and dismissals separate "saw it, declined" from "never saw it".
+  'giving_banner_view', 'giving_banner_dismiss',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.
