@@ -2,8 +2,9 @@
 stage: translation
 measure: [judged]
 languages: [la, de, fr, grc, it, es, nl]
-scripts: [latin]
+scripts: [Latn]
 canons: []
+router_evidence: "none — a page-join prompt and lane change on one engine (3.8 Flash), not an engine-per-stratum routing cell; the per-break verdicts are results/seam-prevent-7118/markers-catchword/report.json"
 n_books: 120
 n_pages: 240
 verdict: "On the production CLI lane (3.8 Flash low via agy), folio markers cut broken page joins from 35.5 to 16.4 per 100 (28 vs 7 discordant, p 0.0003; A-vs-A swing 8.2) and majors from 10 to 3. Markers + catchword label scored 10.9, but the catchword label fails its spurious-label guard (10% and 18% vs ≤ 5%). By the registered rule, markers ship and the catchword label does not."
