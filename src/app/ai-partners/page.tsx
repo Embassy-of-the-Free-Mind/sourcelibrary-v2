@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       '129,000 historical books from more than 30 libraries; 9.6 million pages transcribed and 5.7 million translated into English, each traceable to its scan.',
     url: 'https://sourcelibrary.org/ai-partners',
     type: 'website',
-    images: ['https://sourcelibrary.org/ai-partners/img/ottoman-celestial.jpg'],
+    images: ['https://sourcelibrary.org/ai-partners/img/fludd-empyrean.jpg'],
   },
   twitter: { card: 'summary_large_image' },
 };

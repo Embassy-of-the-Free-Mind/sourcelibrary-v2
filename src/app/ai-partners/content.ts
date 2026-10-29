@@ -8,8 +8,8 @@ export const PARTNERS_HTML = `
       <p>129,000 books in more than fifty languages. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
     </div>
     <figure>
-      <img src="/ai-partners/img/ottoman-celestial.jpg" alt="Ottoman celestial map, 1583: the zodiac and planetary spheres held by angels">
-      <figcaption><a href="https://sourcelibrary.org/book/art-ottoman-celestial-map">Ottoman celestial map, 1583 · Source Library</a></figcaption>
+      <img src="/ai-partners/img/fludd-empyrean.jpg" alt="Engraved circle of the heavens: a dark starry core, a ring of stars, and an outer band of flames">
+      <figcaption><a href="https://sourcelibrary.org/book/69904dd67d19f3f2aac1d49d?page=140">Robert Fludd, <i>Utriusque cosmi historia</i>, 1617: the Empyrean heaven · Source Library</a></figcaption>
     </figure>
   </div>
 </section>
