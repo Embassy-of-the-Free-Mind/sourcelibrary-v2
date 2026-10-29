@@ -3,10 +3,11 @@
 //   node scripts/eval/route-judge-6740/first-read-7701/gate.mjs <route-judge DIR>
 // #7701 gate: (a) all drawn pages, (b) written set; Beta(1+k,1+n-k) P(acc>=0.8), seeded draws.
 import fs from 'node:fs';
+import { makeRng } from '../../lib/paired-stats.mjs';
 const R = process.argv[2];
 const key = JSON.parse(fs.readFileSync(`${R}/key.json`)), s = JSON.parse(fs.readFileSync(`${R}/sample.json`));
 const V = new Map(fs.readFileSync(`${R}/verdicts-opus.jsonl`, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
-let seed = 7701; const rnd = () => { seed = (seed * 1103515245 + 12345) % 2 ** 31; return seed / 2 ** 31; };
+const rnd = makeRng(7701);
 const normal = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
 const gamma = (k) => { if (k < 1) return gamma(k + 1) * rnd() ** (1 / k); const d = k - 1 / 3, c = 1 / Math.sqrt(9 * d); for (;;) { let x, v; do { x = normal(); v = 1 + c * x; } while (v <= 0); v = v ** 3; const u = rnd(); if (u < 1 - 0.0331 * x ** 4 || Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) return d * v; } };
 const post = (k, n) => { const xs = Array.from({ length: 40000 }, () => { const a = gamma(1 + k), b = gamma(1 + n - k); return a / (a + b); }).sort((a, b) => a - b); return { mean: +((1 + k) / (2 + n)).toFixed(3), ci90: [+xs[2000].toFixed(3), +xs[38000].toFixed(3)], p_ge_080: +(xs.filter((x) => x >= 0.8).length / xs.length).toFixed(3) }; };
@@ -21,7 +22,7 @@ for (const [cell, cs] of Object.entries(s.cells)) {
   const drawn = cs.pages.map((p) => p.page_id);
   const willWrite = drawn.filter((id) => !(id in skipped));
   const ver = (id) => { const k = key.find((x) => x.cell === cell && x.route === route && x.kind === 'item' && x.page_id === id); return k && V.get(k.judged_as); };
-  const ctrl = key.filter((x) => x.cell === cell && x.kind === 'wrong_page').map((k) => V.get(k.judged_as));
+  const ctrl = key.filter((x) => x.cell === cell && x.route === route && x.kind === 'wrong_page').map((k) => V.get(k.judged_as));
   const A = { n: drawn.length, k: drawn.filter((id) => ver(id)?.accept).length, w: drawn.filter((id) => ver(id) && wt(ver(id))).length };
   const B = { n: willWrite.length, k: willWrite.filter((id) => ver(id)?.accept).length, w: willWrite.filter((id) => ver(id) && wt(ver(id))).length };
   const pb = post(B.k, B.n), pa = post(A.k, A.n);
