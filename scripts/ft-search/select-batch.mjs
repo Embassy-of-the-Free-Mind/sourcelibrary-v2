@@ -8,7 +8,8 @@
 // attempt yet (method claude_subagent_verify). Random order, seeded, so a batch is reproducible.
 //
 //   set -a; source .env.production.local; set +a
-//   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029]
+//   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029] [--exclude <ids.txt>[,<ids.txt>]]
+// --exclude: ids already drawn by a batch that has not been ingested yet, so parallel batches never overlap.
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -100,7 +101,9 @@ const pool = await db.collection('books').find(
   { visible: true, pages_translated: { $gt: 0 }, language: { $nin: ['English', 'english', 'en', 'eng'] } },
   { projection: { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1, is_first_translation: 1, prior_translation: 1 } },
 ).toArray();
-const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)));
+const excluded = new Set((arg('--exclude', '') || '').split(',').filter(Boolean).flatMap((f) => readFileSync(f, 'utf8').split('\n').filter(Boolean)));
+const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)) && !excluded.has(b.id || String(b._id)));
+if (excluded.size) console.log(`excluded ${excluded.size} ids drawn by un-ingested batches`);
 // Priority tiers, each shuffled: 0 never searched; 1 searched by the old system, no badge or credit;
 // 2 already badged or credited (a fresh search there only adds evidence).
 const tier = (b) => (!oldSearched.has(b.id || String(b._id)) ? 0 : b.is_first_translation || b.prior_translation ? 2 : 1);
