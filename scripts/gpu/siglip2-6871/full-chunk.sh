@@ -21,7 +21,7 @@ free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
 echo "$(date -u +%FT%TZ) start chunk $CHUNK; card $(gpu_mib) MiB; root disk ${free_g}G free"
 [ "${free_g:-0}" -lt 30 ] && { echo "root disk ${free_g}G free < 30G: not starting chunk $CHUNK"; exit 3; }
 "$PY" "$J/code-full/embed-shards.py" --manifest "$J/full/chunk-$CHUNK.jsonl" --out "$J/out/full/chunk-$CHUNK" \
-  --procs 12 --workers 8 --deadline "$DEADLINE"; rc=$?
+  --procs 12 --workers 8 --deadline "$DEADLINE" --yield-dir /root/gpu-queue/pending; rc=$?
 echo "$(date -u +%FT%TZ) chunk $CHUNK exit $rc; card $(gpu_mib) MiB"
 "$PY" "$J/code-full/summarize.py" "$J/out/full/chunk-$CHUNK" | tee "$J/out/full/chunk-$CHUNK/summary.json"
-exit $rc   # 75 = deadline with shards left (re-queued by siglip2-requeue.sh); 0 = chunk complete
+exit $rc   # 75 = deadline, or YIELDED to a waiting task, with shards left (re-queued by siglip2-requeue.sh); 0 = chunk complete
