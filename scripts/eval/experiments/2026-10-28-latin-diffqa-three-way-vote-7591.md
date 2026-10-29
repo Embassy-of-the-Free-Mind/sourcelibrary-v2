@@ -11,6 +11,7 @@ status: rejected
 decision: "Catalogi (69b51ddb47b06ecd581852a2) is NOT written through diff-QA (Derek's gate, inbox 2026-10-28 09:20Z). The route is registered in rules.json (latin-lite, lite>agy-flash-low+diffqa, stage agy-diffqa); the rebuilt table (2026-10-28-latin-diffqa) keeps lite>opus for latin-lite."
 superseded_by: null
 issue: [7591, 7517, 6740, 7613]
+router_evidence: [latin-lite]
 ---
 ## 2026-10-28 · Latin diff-QA with a three-way vote: router eval and positive control (#7591)
 
