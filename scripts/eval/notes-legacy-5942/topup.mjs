@@ -50,7 +50,7 @@ if (opt('from')) {
   const re = new RegExp(opt('regex'));
   for (let t = new Date(opt('from')); t < new Date(opt('to')); t = new Date(t.getTime() + 864e5)) {
     const b = new Date(t.getTime() + 864e5);
-    for await (const p of P.find({ 'translation.updated_at': { $gte: t, $lt: b }, 'translation.data': re }).project(proj).batchSize(1000)) take(p);
+    for await (const p of P.find({ 'translation.updated_at': { $gte: t, $lt: b }, 'translation.data': { $regex: re } }).project(proj).batchSize(1000)) take(p);
     console.log(`${t.toISOString().slice(0, 10)}: ${n} matched, ${kept} kept`);
     await sleep(200);
   }
