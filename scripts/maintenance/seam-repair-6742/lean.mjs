@@ -497,7 +497,8 @@ async function verifyPending(out, o, D = DEPS) {
       row.stopped = `below the ${PREFER_FLOOR * 100}% floor — nothing written`; res.decisions.push(floorDecision(out, p.run, sv));
       if (o.apply) resolvePending(out, p.run, 'below-floor', { verify: sv.summary });
     } else {
-      row.write = await writeOnly(out, p.run, ro, D);
+      // a failed write (Mongo down) leaves the run pending for the next night instead of costing tonight's repair
+      try { row.write = await writeOnly(out, p.run, ro, D); } catch (e) { row.stopped = `write failed: ${String(e?.message || e).slice(0, 200)}; stays pending`; res.verified.push(row); continue; }
       if (o.apply) resolvePending(out, p.run, 'written', { verify: sv.summary, written: row.write?.written ?? null, changedSinceRun: row.write?.changedSinceRun ?? 0 });
     }
     res.verified.push(row);
