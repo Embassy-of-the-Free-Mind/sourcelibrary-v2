@@ -171,6 +171,21 @@ export default async function GivePage() {
               </ul>
             </section>
 
+            {/* Running cost, not cost per book: the yearly bill says what a gift
+                keeps alive. Figures are billed amounts, not meter estimates
+                (ops costs/infrastructure-costs.md): hosting, database, CDN and
+                storage ran $3,600–5,200 a month June–September 2026, before any
+                OCR or translation; R2 held 22.3 TB at the end of August. */}
+            <section>
+              <h2 className="text-xl font-display text-stone-900 mb-3">What it costs to keep it open</h2>
+              <p className="text-stone-700 leading-relaxed">
+                About $50,000 a year, before a single page is translated: the servers, the
+                database, and storage for 22 terabytes of scans, more than 25 million pages.
+                Wikipedia and the Internet Archive stay free because their readers pay for
+                them. This library can too.
+              </p>
+            </section>
+
             <div className="text-sm text-stone-500 leading-relaxed space-y-2">
               <p>
                 The whole plan, costs and all, is in{' '}
