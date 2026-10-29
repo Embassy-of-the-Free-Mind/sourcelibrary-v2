@@ -146,6 +146,16 @@ if (STAGE === 'resolve-names') {
       years.set(b.id, Number(String(b.year ?? b.published ?? '').match(/\d{4}/)?.[0]) || null);
     }
   }
+  // Our record often has no year where the library's does (SBB "Erscheinungsjahr", METS dateIssued): read the raw record.
+  const noYear = todo.filter((r) => !years.get(r.book_id)).map((r) => r._id);
+  for (let i = 0; i < noYear.length; i += 2000) {
+    for (const h of await db.collection('catalogue_authority_harvest').find({ _id: { $in: noYear.slice(i, i + 2000) } }, { projection: { raw: 1, book_id: 1 } }).toArray()) {
+      const md = h.raw?.metadata;
+      const fromManifest = Array.isArray(md) ? md.find((m) => /Erscheinungsjahr|^Date$|^Zeit$|Jahr/.test(JSON.stringify(m.label)))?.value : null;
+      const y = String(fromManifest ?? (h.raw?.xml || '').match(/<mods:dateIssued[^>]*>[^<]*?(\d{4})/)?.[1] ?? '').match(/\d{4}/)?.[0];
+      if (y) years.set(h.book_id, Number(y));
+    }
+  }
   const names = [...new Set(todo.map((r) => r.author.name.replace(/"/g, '')))];
   console.log(`rows naming an author without GND: ${todo.length}; distinct headings ${names.length}`);
   const hits = new Map();   // heading -> [lobid members]
