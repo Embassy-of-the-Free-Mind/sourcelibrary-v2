@@ -7,10 +7,11 @@ canons: [tibetan]
 n_books: 21
 n_pages: 18
 verdict: "Wave 3 of the Yigdzin -> agy Flash-low correction wrote 7,890 pages in 21 Thadrak Kanjur volumes on 2026-10-28/29 (gex45 4,356 and a detached cloudlayer driver 3,534), under the wave-2 rule. The second rolling audit STOPPED it: severe errors were introduced on 3 of 8 judged pages and controls were 11/16. The first audit had passed narrowly: 8/10 pages passing the re-score, 1 severe page, and controls 18/20 only after an empty slot was refilled."
-status: stopped
+status: undecided
 decision: "STOP rule fired (brief, Derek 2026-10-28 11:29Z): writing stopped and what was written is left; the 4 audited pages with a severe introduction were put back on Yigdzin. 38,405 RISKY spans on 6,903 pages are queued for the #6740 judge loop (tranches w3a/w3b/w3c), not accepted. Whether to keep, re-judge or revert wave 3 is Derek's."
 superseded_by: null
 issue: [7263, 6740, 6560]
+router_evidence: "none — a production-pass rolling audit (judge B span leaf checks of written pages, 18 pages), not a blind route comparison; the cell's router evidence is the tibetan-yigdzin router test (#7263)"
 ---
 # Tibetan Flash-low correction, wave 3 (#7263, #6740)
 
