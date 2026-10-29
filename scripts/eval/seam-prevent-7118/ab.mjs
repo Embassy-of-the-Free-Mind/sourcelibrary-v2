@@ -220,7 +220,8 @@ async function judge(out, conc) {
   const todo = [];
   for (const x of ctx) {
     const present = JUDGED.filter(a => { const s = v[x.id][a === 'Acopy' ? 'A' : a]; return s && !s.failed; });
-    if (!present.includes('A')) continue;
+    // A break where any arm could not be read at all is out of the comparison (prereg), so it is not judged.
+    if (ARMS.some(a => v[x.id][a].failed && !v[x.id][a].failed.startsWith('parse-'))) continue;
     const order1 = shuffle(present, rand);
     for (const [order, arms] of [[1, order1], [2, [...order1].reverse()]]) if (!done.has(`${x.id}:${order}`)) todo.push({ x, order, arms });
   }
@@ -274,7 +275,9 @@ function score(out) {
     const r = (res[x.id] = {});
     for (const a of JUDGED) {
       const s = v[x.id][a === 'Acopy' ? 'A' : a];
-      if (s.failed) { r[a] = { def: true, major: true, failed: s.failed, labels: ['failed'] }; continue; }
+      // A page the marked block's parse left undrafted is a defective join (prereg); a read the lane could not get at
+      // all (Gemini's filter, a cut reply) drops the break from the comparison.
+      if (s.failed) { r[a] = s.failed.startsWith('parse-') ? { def: true, major: true, failed: s.failed, labels: ['failed'] } : null; continue; }
       const p = o[1].verdicts[a], q = o[2].verdicts[a];
       if (!p || !q) { r[a] = null; continue; }
       const def = p.label !== 'ok' && q.label !== 'ok';
