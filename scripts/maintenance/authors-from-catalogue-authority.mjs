@@ -239,11 +239,11 @@ if (STAGE === 'verdicts') {
   }
   console.log(`distinct GND ids ${byG.size}`);
 
-  // lobid, 100 ids a request, about one request a second.
+  // lobid, 50 ids a request (a 100-term OR answers HTTP 500), about two requests a second.
   const lobid = new Map();
   const all = [...byG.keys()];
-  for (let i = 0; i < all.length; i += 100) {
-    const chunk = all.slice(i, i + 100);
+  for (let i = 0; i < all.length; i += 50) {
+    const chunk = all.slice(i, i + 50);
     const q = `gndIdentifier:(${chunk.map((g) => `"${g}"`).join(' OR ')})`;
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
