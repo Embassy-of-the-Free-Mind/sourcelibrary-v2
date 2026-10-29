@@ -1,13 +1,13 @@
 ---
 stage: ocr
-measure: [judged, planted]
+measure: [judged, accuracy]
 languages: [la, en]
 scripts: [Latn]
 canons: []
 n_books: 39
 n_pages: 60
 verdict: "The Latin word-level diff-QA for agy corrections (three-way vote: Flash-Lite draft / agy Flash-low correction / fresh agy Flash-low read, agy Flash-high judge only where they disagree) catches planted swaps (20/20 by vote, 19/20 by the judge alone, judge controls 20/20). But it does not make the corrected pages better than the bare correction, and the route as production would run it loses to lite>agy-flash-low on wrong text. Router frame (30 pages, 9 books): lite 17/30 (12 wrong), lite>agy-flash-low 24/30 (4), round 1 diff-QA 20/30 (10), round 2 diff-QA (post hoc) 20/30 (7), Opus 30/30 (0). Confirmation frame (30 new pages, one per book, rules frozen before the draw): lite 7/30 (22 wrong), lite>agy-flash-low 17/28 (7), diff-QA 11/30 (15). The gate fails. Most of the loss comes from the cli-ocr apply guards (>25% of words changed, foreign script) sending 9/30 and 19/30 pages back to the lite draft. On the pages diff-QA merged, it ties the correction: 20/32 accepted with 6 wrong-text pages, against 23/32 and 6."
-status: decided
+status: rejected
 decision: "Catalogi (69b51ddb47b06ecd581852a2) is NOT written through diff-QA (Derek's gate, inbox 2026-10-28 09:20Z). The route is registered in rules.json (latin-lite, lite>agy-flash-low+diffqa, stage agy-diffqa); the rebuilt table (2026-10-28-latin-diffqa) keeps lite>opus for latin-lite."
 superseded_by: null
 issue: [7591, 7517, 6740, 7613]
@@ -104,6 +104,10 @@ on 63% of pages. A judge call thought 4K-86K tokens (median ~28K): it is far hea
 Rebuilt table (`router-table/2026-10-28-latin-diffqa.md`): the diff-QA route pools 31/60, 0.52 [0.39, 0.64],
 wrong text 22/60, 5.14 agy calls per accepted page. lite>agy-flash-low pools 41/58 (11 wrong); latin-lite keeps
 lite>opus.
+
+_Rebased 2026-10-29 (job land-evals, #6740): the table was rebuilt on main's rules.json (margin 0.08, print /
+manuscript split, #7588/#7621). This test's two score files have no by-script file yet, so they enter the
+`latin-lite/unknown` cell only (diff-QA 31/60 there); `latin-lite/print` still keeps lite>opus._
 
 ### Catalogi itself (69b51ddb47b06ecd581852a2, 1,026 Flash-Lite pages)
 1,026 fresh reads were made (second pool, 3 readers, about 2 h, no quota stop). On the first 334 corrections, the
