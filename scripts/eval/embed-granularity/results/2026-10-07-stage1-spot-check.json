@@ -1,0 +1,42 @@
+{
+  "note": "10 stage-1 concept abstracts (seeded draw, one or two per shelf), each claim checked by eye against the page IMAGE and the stored page text (job embed-next-6173, 2026-10-07). 'image' = the claim was read on the scan itself; 'text' = only supported by the stored translation/notes; 'gloss' = not on the page.",
+  "pages": [
+    {"k":0,"title":"Lotus Sutra (Sixi Tripitaka ed.)","url":"https://sourcelibrary.org/book/699356c58ed86e583b7b8334?page=201","lang":"Chinese","claims":[
+      {"claim":"belief in a permanent self is a fundamental error that prevents spiritual progress","support":"text","why":"the page says only 'do not preach this sutra to those who hold the view of self' (計我見者 莫說此經); 'fundamental error … prevents progress' is the translator's footnote"},
+      {"claim":"those deeply attached to sensory desires","support":"image","why":"凡夫淺識 深著五欲"},
+      {"claim":"those who reject the teaching face severe moral consequences","support":"image","why":"毀謗此經 則斷一切世間佛種 … 此人罪報"}],"verdict":"faithful except one claim taken from a translator's note"},
+    {"k":1,"title":"The Great Meaning of the Five Elements","url":"https://sourcelibrary.org/book/6992cabbd4d545ae73fee88b?page=48","lang":"Chinese","claims":[
+      {"claim":"existence vs non-existence is defined by vital energy rather than physical form","support":"gloss","why":"the page ties 'existence' to the living form (生則形存為有) and non-existence to qi dispersing at death (死則氣散為無); 'rather than physical form' inverts it"},
+      {"claim":"spirits lack a tangible body but have a moral quality that lets them affect human affairs","support":"image","why":"鬼神雖無形質 可見而有善惡 可求故能為抑"},
+      {"claim":"their power is real without physical substance","support":"image","why":"same passage"}],"verdict":"one claim misstates the page"},
+    {"k":2,"title":"Selected Extracts (J. W. Überfeld letters)","url":"page 381 of a two-page spread","lang":"German","claims":[
+      {"claim":"descending into others' darkness/suffering to share their transformation","support":"image","why":"uns einer zum andern in die Hölle versencken, und werden was unser Bruder ist"},
+      {"claim":"described as a difficult birth","support":"image","why":"die schwereste Geburt in allen unsern Tagen"},
+      {"claim":"the divine creative command must intervene to cleanse the primordial material of the soul","support":"gloss","why":"the Fiat enters and is cast out (das Fiat eingieng … warf sie das Fiat aus); 'cleanse the primordial material' is not on the page"},
+      {"claim":"identifying with others' struggles, one shares in their redemption","support":"image","why":"so empfahen wir an dieser holdseligen Geburt gleiche Theil"}],"verdict":"faithful except one gloss"},
+    {"k":3,"title":"Greek texts on mathematics, astronomy and geography (CUL Gg.2.33)","lang":"Greek","claims":[
+      {"claim":"the product of two sexagesimal parts is of an order equal to the sum of the orders","support":"image","why":"πρῶτα / τρίτα / τέταρτα ἑξηκοστὰ … πολλαπλασιασθῇ legible in the hand; the worked progression is the page's subject"},
+      {"claim":"governed by proportions that hold regardless of the values used","support":"text","why":"the page cites the proportion theorem of Elements II; 'regardless of the values' is a generalisation"}],"verdict":"faithful"},
+    {"k":4,"title":"Archive for Freemasons and Rosicrucians","lang":"German","claims":[
+      {"claim":"chemistry is a tool for medicine but should not be its foundation","support":"image","why":"Sylvius/Tachenius rejected for making medicine 'ein blosser Zweig' of chemistry; 'mit gehöriger Einschränkung'"},
+      {"claim":"chemistry is essential to the crafts that transform substances for aesthetic value","support":"image","why":"§. 4 Einfluß der Chemie auf die … Handwerkskünste … Färbekünste; painting, ultramarine on the facing page"}],"verdict":"faithful"},
+    {"k":5,"title":"The Secret Doctrine, vol. I","lang":"English","claims":[
+      {"claim":"geometrical abstractions are not mere phantoms of the mind but serve to understand the passage from the unmanifest to the physical","support":"image","why":"argues against 'simply a phantom of the mind'; 'Esoteric application to the idea of the pregenesis, and the genesis of Kosmos'"},
+      {"claim":"a progression from the indivisible point to the solid","support":"image","why":"from the mathematical indivisible point to solid figures"}],"verdict":"faithful"},
+    {"k":6,"title":"Tantrarāja Tantra with the Manoramā","lang":"Sanskrit (English translation)","claims":[
+      {"claim":"the goddesses of the diagrams reside in the body's energy centres","support":"image","why":"सुषुम्नामध्यसंस्थेषु षडाधाराम्बुजेषु ताः । तिष्ठन्ति प्राणिनां देव्यः"},
+      {"claim":"realised by inner understanding and outer ritual","support":"image","why":"ज्ञानपूजिताः … बहिश्च मण्डले पूजा"},
+      {"claim":"worship at bodily sites and altars brings wisdom and protection from harm","support":"image","why":"तया सर्वज्ञतासिद्धिः; वेदिका, गन्धपुष्पधूप and अमङ्गलानि न सम्भवन्ति in the commentary"}],"verdict":"faithful"},
+    {"k":7,"title":"Trithemius in Agrippa, De occulta philosophia (1531 ed.)","lang":"Latin","claims":[
+      {"claim":"patient endurance of persecution is a sign of grace and leads to reward","support":"image","why":"certum est signum, quod in Dei gratia saluandus perseuerat; accipiet coronam uitae"},
+      {"claim":"prosperity is no sign of approval; the wicked flourish","support":"image","why":"Quare impij uiuunt … confortati diuitijs … manifestum damnationis est signum"}],"verdict":"faithful"},
+    {"k":8,"title":"De Visser, The Dragon in China and Japan","lang":"English","claims":[
+      {"claim":"a pond's unchanging level read as a sign of the world's state; a sudden drop signals disaster","support":"image","why":"the Sacred Pond of Higo; the diviners' 'calamity of drought'; 840 proclamation"},
+      {"claim":"a legend about a ruler's body explains a custom and a word","support":"image","why":"Ōjin's dragon tail, the suso skirt, biryū → birō"}],"verdict":"faithful"},
+    {"k":9,"title":"Confucius Sinarum Philosophus (1687), Proemialis declaratio","lang":"Latin","claims":[
+      {"claim":"writing and customs can arise independently in distant nations rather than by migration","support":"image","why":"quid obest quin aliquae gentes … invenerint eadem … cum aliis gentibus maxime dissitis"},
+      {"claim":"a sect arising in one region need not spread at once; long independent laws and rites","support":"image","why":"Foe born 1308 BC, doctrines brought to China ~900 years later; legibus ritibusque non peregrinis, at suis"}],"verdict":"faithful"}
+  ],
+  "summary": {"abstracts": 10, "claims": 27, "image": 22, "text_only": 2, "gloss": 3, "faithful": 7, "one_questionable_claim": 3, "wholly_unfounded": 0,
+    "finding": "The input text includes the translator's notes, so an abstract can carry the translator's gloss as if it were the page's claim (#0). Two pages were two-page spreads; the abstract followed the page's own translation, not the facing page."}
+}
