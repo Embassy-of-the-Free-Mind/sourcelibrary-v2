@@ -5,7 +5,7 @@
  * `claude -p` version so it runs on a job box under the subscription, resumable, with Opus as the
  * instrument. The prompt text and verdict schema are kept identical so the verdicts compare.
  *
- * Replicates the #2684 translation-gap validation with Opus as adjudicator (#7691).
+ * Replicates the #2684 translation-gap validation with a lean Sonnet call per work, the instrument of the first-translation search (#7598, #7691).
  * Input: scripts/analysis/eval-data/gap-validation-n250-blind.json (1000 works, seed 2684).
  * The frame's keys start with T/G and so name the stratum; each work is re-keyed with a seeded
  * random id (O0001…) and the prompt never sees either key. The map back is in the output rows.
@@ -30,7 +30,7 @@ const EVAL = path.join(__dir, 'eval-data');
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const LIMIT = Number(arg('limit', 1e9));
 const CONC = Number(arg('concurrency', 3));
-const MODEL = arg('model', 'opus');
+const MODEL = arg('model', 'sonnet');
 const OUT = arg('out', path.join(EVAL, `gap-validation-${MODEL}-verdicts.jsonl`));
 // Quota guard, as scripts/ft-search/meter-guard.sh: stop when the account's weekly meter passes
 // --week-cap, or when it cannot be read three checks running (a blank reading must not mean "fine").
