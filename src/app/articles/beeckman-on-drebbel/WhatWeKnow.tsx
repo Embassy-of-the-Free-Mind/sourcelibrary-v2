@@ -8,7 +8,9 @@ import SourceQuote from '@/components/articles/SourceQuote';
 // drawing of it after Beeckman", 2026-10-29). Mersenne and Wilkins are served
 // from the library's own page images; Papin's pages and plate are copied from
 // the Bayerische Staatsbibliothek scan (bsb10843010), since the library's copy
-// has no archived images yet.
+// has no archived images yet. Harsdörffer 1651 (no figure) is copied from the
+// Internet Archive scan bub_gb_r1U_AAAAcAAJ; the library holds only a hidden 1677
+// reprint with no text.
 
 const MERSENNE = '69af0dab9f13b61d0a6c6105';
 const WILKINS = '69aebe60c0472fef6455a8f3';
@@ -57,6 +59,48 @@ export default function WhatWeKnow() {
         might be built. He cites Drebbel only to show that it can be done.
       </p>
 
+      <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
+        <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">
+          <p lang="de" className="mb-3 text-secondary italic">
+            Einer von seinen Befreunden hat mich glaubw&uuml;rdig berichtet / da&szlig; besagter
+            K&uuml;nstler an der Teims in Engeland spatzieret / und etliche Fischer daher fahren
+            sehen / mit durchl&ouml;cherten K&auml;sten [&hellip;]
+          </p>
+          <p>
+            One of his kinsmen has told me, and he is to be believed, that the said artist was
+            walking by the Thames in England and saw some fishermen going by with boxes full of
+            holes, in which they keep the fish and which they hang on their boats; and when they
+            cut these off, the boat floated higher. From this he is said to have taken the idea of
+            sinking a whole ship under the water in a river by such water-boxes, and driving it
+            forward with oars or a pole, since the ship and the boxes can be weighed out by art.
+            [&hellip;] The air they must have fetched with a long tube above the water; and two
+            such ships, of different sizes, were made, with walls and a deck of greased leather,
+            in which the late King in England went on the Thames itself.
+          </p>
+          <figcaption className="mt-3 text-sm text-muted not-italic">
+            Georg Philipp Harsd&ouml;rffer, <em>Deliciae physico-mathematicae</em>, vol. 2
+            (Nuremberg, 1651), part 13, problem 8, p. 493,{' '}
+            <a href="https://archive.org/details/bub_gb_r1U_AAAAcAAJ/page/n504/mode/1up" className="underline">
+              scan at the Internet Archive
+            </a>
+          </figcaption>
+        </blockquote>
+        <div className="max-w-[16rem] mx-auto w-full">
+          <PageFigure
+            src="/articles/beeckman-on-drebbel/harsdoerffer-1651-p493.jpg"
+            alt="A page of German blackletter print headed Die VIII Aufgabe, Vnter dem Wasser schiffen."
+          />
+        </div>
+      </figure>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        This is the only early report of how Drebbel&rsquo;s own boat was made to sink, and it is
+        close to Beeckman&rsquo;s guess: boxes that let the water in, weighed against the
+        ship. It is also the source of the greased leather and of the King on board, and it
+        adds that one of the boats went to the Grand Prince in Moscow. Harsd&ouml;rffer gives
+        no picture, and he sends the reader on to Mersenne, &ldquo;f. 207 &amp; 208&rdquo;:
+        the page quoted above.
+      </p>
+
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 my-10 font-body text-lg leading-relaxed text-primary">
         <p>
           [&hellip;] a Vessel to go under Water; of which, tryal was made in the Thames, with
@@ -71,7 +115,7 @@ export default function WhatWeKnow() {
         </p>
       </blockquote>
       <p className="text-secondary leading-relaxed mb-4 font-body">
-        Boyle&rsquo;s is the fullest account, and the only one with numbers. He had it from
+        Boyle&rsquo;s is the only account that counts the crew. He had it from
         Drebbel&rsquo;s family and from &ldquo;an Ingenious Physitian that marry&rsquo;d his
         daughter&rdquo;. They told him that besides &ldquo;the Mechanicall contrivance of his
         vessell&rdquo; Drebbel had a &ldquo;Chymicall liquor&rdquo; which restored the used air,
@@ -138,10 +182,10 @@ export default function WhatWeKnow() {
       </p>
 
       <p className="text-secondary leading-relaxed mt-8 font-body">
-        The rest of the familiar story is later still: the greased-leather hull, a dive of twelve
-        to fifteen feet, the run from Westminster to Greenwich, King James aboard. None of it is in
-        these sources. The picture at the top of this page, and the replica built for the BBC in
-        2002, are reconstructions from the same few lines.
+        Other parts of the familiar story, such as a dive of twelve to fifteen feet and a run from
+        Westminster to Greenwich, are in none of these sources. The picture at the top of this
+        page, and the replica built for the BBC in 2002, are reconstructions from the same few
+        lines.
       </p>
     </section>
   );
