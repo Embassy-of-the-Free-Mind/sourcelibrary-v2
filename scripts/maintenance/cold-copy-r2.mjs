@@ -177,6 +177,8 @@ async function listAll(src, prefix, delimiter) {
   return { objects, prefixes };
 }
 
+// Array.push(...xs) overflows the stack past ~100K items (archived/ has ~500K book folders).
+const pushAll = (arr, xs) => { for (const x of xs) arr.push(x); return arr; };
 const shardOf = (key) => (parseInt(createHash('md5').update(key).digest('hex').slice(0, 2), 16) % 64).toString(16).padStart(2, '0');
 
 /**
@@ -247,7 +249,7 @@ async function unitsFor(group) {
       return dir;
     };
     const r2 = [];
-    for (const p of EFM_PREFIXES.filter((x) => x !== 'archive/')) r2.push(...(await unitsUnder(R2, p)));
+    for (const p of EFM_PREFIXES.filter((x) => x !== 'archive/')) pushAll(r2, await unitsUnder(R2, p));
     return [...r2, {
       id: `bph_works/${day}`, src: { label: 'local' }, dest: `bph_works/${day}.tar`, local: true,
       list: async () => {
@@ -262,9 +264,9 @@ async function unitsFor(group) {
   }
   if (group === 'masters') {
     const out = [];
-    for (const p of MASTER_PREFIXES) out.push(...(await unitsUnder(R2, p)));
+    for (const p of MASTER_PREFIXES) pushAll(out, await unitsUnder(R2, p));
     // artwork/ is flat; its -full images are masters, the rest are derived (they go in `rest`).
-    out.push(...(await unitsUnder(R2, 'artwork/', { filter: isFull, flatLabel: '_flat-full' })));
+    pushAll(out, await unitsUnder(R2, 'artwork/', { filter: isFull, flatLabel: '_flat-full' }));
     return out;
   }
   if (group === 'restic') {
@@ -275,7 +277,7 @@ async function unitsFor(group) {
     const flat = top.objects;
     if (flat.length) out.push({ id: `${root}_top`, src: s, dest: 'restic/_top.tar', list: async () => flat });
     for (const p of top.prefixes) {
-      if (p === `${root}data/`) out.push(...(await unitsUnder(s, p, { destRoot: 'restic', rootPrefix: root })));
+      if (p === `${root}data/`) pushAll(out, await unitsUnder(s, p, { destRoot: 'restic', rootPrefix: root }));
       else out.push({ id: p, src: s, dest: `restic/${p.slice(root.length).replace(/\/$/, '')}.tar`, list: async () => (await listAll(s, p)).objects });
     }
     return out;
@@ -285,8 +287,8 @@ async function unitsFor(group) {
     const out = [];
     for (const p of top.prefixes) {
       if (EFM_PREFIXES.includes(p) || MASTER_PREFIXES.includes(p)) continue; // whole prefix sent by an earlier group
-      if (p === 'artwork/') out.push(...(await unitsUnder(R2, p, { filter: (k) => !isFull(k), flatLabel: '_flat-other' })));
-      else out.push(...(await unitsUnder(R2, p)));
+      if (p === 'artwork/') pushAll(out, await unitsUnder(R2, p, { filter: (k) => !isFull(k), flatLabel: '_flat-other' }));
+      else pushAll(out, await unitsUnder(R2, p));
     }
     if (top.objects.length) out.push({ id: '_root', src: R2, dest: 'r2/_root.tar', list: async () => top.objects });
     return out;
