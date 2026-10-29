@@ -26,6 +26,7 @@ describe('gpu-print-lane (#6871)', () => {
     expect(v).toMatchObject({ verdict: 'reject', reason: 'other_script', detail: { early_stop: true } });
     expect(v.detail.letters).toBeGreaterThan(3);
     expect(pageVerdict(PAGE, { finish: 'stop' })).toMatchObject({ verdict: 'write' });
+    expect(pageVerdict(`${PAGE} which is a class of the United States`, { finish: 'abort_loop' })).toMatchObject({ verdict: 'reject', reason: 'loop_guard:early_loop' });
   });
   it('turns away engine commentary about the image', () => {
     expect(pageVerdict(`${PAGE}\n\nNote: The original image contains a decorative brown scroll at the foot.`)).toMatchObject({ verdict: 'reject', reason: 'engine_commentary' });
