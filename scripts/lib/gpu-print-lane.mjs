@@ -101,6 +101,9 @@ export function translitPermille(s) {
 
 /** The page verdict: { verdict: 'write'|'textless'|'reject', reason, body }. */
 export function pageVerdict(raw, { finish = null } = {}) {
+  // gpu-print-read.py cut this read once it held more than ABORT_OTHER_SCRIPT (40) non-Latin letters: the full read
+  // would have failed the other_script test below (more than MAX_OTHER_SCRIPT), so it gets that verdict now.
+  if (finish === 'abort_other_script') return { verdict: 'reject', reason: 'other_script', detail: { letters: otherScriptCount(convertRead(raw)), early_stop: true } };
   const g = gpuLoopVerdict(raw, { finish });
   if (g.refuse) return { verdict: 'reject', reason: `loop_guard:${g.reason}`, detail: g.detail ?? null };
   const body = convertRead(raw);
