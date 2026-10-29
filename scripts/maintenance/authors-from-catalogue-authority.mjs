@@ -196,7 +196,7 @@ if (STAGE === 'apply-books') {
 
 const rows = await db.collection('catalogue_authority_harvest').find({ error: null }, { projection: { names: 0, statement: 0, raw: 0 } }).toArray();
 // A GND id the record names wins; one resolved by name (--stage=resolve-names) is used where it names none.
-for (const r of rows) if (r.author && !r.author.gnd && r.author_gnd_resolved?.gnd) r.author = { ...r.author, gnd: r.author_gnd_resolved.gnd, gnd_via: 'lobid-name' };
+for (const r of rows) if (r.author && !r.author.gnd && r.author_gnd_resolved?.gnd) r.author = { ...r.author, gnd: r.author_gnd_resolved.gnd, gnd_via: 'lobid-name' }; // imprint-write-ok: a harvest row in memory, not a books write
 const withGnd = rows.filter((r) => r.author?.gnd);
 console.log(`harvested rows ${rows.length}; naming one author ${rows.filter((r) => r.author).length}; with a GND id ${withGnd.length}`);
 
