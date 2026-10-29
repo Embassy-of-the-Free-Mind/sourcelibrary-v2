@@ -35,6 +35,7 @@ import { MongoClient } from 'mongodb';
 import { agyCall, CLI_SAFE_ARGS, installToolGate, firstJson, pageBlockFile, OCR_READ_FILE_INSTRUCTION } from '../lib/agy-cli.mjs';
 import { keepRead, findRead, reuseHash } from '../lib/candidate-reads.mjs';
 import { unwrapSentinels } from '../lib/cli-chatter.mjs';
+import { makeLegacyLcg } from '../eval/lib/paired-stats.mjs';
 import { recordUrlFor, parseBsbManifest, parseSbbManifest, parseMetsMods, authorOf } from '../lib/catalogue-authority.mjs';
 
 const val = (k, d = null) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
@@ -49,9 +50,8 @@ if (!OUT) { console.error('--out=<reads.jsonl>'); process.exit(2); }
 const PLACEHOLDER = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;
 const UA = { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; title-page pilot #7660)' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-// Seeded shuffle, so the draw is reproducible.
-let s = SEED;
-const rnd = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
+// Seeded shuffle, so the draw is reproducible. The 2026-10-28 pilot was drawn with this generator.
+const rnd = makeLegacyLcg(SEED);
 
 const PROMPT = `These are ${LEAVES} consecutive leaves from the front of a digitised early printed book (or manuscript), in order: ${Array.from({ length: LEAVES }, (_, i) => `leaf ${i + 1}: ./${pageBlockFile(i)}`).join(', ')}. ${OCR_READ_FILE_INSTRUCTION.replace('Open it', 'Open each')}
 Find the TITLE PAGE among them (covers, bindings, blank leaves, library stamps and colour charts are not title pages; a half-title naming no author is not the title page if a fuller one follows).
@@ -68,11 +68,11 @@ const pool = [];
 for await (const b of db.collection('books').find({
   author_id: { $in: [null, undefined] }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false },
   'image_source.iiif_manifest': { $exists: true, $ne: null },
-}, { projection: { id: 1, author: 1, title: 1, year: 1, 'image_source.provider': 1, 'image_source.iiif_manifest': 1 } })) {
+}, { projection: { id: 1, author: 1, title: 1, year: 1, 'image_source.provider': 1, 'image_source.iiif_manifest': 1 } }).batchSize(1000)) {
   if (PLACEHOLDER.test(b.author ?? '')) pool.push(b);
 }
 const harvested = new Map();
-for await (const r of db.collection('catalogue_authority_harvest').find({ book_id: { $in: pool.map((b) => b.id) } }, { projection: { book_id: 1, author: 1, author_gnd_resolved: 1 } })) harvested.set(r.book_id, r);
+for await (const r of db.collection('catalogue_authority_harvest').find({ book_id: { $in: pool.map((b) => b.id) } }, { projection: { book_id: 1, author: 1, author_gnd_resolved: 1 } }).batchSize(1000)) harvested.set(r.book_id, r);
 const remaining = pool.filter((b) => !harvested.get(b.id)?.author);
 const byProv = new Map();
 for (const b of remaining) { const p = b.image_source.provider; if (!byProv.has(p)) byProv.set(p, []); byProv.get(p).push(b); }

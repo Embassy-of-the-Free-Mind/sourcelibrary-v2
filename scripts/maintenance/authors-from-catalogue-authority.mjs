@@ -110,7 +110,7 @@ if (STAGE === 'edition-ids') {
   }
   const plan = [];
   const bad = {};
-  for await (const h of db.collection('catalogue_authority_harvest').find({ error: null, ids: { $nin: [null, {}] } }, { projection: { book_id: 1, ids: 1, url: 1 } })) {
+  for await (const h of db.collection('catalogue_authority_harvest').find({ error: null, ids: { $nin: [null, {}] } }, { projection: { book_id: 1, ids: 1, url: 1 } }).batchSize(1000)) {
     const ids = Object.fromEntries(Object.entries(h.ids || {}).filter(([k, v]) => {
       const ok = FORMAT[k]?.test(String(v).trim());
       if (!ok) bad[k] = (bad[k] || 0) + 1;
@@ -312,7 +312,7 @@ if (STAGE === 'unkeyed-strings') {
 // ── existing docs ────────────────────────────────────────────────────────────
 const byQid = new Map(), byGnd = new Map(), variantOwner = new Map(), ids = new Set();
 const docs = new Map();
-for await (const a of db.collection('authors').find({}, { projection: { canonical_name: 1, variants: 1, wikidata_id: 1, gnd_ids: 1, merged_into: 1, is_person: 1 } })) {
+for await (const a of db.collection('authors').find({}, { projection: { canonical_name: 1, variants: 1, wikidata_id: 1, gnd_ids: 1, merged_into: 1, is_person: 1 } }).batchSize(1000)) {
   ids.add(a._id);
   docs.set(a._id, a);
   if (a.merged_into) continue;

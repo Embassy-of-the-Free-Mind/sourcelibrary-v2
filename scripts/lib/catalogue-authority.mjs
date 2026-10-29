@@ -3,6 +3,8 @@
 // e-rara record with no role and no GND, which is why its `author` is so often the printer ("Apiarius, Offizin, Bern").
 // scripts/lib/bib-record.mjs — MARC from LoC SRU, a different source and shape. None reads the libraries' own author
 // AUTHORITY (GND id, role code, life dates) out of the records we already link to.
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 /**
  * Who does the HOLDING LIBRARY say wrote this book? (#7660 stage 0)
  *
@@ -25,8 +27,7 @@
  * more than one.
  */
 
-const decode = (s) => String(s ?? '')
-  .replace(/<[^>]+>/g, '')
+const decode = (s) => stripMarkupTags(String(s ?? ''))
   .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
   .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
   .replace(/\s+/g, ' ').trim();

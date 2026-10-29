@@ -53,7 +53,7 @@ if (COMMIT) await harvest.createIndex({ provider: 1 }).catch(() => {});
 
 const done = new Set();
 const noRaw = new Set();   // harvested before rows kept the raw record: fetched again, after the new work
-if (!REFETCH) for await (const r of harvest.find({ error: null }, { projection: { _id: 1, has_raw: { $gt: ['$raw', null] } } })) (r.has_raw ? done : noRaw).add(r._id);
+if (!REFETCH) for await (const r of harvest.find({ error: null }, { projection: { _id: 1, has_raw: { $gt: ['$raw', null] } } }).batchSize(5000)) (r.has_raw ? done : noRaw).add(r._id);
 
 const books = await db.collection('books').find({
   author_id: { $in: [null, undefined] }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false },
@@ -80,7 +80,7 @@ if (bsb.length) {
   }
   // Strings already sampled in an earlier run count toward their two.
   const sampled = new Map();
-  if (!REFETCH) for await (const r of harvest.find({ provider: { $in: ['bsb', 'mdz'] }, error: null }, { projection: { catalogue_author: 1 } })) sampled.set(r.catalogue_author, (sampled.get(r.catalogue_author) || 0) + 1);
+  if (!REFETCH) for await (const r of harvest.find({ provider: { $in: ['bsb', 'mdz'] }, error: null }, { projection: { catalogue_author: 1 } }).batchSize(5000)) sampled.set(r.catalogue_author, (sampled.get(r.catalogue_author) || 0) + 1);
   const multi = [...byString.entries()].filter(([k, v]) => k !== '\u0000placeholder' && v.length + (sampled.get(k) || 0) >= 2).sort((a, b) => b[1].length - a[1].length);
   for (const [k, v] of multi) work.push(...v.slice(0, Math.max(0, 2 - (sampled.get(k) || 0))));
   work.push(...(byString.get('\u0000placeholder') || []));
