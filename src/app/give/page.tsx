@@ -22,9 +22,8 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
  *   books live       70,970  (visible && pages_count > 0)
  *   first English     6,556  (is_first_translation && pages_translated > 0)
  *   /book/* views   302,821  (analytics_pageviews, 30 days to 2026-10-29)
- * Model cost per page is RATES in src/lib/library-dashboard.ts (Sept 2026:
- * $0.0016–$0.0031 to transcribe and translate), i.e. $0.50–$0.95 for a 300-page
- * book — "under a dollar". Re-measure before changing any of these.
+ * Re-measure before changing any of these. No per-book cost figure on purpose:
+ * model cost alone (under a dollar a book) tells a donor the work is nearly free.
  * The only server work is reading the request country to pick a default route,
  * which cannot fail: an unknown country is a valid answer (defaultRouteForCountry).
  *
@@ -57,7 +56,7 @@ const STATS = [
 const USES = [
   {
     title: 'Reading the page',
-    text: 'A model transcribes and translates a 300-page book for under a dollar. A $10 gift covers that cost for about ten books.',
+    text: 'Transcribing each page from Latin, Greek, German and other languages, and translating it into English, so the text can be searched and quoted.',
   },
   {
     title: 'Checking it',
