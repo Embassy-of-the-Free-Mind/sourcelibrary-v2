@@ -894,7 +894,10 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
   // --weekly-floor=F: a hand-run pilot's fixed floor instead of the pace line (never on the cron line)
   const WEEKLY_FLOOR = arg('weekly-floor') != null ? Number(arg('weekly-floor')) : null;
   if (WEEKLY_FLOOR != null && !(WEEKLY_FLOOR >= 0.2 && WEEKLY_FLOOR < 1)) { console.error('--weekly-floor must be in [0.2, 1)'); process.exit(2); }
-  const floorOpts = { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, weeklyFloor: WEEKLY_FLOOR };
+  // --pace-off-until=ISO (#7701): spend the pool out before that time, as the first-read lines do; the 5-hour floor holds
+  const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
+  if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
+  const floorOpts = { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, weeklyFloor: WEEKLY_FLOOR, paceOffUntil: PACE_OFF_UNTIL };
   const want = parseAgyHome(arg('agy-home'));
   const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
   const openPool = () => readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), floorOpts).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];

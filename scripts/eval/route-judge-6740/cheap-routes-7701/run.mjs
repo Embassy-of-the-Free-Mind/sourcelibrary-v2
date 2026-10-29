@@ -330,9 +330,10 @@ function apply() {
   const cost = (cell, route) => sc.cells[cell].routes[route].usd_per_accepted_page ?? 1;
   const plan = {};
   for (const [cell, C] of Object.entries(CELLS)) for (const sp of s.cells[cell].pages) {
-    const cands = Object.entries(C.routes).filter(([, R]) => R.kind !== 'corr').map(([route]) => {
+    // the GPU lane's stamp is credited to pero>agy-flash-low (one a call) by the nightly sampler: only that arm is written
+    const cands = Object.entries(C.routes).filter(([route, R]) => R.kind !== 'corr' && (R.kind !== 'gpu' || route === 'pero>agy-flash-low')).map(([route]) => {
       const k = key.find((x) => x.cell === cell && x.route === route && x.kind === 'item' && x.page_id === sp.page_id); const v = k && V.get(k.judged_as);
-      return v?.accept && wr[cell][route][sp.page_id]?.text && !wr[cell][route][sp.page_id].later_read ? { route, f: Number(v.fidelity) } : null; }).filter(Boolean)
+      return v?.accept && !wt(v) && wr[cell][route][sp.page_id]?.text && !wr[cell][route][sp.page_id].later_read ? { route, f: Number(v.fidelity) } : null; }).filter(Boolean)
       .sort((a, b) => b.f - a.f || cost(cell, a.route) - cost(cell, b.route));
     if (cands[0]) (plan[`${cell}\t${cands[0].route}`] ??= []).push(sp.page_id);
   }
