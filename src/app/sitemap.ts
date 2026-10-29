@@ -226,8 +226,6 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    // Proxied from a static deployment (next.config.ts rewrites), so no page.tsx makes
-    // embed-site-pages find it; listing it here puts it in sitemap chunk 0, which it crawls.
     { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },

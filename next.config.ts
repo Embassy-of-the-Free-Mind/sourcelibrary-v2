@@ -43,6 +43,12 @@ const nextConfig: NextConfig = {
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
+  // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
+  // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
+  // page's images are served statically and never through it: keep them out (#7710).
+  outputFileTracingExcludes: {
+    '/api/image': ['./public/ai-partners/img/**'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [60, 75, 80, 85, 90], // 60: article heroes, under a dark gradient (ParallaxImage)
@@ -420,13 +426,6 @@ const nextConfig: NextConfig = {
       // assets (transcript.json, lecture.mp3, clips/) load from that deployment
       // directly — only the HTML document needs proxying here.
       { source: '/launch', destination: 'https://sourcelib-launch-talk.vercel.app/' },
-      // The AI-partners page is a standalone static deployment too (source:
-      // sourcelibrary-ops/sites/partners, project sourcelibrary-partners). Same pattern:
-      // its images are referenced as /ai-partners/img/... and proxied here too, so they
-      // load same-origin: the site CSP img-src does not (and should not) list *.vercel.app.
-      // No <base>, which would send the in-page #anchors off-domain. One copy of the page.
-      { source: '/ai-partners', destination: 'https://sourcelibrary-partners.vercel.app/' },
-      { source: '/ai-partners/img/:path*', destination: 'https://sourcelibrary-partners.vercel.app/img/:path*' },
     ];
   },
   async redirects() {
