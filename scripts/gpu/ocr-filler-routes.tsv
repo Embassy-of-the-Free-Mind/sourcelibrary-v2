@@ -23,4 +23,4 @@
 #                                              does not store. Re-reading them would mostly re-find blanks.
 #   Siku duplicates (no hold, 1,044 bk)        skipped on purpose by job paddle-skqs-rest-6388 (a read copy is live).
 on	zh-histories-7546	paddle-zh	7546	/root/jobs/zh-histories-7546	zh-histories-7546	3	paddle-zh-lane.mjs apply --apply (revisions, guards, WYG screen); books stay held zh-histories-7546 until translation is released (#7546 priority juan first)
--	gpu-print-en	gpu-print	6871	/root/jobs/gpu-print-6871	scans-only-publish-7270	5	gpu-print-lane.mjs apply --apply (pages with no text only, guards, revisions); books keep their scans-only hold. OFF (-) until the PR is reviewed: the 10-book pilot is in the #6871 record
+on	gpu-print-en	gpu-print	6871	/root/jobs/gpu-print-6871	scans-only-publish-7270	5	gpu-print-lane.mjs apply --apply (pages with no text only, guards, revisions); books keep their scans-only hold. On 2026-10-29 after review of the v2 pilot (780 pp, 10/10 by eye usable) in the #6871 record
