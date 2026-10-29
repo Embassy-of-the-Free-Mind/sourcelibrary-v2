@@ -35,7 +35,6 @@ const EDITOR = 'system:repoint-bph-links-to-kept-duplicates';
 const NOTE =
   'The linked Source Library book was hidden as a duplicate; the link now points at the copy ' +
   'that was kept, so the catalogue "read online" link stops returning 404 (#7702).';
-const BPH_TENANT_ID = 'bce03f71-c18d-4460-b8ad-224c817f9aa0';
 
 const sb = createClient(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
@@ -44,26 +43,41 @@ const mongo = await MongoClient.connect(process.env.MONGODB_URI);
 const db = mongo.db('bookstore');
 
 async function plan() {
-  const hidden = await db.collection('books')
-    .find({ tenantId: BPH_TENANT_ID, visible: false, duplicate_of: { $exists: true, $ne: null } }, { projection: { id: 1, slug: 1, duplicate_of: 1 } })
-    .toArray();
-  const keptIds = [...new Set(hidden.map(h => h.duplicate_of))];
-  const kept = await db.collection('books')
-    .find({ id: { $in: keptIds } }, { projection: { id: 1, slug: 1, visible: 1, pages_count: 1, tenantId: 1 } })
-    .toArray();
-  const keptById = new Map(kept.map(k => [k.id, k]));
-  const hiddenById = new Map(hidden.map(h => [h.id, h]));
-  const ids = [...hiddenById.keys()];
-
+  // Start from the catalogue, not from the books: a link can name any library's copy
+  // (sl_external_book_id usually names a non-EFM scan). The first version started from
+  // hidden EFM books and missed 15 such links (2026-10-29).
   const rows = [];
-  for (const col of ['sl_book_id', 'sl_external_book_id']) {
-    for (let k = 0; k < ids.length; k += 100) {
-      const { data, error } = await sb.from('bph_works')
-        .select('ubn, uuid, title, sl_book_id, sl_book_slug, sl_external_book_id, sl_external_slug, field_provenance')
-        .in(col, ids.slice(k, k + 100));
-      if (error) throw new Error(`bph_works read failed: ${error.message}`);
-      for (const r of data) if (!rows.some(x => x.uuid === r.uuid)) rows.push(r);
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await sb.from('bph_works')
+      .select('ubn, uuid, title, sl_book_id, sl_book_slug, sl_external_book_id, sl_external_slug, field_provenance')
+      .or('sl_book_id.not.is.null,sl_external_book_id.not.is.null')
+      .order('uuid')
+      .range(from, from + 999);
+    if (error) throw new Error(`bph_works read failed: ${error.message}`);
+    rows.push(...data);
+    if (data.length < 1000) break;
+  }
+  const linked = [...new Set(rows.flatMap(r => [r.sl_book_id, r.sl_external_book_id]).filter(Boolean))];
+  const hiddenById = new Map();
+  for (let k = 0; k < linked.length; k += 1000) {
+    const hidden = await db.collection('books')
+      .find({ id: { $in: linked.slice(k, k + 1000) }, visible: false, duplicate_of: { $exists: true, $ne: null } }, { projection: { id: 1, slug: 1, duplicate_of: 1 } })
+      .toArray();
+    for (const h of hidden) hiddenById.set(h.id, h);
+  }
+
+  // The keeper may itself have been hidden as a duplicate later: follow the chain to a live copy.
+  async function liveKeeper(h) {
+    const seen = new Set([h.id]);
+    let id = h.duplicate_of;
+    while (id && !seen.has(id)) {
+      seen.add(id);
+      const k = await db.collection('books').findOne({ id }, { projection: { id: 1, slug: 1, visible: 1, pages_count: 1, duplicate_of: 1 } });
+      if (!k) return null;
+      if (k.visible === true && k.pages_count > 0) return k;
+      id = k.visible === false ? k.duplicate_of : null;
     }
+    return null;
   }
 
   const changes = [];
@@ -72,9 +86,9 @@ async function plan() {
     for (const [idCol, slugCol] of [['sl_book_id', 'sl_book_slug'], ['sl_external_book_id', 'sl_external_slug']]) {
       const h = hiddenById.get(r[idCol]);
       if (!h) continue;
-      const k = keptById.get(h.duplicate_of);
-      if (!k || k.visible !== true || !(k.pages_count > 0)) {
-        console.log(`  SKIP ${r.ubn ?? r.uuid}: kept copy ${h.duplicate_of} of ${h.slug} is missing or not live`);
+      const k = await liveKeeper(h);
+      if (!k) {
+        console.log(`  SKIP ${r.ubn ?? r.uuid}: no live copy along the duplicate_of chain from ${h.slug}`);
         continue;
       }
       next[idCol] = k.id;
@@ -96,7 +110,7 @@ for (const { row, next } of changes) {
 }
 if (!changes.length || !APPLY) { await mongo.close(); process.exit(0); }
 
-const stamp = new Date().toISOString().slice(0, 10);
+const stamp = new Date().toISOString().slice(0, 16).replace(':', '');
 mkdirSync('scripts/output', { recursive: true });
 const backupPath = `scripts/output/repoint-bph-links-backup-${stamp}.json`;
 writeFileSync(backupPath, JSON.stringify({ generated: new Date().toISOString(), reason: NOTE, rows: changes.map(c => c.row) }, null, 2));
