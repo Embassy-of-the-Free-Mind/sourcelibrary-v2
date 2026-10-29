@@ -1,0 +1,30 @@
+{
+ "at": "2026-10-29T14:42:30.747Z",
+ "apply": false,
+ "run": null,
+ "reason": "#7701 router cell test dry run",
+ "lane": "agy-first-read-7701",
+ "written": 24,
+ "skipped": {
+  "reply wrapper: reply cut before <<<END>>>": 4,
+  "more than one transcription header: restarted or refused read": 1,
+  "letters outside the book's scripts": 1
+ },
+ "held_yatags": 0,
+ "yatags_hits": 0,
+ "yatags_kept": 0,
+ "yatags_reverted": 0,
+ "written_page_ids": [],
+ "write_guard_repaired": 0,
+ "write_guard_refused": [],
+ "skipped_pages": {
+  "6a9528c6d5f269de866d54f6": "reply wrapper: reply cut before <<<END>>>",
+  "69bc855d173577a337420736": "more than one transcription header: restarted or refused read",
+  "69e72986a409200ea79f0732": "reply wrapper: reply cut before <<<END>>>",
+  "69f338b8876dd827cbc53feb": "reply wrapper: reply cut before <<<END>>>",
+  "69aebbba6059efb05d4fe63d": "reply wrapper: reply cut before <<<END>>>",
+  "6aaafb915735c12a1ee4bc60": "letters outside the book's scripts"
+ },
+ "contain_claims": [],
+ "failed_reads": 5
+}

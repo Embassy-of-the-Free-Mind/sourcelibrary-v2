@@ -81,7 +81,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-6740/judge.mjs';
-import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON } from '../batch/cli-ocr-lane.mjs';
+import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON, FIRST_READ_LANE, FIRST_READ_CORRECT_LANE, FIRST_READ_REASON, FIRST_READ_CORRECT_REASON, FIRST_READ_MODEL, firstReadLanguage } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
 import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
@@ -114,6 +114,9 @@ export const PLANT_WINDOW_DAYS = 56;
  * The lanes, by the stamps they leave. Only `enabled` lanes are drawn. Each maps a written page to a router cell and
  * route by rules.json ids. A lane is off until its cell is named and the judge is valid for its script.
  */
+/** First-read lane (#7701): language code -> [rules.json cell, route]. */
+export const FIRST_READ_CELLS = Object.freeze({ lat: ['latin-blank', 'agy-flash-low@4-written'], deu: ['german-blank', 'agy-flash-low@4-written'], fra: ['french-blank', 'agy-flash-low-written'] });
+export const FIRST_READ_CORRECT_CELLS = Object.freeze({ lat: ['latin-blank', 'agy-flash-low@4>agy-flash-low-written'], deu: ['german-blank', 'agy-flash-low@4>agy-flash-low-written'], fra: ['french-blank', 'agy-flash-low>agy-flash-low-written'] });
 export const LANES = [
   { lane: CORRECT_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': CORRECT_LANE }, reason: /^#7558 correction lane/,
     route: 'lite>agy-flash-low', draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
@@ -127,7 +130,21 @@ export const LANES = [
     cell: (lang) => (/^Latin/.test(lang) ? 'latin-gpu-7263' : null), lang: (lang) => (/^Latin/.test(lang) ? 'Latin' : null), languages: /^Latin/ },
   { lane: 'tib-correct-6560', enabled: false, why: 'Tibetan: the judge alone does not decide the cell (planted-syllable catch below 0.80 hands it to Derge, judge.mjs tib-kangyur); needs the Derge stage' },
   { lane: 'tib_gutter_vllm_6871', enabled: false, why: 'GPU Yigdzin gutter reads: no rules.json route for them yet' },
-  { lane: '(no ocr.pipeline) gemini-3.8-flash-low', enabled: false, why: 'the held-book CLI read (#7089) stamps no lane, and a page with no draft has no cell in rules.json yet' },
+  // #7701: first reads of pages with no OCR in visible books held as scans only (cli-ocr-lane.mjs run --cohort), agy
+  // Flash-low, 4 pages a call for German (Latin is not scheduled), 1 for French. No draft (`unread`): nothing is judged
+  // beside it. The route is the no-stored-text cell's `-written` row, the pages the lane writes.
+  { lane: FIRST_READ_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': FIRST_READ_LANE }, reason: new RegExp(`^${FIRST_READ_REASON}(?! correction)`),
+    route: (lang) => (FIRST_READ_CELLS[firstReadLanguage({ language: lang })] ?? [])[1] ?? null, draft_route: null, unread: true, hand: 'print',
+    cell: (lang) => (FIRST_READ_CELLS[firstReadLanguage({ language: lang })] ?? [])[0] ?? null,
+    lang: (lang) => ({ lat: 'Latin', deu: 'German', fra: 'French' })[firstReadLanguage({ language: lang })] ?? null, languages: /^(Latin|German|French|la|de|fr)$/i },
+  // #7701 arm B: the first read corrected in a second pass (cli-ocr-lane.mjs run --cohort --correct=deu). Its draft is the
+  // first read the revision row holds, so it is judged beside it (worse than the draft).
+  { lane: FIRST_READ_CORRECT_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': FIRST_READ_CORRECT_LANE }, reason: new RegExp(`^${FIRST_READ_CORRECT_REASON}`),
+    route: (lang) => FIRST_READ_CORRECT_CELLS[firstReadLanguage({ language: lang })]?.[1] ?? null,
+    draft_route: (lang) => FIRST_READ_CELLS[firstReadLanguage({ language: lang })]?.[1] ?? null, draft_models: [FIRST_READ_MODEL], hand: 'print',
+    cell: (lang) => FIRST_READ_CORRECT_CELLS[firstReadLanguage({ language: lang })]?.[0] ?? null,
+    lang: (lang) => ({ lat: 'Latin', deu: 'German', fra: 'French' })[firstReadLanguage({ language: lang })] ?? null, languages: /^(Latin|German|French|la|de|fr)$/i },
+  { lane: '(no ocr.pipeline) gemini-3.8-flash-low', enabled: false, why: 'the held-book CLI read (#7089) stamps no lane; first reads of scans-only books are agy-first-read-7701 above' },
 ];
 
 /** The draw weight of a book: 1 + ln(1 + human_read_count). */
@@ -515,7 +532,7 @@ async function findWrites(db, since, until) {
       F.eligible++;
       const sc = scriptClass(p[L.field].data, p.script_type, bookHand(prof.get(p.book_id)));
       F.script[sc.script_type] = (F.script[sc.script_type] ?? 0) + 1;
-      out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: L.route, draft_route: L.draft_route, lane: L.lane, lang: L.lang(b.language),
+      out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: typeof L.route === 'function' ? L.route(b.language) : L.route, draft_route: typeof L.draft_route === 'function' ? L.draft_route(b.language) : L.draft_route, lane: L.lane, lang: L.lang(b.language),
         weight: bookWeight(b), human_read_count: b.human_read_count ?? 0, ...sc, cell_hand: L.hand,
         write: { revision_id: r.id, run_id: r.run_id ?? null, written_at: r.created_at, text_hash: r.next_hash, model: p[L.field].model },
         draft_model: r.model, ...(L.unread && { check_flag: !!p[L.field].engine?.input?.draft?.check_flag, change_share: p[L.field].engine?.input?.draft?.change_share ?? null }) });

@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -250,6 +250,12 @@ describe('the first-read cohort (#7701)', () => {
     expect(body).not.toMatch(/releaseBook\(|\$set|\$unset/);
     expect(body).not.toMatch(/updateOne|updateMany|insertOne/);
     expect(FIRST_READ_LANE).toBe('agy-first-read-7701');
+    // every read is agy Flash-low (never flash-lite, Derek 2026-10-29); the second pass is the correction lane's call
+    expect(FIRST_READ_MODEL).toBe('gemini-3.8-flash-low');
+    expect([...body.matchAll(/--model=\$\{(\w+)\}/g)].map((m) => m[1])).toEqual(['FIRST_READ_MODEL', 'FIRST_READ_MODEL']);
+    expect(body).toContain('--correct-prompt=${TPL}');
+    expect(body).toContain('--lane=${FIRST_READ_CORRECT_LANE}');
+    expect(FIRST_READ_CORRECT_LANE).toBe('agy-first-read-correct-7701');
     const cli = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
     expect(cli).toMatch(/FIRST_READ_ONLY && page\.ocr\?\.data\?\.trim\(\)/);
     expect(cli).toMatch(/!correct && LANE && \{ pipeline: LANE \}/);

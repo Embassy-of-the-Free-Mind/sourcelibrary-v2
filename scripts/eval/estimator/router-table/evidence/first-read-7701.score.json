@@ -12,7 +12,20 @@
     "spread_wait": 9,
     "no_interior_unread": 0,
     "no_ocr_books": 15334,
-    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "agy_calls": {
+    "agy-flash-low@4": {
+     "calls": 69,
+     "pages": 116,
+     "per_page": 0.595
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "calls": 26,
+     "pages": 26,
+     "per_page": 1
+    }
    },
    "routes": {
     "agy-flash-low@4": {
@@ -56,6 +69,47 @@
       "O13": "1/19"
      },
      "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "24/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "26/30",
+     "filter_cut": "4/30",
+     "classes_k_of_n": {
+      "O8": "11/30",
+      "E2": "7/30",
+      "T6": "3/30",
+      "O6": "3/30",
+      "O11": "2/30",
+      "O12": "1/30",
+      "O16": "1/30",
+      "O7": "1/30",
+      "O15": "1/30",
+      "O13": "1/30"
+     },
+     "note": "arm B: agy-flash-low@4 then the #7558 correction pass on it (fc template, the image, one page a call); where it gave no correction the page serves agy-flash-low@4's read"
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 19,
+     "books": 19,
+     "accept": "17/19",
+     "wrong_text_pages": "1/19",
+     "delivered": "19/19",
+     "filter_cut": "0/19",
+     "classes_k_of_n": {
+      "O8": "7/19",
+      "E2": "5/19",
+      "O6": "3/19",
+      "T6": "2/19",
+      "O11": "2/19",
+      "O12": "1/19",
+      "O16": "1/19",
+      "O7": "1/19",
+      "O15": "1/19"
+     },
+     "note": "arm B on the pages the lane writes (agy-flash-low@4-written's pages)"
     }
    }
   },
@@ -68,7 +122,20 @@
     "spread_wait": 45,
     "no_interior_unread": 0,
     "no_ocr_books": 1586,
-    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "agy_calls": {
+    "agy-flash-low@4": {
+     "calls": 66,
+     "pages": 120,
+     "per_page": 0.55
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "calls": 28,
+     "pages": 28,
+     "per_page": 1
+    }
    },
    "routes": {
     "agy-flash-low@4": {
@@ -109,6 +176,47 @@
       "O17": "1/24"
      },
      "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "28/30",
+     "filter_cut": "2/30",
+     "classes_k_of_n": {
+      "O8": "10/30",
+      "E2": "4/30",
+      "O7": "2/30",
+      "O5": "2/30",
+      "O6": "2/30",
+      "T6": "1/30",
+      "O10": "1/30",
+      "O16": "1/30",
+      "O11": "1/30",
+      "O17": "1/30"
+     },
+     "note": "arm B: agy-flash-low@4 then the #7558 correction pass on it (fc template, the image, one page a call); where it gave no correction the page serves agy-flash-low@4's read"
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "23/24",
+     "wrong_text_pages": "0/24",
+     "delivered": "24/24",
+     "filter_cut": "0/24",
+     "classes_k_of_n": {
+      "O8": "8/24",
+      "E2": "3/24",
+      "O6": "2/24",
+      "T6": "1/24",
+      "O5": "1/24",
+      "O16": "1/24",
+      "O11": "1/24",
+      "O7": "1/24",
+      "O17": "1/24"
+     },
+     "note": "arm B on the pages the lane writes (agy-flash-low@4-written's pages)"
     }
    }
   },
@@ -121,7 +229,20 @@
     "spread_wait": 200,
     "no_interior_unread": 0,
     "no_ocr_books": 740,
-    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 1"
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 1",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "agy_calls": {
+    "agy-flash-low": {
+     "calls": 37,
+     "pages": 30,
+     "per_page": 1.233
+    },
+    "agy-flash-low>agy-flash-low": {
+     "calls": 26,
+     "pages": 26,
+     "per_page": 1
+    }
    },
    "routes": {
     "agy-flash-low": {
@@ -167,6 +288,49 @@
       "O10": "1/24"
      },
      "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    },
+    "agy-flash-low>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "25/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "26/30",
+     "filter_cut": "4/30",
+     "classes_k_of_n": {
+      "O8": "8/30",
+      "E2": "7/30",
+      "O6": "3/30",
+      "O11": "2/30",
+      "O16": "2/30",
+      "O7": "1/30",
+      "O17": "1/30",
+      "O4": "1/30",
+      "D1": "1/30",
+      "O5": "1/30",
+      "O15": "1/30",
+      "O18": "1/30",
+      "O12": "1/30",
+      "O10": "1/30"
+     },
+     "note": "arm B: agy-flash-low then the #7558 correction pass on it (fc template, the image, one page a call); where it gave no correction the page serves agy-flash-low's read"
+    },
+    "agy-flash-low>agy-flash-low-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "24/24",
+     "wrong_text_pages": "0/24",
+     "delivered": "24/24",
+     "filter_cut": "0/24",
+     "classes_k_of_n": {
+      "E2": "7/24",
+      "O8": "6/24",
+      "O11": "2/24",
+      "O6": "2/24",
+      "O12": "1/24",
+      "O10": "1/24",
+      "O16": "1/24"
+     },
+     "note": "arm B on the pages the lane writes (agy-flash-low-written's pages)"
     }
    }
   }

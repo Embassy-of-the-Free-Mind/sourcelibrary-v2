@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS } from '../../scripts/eval/lane-judge-sampler.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -303,5 +303,37 @@ Ultimus versus paginae, ubi custos stat.`;
     expect(bad.routes_not_counted['lite>agy-flash-low'].not_counted_because[0]).toMatch(/judge-unvalidated: planted catch 5\/8/);
     expect(bad.controls['lite>agy-flash-low']).toMatchObject({ wrong_page_passed: true, passed: false });
     expect(validRecord({ ...base('planted', 1, true) })).toBe(true);
+  });
+});
+
+describe('the first-read lane (#7701)', () => {
+  it('is drawn as an unread lane: no draft beside it, its pages mapped to the no-stored-text cells', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.stamp).toEqual({ 'ocr.pipeline': 'agy-first-read-7701' });
+    expect(L.reason.test('#7701 first-read lane: visible book held scans-only-publish-7176 (the hold stays)')).toBe(true);
+    expect([L.cell('German'), L.route('German')]).toEqual(['german-blank', 'agy-flash-low@4-written']);
+    expect([L.cell('de'), L.route('de')]).toEqual(['german-blank', 'agy-flash-low@4-written']);
+    expect([L.cell('French'), L.route('French')]).toEqual(['french-blank', 'agy-flash-low-written']);
+    expect(L.cell('English')).toBeNull();
+  });
+  it('the second pass is its own lane, judged beside the first read it corrected', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-correct-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBeFalsy();
+    expect(L.draft_models).toEqual(['gemini-3.8-flash-low']);
+    expect([L.cell('German'), L.route('German'), L.draft_route('German')]).toEqual(['german-blank', 'agy-flash-low@4>agy-flash-low-written', 'agy-flash-low@4-written']);
+    expect(L.reason.test('#7701 first-read lane correction: the first read (agy-first-read-7701) corrected')).toBe(true);
+    // the first-read lane's reason does not take the correction's revision rows
+    const A = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    expect(A.reason.test('#7701 first-read lane correction: the first read corrected')).toBe(false);
+  });
+  it('every cell and route it names is in rules.json', () => {
+    const rules = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    for (const [cell, route] of [...Object.values(FIRST_READ_CELLS), ...Object.values(FIRST_READ_CORRECT_CELLS)] as [string, string][]) {
+      expect(rules.cells.find((c: { id: string }) => c.id === cell)?.routes.some((r: { id: string }) => r.id === route)).toBe(true);
+    }
   });
 });
