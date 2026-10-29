@@ -140,6 +140,28 @@
  * translation, the chained Batch enrolment, which refuses a held book) selects it because it now has text.
  * Ledger DIR/../first-read-ledger.jsonl (every page tried, never tried again), claims DIR/../claims-first-read/, quota
  * floor and pools as the correction lane's (QUOTA FLOOR, POOL above).
+ *
+ * ARMC (#7567 arm c, Derek 2026-10-29): the CORRECT frame (a stored Flash-Lite draft of 300+ characters, visible idle
+ * unheld book, interior page, not handwritten, edited or withheld; plus E5's: `year` 1450-1800, no manuscript tag, and
+ * no page the stored read calls an illustration, plate, map or blank) for Latin and Italian, where E5 passed arm c:
+ * the language's GPU draft (la PERO-OCR, it LightOnOCR-3-1B) corrected by agy Flash-low with the image on the #7263
+ * template, written OVER the stored draft (cli-ocr.mjs read --over-stored) with the E3 diff guard putting every flagged
+ * number, negation and expansion back to the stored reading. Lane dir L (/root/jobs/euro-armc-7567):
+ *
+ *   ... cli-ocr-lane.mjs armc-plan --lane-dir=L [--ahead=N] [--langs=la,it] [--per-book=N --books-per-lang=M] [--book=ID]
+ *        L/plan/<book>.json; tops up to N pages planned and not ledgered (default: what the lane ledgered in 48 h, at
+ *        least 600), most-read books first, so the GPU drafts at most ~2 days ahead of the correction
+ *   ... armc-fetch --lane-dir=L / armc-collect ...   (scripts/gpu/euro-draft-task.sh, an ocr-filler `euro-draft` chunk)
+ *        images to L/drafts/<book>/img/<page>.jpg, one draft a page in L/drafts/<book>/<page>.json
+ *   ... armc-left --lane-dir=L                       "<pages> <books>" planned with no draft (the filler's pages left)
+ *   ... armc-count --lane-dir=L
+ *   ... armc --lane-dir=L --out=DIR [--max-pages=N] [--book-chunk=40] [--concurrency=N] [--deadline-min=M]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--wait-quota] [--weekly-floor=F] [--book=ID] [--apply]
+ *        (--weekly-floor: a hand-run pilot's fixed weekly floor in place of the pace line, as E2/E5 ran; never on cron)
+ *        drafted pages, re-checked against the frame, read and applied a book chunk at a time (claims L/claims-armc/),
+ *        stamped ocr.pipeline = ARMC_LANE, --mark-stale (a flag; nothing re-translates on it). Every page tried goes to
+ *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
+ *        L/armc-contain-claims.jsonl for a by-eye check. Undo: scripts/maintenance/revert-run.mjs --run-id <run>.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -233,10 +255,11 @@ const WEEK_MS = 7 * 24 * 3600 * 1000;
  * { ok, why, weekly, line, five_h }: not ok when the weekly bucket is under the straight line to its reset, the 5-hour
  * bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
-  const line = weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
+  // weeklyFloor (a hand-run pilot, armc --weekly-floor=F, #7567): a fixed floor in place of the pace line, as E2/E5 ran (0.40)
+  const line = weeklyFloor != null ? weeklyFloor : weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
   // --pace-off-until: spend the pool out before its reset (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
   const paceOff = paceOffUntil != null && now < paceOffUntil;
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
@@ -656,6 +679,315 @@ async function gpuMain(mode, arg) {
   await client.close();
 }
 
+// ── armc (#7567 arm c over the correct frame) ──
+export const ARMC_LANE = 'gpu-agy-correct-lite-7567';
+export const ARMC_REASON = '#7567 arm-c lane';
+/** The languages arm c passed in E5 (la 23→4, it 8→2 misleading against lite→Flash), each one's GPU draft engine and router cell/route. */
+export const ARMC_ENGINES = Object.freeze({
+  la: { language: /^Latin/, engine: 'pero', cell: 'latin-lite', route: 'pero>agy-flash-low' },
+  it: { language: /^Italian/, engine: 'lightonocr', cell: 'italian-lite', route: 'lighton>agy-flash-low' },
+});
+export const ARMC_YEARS = Object.freeze([1450, 1800]);
+/** E2's draftText (scripts/eval/euro-gpu-correct-7567/e2-correct.mjs), unchanged: the GPU read as E5's arm c sent it. */
+export function armcDraftText(t) {
+  t = String(t || '').replace(/^\s*```[a-zA-Z]*\s*$/gm, '');
+  if (/<HistoricalDocument|<Metadata>/.test(t)) {
+    t = t.replace(/<Metadata>[\s\S]*?<\/Metadata>/g, '').replace(/<\/(Line|Paragraph|Heading|PageNumber|Header|Footer)>/g, '\n')
+      .replace(/<[^>\n]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\n\s*\n\s*\n+/g, '\n\n')
+      .split('\n').map((l) => l.trim()).join('\n');
+  }
+  return t.trim();
+}
+/** The lane dir's files (see ARMC in the header). */
+export const armcPaths = (L) => ({ plan: path.join(L, 'plan'), drafts: path.join(L, 'drafts'), stage: path.join(L, 'stage'), ledger: path.join(L, 'armc-ledger.jsonl'), claims: path.join(L, 'claims-armc'), contain: path.join(L, 'armc-contain-claims.jsonl'), runs: path.join(L, 'armc-runs.jsonl') });
+const readJson = (f, d = null) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
+/** Planned pages with no draft file yet (what the GPU chunk drafts; what ocr-filler.sh counts as pages left). */
+export function armcUndrafted(L) {
+  const P = armcPaths(L), out = [];
+  if (!fs.existsSync(P.plan)) return out;
+  for (const f of fs.readdirSync(P.plan).filter((x) => x.endsWith('.json'))) {
+    const pl = readJson(path.join(P.plan, f)); if (!pl) continue;
+    for (const pg of pl.pages) if (!fs.existsSync(path.join(P.drafts, pl.bid, `${pg.id}.json`))) out.push({ ...pg, bid: pl.bid, lang: pl.lang });
+  }
+  return out;
+}
+/**
+ * The correct frame for one book (correctablePages) plus E5's two extra filters (not withheld, no manuscript tag) and one
+ * of this lane's: a page whose stored read calls it an illustration, a plate, a map or a blank, or names no script, is
+ * not a text page (the pilot's planner drew a tarot deck whose 300+ characters were an image description).
+ */
+async function armcPages(db, bookId, pagesCount, SKIP, ids = null) {
+  const rows = await db.collection('pages').aggregate([
+    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
+    { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*(handwrit|manuscript|mixed|none)|<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
+    { $match: { n: { $gte: 300 }, hw: false } },
+    { $sort: { page_number: 1 } },
+  ]).toArray();
+  return rows.filter((p) => isInterior(p.page_number, pagesCount));
+}
+const armcBookFilter = (langs) => ({ visible: true, pages_count: { $gt: 0 }, year: { $gte: ARMC_YEARS[0], $lte: ARMC_YEARS[1] }, $or: langs.map((l) => ({ language: { $regex: ARMC_ENGINES[l].language } })), 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true }, needs_splitting: { $ne: true } });
+export const armcLang = (language) => Object.entries(ARMC_ENGINES).find(([, v]) => v.language.test(String(language || '')))?.[0] ?? null;
+
+async function armcMain(mode, arg) {
+  const L = arg('lane-dir') && path.resolve(arg('lane-dir'));
+  if (!L) { console.error(`${mode} needs --lane-dir=DIR`); process.exit(2); }
+  const P = armcPaths(L);
+  for (const d of [P.plan, P.drafts, P.stage]) fs.mkdirSync(d, { recursive: true });
+  const LANGS = (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l]);
+  const ledger = new Set(), tailState = { offset: 0 };
+  ledgerTail(P.ledger, ledger, tailState);
+  if (mode === 'armc-left') { const u = armcUndrafted(L).filter((p) => !ledger.has(p.id)); console.log(`${u.length} ${new Set(u.map((p) => p.bid)).size}`); return; }
+  if (mode === 'armc-collect') {
+    // --engine-out=FILE --engine=pero|lightonocr: the engine's output over a stage folder, split into one draft file a page.
+    const eng = arg('engine'), file = arg('engine-out'), stageDir = arg('stage-dir');
+    const where = new Map();   // page id → book id, from the plan
+    for (const f of fs.readdirSync(P.plan)) { const pl = readJson(path.join(P.plan, f)); for (const pg of pl?.pages ?? []) where.set(pg.id, pl.bid); }
+    const sha = (f) => createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+    let rows, engine;
+    if (eng === 'pero') { const j = readJson(file, {}); engine = j._engine; if (engine?.exit !== 0) { console.error(`armc-collect: PERO exited ${engine?.exit}; nothing collected`); process.exit(1); } rows = Object.entries(j).filter(([k]) => k !== '_engine').map(([id, r]) => ({ id, text: r.text, sha: r.image_sha256 })); }
+    else if (eng === 'lightonocr') {
+      engine = { name: 'lightonocr', model: 'lightonai/LightOnOCR-3-1B', ...readJson(`${file}.engine.json`, {}), ...(readJson(`${file}.run.json`) && { run: readJson(`${file}.run.json`) }) };
+      rows = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => !r.error).map((r) => ({ id: r.page_id, text: r.text, sha: sha(path.join(stageDir, `${r.page_id}.jpg`)), finish: r.finish }));
+    } else { console.error('--engine must be pero or lightonocr'); process.exit(2); }
+    let n = 0;
+    for (const r of rows) {
+      const bid = where.get(r.id); if (!bid) continue;
+      const text = armcDraftText(r.text);
+      fs.writeFileSync(path.join(P.drafts, bid, `${r.id}.json`), JSON.stringify({ text, image_sha256: r.sha, engine, ...(r.finish && { finish: r.finish }), at: new Date().toISOString() }));
+      n++;
+    }
+    // a staged page the engine wrote nothing for gets an empty draft, so it is not drafted again (the run ledgers it)
+    let empty = 0;
+    if (stageDir) for (const f of fs.readdirSync(stageDir).filter((x) => x.endsWith('.jpg'))) {
+      const id = f.slice(0, -4), bid = where.get(id);
+      if (bid && !fs.existsSync(path.join(P.drafts, bid, `${id}.json`))) { fs.writeFileSync(path.join(P.drafts, bid, `${id}.json`), JSON.stringify({ text: '', error: `${eng} wrote no draft`, engine, at: new Date().toISOString() })); empty++; }
+    }
+    if (stageDir) fs.rmSync(stageDir, { recursive: true, force: true });
+    console.log(`armc-collect ${eng}: ${n} drafts, ${empty} pages with none`);
+    return;
+  }
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  const { SKIP_TRANSLATION_PAGE_TYPES: SKIP } = await import('../lib/translate-core.mjs');
+  try {
+    if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP);
+    if (mode === 'armc-fetch') return await armcFetch(db, P, arg, LANGS, ledger);
+    if (mode === 'armc-count') {
+      const u = armcUndrafted(L).filter((p) => !ledger.has(p.id));
+      const planned = fs.readdirSync(P.plan).map((f) => readJson(path.join(P.plan, f))).filter(Boolean);
+      const drafted = planned.flatMap((pl) => pl.pages.filter((pg) => !ledger.has(pg.id) && fs.existsSync(path.join(P.drafts, pl.bid, `${pg.id}.json`))));
+      const t = {};
+      for (const pl of planned) { const k = pl.lang; t[k] ??= { books: 0, planned: 0, ledgered: 0 }; t[k].books++; t[k].planned += pl.pages.length; t[k].ledgered += pl.pages.filter((pg) => ledger.has(pg.id)).length; }
+      console.log(`arm-c lane (${ARMC_LANE}): ${JSON.stringify(t)}; drafted, waiting for a correction: ${drafted.length}; planned, no draft yet: ${u.length}`);
+      return;
+    }
+    return await armcRun(db, P, arg, ledger, tailState, SKIP);
+  } finally { await client.close(); }
+}
+
+/**
+ * armc-plan: tops the plan up to the drafting horizon (--ahead=N pages planned and not yet ledgered; default the pages the
+ * lane ledgered in the last 48 h, at least --ahead-min=600), so the GPU never drafts more than ~2 days ahead of the
+ * correction. Books most-read first; a book is planned whole (every page in frame), unless --per-book=N (a pilot: N
+ * pages spread evenly) with --books-per-lang=M.
+ */
+async function armcPlan(db, P, arg, LANGS, ledger, SKIP) {
+  const planned = new Map(fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => { const pl = readJson(path.join(P.plan, f)); return [pl.bid, pl]; }));
+  const open = [...planned.values()].reduce((n, pl) => n + pl.pages.filter((pg) => !ledger.has(pg.id)).length, 0);
+  const since = Date.now() - 48 * 3600_000;
+  const recent = fs.existsSync(P.ledger) ? fs.readFileSync(P.ledger, 'utf8').split('\n').filter(Boolean).filter((l) => { try { return Date.parse(JSON.parse(l).at) >= since; } catch { return false; } }).length : 0;
+  const AHEAD = Number(arg('ahead') || Math.max(Number(arg('ahead-min') || 600), recent));
+  const PER_BOOK = Number(arg('per-book') || 0), PER_LANG = Number(arg('books-per-lang') || Infinity);
+  const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  let room = AHEAD - open;
+  console.log(`armc-plan: ${open} pages planned and not ledgered, horizon ${AHEAD} (${recent} ledgered in 48 h): room for ${Math.max(0, room)}`);
+  if (room <= 0) return;
+  const books = (await db.collection('books').find(armcBookFilter(LANGS), { projection: { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1 } }).toArray())
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(byReaders);
+  const perLang = {};
+  let added = 0;
+  for (const b of books) {
+    if (room <= 0) break;
+    const lang = armcLang(b.language);
+    if (!lang || (perLang[lang] ?? 0) >= PER_LANG) continue;
+    const prev = planned.get(b.id);
+    const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
+    let rows = (await armcPages(db, b.id, b.pages_count, SKIP)).filter((p) => !ledger.has(p.id) && !have.has(p.id));
+    if (PER_BOOK) { if (rows.length < PER_BOOK) continue; rows = Array.from({ length: PER_BOOK }, (_, i) => rows[Math.floor((i + 0.5) * rows.length / PER_BOOK)]); }
+    const whole = !PER_BOOK && rows.length <= room;
+    rows = rows.slice(0, room);
+    if (!rows.length) { if (!PER_BOOK) fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ ...(prev ?? { bid: b.id, lang, title: b.title, year: b.year, pages: [] }), whole: true })); continue; }
+    fs.mkdirSync(path.join(P.drafts, b.id), { recursive: true });
+    fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ bid: b.id, lang, title: b.title, year: b.year, language: b.language, whole, planned_at: new Date().toISOString(), pages: [...(prev?.pages ?? []), ...rows.map((p) => ({ id: p.id, pn: p.page_number }))] }));
+    perLang[lang] = (perLang[lang] ?? 0) + 1;
+    room -= rows.length; added += rows.length;
+    console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${lang}, ${b.year}, ${b.human_read_count ?? 0} readers): ${rows.length} pages${whole ? '' : ' (part)'}`);
+  }
+  console.log(`armc-plan: ${added} pages added (${JSON.stringify(perLang)} books)`);
+}
+
+/** armc-fetch: the page images of undrafted planned pages, to drafts/<book>/img, and a stage folder per language for the engines. */
+async function armcFetch(db, P, arg, LANGS, ledger) {
+  const { getPageSource } = await import('../lib/page-image-url.mjs');
+  const MAX = Number(arg('max-pages') || 2000);
+  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && LANGS.includes(p.lang)).slice(0, MAX);
+  const docs = new Map();
+  for (let i = 0; i < todo.length; i += 500) for (const d of await db.collection('pages').find({ id: { $in: todo.slice(i, i + 500).map((p) => p.id) } }, { projection: GPU_PAGE_PROJECTION }).toArray()) docs.set(d.id, d);
+  const t = {}; let failed = 0;
+  const one = async (p) => {
+    const img = path.join(P.drafts, p.bid, 'img', `${p.id}.jpg`);
+    fs.mkdirSync(path.dirname(img), { recursive: true });
+    if (!fs.existsSync(img)) {
+      const src = docs.get(p.id) && getPageSource(docs.get(p.id));
+      let ok = false;
+      for (let a = 0; a < 2 && !ok; a++) { try { const r = src && await fetch(src); if (r?.ok) { const b = Buffer.from(await r.arrayBuffer()); if (b.length > 2000) { fs.writeFileSync(img, b); ok = true; } } } catch { /* retry once */ } }
+      if (!ok) { failed++; fs.writeFileSync(path.join(P.drafts, p.bid, `${p.id}.json`), JSON.stringify({ text: '', error: 'no image fetched', at: new Date().toISOString() })); return; }
+    }
+    const st = path.join(P.stage, p.lang); fs.mkdirSync(st, { recursive: true });
+    try { fs.linkSync(img, path.join(st, `${p.id}.jpg`)); } catch (e) { if (e.code !== 'EEXIST') throw e; }
+    t[p.lang] = (t[p.lang] ?? 0) + 1;
+  };
+  const q = [...todo];
+  await Promise.all(Array.from({ length: 8 }, async () => { while (q.length) await one(q.shift()); }));
+  console.log(`armc-fetch: ${JSON.stringify(t)} staged, ${failed} with no image`);
+}
+
+/** armc: the agy correction of drafted pages, guarded, written; every page tried ledgered. */
+async function armcRun(db, P, arg, ledger, tailState, SKIP) {
+  const APPLY = process.argv.includes('--apply');
+  const OUT = arg('out') && path.resolve(arg('out'));
+  if (!OUT) { console.error('armc needs --out=DIR'); process.exit(2); }
+  const tplText = fs.readFileSync(path.join(HERE, '../..', GPU_TEMPLATE.file), 'utf8');
+  if (createHash('sha256').update(tplText).digest('hex').slice(0, 16) !== GPU_TEMPLATE.hash) { console.error(`${GPU_TEMPLATE.file} is not template ${GPU_TEMPLATE.hash}: nothing read`); process.exit(1); }
+  const MAX = Number(arg('max-pages') || 400), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
+  const WEEKLY_END = Number(arg('weekly-end') ?? 0);
+  if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const CONCURRENCY = Number(arg('concurrency') || 1);
+  if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
+  const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
+  const WAIT = process.argv.includes('--wait-quota');
+  // --weekly-floor=F: a hand-run pilot's fixed floor instead of the pace line (never on the cron line)
+  const WEEKLY_FLOOR = arg('weekly-floor') != null ? Number(arg('weekly-floor')) : null;
+  if (WEEKLY_FLOOR != null && !(WEEKLY_FLOOR >= 0.2 && WEEKLY_FLOOR < 1)) { console.error('--weekly-floor must be in [0.2, 1)'); process.exit(2); }
+  const floorOpts = { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, weeklyFloor: WEEKLY_FLOOR };
+  const want = parseAgyHome(arg('agy-home'));
+  const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+  const openPool = () => readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), floorOpts).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
+  let HOME = want.home ?? null;
+  if (want.auto) {
+    const pick = openPool();
+    if (!pick && !WAIT) { console.log('armc: no pool has its floor open; nothing read'); fs.appendFileSync(P.runs, JSON.stringify({ at: new Date().toISOString(), apply: APPLY, stop: 'no pool open', taken: 0 }) + '\n'); return; }
+    HOME = pick?.home ?? null;
+  } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); process.exit(2); }
+  let POOL = poolName({ home: HOME }), CHILD_ENV = agyEnv(HOME);
+  const repick = () => {
+    if (!want.auto) return quotaFloor(readQuota(HOME), floorOpts).ok;
+    const p = openPool(); if (!p) return false;
+    HOME = p.home; POOL = poolName({ home: HOME }); CHILD_ENV = agyEnv(HOME); return true;
+  };
+  const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const plans = fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => readJson(path.join(P.plan, f))).filter((pl) => pl && (!ONLY || ONLY.has(pl.bid)));
+  const books = new Map((await db.collection('books').find({ id: { $in: plans.map((pl) => pl.bid) } }, { projection: { id: 1, title: 1, language: 1, pages_count: 1, human_read_count: 1, processing_priority: 1, visible: 1, needs_splitting: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1 } }).toArray()).map((b) => [b.id, b]));
+  const order = plans.filter((pl) => books.has(pl.bid)).sort((a, b) => byReaders(books.get(a.bid), books.get(b.bid)));
+  const job = `cli-ocr-armc-${new Date().toISOString().slice(0, 10)}`;
+  fs.mkdirSync(OUT, { recursive: true });
+  const TPL = path.join(OUT, `gpu-correct-prompt-${GPU_TEMPLATE.hash}.txt`);
+  fs.writeFileSync(TPL, tplText);
+  const ME = { pid: process.pid, pool: POOL, lane: ARMC_LANE };
+  const held = new Set();
+  process.on('exit', () => { for (const id of held) releaseBookClaim(P.claims, id); });
+  console.log(`armc: pool ${POOL}; ${order.length} planned books, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
+  let budget = MAX, stop = null, bi = 0;
+  const tally = { written: 0, unchanged: 0, contain: 0, put_back_all: 0, put_back_unsafe: 0, no_draft: 0, out_of_frame: 0, other: 0, agy_calls: 0, pages_flagged: 0, put_back: 0, books: 0 };
+  const ledgerRow = (r) => { fs.appendFileSync(P.ledger, JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n'); ledger.add(r.page_id); };
+  const nextChunk = async () => {
+    while (bi < order.length) {
+      const pl = order[bi++], b = books.get(pl.bid);
+      if (!claimBook(P.claims, b.id, ME)) continue;
+      held.add(b.id);
+      ledgerTail(P.ledger, ledger, tailState);
+      const drafted = pl.pages.filter((pg) => !ledger.has(pg.id) && fs.existsSync(path.join(P.drafts, b.id, `${pg.id}.json`)));
+      if (drafted.length) return { book: b, plan: pl, drafted };
+      releaseBookClaim(P.claims, b.id); held.delete(b.id);
+    }
+    return null;
+  };
+  const worker = async () => {
+    while (!stop) {
+      if (budget <= 0) { stop ??= 'page budget spent'; break; }
+      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
+      let q = quotaFloor(readQuota(HOME), floorOpts);
+      if (!q.ok && WAIT) {
+        console.log(`  pool ${POOL}: ${q.why}; waiting for a floor to open (--wait-quota)`);
+        while (!repick() && Date.now() < DEADLINE) await new Promise((r) => setTimeout(r, 300_000));
+        q = quotaFloor(readQuota(HOME), floorOpts);
+      }
+      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      const c = await nextChunk();
+      if (!c) { stop ??= 'queue empty'; break; }
+      const { book, plan } = c;
+      const env = CHILD_ENV, pool = POOL;
+      const release = () => { releaseBookClaim(P.claims, book.id); held.delete(book.id); };
+      if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
+      const take = c.drafted.slice(0, Math.min(CHUNK, budget));
+      budget -= take.length;
+      tally.books++;
+      const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
+      const dir = path.join(OUT, book.id), imgDir = path.join(P.drafts, book.id, 'img');
+      fs.mkdirSync(dir, { recursive: true });
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${plan.lang}): ${take.length} of ${c.drafted.length} drafted pages; pool ${pool} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      // The book and the page must still be in frame now: a page re-read, edited or withheld since the plan is not this lane's.
+      const bookOk = book.visible && !book.needs_splitting && IDLE_STATUSES.includes(book.pipeline_auto?.status) && !book.pipeline_auto?.hold && !book.pipeline_auto?.held;
+      const inFrame = new Set(bookOk ? (await armcPages(db, book.id, book.pages_count, SKIP, take.map((p) => p.id))).map((p) => p.id) : []);
+      const drafts = { _engine: null };
+      const unsent = new Map();
+      for (const p of take) {
+        const d = readJson(path.join(P.drafts, book.id, `${p.id}.json`), {});
+        if (!inFrame.has(p.id)) { unsent.set(p.id, ['out_of_frame', bookOk ? 'the page left the frame since the plan (re-read, edited, withheld)' : 'the book left the frame since the plan (held, busy, hidden)']); continue; }
+        if (!d.text || d.text.replace(/\W/g, '').length < 30) { unsent.set(p.id, ['no_draft', d.error || 'GPU draft under 30 word characters']); continue; }
+        drafts._engine ??= d.engine;
+        if (d.engine?.name !== drafts._engine?.name) { unsent.set(p.id, ['other', 'draft from another engine than the chunk\'s']); continue; }
+        drafts[p.id] = { text: d.text, image_sha256: d.image_sha256 };
+      }
+      const send = take.filter((p) => drafts[p.id]);
+      const t0 = Date.now();
+      let sum = {};
+      if (send.length) {
+        const draftFile = path.join(dir, `drafts-${t0}.json`), ids = path.join(dir, `page-ids-${t0}.json`);
+        fs.writeFileSync(draftFile, JSON.stringify(drafts));
+        fs.writeFileSync(ids, JSON.stringify(send.map((p) => p.id)));
+        const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${ARMC_LANE}`, `--gpu-draft=${draftFile}`, `--image-dir=${imgDir}`, '--over-stored', `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
+        if (read === 3) { release(); budget += take.length; stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
+        if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+        const reason = `${ARMC_REASON}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}, replacing the stored Flash-Lite draft; E3 diff guard put back every flagged number, negation and expansion (route ${ARMC_ENGINES[plan.lang].route}: #7567 E5 misleading la 23→4, it 8→2 against lite→Flash; Derek 2026-10-29)`;
+        const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--mark-stale=${ARMC_LANE}`, ...(APPLY ? ['--apply'] : [])], tag, env);
+        for (const p of send) { try { tally.agy_calls += JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')).calls ?? 0; } catch { /* not read */ } }
+        if (!APPLY || applied !== 0) { release(); continue; }
+        const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
+        sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
+        for (const cl of sum.contain_claims || []) if (send.some((p) => p.id === cl.page_id)) fs.appendFileSync(P.contain, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: ARMC_LANE }) + '\n');
+        tally.pages_flagged += sum.diff_guard?.pages_flagged ?? 0; tally.put_back += sum.diff_guard?.put_back ?? 0;
+      } else if (!APPLY) { release(); continue; }
+      const written = new Set(sum.written_page_ids || []);
+      for (const p of take) {
+        const pre = unsent.get(p.id);
+        const why = pre ? pre[1] : written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
+        const k = pre ? pre[0] : why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /put back by the diff guard/.test(why) ? 'put_back_all' : /put-back cannot be spliced|put-back changed/.test(why) ? 'put_back_unsafe' : 'other';
+        tally[k]++;
+        ledgerRow({ page_id: p.id, book_id: book.id, page_number: p.pn, lang: plan.lang, outcome: k, why, run: sum.run ?? null });
+      }
+      // ledgered: the images and the read workspaces are not needed again (the draft json stays, a few KB a page)
+      for (const p of take) { fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true }); fs.rmSync(path.join(imgDir, `${p.id}.jpg`), { force: true }); }
+      release();
+      console.log(`${tag}  ${JSON.stringify(tally)}`);
+    }
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  console.log(`\narmc run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  fs.appendFileSync(P.runs, JSON.stringify({ at: new Date().toISOString(), pool: POOL, apply: APPLY, stop: stop ?? 'done', taken: MAX - budget, ...tally }) + '\n');
+}
+
 // ── run --cohort=visible-unread (#7701) ──
 export const FIRST_READ_COHORT = 'visible-unread';
 export const FIRST_READ_LANE = 'agy-first-read-7701';
@@ -908,6 +1240,7 @@ async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (mode === 'correct' || mode === 'correct-count') return correctMain(mode, arg);
   if (mode === 'gpu-correct' || mode === 'gpu-count') return gpuMain(mode, arg);
+  if (/^armc(-(plan|fetch|collect|count|left))?$/.test(mode)) return armcMain(mode, arg);
   if ((mode === 'run' || mode === 'count') && arg('cohort')) {
     if (arg('cohort') !== FIRST_READ_COHORT) { console.error(`--cohort: the only cohort is ${FIRST_READ_COHORT}`); process.exit(2); }
     return firstReadMain(mode, arg);

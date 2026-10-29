@@ -58,6 +58,12 @@
  * and sets `engine.input.draft.check_flag` at >= 27% (Derek, 2026-10-28), which the lane-judge sampler always judges.
  * UNCHANGED leaves the page unread (a headerless draft is not what was judged); a page the corrector tags handwritten
  * or mixed is not written (the route is print only).
+ * `read --over-stored` (#7567 arm c): the same read for a page that HAS a stored draft (the lane sends Flash-Lite drafts
+ * of Latin and Italian print); the read records the stored text it replaces (`draft.replaces`). `apply` writes it only
+ * while the page still holds that exact text, through the plain read's 40% shared-words floor against it, and then the
+ * E3 guards against it (scripts/lib/correction-diff-guard.mjs): the long-s pass, and every flagged number, negation or
+ * expansion change put back to the stored reading, counted in `engine.input.draft.diff_guard`. The unread-only path
+ * (no --over-stored) is unchanged.
  *
  * RE-READ LANE GATE (#6769, Gemini 4 Argon low over Greek manuscripts and Rashi books): `apply --lane=ID
  * --lane-gate=FILE` replaces the 40% shared-words floor — which compares the read with the bad read it replaces — by a
@@ -125,6 +131,7 @@ import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
+import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -147,6 +154,11 @@ if (STAGE === 'read' && GPU_DRAFT && (!CORRECT_PROMPT || DRAFT_FILE)) { console.
 // archived/<book>/12.jpg, 2026-10-28), so a re-fetch is not the image the draft was made from.
 const IMAGE_DIR = arg('image-dir');
 if (STAGE === 'read' && IMAGE_DIR && !GPU_DRAFT) { console.error('--image-dir is for --gpu-draft'); process.exit(2); }
+// --over-stored (#7567 arm c, with --gpu-draft): the page HAS a stored draft (the lane picks Flash-Lite drafts) and the
+// corrected GPU draft replaces it. The read requires stored OCR instead of refusing it, and records the stored text it
+// will replace (`draft.replaces`); apply writes only while the page still holds exactly that text (see GPU DRAFT).
+const OVER_STORED = process.argv.includes('--over-stored');
+if (STAGE === 'read' && OVER_STORED && !GPU_DRAFT) { console.error('--over-stored is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
@@ -239,9 +251,11 @@ if (STAGE === 'read') {
     if (!eng?.name || !eng?.model) { console.error(`${GPU_DRAFT} has no _engine block`); process.exit(2); }
     for (const p of pages) {
       const d = drafts[p.id];
-      if (p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has OCR: the GPU-draft route is for unread pages; skipped`); p.ocr = null; continue; }
+      if (OVER_STORED && !p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has no stored OCR: --over-stored replaces a stored draft; skipped`); p.ocr = null; continue; }
+      if (!OVER_STORED && p.ocr?.data?.trim()) { console.log(`  ${p.page_number} has OCR: the GPU-draft route is for unread pages; skipped`); p.ocr = null; continue; }
       if (!d?.text || d.text.replace(/\W/g, '').length < 30) { console.log(`  ${p.page_number} GPU draft under 30 word characters; skipped`); p.ocr = null; continue; }
-      p.ocr = { data: d.text, model: `${eng.name}/${eng.model}`, pipeline: null, content_hash: contentHash(d.text), updated_at: null, source: 'gpu', gpu: { engine: eng, image_sha256: d.image_sha256, regions: d.regions, lines: d.lines } };
+      const replaces = OVER_STORED ? { model: p.ocr.model ?? null, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? null, text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at ?? null } : null;
+      p.ocr = { data: d.text, model: `${eng.name}/${eng.model}`, pipeline: null, content_hash: contentHash(d.text), updated_at: null, source: 'gpu', gpu: { engine: eng, image_sha256: d.image_sha256, regions: d.regions, lines: d.lines, ...(replaces && { replaces }) } };
     }
   }
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
@@ -581,8 +595,11 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     if (hand !== 'printed') { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
   }
   if (gpu) {
-    // The page must still be unread, and the draft on disk the one the corrector was sent.
-    if (page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: the GPU-draft route is for unread pages'); continue; }
+    // The page must still be unread (or, --over-stored, still hold the stored draft the read was made over), and the
+    // draft on disk the one the corrector was sent.
+    const over = m.draft.replaces;
+    if (!over && page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: the GPU-draft route is for unread pages'); continue; }
+    if (over && contentHash(page.ocr?.data ?? '') !== over.text_hash) { skip(m, 'the stored text this read replaces is no longer the stored OCR'); continue; }
     let draft = null;
     try { draft = fs.readFileSync(path.join(OUT, m.draft.file), 'utf8'); } catch { /* missing */ }
     if (draft == null || contentHash(draft) !== m.draft.text_hash) { skip(m, 'the GPU draft on disk is not the draft this read corrected'); continue; }
@@ -595,6 +612,39 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     change = { change_share: Number(share.toFixed(4)), change_measure: 'T3 #7263: share of the draft\'s folded words not kept (difflib blocks)', check_flag: share >= CHECK_FLAG_SHARE, check_threshold: CHECK_FLAG_SHARE };
     if (change.check_flag) tally.check_flagged = (tally.check_flagged || 0) + 1;
     (tally.change_shares ??= {})[m.page_id ?? m.key] = change.change_share;
+    if (over) {
+      // #7567 arm c over a stored draft: the plain read's 40% shared-words floor against the text it replaces (E5 wrote
+      // through it), then the E3 guards against that stored text: the long-s pass, and every flip-risk change (a number, a
+      // negation, an abbreviation expanded into another word) PUT BACK to the stored reading. Production has no image
+      // check, and put-back is the safe direction: E5's image check gave the stored reading back on 78 of 198 changed
+      // numbers, 28 of 171 negations, 1 of 23 expansions, so a put-back keeps a known misread about as often as it saves one.
+      const was = longWords(page.ocr.data), now = longWords(text);
+      const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
+      if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+      const lang = LANG_OF((await bookOf(page.book_id))?.language);
+      const ls = longSPass(text, { lang, convention: page.ocr.data });
+      const { flags } = correctionDiffs(page.ocr.data, ls.text, { lang });
+      // A put-back splices the stored span over the corrected one. A span that holds a tag (a number flag on a running
+      // head moved into <header>/<sig>/<page-num>) splices tags across each other: the pilot wrote `<sig>E.</header>` on
+      // 30 of 84 put-back pages (by eye, #7567). Such a page is not written: the stored text stands.
+      const tagIn = (t, [x, y]) => /[<>]/.test(String(t).slice(x, y));
+      if (flags.some((f) => tagIn(page.ocr.data, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, the stored text stands'); continue; }
+      // Only a like-for-like substitution (the same number of words a side) is spliced back. A one-sided or uneven hunk
+      // put back deleted a printed heading the stored text lacked (CAP. XIII) and doubled a phrase the corrector had
+      // re-aligned (by eye, pilot 2026-10-29): such a page is not written.
+      const nWords = (s) => String(s).split(/\s+/).filter(Boolean).length;
+      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the stored text stands'); continue; }
+      const back = applyDiffVerdicts(page.ocr.data, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
+      const tagShape = (t) => (String(t).match(/<\/?[a-z-]+/g) || []).join(' ');
+      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: the stored text stands'); continue; }
+      text = back.text;
+      const kinds = {}; for (const f of flags) kinds[f.kind] = (kinds[f.kind] || 0) + 1;
+      change.diff_guard = { against: 'stored', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
+      const g = (tally.diff_guard ??= { pages_flagged: 0, put_back: 0, negation: 0, number: 0, expansion: 0, long_s_tells: 0 });
+      if (flags.length) g.pages_flagged++;
+      g.put_back += back.reverted; g.long_s_tells += ls.tells.length; for (const [k, n] of Object.entries(kinds)) g[k] += n;
+      if (text.trim() === page.ocr.data.trim()) { skip(m, 'every change was put back by the diff guard: the stored text stands'); continue; }
+    }
   } else if (correct) {
     if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }

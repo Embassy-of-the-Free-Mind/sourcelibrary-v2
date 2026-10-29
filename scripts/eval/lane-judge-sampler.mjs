@@ -81,7 +81,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-6740/judge.mjs';
-import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON, FIRST_READ_LANE, FIRST_READ_CORRECT_LANE, FIRST_READ_REASON, FIRST_READ_CORRECT_REASON, FIRST_READ_MODEL, firstReadLanguage } from '../batch/cli-ocr-lane.mjs';
+import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON, FIRST_READ_LANE, FIRST_READ_CORRECT_LANE, FIRST_READ_REASON, FIRST_READ_CORRECT_REASON, FIRST_READ_MODEL, firstReadLanguage, ARMC_LANE, ARMC_REASON, ARMC_ENGINES, armcLang } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
 import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
@@ -128,6 +128,12 @@ export const LANES = [
   { lane: GPU_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': GPU_LANE }, reason: new RegExp(`^${GPU_LANE_REASON}`),
     route: GPU_ROUTE, draft_route: null, unread: true, hand: 'print',
     cell: (lang) => (/^Latin/.test(lang) ? 'latin-gpu-7263' : null), lang: (lang) => (/^Latin/.test(lang) ? 'Latin' : null), languages: /^Latin/ },
+  // #7567 arm c: the language's GPU draft (la PERO-OCR, it LightOnOCR) corrected by agy Flash-low with the image, written
+  // OVER the stored Flash-Lite draft (the revision row's data), with the E3 diff guard's put-back. The lite draft is the
+  // served text it replaced, judged beside it; route by language (`route` is a function of the book's language here).
+  { lane: ARMC_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': ARMC_LANE }, reason: new RegExp(`^${ARMC_REASON}`),
+    route: (lang) => ARMC_ENGINES[armcLang(lang)]?.route ?? null, draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
+    cell: (lang) => ARMC_ENGINES[armcLang(lang)]?.cell ?? null, lang: (lang) => ({ la: 'Latin', it: 'Italian' }[armcLang(lang)] ?? null), languages: /^(Latin|Italian)/ },
   { lane: 'tib-correct-6560', enabled: false, why: 'Tibetan: the judge alone does not decide the cell (planted-syllable catch below 0.80 hands it to Derge, judge.mjs tib-kangyur); needs the Derge stage' },
   { lane: 'tib_gutter_vllm_6871', enabled: false, why: 'GPU Yigdzin gutter reads: no rules.json route for them yet' },
   // #7701: first reads of pages with no OCR in visible books held as scans only (cli-ocr-lane.mjs run --cohort), agy
@@ -473,13 +479,14 @@ export async function claudeMeter(limits) {
   const u = limits.claudeUsage();
   if (u && u.weekly != null) return { source: 'climits', email: u.email, weekly: u.weekly, session: u.session, weekly_reset: u.weeklyReset, session_reset: u.sessionReset, at: new Date().toISOString() };
   try {   // the route-judge pilot's reading (meter.json: api.anthropic.com/api/oauth/usage); never refreshes the token
-    const c = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude/.credentials.json'), 'utf8')).claudeAiOauth;
+    const login = limits.claudeLoginFiles();   // CLAUDE_CONFIG_DIR's login when set: the one `claude -p` spends
+    const c = JSON.parse(fs.readFileSync(login.credentials, 'utf8')).claudeAiOauth;
     if (!c?.accessToken || !(c.expiresAt > Date.now() + 60e3)) return null;
     const r = await fetch('https://api.anthropic.com/api/oauth/usage', { headers: { Authorization: `Bearer ${c.accessToken}`, 'anthropic-beta': 'oauth-2025-04-20' }, signal: AbortSignal.timeout(20e3) });
     if (!r.ok) return null;
     const j = await r.json();
     if (typeof j.seven_day?.utilization !== 'number') return null;
-    let email = null; try { email = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
+    let email = null; try { email = JSON.parse(fs.readFileSync(login.account, 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
     return { source: 'oauth-usage', email, weekly: j.seven_day.utilization, session: j.five_hour?.utilization ?? null, weekly_reset: j.seven_day.resets_at, session_reset: j.five_hour?.resets_at ?? null, at: new Date().toISOString() };
   } catch { return null; }
 }
