@@ -55,7 +55,7 @@ const W = 64, H = 80;
 
 function pageImageUrl(p) {
   // cropped/ and archived/ are already the page; an /uploads/ spread needs its crop applied.
-  const url = p.photo || p.archived_photo || p.compressed_photo;
+  const url = p.photo || p.archived_photo || p.compressed_photo; // image-pick-ok: a split leaf's crop is applied in thumb() below
   return url && /^https?:/.test(url) ? url : null;
 }
 
