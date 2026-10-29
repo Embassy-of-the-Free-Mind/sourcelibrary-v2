@@ -37,7 +37,8 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # /root/gpu.lock, queue ONE zy-ocr-<route>-cNNN chunk of the first gated route in ocr-filler-routes.tsv with pages left
 # (scripts/gpu/ocr-filler.sh; installed copy + routes file in /root/bin/). Pause: touch /root/gpu-queue/ocr-filler/PAUSE.
 # It replaces the SigLIP2 requeue line (2,32 … /root/jobs/siglip2-6871/code-full/siglip2-requeue.sh), removed 2026-10-28 by job
-# gpu-ocr-filler-6871; SigLIP stays paused and its script stays on disk.
+# gpu-ocr-filler-6871. Since 2026-10-29 the filler itself runs that script as the BACKFILL when no OCR route has
+# pages (Derek: no idle card), and pages ntfy after 2 h idle. The requeue line stays out of cron.
 */10 * * * * /root/bin/ocr-filler.sh run >> /var/log/sourcelibrary/ocr-filler.log 2>&1  # #6871
 
 # Archiver host lanes (#5448): start the gex45 lanes of scripts/catalog-coverage/archive-lanes.json (ia-lazy) that have no tmux

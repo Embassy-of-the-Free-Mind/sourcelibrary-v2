@@ -22,6 +22,15 @@
 # OCR-FILLER-SKIP in its log: a recorded skip, not a failure. Every chunk appends a row to $ST/runs.jsonl.
 # Chunks are named zy-ocr-<route>-cNNN: after every digit-prefixed (hand-queued) task, before the zz-siglip2 chunks.
 # Nothing here writes to Mongo; each route's own task applies its reads (see the routes file's downstream column).
+#
+# BACKFILL (Derek 2026-10-29: "I don't want it unused, there should be a continual queue"). When no enabled route has
+# pages left, the filler hands the card to the SigLIP2 page-embedding run (#6871 row 8, approved 10-21/10-26) by running
+# its own chunk queuer, $BACKFILL. OCR still goes first: zz-siglip2 chunks are ignored in the pending/running test
+# above, so an OCR chunk is queued as soon as a route has pages, and zy- sorts before zz- (it runs when the current
+# embedding chunk ends, ≤ 12 h). Turn the backfill off with `touch $ST/BACKFILL-OFF`; the SigLIP run's own
+# switch, /root/jobs/siglip2-6871/full/PAUSE, still stops it (its queuer writes PAUSE itself after 5 failed tries).
+# IDLE CHECK: if the card has had nothing queued or running for 2 h, page ntfy (at most once every 12 h), so an empty
+# queue is never silent again (10-28 15:09Z → 10-29: 8 h idle, no page).
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROUTES=${OCR_FILLER_ROUTES:-$HERE/ocr-filler-routes.tsv}
@@ -62,13 +71,16 @@ case "${1:-run}" in
   run)
     exec 9>/tmp/ocr-filler.lock; flock -n 9 || exit 0
     [ -e "$ST/PAUSE" ] && exit 0
-    [ "$(ls -1 "$Q"/pending | grep -c '\.sh$')" -gt 0 ] && exit 0
-    [ "$(ls -1 "$Q"/running | grep -c '\.sh$')" -gt 0 ] && exit 0
+    [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -gt 0 ] && rm -f "$ST/IDLE-SINCE"
+    # backfill chunks (zz-siglip2-*) do not block OCR: an OCR chunk sorts ahead of them
+    [ "$(ls -1 "$Q"/pending | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
+    [ "$(ls -1 "$Q"/running | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
+    backfill_running=$(ls -1 "$Q"/running | grep -c '^zz-siglip2-')
     # a job outside the queue that takes the lock (e.g. an eval's drafting arms) owns the card until it lets go
     flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1)
     case "$vram" in ''|*[!0-9]*) echo "$(now) nvidia-smi unreadable: queueing nothing"; exit 0 ;; esac
-    if [ "$vram" -gt 1000 ]; then
+    if [ "$vram" -gt 1000 ] && [ "$backfill_running" -eq 0 ]; then
       echo "$(now) card holds ${vram} MiB with nothing running in the queue (an out-of-queue job): queueing nothing"; exit 0
     fi
     free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
@@ -136,6 +148,22 @@ EOF
       echo "$(now) queued $name: route $route, $p pages left in $b books (VRAM ${vram} MiB, disk ${free_g}G)"
       exit 0
     done < <(routes)
-    echo "$(now) nothing to queue: no enabled route has pages left" ;;
+    echo "$(now) nothing to queue: no enabled route has pages left"
+    BACKFILL=${BACKFILL:-/root/jobs/siglip2-6871/code-full/siglip2-requeue.sh}
+    if [ ! -e "$ST/BACKFILL-OFF" ] && [ -x "$BACKFILL" ]; then
+      "$BACKFILL" 2>&1 | sed "s/^/$(now) backfill: /"
+    fi
+    # idle check: nothing queued or running → note when it started; page after 2 h, then at most every 12 h
+    if [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -eq 0 ]; then
+      [ -e "$ST/IDLE-SINCE" ] || date +%s > "$ST/IDLE-SINCE"
+      idle_m=$(( ( $(date +%s) - $(cat "$ST/IDLE-SINCE") ) / 60 ))
+      last=$(cat "$ST/IDLE-PAGED" 2>/dev/null || echo 0)
+      if [ "$idle_m" -ge 120 ] && [ $(( $(date +%s) - last )) -ge 43200 ]; then
+        page "gex45 GPU idle ${idle_m} min (#6871)" "No OCR route has pages and the backfill queued nothing (off, paused, or done). Add a route to ocr-filler-routes.tsv or queue a task; ocr-filler.sh status shows the routes."
+        date +%s > "$ST/IDLE-PAGED"
+      fi
+    else
+      rm -f "$ST/IDLE-SINCE"
+    fi ;;
   *) sed -n '2,25p' "$0"; exit 2 ;;
 esac
