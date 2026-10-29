@@ -11,6 +11,7 @@ status: adopted
 decision: "Schedule the first-read lane (cli-ocr-lane.mjs run --cohort=visible-unread) for German with --correct=deu and for French, on both agy pools in place of the two correction-lane cron lines. Latin is not scheduled."
 superseded_by: null
 issue: [7701, 6740, 7611]
+router_evidence: [latin-blank, german-blank, french-blank]
 ---
 PRIOR ART: `scripts/eval/experiments/2026-10-27-flash-low-fresh-vs-lite-7517.md`. It measured the same fresh Flash-low
 read (one page a call) on pages that HAD a Flash-Lite draft. It counted a filter cut as not accepted, against Flash-Lite.
