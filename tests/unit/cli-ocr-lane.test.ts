@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -187,5 +187,77 @@ describe('the correction lane on a second pool (#7263)', () => {
     expect(parseShard(undefined)).toBeNull();
     expect(() => parseShard('2/2')).toThrow();
     expect(() => parseShard('x')).toThrow();
+  });
+});
+
+describe('the first-read cohort (#7701)', () => {
+  const held = (over: Record<string, unknown> = {}, hold = 'scans-only-publish-7176') => ({
+    id: 'b', visible: true, pages_count: 300, pages_ocr: 0, language: 'Latin', title: 'Opera omnia', published: '1580',
+    image_source: { provider: 'e-rara' }, pipeline_auto: { status: 'held', hold: { reason: hold } }, ...over,
+  });
+  it('reads a visible Latin print book held as scans only', () => {
+    expect(firstReadSkip(held())).toBeNull();
+    for (const h of FIRST_READ_HOLDS) expect(firstReadSkip(held({}, h))).toBeNull();
+  });
+  it('the hold is what keeps new OCR from queueing paid work: a book that is not held, or held for another reason, is not read', () => {
+    expect(firstReadSkip(held({ pipeline_auto: { status: 'archive_complete' } }))).toMatch(/not held/);
+    expect(firstReadSkip(held({ pipeline_auto: { status: 'held' } }))).toMatch(/not held/);
+    expect(firstReadSkip(held({}, 'invented-ocr-6056'))).toMatch(/other hold/);
+    expect(firstReadSkip(held({ pipeline_auto: { status: 'held', held: true, hold: { reason: 'scans-only-publish-7176' } } }))).toMatch(/held/);
+    expect(firstReadSkip(held({ visible: false }))).toMatch(/not visible/);
+    // the run selector carries the same rules a query can
+    expect(FIRST_READ_BOOKS['pipeline_auto.status']).toBe('held');
+    expect(FIRST_READ_BOOKS['pipeline_auto.hold.reason']).toEqual({ $in: FIRST_READ_HOLDS });
+    expect(FIRST_READ_BOOKS.visible).toBe(true);
+  });
+  it('print only: a manuscript library, a manuscript title or a date before print is skipped', () => {
+    expect(manuscriptReason(held({ image_source: { provider: 'vatican' } }))).toMatch(/vatican/);
+    expect(manuscriptReason(held({ title: 'Peshitta Gospels (Vat.sir.622)' }))).toMatch(/title/);
+    expect(manuscriptReason(held({ title: 'Cod. Pal. germ. 329' }))).toMatch(/title/);
+    expect(manuscriptReason(held({ published: '1298' }))).toMatch(/before print/);
+    expect(manuscriptReason(held())).toBeNull();
+    expect(firstReadSkip(held({ image_source: { provider: 'heidelberg' } }))).toBe('manuscript');
+  });
+  it('an unsplit spread book is skipped; a split one is read', () => {
+    expect(firstReadSkip(held({ needs_splitting: true }))).toMatch(/unsplit spread/);
+    expect(firstReadSkip(held({ needs_splitting: true, split_completed: true }))).toBeNull();
+    expect(FIRST_READ_BOOKS.$nor).toEqual([{ needs_splitting: true, split_completed: { $ne: true } }]);
+    // the page-level check (possible spreads, #523) is the lane's spreadReason, run on the unread pages
+    expect(spreadReason(held(), [{}, {}])).toMatch(/#523/);
+    expect(spreadReason(held({ pipeline_auto: { status: 'held', hold: { reason: 'x' }, split_checked: true } }), [{}, {}])).toBeNull();
+  });
+  it('--languages narrows the cohort, by code or name', () => {
+    expect(firstReadLanguage(held({ language: 'de' }))).toBe('deu');
+    expect(firstReadLanguage(held({ language: 'Latin' }))).toBe('lat');
+    expect(firstReadSkip(held({ language: 'English' }), { languages: ['lat', 'deu', 'fra'] })).toMatch(/language/);
+    expect(firstReadSkip(held({ language: 'French' }), { languages: ['lat', 'deu', 'fra'] })).toBeNull();
+  });
+  it('no OCR first, then Latin and German, then priority, then the fewest pages read', () => {
+    const books = [
+      held({ id: 'fr-0', language: 'French', processing_priority: 90 }),
+      held({ id: 'de-partly', language: 'German', pages_ocr: 12, processing_priority: 90 }),
+      held({ id: 'la-0-low', processing_priority: 1 }),
+      held({ id: 'la-0-high', processing_priority: 50 }),
+      held({ id: 'de-partly-less', language: 'German', pages_ocr: 3, processing_priority: 90 }),
+    ];
+    expect(books.sort(byFirstReadOrder).map((b) => b.id)).toEqual(['la-0-high', 'la-0-low', 'fr-0', 'de-partly-less', 'de-partly']);
+  });
+  it('writes through cli-ocr.mjs apply as first reads of printed pages, stamped with the lane, never releasing the book', () => {
+    const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr-lane.mjs'), 'utf8');
+    const body = src.slice(src.indexOf('async function firstReadMain'), src.indexOf('async function main()'));
+    expect(body).toMatch(/'--first-read-only', '--print-only'/);
+    expect(body).toContain('--lane=${FIRST_READ_LANE}');
+    expect(body).not.toMatch(/releaseBook\(|\$set|\$unset/);
+    expect(body).not.toMatch(/updateOne|updateMany|insertOne/);
+    expect(FIRST_READ_LANE).toBe('agy-first-read-7701');
+    // every read is agy Flash-low (never flash-lite, Derek 2026-10-29); the second pass is the correction lane's call
+    expect(FIRST_READ_MODEL).toBe('gemini-3.8-flash-low');
+    expect([...body.matchAll(/--model=\$\{(\w+)\}/g)].map((m) => m[1])).toEqual(['FIRST_READ_MODEL', 'FIRST_READ_MODEL']);
+    expect(body).toContain('--correct-prompt=${TPL}');
+    expect(body).toContain('--lane=${FIRST_READ_CORRECT_LANE}');
+    expect(FIRST_READ_CORRECT_LANE).toBe('agy-first-read-correct-7701');
+    const cli = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
+    expect(cli).toMatch(/FIRST_READ_ONLY && page\.ocr\?\.data\?\.trim\(\)/);
+    expect(cli).toMatch(/!correct && LANE && \{ pipeline: LANE \}/);
   });
 });

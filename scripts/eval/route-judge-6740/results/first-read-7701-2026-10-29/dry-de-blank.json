@@ -1,0 +1,30 @@
+{
+ "at": "2026-10-29T14:42:27.707Z",
+ "apply": false,
+ "run": null,
+ "reason": "#7701 router cell test dry run",
+ "lane": "agy-first-read-7701",
+ "written": 24,
+ "skipped": {
+  "reply wrapper: reply cut before <<<END>>>": 2,
+  "letters outside the book's scripts": 3,
+  "reader tags the page <script>handwritten</script>: --print-only": 1
+ },
+ "held_yatags": 0,
+ "yatags_hits": 0,
+ "yatags_kept": 0,
+ "yatags_reverted": 0,
+ "written_page_ids": [],
+ "write_guard_repaired": 0,
+ "write_guard_refused": [],
+ "skipped_pages": {
+  "6a26cc9e5ac5aecc53cf0da5": "reply wrapper: reply cut before <<<END>>>",
+  "6a26d431f5273a8d907acb93": "reply wrapper: reply cut before <<<END>>>",
+  "6a494a8b824310de51ec02c1": "letters outside the book's scripts",
+  "6a940511a4ad12cb35ec7a70": "reader tags the page <script>handwritten</script>: --print-only",
+  "6ad92bd0b48e2f8490802626": "letters outside the book's scripts",
+  "6aa1d24e77169abff161b7fb": "letters outside the book's scripts"
+ },
+ "contain_claims": [],
+ "failed_reads": 2
+}

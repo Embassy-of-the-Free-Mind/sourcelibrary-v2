@@ -68,6 +68,10 @@
  * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
  * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
  *
+ * FIRST READS (#7701, cli-ocr-lane.mjs run --cohort): `apply --lane=ID --first-read-only --print-only` stamps a plain
+ * read's `ocr.pipeline` with the lane, writes it only while the page still has no OCR, and only when the read's own
+ * <script> tag says printed.
+ *
  * BY-EYE CHECK (#6865): `apply --by-eye=FILE` (JSONL, one row per page: {page_id, read_sha256, verdict, checked_by, at,
  * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
  * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
@@ -467,6 +471,10 @@ const ONLY = arg('only') ? new Set(readPageIdsFile(arg('only'))) : null;
 // --mark-stale=<lane>: stamp `translation_stale` (#4927) on written pages that carry a translation, with this lane
 // id, so the re-translation of exactly these pages can be planned and found (#6420 lane C) rather than discovered.
 const MARK_STALE = arg('mark-stale');
+// --first-read-only (#7701): write a plain read only while the page still has no OCR (a first read, never a re-read).
+// --print-only (#7701): write a plain read only when its own <script> tag says printed (the lane is print only).
+const FIRST_READ_ONLY = process.argv.includes('--first-read-only');
+const PRINT_ONLY = process.argv.includes('--print-only');
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
@@ -567,6 +575,11 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
   let yat = null, byEye = null, change = null;
+  if (!correct && FIRST_READ_ONLY && page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: --first-read-only'); continue; }
+  if (!correct && PRINT_ONLY) {
+    const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
+    if (hand !== 'printed') { skip(m, `reader tags the page <script>${hand || 'none'}</script>: --print-only`); continue; }
+  }
   if (gpu) {
     // The page must still be unread, and the draft on disk the one the corrector was sent.
     if (page.ocr?.data?.trim()) { skip(m, 'the page has OCR now: the GPU-draft route is for unread pages'); continue; }
@@ -655,8 +668,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     // withhold sweep (WITHHOLD_LANES) does not take the English down; --mark-stale queues it for re-translation.
     ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }),
     // A gated re-read is stamped with its lane: the stale-translation sweep (arm 1) then finds any page whose
-    // English was not redone after it (#6769).
-    ...(LANE_GATE && { pipeline: LANE }),
+    // English was not redone after it (#6769). A plain read given `--lane` (a first-read lane, #7701) is stamped too.
+    ...(!correct && LANE && { pipeline: LANE }),
   }, { by: `${m.cli} ${m.model}`, reason: REASON, run_id: runId, revision_source: 'reocr_cli', expect_prior_hash: textHash(page.ocr) });
   if (w.status !== 'written') { skip(m, w.status === 'conflict' || w.status === 'prior_changed' ? 'page changed between read and write' : `writer: ${w.status}`); continue; }
   // Page-level tags lifted from the read go in a second update, only while the page still holds the text just written.
@@ -680,7 +693,7 @@ if (APPLY) {
   for (const [bookId, { nums, models }] of Object.entries(books)) {
     // The one counter writer (#5325): three of these pages may have had no OCR before.
     await recountBook(db, bookId, { reason: 'cli-ocr' });
-    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_reread', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [...models], pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: REASON, ...(LANE_GATE && { lane: LANE, lane_gate: gateProvenance(LANE_GATE) }) } });
+    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_reread', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [...models], pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: REASON, ...(LANE && { lane: LANE }), ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }) } });
   }
 }
 console.log(`\n${APPLY ? 'written' : 'would write'}: ${tally.written}   skipped: ${JSON.stringify(tally.skipped)}${APPLY ? `   run ${runId}` : '   (dry run; add --apply)'}`);

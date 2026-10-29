@@ -116,6 +116,30 @@
  * pool with the most weekly left; `--wait-quota` (hand-run pilots) waits for a floor instead of stopping.
  * NOT SCHEDULED: the 2026-10-28 pilot (20 books, the first 15 unread pages each) was accepted 53/60, under the 0.92 bar
  * fixed before judging (scripts/eval/experiments/2026-10-28-gpu-latin-route-pilot-7263.md). No cron line runs this mode.
+ *
+ * FIRST READS (#7701, Derek 2026-10-29 "focus on books that haven't been OCRd yet"): visible books published as scans
+ * whose pages have no OCR get a first read on the subscription instead of the correction lane spending it.
+ *
+ *   ... cli-ocr-lane.mjs count --cohort=visible-unread [--languages=la,de,fr]
+ *   ... cli-ocr-lane.mjs run --cohort=visible-unread --out=DIR [--languages=la,de,fr] [--max-pages=N] [--max-books=N]
+ *        [--book-chunk=40] [--per-call=4] [--concurrency=N] [--deadline-min=M] [--floor-5h=0.25] [--weekly-end=0]
+ *        [--pace-off-until=ISO] [--agy-home=default|auto|DIR] [--book=ID[,ID]] [--apply]
+ *
+ * Books (firstReadSkip): visible, held with a reason in FIRST_READ_HOLDS (published as scans, OCR not read), never
+ * pipeline_auto.held, not an unsplit spread nor a possible one (spreadReason on its unread pages), not a manuscript by
+ * library, title or date (manuscriptReason), routed to a print model (flash-lite or Flash), in --languages. Order: books
+ * with no OCR first, then Latin and German, then processing_priority, then fewest pages read. Pages: UNREAD.
+ * Each chunk is read by `cli-ocr.mjs read` on gemini-3.8-flash-low (--per-call for Latin and German only: #7522;
+ * every other language 1 a call) and written by `cli-ocr.mjs apply --lane=agy-first-read-7701 --first-read-only
+ * --print-only`: only while the page has no OCR, only when the reader tags it printed, stamped ocr.pipeline with the
+ * lane. A book whose chunk the reader tags mostly not printed goes to DIR/../first-read-books-skipped.jsonl.
+ * `--correct=deu` (#7701 arm B, the router's pick for German): the pages just written get the correction lane's second
+ * pass (cli-ocr.mjs read --correct-prompt, the #5924 template, the image; apply's correct-mode guards), stamped
+ * agy-first-read-correct-7701; an UNCHANGED, CONTAIN or refused correction leaves the first read. Never flash-lite.
+ * THE HOLD STAYS: this lane never releases a book, so no pipeline phase (Phase 2's paid OCR, Phase 4's paid
+ * translation, the chained Batch enrolment, which refuses a held book) selects it because it now has text.
+ * Ledger DIR/../first-read-ledger.jsonl (every page tried, never tried again), claims DIR/../claims-first-read/, quota
+ * floor and pools as the correction lane's (QUOTA FLOOR, POOL above).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -123,8 +147,9 @@ import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
-import { ocrLaneForBook, CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
-import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD } from '../lib/pipeline-hold.mjs';
+import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
+import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
+import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 
@@ -631,12 +656,263 @@ async function gpuMain(mode, arg) {
   await client.close();
 }
 
+// ── run --cohort=visible-unread (#7701) ──
+export const FIRST_READ_COHORT = 'visible-unread';
+export const FIRST_READ_LANE = 'agy-first-read-7701';
+export const FIRST_READ_MODEL = 'gemini-3.8-flash-low';
+/** The second pass (#7701 arm B, `--correct=deu`): the #7558 correction of the first read, its own ocr.pipeline stamp. */
+export const FIRST_READ_CORRECT_LANE = 'agy-first-read-correct-7701';
+export const FIRST_READ_REASON = '#7701 first-read lane';
+export const FIRST_READ_CORRECT_REASON = '#7701 first-read lane correction';
+/** The holds that mean "published as scans, OCR not read yet" (the brief's four; GPU_LANE_HOLDS less the wave-b hold). */
+export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270']);
+/** The routed models that mean a print route: flash-lite (Latin-script print) and Flash (print in the flash families). */
+export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH]);
+/** Languages read 4 pages a call (#7522 held quality on German and Latin print); every other language reads 1. */
+export const FIRST_READ_PER_CALL_LANGUAGES = Object.freeze(['lat', 'deu']);
+/** Libraries whose held, unread books here are manuscripts and archival hands (census 2026-10-29: Vat.sir., Cod. Pal., Universitätsarchiv). */
+export const MANUSCRIPT_PROVIDERS = Object.freeze(['vatican', 'heidelberg', 'morgan', 'museumsofindia']);
+const MANUSCRIPT_TITLE = /\bmanuscripts?\b|\bMS\.?\s?[A-Z]*\s?\d|\bcodex\b|\bmss?\b|\bcod\.\s|handschrift|\bVat\.\s?[a-z]+\.\s?\d/i;
+
+/** The book's first language code, ISO 639-3 (`Latin` and `la` alike → 'lat'), or null. */
+export const firstReadLanguage = (book) => toLanguageCodes(book?.language).codes[0] ?? null;
+
+/** Why this book may be handwritten (a sentence), or null. Book-level only; the reader's <script> tag decides per page. */
+export function manuscriptReason(book) {
+  const provider = String(book?.image_source?.provider || '').toLowerCase();
+  if (MANUSCRIPT_PROVIDERS.includes(provider)) return `manuscript library (${provider})`;
+  if (MANUSCRIPT_TITLE.test(String(book?.title || ''))) return 'manuscript by title';
+  const year = /\b(\d{4})\b/.exec(String(book?.published || ''))?.[1];
+  if (year && +year < 1450) return `published ${year}: before print`;
+  return null;
+}
+
+/**
+ * Why the first-read lane does not read this book (a short key for `count`), or null. `languages`: codes the run reads
+ * (null = every language). Book-level: the page-level spread check (spreadReason) runs on the unread pages.
+ */
+export function firstReadSkip(book, { languages = null } = {}) {
+  const pa = book?.pipeline_auto ?? {};
+  if (!book?.visible || !(book.pages_count > 0)) return 'not visible';
+  if (pa.status !== HOLD_STATUS || !pa.hold) return 'not held: the pipeline owns it';
+  if (pa.held === true) return 'pipeline_auto.held';
+  if (!FIRST_READ_HOLDS.includes(pa.hold.reason)) return `other hold (${pa.hold.reason})`;
+  if (isUnsplitSpread(book)) return 'unsplit spread (needs_splitting)';
+  if (manuscriptReason(book)) return 'manuscript';
+  const { model } = ocrLaneForBook(book);
+  if (!PRINT_ROUTE_MODELS.includes(model)) return `route ${model}: not a print route`;
+  if (languages && !languages.includes(firstReadLanguage(book))) return 'language not in --languages';
+  return null;
+}
+
+/** Books with no OCR first, then Latin and German, then processing_priority, then the fewest pages read, then id. */
+export const byFirstReadOrder = (a, b) => ((a.pages_ocr ?? 0) > 0) - ((b.pages_ocr ?? 0) > 0)
+  || !FIRST_READ_PER_CALL_LANGUAGES.includes(firstReadLanguage(a)) - !FIRST_READ_PER_CALL_LANGUAGES.includes(firstReadLanguage(b))
+  || (b.processing_priority ?? 0) - (a.processing_priority ?? 0)
+  || (a.pages_ocr ?? 0) - (b.pages_ocr ?? 0)
+  || String(a.id).localeCompare(String(b.id));
+
+/** The Mongo selector the run reads from: firstReadSkip's book-level rules that a query can carry. */
+export const FIRST_READ_BOOKS = Object.freeze({
+  visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': { $in: FIRST_READ_HOLDS },
+  'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD, $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] },
+});
+const FIRST_READ_PROJECTION = { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
+
+/** The quota flags every agy lane here shares (QUOTA FLOOR and POOL in the header), validated; exits 2 on a bad one. */
+function quotaFlags(arg) {
+  const FLOOR5H = Number(arg('floor-5h') ?? 0.25), WEEKLY_END = Number(arg('weekly-end') ?? 0);
+  if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
+  if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
+  return { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL };
+}
+
+async function firstReadMain(mode, arg) {
+  const APPLY = process.argv.includes('--apply');
+  const OUT = arg('out') && path.resolve(arg('out'));
+  if (mode === 'run' && !OUT) { console.error('run needs --out=DIR'); process.exit(2); }
+  const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'first-read-ledger.jsonl') : null);
+  const BOOKS_SKIPPED = LEDGER ? path.join(path.dirname(LEDGER), 'first-read-books-skipped.jsonl') : null;
+  const LANGS = arg('languages') ? arg('languages').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : null;
+  // --correct=deu[,…]: the languages whose first reads get the second pass (the router picks it per cell, #7701 arm B)
+  const CORRECT_LANGS = arg('correct') ? arg('correct').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : [];
+  const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  const ledger = new Set(), tailState = { offset: 0 };
+  ledgerTail(LEDGER, ledger, tailState);
+  const skippedBooks = readLedger(BOOKS_SKIPPED);   // rows carry page_id = the book id
+  const unreadPages = (b) => db.collection('pages').find({ book_id: b.id, ...UNREAD }, { projection: { id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+
+  if (mode === 'count') {
+    // Every visible book with unread pages that is held or has no OCR at all, by the reason the lane skips it; pages
+    // are estimated from the counters (pages_count - pages_ocr), so the count is a few queries, not one per book.
+    const books = (await db.collection('books').find(
+      { visible: true, pages_count: { $gt: 0 }, $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] }, $or: [{ 'pipeline_auto.status': HOLD_STATUS }, { pages_ocr: { $in: [0, null] } }] },
+      { projection: FIRST_READ_PROJECTION },
+    ).toArray()).filter((b) => !ONLY || ONLY.has(b.id));
+    const why = new Map(books.map((b) => [b.id, firstReadSkip(b, { languages: LANGS }) ?? (skippedBooks.has(b.id) ? 'skipped: reader tagged it handwritten' : null)]));
+    // The page-level spread check (spreadReason) for the books still in: a book is in only if Phase 1.25 checked it
+    // or some page carries crop data.
+    const unchecked = books.filter((b) => !why.get(b.id) && !b.pipeline_auto?.split_checked).map((b) => b.id);
+    const cropped = new Set();
+    for (let i = 0; i < unchecked.length; i += 300) {
+      for (const id of await db.collection('pages').distinct('book_id', { book_id: { $in: unchecked.slice(i, i + 300) }, $or: [{ crop: { $exists: true, $ne: null } }, { cropped_photo: { $exists: true, $nin: [null, ''] } }, { split_from_spread: { $exists: true } }] })) cropped.add(id);
+    }
+    for (const id of unchecked) if (!cropped.has(id)) why.set(id, 'possible unsplit spreads (not split_checked, no crop data, #523)');
+    const t = {};
+    for (const b of books) {
+      const k = why.get(b.id) ? `skip: ${why.get(b.id)}` : `read: ${b.pages_ocr ? 'partly read' : 'no OCR'}`;
+      const lang = firstReadLanguage(b) ?? String(b.language ?? '?');
+      t[k] ??= { books: 0, pages_est: 0, by_language: {} };
+      const u = Math.max(0, b.pages_count - (b.pages_ocr ?? 0));
+      t[k].books++; t[k].pages_est += u;
+      (t[k].by_language[lang] ??= { books: 0, pages_est: 0 }); t[k].by_language[lang].books++; t[k].by_language[lang].pages_est += u;
+    }
+    console.log(`first-read cohort (${FIRST_READ_LANE}): ${books.length} visible books with unread pages, held or with no OCR${LANGS ? `; --languages=${LANGS.join(',')}` : ''}; ${ledger.size} page(s) ledgered`);
+    for (const [k, v] of Object.entries(t).sort((a, b) => b[1].pages_est - a[1].pages_est)) {
+      const top = Object.entries(v.by_language).sort((a, b) => b[1].pages_est - a[1].pages_est).slice(0, 8).map(([l, x]) => `${l} ${x.books}/${x.pages_est}`).join(', ');
+      console.log(`  ${k.padEnd(72)} ${String(v.books).padStart(6)} books ${String(v.pages_est).padStart(9)} pages  [${top}]`);
+    }
+    await client.close(); return;
+  }
+
+  const books = (await db.collection('books').find(FIRST_READ_BOOKS, { projection: FIRST_READ_PROJECTION }).toArray())
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !skippedBooks.has(b.id) && !firstReadSkip(b, { languages: LANGS })).sort(byFirstReadOrder);
+  const MAX = Number(arg('max-pages') || 400), MAX_BOOKS = Number(arg('max-books') || Infinity), CHUNK = Number(arg('book-chunk') || 40);
+  const QF = quotaFlags(arg);
+  const int = (name, dflt, hi) => { const v = Number(arg(name) || dflt); if (!(Number.isInteger(v) && v >= 1 && v <= hi)) { console.error(`--${name} must be 1 to ${hi}`); process.exit(2); } return v; };
+  const PER_CALL = int('per-call', 1, 4), CONCURRENCY = int('concurrency', 1, 8);
+  const want = parseAgyHome(arg('agy-home'));
+  let HOME = want.home ?? null;
+  if (want.auto) {
+    const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+    const pick = choosePool(readPools(), (r) => { const q = quotaFloor(toBuckets(r), QF); return { open: q.ok, why: q.why }; });
+    if (!pick) { console.log('run: no pool has its floor open; nothing read'); await client.close(); return; }
+    HOME = pick.home;
+  } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
+  const POOL = poolName({ home: HOME });
+  const CHILD_ENV = agyEnv(HOME, process.env, { AGY_JOB: 'cli-ocr-first-read-7701' });
+  const CLAIMS_DIR = path.join(path.dirname(LEDGER), 'claims-first-read');
+  const ME = { pid: process.pid, pool: POOL, lane: FIRST_READ_LANE };
+  const held = new Set();
+  process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
+  const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
+  const job = `cli-ocr-first-read-${new Date().toISOString().slice(0, 10)}`;
+  fs.mkdirSync(OUT, { recursive: true });
+  // The second pass's template: the #5924 one-page template the correction lane sends, built once per day folder.
+  const TPL = path.join(OUT, 'fc-correct-prompt.txt');
+  if (CORRECT_LANGS.length && !fs.existsSync(TPL)) {
+    const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
+    if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
+  }
+  console.log(`run --cohort=${FIRST_READ_COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${PER_CALL}/call for ${FIRST_READ_PER_CALL_LANGUAGES.join('/')}${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  let budget = MAX, stop = null, bi = 0, booksTaken = 0;
+  const tally = { written: 0, handwritten: 0, has_ocr_now: 0, failed: 0, other: 0, books: 0, books_skipped_handwritten: 0, spread_wait: 0, corrected: 0, correct_unchanged: 0, correct_other: 0 };
+  const nextChunk = async () => {
+    while (bi < books.length) {
+      if (booksTaken >= MAX_BOOKS) return null;
+      const b = books[bi++];
+      if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
+      held.add(b.id);
+      ledgerTail(LEDGER, ledger, tailState);
+      const pages = await unreadPages(b);
+      const spread = spreadReason(b, pages);
+      const open = pages.filter((p) => !ledger.has(p.id));
+      if (open.length && !spread) { booksTaken++; return { book: b, open }; }
+      if (spread && open.length) tally.spread_wait++;
+      releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
+    }
+    return null;
+  };
+  const worker = async () => {
+    while (!stop) {
+      if (budget <= 0) { stop ??= 'page budget spent'; break; }
+      if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
+      const q = quotaFloor(readQuota(HOME), QF);
+      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      const c = await nextChunk();
+      if (!c) { stop ??= 'queue empty'; break; }
+      const { book } = c;
+      const release = () => { releaseBookClaim(CLAIMS_DIR, book.id); held.delete(book.id); };
+      if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
+      const take = c.open.slice(0, Math.min(CHUNK, budget));
+      budget -= take.length;
+      tally.books++;
+      const { model: routed } = ocrLaneForBook(book);
+      const perCall = FIRST_READ_PER_CALL_LANGUAGES.includes(firstReadLanguage(book)) ? perCallFor(book, { perCall: PER_CALL }) : 1;
+      const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
+      const dir = path.join(OUT, book.id);
+      fs.mkdirSync(dir, { recursive: true });
+      const ids = path.join(dir, `page-ids-${Date.now()}.json`);
+      fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${book.pages_ocr ?? 0}/${book.pages_count} read, hold ${book.pipeline_auto.hold.reason}): ${take.length} of ${c.open.length} pages, ${perCall}/call; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${FIRST_READ_MODEL}`, `--job=${job}`, '--stop-on-quota',
+        ...(perCall > 1 ? [`--per-call=${perCall}`] : [])], tag, CHILD_ENV);
+      if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
+      if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+      const reason = `${FIRST_READ_REASON}: visible book held ${book.pipeline_auto.hold.reason} (the hold stays), routed ${routed}, first read by ${FIRST_READ_MODEL} through agy${perCall > 1 ? `, ${perCall} pages a call (#7522)` : ''}`;
+      const t0 = Date.now();
+      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only', ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      if (!APPLY || applied !== 0) { release(); continue; }
+      const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
+      const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
+      const written = new Set(sum.written_page_ids || []);
+      let hand = 0;
+      for (const p of take) {
+        const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
+        const k = why === 'written' ? 'written' : /--print-only/.test(why) ? 'handwritten' : /has OCR now/.test(why) ? 'has_ocr_now' : /cli exit|empty read|refus|wrapper|not_read/.test(why) ? 'failed' : 'other';
+        if (k === 'handwritten') hand++;
+        tally[k]++;
+        fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, outcome: k, why, run: sum.run ?? null, pool: POOL, at: new Date().toISOString() }) + '\n');
+        ledger.add(p.id);
+      }
+      // A book the reader tags mostly handwritten is not this lane's: its other pages are not read again (the gpu-correct rule).
+      if (hand * 2 >= take.length && take.length >= 4) { tally.books_skipped_handwritten++; fs.appendFileSync(BOOKS_SKIPPED, JSON.stringify({ page_id: book.id, why: `reader tagged ${hand}/${take.length} pages not printed`, at: new Date().toISOString() }) + '\n'); console.log(`${tag}  book skipped from now on: ${hand}/${take.length} pages not printed`); }
+      // The second pass (--correct): the pages just written, corrected by the correction lane's own read and apply
+      // (cli-ocr.mjs --correct-prompt on the stored first read, the image; UNCHANGED, CONTAIN or a > 25% change leaves the
+      // first read), stamped FIRST_READ_CORRECT_LANE. A quota stop leaves the first read standing.
+      if (CORRECT_LANGS.includes(firstReadLanguage(book)) && written.size) {
+        const cdir = path.join(dir, 'correct');
+        fs.mkdirSync(cdir, { recursive: true });
+        const cids = path.join(cdir, `page-ids-${Date.now()}.json`);
+        fs.writeFileSync(cids, JSON.stringify([...written]));
+        const cread = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${cids}`, `--out=${cdir}`, `--model=${FIRST_READ_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${FIRST_READ_CORRECT_LANE}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
+        if (cread === 0) {
+          const t1 = Date.now();
+          const creason = `${FIRST_READ_CORRECT_REASON}: the first read (${FIRST_READ_LANE}) corrected by ${FIRST_READ_MODEL} through agy with the image (the #7558 template; #7701 arm B, the router's pick for ${firstReadLanguage(book)})`;
+          const capplied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${cdir}`, `--only=${cids}`, `--reason=${creason}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+          const cf = capplied === 0 && APPLY ? fs.readdirSync(cdir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(cdir, f)).filter((f) => fs.statSync(f).mtimeMs >= t1).sort().pop() : null;
+          const cs = cf ? JSON.parse(fs.readFileSync(cf, 'utf8')) : {};
+          for (const id of written) { const w = (cs.written_page_ids || []).includes(id) ? 'corrected' : /UNCHANGED/.test(cs.skipped_pages?.[id] ?? '') ? 'correct_unchanged' : 'correct_other'; tally[w]++; }
+          for (const cl of cs.contain_claims || []) fs.appendFileSync(path.join(path.dirname(LEDGER), 'first-read-contain-claims.jsonl'), JSON.stringify({ ...cl, at: new Date().toISOString(), lane: FIRST_READ_CORRECT_LANE }) + '\n');
+        } else if (cread === 3) { stop ??= 'quota'; console.log(`${tag}quota reached in the second pass: the first reads stand; stopping`); }
+        for (const id of written) fs.rmSync(path.join(cdir, `ws-${id}`), { recursive: true, force: true });
+      }
+      // Ledgered: the page images are not needed again (apply checked the image hash; provenance keeps the prompt). #6223.
+      for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      release();
+      console.log(`${tag}  ${JSON.stringify(tally)}`);
+    }
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  console.log(`\nfirst-read run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  fs.appendFileSync(path.join(path.dirname(LEDGER), 'first-read-runs.jsonl'), JSON.stringify({ at: new Date().toISOString(), pool: POOL, apply: APPLY, stop: stop ?? 'done', taken: MAX - budget, ...tally }) + '\n');
+  await client.close();
+}
+
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (mode === 'correct' || mode === 'correct-count') return correctMain(mode, arg);
   if (mode === 'gpu-correct' || mode === 'gpu-count') return gpuMain(mode, arg);
-  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-ocr-lane.mjs count | run --out=DIR [--max-pages=120] [--book=ID] [--apply] | correct-count | correct --out=DIR [--apply]'); process.exit(2); }
+  if ((mode === 'run' || mode === 'count') && arg('cohort')) {
+    if (arg('cohort') !== FIRST_READ_COHORT) { console.error(`--cohort: the only cohort is ${FIRST_READ_COHORT}`); process.exit(2); }
+    return firstReadMain(mode, arg);
+  }
+  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-ocr-lane.mjs count | run --out=DIR [--max-pages=120] [--book=ID] [--apply] | count --cohort=visible-unread | run --cohort=visible-unread --out=DIR [--apply] | correct-count | correct --out=DIR [--apply]'); process.exit(2); }
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
   const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'cli-ocr-ledger.jsonl') : null);
