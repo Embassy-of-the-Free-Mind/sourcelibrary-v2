@@ -16,6 +16,7 @@ import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
 import { issueUrl } from '@/lib/check-methods';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
 import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -197,6 +198,8 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
 }) {
   const locale = useLocale();
   const t = getReaderStrings(locale).info;
+  // The checks record has no embed route: inside a partner frame the warning is shown without that link.
+  const isEmbedded = useIsEmbedded();
   if (!warnings) return null;
   const page = pageNumber != null ? warnings.pages[pageNumber] : undefined;
   const book = warnings.book;
@@ -222,8 +225,8 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
   const external = href.startsWith('http');
   return (
     <p role="note" data-quality-warning={page ? page.level : 'book'} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
-      {text}{' '}
-      <a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a>
+      {text}
+      {(external || !isEmbedded) && <>{' '}<a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a></>}
     </p>
   );
 }
