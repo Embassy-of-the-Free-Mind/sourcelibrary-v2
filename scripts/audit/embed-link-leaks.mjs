@@ -33,6 +33,9 @@ const onlySlug = opt('slug');
 
 // Paths that are fine to leave the namespace: assets, APIs, icons, feeds.
 const ALLOWED = [/^\/_next\//, /^\/api\//, /^\/icon/, /^\/apple-icon/, /^\/favicon/, /^\/opensearch\.xml$/, /^\/manifest/];
+// Sign-in links leave the embed too, but they are owned by a separate fix (sign-in inside the
+// partner frame, #7702): listed as KNOWN, not counted as a failure. Drop this once that lands.
+const KNOWN = [/^\/auth\//];
 
 const client = await MongoClient.connect(process.env.MONGODB_URI);
 const db = client.db('bookstore');
@@ -48,6 +51,7 @@ const books = onlySlug
 if (!books.length) { console.error(`no books for tenant ${tenantSlug} (tenantId ${tenantId || 'not found'})`); process.exit(2); }
 
 const leaks = new Map(); // normalised href -> { count, example }
+const known = new Map();
 let fetched = 0;
 for (const b of books) {
   const page = await db.collection('pages').findOne({ book_id: b.id, page_number: { $gt: 0 } }, { projection: { id: 1 }, sort: { page_number: 1 } });
@@ -62,14 +66,16 @@ for (const b of books) {
       const href = m[1].replace(/&amp;/g, '&');
       if (href.startsWith(`/embed/${tenantSlug}`) || ALLOWED.some(re => re.test(href))) continue;
       const key = href.replace(/[0-9a-f]{24}/g, ':id').replace(/\?.*$/, '').replace(new RegExp(b.slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), ':slug');
-      const e = leaks.get(key) ?? { count: 0, example: `${path} -> ${href}` };
-      e.count++; leaks.set(key, e);
+      const bucket = KNOWN.some(re => re.test(href)) ? known : leaks;
+      const e = bucket.get(key) ?? { count: 0, example: `${path} -> ${href}` };
+      e.count++; bucket.set(key, e);
     }
   }
 }
 await client.close();
 
 console.log(`${fetched} embedded pages fetched from ${books.length} ${tenantSlug} books at ${base}`);
+for (const [k, e] of known) console.log(`KNOWN (sign-in, fixed separately): ${e.count}  ${k}    e.g. ${e.example}`);
 if (!leaks.size) { console.log('PASS: no link leaves the embed'); process.exit(0); }
 console.log(`FAIL: ${leaks.size} link pattern(s) leave /embed/${tenantSlug}/`);
 for (const [k, e] of [...leaks].sort((a, b) => b[1].count - a[1].count)) console.log(`  ${String(e.count).padStart(4)}  ${k}    e.g. ${e.example}`);

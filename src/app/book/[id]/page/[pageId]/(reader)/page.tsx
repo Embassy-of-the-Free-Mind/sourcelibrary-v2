@@ -4,7 +4,6 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import Reader2C from '@/components/reader-v2/Reader2C';
-import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
@@ -189,11 +188,10 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   }
 
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
-  // page turn needs no second request. Never throws; most books have no rows. Partner rooms keep the old reader.
+  // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
+  // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
-  const [qualityWarnings, scanGaps] = ctx?.isEmbedded
-    ? [undefined, undefined]
-    : await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
+  const [qualityWarnings, scanGaps] = await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   // On an English edition the leaf's own words are the text: a stored
@@ -245,13 +243,15 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
-          BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
-          old reader until BPH have seen it and approved it. Not caution for
-          its own sake: the new reader's Cite and Share build absolute URLs
-          against sourcelibrary.org rather than the host page, so a scholar
-          citing a page inside a partner's site would be handed a URL pointing
-          away from it.
+      {/* One reader everywhere. Partner reading rooms (BPH, EFM, every
+          /embed/** iframe and tenant subdomain) stayed on the old reader
+          (PageEditorClient) until BPH had seen the redesign, because its Cite
+          and Share build URLs against sourcelibrary.org rather than the host
+          page. BPH/EFM approved the switch on 2026-10-29, via Derek: the
+          sourcelibrary.org permalink is the citation (persistent, DOI-backed,
+          the same everywhere), and the reader inside the Embassy frame should
+          be the one sourcelibrary.org shows. Reader2C hides the site menu and
+          WebMCP when embedded and routes its links through useEmbedHref.
           
           Books we hold a facsimile fount for are read in their own type
           (#4083); `display: contents` so this wrapper carries the font
@@ -261,22 +261,14 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
         style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
       >
-        {ctx?.isEmbedded ? (
-          <PageEditorClient
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-          />
-        ) : (
-          <Reader2C
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-            qualityWarnings={qualityWarnings}
-            scanGaps={scanGaps}
-            ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
-          />
-        )}
+        <Reader2C
+          initialBook={book}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+          qualityWarnings={qualityWarnings}
+          scanGaps={scanGaps}
+          ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
+        />
       </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
