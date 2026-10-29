@@ -77,3 +77,27 @@ describe('cli-ocr.mjs read --correct-prompt --per-call', () => {
     expect(v).toContain('`correct:${lane}${callPages > 1 ? `:per_call=${callPages}` : \'\'}`');
   });
 });
+
+describe('cli-ocr.mjs apply --diff-guard=gpu-draft and --emit-written (#7701 Latin arm c on unread pages)', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
+  const guard = src.slice(src.indexOf('if (over || DIFF_GUARD_DRAFT) {'), src.indexOf('} else if (correct) {', src.indexOf('if (over || DIFF_GUARD_DRAFT) {')));
+
+  it('runs the #7695 guards against the GPU draft when there is no stored text, never against page.ocr there', () => {
+    expect(guard).toContain("const ref = over ? page.ocr.data : draft");
+    const code = guard.split('\n').filter((l) => !l.trim().startsWith('//') && !l.includes('const ref ='));
+    expect(code.join('\n')).not.toContain('page.ocr.data');
+    // the like-for-like, tag-free put-back rule is the one #7695 fixed
+    expect(guard).toContain("flags.some((f) => tagIn(ref, f.a) || tagIn(ls.text, f.b))");
+    expect(guard).toContain('nWords(f.draft) !== nWords(f.next)');
+    expect(guard).toContain("winner: 'draft'");
+    expect(guard).toContain("against: over ? 'stored' : 'gpu-draft'");
+  });
+
+  it('takes only gpu-draft, and emits the exact text written after every guard', () => {
+    expect(src).toMatch(/if \(arg\('diff-guard'\) && !DIFF_GUARD_DRAFT\)/);
+    const emit = src.indexOf('if (EMIT_WRITTEN)'), dry = src.indexOf("if (!APPLY) { tally.written++; continue; }");
+    expect(emit).toBeGreaterThan(src.indexOf('text = back.text'));
+    expect(emit).toBeLessThan(dry);
+  });
+});
+

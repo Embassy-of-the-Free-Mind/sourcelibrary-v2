@@ -509,6 +509,13 @@ const MARK_STALE = arg('mark-stale');
 // --first-read-only (#7701): write a plain read only while the page still has no OCR (a first read, never a re-read).
 // --print-only (#7701): write a plain read only when its own <script> tag says printed (the lane is print only).
 const FIRST_READ_ONLY = process.argv.includes('--first-read-only');
+// --diff-guard=gpu-draft (#7701, the Latin arm-c cell): on the unread GPU-draft path, run #7695's put-back guards against
+// the GPU draft (the --over-stored path runs them against the stored text it replaces).
+const DIFF_GUARD_DRAFT = arg('diff-guard') === 'gpu-draft';
+if (arg('diff-guard') && !DIFF_GUARD_DRAFT) { console.error('--diff-guard: the only value is gpu-draft'); process.exit(2); }
+// --emit-written=FILE (#7701): one JSON line {page_id, text} for every page this apply writes (or, dry run, would write):
+// the exact text, after every guard and put-back, so an eval judges what the lane writes.
+const EMIT_WRITTEN = arg('emit-written');
 const PRINT_ONLY = process.argv.includes('--print-only');
 const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
   .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
@@ -633,38 +640,41 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     change = { change_share: Number(share.toFixed(4)), change_measure: 'T3 #7263: share of the draft\'s folded words not kept (difflib blocks)', check_flag: share >= CHECK_FLAG_SHARE, check_threshold: CHECK_FLAG_SHARE };
     if (change.check_flag) tally.check_flagged = (tally.check_flagged || 0) + 1;
     (tally.change_shares ??= {})[m.page_id ?? m.key] = change.change_share;
-    if (over) {
+    if (over || DIFF_GUARD_DRAFT) {
+      // #7701 (--diff-guard=gpu-draft, the Latin arm-c cell on UNREAD pages): the same guards against the GPU draft itself,
+      // the only reading there is; a page they refuse stays unread.
+      const ref = over ? page.ocr.data : draft, stands = over ? 'the stored text stands' : 'the page stays unread';
       // #7567 arm c over a stored draft: the plain read's 40% shared-words floor against the text it replaces (E5 wrote
       // through it), then the E3 guards against that stored text: the long-s pass, and every flip-risk change (a number, a
       // negation, an abbreviation expanded into another word) PUT BACK to the stored reading. Production has no image
       // check, and put-back is the safe direction: E5's image check gave the stored reading back on 78 of 198 changed
       // numbers, 28 of 171 negations, 1 of 23 expansions, so a put-back keeps a known misread about as often as it saves one.
-      const was = longWords(page.ocr.data), now = longWords(text);
+      const was = longWords(ref), now = longWords(text);
       const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
-      if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
+      if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the ${over ? 'stored read' : 'GPU draft'}: check by eye`); continue; }
       const lang = LANG_OF((await bookOf(page.book_id))?.language);
-      const ls = longSPass(text, { lang, convention: page.ocr.data });
-      const { flags } = correctionDiffs(page.ocr.data, ls.text, { lang });
+      const ls = longSPass(text, { lang, convention: ref });
+      const { flags } = correctionDiffs(ref, ls.text, { lang });
       // A put-back splices the stored span over the corrected one. A span that holds a tag (a number flag on a running
       // head moved into <header>/<sig>/<page-num>) splices tags across each other: the pilot wrote `<sig>E.</header>` on
       // 30 of 84 put-back pages (by eye, #7567). Such a page is not written: the stored text stands.
       const tagIn = (t, [x, y]) => /[<>]/.test(String(t).slice(x, y));
-      if (flags.some((f) => tagIn(page.ocr.data, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, the stored text stands'); continue; }
+      if (flags.some((f) => tagIn(ref, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, ' + stands); continue; }
       // Only a like-for-like substitution (the same number of words a side) is spliced back. A one-sided or uneven hunk
       // put back deleted a printed heading the stored text lacked (CAP. XIII) and doubled a phrase the corrector had
       // re-aligned (by eye, pilot 2026-10-29): such a page is not written.
       const nWords = (s) => String(s).split(/\s+/).filter(Boolean).length;
-      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the stored text stands'); continue; }
-      const back = applyDiffVerdicts(page.ocr.data, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
+      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, ' + stands); continue; }
+      const back = applyDiffVerdicts(ref, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
       const tagShape = (t) => (String(t).match(/<\/?[a-z-]+/g) || []).join(' ');
-      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: the stored text stands'); continue; }
+      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: ' + stands); continue; }
       text = back.text;
       const kinds = {}; for (const f of flags) kinds[f.kind] = (kinds[f.kind] || 0) + 1;
-      change.diff_guard = { against: 'stored', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
+      change.diff_guard = { against: over ? 'stored' : 'gpu-draft', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
       const g = (tally.diff_guard ??= { pages_flagged: 0, put_back: 0, negation: 0, number: 0, expansion: 0, long_s_tells: 0 });
       if (flags.length) g.pages_flagged++;
       g.put_back += back.reverted; g.long_s_tells += ls.tells.length; for (const [k, n] of Object.entries(kinds)) g[k] += n;
-      if (text.trim() === page.ocr.data.trim()) { skip(m, 'every change was put back by the diff guard: the stored text stands'); continue; }
+      if (text.trim() === ref.trim()) { skip(m, 'every change was put back by the diff guard: ' + stands); continue; }
     }
   } else if (correct) {
     if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
@@ -730,6 +740,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const detectedImages = parseDetectedImages(text);
   console.log(`  ${APPLY ? 'WRITE' : 'would write'} p.${page.page_number} (${page.ocr?.model ?? 'no OCR'} -> ${m.model}, ${text.length} chars)`);
   if (yat) { tally.yatags_hits += yat.hits; tally.yatags_kept += yat.kept; tally.yatags_reverted += yat.reverted; }
+  if (EMIT_WRITTEN) fs.appendFileSync(EMIT_WRITTEN, JSON.stringify({ page_id: page.id, book_id: page.book_id, page_number: page.page_number, text, apply: APPLY }) + '\n');
   if (!APPLY) { tally.written++; continue; }
   // Through the one page-text writer (#7058): the whole prior `ocr` goes to page_revisions with this run's id, the write
   // is compare-and-set on the text read above, and scripts/maintenance/revert-run.mjs --run-id <run> undoes the run.
