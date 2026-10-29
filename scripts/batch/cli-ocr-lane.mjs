@@ -156,7 +156,8 @@
  *   ... armc-left --lane-dir=L                       "<pages> <books>" planned with no draft (the filler's pages left)
  *   ... armc-count --lane-dir=L
  *   ... armc --lane-dir=L --out=DIR [--max-pages=N] [--book-chunk=40] [--concurrency=N] [--deadline-min=M]
- *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--wait-quota] [--book=ID] [--apply]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--wait-quota] [--weekly-floor=F] [--book=ID] [--apply]
+ *        (--weekly-floor: a hand-run pilot's fixed weekly floor in place of the pace line, as E2/E5 ran; never on cron)
  *        drafted pages, re-checked against the frame, read and applied a book chunk at a time (claims L/claims-armc/),
  *        stamped ocr.pipeline = ARMC_LANE, --mark-stale (a flag; nothing re-translates on it). Every page tried goes to
  *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
@@ -254,10 +255,11 @@ const WEEK_MS = 7 * 24 * 3600 * 1000;
  * { ok, why, weekly, line, five_h }: not ok when the weekly bucket is under the straight line to its reset, the 5-hour
  * bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
-  const line = weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
+  // weeklyFloor (a hand-run pilot, armc --weekly-floor=F, #7567): a fixed floor in place of the pace line, as E2/E5 ran (0.40)
+  const line = weeklyFloor != null ? weeklyFloor : weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
   // --pace-off-until: spend the pool out before its reset (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
   const paceOff = paceOffUntil != null && now < paceOffUntil;
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
@@ -1112,9 +1114,13 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP) {
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
   const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const WAIT = process.argv.includes('--wait-quota');
+  // --weekly-floor=F: a hand-run pilot's fixed floor instead of the pace line (never on the cron line)
+  const WEEKLY_FLOOR = arg('weekly-floor') != null ? Number(arg('weekly-floor')) : null;
+  if (WEEKLY_FLOOR != null && !(WEEKLY_FLOOR >= 0.2 && WEEKLY_FLOOR < 1)) { console.error('--weekly-floor must be in [0.2, 1)'); process.exit(2); }
+  const floorOpts = { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, weeklyFloor: WEEKLY_FLOOR };
   const want = parseAgyHome(arg('agy-home'));
   const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-  const openPool = () => readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
+  const openPool = () => readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), floorOpts).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
   let HOME = want.home ?? null;
   if (want.auto) {
     const pick = openPool();
@@ -1123,7 +1129,7 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP) {
   } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); process.exit(2); }
   let POOL = poolName({ home: HOME }), CHILD_ENV = agyEnv(HOME);
   const repick = () => {
-    if (!want.auto) return quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok;
+    if (!want.auto) return quotaFloor(readQuota(HOME), floorOpts).ok;
     const p = openPool(); if (!p) return false;
     HOME = p.home; POOL = poolName({ home: HOME }); CHILD_ENV = agyEnv(HOME); return true;
   };
@@ -1140,7 +1146,7 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP) {
   process.on('exit', () => { for (const id of held) releaseBookClaim(P.claims, id); });
   console.log(`armc: pool ${POOL}; ${order.length} planned books, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
   let budget = MAX, stop = null, bi = 0;
-  const tally = { written: 0, unchanged: 0, contain: 0, put_back_all: 0, no_draft: 0, out_of_frame: 0, other: 0, agy_calls: 0, pages_flagged: 0, put_back: 0, books: 0 };
+  const tally = { written: 0, unchanged: 0, contain: 0, put_back_all: 0, put_back_unsafe: 0, no_draft: 0, out_of_frame: 0, other: 0, agy_calls: 0, pages_flagged: 0, put_back: 0, books: 0 };
   const ledgerRow = (r) => { fs.appendFileSync(P.ledger, JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n'); ledger.add(r.page_id); };
   const nextChunk = async () => {
     while (bi < order.length) {
@@ -1158,11 +1164,11 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      let q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+      let q = quotaFloor(readQuota(HOME), floorOpts);
       if (!q.ok && WAIT) {
         console.log(`  pool ${POOL}: ${q.why}; waiting for a floor to open (--wait-quota)`);
         while (!repick() && Date.now() < DEADLINE) await new Promise((r) => setTimeout(r, 300_000));
-        q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+        q = quotaFloor(readQuota(HOME), floorOpts);
       }
       if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
       const c = await nextChunk();
@@ -1214,7 +1220,7 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP) {
       for (const p of take) {
         const pre = unsent.get(p.id);
         const why = pre ? pre[1] : written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
-        const k = pre ? pre[0] : why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /put back by the diff guard/.test(why) ? 'put_back_all' : 'other';
+        const k = pre ? pre[0] : why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /put back by the diff guard/.test(why) ? 'put_back_all' : /put-back cannot be spliced|put-back changed/.test(why) ? 'put_back_unsafe' : 'other';
         tally[k]++;
         ledgerRow({ page_id: p.id, book_id: book.id, page_number: p.pn, lang: plan.lang, outcome: k, why, run: sum.run ?? null });
       }

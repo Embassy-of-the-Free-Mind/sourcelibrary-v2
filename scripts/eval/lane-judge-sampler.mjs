@@ -479,13 +479,14 @@ export async function claudeMeter(limits) {
   const u = limits.claudeUsage();
   if (u && u.weekly != null) return { source: 'climits', email: u.email, weekly: u.weekly, session: u.session, weekly_reset: u.weeklyReset, session_reset: u.sessionReset, at: new Date().toISOString() };
   try {   // the route-judge pilot's reading (meter.json: api.anthropic.com/api/oauth/usage); never refreshes the token
-    const c = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude/.credentials.json'), 'utf8')).claudeAiOauth;
+    const login = limits.claudeLoginFiles();   // CLAUDE_CONFIG_DIR's login when set: the one `claude -p` spends
+    const c = JSON.parse(fs.readFileSync(login.credentials, 'utf8')).claudeAiOauth;
     if (!c?.accessToken || !(c.expiresAt > Date.now() + 60e3)) return null;
     const r = await fetch('https://api.anthropic.com/api/oauth/usage', { headers: { Authorization: `Bearer ${c.accessToken}`, 'anthropic-beta': 'oauth-2025-04-20' }, signal: AbortSignal.timeout(20e3) });
     if (!r.ok) return null;
     const j = await r.json();
     if (typeof j.seven_day?.utilization !== 'number') return null;
-    let email = null; try { email = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
+    let email = null; try { email = JSON.parse(fs.readFileSync(login.account, 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
     return { source: 'oauth-usage', email, weekly: j.seven_day.utilization, session: j.five_hour?.utilization ?? null, weekly_reset: j.seven_day.resets_at, session_reset: j.five_hour?.resets_at ?? null, at: new Date().toISOString() };
   } catch { return null; }
 }

@@ -624,7 +624,19 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       const lang = LANG_OF((await bookOf(page.book_id))?.language);
       const ls = longSPass(text, { lang, convention: page.ocr.data });
       const { flags } = correctionDiffs(page.ocr.data, ls.text, { lang });
+      // A put-back splices the stored span over the corrected one. A span that holds a tag (a number flag on a running
+      // head moved into <header>/<sig>/<page-num>) splices tags across each other: the pilot wrote `<sig>E.</header>` on
+      // 30 of 84 put-back pages (by eye, #7567). Such a page is not written: the stored text stands.
+      const tagIn = (t, [x, y]) => /[<>]/.test(String(t).slice(x, y));
+      if (flags.some((f) => tagIn(page.ocr.data, f.a) || tagIn(ls.text, f.b))) { skip(m, 'a diff-guard flag spans a tag: the put-back cannot be spliced, the stored text stands'); continue; }
+      // Only a like-for-like substitution (the same number of words a side) is spliced back. A one-sided or uneven hunk
+      // put back deleted a printed heading the stored text lacked (CAP. XIII) and doubled a phrase the corrector had
+      // re-aligned (by eye, pilot 2026-10-29): such a page is not written.
+      const nWords = (s) => String(s).split(/\s+/).filter(Boolean).length;
+      if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) { skip(m, 'a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the stored text stands'); continue; }
       const back = applyDiffVerdicts(page.ocr.data, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
+      const tagShape = (t) => (String(t).match(/<\/?[a-z-]+/g) || []).join(' ');
+      if (tagShape(back.text) !== tagShape(ls.text)) { skip(m, 'the put-back changed the read\'s tag structure: the stored text stands'); continue; }
       text = back.text;
       const kinds = {}; for (const f of flags) kinds[f.kind] = (kinds[f.kind] || 0) + 1;
       change.diff_guard = { against: 'stored', lang, flags: kinds, put_back: back.reverted, put_back_changes: flags.map((f) => ({ kind: f.kind, stored: f.draft, corrected: f.next })), long_s_tells: ls.tells.length, long_s_folded: ls.folded, rule: '#7567 E3: every flag put back to the stored reading (no image check in production)' };
