@@ -16,14 +16,15 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
  * phone the headline and form come first and the case follows, so nobody has to
  * scroll past an argument to reach the button.
  *
+ * The case is the vision letter's (src/app/articles/vision/content.ts) in short:
+ * the Renaissance began with a translation, most of it is still untranslated, and
+ * a gift joins the project of reading all of it. The figures are the letter's own,
+ * so the two pages never disagree — change them THERE first, then here.
+ * No per-book cost figure on purpose: model cost alone (under a dollar a book)
+ * tells a donor the work is nearly free, which is not the story.
+ *
  * NO DATA FETCHING, deliberately. Every other surface can degrade; the page that
- * takes money cannot. The figures below are therefore constants, measured on
- * 2026-10-29 and rounded DOWN so they stay true as the library grows:
- *   books live       70,970  (visible && pages_count > 0)
- *   first English     6,556  (is_first_translation && pages_translated > 0)
- *   /book/* views   302,821  (analytics_pageviews, 30 days to 2026-10-29)
- * Re-measure before changing any of these. No per-book cost figure on purpose:
- * model cost alone (under a dollar a book) tells a donor the work is nearly free.
+ * takes money cannot.
  * The only server work is reading the request country to pick a default route,
  * which cannot fail: an unknown country is a valid answer (defaultRouteForCountry).
  *
@@ -37,7 +38,7 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
 export const metadata: Metadata = {
   title: 'Donate | Source Library',
   description:
-    'Help put rare books on alchemy, astrology, magic and early science into English, free for anyone to read. Give in two taps, US tax-deductible or international.',
+    'Join the largest historical translation project in history: 73,000 scanned books waiting to be read, free for everyone. Give in two taps, US tax-deductible or international.',
   alternates: { canonical: '/give' },
 };
 
@@ -48,23 +49,27 @@ const FEATURE_IMAGE =
 const FEATURE_BOOK = '/book/6990688d249ce014347d6e76';
 
 const STATS = [
-  { value: '70,000+', label: 'books, free to read' },
-  { value: '6,500+', label: 'translated into English for the first time' },
-  { value: '300,000', label: 'visits to its books last month' },
+  { value: '93,000', label: 'books in over fifty languages' },
+  { value: '20,000', label: 'already readable in translation' },
+  { value: '73,000', label: 'scanned and waiting to be read' },
 ];
 
-const USES = [
+const BUILDS = [
   {
-    title: 'Reading the page',
-    text: 'Transcribing each page from Latin, Greek, German and other languages, and translating it into English, so the text can be searched and quoted.',
+    title: 'Every book we hold, readable',
+    text: 'Latin, Greek, Arabic, Hebrew, Chinese, Sanskrit, Tibetan: 73,000 books are scanned and catalogued, and no one can read them yet. Your gift moves them into English.',
   },
   {
-    title: 'Checking it',
-    text: 'Readings are checked against the page images. Pages we find wrong are corrected or held back until they are.',
+    title: 'A living archive',
+    text: 'Translations are re-read as the models improve, checked by scholars language by language, and corrected by a community of readers. It gets better every year instead of going stale.',
   },
   {
-    title: 'Keeping it free',
-    text: 'Scans, storage and hosting, so every page stays open to read, search and quote, with no paywall.',
+    title: 'Open to everyone, for good',
+    text: 'Free to read and quote, every line beside the page it came from, and open to the AI assistants people already use, so they cite the source instead of guessing.',
+  },
+  {
+    title: 'Toward a million books',
+    text: 'Then the wider record: the millions of volumes scanned by libraries worldwide that nobody can read, and the Embassy’s own books that exist in no other collection.',
   },
 ];
 
@@ -83,13 +88,23 @@ export default async function GivePage() {
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_26rem] gap-10 lg:gap-14 items-start">
           {/* Headline: first on every screen */}
           <div className="lg:col-start-1 lg:row-start-1">
-            <h1 className="text-3xl md:text-[2.6rem] font-display text-stone-900 mb-4 leading-tight">
-              Help translate the books no one ever translated
+            <h1 className="text-3xl md:text-4xl font-display text-stone-900 mb-4 leading-tight">
+              The last time the world translated its ancient wisdom, it sparked
+              the Renaissance
             </h1>
+            <p className="text-lg text-stone-700 leading-relaxed mb-4">
+              When Marsilio Ficino put ancient wisdom texts into Latin, the ideas
+              lit up Europe. Yet most of the Renaissance itself has never been
+              translated: an estimated{' '}
+              <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className={link}>
+                90 percent of its Latin texts
+              </a>
+              , and far more in Arabic, Chinese, Sanskrit and Tibetan. At the pace
+              of human translation, it would take ten thousand years.
+            </p>
             <p className="text-lg text-stone-700 leading-relaxed">
-              Source Library publishes rare books on alchemy, astrology, magic,
-              medicine and early science, in the original and in English, free for
-              anyone to read and cite. Your gift puts more of them into English.
+              Source Library is doing it now, in the open, free for everyone. Your
+              gift makes you part of the largest translation project in history.
             </p>
           </div>
 
@@ -145,9 +160,9 @@ export default async function GivePage() {
             </figure>
 
             <section>
-              <h2 className="text-xl font-display text-stone-900 mb-4">Where a gift goes</h2>
+              <h2 className="text-xl font-display text-stone-900 mb-4">What your gift builds</h2>
               <ul className="space-y-4">
-                {USES.map((u) => (
+                {BUILDS.map((u) => (
                   <li key={u.title} className="border-l-2 border-accent-rust pl-4">
                     <p className="font-semibold text-stone-900">{u.title}</p>
                     <p className="text-stone-600 leading-relaxed">{u.text}</p>
@@ -157,6 +172,10 @@ export default async function GivePage() {
             </section>
 
             <div className="text-sm text-stone-500 leading-relaxed space-y-2">
+              <p>
+                The whole plan, costs and all, is in{' '}
+                <Link href="/articles/vision" className={link}>the five-year vision</Link>.
+              </p>
               <p>
                 Giving through a business, or becoming a sponsor?{' '}
                 <Link href="/support" className={link}>More ways to support the library</Link>.
