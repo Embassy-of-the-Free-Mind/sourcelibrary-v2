@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -227,5 +227,81 @@ describe('the judge is the router tests\' judge', () => {
   it('names weeks for the weekly controls', () => {
     expect(isoWeek(new Date('2026-10-28T12:00:00Z'))).toBe('2026-W44');
     expect(isoWeek(new Date('2027-01-01T12:00:00Z'))).toBe('2026-W53');
+  });
+});
+
+describe('planted controls (#7611)', () => {
+  const page = (i: number) => `<page-num>${i}</page-num>
+<header>LIBER PRIMVS</header>
+Primus versus capitis qui caput tenet et nihil aliud.
+Quod si quis in hac arte veritatem quærit, ex duabus
+partibus constare dicitur, quarum prima est ratione
+animi, altera corporis operatione perficitur. Hoc anno
+1563 scripsit Paracelsus in Basilea de compositione
+lapidis, & septem metallorum generatione tractauit.
+Quod etiam in Germania multi fecerunt. Nam qui
+substantiam rei non intelligit, nihil efficit in hac
+Ultimus versus paginae, ubi custos stat.`;
+  const src = (n: number, perBook = 1) => Array.from({ length: n }, (_, i) => ({ rec: { _id: `lj${i}`, book_id: `b${Math.floor(i / perBook)}`, page_id: `p${i}`, lang: 'Latin' }, text: page(i) }));
+
+  it('plants the owed number, one per book, rotating the kind from the store\'s count, never reusing a source', () => {
+    const a = planPlanted(src(10, 2), { owed: 3, prior: [], seed: 5 });
+    expect(a).toHaveLength(3);
+    expect(new Set(a.map((x: { rec: { book_id: string } }) => x.rec.book_id)).size).toBe(3);
+    expect(a.map((x: { plant: { kind: string } }) => x.plant.kind)).toEqual(['B', 'C', 'D']);
+    const prior = [{ planted_from: 'lj0' }, { planted_from: 'lj1' }, { planted_from: 'lj2' }, { planted_from: 'lj3' }, { planted_from: 'lj4' }];
+    const b = planPlanted(src(10), { owed: 2, prior, seed: 5 });
+    expect(b.map((x: { plant: { kind: string } }) => x.plant.kind)).toEqual(['C', 'D']);   // 5 before: the 6th is C
+    for (const x of b) expect(prior.map((p) => p.planted_from)).not.toContain(x.rec._id);
+    for (const x of b) expect(x.plantedText).not.toBe(x.text);
+  });
+
+  it('holds a kind across pages: a page with no number does not skip B', () => {
+    const noNumber = { rec: { _id: 'lj00', book_id: 'bz', page_id: 'pz', lang: 'Latin' }, text: page(0).replace('1563 ', '').replace('duabus', 'multis').replace('septem ', '').replace(/prima/, 'una') };
+    const r = planPlanted([noNumber, ...src(3)], { owed: 1, seed: 1 });
+    expect(r[0].plant.kind).toBe('B'); expect(r[0].rec._id).not.toBe('lj00');
+    expect(planPlanted([noNumber], { owed: 1, seed: 1 })[0].plant.kind).toBe('C');   // no page has a number: the next kind
+  });
+
+  it('is deterministic by seed, whatever order the sources arrive in', () => {
+    const s = src(12);
+    const ids = (r: { rec: { _id: string }; plant: unknown }[]) => r.map((x) => [x.rec._id, x.plant]);
+    expect(ids(planPlanted([...s].reverse(), { owed: 4, seed: 9 }))).toEqual(ids(planPlanted(s, { owed: 4, seed: 9 })));
+    expect(() => planPlanted(s, { owed: 1 })).toThrow();
+  });
+
+  const pl = (i: number, accept: boolean, named = false, at = '2026-10-28T00:00:00Z') => ({ kind: 'planted', judged_at: at, plant: { kind: 'C', before: 'pietatem', after: 'humiditatem' },
+    verdict: { accept, fidelity: accept ? 5 : 3, defects: named ? [{ class: 'O6', quote: 'ueram humiditatem', severity: 'misleads' }] : [] } });
+
+  it('scores a route: caught = rejected or named; fails it below the bar only from 8 plants in the window', () => {
+    const now = Date.parse('2026-10-29T00:00:00Z');
+    const seven = [...Array(4)].map((_, i) => pl(i, true)).concat([...Array(3)].map((_, i) => pl(i, false)));
+    expect(plantedBlock(seven, { now }).validated).toBeNull();                  // 3/7 but under 8 plants: no verdict yet
+    const eight = [...seven, pl(9, true, true)];
+    const b = plantedBlock(eight, { now });
+    expect(b.rolling.caught).toBe('4/8'); expect(b.failed).toBe(true); expect(b.validated).toBe(false);
+    expect(b.ci95[0]).toBeLessThan(0.5); expect(b.by_kind.C).toBe('4/8');
+    const good = [...Array(8)].map((_, i) => pl(i, i === 0));                   // 7/8 caught
+    expect(plantedBlock(good, { now }).validated).toBe(true);
+    // old plants leave the window: 8 misses two months ago do not fail a route that now catches
+    const old = [...Array(8)].map((_, i) => pl(i, true, false, '2026-08-01T00:00:00Z'));
+    expect(plantedBlock([...old, ...good], { now }).validated).toBe(true);
+    expect(PLANT_BAR).toBe(0.8);
+  });
+
+  it('moves a route whose judge misses planted errors to routes_not_counted, and carries the catch rate on every route', () => {
+    let n = 0;
+    const base = (kind: string, book: number, accept: boolean, extra = {}) => ({ _id: `x${n++}`, kind, page_id: `p${book}`, book_id: `b${book}`, page_number: 1, cell: 'french-lite', route: 'lite>agy-flash-low', lane: 'agy-correct-lite-7558',
+      lang: 'French', script_type: 'print', write: {}, judge: { model_reported: 'claude-opus-5-5' }, run_id: 'r', judged_at: '2026-10-28T00:00:00Z', week: '2026-W44', verdict: { accept, fidelity: accept ? 5 : 1, defects: [] }, ...extra });
+    const recs = [...Array(10)].map((_, i) => base('item', i, true)).concat([base('wrong_page', 0, false), base('wrong_page', 1, false)]);
+    const plants = (k: number) => [...Array(8)].map((_, i) => ({ ...base('planted', i, i >= k), plant: { kind: 'B', before: '3', after: '6' } }));
+    const ok = exportScore([...recs, ...plants(7)], { generatedAt: '2026-10-29T00:00:00Z' }).cells['french-lite'];
+    expect(ok.routes['lite>agy-flash-low'].judge_planted).toMatchObject({ caught: '7/8', validated: true });
+    expect(ok.routes['lite>agy-flash-low'].accept).toBe('10/10');                     // plants are never evidence
+    const bad = exportScore([...recs, ...plants(5)], { generatedAt: '2026-10-29T00:00:00Z' }).cells['french-lite'];
+    expect(bad.routes['lite>agy-flash-low']).toBeUndefined();
+    expect(bad.routes_not_counted['lite>agy-flash-low'].not_counted_because[0]).toMatch(/judge-unvalidated: planted catch 5\/8/);
+    expect(bad.controls['lite>agy-flash-low']).toMatchObject({ wrong_page_passed: true, passed: false });
+    expect(validRecord({ ...base('planted', 1, true) })).toBe(true);
   });
 });

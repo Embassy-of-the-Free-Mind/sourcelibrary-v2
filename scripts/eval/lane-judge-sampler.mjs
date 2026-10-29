@@ -14,6 +14,7 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/lane-judge-sampler.mjs run --out=DIR
  *        [--since=ISO] [--until=ISO] [--seed=N] [--dry-run] [--cap-points=1] [--max-calls=N] [--draft-share=1]
+ *        [--planted=2]                       planted-error controls per cell x route per ISO week (#7611; 0 = none)
  *        [--book=ID[,ID] [--per-book=3]]   book-depth (#7263 pilots): N random written pages of each named book, no rate
  *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
@@ -39,7 +40,10 @@
  *
  * JUDGE. Each drawn page's lane output, and its draft (--draft-share, default every page; for worse-than-draft), as
  * one blind item each, with judge.mjs's judgePrompt / opusCall / parseVerdict exactly as the router tests ran them;
- * plus two wrong-page controls per cell x route per ISO week (this page's image, another book's output). Opus through
+ * plus two wrong-page controls per cell x route per ISO week (this page's image, another book's output), and PLANTED
+ * controls (#7611, "test the test"): --planted=K (default 2) per cell x route per ISO week, a page the judge ACCEPTED
+ * before with one error planted in its body (lib/plant-ocr-errors.mjs: B a number, C a noun, D a line dropped, E a
+ * sentence inserted, the kind rotating), judged blind like any item. Opus through
  * `claude -p` on the box's subscription; claudeEnv strips every API key. No Opus read or correction is made.
  *
  * BUDGET. A hard weekly cap: --cap-points (default 1 = 1% of one Claude account-week) / the router table's price of
@@ -57,7 +61,9 @@
  * FEED. `export` writes every counted verdict as one score.json in the route-judge format, cells and routes named as
  * rules.json names them (german-lite / lite>agy-flash-low), so build.py pools it as one more source, scaled by its
  * books (#7606). Every k/n is also split by script type (by_script); a print cell's evidence counts its print pages
- * only (Derek, 2026-10-28: print and manuscript are separate). A route whose wrong-page control failed is listed under routes_not_counted. The DRAFT verdicts are a
+ * only (Derek, 2026-10-28: print and manuscript are separate). A route whose wrong-page control failed is listed under routes_not_counted;
+ * so is one whose judge misses planted errors: rolling catch rate (the last 56 days, >= 8 plants) below 0.80. The
+ * catch rate rides on every route block as `judge_planted`, and build.py prints it next to k/n. The DRAFT verdicts are a
  * conditioned frame (the lane writes only the pages its corrector changed) and go to drafts_conditioned and
  * made_worse, never into evidence. `rebuild` runs build.py on a copy of origin/main with and without the export,
  * publishes the table (ops_reports `router-table:lane-judge`, and DIR/published/), and comments on #7263 only when a
@@ -78,6 +84,8 @@ import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-67
 import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
+import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
+import { wilson } from './lib/agreement-stats.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -97,6 +105,10 @@ export const BY_SCRIPT_PATH = 'scripts/eval/estimator/router-table/evidence/by-s
 const WEEKLY_MAX = Number(process.env.LANE_JUDGE_WEEKLY_MAX || 85);
 const SESSION_MAX = Number(process.env.LANE_JUDGE_SESSION_MAX || 95);
 const WRONG_TEXT_CONTAIN = /^(O1|O2|O3|I1)$/;   // text not on this leaf: containment-on-finding.md
+// Planted controls (#7611): the bar is Tibetan's (judge.mjs tib-kangyur): below 0.80 the judge does not decide the cell.
+export const PLANT_BAR = 0.8;
+export const PLANT_MIN = 8;
+export const PLANT_WINDOW_DAYS = 56;
 
 /**
  * The lanes, by the stamps they leave. Only `enabled` lanes are drawn. Each maps a written page to a router cell and
@@ -229,12 +241,56 @@ export function isoWeek(d) {
   return `${t.getUTCFullYear()}-W${String(Math.ceil(((t - y0) / 864e5 + 1) / 7)).padStart(2, '0')}`;
 }
 
+/**
+ * The planted controls owed to one cell x route this run (#7611). sources: [{ rec, text }] — store records the judge
+ * ACCEPTED (kind item) with the text they were accepted on, still the page's text; prior: planted records of this cell x
+ * route already in the store (their count rotates the kind B -> C -> D -> E; their planted_from is never reused).
+ * Returns [{ rec, text, plant, plantedText }]: up to `owed`, one per book, a seeded draw. Each slot's kind is held
+ * across pages (a page with no number does not skip B: the next page is tried); only when no page has a site for it
+ * does the slot take the next kind. Deterministic in (sources as a set, prior, seed).
+ */
+export function planPlanted(sources, { owed, prior = [], seed, lang }) {
+  if (!Number.isFinite(seed)) throw new Error('planPlanted: a numeric seed is required');
+  const used = new Set(prior.map((r) => r.planted_from)), rnd = makeRng(seed);
+  const pool = sources.filter((s) => !used.has(s.rec._id)).sort((a, b) => (a.rec._id < b.rec._id ? -1 : 1))
+    .map((s) => ({ s, k: rnd() })).sort((a, b) => a.k - b.k).map((x) => x.s);
+  const out = [], books = new Set();
+  for (let slot = 0; slot < owed; slot++) {
+    let got = null;
+    for (let j = 0; j < ERROR_KINDS.length && !got; j++) {
+      const kind = ERROR_KINDS[(prior.length + slot + j) % ERROR_KINDS.length];
+      for (const src of pool) {
+        if (books.has(src.rec.book_id)) continue;
+        const r = plantError(src.text, { kind, lang: lang ?? src.rec.lang, seed: parseInt(h(`${src.rec._id}:${kind}:${seed}`).slice(0, 8), 16) });
+        if (r) { got = { rec: src.rec, text: src.text, plant: r.plant, plantedText: r.text }; break; }
+      }
+    }
+    if (!got) break;
+    out.push(got); books.add(got.rec.book_id);
+  }
+  return out;
+}
+
+/** A route's planted-control block: all plants, the rolling window, and whether the judge is validated on it. */
+export function plantedBlock(rows, { now = Date.now(), windowDays = PLANT_WINDOW_DAYS, min = PLANT_MIN, bar = PLANT_BAR } = {}) {
+  const kn = (g) => { const k = g.filter((r) => r.catch.caught).length; return { caught: `${k}/${g.length}`, rate: g.length ? +(k / g.length).toFixed(3) : null, ci95: g.length ? wilson(k, g.length).map((x) => +x.toFixed(3)) : null }; };
+  const got = rows.map((r) => ({ ...r, catch: scorePlant(r.verdict, r.plant) }));
+  const recent = got.filter((r) => now - Date.parse(r.judged_at) <= windowDays * 864e5);
+  const roll = kn(recent);
+  const failed = recent.length >= min && roll.rate < bar;
+  const byKind = {};
+  for (const k of ERROR_KINDS) { const g = got.filter((r) => r.plant?.kind === k); if (g.length) byKind[k] = kn(g).caught; }
+  return { n: got.length, ...kn(got), named: `${got.filter((r) => r.catch.named).length}/${got.length}`, by_kind: byKind,
+    rolling: { days: windowDays, n: recent.length, ...roll }, validated: recent.length >= min ? !failed : null, failed,
+    rule: `rolling catch rate over the last ${windowDays} days, counted from ${min} plants: below ${bar} the route is not counted` };
+}
+
 /** The prompt's template hash: judgePrompt with placeholders, so a change to the rubric shows as a new hash. */
 export const PROMPT_TEMPLATE_SHA = h(judgePrompt({ task: 'ocr', lang: '{lang}', text: '{text}' }, '{image}')).slice(0, 16);
 
 const REQUIRED = ['_id', 'kind', 'page_id', 'book_id', 'cell', 'route', 'lane', 'judge', 'run_id', 'judged_at'];
 /** Read-side shape check (a store another session can write): a record missing any of these is not counted. */
-export const validRecord = (r) => r && REQUIRED.every((k) => r[k] != null) && ['item', 'draft', 'wrong_page'].includes(r.kind)
+export const validRecord = (r) => r && REQUIRED.every((k) => r[k] != null) && ['item', 'draft', 'wrong_page', 'planted'].includes(r.kind)
   && (r.verdict == null || (typeof r.verdict.accept === 'boolean' && Number(r.verdict.fidelity) >= 1 && Number(r.verdict.fidelity) <= 5));
 
 const cls = (d) => String(d.class || '').toUpperCase().match(/^[IOTDE]\d+/)?.[0] ?? 'E2';
@@ -294,13 +350,19 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
     const C = report.cells[cell] = { task: 'ocr', lang: rs[0].lang ?? null, controls: {}, routes: {}, routes_not_counted: {}, drafts_conditioned: {}, made_worse: {} };
     for (const route of [...new Set(rs.filter((r) => r.kind === 'item').map((r) => r.route))].sort()) {
       const wp = rs.filter((r) => r.kind === 'wrong_page' && r.route === route);
-      const passed = wp.length > 0 && wp.every((r) => !r.verdict.accept && Number(r.verdict.fidelity) <= 2);
-      C.controls[route] = { n: wp.length, passed, verdicts: wp.map((r) => ({ accept: r.verdict.accept, fidelity: r.verdict.fidelity, week: r.week })) };
+      const wpPassed = wp.length > 0 && wp.every((r) => !r.verdict.accept && Number(r.verdict.fidelity) <= 2);
+      const pl = rs.filter((r) => r.kind === 'planted' && r.route === route && r.plant);
+      const judgePlanted = pl.length ? plantedBlock(pl, { now: Date.parse(generatedAt) || Date.now() }) : null;
+      const passed = wpPassed && !judgePlanted?.failed;
+      C.controls[route] = { n: wp.length, passed, wrong_page_passed: wpPassed, verdicts: wp.map((r) => ({ accept: r.verdict.accept, fidelity: r.verdict.fidelity, week: r.week })),
+        ...(judgePlanted && { planted: judgePlanted }) };
       const all = rs.filter((r) => r.kind === 'item' && r.route === route);
       // A print cell's evidence is its print pages; manuscript, mixed and unknown pages are reported apart (by_script).
       const got = all.filter(inEvidence);
       const flagged = all.filter((r) => r.draw?.stratum === 'flagged');
       const block = { ...routeBlock(got), lane: [...new Set(all.map((r) => r.lane))], counts: passed, served: 'the live lane\'s applied output (served)',
+        judge_planted: judgePlanted && { caught: judgePlanted.rolling.caught, rate: judgePlanted.rolling.rate, ci95: judgePlanted.rolling.ci95, validated: judgePlanted.validated, all: judgePlanted.caught },
+        ...(!passed && { not_counted_because: [!wpPassed && 'wrong-page control not passed', judgePlanted?.failed && `judge-unvalidated: planted catch ${judgePlanted.rolling.caught} < ${PLANT_BAR}`].filter(Boolean) }),
         evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all),
         ...(flagged.length && { flagged_stratum: { ...routeBlock(flagged), note: 'pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence' } }) };
       (passed ? C.routes : C.routes_not_counted)[route] = block;
@@ -465,7 +527,7 @@ async function findWrites(db, since, until) {
 async function history(db) {
   const rows = await db.collection(VERDICTS).find({}, { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
   const pagesJudged = new Set(), bookPagesSet = new Map(), routeBooks = new Map();
-  for (const r of rows.filter((x) => x.kind !== 'wrong_page' && validRecordLoose(x))) {
+  for (const r of rows.filter((x) => x.kind !== 'wrong_page' && x.kind !== 'planted' && validRecordLoose(x))) {
     pagesJudged.add(r.page_id);
     if (!bookPagesSet.has(r.book_id)) bookPagesSet.set(r.book_id, new Set());
     bookPagesSet.get(r.book_id).add(r.page_id);
@@ -531,16 +593,41 @@ async function run() {
         if (other) controls.push({ kind: 'wrong_page', d, other, route });
       }
     }
-    const queue = [...controls, ...items];
+    // Planted controls (#7611): K per cell x route per ISO week, on pages the judge ACCEPTED before, still holding that
+    // text; one error each in the body, the kind rotating B -> E. Judged blind beside the items; scored in the export.
+    const planted = [];
+    const PER_WEEK = Number(arg('planted') ?? 2);
+    if (PER_WEEK > 0) {
+      for (const g of [...new Set(drawn.map((d) => `${d.cell}|${d.route}`))]) {   // every cell x route judged this run, flagged-only ones too
+        const [cell, route] = g.split('|');
+        // A language the planter has no bank for (it plants la / de / fr) gets no planted control, and says so.
+        const lang = drawn.find((d) => `${d.cell}|${d.route}` === g)?.lang;
+        if (!langCode(lang)) { console.log(`  planted: no planter for ${lang} (${g}); none owed`); continue; }
+        const prior = await db.collection(VERDICTS).find({ kind: 'planted', cell, route }, { projection: { planted_from: 1, week: 1 } }).toArray();
+        const owed = PER_WEEK - prior.filter((r) => r.week === week).length;
+        if (owed <= 0) continue;
+        const accepted = await db.collection(VERDICTS).find({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } }).toArray();
+        const ok = accepted.filter((r) => validRecord(r) && inEvidence(r));
+        const texts = new Map((await db.collection('pages').find({ id: { $in: ok.map((r) => r.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
+        const sources = ok.map((rec) => ({ rec, text: texts.get(rec.page_id) })).filter((x) => typeof x.text === 'string' && h(x.text.trim()).slice(0, 16) === x.rec.text_hash);
+        for (const x of planPlanted(sources, { owed, prior, lang, seed: seed ^ 0x7611 ^ parseInt(h(g).slice(0, 6), 16) })) {
+          const r = x.rec;
+          planted.push({ kind: 'planted', route, text: x.plantedText, plant: x.plant, from: r._id,
+            d: { page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, cell, route, lane: r.lane, lang: r.lang, script_type: r.script_type, script_source: r.script_source,
+              cell_hand: r.cell_hand, write: r.write, draft_model: r.draft_model, key: null, rate: null, u: null, human_read_count: r.draw?.human_read_count ?? null, stratum: 'planted' } });
+        }
+      }
+    }
+    const queue = [...controls, ...planted, ...items];
     const drawFile = path.join(OUT, `draw-${runId}.json`);
     fs.writeFileSync(drawFile, JSON.stringify({ run_id: runId, since, until, seed, frame, log, budget, max_calls: maxCalls, draft_share: draftShare, prompt_template_sha: PROMPT_TEMPLATE_SHA,
       mode: BOOKS ? 'book-depth' : 'nightly', books: BOOKS ? [...BOOKS] : null, per_book: BOOKS ? PER_BOOK : null,
       drawn: drawn.map(({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, write, stratum, check_flag, change_share }) => ({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, revision_id: write.revision_id, stratum, check_flag, change_share })),
-      queue: queue.map((q) => ({ kind: q.kind, page_id: q.d.page_id, route: q.route, other: q.other?.page_id })) }, null, 1));
+      queue: queue.map((q) => ({ kind: q.kind, page_id: q.d.page_id, route: q.route, other: q.other?.page_id, ...(q.plant && { plant: q.plant, planted_from: q.from }) })) }, null, 1));
     const tally = {}; for (const d of drawn) tally[`${d.cell}/${d.route}`] = (tally[`${d.cell}/${d.route}`] ?? 0) + 1;
     console.log(`window ${since.toISOString()} .. ${until.toISOString()}  seed ${seed}  run ${runId}`);
     console.log(`frame ${JSON.stringify(frame)}`);
-    console.log(`draw ${JSON.stringify(log)} -> ${drawn.length} pages ${JSON.stringify(tally)}; queue ${queue.length} calls (${controls.length} controls)`);
+    console.log(`draw ${JSON.stringify(log)} -> ${drawn.length} pages ${JSON.stringify(tally)}; queue ${queue.length} calls (${controls.length} wrong-page controls, ${planted.length} planted)`);
     console.log(`budget: ${budget.maxCalls} calls / 7 days (${capPoints} pt / ${ppc} pt a call); ${hist.callsLast7d} made; ${maxCalls} this run`);
     const meter0 = await claudeMeter(limits);
     console.log(`meter: ${meter0 ? `${meter0.source} ${meter0.email ?? ''} weekly ${meter0.weekly}% 5h ${meter0.session}%` : 'unreadable'}`);
@@ -559,7 +646,7 @@ async function run() {
       const why = local ? `${local.reason} (until ${local.until})` : paceBlock(meter);
       if (why) { stop = why; break; }
       const p = pageDocs.get(q.d.page_id);
-      const text = q.kind === 'draft' ? drafts.get(q.d.write.revision_id) : q.kind === 'wrong_page' ? pageDocs.get(q.other.page_id)?.ocr?.data : p?.ocr?.data;
+      const text = q.kind === 'draft' ? drafts.get(q.d.write.revision_id) : q.kind === 'wrong_page' ? pageDocs.get(q.other.page_id)?.ocr?.data : q.kind === 'planted' ? q.text : p?.ocr?.data;
       const imageUrl = p && getPageSource(p);
       if (!text?.trim() || !imageUrl) { console.log(`  skip ${q.kind} ${q.d.page_id}: ${!imageUrl ? 'no image' : 'no text'}`); continue; }
       if (q.kind === 'item' && (await import('../lib/page-text-writer.mjs')).textHash(p.ocr) !== q.d.write.text_hash) { console.log(`  skip ${q.d.page_id}: rewritten since the draw`); continue; }
@@ -581,6 +668,7 @@ async function run() {
           other_page_id: q.other?.page_id, script_type: q.d.script_type, script_source: q.d.script_source, cell_hand: q.d.cell_hand, write: q.d.write, draft_model: q.d.draft_model, image_url: imageUrl, text_hash: h(text.trim()).slice(0, 16),
           judge: { by: 'claude -p --model opus', model_reported: res.model, prompt_template_sha: PROMPT_TEMPLATE_SHA, prompt_sha: h(prompt).slice(0, 16), instrument: 'route-judge-6740 judgePrompt' },
           verdict: v, raw: v ? undefined : String(res.text).slice(0, 500), cls: res.cls, usage: res.usage, list_usd: res.cost, secs: Math.round((Date.now() - t0) / 1000),
+          ...(q.kind === 'planted' && { plant: q.plant, planted_from: q.from, catch: v ? scorePlant(v, q.plant) : null }),
           seed, run_id: runId, week, draw: { key: q.d.key, rate: q.d.rate, u: q.d.u, human_read_count: q.d.human_read_count, stratum: q.d.stratum ?? 'random', ...(BOOKS && { mode: 'book-depth' }), ...(q.d.check_flag != null && { check_flag: q.d.check_flag, change_share: q.d.change_share }) }, called: true, judged_at: new Date().toISOString() };
         await db.collection(VERDICTS).insertOne(doc);
         console.log(`  ${q.kind} ${q.d.cell}/${q.route} ${q.d.book_id}:${q.d.page_number}: ${v ? `accept=${v.accept} ${v.fidelity} (${(v.defects || []).length} defects)` : `unparsed ${res.cls ?? ''}`}`);

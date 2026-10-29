@@ -270,7 +270,10 @@ def main():
             if x.get('_group'): g = grp.setdefault(x['_group'], [0, 0]); g[0] = max(g[0], x['books']); g[1] += nn(x)
         f = lambda x: (min(1, grp[x['_group']][0] / grp[x['_group']][1]) if x.get('_group') else min(1, x['books'] / nn(x))) * x.get('_w', 1) if P['cluster_by_book'] else x.get('_w', 1)
         eff = [sum(int(x[fl].split('/')[i]) * f(x) for x in xs) for fl, i in (('accept', 0), ('accept', 1), ('wrong_text_pages', 0))]
-        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs if not x.get('_group')) + sum(g[0] for g in grp.values()), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff)
+        # the judge's planted-error catch rate (#7611), from any source that measured it (lane-judge-sampler's planted controls)
+        jp = [x['judge_planted'] for x in xs if x.get('judge_planted')]
+        return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs if not x.get('_group')) + sum(g[0] for g in grp.values()), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff,
+                    judge_planted=jp[0] if len(jp) == 1 else None)
 
     # wrong-text bar (#7461): relative = at most the best route's rate + wrong_text_max; the other bar is a sensitivity
     rel = P['switch'].get('wrong_text_bar', 'absolute') == 'relative'
@@ -295,7 +298,7 @@ def main():
             rs.append(dict(id=r['id'], stage=r['stage'], channel=st['channel'], lane=st.get('lane'),
                            _bar=P['switch'].get('bar') == 'opus' and st['channel'] == 'claude' and not (cell.get('script') == 'manuscript' and P['switch'].get('bar_scope') == 'print'), points=st.get('points'), points_flat=st0.get('points'),
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)], prior_model=dict(zip(('mean', 'basis'), pb[cell['id'], r['id']])), eff=x and [round(v, 4) for v in x['eff']],
-                           k=k, n=n, wrong=w, wrate=wrate, top=top, mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
+                           k=k, n=n, wrong=w, wrate=wrate, top=top, judge_planted=x and x.get('judge_planted'), mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
                            p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
@@ -435,6 +438,7 @@ def main():
         for j, r in enumerate(row['routes']):
             acc = (f"**{r['k']}/{r['n']}** → {r['mean']:.2f} [{r['ci90'][0]:.2f}, {r['ci90'][1]:.2f}]" if r['tested']
                    else f"UNTESTED: prior {r['mean']:.2f} [{r['ci90'][0]:.2f}, {r['ci90'][1]:.2f}]")
+            if r.get('judge_planted'): acc += f"; judge caught {r['judge_planted']['caught']} planted" + (' (judge-unvalidated)' if r['judge_planted'].get('validated') is False else '')
             dw = '' if (row['decision_week'], row['route_week']) == (row['decision'], row['route']) else f"; this week: {row['decision_week']} → {row['route_week']}"
             dec = (fmt(row['decision'], row['route']) + dw
                    + (f"; margin {sw['sensitivity_within']}: {row['margin_010']}" if row['margin_010'] else '')
