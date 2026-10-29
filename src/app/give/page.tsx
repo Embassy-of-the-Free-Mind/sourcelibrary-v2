@@ -73,6 +73,31 @@ const BUILDS = [
   },
 ];
 
+// Fields a paid scholar would take on first. Each links to the shelf they would
+// review, so a donor can see the books behind the ask.
+const SCHOLAR_FIELDS = [
+  {
+    title: 'Hermetica and Renaissance Latin',
+    href: '/collections/hermetica',
+    text: 'Ficino’s Latin Hermes, Pico, the Neoplatonists: the texts the Renaissance was built on.',
+  },
+  {
+    title: 'Alchemy',
+    href: '/collections/alchemy',
+    text: 'Technical Latin and German, where one wrong word turns a recipe into nonsense.',
+  },
+  {
+    title: 'Kabbalah',
+    href: '/collections/kabbalah',
+    text: 'Hebrew and Christian Kabbalah, where a translation has to keep the letters as well as the sense.',
+  },
+  {
+    title: 'Maya writing',
+    href: '/collections/maya',
+    text: 'Codices and inscriptions read glyph by glyph, in a script deciphered only in living memory.',
+  },
+];
+
 const link = 'text-accent-rust hover:text-accent-gold-dark underline underline-offset-2';
 
 export default async function GivePage() {
@@ -185,20 +210,53 @@ export default async function GivePage() {
                   (src/app/articles/vision/content.ts, `plan` and `ways`): $150K over
                   five years for scholars, €70 / €400 per scan, adoption from $275.
                   Change them THERE first. */}
+            {/* The scholars' fund gets its own block because it is the ask with the
+                most leverage: the one cost the machines cannot lower. No scholar is
+                named here until they have agreed to the role; a name on a donation
+                page reads as their endorsement. */}
+            <section className="rounded-lg border border-stone-300 bg-white/60 p-6 md:p-8">
+              <p className="text-xs uppercase tracking-widest text-accent-rust mb-2">The scholars’ fund</p>
+              <h2 className="text-2xl font-display text-stone-900 leading-snug mb-3">
+                Put the experts on the page
+              </h2>
+              <p className="text-stone-700 leading-relaxed mb-3">
+                A machine translation is a draft until someone who reads the original has
+                checked it. The people who can do that are few: historians of esotericism who
+                read Ficino’s Latin, specialists in alchemical German, epigraphers who read
+                Maya glyphs. So far every check has been done by volunteers.
+              </p>
+              <p className="text-stone-700 leading-relaxed mb-6">
+                We want to pay them. A scholar takes responsibility for a field, reads the
+                translations against the originals, and corrects them; their corrections go
+                straight back into the text, and the core works become editions with a DOI
+                that anyone can cite.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                {SCHOLAR_FIELDS.map((f) => (
+                  <li key={f.title} className="border-l-2 border-accent-gold/40 pl-4">
+                    <Link href={f.href} className="font-semibold text-stone-900 hover:text-accent-rust">
+                      {f.title}
+                    </Link>
+                    <p className="text-sm text-stone-600 leading-relaxed">{f.text}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-stone-800 leading-relaxed">
+                <strong>$30,000 a year</strong> starts the first fields. To fund a scholar
+                in a field you care about,{' '}
+                <a
+                  href="mailto:derek@sourcelibrary.org?subject=The%20scholars%E2%80%99%20fund"
+                  className={link}
+                >
+                  write to Derek
+                </a>
+                .
+              </p>
+            </section>
+
             <section>
-              <h2 className="text-xl font-display text-stone-900 mb-4">Where the money goes</h2>
+              <h2 className="text-xl font-display text-stone-900 mb-4">Where the rest goes</h2>
               <ul className="space-y-5">
-                <li>
-                  <p className="font-semibold text-stone-900">Scholars who check the translations</p>
-                  <p className="text-stone-600 leading-relaxed">
-                    A machine translation is a draft until someone who reads the original has
-                    checked it. So far every check has been done by volunteers. We want to pay
-                    scholars to read the translations against the originals, language by
-                    language, starting with Renaissance Latin, so the most important texts can
-                    be cited with confidence. That is $30,000 a year, and it is the part of the
-                    work that most needs people.
-                  </p>
-                </li>
                 <li>
                   <p className="font-semibold text-stone-900">Scanning the Embassy’s last books</p>
                   <p className="text-stone-600 leading-relaxed">
