@@ -33,8 +33,15 @@
  */
 export const ANON_EMBED_DOWNLOAD_TENANTS: readonly string[] = ['bph'];
 
-/** Distinct books per rolling 24h per visitor IP, for anonymous embed downloads. */
-export const ANON_EMBED_DAILY_BOOK_CAP = 10;
+/**
+ * Distinct books per rolling 24h per visitor IP, for anonymous embed downloads.
+ * Per IP, not per visitor: everyone in the Embassy's reading room shares one
+ * address, so 10 (the first value) would have been spent by a few readers before
+ * noon. A per-browser key is not available: a cookie set inside a cross-site
+ * frame is blocked or partitioned in Safari and Firefox. 50 free-tier text
+ * downloads of books readable on the page anyway still bounds bulk export.
+ */
+export const ANON_EMBED_DAILY_BOOK_CAP = 50;
 
 const SLUG_RE = /^[a-z0-9-]+$/;
 const APEX_HOSTS = new Set(['sourcelibrary.org', 'www.sourcelibrary.org']);
