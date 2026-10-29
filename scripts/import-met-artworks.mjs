@@ -20,7 +20,7 @@ import sharp from 'sharp';
 import { makeBookDoc } from './lib/book-docs.mjs';
 
 const MET_API = 'https://collectionapi.metmuseum.org/public/collection/v1';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const DISPLAY_MAX = 99999; // Store original resolution — no downscaling
 const THUMB_WIDTH = 600;

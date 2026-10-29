@@ -82,7 +82,7 @@ async function importOne(job: Job) {
     if (job.local_pdf) {
       buf = readFileSync(job.local_pdf);
     } else {
-      const res = await fetch(job.pdf_url as string, { signal: AbortSignal.timeout(180000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
+      const res = await fetch(job.pdf_url as string, { signal: AbortSignal.timeout(180000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
       if (!res.ok) { console.log(`  FAIL download ${res.status}: ${job.title}`); return null; }
       buf = Buffer.from(await res.arrayBuffer());
     }

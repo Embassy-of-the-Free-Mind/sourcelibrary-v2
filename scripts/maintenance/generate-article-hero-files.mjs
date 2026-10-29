@@ -34,7 +34,7 @@ const QUALITY = 50;
 
 async function load(src) {
   if (src.startsWith('/')) return fs.readFileSync(path.join(ROOT, 'public', src));
-  const res = await fetch(src, { headers: { 'User-Agent': 'SourceLibrary/1.0 (article heroes)' } });
+  const res = await fetch(src, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) article-heroes' } });
   if (!res.ok) throw new Error(`${res.status}`);
   return Buffer.from(await res.arrayBuffer());
 }

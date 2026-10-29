@@ -14,7 +14,7 @@ import { MongoClient } from 'mongodb';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '2000');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const DELAY_MS = 200;
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));

@@ -49,7 +49,7 @@ const CAMPAIGN = 'maya-mss-6559';
 const ISSUE = 6559;
 const NKC = 'http://rightsstatements.org/vocab/NKC/1.0/';
 const DPUL = 'https://dpul.princeton.edu/mesoamerican/catalog';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const HOLD = {
   reason: CAMPAIGN,
   issue: ISSUE,

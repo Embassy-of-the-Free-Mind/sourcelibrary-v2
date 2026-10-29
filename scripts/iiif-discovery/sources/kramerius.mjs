@@ -36,7 +36,7 @@ const MAX_RECORDS = parseInt(args['max-records']) || Infinity;
 const BEFORE = parseInt(args.before) || 1900;
 const DELAY = parseInt(args.delay) || 1100;
 const ROWS = 1000;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library; Kramerius harvest)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) kramerius-harvest';
 
 const SITES = {
   nkp: {
