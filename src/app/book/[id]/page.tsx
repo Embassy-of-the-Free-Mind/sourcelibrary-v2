@@ -845,7 +845,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, embedPathPrefix = '', previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; embedPathPrefix?: string; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, embedPathPrefix = '', partnerV2 = false, previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; embedPathPrefix?: string; partnerV2?: boolean; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
   // Chrome words for this URL's language, and the link prefix that keeps a
   // reader on it. `lp` is registry-guarded (src/lib/i18n.ts): a path with no
   // Spanish twin comes back unprefixed rather than pointing at a 404.
@@ -1129,9 +1129,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // BPH/EFM asked, via Derek, for the same book page as sourcelibrary.org. The
   // embedPolicy switches still hide every cross-library rail, and `lpv` below
   // keeps every link this layout builds inside /embed/<tenant>. Self-serve
-  // reading rooms (no tenant, so no embedPathPrefix) keep the layout below.
+  // reading rooms (no tenant, so no partnerV2) keep the layout below.
   // ============================================================================
-  if (!isEmbedded || embedPathPrefix) {
+  if (!isEmbedded || partnerV2) {
     // The v2 link builder: the locale prefix, then the embed namespace when
     // embedded. Every in-book link below goes through it; a target with no
     // embed route (gallery, checks, author, admin) is not linked when embedded.
@@ -2833,6 +2833,9 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // 2026-10-29: illustration links opened Reader2C inside the Embassy iframe).
   // On a tenant subdomain the proxy hides the prefix, so it stays empty there.
   const embedPathPrefix = isEmbedded && ctx?.source === 'embed-path' && tenantSlug ? `/embed/${tenantSlug}` : '';
+  // A partner's frame gets the v2 book page whether it arrives as /embed/<tenant>/… or on the
+  // partner's subdomain (bph.sourcelibrary.org), which the proxy rewrites without the prefix.
+  const partnerV2 = isEmbedded && !!tenantSlug && (ctx?.source === 'embed-path' || ctx?.source === 'subdomain');
 
   // Existence + tenant-match check BEFORE streaming. notFound() called from
   // inside the Suspense boundary below renders the not-found UI but leaves the
@@ -3011,7 +3014,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} embedPathPrefix={embedPathPrefix} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} embedPathPrefix={embedPathPrefix} partnerV2={partnerV2} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
       </Suspense>
       {!isEmbedded && (
         <SignUpCTA
