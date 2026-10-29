@@ -25,6 +25,15 @@
  *                   transcription and stay in `text`; the annotation spans them (`body` null);
  *       page        `<summary>`, `<keywords>`, `<vocab>`, `<warning>`, `<meta>`, `<abbrev>` and the
  *                   page-data tags (`<page-type>`, `<folio>` …): no anchor, scope the page.
+ *   - the LEGACY syntaxes (annotation-layer/3, #5942): whatever the reader hides with notes off leaves `text`
+ *     as an annotation of the same family — every `[[label: …]]` block (page marks `[[margin|gloss|insert|unclear|
+ *     term: …]]` keep their words as marks), a bracketed image paragraph ("[Engraving of …]") as an image note, a
+ *     plain "Summary:" line, a leading preamble, a code fence, a free-text vocabulary section. A single-bracket
+ *     interpolation ("[that is, Mercury]") is part of the sentence: it stays in `text`, brackets and all, under an
+ *     `interp` mark, which notes-off (`notesOffText`) drops as the reader does. A lacuna mark ("[…]") is neither.
+ *     The reader's rules are imported from scripts/lib/legacy-note-syntax.mjs, not restated; where the reader
+ *     is itself wrong (it deletes a book's "## INDEX" heading and a dictionary's "GENERAL VOCABULARY" page)
+ *     the parser keeps the book's words, and the difference is listed on #5942.
  *   - an UNCLOSED tag is an annotation flagged `malformed: 'unclosed'` with `body: null`; only the
  *     tag itself leaves the text, the words after it stay. `suspect` marks the stretch (to the end
  *     of its paragraph) that today's reader would have hidden. A stray close tag is
@@ -39,6 +48,8 @@
 
 import { splitInlineTermDefinitions } from './term-definitions.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { PREAMBLE_OPENER, PREAMBLE_META_VOCAB } from './strip-editorial-wrappers.mjs';
+import { BRACKETED_PARAGRAPH, INTERP_PATTERN, isLacunaMark, looksLikeImageDescription } from './legacy-note-syntax.mjs';
 
 export const COMMENTARY_TAGS = ['note', 'image-desc'];
 export const MARK_TAGS = ['margin', 'gloss', 'insert', 'unclear', 'term'];
@@ -46,8 +57,16 @@ export const PAGE_TAGS = ['summary', 'keywords', 'vocab', 'warning', 'meta', 'ab
 export const PAGE_DATA_TAGS = ['page-type', 'page-num', 'folio', 'sig', 'lang', 'language', 'script', 'scan-quality', 'columns', 'header', 'detected-images'];
 const VOCAB = [...COMMENTARY_TAGS, ...MARK_TAGS, ...PAGE_TAGS, ...PAGE_DATA_TAGS];
 const TAG_RE = new RegExp(`<(\\/?)(${VOCAB.map((t) => t.replace('-', '\\-')).join('|')})((?:\\s[^<>]*)?)>`, 'gi');
-// Legacy bracket syntax the reader still reads: [[notes: …]], [[meta: …]] and friends.
-const LEGACY_RE = /\[\[(notes?|meta|warning|language|page\s*number|folio|signature|abbrev|summary|keywords):\s*([\s\S]*?)\]\]/gi;
+// Legacy bracket syntax (the 2025-12 prompts) — every label the reader reads, not only the ones it shows in
+// the page panel: [[image:]], [[vocabulary:]], [[header:]], [[markup:]], [[page type:]] and the bracketed page
+// marks were left in `text` as book words by annotation-layer/1–/2 (#5942 legacy syntaxes, 2026-10-29).
+const LEGACY_PAGE_LABELS = 'meta|warning|language|page\\s*number|page\\s*type|folio|signature|abbrev|summary|keywords|vocabulary|header|markup'
+  // Labels the model invented that NO reader rule reads: today's reader shows "[[original page: 68]]" as book text (a
+  // reader error, listed on #5942). They are page furniture (a page number, a catchword, a signature) or a word list.
+  + '|original\\s*page|page|catchword|sig|signature\\s*mark|vocab';
+const LEGACY_PAGE_RE = new RegExp(`\\[\\[(${LEGACY_PAGE_LABELS}):\\s*([\\s\\S]*?)\\]\\]`, 'gi');
+const LEGACY_COMMENTARY_RE = /\[\[(image|notes?):\s*([\s\S]*?)\]\]/gi;
+const LEGACY_TYPE = { vocabulary: 'vocab', vocab: 'vocab', summary: 'summary', keywords: 'keywords', meta: 'meta', warning: 'warning', abbrev: 'abbrev' };
 
 /** Context kept on each side of an anchor (characters). */
 export const CONTEXT = 32;
@@ -66,11 +85,13 @@ const kindOf = (tag) => (COMMENTARY_TAGS.includes(tag) ? 'commentary' : MARK_TAG
  * @param {string} markup a stored translation or OCR page
  * @param {{ source?: string, termDefinitions?: boolean }} [opts]
  *   source: provenance label for every annotation (e.g. `inline-v13`).
+ *   ocr: the page's transcription. When given, an interpolation whose brackets the SOURCE prints (an edition's
+ *   "[Fig. 164 :]", "[Σ 392]", a papyrus restoration) is flagged `printed: true`, and notes-off keeps it.
  *   termDefinitions: first lift a definition written inside a `<term>` chip into a `<note>`
  *   (term-definitions.mjs shape 1), as every reader surface does. Default true. When it fires,
  *   `renderInline` rebuilds the lifted form, not the stored one; `termDefinitionsLifted` says so.
  */
-export function splitAnnotations(markup, { source = 'inline', termDefinitions = true } = {}) {
+export function splitAnnotations(markup, { source = 'inline', termDefinitions = true, ocr = null } = {}) {
   let input = String(markup ?? '');
   let lifted = 0;
   if (termDefinitions && /<term>/i.test(input)) {
@@ -172,17 +193,10 @@ export function splitAnnotations(markup, { source = 'inline', termDefinitions = 
   }
   for (const m of markStack) m.ann.malformed = 'unclosed';
 
-  // Legacy [[…]] blocks, outside any cut.
-  for (const m of input.matchAll(LEGACY_RE)) {
-    const s = m.index, e = s + m[0].length;
-    if (cuts.some((c) => s < c.e && e > c.s)) continue;
-    const label = m[1].toLowerCase().replace(/\s+/g, ' ');
-    const type = /^notes?$/.test(label) ? 'note' : PAGE_TAGS.includes(label) ? label : 'pagedata';
-    const ann = { type, kind: type === 'note' ? 'commentary' : 'page', tag: `[[${label}]]`, body: m[2], anchor: null, source };
-    anns.push(ann);
-    cuts.push({ s, e, ann, role: 'whole' });
-  }
-  cuts.sort((a, b) => a.s - b.s);
+  legacyPasses(input, cuts, anns, source);
+  if (ocr) markPrintedBrackets(anns, input, cuts, ocr);
+  // A zero-width piece (an interpolation's bound) goes before a cut that starts where it stands.
+  cuts.sort((a, b) => a.s - b.s || (a.e > a.s) - (b.e > b.s));
 
   // Whitespace that goes with a removed block, so `text` does not keep a hole.
   for (const c of cuts) {
@@ -283,6 +297,227 @@ export function splitAnnotations(markup, { source = 'inline', termDefinitions = 
   return { text, annotations, inline: layout, termDefinitionsLifted: lifted };
 }
 
+// ---------- legacy syntaxes ----------
+
+/**
+ * The page as the reader's regexes see it at one stage: `input` with the given cuts deleted, and a map from
+ * each view index back to its input index (`map[view.length]` is the end).
+ */
+function viewOf(input, removed) {
+  const rs = removed.filter((c) => c.e > c.s).sort((a, b) => a.s - b.s);
+  let view = '';
+  const map = [];
+  let pos = 0;
+  for (const c of rs) {
+    if (c.e <= pos) continue;
+    const s = Math.max(c.s, pos);
+    for (let i = pos; i < s; i++) map.push(i);
+    view += input.slice(pos, s);
+    pos = c.e;
+  }
+  for (let i = pos; i < input.length; i++) map.push(i);
+  view += input.slice(pos);
+  map.push(input.length);
+  return { view, map };
+}
+
+/** Input range of a view range [a, b). */
+const toInput = (map, a, b) => [map[a], b > a ? map[b - 1] + 1 : map[a]];
+
+/** Where an input range sits against the cuts already made: 'free', 'inside' one, or 'straddle'. */
+function placeOf(cuts, s, e) {
+  for (const c of cuts) {
+    if (c.e <= c.s) continue;
+    if (s >= c.s && e <= c.e) return 'inside';
+    if (s < c.e && e > c.s && !(s <= c.s && e >= c.e)) return 'straddle';
+  }
+  return 'free';
+}
+
+/**
+ * A block that leaves the text whole. Cuts lying entirely inside it go with it: their annotations are dropped,
+ * since their markup is part of this block's body (the reader removes the block with them inside).
+ */
+function addWhole(input, cuts, anns, s, e, ann) {
+  if (placeOf(cuts, s, e) !== 'free') return false;
+  for (let k = cuts.length - 1; k >= 0; k--) {
+    const c = cuts[k];
+    if (c.s >= s && c.e <= e) {
+      cuts.splice(k, 1);
+      const j = anns.indexOf(c.ann);
+      if (j >= 0 && !cuts.some((d) => d.ann === c.ann)) anns.splice(j, 1);
+    }
+  }
+  anns.push(ann);
+  cuts.push({ s, e, ann, role: 'whole' });
+  return true;
+}
+
+const pageCuts = (cuts) => cuts.filter((c) => c.role === 'whole' && c.ann.kind === 'page');
+
+/**
+ * The legacy syntaxes, in the order the reader's notes-off pipeline removes them (NotesRenderer.tsx
+ * `prepareNotesMarkdown`: extractMetadata → cleanOcrArtifacts → preprocessBracketTags), each pass run on the
+ * page as the reader sees it at that stage. Each becomes what the reader makes of it:
+ *   page       a code fence, a leading preamble, a "# Title Page" label line, a free-text vocabulary section,
+ *              the [[label: …]] page blocks, a plain "Summary:" line — removed, body kept;
+ *   commentary [[notes:]], [[image:]], a bracketed image paragraph — removed, body kept, anchored;
+ *   mark       [[margin|gloss|insert|unclear|term: …]] — the words stay; the brackets leave;
+ *   interp     a single-bracket interpolation ("[that is, Mercury]") — the words AND the brackets stay in
+ *              `text`; the annotation spans them (zero-width pieces), so notes-off can drop the span.
+ */
+function legacyPasses(input, cuts, anns, source) {
+  const page = (type, tag, body) => ({ type, kind: 'page', tag, body, anchor: null, source });
+
+  // 1. Code fence and leading preamble (extractMetadata's first lines), on the stored string.
+  const fenceOpen = input.match(/^```(?:markdown)?\s*\n?/i);
+  let at = 0;
+  if (fenceOpen && addWhole(input, cuts, anns, 0, fenceOpen[0].length, page('pagedata', 'fence', fenceOpen[0]))) at = fenceOpen[0].length;
+  const fenceClose = input.match(/\n?```\s*$/i);
+  if (fenceClose && fenceClose.index >= at) addWhole(input, cuts, anns, fenceClose.index, input.length, page('pagedata', 'fence', fenceClose[0]));
+  for (const re of [
+    /^(?:Here (?:is|are) (?:the |my )?(?:translation|transcription|OCR|summary|text)[^:]*:\s*\n*)/i,
+    /^(?:Below is (?:the |my )?(?:translation|transcription|OCR|summary)[^:]*:\s*\n*)/i,
+    /^(?:I have (?:translated|transcribed|completed)[^:]*:\s*\n*)/i,
+    /^(?:The following is[^:]*:\s*\n*)/i,
+  ]) {
+    const m = input.slice(at).match(re);
+    if (m && addWhole(input, cuts, anns, at, at + m[0].length, page('preamble', 'preamble', m[0]))) at += m[0].length;
+  }
+  // Not taken: the reader's "# Title Page"-style label lines. In a 59,387-page draw every one of the 249 was the
+  // book's own heading ("## INDEX 421", "# Table of Contents"), which the reader deletes (a reader bug, listed on #5942).
+
+  // 2. A free-text vocabulary section the model appended ("**Technical Vocabulary**", "### Vocabulary", "Key terms:"):
+  //    a line of nothing but the heading, to the next image description, page block or the end of the page. Not
+  //    taken: the word mid-line ("…the key words:") or a heading in capitals ("GENERAL VOCABULARY", a dictionary's
+  //    own) — the reader's regex takes those too and deletes the rest of the page (listed on #5942).
+  {
+    const { view, map } = viewOf(input, pageCuts(cuts));
+    const re = /(^|\n)[ \t]*(?:#{1,6}[ \t]*)?\*{0,2}((?:(?:Technical|Specialized|Specialised|Key)\s+)?(?:Vocabulary(?:\s+used)?(?:\s+in\s+this\s+passage)?|Key\s+(?:vocabulary|terms|words))(?:\s+(?:used\s+)?(?:in|on|from)\s+this\s+page)?):?\*{0,2}:?[ \t]*\n([\s\S]*?)(?=\n<image-desc>|$)/gi;
+    const m = [...view.matchAll(re)].find((x) => x[2] !== x[2].toUpperCase());
+    if (m) {
+      let [s, e] = toInput(map, m.index + m[1].length, m.index + m[0].length);
+      for (const c of pageCuts(cuts)) if (c.s >= s && c.s < e) e = c.s;
+      addWhole(input, cuts, anns, s, e, page('vocab', 'vocab-section', input.slice(s, e)));
+    }
+  }
+
+  // 3. [[label: …]] page blocks, then plain "Summary:" lines.
+  for (const re of [LEGACY_PAGE_RE, /^Summary:\s*(.+?)(?=\n\n|\n\[\[|$)/gim]) {
+    const { view, map } = viewOf(input, pageCuts(cuts));
+    for (const m of view.matchAll(re)) {
+      const [s, e] = toInput(map, m.index, m.index + m[0].length);
+      if (input.slice(s, e) !== m[0]) continue; // spans a removed block: leave it
+      if (m.length === 3) {
+        const label = m[1].toLowerCase().replace(/\s+/g, ' ');
+        addWhole(input, cuts, anns, s, e, page(LEGACY_TYPE[label] ?? 'pagedata', `[[${label}]]`, m[2]));
+      } else addWhole(input, cuts, anns, s, e, page('summary', 'Summary:', m[1]));
+    }
+  }
+
+  // 4. A leading preamble paragraph (cleanOcrArtifacts → stripLeadingAiPreamble), up to three.
+  {
+    const { view, map } = viewOf(input, pageCuts(cuts));
+    let p = 0;
+    for (let i = 0; i < 3; i++) {
+      p += view.slice(p).match(/^\s*/)[0].length;
+      const rest = view.slice(p);
+      const parEnd = rest.search(/\n[ \t]*\n/);
+      const para = parEnd === -1 ? rest.split('\n', 1)[0] : rest.slice(0, parEnd);
+      if (!para.length || para.length > 500 || para.startsWith('<') || !PREAMBLE_OPENER.test(para) || !PREAMBLE_META_VOCAB.test(para)) break;
+      const [s, e] = toInput(map, p, p + para.length);
+      if (input.slice(s, e) !== para || !addWhole(input, cuts, anns, s, e, page('preamble', 'preamble', para))) break;
+      p += para.length;
+    }
+  }
+
+  // 5. [[image:]] and [[notes:]] (commentary), then the bracketed page marks.
+  {
+    const { view, map } = viewOf(input, pageCuts(cuts));
+    for (const m of view.matchAll(LEGACY_COMMENTARY_RE)) {
+      const [s, e] = toInput(map, m.index, m.index + m[0].length);
+      if (input.slice(s, e) !== m[0]) continue;
+      const label = m[1].toLowerCase();
+      addWhole(input, cuts, anns, s, e, { type: label === 'image' ? 'image' : 'note', kind: 'commentary', tag: `[[${label}]]`, body: m[2], anchor: null, source });
+    }
+  }
+  // One label at a time, in the reader's order, each on the page as the last pass left it: in
+  // "[[margin: Agrypnia [[gloss: by sickness]]]]" the margin closes at the first "]]" and the gloss at the second.
+  const legacyGone = (c) => c.e > c.s && (c.ann.kind === 'page' || c.ann.tag?.startsWith('[['));
+  // "[[heading: …]]" and "[[crossed out: …]]" (invented; shown as text by today's reader) mark printed words too.
+  for (const label of ['margin', 'gloss', 'insert', 'unclear', 'term', 'heading', 'crossed\\s*out']) {
+    const { view, map } = viewOf(input, cuts.filter(legacyGone));
+    for (const m of view.matchAll(new RegExp(`(\\[\\[(${label}):\\s*)([\\s\\S]*?)(\\]\\])`, 'gi'))) {
+      // The words inside may hold blocks already removed ("[[margin: see [[page number: 3]] here]]"); the
+      // brackets must stand in the stored text as they are in the view. The whitespace after the colon goes
+      // with the opening bracket only as far as it is unbroken in the stored text.
+      let k = m[1].length;
+      while (k > m[2].length + 3 && map[m.index + k - 1] - map[m.index] !== k - 1) k--;
+      const [s, openEnd] = toInput(map, m.index, m.index + k);
+      const [closeStart, e] = toInput(map, m.index + m[0].length - 2, m.index + m[0].length);
+      if (input.slice(s, openEnd) !== m[1].slice(0, k) || input.slice(closeStart, e) !== ']]') continue;
+      if (placeOf(cuts, s, openEnd) !== 'free' || placeOf(cuts, closeStart, e) !== 'free' || placeOf(cuts, s, e) === 'inside') continue;
+      const name = m[2].toLowerCase().replace(/\s+/g, ' ');
+      const ann = { type: name.replace(' ', '-'), kind: 'mark', tag: `[[${name}]]`, body: null, anchor: null, source };
+      anns.push(ann);
+      cuts.push({ s, e: openEnd, ann, role: 'open' }, { s: closeStart, e, ann, role: 'close' });
+    }
+  }
+
+  // 6. Bracketed image paragraphs, then single-bracket interpolations — on the page as preprocessBracketTags
+  //    sees it: page blocks and every [[…]] gone, XML notes still in place.
+  const bracketView = () => viewOf(input, cuts.filter((c) => c.e > c.s && (c.ann.kind === 'page' || c.ann.tag?.startsWith?.('[['))));
+  {
+    const { view: v0, map: m0 } = bracketView();
+    // extractMetadata trims the page; BRACKETED_PARAGRAPH's ^ and $ are the trimmed page's ends.
+    const lead = v0.match(/^\s*/)[0].length;
+    const view = v0.slice(lead).replace(/\s+$/, '');
+    for (const m of view.matchAll(BRACKETED_PARAGRAPH)) {
+      if (!looksLikeImageDescription(m[2])) continue;
+      const open = lead + m.index + m[1].length + m[0].slice(m[1].length).indexOf('[');
+      const close = lead + m.index + m[0].lastIndexOf(']') + 1;
+      const [s, e] = toInput(m0, open, close);
+      // Notes the reader removed before this pass may stand inside it; they leave with it.
+      if (input[s] !== '[' || input[e - 1] !== ']') continue;
+      addWhole(input, cuts, anns, s, e, { type: 'image', kind: 'commentary', tag: '[image]', body: input.slice(s + 1, e - 1), anchor: null, source });
+    }
+  }
+  {
+    const { view, map } = bracketView();
+    for (const m of view.matchAll(INTERP_PATTERN)) {
+      if (isLacunaMark(m[1])) continue;
+      const [s, e] = toInput(map, m.index, m.index + m[0].length);
+      if (input[s] !== '[' || input[e - 1] !== ']') continue;
+      // Its bounds must stand in the text: not inside a removed block.
+      if (placeOf(cuts, s, s + 1) !== 'free' || placeOf(cuts, e - 1, e) !== 'free') continue;
+      const ann = { type: 'interp', kind: 'mark', tag: 'interp', body: null, anchor: null, source };
+      anns.push(ann);
+      cuts.push({ s, e: s, ann, role: 'open' }, { s: e, e, ann, role: 'close' });
+    }
+  }
+}
+
+/**
+ * Single brackets the source itself prints. In the #5942 image-grounded check, 6 of 49 interpolations had printed
+ * brackets, and every one stood on a page whose OCR carries bracket runs; none of the model's did. An interpolation is
+ * printed when the OCR has the same bracketed words, or when the OCR has at least as many bracket runs as the
+ * translation has interpolations (an edition that brackets throughout).
+ */
+function markPrintedBrackets(anns, input, cuts, ocr) {
+  const norm = (x) => x.replace(/\s+/g, ' ').trim().toLowerCase();
+  const runs = [...String(ocr).matchAll(INTERP_PATTERN)].map((m) => m[1]).filter((x) => !isLacunaMark(x));
+  if (!runs.length) return;
+  const set = new Set(runs.map(norm));
+  const interps = anns.filter((a) => a.type === 'interp');
+  const all = runs.length >= interps.length;
+  for (const a of interps) {
+    const open = cuts.find((c) => c.ann === a && c.role === 'open');
+    const close = cuts.find((c) => c.ann === a && c.role === 'close');
+    const inner = open && close ? input.slice(open.s + 1, close.s - 1) : '';
+    if (all || set.has(norm(inner))) a.printed = true;
+  }
+}
+
 /** The markup again: `text` with every removed piece put back where it stood. */
 export function renderInline({ text, inline }) {
   let out = '';
@@ -294,7 +529,26 @@ export function renderInline({ text, inline }) {
   return out + text.slice(pos);
 }
 
-const FRONT_PAGE_TYPES = new Set(['meta', 'warning', 'pagedata']);
+/**
+ * The text a reader with notes OFF sees: `text` without its interpolation spans ("[that is, Mercury]"), which
+ * stay in `text` because they are part of the sentence, and which the reader drops with the rest of the
+ * translator's voice — except brackets the source prints (`printed`, from the OCR), which today's reader drops
+ * too (a reader error, listed on #5942). Takes splitAnnotations' result, or { text, annotations } with stored (flat) anchors.
+ */
+export function notesOffText({ text, annotations }) {
+  const spans = annotations
+    .filter((a) => a.type === 'interp' && !a.printed)
+    .map((a) => (a.anchor ? [a.anchor.start, a.anchor.end] : [a.start, a.end]))
+    .filter(([s, e]) => s != null && e > s)
+    .sort((x, y) => y[0] - x[0]);
+  let t = text;
+  for (const [s, e] of spans) t = t.slice(0, s) + t.slice(e);
+  return t;
+}
+
+const FRONT_PAGE_TYPES = new Set(['meta', 'warning', 'pagedata', 'preamble']);
+// Page blocks of the legacy syntaxes that have no tag: rebuilt as the words they were.
+const RAW_PAGE_TAGS = new Set(['preamble', 'heading', 'fence', 'vocab-section']);
 
 /**
  * Inline markup from `text` and the annotations alone — what a store that keeps the two apart
@@ -310,11 +564,17 @@ export function renderMarkup(text, annotations) {
   const front = [], back = [];
   annotations.forEach((a, order) => {
     if (a.malformed === 'stray-close') return;
-    const open = a.tag && !a.tag.startsWith('[[') ? `<${a.tag}${a.attrs ? ' ' + a.attrs : ''}>` : `<${a.type}>`;
-    const tag = a.tag && !a.tag.startsWith('[[') ? a.tag : a.type;
+    if (a.type === 'interp') return; // its brackets are in the text
+    const legacy = a.tag && a.tag.startsWith('[');
+    const tag = a.type === 'image' ? 'image-desc' : a.tag && !legacy ? a.tag : a.type;
+    const open = a.tag && !legacy ? `<${a.tag}${a.attrs ? ' ' + a.attrs : ''}>` : `<${tag}>`;
     if (a.glossary) { back.push(`<term>${a.term}</term> <note>${a.body ?? ''}</note>`); return; }
     if (a.scope === 'page') {
-      (FRONT_PAGE_TYPES.has(a.type) ? front : back).push(`<${tag}>${a.body ?? ''}</${tag}>`);
+      const block = a.tag?.startsWith('[[') ? `${a.tag.slice(0, -2)}: ${a.body ?? ''}]]`
+        : a.tag === 'Summary:' ? `Summary: ${a.body ?? ''}`
+        : RAW_PAGE_TAGS.has(a.tag) ? String(a.body ?? '').trim()
+        : `<${tag}>${a.body ?? ''}</${tag}>`;
+      (FRONT_PAGE_TYPES.has(a.type) || a.tag === 'heading' || a.tag === 'fence' ? front : back).push(block);
       return;
     }
     const r = resolveAnchor(text, a.anchor);
