@@ -26,6 +26,11 @@
  *                      bylines (author := the heading the LIBRARY'S RECORD gives) and
  *                      strings that name different GND people on different books
  *                      (author kept, author_id set).
+ *   --stage=unkeyed-strings --in=<enumerate-unmatched --out file> --out=<file>: the rows of that
+ *                      file the model may classify (Derek: "only strings with no GND id"):
+ *                      strings with no harvested book, or whose harvested record names ONE
+ *                      author without a GND id even after resolve-names. Strings keyed to a
+ *                      GND id, or naming several GND people, are left out.
  *   --stage=apply-books --in=<proposals.json> [--apply] [--undo]: writes them. books.author
  *                      through setCatalogueFields (scripts/lib/catalogue-fields.mjs) with
  *                      field_provenance.author = {source: <record URL>, type: original_catalog,
@@ -54,7 +59,7 @@ import { appendFileSync, readFileSync, existsSync } from 'node:fs';
 const val = (k, d = null) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const STAGE = val('stage');
 const OUT = val('out');
-if (!['resolve-names', 'verdicts', 'books', 'apply-books'].includes(STAGE) || (!OUT && ['verdicts', 'books'].includes(STAGE))) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file> | --stage=apply-books --in=<file> [--apply] [--undo]'); process.exit(2); }
+if (!['resolve-names', 'verdicts', 'books', 'apply-books', 'unkeyed-strings'].includes(STAGE) || (!OUT && ['verdicts', 'books', 'unkeyed-strings'].includes(STAGE))) { console.error('--stage=resolve-names | --stage=verdicts|books --out=<file> | --stage=apply-books --in=<file> [--apply] [--undo]'); process.exit(2); }
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
 const RUN = 'catalogue-authority-gnd-7660';
@@ -209,6 +214,26 @@ function stringKey(s) {
   const sampled = rs.filter((r) => SAMPLED.has(r.provider)).length;
   if (sampled && sampled < 2 && (sampledTotals.get(s) || 0) > 1 && rs.length < 2) return { gnd: null, why: 'one BSB sample of a multi-book string' };
   return { gnd, why: null };
+}
+
+if (STAGE === 'unkeyed-strings') {
+  const HARVESTED_PROVIDERS = new Set(['bsb', 'mdz', 'erara', 'e-rara', 'sbb', 'goettingen']);
+  const harvestedStrings = new Set(rows.map((r) => r.catalogue_author));
+  const { rows: en, ...rest } = JSON.parse(readFileSync(val('in'), 'utf8'));
+  const tally = {};
+  const keep = en.filter((r) => {
+    let why;
+    if (!r.providers?.some((p) => HARVESTED_PROVIDERS.has(p))) why = 'no harvestable provider (classified in the first half)';
+    else if (!harvestedStrings.has(r.string)) why = 'not harvested yet';
+    else if (!stringGnds.has(r.string)) why = null;   // the record names no author by role: only a reader can say
+    else { const k = stringKey(r.string); why = k.gnd ? 'keyed to a GND id' : k.why === 'no GND id' ? null : k.why; }
+    tally[why || 'to the model'] = (tally[why || 'to the model'] || 0) + 1;
+    return !why;
+  });
+  writeFileSync(OUT, JSON.stringify({ ...rest, rows: keep }, null, 1));
+  console.log(`unkeyed strings ${keep.length} -> ${OUT}`, tally);
+  await mc.close();
+  process.exit(0);
 }
 
 // ── existing docs ────────────────────────────────────────────────────────────
