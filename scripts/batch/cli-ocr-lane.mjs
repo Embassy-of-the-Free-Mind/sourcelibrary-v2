@@ -70,6 +70,8 @@
  * QUOTA FLOOR. Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini weekly remaining
  * fraction is below the straight line to its reset (remaining time / 7 days), or the 5-hour bucket is below
  * --floor-5h (default 0.25, so the other lanes on the pool keep their window). An unreadable /quota stops it too.
+ * `--pace-off-until=ISO` drops the weekly pace line until that time (the 5-hour floor still holds), so a pool can be
+ * spent out before its reset instead of paced to it; after that time the line is back with no edit (Derek 2026-10-29).
  * `--weekly-end=F` bends the line to end at F instead of 0 (line = F + (1 - F) × remaining time / 7 days), so a pool
  * the lane has to itself can be spent down to F by its reset and no further (#7263: the second pool, F = 0.10).
  *
@@ -206,12 +208,14 @@ const WEEK_MS = 7 * 24 * 3600 * 1000;
  * { ok, why, weekly, line, five_h }: not ok when the weekly bucket is under the straight line to its reset, the 5-hour
  * bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0 } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
   const line = weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
+  // --pace-off-until: spend the pool out before its reset (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
+  const paceOff = paceOffUntil != null && now < paceOffUntil;
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
-  if (weekly.remaining_fraction < line) return { ok: false, why: `weekly ${(100 * weekly.remaining_fraction).toFixed(1)}% is under the pace line ${(100 * line).toFixed(1)}%`, ...r };
+  if (!paceOff && weekly.remaining_fraction < line) return { ok: false, why: `weekly ${(100 * weekly.remaining_fraction).toFixed(1)}% is under the pace line ${(100 * line).toFixed(1)}%`, ...r };
   if (typeof five?.remaining_fraction !== 'number') return { ok: false, why: 'no Gemini 5-hour bucket in /quota', ...r };
   if (five.remaining_fraction < floor5h) return { ok: false, why: `5-hour bucket ${(100 * five.remaining_fraction).toFixed(1)}% is under ${100 * floor5h}%`, ...r };
   return { ok: true, why: null, ...r };
@@ -333,13 +337,15 @@ async function correctMain(mode, arg) {
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
   const WEEKLY_END = Number(arg('weekly-end') ?? 0);
   if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
+  if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
   const want = parseAgyHome(arg('agy-home'));
   let HOME = want.home ?? null;
   if (want.auto) {
     const pools = readPools();
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }); return { open: q.ok, why: q.why }; });
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }); return { open: q.ok, why: q.why }; });
     if (!pick) { console.log('correct: no pool has its floor open; nothing read'); await client.close(); return; }
     HOME = pick.home;
   } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
@@ -381,7 +387,7 @@ async function correctMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      const q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+      const q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
       if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
       const c = await nextChunk();
       if (!c) { stop ??= 'queue empty'; break; }
@@ -490,6 +496,8 @@ async function gpuMain(mode, arg) {
   const MAX = Number(arg('max-pages') || 400), MAX_BOOKS = Number(arg('max-books') || Infinity), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
   const WEEKLY_END = Number(arg('weekly-end') ?? 0);
   if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
+  const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
+  if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
   const want = parseAgyHome(arg('agy-home'));
   let HOME = want.home ?? null;
   // --wait-quota (a hand-run pilot): when every floor is shut, wait for one to open (re-picking the pool) until the
@@ -500,7 +508,7 @@ async function gpuMain(mode, arg) {
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
     // The open pool with the most weekly left (choosePool looks at the fullest pool only, and stops if its floor is shut).
-    const gate = (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }); return { open: q.ok, why: q.why }; };
+    const gate = (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }); return { open: q.ok, why: q.why }; };
     const pick = pools.filter((p) => p.reading && !p.busy && gate(p.reading).open).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
     if (!pick && !WAIT) { console.log('gpu-correct: no pool has its floor open; nothing read'); await client.close(); return; }
     HOME = pick?.home ?? null;
@@ -508,9 +516,9 @@ async function gpuMain(mode, arg) {
   let POOL = poolName({ home: HOME });
   let CHILD_ENV = agyEnv(HOME);
   const repick = () => {
-    if (!want.auto) return quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok;
+    if (!want.auto) return quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }).ok;
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    const p = readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END }).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
+    const p = readPools().filter((x) => x.reading && !x.busy && quotaFloor(toBuckets(x.reading), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }).ok).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
     if (!p) return false;
     HOME = p.home; POOL = poolName({ home: HOME }); CHILD_ENV = agyEnv(HOME); return true;
   };
@@ -547,11 +555,11 @@ async function gpuMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      let q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+      let q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
       if (!q.ok && WAIT) {
         console.log(`  pool ${POOL}: ${q.why}; waiting for a floor to open (--wait-quota)`);
         while (!repick() && Date.now() < DEADLINE) await new Promise((r) => setTimeout(r, 300_000));
-        q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END });
+        q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
       }
       if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
       const c = await nextChunk();

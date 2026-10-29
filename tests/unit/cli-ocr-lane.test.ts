@@ -101,6 +101,12 @@ describe('the correction lane quota floor (#7558)', () => {
     expect(quotaFloor(b(0.63, 0.2), { now }).ok).toBe(false);
     expect(quotaFloor(b(0.63, 0.2), { now, floor5h: 0.1 }).ok).toBe(true);
   });
+  it('--pace-off-until drops the pace line until that time, never the 5-hour floor', () => {
+    const until = now + 3600_000;
+    expect(quotaFloor(b(0.2), { now, paceOffUntil: until }).ok).toBe(true);
+    expect(quotaFloor(b(0.2), { now: until + 1, paceOffUntil: until }).ok).toBe(false);
+    expect(quotaFloor(b(0.2, 0.1), { now, paceOffUntil: until }).ok).toBe(false);
+  });
   it('fails closed on an unreadable /quota', () => {
     expect(quotaFloor(null, { now }).ok).toBe(false);
     expect(quotaFloor([], { now }).ok).toBe(false);
