@@ -87,6 +87,8 @@ for (const r of recs) {
       set.prior_translation = {
         work_title: p.title, translators: p.translator ? [p.translator] : [], scope: 'complete', url,
         verification_method: 'other', verified_at: NOW.toISOString(), evidence: r.card || '', source_attempt_id: attempt_id,
+        // Since 2026-10-29 the prompt asks for both sides of the coverage comparison; keep them so a recheck can read them.
+        ...(p.book_contains ? { book_contains: p.book_contains } : {}), ...(p.translation_covers ? { translation_covers: p.translation_covers } : {}),
         ...(Number.isInteger(yr) ? { year: yr } : {}), ...(p.publisher ? { publisher: p.publisher } : {}),
       };
       action = 'prior_credit';
