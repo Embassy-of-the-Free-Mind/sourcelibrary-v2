@@ -4,9 +4,11 @@ import { HowItSank, SourcesTable, SourcesTimeline } from './BoatFigures';
 
 // Shown after Beeckman's 1620 entry: every early report of the boat that the
 // library holds, in date order, so a reader can see how little rests on
-// Drebbel's own time. Papin's two plates are the earliest printed pictures of
-// a submarine in Drebbel's line that we found (Derek asked for "the first
-// drawing of it after Beeckman", 2026-10-29). Mersenne and Wilkins are served
+// Drebbel's own time. Borelli's 1680 plate is the earliest printed picture of
+// a rowed submarine that we found, and Papin's two plates follow (Derek asked
+// for "the first drawing of it after Beeckman", 2026-10-29). Borelli's figure
+// is cropped from the Library of Congress copy of Tab. XIV (cph.3b09148,
+// public domain). Mersenne and Wilkins are served
 // from the library's own page images; Papin's pages and plate are copied from
 // the Bayerische Staatsbibliothek scan (bsb10843010), since the library's copy
 // has no archived images yet. Harsdörffer 1651 (no figure) is copied from the
@@ -159,8 +161,26 @@ export default function WhatWeKnow() {
 
       <h3 className="font-serif text-xl text-primary mt-10 mb-3">The first pictures after Beeckman&rsquo;s</h3>
       <p className="text-secondary leading-relaxed mb-4 font-body">
-        The earliest printed pictures of a submarine in Drebbel&rsquo;s line that we have found
-        are Papin&rsquo;s, seventy-five years after Beeckman&rsquo;s sketch. They show
+        No picture of Drebbel&rsquo;s own boat was ever made from life, as far as we can find.
+        The first printed picture of a submarine with rowers is Giovanni Alfonso
+        Borelli&rsquo;s, in his book on how animals move (1680), sixty years after
+        Beeckman&rsquo;s sketch. Borelli does not name Drebbel, and his boat is a design, not a
+        record. But it works as the reports say Drebbel&rsquo;s did. Goatskin bottles, open to
+        the river through holes in the bottom, fill with water to sink the boat, as
+        Harsd&ouml;rffer&rsquo;s water-boxes do. A man squeezes them with a lever to send the
+        water out and rise. The oars pass through holes in the sides sealed with doubled goat
+        leather, the detail Papin later reports of Drebbel&rsquo;s boat.
+      </p>
+      <PageFigure src="/articles/beeckman-on-drebbel/borelli-1680-fig-9.jpg" alt="Engraving of a boat with its side cut away: inside, a row of tall leather bottles N stands on the floor and a man works a lever P against them; two oars V pass through the hull and end in webbed blades.">
+        Borelli&rsquo;s <span lang="la"><em>navis urinatoria</em></span>, a &ldquo;diving
+        ship&rdquo;: the bottles N, the lever P, the oars V with webbed blades Z &ldquo;like the
+        feet of geese and frogs&rdquo;. <em>De motu animalium</em>, part 1 (Rome, 1680),
+        proposition 224, Tab. XIV, Fig. 9.{' '}
+        <a href="https://www.loc.gov/pictures/item/2007675509/" className="underline">Library of Congress</a>.
+        The <em>Gentleman&rsquo;s Magazine</em> reprinted it in English in June 1749.
+      </PageFigure>
+      <p className="text-secondary leading-relaxed mb-4 mt-8 font-body">
+        Papin&rsquo;s pictures came fifteen years later. They show
         Papin&rsquo;s own two boats, built for Charles, Landgrave of Hesse, which he
         offers as the remedy for Drebbel&rsquo;s want of air. They are not pictures of
         Drebbel&rsquo;s boat. The first, a box of tinned iron plates, was wrecked when the crane

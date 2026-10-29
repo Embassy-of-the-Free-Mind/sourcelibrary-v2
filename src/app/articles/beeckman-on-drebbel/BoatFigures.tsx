@@ -254,7 +254,8 @@ const EVENTS: { year: number; who: string; what: string; tier: -2 | -1 | 1 | 2 }
   { year: 1648, who: 'Wilkins 1648', what: '“already experimented”', tier: 2 },
   { year: 1651, who: 'Harsdörffer 1651', what: 'boxes, leather, the King', tier: -2 },
   { year: 1660, who: 'Boyle 1660', what: 'twelve rowers, a liquor', tier: 1 },
-  { year: 1695, who: 'Papin 1695', what: 'first printed pictures', tier: -1 },
+  { year: 1680, who: 'Borelli 1680', what: 'first picture of one', tier: 2 },
+  { year: 1695, who: 'Papin 1695', what: 'his own boats, drawn', tier: -1 },
 ];
 
 export function SourcesTimeline() {
