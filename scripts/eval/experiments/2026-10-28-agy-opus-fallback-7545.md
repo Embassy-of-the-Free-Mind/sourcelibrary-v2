@@ -8,9 +8,10 @@ n_books: 45
 n_pages: 45
 verdict: "Opus through agy (claude-opus-5-5-low) matches Opus through claude -p on Latin Flash-Lite correction: 15/15 against 15/15 accepted, 0 wrong text on either, same pages (P = 0.915 under the router's 0.08 margin). On German translation it reads as well (23 of the 26 pages both routes answered, against 22), but 4/30 replies put the prompt's summary and keywords after <<<END>>>, which the writer refuses. Counted as the lane would count them, that is 23/30 against 26/30 (P = 0.45), so German does not pass yet. The Claude group of one agy account holds about 235 Latin corrections or about 870 German translations a week, down to the 10% floor."
 status: adopted
-decision: "lite>agy-opus is a fallback route for the latin-lite cell, used only when the account's Gemini weekly bucket reads 0 (agyClaudeGate, PR #7592). agy-opus-tr is not adopted until the marker failure is fixed and re-tested. Tibetan translation was not tested."
+decision: "lite>agy-opus is a fallback route for the latin-lite cell, used only when the account's Gemini weekly bucket reads 0 (agyClaudeGate, PR #7592). agy-opus-tr is not adopted until the marker failure is fixed and re-tested. Tibetan translation was not tested. The gate itself is PR #7592, still open on 2026-10-29 (land-evals): until it merges no lane takes this fallback."
 superseded_by: null
 issue: [7545, 6740]
+router_evidence: [latin-lite, german-tr-flash3, german-tr-lite]
 ---
 ## 2026-10-28 · Is Opus through agy as good as Opus through claude -p on the cells routed to Opus? (#7545)
 <!-- PRIOR ART: scripts/eval/route-judge-6740/judge.mjs (the router tests' instrument, reused unchanged except for two cells: latin-lite-7545 and german-7545); 2026-10-26 router tests (lite>opus-correct 30/30 on the Latin pilot; German opus-cli 49/60). Nothing before this run had measured Claude through agy: it was refused by assertGeminiModel until #7545. -->
