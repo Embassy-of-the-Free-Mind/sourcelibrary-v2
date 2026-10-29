@@ -120,6 +120,34 @@ export function ocrBlockInstruction(n, { variant = 'sentinels-6523' } = {}) {
 const BLOCK_RULES = (n) => `Transcribe each page separately and completely in the format above, following every rule above as if it were the only page: never carry text, a header or a heading over from a neighbouring page, and where a word or sentence runs over a page break, end that page with its last printed word and begin the next page with its own first printed word. Write each page between its own two marker lines: <<<PAGE 1 BEGIN>>> and <<<PAGE 1 END>>> around page 1, then <<<PAGE 2 BEGIN>>> and <<<PAGE 2 END>>> around page 2, and so on up to page ${n}. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.`;
 
 /**
+ * A CORRECTION of N consecutive pages in one call (#7701 arm C, `cli-ocr.mjs read --correct-prompt --per-call=N`). The
+ * one-page correction template (#5924 fc template, fc-prompt.mjs) is the live OCR prompt, then a "This call: correct
+ * one existing transcription" paragraph, its {draft} slot and the image line. The block prompt keeps everything before
+ * that paragraph byte for byte and replaces the rest: the same three answers (UNCHANGED, CONTAIN, the corrected page)
+ * asked PER PAGE, each draft between its own numbered DRAFT lines, each answer between the <<<PAGE n BEGIN>>> /
+ * <<<PAGE n END>>> markers splitPageBlocks reads, then the images in page order. Returns null when the template has no
+ * such paragraph (a template this cannot rebuild is never guessed at).
+ */
+export const CORRECT_ONE_PAGE_MARK = '**This call: correct one existing transcription against the page image.**';
+export function correctBlockPrompt(template, drafts) {
+  const at = String(template).indexOf(CORRECT_ONE_PAGE_MARK);
+  const n = drafts.length;
+  if (at < 0 || !(n >= 2) || !String(template).includes('{draft}')) return null;
+  const marks = Array.from({ length: n }, (_, i) => `<<<PAGE ${i + 1} BEGIN>>> and <<<PAGE ${i + 1} END>>> around page ${i + 1}`);
+  const images = Array.from({ length: n }, (_, i) => `page ${i + 1}: @./${pageBlockFile(i)}`).join(', ');
+  return `${String(template).slice(0, at)}**This call: correct ${n} existing transcriptions, one a page, against their page images.** The ${n} images, attached at the end of this message, are consecutive pages of one book, in page order. For each page n, the draft between the lines DRAFT n START and DRAFT n END below is the transcription a library currently gives readers for page n, made by an OCR engine. It may contain misread words, letters or numbers, dropped or repeated lines, a missed column or marginal note, or text that is not on the page. Open each image. The IMAGE is the authority.
+Check each draft against ITS OWN page image line by line and answer, for each page separately, with exactly one of:
+- \`UNCHANGED\` (that word alone) — the draft is a faithful transcription of its leaf: any differences from the image are spacing, punctuation, line breaks or conventions (tags, abbreviation expansion, the long s) that do not change what a reader learns.
+- \`CONTAIN: <one sentence>\` — the draft is not its leaf's text (another page's text, a different work, an invention), or the leaf cannot be read; say which and why.
+- The complete corrected transcription of the page, not a list of changes, in the format above: its metadata tags as the format above defines them, always including <page-type>, even where the draft uses older tags (such as <lang>). Keep the draft's conventions and layout where the image does not contradict them; change what the image contradicts, add what the draft left out, remove what the page does not print. Do not change a word the image supports, even where another reading would be more usual. Transcribe each page on its own: never carry text, a header or a heading over from a neighbouring page or its draft, and where a word or sentence runs over a page break, end that page with its last printed word and begin the next page with its own first printed word.
+Write each page's one answer (UNCHANGED, CONTAIN: …, or the corrected transcription) between its own two marker lines: ${marks.join(', then ')}. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.
+
+${drafts.map((d, i) => `DRAFT ${i + 1} START\n${d}\nDRAFT ${i + 1} END`).join('\n\n')}
+
+The page images, in page order: ${images}`;
+}
+
+/**
  * Split a block OCR reply into its n pages. Returns the n texts in page order, or null unless the reply is exactly
  * <<<PAGE 1 BEGIN>>> … <<<PAGE 1 END>>> … <<<PAGE n END>>>, in order, each page non-empty, nothing but whitespace
  * outside them and no other marker inside them. Strict on purpose: a reply is attributed to pages ONLY by its markers,
