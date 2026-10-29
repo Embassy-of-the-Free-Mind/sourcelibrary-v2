@@ -4,9 +4,10 @@
 // accepting low-risk spans from the text alone and sending only risky spans to the image. This classifies the spans and
 // merges the judge's verdicts back, span by span; the judging itself is leafcheck.mjs audit-req --pages --spans.
 /**
- *   list   --drafts=D.jsonl --run=cli-ocr-<id> --out=L.jsonl   (needs --env-file; #7263 wave 3)
+ *   list   [--drafts=D.jsonl] --run=cli-ocr-<id> --out=L.jsonl   (needs --env-file; #7263 wave 3)
  *          L for one apply run: every page that run wrote with a change, the draft from D (apply-volume.sh keeps the
- *          drafts as derge-drafts.jsonl before the write) and `next` as stored now. A page rewritten since is left out.
+ *          drafts as derge-drafts.jsonl before the write) or, without D, from the run's page_revisions rows (the prior
+ *          text writePageText kept), and `next` as stored now. A page rewritten since is left out.
  *   restore --pages=IDS.json --from-run=cli-ocr-<id> --run=diffqa-6740-<name> --why="..." [--apply]   (needs --env-file)
  *          Put whole pages back to the text --from-run replaced (its page_revisions row), compare-and-set: only a page
  *          still holding exactly what that run wrote. For an audited page that introduced a severe error (#6740 rule).
@@ -83,8 +84,9 @@ const CMD = process.argv[2];
 if (CMD === 'list') {
   const { MongoClient } = await import('mongodb');
   const RUN = arg('run'); if (!/^cli-ocr-/.test(RUN || '')) { console.error('--run=cli-ocr-<id> is required'); process.exit(2); }
-  const drafts = new Map(readJsonl(arg('drafts')).map((r) => [r.key, r.text]));
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const drafts = arg('drafts') ? new Map(readJsonl(arg('drafts')).map((r) => [r.key, r.text]))
+    : new Map((await c.db('bookstore').collection('page_revisions').find({ run_id: RUN, field: 'ocr', aborted: { $exists: false } }, { projection: { page_id: 1, data: 1 } }).toArray()).map((r) => [r.page_id, r.data]));
   const ps = await c.db('bookstore').collection('pages').find({ id: { $in: [...drafts.keys()] }, 'ocr.engine.run.job_id': RUN },
     { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
   await c.close();
