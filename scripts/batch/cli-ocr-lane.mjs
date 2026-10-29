@@ -507,7 +507,7 @@ async function gpuMain(mode, arg) {
     const pools = readPools();
     for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    // The open pool with the most weekly left (choosePool looks at the fullest pool only, and stops if its floor is shut).
+    // The open pool with the most weekly left.
     const gate = (r) => { const q = quotaFloor(toBuckets(r), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL }); return { open: q.ok, why: q.why }; };
     const pick = pools.filter((p) => p.reading && !p.busy && gate(p.reading).open).sort((x, y) => y.reading.weekly - x.reading.weekly)[0];
     if (!pick && !WAIT) { console.log('gpu-correct: no pool has its floor open; nothing read'); await client.close(); return; }

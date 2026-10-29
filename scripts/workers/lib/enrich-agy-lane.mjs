@@ -38,7 +38,7 @@
  * block (api 'cli', agy version, model, the hash of every prompt sent, run, issue); chapters get
  * field_provenance.chapters (+ history). The state row keeps calls, seconds and agy's token counts per book.
  *
- * Flags (after --agy): --limit=N books (20), --max-calls-day=N (600), --deadline-min=N (100), --concurrency=N (2),
+ * Flags (after --agy): --limit=N books (20), --max-calls-day=N (600), --pace-off-until=ISO, --deadline-min=N (100), --concurrency=N (2),
  * --max-chars=N (text per conversation, see MAX_CHARS), --max-turns=N (messages per conversation, MAX_TURNS), --agy-home=auto|default|<path> (auto), --model=<gemini> (3.8 Flash
  * low), --floor-5h=F (0.25), --ignore-floor (a hand-run pilot only), --run-tag=TAG, --book=ID / --book-ids-file=PATH.
  *
@@ -127,6 +127,8 @@ export async function runEnrichAgyLane(o) {
   const maxTurns = Number(argOf(args, 'max-turns', MAX_TURNS));
   const model = argOf(args, 'model', DEFAULT_MODEL);
   const floor5h = Number(argOf(args, 'floor-5h', 0.25));
+  // --pace-off-until=ISO: no weekly pace line until then, to spend a pool out before its reset (cli-ocr-lane.mjs quotaFloor)
+  const paceOffUntil = argOf(args, 'pace-off-until', null) ? Date.parse(argOf(args, 'pace-off-until', null)) : null;
   const runTag = argOf(args, 'run-tag', 'enrich-agy-7628');
   const run = `enrich-agy-${new Date().toISOString().replace(/[-:]/g, '').slice(0, 13)}-${process.pid}`;
   const me = { run, runTag };
@@ -141,8 +143,8 @@ export async function runEnrichAgyLane(o) {
   if (want === 'auto') {
     const pools = readPools();
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
-    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
+    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h, paceOffUntil }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h, paceOffUntil }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
     if (!pick) { report.stop = 'no pool above its quota floor'; console.log(`[ENRICH-AGY] ${report.stop}: nothing called`); return report; }
     home = pick.home;
   } else if (want !== 'default') home = path.resolve(want);

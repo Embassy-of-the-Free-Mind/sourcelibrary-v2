@@ -152,6 +152,8 @@ describe('the correction lane on a second pool (#7263)', () => {
     const pools = [{ home: null, reading: { weekly: 0.42 } }, { home: '/j', reading: { weekly: 0.97 } }, { home: '/k', busy: 9, reading: { weekly: 0.99 } }];
     expect(choosePool(pools, () => ({ open: true })).home).toBe('/j');
     expect(choosePool(pools, () => ({ open: false }))).toBeNull();
+    // the fullest pool under its pace line does not shut a smaller open one
+    expect(choosePool(pools, (r) => ({ open: r.weekly < 0.5 })).home).toBeNull();
   });
   it('two runs never hold one book: a live claim refuses, a dead or old claim is taken over', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'claims-'));
