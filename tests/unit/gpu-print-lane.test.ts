@@ -6,7 +6,7 @@ const PAGE = 'It was in the year 1834 that the Society first met in the rooms ab
 describe('gpu-print-lane (#6871)', () => {
   it('converts LightOnOCR markdown to plain text', () => {
     expect(convertRead('---\n\n# CHAPTER IV\n\n**Bold** and $^{12}$ ![fig](a.png)\n<table><tr><td>a</td><td>b</td></tr></table>'))
-      .toBe('CHAPTER IV\n\nBold and 12 \na | b');
+      .toBe('CHAPTER IV\n\nBold and 12\na | b');
   });
   it('writes an ordinary English page', () => {
     expect(pageVerdict(PAGE)).toMatchObject({ verdict: 'write' });
@@ -23,6 +23,23 @@ describe('gpu-print-lane (#6871)', () => {
   });
   it('turns away engine commentary about the image', () => {
     expect(pageVerdict(`${PAGE}\n\nNote: The original image contains a decorative brown scroll at the foot.`)).toMatchObject({ verdict: 'reject', reason: 'engine_commentary' });
+  });
+  it('turns away the pilot\'s appended notes (2026-10-29, by eye)', () => {
+    for (const note of ['Note: The images are placeholders since actual image URLs are not provided.',
+      'Note: The page number "19" at the bottom left is preserved as it appears in the image.',
+      'Note: The text ends abruptly with "and in the Holy Ghost," suggesting the original document may have been cut off.']) {
+      expect(pageVerdict(`${PAGE}\n\n${note}`)).toMatchObject({ verdict: 'reject', reason: 'engine_commentary' });
+    }
+  });
+  it('keeps a printed note that is not about the image', () => {
+    expect(pageVerdict(`${PAGE}\n\nNote: Mr. Herne was present at the second sitting only.`)).toMatchObject({ verdict: 'write' });
+  });
+  it('drops empty HTML divs and blockquote marks, unwraps transliteration set in math mode', () => {
+    expect(convertRead('<div style="text-align: center;">\n  \n</div>\n\n> “And the Holy Ghost”\n$nṛpas\\ sīdati$')).toBe('“And the Holy Ghost”\nnṛpas sīdati');
+  });
+  it('turns away a transliteration-dense page (Sanskrit phonetics), keeps a page naming Rāma', () => {
+    expect(pageVerdict('agniṣ + dahati = agnir dahati, the fire burns. sādhuṣ + yacchati = sādhur yacchati, the good man gives. ṛṣiṣ + uvāca = ṛṣir uvāca.')).toMatchObject({ verdict: 'reject', reason: 'transliteration_dense' });
+    expect(pageVerdict(`${PAGE} So said Rāma to the sage.`)).toMatchObject({ verdict: 'write' });
   });
   it('turns away a read that hit the token cap', () => {
     expect(pageVerdict(PAGE, { finish: 'length' })).toMatchObject({ verdict: 'reject', reason: 'loop_guard:token_cap' });

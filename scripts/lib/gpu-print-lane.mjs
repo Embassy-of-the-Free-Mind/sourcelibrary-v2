@@ -11,7 +11,8 @@
  *
  * Guards (in the worker's apply): the page still has no text, is not human-edited, its book is still held for this
  * lane, scripts/lib/gpu-ocr-loop-guard.mjs passes, the read has at least MIN_WORD_CHARS word characters (a blank
- * leaf stays unread), at most MAX_OTHER_SCRIPT letters of a non-Latin script, and no engine commentary line. Every write goes through writePageText (revision row, CAS on the prior field, run id), with
+ * leaf stays unread), at most MAX_OTHER_SCRIPT letters of a non-Latin script, no engine commentary line, and at most
+ * MAX_TRANSLIT_PERMILLE transliteration letters (the last three added after the judge and the pilot's by-eye check). Every write goes through writePageText (revision row, CAS on the prior field, run id), with
  * `ocr.source: 'lightonocr'` and an engine block (model, weights revision, serving, run, image).
  */
 import { contentHash } from './write-provenance.mjs';
@@ -47,17 +48,21 @@ export function hasNoText(ocr) {
 
 /**
  * LightOnOCR's markdown → the library's plain transcription: heading marks and bold dropped, standalone rules and
- * image links removed, an HTML table flattened one row a line (cells joined with " | "), a LaTeX superscript
- * ($^{12}$) to its digits. Everything else is kept as read.
+ * image links removed, an HTML table flattened one row a line (cells joined with " | "), every other HTML tag dropped
+ * (LightOnOCR frames ornaments in empty <div>s), blockquote marks dropped, a LaTeX superscript ($^{12}$) to its
+ * digits, and an inline $…$ span that holds no LaTeX command but `\ ` unwrapped (it sets transliterated words in
+ * math mode). Everything else is kept as read.
  */
 export function convertRead(raw) {
   let t = String(raw || '').replace(/\r/g, '');
   t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, '');
   t = t.replace(/<\/t[dh]>\s*<t[dh][^>]*>/gi, ' | ').replace(/<\/tr>/gi, '\n').replace(/<\/?(table|thead|tbody|tr|td|th)[^>]*>/gi, '');
+  t = t.replace(/<\/?(div|span|p|center|br|img|sup|sub|i|b|em|strong|u|small)\b[^>]*>/gi, '');
   t = t.replace(/\$\^\{?([^${}]{1,8})\}?\$/g, '$1');
-  t = t.split('\n').map((l) => l.replace(/^\s{0,3}#{1,6}\s+/, '').replace(/\*\*([^*\n]+)\*\*/g, '$1'))
+  t = t.replace(/\$([^$\n]{1,300})\$/g, (m, inner) => (/\\[A-Za-z]/.test(inner) ? m : inner.replace(/\\ /g, ' ')));
+  t = t.split('\n').map((l) => l.replace(/^\s{0,3}#{1,6}\s+/, '').replace(/^\s{0,3}>\s?/, '').replace(/\*\*([^*\n]+)\*\*/g, '$1'))
     .filter((l) => !/^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(l)).join('\n');
-  return t.replace(/\n{3,}/g, '\n\n').trim();
+  return t.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 export const wordChars = (s) => (String(s || '').match(/[\p{L}\p{N}]/gu) || []).length;
@@ -71,8 +76,28 @@ export const wordChars = (s) => (String(s || '').match(/[\p{L}\p{N}]/gu) || []).
 const OTHER_SCRIPT = /[\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Hebrew}\p{Script=Arabic}\p{Script=Syriac}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Tamil}\p{Script=Telugu}\p{Script=Kannada}\p{Script=Malayalam}\p{Script=Gujarati}\p{Script=Gurmukhi}\p{Script=Tibetan}\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Armenian}\p{Script=Georgian}\p{Script=Ethiopic}\p{Script=Thai}]/gu;
 export const MAX_OTHER_SCRIPT = 3;
 export const otherScriptCount = (s) => (String(s || '').match(OTHER_SCRIPT) || []).length;
-/** A line in which the engine talks about the image instead of transcribing it (one judged page, #6871). */
-export const COMMENTARY = /^\s*(?:\*{0,2}note\*{0,2}\s*:\s*)?(?:the|this) (?:original )?(?:image|page|scan|photograph)\s+(?:contains|shows|depicts|is)\b/im;
+/**
+ * A line in which the engine talks about the page instead of transcribing it. The #6871 pilot (by eye, 2026-10-29)
+ * found LightOnOCR appending such a note to 56 of 852 written pages, 50 of them the ornamented pages of one book
+ * ("Note: The images are placeholders since actual image URLs are not provided…", "Note: The page number … is
+ * preserved as it appears"): invented text. A page carrying one is not written.
+ */
+export const COMMENTARY = new RegExp([
+  String.raw`^\s*(?:\*{0,2}note\*{0,2}\s*:\s*)?(?:the|this) (?:original )?(?:image|page|scan|photograph)\s+(?:contains|shows|depicts|is)\b`,
+  String.raw`^\s*\*{0,2}note\*{0,2}\s*:.*\b(?:markdown|placeholders?|images?|urls?|formatting|preserved|transcri\w*|ocr|excerpt|output|as it appears|page number|original document|scenario|the text (?:ends|is|appears))\b`,
+].join('|'), 'im');
+
+/**
+ * Indic transliteration letters (ṛ ṣ ç ā …) per 1,000 letters. On the pilot's Sanskrit phonetics pages (16–111 ‰)
+ * LightOnOCR misread the diacritics (ç as ṣ or ḍ, macrons added); the English pages that name a Rāma or a Buddha stay
+ * under 7 ‰. Over MAX_TRANSLIT_PERMILLE the page is not written.
+ */
+const TRANSLIT = /[āīūṛṝḷṣśṭḍṇṅñḥṃṁçĀĪŪṚṢŚṬḌṆ]/gu;
+export const MAX_TRANSLIT_PERMILLE = 15;
+export function translitPermille(s) {
+  const letters = (String(s || '').match(/\p{L}/gu) || []).length;
+  return letters ? ((String(s).match(TRANSLIT) || []).length * 1000) / letters : 0;
+}
 
 /** The page verdict: { verdict: 'write'|'textless'|'reject', reason, body }. */
 export function pageVerdict(raw, { finish = null } = {}) {
@@ -83,6 +108,8 @@ export function pageVerdict(raw, { finish = null } = {}) {
   const other = otherScriptCount(body);
   if (other > MAX_OTHER_SCRIPT) return { verdict: 'reject', reason: 'other_script', detail: { letters: other } };
   if (COMMENTARY.test(body)) return { verdict: 'reject', reason: 'engine_commentary', detail: { line: body.match(COMMENTARY)[0].slice(0, 80) } };
+  const tl = translitPermille(body);
+  if (tl > MAX_TRANSLIT_PERMILLE) return { verdict: 'reject', reason: 'transliteration_dense', detail: { permille: +tl.toFixed(1) } };
   return { verdict: 'write', reason: 'ok', body };
 }
 

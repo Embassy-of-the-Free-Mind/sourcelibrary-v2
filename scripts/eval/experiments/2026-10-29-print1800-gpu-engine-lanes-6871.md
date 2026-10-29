@@ -6,7 +6,7 @@ scripts: [Latn]
 canons: []
 n_books: 320
 n_pages: 331
-verdict: "On 1800+ English print an open GPU engine replaces Flash-Lite: on 97 typed English reference pages every engine tested passes the preregistered rule (LightOnOCR-3-1B median folded CER 0.12% vs lite 0.27%, catastrophic 0 vs 17, loops 0 vs 1), reads lite's 16 RECITATION refusals at median 0.09%, and drafts for agy Flash as well as lite does. German fails every use (lite 0.27% vs the best engine 0.52%; judged misleading 15 vs 4 of 40). French, Italian and Latin fail (a) on judged or answered pages; French passes (b) on 25 refused pages. The English lane (LightOnOCR on pages with no text, books held scans-only) is built; its frame is 984 books, 162,747 pages, about 2.3 GPU-days."
+verdict: "On 1800+ English print an open GPU engine replaces Flash-Lite: on 97 typed English reference pages every engine tested passes the preregistered rule (LightOnOCR-3-1B median folded CER 0.12% vs lite 0.27%, catastrophic 0 vs 17, loops 0 vs 1), reads lite's 16 RECITATION refusals at median 0.09%, and drafts for agy Flash as well as lite does. German fails every use (lite 0.27% vs the best engine 0.52%; judged misleading 15 vs 4 of 40). French, Italian and Latin fail (a) on judged or answered pages; French passes (b) on 25 refused pages. The English lane (LightOnOCR on pages with no text, books held scans-only) is built; its frame is 984 books, 162,747 pages, about 1.4 GPU-days at the pilot's 4,860 pages/h; a 10-book pilot wrote 780 pages, 10 of 10 checked by eye usable after one guard round (v1 stored an appended engine note on 56 pages; reverted)."
 status: undecided
 decision: "Proposed: English 1800+ pages with no text (never read or lite-refused) in books held scans-only-publish-7270 are read by LightOnOCR-3-1B on gex45 (scripts/workers/gpu-print-lane.mjs, ocr-filler route gpu-print-en, disabled until Derek turns it on); lite drafts already stored are not replaced. German, French, Italian and Latin 1800+ print stay on Flash-Lite (French refusals: a 731-page follow-up)."
 superseded_by: null
@@ -152,4 +152,34 @@ Reported beside it, never deciding: median Δ with a 95% paired bootstrap CI, wi
 ### What this does not show
 - **The English references are Wikisource/Gutenberg books,** which are legible, canonical and memorised. That inflates lite's refusal rate (16/97 here against 10,009 of 357K read pages in the corpus, 2.8%) and understates every engine's CER. Without refusals, LO and lite are close on English. The case for the lane is refusals, catastrophic pages and $0 marginal cost, not a better reading of clean pages.
 - **German, Latin, Italian and French n are small** (20–40 a cell), and the judge is one Opus pass.
-- **No pilot pages are in this table:** see the pilot section.
+- **No pilot pages are in the tables above:** see the pilot section.
+
+### Pilot: 10 books, `--apply` (2026-10-29)
+
+**The books.** The first 10 frame books with 30–250 owed pages (seeded order), all held `scans-only-publish-7270`, so no hold was added or released. 1,064 pages had no text.
+
+**The read.** Queue task `41-gpu-print-pilot-6871`, LightOnOCR (HF snapshot `23d54408…`, vLLM 0.31.0): **4,860 pages/h**, 0 errors.
+
+**v1 (run `gpu-print-en-2026-10/lo-20261029T020001Z`).** 852 written, 95 textless (blank leaves: one checked by eye), 117 turned away (115 other script, 2 token cap). By eye, 10 random written pages:
+- 8 right; one slip, "chris-tians" read as "Christians".
+- **Sanskrit phonetics, p.121:** the transliteration's diacritics were misread (ç as ṣ or ḍ, macrons added), and the LaTeX `$…\ …$` that wraps them was stored.
+- **Gibran, *Sand and Foam*, p.31:** the text was right, but empty `<div>`s were stored, and so was an appended engine note: "Note: The actual image URLs are placeholders…". That note is invented text.
+- **The note was not one page.** 56 of the 852 written pages carried one ("Note: The page number … is preserved as it appears…"), 50 of them on that book's ornamented pages. On the 331 eval pages it was 3.
+
+**The fix.**
+- **The converter** drops HTML tags and blockquote marks, and unwraps `$…$` spans that hold no LaTeX command.
+- **The commentary guard** catches any "Note:" line about the image, markdown, placeholders or the page number.
+- **A new transliteration guard** turns away a page with more than 15 ‰ Indic transliteration letters. The Sanskrit pages are at 16–111 ‰; English pages naming a Rāma stay under 7 ‰.
+- All are unit-tested (`tests/unit/gpu-print-lane.test.ts`).
+- **The v1 run was reverted whole** (`revert-run.mjs`: 852 restorable, 0 changed since) and applied again.
+
+**v2 (`…/v2`, the pages as they now stand).**
+- **780 written**, 0 conflicts, 95 textless.
+- **189 turned away:** 115 other script, 56 commentary, 16 transliteration-dense, 2 token cap.
+- **All 780 pass `missingProvenance`**, `ocr.source: 'lightonocr'`, and none carries a note. The two defective pages above are empty again.
+- **By eye, 10 newly drawn written pages:** 10 usable, 0 invented, 0 omissions. They include a two-column index (right column order) and a portrait plate's caption.
+  - Minor faults: one page silently corrects two printer's typos ("is ot" → "is of", "resuccitation" → "resuscitation"); markdown italics (`*…*`) and list bullets are kept.
+
+**Turned-away pages stay unread in their held books.** No other lane reads them while the hold stands. They are listed in `rejected.jsonl` on gex45.
+
+**Recommendation.** Turn on route `gpu-print-en` (`-` → `on` in `ocr-filler-routes.tsv`) after this PR is reviewed. The frame (984 books, 162,747 pages) is about 1.4 GPU-days at the pilot's rate.
