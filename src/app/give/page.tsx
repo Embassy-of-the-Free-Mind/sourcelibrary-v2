@@ -171,6 +171,63 @@ export default async function GivePage() {
               </ul>
             </section>
 
+            {/* Where the money goes: three things a gift pays for, each with a cost
+                someone measured. Not a cost per translated book on purpose (see the
+                file comment).
+                - Running cost: billed amounts, not meter estimates (ops
+                  costs/infrastructure-costs.md): hosting, database, CDN and storage
+                  ran $3,600–5,200 a month June–September 2026, before any OCR or
+                  translation; R2 held 22.3 TB at the end of August. Words are from
+                  scripts/analytics/corpus-size.mjs (2026-10-29 log row: 7.65B, median
+                  floor 5.23B, against ~5B for English Wikipedia), so the comparison
+                  holds even on the floor; re-run it before changing them.
+                - Scholars and scanning: the vision letter's budget
+                  (src/app/articles/vision/content.ts, `plan` and `ways`): $150K over
+                  five years for scholars, €70 / €400 per scan, adoption from $275.
+                  Change them THERE first. */}
+            <section>
+              <h2 className="text-xl font-display text-stone-900 mb-4">Where the money goes</h2>
+              <ul className="space-y-5">
+                <li>
+                  <p className="font-semibold text-stone-900">Scholars who check the translations</p>
+                  <p className="text-stone-600 leading-relaxed">
+                    A machine translation is a draft until someone who reads the original has
+                    checked it. So far every check has been done by volunteers. We want to pay
+                    scholars to read the translations against the originals, language by
+                    language, starting with Renaissance Latin, so the most important texts can
+                    be cited with confidence. That is $30,000 a year, and it is the part of the
+                    work that most needs people.
+                  </p>
+                </li>
+                <li>
+                  <p className="font-semibold text-stone-900">Scanning the Embassy’s last books</p>
+                  <p className="text-stone-600 leading-relaxed">
+                    The Embassy of the Free Mind still has about 3,000 books to scan. Scanning
+                    one costs about €70; a fragile volume on the slow scanner, about €400. From
+                    $275 you can{' '}
+                    <a
+                      href="mailto:derek@sourcelibrary.org?subject=Adopt%20a%20book"
+                      className={link}
+                    >
+                      adopt one
+                    </a>
+                    : it is scanned, translated and named for you.
+                  </p>
+                </li>
+                <li>
+                  <p className="font-semibold text-stone-900">Keeping it open</p>
+                  <p className="text-stone-600 leading-relaxed">
+                    About $50,000 a year, before a single page is translated: the servers, the
+                    database, and storage for 22 terabytes of scans, more than 25 million pages.
+                    The library already holds more text than English Wikipedia: 7.6 billion
+                    words, half in the original languages and half in English. Wikipedia and the
+                    Internet Archive stay free because their readers pay for them. This library
+                    can too.
+                  </p>
+                </li>
+              </ul>
+            </section>
+
             <div className="text-sm text-stone-500 leading-relaxed space-y-2">
               <p>
                 The whole plan, costs and all, is in{' '}

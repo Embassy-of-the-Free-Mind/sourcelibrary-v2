@@ -151,6 +151,7 @@ node --env-file=.env.production.local scripts/analytics/corpus-size.mjs --sample
 |---|---|---|---|---|---|---|
 | 2026-06-01 | 6.5M | | 5–7B | | ≈ 1× | blog "How Big Is the Library?" |
 | 2026-10-01 | 22.6M | 6.9M / 4.87M | 6.8B (3.4B originals + 3.3B translations) | 4.8B | ≈ 1.35× | the log |
+| 2026-10-29 | 30.6M | 9.62M / 5.75M | 7.65B (3.89B originals + 3.73B translations) | 5.23B | ≈ 1.5× | the log; quoted on /give |
 
 **`$sample` is biased toward text-bearing documents — never take a coverage
 fraction from it (2026-10-01).** The same run, projecting from the sample's own

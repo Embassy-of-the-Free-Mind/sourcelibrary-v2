@@ -128,8 +128,8 @@ export default function GivingSeasonBanner() {
         <p className="hidden sm:block text-base text-stone-700 leading-relaxed mb-4">
           No ads, no paywall: every translation sits beside the page it came from,
           for anyone to read and quote. Running it has cost over $120,000 so far,
-          and donors have given $60,000. Another 73,000 scanned books are waiting
-          to be read in English. If this library is useful to you, please give
+          and donors have given $60,000. Next, we want to pay scholars to check
+          the translations and bring 73,000 more books into English. If this library is useful to you, please give
           before the year ends.
         </p>
         <div className="flex flex-wrap items-center gap-3">
