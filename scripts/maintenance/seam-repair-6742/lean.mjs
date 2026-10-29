@@ -25,10 +25,14 @@
  *   $N $S night      --out=DIR --max-joins=N [--all-joins --top-books=N] [--apply]   candidates (topped up to N pending)
  *                    + run: the cron entry
  *   $N $S write      --out=DIR --run=ID [--apply]                re-plan / write a finished run's placed repairs, no model call
+ *                    (a run older than 24 h is re-checked against the current page text first)
  *   $N $S report     --out=DIR
  *   $N seam-repair.mjs undo --out=DIR [--apply]                 the pilot's undo reads this DIR's manifest.jsonl
  *
- * A night: (1) stop at once if the box's account is over --max-weekly % of its week, or the poll is stale/unknown;
+ * A night: (1) with the box's Claude account over --max-weekly % of its week (or the poll stale/unknown), a Gemini
+ * night still runs tier 2 on agy with no Claude call at all (no fallback, no judge) and records the run as
+ * pending_verify, writing nothing; a Claude repairer stops at once as before. Under the cap, the pending runs are first
+ * verified, oldest first, by the same blind sample and floor, and written through `write --run` (PENDING, #7118);
  * (2) tier 1 — joins whose signal Test A trusts get the rule repair, no model; (3) tier 2 — the rest go to the
  * repairer (Gemini 3.8 Flash low via agy, one join per call; or Opus, 30 per call) with tight windows: the last ~2
  * English sentences of N, the first ~2 of N+1, and the matching share of each source; (4) placement (edgeRefusal, and
@@ -64,6 +68,59 @@ const REPO = path.resolve(HERE, '../../..');
 export const TRUSTED_RULES = [];
 export const VERIFY_RATE = 0.07, VERIFY_MIN = 20, PREFER_FLOOR = 0.90, MAX_WEEKLY = 60;
 export const OPUS_PACK = 30;
+
+/**
+ * Claude-free nights (#7118). From 10-24 the box's Claude account sat at 78-100% of its week, and every night logged
+ * "weekly NN% >= 60%: not starting", though the repairer is Gemini on agy and Claude is needed only for the 7% Opus
+ * sample and the Sonnet fallback. Now a Gemini night over the cap repairs and places with no Claude call, and records
+ * the run in runs.jsonl as `pending_verify` (nothing written). The first night under the cap verifies pending runs,
+ * oldest first, with the same blind both-orders sample and PREFER_FLOOR, and writes those that pass through writeOnly
+ * (the `write --run` path). A run older than STALE_RECHECK_H is re-checked against the current page text first: a join
+ * whose page changed since is skipped and counted. A pending run older than PENDING_TTL_DAYS is expired, with a row in
+ * pending.jsonl and a line in the log. Resolutions (written / below-floor / nothing-placed / expired) go to pending.jsonl.
+ */
+export const PENDING_TTL_DAYS = 14, STALE_RECHECK_H = 24;
+/** The night's mode from the meter: a Claude repairer needs the meter under the cap; a Gemini one runs Claude-free. */
+export function nightMode(usage, { repairer, maxWeekly }) {
+  const claudeOk = !!usage && usage.weekly < maxWeekly;
+  const why = usage ? `weekly ${usage.weekly}% >= ${maxWeekly}%` : 'claude usage unknown or stale';
+  if (claudeOk) return { claudeFree: false };
+  if (repairer !== 'gemini') return { skip: usage ? `${why}: not starting` : `${why}: not starting` };
+  return { claudeFree: true, why };
+}
+/** When a run started, from its id (lean-YYYYMMDDHHMMSS). */
+export const runStartedAt = (runId) => { const d = String(runId).replace(/\D/g, '').slice(0, 14);
+  return d.length === 14 ? Date.parse(`${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}T${d.slice(8, 10)}:${d.slice(10, 12)}:${d.slice(12, 14)}Z`) : NaN; };
+/** Unresolved pending_verify runs, oldest first. */
+export function pendingRuns(out) {
+  const resolved = new Set(readJsonl(path.join(out, 'pending.jsonl')).map(r => r.run));
+  return readJsonl(path.join(out, 'runs.jsonl')).filter(r => r.pending_verify && !resolved.has(r.run)).sort((a, b) => runStartedAt(a.run) - runStartedAt(b.run));
+}
+export const resolvePending = (out, run, resolved, extra = {}) => append(path.join(out, 'pending.jsonl'), { run, resolved, at: new Date().toISOString(), ...extra });
+/** Expire pending runs older than PENDING_TTL_DAYS: a row each in pending.jsonl and a log line, never silently. */
+export function expirePending(out, now = Date.now(), log = console.log) {
+  const gone = [];
+  for (const r of pendingRuns(out)) {
+    const ageDays = (now - runStartedAt(r.run)) / 86400e3;
+    if (!(ageDays > PENDING_TTL_DAYS)) continue;
+    resolvePending(out, r.run, 'expired', { ageDays: +ageDays.toFixed(1), placed: r.placed ?? null });
+    log(`pending run ${r.run} expired: ${ageDays.toFixed(1)} days old (> ${PENDING_TTL_DAYS}), ${r.placed ?? 0} placed repairs never verified, nothing written`);
+    gone.push(r.run);
+  }
+  return gone;
+}
+/**
+ * Why a placed repair may no longer be written on the current page text, or null (a run older than STALE_RECHECK_H).
+ * `A`/`B` are the current stored pages. A changed page is refused outright; edgeRefusal is re-run on windows cut from
+ * the current text, so a tail_old/head_old that is no longer at the edge is caught by name.
+ */
+export function currentTextRefusal(it, x, A, B, { wide = false } = {}) {
+  if (!A?.translation?.data || !B?.translation?.data) return 'page-missing-now';
+  if (sha(A.translation.data) !== it.hashA || sha(B.translation.data) !== it.hashB) return 'page-changed-since-run';
+  const cur = { ...it, enTailA: enWindow(translationProse(A.translation.data), 'tail'), enHeadB: enWindow(translationProse(B.translation.data), 'head') };
+  const why = edgeRefusal(cur, x.repair, wide ? MAJORS_WIDE : undefined);
+  return why ? `current-text:${why}` : null;
+}
 
 /**
  * Content conservation at the join: a seam repair moves words across the turn, removes one copy of a doubled run, or
@@ -269,8 +326,8 @@ async function candidates(out, maxJoins, days, { allJoins = false, bookIds = [],
 // ── run ──────────────────────────────────────────────────────────────────────
 /** The Claude repairers, by arm: the same packed PROMPT through claude -p. */
 export const CLAUDE_MODEL = { opus: 'claude-opus-5-5', sonnet: 'claude-sonnet-5-5' };
-async function repairClaude(pk, arm) {
-  const r = await claudeCall(`${PACK_HEAD}${PROMPT}\n\n${pk.map(joinText).join('\n')}`, arm);
+async function repairClaude(pk, arm, call = claudeCall) {
+  const r = await call(`${PACK_HEAD}${PROMPT}\n\n${pk.map(joinText).join('\n')}`, arm);
   const arr = r.cls ? null : extractJson(r.text, '[');
   return { byId: new Map((Array.isArray(arr) ? arr : []).filter(Boolean).map(x => [x.id, x])), r };
 }
@@ -280,20 +337,32 @@ function agyLockedUntil() {
   try { return JSON.parse(fs.readFileSync('/root/agy-quota/status.json', 'utf8')).locked_until_max || null; } catch { return null; }
 }
 
-async function run(out, o) {
+/** The model calls and the meter, injectable for the tests (#7118). */
+const DEPS = { usage: () => claudeUsage(), gemini: (pk, m) => geminiPack(pk, m), agyOpen: (m) => agyOpen(m), claude: (p, arm) => claudeCall(p, arm), writeRun: (...a) => writeRun(...a) };
+
+async function run(out, o, deps = {}) {
+  const D = { ...DEPS, ...deps };
   const status = (x) => { fs.writeFileSync(path.join(out, 'status.json'), JSON.stringify({ at: new Date().toISOString(), ...x }, null, 1)); return x; };
   // A night that does not start is still a night: it goes in runs.jsonl, so it cannot vanish from the record (#7118:
   // 10-19 and 10-20 left no row).
   const skip = (x) => { const row = { run: `lean-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`, skipped: true, ...x }; append(path.join(out, 'runs.jsonl'), row); console.log(JSON.stringify(status(row))); };
-  const u0 = claudeUsage();
-  if (!u0) return skip({ stopped: 'claude usage unknown or stale: not starting' });
-  if (u0.weekly >= o.maxWeekly) return skip({ stopped: `weekly ${u0.weekly}% >= ${o.maxWeekly}%: not starting`, usage: u0 });
+  const expired = expirePending(out);
+  let u0 = D.usage(), mode = nightMode(u0, o);
+  if (mode.skip) return skip({ stopped: mode.skip, ...(u0 ? { usage: u0 } : {}), ...(expired.length ? { pendingExpired: expired } : {}) });
+  // Under the cap: verify the runs earlier Claude-free nights left pending, oldest first, before tonight's own work.
+  let pending = null;
+  if (!mode.claudeFree && pendingRuns(out).length) {
+    pending = await verifyPending(out, o, D);
+    u0 = D.usage(); mode = nightMode(u0, o);
+    if (mode.skip) return skip({ stopped: mode.skip, ...(u0 ? { usage: u0 } : {}), pending });
+  }
+  let claudeFree = !!mode.claudeFree;
   const runId = `lean-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
-  const repFile = path.join(out, 'repairs.jsonl'), calls = path.join(out, 'calls.jsonl'), verFile = path.join(out, 'verify.jsonl');
+  const repFile = path.join(out, 'repairs.jsonl'), calls = path.join(out, 'calls.jsonl');
   const done = new Set(readJsonl(repFile).map(x => x.id));
   const todo = readJsonl(path.join(out, 'candidates.jsonl')).filter(c => !done.has(c.id)).slice(0, o.maxJoins);
-  const tally = { run: runId, joins: todo.length, tier1: 0, tier2: 0, usageStart: u0 };
-  console.log(`${runId}: ${todo.length} joins; weekly ${u0.weekly}%, session ${u0.session}%; repairer ${o.repairer}`);
+  const tally = { run: runId, joins: todo.length, tier1: 0, tier2: 0, usageStart: u0, ...(claudeFree ? { claudeFree: mode.why } : {}), ...(expired.length ? { pendingExpired: expired } : {}), ...(pending ? { pending } : {}) };
+  console.log(`${runId}: ${todo.length} joins; ${u0 ? `weekly ${u0.weekly}%, session ${u0.session}%` : 'Claude meter unknown'}; repairer ${o.repairer}${claudeFree ? ` — Claude-free (${mode.why}): no fallback, no judge, the run waits as pending_verify` : ''}`);
 
   // tier 1: trusted rule repairs, no model
   const t2 = [];
@@ -306,16 +375,19 @@ async function run(out, o) {
   // With a --fallback Claude arm, a Gemini quota lock (at the start or mid-run) does not wait: the joins Gemini did not
   // reach go to the fallback in packs, under the same placement and the same blind Opus sample. Without one, the pool
   // waits out the lock as before (#7118: two nights sat 6 h in "usage limit — waiting 15 min" with Claude at 7%).
+  // A Claude-free night stops at a lock too: the joins agy did not reach stay candidates for the next night.
+  // The meter check mid-run stops a Claude arm; on the Gemini arm it turns the night Claude-free instead (#7118).
   let guardTripped = null, sinceCheck = 0, agyLock = null;
   const tier2 = async (items, arm, pack) => {
     const model = arm === 'gemini' ? GEMINI : CLAUDE_MODEL[arm];
-    const fallsBack = arm === 'gemini' && o.fallback;
+    const fallsBack = arm === 'gemini' && (o.fallback || claudeFree);
     const checkEvery = pack > 1 ? 3 : 20;
     return pool(packs(items, pack), o.conc, async (pk) => {
       if (guardTripped || (arm === 'gemini' && agyLock)) return { ok: true };
-      if (++sinceCheck % checkEvery === 0) { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) { guardTripped = u ? `weekly ${u.weekly}%` : 'usage unknown'; return { ok: true }; } }
-      if (arm === 'gemini' && !agyOpen(GEMINI)) { if (fallsBack) { agyLock = agyLockedUntil() || 'locked'; return { ok: true }; } return { cls: 'usage_limit' }; }
-      const { byId, r } = arm === 'gemini' ? await geminiPack(pk, GEMINI) : await repairClaude(pk, arm);
+      if (!claudeFree && ++sinceCheck % checkEvery === 0) { const u = D.usage(), m = nightMode(u, o);
+        if (!u || u.weekly >= o.maxWeekly) { if (arm === 'gemini' && m.claudeFree) { claudeFree = true; tally.claudeFree = `mid-run: ${m.why}`; } else { guardTripped = u ? `weekly ${u.weekly}%` : 'usage unknown'; return { ok: true }; } } }
+      if (arm === 'gemini' && !D.agyOpen(GEMINI)) { if (fallsBack) { agyLock = agyLockedUntil() || 'locked'; return { ok: true }; } return { cls: 'usage_limit' }; }
+      const { byId, r } = arm === 'gemini' ? await D.gemini(pk, GEMINI) : await repairClaude(pk, arm, D.claude);
       if (r.cls === 'usage_limit' || r.cls === 'quota') { if (fallsBack) { agyLock = agyLockedUntil() || `agy reply ${r.cls}`; return { ok: true }; } return { cls: 'usage_limit' }; }
       append(calls, { run: runId, stage: 'repair', arm, n: pk.length, model: r.model || model, cls: r.cls, secs: Math.round(r.secs), usage: arm === 'gemini' ? (r.usage ? { in: r.usage.input_tokens, out: r.usage.output_tokens, thinking: r.usage.thinking_tokens } : null) : usageOf(r), at: new Date().toISOString() });
       let ok = 0;
@@ -327,25 +399,64 @@ async function run(out, o) {
         tally.tier2++;
       }
       return { ok: ok > 0, cls: r.cls };
-    }, arm === 'gemini' && !fallsBack ? { probe: async () => ({ cls: agyOpen(GEMINI) ? null : 'usage_limit' }) } : {});
+    }, arm === 'gemini' && !fallsBack ? { probe: async () => ({ cls: D.agyOpen(GEMINI) ? null : 'usage_limit' }) } : {});
   };
   await tier2(t2, o.repairer, o.pack);
-  if (agyLock && !guardTripped) {
+  if (agyLock && !guardTripped && !claudeFree && o.fallback) {
     const reached = new Set(readJsonl(repFile).filter(x => x.run === runId).map(x => x.id));
     const rest = t2.filter(it => !reached.has(it.id));
     tally.fallback = { arm: o.fallback, joins: rest.length, why: `agy locked until ${agyLock}` };
     console.log(`agy locked until ${agyLock}: ${rest.length} joins to the ${o.fallback} fallback`);
     await tier2(rest, o.fallback, OPUS_PACK);
-  }
+  } else if (agyLock) tally.agyLocked = `agy locked until ${agyLock}${claudeFree ? '; Claude-free night, no fallback' : ''}`;
   if (guardTripped) tally.guard = `stopped mid-run: ${guardTripped}`;
 
   // placement
   const { placedRows, refusals } = placeRun(out, runId, { majorsWide: o.majorsWide });
   tally.placed = placedRows.length; tally.placementRefused = refusals;
   tally.skippedDriftOnly = refusals['skipped-drift-only'] || 0;
-  const wideRows = placedRows.filter(r => r.wide), normalRows = placedRows.filter(r => !r.wide);
+  if (o.majorsWide) tally.majorsWideFlag = true;
 
-  // verification sample: seeded 7% (≥ 20) of placed repairs, both orders in different calls, + 2 A/A pairs
+  if (claudeFree) {
+    // No judge without Claude: the run waits, whole, for a night under the cap. Nothing is written tonight.
+    if (placedRows.length) { tally.pending_verify = true; tally.stopped = `Claude-free (${tally.claudeFree}): ${placedRows.length} placed repairs pending verification; nothing written`; }
+    else tally.stopped = `Claude-free (${tally.claudeFree}): no repair placed${agyLock ? ` (agy locked until ${agyLock})` : ''}; nothing pending`;
+  } else {
+    const { sv, sample, wideRows, aa } = await judgeRun(out, runId, o, placedRows, D);
+    tally.verify = { sampled: sample.length - wideRows.length, ...sv.summary, aa: aa.length ? [sv.vs[aa[0].id]?.['aa-1'], sv.vs[aa[0].id]?.['aa-2']] : [] };
+    if (o.majorsWide) tally.majorsWide = { placed: wideRows.length, ...sv.wide };
+    const arms = [...new Set(sample.map(r => r.arm))];
+    if (arms.length > 1) tally.verify.byArm = Object.fromEntries(arms.map(a => { const ids = sample.filter(r => r.arm === a).map(r => r.id).filter(id => sv.vs[id]?.['cur-first'] && sv.vs[id]?.['rep-first']);
+      return [a, { judged: ids.length, prefersBothOrders: ids.filter(id => sv.vs[id]['cur-first'] === 'Q' && sv.vs[id]['rep-first'] === 'P').length }]; }));
+    if (!sv.summary.judged) {
+      // Nothing to judge is not a quality verdict: name what stopped the run, and ask for no pause.
+      const lock = agyLockedUntil();
+      tally.stopped = `nothing judged (${tally.tier2} joins repaired, ${placedRows.length} placed) — ${guardTripped ? `Claude usage guard: ${guardTripped}` : !tally.tier2 && o.repairer === 'gemini' && !D.agyOpen(GEMINI) ? `agy locked until ${lock || 'unknown'}${o.fallback ? '' : ', no --fallback'}` : !placedRows.length ? 'no repair placed' : 'the Opus judge returned no verdicts'}; nothing written`;
+    } else if (sv.belowFloor) {
+      tally.stopped = `verification sample: ${sv.summary.prefersBothOrders}/${sv.summary.judged} preferred in both orders, below ${PREFER_FLOOR * 100}% — nothing written`;
+      tally.decision = floorDecision(out, runId, sv);
+    } else tally.write = await D.writeRun(out, runId, o, placedRows, sv);
+  }
+  tally.usageEnd = D.usage();
+  const runCalls = readJsonl(calls).filter(c => c.run === runId);
+  tally.calls = runCalls.reduce((a, c) => { const k = `${c.stage}:${c.arm}`; a[k] = (a[k] || 0) + 1; return a; }, {});
+  tally.listUsdClaude = +runCalls.reduce((a, c) => a + (c.usage?.list_usd || 0), 0).toFixed(2);
+  append(path.join(out, 'runs.jsonl'), tally);
+  status(tally);
+  console.log(JSON.stringify(tally, null, 1));
+  for (const d of [tally.decision, ...(pending?.decisions || [])].filter(Boolean)) {
+    console.log(d);
+    // a cron run has no wrapper to collect it: put it where the morning digest reads DECISION lines
+    if (fs.existsSync('/root/claude-jobs')) fs.appendFileSync('/root/claude-jobs/decisions.txt', `${new Date().toISOString().slice(0, 10)} | seam-lean-6742-cron | ${d}\n`);
+  }
+}
+const floorDecision = (out, runId, sv) => `DECISION: seam-repair lean run ${runId} stopped — the blind Opus sample preferred ${sv.summary.prefersBothOrders}/${sv.summary.judged} repairs (< ${PREFER_FLOOR * 100}%); inspect ${out}/verify.jsonl before the next night — default: keep the runner paused (#6742)`;
+
+/** The blind Opus judge on one run's placed repairs: a seeded VERIFY_RATE sample (≥ VERIFY_MIN) of the edge-bound ones
+ *  plus every --majors-wide one, both orders in different calls, + 2 A/A pairs. Appends to verify.jsonl. */
+async function judgeRun(out, runId, o, placedRows, D = DEPS) {
+  const calls = path.join(out, 'calls.jsonl'), verFile = path.join(out, 'verify.jsonl');
+  const wideRows = placedRows.filter(r => r.wide), normalRows = placedRows.filter(r => !r.wide);
   const rand = makeRng(Number(runId.replace(/\D/g, '').slice(-9)));
   // the 7% sample is drawn from the repairs the edge bound placed; every --majors-wide repair is judged on top of it
   const nSample = Math.min(normalRows.length, Math.max(VERIFY_MIN, Math.ceil(normalRows.length * o.verifyRate)));
@@ -355,7 +466,7 @@ async function run(out, o) {
   const aa = sample.slice(0, 1).flatMap(r => ['aa-1', 'aa-2'].map(order => mk(r, order)));
   const firstOrder = shuffle([...sample.map(r => mk(r, 'cur-first')), aa[0]].filter(Boolean), rand), secondOrder = shuffle([...sample.map(r => mk(r, 'rep-first')), aa[1]].filter(Boolean), rand);
   await pool([...packs(firstOrder, 10), ...packs(secondOrder, 10)], o.conc, async (pk) => {
-    const r = await claudeCall(`${JUDGE}\n\n${pk.map(pairText).join('\n\n')}\n`, 'opus');
+    const r = await D.claude(`${JUDGE}\n\n${pk.map(pairText).join('\n\n')}\n`, 'opus');
     if (r.cls === 'usage_limit') return { cls: r.cls };
     append(calls, { run: runId, stage: 'verify', arm: 'opus-judge', n: pk.length, model: r.model, cls: r.cls, secs: Math.round(r.secs), usage: usageOf(r), at: new Date().toISOString() });
     const arr = r.cls ? null : extractJson(r.text, '[');
@@ -363,37 +474,41 @@ async function run(out, o) {
     for (const p of pk) { const v = byPair.get(p.pair); append(verFile, { run: runId, pair: p.pair, id: p.id, order: p.order, better: v?.better ?? null, note: v?.note }); }
     return { ok: byPair.size > 0, cls: r.cls };
   });
-  const sv = sampleVerdicts(out, runId, new Set(wideRows.map(r => r.id)));
-  const aaVerdicts = aa.length ? [sv.vs[aa[0].id]?.['aa-1'], sv.vs[aa[0].id]?.['aa-2']] : [];
-  tally.verify = { sampled: sample.length - wideRows.length, ...sv.summary, aa: aaVerdicts };
-  if (o.majorsWide) tally.majorsWide = { placed: wideRows.length, ...sv.wide };
-  const arms = [...new Set(sample.map(r => r.arm))];
-  if (arms.length > 1) tally.verify.byArm = Object.fromEntries(arms.map(a => { const ids = sample.filter(r => r.arm === a).map(r => r.id).filter(id => sv.vs[id]?.['cur-first'] && sv.vs[id]?.['rep-first']);
-    return [a, { judged: ids.length, prefersBothOrders: ids.filter(id => sv.vs[id]['cur-first'] === 'Q' && sv.vs[id]['rep-first'] === 'P').length }]; }));
-  if (!sv.summary.judged) {
-    // Nothing to judge is not a quality verdict: name what stopped the run, and ask for no pause.
-    const lock = agyLockedUntil();
-    tally.stopped = `nothing judged (${tally.tier2} joins repaired, ${placedRows.length} placed) — ${guardTripped ? `Claude usage guard: ${guardTripped}` : !tally.tier2 && o.repairer === 'gemini' && !agyOpen(GEMINI) ? `agy locked until ${lock || 'unknown'}${o.fallback ? '' : ', no --fallback'}` : !placedRows.length ? 'no repair placed' : 'the Opus judge returned no verdicts'}; nothing written`;
-  } else if (sv.belowFloor) {
-    tally.stopped = `verification sample: ${sv.summary.prefersBothOrders}/${sv.summary.judged} preferred in both orders, below ${PREFER_FLOOR * 100}% — nothing written`;
-    tally.decision = `DECISION: seam-repair lean run ${runId} stopped — the blind Opus sample preferred ${sv.summary.prefersBothOrders}/${sv.summary.judged} repairs (< ${PREFER_FLOOR * 100}%); inspect ${out}/verify.jsonl before the next night — default: keep the runner paused (#6742)`;
-  } else tally.write = await writeRun(out, runId, o, placedRows, sv);
-  tally.usageEnd = claudeUsage();
-  const runCalls = readJsonl(calls).filter(c => c.run === runId);
-  tally.calls = runCalls.reduce((a, c) => { const k = `${c.stage}:${c.arm}`; a[k] = (a[k] || 0) + 1; return a; }, {});
-  tally.listUsdClaude = +runCalls.reduce((a, c) => a + (c.usage?.list_usd || 0), 0).toFixed(2);
-  append(path.join(out, 'runs.jsonl'), tally);
-  status(tally);
-  console.log(JSON.stringify(tally, null, 1));
-  if (tally.decision) {
-    console.log(tally.decision);
-    // a cron run has no wrapper to collect it: put it where the morning digest reads DECISION lines
-    if (fs.existsSync('/root/claude-jobs')) fs.appendFileSync('/root/claude-jobs/decisions.txt', `${new Date().toISOString().slice(0, 10)} | seam-lean-6742-cron | ${tally.decision}\n`);
+  return { sv: sampleVerdicts(out, runId, new Set(wideRows.map(r => r.id))), sample, wideRows, aa };
+}
+
+/**
+ * Verify the pending runs, oldest first (#7118): the same judge and floor as a night, then writeOnly (the `write --run`
+ * path, with its current-text re-check for a run older than STALE_RECHECK_H). The meter is read before each run's
+ * judge; at the cap the rest stay pending. A run is resolved only with --apply: a dry pass reports and leaves it.
+ */
+async function verifyPending(out, o, D = DEPS) {
+  const res = { verified: [], decisions: [] };
+  for (const p of pendingRuns(out)) {
+    const m = nightMode(D.usage(), o);
+    if (m.claudeFree || m.skip) { res.leftPending = `${m.why || m.skip}: ${pendingRuns(out).length - res.verified.length} runs stay pending`; break; }
+    const ro = { ...o, majorsWide: !!p.majorsWideFlag };
+    const { placedRows } = placeRun(out, p.run, { majorsWide: ro.majorsWide });
+    if (!placedRows.length) { if (o.apply) resolvePending(out, p.run, 'nothing-placed'); res.verified.push({ run: p.run, placed: 0 }); continue; }
+    const { sv } = await judgeRun(out, p.run, ro, placedRows, D);
+    const row = { run: p.run, placed: placedRows.length, verify: sv.summary };
+    if (!sv.summary.judged) { row.stopped = 'the Opus judge returned no verdicts; stays pending'; res.verified.push(row); continue; }
+    if (sv.belowFloor) {
+      row.stopped = `below the ${PREFER_FLOOR * 100}% floor — nothing written`; res.decisions.push(floorDecision(out, p.run, sv));
+      if (o.apply) resolvePending(out, p.run, 'below-floor', { verify: sv.summary });
+    } else {
+      row.write = await writeOnly(out, p.run, ro, D);
+      if (o.apply) resolvePending(out, p.run, 'written', { verify: sv.summary, written: row.write?.written ?? null, changedSinceRun: row.write?.changedSinceRun ?? 0 });
+    }
+    res.verified.push(row);
   }
+  console.log(`pending: ${JSON.stringify(res)}`);
+  return res;
 }
 
 /** Placement for one run's repairs: edgeRefusal + the content-conservation guard; with `majorsWide`, a major they
  *  refuse is tried under MAJORS_WIDE and placed with `wide: true`. */
+export { run, judgeRun, verifyPending };
 export function placeRun(out, runId, { majorsWide = false } = {}) {
   const cands = new Map(readJsonl(path.join(out, 'candidates.jsonl')).map(c => [c.id, c]));
   const placedRows = [], refusals = {};
@@ -423,11 +538,22 @@ function sampleVerdicts(out, runId, wideIds = new Set()) {
  *  is kept: the judge could not separate the two. */
 async function writeRun(out, runId, o, placedRows, sv) {
   // a --majors-wide repair is written only when the judge preferred it in both orders
-  const accepted = placedRows.filter(r => !sv.worse.has(r.id) && (!r.wide || sv.preferred.has(r.id))).map(r => ({ ...r, verdict: sv.vs[r.id] ? { sampled: true, ...sv.vs[r.id] } : { sampled: false } }));
-  // One write per arm: a night that fell back from Gemini to a Claude arm records each repairer's own provenance.
-  const byArm = {}; for (const r of accepted) (byArm[r.arm] ||= []).push(r);
+  let accepted = placedRows.filter(r => !sv.worse.has(r.id) && (!r.wide || sv.preferred.has(r.id))).map(r => ({ ...r, verdict: sv.vs[r.id] ? { sampled: true, ...sv.vs[r.id] } : { sampled: false } }));
   const { client, db } = await mongo();
   try {
+    // A run verified a night or more after it repaired (a Claude-free night, #7118): re-check each join on the current
+    // page text first; a join whose page changed since is skipped and counted.
+    let changed = null;
+    if (Date.now() - runStartedAt(runId) > STALE_RECHECK_H * 3600e3) {
+      changed = {};
+      const ids = [...new Set(accepted.flatMap(r => [r.it.idA, r.it.idB]))];
+      const pages = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, translation: 1 } }).toArray()).map(p => [p.id, p]));
+      accepted = accepted.filter(r => { const why = currentTextRefusal(r.it, r.x, pages.get(r.it.idA), pages.get(r.it.idB), { wide: !!r.wide });
+        if (why) { changed[why] = (changed[why] || 0) + 1; append(path.join(out, 'apply-refusals.jsonl'), { join: r.id, book: r.it.book, why, run: runId, apply: o.apply, at: new Date().toISOString() }); }
+        return !why; });
+    }
+    // One write per arm: a night that fell back from Gemini to a Claude arm records each repairer's own provenance.
+    const byArm = {}; for (const r of accepted) (byArm[r.arm] ||= []).push(r);
     const tallies = {};
     for (const [arm, rows] of Object.entries(byArm)) {
       const claude = arm !== 'gemini';
@@ -436,18 +562,20 @@ async function writeRun(out, runId, o, placedRows, sv) {
         accepted: `placement-checked; the night's ${VERIFY_RATE * 100}% blind Opus sample preferred ${sv.summary.prefersBothOrders}/${sv.summary.judged} in both orders` });
     }
     const arms = Object.keys(tallies);
-    return arms.length === 1 ? tallies[arms[0]] : { byArm: tallies, written: arms.reduce((a, k) => a + tallies[k].written, 0), pagesWritten: arms.reduce((a, k) => a + tallies[k].pagesWritten, 0) };
+    const t = arms.length === 1 ? tallies[arms[0]] : { byArm: tallies, written: arms.reduce((a, k) => a + tallies[k].written, 0), pagesWritten: arms.reduce((a, k) => a + tallies[k].pagesWritten, 0) };
+    return changed ? { ...t, changedSinceRun: Object.values(changed).reduce((a, b) => a + b, 0), changedReasons: changed } : t;
   } finally { await client.close(); }
 }
 /** Re-plan (or with --apply, write) a finished run's placed repairs — no model calls. Refuses a run below the floor. */
-async function writeOnly(out, runId, o) {
+async function writeOnly(out, runId, o, D = DEPS) {
   const { placedRows, refusals } = placeRun(out, runId, { majorsWide: o.majorsWide });
   const sv = sampleVerdicts(out, runId, new Set(placedRows.filter(r => r.wide).map(r => r.id)));
-  if (sv.belowFloor) { console.log(JSON.stringify({ run: runId, refused: `sample below the ${PREFER_FLOOR * 100}% floor`, ...sv.summary })); return; }
-  const write = await writeRun(out, runId, o, placedRows, sv);
+  if (sv.belowFloor) { console.log(JSON.stringify({ run: runId, refused: `sample below the ${PREFER_FLOOR * 100}% floor`, ...sv.summary })); return null; }
+  const write = await D.writeRun(out, runId, o, placedRows, sv);
   const row = { run: runId, rewrite: true, at: new Date().toISOString(), placed: placedRows.length, placementRefused: refusals, verify: sv.summary, write };
   append(path.join(out, 'writes.jsonl'), row);
   console.log(JSON.stringify(row, null, 1));
+  return write;
 }
 
 // ── report ───────────────────────────────────────────────────────────────────
@@ -455,7 +583,7 @@ function report(out) {
   const runs = readJsonl(path.join(out, 'runs.jsonl')), cands = readJsonl(path.join(out, 'candidates.jsonl')), books = readJsonl(path.join(out, 'books-done.jsonl'));
   const fired = {}; for (const c of cands) for (const f of c.fired) fired[f] = (fired[f] || 0) + 1;
   const ruleReady = {}; for (const c of cands) for (const [s, r] of Object.entries(c.rules || {})) { ruleReady[s] ||= { repair: 0, decline: 0 }; ruleReady[s][r.repair ? 'repair' : 'decline']++; }
-  const rep = { candidates: cands.length, books: books.length, viewsRange: [books[0]?.views, books[books.length - 1]?.views], fired, ruleRepairsAvailable: ruleReady, trustedRules: TRUSTED_RULES, runs };
+  const rep = { candidates: cands.length, books: books.length, viewsRange: [books[0]?.views, books[books.length - 1]?.views], fired, ruleRepairsAvailable: ruleReady, trustedRules: TRUSTED_RULES, pendingVerify: pendingRuns(out).map(r => ({ run: r.run, placed: r.placed })), pendingResolved: readJsonl(path.join(out, 'pending.jsonl')), runs };
   fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(rep, null, 1) + '\n');
   console.log(JSON.stringify(rep, null, 1).slice(0, 5000));
 }
@@ -474,9 +602,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const allJoins = process.argv.includes('--all-joins') || bookIds.length > 0;
   if (allJoins && !arg('top-books') && !bookIds.length) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
   const co = { allJoins, bookIds, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
-  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60)), co), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
-    // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first)
-    night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60)), co); return run(out, o); } }[cmd];
+  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60)), co), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), { ...o, majorsWide: o.majorsWide || !!readJsonl(path.join(out, 'runs.jsonl')).find(r => r.run === arg('run'))?.majorsWideFlag }),
+    // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first; a Gemini
+    // night over the cap still draws candidates, which is Mongo only, and runs Claude-free)
+    night: async () => { if (nightMode(claudeUsage(), o).skip) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60)), co); return run(out, o); } }[cmd];
   if (!go || !out) { console.error('usage: see the header'); process.exit(2); }
   go().catch(e => { console.error(e); process.exit(1); });
 }
