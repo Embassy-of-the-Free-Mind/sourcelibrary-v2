@@ -21,6 +21,7 @@ const SOURCES = [
   { name: 'Wilkins', year: 1648 },
   { name: 'Harsdörffer', year: 1651 },
   { name: 'Boyle', year: 1660 },
+  { name: 'Monconys', year: 1666 },
   { name: 'Papin', year: 1695 },
 ] as const;
 
@@ -28,16 +29,18 @@ const SOURCES = [
 type Cell = 'y' | 'p' | string | undefined;
 
 const ROWS: { claim: string; cells: Cell[] }[] = [
-  { claim: 'Had it from', cells: ['his father’s letter', '“well known”', 'not said', 'a kinsman of Drebbel', 'Drebbel’s family', '“they report”'] },
-  { claim: 'Went under water', cells: ['y', 'y', 'y', 'y', 'y', 'y'] },
+  { claim: 'Had it from', cells: ['his father’s letter', '“well known”', 'not said', 'a kinsman of Drebbel', 'Drebbel’s family', 'Drebbel’s son-in-law', '“they report”'] },
+  { claim: 'Went under water', cells: ['y', 'y', 'y', 'y', 'y', 'y', 'y'] },
   { claim: 'On the Thames', cells: [, , , 'y', 'y'] },
-  { claim: 'Sank by taking water in', cells: ['p', 'p', , 'y', , 'p'] },
-  { claim: 'Oars', cells: [, 'p', , 'y', 'y', 'y'] },
-  { claim: 'Oars sealed with leather', cells: [, 'p', , , , 'y'] },
+  { claim: 'Sank by taking water in', cells: ['p', 'p', , 'y', , , 'p'] },
+  { claim: 'Oars', cells: [, 'p', , 'y', 'y', 'y', 'y'] },
+  { claim: 'Oars sealed with leather', cells: [, 'p', , , , , 'y'] },
+  { claim: 'Oars worked through sleeves', cells: [, , , , , 'y'] },
+  { claim: 'No deeper than 12 or 15 feet', cells: [, , , , , 'y'] },
   { claim: 'Walls and deck of greased leather', cells: [, , , 'y'] },
   { claim: 'Glass to look out', cells: [, 'p', , 'y'] },
-  { claim: 'Air by a tube from the surface', cells: [, 'p', , 'y', , 'p'] },
-  { claim: 'A liquor that restored the air', cells: [, , , , 'y', 'reports it, doubts it'] },
+  { claim: 'Air by a tube from the surface', cells: [, 'p', , 'y', , , 'p'] },
+  { claim: 'A liquor that restored the air', cells: [, , , , 'y', 'y', 'reports it, doubts it'] },
   { claim: 'Twelve rowers', cells: [, , , , 'y'] },
   { claim: 'Passengers', cells: [, , , 'the King', 'y'] },
   { claim: 'Two boats', cells: [, , , 'y'] },
@@ -254,6 +257,7 @@ const EVENTS: { year: number; who: string; what: string; tier: -2 | -1 | 1 | 2 }
   { year: 1648, who: 'Wilkins 1648', what: '“already experimented”', tier: 2 },
   { year: 1651, who: 'Harsdörffer 1651', what: 'boxes, leather, the King', tier: -2 },
   { year: 1660, who: 'Boyle 1660', what: 'twelve rowers, a liquor', tier: 1 },
+  { year: 1666, who: 'Monconys 1666', what: '12 or 15 feet', tier: -1 },
   { year: 1680, who: 'Borelli 1680', what: 'first picture of one', tier: 2 },
   { year: 1695, who: 'Papin 1695', what: 'his own boats, drawn', tier: -1 },
 ];
