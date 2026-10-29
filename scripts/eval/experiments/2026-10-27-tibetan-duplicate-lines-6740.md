@@ -8,7 +8,7 @@ n_books: 2402
 n_pages: 889974
 verdict: "A text-only detector for invented repeated lines in Tibetan OCR does not reach 90% precision. The final rule (an extra line beyond the book's usual count AND a near-copy pair within 3 lines) flags 7,568 of 889,974 pages (2,272 with served English, 849 books), but on 7 fresh pages checked by eye only 2 of 6 decided were real: the Kangyur's sutras repeat near-whole lines on the leaf, and volumes mix 7- and 8-line leaves. Flash, reading the image, dropped a line of the flagged pair on 2 of 56 pilot pages. Under Derek's severity rule, the one existing Flash batch audited end to end (router-30) FAILS: a severe error introduced on 4 of 10 pages, confirmed by a second judge (controls 20/20, 10/10), while the Derge guard passed all 30 (0.944 -> 0.967). Nothing was written."
 status: rejected
-decision: "No Flash correction surfaced or written (#6740). The detector lands as a worklist; the severity audit (leafcheck --severity, confirm-req, severity-gate), derge-guard.mjs and severity-batch.sh land as tooling."
+decision: "No Flash correction surfaced or written (#6740). The detector lands as a worklist; the severity audit (leafcheck --severity, confirm-req, severity-gate), derge-guard-allow.mjs and severity-batch.sh land as tooling."
 superseded_by: null
 issue: [6740, 4523, 5771, 6560]
 ---
