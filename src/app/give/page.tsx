@@ -18,8 +18,12 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
  *
  * The case is the vision letter's (src/app/articles/vision/content.ts) in short:
  * the Renaissance began with a translation, most of it is still untranslated, and
- * a gift joins the project of reading all of it. The figures are the letter's own,
- * so the two pages never disagree — change them THERE first, then here.
+ * a gift joins the project of reading all of it. The corpus figures (STATS, the
+ * metadata, storage, words) are measured 2026-10-29 and match /ai-partners: books
+ * held with page scans, excluding duplicates, takedowns and the catalogue-only
+ * records of the October import wave (#7343). The vision letter's budget still
+ * rests on its 6 October counts (93,000 / 73,000); re-cost it before changing
+ * the letter.
  * No per-book cost figure on purpose: model cost alone (under a dollar a book)
  * tells a donor the work is nearly free, which is not the story.
  *
@@ -38,7 +42,7 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
 export const metadata: Metadata = {
   title: 'Donate | Source Library',
   description:
-    'Join the largest historical translation project in history: 73,000 scanned books waiting to be read, free for everyone. Give in two taps, US tax-deductible or international.',
+    'Join the largest historical translation project in history: 110,000 scanned books waiting to be read, free for everyone. Give in two taps, US tax-deductible or international.',
   alternates: { canonical: '/give' },
 };
 
@@ -49,15 +53,15 @@ const FEATURE_IMAGE =
 const FEATURE_BOOK = '/book/6990688d249ce014347d6e76';
 
 const STATS = [
-  { value: '93,000', label: 'books in over fifty languages' },
+  { value: '131,000', label: 'books in over fifty languages' },
   { value: '20,000', label: 'already readable in translation' },
-  { value: '73,000', label: 'scanned and waiting to be read' },
+  { value: '110,000', label: 'scanned and waiting to be read' },
 ];
 
 const BUILDS = [
   {
     title: 'Every book we hold, readable',
-    text: 'Latin, Greek, Arabic, Hebrew, Chinese, Sanskrit, Tibetan: 73,000 books are scanned and catalogued, and no one can read them yet. Your gift moves them into English.',
+    text: 'Latin, Greek, Arabic, Hebrew, Chinese, Sanskrit, Tibetan: 110,000 books are scanned and catalogued, and no one can read them yet. Your gift moves them into English.',
   },
   {
     title: 'A living archive',
@@ -120,11 +124,10 @@ export default async function GivePage() {
             <p className="text-lg text-stone-700 leading-relaxed mb-4">
               When Marsilio Ficino put ancient wisdom texts into Latin, the ideas
               lit up Europe. Yet most of the Renaissance itself has never been
-              translated: an estimated{' '}
-              <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className={link}>
-                90 percent of its Latin texts
-              </a>
-              , and far more in Arabic, Chinese, Sanskrit and Tibetan. At the pace
+              translated. Of a random sample of 1,000 Latin works printed between
+              1480 and 1620, searched with AI help, 93 percent have no English
+              translation, and the share is higher still in Arabic, Chinese, Sanskrit
+              and Tibetan. At the pace
               of human translation, it would take ten thousand years.
             </p>
             <p className="text-lg text-stone-700 leading-relaxed">
@@ -276,8 +279,8 @@ export default async function GivePage() {
                   <p className="font-semibold text-stone-900">Keeping it open</p>
                   <p className="text-stone-600 leading-relaxed">
                     About $50,000 a year, before a single page is translated: the servers, the
-                    database, and storage for 22 terabytes of scans, more than 25 million pages.
-                    The library already holds more text than English Wikipedia: 7.6 billion
+                    database, and storage for 32 terabytes of scans, nearly 30 million pages.
+                    The library already holds more text than English Wikipedia: 7.7 billion
                     words, half in the original languages and half in English. Wikipedia and the
                     Internet Archive stay free because their readers pay for them. This library
                     can too.

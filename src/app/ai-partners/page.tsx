@@ -5,7 +5,7 @@ import { PARTNERS_HTML } from './content';
 import './ai-partners.css';
 
 const DESCRIPTION =
-  'Source Library for AI partners: 129,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, with provenance for every page and public-domain originals.';
+  'Source Library for AI partners: 131,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, with provenance for every page and public-domain originals.';
 
 export const metadata: Metadata = {
   title: 'Source Library for AI Partners',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Source Library for AI Partners',
     description:
-      '129,000 historical books from more than 30 libraries; 9.6 million pages transcribed and 5.7 million translated into English, each traceable to its scan.',
+      '131,000 historical books from more than 30 libraries; 9.6 million pages transcribed and 5.7 million translated into English, each traceable to its scan.',
     url: 'https://sourcelibrary.org/ai-partners',
     type: 'website',
     images: ['https://sourcelibrary.org/ai-partners/img/fludd-empyrean.jpg'],

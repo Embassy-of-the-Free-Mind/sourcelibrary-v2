@@ -150,3 +150,8 @@
   .ai-partners .pf { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .ai-partners .proof { padding-block: 52px; }
 }
+/* Calls to action: one in the hero, one at the close. */
+.ai-partners .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.ai-partners .cta a { font-family: var(--sans); font-size: 15px; font-weight: 600; text-decoration: none; padding: 11px 18px; border: 1px solid var(--rust); color: var(--rust); }
+.ai-partners .cta a.primary { background: var(--rust); color: var(--cream); }
+.ai-partners .cta a:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
