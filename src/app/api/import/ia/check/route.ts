@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 
 import { getDb } from '@/lib/mongodb';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 interface CheckResult {
   identifier: string;
@@ -39,7 +40,7 @@ async function checkIdentifier(identifier: string): Promise<CheckResult> {
   // 1. Fetch IA metadata
   let metadata;
   try {
-    const res = await fetch(`https://archive.org/metadata/${identifier}`, {
+    const res = await outboundFetch(`https://archive.org/metadata/${identifier}`, {
       signal: AbortSignal.timeout(10000),
     });
     if (!res.ok) {
@@ -59,7 +60,7 @@ async function checkIdentifier(identifier: string): Promise<CheckResult> {
 
   // 2. Try IIIF manifest
   try {
-    const iiifRes = await fetch(
+    const iiifRes = await outboundFetch(
       `https://iiif.archive.org/iiif/${identifier}/manifest.json`,
       { signal: AbortSignal.timeout(10000) }
     );
