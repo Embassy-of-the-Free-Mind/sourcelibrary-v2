@@ -1,0 +1,15 @@
+{
+ "books": 30,
+ "pages": 4357,
+ "planned_calls": 2089,
+ "calls_per_page": 0.479,
+ "short_pages": 991,
+ "short_share": 0.227,
+ "min_ocr_chars_for_block": 200,
+ "call_sizes": {
+  "1": 1230,
+  "2": 120,
+  "3": 69,
+  "4": 670
+ }
+}
