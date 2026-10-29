@@ -2836,19 +2836,25 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
     // A hidden DUPLICATE sends readers to the copy dedup kept (#5029) instead of
-    // dead-ending. Not when embedded: /embed/[tenant]/book re-exports this
-    // component and a /book or /artwork target would leave the embed shell (same
-    // reason as the artwork canonicalisation below). The lookup runs only on
-    // this already-hidden branch, so the canonical path pays nothing.
-    if (!isEmbedded && !previewProposed) {
+    // dead-ending. The lookup runs only on this already-hidden branch, so the
+    // canonical path pays nothing.
+    if (!previewProposed) {
       const hiddenId = (earlyBook as { id?: string }).id ?? id;
       const keeper = await findVisibleDuplicateKeeper(await getReadDb(), hiddenId, ctx);
-      if (keeper) {
+      if (keeper && !isEmbedded) {
         permanentRedirect(
           keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}`
             : lang !== 'en' ? `/${lang}/book/${keeper.slug}`
             : `/book/${keeper.slug}`,
         );
+      }
+      // Embedded, the target stays inside the partner's frame (EFM's Atalanta
+      // Fugiens 404'd on the Embassy site, #7702). The keeper already passed the
+      // tenant's admission rule; there is no embed /artwork route, so an artwork
+      // keeper keeps the 404. A 307, not a 308: a partner may yet restore its own
+      // copy, and a browser would cache a permanent redirect away from it.
+      if (keeper && isEmbedded && !keeper.artworkSlug) {
+        redirect(`${embedPathPrefix}/book/${keeper.slug}`);
       }
     }
     notFound();
