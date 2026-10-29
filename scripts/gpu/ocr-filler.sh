@@ -77,7 +77,10 @@ case "${1:-run}" in
     [ "$(ls -1 "$Q"/running | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
     backfill_running=$(ls -1 "$Q"/running | grep -c '^zz-siglip2-')
     # a job outside the queue that takes the lock (e.g. an eval's drafting arms) owns the card until it lets go
-    flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+    # (a running backfill chunk holds the lock through gpu-queue.sh; it yields to whatever is queued, so it does not count)
+    if [ "$backfill_running" -eq 0 ]; then
+      flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+    fi
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1)
     case "$vram" in ''|*[!0-9]*) echo "$(now) nvidia-smi unreadable: queueing nothing"; exit 0 ;; esac
     if [ "$vram" -gt 1000 ] && [ "$backfill_running" -eq 0 ]; then
