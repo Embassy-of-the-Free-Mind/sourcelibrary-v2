@@ -813,6 +813,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
             hasImages={pagesCount > 0}
             imageRestricted={imageAccess === 'blocked'}
             imageAccess={imageAccess}
+            bookTenantId={(full.tenantId as string | undefined) ?? book.tenantId}
           />
         </div>
       ) : (
