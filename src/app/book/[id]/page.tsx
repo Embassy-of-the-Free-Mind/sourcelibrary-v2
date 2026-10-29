@@ -845,7 +845,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, embedPathPrefix = '', previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; embedPathPrefix?: string; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
   // Chrome words for this URL's language, and the link prefix that keeps a
   // reader on it. `lp` is registry-guarded (src/lib/i18n.ts): a path with no
   // Spanish twin comes back unprefixed rather than pointing at a 404.
@@ -2323,7 +2323,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {humanReads.toLocaleString('en-US')} {humanReads === 1 ? 'read' : 'reads'}
                   </div>
                 )}
-                {imageCount > 0 && (
+                {imageCount > 0 && (isEmbedded ? (
+                  <div className="flex items-center gap-2">
+                    <Images className="w-4 h-4" />
+                    {imageCount} images
+                  </div>
+                ) : (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
@@ -2332,7 +2337,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <Images className="w-4 h-4" />
                     {imageCount} images
                   </Link>
-                )}
+                ))}
               </div>
 
               {/* The Translation Card (#3881): when this book's work has a
@@ -2701,12 +2706,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     Illustrations
                     <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
-                  <Link
-                    href={`/gallery?bookId=${book.id}`}
-                    className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
-                  >
-                    View All &rarr;
-                  </Link>
+                  {/* The gallery has no embed route: from a partner frame it would open sourcelibrary.org. */}
+                  {!isEmbedded && (
+                    <Link
+                      href={`/gallery?bookId=${book.id}`}
+                      className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
+                    >
+                      View All &rarr;
+                    </Link>
+                  )}
                 </div>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
                   {galleryImages.map((img) => {
@@ -2714,8 +2722,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     if (!src) return null;
                     const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
                     const href = pageId
-                      ? `/book/${book.slug || book.id}/page/${pageId}`
-                      : `/gallery/image/${img.id}`;
+                      ? `${embedPathPrefix}/book/${book.slug || book.id}/page/${pageId}`
+                      : isEmbedded ? null : `/gallery/image/${img.id}`;
+                    if (!href) return null;
                     return (
                       <Link
                         key={img.id}
@@ -2799,6 +2808,11 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   const isEmbedded = ctx?.isEmbedded ?? false;
   const tenantId = ctx?.id ?? undefined;
   const tenantSlug = ctx?.slug ?? '';
+  // On /embed/<tenant>/… the URL bar shows the embed namespace, and a server-built
+  // link that drops it leaves the partner's frame for the global reader (EFM,
+  // 2026-10-29: illustration links opened Reader2C inside the Embassy iframe).
+  // On a tenant subdomain the proxy hides the prefix, so it stays empty there.
+  const embedPathPrefix = isEmbedded && ctx?.source === 'embed-path' && tenantSlug ? `/embed/${tenantSlug}` : '';
 
   // Existence + tenant-match check BEFORE streaming. notFound() called from
   // inside the Suspense boundary below renders the not-found UI but leaves the
@@ -2822,19 +2836,25 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
     // A hidden DUPLICATE sends readers to the copy dedup kept (#5029) instead of
-    // dead-ending. Not when embedded: /embed/[tenant]/book re-exports this
-    // component and a /book or /artwork target would leave the embed shell (same
-    // reason as the artwork canonicalisation below). The lookup runs only on
-    // this already-hidden branch, so the canonical path pays nothing.
-    if (!isEmbedded && !previewProposed) {
+    // dead-ending. The lookup runs only on this already-hidden branch, so the
+    // canonical path pays nothing.
+    if (!previewProposed) {
       const hiddenId = (earlyBook as { id?: string }).id ?? id;
       const keeper = await findVisibleDuplicateKeeper(await getReadDb(), hiddenId, ctx);
-      if (keeper) {
+      if (keeper && !isEmbedded) {
         permanentRedirect(
           keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}`
             : lang !== 'en' ? `/${lang}/book/${keeper.slug}`
             : `/book/${keeper.slug}`,
         );
+      }
+      // Embedded, the target stays inside the partner's frame (EFM's Atalanta
+      // Fugiens 404'd on the Embassy site, #7702). The keeper already passed the
+      // tenant's admission rule; there is no embed /artwork route, so an artwork
+      // keeper keeps the 404. A 307, not a 308: a partner may yet restore its own
+      // copy, and a browser would cache a permanent redirect away from it.
+      if (keeper && isEmbedded && !keeper.artworkSlug) {
+        redirect(`${embedPathPrefix}/book/${keeper.slug}`);
       }
     }
     notFound();
@@ -2971,7 +2991,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} embedPathPrefix={embedPathPrefix} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
       </Suspense>
       {!isEmbedded && (
         <SignUpCTA
