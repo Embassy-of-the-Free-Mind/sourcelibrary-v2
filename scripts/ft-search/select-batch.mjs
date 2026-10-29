@@ -8,7 +8,8 @@
 // attempt yet (method claude_subagent_verify). Random order, seeded, so a batch is reproducible.
 //
 //   set -a; source .env.production.local; set +a
-//   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029]
+//   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029] [--exclude <ids.txt>[,<ids.txt>]]
+// --exclude: ids already drawn by a batch that has not been ingested yet, so parallel batches never overlap.
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -47,14 +48,43 @@ async function fetchRecord(id) {
   return null;
 }
 
-function prompt(b, record) {
+// Leads from Supabase translation_catalogs (#7598): rows for the same author surname, given to the
+// searcher to check, never to trust. A 30-row spot check (2026-10-29) confirmed 12 of 18 library and
+// catalogue rows (UNESCO, LoC, HathiTrust, Open Library) and 1 of 6 sl_ft_llm_claim rows.
+const SUPA = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SL_ORIGIN = /^sl_|^validated_additions$/;
+const surname = (a) => {
+  const s = (a || '').split(/[;|]/)[0].trim();
+  const n = (s.indexOf(',') > 0 ? s.slice(0, s.indexOf(',')) : s).replace(/\b(saint|st\.?|von|de|van|del|di|da|al-)\b/gi, '').trim();
+  return (n.split(/\s+/).pop() || '').toLowerCase();
+};
+async function catalogLeads(b) {
+  const s = surname(b.author);
+  if (!SUPA || s.length < 3 || /^(anonymous|anon|unknown)$/.test(s)) return null;
+  const q = `author_surname_lower=eq.${encodeURIComponent(s)}&select=source,english_title,original_title,canonical_work,translator,pub_year,publisher,source_url&limit=200`;
+  const r = await fetch(`${process.env.SUPABASE_URL}/rest/v1/translation_catalogs?${q}`, {
+    headers: { apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}` },
+  }).catch(() => null);
+  const rows = r?.ok ? await r.json() : [];
+  if (!rows.length) return null;
+  // Rows sharing words with this book's title first, then library and catalogue rows before our own findings.
+  const words = (t) => new Set((t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/\p{L}{4,}/gu) || []);
+  const mine = words(`${b.title || ''} ${b.display_title || ''}`);
+  const overlap = (x) => [...words(`${x.english_title} ${x.original_title} ${x.canonical_work}`)].filter((w) => mine.has(w)).length;
+  rows.forEach((x) => { x._o = overlap(x); });
+  rows.sort((x, y) => y._o - x._o || SL_ORIGIN.test(x.source) - SL_ORIGIN.test(y.source));
+  const line = (x) => `- ${x.english_title}${x.translator ? `, tr. ${x.translator}` : ''}${x.pub_year ? ` (${x.pub_year})` : ''}${x.publisher ? `, ${x.publisher}` : ''} [${SL_ORIGIN.test(x.source) ? 'our earlier finding, unverified' : x.source}]${x.source_url ? ` ${x.source_url}` : ''}`;
+  return `${rows.length}${rows.length === 200 ? '+' : ''} row(s) in our catalogue of English translations match this author's surname${rows.length > 10 ? '; the 10 whose titles best match this book' : ''}. They are LEADS to check, not answers: many are a different work by the author, wrong in detail, or not real. Cite one only after you find it yourself.\n${rows.slice(0, 10).map(line).join('\n')}\n`;
+}
+
+function prompt(b, record, leads) {
   const id = b.id || String(b._id);
   const read = record
     ? `The book's Source Library record (first 4,000 characters, already fetched; do not fetch sourcelibrary.org yourself):\n<<<\n${record}\n>>>\n`
     : `First read the book's summary: curl -s https://sourcelibrary.org/api/books/${id} | head -c 4000. `;
   return `Find out whether a published English translation already exists for this book. Source Library has machine-translated it.
 Book: ${b.display_title || b.title || ''} | author: ${b.author || 'Anonymous'} | date: ${b.published || b.year || ''} | edition language: ${b.language || ''} | Source Library id ${id}.
-${read}Identify the WORK. For a volume of a Chinese collection (卷), identify the specific juan or texts it contains.
+${read}${leads || ''}Identify the WORK. For a volume of a Chinese collection (卷), identify the specific juan or texts it contains.
 Then use web search to look for any published English translation of the work, complete or substantial, from any year; one embedded in a scholarly edition counts. Search the original-language title, the English title, and the author with "translated". Look in WorldCat, Google Books, HathiTrust, Internet Archive, publisher sites and JSTOR. One legitimate prior translation settles it. Give up after about 8 searches. Excerpts or selected passages are partial_only, not a prior.
 Report only URLs you actually opened. Never guess a URL.
 Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":""} or null,"queries":["..."],"card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
@@ -71,7 +101,9 @@ const pool = await db.collection('books').find(
   { visible: true, pages_translated: { $gt: 0 }, language: { $nin: ['English', 'english', 'en', 'eng'] } },
   { projection: { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1, is_first_translation: 1, prior_translation: 1 } },
 ).toArray();
-const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)));
+const excluded = new Set((arg('--exclude', '') || '').split(',').filter(Boolean).flatMap((f) => readFileSync(f, 'utf8').split('\n').filter(Boolean)));
+const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)) && !excluded.has(b.id || String(b._id)));
+if (excluded.size) console.log(`excluded ${excluded.size} ids drawn by un-ingested batches`);
 // Priority tiers, each shuffled: 0 never searched; 1 searched by the old system, no badge or credit;
 // 2 already badged or credited (a fresh search there only adds evidence).
 const tier = (b) => (!oldSearched.has(b.id || String(b._id)) ? 0 : b.is_first_translation || b.prior_translation ? 2 : 1);
@@ -81,13 +113,16 @@ console.log(`tiers: never searched ${tiers[0].length}, old search unmarked ${tie
 
 mkdirSync(OUT, { recursive: true });
 let missing = 0;
+let withLeads = 0;
 for (let i = 0; i < batch.length; i += 8) {
   await Promise.all(batch.slice(i, i + 8).map(async (b) => {
-    const record = await fetchRecord(b.id || String(b._id));
+    const [record, leads] = await Promise.all([fetchRecord(b.id || String(b._id)), catalogLeads(b)]);
     if (!record) missing++;
-    writeFileSync(`${OUT}/${b.id || String(b._id)}.prompt`, prompt(b, record));
+    if (leads) withLeads++;
+    writeFileSync(`${OUT}/${b.id || String(b._id)}.prompt`, prompt(b, record, leads));
   }));
 }
+console.log(`${withLeads} of ${batch.length} prompts carry catalogue leads${SUPA ? '' : ' (SUPABASE_URL not set: none)'}`);
 if (missing) console.error(`${missing} records not fetched; those prompts curl the record themselves`);
 writeFileSync(`${OUT}/ids.txt`, batch.map((b) => b.id || String(b._id)).join('\n') + '\n');
 writeFileSync(`${OUT}/batch.json`, JSON.stringify({ seed: SEED, drawn_at: new Date().toISOString(), eligible: eligible.length, n: batch.length }, null, 1));
