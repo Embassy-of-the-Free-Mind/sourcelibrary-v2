@@ -11,6 +11,7 @@ status: undecided
 decision: "Re-read only the frames whose stored Yigdzin read is a whole-page read (free metadata; sensitivity 0.87, specificity 0.86 for 'bad from the OCR'), behind a per-leaf blank/title guard; no page writes until Derek decides the split migration (#5771)"
 superseded_by: null
 issue: [5771, 6948, 5320, 6871]
+router_evidence: "none — not yet entered in router-table/rules.json (land-evals, 2026-10-29); the per-arm audit is scripts/eval/split-leaf-5771/results/score.json"
 ---
 ## 2026-10-25 · Does splitting multi-leaf Tibetan photos into single leaves fix the seam damage the #6948 gate found? (#5771)
 
