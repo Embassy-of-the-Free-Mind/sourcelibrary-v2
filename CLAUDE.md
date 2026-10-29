@@ -188,7 +188,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 
 Detect the work domain from the user's prompt and load the right context automatically:
 - **System overview / "where does X live?":** read `.claude/docs/system-map.md`
-- **Pipeline/cron/Lambda/OCR/translation:** read `memory/pipeline-ops.md`
+- **Pipeline/cron/Lambda/OCR/translation:** read `.claude/docs/book-process.md`, then `memory/pipeline-ops.md`
 - **UI/frontend/navigation:** read `memory/ui-navigation.md`
 - **Collection page layout / design:** governed by `.claude/docs/collection-page-redesign-spec.md` — read before changing structure or styling; hard rule: no new design primitives, every value maps to an existing token.
 - **Writing or editing an article (/articles):** follow `.claude/docs/article-rules.md` (hero, pictures in every section, `SourceQuote` for library quotes, no red text, book grid instead of a "The books" list).
