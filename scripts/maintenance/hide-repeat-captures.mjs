@@ -25,8 +25,8 @@
  *     --pairs scored-2026-10-29.jsonl.gz --out $JOB_SCRATCH/run1 [--books a,b|--books-file f] [--limit-books N] \
  *     [--apply] [--recount] [--revalidate]
  *
- * Undo (unsets both fields on pages this sweep hid; scope with --books or --run):
- *   ... hide-repeat-captures.mjs --undo [--books a,b] [--run <run id>] [--apply] [--recount]
+ * Undo (unsets both fields on pages this sweep hid; --books/--books-file required, --run narrows):
+ *   ... hide-repeat-captures.mjs --undo --books a,b [--run <run id>] [--apply] [--recount]
  *
  * --recount runs recountBook per touched book. Leave it OFF until the code that
  * reads `repeat_of` is deployed: the 2-hourly reconciler still running the old
@@ -84,8 +84,9 @@ async function afterBook(bookId) {
 
 try {
   if (UNDO) {
-    const q = { 'repeat_of_meta.issue': 5056, 'repeat_of_meta.by': `system:${SWEEP}` };
-    if (bookFilter) q.book_id = { $in: [...bookFilter] };
+    // Scoped by book: `repeat_of_meta` is unindexed, and an unscoped query walks every page.
+    if (!bookFilter) throw new Error('--undo needs --books or --books-file (per-book, so the query uses the book_id index)');
+    const q = { book_id: { $in: [...bookFilter] }, repeat_of: { $ne: null }, 'repeat_of_meta.issue': 5056, 'repeat_of_meta.by': `system:${SWEEP}` };
     if (opt('run')) q['repeat_of_meta.run'] = opt('run');
     const rows = await pages.find(q, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, repeat_of: 1, repeat_of_meta: 1 } }).toArray();
     const byBook = Map.groupBy(rows, r => r.book_id);
