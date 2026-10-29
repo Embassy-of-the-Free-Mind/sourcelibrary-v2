@@ -84,7 +84,7 @@ import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-67
 import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
-import { plantError, scorePlant, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
+import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
 import { wilson } from './lib/agreement-stats.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -600,6 +600,9 @@ async function run() {
     if (PER_WEEK > 0) {
       for (const g of [...new Set(drawn.map((d) => `${d.cell}|${d.route}`))]) {   // every cell x route judged this run, flagged-only ones too
         const [cell, route] = g.split('|');
+        // A language the planter has no bank for (it plants la / de / fr) gets no planted control, and says so.
+        const lang = drawn.find((d) => `${d.cell}|${d.route}` === g)?.lang;
+        if (!langCode(lang)) { console.log(`  planted: no planter for ${lang} (${g}); none owed`); continue; }
         const prior = await db.collection(VERDICTS).find({ kind: 'planted', cell, route }, { projection: { planted_from: 1, week: 1 } }).toArray();
         const owed = PER_WEEK - prior.filter((r) => r.week === week).length;
         if (owed <= 0) continue;
@@ -607,7 +610,7 @@ async function run() {
         const ok = accepted.filter((r) => validRecord(r) && inEvidence(r));
         const texts = new Map((await db.collection('pages').find({ id: { $in: ok.map((r) => r.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
         const sources = ok.map((rec) => ({ rec, text: texts.get(rec.page_id) })).filter((x) => typeof x.text === 'string' && h(x.text.trim()).slice(0, 16) === x.rec.text_hash);
-        for (const x of planPlanted(sources, { owed, prior, seed: seed ^ 0x7611 ^ parseInt(h(g).slice(0, 6), 16) })) {
+        for (const x of planPlanted(sources, { owed, prior, lang, seed: seed ^ 0x7611 ^ parseInt(h(g).slice(0, 6), 16) })) {
           const r = x.rec;
           planted.push({ kind: 'planted', route, text: x.plantedText, plant: x.plant, from: r._id,
             d: { page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, cell, route, lane: r.lane, lang: r.lang, script_type: r.script_type, script_source: r.script_source,
