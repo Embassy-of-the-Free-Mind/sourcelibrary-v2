@@ -68,6 +68,9 @@ describe('helpers', () => {
   it('plainLines drops olmOCR front matter and markup', () => {
     expect(plainLines('---\nprimary_language: en\n---\n<p>One</p><p>Two</p>')).toEqual(['One', 'Two']);
   });
+  it('plainLines keeps text after a bare --- rule (LightOnOCR opens with one)', () => {
+    expect(plainLines('---\n\n62\n\n# CHAPITRE XV\n\n---\n\nmore')).toEqual(['---', '62', '# CHAPITRE XV', '---', 'more']);
+  });
   it('repeatedLines finds the longest block', () => {
     expect(repeatedLines(['a long enough line here', 'a long enough line here', 'x'])?.reps).toBe(2);
   });

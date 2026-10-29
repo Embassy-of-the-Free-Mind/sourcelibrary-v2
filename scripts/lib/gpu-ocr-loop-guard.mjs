@@ -34,7 +34,8 @@ export const LINE_MIN_REPS = 4;
 /** The text with markup and engine wrappers taken out, lines kept. */
 export function plainLines(text) {
   let t = String(text || '');
-  t = t.replace(/^---\n[\s\S]*?\n---\n/, '');                     // olmOCR front matter
+  t = t.replace(/^---\n(?:[A-Za-z_]+:.*\n)+---\n/, '');            // olmOCR front matter (key: value lines only;
+  //                                                                  LightOnOCR opens with a bare --- rule)
   t = t.replace(/^\s*```[a-zA-Z]*\s*$/gm, '');
   t = t.replace(/<Metadata>[\s\S]*?<\/Metadata>/g, '');            // CHURRO
   t = t.replace(/<(scan-quality|language|script|page-type|vocab|warning|note|meta|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
