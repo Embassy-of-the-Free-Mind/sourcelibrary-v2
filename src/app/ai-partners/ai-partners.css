@@ -155,3 +155,4 @@
 .ai-partners .cta a { font-family: var(--sans); font-size: 15px; font-weight: 600; text-decoration: none; padding: 11px 18px; border: 1px solid var(--rust); color: var(--rust); }
 .ai-partners .cta a.primary { background: var(--rust); color: var(--cream); }
 .ai-partners .cta a:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+.ai-partners .hero .cta a:not(.primary) { color: var(--night-text); border-color: var(--night-muted); }
