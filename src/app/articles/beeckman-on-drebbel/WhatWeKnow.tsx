@@ -1,5 +1,6 @@
 import PageFigure from '@/components/articles/PageFigure';
 import SourceQuote from '@/components/articles/SourceQuote';
+import { HowItSank, SourcesTable, SourcesTimeline } from './BoatFigures';
 
 // Shown after Beeckman's 1620 entry: every early report of the boat that the
 // library holds, in date order, so a reader can see how little rests on
@@ -25,6 +26,8 @@ export default function WhatWeKnow() {
         tap are his own guess, made from one line in a letter. Everything else comes from people
         who wrote about the boat years later, and most of them had it at second hand.
       </p>
+
+      <SourcesTimeline />
 
       <SourceQuote
         book={MERSENNE}
@@ -100,6 +103,8 @@ export default function WhatWeKnow() {
         no picture, and he sends the reader on to Mersenne, &ldquo;f. 207 &amp; 208&rdquo;:
         the page quoted above.
       </p>
+
+      <HowItSank />
 
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 my-10 font-body text-lg leading-relaxed text-primary">
         <p>
@@ -180,6 +185,8 @@ export default function WhatWeKnow() {
         Papin, <em>Fasciculus</em> (1695), folding plate. Bayerische Staatsbibliothek, Munich,{' '}
         <a href="https://www.digitale-sammlungen.de/en/view/bsb10843010" className="underline">bsb10843010</a>.
       </p>
+
+      <SourcesTable />
 
       <p className="text-secondary leading-relaxed mt-8 font-body">
         Other parts of the familiar story, such as a dive of twelve to fifteen feet and a run from
