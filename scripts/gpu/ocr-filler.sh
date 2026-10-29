@@ -45,6 +45,21 @@ for f in glob.glob(f"{J}/plan/*.json"):
 print(pages, books)
 PY
     ;;
+    gpu-print) python3 - "$2" <<'PY'
+import json, os, sys
+J = sys.argv[1]; pages = 0; books = set(); planned = set()
+if os.path.exists(f"{J}/manifest.tsv"):
+    for l in open(f"{J}/manifest.tsv"):
+        r = l.rstrip("\n").split("\t")
+        if len(r) != 4: continue
+        planned.add(r[0])
+        if not os.path.exists(f"{J}/out/{r[0]}/{r[1]}.json") and not os.path.exists(f"{J}/out/{r[0]}/{r[1]}.err"): pages += 1; books.add(r[0])
+fr = json.load(open(f"{J}/frame-books.json"))["books"] if os.path.exists(f"{J}/frame-books.json") else []
+for b in fr:
+    if b["bid"] not in planned: pages += b["owed"]; books.add(b["bid"])
+print(pages, len(books))
+PY
+    ;;
     *) echo "0 0" ;;
   esac
 }
@@ -128,6 +143,31 @@ PY
 row done \$rc \${after:-null}
 echo "\$(date -u +%FT%TZ) end rc=\$rc: \$(( $p - \${after:-$p} )) pages read this chunk, \${after} left"
 exit \$rc
+EOF
+        ;;
+        gpu-print) cat > "$tmp" <<EOF
+#!/usr/bin/env bash
+# timeout: $((dl + 2))h
+# issue: $issue
+# $name: queued by ocr-filler.sh (#6871) at $(now). Route $route ($kind), $p pages left in $b books.
+# Plans the next frame books when fewer than 3,000 planned pages wait, reads up to ${dl} h with LightOnOCR, then applies.
+# Downstream: $down
+set -uo pipefail
+ST=$ST; LANE=$lane; CODE=$CODE; ENV_FILE=$ENV_FILE
+row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" >> "\$ST/runs.jsonl"; }
+# vLLM at util 0.6 asks for 14.7 GB: wait up to an hour for it, else a recorded skip
+for i in \$(seq 1 60); do
+  f=\$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  [ "\${f:-0}" -ge 15500 ] && break
+  [ "\$i" -eq 60 ] && { echo "OCR-FILLER-SKIP card busy (\${f} MiB free) for an hour"; row skip 75; exit 75; }
+  sleep 60
+done
+waiting=\$(awk -F'\t' -v J="\$LANE" 'NF==4 { f=J"/out/"\$1"/"\$2; if ((getline x < (f".json")) <= 0 && (getline y < (f".err")) <= 0) n++; close(f".json"); close(f".err") } END { print n+0 }' "\$LANE/manifest.tsv" 2>/dev/null)
+[ "\${waiting:-0}" -lt 3000 ] && node --env-file="\$ENV_FILE" "\$CODE/scripts/workers/gpu-print-lane.mjs" plan --apply --dir "\$LANE" --limit 40
+LANE_DIR=\$LANE CODE_DIR=\$CODE HOURS=$dl bash "\$CODE/scripts/gpu/gpu-print-gpu.sh"; rc=\$?
+node --env-file="\$ENV_FILE" "\$CODE/scripts/workers/gpu-print-lane.mjs" apply --apply --dir "\$LANE"; arc=\$?
+row done \$(( rc > arc ? rc : arc ))
+exit \$(( rc > arc ? rc : arc ))
 EOF
         ;;
         *) echo "$(now) $route: unknown kind $kind, skipped"; rm -f "$tmp"; continue ;;

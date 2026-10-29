@@ -29,9 +29,9 @@ for (const [lang, L] of Object.entries(LANGS)) {
     const rows = await db.collection('pages').aggregate([
       { $match: { book_id: { $in: ids.slice(i, i + 400) } } },
       { $project: { _id: 0, book_id: 1,
-        txt: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: { $trim: { input: { $ifNull: ['$ocr.data', ''] } } } }, 0] }] },
+        txt: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: { $trim: { input: '$ocr.data' } } }, 0] }, false] },
         lite: { $in: [{ $ifNull: ['$ocr.model', ''] }, LITE_MODELS] },
-        ref: { $or: [{ $gt: [{ $ifNull: ['$ocr.recitation_count', 0] }, 0] }, { $eq: ['$ocr.recitation_blocked', true] }, { $eq: ['$ocr.fail_blocked', true] }, { $gt: [{ $strLenCP: { $ifNull: ['$ocr.fail_reason', ''] } }, 0] }] } } },
+        ref: { $or: [{ $gt: [{ $ifNull: ['$ocr.recitation_count', 0] }, 0] }, { $eq: ['$ocr.recitation_blocked', true] }, { $eq: ['$ocr.fail_blocked', true] }, { $cond: [{ $eq: [{ $type: '$ocr.fail_reason' }, 'string'] }, { $gt: [{ $strLenCP: '$ocr.fail_reason' }, 0] }, false] }] } } },
       { $group: { _id: { b: '$book_id', s: { $cond: ['$txt', { $cond: ['$lite', 'lite', 'other'] }, { $cond: ['$ref', 'refused', 'none'] }] } }, n: { $sum: 1 } } },
     ], { allowDiskUse: true }).toArray();
     for (const r of rows) {

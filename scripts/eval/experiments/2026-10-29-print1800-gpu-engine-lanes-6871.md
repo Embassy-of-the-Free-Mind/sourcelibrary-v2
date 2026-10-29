@@ -4,14 +4,14 @@ measure: [accuracy, judged]
 languages: [en, de, la, fr, it]
 scripts: [Latn]
 canons: []
-n_books: null
+n_books: 320
 n_pages: 331
-verdict: "PREREGISTERED, not yet scored."
+verdict: "On 1800+ English print an open GPU engine replaces Flash-Lite: on 97 typed English reference pages every engine tested passes the preregistered rule (LightOnOCR-3-1B median folded CER 0.12% vs lite 0.27%, catastrophic 0 vs 17, loops 0 vs 1), reads lite's 16 RECITATION refusals at median 0.09%, and drafts for agy Flash as well as lite does. German fails every use (lite 0.27% vs the best engine 0.52%; judged misleading 15 vs 4 of 40). French, Italian and Latin fail (a) on judged or answered pages; French passes (b) on 25 refused pages. The English lane (LightOnOCR on pages with no text, books held scans-only) is built; its frame is 984 books, 162,747 pages, about 2.3 GPU-days."
 status: undecided
-decision: null
+decision: "Proposed: English 1800+ pages with no text (never read or lite-refused) in books held scans-only-publish-7270 are read by LightOnOCR-3-1B on gex45 (scripts/workers/gpu-print-lane.mjs, ocr-filler route gpu-print-en, disabled until Derek turns it on); lite drafts already stored are not replaced. German, French, Italian and Latin 1800+ print stay on Flash-Lite (French refusals: a 731-page follow-up)."
 superseded_by: null
 issue: [6871, 5660]
-router_evidence: "none yet"
+router_evidence: "english-1800-plus: gpu-alone pass (typed n=97), refusal-fill pass (typed 16 + judged 30), gpu-draft→flash pass; german-1800-plus: fail all three; latin-1800-plus: (a) pass by the letter only (tie carried by lite empties), (c) pass; french-1800-plus: (a) judged fail, (b) judged pass; italian-1800-plus: (a) judged fail"
 ---
 ## 2026-10-29 · Can a GPU engine serve 1800+ European print alone, fill lite's refusals, or draft for Flash? (#6871, #5660)
 <!-- PRIOR ART: 2026-10-03-later-the-second-open-engine-olmocr-2-7b-fp8-5660.md (olmOCR-2 on English 1700+, CER 0.002 vs lite 0.022, kept off by one loop); 2026-09-28-is-flash-lite-adequate-on-modern-english-print-or-5216.md (lite refuses 14.9% of English reference pages); 2026-10-12-dropped-lines-two-engine-reads-6326.md (10 of 12 real dropped runs were lite's); 2026-10-28-euro-print-gpu-draft-flash-correct-7567.md and 2026-10-28-euro-print-gpu-correct-e3-e5-7567.md (E1 per-language engine choice and arm c, all on print before 1800; this is the 1800+ frame they left out, with their read.py, drive.sh and score.py reused). -->
@@ -69,3 +69,87 @@ Reported beside it, never deciding: median Δ with a 95% paired bootstrap CI, wi
 **Landing.** If (a) or (b) passes for a language, its lane is added as an `ocr-filler` kind with `cli-ocr.mjs apply` guards, provenance, the human-edit guard, and unread-only writes for (b). Then 10 books are piloted with `--apply` and 10 pages spot-checked by eye before any cron. If no language passes, this record reports the measured gap and stops.
 
 **Not run.** PERO-OCR (E1's Latin pick, pre-1800 only); a lite A-vs-A floor (no Gemini API in this job); no new lite reads.
+
+### Results (scored after the preregistration commit 954f2a3b8)
+
+**The run.** gpu-queue task `40-print1800-6871`, 2026-10-29 00:40–01:39Z, card otherwise empty, util 0.6, 16 clients, 331 pages per engine, 0 errors.
+
+| engine | pages/h | token-cap hits | guard refusals |
+|---|---|---|---|
+| LightOnOCR-3-1B (LO) | 2,899 | 5 | 5 |
+| olmOCR-2-7B FP8 (O), pages at 1,288 px | 2,078 | 8 | 8 |
+| CHURRO-3B fp8 (CH8) | 1,781 | 7 | 7 |
+| Surya 2 (S) | 1,707 | — | 1 |
+| GLM-OCR (G) | 1,553 | 14 | 14 |
+
+**(a) Typed panel, the engine alone against lite** (`decide.py`; median folded CER %, catastrophic, loops after the guard; W/L = pages better/worse than lite by > 0.2 pt):
+
+| lang | lite | LO | S | G | O | CH8 | verdict |
+|---|---|---|---|---|---|---|---|
+| en (97) | 0.27, 17, 1 | 0.12, 0, 0 (W/L 29/10) | 0.11, 0, 0 (26/5) | 0.12, 1, 0 (29/8) | 0.13, 0, 0 (28/8) | 0.16, 0, 0 (26/17) | **every engine passes** |
+| de (20) | 0.27, 1, 0 | 1.27, 0, 0 (1/13) | 1.70, 1, 0 | 3.08, 1, 0 | 1.16, 1, 0 | 0.52, 0, 0 (2/11) | **every engine fails** |
+| la (29) | 1.00, 4, 0 | 0.99, 0, 0 (6/13) | 1.14, 1, 0 | 1.51, 2, 0 | 1.73, 1, 0 | 2.19, 0, 0 | LO passes, the rest fail |
+
+- **English.** Lite's median carries its 16 RECITATION refusals. On the 81 pages lite answered, the engines and lite are close: LO 0.17% against 0.19%, olmOCR 0.12%, Surya 0.12%. The gain is that no engine refuses, and every engine reads fewer pages worse than lite than better. MinerU, today's tier-3 refusal reader, is 0.24% on the same pages (stored read, descriptive).
+- **German** (Wikisource proofread pages, mostly Fraktur, 1803–1847). Lite is better on 11–19 of 20 pages against every engine. The best engine, CHURRO, has twice lite's median.
+- **Latin** (Wikisource, 1800+). LO passes by the letter: median 0.99% against 1.00%, 0 catastrophic against 4. The pass is carried by lite's 4 empty bench reads. On the 26 pages both answered, LO is 0.97% against 0.93%, and worse on 13 pages against 6. Treated as a tie (TAKEN below).
+- **Candidate** (the preregistered rule: the most typed passes, then pooled median): **LightOnOCR-3-1B**, which passes en and la. It is also the fastest engine.
+
+**(b) Typed: lite's 16 English refusals** (+ 4 empty de/la bench reads): LO median 0.09%, Surya 0.10, GLM 0.13, olmOCR 0.17, CHURRO 0.27, all with 0 catastrophic; MinerU-fn 0.21. **Pass** for every engine.
+
+**Judged** (blind Opus, `claude -p`, #7522's `judge.mjs`, one call a page with the neighbouring leaves; 180 calls, 0 without a verdict; `judge-table.py`):
+
+| set | lang | pages | result | verdict |
+|---|---|---|---|---|
+| a: lite draft vs LO | fr | 40 | misleading lite 2 / LO 3; LO more faults on 13 pages, lite on 7 | fail |
+| | it | 20 | misleading 0 / 1; more faults 5 / 3 | fail |
+| | de | 40 | misleading 4 / 15; more faults 26 / 5 | fail |
+| b: LO on lite-refused pages | en | 30 | usable 24 (80%), invented 1, not delivered 2 (a token-cap loop; a plate) | **pass** |
+| | fr | 25 | usable 22 (88%), invented 0, not delivered 2 | **pass** |
+| | de | 30 | usable 20 (67%), invented 2 | fail |
+
+- **The English b-failures are all one kind.** 3 pages are English with a Sanskrit, Devanagari or Chinese span, where LO garbled the span and read the English right. 1 page has a line of engine commentary appended ("Note: The original image contains a decorative brown scroll…").
+
+**(c) GPU draft → agy Flash** (`decide-c.py`; mean folded CER difference c − a on pages both arms answered, 95% bootstrap CI; catastrophic over all pages):
+
+| lang | both answered | Δ (c − a) | median a / c | catastrophic a / c | verdict |
+|---|---|---|---|---|---|
+| en | 81 of 97 | −0.41 [−1.25, +0.12] | 0.23 / 0.10 | 16 / 0 | **pass** |
+| de | 19 of 20 | −0.10 [−0.62, +0.38] | 0.20 / 0.14 | 1 / 0 | fail (CI upper end above +0.25) |
+| la | 26 of 29 | −0.04 [−0.26, +0.15] | 0.86 / 0.52 | 3 / 0 | **pass** |
+
+- Arm a's catastrophic pages are lite's refusals: they have no draft to correct. 272 agy calls; the Gemini weekly bucket went 0.28 → 0.24, other pool traffic included.
+
+### Routing proposal
+
+| language, 1800+ | pages with no text (census) | proposal | evidence |
+|---|---|---|---|
+| **English** | 267,671 none + 10,009 refused | **LightOnOCR-3-1B on gex45 for pages with no text**; stored lite drafts stay | (a), (b) and (c) pass |
+| German | 86,579 + 1,044 | Flash-Lite, unchanged | every use fails. Gap: typed median 0.52% (best engine) vs 0.27%; judged misleading 15 vs 4 |
+| Latin | 88,554 + 281 | Flash-Lite + the long-s pass, unchanged | (a) a tie carried by lite's empties; refusals too few for a (b) lane |
+| French | 46,822 + 731 | Flash-Lite. A refusal-fill route for the 731 refused pages is a follow-up | (a) judged fail by 1 page; (b) judged pass |
+| Italian | 7,818 + 33 | Flash-Lite, unchanged | (a) judged fail, n=20 |
+| Dutch, Spanish | 2,271 / 8,587 | not measured | no references; below the judged-panel budget |
+
+- **The English frame is smaller than the census.** Visible English 1800+ pages with no text: 213K. Of these, 162,747 are in 984 books held `scans-only-publish-7270` (#7270 published them as scans, OCR undecided) and 31,653 are held `ia-free-text-first-4966` (branch 0: Archive text first). Only 25,051 are in free books.
+- **The lane takes the scans-only books.** These are the holds the #7263 Latin GPU lane already reads (`GPU_LANE_HOLDS`). The lane writes OCR into them and keeps the hold, so no translation follows and no hold is released.
+- **At LO's rate** (2,899 pages/h here; 3,578 alone in E5) the frame is **2.3 GPU-days**. All 277,680 English pages with no text would take 3.2–4.0 days.
+
+### The lane (built here, `scripts/workers/gpu-print-lane.mjs`, `scripts/lib/gpu-print-lane.mjs`, `scripts/gpu/gpu-print-{gpu.sh,read.py}`)
+- **`frame` → `plan` → GPU → `apply`**, the Paddle print lane's shape (#6101).
+- **It writes only pages with no text** (never read, or lite-refused/empty) in English books dated 1800+ under a GPU-lane hold. With `--free`, an unheld book is held `gpu-print-6871` first.
+- **Guards at apply:** the page still has no text and is not human-edited; the book is still under a lane hold; `gpu-ocr-loop-guard` (token cap, #4850 loop, tail runaway, repeated lines); a 30-word-character floor (a blank leaf stays unread); ≤ 3 letters of a non-Latin script; no engine-commentary line.
+- **The last two guards were added AFTER the judge (post hoc).** They only turn pages away. On the typed English pages they turn away 6 of 97 pages, all pages where lite read better than LO. On the judged b set they turn away all 4 English failures.
+- **Every write goes through `writePageText`:** a revision row, CAS on the prior field, and a run id, so `revert-run.mjs` undoes it. The page is stamped `ocr.source: 'lightonocr'`, with an engine block (model, HF snapshot, vLLM version, host, GPU, decode settings, image URL and sha256). `missingProvenance` now checks `lightonocr` with the other specialist engines.
+- Each written book also gets sweep_log rows before and after, a recount, and one `book_events` row.
+
+### Deviations
+1. **The guard's front-matter strip was wrong** in the first version. LightOnOCR opens with a bare `---` rule, and the strip took everything up to the next rule. It was fixed (and tested) before any judge packet was built. Guard counts on all five engines were unchanged by the fix.
+2. **The (b) judged rule.** The rule said pages the judge calls blank are left out. The judge prompt has no blank verdict, so usable is counted over every drawn page, which is stricter. One English "not delivered" page is a plate, where LO's 14 letters were right.
+3. **olmOCR read pages at 1,288 px** (its own recipe, #5660); every other engine read at 2,400 px.
+4. **The typed panel's lite reads are bench reads,** not the stored library text: realtime #5216 for English, #6740/E2 for de/la.
+
+### What this does not show
+- **The English references are Wikisource/Gutenberg books,** which are legible, canonical and memorised. That inflates lite's refusal rate (16/97 here against 10,009 of 357K read pages in the corpus, 2.8%) and understates every engine's CER. Without refusals, LO and lite are close on English. The case for the lane is refusals, catastrophic pages and $0 marginal cost, not a better reading of clean pages.
+- **German, Latin, Italian and French n are small** (20–40 a cell), and the judge is one Opus pass.
+- **No pilot pages are in this table:** see the pilot section.
