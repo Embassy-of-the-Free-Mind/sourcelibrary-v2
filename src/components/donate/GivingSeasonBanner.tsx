@@ -39,6 +39,7 @@ import { useIsEmbedded, isTenantSubdomain } from '@/hooks/useEmbedContext';
 const SEASON = { start: '2026-11-24', end: '2027-01-01' }; // end is exclusive
 const DISMISS_KEY = 'sl_giving_banner_dismissed_at';
 const VIEWS_KEY = 'sl_giving_banner_book_views';
+const LAST_PATH_KEY = 'sl_giving_banner_last_path';
 const DISMISS_DAYS = 14;
 
 function inSeason(now: Date): boolean {
@@ -74,8 +75,14 @@ export default function GivingSeasonBanner() {
     if (!forced && !inSeason(new Date())) return;
     if (!forced && getConsent() === null) return;
 
-    const views = Number(read(window.sessionStorage, VIEWS_KEY) || '0') + 1;
-    write(window.sessionStorage, VIEWS_KEY, String(views));
+    // Count each page once: React runs effects twice in development, and a
+    // re-render on the same page must not count as a second page.
+    let views = Number(read(window.sessionStorage, VIEWS_KEY) || '0');
+    if (read(window.sessionStorage, LAST_PATH_KEY) !== pathname) {
+      views += 1;
+      write(window.sessionStorage, VIEWS_KEY, String(views));
+      write(window.sessionStorage, LAST_PATH_KEY, pathname ?? '');
+    }
     if (!forced && views < 2) return;
 
     const dismissedAt = Number(read(window.localStorage, DISMISS_KEY) || '0');
@@ -100,7 +107,7 @@ export default function GivingSeasonBanner() {
       aria-label="A note from Source Library"
       className="fixed inset-x-0 bottom-0 z-50 px-3 pb-3 sm:px-6 sm:pb-6 pointer-events-none"
     >
-      <div className="pointer-events-auto relative mx-auto max-w-3xl bg-[#f6f3ee] border border-stone-300 shadow-2xl px-5 py-5 sm:px-8 sm:py-6">
+      <div className="pointer-events-auto relative mx-auto max-w-3xl bg-[#f6f3ee] border border-stone-300 shadow-2xl px-4 py-4 sm:px-8 sm:py-6">
         <button
           type="button"
           onClick={dismiss}
@@ -109,10 +116,16 @@ export default function GivingSeasonBanner() {
         >
           <X className="w-4 h-4" />
         </button>
-        <p className="font-display text-xl sm:text-2xl text-stone-900 leading-snug pr-8 mb-2">
+        <p className="font-display text-lg sm:text-2xl text-stone-900 leading-snug pr-8 mb-1.5 sm:mb-2">
           This library is free, and volunteers built it.
         </p>
-        <p className="text-sm sm:text-base text-stone-700 leading-relaxed mb-4">
+        {/* Phones get the short version: the card sits over the text being read,
+            and the long one covered more than half a 390px screen. */}
+        <p className="sm:hidden text-sm text-stone-700 leading-relaxed mb-3">
+          It has cost over $120,000 so far; donors have given $60,000. If it is
+          useful to you, please give before the year ends.
+        </p>
+        <p className="hidden sm:block text-base text-stone-700 leading-relaxed mb-4">
           No ads, no paywall: every translation sits beside the page it came from,
           for anyone to read and quote. Running it has cost over $120,000 so far,
           and donors have given $60,000. Another 73,000 scanned books are waiting
@@ -134,7 +147,7 @@ export default function GivingSeasonBanner() {
           >
             Not now
           </button>
-          <span className="text-xs text-stone-500 ml-auto">
+          <span className="hidden sm:inline text-xs text-stone-500 ml-auto">
             Derek Lomas, founder · Embassy of the Free Mind, Amsterdam
           </span>
         </div>
