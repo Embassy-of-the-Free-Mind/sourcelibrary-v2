@@ -174,6 +174,15 @@ const RT = {
   'la-blank': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
   'de-blank': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
   'fr-blank': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low' } } },
+  // #7701 cheap routes (job cheap-routes-7701): 30 NEW books per cell (draw --exclude-from=<the 2026-10-29 sample.json>),
+  // the same frame. German: read@4 alone (A), A > the one-page correction (B, the live route), A > the correction 4
+  // pages a call (C: cli-ocr.mjs --correct-prompt --per-call=4, A's reads of the whole block as drafts). French: read@1
+  // (the live route) against read@4, PAIRED on the same pages. Latin arm c: the page's PERO GPU draft (DIR/pero.json,
+  // made on gex45 from DIR/img/<page>.jpg, the image the corrector is then sent) corrected by agy Flash-low with the
+  // image, one page a call and 4 a call (the block's drafts).
+  'de-blank-r2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' }, 'agy-flash-low@4>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4', perCall: 4 } } },
+  'fr-blank-r2': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 } } },
+  'la-armc': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'pero>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img' }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -363,8 +372,11 @@ async function drawBlank(db, name, t, isInterior) {
   const perCall = Math.max(1, ...Object.values(t.correctors).map((c) => c.perCall ?? 1));
   const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
     .filter((b) => !lane.firstReadSkip(b, { languages: [t.blank] }));
+  // --exclude-from=<sample.json> (#7701 cheap routes): no book any cell of that draw used
+  const excluded = new Set(arg('exclude-from') ? Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id)) : []);
+  for (const b of [...books]) if (excluded.has(b.id)) books.splice(books.indexOf(b), 1);
   const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
-  const pages = [], tally = { books_in_frame: books.length, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
+  const pages = [], tally = { books_in_frame: books.length, books_left_out: excluded.size, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
   for (const b of order) {
     if (pages.length >= N) break;
     tally.books_walked++;
@@ -545,14 +557,15 @@ async function correct() {
         let draftsFile = null;
         if (cor.draftFrom) {
           const drafts = {};
-          for (const sp of cs.pages) { const a = correction(cell, cs, cor.draftFrom, sp, ''); if (a.text) drafts[sp.page_id] = a.text; }
+          // perCall (#7701 arm C): the draft route's reads of the whole block, so the correction sees the block it read
+          for (const id of cor.perCall > 1 ? readIds : ids) { const a = correction(cell, cs, cor.draftFrom, { page_id: id }, ''); if (a.text) drafts[id] = a.text; }
           draftsFile = path.join(dir, 'drafts-from.json'); fs.writeFileSync(draftsFile, JSON.stringify(drafts));
-          readIds = Object.keys(drafts);
+          readIds = readIds.filter((id) => drafts[id]);
         }
         fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(readIds));
         console.log(`${cell}/${route}: cli-ocr.mjs ${cor.fresh ? 'fresh read (live OCR prompt, no draft)' : `correct mode, ${cor.prompt ?? 'fc template'}`}, ${cor.model}, ${ids.length} pages (${used} agy calls so far${process.env.AGY_HOME ? `; AGY_HOME=${process.env.AGY_HOME}` : ''})`);
         // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
-        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : []), ...(draftsFile ? [`--draft-file=${draftsFile}`] : [])];
+        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : []), ...(draftsFile ? [`--draft-file=${draftsFile}`] : []), ...(cor.gpuDraft ? [`--gpu-draft=${path.join(OUT, cor.gpuDraft)}`, `--image-dir=${path.join(OUT, cor.imageDir)}`] : [])];
         // --keep-reads (#7263 router-next: tests on WAITING pages are useful work): a kept read of the same page, prompt
         // and model is reused (candidate-reads findRead) and every new read is kept, so a later lane need not pay again.
         const keep = process.argv.includes('--keep-reads');
