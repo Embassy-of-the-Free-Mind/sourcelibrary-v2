@@ -94,8 +94,7 @@ function runOne(w) {
       try {
         const env = JSON.parse(out);
         row.usage = env.usage; row.num_turns = env.num_turns; row.raw = env.result;
-        const m = String(env.result || '').match(/\{[\s\S]*\}/);
-        Object.assign(row, m ? JSON.parse(m[0]) : { translation_verdict: 'FAIL', fail: 'no JSON in reply' });
+        Object.assign(row, parseVerdict(String(env.result || '')) ?? { translation_verdict: 'FAIL', fail: 'no JSON in reply' });
       } catch (e) {
         Object.assign(row, { translation_verdict: 'FAIL', fail: `exit ${code}: ${(err || out).slice(0, 300)}` });
       }
@@ -103,6 +102,17 @@ function runOne(w) {
       resolve(row);
     });
   });
+}
+
+// Sonnet's reply is JSON, but it often drops the closing quote of the last string
+// ("...is weak.}"): 106 of 1,000 replies on 2026-10-29. Parse strictly, then close it.
+function parseVerdict(text) {
+  const a = text.indexOf('{'), b = text.lastIndexOf('}');
+  if (a < 0 || b < a) return null;
+  for (const t of [text.slice(a, b + 1), text.slice(a, b) + '"}', text.slice(a, b) + '"]}']) {
+    try { const o = JSON.parse(t); if (o.translation_verdict) return o; } catch { /* next */ }
+  }
+  return null;
 }
 
 let i = 0, n = 0;
