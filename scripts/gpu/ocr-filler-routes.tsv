@@ -7,6 +7,10 @@
 #   kind paddle-zh: the Siku Quanshu Paddle lane (#5600). Task = scripts/gpu/paddle-zh-queue-task.sh (read, then
 #   `paddle-zh-lane.mjs apply --apply`: revisions, human-edit guard, loop guards, Kanripo WYG screen, hold kept).
 #   Pages left = planned pages with no out/<bid>/<pn>.txt|.err.
+#   kind gpu-print: the 1800+ English print lane (#6871, LightOnOCR-3-1B). Task = plan the next frame books when the
+#   manifest runs low, scripts/gpu/gpu-print-gpu.sh (read), then `gpu-print-lane.mjs apply --apply` (pages with no
+#   text only; loop, blank, other-script and commentary guards; revisions; the scans-only hold kept).
+#   Pages left = manifest pages with no out/<bid>/<pn>.json|.err + the owed pages of frame books not yet planned.
 #
 # Routes considered and NOT listed (2026-10-28, job gpu-ocr-filler-6871):
 #   chinese-print (Paddle split-leaf, #6101)   frame read and applied (73,330 pp); census 2026-10-26 found 0 books left.
@@ -19,3 +23,4 @@
 #                                              does not store. Re-reading them would mostly re-find blanks.
 #   Siku duplicates (no hold, 1,044 bk)        skipped on purpose by job paddle-skqs-rest-6388 (a read copy is live).
 on	zh-histories-7546	paddle-zh	7546	/root/jobs/zh-histories-7546	zh-histories-7546	3	paddle-zh-lane.mjs apply --apply (revisions, guards, WYG screen); books stay held zh-histories-7546 until translation is released (#7546 priority juan first)
+-	gpu-print-en	gpu-print	6871	/root/jobs/gpu-print-6871	scans-only-publish-7270	5	gpu-print-lane.mjs apply --apply (pages with no text only, guards, revisions); books keep their scans-only hold. OFF (-) until the PR is reviewed: the 10-book pilot is in the #6871 record

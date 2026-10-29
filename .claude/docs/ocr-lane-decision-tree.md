@@ -121,7 +121,10 @@ A page (or book) needs text
 │     │                      truncates whole recipes. Subscription, $0; run on Hetzner.   │
 │     ├─ Latin-script print (en/fr/de/nl/la/it/es …) ── lite, batch. de/fr/nl stay on   │
 │     │                      lite UNJUDGED (agreement only, #5090); English 1800–1930    │
-│     │                      DECIDED lite (flash fixes nothing, #5182).                  │
+│     │                      DECIDED lite (flash fixes nothing, #5182). PROPOSED (#6871):│
+│     │                      English 1800+ pages with NO text in scans-only books →      │
+│     │                      LightOnOCR on gex45 (gpu-print-lane.mjs); de/fr/it/la 1800+ │
+│     │                      measured and kept on lite.                                  │
 │     └─ Unknown / empty language ── flash (safer default) — but fix the field first.   │
 │     NOTE: `OCR_LITE_ONLY` (default ON since 2026-09-11) forces lite for every Gemini  │
 │     read except the families in `FLASH_OCR_FROM`, and collapses ladder tier 2 to a    │
@@ -209,6 +212,7 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
 | Chinese guarded Paddle (held table + mixed residue, #6871 row 3) | `scripts/workers/paddle-zh-guarded-lane.mjs` (dry-run tested 2026-10-18; not applied) | `paddle`; `ai` on the Flash route | ✓ Paddle engine block (weights sha256, stack, serving, run, image sha256) or `gemini-engine/1` CLI block; `ocr.verdict` = the guard's verdict; first reads only, human-edit guard, revisions, sweep_log + book_events. Books stay held: their release is what queues paid translation |
 | Paddle split-leaf print (Chinese / Japanese, #6101) | `scripts/workers/paddle-print-lane.mjs apply` (`ocr.pipeline: paddle-print-2026-10`) | `paddle` | ✓ Paddle engine block (weights sha256, stack, serving, run) + `input.leaves` (crop box, ink, blank per leaf) + `replaced` (no_text / flash_lite / paddle_whole_spread); through `writePageText` (revision row with the whole prior field, `reason: reocr_paddle_print_6101`, `run_id`), human-edit guard, leaf blank/loop guards, sweep_log before and after, book_events. Books held `paddle-print-6101` before the first write |
+| GPU print, English 1800+ (#6871) | `scripts/workers/gpu-print-lane.mjs apply` (`ocr.pipeline: gpu-print-en-2026-10`) | `lightonocr` | ✓ engine block (model, HF snapshot, vLLM, host, GPU, decode, image URL + sha256); writes ONLY pages with no text in books under a GPU-lane hold (scans-only), kept; through `writePageText` (revision, CAS, run id); loop, blank, other-script, engine-commentary and transliteration guards; sweep_log + book_events. ocr-filler route `gpu-print-en` is OFF until reviewed |
 | Greek Kraken, Japanese NDL | eval only | — | — |
 | Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
 
