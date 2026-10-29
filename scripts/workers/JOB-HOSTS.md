@@ -81,6 +81,16 @@ PR: yes
 
 `start` prints a note when they are missing. Without them the wrapper guesses: the issue is the number the job name ends in (`second-reader-6338`), else the first `#NNNN` in the brief; a PR is expected only if the worktree holds commits beyond main. The guess is what paged Derek "did NOT land" for 58 of 113 finished jobs: the first number in a brief is often a cross-reference.
 
+**A third line for OCR and translation briefs: `Route:` (#7701).** If a brief runs a lane that writes page text, or says it will OCR, translate or correct books or pages *and* writes, it names its cell in the router table (#6740, `scripts/eval/estimator/router-table/`). There are three accepted forms:
+
+```
+Route: German print, lite text → lite>agy-flash-low 28/30
+Route: untested → cell test (30 pages, one per book, blind Opus judge)
+Route: none — eval only, no production writes
+```
+
+`start` refuses such a brief with exit 8 when the line is missing, or when it is a bare model name. The check is `scripts/workers/brief-route-check.sh <brief>`, and you can run it on a draft brief. Why it is a check: on 10-28 and again on 10-29 an OCR job was dispatched on a model picked by habit. Both times Derek asked "is the router being used?"
+
 ## Steering a running job: the inbox (#6534)
 
 ```

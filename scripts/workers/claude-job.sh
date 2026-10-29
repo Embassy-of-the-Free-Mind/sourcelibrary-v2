@@ -560,6 +560,10 @@ case "${1:-status}" in
     [ -n "${JOB_CLAUDE_HOME:-}" ] && export CLAUDE_CONFIG_DIR="$JOB_CLAUDE_HOME"
     # An empty brief launched harmony-authors-a and -b on 2026-10-21: each ran with only the HEADLESS RULES.
     grep -q '[^[:space:]]' "$brief" || { echo "REFUSED: brief file $brief is empty"; exit 2; }
+    # An OCR/translation brief names its router cell and k/n, or says it is untested (#7701, brief-route-check.sh).
+    rc_script="$SL/scripts/workers/brief-route-check.sh"
+    if [ -f "$rc_script" ]; then rc_out=$(bash "$rc_script" "$brief") || { echo "$rc_out"; exit 8; }; echo "route check: $rc_out"
+    else echo "note: $rc_script not on this box yet; route header not checked"; fi
     # Preflight (#6223): a job started on a full root disk dies silently with an empty log.
     free=$(root_free_gb)
     if [ "${free:-0}" -lt "$MIN_ROOT_FREE_GB" ] && [ -z "${JOB_IGNORE_DISK:-}" ]; then
