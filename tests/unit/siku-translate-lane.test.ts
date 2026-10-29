@@ -74,6 +74,11 @@ describe('siku lane: book picker', () => {
     const got = rankBooks([book({ id: 'big', pages_count: 300 }), book({ id: 'hidden', visible: false, pages_count: 10 }), book({ id: 'small', pages_count: 50 })]).map((b: { id: string }) => b.id);
     expect(got).toEqual(['small', 'big', 'hidden']);
   });
+  it('puts the Four Histories first, Derek\'s priority volumes first of all (#7546)', () => {
+    const h = (id: string) => book({ id, visible: false, pipeline_auto: { status: 'held', hold: { reason: 'zh-histories-7546' } } });
+    const got = rankBooks([book({ id: 'siku', pages_count: 10 }), h('hist'), h('6ae0bab64adf2ffb52f71058')]).map((b: { id: string }) => b.id);
+    expect(got).toEqual(['6ae0bab64adf2ffb52f71058', 'hist', 'siku']);
+  });
   it('a translated sibling volume of the same set is not a dupe; another edition with English is', () => {
     const me = book();
     expect(isDupeSibling(me, { title: '禮書·卷五~卷十二 (vol 2)', translation_state: { translated: 140 }, pipeline_auto: { hold: { reason: 'paddle-zh-5600-ocr-only' } } })).toBe(false);
