@@ -48,7 +48,11 @@ const bookDocs = await books.find(
 ).toArray();
 const byKey = new Map();
 for (const b of bookDocs) { byKey.set(String(b._id), b); if (b.id) byKey.set(b.id, b); }
-const already = new Set(await attempts.distinct('book_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } }));
+// --research: the books were searched before on purpose (select-batch --ids); skip only a repeat of THIS run's attempt.
+const RESEARCH = process.argv.includes('--research');
+const already = new Set(RESEARCH
+  ? await attempts.distinct('attempt_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } })
+  : await attempts.distinct('book_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } }));
 
 const stats = {};
 const inc = (k) => (stats[k] = (stats[k] || 0) + 1);
@@ -61,7 +65,7 @@ for (const r of recs) {
   const b = byKey.get(r._book);
   if (!b) { inc('book_not_found'); continue; }
   const bookId = b.id || String(b._id);
-  if (already.has(bookId)) { inc('already_ingested'); continue; }
+  if (already.has(RESEARCH ? `${bookId}:${METHOD}:${r._date}` : bookId)) { inc('already_ingested'); continue; }
   const p = r.prior || {};
   const url = (p.url || '').trim();
   const linkOk = /^https?:\/\//.test(url) && ['200', '202'].includes(http[r._book]) && !BAD_HOSTS.test(url);
