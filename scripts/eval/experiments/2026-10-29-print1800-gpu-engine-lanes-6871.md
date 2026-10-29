@@ -133,13 +133,13 @@ Reported beside it, never deciding: median Δ with a 95% paired bootstrap CI, wi
 
 - **The English frame is smaller than the census.** Visible English 1800+ pages with no text: 213K. Of these, 162,747 are in 984 books held `scans-only-publish-7270` (#7270 published them as scans, OCR undecided) and 31,653 are held `ia-free-text-first-4966` (branch 0: Archive text first). Only 25,051 are in free books.
 - **The lane takes the scans-only books.** These are the holds the #7263 Latin GPU lane already reads (`GPU_LANE_HOLDS`). The lane writes OCR into them and keeps the hold, so no translation follows and no hold is released.
-- **At LO's rate** (2,899 pages/h here; 3,578 alone in E5) the frame is **2.3 GPU-days**. All 277,680 English pages with no text would take 3.2–4.0 days.
+- **At LO's rate** (2,899 pages/h on the panel, 4,860 on the pilot's library pages) the frame is **1.4–2.3 GPU-days**. All 277,680 English pages with no text would take 3.2–4.0 days.
 
 ### The lane (built here, `scripts/workers/gpu-print-lane.mjs`, `scripts/lib/gpu-print-lane.mjs`, `scripts/gpu/gpu-print-{gpu.sh,read.py}`)
 - **`frame` → `plan` → GPU → `apply`**, the Paddle print lane's shape (#6101).
 - **It writes only pages with no text** (never read, or lite-refused/empty) in English books dated 1800+ under a GPU-lane hold. With `--free`, an unheld book is held `gpu-print-6871` first.
-- **Guards at apply:** the page still has no text and is not human-edited; the book is still under a lane hold; `gpu-ocr-loop-guard` (token cap, #4850 loop, tail runaway, repeated lines); a 30-word-character floor (a blank leaf stays unread); ≤ 3 letters of a non-Latin script; no engine-commentary line.
-- **The last two guards were added AFTER the judge (post hoc).** They only turn pages away. On the typed English pages they turn away 6 of 97 pages, all pages where lite read better than LO. On the judged b set they turn away all 4 English failures.
+- **Guards at apply:** the page still has no text and is not human-edited; the book is still under a lane hold; `gpu-ocr-loop-guard` (token cap, #4850 loop, tail runaway, repeated lines); a 30-word-character floor (a blank leaf stays unread); ≤ 3 letters of a non-Latin script; no engine-commentary line; ≤ 15 ‰ Indic transliteration letters.
+- **The last three guards were added AFTER the judge and the pilot (post hoc).** They only turn pages away. On the typed English pages they turn away 6 of 97 pages, all pages where lite read better than LO. On the judged b set they turn away all 4 English failures.
 - **Every write goes through `writePageText`:** a revision row, CAS on the prior field, and a run id, so `revert-run.mjs` undoes it. The page is stamped `ocr.source: 'lightonocr'`, with an engine block (model, HF snapshot, vLLM version, host, GPU, decode settings, image URL and sha256). `missingProvenance` now checks `lightonocr` with the other specialist engines.
 - Each written book also gets sweep_log rows before and after, a recount, and one `book_events` row.
 
