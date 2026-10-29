@@ -23,7 +23,7 @@ import { PAGE_BREAK_SCOPED, buildTranslationPrompt, buildBlockTranslationPrompt,
 import { gatedTextCall, TRANSLATE_SUFFIX } from '../../lib/agy-cli.mjs';
 import { cliChatterReason } from '../../lib/cli-chatter.mjs';
 import { sourceProse, translationProse, continuationFragment } from '../../lib/block-drift.mjs';
-import { dominantScript, NON_PROSE_TYPES, foldWord } from '../../lib/page-integrity.mjs';
+import { dominantScript, NON_PROSE_TYPES, foldWord, parseCatchword } from '../../lib/page-integrity.mjs';
 import { resolvePageBreak } from '../../lib/page-break-devices.mjs';
 import { parseFolioMarkedText } from '../../lib/folio-markers.mjs';
 import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
@@ -280,6 +280,7 @@ function score(out) {
   const ids = Object.keys(res).filter(id => ARMS.every(a => res[id][a]));
   const cwIds = ids.filter(id => ctx.find(x => x.id === id).stratum === 'catchword');
   const plainIds = ids.filter(id => !cwIds.includes(id));
+  const noCwIds = plainIds.filter(id => !parseCatchword(ctx.find(x => x.id === id).ocrA)?.judged);
   const count = (set, a, f) => set.filter(id => f(res[id][a])).length;
   const table = (set) => Object.fromEntries([...ARMS, 'Acopy'].map(a => [a, {
     def100: pct(count(set, a, r => r?.def), set.length), major100: pct(count(set, a, r => r?.major), set.length),
@@ -301,8 +302,8 @@ function score(out) {
   rep.catchwordLabel = {};
   for (const a of ['A', 'C', 'MC']) {
     const tally = (set) => set.reduce((t, id) => { const k = catchwordCheck(ctx.find(x => x.id === id), v[id][a]); t[k] = (t[k] || 0) + 1; return t; }, {});
-    const spurious = plainIds.filter(id => { const s = v[id][a]; return s && !s.failed && (catchwordsIn(s.N).length || catchwordsIn(s.N1).length); }).length;
-    rep.catchwordLabel[a] = { stratum: tally(cwIds), keptRate: pct(cwIds.filter(id => catchwordCheck(ctx.find(x => x.id === id), v[id][a]) === 'kept').length, cwIds.length), spurious, spuriousRate: pct(spurious, plainIds.length) };
+    const spurious = noCwIds.filter(id => { const s = v[id][a]; return s && !s.failed && (catchwordsIn(s.N).length || catchwordsIn(s.N1).length); }).length;
+    rep.catchwordLabel[a] = { stratum: tally(cwIds), keptRate: pct(cwIds.filter(id => catchwordCheck(ctx.find(x => x.id === id), v[id][a]) === 'kept').length, cwIds.length), spurious, spuriousRate: pct(spurious, noCwIds.length) };
   }
   // the registered rule
   const armRule = (a) => { const d = rep.vsA[a]; return { beatsSwing: d.delta100 > swing, p10: d.p < 0.10, majorsNotUp: d.majors <= d.majorsA, ships: d.delta100 > swing && d.p < 0.10 && d.majors <= d.majorsA }; };

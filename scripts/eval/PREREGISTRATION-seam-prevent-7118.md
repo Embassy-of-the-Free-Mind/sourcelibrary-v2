@@ -74,3 +74,11 @@ folio markers and a catchword label cut broken page joins, especially majors? If
 
 A seam judge reads a window around the turn, not the whole page's accuracy. Two-page blocks only (production blocks
 would be longer). Latin script only. n = 120 resolves only large effects: the 6742 A/A swing was 6.7 per 100.
+
+## Amendment 1 (2026-10-29 22:15 UTC, after the draw, before any arm ran)
+
+The draw: 165 books scanned, 120 breaks, 40 in the catchword stratum (kinds: catchword 21, split 9, none-but-tagged 7,
+merged 2, split+catchword 1; all 40 also carry a catchword in the OCR's `<meta>`). 27 of the 80 "plain" breaks carry a
+catchword in the OCR's `<meta>` that the device did not match to the next page. A label on such a page is not
+spurious, so **spurious** is counted over the 53 plain breaks whose OCR records no catchword at all. Everything else
+stands.
