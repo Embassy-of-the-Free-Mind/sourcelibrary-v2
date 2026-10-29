@@ -671,6 +671,8 @@ export interface ReaderStrings {
   noImage: string;
   download: string;
   downloadFullRes: string;
+  /** Shown when a page download returned something other than an image. */
+  downloadFailed: string;
   viewAt: (provider: string) => string;
   // translation panel toolbar
   notes: string;
@@ -766,6 +768,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'No image available',
     download: 'Download',
     downloadFullRes: 'Download full resolution',
+    downloadFailed: 'Download failed. Please try again.',
     viewAt: (provider) => `View at ${provider}`,
 
     notes: 'Notes',
@@ -855,6 +858,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'No hay imagen disponible',
     download: 'Descargar',
     downloadFullRes: 'Descargar en alta resolución',
+    downloadFailed: 'No se pudo descargar. Inténtelo de nuevo.',
     viewAt: (provider) => `Ver en ${provider}`,
 
     notes: 'Notas',
@@ -946,6 +950,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'Imago nulla praesto est',
     download: 'Deprome',
     downloadFullRes: 'Imaginem plenae magnitudinis deprome',
+    downloadFailed: 'Depromi non potuit. Iterum conare.',
     viewAt: (provider) => `Apud ${provider} specta`,
 
     notes: 'Notae',
@@ -1037,6 +1042,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'Geen afbeelding beschikbaar',
     download: 'Downloaden',
     downloadFullRes: 'Downloaden in volledige resolutie',
+    downloadFailed: 'Downloaden mislukt. Probeer het opnieuw.',
     viewAt: (provider) => `Bekijken bij ${provider}`,
 
     notes: 'Noten',
@@ -1128,6 +1134,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: '暂无图像',
     download: '下载',
     downloadFullRes: '下载原始分辨率图像',
+    downloadFailed: '下载失败，请重试。',
     viewAt: (provider) => `在 ${provider} 查看`,
 
     notes: '注释',
