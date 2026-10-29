@@ -38,7 +38,22 @@
  *         scripts/output/cluster-external-priors.jsonl, Mongo books
  * Writes: scripts/output/work-graph.jsonl, scripts/output/work-graph-report.json
  *
- * Usage: node --env-file=.env.production.local scripts/translation-layer/11-work-graph.mjs [--refresh]
+ * --lang <name> (#7769): build the graph over USTC editions whose language_1 is
+ * that language (latin, german, french, italian, dutch, spanish, greek,
+ * portuguese) and SL books in it. Non-Latin outputs carry the language in the
+ * file name; Latin keeps the original names.
+ *
+ * External works as x NODES (#7769): every work in the external-works file
+ * (default external-translation-works-staging.jsonl, from `01 --staging`;
+ * override --external <file>) whose orig_lang is this language is matched AFTER
+ * the leader pass, against the leaders, by the same containment + specificity
+ * rule. An x node never becomes a leader and never joins two works, so the
+ * external side cannot change the clustering it is measured against. A work's
+ * external prior is then (phase-3 cluster prior, Latin only) ∪ (an attached x
+ * node), and the report counts, per source, x works landing on a USTC work and
+ * USTC works carrying a prior — before (non-staged sources) vs after (all).
+ *
+ * Usage: node --env-file=.env.production.local scripts/translation-layer/11-work-graph.mjs [--refresh] [--lang german] [--external <file>]
  */
 import fs from 'fs';
 import path from 'path';
@@ -48,7 +63,14 @@ import { surnameStems, distinctiveTokens, extractSurname, normTitle, supa } from
 
 const __dir = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(__dir, '../../scripts/output');
-const EDITIONS = path.join(OUT, 'ustc-latin-editions.jsonl');
+const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
+const LANG = (argOf('--lang') || 'latin').toLowerCase();
+const LANG_NAME = LANG[0].toUpperCase() + LANG.slice(1); // ustc_editions.language_1 and books.language
+const SUFFIX = LANG === 'latin' ? '' : `-${LANG}`;
+const EDITIONS = path.join(OUT, `ustc-${LANG}-editions.jsonl`);
+const EXTERNAL = argOf('--external') || path.join(OUT, 'external-translation-works-staging.jsonl');
+// sources written by `01 --staging` (#7769); everything else in the file is the pre-existing external side
+const STAGED_SOURCES = new Set(['loc_marc_041', 'openlibrary_translated_from', 'wikidata_p629']);
 const readJsonl = (p) => fs.readFileSync(p, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
 const orth = (s) => (s || '').replace(/[vV]/g, 'u').replace(/[jJ]/g, 'i');
 
@@ -64,7 +86,7 @@ async function pullEditions() {
   while (true) {
     const { data, error } = await sb.from('ustc_editions')
       .select('id,sn,work_cluster_id,author_1,title,year,source_library_id')
-      .eq('language_1', 'Latin').gte('year', 1400).lte('year', 1700)
+      .eq('language_1', LANG_NAME).gte('year', 1400).lte('year', 1700)
       .gt('id', last).order('id', { ascending: true }).limit(1000);
     if (error) throw new Error(error.message);
     if (!data.length) break;
@@ -84,24 +106,30 @@ function bookStatus(b) {
 }
 
 async function main() {
-  console.log('Loading USTC Latin editions…');
+  console.log(`Loading USTC ${LANG_NAME} editions…`);
   const eds = await pullEditions();
   console.log(`  ${eds.length} editions`);
-  const priorClusters = new Set(readJsonl(path.join(OUT, 'cluster-external-priors.jsonl')).map((r) => r.work_cluster_id));
+  // phase-3 priors are matched against the LATIN cluster denominator only
+  const priorFile = path.join(OUT, 'cluster-external-priors.jsonl');
+  const priorClusters = new Set(LANG === 'latin' && fs.existsSync(priorFile) ? readJsonl(priorFile).map((r) => r.work_cluster_id) : []);
+  if (LANG === 'latin' && !priorClusters.size) console.warn('⚠️  no cluster-external-priors.jsonl: phase-3 priors absent, x nodes only');
+  const extWorks = fs.existsSync(EXTERNAL) ? readJsonl(EXTERNAL).filter((w) => (w.orig_lang || '').toLowerCase() === LANG) : [];
+  console.log(`  ${extWorks.length} external works in ${LANG} from ${path.basename(EXTERNAL)}${fs.existsSync(EXTERNAL) ? '' : ' (file absent)'}`);
 
   const c = new MongoClient(process.env.MONGODB_URI);
   await c.connect();
   const books = await c.db('bookstore').collection('books').find(
-    { $or: [{ language: 'Latin' }, { languages: 'Latin' }], pages_count: { $gt: 0 } },
+    { $or: [{ language: LANG_NAME }, { languages: LANG_NAME }], pages_count: { $gt: 0 } },
     { projection: { id: 1, slug: 1, title: 1, author: 1, ustc_id: 1, visible: 1, pages_count: 1, pages_blank: 1, pages_translated: 1 } },
   ).toArray();
   await c.close();
-  console.log(`  ${books.length} SL Latin books`);
+  console.log(`  ${books.length} SL ${LANG_NAME} books`);
 
   // --- nodes ---
   const nodes = [];
   for (const e of eds) nodes.push({ k: 'u', ref: e, author: e.author_1 || '', title: e.title || '' });
   for (const b of books) nodes.push({ k: 's', ref: b, author: b.author || '', title: b.title || '' });
+  for (const w of extWorks) nodes.push({ k: 'x', ref: w, author: w.author || w.surname || '', title: w.title || '' });
 
   // IDF over USTC edition titles only (the population whose works we count)
   const df = new Map();
@@ -141,7 +169,7 @@ async function main() {
   const anonKey = new Map();
   let anon = 0;
   nodes.forEach((n, i) => {
-    if (n.stems.length || linked.has(i)) return;
+    if (n.stems.length || linked.has(i) || n.k === 'x') return;
     const key = normTitle(orth(n.title)).split(' ').slice(0, 6).join(' ');
     if (key.split(' ').length < 3) return;
     anon++;
@@ -155,13 +183,11 @@ async function main() {
   // chain can form: single-linkage union-find fused all 4,772 Aquinas editions,
   // and all of Cicero, through omnibus title pages — do not revert to it. An
   // omnibus edition joins ONE of its works (the best-scoring), never bridges two.
-  const order = nodes.map((n, i) => i).filter((i) => nodes[i].w > 0 && nodes[i].stems.length && !linked.has(i));
+  const order = nodes.map((n, i) => i).filter((i) => nodes[i].k !== 'x' && nodes[i].w > 0 && nodes[i].stems.length && !linked.has(i));
   order.sort((a, b) => nodes[a].w - nodes[b].w || nodes[b].k.localeCompare(nodes[a].k));
   const leaderIdx = new Map(); // "stem|token" → leader node ids
   let leaders = 0, joins = 0, scored = 0;
-  for (let o = 0; o < order.length; o++) {
-    if (o % 100000 === 0 && o) console.log(`  leader pass ${o}/${order.length}…`);
-    const i = order[o], a = nodes[i];
+  function bestLeader(a) {
     let best = -1, bestScore = 0, bestSw = 0;
     const seen = new Set();
     for (const s of a.stems) for (const t of a.head) {
@@ -178,6 +204,12 @@ async function main() {
         if (score > bestScore + 1e-9 || (Math.abs(score - bestScore) < 1e-9 && sw > bestSw)) { best = L; bestScore = score; bestSw = sw; }
       }
     }
+    return best;
+  }
+  for (let o = 0; o < order.length; o++) {
+    if (o % 100000 === 0 && o) console.log(`  leader pass ${o}/${order.length}…`);
+    const i = order[o], a = nodes[i];
+    const best = bestLeader(a);
     if (best >= 0) { union(i, best); joins++; continue; }
     leaders++;
     for (const s of a.stems) for (const t of a.head) if (idf(t) >= MID_IDF) {
@@ -186,7 +218,18 @@ async function main() {
       leaderIdx.get(key).push(i);
     }
   }
-  console.log(`direct ${direct} | anon nodes ${anon} | leaders ${leaders} | joins ${joins} | leader comparisons ${scored}`);
+  // x pass: external works attach to ONE leader each, after the graph is fixed
+  let xJoined = 0;
+  const xUnmatched = { no_author: 0, no_title_tokens: 0, no_leader: 0 };
+  nodes.forEach((n, i) => {
+    if (n.k !== 'x') return;
+    if (!n.stems.length) { xUnmatched.no_author++; return; }
+    if (!(n.w > 0)) { xUnmatched.no_title_tokens++; return; }
+    const L = bestLeader(n);
+    if (L < 0) { xUnmatched.no_leader++; return; }
+    union(i, L); xJoined++;
+  });
+  console.log(`direct ${direct} | anon nodes ${anon} | leaders ${leaders} | joins ${joins} | x joined ${xJoined} ${JSON.stringify(xUnmatched)} | leader comparisons ${scored}`);
   const root = (i) => find(i);
 
   // --- components ---
@@ -196,14 +239,36 @@ async function main() {
   const works = [];
   for (const [r, mem] of comp) {
     const u = mem.filter((i) => nodes[i].k === 'u'), s = mem.filter((i) => nodes[i].k === 's');
-    const ext = u.some((i) => priorClusters.has(nodes[i].ref.work_cluster_id));
+    const x = mem.filter((i) => nodes[i].k === 'x');
+    const xSources = new Set(x.flatMap((i) => nodes[i].ref.sources || []));
+    const extBefore = u.some((i) => priorClusters.has(nodes[i].ref.work_cluster_id)) || [...xSources].some((src) => !STAGED_SOURCES.has(src));
+    const ext = extBefore || xSources.size > 0;
     const sl = s.reduce((a, i) => (rank[bookStatus(nodes[i].ref)] > rank[a] ? bookStatus(nodes[i].ref) : a), s.length ? 'none' : null);
     const years = u.map((i) => nodes[i].ref.year).filter(Boolean);
-    works.push({ r, u: u.length, s: s.length, ext, sl, year_min: years.length ? Math.min(...years) : null,
+    works.push({ r, u: u.length, s: s.length, x, xSources, extBefore, ext, sl, year_min: years.length ? Math.min(...years) : null,
       old_clusters: new Set(u.map((i) => nodes[i].ref.work_cluster_id)).size,
       title: nodes[(u[0] ?? s[0])].title.slice(0, 140), author: nodes[(u[0] ?? s[0])].author, mem });
   }
   const ustcWorks = works.filter((w) => w.u > 0);
+
+  // --- external landing (#7769): per source, x works on a USTC work; USTC works with a prior ---
+  const xLanding = {};
+  const bump = (src, key) => { xLanding[src] ??= { x_works: 0, landed_on_ustc_work: 0, ustc_works_with_prior: 0, ustc_works_only_this_source: 0 }; xLanding[src][key]++; };
+  nodes.forEach((n) => { if (n.k === 'x') for (const src of new Set(n.ref.sources || [])) bump(src, 'x_works'); });
+  for (const w of ustcWorks) {
+    for (const i of w.x) for (const src of new Set(nodes[i].ref.sources || [])) bump(src, 'landed_on_ustc_work');
+    for (const src of w.xSources) bump(src, 'ustc_works_with_prior');
+    if (w.xSources.size === 1 && !w.extBefore) bump([...w.xSources][0], 'ustc_works_only_this_source');
+  }
+  const staged = [...STAGED_SOURCES];
+  const external_landing = {
+    ustc_works: ustcWorks.length,
+    with_prior_before: ustcWorks.filter((w) => w.extBefore).length,
+    with_prior_after: ustcWorks.filter((w) => w.ext).length,
+    with_staged_prior: ustcWorks.filter((w) => staged.some((src) => w.xSources.has(src))).length,
+    by_source: xLanding,
+  };
+  console.log('external landing:', JSON.stringify(external_landing));
   console.log(`works with ≥1 USTC edition: ${ustcWorks.length} (was ${new Set(eds.map((e) => e.work_cluster_id)).size} clusters) | SL-only works: ${works.length - ustcWorks.length}`);
 
   // --- gold fragmentation tests ---
@@ -241,7 +306,7 @@ async function main() {
   const sample = [];
   for (let k = 0; k < 40 && multi.length; k++) {
     const w = multi[Math.floor(rnd() * multi.length)];
-    const tt = [...new Set(w.mem.map((i) => nodes[i].title.slice(0, 110)))];
+    const tt = [...new Set(w.mem.filter((i) => nodes[i].k !== 'x').map((i) => nodes[i].title.slice(0, 110)))];
     sample.push({ author: w.author, editions: w.u, titles: [tt[0], tt[Math.floor(rnd() * tt.length)]] });
   }
 
@@ -253,19 +318,20 @@ async function main() {
     works_with_ustc: ustcWorks.length, old_clusters: new Set(eds.map((e) => e.work_cluster_id)).size,
     sl_only_works: works.length - ustcWorks.length,
     editions_per_work: sizes, gold: goldOut,
+    lang: LANG, external_file: path.basename(EXTERNAL), external_landing,
     held: grid(ustcWorks, 'none'), translated_any: grid(ustcWorks, 'partial'), readable: grid(ustcWorks, 'readable'),
     readable_by_century: byCentury('readable'),
     biggest_works: biggest, over_merge_sample: sample,
   };
-  fs.writeFileSync(path.join(OUT, 'work-graph-report.json'), JSON.stringify(report, null, 2));
-  const w1 = fs.createWriteStream(path.join(OUT, 'work-graph.jsonl'));
-  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext: w.ext, sl: w.sl, year_min: w.year_min, author: w.author, title: w.title }) + '\n');
+  fs.writeFileSync(path.join(OUT, `work-graph-report${SUFFIX}.json`), JSON.stringify(report, null, 2));
+  const w1 = fs.createWriteStream(path.join(OUT, `work-graph${SUFFIX}.jsonl`));
+  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext_refs: w.x.flatMap((i) => nodes[i].ref.staged_refs || nodes[i].ref.sources || []).slice(0, 10), ext_before: w.extBefore, ext: w.ext, sl: w.sl, year_min: w.year_min, author: w.author, title: w.title }) + '\n');
   w1.end();
   for (const [k, g] of Object.entries({ held: report.held, translated_any: report.translated_any, readable: report.readable, ...Object.fromEntries(Object.entries(report.readable_by_century).map(([a, b]) => [`readable ${a}`, b])) })) {
     console.log(`${k}: of ${g.works} works — SL ${g.sl} (${g.sl_pct}%), external ${g.external} (${g.external_pct}%), grid ${JSON.stringify(g.grid)}`);
   }
   console.log('editions/work:', sizes);
-  console.log('wrote work-graph.jsonl + work-graph-report.json');
+  console.log(`wrote work-graph${SUFFIX}.jsonl + work-graph-report${SUFFIX}.json`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

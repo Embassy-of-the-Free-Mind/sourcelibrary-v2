@@ -62,6 +62,8 @@
  *   node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --out ./loc-bulk
  *   node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-4 --keep-gz
  *   node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --load    # → Mongo
+ *   node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --out $JOB_SCRATCH/loc-bulk \
+ *     --staging $JOB_SCRATCH/loc.jsonl    # staged rows for translation-layer 01 --staging (#7769)
  */
 import fs from 'fs';
 import path from 'path';
@@ -74,6 +76,9 @@ import { withMongo } from '../lib/mongo.mjs';
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
 const KEEP_GZ = process.argv.includes('--keep-gz');
 const LOAD = process.argv.includes('--load');
+// --staging <file>: after extraction, write the target-language 041h rows in the
+// translation-layer staging shape (#7769). Re-runnable over existing extracts.
+const STAGING_OUT = argOf('--staging');
 const OUT_DIR = argOf('--out') ?? path.join(process.cwd(), 'scripts', 'output', 'loc-bulk');
 
 const SNAPSHOT = '2016';
@@ -233,7 +238,10 @@ export function extractEnglishTranslation(rec, reject = () => {}) {
   const f008 = controlField(rec, '008');
   const itemLangs = itemLanguages(rec, f008);
   const originalLangs = rec.includes('tag="041"') ? subfieldValues(rec, '041', 'h') : [];
-  const uniform = subfieldValues(rec, '240', 'a')[0] || '';
+  // 130 is the uniform title when it is the MAIN entry (anonymous and sacred
+  // works: "Bible.", "Beowulf.", "Imitatio Christi."), so it is the 240 of a
+  // record with no 100 — same work-identity role, different tag.
+  const uniform = subfieldValues(rec, '240', 'a')[0] || subfieldValues(rec, '130', 'a')[0] || '';
 
   const evidence = originalLangs.length ? '041h'
     : uniformTitleDeclaresEnglish(rec) ? 'uniform_title_lang'
@@ -256,9 +264,11 @@ export function extractEnglishTranslation(rec, reject = () => {}) {
   return {
     ...extractVernacular(rec),
     lccn: (subfieldValues(rec, '010', 'a')[0] || '').replace(/\s+/g, ''),
+    control_number: controlField(rec, '001').trim(),
     author: decode(subfieldValues(rec, '100', 'a')[0] || subfieldValues(rec, '110', 'a')[0] || ''),
     added_entries: subfieldValues(rec, '700', 'a').map(decode),
     uniform_title: decode(subfieldValues(rec, '240', 'a')[0] || ''),
+    uniform_title_130: decode(subfieldValues(rec, '130', 'a')[0] || ''),
     title: decode(subfieldValues(rec, '245', 'a')[0] || ''),
     subtitle: decode(subfieldValues(rec, '245', 'b')[0] || ''),
     year,
@@ -282,6 +292,52 @@ export function extractEnglishTranslation(rec, reject = () => {}) {
     source: 'loc_mdsconnect',
     snapshot: SNAPSHOT,
   };
+}
+
+// ── Staging rows for the translation layer (#7769) ──────────────────────────
+// The multi-language external side of the gap census: English translations
+// whose ORIGINAL is in one of the target languages, one row per (record, source
+// language), in the shape scripts/translation-layer/01-build-external-works.mjs
+// --staging reads. Only `041h` rows qualify — the other two evidence grades do
+// not name a source language, and a row without one cannot be counted against a
+// per-language denominator. They are tallied, not silently dropped.
+//
+// STAGED, never loaded: these rows do NOT go to translation_catalogs, which
+// feeds public first-translation badges and /census. Merging is Derek's call.
+
+/** MARC language code → the lowercase English name external-translation-works.jsonl uses. */
+export const STAGING_LANGS = {
+  lat: 'latin', ger: 'german', fre: 'french', ita: 'italian', dut: 'dutch',
+  spa: 'spanish', grc: 'greek', gre: 'greek', por: 'portuguese',
+};
+
+const cleanTitle = (t) => (t || '').replace(/\s*[\/:;,.=]\s*$/, '').replace(/\s+/g, ' ').trim();
+
+/** Extract row → staged rows (0..n, one per target source language). */
+export function toStagingRows(row) {
+  if (row.translation_evidence !== '041h') return [];
+  const codes = [...new Set((row.original_languages || [])
+    .flatMap((v) => (v.toLowerCase().replace(/[^a-z]/g, '').match(/.{1,3}/g) ?? [])))];
+  const langs = [...new Set(codes.map((c) => STAGING_LANGS[c]).filter(Boolean))];
+  if (!langs.length) return [];
+  const id = row.lccn || row.control_number;
+  const url = row.lccn ? `https://lccn.loc.gov/${row.lccn}` : '';
+  const enTitle = [row.title, row.subtitle].map(cleanTitle).filter(Boolean).join(' : ');
+  const origTitle = cleanTitle(row.uniform_title || row.uniform_title_130) || enTitle;
+  return langs.map((orig_lang) => ({
+    source: 'loc_marc_041',
+    source_id: id,
+    url,
+    orig_lang,
+    orig_author: cleanTitle(row.author),
+    orig_title: origTitle,
+    orig_title_from: row.uniform_title ? '240' : row.uniform_title_130 ? '130' : '245',
+    en_title: enTitle,
+    en_year: row.year ? Number(row.year) : null,
+    orig_year: null, // MARC carries the edition's date, not the work's
+    bilingual: !!row.bilingual,
+    snapshot: row.snapshot,
+  }));
 }
 
 /** Stream one gzipped MARC-XML part, writing matching rows as JSONL. */
@@ -496,6 +552,8 @@ if (failedParts.length) {
   console.log('      Do NOT quote coverage numbers from this run until they land.');
 }
 
+if (STAGING_OUT) await writeStaging(STAGING_OUT);
+
 if (LOAD) {
   console.log('\nLoading into Mongo `reference_translations`…');
   await withMongo(async (db) => {
@@ -546,4 +604,34 @@ if (LOAD) {
    */
   { noTimeout: true });
 }
+}
+
+/** Read every extracted part in OUT_DIR, write the staged rows to `outPath`. */
+async function writeStaging(outPath) {
+  fs.mkdirSync(path.dirname(path.resolve(outPath)), { recursive: true });
+  const out = fs.createWriteStream(outPath);
+  const byLang = {}, byEvidence = {};
+  let rows = 0, otherLang = 0;
+  const files = fs.readdirSync(OUT_DIR).filter((f) => /^eng-translations\.part\d+\.jsonl$/.test(f)).sort();
+  for (const f of files) {
+    const rl = readline.createInterface({ input: fs.createReadStream(path.join(OUT_DIR, f)), crlfDelay: Infinity });
+    for await (const line of rl) {
+      if (!line.trim()) continue;
+      const row = JSON.parse(line);
+      byEvidence[row.translation_evidence] = (byEvidence[row.translation_evidence] || 0) + 1;
+      const staged = toStagingRows(row);
+      if (!staged.length && row.translation_evidence === '041h') otherLang++;
+      for (const s of staged) {
+        out.write(JSON.stringify(s) + '\n');
+        byLang[s.orig_lang] = (byLang[s.orig_lang] || 0) + 1;
+        rows++;
+      }
+    }
+  }
+  await new Promise((res) => out.end(res));
+  console.log(`\n─── Staging (#7769) → ${outPath} ─────────────────────`);
+  console.log(`  parts read: ${files.length} of 43 | staged rows: ${rows}`);
+  console.log('  by original language:', byLang);
+  console.log(`  041h rows from a non-target language: ${otherLang}`);
+  console.log('  extract rows by evidence (only 041h can be staged — the others name no source language):', byEvidence);
 }
