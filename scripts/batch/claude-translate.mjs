@@ -142,7 +142,7 @@ async function agyBlockCall(prompt, model, cwd) {
 }
 
 /** One sealed text-only `claude -p` call, the prompt on stdin. Resolves {text, model, usage, code, cls, err, secs}. */
-function claudeCall(prompt, model, cwd, { readImages = false } = {}) {
+export function claudeCall(prompt, model, cwd, { readImages = false } = {}) {
   // A spent account is not called (model-limits.mjs): the caller gets the usage_limit it would have got, with no call.
   const blocked = claudeBlocked();
   if (blocked) return Promise.resolve({ text: '', model: null, usage: null, code: null, cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true, until: blocked.until });
