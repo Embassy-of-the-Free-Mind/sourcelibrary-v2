@@ -11,6 +11,7 @@ status: rejected
 decision: "No Flash correction surfaced or written (#6740). The detector lands as a worklist; the severity audit (leafcheck --severity, confirm-req, severity-gate), derge-guard-allow.mjs and severity-batch.sh land as tooling."
 superseded_by: null
 issue: [6740, 4523, 5771, 6560]
+router_evidence: "none — not yet entered in router-table/rules.json (land-evals, 2026-10-29); the router-30 verdicts are in scripts/eval/results/tibetan-correct-6560/severity-6740/ (router30-gate.json.gz)"
 ---
 ## 2026-10-27 · Invented repeated lines in Tibetan OCR, and Flash corrections under the severity rule (#6740)
 
