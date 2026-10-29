@@ -91,6 +91,9 @@ export const RATE_FULL_BOOKS = 60;
 export const RATE_AFTER = 0.05;
 export const DEFAULT_SINCE = '2026-10-27T00:00:00Z';
 export const EVIDENCE_PATH = 'scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json';
+// build.py's script split (#7621) reads each source cut by script type from evidence/by-script/<basename>; a source
+// without one enters only the /unknown cells. Written beside the export, from its `by_script_cells`.
+export const BY_SCRIPT_PATH = 'scripts/eval/estimator/router-table/evidence/by-script/lane-judge-sampler.score.json';
 const WEEKLY_MAX = Number(process.env.LANE_JUDGE_WEEKLY_MAX || 85);
 const SESSION_MAX = Number(process.env.LANE_JUDGE_SESSION_MAX || 95);
 const WRONG_TEXT_CONTAIN = /^(O1|O2|O3|I1)$/;   // text not on this leaf: containment-on-finding.md
@@ -256,6 +259,13 @@ function routeBlock(got) {
 }
 
 const scriptOf = (r) => r.script_type ?? 'unknown';
+const routerScript = (r) => (scriptOf(r) === 'mixed' ? 'print' : ['print', 'manuscript'].includes(scriptOf(r)) ? scriptOf(r) : 'unknown');
+/** Write the export and its by-script cut under a repo root (a rebuild copy, a PR worktree). */
+export function writeEvidence(root, score) {
+  for (const [f, body] of [[EVIDENCE_PATH, score], [BY_SCRIPT_PATH, { source: score.source, generated_at: score.generated_at, of: EVIDENCE_PATH, cells: score.by_script_cells ?? {} }]]) {
+    fs.mkdirSync(path.dirname(path.join(root, f)), { recursive: true }); fs.writeFileSync(path.join(root, f), JSON.stringify(body, null, 1) + '\n');
+  }
+}
 const handOf = (r) => r.cell_hand ?? LANES.find((l) => l.lane === r.lane)?.hand ?? null;
 // The check-flag stratum (#7263) is drawn because it is flagged, not at random: reported apart, never evidence.
 const inEvidence = (r) => r.draw?.stratum !== 'flagged' && (handOf(r) !== 'print' || scriptOf(r) === 'print');
@@ -277,7 +287,7 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
     frame: "pages a live lane WROTE, by its own stamps; one page per book per run, at most two per book; books weighted by 1 + ln(1 + human_read_count); every book until a route has 60 books judged in its cell, then 5%. The lane writes only pages its corrector CHANGED (an UNCHANGED answer leaves no stamp), so a route's rate is over changed pages: the router tests' unchanged share was 0/30 German, 3/29 French.",
     calls: { records: records.length, malformed_not_counted: bad, judged: judged.length, unparsed: ok.filter((r) => !r.verdict).length,
       list_usd_equiv: +ok.reduce((a, r) => a + (r.list_usd || 0), 0).toFixed(2) },
-    cells: {}, contain_candidates: [] };
+    cells: {}, contain_candidates: [], by_script_cells: {} };
   const cells = [...new Set(judged.map((r) => r.cell))].sort();
   for (const cell of cells) {
     const rs = judged.filter((r) => r.cell === cell);
@@ -294,6 +304,12 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
         evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all),
         ...(flagged.length && { flagged_stratum: { ...routeBlock(flagged), note: 'pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence' } }) };
       (passed ? C.routes : C.routes_not_counted)[route] = block;
+      // The by-script cut build.py reads (split_evidence.py's shape, `<cell>|<script>`; mixed counts as print, as there).
+      if (passed) for (const t of ['print', 'manuscript', 'unknown']) {
+        const g = all.filter((r) => routerScript(r) === t); if (!g.length) continue;
+        const { n, books, accept, wrong_text_pages, classes_k_of_n } = routeBlock(g);
+        ((report.by_script_cells[`${cell}|${t}`] ??= { routes: {} }).routes[route] = { n, books, accept, wrong_text_pages, classes_k_of_n, script_basis: { page: g.length } });
+      }
       for (const r of all) {
         const wtd = (r.verdict.defects || []).filter((d) => d.severity === 'wrong_text');
         if (wtd.some((d) => WRONG_TEXT_CONTAIN.test(cls(d))))
@@ -605,7 +621,7 @@ async function readStore() {
   try { return { records: await db.collection(VERDICTS).find({}).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
 }
 
-async function doExport(file) {
+async function doExport(file, root) {
   const { records, runs } = await readStore();
   const score = exportScore(records);
   // The measured price: the meter's movement over the runs that judged (integer percents, the account is shared).
@@ -614,6 +630,7 @@ async function doExport(file) {
   score.meter = { runs: judgedRuns.length, calls: n, weekly_points_delta: pts, points_per_call: n ? +(pts / n).toPrecision(3) : null,
     note: 'upper bound: integer meter, and the account is shared with the box\'s other sessions' };
   if (file) { fs.mkdirSync(path.dirname(path.resolve(file)), { recursive: true }); fs.writeFileSync(file, JSON.stringify(score, null, 1) + '\n'); }
+  if (root) writeEvidence(root, score);
   for (const [cell, C] of Object.entries(score.cells)) for (const [route, x] of Object.entries({ ...C.routes, ...C.routes_not_counted }))
     console.log(`${cell}/${route}: ${x.counts ? 'counts' : 'control not passed'} accept ${x.accept} [${x.accept_ci.ci95?.join(', ')}] by ${x.accept_ci.unit} wrong_text ${x.wrong_text_pages} books ${x.books}`);
   return score;
@@ -621,6 +638,14 @@ async function doExport(file) {
 
 const sh = (cmd, args, opts = {}) => { const r = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1 << 28, ...opts }); if (r.status !== 0) throw new Error(`${cmd} ${args.slice(0, 3).join(' ')}: ${r.stderr || r.stdout}`); return r.stdout; };
 const REPO = () => process.env.SL_REPO || '/data/scratch/sl/sourcelibrary';
+
+/** The repo paths build.py opens: the table's own folder, its inputs, the script split's, and every evidence source but ours. */
+export function rebuildInputs(rules, RT = 'scripts/eval/estimator/router-table') {
+  const ss = rules.script_split?.on ? [rules.script_split.waiting].filter(Boolean) : [];
+  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...ss,
+    ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
+    .filter((p) => p !== EVIDENCE_PATH && p !== BY_SCRIPT_PATH);
+}
 
 /** build.py on a copy of origin/main, before and after the export; publish; comment on #7263 when a decision flips. */
 async function rebuild() {
@@ -631,14 +656,13 @@ async function rebuild() {
   sh('git', ['-C', REPO(), 'fetch', '-q', 'origin', 'main']);
   const rulesText = sh('git', ['-C', REPO(), 'show', `${ref}:${RT}/rules.json`]);
   const rules = JSON.parse(rulesText);
-  const need = [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
-    .filter((p) => p !== EVIDENCE_PATH);
+  const need = rebuildInputs(rules, RT);
   const tar = spawnSync('git', ['-C', REPO(), 'archive', '--format=tar', ref, ...need], { maxBuffer: 1 << 30 });
   if (tar.status !== 0) throw new Error(`git archive: ${tar.stderr}`);
   sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
   // --export=FILE: a given score.json instead of the store (a replay, or a test of the feed)
-  const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(path.join(dir, EVIDENCE_PATH));
-  if (arg('export')) fs.writeFileSync(path.join(dir, EVIDENCE_PATH), JSON.stringify(score));
+  const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(null, dir);
+  if (arg('export')) writeEvidence(dir, score);
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
   let text = rulesText; const added = [];
@@ -692,14 +716,14 @@ async function weeklyPr() {
   sh('git', ['-C', REPO(), 'worktree', 'add', '-q', '-B', branch, wt, 'origin/main']);
   try {
     for (const f of ['src/lib/vendor/lamejs-bundle.js']) if (fs.existsSync(path.join(REPO(), f))) { fs.mkdirSync(path.dirname(path.join(wt, f)), { recursive: true }); fs.copyFileSync(path.join(REPO(), f), path.join(wt, f)); }
-    const score = await doExport(path.join(wt, EVIDENCE_PATH));
+    const score = await doExport(null, wt);
     const rf = path.join(wt, RT, 'rules.json');
     let text = fs.readFileSync(rf, 'utf8'); const rules = JSON.parse(text), added = [];
     for (const { cell, route, entry } of evidenceEntries(score, rules)) { const t2 = addEvidence(text, cell, route, entry); if (t2 !== text) added.push(`${cell}/${route}`); text = t2; }
     fs.writeFileSync(rf, text);
-    const changed = sh('git', ['-C', wt, 'status', '--porcelain', '--', EVIDENCE_PATH, `${RT}/rules.json`]).trim();
+    const changed = sh('git', ['-C', wt, 'status', '--porcelain', '--', EVIDENCE_PATH, BY_SCRIPT_PATH, `${RT}/rules.json`]).trim();
     if (!changed) { console.log('weekly-pr: no change against main'); return null; }
-    sh('git', ['-C', wt, 'add', EVIDENCE_PATH, `${RT}/rules.json`]);
+    sh('git', ['-C', wt, 'add', EVIDENCE_PATH, BY_SCRIPT_PATH, `${RT}/rules.json`]);
     sh('git', ['-C', wt, 'commit', '-s', '-q', '-m', `eval(#7611): lane-judge sampler weekly snapshot ${stamp}\n\nThe store's verdicts as router evidence (${EVIDENCE_PATH})${added.length ? `; rules.json entries added: ${added.join(', ')}` : ''}.`]);
     sh('git', ['-C', wt, 'push', '-q', '-f', '-u', 'origin', branch]);
     const lines = Object.entries(score.cells).flatMap(([c, C]) => Object.entries(C.routes).map(([r, x]) => `| ${c} | ${r} | ${x.accept} | ${x.accept_ci.ci95?.join('–') ?? ''} | ${x.wrong_text_pages} | ${x.books} |`));
