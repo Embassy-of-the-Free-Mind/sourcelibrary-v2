@@ -170,10 +170,10 @@ EOF
 set -uo pipefail
 ST=$ST; LANE=$lane; CODE=$CODE; ENV_FILE=$ENV_FILE
 row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" >> "\$ST/runs.jsonl"; }
-# vLLM at util 0.6 asks for 14.7 GB: wait up to an hour for it, else a recorded skip
+# vLLM at util 0.85 (gpu-print-gpu.sh, FP8) asks for ~20.4 GB: wait up to an hour for it, else a recorded skip
 for i in \$(seq 1 60); do
   f=\$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
-  [ "\${f:-0}" -ge 15500 ] && break
+  [ "\${f:-0}" -ge 21000 ] && break
   [ "\$i" -eq 60 ] && { echo "OCR-FILLER-SKIP card busy (\${f} MiB free) for an hour"; row skip 75; exit 75; }
   sleep 60
 done
