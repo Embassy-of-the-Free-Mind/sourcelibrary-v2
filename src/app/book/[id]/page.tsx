@@ -1135,7 +1135,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The v2 link builder: the locale prefix, then the embed namespace when
     // embedded. Every in-book link below goes through it; a target with no
     // embed route (gallery, checks, author, admin) is not linked when embedded.
-    const lpv = (href: string) => embedPathPrefix + lp(href);
+    const lpv = (href: string) => {
+      const localized = lp(href);
+      // Root-relative only: an editor-set About link (about_visual.href) may be absolute.
+      return localized.startsWith('/') ? embedPathPrefix + localized : localized;
+    };
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
     // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
     const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id])).then(w => w.book);
