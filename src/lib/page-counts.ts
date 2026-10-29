@@ -18,8 +18,20 @@
 import type { Db, Document } from 'mongodb';
 import { isLazyPagesBook } from '../../scripts/lib/pages-state.mjs';
 
+/**
+ * Match fragment: pages that are not a hidden repeat capture (#5056). Mirror of
+ * the .mjs twin — `repeat_of` names the kept capture of the same leaf; the page
+ * keeps its number and id so citations resolve, but no list or counter sees it.
+ */
+export const NOT_REPEAT_CAPTURE = { repeat_of: null } as const;
+
 /** Match fragment selecting only visible (renderable) pages. */
-export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
+export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE } as const;
+
+/** True iff a page is a hidden repeat capture of another page (#5056). */
+export function isRepeatCapture(page: { repeat_of?: unknown } | null | undefined): boolean {
+  return page?.repeat_of != null;
+}
 
 /**
  * Page types that will never carry a translation. Mirror of the .mjs list.

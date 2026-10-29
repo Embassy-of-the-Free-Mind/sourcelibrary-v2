@@ -24,7 +24,7 @@
 
 import { createHash, randomBytes } from 'crypto';
 import { existsSync } from 'fs';
-import { recountBook } from './page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
@@ -1261,7 +1261,7 @@ export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = 
  */
 export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
   return {
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $nin: [null, ''] },
     'ocr.unreadable': { $ne: true },
     page_type: { $nin: [...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes] },

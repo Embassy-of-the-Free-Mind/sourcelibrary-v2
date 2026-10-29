@@ -1,4 +1,5 @@
 import { Suspense, cache } from 'react';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
@@ -628,7 +629,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // Digitizer-inserts are still filtered in JS (rare, no index benefit).
   const loadPreviewPages = (pagesDb: typeof db) =>
     pagesDb.collection('pages')
-      .find({ book_id: bookId, page_number: { $gte: 0 } }, {
+      .find(readerPageListFilter(bookId), {
         projection: {
           _id: 0,
           id: 1,
@@ -661,7 +662,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
       .toArray()
-      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100));
+      .then(docs => docs.filter(isReaderListedPage).slice(0, 100));
 
   // All queries have maxTimeMS to fail fast during DB degradation
   const [fullBookResult, pagesFirstRead, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard, freshSearchDoc] = await Promise.all([
@@ -936,7 +937,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   if ((book as { content_type?: string }).content_type === 'text') {
     const textDb = await getReadDb();
     const textPages = await textDb.collection('pages')
-      .find({ book_id: book.id, page_number: { $gte: 0 } }, {
+      .find(readerPageListFilter(book.id), {
         projection: { _id: 0, page_number: 1, part_title: 1, 'transliteration.data': 1, 'translation.data': 1, 'ocr.data': 1 },
         maxTimeMS: 5000,
       })

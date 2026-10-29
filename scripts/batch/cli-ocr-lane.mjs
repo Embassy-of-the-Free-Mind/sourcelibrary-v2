@@ -163,6 +163,7 @@
  *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
  *        L/armc-contain-claims.jsonl for a by-eye check. Undo: scripts/maintenance/revert-run.mjs --run-id <run>.
  */
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -190,7 +191,7 @@ export const CLI_MODEL_FOR = Object.freeze({ 'gemini-3-flash-preview': 'gemini-3
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
 export const UNREAD = Object.freeze({
-  page_number: { $gt: 0 },
+  ...VISIBLE_PAGE_MATCH,
   'ocr.recitation_blocked': { $ne: true },
   $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
   $and: [{
@@ -344,7 +345,7 @@ function ledgerTail(file, set, state) {
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
 async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: book.id, page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: book.id, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
@@ -718,7 +719,7 @@ export function armcUndrafted(L) {
  */
 async function armcPages(db, bookId, pagesCount, SKIP, ids = null) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*(handwrit|manuscript|mixed|none)|<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },

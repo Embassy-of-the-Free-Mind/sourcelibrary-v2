@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
@@ -341,7 +342,8 @@ export const GET = withApiAuth(async (
     const effectiveToPage = pageCaps.length ? Math.min(...pageCaps) : undefined;
 
     const effectiveFromPage = localizedChapterRange?.from ?? fromPage;
-    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
+    // A repeat capture (#5056) is a second copy of a leaf already served; leave it out.
+    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId, ...NOT_REPEAT_CAPTURE };
     if (effectiveFromPage !== undefined || effectiveToPage !== undefined) {
       pageFilter.page_number = {};
       if (effectiveFromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = effectiveFromPage;
