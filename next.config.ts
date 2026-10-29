@@ -43,6 +43,12 @@ const nextConfig: NextConfig = {
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
   },
+  // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
+  // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
+  // page's images are served statically and never through it: keep them out (#7710).
+  outputFileTracingExcludes: {
+    '/api/image': ['./public/ai-partners/img/**'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     qualities: [60, 75, 80, 85, 90], // 60: article heroes, under a dark gradient (ParallaxImage)
