@@ -19,6 +19,7 @@ node scripts/translation-layer/05-spotcheck.mjs              # Filelfo/Pico/Vall
 node scripts/translation-layer/04-write-provenance.mjs       # DRY-RUN; add --write to mutate Supabase
 node scripts/translation-layer/09-scan-coverage.mjs          # evidence-backed scan coverage (IIIF) + scanned x translated 2x2
 node scripts/translation-layer/10-sl-coverage.mjs           # SL holdings/translations x external priors 2x2 (#7751)
+node scripts/translation-layer/11-work-graph.mjs            # real WORK unit over USTC editions + our books; 2x2 at work level (#7751)
 ```
 
 Outputs land in `scripts/output/` (gitignored, regenerable):
