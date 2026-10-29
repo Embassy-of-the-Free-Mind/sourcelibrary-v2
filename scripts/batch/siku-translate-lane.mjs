@@ -10,7 +10,7 @@
 /**
  * siku-translate-lane — translate the held Siku Quanshu cohort (#5600) on agy 3.8 Flash, in waves, on spare quota.
  *
- * WHO RUNS IT: cron on main every 2 h (flock'd), and a session by hand. No paid API: reads go through `agy -p`
+ * WHO RUNS IT: cron on main every 15 min (flock'd; a wave reads for --max-minutes), and a session by hand. No paid API: reads go through `agy -p`
  * (cli-translate.mjs read, 1 page per call, reads ON) and are written by `cli-translate.mjs apply --apply`, which
  * recounts each book. Derek, 2026-10-27: "yes" to translating the held Siku books, "lower the bar, keep them as drafts".
  *
@@ -43,10 +43,21 @@
  *
  * SPOT CHECK. After every 5,000 pages written (state.json), 10 pages drawn at random across the books written since
  * the last check are judged by Opus through `claude -p` against the page image (sealed folder, Read/Write only, the
- * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. The tally is
+ * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. A check
+ * deferred for 6 h pages ntfy once, so a box whose account is spent does not leave the lane unchecked silently (it was
+ * deferred 19 h on 2026-10-29); run `spot-check --force` on a box whose account has room, with --state pointing at a copy. The tally is
  * posted on #5600 against the bar: 0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3. An invented or wrong-leaf
  * page is CONTAINED (containment-on-finding.md: the book is already held; withhold-stale-translations --by-eye-pages
  * --apply) and the lane PAUSES: the stop file is written and ntfy is pinged.
+ *
+ * WAVE LENGTH. --max-pages caps a wave's pages; --max-minutes=M (#5600, 2026-10-29) instead stops TAKING new books M
+ * minutes after the wave starts, so the parallel readers stay full until then and only the last books drain. With the
+ * cron firing every 15 min under flock, the next wave starts within 15 min of the last one ending. (A 4,000-page cap
+ * left 6 slots draining for the last ~20 min of each ~3 h wave and the hourly cron idle up to 60 min after it.)
+ *
+ * BOOKS THE READER REFUSES. A read that exits 2 (cli-translate's own refusal, e.g. "30% of these pages rest on a
+ * flash-lite transcription ... open 3 pages against their images first") is recorded in <state>/book-skips.jsonl with
+ * the reader's reason, and the book is not offered again: it needs an OCR check or re-OCR, not another wave.
  *
  * PAUSE / RESUME: `touch <state>/STOP` pauses (checked before each wave and each book); `rm <state>/STOP` resumes.
  *
@@ -139,11 +150,12 @@ function rankKey(b) {
 
 const arg = (n, d = null) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const STATE_DIR = path.resolve(arg('state', '/mnt/HC_Volume_105839809/siku-lane-5600'));
-const P = { stop: path.join(STATE_DIR, 'STOP'), state: path.join(STATE_DIR, 'state.json'), ledger: path.join(STATE_DIR, 'ledger.jsonl'), readings: path.join(STATE_DIR, 'pool-readings.jsonl'), written: path.join(STATE_DIR, 'written.jsonl') };
+const P = { stop: path.join(STATE_DIR, 'STOP'), state: path.join(STATE_DIR, 'state.json'), ledger: path.join(STATE_DIR, 'ledger.jsonl'), readings: path.join(STATE_DIR, 'pool-readings.jsonl'), written: path.join(STATE_DIR, 'written.jsonl'), skips: path.join(STATE_DIR, 'book-skips.jsonl') };
 const log = (...a) => console.log(new Date().toISOString().slice(0, 19) + 'Z', ...a);
 const readState = () => { try { return JSON.parse(fs.readFileSync(P.state, 'utf8')); } catch { return { written_total: 0, spot_at: 0, last_comment_day: null, waves: [] }; } };
 const saveState = (s) => fs.writeFileSync(P.state, JSON.stringify(s, null, 1));
 const readLedger = () => new Set(fs.existsSync(P.ledger) ? fs.readFileSync(P.ledger, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
+const readSkips = () => new Set(fs.existsSync(P.skips) ? fs.readFileSync(P.skips, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).book_id) : []);
 const ledger = (row) => fs.appendFileSync(P.ledger, JSON.stringify({ ...row, at: new Date().toISOString() }) + '\n');
 
 async function ntfy(title, msg) {
@@ -227,6 +239,8 @@ async function runWave(db) {
   const MAX = Number(arg('max-pages', 1500));
   const PAR = Math.max(1, Number(arg('parallel', 3)));
   const PER_CALL = Number(arg('per-call', 1));
+  const MAX_MIN = Number(arg('max-minutes', 0));
+  const T0 = Date.now();
   if (fs.existsSync(P.stop)) { log(`paused: ${P.stop} exists (${fs.readFileSync(P.stop, 'utf8').trim().slice(0, 200)}); rm it to resume`); return; }
   const pools = readPools();
   for (const p of pools) log(`pool ${poolName(p)}: ${p.reading ? `weekly ${p.reading.weekly.toFixed(3)} (reset ${p.reading.weeklyReset}), 5h ${p.reading.fiveHour?.toFixed(3) ?? '-'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}${p.reading ? `; ${poolGate(p.reading).why}` : ''}`);
@@ -243,8 +257,9 @@ async function runWave(db) {
   log(`using pool ${poolName(pool)} (${pool.gate.why})`);
 
   const done = readLedger();
-  const books = await candidates(db);
-  log(`cohort: ${books.length} books eligible before the per-book checks`);
+  const skipped = readSkips();
+  const books = (await candidates(db)).filter((b) => !skipped.has(b.id));
+  log(`cohort: ${books.length} books eligible before the per-book checks (${skipped.size} refused by the reader earlier, left out)`);
   const env = { ...process.env, CLI_JOB_NAME: JOB, JOB_NAME: process.env.JOB_NAME || JOB, JOB_LANDS: `#${ISSUE}`, SIKU_LANE_CHILD: '1' };
   if (pool.home) env.AGY_HOME = pool.home; else delete env.AGY_HOME;
   const day = new Date().toISOString().slice(0, 10);
@@ -269,6 +284,7 @@ async function runWave(db) {
   };
 
   const next = async () => {
+    if (MAX_MIN > 0 && Date.now() - T0 > MAX_MIN * 60e3) { stop = stop || `time: ${MAX_MIN} min`; return null; }
     while (cursor < books.length && budget > 0) {
       const b = books[cursor++];
       if (await hasDupe(db, b)) { log(`  ${b.id} skipped: a work_id sibling is another edition with English`); continue; }
@@ -303,7 +319,15 @@ async function runWave(db) {
       wave.read += metas;
       log(`  ${label}: read exit ${rc}, ${metas} reads in ${Math.round((Date.now() - t0) / 60e3)} min`);
       if (rc === 3) stop = stop || `quota reply from agy (pool ${poolName(pool)})`;
-      else if (rc !== 0) { log(`  ${label}: reader failed; book left for the next wave`); continue; }
+      else if (rc === 2) {
+        // The reader's own refusal (not a crash): record why and do not offer the book again.
+        const rl = fs.readFileSync(path.join(dir, 'read.log'), 'utf8').trim().split('\n');
+        const why = (rl.find((l) => /translat|re-OCR|refus/i.test(l) && !/page ids found/.test(l)) || rl.at(-1) || '').slice(0, 300);
+        fs.appendFileSync(P.skips, JSON.stringify({ book_id: book.id, title: book.title, wave: waveId, rc, why, at: new Date().toISOString() }) + '\n');
+        log(`  ${label}: reader refused (exit 2); recorded in book-skips.jsonl, not offered again: ${why.slice(0, 120)}`);
+        continue;
+      }
+      else if (rc !== 0) { log(`  ${label}: reader failed (exit ${rc}); book left for the next wave`); continue; }
       if (!metas) continue;
       if (!(await stillHeld(db, book.id))) { log(`  ${label}: hold moved during the read; not applied`); continue; }
       const arc = await runNode([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${dir}`, `--reason=${REASON}`, ...(APPLY ? ['--apply'] : [])], env, path.join(dir, 'apply.log'));
@@ -375,6 +399,16 @@ Write OUTPUT_FILE as a JSON array, one object per item: {"page_id", "wrong_leaf"
 "sense_errors", "from_ocr", "verdict", "note"}. No prose outside the file.`;
 
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
+/** The judge's claude binary: /usr/bin/claude first (an older ~/.local/bin/claude lacks --restricted), else the first
+ *  one on this box that has it. l7a has no /usr/bin/claude (2026-10-29: the spot check died with ENOENT there). */
+function claudeBin() {
+  for (const c of ['/usr/bin/claude', path.join(process.env.HOME || '/root', '.local/bin/claude')]) {
+    if (!fs.existsSync(c)) continue;
+    const h = spawnSync(c, ['--help'], { encoding: 'utf8', timeout: 30e3 });
+    if (/--restricted/.test(h.stdout || '')) return c;
+  }
+  return '/usr/bin/claude';
+}
 function judgeSealed(dir, items) {
   fs.mkdirSync(path.join(dir, 'images'), { recursive: true });
   fs.writeFileSync(path.join(dir, 'JUDGE.md'), JUDGE);
@@ -383,8 +417,7 @@ function judgeSealed(dir, items) {
   const prompt = 'Your instructions are the full text of `JUDGE.md` in this folder; follow them exactly. Work only inside this folder.\nITEMS_FILE: `items.json`\nOUTPUT_FILE: `review.json`';
   return new Promise((resolve) => {
     const out = fs.openSync(path.join(dir, 'transcript.jsonl'), 'w');
-    // /usr/bin/claude: an older ~/.local/bin/claude lacks --restricted.
-    const child = spawn('/usr/bin/claude', ['-p', prompt, '--model', 'opus', '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'stream-json', '--verbose'], { cwd: dir, stdio: ['ignore', out, out], env: claudeEnv() });
+    const child = spawn(claudeBin(), ['-p', prompt, '--model', 'opus', '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'stream-json', '--verbose'], { cwd: dir, stdio: ['ignore', out, out], env: claudeEnv() });
     const timer = setTimeout(() => child.kill('SIGKILL'), 45 * 60e3);
     child.on('close', () => {
       clearTimeout(timer); fs.closeSync(out);
@@ -409,7 +442,15 @@ export function tallyBar(verdicts) {
 async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   const s = readState();
   const u = claudeUsage();
-  if (u?.weekly != null && u.weekly >= 90 && !force) { log(`spot check deferred: this box's Claude account is at ${u.weekly}% weekly`); return; }
+  if (u?.weekly != null && u.weekly >= 90 && !force) {
+    log(`spot check deferred: this box's Claude account is at ${u.weekly}% weekly`);
+    s.spot_deferred_since = s.spot_deferred_since || new Date().toISOString();
+    if (!s.spot_deferred_paged && Date.now() - Date.parse(s.spot_deferred_since) > 6 * 3600e3) {
+      await ntfy('Siku lane: spot check deferred 6 h', `siku-translate-lane: the Opus spot check has been deferred since ${s.spot_deferred_since} (this box's Claude account at ${u.weekly}% weekly); ${s.written_total - (s.spot_at || 0)} pages written unchecked. Run spot-check --force on a box with room (#${ISSUE})`);
+      s.spot_deferred_paged = true;
+    }
+    saveState(s); return;
+  }
   const rows = fs.existsSync(P.written) ? fs.readFileSync(P.written, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
   const since = s.spot_written_rows || 0;
   const pool = rows.slice(since).flatMap((r) => r.page_ids.map((id) => ({ id, book_id: r.book_id })));
@@ -460,6 +501,7 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
     ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.`] : []),
     ...(!t.pass && !bad.length ? ['', 'The sense-error rate is over the bar; the lane keeps running (the bar\'s stop is invented or wrong-leaf text). Raising it here for a look.'] : []),
   ].join('\n'));
+  delete s.spot_deferred_since; delete s.spot_deferred_paged;
   s.spot_at = s.written_total; s.spot_written_rows = rows.length; s.spots = [...(s.spots || []), { at: new Date().toISOString(), dir, ...t }]; saveState(s);
 }
 
