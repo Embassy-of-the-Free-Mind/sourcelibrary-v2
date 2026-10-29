@@ -53,6 +53,7 @@
  *   … --group efm-books --dry-run --limit 3 --out /root/jobs/cold-copy/dry   (writes tars locally, no AWS)
  *   … --group efm-archive --apply [--concurrency 4] [--limit N] [--units archive/<id>/,…]
  * Flags: --ledger <jsonl> (default /root/jobs/cold-copy/ledger.jsonl)
+ *        --concurrency N (units in parallel, default 4) --prefetch N (GETs ahead per unit, default 16)
  *        --target scw|aws  per-group default: efm-* and restic → scw, masters and rest → aws.
  *          efm-* refuses aws (the BPH agreement: partner masters stay with an EU company).
  *          scw → /root/.config/cold-scw.env, aws → /root/.config/cold-aws.env (--cold-env overrides):
@@ -372,7 +373,9 @@ async function openObject(unit, o) {
   return r.Body;
 }
 
-const PREFETCH = 16;
+// Parallel GETs per unit. Total R2 fetches in flight ≈ concurrency × prefetch; on
+// gex45's 1 Gbit link 6×16 starved the long-RTT Postgres/Mongo dump streams (#7708).
+const PREFETCH = parseInt(arg('--prefetch', '16')) || 16;
 const PREFETCH_MAX = 32 * 1024 * 1024;
 async function fetchBuffer(unit, o) {
   for (let attempt = 1; ; attempt++) {
