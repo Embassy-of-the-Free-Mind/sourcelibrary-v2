@@ -892,6 +892,8 @@ function rtCost(cs, route, q, measuredPoints) {
   if (cor?.fresh) return { usd: 0, agy_share: q.agy_share_per_call, basis: `one agy ${cor.model} call, no draft` };
   if (!cor && cs.draft_route !== 'yigdzin') return { usd, basis: `${eng} (route-costs.json${e ? '' : ': not listed'})` };
   if (cs.draft_route === 'yigdzin') return cor ? (cor.by.startsWith('opus') ? { usd: 0, claude_points: measuredPoints ?? q.pts, basis: `held Yigdzin + one Opus image call (${q.ptsBasis})` } : { usd: 0, agy_share: q.agy_share_per_call, basis: `held Yigdzin + one agy ${cor.model} call` }) : { usd: 0, basis: "BDRC's own OCR, held" };
+  // A route of several agy calls a page (#7591 diff-QA: correction + fresh read + span judge) carries its measured count.
+  if (cor.calls_per_page) return { usd, agy_calls: cor.calls_per_page, agy_share: +(q.agy_share_per_call * cor.calls_per_page).toPrecision(3), basis: `draft + ${cor.calls_per_page} agy calls a page, measured on this run (${cor.by})` };
   return cor.by.startsWith('opus') ? { usd, claude_points: measuredPoints ?? q.pts, basis: `draft + one Opus image call (${q.ptsBasis}; correct.mjs at one page a call here)` }
     : { usd, agy_share: q.agy_share_per_call, basis: `draft + one agy ${cor.model} call` };
 }

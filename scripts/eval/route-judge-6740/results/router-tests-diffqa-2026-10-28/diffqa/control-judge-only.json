@@ -1,0 +1,205 @@
+{
+ "caught": "19/20",
+ "rows": [
+  {
+   "page_id": "69b51ddb47b06ecd581855dd",
+   "page_number": 827,
+   "kind": "shelfmark",
+   "truth": "5498.",
+   "planted": "5948.",
+   "before": "1600. ad 1604.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd58185319",
+   "page_number": 119,
+   "kind": "year",
+   "truth": "1649.",
+   "planted": "1469.",
+   "before": "Interpretationum per *Messahalam*.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581852c7",
+   "page_number": 37,
+   "kind": "page",
+   "truth": "150.",
+   "planted": "510.",
+   "before": "D. Rogeri Dodsworth,",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd58185443",
+   "page_number": 417,
+   "kind": "name",
+   "truth": "Arden.",
+   "planted": "Adren.",
+   "before": "Arden (Abbatia) 5032.",
+   "span": "RISKY:capital:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581852da",
+   "page_number": 56,
+   "kind": "negation",
+   "truth": "non",
+   "planted": "∅",
+   "before": "Contra incufantes, quod",
+   "span": "RISKY:negation:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd58185588",
+   "page_number": 742,
+   "kind": "shelfmark",
+   "truth": "3679.",
+   "planted": "3769.",
+   "before": "Medicines for Horfes.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd5818530e",
+   "page_number": 108,
+   "kind": "year",
+   "truth": "1535.",
+   "planted": "1355.",
+   "before": "Anglice Impress. Lond.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855cb",
+   "page_number": 809,
+   "kind": "page",
+   "truth": "467.",
+   "planted": "647.",
+   "before": "in Pontremoli, f.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581852e4",
+   "page_number": 66,
+   "kind": "name",
+   "truth": "Gregorii",
+   "planted": "Gergorii",
+   "before": "104. Φωνὴ ἀγαλλιάσεως.",
+   "span": "RISKY:capital:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855d3",
+   "page_number": 817,
+   "kind": "negation",
+   "truth": "non",
+   "planted": "∅",
+   "before": "cum Claufula de",
+   "span": "RISKY:negation:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855a6",
+   "page_number": 772,
+   "kind": "shelfmark",
+   "truth": "253.",
+   "planted": "523.",
+   "before": "Reginam Angliæ, f.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855a5",
+   "page_number": 771,
+   "kind": "year",
+   "truth": "1584.",
+   "planted": "1854.",
+   "before": "Grodnam funt miffæ,",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855a9",
+   "page_number": 775,
+   "kind": "page",
+   "truth": "49.",
+   "planted": "94.",
+   "before": "præmiffis, &c. f.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd5818541f",
+   "page_number": 381,
+   "kind": "name",
+   "truth": "Physick,",
+   "planted": "Pyhsick,",
+   "before": "old Chimistry and",
+   "span": "RISKY:capital:no-fresh",
+   "caught": "missed"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd58185479",
+   "page_number": 471,
+   "kind": "negation",
+   "truth": "nisi",
+   "planted": "∅",
+   "before": "*Quod nemo laeditur",
+   "span": "RISKY:negation:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581852cc",
+   "page_number": 42,
+   "kind": "shelfmark",
+   "truth": "247.",
+   "planted": "427.",
+   "before": "pro Synodo Florentina.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855a1",
+   "page_number": 767,
+   "kind": "year",
+   "truth": "1523.",
+   "planted": "1253.",
+   "before": "Illustriff. Rempub. Venet.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581855de",
+   "page_number": 828,
+   "kind": "page",
+   "truth": "134.",
+   "planted": "314.",
+   "before": "things promifcuoufly. 5559.",
+   "span": "RISKY:number:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd58185426",
+   "page_number": 388,
+   "kind": "name",
+   "truth": "Speech",
+   "planted": "Sepech",
+   "before": "11. 8066. A",
+   "span": "RISKY:capital:no-fresh",
+   "caught": "reverted"
+  },
+  {
+   "page_id": "69b51ddb47b06ecd581852e3",
+   "page_number": 65,
+   "kind": "negation",
+   "truth": "non",
+   "planted": "∅",
+   "before": "de injuriarum oblivione,",
+   "span": "RISKY:negation:no-fresh",
+   "caught": "reverted"
+  }
+ ]
+}

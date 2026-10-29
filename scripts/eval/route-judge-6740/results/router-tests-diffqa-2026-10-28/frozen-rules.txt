@@ -1,0 +1,9 @@
+1e9417f915bf1ea79131642c23cbdae9a95e5cd9
+ scripts/eval/latin-diffqa-7591/diffqa.mjs | 10 +++++++---
+ scripts/eval/route-judge-6740/judge.mjs   |  2 ++
+ scripts/lib/latin-diffqa.mjs              |  3 ++-
+ tests/unit/latin-diffqa.test.ts           |  4 ++++
+ 4 files changed, 15 insertions(+), 4 deletions(-)
+2b0b0a072ecce25c84c2e4679719ff7968a09ea2d8ada07633f7267e0b7d9303  scripts/lib/latin-diffqa.mjs
+d35ed26822675502712cd36f0ac49570b6939149d63953f48c2ac476d8146e13  scripts/eval/latin-diffqa-7591/diffqa.mjs
+Wed Oct 28 10:30:43 AM UTC 2026
