@@ -8,8 +8,8 @@ export const PARTNERS_HTML = `
       <p>129,000 books in more than fifty languages. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
     </div>
     <figure>
-      <img src="/ai-partners/img/ottoman-celestial.jpg" alt="Ottoman celestial map, 1583: the zodiac and planetary spheres held by angels">
-      <figcaption><a href="https://sourcelibrary.org/book/art-ottoman-celestial-map">Ottoman celestial map, 1583 · Source Library</a></figcaption>
+      <img src="/ai-partners/img/fludd-empyrean.jpg" alt="Engraved circle of the heavens: a dark starry core, a ring of stars, and an outer band of flames">
+      <figcaption><a href="https://sourcelibrary.org/book/69904dd67d19f3f2aac1d49d?page=140">Robert Fludd, <i>Utriusque cosmi historia</i>, 1617: the Empyrean heaven · Source Library</a></figcaption>
     </figure>
   </div>
 </section>
@@ -33,7 +33,7 @@ export const PARTNERS_HTML = `
       <p class="eyebrow">The untranslated record</p>
       <h2>Most of it has never been translated</h2>
       <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, most of the books we translate have no earlier English translation.</p>
-      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. Debora Shuger’s estimate was roughly 90%. In our library: of a random sample of 995 books we have translated, from Latin, German, Chinese, Sanskrit and other languages, a search found no earlier English translation for 59% (56–62%), and only a partial one for another 7%. Searched October 2026.</p>
+      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: of a random sample of 995 books we have translated, from Latin, German, Chinese, Sanskrit and other languages, a search found no earlier English translation for 59% (56–62%), and only a partial one for another 7%. Searched October 2026.</p>
       
       
     </div>
@@ -151,7 +151,8 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Immediately available</h2>
     <div>
-      <p class="lede">The public corpus is available now through our streaming API and MCP server, with a stable citation link for every passage. It comprises some 18 billion tokens, of which 11.5 billion are transcription and translation aligned to the page.</p>
+      <p class="lede">The public corpus is available now through our streaming API and MCP server, with a stable citation link for every passage. It comprises about 21 billion tokens, three times the size of English Wikipedia: 15 billion in the original languages and 6 billion of English translation, each page aligned to its scan.</p>
+      <p class="note">Measured 29 October 2026 with the o200k tokenizer over a random sample of 12,000 pages, multiplied by the exact counts of transcribed and translated pages; by the median page, about 14.5 billion. English Wikipedia’s articles hold about 5 billion words, some 6.5 billion tokens. In words the library is half as large again, 7.7 billion: Latin, Chinese and Sanskrit take more tokens per word than English.</p>
       <table class="ledger">
         <tr><td>Page views by readers, last 7 days</td><td class="n">103K</td></tr>
         <tr><td>Pages fetched by ChatGPT and Claude for their users, last 30 days</td><td class="n">1.8M</td></tr>
