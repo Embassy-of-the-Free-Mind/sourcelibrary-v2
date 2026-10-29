@@ -12,8 +12,10 @@
 # 2026-10-28, sat un-ingested in a scratchpad). Launch it with the env loaded (MONGODB_URI, SUPABASE_*), then:
 #   1 parse-results.py            2 ingest.mjs --apply         3 harvest-ft-into-translation-catalogs --from-credits
 #   4 update-homepage-stats.mjs   5 recheck-credits prepare -> run-batch.sh on <dir>-recheck -> apply --no-retract
-#   6 ONE ntfy page: counts, and how many credit retractions are held for review (file: <dir>-recheck/retractions-held.json)
-# Retractions stay manual. Any step that fails pages ntfy and STOPS the chain; nothing after it runs.
+#   5b work-conflicts.mjs: works with a first-badged edition beside a credited one -> check, covers_part credited, covers_all HELD
+#   5c archive-run.sh: tar the run (+ -recheck, -workconflicts) to R2 ft-search-runs/<name>.tgz and ~/ft-batches/archive/
+#   6 ONE ntfy page: counts, and how many changes are held for review (book_events ft_change_held_for_review; held-review.mjs lists them)
+# Retractions and badge removals stay manual. Any step that fails pages ntfy and STOPS the chain; nothing after it runs.
 # NO_AUTO_APPLY=1 keeps the old behaviour (parse + ingest dry run into postrun.txt, page, apply by hand).
 # A dir holding NO_POSTRUN (recheck, held) or GATE (read-only propagation gate) stops after the searches.
 # Keep <dir> out of a session scratchpad: /private/tmp is cleared on reboot.
@@ -65,8 +67,23 @@ if [ "$(grep -c . "$RECHECK/ids.txt" 2>/dev/null)" -gt 0 ] 2>/dev/null; then
   step recheck-apply sh -c "cd '$REPO' && node '$HERE/recheck-credits.mjs' apply '$RECHECK' --apply --no-retract"
 fi
 
-HELD=0
-[ -f "$RECHECK/retractions-held.json" ] && HELD=$(python3 -c "import json,sys;print(len(json.load(open(sys.argv[1]))))" "$RECHECK/retractions-held.json")
+# Works whose editions disagree: a first-badged book beside a sibling edition with a complete credit. Only works this
+# ingest touched (--since). covers_part adds a partial credit; covers_all (badge removal) is HELD for review.
+CONFL="$DIR-workconflicts"
+step conflicts-prepare sh -c "cd '$REPO' && node '$HERE/work-conflicts.mjs' '$CONFL' --since '$SINCE'"
+if [ "$(grep -c . "$CONFL/ids.txt" 2>/dev/null)" -gt 0 ] 2>/dev/null; then
+  step conflicts-search "$HERE/run-batch.sh" "$CONFL" "$P"   # NO_POSTRUN: searches only
+  step conflicts-apply sh -c "cd '$REPO' && node '$HERE/work-conflicts.mjs' apply '$CONFL' --apply"
+fi
+
+count_json() { [ -f "$1" ] && python3 -c "import json,sys;print(len(json.load(open(sys.argv[1]))))" "$1" || echo 0; }
+HELD_RETRACT=$(count_json "$RECHECK/retractions-held.json")
+HELD_BADGE=$(count_json "$CONFL/work-conflicts-held.json")
+HELD=$((HELD_RETRACT + HELD_BADGE))
+# Raw run to R2 (ft-search-runs/<name>.tgz) and a local copy; an R2 failure is reported, not fatal.
+step archive sh -c "'$HERE/archive-run.sh' '$DIR'"
+ARCH=$(grep '^ARCHIVE' postrun.txt | tail -1)
 SUMMARY=$(grep -E '^(parsed|APPLIED|DRY RUN)' postrun.txt | cut -c1-300 | head -c 1200)
 page "ft-search batch applied: $NAME" "$SUMMARY
-Retractions held for review: $HELD$( [ "$HELD" -gt 0 ] && echo " -> $RECHECK/retractions-held.json" ) (#7598)"
+Held for review: $HELD ($HELD_RETRACT credit retractions, $HELD_BADGE badge removals; list: node scripts/ft-search/held-review.mjs list --since ${SINCE%%T*}) (#7598)
+$ARCH"

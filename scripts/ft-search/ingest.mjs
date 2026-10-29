@@ -11,6 +11,10 @@
 //                                                     states the search, it does not assert a negative)
 //   none found, already badged                      → the search becomes its evidence
 //   prior found on a badged book                    → HELD (same-work check first; see the skill)
+// Every new credit is also appended to its work's card in work_translation_history (the works ledger; entry source
+// 'ft_fresh_search', evidence_grade moderate, verified false; deduped on citation_url or title+year; existing entries
+// and the card's status are never touched; a work with no card gets one as 'under_review', which renders nothing).
+// A search's structured metadata_issue (any kind but none/other) is written as a book_events row.
 // Idempotent: a book that already has a fresh-search row is not written twice.
 // One search per work (#7598): <dir>/siblings.json (written by select-batch.mjs when propagation is on) maps a
 // representative to sibling volumes. A rep's none_found is applied to each sibling by the same rules, with its own
@@ -22,6 +26,7 @@
 //   node scripts/ft-search/ingest.mjs <dir> --apply    # writes; ingest-log.json lists every action
 import { MongoClient, ObjectId } from 'mongodb';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { entryFromCredit, ledgerOp, LEDGER } from './ledger-lib.mjs';
 
 const DIR = process.argv[2];
 const APPLY = process.argv.includes('--apply');
@@ -50,7 +55,7 @@ const ids = [...recs.map((r) => r._book), ...Object.values(SIBLINGS).flat()];
 const oids = ids.filter((i) => /^[0-9a-f]{24}$/.test(i)).map((i) => new ObjectId(i));
 const bookDocs = await books.find(
   { $or: [{ id: { $in: ids } }, { _id: { $in: oids } }] },
-  { projection: { id: 1, is_first_translation: 1, prior_translation: 1, pages_translated: 1, visible: 1, first_translation: 1, language: 1, original_language: 1 } },
+  { projection: { id: 1, is_first_translation: 1, prior_translation: 1, pages_translated: 1, visible: 1, first_translation: 1, language: 1, original_language: 1, work_id: 1 } },
 ).toArray();
 const byKey = new Map();
 for (const b of bookDocs) { byKey.set(String(b._id), b); if (b.id) byKey.set(b.id, b); }
@@ -66,6 +71,7 @@ const log = [];
 const attemptInserts = [];
 const bookOps = [];
 const events = [];
+const creditsForLedger = []; // { work_id, credit, attempt_id, book_id }
 
 // inheritedFrom: the representative's attempt_id when r is a rep's answer applied to a sibling volume.
 function handle(r, inheritedFrom = null) {
@@ -105,6 +111,7 @@ function handle(r, inheritedFrom = null) {
         ...(Number.isInteger(yr) ? { year: yr } : {}), ...(p.publisher ? { publisher: p.publisher } : {}),
       };
       action = 'prior_credit';
+      creditsForLedger.push({ work_id: b.work_id, credit: set.prior_translation, attempt_id, book_id: bookId });
     }
   } else if (r.verdict === 'prior_translation_found') action = 'prior_link_rejected';
   else if (r.verdict === 'none_found') {
@@ -125,6 +132,10 @@ function handle(r, inheritedFrom = null) {
   const miReported = typeof mi === 'string' ? mi.trim() : mi && mi.kind && mi.kind !== 'none';
   if (miReported && !inheritedFrom) inc('metadata_issue_reported');
   log.push({ book_id: bookId, verdict: r.verdict, action, url: url || null, ...(inheritedFrom ? { inherited_from: inheritedFrom } : {}), ...(miReported && !inheritedFrom ? { metadata_issue: mi } : {}) });
+  if (miReported && !inheritedFrom && typeof mi === 'object' && !['none', 'other'].includes(mi.kind)) {
+    events.push({ book_id: bookId, type: 'metadata_issue_reported', at: NOW, by: BY, attempt_id, detail: { kind: mi.kind, right_value: mi.right_value || '' } });
+    inc('metadata_issue_event');
+  }
   if (Object.keys(set).length) {
     bookOps.push({ updateOne: { filter: { _id: b._id }, update: { $set: set } } });
     events.push({ book_id: bookId, type: action === 'prior_credit' ? 'prior_translation_credited' : 'first_translation_search_recorded', at: NOW, by: BY, detail: { action, attempt_id, url: url || null, ...(inheritedFrom ? { inherited_from: inheritedFrom } : {}) } });
@@ -142,11 +153,37 @@ for (const r of recs) {
   }
 }
 
+// Works ledger: one card per work. Read the cards once, decide each append against the card as it will stand.
+const ledgerOps = [];
+const ledgerLog = [];
+const ledgerWorks = [...new Set(creditsForLedger.map((x) => x.work_id).filter(Boolean))];
+const cards = new Map((await db.collection(LEDGER).find({ _id: { $in: ledgerWorks } }, { projection: { entries: 1, status: 1 } }).toArray()).map((d) => [d._id, d]));
+const contradictions = [];
+for (const x of creditsForLedger) {
+  if (!x.work_id) { inc('ledger_no_work_id'); continue; }
+  const entry = entryFromCredit(x.credit, x.attempt_id);
+  const doc = cards.get(x.work_id) || null;
+  const { action, op } = ledgerOp(x.work_id, doc, entry, NOW);
+  inc(`ledger_${action}`);
+  ledgerLog.push({ work_id: x.work_id, book_id: x.book_id, action, status: doc?.status ?? null });
+  if (!op) continue;
+  ledgerOps.push(op);
+  cards.set(x.work_id, { ...(doc || { _id: x.work_id, status: 'under_review' }), entries: [...(doc?.entries || []), entry] });
+  // Not changed here: a card still saying no_prior_known now holds an entry. Listed for review.
+  if (doc?.status === 'no_prior_known') contradictions.push({ work_id: x.work_id, book_id: x.book_id, entry });
+}
+if (contradictions.length) { stats.ledger_card_says_no_prior_known = contradictions.length; writeFileSync(`${DIR}/ledger-contradictions.json`, JSON.stringify(contradictions, null, 1)); }
+writeFileSync(`${DIR}/ledger-log${APPLY ? '' : '-dryrun'}.json`, JSON.stringify(ledgerLog, null, 1));
+
 if (APPLY) {
   if (attemptInserts.length) stats.attempts_inserted = (await attempts.insertMany(attemptInserts, { ordered: false })).insertedCount;
   if (bookOps.length) stats.books_modified = (await books.bulkWrite(bookOps, { ordered: false })).modifiedCount;
   if (events.length) await db.collection('book_events').insertMany(events, { ordered: false });
+  if (ledgerOps.length) {
+    const r = await db.collection(LEDGER).bulkWrite(ledgerOps, { ordered: true });
+    stats.ledger_writes = r.modifiedCount + r.upsertedCount;
+  }
 }
 writeFileSync(`${DIR}/ingest-log${APPLY ? '' : '-dryrun'}.json`, JSON.stringify(log, null, 1));
-console.log(APPLY ? 'APPLIED' : 'DRY RUN', stats);
+console.log(APPLY ? 'APPLIED' : 'DRY RUN', JSON.stringify(stats)); // one line: run-batch.sh greps it into the ntfy page
 await c.close();

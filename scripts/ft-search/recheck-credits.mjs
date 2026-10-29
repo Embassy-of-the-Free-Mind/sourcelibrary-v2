@@ -15,11 +15,14 @@
 // apply writes: `partial` → prior_translation.scope 'partial' (and the catalogue row's completeness);
 // `not_a_translation` / `wrong_work` → the credit is removed, its full value kept in the book_events row
 // (type prior_translation_retracted) so it can be restored. Every rechecked book gets a book_events row.
+// With --no-retract a retraction is held as a book_events row (ft_change_held_for_review), not only in retractions-held.json;
+// scripts/ft-search/held-review.mjs lists and applies them.
 // It never writes a first-translation badge: a retracted credit leaves the book with neither claim.
 import fs from 'fs';
 import path from 'path';
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { heldEvent, insertHeld } from './ledger-lib.mjs';
 
 const [mode, dirArg] = process.argv.slice(2);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -70,7 +73,7 @@ if (mode === 'prepare') {
   console.log(`prepared ${list.length} credits (verified_at >= ${since}) in ${dir}`);
 } else {
   const ids = fs.readFileSync(path.join(dir, 'ids.txt'), 'utf8').split(/\s+/).filter(Boolean);
-  const counts = {}; const log = []; const held = [];
+  const counts = {}; const log = []; const held = []; const heldRows = [];
   const inc = (k) => { counts[k] = (counts[k] || 0) + 1; };
   const sb = APPLY ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY) : null;
   for (const id of ids) {
@@ -96,6 +99,8 @@ if (mode === 'prepare') {
       await sb.from('translation_catalogs').update({ completeness: 'partial' }).eq('source', 'sl_prior_credit_linked').eq('source_url', b.prior_translation.url);
     } else if ((v === 'not_a_translation' || v === 'wrong_work') && !RETRACT) {
       inc('retraction_held');
+      heldRows.push(heldEvent({ book_id: id, change: 'retract_credit', by: BY, attempt_id: b.prior_translation.source_attempt_id || null,
+        reason: `recheck verdict ${v}: ${o.note || ''}`.trim(), current: b.prior_translation, proposed: { unset: 'prior_translation', better_url: o.better_url || '' } }));
       held.push({ book_id: id, url: `https://sourcelibrary.org/book/${id}`, verdict: v, credit_url: b.prior_translation.url, better_url: o.better_url || '', note: o.note || '' });
     } else if (v === 'not_a_translation' || v === 'wrong_work') {
       await books.updateOne({ _id: b._id }, { $unset: { prior_translation: '' } });
@@ -104,9 +109,11 @@ if (mode === 'prepare') {
       await bookEvents.insertOne({ book_id: id, type: 'prior_translation_rechecked', at: new Date(), by: BY, detail });
     }
   }
+  // Held retractions live in the database too (book_events ft_change_held_for_review), listed by held-review.mjs.
+  if (APPLY && heldRows.length) counts.held_events_inserted = await insertHeld(bookEvents, heldRows);
   fs.writeFileSync(path.join(dir, APPLY ? 'recheck-log.json' : 'recheck-log-dryrun.json'), JSON.stringify(log, null, 1));
   // Retractions stay manual: with --no-retract the credits to review are listed here, for Derek.
   if (APPLY && !RETRACT) fs.writeFileSync(path.join(dir, 'retractions-held.json'), JSON.stringify(held, null, 1));
-  console.log(APPLY ? 'APPLIED' : 'DRY RUN', counts);
+  console.log(APPLY ? 'APPLIED' : 'DRY RUN', JSON.stringify(counts)); // one line: run-batch.sh greps it into the ntfy page
 }
 await client.close();

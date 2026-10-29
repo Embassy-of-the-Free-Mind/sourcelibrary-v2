@@ -20,6 +20,7 @@ import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { ledgerLeads, LEDGER } from './ledger-lib.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const N = parseInt(arg('--n', '1000'), 10);
@@ -84,6 +85,20 @@ async function catalogLeads(b) {
   return `${rows.length}${rows.length === 200 ? '+' : ''} row(s) in our catalogue of English translations match this author's surname${rows.length > 10 ? '; the 10 whose titles best match this book' : ''}. They are LEADS to check, not answers: many are a different work by the author, wrong in detail, or not real. Cite one only after you find it yourself.\n${rows.slice(0, 10).map(line).join('\n')}\n`;
 }
 
+// Leads from the works ledger (work_translation_history, #7598): the English translations older lanes recorded for
+// this book's work, labelled by their own evidence grade and verified flag. Fetched once per batch by loadLedger().
+let LEDGER_DOCS = new Map();
+async function loadLedger(db, workIds) {
+  const ids = [...new Set(workIds.filter(Boolean))];
+  if (!ids.length) return;
+  for (let i = 0; i < ids.length; i += 2000) {
+    for (const d of await db.collection(LEDGER).find({ $or: [{ _id: { $in: ids.slice(i, i + 2000) } }, { work_id: { $in: ids.slice(i, i + 2000) } }] }, { projection: { entries: 1, work_id: 1 } }).toArray()) {
+      LEDGER_DOCS.set(d._id, d);
+      if (d.work_id) LEDGER_DOCS.set(d.work_id, d);
+    }
+  }
+}
+
 // Collected-works sets: their volumes hold DIFFERENT works, so one volume's answer says nothing about another.
 const COLLECTION = /collected|works|opera|werke|sämtliche|samtliche|corpus|tengyur|kangyur|collection|anthology|selected|omnia|全書|集成|選|选/i; // 選 added after the gate: Yuanqu xuan's volumes were different plays
 // A title with its volume number taken out: two volumes of one work normalise to the same string.
@@ -117,7 +132,7 @@ What counts as a prior: an English TRANSLATION (the text itself rendered into En
 - The url must be the translation itself or a library or publisher record of it. A Wikipedia page or a review is not enough; find the record.
 Report only URLs you actually opened. Never guess a URL.
 metadata_issue.kind is "none" unless our record is clearly wrong; then name the kind (author_is_printer, author_is_editor, author_is_uploader, author_is_root_text_author, date_is_upload_date, wrong_volume, wrong_language, other) and give right_value. Approximate dates, missing details and several compilers are "none".
-Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":"","book_contains":"what this book contains","translation_covers":"what the translation covers"} or null,"queries":["..."],"metadata_issue":{"kind":"none|author_is_printer|author_is_editor|author_is_uploader|author_is_root_text_author|date_is_upload_date|wrong_volume|wrong_language|other","right_value":"the correct author, date, volume or language; empty when kind is none"},,"card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
+Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":"","book_contains":"what this book contains","translation_covers":"what the translation covers"} or null,"queries":["..."],"metadata_issue":{"kind":"none|author_is_printer|author_is_editor|author_is_uploader|author_is_root_text_author|date_is_upload_date|wrong_volume|wrong_language|other","right_value":"the correct author, date, volume or language; empty when kind is none"},"card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
 }
 
 const c = await MongoClient.connect(process.env.MONGODB_URI);
@@ -174,20 +189,26 @@ if (GATE_N) {
   const nsib = Object.values(siblings).reduce((a, x) => a + x.length, 0);
   console.log(`one search per work: ${Object.keys(siblings).length} representatives stand for ${nsib} sibling volumes in this batch`);
 } else batch = ordered.slice(0, N);
+await loadLedger(db, batch.map((b) => b.work_id));
 const volumesOf = (b) => (siblings[idOf(b)]?.length || 0) + 1;
 
 mkdirSync(OUT, { recursive: true });
 let missing = 0;
 let withLeads = 0;
+let withLedger = 0;
 for (let i = 0; i < batch.length; i += 8) {
   await Promise.all(batch.slice(i, i + 8).map(async (b) => {
-    const [record, leads] = await Promise.all([fetchRecord(b.id || String(b._id)), catalogLeads(b)]);
+    const [record, catLeads] = await Promise.all([fetchRecord(b.id || String(b._id)), catalogLeads(b)]);
+    const ledLeads = b.work_id ? ledgerLeads(LEDGER_DOCS.get(b.work_id)) : null;
+    const leads = [ledLeads, catLeads].filter(Boolean).join('') || null;
     if (!record) missing++;
     if (leads) withLeads++;
+    if (ledLeads) withLedger++;
     writeFileSync(`${OUT}/${b.id || String(b._id)}.prompt`, prompt(b, record, leads, volumesOf(b)));
   }));
 }
-console.log(`${withLeads} of ${batch.length} prompts carry catalogue leads${SUPA ? '' : ' (SUPABASE_URL not set: none)'}`);
+console.log(`${withLedger} of ${batch.length} prompts carry works-ledger leads`);
+console.log(`${withLeads} of ${batch.length} prompts carry leads (ledger and/or catalogue)${SUPA ? '' : ' (SUPABASE_URL not set: none)'}`);
 if (missing) console.error(`${missing} records not fetched; those prompts curl the record themselves`);
 if (Object.keys(siblings).length) writeFileSync(`${OUT}/siblings.json`, JSON.stringify(siblings, null, 1));
 if (GATE_N) writeFileSync(`${OUT}/GATE`, 'read-only propagation gate: do not ingest\n');
