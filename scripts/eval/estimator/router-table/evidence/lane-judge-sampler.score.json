@@ -1,0 +1,985 @@
+{
+ "generated_at": "2026-10-29T22:27:34.233Z",
+ "source": "lane-judge-sampler (#7611)",
+ "file": "scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  "0032976699c6d194",
+  "6c73d24dbbc9c9df"
+ ],
+ "frame": "pages a live lane WROTE, by its own stamps; one page per book per run, at most two per book; books weighted by 1 + ln(1 + human_read_count); every book until a route has 60 books judged in its cell, then 5%. The lane writes only pages its corrector CHANGED (an UNCHANGED answer leaves no stamp), so a route's rate is over changed pages: the router tests' unchanged share was 0/30 German, 3/29 French.",
+ "calls": {
+  "records": 257,
+  "malformed_not_counted": 0,
+  "judged": 256,
+  "unparsed": 1,
+  "list_usd_equiv": 15.81
+ },
+ "cells": {
+  "french-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "controls": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 15,
+     "books": 15,
+     "accept": "14/15",
+     "accept_rate": 0.933,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       1
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_pages": "0/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O16": "4/15",
+      "O11": "3/15",
+      "E2": "3/15",
+      "O6": "2/15",
+      "T6": "1/15",
+      "O14": "1/15",
+      "O8": "1/15"
+     },
+     "fidelity_mean": 4.6,
+     "lane": [
+      "agy-correct-lite-7558"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "2/2",
+       "wrong_text_pages": "0/2",
+       "books": 2
+      },
+      "print": {
+       "accept": "14/15",
+       "wrong_text_pages": "0/15",
+       "books": 15
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {
+    "lite": {
+     "n": 15,
+     "books": 15,
+     "accept": "13/15",
+     "accept_rate": 0.867,
+     "accept_ci": {
+      "ci95": [
+       0.667,
+       1
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_pages": "0/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "5/15",
+      "O8": "4/15",
+      "O16": "3/15",
+      "O5": "2/15",
+      "O6": "2/15",
+      "T6": "2/15",
+      "D1": "1/15",
+      "O9": "1/15",
+      "O11": "1/15"
+     },
+     "fidelity_mean": 4.53,
+     "by_script": {
+      "manuscript": {
+       "accept": "0/2",
+       "wrong_text_pages": "1/2",
+       "books": 2
+      },
+      "print": {
+       "accept": "13/15",
+       "wrong_text_pages": "0/15",
+       "books": 15
+      }
+     }
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 15,
+     "fidelity_diff": 0.07,
+     "fidelity_diff_ci": [
+      -0.2,
+      0.333
+     ],
+     "worse": "2/15",
+     "better": "3/15",
+     "accept_lost": "0/15",
+     "accept_gained": "1/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": [
+      {
+       "page_id": "6a8f624fe408ab73f484cf04",
+       "book_id": "6a8f624fe408ab73f484cec0",
+       "page_number": 68,
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The page's text is complete and in the right order, but the first word reads 'fons fondamentaux' where the page has 'sons fondamentaux' (fundamental sounds)."
+      },
+      {
+       "page_id": "6a8ee22f90f5a0e4155eab81",
+       "book_id": "6a8ee22f90f5a0e4155eab07",
+       "page_number": 121,
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful, complete transcription of the opening Sommaires page: the title, the note on numerals, the Préambule heading and two italic paragraphs ending on 'de-'. Only the small symbol before PRÉAMBULE is shown wrongly as 'M'."
+      }
+     ]
+    }
+   }
+  },
+  "german-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 20,
+     "books": 20,
+     "accept": "16/20",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.6,
+       0.95
+      ],
+      "unit": "book",
+      "units": 20
+     },
+     "wrong_text_pages": "1/20",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.15
+      ],
+      "unit": "book",
+      "units": 20
+     },
+     "wrong_text_classes": {
+      "O6": "1/20"
+     },
+     "classes_k_of_n": {
+      "O8": "11/20",
+      "O6": "7/20",
+      "E2": "5/20",
+      "O13": "2/20",
+      "O11": "2/20",
+      "O16": "2/20",
+      "O14": "1/20",
+      "O7": "1/20",
+      "I3": "1/20",
+      "O5": "1/20",
+      "O12": "1/20",
+      "D1": "1/20"
+     },
+     "fidelity_mean": 4.25,
+     "lane": [
+      "agy-correct-lite-7558"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "16/20",
+       "wrong_text_pages": "1/20",
+       "books": 20
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {
+    "lite": {
+     "n": 21,
+     "books": 21,
+     "accept": "14/21",
+     "accept_rate": 0.667,
+     "accept_ci": {
+      "ci95": [
+       0.476,
+       0.857
+      ],
+      "unit": "book",
+      "units": 21
+     },
+     "wrong_text_pages": "4/21",
+     "wrong_text_ci": {
+      "ci95": [
+       0.048,
+       0.381
+      ],
+      "unit": "book",
+      "units": 21
+     },
+     "wrong_text_classes": {
+      "O5": "2/21",
+      "O6": "2/21",
+      "O7": "1/21",
+      "O12": "1/21",
+      "O10": "1/21"
+     },
+     "classes_k_of_n": {
+      "O6": "13/21",
+      "O8": "12/21",
+      "E2": "7/21",
+      "T6": "6/21",
+      "O11": "5/21",
+      "O16": "5/21",
+      "O12": "3/21",
+      "O5": "3/21",
+      "O14": "1/21",
+      "O7": "1/21",
+      "I3": "1/21",
+      "O13": "1/21",
+      "O10": "1/21"
+     },
+     "fidelity_mean": 3.9,
+     "by_script": {
+      "print": {
+       "accept": "14/21",
+       "wrong_text_pages": "4/21",
+       "books": 21
+      }
+     }
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 20,
+     "fidelity_diff": 0.35,
+     "fidelity_diff_ci": [
+      0.1,
+      0.65
+     ],
+     "worse": "1/20",
+     "better": "7/20",
+     "accept_lost": "0/20",
+     "accept_gained": "3/20",
+     "wrong_text_added": "0/20",
+     "worse_pages": [
+      {
+       "page_id": "69d37a91f510a016bc1c2bc1",
+       "book_id": "69c888a16c6f3cc53c85a348",
+       "page_number": 56,
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text matches the page line for line, but the description of the central symbol gets its shape wrong: the page shows a bowl-like arc in the lower half, not a diagonal stroke."
+      }
+     ]
+    }
+   }
+  },
+  "italian-lite": {
+   "task": "ocr",
+   "lang": "Italian",
+   "controls": {
+    "lighton>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lighton>agy-flash-low": {
+     "n": 36,
+     "books": 9,
+     "accept": "31/36",
+     "accept_rate": 0.861,
+     "accept_ci": {
+      "ci95": [
+       0.694,
+       1
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "3/36",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.194
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O1": "1/36",
+      "O7": "1/36",
+      "O5": "1/36"
+     },
+     "classes_k_of_n": {
+      "O8": "17/36",
+      "E2": "9/36",
+      "O11": "8/36",
+      "O16": "7/36",
+      "O6": "6/36",
+      "D1": "6/36",
+      "O7": "3/36",
+      "O12": "3/36",
+      "O5": "2/36",
+      "T6": "2/36",
+      "O1": "1/36",
+      "O14": "1/36",
+      "I4": "1/36"
+     },
+     "fidelity_mean": 4.31,
+     "lane": [
+      "gpu-agy-correct-lite-7567"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "31/36",
+       "wrong_text_pages": "3/36",
+       "books": 9
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "latin-gpu-7263": {
+   "task": "ocr",
+   "lang": "Latin",
+   "controls": {
+    "pero>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 60,
+     "books": 20,
+     "accept": "53/60",
+     "accept_rate": 0.883,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       0.967
+      ],
+      "unit": "book",
+      "units": 20
+     },
+     "wrong_text_pages": "5/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0.017,
+       0.15
+      ],
+      "unit": "book",
+      "units": 20
+     },
+     "wrong_text_classes": {
+      "O6": "3/60",
+      "O5": "1/60",
+      "O1": "1/60"
+     },
+     "classes_k_of_n": {
+      "O8": "18/60",
+      "E2": "15/60",
+      "O6": "14/60",
+      "O16": "13/60",
+      "O11": "4/60",
+      "D1": "4/60",
+      "T6": "4/60",
+      "O14": "3/60",
+      "O12": "3/60",
+      "O5": "3/60",
+      "O17": "2/60",
+      "O13": "2/60",
+      "O7": "1/60",
+      "O1": "1/60"
+     },
+     "fidelity_mean": 4.45,
+     "lane": [
+      "pero-agy-flash-low-7263"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "54/63",
+       "wrong_text_pages": "7/63",
+       "books": 20
+      }
+     },
+     "flagged_stratum": {
+      "n": 3,
+      "books": 1,
+      "accept": "1/3",
+      "accept_rate": 0.333,
+      "accept_ci": {
+       "ci95": [
+        0,
+        1
+       ],
+       "unit": "page",
+       "units": 3
+      },
+      "wrong_text_pages": "2/3",
+      "wrong_text_ci": {
+       "ci95": [
+        0,
+        1
+       ],
+       "unit": "page",
+       "units": 3
+      },
+      "wrong_text_classes": {
+       "O7": "2/3"
+      },
+      "classes_k_of_n": {
+       "O7": "3/3",
+       "E2": "2/3",
+       "O6": "1/3",
+       "O8": "1/3"
+      },
+      "fidelity_mean": 3.67,
+      "note": "pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence"
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "controls": {
+    "pero>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 40,
+     "books": 10,
+     "accept": "32/40",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.65,
+       0.925
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "6/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.025,
+       0.3
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_classes": {
+      "O6": "3/40",
+      "O5": "2/40",
+      "O7": "2/40"
+     },
+     "classes_k_of_n": {
+      "E2": "13/40",
+      "O8": "10/40",
+      "O6": "10/40",
+      "O12": "9/40",
+      "O11": "7/40",
+      "D1": "6/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O10": "2/40",
+      "T6": "2/40",
+      "O16": "1/40",
+      "O13": "1/40"
+     },
+     "fidelity_mean": 4.3,
+     "lane": [
+      "gpu-agy-correct-lite-7567"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "32/40",
+       "wrong_text_pages": "6/40",
+       "books": 10
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "zh-siku-first-tr": {
+   "task": "translation",
+   "lang": "Classical Chinese",
+   "controls": {
+    "agy-flash-low@1": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      },
+      {
+       "accept": false,
+       "fidelity": 1,
+       "week": "2026-W44"
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 30,
+     "books": 30,
+     "accept": "20/30",
+     "accept_rate": 0.667,
+     "accept_ci": {
+      "ci95": [
+       0.5,
+       0.833
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "6/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.067,
+       0.333
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "3/30",
+      "O7": "2/30",
+      "T3": "1/30",
+      "O5": "1/30",
+      "O17": "1/30",
+      "O4": "1/30",
+      "T9": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "17/30",
+      "T10": "16/30",
+      "E2": "13/30",
+      "T9": "3/30",
+      "T5": "2/30",
+      "D1": "2/30",
+      "T8": "2/30",
+      "O7": "2/30",
+      "T3": "1/30",
+      "O11": "1/30",
+      "O16": "1/30",
+      "O5": "1/30",
+      "O17": "1/30",
+      "O4": "1/30",
+      "T7": "1/30",
+      "O12": "1/30"
+     },
+     "fidelity_mean": 3.8,
+     "lane": [
+      "siku-translate-5600"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "13/22",
+       "wrong_text_pages": "6/22",
+       "books": 22
+      },
+      "print": {
+       "accept": "7/8",
+       "wrong_text_pages": "0/8",
+       "books": 8
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "italian-lite",
+   "route": "lighton>agy-flash-low",
+   "page_id": "69904fb27d19f3f2aac1d66f",
+   "book_id": "69904fb17d19f3f2aac1d59a",
+   "page_number": 213,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "mostrar d'hauer con Lani",
+     "severity": "wrong_text",
+     "what": "the page reads 'mostrar di fare'; 'd'hauer con Lani' is invented"
+    }
+   ],
+   "note": "The page number is wrong (104 for 204), the first lines contain an invented phrase ('d'hauer con Lani' where the page says 'di fare'), and the catchword in the notes is made up. The rest of the text mostly follows the page."
+  },
+  {
+   "cell": "latin-gpu-7263",
+   "route": "pero>agy-flash-low",
+   "page_id": "69b64caf18b87551bfc77950",
+   "book_id": "69b64caf18b87551bfc7794e",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<image-desc size=\"medium\" type=\"woodcut\" significance=\"high\">Woodcut printer's device featuring a sow or wild boar beneath a fruit tree",
+     "severity": "wrong_text",
+     "what": "there is no woodcut or printer's device on the page; the space between the title and the imprint is blank apart from show-through from the other side of the leaf"
+    },
+    {
+     "class": "O1",
+     "quote": "1538.",
+     "severity": "wrong_text",
+     "what": "no date is printed on the page; the imprint ends with 'D. Hilarii.'"
+    }
+   ],
+   "note": "The title text and imprint are read correctly, but the candidate invents a woodcut printer's device and the date 1538, neither of which is on this page, and it silently expands 'Baren.' to 'Barentonii'."
+  }
+ ],
+ "by_script_cells": {
+  "french-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 15,
+     "books": 15,
+     "accept": "14/15",
+     "wrong_text_pages": "0/15",
+     "classes_k_of_n": {
+      "O16": "4/15",
+      "O11": "3/15",
+      "E2": "3/15",
+      "O6": "2/15",
+      "T6": "1/15",
+      "O14": "1/15",
+      "O8": "1/15"
+     },
+     "script_basis": {
+      "page": 15
+     }
+    }
+   }
+  },
+  "french-lite|manuscript": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "books": 2,
+     "accept": "2/2",
+     "wrong_text_pages": "0/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "E2": "2/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 20,
+     "books": 20,
+     "accept": "16/20",
+     "wrong_text_pages": "1/20",
+     "classes_k_of_n": {
+      "O8": "11/20",
+      "O6": "7/20",
+      "E2": "5/20",
+      "O13": "2/20",
+      "O11": "2/20",
+      "O16": "2/20",
+      "O14": "1/20",
+      "O7": "1/20",
+      "I3": "1/20",
+      "O5": "1/20",
+      "O12": "1/20",
+      "D1": "1/20"
+     },
+     "script_basis": {
+      "page": 20
+     }
+    }
+   }
+  },
+  "italian-lite|print": {
+   "routes": {
+    "lighton>agy-flash-low": {
+     "n": 36,
+     "books": 9,
+     "accept": "31/36",
+     "wrong_text_pages": "3/36",
+     "classes_k_of_n": {
+      "O8": "17/36",
+      "E2": "9/36",
+      "O11": "8/36",
+      "O16": "7/36",
+      "O6": "6/36",
+      "D1": "6/36",
+      "O7": "3/36",
+      "O12": "3/36",
+      "O5": "2/36",
+      "T6": "2/36",
+      "O1": "1/36",
+      "O14": "1/36",
+      "I4": "1/36"
+     },
+     "script_basis": {
+      "page": 36
+     }
+    }
+   }
+  },
+  "latin-gpu-7263|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 63,
+     "books": 20,
+     "accept": "54/63",
+     "wrong_text_pages": "7/63",
+     "classes_k_of_n": {
+      "O8": "19/63",
+      "E2": "17/63",
+      "O6": "15/63",
+      "O16": "13/63",
+      "O7": "4/63",
+      "O11": "4/63",
+      "D1": "4/63",
+      "T6": "4/63",
+      "O14": "3/63",
+      "O12": "3/63",
+      "O5": "3/63",
+      "O17": "2/63",
+      "O13": "2/63",
+      "O1": "1/63"
+     },
+     "script_basis": {
+      "page": 63
+     }
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 40,
+     "books": 10,
+     "accept": "32/40",
+     "wrong_text_pages": "6/40",
+     "classes_k_of_n": {
+      "E2": "13/40",
+      "O8": "10/40",
+      "O6": "10/40",
+      "O12": "9/40",
+      "O11": "7/40",
+      "D1": "6/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O10": "2/40",
+      "T6": "2/40",
+      "O16": "1/40",
+      "O13": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|print": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 8,
+     "books": 8,
+     "accept": "7/8",
+     "wrong_text_pages": "0/8",
+     "classes_k_of_n": {
+      "O6": "5/8",
+      "T10": "4/8",
+      "E2": "3/8",
+      "O16": "1/8",
+      "D1": "1/8"
+     },
+     "script_basis": {
+      "page": 8
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|manuscript": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 22,
+     "books": 22,
+     "accept": "13/22",
+     "wrong_text_pages": "6/22",
+     "classes_k_of_n": {
+      "T10": "12/22",
+      "O6": "12/22",
+      "E2": "10/22",
+      "T9": "3/22",
+      "T5": "2/22",
+      "T8": "2/22",
+      "O7": "2/22",
+      "T3": "1/22",
+      "D1": "1/22",
+      "O11": "1/22",
+      "O5": "1/22",
+      "O17": "1/22",
+      "O4": "1/22",
+      "T7": "1/22",
+      "O12": "1/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    }
+   }
+  }
+ },
+ "meter": {
+  "runs": 3,
+  "calls": 192,
+  "weekly_points_delta": 8,
+  "points_per_call": 0.0417,
+  "note": "upper bound: integer meter, and the account is shared with the box's other sessions"
+ }
+}

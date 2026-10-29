@@ -172,6 +172,10 @@
       "routes": [
         { "id": "stored", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/siku-tr-6567.score.json", "cell": "zh-siku-tr", "route": "stored"}] },
         { "id": "agy-flash-low@1", "stage": "agy-text@1", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/siku-tr-6567.score.json", "cell": "zh-siku-tr", "route": "agy-flash-low@1"}] } ] },
+    { "id": "zh-siku-first-tr", "title": "Siku translation, first English, the Siku lane (#5600)", "pages_waiting": 1345326, "pages_source": "books held for the Siku lane (siku-translate-lane.mjs HOLD_REASONS, rungs transcribed / translating), translation_state translatable - translated, 2026-10-29: 8,875 books. An upper bound: the lane's per-book filters (OCR >= 80%, residue classes, dupes) are not applied", "current": "agy-flash-low@1",
+      "caveat": "The live Siku lane's output (agy 3.8 Flash-low, one page a call, cli-translate.mjs; pages with no English before), sampled by lane-judge-sampler.mjs (#7611) from the lane's own write stamps: translation.engine.run.reason and its page_revisions row. Visible books only, so the hidden Four Histories volumes (zh-histories-7546) are outside the frame. Judged by Opus against the image and the stored OCR (route-judge judgePrompt, translation form). No planted controls (the planter plants OCR errors); a wrong-page control each ISO week.",
+      "routes": [
+        { "id": "agy-flash-low@1", "stage": "agy-text@1", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json", "cell": "zh-siku-first-tr", "route": "agy-flash-low@1"}] } ] },
     { "id": "tibetan-yigdzin", "title": "Tibetan, Yigdzin (#6560)", "v2": "tibetan-yigdzin", "pilot": "tibetan", "current": "yigdzin>opus",
       "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
       "routes": [
