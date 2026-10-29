@@ -21,6 +21,12 @@ describe('gpu-print-lane (#6871)', () => {
   it('keeps a page with a stray Greek letter or two', () => {
     expect(pageVerdict(`${PAGE} the angle α and β.`)).toMatchObject({ verdict: 'write' });
   });
+  it('a read cut early for other-script letters (gpu-print-read.py) is the other_script reject, whatever its partial text', () => {
+    const v = pageVerdict('ἡ κακὸς ἢ ἀγαθός· Ζεὺς δ’ ἔμπης πάντ’ ἰθύνει· ἡμῖν δ’ αὕτως', { finish: 'abort_other_script' });
+    expect(v).toMatchObject({ verdict: 'reject', reason: 'other_script', detail: { early_stop: true } });
+    expect(v.detail.letters).toBeGreaterThan(3);
+    expect(pageVerdict(PAGE, { finish: 'stop' })).toMatchObject({ verdict: 'write' });
+  });
   it('turns away engine commentary about the image', () => {
     expect(pageVerdict(`${PAGE}\n\nNote: The original image contains a decorative brown scroll at the foot.`)).toMatchObject({ verdict: 'reject', reason: 'engine_commentary' });
   });
