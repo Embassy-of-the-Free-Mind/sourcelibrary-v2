@@ -10,7 +10,7 @@
 //   CLAUDE_CONFIG_DIR=~/.claude-team scripts/ft-search/run-batch.sh <dir> 4     # launch WITHOUT the env loaded:
 //                                       # run-batch's post-run would otherwise dry-run ingest.mjs on these answers
 //   node scripts/ft-search/recheck-credits.mjs apply <dir>            # dry run: counts + recheck-log.json
-//   node scripts/ft-search/recheck-credits.mjs apply <dir> --apply
+//   node scripts/ft-search/recheck-credits.mjs apply <dir> --apply [--no-retract]
 //
 // apply writes: `partial` → prior_translation.scope 'partial' (and the catalogue row's completeness);
 // `not_a_translation` / `wrong_work` → the credit is removed, its full value kept in the book_events row
@@ -24,6 +24,7 @@ import { createClient } from '@supabase/supabase-js';
 const [mode, dirArg] = process.argv.slice(2);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply');
+const RETRACT = !process.argv.includes('--no-retract'); // apply the partials now, hold the retractions for review
 if (!['prepare', 'apply'].includes(mode) || !dirArg) { console.error('usage: recheck-credits.mjs prepare|apply <dir> [--since D] [--limit N] [--apply]'); process.exit(1); }
 const dir = path.resolve(dirArg);
 const BY = 'ft-recheck-credits (#7598)';
@@ -91,6 +92,8 @@ if (mode === 'prepare') {
       await books.updateOne({ _id: b._id }, { $set: { 'prior_translation.scope': 'partial' } });
       await bookEvents.insertOne({ book_id: id, type: 'prior_translation_scope_partial', at: new Date(), by: BY, detail });
       await sb.from('translation_catalogs').update({ completeness: 'partial' }).eq('source', 'sl_prior_credit_linked').eq('source_url', b.prior_translation.url);
+    } else if ((v === 'not_a_translation' || v === 'wrong_work') && !RETRACT) {
+      inc('retraction_held');
     } else if (v === 'not_a_translation' || v === 'wrong_work') {
       await books.updateOne({ _id: b._id }, { $unset: { prior_translation: '' } });
       await bookEvents.insertOne({ book_id: id, type: 'prior_translation_retracted', at: new Date(), by: BY, detail: { ...detail, retracted: b.prior_translation } });
