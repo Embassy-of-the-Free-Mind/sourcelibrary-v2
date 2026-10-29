@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS, FIRST_READ_ROUTE_AT4 } from '../../scripts/eval/lane-judge-sampler.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -332,8 +332,27 @@ describe('the first-read lane (#7701)', () => {
   });
   it('every cell and route it names is in rules.json', () => {
     const rules = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
-    for (const [cell, route] of [...Object.values(FIRST_READ_CELLS), ...Object.values(FIRST_READ_CORRECT_CELLS)] as [string, string][]) {
-      expect(rules.cells.find((c: { id: string }) => c.id === cell)?.routes.some((r: { id: string }) => r.id === route)).toBe(true);
-    }
+    const has = (cell: string, route: string) => rules.cells.find((c: { id: string }) => c.id === cell)?.routes.some((r: { id: string }) => r.id === route);
+    for (const [cell, route] of [...Object.values(FIRST_READ_CELLS), ...Object.values(FIRST_READ_CORRECT_CELLS)] as [string, string][]) expect(has(cell, route)).toBe(true);
+    expect(has('french-blank', FIRST_READ_ROUTE_AT4.fra)).toBe(true);
+    expect(has('latin-blank', 'pero>agy-flash-low-written')).toBe(true);
+  });
+  it('credits a French page to the route its write records: 4 a call after the #7701 cheap-routes switch, 1 before', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    const page = (n: number | undefined) => ({ ocr: { engine: { run: n ? { call_pages: n } : {} } } });
+    expect(L.route('French', page(4))).toBe('agy-flash-low@4-written');
+    expect(L.route('French', page(undefined))).toBe('agy-flash-low-written');
+    expect(L.route('German', page(4))).toBe('agy-flash-low@4-written');
+    expect(L.route('German', page(undefined))).toBe('agy-flash-low@4-written');
+  });
+  it('samples the Latin arm-c first reads (#7701 cheap routes) as an unread lane in the latin-blank cell', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'pero-agy-first-read-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.stamp).toEqual({ 'ocr.pipeline': 'pero-agy-first-read-7701' });
+    expect([L.cell('Latin'), L.route, L.lang('la')]).toEqual(['latin-blank', 'pero>agy-flash-low-written', 'Latin']);
+    expect(L.cell('German')).toBeNull();
+    expect(L.reason.test('#7701 first-read arm-c lane: pero-ocr draft (Latin print, ...)')).toBe(true);
   });
 });
