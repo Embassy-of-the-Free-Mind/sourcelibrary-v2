@@ -70,7 +70,12 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 export const ISSUE = 5600;
 export const JOB = 'siku-lane-5600';
-export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660']);
+// zh-histories-7546: the Four Histories (Shiji, Hanshu, Hou Hanshu, Sanguozhi), Siku copies OCR'd by the Paddle lane on
+// 2026-10-28 (#7546). Derek 2026-10-29: "get more chinese translated". They go first, his 10-27 priority volumes first.
+export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']);
+export const FIRST_HOLD = 'zh-histories-7546';
+// Derek's 10-27 translation priority list (#7546 comment, section 3): the 21 volumes holding those chapters.
+export const PRIORITY_IDS = Object.freeze(new Set(['6ae0bab64adf2ffb52f71058', '6ae0baf94adf2ffb52f7121a', '6ae0bb854adf2ffb52f7166f', '6ae0bb894adf2ffb52f7170c', '6ae0bbc74adf2ffb52f7176e', '6ae0bd3d4adf2ffb52f72384', '6ae0bdca4adf2ffb52f72677', '6ae0bdce4adf2ffb52f72711', '6ae0beb34adf2ffb52f72f36', '6ae0bef64adf2ffb52f7304b', '6ae0befa4adf2ffb52f730c0', '6ae0befe4adf2ffb52f7311a', '6ae0bf3b4adf2ffb52f731bb', '6ae0bf3f4adf2ffb52f7321e', '6ae0bf424adf2ffb52f732bf', '6ae0bf884adf2ffb52f73494', '6ae0bf9a4adf2ffb52f73668', '6ae0bfa24adf2ffb52f736b3', '6ae0c5d74adf2ffb52f75eba', '6ae0c5db4adf2ffb52f75f31', '6ae0c61d4adf2ffb52f76087']));
 export const RUNGS = Object.freeze(['transcribed', 'translating']);
 export const MIN_OCR_SHARE = 0.8;
 export const FLOOR = Object.freeze({ weekly: 0.35, nearReset: 0.05, nearResetHours: 24 });
@@ -122,7 +127,12 @@ export function rankBooks(books, { exclude = new Set(), sealRe = null } = {}) {
     if (!(ts.whole > 0) || (ts.ocr ?? 0) / ts.whole < MIN_OCR_SHARE) return false;
     if (sealRe && sealRe.test(b.title || '')) return false;
     return true;
-  }).sort((a, b) => (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+  }).sort((a, b) => rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+}
+/** 2 = a priority Four Histories volume, 1 = another Four Histories volume, 0 = the Siku cohort. */
+function rankKey(b) {
+  if (b.pipeline_auto?.hold?.reason !== FIRST_HOLD) return 0;
+  return PRIORITY_IDS.has(b.id) ? 2 : 1;
 }
 
 // ── state, ledger, log ──
