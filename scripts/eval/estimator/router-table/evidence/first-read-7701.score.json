@@ -1,0 +1,174 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/results/first-read-7701-2026-10-29 (job ocr-first-7701, #7701; no model calls in this step)",
+ "provenance": "#7701 router cell test: judge.mjs draw --cells=la-blank,de-blank,fr-blank (the first-read lane frame), correct (agy gemini-3.8-flash-low, AGY_HOME .agy-james, Latin/German 4 a call), packet, judge (Opus, image, blind, wrong-page controls passed), score; written = the drawn pages cli-ocr.mjs apply --first-read-only --print-only would write (dry run)",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key (the route-judge prompt)",
+ "cells": {
+  "la-blank": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books_in_frame": 15356,
+    "books_walked": 39,
+    "spread_wait": 9,
+    "no_interior_unread": 0,
+    "no_ocr_books": 15334,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "24/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "26/30",
+     "filter_cut": "4/30",
+     "classes_k_of_n": {
+      "O8": "10/30",
+      "O6": "6/30",
+      "E2": "4/30",
+      "O11": "2/30",
+      "T6": "2/30",
+      "O16": "1/30",
+      "O9": "1/30",
+      "O7": "1/30",
+      "O15": "1/30",
+      "O13": "1/30",
+      "O12": "1/30"
+     },
+     "note": "every drawn page; a filter-cut or failed read counts as not accepted (the #7517 convention)"
+    },
+    "agy-flash-low@4-written": {
+     "n": 19,
+     "books": 19,
+     "accept": "17/19",
+     "wrong_text_pages": "1/19",
+     "delivered": "19/19",
+     "filter_cut": "0/19",
+     "classes_k_of_n": {
+      "O8": "8/19",
+      "O6": "5/19",
+      "E2": "4/19",
+      "O11": "1/19",
+      "O16": "1/19",
+      "O7": "1/19",
+      "T6": "1/19",
+      "O15": "1/19",
+      "O13": "1/19"
+     },
+     "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    }
+   }
+  },
+  "de-blank": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books_in_frame": 3142,
+    "books_walked": 75,
+    "spread_wait": 45,
+    "no_interior_unread": 0,
+    "no_ocr_books": 1586,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "28/30",
+     "filter_cut": "2/30",
+     "classes_k_of_n": {
+      "O8": "12/30",
+      "O6": "6/30",
+      "E2": "5/30",
+      "O11": "3/30",
+      "T6": "1/30",
+      "O7": "1/30",
+      "O5": "1/30",
+      "O10": "1/30",
+      "O16": "1/30",
+      "O17": "1/30"
+     },
+     "note": "every drawn page; a filter-cut or failed read counts as not accepted (the #7517 convention)"
+    },
+    "agy-flash-low@4-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "23/24",
+     "wrong_text_pages": "0/24",
+     "delivered": "24/24",
+     "filter_cut": "0/24",
+     "classes_k_of_n": {
+      "O8": "10/24",
+      "O6": "4/24",
+      "E2": "4/24",
+      "O11": "3/24",
+      "T6": "1/24",
+      "O16": "1/24",
+      "O17": "1/24"
+     },
+     "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    }
+   }
+  },
+  "fr-blank": {
+   "task": "ocr",
+   "lang": "French",
+   "frame": {
+    "books_in_frame": 912,
+    "books_walked": 230,
+    "spread_wait": 200,
+    "no_interior_unread": 0,
+    "no_ocr_books": 740,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 1"
+   },
+   "routes": {
+    "agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "24/30",
+     "wrong_text_pages": "1/30",
+     "delivered": "26/30",
+     "filter_cut": "4/30",
+     "classes_k_of_n": {
+      "E2": "7/30",
+      "O8": "7/30",
+      "O6": "4/30",
+      "O16": "3/30",
+      "O11": "2/30",
+      "O7": "1/30",
+      "O4": "1/30",
+      "D1": "1/30",
+      "O5": "1/30",
+      "O15": "1/30",
+      "O18": "1/30",
+      "O12": "1/30",
+      "I4": "1/30",
+      "O10": "1/30"
+     },
+     "note": "every drawn page; a filter-cut or failed read counts as not accepted (the #7517 convention)"
+    },
+    "agy-flash-low-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "24/24",
+     "wrong_text_pages": "0/24",
+     "delivered": "24/24",
+     "filter_cut": "0/24",
+     "classes_k_of_n": {
+      "E2": "7/24",
+      "O8": "5/24",
+      "O6": "3/24",
+      "O11": "2/24",
+      "O16": "2/24",
+      "O12": "1/24",
+      "I4": "1/24",
+      "O10": "1/24"
+     },
+     "note": "the drawn pages the lane writes (delivered and past cli-ocr.mjs apply --first-read-only --print-only); a page not written stays scans-only"
+    }
+   }
+  }
+ }
+}
