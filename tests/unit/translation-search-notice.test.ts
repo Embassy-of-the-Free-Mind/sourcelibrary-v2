@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { translationSearchNoticeKind } from '@/components/book/TranslationSearchNotice';
+import { priorChipLabel, translationSearchNoticeKind } from '@/components/book/TranslationSearchNotice';
 
 const search = (result: string) => ({ date: '2026-10-28T08:51:48Z', result, queries: ['q'] });
 const prior = {
@@ -27,5 +27,13 @@ describe('translationSearchNoticeKind', () => {
   });
   it('shows nothing new for a found prior that had no usable link', () => {
     expect(translationSearchNoticeKind({ pages_translated: 10, language: 'Latin' }, search('found'))).toBeNull();
+  });
+});
+
+describe('priorChipLabel', () => {
+  it('says partial on a partial credit, so it does not read as a complete one', () => {
+    expect(priorChipLabel({ scope: 'partial' })).toBe('Earlier partial English translation');
+    expect(priorChipLabel({ scope: 'complete' })).toBe('Earlier English translation');
+    expect(priorChipLabel(undefined)).toBe('Earlier English translation');
   });
 });
