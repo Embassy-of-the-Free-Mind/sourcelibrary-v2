@@ -37,6 +37,12 @@ export function translationSearchNoticeKind(book: NoticeBook, search: FreshSearc
   return null;
 }
 
+// A partial credit must not read, at a glance, like a complete one: 323 of 1,018 credits turned out
+// partial on a recheck (#7598), and the chip is all most readers see.
+export function priorChipLabel(prior: { scope?: string } | null | undefined): string {
+  return prior?.scope === 'partial' ? 'Earlier partial English translation' : 'Earlier English translation';
+}
+
 function fmtDate(d: string): string {
   const t = new Date(d);
   return Number.isNaN(t.getTime()) ? '' : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -78,7 +84,7 @@ export default function TranslationSearchNotice({
       <div className="mt-3">
         <details className="group">
           <summary className="inline-flex px-2.5 py-1 bg-stone-700/40 text-stone-300 hover:bg-stone-700/60 text-xs font-medium rounded-full border border-stone-600/50 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-            Earlier English translation
+            {priorChipLabel(prior)}
           </summary>
           <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
             <p className="text-stone-300">
