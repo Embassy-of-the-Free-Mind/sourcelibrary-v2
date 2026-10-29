@@ -21,7 +21,7 @@ export function withCatchwordRule(prompt, { block = false } = {}) {
   const anchor = block ? /\n\*\*Pages to (?:translate|modernize):\*\*/ : /\n\n\*\*Text to (?:translate|modernize):\*\*/;
   const m = p.match(anchor);
   if (!m) throw new Error('catchword-rule: the text anchor was not found in the built prompt');
-  return p.slice(0, m.index) + `\n\n${block ? CATCHWORD_RULE_BLOCK : CATCHWORD_RULE}` + p.slice(m.index);
+  return p.slice(0, m.index) + `\n\n${block ? CATCHWORD_RULE_BLOCK : CATCHWORD_RULE}${block ? "\n" : ""}` + p.slice(m.index);
 }
 
 /** The labels in a translation, and the text with them removed (what the continuous view reads). */
