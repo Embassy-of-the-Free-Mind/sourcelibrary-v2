@@ -172,7 +172,11 @@ def expand_by_script(P):
             if pl and not any(r['id'] == pl['route'] for r in routes): routes.append(dict(id=pl['route'], stage=pl['stage'], evidence=[]))
             pages = round(pw * share) if share else 0
             if not any(r['evidence'] for r in routes) and not pages: continue
-            c2 = {k: v for k, v in cell.items() if k not in ('pilot', 'pilot_book_group', 'routes', 'pages_waiting') and not (s == 'manuscript' and k == 'v1')}
+            c2 = {k: v for k, v in cell.items() if k not in ('pilot', 'pilot_book_group', 'routes', 'pages_waiting', 'paired') and not (s == 'manuscript' and k == 'v1')}
+            # paired evidence (#7701): the same score cut to this script type, where its by-script file holds that pair
+            pr = [dict(pe, score=bs(pe['score']), cell=f"{pe['cell']}|{s}") for pe in cell.get('paired', [])]
+            pr = [pe for pe in pr if os.path.exists(pe['score']) and pe['pair'] in files.setdefault(pe['score'], json.load(open(pe['score'])))['cells'].get(pe['cell'], {}).get('paired', {})]
+            if pr: c2['paired'] = pr
             out.append(dict(c2, id=f"{cell['id']}/{s}", base=cell['id'], script=s, title=f"{cell['title']} [{s}]", routes=routes, pages_waiting=pages,
                             pages_waiting_share=share, **({'planned': pl} if pl else {})))
     return out
