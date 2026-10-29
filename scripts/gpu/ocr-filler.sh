@@ -69,6 +69,8 @@ for b in fr:
 print(pages, len(books))
 PY
     ;;
+    # #7567 arm c: planned pages (cli-ocr-lane.mjs armc-plan) with no draft file and not ledgered
+    euro-draft) node --no-warnings "$CODE/scripts/batch/cli-ocr-lane.mjs" armc-left --lane-dir="$2" 2>/dev/null | tail -1 | grep -E '^[0-9]+ [0-9]+$' || echo "0 0" ;;
     *) echo "0 0" ;;
   esac
 }
@@ -183,6 +185,28 @@ LANE_DIR=\$LANE CODE_DIR=\$CODE HOURS=$dl bash "\$CODE/scripts/gpu/gpu-print-gpu
 node --env-file="\$ENV_FILE" "\$CODE/scripts/workers/gpu-print-lane.mjs" apply --apply --dir "\$LANE"; arc=\$?
 row done \$(( rc > arc ? rc : arc ))
 exit \$(( rc > arc ? rc : arc ))
+EOF
+        ;;
+        euro-draft) cat > "$tmp" <<EOF
+#!/usr/bin/env bash
+# timeout: $((dl + 1))h
+# issue: $issue
+# $name: queued by ocr-filler.sh (#6871) at $(now). Route $route ($kind), $p pages left in $b books.
+# Drafts up to MAX_PAGES planned pages (la PERO, it LightOnOCR); the agy correction is the lane's cron run. Downstream: $down
+set -uo pipefail
+ST=$ST
+row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s,"pages_left":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" "\$3" >> "\$ST/runs.jsonl"; }
+# LightOnOCR asks for 0.6 of the card (14.7 GB): wait up to an hour for it, else a recorded skip
+for i in \$(seq 1 60); do
+  f=\$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  [ "\${f:-0}" -ge 15000 ] && break
+  [ "\$i" -eq 60 ] && { echo "OCR-FILLER-SKIP card busy (\${f} MiB free) for an hour"; row skip 75 $p; exit 75; }
+  sleep 60
+done
+LANE_DIR=$lane CODE_DIR=$CODE ENV_FILE=$ENV_FILE MAX_PAGES=\${MAX_PAGES:-1500} bash "$CODE/scripts/gpu/euro-draft-task.sh"; rc=\$?
+read -r after _ < <(node --no-warnings "$CODE/scripts/batch/cli-ocr-lane.mjs" armc-left --lane-dir="$lane" 2>/dev/null | tail -1)
+row done \$rc \${after:-null}
+exit \$rc
 EOF
         ;;
         *) echo "$(now) $route: unknown kind $kind, skipped"; rm -f "$tmp"; continue ;;
