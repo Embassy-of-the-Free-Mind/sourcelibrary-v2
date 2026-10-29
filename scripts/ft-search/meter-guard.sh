@@ -15,8 +15,8 @@ while true; do
   n=$(grep -l verdict ./*.json 2>/dev/null | wc -l | tr -d ' ')
   echo "$(date -u +%H:%M:%S) 5h=${m% *} week=${m#* } done=$n" >> meter.log
   if [ -z "$m" ]; then
-    # One blank reading happens; two in a row means the meter is gone.
-    blind=$((blind + 1)); [ "$blind" -ge 2 ] && stop "METER BLIND $(date -u +%H:%M:%S): re-login with climits add $EMAIL" 1
+    # A blank reading happens (the usage endpoint 429s when several guards and the menubar poll one account); BLIND_MAX (default 5, ten minutes) in a row means the meter is gone.
+    blind=$((blind + 1)); [ "$blind" -ge "${BLIND_MAX:-5}" ] && stop "METER BLIND $(date -u +%H:%M:%S): re-login with climits add $EMAIL" 1
   else
     blind=0; s=${m% *}; w=${m#* }
     if [ "$s" -ge "$CAP5" ] || [ "$w" -ge "$CAPW" ]; then stop "STOPPED 5h=$s week=$w" 0; fi
