@@ -48,7 +48,11 @@ const bookDocs = await books.find(
 ).toArray();
 const byKey = new Map();
 for (const b of bookDocs) { byKey.set(String(b._id), b); if (b.id) byKey.set(b.id, b); }
-const already = new Set(await attempts.distinct('book_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } }));
+// --research: the books were searched before on purpose (select-batch --ids); skip only a repeat of THIS run's attempt.
+const RESEARCH = process.argv.includes('--research');
+const already = new Set(RESEARCH
+  ? await attempts.distinct('attempt_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } })
+  : await attempts.distinct('book_id', { method: METHOD, book_id: { $in: bookDocs.map((b) => b.id || String(b._id)) } }));
 
 const stats = {};
 const inc = (k) => (stats[k] = (stats[k] || 0) + 1);
@@ -61,7 +65,7 @@ for (const r of recs) {
   const b = byKey.get(r._book);
   if (!b) { inc('book_not_found'); continue; }
   const bookId = b.id || String(b._id);
-  if (already.has(bookId)) { inc('already_ingested'); continue; }
+  if (already.has(RESEARCH ? `${bookId}:${METHOD}:${r._date}` : bookId)) { inc('already_ingested'); continue; }
   const p = r.prior || {};
   const url = (p.url || '').trim();
   const linkOk = /^https?:\/\//.test(url) && ['200', '202'].includes(http[r._book]) && !BAD_HOSTS.test(url);
@@ -87,6 +91,8 @@ for (const r of recs) {
       set.prior_translation = {
         work_title: p.title, translators: p.translator ? [p.translator] : [], scope: 'complete', url,
         verification_method: 'other', verified_at: NOW.toISOString(), evidence: r.card || '', source_attempt_id: attempt_id,
+        // Since 2026-10-29 the prompt asks for both sides of the coverage comparison; keep them so a recheck can read them.
+        ...(p.book_contains ? { book_contains: p.book_contains } : {}), ...(p.translation_covers ? { translation_covers: p.translation_covers } : {}),
         ...(Number.isInteger(yr) ? { year: yr } : {}), ...(p.publisher ? { publisher: p.publisher } : {}),
       };
       action = 'prior_credit';
@@ -104,7 +110,9 @@ for (const r of recs) {
     } else action = 'none_found_not_translated_or_hidden';
   }
   inc(action);
-  log.push({ book_id: bookId, verdict: r.verdict, action, url: url || null });
+  // The search reports a wrong author/date/language it notices; collected for a by-hand fix, never written here.
+  if (r.metadata_issue) inc('metadata_issue_reported');
+  log.push({ book_id: bookId, verdict: r.verdict, action, url: url || null, ...(r.metadata_issue ? { metadata_issue: r.metadata_issue } : {}) });
   if (Object.keys(set).length) {
     bookOps.push({ updateOne: { filter: { _id: b._id }, update: { $set: set } } });
     events.push({ book_id: bookId, type: action === 'prior_credit' ? 'prior_translation_credited' : 'first_translation_search_recorded', at: NOW, by: BY, detail: { action, attempt_id, url: url || null } });

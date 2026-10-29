@@ -9,6 +9,7 @@
 //
 //   set -a; source .env.production.local; set +a
 //   node scripts/ft-search/select-batch.mjs --n 1000 --out <dir> [--seed 20261029] [--exclude <ids.txt>[,<ids.txt>]]
+// --ids <file>: re-search exactly these books (ingest them with ingest.mjs --research).
 // --exclude: ids already drawn by a batch that has not been ingested yet, so parallel batches never overlap.
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -85,9 +86,13 @@ function prompt(b, record, leads) {
   return `Find out whether a published English translation already exists for this book. Source Library has machine-translated it.
 Book: ${b.display_title || b.title || ''} | author: ${b.author || 'Anonymous'} | date: ${b.published || b.year || ''} | edition language: ${b.language || ''} | Source Library id ${id}.
 ${read}${leads || ''}Identify the WORK. For a volume of a Chinese collection (卷), identify the specific juan or texts it contains.
-Then use web search to look for any published English translation of the work, complete or substantial, from any year; one embedded in a scholarly edition counts. Search the original-language title, the English title, and the author with "translated". Look in WorldCat, Google Books, HathiTrust, Internet Archive, publisher sites and JSTOR. One legitimate prior translation settles it. Give up after about 8 searches. Excerpts or selected passages are partial_only, not a prior.
+Then use web search to look for any published English translation of the work, from any year; one embedded in a scholarly edition counts. Search the original-language title, the English title, and the author with "translated". Look in WorldCat, Google Books, HathiTrust, Internet Archive, publisher sites and JSTOR. One legitimate prior translation settles it. Give up after about 8 searches.
+What counts as a prior: an English TRANSLATION (the text itself rendered into English) of ALL the text this book contains. Compare the two: what does this book contain, and what does the translation cover?
+- A translation of only part of it (one of several works in the volume, one volume of several, selected poems or chapters, excerpts, an abridgement) is partial_only, not a prior.
+- A study, monograph, dissertation, commentary, summary, paraphrase, review, or an encyclopedia or Wikipedia article ABOUT the work is not a translation, even when it quotes passages. It settles nothing: keep searching, and if that is all you find, answer none_found or unclear.
+- The url must be the translation itself or a library or publisher record of it. A Wikipedia page or a review is not enough; find the record.
 Report only URLs you actually opened. Never guess a URL.
-Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":""} or null,"queries":["..."],"card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
+Answer with ONLY a JSON object: {"id":"${id}","work_identified":"...","verdict":"prior_translation_found|partial_only|none_found|unclear","prior":{"translator":"","title":"","year":"","publisher":"","url":"","book_contains":"what this book contains","translation_covers":"what the translation covers"} or null,"queries":["..."],"metadata_issue":"leave EMPTY unless our record is clearly wrong: then say what is wrong and what is right (author is an editor, praeses, uploader or the root text's author; date is an upload date; wrong language). Not for approximate dates, missing details or multiple compilers.","card":"1-3 sentence library card notice: 'Prior English translation: <translator>, <title> (<publisher>, <year>). <url>' or 'Searched <today's date> for an earlier English translation (<sources>); none found.'"}`;
 }
 
 const c = await MongoClient.connect(process.env.MONGODB_URI);
@@ -102,7 +107,11 @@ const pool = await db.collection('books').find(
   { projection: { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, language: 1, is_first_translation: 1, prior_translation: 1 } },
 ).toArray();
 const excluded = new Set((arg('--exclude', '') || '').split(',').filter(Boolean).flatMap((f) => readFileSync(f, 'utf8').split('\n').filter(Boolean)));
-const eligible = pool.filter((b) => !searched.has(b.id || String(b._id)) && !excluded.has(b.id || String(b._id)));
+// --ids <file>: search exactly these books again, searched or not (e.g. books whose credit a recheck retracted).
+const only = arg('--ids') ? new Set(readFileSync(arg('--ids'), 'utf8').split(/\s+/).filter(Boolean)) : null;
+const eligible = only
+  ? pool.filter((b) => only.has(b.id || String(b._id)))
+  : pool.filter((b) => !searched.has(b.id || String(b._id)) && !excluded.has(b.id || String(b._id)));
 if (excluded.size) console.log(`excluded ${excluded.size} ids drawn by un-ingested batches`);
 // Priority tiers, each shuffled: 0 never searched; 1 searched by the old system, no badge or credit;
 // 2 already badged or credited (a fresh search there only adds evidence).
