@@ -15,6 +15,7 @@ import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -152,9 +153,8 @@ export const POST = withCuratorAuth(async (request) => {
 
     // 1. Download PDF
     const pdfPath = join(tmpDir, 'book.pdf');
-    const pdfRes = await fetch(pdf_url, {
+    const pdfRes = await outboundFetch(pdf_url, {
       signal: AbortSignal.timeout(120000), // 2 min timeout for large PDFs
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
     });
     if (!pdfRes.ok) {
       return NextResponse.json(
