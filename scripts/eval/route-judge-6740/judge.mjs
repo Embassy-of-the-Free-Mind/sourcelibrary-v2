@@ -61,6 +61,10 @@
  *                de-lite has the fresh route too. A FRESH route is cli-ocr.mjs read on the image alone (no draft).
  *                `draw --from=<sample.json> --routes=a,b` re-uses an earlier draw's pages for a cell and keeps only
  *                the named routes, so `judge --reuse` pairs the new route with the verdicts already made.
+ *   la-blank, de-blank, fr-blank (#7701)  NO STORED TEXT: a page with no OCR in the first-read lane's frame (visible
+ *                books held as scans only, cli-ocr-lane.mjs firstReadSkip), read fresh by agy-flash-low, Latin and German
+ *                4 a call (the drawn page inside a block of its unread neighbours; only it is judged), French 1. The
+ *                only route in the cell: no draft to compare against.
  *   german       German translation, a second draw (salt german-r2, the pilot's books left out), as the pilot's cell.
  *   latin-lite-7545  Opus through agy against Opus through claude -p (#7545): lite; lite>opus-correct; lite>agy-opus
  *                (cli-ocr.mjs correct mode on claude-opus-5-5-low, which agyClaudeGate allows only on an empty Gemini pool).
@@ -162,6 +166,14 @@ const RT = {
   // #7545: Opus through agy (on an account whose Gemini pool is empty) against Opus through claude -p, the cell's route.
   // The agy corrector is the correction lane's own call (cli-ocr.mjs correct mode, the fc template) on claude-opus-5-5-low.
   'latin-lite-7545': { lang: 'Latin', draft: 'lite', models: LITE, books: '^Latin', correctors: { 'lite>opus-correct': { by: 'opus' }, 'lite>agy-opus': AGY('claude-opus-5-5-low') } },
+  // #7701: NO STORED TEXT. Visible books published as scans (the first-read cohort, cli-ocr-lane.mjs firstReadSkip),
+  // a page with no OCR read fresh by agy Flash-low, as the first-read lane reads it: Latin and German 4 pages a call
+  // (the drawn page and its neighbours in one call, only the drawn page judged), French 1. No draft, no competing route.
+  // Arm B (Derek 2026-10-29, "an initial read with agy flash and then corrected by it in a second pass"): the fresh read,
+  // then the #7558 correction pass on it (fc template, the image), its draft A's read on disk (draftFrom, --draft-file).
+  'la-blank': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
+  'de-blank': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' } } },
+  'fr-blank': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low' } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -282,8 +294,8 @@ async function drawRouterTests(names) {
     if (!t) throw new Error(`unknown cell ${name}; cells: ${Object.keys(RT).join(', ')}, german`);
     // --routes=a,b keeps only these of the cell's routes (#7517: the draft and the new fresh read, not the correctors
     // an earlier run already judged on the same pages).
-    const routes = (t.routes ?? [t.draft, ...Object.keys(t.correctors)]).filter((r) => !arg('routes') || arg('routes').split(',').includes(r));
-    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo, ...(t.draftFile && { draft_file: t.draftFile }),
+    const routes = (t.routes ?? [t.draft, ...Object.keys(t.correctors)]).filter((r) => r && (!arg('routes') || arg('routes').split(',').includes(r)));
+    const base = { task: 'ocr', lang: t.lang, paired: true, kind: 'router-test', draft_route: t.draft, routes, correctors: t.correctors, kanripo: !!t.kanripo, ...(t.draftFile && { draft_file: t.draftFile }), ...(t.blank && { blank: true }),
       served: Object.fromEntries(routes.map((r) => [r, r === t.draft ? 'served (the stored draft)' : t.correctors[r]?.fresh ? `this run's fresh read of the image, not served (${t.correctors[r].by} ${t.correctors[r].model})` : t.correctors[r] ? `this run's correction of the stored draft, not served (${t.correctors[r].by}${t.correctors[r].model ? ` ${t.correctors[r].model}` : ''})` : 'experiment read, not served (#5924 oc-reads)'])) };
     base.correctors = Object.fromEntries(Object.entries(t.correctors).filter(([r]) => routes.includes(r)));
     // --from=<an earlier sample.json>: the SAME pages that run drew for this cell, so the new route pairs with the
@@ -301,6 +313,7 @@ async function drawRouterTests(names) {
       continue;
     }
     if (name === 'tib-kangyur') { cells[name] = { ...base, derge: true, ...(await drawTib(db, name, row, isInterior)) }; continue; }
+    if (t.blank) { cells[name] = { ...base, ...(await drawBlank(db, name, t, isInterior)) }; continue; }
     let frameBooks, eligible;
     if (t.guarded) {
       const ev = await db.collection('book_events').find({ type: 'paddle_zh_guarded_ocr', 'details.paddle': { $gt: 0 } }, { projection: { _id: 0, book_id: 1 } }).toArray();
@@ -337,6 +350,41 @@ async function drawRouterTests(names) {
   const prev = fs.existsSync(path.join(OUT, 'sample.json')) ? J('sample.json') : null;
   W('sample.json', { drawn_at: new Date().toISOString(), n: N, router_tests: true, cells: { ...(prev?.router_tests ? prev.cells : {}), ...cells } });
   for (const [k, v] of Object.entries(cells)) console.log(`${k}: ${v.pages.length} rows from ${new Set(v.pages.map((p) => p.book_id)).size} books; frame ${JSON.stringify(v.frame)}`);
+}
+
+/**
+ * A no-stored-text cell (#7701): the first-read lane's own frame (cli-ocr-lane.mjs FIRST_READ_BOOKS + firstReadSkip,
+ * the cell's language; spreadReason on the book's unread pages), books in a seeded order (salt rt-<cell>), one interior
+ * UNREAD page per book. For a corrector with perCall N the page is read inside a block of up to N consecutive unread
+ * pages of its book (its position in the block seeded), as the lane groups them; only the drawn page is judged.
+ */
+async function drawBlank(db, name, t, isInterior) {
+  const lane = await import('../../batch/cli-ocr-lane.mjs');
+  const perCall = Math.max(1, ...Object.values(t.correctors).map((c) => c.perCall ?? 1));
+  const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
+    .filter((b) => !lane.firstReadSkip(b, { languages: [t.blank] }));
+  const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
+  const pages = [], tally = { books_in_frame: books.length, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
+  for (const b of order) {
+    if (pages.length >= N) break;
+    tally.books_walked++;
+    const unread = await db.collection('pages').find({ book_id: b.id, ...lane.UNREAD }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+    if (lane.spreadReason(b, unread)) { tally.spread_wait++; continue; }
+    const inner = unread.filter((p) => isInterior(p.page_number, b.pages_count));
+    if (!inner.length) { tally.no_interior_unread++; continue; }
+    const p = inner.sort((x, y) => h(`rt-${name}${x.id}`).localeCompare(h(`rt-${name}${y.id}`)))[0];
+    // The block: the run of consecutive unread page numbers around p, cut to perCall pages with p at a seeded position.
+    const byNum = new Map(unread.map((x) => [x.page_number, x]));
+    const pos = parseInt(h(`pos-${p.id}`).slice(0, 8), 16) % perCall;
+    let start = p.page_number - pos;
+    const runTo = (a, z) => { for (let n = a; n <= z; n++) if (!byNum.has(n)) return false; return true; };
+    while (start < p.page_number && !runTo(start, p.page_number)) start++;
+    let end = p.page_number;
+    while (end + 1 - start < perCall && byNum.has(end + 1)) end++;
+    const block = Array.from({ length: end - start + 1 }, (_, i) => byNum.get(start + i).id);
+    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0 });
+  }
+  return { pages, frame: { ...tally, rule: `the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=${t.blank}, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of ${perCall}` } };
 }
 
 /**
@@ -471,6 +519,7 @@ async function correct() {
     if (arg('cell') && arg('cell') !== cell) continue;
     for (const [route, cor] of Object.entries(cs.correctors || {})) {
       if (arg('by') && arg('by') !== cor.by) continue;
+      if (arg('route') && arg('route') !== route) continue;   // one route only (#7701 arm B on arm A's finished reads)
       const dir = path.join(OUT, 'corr', cell, slug(route)); fs.mkdirSync(dir, { recursive: true });
       const ids = cs.pages.map((p) => p.page_id);
       if (pastStop()) { console.log('STOP_AT reached'); process.exit(3); }
@@ -489,16 +538,27 @@ async function correct() {
         if (agyStopped) { console.log(`${cell}/${route}: agy stopped earlier (agy-stopped.txt); skipped`); continue; }
         const used = agyCalls();
         if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
-        fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(ids));
+        // perCall (#7701 blank cells): each drawn page with its block of neighbours, read N a call as the lane reads.
+        let readIds = cor.perCall > 1 ? cs.pages.flatMap((p) => p.block ?? [p.page_id]) : ids;
+        // draftFrom (#7701 arm B): the draft is the named route's read of each page in this DIR (a page it did not deliver
+        // has no draft and is not corrected), handed to cli-ocr.mjs as --draft-file.
+        let draftsFile = null;
+        if (cor.draftFrom) {
+          const drafts = {};
+          for (const sp of cs.pages) { const a = correction(cell, cs, cor.draftFrom, sp, ''); if (a.text) drafts[sp.page_id] = a.text; }
+          draftsFile = path.join(dir, 'drafts-from.json'); fs.writeFileSync(draftsFile, JSON.stringify(drafts));
+          readIds = Object.keys(drafts);
+        }
+        fs.writeFileSync(path.join(dir, 'ids.json'), JSON.stringify(readIds));
         console.log(`${cell}/${route}: cli-ocr.mjs ${cor.fresh ? 'fresh read (live OCR prompt, no draft)' : `correct mode, ${cor.prompt ?? 'fc template'}`}, ${cor.model}, ${ids.length} pages (${used} agy calls so far${process.env.AGY_HOME ? `; AGY_HOME=${process.env.AGY_HOME}` : ''})`);
         // cli-ocr sleeps and retries on a quota reply; the brief says stop instead: the first QUOTA/LOCKED line ends it.
-        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : [])];
+        const mode = cor.fresh ? [] : [`--correct-prompt=${cor.prompt ? path.join(ROOT, cor.prompt) : tpl}`, '--lane=route-judge-6740-eval', ...(cs.draft_file ? [`--draft-file=${path.join(OUT, cs.draft_file)}`] : []), ...(draftsFile ? [`--draft-file=${draftsFile}`] : [])];
         // --keep-reads (#7263 router-next: tests on WAITING pages are useful work): a kept read of the same page, prompt
         // and model is reused (candidate-reads findRead) and every new read is kept, so a later lane need not pay again.
         const keep = process.argv.includes('--keep-reads');
         await new Promise((resolve) => {
           const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
-            ...mode, `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+            ...mode, ...(cor.perCall > 1 ? [`--per-call=${cor.perCall}`] : []), `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
           child.stdout.on('data', (d) => {
             process.stdout.write(d);
             if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }
@@ -601,6 +661,13 @@ async function packet() {
   };
   const output = (cell, route, sp) => {
     const p = pages.get(sp.page_id), cs = s.cells[cell];
+    if (cs.kind === 'router-test' && cs.blank) {   // no stored text (#7701): the fresh read, or its correction (draftFrom)
+      const from = cs.correctors[route]?.draftFrom;
+      const d = from ? correction(cell, cs, from, sp, '').text : '';
+      if (from && !d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: `${from} delivered no read to correct` }); return null; }
+      const a = correction(cell, cs, route, sp, d); corrOf.set(`${cell}/${route}/${sp.page_id}`, a);
+      return a.text ?? null;
+    }
     if (cs.kind === 'router-test' && (cs.correctors[route] || route === cs.draft_route)) {
       const d = draftOf(cs, sp);
       if (!d) { corrOf.set(`${cell}/${route}/${sp.page_id}`, { none: 'stored draft changed since the draw' }); return null; }
@@ -1043,7 +1110,8 @@ function score() {
 
   // Pages made worse: a correction (or the Opus read) beside the draft (or the served route) on the same page.
   const pairsOf = { latin: [['lite', 'lite>opus-correct']], chinese: [['paddle', 'paddle>opus-correct']], tibetan: [['yigdzin', 'yigdzin>flash-low-correct'], ['yigdzin', 'yigdzin>opus-correct']], german: [['flash3', 'opus-cli'], ['flash-lite', 'opus-cli']] };
-  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test') pairsOf[cell] = cs.routes.filter((r) => r !== cs.draft_route).map((r) => [cs.draft_route, r]);
+  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test' && cs.blank) pairsOf[cell] = Object.entries(cs.correctors).filter(([r, c]) => c.draftFrom && cs.routes.includes(r)).map(([r, c]) => [c.draftFrom, r]);
+  for (const [cell, cs] of Object.entries(s.cells)) if (cs.kind === 'router-test' && !cs.blank) pairsOf[cell] = cs.routes.filter((r) => r !== cs.draft_route).map((r) => [cs.draft_route, r]);
   for (const [cell, prs] of Object.entries(pairsOf).filter(([c2]) => s.cells[c2])) {
     const ks = keyRows.filter((k) => k.cell === cell && k.kind === 'item');
     report.cells[cell].made_worse = {};
