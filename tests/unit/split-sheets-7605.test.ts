@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { sampleIndexes, shapeOf, bookFoldOf, shapeOrBookCut, expandSheetVerdicts, applyRefusal, readVerdicts } from '../../scripts/maintenance/split-spreads-agy.mjs';
+import { sampleIndexes, shapeOf, bookFoldOf, shapeOrBookCut, expandSheetVerdicts, applyRefusal, readVerdicts, parseOnGutter, seededSample } from '../../scripts/maintenance/split-spreads-agy.mjs';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -65,5 +65,46 @@ describe('sheet verdicts', () => {
     const pages = proposal.frames.map((f) => ({ page_number: f.page_number, id: `p${f.page_number}` }));
     const p2 = { ...proposal, unresolved: 0, frames: proposal.frames.map((f) => ({ ...f, page_id: `p${f.page_number}`, url: null })) };
     expect(applyRefusal(p2, v, pages, 'b')).toMatch(/verdict bad/);
+  });
+});
+
+describe('strip screen verdicts', () => {
+  const B = 'b'.repeat(24);
+  const proposal = { book_id: B, frames: [1, 2, 3, 4, 5].map((n) => ({ page_number: n, fold: n === 5 ? null : 500 })) };
+  const screen = { frames: [{ page_number: 1, on_gutter: true }, { page_number: 2, on_gutter: true }, { page_number: 3, on_gutter: true }, { page_number: 4, on_gutter: false }], sheets: { 'flagged-01': [4], 'whole-01': [5], sample: [2] } };
+  const rows = (...r: object[]) => {
+    const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'scr-')), 'v.jsonl');
+    fs.writeFileSync(f, r.map((x) => JSON.stringify(x)).join('\n'));
+    return readVerdicts(f);
+  };
+  const reviewed = [
+    { book_id: B, screen_sheet: 'flagged-01', verdict: 'ok', checked_by: 'opus' },
+    { book_id: B, screen_sheet: 'whole-01', verdict: 'ok', checked_by: 'opus' },
+    { book_id: B, screen_sheet: 'sample', verdict: 'ok', checked_by: 'opus' },
+  ];
+  it('passes screened frames once the sample sheet is ok, and every frame then has a verdict', () => {
+    const v = expandSheetVerdicts(proposal, rows(...reviewed, { book_id: B, screen_accept: true, checked_by: 'opus' }), screen);
+    expect(v.get(`${B}:1`).checked_by).toBe('agy-strip-screen+opus');
+    expect([1, 2, 3, 4, 5].every((n) => v.get(`${B}:${n}`)?.verdict === 'ok')).toBe(true);
+  });
+  it('does not trust the screen when the sample sheet has a bad frame', () => {
+    const bad = [...reviewed.slice(0, 2), { ...reviewed[2], bad_pages: [2] }, { book_id: B, screen_accept: true, checked_by: 'opus' }];
+    const v = expandSheetVerdicts(proposal, rows(...bad), screen);
+    expect(v.has(`${B}:1`)).toBe(false);
+    expect(v.get(`${B}:2`).verdict).toBe('bad');
+  });
+  it('without screen_accept the passed frames stay unreviewed', () => {
+    expect(expandSheetVerdicts(proposal, rows(...reviewed), screen).has(`${B}:3`)).toBe(false);
+  });
+  it('reads the answer, and a reply without one is null', () => {
+    expect(parseOnGutter('{"on_gutter": false}')).toBe(false);
+    expect(parseOnGutter('```json\n{"on_gutter":true}\n```')).toBe(true);
+    expect(parseOnGutter('I cannot see a line')).toBe(null);
+  });
+  it('draws the same sample for the same book', () => {
+    const xs = Array.from({ length: 100 }, (_, i) => i);
+    expect(seededSample(xs, 20, B)).toEqual(seededSample(xs, 20, B));
+    expect(seededSample(xs, 20, B)).toHaveLength(20);
+    expect(seededSample(xs, 20, B)).not.toEqual(seededSample(xs, 20, 'c'.repeat(24)));
   });
 });

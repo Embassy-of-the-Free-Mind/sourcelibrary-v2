@@ -19,6 +19,9 @@
  *            leaf is read first. Writes DIR/<book>/proposal.json, positions.json (split-book.mjs --positions-file
  *            format: { "<page_number>": fold % | null }) and one review image per frame (the frame with the cut, then
  *            the leaves exactly as split-book.mjs will crop them, in reading order). Writes nothing to Mongo or R2.
+ *   screen   node scripts/maintenance/split-spreads-agy.mjs screen --out=DIR [--book=ID,ID] [--concurrency=4]
+ *            After `propose --sheets` (#7605): one agy strip question per cut frame; the review then reads only the
+ *            flagged, WHOLE and random-sample sheets it renders (see screen() below).
  *   apply    node --env-file=.env.production.local scripts/maintenance/split-spreads-agy.mjs apply --out=DIR
  *              --verdicts=FILE [--book=ID,ID] [--apply]
  *            Dry run unless --apply. A book is split only when EVERY frame has an `ok` row in FILE (JSONL
@@ -42,7 +45,7 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { detectGutterPixel } from '../lib/gutter-detect.mjs';
-import { CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
+import { CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead, gatedImageCall } from '../lib/agy-cli.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const MODEL = 'gemini-3.8-flash-low';
@@ -227,18 +230,56 @@ export function shapeOrBookCut(ar, medAr, bookFold) {
   return withRange({ fold: bookFold, method: `book-fold(${bookFold})`, flags: [] });
 }
 
-/** Sheet-level verdict rows expanded to one per frame (a page row wins over its sheet's row). */
-export function expandSheetVerdicts(proposal, verdicts) {
+/**
+ * Sheet-level verdict rows expanded to one per frame (a page row wins over its sheet's row).
+ * With `screen` (screen.json from the screen stage): a `{book_id, screen_sheet, verdict, bad_pages?}` row covers the
+ * frames on that screen sheet, and a `{book_id, screen_accept: true, checked_by}` row passes every frame the strip
+ * screen passed, but only when every frame of the random sample sheet has an ok verdict: a miss in the sample means
+ * the screen is not trusted for that book and its full sheets must be read.
+ */
+export function expandSheetVerdicts(proposal, verdicts, screen = null) {
+  const id = proposal.book_id;
   const out = new Map(verdicts);
+  const fill = (key, row, page) => { if (!verdicts.has(key)) out.set(key, { ...row, page_number: page, verdict: (row.bad_pages || []).includes(page) ? 'bad' : row.verdict }); };
   for (const f of proposal.frames) {
-    const key = `${proposal.book_id}:${f.page_number}`;
-    if (f.sheet == null || verdicts.has(key)) continue;
-    const s = verdicts.get(`${proposal.book_id}:sheet${f.sheet}`);
-    if (!s) continue;
-    const bad = (s.bad_pages || []).includes(f.page_number);
-    out.set(key, { ...s, page_number: f.page_number, verdict: bad ? 'bad' : s.verdict });
+    const s = f.sheet != null && verdicts.get(`${id}:sheet${f.sheet}`);
+    if (s) fill(`${id}:${f.page_number}`, s, f.page_number);
+  }
+  if (!screen) return out;
+  for (const [name, pages] of Object.entries(screen.sheets || {})) {
+    const s = verdicts.get(`${id}:screen:${name}`);
+    if (s) for (const n of pages) fill(`${id}:${n}`, s, n);
+  }
+  const accept = verdicts.get(`${id}:screen-accept`);
+  const sample = screen.sheets?.sample || [];
+  if (accept && sample.every((n) => out.get(`${id}:${n}`)?.verdict === 'ok')) {
+    for (const r of screen.frames) {
+      if (r.on_gutter === true) fill(`${id}:${r.page_number}`, { verdict: 'ok', checked_by: `agy-strip-screen+${accept.checked_by}`, note: 'strip screen passed; sample sheet ok' }, r.page_number);
+    }
   }
   return out;
+}
+
+export const STRIP_HALF = 150; // the screen's strip: fold ± 15% of the frame width
+export const SCREEN_PROMPT = (f) => `This is a narrow vertical strip from the middle of a photographed open book: @./${f}
+A red vertical line marks where the photograph will be cut into two pages. A correct cut runs down the gutter: the fold or shadow where the two pages meet.
+Is the red line on the gutter? Answer "no" if it runs through a page (text or blank paper) with the fold visibly to one side of it.
+Do not use any tool other than viewing the attached image. Reply with exactly one line of JSON and nothing else: {"on_gutter": true or false}`;
+
+/** The screen's answer: true / false, or null when the reply did not say (a null is reviewed like a false). */
+export function parseOnGutter(text) {
+  const m = String(text || '').match(/"on_gutter"\s*:\s*(true|false)/);
+  return m ? m[1] === 'true' : null;
+}
+
+/** A deterministic pick of up to n items, seeded by the book id, so a re-run draws the same sample. */
+export function seededSample(items, n, seed) {
+  let h = 2166136261;
+  for (const c of String(seed)) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  const rand = () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0) / 4294967296);
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a.slice(0, n).sort((x, y) => x - y);
 }
 
 /** One contact sheet: SHEET_N thumbnails in a 5-wide grid, each with its cut, overlap band and a label. */
@@ -404,6 +445,77 @@ async function propose(db) {
   if (quota) process.exit(3);
 }
 
+/**
+ * SCREEN (#7605): one agy strip question per cut frame, so the by-eye review reads only what the screen doubts.
+ * On a planted control (one book, 20 frames, 4 shifted cuts of ≥45/1000 and one spread marked WHOLE) one zoomed strip
+ * per call caught all 4 shifts with 1–2 false flags in 19 correct cuts; a whole contact sheet asked of agy caught 1–2.
+ * WHOLE frames are never screened (a strip has no line); they go on their own sheet. Writes DIR/<book>/screen.json
+ * and screen-<name>.jpg sheets: flagged-NN (screen said no, or did not answer), whole-NN, sample (20 random passed
+ * frames, to measure what the screen misses). Resumable per frame; writes nothing to Mongo or R2.
+ */
+async function screen() {
+  const OUT = path.resolve(arg('out'));
+  const only = arg('book')?.split(',');
+  const conc = Math.max(1, Math.min(6, Number(arg('concurrency') || 4)));
+  const ids = fs.readdirSync(OUT).filter((d) => /^[0-9a-f]{24}$/.test(d) && (!only || only.includes(d)) && fs.existsSync(path.join(OUT, d, 'proposal.json')));
+  fs.mkdirSync(path.join(OUT, '.ws'), { recursive: true });
+  let quota = false, calls = 0;
+  for (const id of ids) {
+    if (quota) break;
+    const dir = path.join(OUT, id);
+    const proposal = JSON.parse(fs.readFileSync(path.join(dir, 'proposal.json'), 'utf8'));
+    const file = path.join(dir, 'screen.json');
+    const prev = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+    if (prev?.sheets) { console.log(`${id} already screened`); continue; }
+    const done = new Map((prev?.frames || []).map((r) => [r.page_number, r]));
+    const cut = proposal.frames.filter((f) => typeof f.fold === 'number' && !done.has(f.page_number));
+    let k = 0;
+    await Promise.all(Array.from({ length: conc }, async () => {
+      while (k < cut.length && !quota) {
+        const f = cut[k++];
+        try {
+          const buf = await fetchBuf(f.url);
+          const m = await sharp(buf).metadata();
+          const left = Math.max(0, Math.round(((f.fold - STRIP_HALF) / 1000) * m.width));
+          const width = Math.min(m.width - left, Math.round(((2 * STRIP_HALF) / 1000) * m.width));
+          const strip = await sharp(buf).extract({ left, top: 0, width, height: m.height }).resize(300).jpeg({ quality: 85 }).toBuffer();
+          const sh = (await sharp(strip).metadata()).height;
+          const x = Math.round((((f.fold / 1000) * m.width - left) / width) * 300);
+          const img = await sharp(strip).composite([{ input: Buffer.from(`<svg width="300" height="${sh}"><line x1="${x}" y1="0" x2="${x}" y2="${sh}" stroke="red" stroke-width="2"/></svg>`), top: 0, left: 0 }]).jpeg().toBuffer();
+          const r = await gatedImageCall(SCREEN_PROMPT, img, { model: MODEL, tmp: path.join(OUT, '.ws') });
+          calls += r.calls;
+          if (r.cls === 'quota') { quota = true; break; }
+          done.set(f.page_number, { page_number: f.page_number, on_gutter: r.cls ? null : parseOnGutter(r.text), err: r.cls || undefined });
+        } catch (e) { done.set(f.page_number, { page_number: f.page_number, on_gutter: null, err: e.message?.slice(0, 120) }); }
+      }
+    }));
+    const frames = [...done.values()].sort((a, b) => a.page_number - b.page_number);
+    if (quota) { fs.writeFileSync(file, JSON.stringify({ book_id: id, model: MODEL, frames }, null, 1)); console.log(`QUOTA: ${id} partly screened; re-run resumes`); break; }
+    const flagged = frames.filter((r) => r.on_gutter !== true).map((r) => r.page_number);
+    const whole = proposal.frames.filter((f) => f.fold === null).map((f) => f.page_number);
+    const passed = frames.filter((r) => r.on_gutter === true).map((r) => r.page_number);
+    const sheets = {};
+    const chunk = (name, pages) => { for (let i = 0; i < pages.length; i += SHEET_N) sheets[`${name}-${String(i / SHEET_N + 1).padStart(2, '0')}`] = pages.slice(i, i + SHEET_N); };
+    chunk('flagged', flagged);
+    chunk('whole', whole);
+    if (passed.length) sheets.sample = seededSample(passed, SHEET_N, id);
+    for (const [name, pages] of Object.entries(sheets)) {
+      const thumbs = [];
+      for (const n of pages) {
+        const f = proposal.frames.find((x) => x.page_number === n);
+        const buf = await sharp(await fetchBuf(f.url)).resize(300).jpeg({ quality: 80 }).toBuffer();
+        thumbs.push({ buf, th: (await sharp(buf).metadata()).height, fold: f.fold, page_number: n, asked: false, short: String(f.method || '').replace(/\(.*$/, '') });
+      }
+      await renderSheet(thumbs, path.join(dir, `screen-${name}.jpg`));
+    }
+    fs.writeFileSync(file, JSON.stringify({ book_id: id, model: MODEL, at: new Date().toISOString(), frames, sheets }, null, 1));
+    console.log(`${id}: ${frames.length} cut frames screened, ${flagged.length} flagged, ${whole.length} whole, sheets ${Object.keys(sheets).join(' ')}`);
+  }
+  fs.rmSync(path.join(OUT, '.ws'), { recursive: true, force: true });
+  console.log(`agy calls: ${calls}`);
+  if (quota) process.exit(3);
+}
+
 /** A fold placed by eye on a frame the check marked bad: `--page=N --fold=0–1000|whole --by=NAME`. Re-renders its review. */
 async function refold(db) {
   const OUT = path.resolve(arg('out'));
@@ -431,7 +543,8 @@ export function readVerdicts(file) {
   const v = new Map();
   for (const l of fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)) {
     const r = JSON.parse(l);
-    v.set(r.sheet != null && r.page_number == null ? `${r.book_id}:sheet${r.sheet}` : `${r.book_id}:${r.page_number}`, r); // the last row for a frame (or sheet) wins: a re-check replaces the first
+    const key = r.page_number != null ? r.page_number : r.screen_sheet != null ? `screen:${r.screen_sheet}` : r.screen_accept ? 'screen-accept' : `sheet${r.sheet}`;
+    v.set(`${r.book_id}:${key}`, r); // the last row for a frame (or sheet) wins: a re-check replaces the first
   }
   return v;
 }
@@ -463,7 +576,8 @@ async function apply(db) {
     const book = await db.collection('books').findOne({ id }, { projection: { id: 1, title: 1, needs_splitting: 1, split_completed: 1 } });
     if (!book?.needs_splitting || book.split_completed === true) { report.push({ id, result: 'skipped', why: 'no longer needs_splitting / already split' }); continue; }
     const pages = await db.collection('pages').find({ book_id: id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, archived_photo: 1, photo: 1 } }).sort({ page_number: 1 }).toArray();
-    const bookVerdicts = expandSheetVerdicts(proposal, verdicts);
+    const screenFile = path.join(OUT, id, 'screen.json');
+    const bookVerdicts = expandSheetVerdicts(proposal, verdicts, fs.existsSync(screenFile) ? JSON.parse(fs.readFileSync(screenFile, 'utf8')) : null);
     const why = applyRefusal(proposal, bookVerdicts, pages, id);
     if (why) { report.push({ id, result: 'refused', why }); console.log(`${id}: REFUSED — ${why}`); continue; }
     const by = [...new Set(proposal.frames.map((f) => bookVerdicts.get(`${id}:${f.page_number}`).checked_by))].join('+');
@@ -495,11 +609,12 @@ async function apply(db) {
 
 async function main() {
   const stage = process.argv[2];
-  if (!['propose', 'apply', 'refold'].includes(stage) || !arg('out') || (stage === 'apply' && !arg('verdicts'))) {
-    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--sheets] [--hold=H] [--book=ID,.. | --books-file=FILE] [--limit=N] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--apply]');
+  if (!['propose', 'screen', 'apply', 'refold'].includes(stage) || !arg('out') || (stage === 'apply' && !arg('verdicts'))) {
+    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--sheets] [--hold=H] [--book=ID,.. | --books-file=FILE] [--limit=N] | screen --out=DIR [--book=ID,..] [--concurrency=4] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--apply]');
     process.exit(2);
   }
   if (stage === 'refold') return refold(null);
+  if (stage === 'screen') return screen();
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   try { await (stage === 'propose' ? propose : apply)(client.db('bookstore')); } finally { await client.close(); }
