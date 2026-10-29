@@ -57,6 +57,9 @@ export async function GET(
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
       published: 1, language: 1, doi: 1,
       chapters: 1,
+      // The reader's download panel: a partner's own book downloads without
+      // sign-in inside the partner's embed (#7702).
+      tenantId: 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);

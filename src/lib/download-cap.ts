@@ -12,6 +12,10 @@ import { getDb } from './mongodb';
  * exempt — the caller (the download routes) checks those and only calls
  * this helper for accounts that aren't.
  *
+ * Anonymous partner-embed downloads (#7702) use the same helper with a
+ * hashed-IP key (`anon-ip:…`, partner-embed-download-server.ts) and their own
+ * smaller cap, ANON_EMBED_DAILY_BOOK_CAP.
+ *
  * Storage: `download_events` collection in the `bookstore` db, one doc per
  * (user_id, book_id) download event with a `ts` Date. No TTL index — repo
  * policy (#2976) forbids automated retention; prune manually if the
@@ -38,6 +42,7 @@ export interface DownloadCapResult {
 export async function checkAndRecordDownload(
   userId: string,
   bookId: string,
+  cap: number = DAILY_FREE_BOOK_CAP,
 ): Promise<DownloadCapResult> {
   const db = await getDb();
   const events = db.collection('download_events');
@@ -49,12 +54,12 @@ export async function checkAndRecordDownload(
   });
   const alreadyCounted = distinctBooks.includes(bookId);
 
-  if (!alreadyCounted && distinctBooks.length >= DAILY_FREE_BOOK_CAP) {
+  if (!alreadyCounted && distinctBooks.length >= cap) {
     return { allowed: false, remaining: 0 };
   }
 
   await events.insertOne({ user_id: userId, book_id: bookId, ts: new Date() });
 
   const newCount = alreadyCounted ? distinctBooks.length : distinctBooks.length + 1;
-  return { allowed: true, remaining: Math.max(0, DAILY_FREE_BOOK_CAP - newCount) };
+  return { allowed: true, remaining: Math.max(0, cap - newCount) };
 }
