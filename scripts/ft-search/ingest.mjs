@@ -106,7 +106,9 @@ for (const r of recs) {
     } else action = 'none_found_not_translated_or_hidden';
   }
   inc(action);
-  log.push({ book_id: bookId, verdict: r.verdict, action, url: url || null });
+  // The search reports a wrong author/date/language it notices; collected for a by-hand fix, never written here.
+  if (r.metadata_issue) inc('metadata_issue_reported');
+  log.push({ book_id: bookId, verdict: r.verdict, action, url: url || null, ...(r.metadata_issue ? { metadata_issue: r.metadata_issue } : {}) });
   if (Object.keys(set).length) {
     bookOps.push({ updateOne: { filter: { _id: b._id }, update: { $set: set } } });
     events.push({ book_id: bookId, type: action === 'prior_credit' ? 'prior_translation_credited' : 'first_translation_search_recorded', at: NOW, by: BY, detail: { action, attempt_id, url: url || null } });
