@@ -43,7 +43,7 @@
  * GROUPS, in the order #7708 asks for (`--group all` runs them in this order):
  *   efm-archive    R2 archive/ — the BPH JP2 partner masters
  *   efm-books      every other prefix of books with image_source.provider = 'bph'
- *   efm-bph-works  a fresh bph_works export, tarred
+ *   efm-bph-works  a fresh bph_works export, tarred, plus R2 bph-backups/ and bph-editor-help/
  *   masters        books/ uploads/ page-masters/ masters/ and artwork/ *-full*
  *   restic         the restic repository (Hetzner Object Storage)
  *   rest           every other R2 prefix (units already sent above are skipped)
@@ -206,9 +206,13 @@ async function unitsUnder(src, prefix, { filter = null, flatLabel = '_flat', des
 // Mirrors build-preservation-manifest.mjs BOOK_PREFIXES (archive/ is its own group).
 const BOOK_PREFIXES = ['archived/', 'pages/', 'books/', 'cropped/', 'gallery/', 'thumbnails/', 'deepzoom/', 'uploads/', 'enhanced/', 'page-masters/', 'masters/'];
 const MASTER_PREFIXES = ['books/', 'uploads/', 'page-masters/', 'masters/'];
+// Whole R2 prefixes that are EFM/BPH material: they go to Scaleway with the EFM groups, never to AWS.
+const EFM_PREFIXES = ['archive/', 'bph-backups/', 'bph-editor-help/'];
 const isFull = (k) => /-full\.[a-z0-9]+$/i.test(k);
 
+let BPH_IDS = null;
 async function bphBookIds() {
+  if (BPH_IDS) return BPH_IDS;
   const c = new MongoClient(process.env.MONGODB_URI);
   await c.connect();
   try {
@@ -219,7 +223,8 @@ async function bphBookIds() {
       // R2 keys use the book's `id`; 16K books have a re-minted `_id`, so take both.
       for await (const b of cur) { if (b.id) ids.add(String(b.id)); ids.add(String(b._id)); }
     }
-    return [...ids].sort();
+    BPH_IDS = [...ids].sort();
+    return BPH_IDS;
   } finally { await c.close(); }
 }
 
@@ -240,7 +245,9 @@ async function unitsFor(group) {
       execFileSync('node', [new URL('./backup-bph-catalog.mjs', import.meta.url).pathname, '--out', dir], { stdio: ['ignore', 'ignore', 'inherit'] });
       return dir;
     };
-    return [{
+    const r2 = [];
+    for (const p of EFM_PREFIXES.filter((x) => x !== 'archive/')) r2.push(...(await unitsUnder(R2, p)));
+    return [...r2, {
       id: `bph_works/${day}`, src: { label: 'local' }, dest: `bph_works/${day}.tar`, local: true,
       list: async () => {
         const d = ensure();
@@ -276,7 +283,7 @@ async function unitsFor(group) {
     const top = await listAll(R2, '', '/');
     const out = [];
     for (const p of top.prefixes) {
-      if (p === 'archive/' || MASTER_PREFIXES.includes(p)) continue; // whole prefix sent by an earlier group
+      if (EFM_PREFIXES.includes(p) || MASTER_PREFIXES.includes(p)) continue; // whole prefix sent by an earlier group
       if (p === 'artwork/') out.push(...(await unitsUnder(R2, p, { filter: (k) => !isFull(k), flatLabel: '_flat-other' })));
       else out.push(...(await unitsUnder(R2, p)));
     }
@@ -480,6 +487,14 @@ async function runGroup(group) {
   TARGET = targetFor(group);
   let units = await unitsFor(group);
   if (ONLY_UNITS) units = units.filter((u) => ONLY_UNITS.has(u.id));
+  if (TARGET !== 'scw') {
+    // `masters` and `rest` walk whole prefixes, which include BPH books' folders.
+    // Those went to Scaleway with efm-books; they must not reach AWS (#7708).
+    const bph = new Set(await bphBookIds());
+    const before = units.length;
+    units = units.filter((u) => !(u.src === R2 && bph.has(u.id.split('/')[1])));
+    if (before !== units.length) console.log(`[${group}] ${before - units.length} BPH book units held back from ${TARGET}`);
+  }
   console.log(`[${group}] ${units.length} candidate units (${MODE}, target ${TARGET})`);
   const st = { units: units.length, nonempty: 0, objects: 0, bytes: 0, sent: 0, skipped: 0, failed: 0, sent_bytes: 0, requests: 0, largest: 0 };
   let sentCount = 0;
