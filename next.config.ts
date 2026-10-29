@@ -422,9 +422,11 @@ const nextConfig: NextConfig = {
       { source: '/launch', destination: 'https://sourcelib-launch-talk.vercel.app/' },
       // The AI-partners page is a standalone static deployment too (source:
       // sourcelibrary-ops/sites/partners, project sourcelibrary-partners). Same pattern:
-      // its image URLs are absolute to that deployment (no <base>, which would send the
-      // in-page #anchors off-domain); only the HTML is proxied. One copy of the page.
+      // its images are referenced as /ai-partners/img/... and proxied here too, so they
+      // load same-origin: the site CSP img-src does not (and should not) list *.vercel.app.
+      // No <base>, which would send the in-page #anchors off-domain. One copy of the page.
       { source: '/ai-partners', destination: 'https://sourcelibrary-partners.vercel.app/' },
+      { source: '/ai-partners/img/:path*', destination: 'https://sourcelibrary-partners.vercel.app/img/:path*' },
     ];
   },
   async redirects() {
