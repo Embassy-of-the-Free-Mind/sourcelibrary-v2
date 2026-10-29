@@ -1,5 +1,7 @@
 # How to translate a book (collaborator runbook)
 
+> **SUPERSEDED (2026-10-29, #7759).** This runbook says the pipeline is paused. It is not: the subscription lanes translate thousands of pages a day, and the paid lane runs under the spend dial. To get one book translated today, find its cell in the router table and use the lane it names (`book-process.md`, Routing). Live state: https://sourcelibrary.org/admin/pipeline/now.
+
 You want a book OCR'd and translated. This is the short, reliable path — written
 so anyone (not just whoever set up the pipeline) can do it without re-discovering
 the gotchas. If you only read one thing: **don't try to "unpause the pipeline" —
