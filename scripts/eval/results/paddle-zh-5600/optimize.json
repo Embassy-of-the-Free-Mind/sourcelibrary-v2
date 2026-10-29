@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-02T08:30:00.198Z",
+ "generated_at": "2026-10-02T11:24:20.449Z",
  "gate": {
   "delta": 0.01,
   "catastrophic": 0.02
@@ -41,6 +41,52 @@
    "eur_per_page": 0.000733,
    "gate": "baseline",
    "note": "#5547 pilot throughput (3,422 pages incl. bench; 3.35 s/page on book pages)"
+  },
+  {
+   "arm": "rp4090-native-w2",
+   "config": "native runners=2 max_side=0 layout=1",
+   "gpu": "RTX 4090 (secure)",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    13,
+    12,
+    70
+   ],
+   "s_per_page": 4.9242,
+   "eur_per_page": 0.00087,
+   "gate": "PASS",
+   "note": "community: no instances (3 tries)"
+  },
+  {
+   "arm": "rp4090-vllm-c8",
+   "config": "server clients=8 max_side=0 layout=1",
+   "gpu": "RTX 4090 (secure)",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    15,
+    9,
+    71
+   ],
+   "s_per_page": 0.463,
+   "eur_per_page": 0.000082,
+   "gate": "PASS",
+   "note": "community: no instances (3 tries)"
   }
  ]
 }
