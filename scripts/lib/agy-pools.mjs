@@ -82,9 +82,11 @@ export function readPools({ homes = POOL_HOMES, ...opts } = {}) {
 
 /** The pool to use: of the pools not busy and read, the one with most weekly remaining, if `gate(reading).open`. */
 export function choosePool(pools, gate) {
-  const ok = pools.filter((p) => !p.busy && p.reading).map((p) => ({ ...p, gate: gate(p.reading) }));
+  // Every open pool is a candidate, not just the fullest: a fuller pool under its own pace line must not shut a
+  // smaller one that is above its line (2026-10-29: enrich-agy called nothing for days while the main pool was open).
+  const ok = pools.filter((p) => !p.busy && p.reading).map((p) => ({ ...p, gate: gate(p.reading) })).filter((p) => p.gate.open);
   ok.sort((a, b) => b.reading.weekly - a.reading.weekly);
-  return ok[0]?.gate.open ? ok[0] : null;
+  return ok[0] ?? null;
 }
 
 export const poolName = (p) => (p?.home ? path.basename(p.home) : 'default');
