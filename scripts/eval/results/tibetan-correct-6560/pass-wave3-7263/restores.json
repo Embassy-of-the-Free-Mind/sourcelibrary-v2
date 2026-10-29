@@ -1,0 +1,34 @@
+[
+ {
+  "page_id": "69e7aabd80b52390feb19e4e",
+  "book": "rGyud 'bum Nga",
+  "page": 324,
+  "from_run": "cli-ocr-20261028133751-883374",
+  "run": "diffqa-6740-w3-audit1-restore",
+  "why": "audit 1: 3 mantra spellings introduced"
+ },
+ {
+  "page_id": "69e7aada5f1a22ab19a8e700",
+  "book": "rNying rgyud Ka",
+  "page": 115,
+  "from_run": "cli-ocr-20261029014744-3092564",
+  "run": "diffqa-6740-w3-audit2-restore",
+  "why": "audit 2: རྨག→ཉི་མ (the leaf shows the draft)"
+ },
+ {
+  "page_id": "69e7aadc5f1a22ab19a8e91b",
+  "book": "rNying rgyud Kha",
+  "page": 174,
+  "from_run": "cli-ocr-20261029012454-3000303",
+  "run": "diffqa-6740-w3-audit2-restore",
+  "why": "audit 2: mantra ནྲི→ནྲྀ"
+ },
+ {
+  "page_id": "69e7aad55f1a22ab19a8e2da",
+  "book": "rGyud 'bum Tsha",
+  "page": 228,
+  "from_run": "cli-ocr-20261029024010-3236974",
+  "run": "diffqa-6740-w3-audit2-restore",
+  "why": "audit 2: mantra ཧ→ཧཱ"
+ }
+]

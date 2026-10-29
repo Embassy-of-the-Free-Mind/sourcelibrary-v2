@@ -1,0 +1,144 @@
+{
+ "pages": 8,
+ "judged": 8,
+ "no_reply": 0,
+ "better": 5,
+ "same": 1,
+ "worse": 2,
+ "go": false,
+ "spans": {
+  "spans": 43,
+  "arm": 24,
+  "base": 8,
+  "other": 5,
+  "unclear": 6,
+  "unanswered": 0,
+  "ctl": 16,
+  "ctl_right": 11
+ },
+ "span_correction_right": 0.75,
+ "span_correction_right_ci": [
+  0.5789344086290853,
+  0.8674759914885746
+ ],
+ "controls_right": "11/16",
+ "page_rows": [
+  {
+   "page_id": "69e7aada5f1a22ab19a8e700",
+   "page_number": 115,
+   "book_id": "69e7aada5f1a22ab19a8e68d",
+   "changed": 8,
+   "arm": 4,
+   "base": 3,
+   "other": 0,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [
+    "རྨག→ཉི་མ (line 11; leaf: རྨག)",
+    "དུས→གྱུར (line 11; leaf: དུས)",
+    "ཚད→ཆད (line 3; leaf: ཚད)"
+   ],
+   "verdict": "better"
+  },
+  {
+   "page_id": "69e7aada5f1a22ab19a8e7f8",
+   "page_number": 363,
+   "book_id": "69e7aada5f1a22ab19a8e68d",
+   "changed": 6,
+   "arm": 0,
+   "base": 0,
+   "other": 0,
+   "unclear": 5,
+   "unanswered": 0,
+   "worse_spans": [],
+   "verdict": "same"
+  },
+  {
+   "page_id": "69e7aadc5f1a22ab19a8e91b",
+   "page_number": 174,
+   "book_id": "69e7aadc5f1a22ab19a8e86d",
+   "changed": 11,
+   "arm": 8,
+   "base": 1,
+   "other": 1,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [
+    "ནྲི→ནྲྀ (line 6; leaf: ནྲི)"
+   ],
+   "verdict": "better"
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2bd",
+   "page_number": 199,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "changed": 2,
+   "arm": 0,
+   "base": 2,
+   "other": 0,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [
+    "བཏགས→བསྐུས (line 11; leaf: བཏགས)",
+    "ཁྲིས→ཁྲི (line 11; leaf: ཁྲིས)"
+   ],
+   "verdict": "worse"
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2d7",
+   "page_number": 225,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "changed": 11,
+   "arm": 8,
+   "base": 0,
+   "other": 1,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [],
+   "verdict": "better"
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2da",
+   "page_number": 228,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "changed": 5,
+   "arm": 2,
+   "base": 1,
+   "other": 0,
+   "unclear": 1,
+   "unanswered": 0,
+   "worse_spans": [
+    "ཧ→ཧཱ (line 11; leaf: ཧ)"
+   ],
+   "verdict": "better"
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2dd",
+   "page_number": 231,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "changed": 10,
+   "arm": 2,
+   "base": 0,
+   "other": 3,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [],
+   "verdict": "better"
+  },
+  {
+   "page_id": "69e7aacb5f1a22ab19a8d7da",
+   "page_number": 2,
+   "book_id": "69e7aacb5f1a22ab19a8d7d8",
+   "changed": 1,
+   "arm": 0,
+   "base": 1,
+   "other": 0,
+   "unclear": 0,
+   "unanswered": 0,
+   "worse_spans": [
+    "པའི→པོའི (line 3; leaf: པའི)"
+   ],
+   "verdict": "worse"
+  }
+ ]
+}
