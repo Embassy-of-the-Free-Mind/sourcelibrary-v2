@@ -420,6 +420,11 @@ const nextConfig: NextConfig = {
       // assets (transcript.json, lecture.mp3, clips/) load from that deployment
       // directly — only the HTML document needs proxying here.
       { source: '/launch', destination: 'https://sourcelib-launch-talk.vercel.app/' },
+      // The AI-partners page is a standalone static deployment too (source:
+      // sourcelibrary-ops/sites/partners, project sourcelibrary-partners). Same pattern:
+      // its image URLs are absolute to that deployment (no <base>, which would send the
+      // in-page #anchors off-domain); only the HTML is proxied. One copy of the page.
+      { source: '/ai-partners', destination: 'https://sourcelibrary-partners.vercel.app/' },
     ];
   },
   async redirects() {
