@@ -204,8 +204,12 @@ async function main() {
         if (!surname || !title || !r.source || !r.orig_lang) continue;
         const year = Number(r.orig_year) || null;
         const era = eraFromYear(year);
+        // the key carries no language; one surname+title in two source languages
+        // (Hoffmann's Nussknacker and Dumas's French retelling) must stay two works
+        let wk = workKey(surname, title, year);
+        if (external.has(wk) && external.get(wk).orig_lang !== r.orig_lang) wk += `|${r.orig_lang}`;
         add(external, {
-          work_key: workKey(surname, title, year),
+          work_key: wk,
           surname,
           author: r.orig_author,
           title,
@@ -221,7 +225,7 @@ async function main() {
         stagedBySource[k] = (stagedBySource[k] || 0) + 1;
       }
     }
-    console.log(`  staged rows read from ${STAGING_DIR}:`);
+    console.log(`  staged rows read from ${STAGING_DIR} (rows with no author or title are not counted; they cannot anchor a work match):`);
     for (const [k, n] of Object.entries(stagedBySource).sort()) console.log(`    ${k.replace('\t', '  ')}  ${n}`);
   }
 

@@ -46,7 +46,7 @@
  * External works as x NODES (#7769): every work in the external-works file
  * (default external-translation-works-staging.jsonl, from `01 --staging`;
  * override --external <file>) whose orig_lang is this language is matched AFTER
- * the leader pass, against the leaders, by the same containment + specificity
+ * the leader pass, against every clustered node, by the same containment + specificity
  * rule. An x node never becomes a leader and never joins two works, so the
  * external side cannot change the clustering it is measured against. A work's
  * external prior is then (phase-3 cluster prior, Latin only) ∪ (an attached x
@@ -77,6 +77,7 @@ const orth = (s) => (s || '').replace(/[vV]/g, 'u').replace(/[jJ]/g, 'i');
 const K = 10;            // leading distinctive tokens compared (title pages run on; the head names the work)
 const CONTAIN = Number(process.env.WG_CONTAIN ?? 0.6); // IDF-weighted containment needed to join a leader (shared / lighter title)
 const STRONG_IDF = 6.0, MID_IDF = 5.0, FLOOR_IDF = 3.0;
+const X_FULL_IDF = 4.0;  // x nodes only: summed idf a fully-contained external title needs (#7769)
 
 async function pullEditions() {
   if (fs.existsSync(EDITIONS) && !process.argv.includes('--refresh')) return readJsonl(EDITIONS);
@@ -129,7 +130,8 @@ async function main() {
   const nodes = [];
   for (const e of eds) nodes.push({ k: 'u', ref: e, author: e.author_1 || '', title: e.title || '' });
   for (const b of books) nodes.push({ k: 's', ref: b, author: b.author || '', title: b.title || '' });
-  for (const w of extWorks) nodes.push({ k: 'x', ref: w, author: w.author || w.surname || '', title: w.title || '' });
+  // uniform titles carry editor/version parentheticals ("Tischreden (Aurifaber)") that only dilute containment
+  for (const w of extWorks) nodes.push({ k: 'x', ref: w, author: w.author || w.surname || '', title: (w.title || '').replace(/\([^)]*\)/g, ' ') });
 
   // IDF over USTC edition titles only (the population whose works we count)
   const df = new Map();
@@ -187,21 +189,34 @@ async function main() {
   order.sort((a, b) => nodes[a].w - nodes[b].w || nodes[b].k.localeCompare(nodes[a].k));
   const leaderIdx = new Map(); // "stem|token" → leader node ids
   let leaders = 0, joins = 0, scored = 0;
-  function bestLeader(a) {
+  // xMode: an external work is a short uniform title ("Il principe", "Essais"), so
+  // containment is measured on the x side, and a title whose EVERY head token sits
+  // in the leader passes on a lower bar (X_FULL_IDF) — the author anchor already
+  // holds, and corpus-wide IDF is too strict for one-word titles ("principe" is
+  // in 1,481 Italian editions, idf 4.31, below MID).
+  let xIdx = null; // stem|token → every clustered node, over every head token (built once, for the x pass)
+  function bestLeader(a, xMode = false) {
     let best = -1, bestScore = 0, bestSw = 0;
     const seen = new Set();
+    const idx = xMode ? xIdx : leaderIdx;
     for (const s of a.stems) for (const t of a.head) {
-      const lst = leaderIdx.get(s + '|' + t); if (!lst) continue;
+      const lst = idx.get(s + '|' + t); if (!lst) continue;
       for (const L of lst) {
         if (seen.has(L)) continue;
         seen.add(L); scored++;
         const l = nodes[L];
         let sw = 0, nS = 0, nM = 0;
         for (const x of l.head) if (a.set.has(x)) { const v = idf(x); sw += v; if (v >= STRONG_IDF) nS++; if (v >= MID_IDF) nM++; }
-        if (!(nS >= 1 || nM >= 2)) continue;
-        const score = sw / Math.min(l.w, a.w);
+        const score = Math.max(sw / Math.min(l.w, a.w), xMode ? sw / a.w : 0);
+        const specific = nS >= 1 || nM >= 2 || (xMode && score >= 0.999 && sw >= X_FULL_IDF);
+        if (!specific) continue;
         if (score < CONTAIN) continue;
-        if (score > bestScore + 1e-9 || (Math.abs(score - bestScore) < 1e-9 && sw > bestSw)) { best = L; bestScore = score; bestSw = sw; }
+        // x pass: on a tie, a USTC edition beats an SL book (an SL "Il principe" left
+        // outside the USTC work would otherwise swallow every external Prince)
+        const tie = Math.abs(score - bestScore) < 1e-9;
+        const uBeats = xMode && tie && l.k === 'u' && best >= 0 && nodes[best].k !== 'u';
+        const uLoses = xMode && tie && l.k !== 'u' && best >= 0 && nodes[best].k === 'u';
+        if (score > bestScore + 1e-9 || uBeats || (tie && !uLoses && sw > bestSw)) { best = L; bestScore = score; bestSw = sw; }
       }
     }
     return best;
@@ -218,14 +233,24 @@ async function main() {
       leaderIdx.get(key).push(i);
     }
   }
-  // x pass: external works attach to ONE leader each, after the graph is fixed
+  // x pass: external works attach to ONE node's work each, after the graph is fixed
+  if (extWorks.length) {
+    xIdx = new Map();
+    // members too, not only leaders: "Il principe … La vita di Castruccio" joined
+    // the Castruccio leader, and an x node must still be able to land on it
+    for (let L = 0; L < nodes.length; L++) if (nodes[L].k !== 'x') for (const s of nodes[L].stems) for (const t of nodes[L].head) {
+      const key = s + '|' + t;
+      if (!xIdx.has(key)) xIdx.set(key, []);
+      xIdx.get(key).push(L);
+    }
+  }
   let xJoined = 0;
   const xUnmatched = { no_author: 0, no_title_tokens: 0, no_leader: 0 };
   nodes.forEach((n, i) => {
     if (n.k !== 'x') return;
     if (!n.stems.length) { xUnmatched.no_author++; return; }
     if (!(n.w > 0)) { xUnmatched.no_title_tokens++; return; }
-    const L = bestLeader(n);
+    const L = bestLeader(n, true);
     if (L < 0) { xUnmatched.no_leader++; return; }
     union(i, L); xJoined++;
   });
@@ -240,6 +265,7 @@ async function main() {
   for (const [r, mem] of comp) {
     const u = mem.filter((i) => nodes[i].k === 'u'), s = mem.filter((i) => nodes[i].k === 's');
     const x = mem.filter((i) => nodes[i].k === 'x');
+    if (!u.length && !s.length) continue; // an unmatched external work is not a work of this graph
     const xSources = new Set(x.flatMap((i) => nodes[i].ref.sources || []));
     const extBefore = u.some((i) => priorClusters.has(nodes[i].ref.work_cluster_id)) || [...xSources].some((src) => !STAGED_SOURCES.has(src));
     const ext = extBefore || xSources.size > 0;
@@ -312,7 +338,7 @@ async function main() {
 
   const report = {
     generated: new Date().toISOString().slice(0, 10), issue: '#7751',
-    params: { K, CONTAIN, STRONG_IDF, MID_IDF, FLOOR_IDF },
+    params: { K, CONTAIN, STRONG_IDF, MID_IDF, FLOOR_IDF, X_FULL_IDF },
     nodes: { ustc_editions: eds.length, sl_books: books.length },
     edges: { direct, leaders, joins, anon_nodes: anon },
     works_with_ustc: ustcWorks.length, old_clusters: new Set(eds.map((e) => e.work_cluster_id)).size,
@@ -325,7 +351,7 @@ async function main() {
   };
   fs.writeFileSync(path.join(OUT, `work-graph-report${SUFFIX}.json`), JSON.stringify(report, null, 2));
   const w1 = fs.createWriteStream(path.join(OUT, `work-graph${SUFFIX}.jsonl`));
-  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext_refs: w.x.flatMap((i) => nodes[i].ref.staged_refs || nodes[i].ref.sources || []).slice(0, 10), ext_before: w.extBefore, ext: w.ext, sl: w.sl, year_min: w.year_min, author: w.author, title: w.title }) + '\n');
+  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext_refs: w.x.flatMap((i) => nodes[i].ref.staged_refs || nodes[i].ref.sources || []).slice(0, 200), ext_before: w.extBefore, ext: w.ext, sl: w.sl, year_min: w.year_min, author: w.author, title: w.title }) + '\n');
   w1.end();
   for (const [k, g] of Object.entries({ held: report.held, translated_any: report.translated_any, readable: report.readable, ...Object.fromEntries(Object.entries(report.readable_by_century).map(([a, b]) => [`readable ${a}`, b])) })) {
     console.log(`${k}: of ${g.works} works — SL ${g.sl} (${g.sl_pct}%), external ${g.external} (${g.external_pct}%), grid ${JSON.stringify(g.grid)}`);
