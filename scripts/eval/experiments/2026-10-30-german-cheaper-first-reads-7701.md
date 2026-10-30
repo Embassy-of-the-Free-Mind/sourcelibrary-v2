@@ -71,7 +71,7 @@ touch.)
 **Rule** (RULE.md): no route is eligible.
 - read@4 itself is at P(acc >= 0.8) = 0.77 on these 24 pages (0.91 posterior mean over its 68 pooled), so it stays live and no cheaper route clears the bar that would replace it.
 - Pooled pick: read@4. Fraktur: read@4. Antiqua: read@4.
-- The router (`router-table/2026-10-30-german-cheaper-7701.md`, cells german-blank, german-blank-fraktur, german-blank-antiqua) agrees. German keeps read@4. The Fraktur face HOLDs on read@4. The Antiqua face HOLDs and names LightOnOCR alone as the next route to test.
+- The router (`router-table/2026-10-30-german-cheaper-7701.md`, cells german-blank, german-blank-fraktur, german-blank-antiqua; now the live table in `current.json`, #7809) agrees. `scripts/audit/router-binding.mjs` on gex45's crontab: German, French and Latin first reads OK. German keeps read@4. The Fraktur face HOLDs on read@4. The Antiqua face HOLDs and names LightOnOCR alone as the next route to test.
 
 **Written.** The 21 pages whose read@4 the judge accepted with no wrong-text, invented or wrong-leaf defect went through the
 lane's own apply (first reads only, printed only, stamp agy-first-read-7701; run cli-ocr-20261030184126-1177265). All 21

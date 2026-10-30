@@ -19332,6 +19332,172 @@
    "decision_week": "HOLD (manuscript: < 10 pages a route)",
    "route_week": "agy-flash-low-written",
    "before": "HOLD (manuscript: < 10 pages a route) → agy-flash-low-written"
+  },
+  {
+   "id": "english-blank-pre1800/unknown",
+   "base": "english-blank-pre1800",
+   "script": "unknown",
+   "title": "English print before 1800, no stored text (#6871 GPU print lane) [unknown]",
+   "pages_waiting": 0,
+   "current": "scans-only",
+   "decision": "HOLD",
+   "route": "lighton-written",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lighton-written",
+   "decision_other_prior": "HOLD lighton-written",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6871 router cell test, NO STORED TEXT: one interior page with no text per book (30 books), read by LightOnOCR-3-1B exactly as the 1800+ GPU print lane reads (gpu-print-gpu.sh, FP8), judged blind by Opus against the image (wrong-page controls 2/2 refused, planted 2/2 caught). lighton counts every drawn page; lighton-written only the pages the lane guards (pageVerdict) write. A page not written stays scans-only, the current route. Rule fixed before the read (RULE.md beside the results): the written row's wrong text <= 4% and P(acc >= 0.8) >= 0.9.",
+   "routes": [
+    {
+     "id": "scans-only",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "judge_planted": null,
+     "mean": 0.5014409976831773,
+     "ci90": [
+      0.0505988908112903,
+      0.95024314182707
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.19955,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lighton",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      18,
+      30,
+      10
+     ],
+     "k": 18,
+     "n": 30,
+     "wrong": 10,
+     "wrate": 0.3333333333333333,
+     "top": [
+      [
+       "O6",
+       "18/30"
+      ],
+      [
+       "O8",
+       "16/30"
+      ],
+      [
+       "E2",
+       "13/30"
+      ]
+     ],
+     "judge_planted": null,
+     "mean": 0.5941170552240628,
+     "ci90": [
+      0.4494039956538506,
+      0.7302974340458469
+     ],
+     "var": 0.007309422348484848,
+     "p80": 0.005,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lighton-written",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      18,
+      29,
+      10
+     ],
+     "k": 18,
+     "n": 29,
+     "wrong": 10,
+     "wrate": 0.3448275862068966,
+     "top": [
+      [
+       "O6",
+       "18/29"
+      ],
+      [
+       "O8",
+       "16/29"
+      ],
+      [
+       "E2",
+       "13/29"
+      ]
+     ],
+     "judge_planted": null,
+     "mean": 0.6135763149809624,
+     "ci90": [
+      0.4670484460314849,
+      0.7516909612325203
+     ],
+     "var": 0.007414151925078044,
+     "p80": 0.010025,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lighton-written",
+   "before": null
   }
  ],
  "tests": [
@@ -21643,6 +21809,24 @@
     1
    ],
    "0/1"
+  ],
+  [
+   "english-blank-pre1800/unknown",
+   "lighton",
+   [
+    1,
+    1
+   ],
+   "18/30"
+  ],
+  [
+   "english-blank-pre1800/unknown",
+   "lighton-written",
+   [
+    1,
+    1
+   ],
+   "18/29"
   ]
  ]
 }

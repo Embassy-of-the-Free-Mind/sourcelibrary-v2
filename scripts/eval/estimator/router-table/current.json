@@ -1,8 +1,8 @@
 {
  "_prior_art": "PRIOR ART: none — looked in scripts/eval/estimator/router-table/ (dated builds and rules.json only; nothing names the live table) and scripts/lib/ocr-routing-table.json (hand-edited production routes, not the k/n decisions).",
  "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
- "table": "2026-10-29-cheap-routes-7701",
+ "table": "2026-10-30-german-cheaper-7701",
  "set": "2026-10-30",
- "why": "The newest full build (#7752, #7701 cheap routes): the gex45 first-read cron lines were set from it on 2026-10-29 (German and French read 4 a call, no correction pass; Latin arm c). The earlier 2026-10-29-first-read-7701 build is superseded.",
+ "why": "The newest full build (#7701 german-cheaper: German cells german-blank, german-blank-fraktur, german-blank-antiqua; no cheaper German first-read route passes, so every live cron route keeps its decision — German and French read 4 a call, Latin arm c). It includes the 2026-10-30 en-pre1800 HOLD (#7808). The 2026-10-29-cheap-routes-7701 build is superseded.",
  "waivers": []
 }
