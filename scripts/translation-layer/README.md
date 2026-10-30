@@ -42,6 +42,14 @@ Phase 11 attaches each external work (an x node) to ONE existing work after
 clustering, so the external side cannot reshape the denominator it is measured
 against. `external_landing` in the report gives per-source counts, before and after.
 
+**Newspapers are one work each (#7751).** USTC catalogues every newspaper issue
+as its own record (no sn), which made 31% of German and 28% of Dutch "works"
+single issues. Phase 11 groups issues (`classification_1 = 'Newspapers'`) by
+place + title head, or by printer for issues whose title is only their news,
+and flags those works `newspaper: true`. The report's `newspapers` block gives
+works with each newspaper counted once beside works excluding newspapers; quote
+the latter for book-translation shares. `WG_NEWSPAPERS=0` restores the old count.
+
 Outputs land in `scripts/output/` (gitignored, regenerable):
 `external-translation-works.jsonl`, `quarantine-sl-works.jsonl`,
 `ustc-latin-clusters.jsonl`, `cluster-external-priors.jsonl`,
