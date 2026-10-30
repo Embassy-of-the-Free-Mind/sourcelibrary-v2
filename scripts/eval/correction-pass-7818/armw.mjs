@@ -19,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { OUT, ROOT, J, W, sha, SEED, arg, imageFor, correctionRead, servedCorrection, servedArmc, shuffle, makeRng } from './lib.mjs';
 import { CORRECT_MODEL, GPU_TEMPLATE } from '../../batch/cli-ocr-lane.mjs';
@@ -139,7 +140,7 @@ async function gpuCollect() {
   for (const p of J('ws/set.json').kept) {
     const x = d[p.slug]; if (!x) continue;
     const img = path.join(OUT, 'img', `W-${p.slug}.jpg`);
-    if (!fs.existsSync(img) || sha(fs.readFileSync(img)) !== x.image_sha256) { badImage++; continue; }
+    if (!fs.existsSync(img) || crypto.createHash('sha256').update(fs.readFileSync(img)).digest('hex') !== x.image_sha256) { badImage++; continue; }
     if (String(x.text || '').replace(/\W/g, '').length < 30) { short++; continue; }   // the GPU-draft read's own floor
     fs.writeFileSync(path.join(OUT, 'texts', `W-${p.slug}.gpu.txt`), x.text); n++;
   }
