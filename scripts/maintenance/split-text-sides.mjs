@@ -46,7 +46,8 @@ Reply with ONLY one line of JSON: {"A": "left" or "right" or "unsure", "B": "lef
 /** The --text-sides value for one answer: 'lr', 'rl', or null (unsure, both the same side, or unparseable). */
 export function sidesFrom(answer) {
   // The last flat JSON object: a reply sometimes states its answer twice.
-  const objs = String(answer || '').match(/\{[^{}]*\}/g) || [];
+  // An Arabic comma (U+060C) between keys is the model writing in the page's script, not a refusal.
+  const objs = String(answer || '').replace(/\u060C/g, ',').match(/\{[^{}]*\}/g) || [];
   let j;
   try { j = JSON.parse(objs[objs.length - 1] ?? ''); } catch { return null; }
   if (j.A === 'left' && j.B === 'right') return 'lr';

@@ -35,6 +35,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { decodeShortlinkCode } from '../lib/shortlink-code.mjs';
+import { revalidatePaths } from '../lib/revalidate.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find((a) => !a.startsWith('--'));
@@ -126,6 +127,11 @@ try {
       // this the archived spreads keep their old positive numbers there beside the leaves (gate book, 2026-10-30).
       const sync = spawnSync(process.execPath, [path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'workers', 'sync-pages-content.mjs'), `--book=${bookId}`], { encoding: 'utf8', env: process.env, timeout: 300_000 });
       console.log(`  supabase pages: ${(sync.stdout || sync.stderr || '').trim().split('\n').pop()}`);
+      // The book page is ISR- and CDN-cached with the old page count (gate run: 17 pages shown for 32): tell the cache.
+      try {
+        const rv = await revalidatePaths([...new Set([`/book/${book.slug || bookId}`, `/book/${bookId}`])], { quiet: true });
+        console.log(`  revalidated: ${rv?.revalidated ?? '?'} path(s)`);
+      } catch (e) { console.log(`  REVALIDATE FAILED (${e.message}): the book page may show the old page count until its ISR expires`); }
       console.log(`  SWAPPED: pages ${before.pages} → ${after.pages}, readable ${before.readable} → ${after.readable}, translated ${before.translated} → ${after.translated}; ${redirects.length} redirect(s)`);
       console.log(`  check: https://sourcelibrary.org/book/${book.slug || bookId}`);
     }

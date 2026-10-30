@@ -57,6 +57,7 @@ describe('the text a leaf starts with (leavesForFrame)', () => {
     expect(sidesFrom('{"A": "right", "B": "left"}')).toBe('rl');
     // A reply that states its answer twice (gate book p.10) is read by its last object.
     expect(sidesFrom('{"A": "left", "B": "right"} {"A": "left", "B": "right", "evidence": "y"}')).toBe('lr');
+    expect(sidesFrom('{"A": "left", "B": "right"\u060C "evidence": "z"}')).toBe('lr');
     expect(sidesFrom('{"A": "left", "B": "left"}')).toBeNull();
     expect(sidesFrom('{"A": "unsure", "B": "right"}')).toBeNull();
     expect(sidesFrom('no json')).toBeNull();
