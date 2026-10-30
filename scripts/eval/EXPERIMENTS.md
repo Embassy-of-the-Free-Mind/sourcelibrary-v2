@@ -137,6 +137,30 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-30 · Can the existing merge lane be applied as is? (#7761)
+<!-- PRIOR ART: scripts/analysis/llm-verify-work-merges.mjs (the proposer; June validation 16/16); 2026-10-29-work-identity-recall-7761.md (the recall gap this closes part of); scripts/eval/work-recall/merge-precision.mjs (the second judge). -->
+
+**Why.** About one live book in six has an edition or translation under another work_id (previous entry). The coverage report shows the merge lane has judged only 8,411 of 53,111 author-linked live books (16%).
+
+**Run.** `llm-verify-work-merges.mjs` on all 5,226 author blocks (CONC 32, rolling pool) and `--mega` on the 37 authors with >50 work_ids: `gemini-3.1-flash-lite`, thinking off, temperature 0, ~6 minutes plus ~9 minutes. 1,510 + 267 HIGH groups. Then `merge-precision.mjs --n all`: `claude -p --model sonnet` (subscription, no tools) reads every BOOK in each group (title, author, year, language, pages; up to 4 per existing id) and gives one verdict.
+
+| | groups | all same work | volume or part | container / commentary / excerpt | different work | unsure |
+|---|---|---|---|---|---|---|
+| normal blocks | 1,510 | **975 (64.6%)** | 116 | 162 | 110 | 147 |
+| mega authors | 267 | **131 (49.1%)** | 27 | 50 | 30 | 29 |
+
+The 40-author pilot (the largest normal blocks) was worse, 6/20, with the Suyuti, Ptolemy and Avicenna groups mixing treatises, a single book of the *Canon*, and collected volumes.
+
+**By hand, accepted groups only.** 40 drawn uniformly from the normal 975 and 20 from the mega 131: **60/60 right.** They are respelt reprints (Linnaeus *Systema vegetabilium* 1774/1784/1797), duplicate scans (Libavius *Alchemia* 1597), translations (Alberti *De re aedificatoria* Latin 1485, Italian 1546–1833, French 1553; Medina *Arte de navegar* in Spanish, French, Dutch; Bullinger's *Confessio* in Latin, German, French), manuscript witnesses of one text (Flexel, Cod. Pal. germ. 325 and 836), and a Nôm and a quốc ngữ *Kim Vân Kiều* of 1894. Verdicts by title and record, not by page image.
+
+**Apply plan (dry run).** 1,106 accepted groups → 1,105 planned (1 has no existing id), 1,620 book writes, 101 of them hidden books that carry a retired id, 1,370 retired ids kept as aliases. Backup: `scripts/output/verified-work-merges-backup-*.json` holds each book's full before-state.
+
+**Applied 2026-10-30.** 1,620 books moved (0 changed since plan), 1,105 `work_id_merges` rows, `sync-books-catalog.mjs` 3,345 rows, 0 errors. Of the 59 frame books the judge found with an unlinked sibling on 2026-10-29, **15 now share a work_id with it** (27 of 228 judged pairs), so the judge-as-called miss rate on that frame falls from 59/291 (20.3%) to 44/291 (15.1%). Known flaw: the surviving work_title is the winner id's own, so Alberti's work page now reads *L'architettura* rather than *De re aedificatoria*; the proposal's uniform title should win.
+
+**Titles, 2026-10-30.** For the 906 merged works whose books did not already all carry the proposer's title, `title-judge.mjs` (Sonnet CLI) chose between CURRENT and PROPOSED or corrected both: proposed 652, current 32, corrected 222. Of the 222, 166 are found in our own records and 56 are not. I read all 56: they are spelling normalisations or the original-language title (Dürer *Vier Bücher von menschlicher Proportion*, Bodin *De la démonomanie des sorciers*), and one I pinned by hand (Vesalius → *Epitome*). `retitle-verified-work-merges.mjs` wrote 2,383 books (216 hidden) in two runs, 1,814 + 569, after the first died partway. Ids and slugs are unchanged. Live check: https://sourcelibrary.org/work/l-architettura-di-leonbatista-alberti now titles *De re aedificatoria: 11 editions*. Backups are in ops `backups/work-merges-7761/`.
+
+**Not established.** The 17,795 live books with no `author_id` are outside this lane.
+
 ## 2026-10-30 · What share of 1400–1700 works in each vernacular has ever been published in English, and how many are scanned? (#7751)
 <!-- PRIOR ART: scripts/analysis/gap-validation-sample.mjs, gap-validation-cli-adjudicate.mjs, gap-validation-estimate.mjs (the June Latin study, n=1000, #2684: its prompt, verdict schema and binary rule are reused); scripts/translation-layer/09-scan-coverage.mjs (the Latin cluster scan matcher, generalised here); the #7751 over-merge sample (40 Latin works, by hand). -->
 
@@ -354,6 +378,42 @@ Artifacts: `scripts/analysis/eval-data/gap-validation-counts.json`, `-cluster-au
 **Not checked.** No human reader of classical Chinese. One AI judge family (Opus) for both passes. 50 pages, so a kind seen on 2–4 pages has a wide interval. Arm B's books are a different genre mix from arm A's. The served lane was not measured on the encyclopaedias, so this does not show that it fixes the 丨 problem.
 
 Artifacts: `scripts/eval/siku-error-types-5600/` (`draw.mjs`, `draw.json`, `prep.mjs`, `judge.mjs`, `score.mjs`, `results.json` with every HIGH finding and its page URL, `eye.mjs`). Packets, images and raw replies are in the job's scratch directory.
+
+## 2026-10-29 · How many links does the works system miss? (#7761)
+<!-- PRIOR ART: scripts/eval/build-work-gold-set.mjs + score-work-gold-set.mjs (pair precision, human labels; its header says it cannot measure recall); scripts/eval/work-resolver-probe.mjs (lower bound from our own titles); #7751 / PR #7758 (book -> USTC cluster matches, reused as input). -->
+
+**Question.** 46,939 of 51,409 live works (91%) hold one book. How many of those, and of the books in larger works, have a sibling (another edition, a copy, a translation) we hold under a *different* `work_id`?
+
+**Design.** Three instruments, $0: the dumps were already on disk, and the judge is `claude -p --model sonnet` on the team@ subscription with no tools and no project settings (`scripts/eval/work-recall/`). The judge sees title, author, year, language and page count only, never an image, so every call is a catalogue judgement. Relations follow `work-identity-gold-rubric.md`, with volume and part-of kept separate from same work.
+
+1. **Uniform frame.** 300 live books (`visible`, `pages_count > 0`) in a fixed hash order. For each, up to 22 candidates under other work_ids: same `author_id` or surname, rare title tokens (IDF ≥ 6; CJK as character bigrams), plus up to 6 same-author books in another language, because translations share no title words. **Positive control:** the same retrieval run on 200 books whose siblings we already link returns a known sibling for **180/200 (90%)**. A "no sibling" result is therefore informative, and the rate below is a floor by about a tenth. 291 of 300 targets came back (9 were dropped from batch replies).
+2. **USTC.** Book → `work_cluster_id` (author + USTC standard title) from the #7751 output: 3,303 direct links (our `ustc_id`), 114,819 title matches (all books, hidden included; 24,671 live books mapped).
+3. **Open Library.** `ia_identifier` = `ocaid` in the 2026-04-30 OL editions dump on Hetzner (55.96M records). **Only 4,904 of 26,817 IA-sourced live books have an OL edition** (18%), so OL is a narrow instrument here.
+
+For 2 and 3, one pair was judged per outside group that we split across work_ids. The reverse direction (one of our clusters, two outside keys) was not scored. Read by hand, it is mostly the catalogues over-splitting: USTC keys Kepler's *Prodromus* 1596 and 1621 apart, and Grataroli's *Verae alchemiae* 1561 and *Alchemiae… doctrina* 1572.
+
+**Result.**
+
+| instrument | groups we split / groups held ≥2 | judged one work (edition, copy, translation) | judged volume of one set | judged different |
+|---|---|---|---|---|
+| USTC direct | 111 / 344 | 50/111 = 45.0% [36.1–54.3] | 8 | 27 |
+| USTC title-matched (sample) | 2,040 / 3,041 (150 judged) | 68/150 = 45.3% [37.6–53.3] | 6 | 55 |
+| Open Library | 61 / 105 | 21/61 = 34.4% [23.7–47.0] | 20 | 8 |
+
+**Uniform frame, 291 books:** the judge links 59 (same work 44, translation 8, same edition 7); 14 more have an unlinked volume of the same set (4.8% [2.9–7.9]). **All 59 read by hand:** 3 are wrong (Commynes's Charles VIII chronicle against a German Burgundian-war history; a 1525 German Galatians against a French doctrinal tract; one call on a candidate id that is not in the list). 1 is doubtful (Latin against German Psalter prayers, 1552). 6 are part against whole rather than edition against edition (a Gorresio *Rāmāyaṇa* volume against the Schlegel text; one juan of 婦人大全良方 against the whole; overlapping Aristophanes collections). Hence a strict and a lenient count:
+
+| | books | share | live books (×70,968) |
+|---|---|---|---|
+| strict (49) | 49/291 | 16.8% [13.0–21.6] | ~11,950 |
+| lenient (55) | 55/291 | 18.9% [14.8–23.8] | ~13,400 |
+| judge as called (59), single-book works only | 45/187 | 24.1% [18.5–30.7] | |
+| judge as called, books already in a multi-book work | 14/104 | 13.5% [8.2–21.3] | |
+
+By tradition (judge as called): Latin 26/126, German 8/28, French 6/9, English 4/25, other languages 12/42, **Chinese (Kanripo ids) 1/57**. The Kanripo catalogue does this job well, and the local minter does not.
+
+**What the misses look like.** Mostly not hard cases: *Sessanta salmi di David* 1560 and 1585; Ovid's *Metamorphosis* 1613 and 1619; *The Mahatma Letters* 1923 and 1926; two 1503 scans of *Opera Dionysii*; Schöner's *Opera mathematica* 1551 and 1561 under respelt titles; *Musaeum Hermeticum* 1678 against Waite's *Hermetic Museum* 1893. The common cause is the local mint: `local:a:<author>:<title slug>` takes the slug from whichever title or English gloss the record carried, so one respelling or a longer title yields a second work.
+
+**Not established.** Precision of existing links on today's corpus (the June sampled audit found no false distinct-work fusions, n small). Agreement of this judge with a person or a second model (κ). How many of the "different" outside pairs are wrong links on OUR side: in USTC-direct at least one is (a Tacitus *Opera* carrying an Agrippa `ustc_id`).
 
 ## 2026-10-29 · Does the USTC translation-gap estimate survive a different adjudicator? (#7691)
 <!-- PRIOR ART: .claude/docs/translation-gap-paper.md (design, seed 2684, Gemini on 1,000 + Claude on 419, κ 0.82); scripts/analysis/gap-validation-estimate.mjs (the estimator, reused here with --verdicts); scripts/analysis/gap-validation-score.mjs (toBinary rule, copied unchanged). -->
