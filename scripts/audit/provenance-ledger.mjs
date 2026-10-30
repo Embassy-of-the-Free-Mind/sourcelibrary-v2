@@ -32,7 +32,8 @@
  *        Text no model read (imported digital editions, e.g. esukhia-derge-*) is reported apart as
  *        "not model-read; source named", with which of content_hash / edition / licence / source_url
  *        its subdocument records (the Syriac-lane writer standard: scripts/lib/syriac-kraken-lane.mjs).
- *   d  translated pages naming the model      translation.data | translation.text non-empty; translation.model
+ *   d  translated pages naming the model      translation has text (its data or text slot is a non-empty string —
+ *                                            presence only, the words are never read); translation.model
  *   e  full record                            missingProvenance(field, sub) → no missing AND no
  *        not_recorded markers, with an engine block (gemini-engine/1, or a specialist engine). The #4613
  *        writers went live 2026-09-28T16:21Z; a block whose slots are all `not_recorded` is NOT full.
