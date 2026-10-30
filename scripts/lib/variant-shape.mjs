@@ -224,6 +224,65 @@ export function classifyVariant(raw, opts = {}) {
   return { shape: 'clean', matchable: true, people: [v] };
 }
 
+/**
+ * Role words as catalogues abbreviate them, including plurals and the German
+ * forms (Hrsg., Bearb., Übers.) that `ROLE` does not carry. Kept apart from
+ * `ROLE` on purpose: widening `ROLE` would re-classify variants as unmatchable
+ * for every writer that links by name, which is a separate decision.
+ */
+const ROLE_WORD = /^(?:trans(?:l(?:ator|ators|ated)?)?|tr|eds?|editors?|edited|hrsg|herausgegeben|bearb|ubers|uebers|übers|comm(?:entary|entator)?|illus(?:t(?:rator|rated)?)?|engraver|printer|publisher|introd(?:uction)?|pref(?:ace)?|annot(?:ator|ated)?|compil(?:er|ed)?)\.?(?:\s+by)?$/i;
+const roleFromWord = (w) => {
+  const s = w.toLowerCase().replace(/\.$/, '');
+  if (/^(trans|transl|translator|translators|translated|tr|ubers|uebers|übers)/.test(s)) return 'trl';
+  if (/^(eds?|editors?|edited|hrsg|herausgegeben|bearb)$/.test(s)) return 'edt';
+  if (/^comm/.test(s)) return 'cmm';
+  if (/^(illus|engraver)/.test(s)) return 'ill';
+  if (s === 'printer') return 'prt';
+  if (s === 'publisher') return 'pbl';
+  return 'ctb';
+};
+
+/**
+ * Split one person fragment of a `books.author` string into the name and the
+ * role its annotation states (#7787). A bracket that names a role AND another
+ * person ("Plutarch (trans. William W. Goodwin)") is a second contributor, not
+ * a role of the first: it comes back in `extra`, and the first keeps no role.
+ *
+ *   parseContributor('Katherine Tingley (editor)') -> { name: 'Katherine Tingley', role: 'edt', extra: [] }
+ *   parseContributor('trans. Bernadotte Perrin')   -> { name: 'Bernadotte Perrin', role: 'trl', extra: [] }
+ *
+ * `roleFrom` says where the role came from: 'bracket', 'prefix' or 'suffix'.
+ * A caller uses it to decide whether a trailing "(eds.)" covers every name
+ * joined by "&" before it.
+ */
+export function parseContributor(fragment) {
+  let s = String(fragment ?? '').trim();
+  let role = null; let roleFrom = null;
+  const extra = [];
+  s = s.replace(/[([]([^)\]]*)[)\]]/g, (m, inner) => {
+    const words = inner.trim().split(/\s+/);
+    for (let n = Math.min(3, words.length); n >= 1; n--) {
+      const head = words.slice(0, n).join(' ');
+      if (!ROLE_WORD.test(head)) continue;
+      const rest = words.slice(n).join(' ').replace(/^by\s+/i, '').trim();
+      if (/\p{L}{2,}/u.test(rest)) extra.push({ name: rest, role: roleFromWord(words[0]) });
+      else { role = roleFromWord(words[0]); roleFrom = 'bracket'; }
+      return ' ';
+    }
+    return m;
+  });
+  // Outside a bracket a bare "Ed" or "Tr" may be a name, so a prefix or suffix
+  // role needs a full stop, "by", or a word of six letters or more.
+  const plain = (w) => ROLE_WORD.test(w) && (/\.$|\sby$/i.test(w) || w.length >= 6);
+  const pre = s.match(/^((?:\S+\.?)(?:\s+by)?)\s+(?=\S)/);
+  if (pre && plain(pre[1])) { role = roleFromWord(pre[1].split(/\s+/)[0]); roleFrom = 'prefix'; s = s.slice(pre[0].length); }
+  const suf = s.match(/[,\s]+([\p{L}]+\.?)\s*$/u);
+  if (!role && suf && plain(suf[1]) && s.slice(0, suf.index).trim()) {
+    role = roleFromWord(suf[1]); roleFrom = 'suffix'; s = s.slice(0, suf.index);
+  }
+  return { name: s.replace(/\s{2,}/g, ' ').replace(/^[,;:\s]+|[,;:\s]+$/g, '').trim(), role, roleFrom, extra };
+}
+
 /** Drop a trailing/leading role annotation from one person fragment. */
 export function stripRole(s) {
   return String(s ?? '')

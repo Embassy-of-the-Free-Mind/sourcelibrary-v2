@@ -23,7 +23,7 @@
  * people" block, and neither may be loosened to fix the other.
  */
 import { describe, it, expect } from 'vitest';
-import { buildExtenderIndex, classifyVariant, matchKeyVerdict, stripRole } from '../../scripts/lib/variant-shape.mjs';
+import { buildExtenderIndex, classifyVariant, matchKeyVerdict, parseContributor, stripRole } from '../../scripts/lib/variant-shape.mjs';
 
 describe('several people — must NOT be matchable', () => {
   const MULTI: Array<[string, number]> = [
@@ -206,5 +206,37 @@ describe('match-key screen used by the author-link backfill', () => {
   // which is exactly the state the backfill was in before this guard.
   it('without corpus evidence "Johannes" passes — the pre-fix behaviour', () => {
     expect(matchKeyVerdict('Johannes', 'jan-hus').matchable).toBe(true);
+  });
+});
+
+// #7787: real `books.author` fragments. The costly error is giving one person
+// another's role — "Plutarch (trans. Goodwin)" must not make Plutarch the
+// translator — or reading a given name as a role word.
+describe('parseContributor', () => {
+  it('reads a bracketed role', () => {
+    expect(parseContributor('Katherine Tingley (editor)')).toMatchObject({ name: 'Katherine Tingley', role: 'edt', roleFrom: 'bracket' });
+    expect(parseContributor('Henry Wace (eds.)')).toMatchObject({ name: 'Henry Wace', role: 'edt' });
+    expect(parseContributor('Lochner, Johann Hieronymus [Hrsg.]')).toMatchObject({ name: 'Lochner, Johann Hieronymus', role: 'edt' });
+  });
+
+  it('a bracket naming a role AND a person is a second contributor', () => {
+    const p = parseContributor('Plutarch (trans. William W. Goodwin)');
+    expect(p).toMatchObject({ name: 'Plutarch', role: null });
+    expect(p.extra).toEqual([{ name: 'William W. Goodwin', role: 'trl' }]);
+  });
+
+  it('reads a prefix or suffix role', () => {
+    expect(parseContributor('trans. Bernadotte Perrin')).toMatchObject({ name: 'Bernadotte Perrin', role: 'trl', roleFrom: 'prefix' });
+    expect(parseContributor('Muller, translator')).toMatchObject({ name: 'Muller', role: 'trl', roleFrom: 'suffix' });
+  });
+
+  it('a bare "Ed" outside a bracket is a name, not a role', () => {
+    expect(parseContributor('Smith, Ed')).toMatchObject({ name: 'Smith, Ed', role: null });
+    expect(parseContributor('Ed Smith')).toMatchObject({ name: 'Ed Smith', role: null });
+  });
+
+  it('leaves a plain name and a life-date bracket alone', () => {
+    expect(parseContributor('Perrault, Charles')).toMatchObject({ name: 'Perrault, Charles', role: null, extra: [] });
+    expect(parseContributor('Boethius (480-524)').role).toBeNull();
   });
 });
