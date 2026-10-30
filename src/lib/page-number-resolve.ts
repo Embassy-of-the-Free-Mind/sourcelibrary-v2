@@ -1,4 +1,5 @@
 import type { Db, Document } from 'mongodb';
+import { resolveRepeatKeepers, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
 
 /**
  * Resolve a book page from a printed page number (`pages.page_number`).
@@ -88,12 +89,28 @@ export async function resolvePageIdsByNumber(
   if (wanted.length === 0) return {};
   try {
     const rows = await db.collection('pages')
-      .find({ book_id: bookId, page_number: { $in: wanted } }, { projection: { _id: 0, id: 1, page_number: 1, page_type: 1 }, maxTimeMS: 3000 })
+      .find({ book_id: bookId, page_number: { $in: wanted } }, { projection: { _id: 0, id: 1, page_number: 1, page_type: 1, repeat_of: 1 }, maxTimeMS: 3000 })
       .toArray();
     const out: Record<number, string> = {};
+    const repeats: { id: string; page_number: number }[] = [];
     for (const r of rows) {
       if (r.page_type === 'digitizer-insert' || r.page_type === 'archived-spread') continue;
-      if (typeof r.id === 'string' && typeof r.page_number === 'number' && !(r.page_number in out)) out[r.page_number] = r.id;
+      if (typeof r.id !== 'string' || typeof r.page_number !== 'number') continue;
+      // A hidden repeat capture (#5056) keeps its number; the link goes to
+      // the page kept in its place, unless a listed page shares the number.
+      if (typeof r.repeat_of === 'string') { repeats.push({ id: r.id, page_number: r.page_number }); continue; }
+      if (!(r.page_number in out)) out[r.page_number] = r.id;
+    }
+    const open = repeats.filter(r => !(r.page_number in out));
+    if (open.length) {
+      const keepers = await resolveRepeatKeepers(
+        ids => db.collection('pages').find({ book_id: bookId, id: { $in: ids } }, { projection: REPEAT_KEEPER_PROJECTION, maxTimeMS: 3000 }).toArray(),
+        open.map(r => r.id),
+      );
+      for (const r of open) {
+        const keeper = keepers.get(r.id);
+        if (keeper && !(r.page_number in out)) out[r.page_number] = keeper;
+      }
     }
     return out;
   } catch {

@@ -23,7 +23,7 @@ import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
 import { ocrMeasure } from '@/lib/ocr-measure';
 import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
-import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
+import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -199,7 +199,24 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
   // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
-  const [qualityWarnings, scanGaps] = await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
+  // A chapter whose stored pageId is a hidden repeat capture (#5056) opens the
+  // kept capture instead: one batched lookup per book, stored chapters untouched.
+  // The reader's contents panel turns pages client-side, so no redirect would
+  // catch it.
+  const chapters = (book.chapters ?? []) as { pageId?: string; pageNumber?: number }[];
+  const [qualityWarnings, scanGaps, chapterKeepers] = await Promise.all([
+    getQualityWarnings(db, [scopedBookId]),
+    getScanGaps(db, scopedBookId),
+    resolveRepeatKeepers(
+      (ids) => db.collection('pages').find({ book_id: scopedBookId, id: { $in: ids } }, { projection: REPEAT_KEEPER_PROJECTION, maxTimeMS: 3000 }).toArray(),
+      chapters.map((ch) => ch.pageId).filter((id): id is string => typeof id === 'string'),
+    ).catch(() => new Map<string, string>()),
+  ]);
+  const readerChapters = mapChapterPageIds(chapters, chapterKeepers, (id) => {
+    const n = (navPages as { id?: string; page_number?: unknown }[]).find((p) => p.id === id)?.page_number;
+    return typeof n === 'number' ? n : undefined;
+  });
+  const readerBook = readerChapters === chapters ? book : ({ ...book, chapters: readerChapters } as Book);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   // On an English edition the leaf's own words are the text: a stored
@@ -270,7 +287,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
       >
         <Reader2C
-          initialBook={book}
+          initialBook={readerBook}
           initialPage={markedPage}
           initialPageList={serializedNavPages}
           qualityWarnings={qualityWarnings}

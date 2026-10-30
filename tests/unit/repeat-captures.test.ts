@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { planBookRepeats, namesOcclusion, wordCount } from '../../scripts/lib/repeat-captures.mjs';
-import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES, readerPageCountFilters, countReaderListedPages, resolveRepeatKeeper } from '@/lib/reader-pages';
+import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES, readerPageCountFilters, countReaderListedPages, resolveRepeatKeeper, resolveRepeatKeepers, mapChapterPageIds } from '@/lib/reader-pages';
 import { VISIBLE_PAGE_MATCH as TS_VISIBLE, isRepeatCapture } from '@/lib/page-counts';
+import { resolvePageIdsByNumber } from '@/lib/page-number-resolve';
 import { classifyRepeatTarget, FAILING } from '../../scripts/audit/repeat-of-orphans.mjs';
 import { VISIBLE_PAGE_MATCH as MJS_VISIBLE, isVisiblePage } from '../../scripts/lib/page-counts.mjs';
 
@@ -165,5 +166,87 @@ describe('planBookRepeats (#5056)', () => {
 
   it('counts words with the detector\'s tokenizer (tags stripped)', () => {
     expect(wordCount('<page-num>12</page-num> Hermes Trismegistus')).toBe(3);
+  });
+});
+
+describe('chapter links to a hidden repeat open the kept page (#5056)', () => {
+  const pages = byId(
+    { id: 'p168', page_number: 168 },
+    { id: 'p170', page_number: 170, repeat_of: 'p168' },
+    { id: 'p254', page_number: 254, repeat_of: 'p252' },
+    { id: 'p252', page_number: 252, repeat_of: 'p250' }, // a chain
+    { id: 'p250', page_number: 250 },
+    { id: 'orphan', page_number: 300, repeat_of: 'gone' },
+    { id: 'p10', page_number: 10 },
+  );
+  const finder = () => {
+    const calls: string[][] = [];
+    const find = async (ids: string[]) => { calls.push(ids); return ids.map(id => pages.get(id)).filter(Boolean) as object[]; };
+    return { calls, find };
+  };
+
+  it('resolveRepeatKeepers maps only repeats with a keeper, in two batched lookups', async () => {
+    const { calls, find } = finder();
+    const keepers = await resolveRepeatKeepers(find, ['p10', 'p170', 'p254', 'orphan', 'p170', 'missing']);
+    expect([...keepers]).toEqual([['p170', 'p168'], ['p254', 'p250']]);
+    // 1: the chapter pages; 2: their keepers; then one hop for the chain, one for the orphan's target.
+    expect(calls[0]).toEqual(['p10', 'p170', 'p254', 'orphan', 'missing']);
+    expect(calls[1].sort()).toEqual(['gone', 'p168', 'p252']);
+    expect(calls.length).toBeLessThanOrEqual(4);
+  });
+
+  it('no repeats among the ids: one lookup, empty map', async () => {
+    const { calls, find } = finder();
+    expect((await resolveRepeatKeepers(find, ['p10', 'p168'])).size).toBe(0);
+    expect(calls.length).toBe(1);
+    expect((await resolveRepeatKeepers(find, [])).size).toBe(0);
+    expect(calls.length).toBe(1);
+  });
+
+  it('mapChapterPageIds swaps hidden ids, keeps everything else, never mutates', () => {
+    const chapters = [
+      { title: 'A', pageNumber: 10, pageId: 'p10' },
+      { title: 'Des petits garçons', pageNumber: 170, pageId: 'p170' },
+      { title: 'No id', pageNumber: 200 },
+    ];
+    const snapshot = JSON.parse(JSON.stringify(chapters));
+    const out = mapChapterPageIds(chapters, new Map([['p170', 'p168']]));
+    expect(out.map(c => c.pageId)).toEqual(['p10', 'p168', undefined]);
+    expect(out[1]).toMatchObject({ title: 'Des petits garçons', pageNumber: 170 });
+    expect(chapters).toEqual(snapshot);
+    expect(mapChapterPageIds(chapters, new Map())).toBe(chapters);
+    expect(mapChapterPageIds(chapters, new Map([['other', 'x']]))).toBe(chapters);
+  });
+
+  it('the chapter number follows the keeper, so the reader marks it current on the page it opens', () => {
+    const chapters = [{ title: 'A', pageNumber: 160, pageId: 'p160' }, { title: 'B', pageNumber: 170, pageId: 'p170' }];
+    const nums: Record<string, number> = { p160: 160, p168: 168 };
+    const out = mapChapterPageIds(chapters, new Map([['p170', 'p168']]), id => nums[id]);
+    expect(out[1]).toEqual({ title: 'B', pageNumber: 168, pageId: 'p168' });
+    // Unknown keeper number: the id still moves, the stored number stays.
+    expect(mapChapterPageIds(chapters, new Map([['p170', 'p168']]), () => undefined)[1].pageNumber).toBe(170);
+  });
+});
+
+describe('book page: printed-number links skip a hidden repeat (#5056)', () => {
+  it('resolvePageIdsByNumber maps a repeat number to its keeper, a shared number to the listed page', async () => {
+    const rows = [
+      { id: 'p168', page_number: 168 },
+      { id: 'p170', page_number: 170, repeat_of: 'p168' },
+      { id: 'dupe', page_number: 12, repeat_of: 'p10' },
+      { id: 'p12', page_number: 12 },
+      { id: 'p10', page_number: 10 },
+    ];
+    const db = {
+      collection: () => ({
+        find: (filter: { page_number?: { $in: number[] }; id?: { $in: string[] } }) => ({
+          toArray: async () => filter.page_number
+            ? rows.filter(r => filter.page_number!.$in.includes(r.page_number))
+            : rows.filter(r => filter.id!.$in.includes(r.id)),
+        }),
+      }),
+    };
+    const out = await resolvePageIdsByNumber(db as never, 'B', [168, 170, 12]);
+    expect(out).toEqual({ 168: 'p168', 170: 'p168', 12: 'p12' });
   });
 });
