@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
 import { displayablePriorPicks } from '@/lib/ft-prior-guard';
-import { licenseDisplay } from '@/lib/types';
+import { displayedImageRights } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
 import { useRouter } from 'next/navigation';
@@ -540,8 +540,9 @@ export default function BibliographicInfo({
                   // own rights statement and stays as it is. 3,740 live books
                   // store a rightsstatements.org URI or a Creative Commons deed
                   // URL rather than one of our seven ids, and this used to print
-                  // the bare URL where a licence should be.
-                  const lic = licenseDisplay(book.image_source?.license);
+                  // the bare URL where a licence should be. When the holding library
+                  // has stated its own licence, that is shown instead (#7771).
+                  const lic = displayedImageRights(book.image_source).license;
                   if (!lic) return null;
                   return (
                     <div className="flex gap-2">
@@ -556,12 +557,25 @@ export default function BibliographicInfo({
                     </div>
                   );
                 })()}
-                {book.image_source.attribution && (
-                  <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
-                    <span className="text-stone-200">{book.image_source.attribution}</span>
-                  </div>
-                )}
+                {(() => {
+                  const { credit, terms } = displayedImageRights(book.image_source);
+                  return (
+                    <>
+                      {credit && (
+                        <div className="flex gap-2">
+                          <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
+                          <span className="text-stone-200">{credit}</span>
+                        </div>
+                      )}
+                      {terms && (
+                        <div className="flex gap-2">
+                          <span className="text-stone-500 w-24 flex-shrink-0">Terms:</span>
+                          <span className="text-stone-200">{terms}</span>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
                 {book.image_source.shelfmark && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Shelfmark:</span>
