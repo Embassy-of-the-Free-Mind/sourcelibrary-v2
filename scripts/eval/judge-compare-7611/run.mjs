@@ -325,7 +325,8 @@ async function adjudicate() {
   const done = new Set(readJsonl(vf).filter((r) => r.adj).map((r) => r.key));
   // Every real item where a Gemini judge's accept differs from Opus's stored one: one adjudication per (item, judge).
   const todo = [];
-  for (const who of ['flash', 'argon']) for (const v of firstVerdicts(path.join(OUT, `verdicts-${who}.jsonl`))) {
+  // --judge=X: one judge's disagreements (the 150 are split 75 per judge, so a judge run later is not crowded out).
+  for (const who of arg('judge') ? [arg('judge')] : ['flash', 'argon']) for (const v of firstVerdicts(path.join(OUT, `verdicts-${who}.jsonl`))) {
     const it = items.get(v.id); const op = texts[v.id]?.opus;
     if (!it || it.set !== 'real' || !op || op.accept === v.verdict.accept) continue;
     const key = `${who}:${v.id}`; if (!done.has(key)) todo.push({ key, who, it, g: v.verdict, op });
@@ -436,6 +437,11 @@ function score() {
       const gx = base.filter((r) => r.author === 'GPU>GEM');
       const d2 = (s) => { const a = s.filter((r) => r.author === 'GPU>GEM'), b = s.filter((r) => r.author === 'GPU'); return a.length && b.length ? (rate(a, (r) => r.g) - rate(a, (r) => r.o)) - (rate(b, (r) => r.g) - rate(b, (r) => r.o)) : null; };
       if (gx.length) out.real[w].self_preference_GPUGEM_minus_GPU = { diff: +d2([...gx, ...gp]).toFixed(3), ci_book: bookCI([...gx, ...gp], d2) };
+      // The declared confound: GPU is Chinese and Tibetan only, so the contrast is read again inside Chinese.
+      const zh = (s) => s.filter((r) => r.lang === 'Chinese');
+      out.real[w].self_preference_within_Chinese = { n: { GEM: zh(gg).length, GPU: zh(gp).length, 'GPU>GEM': zh(gx).length },
+        GEM_minus_GPU: { diff: d([...zh(gg), ...zh(gp)]) == null ? null : +d([...zh(gg), ...zh(gp)]).toFixed(3), ci_book: bookCI([...zh(gg), ...zh(gp)], d) },
+        GPUGEM_minus_GPU: { diff: d2([...zh(gx), ...zh(gp)]) == null ? null : +d2([...zh(gx), ...zh(gp)]).toFixed(3), ci_book: bookCI([...zh(gx), ...zh(gp)], d2) } };
     }
   }
   // Noise floor: the same judge twice on the 30-item subset.
@@ -472,6 +478,27 @@ function score() {
         opus_calls_per_100: +(100 * (flagged + 0.2 * passed) / rows.length).toFixed(1), saved_per_100: +(100 - 100 * (flagged + 0.2 * passed) / rows.length).toFixed(1),
         gemini_alone_missed_share: F.length ? +(F.filter((r) => r.g).length / F.length).toFixed(3) : null, gemini_alone_false_alarms: rows.filter((r) => !r.g && !r.fail).length };
     }
+  }
+  // Against the adjudicated verdict (the adjudicator's accept where one ran, else the two agree or Opus's stands):
+  // each judge's miss rate (passed a failing page) and false alarms (failed a passing page), by group. A judge that goes
+  // easy on its own family misses more on GEM than on GPU, relative to the other judge.
+  out.vs_adjudicated = {};
+  for (const w of ['flash', 'argon']) {
+    const adjOf = new Map(adj.filter((r) => r.judge === w).map((r) => [r.id, r.adj.accept]));
+    out.vs_adjudicated[w] = {};
+    for (const grp of groups) {
+      const rows = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id) && (grp === 'ALL' || x.author === grp)).map((x) => {
+        const g = V[w].get(x.id).accept, o = opusOf(x.id).accept; return { book: x.book_id, g, o, t: adjOf.has(x.id) ? adjOf.get(x.id) : o, unadj: g !== o && !adjOf.has(x.id) };
+      });
+      if (!rows.length) continue;
+      const F = rows.filter((r) => !r.t), P = rows.filter((r) => r.t);
+      out.vs_adjudicated[w][grp] = { n: rows.length, fails: F.length, unadjudicated_disagreements: rows.filter((r) => r.unadj).length,
+        gemini_miss: kn(F.filter((r) => r.g).length, F.length), opus_miss: kn(F.filter((r) => r.o).length, F.length),
+        gemini_false_alarm: kn(P.filter((r) => !r.g).length, P.length), opus_false_alarm: kn(P.filter((r) => !r.o).length, P.length) };
+    }
+    const sp = (s, who) => { const a = s.filter((r) => r.author === 'GEM' && !r.t), b = s.filter((r) => r.author === 'GPU' && !r.t); return a.length && b.length ? rate(a, (r) => r[who]) - rate(b, (r) => r[who]) : null; };
+    const rows = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id) && ['GEM', 'GPU'].includes(x.author)).map((x) => ({ book: x.book_id, author: x.author, g: V[w].get(x.id).accept, o: opusOf(x.id).accept, t: adjOf.has(x.id) ? adjOf.get(x.id) : opusOf(x.id).accept }));
+    out.vs_adjudicated[w].miss_GEM_minus_GPU = { gemini: { diff: sp(rows, 'g') == null ? null : +sp(rows, 'g').toFixed(3), ci_book: bookCI(rows, (s) => sp(s, 'g')) }, opus: { diff: sp(rows, 'o') == null ? null : +sp(rows, 'o').toFixed(3), ci_book: bookCI(rows, (s) => sp(s, 'o')) } };
   }
   W('score.json', out);
   console.log(JSON.stringify(out, null, 1));
