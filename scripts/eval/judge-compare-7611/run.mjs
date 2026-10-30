@@ -206,8 +206,11 @@ const IMG_OPUS = 'the file ./page.jpg in your working directory (open it with Re
 /** A pool's Gemini quota, read for free (`agy -p /quota`): { weekly, fiveHour } remaining fractions, or null. */
 async function poolQuota() {
   const { parseQuota } = await import('../../lib/agy-pools.mjs');
-  const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json'], { encoding: 'utf8', timeout: 60e3, env: process.env });
-  return parseQuota(r.stdout || '');
+  for (let i = 0; i < 3; i++) {   // a reading can come back empty (timeout): try again before giving up
+    const q = parseQuota(spawnSync('agy', ['-p', '/quota', '--output-format', 'json'], { encoding: 'utf8', timeout: 90e3, env: process.env }).stdout || '');
+    if (q) return q;
+  }
+  return null;
 }
 
 async function geminiCall(prompt, jpeg, model) {
@@ -240,6 +243,7 @@ async function judge() {
   const MAX_WEEK_DROP = Number(arg('max-week-drop') ?? 0.10), MIN_5H = Number(arg('min-5h') ?? 0.30);
   const limits = await import('../../lib/model-limits.mjs');
   const q0 = J0.by === 'agy' ? await poolQuota() : null;
+  if (J0.by === 'agy' && !q0) { console.error('no quota reading for this pool: the stop rule cannot run, so the judge does not start'); process.exit(3); }
   console.log(`${who}${repeat ? ' repeat' : ''}: ${todo.length} of ${todoBase.length} to judge; AGY_HOME=${process.env.AGY_HOME || '(default)'} quota ${JSON.stringify(q0 && { weekly: q0.weekly, fiveHour: q0.fiveHour })}`);
   let stop = null, next = 0, calls = 0;
   const one = async (it) => {
