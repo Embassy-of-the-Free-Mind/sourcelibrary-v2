@@ -37,6 +37,11 @@ measure = `judged` throughout, never accuracy. Results in `scripts/eval/results/
   `ocr_wrong_leaf` and `image_first_words` (a check that the judge really opened the image: the words it reports
   were found in the transcription on 334/365 pages for Opus, 343/365 for Gemini; the rest are mostly scripts
   where the OCR itself misreads).
+- **Image pick caveat (found by CI after the run):** the draw took `display_photo` first, as draw.mjs does. For
+  33 of 410 items (5 split from a spread, 28 cropped) that can be the whole spread rather than the page's half. The
+  fidelity score is unaffected (it is against the transcription); the image fields on those items may be off, but
+  none carries a wrong-leaf flag, Opus marked 2 of them `ocr_misread`, and none is among the contained pages
+  (`image-pick-note.json`). draw-wave2.mjs now uses `getPageSource()`.
 
 ### Design
 

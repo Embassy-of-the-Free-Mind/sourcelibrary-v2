@@ -35,6 +35,7 @@ import { MongoClient } from 'mongodb';
 import { resetSeed, seededRand } from '../lib/paired-stats.mjs';
 import { bookHand, editionYear } from '../../lib/ocr-trust-gate.mjs';
 import { armOf, familyOf, MACHINE_ARMS, period4 } from './arm.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true] : []).filter(Boolean));
 const CENSUS = args.census, OUT = args.out, SEED = Number(args.seed || 20261030), TARGET = Number(args.target || 300);
@@ -129,7 +130,7 @@ async function drawPage(book, { arm = null, prompt = null } = {}) {
   });
   if (!ok.length) return null;
   const pick = ok[Math.floor(seededRand() * ok.length)];
-  const page = await pages.findOne({ book_id: book.id, page_number: pick.page_number }, { projection: { id: 1, page_number: 1, page_type: 1, script_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'translation.data': 1, 'translation.model': 1, 'translation.prompt_version': 1, 'translation.prompt_hash': 1, 'translation.source': 1, 'translation.updated_at': 1, 'translation.engine': 1, display_photo: 1, photo: 1, cropped_photo: 1 } });
+  const page = await pages.findOne({ book_id: book.id, page_number: pick.page_number }, { projection: { id: 1, page_number: 1, page_type: 1, script_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'translation.data': 1, 'translation.model': 1, 'translation.prompt_version': 1, 'translation.prompt_hash': 1, 'translation.source': 1, 'translation.updated_at': 1, 'translation.engine': 1, display_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1 } });
   return { page, n_candidates: ok.length };
 }
 
@@ -153,7 +154,9 @@ async function toItem(kind, b, r, extra = {}) {
     translation_source: t.source, translated_at: t.updated_at || null, ocr_model: o.model || null, ocr_source: o.source || null,
     ocr_at: o.updated_at || null, translation_older_than_ocr: !!(t.updated_at && o.updated_at && new Date(t.updated_at) < new Date(o.updated_at)),
     ocr_chars: o.data.length, translation_chars: t.data.length, ocr_hash: sha16(o.data), translation_hash: sha16(t.data),
-    image: page.display_photo || page.cropped_photo || page.photo || null,
+    // getPageSource: a page split from a spread keeps the WHOLE spread in display_photo. The 2026-10-30 run used
+    // display_photo first (draw.mjs's pick): 33 of its 410 items were split or cropped pages (image-pick-note.json).
+    image: getPageSource(page),
     url: `https://sourcelibrary.org/book/${b.id}?page=${page.page_number}`, n_candidates: r.n_candidates,
     ...extra,
   };

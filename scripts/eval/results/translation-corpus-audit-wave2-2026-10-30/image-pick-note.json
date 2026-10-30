@@ -1,0 +1,269 @@
+{
+ "note": "Items whose judged image was display_photo while getPageSource() picks the split half (split_from_spread) or cropped_photo: the judge may have seen the whole spread. Fidelity is scored against the transcription and is unaffected; the image fields (ocr_misread, ocr_wrong_leaf) on these items may be off. None of them is among the 14 contained pages. Found by the page-image-pick CI check on PR #7826.",
+ "items": [
+  {
+   "id": "a8d7515a7b",
+   "kind": "main",
+   "split": true,
+   "cropped": false,
+   "used": "https://images.sourcelibrary.org/pages/69c887286c6f3cc53c859fc0/0071.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c887286c6f3cc53c859fc0/spwen6-0071.jpg"
+  },
+  {
+   "id": "3024125a36",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/69804b901fb2ba7cf1d43a18/1118.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/698203c57d3063913d0e8796.jpg"
+  },
+  {
+   "id": "d61e5e722e",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6985ca71d6a3951c0372a83f/0341.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6985ca71d6a3951c0372a83f/6986033755a0e500e0db614f.jpg"
+  },
+  {
+   "id": "1365c1f037",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6977813098a09acb229a3f0d/0206.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6977813098a09acb229a3f0d/6977af1f5c311f3e8256e1f9.jpg"
+  },
+  {
+   "id": "4d8413f3e4",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697711607e1d5a07ae945879/0265.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697711607e1d5a07ae945879/697758e8f6c605df6cdcc0be.jpg"
+  },
+  {
+   "id": "f7e30b3cb5",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6985ca730084f4f4247ccf80/0293.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6985ca730084f4f4247ccf80/698605ec78e24f42ea5a7a4d.jpg"
+  },
+  {
+   "id": "11a9d610bb",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6974b649457dd8909910b9fd/0054.jpg",
+   "source": "https://images.sourcelibrary.org/pages/6974b649457dd8909910b9fd/0054-full.jpg"
+  },
+  {
+   "id": "ed8c72f6a8",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/698255f20fdc0a098b59a3c0/0089.jpg",
+   "source": "https://images.sourcelibrary.org/pages/698255f20fdc0a098b59a3c0/0089-full.jpg"
+  },
+  {
+   "id": "1416df15f1",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697d9c9fb401034cf463d2bb/0214.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697d9c9fb401034cf463d2bb/697dc75dfbfdf817724460df.jpg"
+  },
+  {
+   "id": "7954ece5b9",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697d9ca3f53719fc3b56053a/0175.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697d9ca3f53719fc3b56053a/697dbe52fac5511e4ac12dfb.jpg"
+  },
+  {
+   "id": "ce3e51ad92",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6970e35b9b09d309d780a258/0214.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6970e35b9b09d309d780a258/6973b1c8404c5a2d18c0e822.jpg"
+  },
+  {
+   "id": "2df5f771f7",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/698255eeba4a4f5294b2a026/0256.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/698255eeba4a4f5294b2a026/6982b5f3b5148dc042ca7a6a.jpg"
+  },
+  {
+   "id": "46e51befce",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6980941fe1cdc8e435ed69b2/0733.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6980941fe1cdc8e435ed69b2/69814be99c1d2c1902a3e98b.jpg"
+  },
+  {
+   "id": "ca3dad37e8",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697d9c989788c62e1238c868/0133.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697d9c989788c62e1238c868/697db7409b19c4464b766fc3.jpg"
+  },
+  {
+   "id": "368192097c",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/695aa9adbe4023bd34bd6d24/0019.jpg",
+   "source": "https://images.sourcelibrary.org/pages/695aa9adbe4023bd34bd6d24/0019-full.jpg"
+  },
+  {
+   "id": "8d84b401cd",
+   "kind": "main",
+   "split": true,
+   "cropped": false,
+   "used": "https://images.sourcelibrary.org/pages/69c8a23a6c6f3cc53c85e39a/0003.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c8a23a6c6f3cc53c85e39a/spqrnk-0003.jpg"
+  },
+  {
+   "id": "c6a8a5ba56",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6984e84f99e67a12430e0685/0081.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6984e84f99e67a12430e0685/6984f48059e735b314cf140c.jpg"
+  },
+  {
+   "id": "394e943bb6",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697b079910a96682ef80935d/0094.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697b079910a96682ef80935d/697b5323b3856af37829c03c.jpg"
+  },
+  {
+   "id": "0edf1c4dd1",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/69c834886c6f3cc53c84e598/0034.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c834886c6f3cc53c84e598/split-69c8470d1d54fe7ac6a5d123-full.jpg"
+  },
+  {
+   "id": "6f3b8c94d6",
+   "kind": "main",
+   "split": true,
+   "cropped": false,
+   "used": "https://images.sourcelibrary.org/pages/69c7f95e6c6f3cc53c84266e/0025.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c7f95e6c6f3cc53c84266e/sptlut-0025.jpg"
+  },
+  {
+   "id": "c8acda474c",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6985ca722dee84d6b6afece9/0020.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/6985ca722dee84d6b6afece9/6985cd5c39240576a676d910.jpg"
+  },
+  {
+   "id": "20b2fe267c",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697751fccb3de08f8055b176/0746.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697751fccb3de08f8055b176/69780175d8468987f7d6d25a.jpg"
+  },
+  {
+   "id": "3e9ed66992",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/699ef9ff1ac826c051774733/0110.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/699ef9ff1ac826c051774733/699f1167af76c6cfc7a30d25.jpg"
+  },
+  {
+   "id": "9c41618182",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6970e3859b09d309d780a2de/0114.jpg",
+   "source": "https://images.sourcelibrary.org/pages/6970e3859b09d309d780a2de/0114-full.jpg"
+  },
+  {
+   "id": "c0a92bd2d5",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697b0799f4d9463650506f0d/0037.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697b0799f4d9463650506f0d/697b124f92f87269c1b36a01.jpg"
+  },
+  {
+   "id": "9279207eda",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/69c738676a0f3d112faf779a/split-69c77147e9af1b8c699f0b45.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c738676a0f3d112faf779a/split-69c77147e9af1b8c699f0b45-full.jpg"
+  },
+  {
+   "id": "3e57053dca",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/6978ee3a598a6361bba7fbaf/0063.jpg",
+   "source": "https://images.sourcelibrary.org/pages/6978ee3a598a6361bba7fbaf/0063-full.jpg"
+  },
+  {
+   "id": "dbebf45af1",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/69804b9019712623cff10895/0156.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/69804b9019712623cff10895/6980ade4c95125424a02b092.jpg"
+  },
+  {
+   "id": "99e0c888b0",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/698420e1d453c841a6c1d045/0148.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/698420e1d453c841a6c1d045/69843d7f5009dd3a2f4ffacb.jpg"
+  },
+  {
+   "id": "9044cc3901",
+   "kind": "main",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/697a8395e680cef7cedae3a1/0780.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/697a8395e680cef7cedae3a1/697b4daae4c22e165b1f5175.jpg"
+  },
+  {
+   "id": "c9408e81ad",
+   "kind": "swap",
+   "split": true,
+   "cropped": false,
+   "used": "https://images.sourcelibrary.org/pages/69c89be56c6f3cc53c85d483/0019.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c89be56c6f3cc53c85d483/spow0s-0019.jpg"
+  },
+  {
+   "id": "e57ac15434",
+   "kind": "repeat",
+   "split": false,
+   "cropped": true,
+   "used": "https://images.sourcelibrary.org/pages/698255eeba4a4f5294b2a026/0256.jpg",
+   "source": "https://images.sourcelibrary.org/cropped/698255eeba4a4f5294b2a026/6982b5f3b5148dc042ca7a6a.jpg"
+  },
+  {
+   "id": "7ef116a3d7",
+   "kind": "repeat",
+   "split": true,
+   "cropped": false,
+   "used": "https://images.sourcelibrary.org/pages/69c7f95e6c6f3cc53c84266e/0025.jpg",
+   "source": "https://images.sourcelibrary.org/pages/69c7f95e6c6f3cc53c84266e/sptlut-0025.jpg"
+  }
+ ]
+}
