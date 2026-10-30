@@ -136,6 +136,31 @@ started are dropped, B runs before centre and live runs). Planned: about 45–70
   famous texts (Faust, Zarathustra, Grimm), which Gemini cuts as recitation. Absolute German calls a page from this
   panel overstate the queue's; the comparison between settings is paired and stands.
 
+**Amendment 2 (STEER 1, Derek 20:52Z; written 21:45Z, before any phase-B run and before any fit): a Bayesian,
+sequential surface.**
+- *Prior data.* Every earlier agy first read (a plain read of the image, not a correction) with known settings on a
+  #6012 congruent typed page, this design's own reads left out, stratified by prompt version
+  (`prior-inventory.mjs`: 21,590 aligned pages in 246 books; the kept and stored Flash reads there are almost all
+  corrections of lite drafts; the plain reads are a few dozen pages, all at 1 a call, image as served, thinking low).
+  For the calls surface, also #7701's measured agy calls a page at read@4 and read@8 on queue pages
+  (`routes-7701.json`). A prior point at "served" is coded x2 = +1 (the panel's median served long edge is 2,350 px);
+  L1/L2 stay out of the surface, as preregistered.
+- *Power prior.* Each prior point's variance is divided by a0 (0 < a0 ≤ 1), one a0 per response and language, chosen by
+  empirical Bayes (`bayes.mjs estimateA0`: the marginal likelihood of this design's results at the settings where both
+  exist). Calls: earlier read@4 against L1/L2. CER: no earlier read exists at the centre or the live setting, so the
+  earlier (1, served, low) reads are compared with B05 (1, 1600, low) on the same books where they overlap, else
+  pooled; the surface at a0 = 0 (no prior) is reported beside it. Coefficients get a vague N(0, τ²) prior besides
+  (τ = 5 pp for CER, 1 call for calls).
+- *Sequential runs.* C1–C3 and L2 are made first (noise floor, a0, pool check). Then the remaining Box-Behnken runs
+  are made in batches of up to 3 per language, each batch the runs that most shrink the summed posterior variance of
+  predicted CER over the cheap end (the 18 settings with 4 or 8 pages a call; `bayes.mjs rankNext`). A language stops
+  when every cheap-end setting with predicted calls ≤ 0.9 × live is decided (its 95 % posterior interval for δ lies
+  wholly ≤ 1 pp or wholly > 1 pp), or its Box-Behnken runs run out, or the 1,750 cap is reached. Runs the prior or the
+  posterior already pins down are not made; the report counts the runs and calls saved against the full 17.
+- *Decision.* The preregistered rule, with the posterior interval for δ in place of the bootstrap one; the
+  least-squares bootstrap fit is reported beside it wherever 10 or more runs exist. The admin page draws the
+  prior-only and the posterior surfaces.
+
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book
