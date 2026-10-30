@@ -515,7 +515,9 @@ if (STAGE === 'read') {
   if (PER_CALL > 1) {
     // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
     const order = new Map(ids.map((id, i) => [id, i]));
-    const isRead = (p) => { try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
+    // --no-alone: a page its block left unread (not-read.jsonl) is done too, so a resumed design run does not call it again.
+    const leftUnread = new Set(NO_ALONE && fs.existsSync(path.join(OUT, 'not-read.jsonl')) ? fs.readFileSync(path.join(OUT, 'not-read.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
+    const isRead = (p) => { if (leftUnread.has(p.id)) return true; try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
     const runs = [];
     for (const p of [...pages].sort((a, b) => order.get(a.id) - order.get(b.id))) {
       if (isRead(p)) { console.log(`  ${p.page_number} already read`); continue; }

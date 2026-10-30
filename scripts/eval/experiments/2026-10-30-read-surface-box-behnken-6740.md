@@ -114,8 +114,27 @@ live setting changes only through a PR, only if the router picks the optimum. La
 (PERO draft > agy, #7752), so a Latin optimum is confirmed against read@4 here and can replace arm c only after a paired
 test against arm c on gex45 (a follow-up brief, not this job).
 
-**Budget.** At most 2,000 agy calls in all; the design is capped at 1,500 (a run in progress finishes; runs not
+**Budget.** At most 2,000 agy calls in all; the design is capped at 1,500 (1,750 since Amendment 1) (a run in progress finishes; runs not
 started are dropped, B runs before centre and live runs). Planned: about 45–70 calls a run × 34 runs.
+
+**Amendment 1 (2026-10-30 21:20Z, after phase A's 10 runs, before phase B and before any fit).**
+- *Unusable reads.* Phase A showed Gemini filter stubs ("This request was blocked by Gemini's filters …") and one
+  restarted reply returned as 1-a-call reads. The rule above scored them as wrong text, and the identity-guard
+  exclusion then dropped their pages as "reference problems". They are neither: `cli-ocr.mjs` flags every one
+  (`meta.chatter`), and apply never writes such a read. So: a read with `meta.chatter` set or a write guard of
+  truncated / loop / empty is **unusable**, and counts as a page the setting did not deliver (as an unread page: its
+  calls stay in the cost; for CER the target takes the 1-a-call read, as above). A target with **no usable read in any
+  of the four 1-a-call runs** cannot be read by this route at all (production leaves it scans-only): it leaves the CER
+  analysis and is reported as *unreadable by the route*. The identity-guard exclusion applies to usable reads only.
+  The scorer bug found on the way (centring marks `->Name.<-` ate the text between two centred lines; Faust read at
+  CER 0.88, really 0.00) is fixed in `score.mjs` and changes no rule.
+- *Budget.* Phase A used 509 calls for 10 runs (15 of them in two runs restarted after image-host 429s, with the image
+  cache filled first). The plan line (45–70 calls × 34 runs) did not fit its own 1,500 cap, and the drop order would
+  have cut Box-Behnken runs and broken the design. The design cap is now **1,750** and the confirmation's **250**; the
+  2,000 total is unchanged.
+- *Observed, not a rule:* German blocks here are refused (filter cut) far more often than on the queue: the DTA holds
+  famous texts (Faust, Zarathustra, Grimm), which Gemini cuts as recitation. Absolute German calls a page from this
+  panel overstate the queue's; the comparison between settings is paired and stands.
 
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
