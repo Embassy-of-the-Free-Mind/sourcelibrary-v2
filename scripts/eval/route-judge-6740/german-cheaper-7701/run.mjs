@@ -313,7 +313,7 @@ function scoreRoutes(sps, wr, key, V, seedBase) {
 }
 function pair(R, a, b, seed) {
   const ra = new Map(R[a]._rows.map((r) => [r.page_id, r])), both = R[b]._rows.filter((r) => r.written && r.judged && ra.get(r.page_id)?.written && ra.get(r.page_id)?.judged).map((r) => [ra.get(r.page_id), r]);
-  const c = { n: both.length, both: both.filter(([x, y]) => x.accept && y.accept).length, a_only: both.filter(([x, y]) => x.accept && !y.accept).length, b_only: both.filter(([x, y]) => !x.accept && y.accept).length, neither: both.filter(([x, y]) => !x.accept && !y.accept).length };
+  const c = { n: both.length, books: new Set(both.map(([x]) => x.book_id)).size, both: both.filter(([x, y]) => x.accept && y.accept).length, a_only: both.filter(([x, y]) => x.accept && !y.accept).length, b_only: both.filter(([x, y]) => !x.accept && y.accept).length, neither: both.filter(([x, y]) => !x.accept && !y.accept).length };
   return { ...c, p_a_within_008: pairedP(c, 0.08, seed), rule: `P(acc_${a} >= acc_${b} - 0.08) >= 0.9, Dirichlet(1 + counts)` };
 }
 
@@ -373,7 +373,7 @@ function evidence() {
       const rows = pages.filter((sp) => wr[route][sp.page_id]?.text).map((sp) => ({ ...sp, v: vOf(route, sp.page_id) })).filter((r) => r.v);
       routes[`${route}-written`] = { ...agg(rows), note: 'the drawn pages the route writes, judged; a page not written stays scans-only' };
     }
-    const paired = Object.fromEntries(Object.entries(sc.strata[stratum].paired).map(([p, x]) => [p.split('|').map((r) => `${r}-written`).join('|'), { n: x.n, both: x.both, a_only: x.a_only, b_only: x.b_only, neither: x.neither }]));
+    const paired = Object.fromEntries(Object.entries(sc.strata[stratum].paired).map(([p, x]) => [p.split('|').map((r) => `${r}-written`).join('|'), { n: x.n, books: x.books, both: x.both, a_only: x.a_only, b_only: x.b_only, neither: x.neither }]));
     const name = stratum === 'all' ? CELL : `${CELL}-${stratum}`;
     un.cells[name] = { task: 'ocr', lang: 'German', frame: s.cells[CELL].frame, routes, paired };
     if (stratum === 'all') bys.cells[`${CELL}|print`] = { routes, paired };
@@ -385,7 +385,7 @@ function evidence() {
 }
 
 /**
- * apply: each drawn page gets its best ACCEPTED written agy read (highest fidelity; a tie goes to the cheaper route),
+ * apply: each drawn page whose live read@4 the judge ACCEPTED (no wrong-text, invented or wrong-leaf defect) gets it,
  * written by cli-ocr.mjs apply under that route's guards (first reads only, printed only), stamped with the first-read
  * lane. GPU-alone and GPU>agy reads are not written here (no production lane writes them for German yet); where only
  * they were accepted the page is left to the live lane. Holds are untouched.
@@ -395,7 +395,8 @@ function apply() {
   const cost = (route) => sc.strata.all.routes[route].usd_per_accepted_page ?? 1;
   const plan = {};
   for (const sp of s.cells[CELL].pages) {
-    const cands = Object.entries(ROUTES).filter(([, R]) => R.kind === 'read').map(([route]) => {
+    // only the live route's reads: the lane stamp (agy-first-read-7701) is credited to read@4 by the nightly sampler
+    const cands = Object.entries(ROUTES).filter(([route]) => route === LIVE).map(([route]) => {
       const k = key.find((x) => x.route === route && x.kind === 'item' && x.page_id === sp.page_id); const v = k && V.get(k.judged_as);
       return v?.accept && !wt(v) && !invented(v).length && wr[route]?.[sp.page_id]?.text && !wr[route][sp.page_id].later_read ? { route, f: Number(v.fidelity) } : null; }).filter(Boolean)
       .sort((a, b) => b.f - a.f || cost(a.route) - cost(b.route));
