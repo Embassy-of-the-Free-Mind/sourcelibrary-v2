@@ -505,6 +505,45 @@ PR #7798: `tr_year` and `register` on `CatalogPrior` / `PriorTranslation`. `isAn
 - **Grouping.** Read 1 ran once per work. A group can still lump two texts; the per-book rows carry the group id.
 - **Wilson on a weighted estimate** uses the Kish effective n, an approximation. Bootstrap percentile intervals are within 0.2 points of it.
 
+## 2026-10-30 · Does the English GPU print lane carry to print before 1800? (#6871)
+
+The GPU (gex45, LightOnOCR-3-1B) has about a day of English 1800+ pages left in its frame. English before 1800 was the
+nearest untested cell, so the route brief asked for a cell test before any bulk run.
+
+**Design.** The rule (`RULE.md`) was committed in 6795f682e before the GPU read (17:15Z) and before any judge call.
+- **Frame:** visible English books dated 1400-1799 by `year`, held for a GPU lane or not held, not a manuscript, not an
+  unsplit spread, not in the 1800+ frame, with pages that have no text. 319 books, 41,224 pages. 72 of the books
+  (25,858 pages) are possible spreads (not `split_checked`, no crop data).
+- **Sample:** one interior page with no text per book, 30 books in a seeded order. Possible spreads were not left out
+  (11 of the 30).
+- **Route:** `gpu-print-gpu.sh` and `gpu-print-read.py` unchanged (FP8, util 0.85, 2,400 px). The written set is
+  `pageVerdict`, the lane's guards.
+- **Judge:** blind Opus with the route-judge-6740 prompt against the image, plus wrong-page and planted controls.
+  `plant-ocr-errors.mjs` has no English planter, so only kind D (a line dropped) ran; B (a numeral) found no site in the
+  one item it was tried on.
+
+**Result.**
+
+| | pages | accepted | wrong text |
+|---|---|---|---|
+| drawn | 30 | 18 | 10 |
+| written (past the guards) | 29 | **18** | **10** |
+
+- **Rule:** wrong text must be ≤ 4% with P(acc ≥ 0.8) ≥ 0.9. The cell got 34% wrong text and P = 0.01, so it **fails**.
+- **Guards:** they refused 1 page (other_script).
+- **Defects:** O6 meaning-changing misreads on 18/29 pages and O8 normalisation on 16/29. Wrong text includes:
+  - "kils him" read so that the killing of Darius is lost;
+  - "80 Canons into 70" read as 30;
+  - a dropped carried-over first line;
+  - zodiac signs turned into letters;
+  - a Hebrew divine name and a Greek word garbled;
+  - a column of dates shifted by a line;
+  - the show-through of a title page read as text on a blank leaf.
+- **Long s:** "ſhel ves" was read as "the lyes". The long s and the early modern type are where the 1800+ engine breaks.
+
+**Not measured.** A LightOnOCR draft corrected by agy Flash with the image (the router's next test) was not measured, and
+neither was a fine-tuned or early-modern model. agy calls in this test: 0. Opus judge calls: 33.
+
 ## 2026-10-29 · How many links does the works system miss? (#7761)
 <!-- PRIOR ART: scripts/eval/build-work-gold-set.mjs + score-work-gold-set.mjs (pair precision, human labels; its header says it cannot measure recall); scripts/eval/work-resolver-probe.mjs (lower bound from our own titles); #7751 / PR #7758 (book -> USTC cluster matches, reused as input). -->
 
