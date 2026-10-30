@@ -50,9 +50,15 @@ case "${1:-}" in
     rc=$?; mins=$(( ($(date +%s) - start) / 60 ))
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1); vram=${vram:-?}
     left=""; case "$vram" in ''|*[!0-9]*) ;; *) [ "$vram" -gt 500 ] && left=" GPU still holds ${vram} MiB after the task: stop its model." ;; esac
-    if [ $rc -eq 0 ]; then dest=done; verdict=done; else dest=failed; verdict="FAILED rc=$rc$([ $rc -eq 124 ] && echo ' (timeout)')"; fi
+    # A task that stopped on purpose to let a waiting task have the card (exit 75 + a YIELDED line, e.g. the SigLIP
+    # chunks, scripts/gpu/siglip2-6871) still lands in failed/, where its re-queuer looks, but is not paged as a
+    # failure: on 2026-10-29 one yield paged HIGH "FAILED rc=75" with nothing wrong.
+    yielded=""; [ $rc -eq 75 ] && grep -q '^YIELDED' "$OUT/$name/task.log" 2>/dev/null && yielded=1
+    if [ $rc -eq 0 ]; then dest=done; verdict=done
+    elif [ -n "$yielded" ]; then dest=failed; verdict="yielded (rc=75, resumable)"
+    else dest=failed; verdict="FAILED rc=$rc$([ $rc -eq 124 ] && echo ' (timeout)')"; fi
     mv "$Q/running/$task" "$Q/$dest/$task"
     echo "$(now) $verdict $name ${mins}m vram=${vram}MiB"
-    page "GPU task $verdict: $name" "${mins} min.$left Log: gex45:$OUT/$name/task.log${iss:+ (#$iss)}. Next: $(n=$(ls -1 "$Q"/pending | head -1); n=${n%.sh}; echo "${n:-queue empty}")" "$([ $rc -eq 0 ] && [ -z "$left" ] && echo low || echo high)" ;;
+    page "GPU task $verdict: $name" "${mins} min.$left Log: gex45:$OUT/$name/task.log${iss:+ (#$iss)}. Next: $(n=$(ls -1 "$Q"/pending | head -1); n=${n%.sh}; echo "${n:-queue empty}")" "$({ [ $rc -eq 0 ] || [ -n "$yielded" ]; } && [ -z "$left" ] && echo low || echo high)" ;;
   *) sed -n '2,16p' "$0"; exit 2 ;;
 esac
