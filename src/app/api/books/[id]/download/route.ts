@@ -39,6 +39,7 @@ import {
   fetchFacsimilePdfImage,
   generateImagesZipStream,
 } from '@/lib/export-page-images';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -105,6 +106,7 @@ async function generateTxtDownload(db: Db, book: Book, pages: Page[], format: 't
   lines.push(`Source: ${BASE_URL}/book/${book.id}`);
   lines.push(`Downloaded: ${now}`);
   lines.push(`License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)`);
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('');
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');

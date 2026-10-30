@@ -17,6 +17,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
 import { separateTermDefinitions } from '@/lib/term-definitions';
 import { registerPdfFonts, type PdfFontNames } from '@/lib/pdf-fonts';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 export const PDF_MARGINS = { top: 72, bottom: 72, left: 72, right: 72 };
 
@@ -499,6 +500,7 @@ export function writePdfColophon(
     'Downloaded: ' + opts.now,
     'License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)',
     'https://creativecommons.org/licenses/by-sa/4.0/',
+    AI_TRAINING_NOTICE,
     '',
     'This edition carries a Trithemian imprimatur, an invisible provenance',
     "mark in the tradition of the printer's device, asserting that this",
