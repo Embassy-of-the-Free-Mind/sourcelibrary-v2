@@ -13,6 +13,7 @@ import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
 
 export const preferredRegion = 'fra1';
 
@@ -64,7 +65,7 @@ export async function GET(
     const tenantFilter = tenant === 'default' ? { $in: [tenantId, null] } : tenantId;
 
     // Default: exclude detected_images (large array unused by the reader)
-    const projection = full ? undefined : { detected_images: 0 };
+    const projection = full ? undefined : PAGE_API_PROJECTION;
     let page = await db.collection('pages').findOne(
       { id, tenantId: tenantFilter },
       projection ? { projection } : undefined

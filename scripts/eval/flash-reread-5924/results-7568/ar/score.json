@@ -1,0 +1,1048 @@
+{
+ "lang": "ar",
+ "pages": 250,
+ "books": 10,
+ "C_outcomes": {
+  "corrected": 213,
+  "unchanged": 18,
+  "contain": 14,
+  "no-answer": 5
+ },
+ "misleading": {
+  "L": [
+   193,
+   [
+    71.6,
+    82
+   ]
+  ],
+  "C": [
+   44,
+   [
+    13.4,
+    22.8
+   ]
+  ],
+  "R": [
+   144,
+   [
+    51.4,
+    63.6
+   ]
+  ]
+ },
+ "bar_a_halves": {
+  "C": true,
+  "R": false
+ },
+ "worse_than_L": {
+  "C": 24,
+  "R": 32
+ },
+ "bar_b_no_page_worse": {
+  "C": false,
+  "R": false
+ },
+ "bar_c_C_beats_R": true,
+ "prefer": {
+  "CR": {
+   "C": 175,
+   "R": 41,
+   "tie": 34,
+   "material_loss_R": 127,
+   "material_loss_C": 28
+  },
+  "CL": {
+   "C": 203,
+   "L": 5,
+   "tie": 41,
+   "material_loss_L": 170,
+   "material_loss_C": 5
+  },
+  "RL": {
+   "R": 184,
+   "L": 40,
+   "tie": 25,
+   "material_loss_L": 151,
+   "material_loss_R": 32
+  }
+ },
+ "sign_test_CR_p": 6.58e-21,
+ "route": "C: Opus correction",
+ "contains": [
+  {
+   "slug": "6a08a754871243dce9def039-p52",
+   "true_contain": false,
+   "reason": "The leaf is blank with no ink at all, so the draft's handwritten Jāmī preface is invented and is not on this page."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p57",
+   "true_contain": false,
+   "reason": "The leaf is blank with no ink at all, so the draft's handwritten Jāmī preface is invented and is not on this page."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p59",
+   "true_contain": false,
+   "reason": "The leaf is blank with no ink at all, so the draft's handwritten Jāmī preface is invented and is not on this page."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p43",
+   "true_contain": false,
+   "reason": "The draft is an invented passage that repeats one paragraph almost word for word and does not follow the text on this leaf, which is a Maghribi-hand Almagest page on rising times with a red-ink circle diagram."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p59",
+   "true_contain": false,
+   "reason": "The draft is mostly invented, with looping repeated phrases such as \"مجموعتين\" and \"فإذا كانت معلومة\", so it is not a reading of this leaf's text on zenith angles and its three red diagrams."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p78",
+   "true_contain": false,
+   "reason": "The draft is mostly invented; apart from a few phrases (فلتكن الفلك, أقول, فلتكن على هذا المثال), it does not follow this leaf's text on the eccentric and epicyclic hypotheses."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p89",
+   "true_contain": false,
+   "reason": "After the first few lines and the heading, the draft is an invented text that does not follow this leaf's prose about the moon's prosneusis and the dated observation."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p103",
+   "true_contain": false,
+   "reason": "The draft is an invented passage that repeats one sentence more than fifteen times; it is not this leaf's text, a dense page of lunar distance computations without a diagram."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p132",
+   "true_contain": false,
+   "reason": "The draft is largely invented, with repetitive loops of \"فلك القسم\" and \"الكسرة\", and does not follow this leaf's text on eclipse magnitudes, its triangle diagram or its marginal notes."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p298",
+   "true_contain": false,
+   "reason": "Most of the draft does not match this leaf: apart from a few phrases it is invented and garbled, its four identical margin notes (\"الخط ك د ج\") are not the page's real marginalia (including the rotated note in the left margin), and its red headings are misread, so it needs a full new reading rather than correction."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p309",
+   "true_contain": false,
+   "reason": "Only the first line or so of the draft matches the page; the rest is invented filler that repeats phrases like \"ثانية وثلث ثانية\" without reproducing what the page actually says, which runs through degrees, minutes and seconds, and it badly garbles the left-margin note."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p321",
+   "true_contain": false,
+   "reason": "Apart from a few numbers, the draft is invented prose padded with repeated filler (\"فإنه … فإنه …\") and is not this leaf's text; it also misreads the red headings and mixes up where the left-margin note goes."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p333",
+   "true_contain": false,
+   "reason": "Only the opening lines and the red headings roughly match this leaf; the rest of the body is invented, repeating the phrase \"بالاجزاء الستين فلكل منها\" over and over, and the margin notes are misread, so it needs a full new reading rather than correction."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p346",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text: it repeats one invented paragraph on parallax (\"فصل في بيان اختلاف المنظر…\") four times, while the page itself is about the planets, with sections headed \"وعلى هذا المثال ايضا\" and \"فلنرسم شكلا للصورة\"."
+  }
+ ],
+ "R_unread": 0,
+ "R_filter_cut": 17,
+ "books_failing_25_check_L": 10,
+ "strip": {
+  "visible": 59,
+  "in_L": 5,
+  "in_C": 0,
+  "in_R": 13
+ },
+ "identical_C_L_verdict_mismatch": 0,
+ "worse_C_list": [
+  {
+   "slug": "6a08a754871243dce9def039-p6",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads 'السورة' (sura) for print 'الصورة' (figure/constellation). Z refuses and gives only a correction note, no page text. Y is faithful apart from 'سلامان' for 'سلمان'."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p12",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X has 'لم يقسم برهان' for 'لم يقم برهان' (no proof has been established) and drops 'حقيقيا' and 'الخاصة'. Z refuses. Y matches the print."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p16",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'كالأبرة' (needle) for 'كالأبوة' (fatherhood) and drops 'جعل'. X refuses and gives only corrections. Z is faithful."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p18",
+   "reasons": [
+    "C misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X has 'لجد' (not a word) for 'نجد' and 'تداول بعضها' for 'تداولت فكان بعضها', all in footnotes. Z refuses. Y is faithful."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p52",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "The image is a blank white page (10 KB file). X=Z invent a handwritten Nastaʿlīq preface to 'الدرة الفاخرة'. Y correctly says blank."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p57",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Blank white page. X=Z invent a preface ('الحمد لله الذي جعل قلوب العارفين...'). Y says blank."
+  },
+  {
+   "slug": "6a08a754871243dce9def039-p59",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Blank white page. X=Z invent a preface. Y says blank."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p87",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "X transcribes p.156 only. Y and Z are identical: both pages, but p.157 served before p.156, and a few misreads (يثور for يعثر, مطبوع for مطموع)."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p90",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "X and Y identical: both pages, with a stray بفرس ل and بصفة for بصقة. Z omits all of p.163."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p93",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "Y and Z are identical: both skip from فى الرجال to the next sentence, losing وفى المرضى … مع رذيلة الشره, and read بالمديح as بالرجال and سبب الكسل as ايضاب الكل. X complete."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p96",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "X and Y are identical: they read اماتة الشهوات (killing the passions) as امانة and drop تركيبه فقد and هو المخوف اذ. Z faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p99",
+   "reasons": [
+    "no answer"
+   ],
+   "why": "X and Z are identical and in order (p.180 then p.181), with لقوت for لفوت. Y serves p.181 before p.180, so the chapter علاج الحزن opens mid-page."
+  },
+  {
+   "slug": "69ea3ea1300d991d0f1d3bd6-p64",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y drops four lines (the opening of the اطرابلس section). X turns 'حرب لاقح ابدا' into 'حرب لا تقع ابدا' (inverts it) and reads بتافرت. Z's errors are minor: sic'd tribe names (درمك, ورقلة) and لاقع."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p43",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y and Z are identical invented boilerplate repeated 3x; X tracks the page (chord values 156;40,1 / 117;31,25 / 23;19,59 correct) but garbles the opening lines."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p59",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y garble into repetitive fluent text; Z follows the page ('فلنضع الآن مثل هذه الصورة ... النقطة المتوسطة للسماء من القطعة التي تلي المشرق') though with label slips."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p78",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y are fluent but unrelated to the lines; Z follows the eccentric/epicycle proof ('فلما ان اربعة اضلاع ب د ك ز اضلاعه المتقابلة متساوية') with scattered garbles."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p89",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z keeps Hipparchus's observation at Alexandria ('ابرخس كتب انه رصد بالاسكندرية ... في سنة ماية وسبعة وتسعين'); X=Y lose it into fluent garble."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p103",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z invent a short passage and loop it; Y follows the parallax page line by line (headings 'اما الاول منها', 'واما الاثنان الباقيان') though garbled and pulls strip words into a margin."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p132",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z is one line plus an API error; X=Y cover the page but misread the eclipse text ('الكسرة' for 'الكسوف'). Hard page; preference for coverage only."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p298",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X follows every line of the proof down to 'التسعة والتسعين ... الى السبعة والثلثين'; Y=Z compress it, repeat a margin note 4x and invent a heading."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p309",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Hard page. X's four lines are right ('سبع مائة واحد وخمسون جزءا ...') then an API error; Y=Z cover the page but turn every value into repeating 'ثانية' nonsense, which misleads more."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p321",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y follows the Mercury section ('وأيضا في كوكب عطارد', 'من الدلو', 'تسعة وستين جزءا', 'اثنين وعشرين جزءا ونصفا'); X=Z are 'فإنه'-looped confabulation."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p333",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z reads the heading and construction ('أما مسيرة هذين الكوكبين في العرض والميول العظمى', 'فليكن ايضاً في السطح الذي على زوايا قائمة'); X=Y loop a stock phrase."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p346",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X follows the heliacal-visibility page (زحل ... أربعة عشر جزءا, 'فلترسم شكلا للصورة', 'بلاد ... أطول ما يكون النهار به أربعة عشر ساعة وربع') with misreads; Y=Z invent a parallax paragraph and repeat it."
+  }
+ ],
+ "worse_R_list": [
+  {
+   "slug": "69f32843aeeee0fa38c642f2-p100",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z gives the numbers right: diameter 'الفان وخمسمائة وخمسة واربعون' farsakh and ratio 'سبعة الى اثنين وعشرين'. X has 'الفان وخمسة وخمسة' and '27 to 21' plus the facing strip; Y garbles the ratio and tags the first half of the page as margin."
+  },
+  {
+   "slug": "69e4209e813af15d2bdc1eb7-p148",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Prose on Abu Amir. X faithful (وزُئين(١), الوحدة, للنظر, folio markers). Y writes الوحشة and drops folio markers and note anchors. Z misreads the footnoted word as ورُزِّئين, renames البركات الخيّال as المخيّال, garbles the MS reading."
+  },
+  {
+   "slug": "69e4209e813af15d2bdc1eb7-p169",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Prose on the raqib with several short poems. Z faithful, including fn (١) MS رِئْبَة and folios 45a/45b. X garbles verse فما زالت الألطاف تحكم to زلت ألّا لطّاف نحكم, reads بالنول, and writes the MS note as رِيبَة (same as text). Y also voids that note, drops رقيب after استرضاء, vocalises the prose."
+  },
+  {
+   "slug": "69e4209e813af15d2bdc1eb7-p198",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "End of a chapter, 4-line poem, start of باب من احب بالوصف. Z faithful (MS قايل, folio 16b). Y the same text but يهيئه, البيونات and no folio marker. X's text is good but footnote 1 reads 'MS قليل', the text's own word, so it no longer reports the MS variant قايل."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p36",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X stops at the foot of p.54 and omits all of p.55. Y drops من نشأ على and reads التفلسف as التلف. Z has both pages; misreads التفلسف as التعلم."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p39",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y omits all of p.60. Z reads لعلل (ailments) as لمال (money) and mis-numbers the pages 90-91; X faithful apart from توقف for توفق."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p45",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.73 (آخر مراتب الفضائل). Y drops several phrases incl. الى الفضيلة and ولا من الحظوظ النفسانية. X complete; only تشبث بحال for تشيع لحال."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p48",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.79. X drops أخس جزء فيه and شرا from the three-fold maxim (good/evil/neither) and reads بعبادة الهلع. Y near-complete."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p51",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.84 and has a garbled 'وا themتها'. Y drops ذاتية/لا حسية and العلم ومن الرذيلة and reads امر الهى as اهم. X complete; ينشر read as يسر."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p60",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X serves p.103 before p.102, so the text runs out of sequence. Y in order and faithful bar السعيد; Z the same with wrong page numbers 103-104 and ضياع العمر."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p69",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X omits all of p.120. Y drops الولد بوالده so God 'commanded the father' and did not command the father - contradiction. Z faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p72",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.127. X has both pages but mislabels them 127/128 and garbles several words (ينجبان, الجليل, الدلة). Y faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p78",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.139. Y drops the negation in الى ان لا يملأوا عيونهم and reads اترك as أرى. X faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p81",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z transcribes p.145 only and says so. X serves p.145 before p.144 and drops حتى ينكر ذهنه. Y in order and faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p84",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z omits all of p.151. X drops محشودين بين أيديهم الجنائب … والخدم and لا الصحة. Y faithful."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p87",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X transcribes p.156 only. Y and Z are identical: both pages, but p.157 served before p.156, and a few misreads (يثور for يعثر, مطبوع for مطموع)."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p90",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X and Y identical: both pages, with a stray بفرس ل and بصفة for بصقة. Z omits all of p.163."
+  },
+  {
+   "slug": "69ef3d4272c1376fdf2aff50-p99",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X and Z are identical and in order (p.180 then p.181), with لقوت for لفوت. Y serves p.181 before p.180, so the chapter علاج الحزن opens mid-page."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p176",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads the body well ('الشهوات الرديئة ... المراة اذا احبلت شهرا وتسمى الوحم', 'شهوة الطين والفحم', 'سادوق قال اعطهم لحم البقر السمين') but opens with an invented 'النفساء ان يقيئوا' for 'الشبه فان نعسوا'. Y garbles throughout ('السهوار الأدم', 'الطيز'); Z stops after two lines with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p194",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads the page ('وقرنفل منها في ماء رمان حامض', 'اهرن اذا رات الغثي والقي', 'ضماد للهضم عند الضعف'). Y invents '٤ دراهم يابس' and garbles Ahrun's name and much else; Z stops in line 2 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p247",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'اذا كان الدم يسيل من اعلى الفم', 'وان كان الدم يخرج من المقعدة', 'اذا وضع محاجم الحلاق'. X makes the blood a 'الورم' and a 'الجرح' and garbles the cupping line; Z stops after five words with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p300",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'من كان نحيف البدن ويسهل عليه القي فاجعل استفراغه من فوق ولا تفعل ذلك في الشتاء', 'قال وقد قال بقراط', 'من احتاج ان يسقيه الخربق'. Z garbles these ('الماليخار', 'وافعل ذلك اثنتا', 'المروك'); X has no page text, only a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p318",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads the purgatives list: 'الخربق والسقمونيا', 'عصارة قثا الحمار', 'الشبرم', 'الغاريقون فعله قريب من فعل شحم الحنظل', 'القنطوريون الصغير'. X garbles almost every drug name ('السمون', 'بذ الحمارة', 'سوع'); Z stops in line 1 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p336",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads 'ابن ماسويه في اصلاح المسهل الصبر يفتح السدد ويبري اليرقان', 'السقمونيا يسهل صفرا ويضر بالمعدة والكبد ويذهب بشهوة الطعام', 'شحم الحنظل يورث مغصا وسحجا'. Y reverses 'يذهب بشهوة' to 'يدر شهوة' and garbles Ibn Masawayh's line; Z stops in line 1 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p371",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'قال والحنظل يضر بالعصب', 'يلقى على رطل سكنجبين ... اوقية افتيمون اقريطي', 'شرب الفقاع بعد الطعام يلين البطن', 'عصارة قثا الحمار وسقمونيا ومرارة الثور'. X garbles these ('بالعصارة', 'سكمون', 'يسهل الطعام'); Z stops in line 1 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p406",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads 'ووضع المحاجم على البطن', 'قال ابن ماسويه القنابر يعقل الطبيعه', 'لادن مطبوخ امسك البطن', 'حنين في كتاب المعده'. Y puts the cupping glasses on the back ('الظهر'), turns 'امسك البطن' into 'اسهال البطن' and Hunayn into 'جنين'; Z stops in line 1 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p424",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z reads the astringents list ('الهندبا اذا طبخ واكل بالخل عقل البطن', 'ورق الزيتون البري', 'وقال جالينوس بزر الحماض', 'بولس الطراثيث'). X drops line 1 and turns Galen into 'سوس'; Y stops in line 1 with a Gemini filter message."
+  },
+  {
+   "slug": "69d5abced0bd3547a5654189-p442",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z reads 'حب جيد لاستطلاق البطن قال اهرن يوخذ عفص فج وافيون وحب الاس البري', 'فان الاسهال الكيلوسي يحدث عن الكبد'. X garbles the recipe and the chylous-diarrhoea line; Y stops after one line with a Gemini filter message."
+  },
+  {
+   "slug": "69ea3ea1300d991d0f1d3bd6-p377",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z is a refusal message after six words, so the page is missing. X and Y both misread 'فمنعهم' (X 'فنعتهم', Y 'فنعلم'). Y also has 'لما' for فما, 'وفي' for وهى ×3, and replaces the footnotes with 'Printer's ornament'."
+  },
+  {
+   "slug": "6a20333618654bf8e1904946-p328",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "14:41-48. Z reads 'وبينا لكم' (we made clear) for the MS 'وَتَبَيَّنَ لكم' (crop checked); Y drops the pronoun in 'وعده'. X correct."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p132",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z is one line plus an API error; X=Y cover the page but misread the eclipse text ('الكسرة' for 'الكسوف'). Hard page; preference for coverage only."
+  },
+  {
+   "slug": "69d66592daca889caf92725b-p186",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads the Mercury observations (السنة السادسة عشرة لأدريانوس ... فامانوث, الدبران, 21 1/4 parts); Y garbles them; Z is cut off by an API error."
+  }
+ ],
+ "judge2": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "drawn": 30,
+  "parsed": 30,
+  "gemini_prefer": {
+   "C": 19,
+   "R": 11,
+   "tie": 0
+  },
+  "opus_prefer_same_pages": {
+   "C": 21,
+   "R": 5,
+   "tie": 4
+  },
+  "gemini_misleading": {
+   "C": 4,
+   "R": 9
+  },
+  "opus_misleading_same_pages": {
+   "C": 5,
+   "R": 19
+  },
+  "pages": [
+   {
+    "slug": "6a08a754871243dce9def039-p50",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69f32843aeeee0fa38c642f2-p56",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e4209e813af15d2bdc1eb7-p32",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69e4209e813af15d2bdc1eb7-p106",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e4209e813af15d2bdc1eb7-p155",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e4209e813af15d2bdc1eb7-p169",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e4209e813af15d2bdc1eb7-p205",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef3d4272c1376fdf2aff50-p33",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef3d4272c1376fdf2aff50-p39",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef3d4272c1376fdf2aff50-p66",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ef3d4272c1376fdf2aff50-p84",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d5abced0bd3547a5654189-p123",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d5abced0bd3547a5654189-p318",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a9fb207732b9e75e96ba46f-p128",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a9fb207732b9e75e96ba46f-p157",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69ea3ea1300d991d0f1d3bd6-p33",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69ea3ea1300d991d0f1d3bd6-p252",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69ea3ea1300d991d0f1d3bd6-p283",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a477ce51874da9b1a9a5552-p59",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a477ce51874da9b1a9a5552-p163",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a477ce51874da9b1a9a5552-p225",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6a477ce51874da9b1a9a5552-p494",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20333618654bf8e1904946-p23",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6a20333618654bf8e1904946-p282",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20333618654bf8e1904946-p595",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20333618654bf8e1904946-p641",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69d66592daca889caf92725b-p118",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d66592daca889caf92725b-p222",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d66592daca889caf92725b-p298",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69d66592daca889caf92725b-p321",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   }
+  ]
+ },
+ "claude_correction_tokens": {
+  "calls": 37,
+  "input": 763,
+  "output": 667568,
+  "cache_read": 5732711,
+  "list_cost_usd": 26.15
+ },
+ "by_book": [
+  {
+   "book_id": "6a08a754871243dce9def039",
+   "title": "Al-Durra al-Fākhira (The Precious Pearl)",
+   "n": 25,
+   "L": 10,
+   "C": 8,
+   "R": 0,
+   "worse_C": 7,
+   "worse_R": 0,
+   "CR": {
+    "C": 1,
+    "R": 13,
+    "tie": 11
+   },
+   "outcomes": {
+    "corrected": 10,
+    "unchanged": 12,
+    "contain": 3
+   }
+  },
+  {
+   "book_id": "69f32843aeeee0fa38c642f2",
+   "title": "Ḥāwāshī Sharḥ Qāḍīʻzādah al-Rūmī ʻalá al-Jaghmīnī / lil-ʻAllāmah al-Mu",
+   "n": 25,
+   "L": 25,
+   "C": 3,
+   "R": 24,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 24,
+    "R": 1,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e4209e813af15d2bdc1eb7",
+   "title": "Tawq al-Hamama (The Ring of the Dove, French)",
+   "n": 25,
+   "L": 19,
+   "C": 5,
+   "R": 16,
+   "worse_C": 0,
+   "worse_R": 3,
+   "CR": {
+    "C": 16,
+    "R": 4,
+    "tie": 5
+   },
+   "outcomes": {
+    "corrected": 23,
+    "unchanged": 2
+   }
+  },
+  {
+   "book_id": "69ef3d4272c1376fdf2aff50",
+   "title": "Tahdhib al-Akhlaq (The Refinement of Character)",
+   "n": 25,
+   "L": 20,
+   "C": 4,
+   "R": 19,
+   "worse_C": 5,
+   "worse_R": 14,
+   "CR": {
+    "C": 20,
+    "R": 4,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 20,
+    "no-answer": 5
+   }
+  },
+  {
+   "book_id": "69d5abced0bd3547a5654189",
+   "title": "Al-Hawi fi al-Tibb",
+   "n": 25,
+   "L": 25,
+   "C": 2,
+   "R": 25,
+   "worse_C": 0,
+   "worse_R": 10,
+   "CR": {
+    "C": 25,
+    "R": 0,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6a9fb207732b9e75e96ba46f",
+   "title": "El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āthār, Vol. II (MIFAO ",
+   "n": 25,
+   "L": 16,
+   "C": 1,
+   "R": 2,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 19,
+    "R": 4,
+    "tie": 2
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69ea3ea1300d991d0f1d3bd6",
+   "title": "الأعلاق النفيسة (al-Aʿlāq al-Nafīsa)",
+   "n": 25,
+   "L": 21,
+   "C": 4,
+   "R": 11,
+   "worse_C": 1,
+   "worse_R": 1,
+   "CR": {
+    "C": 17,
+    "R": 4,
+    "tie": 4
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6a477ce51874da9b1a9a5552",
+   "title": "al-Mawāʿiẓ wa-al-iʿtibār bi-dhikr al-khiṭaṭ wa-al-āthār (Khiṭaṭ)",
+   "n": 25,
+   "L": 25,
+   "C": 2,
+   "R": 18,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 25,
+    "R": 0,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6a20333618654bf8e1904946",
+   "title": "Quran. On f3b-5b some notes on recitation in Malay and Achehnese Or. 2",
+   "n": 25,
+   "L": 7,
+   "C": 2,
+   "R": 4,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 13,
+    "R": 1,
+    "tie": 11
+   },
+   "outcomes": {
+    "corrected": 21,
+    "unchanged": 4
+   }
+  },
+  {
+   "book_id": "69d66592daca889caf92725b",
+   "title": "Kitab al-Majisti",
+   "n": 25,
+   "L": 25,
+   "C": 13,
+   "R": 25,
+   "worse_C": 11,
+   "worse_R": 2,
+   "CR": {
+    "C": 15,
+    "R": 10,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 14,
+    "contain": 11
+   }
+  }
+ ]
+}

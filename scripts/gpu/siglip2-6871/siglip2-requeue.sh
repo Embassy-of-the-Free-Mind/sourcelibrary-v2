@@ -34,13 +34,18 @@ for f in $(ls -1 "$J"/full/chunk-*.jsonl | sort); do
   n=$(basename "$f" .jsonl); n=${n#chunk-}
   done_chunk "$n" && continue
   ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -q "^zz-siglip2-full-c$n" && continue   # already queued / running
-  tries=$(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep -c "^zz-siglip2-full-c$n")
+  runs=$(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep -c "^zz-siglip2-full-c$n")
+  # a run that YIELDED to a waiting task (embed-shards.py --yield-dir) is not a failed try
+  tries=0
+  for t in $(ls -1 "$Q"/done "$Q"/failed 2>/dev/null | grep "^zz-siglip2-full-c$n"); do
+    grep -q '^YIELDED' "/root/jobs/gpu-queue/${t%.sh}/task.log" 2>/dev/null || tries=$((tries + 1))
+  done
   if [ "$tries" -ge 5 ]; then
     echo "$(now) chunk $n queued $tries times without finishing: chain paused (fix it, then rm $J/full/PAUSE)"
     touch "$J/full/PAUSE"; page "SigLIP2 full run stopped (#6871)" "chunk $n ran $tries times without finishing; see gex45:/root/jobs/gpu-queue/zz-siglip2-full-c$n*/task.log"
     exit 0
   fi
-  name="zz-siglip2-full-c$n$([ "$tries" -gt 0 ] && echo "-r$tries")"
+  name="zz-siglip2-full-c$n$([ "$runs" -gt 0 ] && echo "-r$runs")"
   tmp=$(mktemp); sed "s/^CHUNK=__CHUNK__$/CHUNK=$n/" "$TPL" > "$tmp"
   grep -q "^CHUNK=$n$" "$tmp" || { echo "$(now) template has no CHUNK=__CHUNK__ line: not queueing"; rm -f "$tmp"; exit 1; }
   /root/bin/gpu-queue.sh add "$tmp" "$name"; rm -f "$tmp"

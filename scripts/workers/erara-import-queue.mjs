@@ -80,7 +80,7 @@ async function fetchMetadata(eraraId) {
   const manifestUrl = `https://www.e-rara.ch/i3f/v21/${eraraId}/manifest`;
   const manifestRes = await fetch(manifestUrl, {
     headers: {
-      'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+      'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
       'Accept': 'application/json, application/ld+json',
     }
   });

@@ -149,8 +149,8 @@ export function maxOutputTokensFor(pages) {
  * Folio markers (#5678): `TRANSLATE_FOLIO_MARKERS=1` asks a multi-page block for ONE continuous
  * English text with `<pb n="N"/>` where each source page begins (translate-core
  * FOLIO_MARKER_RULE), and parseBlockResponse then splits it into page spans. OFF by default:
- * unset, every prompt and every parse is byte-identical to before. Measured on the Tengyur pilot
- * only (scripts/eval/experiments/2026-10-03-folio-markers-5678.md); no lane runs with it on.
+ * unset, every prompt and every parse is byte-identical to before. Missed its bar on this lane's model
+ * (flash-lite, #5678) and stays off here; the CLI lane (3.8 Flash) runs markers on its page pairs (#7118).
  */
 export function folioMarkersEnabled(env = process.env) {
   return env.TRANSLATE_FOLIO_MARKERS === '1';

@@ -1,5 +1,7 @@
 # Quality rubric and sampling plan: what every quality number means, and which pages it is measured on
 
+> **Design, not running (checked 2026-10-29, #7759).** The rubric and the standing sample below are not run by any lane. The checks that do run are listed in `book-process.md`.
+
 PRIOR ART: `.claude/docs/eval-design.md` (the measure vocabulary, registry, reference rules, decision cards; it says how a number is *stored and compared*, not what a page's grade *is* or how a corpus-wide sample is drawn and weighted), `.claude/docs/page-error-taxonomy.md` (the 44 classes, by eye, presence only, no severity scale), #5438 (quality round 1: a one-off 12-cell backlog sample with a ship rule), #4925 (decision-grade reference plan, OCR only), #3499 (the held-out reserve policy for unpublished books), #5274 / #5301 (the monthly served-translation audit this plan extends), #5914 (the monthly image-and-book arm). None of them adopts a published rubric or sizes and weights a standing sample over the whole served corpus. This doc does both and links them rather than restating them.
 
 **Read this when:** you are about to quote a quality number, design a judge or a rubric, draw a sample for an eval, or add a figure to `/quality`. Living doc (undated). Issue: #5984. Status: **design**. Nothing here has been run. The inventory in §8 is measured; every paid step is a follow-up with a price (§9).

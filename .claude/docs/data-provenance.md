@@ -9,6 +9,41 @@ translated — by hash), and a content hash of the output. Summaries, indexes an
 carry the older, thinner record (model, prompt version, source). This document explains the chain
 and where it is thinner than that.
 
+## Principles
+
+What the sections below implement, for any value the library shows: a line of text, a title, an
+author, a date, a badge. The test is that "where did this come from?" has a true, specific answer
+in one step, down to the page image or the catalogue record (#7673).
+
+1. **Every value can say five things:** what it was taken from, who or what produced it, how,
+   when, and what it replaced.
+2. **Name the kind of claim.** *Observed* (copied from a source: the title page, a library's
+   record), *generated* (a model: name the model, prompt, settings and run; "ai" is not a label),
+   *inferred* (reconstructed by a stated rule, with its basis), *asserted* (a named person).
+3. **Point at the evidence.** "From the title page" carries the page number and what is printed;
+   "from the catalogue" carries the record's URL. A reader can check it.
+4. **Never lose what was there.** An overwrite keeps the old value (`page_revisions`,
+   `book_revisions`, `field_provenance_history`); the chain only grows.
+5. **"Not recorded" is an answer; a guessed stamp is not.** A wrong stamp is worse than none: it
+   is believed, and it stops anyone looking. An inference is stored as an inference, never as an
+   observation (§8a).
+6. **Value and stamp are written together, through one function, and CI enforces it.** Page text:
+   `write-provenance`. Book fields: `setCatalogueFields()` (imprint, title, author), linted by
+   `field-write-lint`. A written rule alone has failed every time it was tried.
+7. **A machine never overwrites a person's edit.**
+8. **Proportionate depth.** Full records for what a reader cites (text, title, author, date,
+   imprint, language, first-translation claims); model, prompt and input for generated
+   descriptions (summary, index, chapters); a `sweep_log` row for internal flags.
+9. **Reconstruct by matching, not by assuming.** A value written before stamping existed is
+   stamped after the fact only when an independent record matches it (the holding library's
+   record, re-fetched and checked), marked `reconstructed: true` with the record's URL. What
+   matches nothing stays unstamped and is reported (§10, `reconstruct-title-provenance-7673.mjs`).
+
+The number to watch is the share of **writes in the last seven days** that carry a complete
+record; it should be 100% and stay there. Total coverage moves slowly, because old records are
+only improved when real work touches them, and it cannot tell you whether something is still
+writing unstamped values.
+
 > **Status, 2026-09-28 (#4613).** Before this date no Gemini writer recorded temperature, thinking
 > budget, max output tokens or media resolution; realtime OCR recorded neither prompt text, run nor
 > input image; translations did not say which OCR text they were made from; `ocr.source: 'ai'`
@@ -497,8 +532,12 @@ For multiple fields use `createBookRevisions(bookId, fields)` to fan out in para
 > value. Never write a value and its provenance in two operations: the second can fail, and a stamp
 > describing a value it did not produce is worse than no stamp.
 
-This rule is younger than the ones above and is **not yet enforced**: as of 2026-10-12 no writer on
-main calls the helper, and most of the layer was written by hand-rolled stamps. See §10.
+For imprint fields (#6327) and title, display_title, english_title and author (#7673) the rule is
+**enforced**: write them through `setCatalogueFields()` (`scripts/lib/catalogue-fields.mjs`), which
+reads `previous_value` itself, and the `field-write-lint` CI step fails a new write outside it.
+Writers that predate the gate are listed in `scripts/lib/imprint-write-baseline.json`, which may
+only shrink. Other bibliographic fields still rely on this sentence. Most of the existing layer was
+written by hand-rolled stamps; see §10.
 
 ### gemini_usage
 

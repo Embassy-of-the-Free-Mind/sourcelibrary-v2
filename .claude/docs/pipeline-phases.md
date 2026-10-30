@@ -1,5 +1,7 @@
 # Pipeline Phase Reference
 
+> **SUPERSEDED (2026-10-29, #7759).** The numbered phases below are the orchestrator's. They still run: `scheduler.mjs` spawns them every 2 min on the paid Gemini API, bounded by the spend dial. But they now carry a small share of the pages; most OCR and translation runs in the subscription and GPU lanes, which this table does not list. For the process today read `book-process.md`; for live numbers read https://sourcelibrary.org/admin/pipeline/now. `scripts/audit/spend-perimeter.mjs` reads this file, so it stays in place.
+
 The processing pipeline moves books from import to completion through numbered phases.
 Each phase has a corresponding `pipeline_auto.status` value in MongoDB.
 

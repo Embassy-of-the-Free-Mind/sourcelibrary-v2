@@ -1,0 +1,6672 @@
+[
+ {
+  "slug": "69e72c60a409200ea79f46f6-p47",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X follows all six columns with glosses. Y reads 無力 as 無加 twice. Z appends a long passage (時則不至…不亦悲乎) that is not on this leaf.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O3",
+     "quote": "時則不至而控於地而已矣…眾人匹之不亦悲乎",
+     "print": "(not on this page; page ends 搶榆枋)",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "則風斯在下而後",
+     "print": "則風斯在下矣而後",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "interlinear glosses (凹, 字法, 折止, 遏, 血, 鏘 …) dropped",
+     "print": "small-character glosses",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<margin>莫之夭閼者…</margin>",
+     "print": "main-text columns 5-6",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O13",
+     "quote": "<unclear>莫夭寫到者</unclear>",
+     "print": "handwritten note, illegible",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "負大舟也無加",
+     "print": "負大舟也無力",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "負大翼也無加",
+     "print": "負大翼也無力",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "蜩與學鳩",
+     "print": "蜩與鷽 / 學鳩",
+     "material": false
+    },
+    {
+     "class": "O13",
+     "quote": "莫之致而致之",
+     "print": "handwritten note, illegible",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "舉飛小鳩",
+     "print": "學飛小鳩",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p52",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Page ends 天下既已治也; X continues with 而我猶代子…代之矣, text not on this leaf. Y and Z read all seven columns right; differences only in glosses and the handwritten note.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O3",
+     "quote": "而我猶代子，吾將為名乎？…尸祝不越樽俎而代之矣",
+     "print": "(not on this page; page ends 天下既已治也)",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "(冥心而遊 gloss and 爵 gloss dropped)",
+     "print": "冥心而適 / 爵",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<page-num>1</page-num>",
+     "print": "no page number visible",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "冥心而<unclear>[1 character]</unclear>遊",
+     "print": "冥心而適 (?)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O8",
+     "quote": "成物而用臧",
+     "print": "成物而用藏",
+     "material": false
+    },
+    {
+     "class": "O13",
+     "quote": "以初起此三等待",
+     "print": "以頓起此之等待 (handwritten)",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<page-num>日七</page-num>",
+     "print": "no such page number",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p59",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X reads the six columns exactly. Y doubles 中 (不避高中下). Z drops 立 in 立之塗 and appends 廣莫之野…安所困苦哉, which is not on this leaf.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O3",
+     "quote": "廣莫之野，彷徨乎無為其側…安所困苦哉！",
+     "print": "(not on this page; page ends 無何有之鄉)",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "不中規矩之塗",
+     "print": "不中規矩立之塗",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "皆謂家絕無用之",
+     "print": "皆謂寂絕無用之",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "孤屬",
+     "print": "孤屬 (gloss; for 狐屬)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O4",
+     "quote": "不避高中下。中於機辟",
+     "print": "不避高下中於機辟",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "長川堂 / 莊子南華真經卷一",
+     "print": "思川堂 / 莊子旁注卷一",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p63",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X reads 者宎者咬者 and 刁刁 right. Y has 矣 for 宎 and 刀刀 for 刁刁. Z has 突 for 宎 and 伶 for 泠. Both errors swap one item in the list of cavity sounds.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "者。矣者。咬",
+     "print": "者宎者咬者",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "調調之刀刀乎",
+     "print": "調調之刁刁乎",
+     "material": true
+    },
+    {
+     "class": "O8",
+     "quote": "冷",
+     "print": "泠",
+     "material": false
+    },
+    {
+     "class": "O8",
+     "quote": "使其自己也",
+     "print": "使其自已也",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "main text split around interleaved <margin> blocks",
+     "print": "glosses beside columns",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O13",
+     "quote": "此說處提出言 <unclear>字照</unclear>言起手知",
+     "print": "此說處提出言 字然言起于知 (handwritten)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "突者",
+     "print": "宎者",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "喁伶",
+     "print": "喁泠",
+     "material": false
+    },
+    {
+     "class": "O8",
+     "quote": "使其自己也",
+     "print": "使其自已也",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "不開",
+     "print": "不聞",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p68",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X has text and commentary. Y's main text is exact but it drops most of the interlinear commentary. Z drops 至 (昔至也), merges the gloss into the main text (雖雖聖人亦不能知) and reads 鷇 as 穀.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "適越而昔也",
+     "print": "適越而昔至也",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "雖雖聖人亦不能知。",
+     "print": "雖 / gloss 雖聖人亦有不能知",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "異於穀。",
+     "print": "異於鷇音",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "言惡乎存而不可。",
+     "print": "言惡乎存而不 (page ends)",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O13",
+     "quote": "<unclear>取來</unclear>",
+     "print": "取來 (handwritten)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "(interlinear commentary 繞適越遂道其風土之宜…, 何者言者有是非之辯…, 鳥初出卵雖有音不自知, 無眞僞則無不存, 無是非則無不可 dropped)",
+     "print": "small-character commentary beside columns 1-7",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p73",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "All three read the main text right (朝四而暮三…而未始有). X garbles several glosses (drops 七 from 通計七, has 勢 for 勞). Y and Z get the glosses right.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O7",
+     "quote": "三與四通計",
+     "print": "三與四通計七",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "勢神明為一者",
+     "print": "勞神明爲一者",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "休乎無是非之天均",
+     "print": "休乎無是無非之天均",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "如封疆之封有此界限之義",
+     "print": "如封疆之封有彼此界限之義",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(gloss 四升 dropped); 宰法",
+     "print": "四升; 字法",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "是非未虧者",
+     "print": "是非未形筆意 (?)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O16",
+     "quote": "glosses listed after the text",
+     "print": "glosses beside columns",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p78",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y is exact in text and glosses. X adds 此 (以此至於三) and drops 一 in a gloss. Z reads 春秋經世 as 春秋經也, and runs a gloss into the main text with no tag.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "春秋經也。",
+     "print": "春秋經世",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "至於二三而其數遂不可窮。自有而生何可窮乎。 (untagged, as main text)",
+     "print": "small-character gloss 至於一二三而其數遂不可窮况自有而生何可窮乎",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "(glosses 是非是已, 只爲立箇是字便有疆界, 域, 字法 dropped)",
+     "print": "interlinear glosses",
+     "material": false
+    },
+    {
+     "class": "O8",
+     "quote": "而弗論",
+     "print": "而不論",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "有。以此至於三",
+     "print": "有以至於三",
+     "material": false
+    },
+    {
+     "class": "O7",
+     "quote": "至於二三而其數",
+     "print": "至於一二三而其數",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "况自有所生 / 亦因合是而為",
+     "print": "况自有而生 / 亦因之是非爲",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p84",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "All three keep the main text (曰吾聞諸夫子…見彈而求鴞炙). X has a wrong header and two gloss misreads. Y has 日 for 曰 and doubles 為. Z is clean.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "日。吾聞諸夫子",
+     "print": "曰吾聞諸夫子",
+     "material": false
+    },
+    {
+     "class": "O4",
+     "quote": "而我以為為妙道之行也",
+     "print": "而我以爲妙道之行也",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>莊子定本卷一</header>",
+     "print": "莊子旁注卷一",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O11",
+     "quote": "<header>人部二十六卷一</header>",
+     "print": "莊子旁注卷一 (block centre)",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "雖黃帝聽之亦惑哉 / 甚矣到",
+     "print": "雖黃帝聽之亦熒惑 / 其人到",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p90",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X drops 邪惡識所以 (蜩翼邪惡識所以然), so the twin question collapses into one. Y and Z keep all six columns; Y misreads the 夜來 gloss as 後來.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "吾待蛇蚹、蜩翼，…然惡識所以不然",
+     "print": "吾待蛇蚹蜩翼邪惡識所以然惡識所以不然",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "蚹蛇腹下，蜩蛇以蚹行 / 在莊周以彼來之夢為蝴蝶",
+     "print": "蚹蛇腹下齟齬蛇以蚹行 / 在莊周以夜來之夢爲蝴蝶",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(glosses 許, 亦不能自主, 喜貌, 渠 dropped)",
+     "print": "interlinear glosses",
+     "material": false
+    },
+    {
+     "class": "T5",
+     "quote": "不知周之夢為蝴蝶與，蝴蝶",
+     "print": "…蝴蝶與蝴 (page ends)",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "<unclear>[2–3 characters]</unclear>",
+     "print": "small gloss characters, blurred",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "在莊周以後來之夢爲蝴蝶也此時夢又以",
+     "print": "在莊周以夜來之夢爲蝴蝶也此…蝶又以",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "麤鼩",
+     "print": "齟齬",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p96",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Z is exact (硎雖然…非人也天). X drops 硎 and pulls the gloss 除 into the text. Y drops the gloss 以目視之停止而後遲遲然行其刀 and reads 刖 (cut off the foot) as 削 throughout.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O12",
+     "quote": "(gloss 以目視之停止而後遲遲然行其刀 dropped)",
+     "print": "以目視之停止而後遲遲然行其刀",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "已削之人 / 削而獨存 / 天生如此人削之",
+     "print": "已刖之人 / 刖而獨存一足 / 天生如此抑人刖之",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "研雖然",
+     "print": "硎雖然",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "曰：天也，非人也。",
+     "print": "曰天也非人也天 (page ends 天)",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>莊子庖丁解牛卷一</header>",
+     "print": "莊子旁注卷一",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "雖然。每至於族",
+     "print": "硎雖然每至於族",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "爲之躊躇。除滿",
+     "print": "爲之躊躇滿 (除 is a gloss)",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "好好收拾其刃而藏之 / 以刃可養",
+     "print": "好好收拾其刀而藏之 / 以刀可養",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p101",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X drops the negation (非所以盡行也 becomes 所以盡行也), reads 菑 as 蓄 throughout, and promotes two glosses into the text. Y and Z have the text right; Z has a few gloss misreads (拔 for 彼).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "T8",
+     "quote": "二者凶器。所以盡行也",
+     "print": "二者凶器非所以盡行也",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "命之曰蓄。人蓄人者。人必反蓄之 … 為人蓄夫",
+     "print": "命之曰菑人菑人者人必反菑之 … 爲人菑夫",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "是必人惡有其美",
+     "print": "是以人惡有其美",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "而為人所害。 / 求異而自售乎。且汝不待召而自往。 (glosses set as main text)",
+     "print": "small-character glosses",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "關其捷",
+     "print": "鬭其捷",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "雖名<unclear>望</unclear>高",
+     "print": "雖名望高",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "拔衛君者 / 安雅往",
+     "print": "彼衞君者 / 汝殆往",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "忠順堂",
+     "print": "思川堂",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p107",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "All three read the 心齋 passage exactly. Y misreads the gloss 忘我 as 志我 and shifts one column break.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O12",
+     "quote": "志我",
+     "print": "忘我",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "而聽之 / 以心 (column break shifted)",
+     "print": "而聽 / 之以心",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": []
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p114",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X keeps 剋核 and all six columns; its glosses have small misreads. Z drops 剋. Y demotes the column 核太至…不知其然 to a margin note with 不能 for 不肖, and reads 苟爲 as 荷焉.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O16",
+     "quote": "<margin>核大至則必有不能之心應之而不知其然</margin>",
+     "print": "main-text column 核太至則必有不肖之心應之而不知其然",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "不能之心",
+     "print": "不肖之心",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "荷焉不知其然也",
+     "print": "苟爲不知其然也",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "風波易以動 / 並生心厲。(剋 dropped)",
+     "print": "夫風波易以動 / 並生心厲剋",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O5",
+     "quote": "於是並生心厲。 / 核太至",
+     "print": "於是並生心厲剋 / 核太至",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "有迹則真實矣",
+     "print": "有迹則眞喪矣",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "言忿害多是造設 / 計書就奉使事上結",
+     "print": "言忿言多是造設 / 引書就奉使事上結",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>庄子內篇卷一</header> <page-num>八</page-num>",
+     "print": "莊子旁注卷一; no 八",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p118",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X forces the page into a 2-character table, so the text runs out of order with words lost (虎 becomes 處, 決之之 dropped). Y turns 僕緣而拊之 into 拊緣而抶之 (pat becomes whip). Z is exact.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O17",
+     "quote": "| 怒也 | 時其 | 飽達 | 其怒 | / | 心處 | 之與 | 人異 | 類而 | …",
+     "print": "決之之怒也時其飢飽達其怒心虎之與人異類而…",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "(決之之 and 飢 missing; 虎 read as 處)",
+     "print": "決之之怒也時其飢飽…虎之與人",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "以蜯臏盛成溺適有畜蜯盲僕朴",
+     "print": "以蜄腎盛溺適有蚉虻僕緣",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "glosses lumped into one <margin> block",
+     "print": "glosses beside columns",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "盲僕、拊緣而抶之。不時",
+     "print": "僕(朴)緣而拊之不時",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "以蚳臋盛",
+     "print": "以蜄(腎)盛",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "蓋十大也 / 蚤蝨嗜之",
+     "print": "蓋十丈也 / 蚉虻嗜之",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p124",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X is exact. Y reads 林 as 材 and 繲 as 獬. Z gets the words but pulls the glosses 檜, 𦙄 and 解 into the main text and garbles the 五臟 gloss.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O8",
+     "quote": "白額者",
+     "print": "白顙者",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "會檜撮指 / 兩髀𦙄為脇 / 治繲解足",
+     "print": "會撮指 / 兩髀爲脅 / 治繲足 (glosses 噲, 陛, 解 beside)",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "五臟皆背骨曲則管回髀眼也腸骨也",
+     "print": "五臟屬于背背曲則管向上髀腿也脇臂也",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "桑",
+     "print": "奕 (gloss)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "此材之患也",
+     "print": "此林之患也",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "挫鍼治獬",
+     "print": "挫鍼治繲",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "以牛之白顙。與 / 以爲不祥也",
+     "print": "以牛之白顙者與 / 所以爲不祥也",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>折</header> <sig>刀羽二 莊子卷一 見八十三頁下</sig>",
+     "print": "折 is a gloss; no such signature",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p132",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X and Z read the main text exactly (直寓六骸象耳目…彼且擇日而登). Y replaces main-text phrases with the commentary (直寓於此六骸之中…, 且擇日而升于天也) and promotes a gloss into the text.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O12",
+     "quote": "性以正人之性舜之所以獨異於眾人。 (as main text)",
+     "print": "small-character gloss",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "直寓於此六骸之中。而以耳目為象。",
+     "print": "直寓六骸象耳目一",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "彼乃得道之人。且擇日而升于天也。",
+     "print": "彼且擇日而登 (gloss: 彼乃得道之人且擇日而升于至道)",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "外書以攻九枚九地",
+     "print": "兵書以攻九天攻九地",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "<unclear>兵</unclear>書以攻九天",
+     "print": "兵書以攻九天",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "在昔以攻九天故九地 / 而未嘗何物以喪心者乎",
+     "print": "兵書以攻九天攻九地 / 而未嘗因物以喪心者乎",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p137",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X turns 請講以所聞 (let me tell you what I have heard) into 請問請以所聞. Y reads 吾 as 焉 (存焉是以). Z is exact.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "猶有尊足者存焉是以務全之也",
+     "print": "猶有尊足者存吾是以務全之也",
+     "material": false
+    },
+    {
+     "class": "O13",
+     "quote": "可謂法",
+     "print": "句法 字法",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "請問請以所聞",
+     "print": "請講以所聞",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "所謂不在形骸之内言有德也",
+     "print": "所貴不在形骸之內言有性也",
+     "material": false
+    },
+    {
+     "class": "O13",
+     "quote": "可真接奥語老聃矣却 / 倒叙此三行文之節湊",
+     "print": "可直接奧語老聃矣却 / 此段欲以三行文之節湊 (handwritten)",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<sig>見川呈</sig>",
+     "print": "思川堂",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p145",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "The print has 人不忘其所忘. X drops the 不, reversing the sense, and reads 不斲 as 不衒. Y inserts 知 (人不知忘其所忘). Z is exact.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "T8",
+     "quote": "人忘其所忘而忘其所不忘",
+     "print": "人不忘其所忘而忘其所不忘",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "不衒。惡用",
+     "print": "不斲惡用",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "天食飼也 (gloss 飼 run into text)",
+     "print": "天食也 (gloss 飼 beside)",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "以用智為茲 / 以拘禮為同",
+     "print": "以用智爲菑 / 以拘禮爲固",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "以用智爲孽",
+     "print": "以用智爲菑",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "人不知忘其所忘",
+     "print": "人不忘其所忘",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "以用智爲齧 / 嗣 / 哉",
+     "print": "以用智爲菑 / 飼 / 故",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p150",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "why": "Y is exact (…其寢不夢…眞人之). X reads 寢 as 寐 (same sense) and garbles a gloss. Z runs the gloss 作 into the text and drops 至 and 成 from glosses.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O12",
+     "quote": "不謨士。作若然者",
+     "print": "不謩士 (gloss 作 beside) 若然者",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "第三存神 / 以是知其知之升於道 / 或失或皆委之自然",
+     "print": "第二存神 / 以是知其知之升於至道 / 或失或成皆委之自然",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(gloss 模 / 事 / 格 dropped)",
+     "print": "glosses beside 謩, 假",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "其寐",
+     "print": "其寢",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "皆無心而不同得之意 / 功成特不誇之",
+     "print": "皆無入而不自得之意 / 功成時不誇之",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<page-num>凡二十一</page-num>",
+     "print": "no such number visible",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p155",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "The print has 其弗好之也一其一也一其不一也一. X keeps it. Y and Z both drop the three predicate 一, so the claim that their oneness is one disappears. Z's glosses are worse.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "其弗好之也。其一也。其不一也。其一",
+     "print": "其弗好之也一其一也一其不一也一其一",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "其其不一言…皆不山平造化之外 / 一毫力所不得與 / 言平天",
+     "print": "其一其不一言…皆不出乎造化之外 / 一毫人力所不得與 / 言高乎天",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(gloss 者則知天, 惡也 dropped)",
+     "print": "者則知天 / 惡也",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "鶴",
+     "print": "鵠 (?), gloss",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "其弗好之也。其一也。其不一也。其一",
+     "print": "其弗好之也一其一也一其不一也一其一",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "一毫人力所得與 / 如日之夜",
+     "print": "一毫人力所不得與 / 如旦之必夜",
+     "material": false
+    },
+    {
+     "class": "T5",
+     "quote": "泉涸。魚",
+     "print": "泉涸 (page ends; 鶴/鵠 is a gloss)",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p160",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X is exact. Y has 偁 for 偊 and adds 何 (惡惡何可). Z folds the first main-text column into a margin note and garbles it (而地於苑星 for 而比於列星).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O16",
+     "quote": "<margin>東維在箕斗間傳說其精神東維騎箕尾而地於苑星南伯子葵問乎弱子也</margin>",
+     "print": "main-text column 乘東維騎箕尾而比於列星南伯子葵問乎, plus gloss",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "而地於苑星",
+     "print": "而比於列星",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "女偶。禹曰",
+     "print": "女偊 (gloss 禹) 曰",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "<unclear>弱子也</unclear>",
+     "print": "弱子也",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "女偁",
+     "print": "女偊",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "曰惡惡何可",
+     "print": "曰惡惡可",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(gloss 錡 dropped)",
+     "print": "錡",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p166",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Z is exact. X reads 不翅於父母 as 不能越於父母, changing the sense. Y reads 戶 as 尸 (corpse), drops 將奚以汝適 / 子 / 曰, and puts a gloss where 矣彼何罪焉 should be.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "其尸與之語",
+     "print": "其戶與之語",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "奚以汝為。鼠肝乎。其汝為蟲臂乎。",
+     "print": "奚以汝適以汝爲鼠肝乎以汝爲蟲臂乎子",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "來。以父母於東西南北",
+     "print": "來曰父母於子東西南北",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "而不敢逆。彼謂死也適順之何罪於彼。 (gloss as main text; 矣彼何罪焉 missing)",
+     "print": "矣彼何罪焉 (gloss 而不敢逆彼謂死也適去順之何罪於彼)",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "<unclear>悍拧抵也</unclear>",
+     "print": "悍持抵也",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "人不能越於父母",
+     "print": "人不翅於父母",
+     "material": true
+    },
+    {
+     "class": "O16",
+     "quote": "glosses listed after the text",
+     "print": "glosses beside columns",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<sig>田心書室</sig>",
+     "print": "思川堂",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p174",
+  "book": 0,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "All three get the main text (鳥而厲乎天…而劓). X drops every gloss on a heavily annotated page. Y repeats a garbled last column (下汝以仁義而劓下) and drops one gloss. Z is complete.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O4",
+     "quote": "下汝以仁義而劓下",
+     "print": "(not printed; repeat of the last column with the 下同 glosses)",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(gloss 適然而咲不暇於安排 dropped); 未覽見之中; 破去同",
+     "print": "適然而咲不暇於安排; 未嘗見之中; 破玄同",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O12",
+     "quote": "(all interlinear commentary dropped: 未嘗見之中…, 適意而樂…, 順天之自然而安排去之…, 毀道德以爲仁義似黥之, 破玄同以爲是非似劓 …)",
+     "print": "small-character commentary beside every column",
+     "material": true
+    },
+    {
+     "class": "T5",
+     "quote": "而劓汝",
+     "print": "而劓 (page ends)",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<page-num>四十三</page-num>",
+     "print": "no page number visible",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p182",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Z is exact (使蚉負山). X turns the mosquito 蚉 into 蝍 (centipede) and has 已 for 己. Y doubles 始 (未始始入).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "而使蝍負山也",
+     "print": "而使蚉負山也",
+     "material": true
+    },
+    {
+     "class": "O8",
+     "quote": "以已出經式義度人",
+     "print": "以己出經式義度人",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "此文不足以名之 / 諸問之詞",
+     "print": "此又天不足以名之 / 詰問之詞",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O4",
+     "quote": "而未始始入於非人",
+     "print": "而未始入於非人",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "渾混沌未分",
+     "print": "渾混未分",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69e72c60a409200ea79f46f6-p189",
+  "book": 0,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "The first word is 衡 (衡氣機; zoomed, it matches the gloss's 衡). Y has it. X and Z read 御. Z also turns 鯢 into 觀 and garbles 未始出吾宗 as 和始吾.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "御氣機也。觀倪桓之審為淵",
+     "print": "衡氣機也鯢(倪)桓之審爲淵",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "和。始吾吾與之虛而委蛇",
+     "print": "未始出吾宗吾與之虛而委蛇",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "流水之審為淵。有九名",
+     "print": "流水之審爲淵淵有九名",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "(glosses 季咸, 示之以未始有始 dropped)",
+     "print": "季咸 / 示之以未始有始",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "御氣機也",
+     "print": "衡氣機也",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "委蛇。威蛇。移不知其",
+     "print": "委(威)蛇(移)不知其; 威 and 移 are glosses",
+     "material": false
+    },
+    {
+     "class": "O12",
+     "quote": "況太冲莫朕衝氣機水半流半止得其平衡之意",
+     "print": "況太沖莫勝衡氣機水半流半止得其平有衡之意",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p27",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X substitutes 但盡塵勞 for 但盡生死 and 不解輕重 for 不能暫捨; Z only 教誨/教詔 and a dropped 有; Y matches the print.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O3",
+     "quote": "但盡塵勞",
+     "print": "但盡生死",
+     "material": true
+    },
+    {
+     "class": "O3",
+     "quote": "不解輕重",
+     "print": "不能暫捨",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "循行於道",
+     "print": "脩行於道",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O8",
+     "quote": "閑居",
+     "print": "閒居",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "雖復教誨",
+     "print": "雖復教詔",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "若人能信 汝所說",
+     "print": "若人有能 信汝所說",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<script>handwritten</script>",
+     "print": "woodblock print",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p30",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y is faithful; X opens with invented 方生悔恨 and gives 不免 for 定死; Z drops whole clauses (多有僮僕臣佐吏民…, 倍與汝直…) and garbles the opening.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "眾寶悉皆盈溢出入息利",
+     "print": "珠等其諸倉庫悉皆盈溢多有僮僕臣佐吏民象馬車乘牛羊無數出入息利",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "…此有作處[dropped]",
+     "print": "倍與汝直窮子若許將來使作若言欲何所作便",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "各國本國其交易",
+     "print": "向本國其父先來",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "方生悔恨。其父求之不得",
+     "print": "向本國其父先來求子不得",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "此必不免",
+     "print": "此必定死",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p34",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X confabulates the first verses (具足六波羅蜜 …) and drops several lines; Z drops the line 我等今者真是聲聞以佛道聲令一切聞; Y only trims the chapter-title prefix.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "具足六波羅蜜 … 佛道聞必無 … 荷負重擔",
+     "print": "得其果報法王法中久修梵行今得無漏無上大果我等今者真是聲聞…",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "頂戴兩肩荷負於恒沙劫盡心恭敬又以美膳",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O11",
+     "quote": "藥草喻品第五",
+     "print": "妙法蓮華經藥草喻品第五",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<columns>8</columns>",
+     "print": "",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "無上大果。[dropped]我等今者真阿羅漢",
+     "print": "無上大果我等今者真是聲聞以佛道聲令一切聞我等今者真阿羅漢",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "隨其堪任",
+     "print": "隨所堪任",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "究竟盡明",
+     "print": "究盡明了",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p37",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X is largely confabulated and drops the 大目犍連… prose; Z invents 我以佛眼觀見六趣衆生 and an extra 其土無有魔及魔民; Y matches.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "聲如大雲以二法益…適華",
+     "print": "譬如大雲以一味雨潤於人華各得成實",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "爾時大目犍連須菩提摩訶迦旃延等皆悉悚慄一心合掌瞻仰尊顏目不暫捨即共同聲而說偈言",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "菩薩羅漢無量億諸",
+     "print": "黃金為繩以界道側",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O1",
+     "quote": "迦葉當知我以佛眼觀見六趣衆生皆得成道",
+     "print": "迦葉當知以諸因緣種種譬喻開示佛道",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "其土無有魔及魔民",
+     "print": "(not on the page)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "聲如大雲",
+     "print": "譬如大雲",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p42",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X confabulates many phrases; Z drops 又諸比丘東 so the direction becomes 南方, and gives 北方 for 西北方; Y faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "告大德生",
+     "print": "爾時五百萬億國土諸梵天王與宮殿俱",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "坐禪不樂…菩薩名曰悲",
+     "print": "生希有心即各相詣…有一大梵天王名曰大悲",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "又諸比丘東南方",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O8",
+     "quote": "徧",
+     "print": "徧/偏",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "南方五百萬億國土",
+     "print": "又諸比丘東南方五百萬億國土",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "共詣北方",
+     "print": "共詣西北方",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p46",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X drops the long passage naming the sixteen Buddhas of the directions; Y reads 令數百萬億 where the print has 令發阿耨 (zoomed); Z faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "於十方國土現在說法…第十六我釋迦牟尼佛於娑婆國土成阿耨多羅三藐三菩提",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "菩薩此品",
+     "print": "告諸比丘",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O8",
+     "quote": "恆/眾/為",
+     "print": "恒/衆/爲",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "令數百萬億 / 多羅三藐三菩提心",
+     "print": "令發阿耨 / 多羅三藐三菩提心",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p49",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X opens 但作大城郭 for 化作 (the conjured city); Z drops several verse lines and rewrites the closing prose; Y faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "莊嚴諸舍宅周帀有園林渠流及浴池重門高樓閣男女皆充滿即作是化已慰衆言勿懼汝等入此城",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "其於說法眾中…中無畏能令眾生皆歡喜攝取佛之慧",
+     "print": "又於諸佛所說空法明了通達得四無礙智常能審諦清淨說法無有",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "但作大城郭",
+     "print": "化作大城郭",
+     "material": true
+    },
+    {
+     "class": "O11",
+     "quote": "[dropped]",
+     "print": "妙法蓮華經卷第三",
+     "material": false
+    },
+    {
+     "class": "D1",
+     "quote": "->…<- / # / ##",
+     "print": "",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p52",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "misleading",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y and Z are identical: a 277-character garbled summary missing most of the page; X carries the full prose and verse with one misread (貿功 for 貿易).",
+  "C_outcome": "no-answer",
+  "C_reason": "no usable answer after 3 tries",
+  "C_equals_L": true,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "起已遊行到於他國…世尊於長夜 (most of the prose and the verse)",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "為諸菩薩開示",
+     "print": "汝當為宣說",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "是時親友。後於他國。與之相遇",
+     "print": "(not on the page)",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "起已遊行到於他國…世尊於長夜 (most of the prose and the verse)",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "為諸菩薩開示",
+     "print": "汝當為宣說",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "是時親友。後於他國。與之相遇",
+     "print": "(not on the page)",
+     "material": true
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "以此寶貿功所須",
+     "print": "以此寶貿易所須",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [
+   "no answer"
+  ],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p57",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Z matches the print (天龍鬼神…等); X swaps in the canonical eightfold list 夜叉…摩睺羅伽; Y rewrites the opening and drops the verse.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "以如來全身。與塔廟…皆悉圓滿。是諸菩薩。若不聞是法華經",
+     "print": "此中已有如來全身此塔應以…尊重讚歎若有人得見此塔禮拜供養當知是等皆近…",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "the verse 欲捨諸懈怠 … 若聞是深經",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "我時遣化諸天。龍神。乾闥婆。阿修羅等。眾多大眾",
+     "print": "我時廣遣天龍鬼神乾闥婆阿修羅等",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "<gloss><unclear>small interlinear characters</unclear></gloss>",
+     "print": "interlinear small characters",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O3",
+     "quote": "天龍夜叉乾闥婆阿修羅迦樓羅緊那羅摩睺羅伽等",
+     "print": "天龍鬼神乾闥婆阿修羅等",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "譬如有人渴須水。穿於高原",
+     "print": "藥王譬如有人渴乏須水於彼高原",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "猶見乾土燥",
+     "print": "猶見乾燥土",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p62",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Hard page: right panels badly faded. Y declares them untranscribed and reads the clear panels well; X fills them with gibberish; Z invents a 寶華/寶藏 passage and drops 未 (猶故盡).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "爾時有佛。號曰寶華…時有菩薩。名曰寶藏",
+     "print": "faded right-hand panels (not this text)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "猶故盡時",
+     "print": "猶故未盡時",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "諸佛皆來。坐於彼處",
+     "print": "為諸佛當來坐故復於",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O5",
+     "quote": "<unclear>about 20 columns of faded text … not transcribed</unclear>",
+     "print": "faded right-hand panels",
+     "material": true
+    }
+   ],
+   "R": [
+    {
+     "class": "O1",
+     "quote": "訓得迴錄操秉衆豪釋音閱豪音胡",
+     "print": "faded columns (partly legible)",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "正當三十三天頂天帝 能以祕密真梵契文",
+     "print": "plaque: 王宮三十三天雨天…",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p65",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X and Y agree except X 供給使侍 for 走使; Z drops and rewrites much of the Devadatta story.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "無有懈怠…是諸",
+     "print": "能於來世讀持此經是真佛子…能須臾說一切",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "擊鼓宣令四方求法誰能為我說大乘者…王聞仙言歡喜踊躍即隨仙人供給所須採果汲水拾",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "供給使侍",
+     "print": "供給走使",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p69",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Print has end-title 卷第四 then 卷第五: X right, Y gives 卷第十四, Z 卷第十三 and drops two verse lines.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "是人懷惡心",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "發如是誓言佛自知我心",
+     "material": true
+    },
+    {
+     "class": "O7",
+     "quote": "妙法蓮華經卷第十三",
+     "print": "妙法蓮華經卷第四 / 卷第五",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O11",
+     "quote": "<unclear>[faint stamped characters — several words]</unclear>",
+     "print": "faint stamped characters",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O7",
+     "quote": "妙法蓮華經卷第十四",
+     "print": "妙法蓮華經卷第四 / 妙法蓮華經卷第五",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "常在於衆中",
+     "print": "常在大衆中",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p72",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "tie",
+   "loser_material": true
+  },
+  "why": "X matches; Y omits the first two columns and a verse line and reads 世尊 for 一心安樂行; Z drops two passages and garbles 放逸/戲論.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "平等說法以順法故不多不少乃至深愛法者",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "文殊師利譬如強力轉輪聖王欲以威勢降伏諸國",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "汝是故道之人…汝不應藏論",
+     "print": "汝是放逸之人…又亦不應戲論",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "尼優婆塞優婆夷求聲聞者…當於一切眾生起大悲想於",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "若欲說是經 當捨嫉恚慢 諂誑邪偽心",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "智者應守護 世尊安樂行",
+     "print": "智者應守護 一心安樂行",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p75",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y and Z agree with the print; X garbles the count of retinues and drops 爾時四大菩薩而說偈言.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O1",
+     "quote": "然後信者皆得恆河沙數菩薩",
+     "print": "況復億萬眷屬況復千萬百萬",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "乃至一恒河沙半恒河沙四分之一乃至千",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "爾時四大菩薩而說偈言",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O5",
+     "quote": "恒河沙眷屬",
+     "print": "恒河沙等眷屬",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O16",
+     "quote": "<unclear>……</unclear>",
+     "print": "",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p79",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X is faithful; Y drops 發 in 發歡喜心; Z loses the name 彌勒 (請佛首) and 解 three times.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "大眾請佛首",
+     "print": "大衆彌勒為首",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "當信如來誠諦之語 (x3)",
+     "print": "當信解如來誠諦之語",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "教化令教心",
+     "print": "教化令發心",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O8",
+     "quote": "眾/為",
+     "print": "衆/爲",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "能令衆生。歡喜心",
+     "print": "能令衆生發歡喜心",
+     "material": false
+    },
+    {
+     "class": "D1",
+     "quote": "## 妙法蓮華經如來壽量品第十六",
+     "print": "",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p82",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Damaged page. Y transcribes it and marks restored lacunae unclear; X drops the 三生/二生/一生 sequence; Z changes 六百八十萬億 to 八百 and 八世界 to 八恒河沙等.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "三四天下微塵數菩薩摩訶薩三生當得…復有八世界",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "一生補處",
+     "print": "八生當得阿耨多羅",
+     "material": true
+    },
+    {
+     "class": "O11",
+     "quote": "多寶佛塔",
+     "print": "妙法蓮華經分別功德品第十七",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O3",
+     "quote": "<unclear>四四天下微塵數菩</unclear>…",
+     "print": "lacunae in the torn panels, restored and flagged unclear",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O7",
+     "quote": "八百八十萬億",
+     "print": "六百八十萬億",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "無生法 / 羅尼門復",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "八恒河沙等微塵數",
+     "print": "八世界微塵數",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p85",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Zoomed verse: print 起僧坊供養 堂有三十二 / 上饌妙衣服 牀臥皆具足 (Y); X has 堂宇三十六 and repeats a line; Z rewrites the line and gives 諸坊.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "赤栴檀香",
+     "print": "末香塗香",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "衆鼓伎樂簫笛箜篌種種舞戲",
+     "material": true
+    },
+    {
+     "class": "O7",
+     "quote": "堂宇三十六",
+     "print": "堂有三十二",
+     "material": true
+    },
+    {
+     "class": "O4",
+     "quote": "園林諸浴池 經行及禪窟 (twice)",
+     "print": "上饌妙衣服 牀臥皆具足",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "起諸坊供養 堂閣三十二",
+     "print": "起僧坊供養 堂有三十二",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "上饌妙美味 殊服卧具等",
+     "print": "上饌妙衣服 牀臥皆具足",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "衆伎樂",
+     "print": "衆鼓伎樂",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p89",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "misleading",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X and Z are identical: after the prose they replace the ear-faculty verse with a looping 若人散亂心 verse from the Expedient Means chapter; Y matches the print.",
+  "C_outcome": "no-answer",
+  "C_reason": "no usable answer after 3 tries",
+  "C_equals_L": true,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "羊聲雞聲犬聲牙",
+     "print": "車聲啼哭聲愁嘆聲螺聲鼓聲鐘聲鈴聲笑聲語聲男聲女",
+     "material": true
+    },
+    {
+     "class": "O3",
+     "quote": "若人散亂心入於塔廟中一稱南無佛…",
+     "print": "父母所生耳 清淨無濁穢 … (the ear-faculty verse)",
+     "material": true
+    },
+    {
+     "class": "O4",
+     "quote": "若人散亂心乃至以一華供養 … (looped)",
+     "print": "",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "羊聲雞聲犬聲牙",
+     "print": "車聲啼哭聲愁嘆聲螺聲鼓聲鐘聲鈴聲笑聲語聲男聲女",
+     "material": true
+    },
+    {
+     "class": "O3",
+     "quote": "若人散亂心入於塔廟中一稱南無佛…",
+     "print": "父母所生耳 清淨無濁穢 … (the ear-faculty verse)",
+     "material": true
+    },
+    {
+     "class": "O4",
+     "quote": "若人散亂心乃至以一華供養 … (looped)",
+     "print": "",
+     "material": true
+    }
+   ],
+   "R": [
+    {
+     "class": "O8",
+     "quote": "脩",
+     "print": "修",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [
+   "no answer"
+  ],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p92",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X matches; Y drops a verse line and rewrites 唯獨自明了 and 於有頂; Z reads 梵有頂 for 於有頂.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "設諸上供養 諸天龍夜叉",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "是人皆得甘露",
+     "print": "悉皆成甘露",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "乃至鐵圍山",
+     "print": "乃至於有頂",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "見世間有一切諸羣萌",
+     "print": "唯獨自明了",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "乃至梵有頂",
+     "print": "乃至於有頂",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "及其申",
+     "print": "及其中",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p95",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X matches; Y turns 不輕菩薩 into 常輕菩薩; Z omits several passages.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "今於我前聽法者是我於前世勸是諸人聽受斯經第一之法…是故行者於佛滅後",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "會中跋陀婆羅等五百菩薩師子月等五百比丘",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "常輕菩薩",
+     "print": "不輕菩薩",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "臭饒益",
+     "print": "大饒益",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p99",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Print 八百千萬億 and 其身火然千二百歲: Y right, X 六百 and 與熱; Z drops a clause and changes the numbers.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "身光明遍照八十億恒河沙世界其中諸佛",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "恆河沙等",
+     "print": "甄迦羅頻婆",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "垂三",
+     "print": "千二",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O7",
+     "quote": "六百千萬億",
+     "print": "八百千萬億",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "其身與熱",
+     "print": "其身火然",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "爲藷",
+     "print": "為積",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p102",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y matches; X drops the 守護是經 / 良藥 sentences; Z loses the name 宿王華 (梵王華說).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "宿王華汝當以神通之力守護是經所以者何",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "[dropped]",
+     "print": "閻浮提人病之良藥若人有病得聞是經病即消",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "梵王。華說當以神通之力",
+     "print": "宿王華汝當以神通之力",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "至魔魔民",
+     "print": "惡魔魔民",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p105",
+  "book": 1,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "All three carry the text; X drops 之, Z drops the vocative 華德, doubles 善根 and turns 百十五 into 15.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "示現滅度而得度",
+     "print": "示現滅度 華德",
+     "material": false
+    },
+    {
+     "class": "O7",
+     "quote": "<page-num>15</page-num>",
+     "print": "百十五",
+     "material": false
+    },
+    {
+     "class": "O4",
+     "quote": "是妙音菩薩善根。深種善根",
+     "print": "是妙音菩薩深種善根",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "神通智慧力",
+     "print": "神通智慧之力",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p109",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": false
+  },
+  "why": "Dhāraṇī page. Z follows the numbered syllables and the prose; Y substitutes different dhāraṇīs and 二十億; X garbles the syllables with invented glosses.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O3",
+     "quote": "離提。目佉。摩訶目佉…阿豆…娑婆訶",
+     "print": "賒咩七 … 阿摩若那多夜四十三 (numbered dhāraṇī)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "若餓鬼若餓鬼",
+     "print": "若夜叉若羅剎",
+     "material": true
+    },
+    {
+     "class": "O7",
+     "quote": "二十億諸佛所說",
+     "print": "四十二億諸佛所說",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "O12",
+     "quote": "[interlinear pronunciation notes dropped]",
+     "print": "small notes such as 初加反",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O1",
+     "quote": "目多頭摩<gloss>音二合十一</gloss> 脂帝 … 多頭摩脂帝",
+     "print": "目多履十一 娑履十二 阿瑋娑履十三",
+     "material": true
+    },
+    {
+     "class": "O12",
+     "quote": "glosses invented/misplaced",
+     "print": "interlinear pronunciation notes",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69f1347c365e3fcae574ed1c-p113",
+  "book": 1,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "sound"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": true,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X and Z match the print; Y loses the negation (亦復 for 不復自隨心行) and garbles 淨德夫人.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "示導今日亦復自隨心教戒而行甚為隨善",
+     "print": "不可思議微妙功德教戒所行安隱快善",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "我從今日。亦復自隨心行",
+     "print": "我從今日不復自隨心行",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "序德天人。令佛前完照",
+     "print": "淨德夫人今佛前光照",
+     "material": true
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "D1",
+     "quote": "#",
+     "print": "",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p41",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y drops '顯陵外既是先帝' (merging two speakers) and turns 攖城自守 into 闖賊自守; Z has several single-char slips (叫傲, 忽然 for 忽喇喇, 一而去); X only misreads 高坆 as 高坡.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "丑是先帝陵寢為何如此殘破",
+     "print": "丑是先帝顯陵外既是先帝陵寢為何如此殘破",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "殺了偽官闖賊自守",
+     "print": "殺了偽官攖城自守",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "蕭粉",
+     "print": "齏粉",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "外該使人",
+     "print": "外咳使人",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "欽監",
+     "print": "欽天監",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "跌跌的滾滾的一去",
+     "print": "跌的跌滾的滾一閧而去",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "高坡",
+     "print": "高坆(墳)",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "有個叫傲楊承裕",
+     "print": "有個人叫做楊承裕",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "忽然〔記〕",
+     "print": "忽喇喇(丑記)",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "闖賊知復",
+     "print": "闖賊聞知復",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "一而去",
+     "print": "一閧而去",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "櫻城",
+     "print": "攖城",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p67",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": false
+  },
+  "why": "Y matches the print including 公〻; X drops the repeat mark; Z has 日問鳳閣 for 日間鳳闕 and drops 爭.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "靠公的福",
+     "print": "靠公〻的福",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "(no header)",
+     "print": "鐵冠圖 借餉",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "日問鳳閣",
+     "print": "日間鳳闕",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "奈將寡",
+     "print": "爭奈將寡",
+     "material": false
+    },
+    {
+     "class": "O8",
+     "quote": "旰食",
+     "print": "肝食",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p84",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X stops after '俺李洪基' with a Gemini filter message; Y has 俺父 for 俺叔父 and 敗了 for 改了; Z is faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "俺父一隻虎",
+     "print": "俺叔父一隻虎",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "敗了洪基名字聽了年號",
+     "print": "改了洪基名字應了年號",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "攻東攻西應西",
+     "print": "攻東則應東攻西則應西",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "棋逢敵手令人",
+     "print": "棋逢敵手越令人",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "特衛",
+     "print": "侍衛",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "俺李洪基This request was blocked by Gemini's filters...",
+     "print": "俺李洪基奉父王之命攻打岱州 ... 惟鐵騎惟鐵騎如雲馳驟挽金戈挽金戈如",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p99",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y loses the 丑 role marker three times (耳/且) and has 恨 for 悞, 九伐 for 九仞; X has 峽子 for 咲子; Z faithful. First char 咸/威 ambiguous in print, not scored.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "耳唱句 / 棄撇且大王 / 叮且付",
+     "print": "丑唱句 / 棄撇丑大王 / 吖丑付",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "不可因而恨也",
+     "print": "不可因而悞也",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "九伐為山",
+     "print": "九仞為山",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "此人非是你親",
+     "print": "況此人非是你親",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "中山峽子",
+     "print": "中山咲子",
+     "material": false
+    },
+    {
+     "class": "O8",
+     "quote": "勺 / 哥丶 / 速丶",
+     "print": "句 / 哥〻 / 速〻",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p122",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X loses the whole 桂枝香 aria to a Gemini filter message; Z garbles 寇→施, 自→目, 寇兵→魁兵; Y only 諒→諫.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "臣施李目成",
+     "print": "巨寇李自成",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "當思",
+     "print": "當然",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "魁兵圍困",
+     "print": "寇兵圍困",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "諫無能為",
+     "print": "諒無能為",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "諫無能為",
+     "print": "諒無能為",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "〔This request was blocked by Gemini's filters...",
+     "print": "〔桂枝香〕遭逢頹運寇兵圍困三百年一統封疆却被那流賊吞併怕銅駝荊棘…山河搖震正旦介難道滿朝臣子竟無一人為國分憂小生連唱〔合〕豆恨",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p145",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X is cut off after '千秋' by a Gemini filter message; Z has 各矣 for 各哭, 婚養 for 嬌養, 本 for the 末 role, 心如櫺; Y faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "各矣",
+     "print": "各哭",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "孩兒婚養宮中",
+     "print": "孩兒嬌養宮中",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "本拉作旦下",
+     "print": "末拉作旦下",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "心如櫺",
+     "print": "心如攪",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "千秋This request was blocked by Gemini's filters...",
+     "print": "千秋歲淚如潮此際心如攪…形影相弔 末拉作旦下各哭…困極",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p165",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X drops the line '打下長興老唬死我也唬死我也' and reads 眼睛這裂 for 雙睛迸裂; Z turns 王公〻 (eunuch Wang) into 主公 and garbles 沖冠 as 衝說冠; Y faithful (role char 夫/老 small and not scored).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "旦是 (ends)",
+     "print": "旦是打下長興老唬死我也唬死我也",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "眼睛這裂",
+     "print": "雙睛迸裂",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "聖上唬阿呀",
+     "print": "聖上唬阿誰老阿呀",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "阿呀王公不好了",
+     "print": "阿呀王公〻不好了",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "夫光斬",
+     "print": "老先斬",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "阿呀主公",
+     "print": "阿呀王公〻",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "怒起<note>衝說</note>冠髮豎",
+     "print": "怒起沖冠髮豎",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<note>令而放肆…</note> role labels wrapped as notes",
+     "print": "inline role labels",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p195",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "Y faithful incl. 擁擁擠擠喧喧嚷嚷 and 乙調; X drops 擠擠/嚷嚷, adds 有/文; Z spaced out with many single-char slips (天于, 祭宣, 開尊, 戈戰) and drops 老 of 老旦; gist intact in all three.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O8",
+     "quote": "忙；如 … 擁；擠；喧；嚷；",
+     "print": "忙〻如 … 擁〻擠〻喧〻嚷〻",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "天于 / 府祭宣 / 同候 / 大昌子頭 / 開尊 / 戈戰",
+     "print": "天子 / 府聽宣 / 伺候 / 大冒子頭 / 開導 / 戈戟",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "下 旦 上 / 黃 羅 傘 翠 羽",
+     "print": "下老旦上 / 黃羅傘罩翠羽",
+     "material": false
+    },
+    {
+     "class": "O4",
+     "quote": "簇 簇 簇",
+     "print": "簇簇",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<header>元場五記</header>",
+     "print": "元場五記 is an interlinear note; header is 鐵冠圖 刑拷",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "擁擁喧喧",
+     "print": "擁〻擠〻喧〻嚷〻",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "便是有俺相爺 / 先傳文明朝",
+     "print": "便是俺相爺 / 先傳明朝",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "搖干行 / 七調 / 真乃誹",
+     "print": "搖千行 / 乙調 / 真乃腓",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p215",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X reads 常山舌罵 as 常山古馬, invents a footer '鏡花緣初集', and fragments 剝皮揎草; Z has 褫讓 for 豫讓 and 走介 for 夫介; Y faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "常山古馬",
+     "print": "常山舌罵",
+     "material": true
+    },
+    {
+     "class": "O1",
+     "quote": "鏡花緣初集",
+     "print": "(banxin: 崑曲粹存初集 千鍾祿 草詔)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "奕倫名故 / 梁州第一",
+     "print": "彝倫名教 / 梁州第七",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "首將他剝皮 喧 草",
+     "print": "屍首將他剝皮揎草",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "敲過那 / 凌遲 (no 麼唱)",
+     "print": "敲賽過那 / 凌遲麼唱",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "褫讓衣·景二劊子",
+     "print": "豫讓衣梟二劊子",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "攙不負",
+     "print": "纔不負",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "走介",
+     "print": "夫介",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p231",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "flawed",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "Z gets 忠讜, 佯狂, 嚇〻, 裸衣撾; X has 天定/過/縣/伴狂; Y has 伴狂, 忠謹, an inserted 期 and a spurious heading. All minor.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "天定降",
+     "print": "天灾降",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "裸衣過",
+     "print": "裸衣撾",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "且縣過 / 走吓喝",
+     "print": "且躲過 / 走吓唱",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "忠謹 / 伴狂",
+     "print": "忠讜 / 佯狂",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "生嘆唱",
+     "print": "生嗳唱",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "走吓先生",
+     "print": "走吓老生",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "忠謹 / 伴狂",
+     "print": "忠讜 / 佯狂",
+     "material": false
+    },
+    {
+     "class": "O4",
+     "quote": "誓死期翱翔",
+     "print": "誓死翱翔",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "### 鼓罵漁陽",
+     "print": "鼓罵漁陽 continues the lyric line",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "走吓介生",
+     "print": "走吓老生",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p249",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "Z is cut off after '密' by a Gemini filter message; Y has 未付 for the 末付 role throughout and drops the closing '老生大師臣已'; X faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "未付 (x4)",
+     "print": "末付",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "住丁 / 看三追 / 未付問",
+     "print": "住了 / 看〻追 / 末付唱",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "週遮 (ends)",
+     "print": "週遮老生大師臣已",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "痛嗟兇謀竭蟄，密This request was blocked by Gemini's filters...",
+     "print": "…密層層羅網設紛馳鐵騎遠追躡 二生住了差何人尋覓… 特地傳言奏捷程師兄早劃取妙計週遮老生大師臣已",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p269",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "misleading",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": true,
+   "C": true,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y and Z are identical and transcribe another leaf (茅菴…前腔呼天泣地, page 4); the print here is 為忠臣君為智士…須索向死中求活…急〻赶上去 (folio 五). X matches, with 嚴震且 for 嚴震直.",
+  "C_outcome": "contain",
+  "C_reason": "The draft's text (向茅菴再入樓尋…前腔呼天泣地…) is not on this leaf, which begins 為忠臣君為智士今日坐視君亡 and carries the lyrics 須索向死中求活… and 爛翻舌轟雷捲濤….",
+  "C_equals_L": true,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "I1",
+     "quote": "向茅菴再入樓尋到何處覓道人消耗…前腔呼天泣地痛哀號粉骨難全忠孝當初方相國說我",
+     "print": "為忠臣君為智士今日坐視君亡…待我急〻赶上去急〻赶上去打下元場",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "I1",
+     "quote": "向茅菴再入樓尋到何處覓道人消耗…前腔呼天泣地痛哀號粉骨難全忠孝當初方相國說我",
+     "print": "為忠臣君為智士今日坐視君亡…待我急〻赶上去急〻赶上去打下元場",
+     "material": true
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "嚴震且 (x2)",
+     "print": "嚴震直",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "<gloss>唱</gloss>我如今 / <gloss>白</gloss>咳",
+     "print": "嗄我如今 / 唗嚴震直",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<page-num>十五</page-num>",
+     "print": "五",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": true,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p289",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": false
+  },
+  "why": "X faithful (召臣僚, 夙昔, 公公); Y has 名臣僚, 閒說, drops 認 and 〻; Z inserts 名/寀 (召名臣。僚寀) and 體頑搖. Gist intact in all.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "聖諭名臣僚",
+     "print": "聖諭召臣僚",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "風昔 / 閒說",
+     "print": "夙昔 / 聞說",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "入殿識明白 / 公快行",
+     "print": "入殿識認明白 / 公〻快行",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O4",
+     "quote": "聖諭召名臣。僚寀忙整冠",
+     "print": "聖諭召臣僚忙整冠",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "風昔 / 識別 / 體頑搖",
+     "print": "夙昔 / 識認 / 體頓搖",
+     "material": false
+    },
+    {
+     "class": "O16",
+     "quote": "<insert>…</insert> around spoken lines; ### heading",
+     "print": "inline small-character dialogue",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p308",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "Y faithful incl. 呼脬 and 小生內; X inserts 鼐 and reads 小生爲; Z has 忖 for the 付 role throughout, drops 不款外客, 變理 for 燮理.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "忖 (role, throughout)",
+     "print": "付",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "家宴不能相見",
+     "print": "家宴不款外客不能相見",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "跪在此處 / 虧殺那個娘 / 變理陰陽 / 呼脣",
+     "print": "跪門在此 / 虧殺呸個娘 / 燮理陰陽 / 呼脬",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O4",
+     "quote": "調鼎鼐老",
+     "print": "調鼎老",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "小生爲太師爺出堂",
+     "print": "小生內太師爺出堂",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "呼膀",
+     "print": "呼脬",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p326",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y turns the 引 line '暗滄溟勒石燕然' into '暗瘡痍勒石依然' (losing the 燕然 allusion) and garbles 請生末告坐; Z has 都院 for 部院, 敕時, 生走; X faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "暗瘡痍勒石依然",
+     "print": "暗滄溟勒石燕然",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "損兵喪氣",
+     "print": "損兵英雄喪氣",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "相合 / 生老太師 / 請先生未告坐",
+     "print": "相召 / 生末老太師 / 請生末告坐",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "老成都院",
+     "print": "老成部院",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "生走老太師 / 列公敕時",
+     "print": "生末老太師 / 列公救時",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p341",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "misleading",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": true,
+   "C": true,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X and Y are identical and serve the preceding leaf's dialogue (來了這老頭兒…可笑那夏言呵唱); the page is 〔泣顔回〕一旦擢高官… which only Z transcribes, with 正調 for 工調.",
+  "C_outcome": "contain",
+  "C_reason": "The draft's text (來了這老頭兒原錯的…可笑那夏言呵唱) is not on this leaf, which carries the 泣顏回 lyric 一旦擢高官恃君恩獨掌朝權… with the banxin heading 鳴鳳記 賄監.",
+  "C_equals_L": true,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "I1",
+     "quote": "來了這老頭兒原錯的淨如今看起來…淨可笑那夏言呵唱",
+     "print": "〔泣顔回〕一旦擢高官恃君恩獨掌朝權…把夏言這顆頭兒孝敬了老太師罷全哈〻請下",
+     "material": true
+    }
+   ],
+   "C": [
+    {
+     "class": "I1",
+     "quote": "來了這老頭兒原錯的淨如今看起來…淨可笑那夏言呵唱",
+     "print": "〔泣顔回〕一旦擢高官恃君恩獨掌朝權…把夏言這顆頭兒孝敬了老太師罷全哈〻請下",
+     "material": true
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "正調",
+     "print": "工調",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": true,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p358",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Z splices phrases out of order (老婆子偏喜轎馬, 動了氣要雪中送炭) and drops speakers; Y inserts a 旦 speaker and a spurious '生你不成', reassigning the 戲法 joke; X faithful except dropping 遇 (only Y has 憶舊遊遇相知).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "生要夏老夫人到泉州去我不回誰曰：老爺…生就是囊飯這個老婆子生淨那一個夏老夫人",
+     "print": "又要回誰回我回我不回誰回〻老爺…生要送夏老夫人到泉州去淨那一個夏老夫人",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "這老婆子偏喜轎馬 / 我老爺動了氣要雪中送炭",
+     "print": "這老婆子莫說轎馬 / 我老爺偏喜雪中送炭",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "拿板子要打你這狗才",
+     "print": "拿板子要打誰生打你這狗才",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "待我馮起書來",
+     "print": "生待我寫起書來",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O5",
+     "quote": "憶舊遊相知",
+     "print": "憶舊遊遇相知",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "自己打自己不成<gloss>生</gloss>你不成你把那戲法兒收了罷",
+     "print": "自己打自己的腿不成你把那戲法兒收了罷 (all 淨)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "又要同誰同我囘我不囘誰同<gloss>旦</gloss>老爺",
+     "print": "又要回誰回我回我不回誰回〻老爺",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "<gloss>生</gloss>送夏老夫人 / <gloss>净</gloss>夥計們",
+     "print": "生要送夏老夫人 / 淨呔夥計們",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p381",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "tie",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "Y drops the whole first lyric line '斗轉參橫玉壺傳動天階曉長樂鳴鐘玉階' and reads 午官; X (遂瞻) and Z (未上, glossed gongche) are near-faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "點絳唇 (then) 午官送",
+     "print": "點絳唇斗轉參橫玉壺傳動天階曉長樂鳴鐘玉階千官送",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "午官送 / 爐煙晨",
+     "print": "千官送 / 爐煙裊",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "未上 / 遂瞻",
+     "print": "末上 / 遙瞻",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "遂瞻帝座",
+     "print": "遙瞻帝座",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "未上",
+     "print": "末上",
+     "material": false
+    },
+    {
+     "class": "O10",
+     "quote": "<gloss>凡工 六凡工 …</gloss>",
+     "print": "gongche marks beside the lyric (rendering not verified character by character)",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p406",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "flawed",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X reads 順我生時逆我亡 as 送我亡, inverting the maxim; X and Y both make 趨權 into 趙權; Z keeps 趨權 and 鬭黑麻, slips on 帥/果.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "順我生時送我亡",
+     "print": "順我生時逆我亡",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "邊師趙權",
+     "print": "邊師趨權",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "累啞唱 / 關黑麻",
+     "print": "眾咂唱 / 鬭黑麻",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "邊師趙權",
+     "print": "邊師趨權",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "關黑麻",
+     "print": "鬭黑麻",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "邊帥",
+     "print": "邊師",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "果咂唱",
+     "print": "眾咂唱",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p423",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "Y is cut off at '商' by a Gemini filter message; Z inverts '救得書生命' to '殺得書生命', makes the snoring 打齁 into 打躬 and splices phrases; X faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "殺得書生命",
+     "print": "救得書生命",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "小生打躬介",
+     "print": "小生打齁介",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "將易生灌醉。三鎖禁書房 / 彭九 / 不取燈火",
+     "print": "將易弘器灌醉鎖禁書房 / 彭孔 / 不敢燈火",
+     "material": false
+    },
+    {
+     "class": "O4",
+     "quote": "路徑熟悉。鎖禁在此。不取燈火",
+     "print": "路徑熟識為此不敢燈火",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "易生。易生。謝天。",
+     "print": "易生易解元不知在那里吓易生",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "世蕃夫婦商This request was blocked by Gemini's filters...",
+     "print": "…商議道今晚將易弘器灌醉鎖禁書房…小生吓老",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p446",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "X turns 囹圄休錯認 into 圓圓體錯認 and drops '小生可是刑部獄中末啞小生我為何在此唱'; Z is cut off at '昏' by a Gemini filter message; Y faithful.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": true,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "這圓圓體錯認桃源洞",
+     "print": "這囹圄休錯認桃源洞",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "末刑部獄中 小生啞 (ends)",
+     "print": "末是刑部獄中小生可是刑部獄中末啞小生我為何在此唱",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "公治",
+     "print": "公冶",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "莫不是昏This request was blocked by Gemini's filters...",
+     "print": "莫不是昏沈未醒怪異奇逢莫不",
+     "material": true
+    },
+    {
+     "class": "O15",
+     "quote": "This request was blocked by Gemini's filters",
+     "print": "(none)",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "圄圇",
+     "print": "囹圄",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p468",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "Y faithful with all role labels; X drops two 外 labels and 荅 and invents a '上之上 一記' header; Z has 勻贍 for 勾瞻.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O5",
+     "quote": "階下去做什麼。我要拜一拜二聖 / 受苦。受苦生",
+     "print": "階下去做什麼外我要拜一拜二聖 / 受苦外受苦生",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "那一是虜營",
+     "print": "那一荅是虜營",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>上之上 一記</header> / <page-num>一四</page-num>",
+     "print": "(no such header; folio 四)",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "不能勻贍天仰聖",
+     "print": "不能勾瞻天仰聖",
+     "material": false
+    },
+    {
+     "class": "O10",
+     "quote": "<gloss>工尺上四の記</gloss>",
+     "print": "gongche marks (partial/approximate)",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p487",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": false
+  },
+  "why": "X faithful (霜〻, 管教, 羶奴); Y has many single-char slips (曾教, 糟奴, 兀亦, 講宋) and drops 元帥/眾應; Z drops 領 and turns 來 into a 宋 role tag.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "牛皋待牛皋一馬當先曾教",
+     "print": "牛元帥待牛皋一馬當先管教",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "眾將就此殺上前去眾得令三記",
+     "print": "眾將眾應就此殺上前去眾得令唱三記",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "糟奴輩 / 兀亦 / 牛皋早看得 / 快講宋 / 客談",
+     "print": "羶奴輩 / 兀朮 / 俺牛皋看得 / 快講來 / 畧談",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O5",
+     "quote": "兀朮傾國人馬",
+     "print": "兀朮領傾國人馬",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "有話快講。<gloss>宋</gloss> / 有話奉告",
+     "print": "有話快講來 / 有言奉告",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ },
+ {
+  "slug": "69de98851b234a773e438912-p507",
+  "book": 2,
+  "V": {
+   "L": "flawed",
+   "C": "sound",
+   "R": "misleading"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "C",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "L",
+   "loser_material": true
+  },
+  "why": "X faithful; Y's lyric text is right but it pads the page with long repeating 尺工六凡工 gloss runs that are not the printed gongche, plus a 新曲粹粹 header; Z has 德休懊 for 恁休悔懊 and drops the 淨 before 閃開.",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "德休懊",
+     "print": "恁休悔懊",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "莫非計也，閃開",
+     "print": "莫非計也淨閃開",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "方繞說 / 何計喝 / 不得有候 / 眾眾上",
+     "print": "方纔說 / 何計唱 / 不得有悞 / 眾上",
+     "material": false
+    }
+   ],
+   "C": [],
+   "R": [
+    {
+     "class": "O1",
+     "quote": "<gloss>合</gloss><gloss>尺</gloss><gloss>工</gloss><gloss>六</gloss><gloss>凡</gloss>… (long repeating runs)",
+     "print": "the printed gongche beside the lyric (e.g. 合 / 尺上 / 工尺 …), not these repeating sequences",
+     "material": true
+    },
+    {
+     "class": "O4",
+     "quote": "這虛囂囂撞",
+     "print": "這虛囂撞",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>新曲粹粹初集</header> / <page-num>十三</page-num>",
+     "print": "崑曲粹存初集 / 三",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": [
+   "R misleading, L not",
+   "L preferred, material"
+  ]
+ },
+ {
+  "slug": "69de98851b234a773e438912-p530",
+  "book": 2,
+  "V": {
+   "L": "misleading",
+   "C": "misleading",
+   "R": "flawed"
+  },
+  "ntl": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip": {
+   "L": false,
+   "C": false,
+   "R": false
+  },
+  "strip_visible": false,
+  "CL": {
+   "prefer": "C",
+   "loser_material": false
+  },
+  "CR": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "RL": {
+   "prefer": "R",
+   "loser_material": true
+  },
+  "why": "The print has 箕箒 (a broom, for 掃煙塵/掃奸臣); X and Y both read 算籌, losing the sweeping joke; Z has 箕帚 and the doubled 掃奸臣 right but 大筒 for 火筒 (Y gets 火筒).",
+  "C_outcome": "corrected",
+  "C_reason": null,
+  "C_equals_L": false,
+  "R_failed": false,
+  "R_filter_cut": false,
+  "R_exit": 0,
+  "defects": {
+   "L": [
+    {
+     "class": "O6",
+     "quote": "是算籌",
+     "print": "是箕箒",
+     "material": true
+    },
+    {
+     "class": "O6",
+     "quote": "是大筒",
+     "print": "是火筒",
+     "material": false
+    },
+    {
+     "class": "O5",
+     "quote": "掃奸臣淨咄",
+     "print": "掃奸臣掃奸臣淨咄",
+     "material": false
+    }
+   ],
+   "C": [
+    {
+     "class": "O6",
+     "quote": "是算籌",
+     "print": "是箕箒",
+     "material": true
+    },
+    {
+     "class": "O5",
+     "quote": "掃奸臣淨咄",
+     "print": "掃奸臣掃奸臣淨咄",
+     "material": false
+    }
+   ],
+   "R": [
+    {
+     "class": "O6",
+     "quote": "是大筒",
+     "print": "是火筒",
+     "material": false
+    },
+    {
+     "class": "O6",
+     "quote": "淨呸",
+     "print": "淨咄",
+     "material": false
+    },
+    {
+     "class": "O11",
+     "quote": "<header>崑曲粹花初集</header>",
+     "print": "崑曲粹存初集",
+     "material": false
+    }
+   ]
+  },
+  "false_contain": false,
+  "true_contain": false,
+  "worse_C_reasons": [],
+  "worse_R_reasons": []
+ }
+]

@@ -1,0 +1,138 @@
+import { describe, it, expect } from 'vitest';
+import fs from 'node:fs';
+import path from 'node:path';
+import { correctBlockPrompt, CORRECT_ONE_PAGE_MARK, splitPageBlocks, pageBlockFile } from '../../scripts/lib/agy-cli.mjs';
+
+// #7701 arm C: `cli-ocr.mjs read --correct-prompt --per-call=N` corrects N consecutive drafted pages in one agy call.
+// The block prompt keeps the one-page template's format part byte for byte, carries every page's draft under its own
+// number, and asks for each page's answer between the #7522 page markers, so the reply is attributed to pages only by
+// those markers and `apply` runs the correct-mode guards on each page as if it had been read alone.
+const FORMAT = 'Transcribe this historical page to Markdown.\n\n**Format:** ... <page-type>X</page-type> (REQUIRED)\n\n';
+const TEMPLATE = `${FORMAT}${CORRECT_ONE_PAGE_MARK} The image, attached at the end of this message, is a page of one book.\n- \`UNCHANGED\` ...\nWrite your one answer between two marker lines, <<<BEGIN>>> and <<<END>>>.\n\nDRAFT START\n{draft}\nDRAFT END\n\nThe page image:`;
+
+describe('correctBlockPrompt', () => {
+  const drafts = ['<page-type>text</page-type>\nprima pagina', '<page-type>text</page-type>\nsecunda', '<page-type>index</page-type>\ntertia'];
+  const p = correctBlockPrompt(TEMPLATE, drafts)!;
+
+  it('keeps the template before its one-page correction paragraph byte for byte, and drops the rest', () => {
+    expect(p.startsWith(FORMAT)).toBe(true);
+    expect(p).not.toContain(CORRECT_ONE_PAGE_MARK);
+    expect(p).not.toContain('{draft}');
+    expect(p).not.toContain('<<<BEGIN>>>');
+    expect(p).not.toMatch(/^DRAFT START$/m);
+  });
+
+  it('carries each draft once, in page order, under its own number', () => {
+    drafts.forEach((d, i) => {
+      expect(p).toContain(`DRAFT ${i + 1} START\n${d}\nDRAFT ${i + 1} END`);
+      expect(p.split(d).length).toBe(2);
+    });
+    expect(p.indexOf('DRAFT 1 START')).toBeLessThan(p.indexOf('DRAFT 2 START'));
+    expect(p.indexOf('DRAFT 2 START')).toBeLessThan(p.indexOf('DRAFT 3 START'));
+  });
+
+  it('names every page marker and attaches every image under its neutral name, after the drafts', () => {
+    for (let i = 1; i <= 3; i++) expect(p).toContain(`<<<PAGE ${i} BEGIN>>> and <<<PAGE ${i} END>>> around page ${i}`);
+    for (let i = 0; i < 3; i++) expect(p).toContain(`page ${i + 1}: @./${pageBlockFile(i)}`);
+    expect(p.lastIndexOf('DRAFT 3 END')).toBeLessThan(p.indexOf(`@./${pageBlockFile(0)}`));
+    // the three answers are asked per page
+    expect(p).toContain('`UNCHANGED`');
+    expect(p).toContain('`CONTAIN: <one sentence>`');
+    expect(p).toMatch(/for each page separately/);
+  });
+
+  it('refuses a template it cannot rebuild and a block of one page', () => {
+    expect(correctBlockPrompt('Transcribe.\n\nDRAFT START\n{draft}\nDRAFT END', drafts)).toBeNull();
+    expect(correctBlockPrompt(TEMPLATE.replace('{draft}', 'x'), drafts)).toBeNull();
+    expect(correctBlockPrompt(TEMPLATE, [drafts[0]])).toBeNull();
+  });
+
+  it('a reply mixing the three answers splits by the markers alone', () => {
+    const reply = '<<<PAGE 1 BEGIN>>>\nUNCHANGED\n<<<PAGE 1 END>>>\n<<<PAGE 2 BEGIN>>>\nCONTAIN: this is the facing page.\n<<<PAGE 2 END>>>\n<<<PAGE 3 BEGIN>>>\n<page-type>index</page-type>\ntertia correcta\n<<<PAGE 3 END>>>';
+    expect(splitPageBlocks(reply, 3)).toEqual(['UNCHANGED', 'CONTAIN: this is the facing page.', '<page-type>index</page-type>\ntertia correcta']);
+    // a one-page answer marker in a block reply refuses the whole call
+    expect(splitPageBlocks(reply.replace('UNCHANGED', '<<<BEGIN>>>UNCHANGED<<<END>>>'), 3)).toBeNull();
+  });
+});
+
+describe('cli-ocr.mjs read --correct-prompt --per-call', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
+
+  it('no longer refuses --per-call with --correct-prompt, only a template it cannot rebuild', () => {
+    expect(src).not.toContain('--correct-prompt carries one draft per call');
+    expect(src).toMatch(/PER_CALL > 1 && CORRECT_PROMPT && !correctBlockPrompt\(/);
+  });
+
+  it('writes each block page a correct-mode meta pointing at the whole prompt sent, so apply guards it as a correction', () => {
+    const block = src.slice(src.indexOf('const readBlock = async'), src.indexOf('const readGroup = async'));
+    expect(block).toMatch(/\.\.\.\(CORRECT_PROMPT && \{ mode: 'correct', lane: LANE, draft: draftMeta\(p\) \}\)/);
+    expect(block).toContain('prompt_sent_file: promptFile');
+    expect(block).toContain('const sent = blockPrompt(n, group)');
+    // the one-page read records the draft the same way
+    expect(src).toMatch(/prompt_sent_file: `\$\{key\}\.prompt\.txt`, draft: draftMeta\(p\)/);
+  });
+
+  it('keys a block correction apart from a one-page correction and from a plain block read', () => {
+    const v = src.match(/const variantOf = [^\n]+/)![0];
+    expect(v).toContain('`correct:${lane}${callPages > 1 ? `:per_call=${callPages}` : \'\'}`');
+  });
+});
+
+describe('cli-ocr.mjs apply --diff-guard=gpu-draft and --emit-written (#7701 Latin arm c on unread pages)', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
+  const guard = src.slice(src.indexOf('if (over || DIFF_GUARD_DRAFT) {'), src.indexOf('} else if (correct) {', src.indexOf('if (over || DIFF_GUARD_DRAFT) {')));
+
+  it('runs the #7695 guards against the GPU draft when there is no stored text, never against page.ocr there', () => {
+    expect(guard).toContain("const ref = over ? page.ocr.data : draft");
+    const code = guard.split('\n').filter((l) => !l.trim().startsWith('//') && !l.includes('const ref ='));
+    expect(code.join('\n')).not.toContain('page.ocr.data');
+    // the like-for-like, tag-free put-back rule is the one #7695 fixed
+    expect(guard).toContain("flags.some((f) => tagIn(ref, f.a) || tagIn(ls.text, f.b))");
+    expect(guard).toContain('nWords(f.draft) !== nWords(f.next)');
+    expect(guard).toContain("winner: 'draft'");
+    expect(guard).toContain("against: over ? 'stored' : 'gpu-draft'");
+  });
+
+  it('takes only gpu-draft, and emits the exact text written after every guard', () => {
+    expect(src).toMatch(/if \(arg\('diff-guard'\) && !DIFF_GUARD_DRAFT\)/);
+    const emit = src.indexOf('if (EMIT_WRITTEN)'), dry = src.indexOf("if (!APPLY) { tally.written++; continue; }");
+    expect(emit).toBeGreaterThan(src.indexOf('text = back.text'));
+    expect(emit).toBeLessThan(dry);
+  });
+});
+
+
+describe('cli-ocr-lane.mjs armc --frame=first-read (#7701: Latin arm c on unread pages, the router pick)', async () => {
+  const lane = await import('../../scripts/batch/cli-ocr-lane.mjs');
+  const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr-lane.mjs'), 'utf8');
+  const run = src.slice(src.indexOf('async function armcRun'), src.indexOf('// ── run --cohort=visible-unread'));
+
+  it('stamps its own lane, Latin only', () => {
+    expect(lane.ARMC_FIRST_READ_LANE).toBe('pero-agy-first-read-7701');
+    expect(lane.ARMC_FIRST_READ_LANGS).toEqual(['la']);
+    expect(run).toContain("LANE_ID = FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
+    expect(run).toContain('`--lane=${LANE_ID}`');
+  });
+
+  it('reads on the unread GPU-draft path and writes with the put-back against the draft, printed only, no stale mark', () => {
+    expect(run).toContain("...(FR ? [] : ['--over-stored'])");
+    expect(run).toContain("...(FR ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`])");
+  });
+
+  it('re-checks the first-read frame (book and page still unread) at run time, never the correct frame', () => {
+    expect(run).toMatch(/const bookOk = FR \? !firstReadSkip\(book/);
+    expect(run).toContain('FR ? await armcFirstReadPages(db, book, take.map((p) => p.id))');
+    const pages = src.slice(src.indexOf('async function armcFirstReadPages'), src.indexOf('async function armcFirstReadPages') + 600);
+    expect(pages).toContain('...UNREAD');
+    expect(pages).toContain('spreadReason(book, pages)');
+  });
+});
+
+describe('the first-read lane reads French 4 pages a call (#7701 cheap routes)', async () => {
+  const lane = await import('../../scripts/batch/cli-ocr-lane.mjs');
+  it('names French with Latin and German, and keeps the read order (Latin and German first)', () => {
+    expect(lane.FIRST_READ_PER_CALL_LANGUAGES).toEqual(['lat', 'deu', 'fra']);
+    const b = (id: string, language: string) => ({ id, language, pages_ocr: 3, processing_priority: 0 });
+    expect([b('fr', 'French'), b('de', 'German')].sort(lane.byFirstReadOrder).map((x) => x.id)).toEqual(['de', 'fr']);
+  });
+});

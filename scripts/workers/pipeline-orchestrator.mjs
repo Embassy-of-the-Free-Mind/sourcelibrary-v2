@@ -56,7 +56,7 @@ import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
-import { holdViolation, holdBook } from '../lib/pipeline-hold.mjs';
+import { holdViolation, holdBook, isUnsplitSpread, NOT_UNSPLIT_SPREAD } from '../lib/pipeline-hold.mjs';
 import { PAGES_MATERIALIZED_FILTER, LAZY_PAGES_FILTER, isLazyPagesBook, ensurePages } from '../lib/lazy-pages.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
@@ -1560,6 +1560,17 @@ async function submitOcrDirectly(db, book, opts = {}) {
 }
 
 async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, promptVariant } = {}) {
+  // Split before read (#7605): a needs_splitting book is never OCR'd whole any more. Phase 2 used to read it
+  // with the spread prompt (<split-position>/<page-break/>) and Phase 3.1 cut it afterwards; that put 1,149 pages
+  // of two-leaf text on spread records in two weeks. Phase 1.3 splits such books first; books that already
+  // carry spread OCR are still cut by Phase 3.1. The spread-prompt branch below is now unreachable from here.
+  // Read the flags fresh: callers pass books from many projections, and a missing field must not read as "split".
+  const splitState = await db.collection('books').findOne({ id: book.id }, { projection: { needs_splitting: 1, split_completed: 1 } });
+  if (isUnsplitSpread(splitState)) {
+    console.log(`    needs_splitting and not split — not OCR'd until it is split (#7605)`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+  }
+
   const ocrModel = modelOverride || getOcrModelForBook(book);
   const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
@@ -1671,10 +1682,8 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   }
 
   // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
-  // These would send two-page images to OCR, producing garbled results
-  // EXCEPTION: if book.needs_splitting, we USE the spread OCR prompt which handles
-  // two-page images directly — no physical split needed before OCR.
-  // Also: if the book was already split_checked, it passed Phase 1.25 and was determined
+  // These would send two-page images to OCR, producing garbled results.
+  // If the book was already split_checked, it passed Phase 1.25 and was determined
   // to be portrait/single-page — no crop data expected, safe to OCR as-is.
   if (!book.needs_splitting) {
     const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
@@ -4101,6 +4110,7 @@ Rules:
               'pipeline_auto.recitation_blocked': { $ne: true },
               'pipeline_auto.recitation_retry': { $ne: true }, // Recitation books go to Pass 2 w/ fallback model
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
+              ...NOT_UNSPLIT_SPREAD, // split before read (#7605): Phase 1.3 splits these first
               ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
               // FREE TEXT FIRST. Do not pay to OCR a book the IA lane is about to fill for
               // nothing. Phase 1.45 takes 20 books a run and this pass takes ~200, so without
@@ -4238,6 +4248,7 @@ Rules:
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
             'pipeline_auto.recitation_blocked': { $ne: true },
+            ...NOT_UNSPLIT_SPREAD, // split before read (#7605): no more spread-prompt reads of a whole spread
             ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
             $or: [
               { pages_ocr: { $gt: 0 } }, // Already has some OCR (preview pass done)

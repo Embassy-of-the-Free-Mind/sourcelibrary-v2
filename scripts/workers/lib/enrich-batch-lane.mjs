@@ -104,7 +104,7 @@ export function gapFilter(scopeFilter = {}) {
   };
 }
 
-async function hasWithheldPages(db, bookId) {
+export async function hasWithheldPages(db, bookId) {
   return !!(await db.collection('pages').findOne(
     { 'translation_withheld.reason': { $exists: true }, book_id: bookId },
     { projection: { _id: 1 }, hint: 'pages_translation_withheld_partial' },
@@ -112,7 +112,7 @@ async function hasWithheldPages(db, bookId) {
 }
 
 /** Re-checked at write time: a book may have been held or had a translation withheld since submit. */
-async function stillEligible(db, bookId) {
+export async function stillEligible(db, bookId) {
   const book = await db.collection('books').findOne({ id: bookId, ...NOT_HELD, 'pipeline_auto.status': { $ne: 'held' } }, { projection: { _id: 1 } });
   if (!book) return 'held or missing';
   if (await hasWithheldPages(db, bookId)) return 'translation withheld';
@@ -381,7 +381,13 @@ async function admit(o, report) {
   }
 
   const now = new Date();
+  // The agy CLI lane (#7628) claims a book in this collection before its call. One claimed since `known` was read
+  // is left to it: the upsert below would overwrite its claim and both lanes would pay for the book.
+  const rowsNow = await stateColl.find({ _id: { $in: admitted.map(a => a.b.id) } }, { projection: { stage: 1 } }).toArray();
+  const taken = new Set(rowsNow.filter(r => r.stage !== known.get(r._id)?.stage).map(r => r._id));
+  if (taken.size) console.log(`  [batch] ${taken.size} admitted book(s) claimed by another lane meanwhile: left to it`);
   for (const a of admitted) {
+    if (taken.has(a.b.id)) continue;
     await stateColl.updateOne({ _id: a.b.id }, {
       $set: {
         book_id: a.b.id, run_tag: o.runTag, stage: a.needIndex ? 'index_pending' : 'indexed',
@@ -392,7 +398,7 @@ async function admit(o, report) {
       $setOnInsert: { attempts: 0 },
     }, { upsert: true });
   }
-  const indexBooks = admitted.filter(a => a.needIndex);
+  const indexBooks = admitted.filter(a => a.needIndex && !taken.has(a.b.id));
   if (indexBooks.length) {
     await submitJob(o, 'index', 'index', indexBooks.map(a => ({ bookId: a.b.id, estUsd: a.estIndexUsd, title: a.b.title })), lines, report);
     // A failed submit leaves nothing in flight: forget those books so the next run re-admits them.

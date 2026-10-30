@@ -1,0 +1,66 @@
+[
+ {
+  "cell": "zh-dice",
+  "route": "paddle>agy-flash-low",
+  "page_id": "6a3c76f301fe4f593c1febfb",
+  "book_id": "6a3c76f301fe4f593c1feade",
+  "why": "reply cut before <<<END>>>",
+  "contain": false
+ },
+ {
+  "cell": "latin-gpu",
+  "route": "gpu>agy-flash-low",
+  "page_id": "69af0a0a4c57359b8d2d0f85",
+  "book_id": "69af0a0a4c57359b8d2d0f49",
+  "why": "reply cut before <<<END>>>",
+  "contain": false
+ },
+ {
+  "cell": "latin-gpu",
+  "route": "gpu>agy-flash-low",
+  "page_id": "69b51e7f9a81ef7feb3d64f9",
+  "book_id": "69b51e7f9a81ef7feb3d64c8",
+  "why": "reply cut before <<<END>>>",
+  "contain": false
+ },
+ {
+  "cell": "latin-gpu",
+  "route": "gpu>agy-flash-low",
+  "page_id": "69dc557bcb6f7429748b8d49",
+  "book_id": "69dc557bcb6f7429748b8d13",
+  "why": "reply cut before <<<END>>>",
+  "contain": false
+ },
+ {
+  "cell": "latin-gpu",
+  "route": "gpu>agy-flash-low",
+  "page_id": "69b51e7f9a81ef7feb3d65b6",
+  "book_id": "69b51e7f9a81ef7feb3d64c8",
+  "why": "reply cut before <<<END>>>",
+  "contain": false
+ },
+ {
+  "cell": "hebrew-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69c1be708522835be846c19e",
+  "book_id": "69c1be708522835be846c19d",
+  "why": "CONTAIN: The draft transcribes a medal of Byzantine Emperor John VIII Palaiologos with a Greek inscription, whereas this image shows an ancient coin or medallion depicting a radiate bust with Hebrew or Aramaic/Nabataean/Phoenician-type letters (or pseudo-script/antique coin obverse), completely unrelated to the draft.",
+  "contain": true
+ },
+ {
+  "cell": "hebrew-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69c1bb5a8522835be845f2d5",
+  "book_id": "69c1bb5a8522835be845f27d",
+  "why": "CONTAIN: The draft transcribes the biblical Book of Ruth (Chapter 1) in printed Hebrew, whereas the image is a manuscript written in cursive Sephardic/Judeo-Arabic or Judeo-Spanish/Hebrew script and does not contain the text of Ruth.",
+  "contain": true
+ },
+ {
+  "cell": "arabic-flash3",
+  "route": "3flash>agy-flash-low",
+  "page_id": "69b63e852a1dde00d5a9e60f",
+  "book_id": "69b63e852a1dde00d5a9e472",
+  "why": "CONTAIN: The draft is not this leaf's text (it transcribes a page from Surah al-An'am, whereas this image shows a page from Surah al-A'raf, page 457).",
+  "contain": true
+ }
+]

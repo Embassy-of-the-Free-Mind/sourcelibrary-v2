@@ -103,7 +103,8 @@ if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
 fi
 
 # Claude (and GPT, the same agy pool) only once this account's Gemini pool is empty (#7545; Derek 2026-10-27/28): the
-# Gemini WEEKLY bucket must read remaining_fraction 0 and both Claude buckets at least 10%. Read from `/quota` (free),
+# Gemini WEEKLY bucket must be empty (remaining_fraction under 0.005, AGY_GEMINI_EMPTY in agy-cli.mjs; a spent pool
+# keeps a residue such as 0.00028 and never reads exactly 0) and both Claude buckets at least 10%. Read from `/quota` (free),
 # cached 10 min in $QUOTA_DIR/<account>.json, the file agy-cli.mjs agyQuota() reads and writes too, so a reset is seen
 # within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked after
 # the one-model rule above: an account held to one model (allowed-model) runs that model only, Claude included.
@@ -127,7 +128,7 @@ except Exception:
 gem = next((v for k, v in g.items() if k.lower().startswith('gemini')), {}).get('weekly')
 cl = next((v for k, v in g.items() if 'claude' in k.lower()), {})
 if not isinstance(gem, (int, float)): print('quota for %s unreadable' % sys.argv[2])
-elif gem > 0: print('%s Gemini weekly %.1f%% left' % (sys.argv[2], gem * 100))
+elif gem >= 0.005: print('%s Gemini weekly %.1f%% left' % (sys.argv[2], gem * 100))
 else:
     low = [w for w in ('weekly', '5h') if not (isinstance(cl.get(w), (int, float)) and cl[w] >= 0.10)]
     print('%s Claude %s under 10%%' % (sys.argv[2], low[0]) if low else '')

@@ -16,6 +16,7 @@ import {
 } from '@/lib/iiif-manifest-metadata';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
 import { initialPageCounters } from '@/lib/page-counts';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -252,9 +253,8 @@ export const POST = withCuratorAuth(async (request, session) => {
     if (manifest_data) {
       manifest = manifest_data;
     } else {
-      const manifestRes = await fetch(manifest_url, {
+      const manifestRes = await outboundFetch(manifest_url, {
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
           'Accept': 'application/json, application/ld+json',
         }
       });

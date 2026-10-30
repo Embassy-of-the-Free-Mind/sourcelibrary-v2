@@ -344,6 +344,15 @@
       frameNavKey = newNavKey;
       resetHeight();
 
+      // A deep link straight into a page reader: the reader fills one window
+      // height, so with the host's header above it the bottom of the scan and
+      // the page controls start below the fold. Bring the frame to the top of
+      // the window, as an in-frame navigation already does below — unless the
+      // visitor has already scrolled.
+      if (wasInitialNav && data.page && (window.pageYOffset || 0) === 0) {
+        scrollToTop();
+      }
+
       // If this was triggered by popstate, we're done - don't push history
       if (isPopstateNav) {
         isPopstateNav = false;

@@ -1,0 +1,2128 @@
+{
+ "lang": "ar",
+ "seed": 75685,
+ "frame_n": 153,
+ "drawn_at": "2026-10-28T02:47:16.264Z",
+ "books": [
+  {
+   "book_id": "6a08a754871243dce9def039",
+   "title": "Al-Durra al-Fākhira (The Precious Pearl)",
+   "author": "ʿAbd al-Raḥmān Jāmī (d. 1492)",
+   "published": "1480",
+   "pages_count": 61,
+   "lite_share": 1,
+   "eligible": 50,
+   "order": 0,
+   "pages": [
+    {
+     "slug": "6a08a754871243dce9def039-p6",
+     "page_id": "6a08a754871243dce9def03f",
+     "page_number": 6,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/6.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p10",
+     "page_id": "6a08a754871243dce9def043",
+     "page_number": 10,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/10.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p12",
+     "page_id": "6a08a754871243dce9def045",
+     "page_number": 12,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/12.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p14",
+     "page_id": "6a08a754871243dce9def047",
+     "page_number": 14,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/14.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p16",
+     "page_id": "6a08a754871243dce9def049",
+     "page_number": 16,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/16.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p18",
+     "page_id": "6a08a754871243dce9def04b",
+     "page_number": 18,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/18.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p20",
+     "page_id": "6a08a754871243dce9def04d",
+     "page_number": 20,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/20.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p22",
+     "page_id": "6a08a754871243dce9def04f",
+     "page_number": 22,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/22.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p24",
+     "page_id": "6a08a754871243dce9def051",
+     "page_number": 24,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/24.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p26",
+     "page_id": "6a08a754871243dce9def053",
+     "page_number": 26,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/26.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p28",
+     "page_id": "6a08a754871243dce9def055",
+     "page_number": 28,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/28.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p30",
+     "page_id": "6a08a754871243dce9def057",
+     "page_number": 30,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/30.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p32",
+     "page_id": "6a08a754871243dce9def059",
+     "page_number": 32,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/32.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p34",
+     "page_id": "6a08a754871243dce9def05b",
+     "page_number": 34,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/34.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p36",
+     "page_id": "6a08a754871243dce9def05d",
+     "page_number": 36,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/36.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p38",
+     "page_id": "6a08a754871243dce9def05f",
+     "page_number": 38,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/38.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p40",
+     "page_id": "6a08a754871243dce9def061",
+     "page_number": 40,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/40.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p42",
+     "page_id": "6a08a754871243dce9def063",
+     "page_number": 42,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/42.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p44",
+     "page_id": "6a08a754871243dce9def065",
+     "page_number": 44,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/44.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p46",
+     "page_id": "6a08a754871243dce9def067",
+     "page_number": 46,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/46.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p48",
+     "page_id": "6a08a754871243dce9def069",
+     "page_number": 48,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/48.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p50",
+     "page_id": "6a08a754871243dce9def06b",
+     "page_number": 50,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/50.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p52",
+     "page_id": "6a08a754871243dce9def06d",
+     "page_number": 52,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/52.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p57",
+     "page_id": "6a08a754871243dce9def072",
+     "page_number": 57,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/57.jpg"
+    },
+    {
+     "slug": "6a08a754871243dce9def039-p59",
+     "page_id": "6a08a754871243dce9def074",
+     "page_number": 59,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-29T01:38:12.641Z",
+     "src": "https://images.sourcelibrary.org/archived/6a08a754871243dce9def039/59.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69f32843aeeee0fa38c642f2",
+   "title": "Ḥāwāshī Sharḥ Qāḍīʻzādah al-Rūmī ʻalá al-Jaghmīnī / lil-ʻAllāmah al-Muḥarrir Faṣīḥ al-Dīn ibn ʻAbd al-Karīm al-Niṭāqī",
+   "author": "Niẓāmī, Faṣīḥ al-Dīn ibn ʻAbd al-Karīm, -approximately 1446",
+   "published": "Unknown",
+   "pages_count": 196,
+   "lite_share": 0.929,
+   "eligible": 159,
+   "order": 1,
+   "pages": [
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p10",
+     "page_id": "69f32843aeeee0fa38c642fc",
+     "page_number": 10,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/10.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p16",
+     "page_id": "69f32843aeeee0fa38c64302",
+     "page_number": 16,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/16.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p22",
+     "page_id": "69f32843aeeee0fa38c64308",
+     "page_number": 22,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/22.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p29",
+     "page_id": "69f32843aeeee0fa38c6430f",
+     "page_number": 29,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/29.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p36",
+     "page_id": "69f32843aeeee0fa38c64316",
+     "page_number": 36,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/36.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p42",
+     "page_id": "69f32843aeeee0fa38c6431c",
+     "page_number": 42,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/42.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p50",
+     "page_id": "69f32843aeeee0fa38c64324",
+     "page_number": 50,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/50.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p56",
+     "page_id": "69f32843aeeee0fa38c6432a",
+     "page_number": 56,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/56.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p64",
+     "page_id": "69f32843aeeee0fa38c64332",
+     "page_number": 64,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/64.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p78",
+     "page_id": "69f32843aeeee0fa38c64340",
+     "page_number": 78,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/78.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p85",
+     "page_id": "69f32843aeeee0fa38c64347",
+     "page_number": 85,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/85.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p93",
+     "page_id": "69f32843aeeee0fa38c6434f",
+     "page_number": 93,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/93.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p100",
+     "page_id": "69f32843aeeee0fa38c64356",
+     "page_number": 100,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/100.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p107",
+     "page_id": "69f32843aeeee0fa38c6435d",
+     "page_number": 107,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/107.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p114",
+     "page_id": "69f32843aeeee0fa38c64364",
+     "page_number": 114,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/114.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p122",
+     "page_id": "69f32843aeeee0fa38c6436c",
+     "page_number": 122,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/122.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p129",
+     "page_id": "69f32843aeeee0fa38c64373",
+     "page_number": 129,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/129.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p137",
+     "page_id": "69f32843aeeee0fa38c6437b",
+     "page_number": 137,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/137.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p144",
+     "page_id": "69f32843aeeee0fa38c64382",
+     "page_number": 144,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/144.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p153",
+     "page_id": "69f32843aeeee0fa38c6438b",
+     "page_number": 153,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/153.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p159",
+     "page_id": "69f32843aeeee0fa38c64391",
+     "page_number": 159,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/159.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p165",
+     "page_id": "69f32843aeeee0fa38c64397",
+     "page_number": 165,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/165.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p172",
+     "page_id": "69f32843aeeee0fa38c6439e",
+     "page_number": 172,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/172.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p178",
+     "page_id": "69f32843aeeee0fa38c643a4",
+     "page_number": 178,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/178.jpg"
+    },
+    {
+     "slug": "69f32843aeeee0fa38c642f2-p185",
+     "page_id": "69f32843aeeee0fa38c643ab",
+     "page_number": 185,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-05-30T02:30:17.222Z",
+     "src": "https://images.sourcelibrary.org/archived/69f32843aeeee0fa38c642f2/185.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69e4209e813af15d2bdc1eb7",
+   "title": "Tawq al-Hamama (The Ring of the Dove, French)",
+   "author": "Ibn Hazm",
+   "published": "1022",
+   "pages_count": 222,
+   "lite_share": 1,
+   "eligible": 177,
+   "order": 2,
+   "pages": [
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p17",
+     "page_id": "69e4209e813af15d2bdc1ec8",
+     "page_number": 17,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T02:35:19.799Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/17.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p25",
+     "page_id": "69e4209e813af15d2bdc1ed0",
+     "page_number": 25,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-19T02:35:24.484Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/25.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p32",
+     "page_id": "69e4209e813af15d2bdc1ed7",
+     "page_number": 32,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/32.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p39",
+     "page_id": "69e4209e813af15d2bdc1ede",
+     "page_number": 39,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/39.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p61",
+     "page_id": "69e4209e813af15d2bdc1ef4",
+     "page_number": 61,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/61.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p77",
+     "page_id": "69e4209e813af15d2bdc1f04",
+     "page_number": 77,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/77.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p85",
+     "page_id": "69e4209e813af15d2bdc1f0c",
+     "page_number": 85,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/85.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p92",
+     "page_id": "69e4209e813af15d2bdc1f13",
+     "page_number": 92,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/92.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p99",
+     "page_id": "69e4209e813af15d2bdc1f1a",
+     "page_number": 99,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/99.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p106",
+     "page_id": "69e4209e813af15d2bdc1f21",
+     "page_number": 106,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/106.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p113",
+     "page_id": "69e4209e813af15d2bdc1f28",
+     "page_number": 113,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/113.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p120",
+     "page_id": "69e4209e813af15d2bdc1f2f",
+     "page_number": 120,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/120.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p127",
+     "page_id": "69e4209e813af15d2bdc1f36",
+     "page_number": 127,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/127.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p134",
+     "page_id": "69e4209e813af15d2bdc1f3d",
+     "page_number": 134,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/134.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p141",
+     "page_id": "69e4209e813af15d2bdc1f44",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/141.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p148",
+     "page_id": "69e4209e813af15d2bdc1f4b",
+     "page_number": 148,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/148.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p155",
+     "page_id": "69e4209e813af15d2bdc1f52",
+     "page_number": 155,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/155.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p162",
+     "page_id": "69e4209e813af15d2bdc1f59",
+     "page_number": 162,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/162.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p169",
+     "page_id": "69e4209e813af15d2bdc1f60",
+     "page_number": 169,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/169.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p177",
+     "page_id": "69e4209e813af15d2bdc1f68",
+     "page_number": 177,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/177.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p184",
+     "page_id": "69e4209e813af15d2bdc1f6f",
+     "page_number": 184,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/184.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p191",
+     "page_id": "69e4209e813af15d2bdc1f76",
+     "page_number": 191,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/191.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p198",
+     "page_id": "69e4209e813af15d2bdc1f7d",
+     "page_number": 198,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/198.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p205",
+     "page_id": "69e4209e813af15d2bdc1f84",
+     "page_number": 205,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/205.jpg"
+    },
+    {
+     "slug": "69e4209e813af15d2bdc1eb7-p212",
+     "page_id": "69e4209e813af15d2bdc1f8b",
+     "page_number": 212,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T08:26:07.834Z",
+     "src": "https://images.sourcelibrary.org/archived/69e4209e813af15d2bdc1eb7/212.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69ef3d4272c1376fdf2aff50",
+   "title": "Tahdhib al-Akhlaq (The Refinement of Character)",
+   "author": "Ahmad ibn Muhammad Miskawayh",
+   "published": "1030",
+   "pages_count": 105,
+   "lite_share": 0.762,
+   "eligible": 75,
+   "order": 3,
+   "pages": [
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p27",
+     "page_id": "69ef3d4272c1376fdf2aff6b",
+     "page_number": 27,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:23.282Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/27.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p30",
+     "page_id": "69ef3d4272c1376fdf2aff6e",
+     "page_number": 30,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:22.970Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/30.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p33",
+     "page_id": "69ef3d4272c1376fdf2aff71",
+     "page_number": 33,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:28.426Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/33.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p36",
+     "page_id": "69ef3d4272c1376fdf2aff74",
+     "page_number": 36,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:34.321Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/36.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p39",
+     "page_id": "69ef3d4272c1376fdf2aff77",
+     "page_number": 39,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:33.515Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/39.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p42",
+     "page_id": "69ef3d4272c1376fdf2aff7a",
+     "page_number": 42,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:43.074Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/42.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p45",
+     "page_id": "69ef3d4272c1376fdf2aff7d",
+     "page_number": 45,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:22:39.737Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/45.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p48",
+     "page_id": "69ef3d4272c1376fdf2aff80",
+     "page_number": 48,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:48.833Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/48.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p51",
+     "page_id": "69ef3d4272c1376fdf2aff83",
+     "page_number": 51,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:19.434Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/51.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p54",
+     "page_id": "69ef3d4272c1376fdf2aff86",
+     "page_number": 54,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:19.116Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/54.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p57",
+     "page_id": "69ef3d4272c1376fdf2aff89",
+     "page_number": 57,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:27.099Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/57.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p60",
+     "page_id": "69ef3d4272c1376fdf2aff8c",
+     "page_number": 60,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:33.751Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/60.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p63",
+     "page_id": "69ef3d4272c1376fdf2aff8f",
+     "page_number": 63,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:33.622Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/63.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p66",
+     "page_id": "69ef3d4272c1376fdf2aff92",
+     "page_number": 66,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:24:39.208Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/66.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p69",
+     "page_id": "69ef3d4272c1376fdf2aff95",
+     "page_number": 69,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T12:27:16.939Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/69.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p72",
+     "page_id": "69ef3d4272c1376fdf2aff98",
+     "page_number": 72,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/72.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p75",
+     "page_id": "69ef3d4272c1376fdf2aff9b",
+     "page_number": 75,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/75.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p78",
+     "page_id": "69ef3d4272c1376fdf2aff9e",
+     "page_number": 78,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/78.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p81",
+     "page_id": "69ef3d4272c1376fdf2affa1",
+     "page_number": 81,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/81.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p84",
+     "page_id": "69ef3d4272c1376fdf2affa4",
+     "page_number": 84,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-08T02:36:09.396Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/84.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p87",
+     "page_id": "69ef3d4272c1376fdf2affa7",
+     "page_number": 87,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/87.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p90",
+     "page_id": "69ef3d4272c1376fdf2affaa",
+     "page_number": 90,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/90.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p93",
+     "page_id": "69ef3d4272c1376fdf2affad",
+     "page_number": 93,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/93.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p96",
+     "page_id": "69ef3d4272c1376fdf2affb0",
+     "page_number": 96,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/96.jpg"
+    },
+    {
+     "slug": "69ef3d4272c1376fdf2aff50-p99",
+     "page_id": "69ef3d4272c1376fdf2affb3",
+     "page_number": 99,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-06T04:44:10.983Z",
+     "src": "https://images.sourcelibrary.org/archived/69ef3d4272c1376fdf2aff50/99.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69d5abced0bd3547a5654189",
+   "title": "Al-Hawi fi al-Tibb",
+   "author": "Abu Bakr Muhammad ibn Zakariya al-Razi",
+   "published": "1094",
+   "pages_count": 476,
+   "lite_share": 0.947,
+   "eligible": 443,
+   "order": 4,
+   "pages": [
+    {
+     "slug": "69d5abced0bd3547a5654189-p34",
+     "page_id": "69d5abced0bd3547a56541ab",
+     "page_number": 34,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T09:21:33.654Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/34.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p52",
+     "page_id": "69d5abced0bd3547a56541bd",
+     "page_number": 52,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/52.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p70",
+     "page_id": "69d5abced0bd3547a56541cf",
+     "page_number": 70,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/70.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p88",
+     "page_id": "69d5abced0bd3547a56541e1",
+     "page_number": 88,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/88.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p105",
+     "page_id": "69d5abced0bd3547a56541f2",
+     "page_number": 105,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/105.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p123",
+     "page_id": "69d5abced0bd3547a5654204",
+     "page_number": 123,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/123.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p141",
+     "page_id": "69d5abced0bd3547a5654216",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/141.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p158",
+     "page_id": "69d5abced0bd3547a5654227",
+     "page_number": 158,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/158.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p176",
+     "page_id": "69d5abced0bd3547a5654239",
+     "page_number": 176,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/176.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p194",
+     "page_id": "69d5abced0bd3547a565424b",
+     "page_number": 194,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/194.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p212",
+     "page_id": "69d5abced0bd3547a565425d",
+     "page_number": 212,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/212.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p229",
+     "page_id": "69d5abced0bd3547a565426e",
+     "page_number": 229,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/229.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p247",
+     "page_id": "69d5abced0bd3547a5654280",
+     "page_number": 247,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/247.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p265",
+     "page_id": "69d5abced0bd3547a5654292",
+     "page_number": 265,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/265.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p282",
+     "page_id": "69d5abced0bd3547a56542a3",
+     "page_number": 282,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/282.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p300",
+     "page_id": "69d5abced0bd3547a56542b5",
+     "page_number": 300,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.425Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/300.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p318",
+     "page_id": "69d5abced0bd3547a56542c7",
+     "page_number": 318,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/318.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p336",
+     "page_id": "69d5abced0bd3547a56542d9",
+     "page_number": 336,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/336.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p353",
+     "page_id": "69d5abced0bd3547a56542ea",
+     "page_number": 353,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/353.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p371",
+     "page_id": "69d5abced0bd3547a56542fc",
+     "page_number": 371,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/371.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p389",
+     "page_id": "69d5abced0bd3547a565430e",
+     "page_number": 389,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/389.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p406",
+     "page_id": "69d5abced0bd3547a565431f",
+     "page_number": 406,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/406.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p424",
+     "page_id": "69d5abced0bd3547a5654331",
+     "page_number": 424,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/424.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p442",
+     "page_id": "69d5abced0bd3547a5654343",
+     "page_number": 442,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/442.jpg"
+    },
+    {
+     "slug": "69d5abced0bd3547a5654189-p460",
+     "page_id": "69d5abced0bd3547a5654355",
+     "page_number": 460,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-12T11:46:31.239Z",
+     "src": "https://images.sourcelibrary.org/archived/69d5abced0bd3547a5654189/460.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a9fb207732b9e75e96ba46f",
+   "title": "El-Mawāʿiz wa-l-Iʿtibār fī Dhikr al-Khiṭaṭ wa-l-Āthār, Vol. II (MIFAO 33)",
+   "author": "Al-Maqrizi",
+   "published": "1913",
+   "pages_count": 247,
+   "lite_share": 0.996,
+   "eligible": 181,
+   "order": 5,
+   "pages": [
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p18",
+     "page_id": "6aa72c929cdc08b551a8efd8",
+     "page_number": 18,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:12:09.315Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0018.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p25",
+     "page_id": "6aa72c929cdc08b551a8efdf",
+     "page_number": 25,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:12:09.315Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0025.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p34",
+     "page_id": "6aa72c929cdc08b551a8efe8",
+     "page_number": 34,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0034.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p41",
+     "page_id": "6aa72c929cdc08b551a8efef",
+     "page_number": 41,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0041.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p48",
+     "page_id": "6aa72c929cdc08b551a8eff6",
+     "page_number": 48,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0048.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p55",
+     "page_id": "6aa72c929cdc08b551a8effd",
+     "page_number": 55,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0055.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p63",
+     "page_id": "6aa72c929cdc08b551a8f005",
+     "page_number": 63,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0063.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p70",
+     "page_id": "6aa72c929cdc08b551a8f00c",
+     "page_number": 70,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0070.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p77",
+     "page_id": "6aa72c929cdc08b551a8f013",
+     "page_number": 77,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0077.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p84",
+     "page_id": "6aa72c929cdc08b551a8f01a",
+     "page_number": 84,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0084.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p92",
+     "page_id": "6aa72c929cdc08b551a8f022",
+     "page_number": 92,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0092.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p99",
+     "page_id": "6aa72c929cdc08b551a8f029",
+     "page_number": 99,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0099.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p106",
+     "page_id": "6aa72c929cdc08b551a8f030",
+     "page_number": 106,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0106.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p113",
+     "page_id": "6aa72c929cdc08b551a8f037",
+     "page_number": 113,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0113.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p120",
+     "page_id": "6aa72c929cdc08b551a8f03e",
+     "page_number": 120,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0120.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p128",
+     "page_id": "6aa72c929cdc08b551a8f046",
+     "page_number": 128,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0128.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p135",
+     "page_id": "6aa72c929cdc08b551a8f04d",
+     "page_number": 135,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0135.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p142",
+     "page_id": "6aa72c929cdc08b551a8f054",
+     "page_number": 142,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0142.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p149",
+     "page_id": "6aa72c929cdc08b551a8f05b",
+     "page_number": 149,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0149.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p157",
+     "page_id": "6aa72c929cdc08b551a8f063",
+     "page_number": 157,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0157.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p164",
+     "page_id": "6aa72c929cdc08b551a8f06a",
+     "page_number": 164,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0164.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p171",
+     "page_id": "6aa72c929cdc08b551a8f071",
+     "page_number": 171,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0171.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p178",
+     "page_id": "6aa72c929cdc08b551a8f078",
+     "page_number": 178,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0178.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p186",
+     "page_id": "6aa72c929cdc08b551a8f080",
+     "page_number": 186,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0186.jpg"
+    },
+    {
+     "slug": "6a9fb207732b9e75e96ba46f-p193",
+     "page_id": "6aa72c929cdc08b551a8f087",
+     "page_number": 193,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.362Z",
+     "src": "https://images.sourcelibrary.org/pages/6a9fb207732b9e75e96ba46f/sppw5f-0193.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69ea3ea1300d991d0f1d3bd6",
+   "title": "الأعلاق النفيسة (al-Aʿlāq al-Nafīsa)",
+   "author": "Ibn Rustah",
+   "published": "1892",
+   "pages_count": 421,
+   "lite_share": 0.938,
+   "eligible": 385,
+   "order": 6,
+   "pages": [
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p33",
+     "page_id": "69ea3ea1300d991d0f1d3bf7",
+     "page_number": 33,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T11:37:19.826Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/33.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p49",
+     "page_id": "69ea3ea1300d991d0f1d3c07",
+     "page_number": 49,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T11:38:15.912Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/49.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p64",
+     "page_id": "69ea3ea1300d991d0f1d3c16",
+     "page_number": 64,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/64.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p79",
+     "page_id": "69ea3ea1300d991d0f1d3c25",
+     "page_number": 79,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/79.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p95",
+     "page_id": "69ea3ea1300d991d0f1d3c35",
+     "page_number": 95,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/95.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p110",
+     "page_id": "69ea3ea1300d991d0f1d3c44",
+     "page_number": 110,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/110.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p126",
+     "page_id": "69ea3ea1300d991d0f1d3c54",
+     "page_number": 126,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/126.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p141",
+     "page_id": "69ea3ea1300d991d0f1d3c63",
+     "page_number": 141,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/141.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p156",
+     "page_id": "69ea3ea1300d991d0f1d3c72",
+     "page_number": 156,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/156.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p172",
+     "page_id": "69ea3ea1300d991d0f1d3c82",
+     "page_number": 172,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/172.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p190",
+     "page_id": "69ea3ea1300d991d0f1d3c94",
+     "page_number": 190,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/190.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p206",
+     "page_id": "69ea3ea1300d991d0f1d3ca4",
+     "page_number": 206,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/206.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p221",
+     "page_id": "69ea3ea1300d991d0f1d3cb3",
+     "page_number": 221,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/221.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p236",
+     "page_id": "69ea3ea1300d991d0f1d3cc2",
+     "page_number": 236,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/236.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p252",
+     "page_id": "69ea3ea1300d991d0f1d3cd2",
+     "page_number": 252,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/252.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p267",
+     "page_id": "69ea3ea1300d991d0f1d3ce1",
+     "page_number": 267,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/267.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p283",
+     "page_id": "69ea3ea1300d991d0f1d3cf1",
+     "page_number": 283,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/283.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p300",
+     "page_id": "69ea3ea1300d991d0f1d3d02",
+     "page_number": 300,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/300.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p315",
+     "page_id": "69ea3ea1300d991d0f1d3d11",
+     "page_number": 315,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/315.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p331",
+     "page_id": "69ea3ea1300d991d0f1d3d21",
+     "page_number": 331,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/331.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p346",
+     "page_id": "69ea3ea1300d991d0f1d3d30",
+     "page_number": 346,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/346.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p362",
+     "page_id": "69ea3ea1300d991d0f1d3d40",
+     "page_number": 362,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/362.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p377",
+     "page_id": "69ea3ea1300d991d0f1d3d4f",
+     "page_number": 377,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/377.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p392",
+     "page_id": "69ea3ea1300d991d0f1d3d5e",
+     "page_number": 392,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-08T01:48:29.890Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/392.jpg"
+    },
+    {
+     "slug": "69ea3ea1300d991d0f1d3bd6-p408",
+     "page_id": "69ea3ea1300d991d0f1d3d6e",
+     "page_number": 408,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-05-07T11:08:06.754Z",
+     "src": "https://images.sourcelibrary.org/archived/69ea3ea1300d991d0f1d3bd6/408.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a477ce51874da9b1a9a5552",
+   "title": "al-Mawāʿiẓ wa-al-iʿtibār bi-dhikr al-khiṭaṭ wa-al-āthār (Khiṭaṭ)",
+   "author": "Aḥmad ibn ʿAlī al-Maqrīzī",
+   "published": "1853",
+   "pages_count": 550,
+   "lite_share": 0.982,
+   "eligible": 508,
+   "order": 7,
+   "pages": [
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p19",
+     "page_id": "6a477ce51874da9b1a9a5565",
+     "page_number": 19,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:12:09.330Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0019-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p39",
+     "page_id": "6a477ce51874da9b1a9a5579",
+     "page_number": 39,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0039-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p59",
+     "page_id": "6a477ce51874da9b1a9a558d",
+     "page_number": 59,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0059-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p81",
+     "page_id": "6a477ce51874da9b1a9a55a3",
+     "page_number": 81,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0081-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p101",
+     "page_id": "6a477ce51874da9b1a9a55b7",
+     "page_number": 101,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0101-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p121",
+     "page_id": "6a477ce51874da9b1a9a55cb",
+     "page_number": 121,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0121-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p143",
+     "page_id": "6a477ce51874da9b1a9a55e1",
+     "page_number": 143,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0143-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p163",
+     "page_id": "6a477ce51874da9b1a9a55f5",
+     "page_number": 163,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0163-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p183",
+     "page_id": "6a477ce51874da9b1a9a5609",
+     "page_number": 183,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0183-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p205",
+     "page_id": "6a477ce51874da9b1a9a561f",
+     "page_number": 205,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0205-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p225",
+     "page_id": "6a477ce51874da9b1a9a5633",
+     "page_number": 225,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0225-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p245",
+     "page_id": "6a477ce51874da9b1a9a5647",
+     "page_number": 245,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0245-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p267",
+     "page_id": "6a477ce51874da9b1a9a565d",
+     "page_number": 267,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0267-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p287",
+     "page_id": "6a477ce51874da9b1a9a5671",
+     "page_number": 287,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0287-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p307",
+     "page_id": "6a477ce51874da9b1a9a5685",
+     "page_number": 307,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0307-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p327",
+     "page_id": "6a477ce51874da9b1a9a5699",
+     "page_number": 327,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0327-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p349",
+     "page_id": "6a477ce51874da9b1a9a56af",
+     "page_number": 349,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0349-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p369",
+     "page_id": "6a477ce51874da9b1a9a56c3",
+     "page_number": 369,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0369-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p389",
+     "page_id": "6a477ce51874da9b1a9a56d7",
+     "page_number": 389,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0389-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p410",
+     "page_id": "6a477ce51874da9b1a9a56ec",
+     "page_number": 410,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0410-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p431",
+     "page_id": "6a477ce51874da9b1a9a5701",
+     "page_number": 431,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0431-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p451",
+     "page_id": "6a477ce51874da9b1a9a5715",
+     "page_number": 451,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0451-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p473",
+     "page_id": "6a477ce51874da9b1a9a572b",
+     "page_number": 473,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0473-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p494",
+     "page_id": "6a477ce51874da9b1a9a5740",
+     "page_number": 494,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0494-full.jpg"
+    },
+    {
+     "slug": "6a477ce51874da9b1a9a5552-p515",
+     "page_id": "6a477ce51874da9b1a9a5755",
+     "page_number": 515,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-09-13T23:22:11.974Z",
+     "src": "https://images.sourcelibrary.org/pages/6a477ce51874da9b1a9a5552/0515-full.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a20333618654bf8e1904946",
+   "title": "Quran. On f3b-5b some notes on recitation in Malay and Achehnese Or. 2064",
+   "author": "Unknown",
+   "published": "Acheh, not dated, but probably 19th c",
+   "pages_count": 770,
+   "lite_share": 0.777,
+   "eligible": 567,
+   "order": 8,
+   "pages": [
+    {
+     "slug": "6a20333618654bf8e1904946-p23",
+     "page_id": "6a20333618654bf8e190495d",
+     "page_number": 23,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:16.808Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/23.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p46",
+     "page_id": "6a20333618654bf8e1904974",
+     "page_number": 46,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:25:20.977Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/46.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p69",
+     "page_id": "6a20333618654bf8e190498b",
+     "page_number": 69,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:17.574Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/69.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p92",
+     "page_id": "6a20333618654bf8e19049a2",
+     "page_number": 92,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:17.567Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/92.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p115",
+     "page_id": "6a20333618654bf8e19049b9",
+     "page_number": 115,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:25:26.593Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/115.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p139",
+     "page_id": "6a20333618654bf8e19049d1",
+     "page_number": 139,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:25:26.630Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/139.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p212",
+     "page_id": "6a20333618654bf8e1904a1a",
+     "page_number": 212,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:17.562Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/212.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p236",
+     "page_id": "6a20333618654bf8e1904a32",
+     "page_number": 236,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:17.598Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/236.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p259",
+     "page_id": "6a20333618654bf8e1904a49",
+     "page_number": 259,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:19.515Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/259.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p282",
+     "page_id": "6a20333618654bf8e1904a60",
+     "page_number": 282,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:19.613Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/282.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p306",
+     "page_id": "6a20333618654bf8e1904a78",
+     "page_number": 306,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:19.611Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/306.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p328",
+     "page_id": "6a20333618654bf8e1904a8e",
+     "page_number": 328,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:19.593Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/328.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p351",
+     "page_id": "6a20333618654bf8e1904aa5",
+     "page_number": 351,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:19.560Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/351.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p375",
+     "page_id": "6a20333618654bf8e1904abd",
+     "page_number": 375,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:49:19.765Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/375.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p401",
+     "page_id": "6a20333618654bf8e1904ad7",
+     "page_number": 401,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:22.251Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/401.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p424",
+     "page_id": "6a20333618654bf8e1904aee",
+     "page_number": 424,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:13.617Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/424.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p448",
+     "page_id": "6a20333618654bf8e1904b06",
+     "page_number": 448,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:13.593Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/448.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p472",
+     "page_id": "6a20333618654bf8e1904b1e",
+     "page_number": 472,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:13.663Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/472.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p496",
+     "page_id": "6a20333618654bf8e1904b36",
+     "page_number": 496,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:14.825Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/496.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p521",
+     "page_id": "6a20333618654bf8e1904b4f",
+     "page_number": 521,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:49:19.779Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/521.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p543",
+     "page_id": "6a20333618654bf8e1904b65",
+     "page_number": 543,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:14.856Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/543.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p569",
+     "page_id": "6a20333618654bf8e1904b7f",
+     "page_number": 569,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:30:15.050Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/569.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p595",
+     "page_id": "6a20333618654bf8e1904b99",
+     "page_number": 595,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:49:19.865Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/595.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p617",
+     "page_id": "6a20333618654bf8e1904baf",
+     "page_number": 617,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:37:14.091Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/617.jpg"
+    },
+    {
+     "slug": "6a20333618654bf8e1904946-p641",
+     "page_id": "6a20333618654bf8e1904bc7",
+     "page_number": 641,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_updated_at": "2026-10-01T14:37:14.247Z",
+     "src": "https://images.sourcelibrary.org/archived/6a20333618654bf8e1904946/641.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69d66592daca889caf92725b",
+   "title": "Kitab al-Majisti",
+   "author": "Ptolemy",
+   "published": "1381",
+   "pages_count": 357,
+   "lite_share": 0.927,
+   "eligible": 293,
+   "order": 9,
+   "pages": [
+    {
+     "slug": "69d66592daca889caf92725b-p31",
+     "page_id": "69d66592daca889caf92727a",
+     "page_number": 31,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T00:08:08.217Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/31.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p43",
+     "page_id": "69d66592daca889caf927286",
+     "page_number": 43,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:48:25.013Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/43.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p59",
+     "page_id": "69d66592daca889caf927296",
+     "page_number": 59,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/59.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p78",
+     "page_id": "69d66592daca889caf9272a9",
+     "page_number": 78,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T00:30:08.448Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/78.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p89",
+     "page_id": "69d66592daca889caf9272b4",
+     "page_number": 89,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/89.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p103",
+     "page_id": "69d66592daca889caf9272c2",
+     "page_number": 103,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T00:30:08.448Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/103.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p118",
+     "page_id": "69d66592daca889caf9272d1",
+     "page_number": 118,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/118.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p132",
+     "page_id": "69d66592daca889caf9272df",
+     "page_number": 132,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T01:38:07.796Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/132.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p151",
+     "page_id": "69d66592daca889caf9272f2",
+     "page_number": 151,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/151.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p163",
+     "page_id": "69d66592daca889caf9272fe",
+     "page_number": 163,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/163.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p175",
+     "page_id": "69d66592daca889caf92730a",
+     "page_number": 175,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/175.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p186",
+     "page_id": "69d66592daca889caf927315",
+     "page_number": 186,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/186.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p198",
+     "page_id": "69d66592daca889caf927321",
+     "page_number": 198,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T03:20:05.518Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/198.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p210",
+     "page_id": "69d66592daca889caf92732d",
+     "page_number": 210,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/210.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p222",
+     "page_id": "69d66592daca889caf927339",
+     "page_number": 222,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/222.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p235",
+     "page_id": "69d66592daca889caf927346",
+     "page_number": 235,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/235.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p249",
+     "page_id": "69d66592daca889caf927354",
+     "page_number": 249,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/249.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p262",
+     "page_id": "69d66592daca889caf927361",
+     "page_number": 262,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/262.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p273",
+     "page_id": "69d66592daca889caf92736c",
+     "page_number": 273,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/273.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p285",
+     "page_id": "69d66592daca889caf927378",
+     "page_number": 285,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/285.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p298",
+     "page_id": "69d66592daca889caf927385",
+     "page_number": 298,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/298.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p309",
+     "page_id": "69d66592daca889caf927390",
+     "page_number": 309,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-30T00:08:08.217Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/309.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p321",
+     "page_id": "69d66592daca889caf92739c",
+     "page_number": 321,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/321.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p333",
+     "page_id": "69d66592daca889caf9273a8",
+     "page_number": 333,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/333.jpg"
+    },
+    {
+     "slug": "69d66592daca889caf92725b-p346",
+     "page_id": "69d66592daca889caf9273b5",
+     "page_number": 346,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_updated_at": "2026-04-29T23:26:07.474Z",
+     "src": "https://images.sourcelibrary.org/archived/69d66592daca889caf92725b/346.jpg"
+    }
+   ]
+  }
+ ]
+}

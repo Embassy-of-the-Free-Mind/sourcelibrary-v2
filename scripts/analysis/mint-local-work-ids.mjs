@@ -37,6 +37,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import { deacc, slug, authorTokens, mintAuthorPart, remintAliasPlan } from '../lib/work-id-remint.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const INCLUDE_ANON = process.argv.includes('--include-anon');
@@ -122,7 +123,7 @@ const gapOr = [{ work_id: { $exists: false } }, { work_id: null }];
 if (REMINT) gapOr.push({ work_id_source: 'local-mint' });
 const gap = await b.find(
   { ...TEXT, $or: gapOr },
-  { projection: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, year: 1 } }
+  { projection: { id: 1, title: 1, display_title: 1, author: 1, author_id: 1, language: 1, year: 1, work_id: 1 } }
 ).toArray();
 console.log(`Textual books: ${total} | already have work_id: ${already} (${(100*already/total).toFixed(1)}%)`);
 console.log(`Gap (no work_id): ${gap.length}\n`);
@@ -133,6 +134,20 @@ console.log(`Gap (no work_id): ${gap.length}\n`);
 // instead of all fusing into local:a:plato:works.
 const CONTAINER = new Set(['works', 'work', 'opera', 'omnia', 'opuscula', 'dialogues',
   'collected', 'writings', 'miscellanea', 'collection', 'anthology', 'compendium', 'corpus']);
+
+// A manuscript catalogued only by what it IS ("Theologische Sammelhandschrift",
+// "Handschrift", "Document") names an object, not a work; its identity is the
+// shelfmark in the parenthesis the title filter drops. These fused 67 different
+// Bodleian manuscripts into one work, and 42 calligraphy sheets by one hand into
+// another (spot check 2026-10-28, #3780). Treated like a container: one work id
+// per book. Named works in
+// manuscript ("Sīrat ʿAntar", "Breviarium Carthusiense") are unaffected.
+const MS_HEAD = new Set(['handschrift', 'sammelhandschrift', 'manuscript', 'manuscripts', 'codex', 'fragment',
+  'fragmente', 'fragments', 'document', 'documents', 'specimen', 'calligraphy', 'miscellany', 'sammelband', 'konvolut']);
+const MS_QUALIFIER = new Set(['theologische', 'theological', 'lateinische', 'deutsche', 'liturgische', 'medizinische',
+  'juristische', 'astronomische', 'alchemistische', 'philosophische', 'historische', 'religious', 'legal', 'persian', 'arabic', 'zusammengesetzte', 'rhetorische', 'poetische', 'grammatische', 'album',
+  'cod', 'ms', 'hs']);
+const isBareMsTitle = (toks) => toks.some(t => MS_HEAD.has(t)) && toks.every(t => MS_HEAD.has(t) || MS_QUALIFIER.has(t) || /^\d+$/.test(t));
 
 const writes = [];          // {id, work_id, work_title}
 const clusters = new Map();  // work_id -> [book,...]
@@ -156,7 +171,9 @@ for (const bk of gap) {
   if (toks.length < 1) { skippedNoKey++; continue; }
 
   // container-only title → unique per edition (don't fuse a whole author's corpus)
-  const isContainer = toks.every(t => CONTAINER.has(t));
+  // with or without a maker: 42 sheets titled "Calligraphy specimen" by one
+  // calligrapher are 42 objects, and "Unknown"/"Not Traceable" arrive as author strings anyway
+  const isContainer = toks.every(t => CONTAINER.has(t)) || isBareMsTitle(toks);
   if (isContainer) containerUnique++;
   const tslug = isContainer ? `${slug(toks)}-ed-${bk.id}` : slug(toks);
   const work_id = `local:${authorPart || 'anon'}:${tslug}`;
@@ -213,7 +230,17 @@ if (APPLY) {
     toWrite = toWrite.filter(w => !clusterHasParts(clusters.get(w.work_id)));
     heldParts = before - toWrite.length;
   }
-  const heldClusters = writes.length - toWrite.length;
+  // Under --remint-local most books re-derive the id they already carry. Writing
+  // those anyway rewrote all ~410K local mints for a 78K-book change (2026-10-28,
+  // #3780), too heavy to run nightly. Write only the ids that move.
+  let unchanged = 0;
+  if (REMINT) {
+    const currentOf = new Map(gap.map(bk => [bk.id, bk.work_id]));
+    const before = toWrite.length;
+    toWrite = toWrite.filter(w => currentOf.get(w.id) !== w.work_id);
+    unchanged = before - toWrite.length;
+  }
+  const heldClusters = writes.length - toWrite.length - unchanged;
   // A re-mint MOVES an id that queue rows, /work URLs and citations already
   // hold. Where a whole cluster moves to one new id, keep the old id as an
   // alias so those references still resolve (#4329); splits and partial moves
@@ -226,7 +253,18 @@ if (APPLY) {
   fs.writeFileSync(backup, JSON.stringify({ when: 'apply', singletonsOnly: SINGLETONS_ONLY, holdParts: !INCLUDE_PARTS, heldParts, count: toWrite.length,
     writes: toWrite.map(w => ({ ...w, ...(REMINT ? { old_work_id: priorOf.get(w.id) ?? null, alias_added: aliasFor.get(w.id) ?? null } : {}) })) }, null, 2));
   if (aliasTally) console.log(`re-mint trail: ${aliasTally.renamed} old ids kept as aliases (${aliasFor.size} books); ${aliasTally.split} split and ${aliasTally.partial} partially-moved ids get no alias`);
-  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})`);
+  console.log(`\n--apply${SINGLETONS_ONLY ? ' --singletons-only' : ''}${INCLUDE_PARTS ? ' --include-parts' : ''}: writing ${toWrite.length} work_ids${heldClusters ? ` (holding ${heldClusters} for review${heldParts ? `, of which ${heldParts} are volume/series-marked` : ''})` : ''} (backup ${backup})${unchanged ? `; ${unchanged} unchanged, not rewritten` : ''}`);
+  // A moved id is a change to a join key that queue rows, /work URLs and the
+  // translation joins hold, and the book keeps only the new value. Log every move
+  // as a sweep_log row BEFORE writing, so "why did this book's work change, and
+  // from what?" is answerable from the database, not from a backup on one disk.
+  if (REMINT) {
+    const run = `work-id-remint-${new Date().toISOString().slice(0, 10)}`;
+    const rows = toWrite.filter(w => priorOf.get(w.id) && priorOf.get(w.id) !== w.work_id).map(w => ({ sweep: run, book_id: w.id, action: 'work-id-reminted',
+      detail: { from: priorOf.get(w.id), to: w.work_id, alias_kept: aliasFor.get(w.id) ?? null, backup } }));
+    if (rows.length) await recordSweepActions(mc.db('bookstore'), rows);
+    console.log(`sweep_log: ${rows.length} moves recorded under ${run}`);
+  }
   let done = 0;
   for (const w of toWrite) {
     const idFilter = REMINT

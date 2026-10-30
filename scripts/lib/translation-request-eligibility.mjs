@@ -23,7 +23,10 @@
  *
  * PURE. No I/O: the caller fetches the book, the page and the tail and passes them in, so
  * the rules are testable (tests/unit/translation-request-eligibility.test.ts). The verdict
- * is a PROPOSAL — `auto` means "a person may approve this in bulk", never "spend now".
+ * is a PROPOSAL — `auto` means "a person may approve this in bulk", never "spend now" — except
+ * for scripts/batch/reader-request-lane.mjs (#7599), which honours `auto` on the subscription
+ * CLIs ($0 API) with its own, larger ceiling: Derek's call on 2026-10-28 ("finish whichever
+ * books they request"). The lane passes the two options below; every other gate is unchanged.
  */
 import { legacyPublication } from './publication.mjs';
 import { isHeld } from './pipeline-hold.mjs';
@@ -79,26 +82,30 @@ export function repeatReasons(requests, { perRequester = DEFAULT_PER_REQUESTER }
  *   tail       untranslated translatable pages in the book (exact, from `pages`)
  *   brakeStop  brakeStopsBook(brake, bookId) — a pause reason, or null
  *   repeat     a reason from repeatReasons, or undefined
+ *   holdAllowed  the caller's own allowlist says this book's hold is a waiting-for-a-lane hold,
+ *              not a containment (default false: every hold refuses)
+ *   ocrPending the caller OCRs the book first, so a page with no OCR yet is not refused
+ *              (default false); every other untranslatable reason still refuses
  * Returns { verdict: 'auto' | 'human' | 'refuse' | 'done', reason, pages }.
  *   refuse  must not be honoured by any sweep (dark book or page, unresolvable)
  *   human   may be honoured, but only by a person deciding (cost, pause, repeat)
  *   done    nothing to do (already translated)
  *   auto    a person may approve it in a batch without reading it
  */
-export function requestVerdict({ book, page, tail, brakeStop = null, repeat, ceiling = DEFAULT_PAGE_CEILING }) {
+export function requestVerdict({ book, page, tail, brakeStop = null, repeat, ceiling = DEFAULT_PAGE_CEILING, holdAllowed = false, ocrPending = false }) {
   if (!book) return { verdict: 'refuse', reason: 'book not found', pages: 0 };
   const pub = legacyPublication(book);
   if (pub.state !== 'public') {
     return { verdict: 'refuse', reason: `book is ${pub.state}${pub.reason ? ` (${pub.reason})` : ''}`, pages: 0 };
   }
   if (!(book.pages_count > 0)) return { verdict: 'refuse', reason: 'book has no pages (not live)', pages: 0 };
-  if (isHeld(book)) return { verdict: 'refuse', reason: 'book is on pipeline hold', pages: 0 };
+  if (isHeld(book) && !holdAllowed) return { verdict: 'refuse', reason: 'book is on pipeline hold', pages: 0 };
   if (!page) return { verdict: 'refuse', reason: 'page not found in this book', pages: 0 };
   if ((page.translation?.data || '').length > TRANSLATED_MIN_CHARS) {
     return { verdict: 'done', reason: 'page already translated — answer the reader', pages: 0 };
   }
   const t = isTranslatablePage(page);
-  if (!t.ok) return { verdict: 'refuse', reason: `page not translatable (${t.reason})`, pages: 0 };
+  if (!t.ok && !(ocrPending && t.reason === 'no-ocr')) return { verdict: 'refuse', reason: `page not translatable (${t.reason})`, pages: 0 };
   if (repeat) return { verdict: 'human', reason: repeat, pages: 0 };
   if (tail > ceiling) return { verdict: 'human', reason: `book tail ${tail} pages > ceiling ${ceiling}`, pages: tail };
   if (brakeStop) return { verdict: 'human', reason: brakeStop, pages: tail };

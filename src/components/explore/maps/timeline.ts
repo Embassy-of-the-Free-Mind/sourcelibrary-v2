@@ -43,6 +43,11 @@ export type LayersData = {
   labels?: { kinds?: string; counter?: string; ideasFrom?: string; article?: { href: string; label: string } | null };
 };
 
+/** The works a concept's history cites (public/data/maps/<slug>-cited.json, scripts/maintenance/link-history-sources.mjs,
+ *  #7646): per work key, its claims as [claim id, domain, statement cut to a line]. base: the history's claims pages. */
+export type CitedData = { concept: string; generated: string; claims: number; linked: number; works: Record<string, [string, string, string][]> };
+export type CitedConfig = { data: CitedData; base: string; title: string };
+
 export type TimelineConfig = {
   figLabels: [string, string, string, string];
   adjacentLabel?: string;
@@ -74,7 +79,7 @@ const mdInline = (s: string) => esc(s)
   .replace(/\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]*)\)/g, (_, label: string, u: string) => `<a href="${sameHost(u)}"${u.startsWith('/') ? '' : ' rel="noopener"'} target="_blank">${label}</a>`)
   .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
-export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConfig, lensData?: LensData | null, l2?: L2Data | null, Ly?: LayersData | null): () => void {
+export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConfig, lensData?: LensData | null, l2?: L2Data | null, Ly?: LayersData | null, Ct?: CitedConfig | null): () => void {
   const W = D.works;
   const idxByKey = new Map(W.map((w, i) => [`${w.n}|||${w.tr}`, i]));
   // editions known to be hidden: their pages 404 for readers, so nothing links to them
@@ -105,12 +110,16 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
 
   // ---- state ----
   const state = { st: { readable: true, held: true, absent: true } as Record<string, boolean>, adj: !hasAdj, q: '', sel: null as number | null, lens: null as LensConcept | null,
-    kindMode: false, kindOnly: null as string | null, idea: null as string | null, story: null as string | null, lines: false, counter: false };
+    kindMode: false, kindOnly: null as string | null, idea: null as string | null, story: null as string | null, lines: false, counter: false, citedOnly: false };
   const kindsOf = (w: Work) => Ly?.wk[wkey(w)] ?? [];
   const ideaOf = () => Ly?.ideas.find((x) => x.n === state.idea) ?? null;
   const storyOf = () => Ly?.stories.find((x) => x.id === state.story) ?? null;
   const attests = (w: Work) => !!state.lens && wkey(w) in state.lens.works;
-  const visible = (w: Work) => state.st[stat(w)] && (state.adj || !w.adj) && (!state.kindOnly || kindsOf(w).includes(state.kindOnly)) && (!state.q || (w.n + ' ' + w.tr + ' ' + w.gl + ' ' + w.eds.map((e) => e.t + ' ' + e.a).join(' ')).toLowerCase().includes(state.q));
+  // ---- the history's citations (#7646): the claims that quote an edition of the work ----
+  const claimsOf = (w: Work) => Ct?.data.works[wkey(w)] ?? null;
+  const claimHref = (d: string, id: string) => esc(`${Ct!.base}/${encodeURIComponent(d)}#${encodeURIComponent(id)}`);
+  const nClaims = (n: number) => `${n} claim${n === 1 ? '' : 's'}`;
+  const visible = (w: Work) => state.st[stat(w)] && (!state.citedOnly || !!claimsOf(w)) && (state.adj || !w.adj) && (!state.kindOnly || kindsOf(w).includes(state.kindOnly)) && (!state.q || (w.n + ' ' + w.tr + ' ' + w.gl + ' ' + w.eds.map((e) => e.t + ' ' + e.a).join(' ')).toLowerCase().includes(state.q));
 
   // ---- time scale (piecewise linear: antiquity compressed, modernity expanded) ----
   const LEFT = 200, RIGHT = 24, TOP = 44, ROWH = 24, REGGAP = 30;
@@ -157,6 +166,9 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     return c;
   }
   function layerRing(w: Work, x: number, cy: number, r: number) {
+    return (claimsOf(w) ? `<circle class="citring" cx="${x.toFixed(1)}" cy="${cy}" r="${r + 2.6}"/>` : '') + layerRingCounter(w, x, cy, r);
+  }
+  function layerRingCounter(w: Work, x: number, cy: number, r: number) {
     return Ly && state.counter && Ly.counter[wkey(w)] ? `<circle class="ctring" cx="${x.toFixed(1)}" cy="${cy}" r="${r + 3.2}"/>` : '';
   }
   const ptOf = (key: string) => { const i = idxByKey.get(key); if (i == null) return null; const p = pts.find((q) => q[2] === i); return p ? [p[0], p[1]] as [number, number] : null; };
@@ -170,7 +182,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     return s;
   }
   const onSvgClick = (e: Event) => { const i = markAt(e as MouseEvent); if (i == null) return; select(i, true); };
-  const onSvgMove = (e: MouseEvent) => { const hit = markAt(e); svg.style.cursor = hit == null ? '' : 'pointer'; if (hit == null) { if (tip) { tip.remove(); tip = null; } return; } const w = W[hit]; if (!tip) { tip = document.createElement('div'); tip.className = 'tip'; box.appendChild(tip); } tip.innerHTML = `<b>${esc(w.n)}</b>${esc(w.tr)} · ${esc(w.dl || fmtY(w.d))}<br>${stat(w) === 'readable' ? 'Readable now' : stat(w) === 'held' ? 'Held, not yet readable' : 'Not held'} · ${w.eds.length} edition${w.eds.length === 1 ? '' : 's'}${state.lens && attests(w) ? `<br><i>${esc(state.lens.c)}</i> on ${state.lens.works[wkey(w)][0]} page${state.lens.works[wkey(w)][0] === 1 ? '' : 's'}: ${esc(state.lens.works[wkey(w)][3])}${state.lens.works[wkey(w)][4] ? ' (' + esc(state.lens.works[wkey(w)][4]) + ')' : ''}` : ''}`; const bx = box.getBoundingClientRect(); let x = e.clientX - bx.left + box.scrollLeft + 14; const y = e.clientY - bx.top + box.scrollTop - 10; if (x + 310 > box.scrollWidth) x -= 330; tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
+  const onSvgMove = (e: MouseEvent) => { const hit = markAt(e); svg.style.cursor = hit == null ? '' : 'pointer'; if (hit == null) { if (tip) { tip.remove(); tip = null; } return; } const w = W[hit]; if (!tip) { tip = document.createElement('div'); tip.className = 'tip'; box.appendChild(tip); } tip.innerHTML = `<b>${esc(w.n)}</b>${esc(w.tr)} · ${esc(w.dl || fmtY(w.d))}<br>${stat(w) === 'readable' ? 'Readable now' : stat(w) === 'held' ? 'Held, not yet readable' : 'Not held'} · ${w.eds.length} edition${w.eds.length === 1 ? '' : 's'}${claimsOf(w) ? `<br>Cited in ${nClaims(claimsOf(w)!.length)} of the history of ${esc(Ct!.title)}` : ''}${state.lens && attests(w) ? `<br><i>${esc(state.lens.c)}</i> on ${state.lens.works[wkey(w)][0]} page${state.lens.works[wkey(w)][0] === 1 ? '' : 's'}: ${esc(state.lens.works[wkey(w)][3])}${state.lens.works[wkey(w)][4] ? ' (' + esc(state.lens.works[wkey(w)][4]) + ')' : ''}` : ''}`; const bx = box.getBoundingClientRect(); let x = e.clientX - bx.left + box.scrollLeft + 14; const y = e.clientY - bx.top + box.scrollTop - 10; if (x + 310 > box.scrollWidth) x -= 330; tip.style.left = x + 'px'; tip.style.top = y + 'px'; };
   const onSvgLeave = () => { if (tip) { tip.remove(); tip = null; } };
   svg.addEventListener('click', onSvgClick); svg.addEventListener('mousemove', onSvgMove); svg.addEventListener('mouseleave', onSvgLeave);
 
@@ -214,6 +226,11 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     if (sts.length) h += `<div class="argue"><b>In the stories</b><ul>${sts.map((s) => `<li><button class="storybtn" data-story="${s.id}">${esc(s.title)}</button>${s.tested ? ' ' + testedText(s.tested) : ''}</li>`).join('')}</ul></div>`;
     return h ? `<div class="layers-panel">${h}</div>` : '';
   }
+  function citedBlock(w: Work) {
+    const cs = claimsOf(w); if (!cs) return ''; const N = 8;
+    const li = (c: [string, string, string]) => `<li><a href="${claimHref(c[1], c[0])}">${esc(c[2])}</a></li>`;
+    return `<div class="cited"><b>In the history of ${esc(Ct!.title)}</b><span class="sub">${nClaims(cs.length)} quote${cs.length === 1 ? 's' : ''} an edition of this work</span><ul>${cs.slice(0, N).map(li).join('')}</ul>${cs.length > N ? `<details class="moreeds"><summary>Show the other ${cs.length - N}</summary><ul>${cs.slice(N).map(li).join('')}</ul></details>` : ''}</div>`;
+  }
   function edsBlock(w: Work) {
     if (!w.eds.length) return ''; const eds = [...w.eds].sort((a, b) => (+b.rd - +a.rd) || (+b.v - +a.v)); const N = 6;
     const head = `<b class="edsh">${w.eds.length === 1 ? 'The edition in the library' : `${w.eds.length} editions in the library`}</b>`;
@@ -223,6 +240,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     state.sel = i; const w = W[i]; detail.className = 'detail'; const st = stat(w);
     detail.innerHTML = `<h3>${esc(w.n)}</h3><div class="meta"><span>${esc(w.tr)}${w.rg ? ' · ' + esc(w.rg) : ''}</span><span>${esc(w.dl || fmtY(w.d))}</span><span>${esc(w.g)}</span><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held, not yet readable' : 'Not held'}</span>${w.adj ? '<span class="pill absent">adjacent</span>' : ''}</div>
       ${w.gl ? `<p>${esc(w.gl)}</p>` : ''}
+      ${citedBlock(w)}
       ${layersBlock(w, 'top')}
       ${l2Block(w)}
       ${layersBlock(w, 'links')}
@@ -250,7 +268,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
         block += `<div class="trad"><h3>${esc(t)} <small>${cr} readable · ${ch} held · ${ca} not held</small></h3>`;
         ws.forEach(([w, i]) => {
           shown++; const st = stat(w); const eds = w.eds; const showN = 6; const rest = eds.length - showN;
-          block += `<div class="work${w.adj ? ' adj' : ''}" id="w${i}"><div class="date">${esc(w.dl && w.dl.length < 28 ? w.dl : fmtY(w.d))}</div><div><div class="name"><a href="#w${i}" data-i="${i}" class="wl">${esc(w.n)}</a><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held' : 'Not held'}</span>${w.adj ? '<span class="adjtag">adjacent</span>' : ''}</div>${w.gl ? `<p class="gloss">${esc(w.gl)}</p>` : ''}${l2?.works[wkey(w)]?.q.length ? `<button class="more l2more" data-i="${i}">What it says about ${esc(cfg.l2Topic || 'the mind')}, with ${l2.works[wkey(w)].q.length} passage${l2.works[wkey(w)].q.length === 1 ? '' : 's'}</button>` : ''}
+          block += `<div class="work${w.adj ? ' adj' : ''}" id="w${i}"><div class="date">${esc(w.dl && w.dl.length < 28 ? w.dl : fmtY(w.d))}</div><div><div class="name"><a href="#w${i}" data-i="${i}" class="wl">${esc(w.n)}</a><span class="pill ${st}">${st === 'readable' ? 'Readable' : st === 'held' ? 'Held' : 'Not held'}</span>${w.adj ? '<span class="adjtag">adjacent</span>' : ''}</div>${w.gl ? `<p class="gloss">${esc(w.gl)}</p>` : ''}${citedLine(w, i)}${l2?.works[wkey(w)]?.q.length ? `<button class="more l2more" data-i="${i}">What it says about ${esc(cfg.l2Topic || 'the mind')}, with ${l2.works[wkey(w)].q.length} passage${l2.works[wkey(w)].q.length === 1 ? '' : 's'}</button>` : ''}
             ${eds.length ? `<ul class="eds">${eds.slice(0, showN).map(edRow).join('')}${rest > 0 ? `<li><span></span><button class="more" data-i="${i}">and ${rest} more edition${rest === 1 ? '' : 's'}</button></li>` : ''}</ul>` : ''}
             ${st !== 'readable' && w.gap ? `<div class="gap"><b>${st === 'absent' ? 'Source:' : 'Also:'}</b> ${esc(w.gap)}</div>` : ''}</div></div>`;
         });
@@ -263,13 +281,22 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
     if (state.lens) { const hit = W.filter((w) => visible(w) && attests(w)); const trs = new Set(hit.map((w) => w.tr)); lensNote = ` · ${hit.length} attest ${state.lens.c} across ${trs.size} tradition${trs.size === 1 ? '' : 's'}`; }
     count.textContent = `${shown} of ${W.length} works shown${lensNote}`;
   }
+  function citedLine(w: Work, i: number) {
+    const cs = claimsOf(w); if (!cs) return '';
+    // one claim: straight to it; more: the work panel lists them all
+    return cs.length === 1 ? `<a class="citedlink" href="${claimHref(cs[0][1], cs[0][0])}">Cited in one claim of the history</a>` : `<button class="more citedlink" data-i="${i}">Cited in ${nClaims(cs.length)} of the history</button>`;
+  }
   const onCatClick = (e: Event) => { const m = (e.target as Element).closest('.more') as HTMLElement | null; if (m) { select(+m.dataset.i!, true); e.preventDefault(); return; } const a = (e.target as Element).closest('a.wl') as HTMLElement | null; if (a) { e.preventDefault(); select(+a.dataset.i!, true); history.replaceState(null, '', `#w${a.dataset.i}`); } };
   cat.addEventListener('click', onCatClick);
 
   // ---- controls ----
-  const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('.chip'));
+  const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('.chip[data-st]'));
   const onChip = (b: HTMLButtonElement) => () => { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(on)); state.st[b.dataset.st!] = on; refresh(); };
   const chipHandlers = chips.map((b) => { const h = onChip(b); b.addEventListener('click', h); return [b, h] as const; });
+  const citedChip = root.querySelector<HTMLButtonElement>('#citedonly');
+  if (citedChip) citedChip.hidden = !Ct;
+  const onCited = () => { state.citedOnly = !state.citedOnly; citedChip!.setAttribute('aria-pressed', String(state.citedOnly)); refresh(); };
+  citedChip?.addEventListener('click', onCited);
   const adj = root.querySelector<HTMLInputElement>('#adj'); const adjWrap = root.querySelector<HTMLElement>('#adjwrap');
   if (adjWrap) adjWrap.hidden = !hasAdj;
   const onAdj = (e: Event) => { state.adj = (e.target as HTMLInputElement).checked; refresh(); };
@@ -332,7 +359,7 @@ export function mountTimeline(root: HTMLElement, D: ThemeData, cfg: TimelineConf
   return () => {
     svg.removeEventListener('click', onSvgClick); svg.removeEventListener('mousemove', onSvgMove); svg.removeEventListener('mouseleave', onSvgLeave);
     cat.removeEventListener('click', onCatClick); chipHandlers.forEach(([b, h]) => b.removeEventListener('click', h));
-    adj?.removeEventListener('change', onAdj); q?.removeEventListener('input', onQ); window.removeEventListener('resize', onResize);
+    adj?.removeEventListener('change', onAdj); citedChip?.removeEventListener('click', onCited); q?.removeEventListener('input', onQ); window.removeEventListener('resize', onResize);
     lensInput?.removeEventListener('input', onLens); lensInput?.removeEventListener('change', onLens); detail.removeEventListener('click', onDetailClick);
     lyHandlers.forEach(([el, ev, fn]) => el.removeEventListener(ev, fn));
   };

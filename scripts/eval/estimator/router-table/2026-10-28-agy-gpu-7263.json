@@ -1,0 +1,5797 @@
+{
+ "as_of": "2026-10-28",
+ "rules": {
+  "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+  "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
+  "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
+  "capacity": "scripts/eval/estimator/chain/capacity.json",
+  "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json"
+ },
+ "fees": "default plan fee (rules.json fees, the v2 / #7417 convention)",
+ "size_rate": {
+  "by_reading": {
+   "pilot (one-page Opus image calls)": 5.603575080901616e-07,
+   "correct.mjs, 10 Latin pages a call": 5.387545773941811e-07,
+   "claude-translate.mjs, 10 German pages a call": 1.7616001383926886e-07
+  },
+  "low": 1.7616001383926886e-07,
+  "central": {
+   "correct": 5.603575080901616e-07,
+   "translate": 1.7616001383926886e-07
+  },
+  "high": 5.603575080901616e-07,
+  "overhead_eq": 16150
+ },
+ "idle": {
+  "claude": {
+   "share": 0.08537671471397873,
+   "units": 34.15068588559149,
+   "unit": "points",
+   "meter": "scripts/eval/estimator/chain/results/claude-weekly-2026-10-25.json",
+   "as_of": "2026-10-25T23:40:00+00:00"
+  },
+  "agy": {
+   "share": 0.0,
+   "units": 0.0,
+   "unit": "calls",
+   "meter": "agy meter not read: it is on Hetzner main (/root/agy-quota), not on the job box; 0 = no idle credit"
+  }
+ },
+ "idle_after_tests": {
+  "claude": 33.03468588559149,
+  "agy": 0.0
+ },
+ "rows": [
+  {
+   "id": "latin-lite",
+   "title": "Latin print, Flash-Lite text (#5924)",
+   "pages_waiting": 861506,
+   "current": "lite>opus",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.8499324732615842,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.8298575315452726,
+    "gap": -0.020074941716311523,
+    "p_within": 0.6937,
+    "alt_wrate": 0.10400000000000001,
+    "bar_wrate": 0.11666666666666665
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 23.821662143478928,
+   "v2_weeks": 78,
+   "test_score": 0.2585566560342212,
+   "caveat": "Book group 5924-latin (backfill-all): the pilot's 30 pages, the router tests' lite>agy-flash-low reads and #5924's 250 pages (10 books x 25, Step C packets, every reading counted once) are the same 10 books, scaled together so they count as 10 books, not 29. One of the 10 books is another leaf's text on all 25 pages (the correctors CONTAIN it: lite served). Plus #5924's served-page spot check (4 other books).",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      0.25,
+      6.75
+     ],
+     "prior_model": {
+      "mean": 0.035,
+      "basis": "measured"
+     },
+     "eff": [
+      9.0833,
+      14.0,
+      4.9028
+     ],
+     "k": 447,
+     "n": 732,
+     "wrong": 284,
+     "wrate": 0.35019841269841273,
+     "top": [
+      [
+       "O6",
+       "415/732"
+      ],
+      [
+       "O8",
+       "371/732"
+      ],
+      [
+       "O11",
+       "208/732"
+      ]
+     ],
+     "mean": 0.4444774380380476,
+     "ci90": [
+      0.27212235100645343,
+      0.6224817925378155
+     ],
+     "var": 0.011222139478687101,
+     "p80": 0.0001,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.0043278124406666,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00433,
+      "low": 0.00136,
+      "high": 0.00875,
+      "pages_per_call": 8.43882
+     },
+     "tested": true,
+     "prior": [
+      5.63,
+      1.37
+     ],
+     "prior_model": {
+      "mean": 0.803912,
+      "basis": "measured"
+     },
+     "eff": [
+      8.8333,
+      10.0,
+      1.1667
+     ],
+     "k": 689,
+     "n": 780,
+     "wrong": 91,
+     "wrate": 0.11666666666666665,
+     "top": [
+      [
+       "O8",
+       "151/780"
+      ],
+      [
+       "O11",
+       "60/780"
+      ],
+      [
+       "O6",
+       "51/780"
+      ]
+     ],
+     "mean": 0.8499324732615842,
+     "ci90": [
+      0.688589099657108,
+      0.9616578489195166
+     ],
+     "var": 0.007058794477527788,
+     "p80": 0.75235,
+     "share": 2.1639062203333e-05,
+     "units": 0.0043278124406666,
+     "cost": [
+      0.004500366159886462,
+      0.0050106769298711345,
+      0.006285043493749307
+     ],
+     "api": 0.09671356559017043
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      5.45,
+      1.55
+     ],
+     "prior_model": {
+      "mean": 0.7787255000000001,
+      "basis": "measured"
+     },
+     "eff": [
+      8.0943,
+      10.0,
+      1.8679
+     ],
+     "k": 429,
+     "n": 530,
+     "wrong": 99,
+     "wrate": 0.1867924528301887,
+     "top": [
+      [
+       "O6",
+       "199/530"
+      ],
+      [
+       "O8",
+       "153/530"
+      ],
+      [
+       "O11",
+       "84/530"
+      ]
+     ],
+     "mean": 0.7962658989063424,
+     "ci90": [
+      0.6209883035482218,
+      0.931064119693865
+     ],
+     "var": 0.008995339478608344,
+     "p80": 0.53185,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.095520682652208,
+      1.2624650399418649,
+      1.6425430143722404
+     ],
+     "api": null
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      8.96,
+      10.0,
+      1.04
+     ],
+     "k": 448,
+     "n": 500,
+     "wrong": 52,
+     "wrate": 0.10400000000000001,
+     "top": [
+      [
+       "O8",
+       "295/500"
+      ],
+      [
+       "O11",
+       "120/500"
+      ],
+      [
+       "O6",
+       "117/500"
+      ]
+     ],
+     "mean": 0.8298575315452726,
+     "ci90": [
+      0.6307080451848558,
+      0.9648734426852262
+     ],
+     "var": 0.01085384615384615,
+     "p80": 0.66555,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.1193177801581715,
+      1.2727411920058327,
+      1.7123612236204473
+     ],
+     "api": null
+    },
+    {
+     "id": "gpu>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      5.45,
+      1.55
+     ],
+     "prior_model": {
+      "mean": 0.7787255000000001,
+      "basis": "measured"
+     },
+     "eff": [
+      7.6154,
+      9.0,
+      0.6923
+     ],
+     "k": 22,
+     "n": 26,
+     "wrong": 2,
+     "wrate": 0.07692307692307693,
+     "top": [
+      [
+       "O6",
+       "11/26"
+      ],
+      [
+       "O8",
+       "9/26"
+      ],
+      [
+       "O12",
+       "7/26"
+      ]
+     ],
+     "mean": 0.8164580548737393,
+     "ci90": [
+      0.6419666174804387,
+      0.9455845106116691
+     ],
+     "var": 0.008807663488154231,
+     "p80": 0.6172,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0786978726419638,
+      1.2296585314434103,
+      1.5888676641836137
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 1,
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "latin-flash3",
+   "title": "Latin print, 3 Flash text (most-read books)",
+   "pages_waiting": 1317806,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash>agy-flash-low",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD 3flash>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 34.41451482410774,
+   "v2_weeks": 78,
+   "test_score": 0.14557895063110476,
+   "caveat": "3flash: the router tests (30 pages, one a book) and #5924's served-page spot check (2026-10-22, backfill-all: 24 pages in 8 books, 3 consecutive pages a book, Step T on the page as served; every misleading page there is OCR-caused).",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      5.15,
+      1.85
+     ],
+     "prior_model": {
+      "mean": 0.736,
+      "basis": "measured"
+     },
+     "eff": [
+      28.3333,
+      38.0,
+      4.6667
+     ],
+     "k": 43,
+     "n": 54,
+     "wrong": 6,
+     "wrate": 0.12280701754385966,
+     "top": [
+      [
+       "O6",
+       "26/54"
+      ],
+      [
+       "O8",
+       "21/54"
+      ],
+      [
+       "O9",
+       "11/54"
+      ]
+     ],
+     "mean": 0.7441866855251121,
+     "ci90": [
+      0.6327466880733074,
+      0.8432230804377313
+     ],
+     "var": 0.004139264106876603,
+     "p80": 0.1976,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.0038380642716376954,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00384,
+      "low": 0.00121,
+      "high": 0.00577,
+      "pages_per_call": 9.07441
+     },
+     "tested": false,
+     "prior": [
+      6.69,
+      0.31
+     ],
+     "prior_model": {
+      "mean": 0.9550144,
+      "basis": "measured"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.9550061146368242,
+     "ci90": [
+      0.8007530059842898,
+      0.9999933592713606
+     ],
+     "var": 0.005370236974079996,
+     "p80": 0.9507,
+     "share": 1.9190321358188477e-05,
+     "units": 0.0038380642716376954,
+     "cost": [
+      0.003838089759350281,
+      0.0038879075899623987,
+      0.004793068827659194
+     ],
+     "api": 0.08607274732608339
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      6.55,
+      0.45
+     ],
+     "prior_model": {
+      "mean": 0.9362704,
+      "basis": "pooled"
+     },
+     "eff": [
+      23,
+      30,
+      3
+     ],
+     "k": 23,
+     "n": 30,
+     "wrong": 3,
+     "wrate": 0.1,
+     "top": [
+      [
+       "O6",
+       "11/30"
+      ],
+      [
+       "O8",
+       "10/30"
+      ],
+      [
+       "E2",
+       "6/30"
+      ]
+     ],
+     "mean": 0.7993841454778643,
+     "ci90": [
+      0.6835903817628637,
+      0.8963430221733913
+     ],
+     "var": 0.004230161354159935,
+     "p80": 0.5307,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.1379572047392903,
+      1.2667543448823688,
+      1.492121637770258
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 2,
+   "decision_week": "HOLD",
+   "route_week": "3flash>agy-flash-low",
+   "before": "HOLD → 3flash>agy-flash-low"
+  },
+  {
+   "id": "german-lite",
+   "title": "German OCR, Flash-Lite",
+   "pages_waiting": 418603,
+   "current": "lite>opus",
+   "decision": "keep",
+   "route": "lite>opus",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.9357240062716675,
+    "alt": "lite>agy-flash-low",
+    "alt_mean": 0.9231468847557706,
+    "gap": -0.01257712151589696,
+    "p_within": 0.890625,
+    "alt_wrate": 0.06666666666666667,
+    "bar_wrate": 0.031
+   },
+   "decision_flat_price": "keep lite>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": "switch lite>agy-flash-low: acceptance -0.01 against the best, 1.8x cheaper per accepted page",
+   "weeks_to_clear": 7.588284395246396,
+   "v2_weeks": 104,
+   "test_score": 0.06335774402489497,
+   "caveat": "Two sources, each scaled by its books: the router tests (30 pages, one a book, the route-judge prompt) and #7568 wave 1 (250 pages in 10 books, one Step T reader per book, misleading = wrong text; no lite>agy-flash-low arm there). The fresh read: #7517 on the router tests' 30 pages (12 filter-cut, not accepted) and #7568's re-read arm.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      28.48,
+      40.0,
+      7.52
+     ],
+     "k": 208,
+     "n": 280,
+     "wrong": 68,
+     "wrate": 0.188,
+     "top": [
+      [
+       "O6",
+       "164/280"
+      ],
+      [
+       "O8",
+       "163/280"
+      ],
+      [
+       "O11",
+       "74/280"
+      ]
+     ],
+     "mean": 0.701676676027344,
+     "ci90": [
+      0.5805758043674383,
+      0.8108279840011146
+     ],
+     "var": 0.004865917840004219,
+     "p80": 0.07265,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003625527956200217,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00363,
+      "low": 0.00114,
+      "high": 0.00534,
+      "pages_per_call": 8.87311
+     },
+     "tested": true,
+     "prior": [
+      6.21,
+      0.79
+     ],
+     "prior_model": {
+      "mean": 0.88685,
+      "basis": "pooled"
+     },
+     "eff": [
+      37.76,
+      40.0,
+      1.24
+     ],
+     "k": 272,
+     "n": 280,
+     "wrong": 7,
+     "wrate": 0.031,
+     "top": [
+      [
+       "O8",
+       "47/280"
+      ],
+      [
+       "O6",
+       "24/280"
+      ],
+      [
+       "O11",
+       "9/280"
+      ]
+     ],
+     "mean": 0.9357240062716675,
+     "ci90": [
+      0.8684240383419899,
+      0.9818143271959807
+     ],
+     "var": 0.0012572904670052445,
+     "p80": 0.997425,
+     "share": 1.8127639781001083e-05,
+     "units": 0.003625527956200217,
+     "cost": [
+      0.0036926818602806178,
+      0.00384924523552898,
+      0.004174836020341096
+     ],
+     "api": 0.08784641566215731,
+     "idle_fit": 0.021766900240511367
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      6.15,
+      0.85
+     ],
+     "prior_model": {
+      "mean": 0.8792,
+      "basis": "pooled"
+     },
+     "eff": [
+      28,
+      30,
+      2
+     ],
+     "k": 28,
+     "n": 30,
+     "wrong": 2,
+     "wrate": 0.06666666666666667,
+     "top": [
+      [
+       "O8",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "7/30"
+      ]
+     ],
+     "mean": 0.9231468847557706,
+     "ci90": [
+      0.8409912278602752,
+      0.9793393147629875
+     ],
+     "var": 0.0018682434477720966,
+     "p80": 0.98615,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0415184855995012,
+      1.09589859776744,
+      1.2128545057422
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      25.08,
+      40.0,
+      1.92
+     ],
+     "k": 243,
+     "n": 280,
+     "wrong": 24,
+     "wrate": 0.048,
+     "top": [
+      [
+       "O6",
+       "109/280"
+      ],
+      [
+       "O8",
+       "107/280"
+      ],
+      [
+       "O11",
+       "42/280"
+      ]
+     ],
+     "mean": 0.6205377878663518,
+     "ci90": [
+      0.49582788489563495,
+      0.7399053567180851
+     ],
+     "var": 0.005473733059115119,
+     "p80": 0.00445,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.45964614283972,
+      1.7355171077130334,
+      2.1781751952642305
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "keep",
+   "route_week": "lite>opus",
+   "before": "keep"
+  },
+  {
+   "id": "german-flash3",
+   "title": "German OCR, 3 Flash",
+   "pages_waiting": 353186,
+   "current": "3flash>opus",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "vs_bar": {
+    "bar": "3flash>opus",
+    "bar_mean": 0.9756747014199747,
+    "alt": "3flash>agy-flash-low",
+    "alt_mean": 0.8644492953863153,
+    "gap": -0.11122540603365938,
+    "p_within": 0.31785,
+    "alt_wrate": 0.03333333333333333,
+    "bar_wrate": 0.0
+   },
+   "decision_flat_price": "keep 3flash>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": "no change",
+   "weeks_to_clear": 6.068147587665485,
+   "v2_weeks": 78,
+   "test_score": 0.028454687934754228,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      29,
+      30,
+      0
+     ],
+     "k": 29,
+     "n": 30,
+     "wrong": 0,
+     "wrate": 0.0,
+     "top": [
+      [
+       "O8",
+       "22/30"
+      ],
+      [
+       "O6",
+       "12/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.9374330862263567,
+     "ci90": [
+      0.8565829524654697,
+      0.9881989437407146
+     ],
+     "var": 0.0017755681818181818,
+     "p80": 0.992,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003436233365799032,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00344,
+      "low": 0.00108,
+      "high": 0.00479,
+      "pages_per_call": 9.72763
+     },
+     "tested": true,
+     "prior": [
+      6.12,
+      0.88
+     ],
+     "prior_model": {
+      "mean": 0.87495,
+      "basis": "pooled"
+     },
+     "eff": [
+      29,
+      29,
+      0
+     ],
+     "k": 29,
+     "n": 29,
+     "wrong": 0,
+     "wrate": 0.0,
+     "top": [
+      [
+       "O8",
+       "11/29"
+      ],
+      [
+       "O16",
+       "4/29"
+      ],
+      [
+       "E2",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9756747014199747,
+     "ci90": [
+      0.92492776834923,
+      0.9991183887451281
+     ],
+     "var": 0.0006411904066045212,
+     "p80": 0.9997,
+     "share": 1.718116682899516e-05,
+     "units": 0.003436233365799032,
+     "cost": [
+      0.0034392654609378868,
+      0.0034930463872209707,
+      0.003715136990569403
+     ],
+     "api": 0.08424939160600146,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      5.98,
+      1.02
+     ],
+     "prior_model": {
+      "mean": 0.8545499999999999,
+      "basis": "pooled"
+     },
+     "eff": [
+      26,
+      30,
+      1
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "wrate": 0.03333333333333333,
+     "top": [
+      [
+       "O8",
+       "18/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ]
+     ],
+     "mean": 0.8644492953863153,
+     "ci90": [
+      0.7632184308128445,
+      0.9432854140757515
+     ],
+     "var": 0.00308503557297874,
+     "p80": 0.870825,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.081327013838558,
+      1.170854135970632,
+      1.3364457130754528
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "keep",
+   "route_week": "3flash>opus",
+   "before": "keep"
+  },
+  {
+   "id": "german-tr-flash3",
+   "title": "German translation, 3 Flash English (#7263)",
+   "pages_waiting": 306784,
+   "current": "flash3",
+   "decision": "HOLD",
+   "route": "flash3",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD flash3",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
+   "routes": [
+    {
+     "id": "flash3",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      41,
+      60,
+      11
+     ],
+     "k": 41,
+     "n": 60,
+     "wrong": 11,
+     "wrate": 0.18333333333333332,
+     "top": [
+      [
+       "T10",
+       "29/60"
+      ],
+      [
+       "E2",
+       "27/60"
+      ],
+      [
+       "O6",
+       "22/60"
+      ]
+     ],
+     "mean": 0.6771634728545154,
+     "ci90": [
+      0.5772833582785694,
+      0.7699708341155642
+     ],
+     "var": 0.00346860908775581,
+     "p80": 0.011825,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "channel": "claude",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.0009537258296138453,
+     "points_flat": 0.000923,
+     "size": {
+      "central": 0.00095,
+      "low": 0.00095,
+      "high": 0.00472,
+      "pages_per_call": 9.02527
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      49,
+      60,
+      7
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "wrate": 0.11666666666666667,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8067977891653302,
+     "ci90": [
+      0.72053724481457,
+      0.8825314556676677
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.57545,
+     "share": 4.768629148069226e-06,
+     "units": 0.0009537258296138453,
+     "cost": [
+      0.0010806706361444266,
+      0.0011778259535147849,
+      0.0013236315492050467
+     ],
+     "api": 0.07399623648171176
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "flash3",
+   "before": "HOLD → flash3"
+  },
+  {
+   "id": "german-tr-lite",
+   "title": "German translation, Flash-Lite English (#7263)",
+   "pages_waiting": 151361,
+   "current": "flash-lite",
+   "decision": "HOLD",
+   "route": "flash-lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD flash-lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "Each German route was judged on its own 30 pages, not paired.",
+   "routes": [
+    {
+     "id": "flash-lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      26,
+      60,
+      19
+     ],
+     "k": 26,
+     "n": 60,
+     "wrong": 19,
+     "wrate": 0.31666666666666665,
+     "top": [
+      [
+       "E2",
+       "31/60"
+      ],
+      [
+       "O6",
+       "20/60"
+      ],
+      [
+       "T8",
+       "16/60"
+      ]
+     ],
+     "mean": 0.4349693354074573,
+     "ci90": [
+      0.33250375694661927,
+      0.5397384351495704
+     ],
+     "var": 0.003902185223725286,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "channel": "claude",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.0007686508560068668,
+     "points_flat": 0.000923,
+     "size": {
+      "central": 0.00077,
+      "low": 0.00077,
+      "high": 0.00358,
+      "pages_per_call": 9.3633
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      49,
+      60,
+      7
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "wrate": 0.11666666666666667,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8063307065071273,
+     "ci90": [
+      0.7201975808775777,
+      0.8817988633369027
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.57795,
+     "share": 3.843254280034334e-06,
+     "units": 0.0007686508560068668,
+     "cost": [
+      0.0008716850156714182,
+      0.0009492838493578072,
+      0.0010672777532385594
+     ],
+     "api": 0.07403910023296663
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "flash-lite",
+   "before": "HOLD → flash-lite"
+  },
+  {
+   "id": "french-lite",
+   "title": "French OCR, Flash-Lite",
+   "pages_waiting": 151443,
+   "current": "lite>opus",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "vs_bar": null,
+   "decision_flat_price": "switch lite>agy-flash-low",
+   "other_wrong_text_bar": "keep lite>opus",
+   "margin_010": "no change",
+   "weeks_to_clear": 3.954935224537867,
+   "v2_weeks": 104,
+   "test_score": 0.02379305950590963,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      22,
+      30,
+      6
+     ],
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "wrate": 0.2,
+     "top": [
+      [
+       "O8",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ],
+      [
+       "E2",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7185676783791833,
+     "ci90": [
+      0.581491560419296,
+      0.8399116016219889
+     ],
+     "var": 0.006125710227272727,
+     "p80": 0.15105,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.00345819150512764,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00346,
+      "low": 0.00109,
+      "high": 0.00517,
+      "pages_per_call": 9.14077
+     },
+     "tested": false,
+     "prior": [
+      6.19,
+      0.81
+     ],
+     "prior_model": {
+      "mean": 0.8842,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.8841209379993754,
+     "ci90": [
+      0.6528087838489449,
+      0.9959873431010925
+     ],
+     "var": 0.012798795000000002,
+     "p80": 0.810925,
+     "share": 1.72909575256382e-05,
+     "units": 0.00345819150512764,
+     "cost": [
+      0.003472123947238388,
+      0.003764389105286516,
+      0.005297403452107715
+     ],
+     "api": 0.0929737058212935,
+     "idle_fit": 0.06307713189441055
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      6.04,
+      0.96
+     ],
+     "prior_model": {
+      "mean": 0.86235,
+      "basis": "pooled"
+     },
+     "eff": [
+      27,
+      29,
+      2
+     ],
+     "k": 27,
+     "n": 29,
+     "wrong": 2,
+     "wrate": 0.06896551724137931,
+     "top": [
+      [
+       "E2",
+       "11/29"
+      ],
+      [
+       "O8",
+       "10/29"
+      ],
+      [
+       "O6",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9178505353618676,
+     "ci90": [
+      0.8330710580270739,
+      0.9768148286923021
+     ],
+     "var": 0.0020417328035848355,
+     "p80": 0.98205,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.044210192187102,
+      1.1020465295504795,
+      1.2243853512515748
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      23,
+      30,
+      2
+     ],
+     "k": 23,
+     "n": 30,
+     "wrong": 2,
+     "wrate": 0.06666666666666667,
+     "top": [
+      [
+       "E2",
+       "11/30"
+      ],
+      [
+       "O8",
+       "6/30"
+      ],
+      [
+       "filter_cut",
+       "5/30"
+      ]
+     ],
+     "mean": 0.7497056010836489,
+     "ci90": [
+      0.6166977150775067,
+      0.8650245100385054
+     ],
+     "var": 0.005681818181818182,
+     "p80": 0.270325,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.2485195361134047,
+      1.4309667903236802,
+      1.7512631773968312
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "lite>agy-flash-low",
+   "before": "switch → lite>agy-flash-low"
+  },
+  {
+   "id": "greek-flash3",
+   "title": "Greek OCR, 3 Flash",
+   "pages_waiting": 419150,
+   "current": "3flash",
+   "decision": "held",
+   "route": "3flash",
+   "vs_bar": null,
+   "decision_flat_price": "held 3flash",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "Derek 2026-10-14 (#6694): Greek stays on lane A",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.5019813455159982,
+     "ci90": [
+      0.049324774237445634,
+      0.9498119891948631
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.199825,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "held",
+   "route_week": "3flash",
+   "before": "held"
+  },
+  {
+   "id": "tibetan-tr",
+   "title": "Tibetan translation, corrected Kangyur text (#6948)",
+   "pages_waiting": 0,
+   "current": "opus-cli",
+   "decision": "HOLD",
+   "route": "agy-flash-low@4",
+   "vs_bar": {
+    "bar": "opus-cli",
+    "bar_mean": 0.8750680791830511,
+    "alt": "agy-flash-low@4",
+    "alt_mean": 0.7188446066447793,
+    "gap": -0.15622347253827173,
+    "p_within": 0.2142,
+    "alt_wrate": 0.13333333333333333,
+    "bar_wrate": 0.03333333333333333
+   },
+   "decision_flat_price": "HOLD agy-flash-low@4",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.0,
+   "caveat": "Router test 2026-10-27 (job tib-corr-profiles-6560): 30 pages, one per book, of the #6560 profile experiment's arm-A Flash corrections (never written; no arm passed its rule), each translated as the first page of a block of its book (agy 4 a call, Opus 10 a call, cut at 20K chars) and judged blind by Opus against the image and the corrected transcription. Paired, same pages. The pages were drawn from a DIAGNOSTIC set (pages earlier audits judged worse), not the lane's frame.",
+   "routes": [
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "channel": "claude",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.000923,
+     "points_flat": 0.000923,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      27,
+      30,
+      1
+     ],
+     "k": 27,
+     "n": 30,
+     "wrong": 1,
+     "wrate": 0.03333333333333333,
+     "top": [
+      [
+       "E2",
+       "17/30"
+      ],
+      [
+       "T10",
+       "10/30"
+      ],
+      [
+       "O6",
+       "6/30"
+      ]
+     ],
+     "mean": 0.8750680791830511,
+     "ci90": [
+      0.7697851599930875,
+      0.9542259973133089
+     ],
+     "var": 0.0033143939393939395,
+     "p80": 0.8942,
+     "share": 4.615e-06,
+     "units": 0.000923,
+     "cost": [
+      0.0009672760987426166,
+      0.001045645930389335,
+      0.0011990358452847914
+     ],
+     "api": 0.06822326333253399
+    },
+    {
+     "id": "agy-flash-low@4",
+     "stage": "agy-text@4",
+     "channel": "agy",
+     "lane": "claude-translate.mjs --cli=agy --per-call=4 (#7503)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      22,
+      30,
+      4
+     ],
+     "k": 22,
+     "n": 30,
+     "wrong": 4,
+     "wrate": 0.13333333333333333,
+     "top": [
+      [
+       "E2",
+       "20/30"
+      ],
+      [
+       "O6",
+       "15/30"
+      ],
+      [
+       "T9",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7188446066447793,
+     "ci90": [
+      0.582514091078255,
+      0.8395204199416496
+     ],
+     "var": 0.006125710227272727,
+     "p80": 0.1508,
+     "share": 6.835987505760664e-06,
+     "units": 0.267,
+     "cost": [
+      0.3180387202714589,
+      0.3688366654561298,
+      0.4583580107148536
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low@4",
+   "before": "HOLD → agy-flash-low@4"
+  },
+  {
+   "id": "tengyur-tr",
+   "title": "Tibetan translation, Derge Tengyur (#6361)",
+   "pages_waiting": 0,
+   "current": "agy-flash-low@1",
+   "decision": "HOLD",
+   "route": "agy-flash-low@1",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD agy-flash-low@1",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.0,
+   "caveat": "#6361 gate (2026-10-10, backfill-all): one blind Opus reviewer per volume, staged vs stored English side by side with the image and the OCR, serious meaning errors per side (wrong text = >= 1). 21 pages: 7 volumes x 3 consecutive pages, 2 volumes chosen for an extreme length ratio. The staged pages are the ones that passed the gate (23% of staged replies were plan-mode chatter, never written).",
+   "routes": [
+    {
+     "id": "agy-flash-low@1",
+     "stage": "agy-text@1",
+     "channel": "agy",
+     "lane": "agy -p, Standard Translation v13 + the CLI suffix, one page a call (stale-retranslate-6567.mjs; tengyur-cli-6361)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      5.3333,
+      7.0,
+      1.6667
+     ],
+     "k": 16,
+     "n": 21,
+     "wrong": 5,
+     "wrate": 0.23809523809523808,
+     "top": [
+      [
+       "E2",
+       "5/21"
+      ],
+      [
+       "T8",
+       "1/21"
+      ]
+     ],
+     "mean": 0.7053442590972674,
+     "ci90": [
+      0.4427938980062132,
+      0.9131032129471564
+     ],
+     "var": 0.020850480109739368,
+     "p80": 0.288675,
+     "share": 2.5602949459777767e-05,
+     "units": 1.0,
+     "cost": [
+      1.0951664453927101,
+      1.3876909678751805,
+      2.2583870385358567
+     ],
+     "api": null
+    },
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      3.6667,
+      7.0,
+      3.3333
+     ],
+     "k": 11,
+     "n": 21,
+     "wrong": 10,
+     "wrate": 0.47619047619047616,
+     "top": [
+      [
+       "E2",
+       "9/21"
+      ],
+      [
+       "T8",
+       "5/21"
+      ]
+     ],
+     "mean": 0.5189677218837604,
+     "ci90": [
+      0.25692188591080195,
+      0.7749484685637713
+     ],
+     "var": 0.024965706447187926,
+     "p80": 0.0328,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low@1",
+   "before": "HOLD → agy-flash-low@1"
+  },
+  {
+   "id": "zh-siku-tr",
+   "title": "Siku translation, stale English, Paddle CER < 0.1 (#6567)",
+   "pages_waiting": 50676,
+   "current": "stored",
+   "decision": "HOLD",
+   "route": "agy-flash-low@1",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD agy-flash-low@1",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.2974550668236982,
+   "v2_weeks": null,
+   "test_score": 0.005183369851479618,
+   "caveat": "#6567 pilot review (2026-10-12, backfill-all): 30 random pages, one a book, of the 289 the pilot wrote; both Englishes judged blind by Opus against the image and the Paddle reading (MQM; wrong text = >= 1 major / critical accuracy error). The Gemini 3.1 Pro judge, recorded in the score file, accepts far fewer (new 11/30, stored 7/30): the judges disagree on what is material, mostly where the Paddle reading itself is wrong.",
+   "routes": [
+    {
+     "id": "stored",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      12,
+      30,
+      18
+     ],
+     "k": 12,
+     "n": 30,
+     "wrong": 18,
+     "wrate": 0.6,
+     "top": [
+      [
+       "mistranslation",
+       "18/30"
+      ],
+      [
+       "omission",
+       "2/30"
+      ]
+     ],
+     "mean": 0.4062995250025996,
+     "ci90": [
+      0.26958951635902056,
+      0.5503535536954841
+     ],
+     "var": 0.007309422348484848,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "agy-flash-low@1",
+     "stage": "agy-text@1",
+     "channel": "agy",
+     "lane": "agy -p, Standard Translation v13 + the CLI suffix, one page a call (stale-retranslate-6567.mjs; tengyur-cli-6361)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      26,
+      30,
+      4
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 4,
+     "wrate": 0.13333333333333333,
+     "top": [
+      [
+       "mistranslation",
+       "3/30"
+      ],
+      [
+       "omission",
+       "1/30"
+      ]
+     ],
+     "mean": 0.8436451535030485,
+     "ci90": [
+      0.7297989958510346,
+      0.9338019335384378
+     ],
+     "var": 0.003995028409090909,
+     "p80": 0.771575,
+     "share": 2.5602949459777767e-05,
+     "units": 1.0,
+     "cost": [
+      1.0708909074654827,
+      1.1752514945538726,
+      1.3702403068311682
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low@1",
+   "before": "HOLD → agy-flash-low@1"
+  },
+  {
+   "id": "tibetan-yigdzin",
+   "title": "Tibetan, Yigdzin (#6560)",
+   "pages_waiting": 280623,
+   "current": "yigdzin>opus",
+   "decision": "switch",
+   "route": "yigdzin>agy-flash-low",
+   "vs_bar": {
+    "bar": "yigdzin>opus",
+    "bar_mean": 0.8517236965467122,
+    "alt": "yigdzin>agy-flash-low",
+    "alt_mean": 0.8730250870672577,
+    "gap": 0.02130139052054547,
+    "p_within": 0.957625,
+    "alt_wrate": 0.08333333333333333,
+    "bar_wrate": 0.08333333333333333
+   },
+   "decision_flat_price": "switch yigdzin>agy-flash-low",
+   "other_wrong_text_bar": "keep yigdzin>opus",
+   "margin_010": "no change",
+   "weeks_to_clear": 7.32847201597624,
+   "v2_weeks": 104,
+   "test_score": 0.011963266367499687,
+   "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
+   "routes": [
+    {
+     "id": "yigdzin",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      34,
+      60,
+      23
+     ],
+     "k": 34,
+     "n": 60,
+     "wrong": 23,
+     "wrate": 0.38333333333333336,
+     "top": [
+      [
+       "O6",
+       "53/60"
+      ],
+      [
+       "E2",
+       "50/60"
+      ],
+      [
+       "O5",
+       "19/60"
+      ]
+     ],
+     "mean": 0.5649290693652665,
+     "ci90": [
+      0.4615009352052171,
+      0.6670461495983133
+     ],
+     "var": 0.003902185223725286,
+     "p80": 2.5e-05,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "yigdzin>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      5.48,
+      1.52
+     ],
+     "prior_model": {
+      "mean": 0.7827,
+      "basis": "pooled"
+     },
+     "eff": [
+      53,
+      60,
+      5
+     ],
+     "k": 53,
+     "n": 60,
+     "wrong": 5,
+     "wrate": 0.08333333333333333,
+     "top": [
+      [
+       "O12",
+       "23/60"
+      ],
+      [
+       "O6",
+       "19/60"
+      ],
+      [
+       "E2",
+       "17/60"
+      ]
+     ],
+     "mean": 0.8730250870672577,
+     "ci90": [
+      0.8012569915406221,
+      0.9324520217997097
+     ],
+     "var": 0.0016324366582037137,
+     "p80": 0.95225,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0938900620659446,
+      1.1633873484565211,
+      1.2729998125055837
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "yigdzin>opus",
+     "stage": "opus-img@1",
+     "channel": "claude",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.01720801871594077,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01721,
+      "low": 0.00541,
+      "high": 0.02242,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      5.07,
+      1.93
+     ],
+     "prior_model": {
+      "mean": 0.72385,
+      "basis": "pooled"
+     },
+     "eff": [
+      52,
+      60,
+      5
+     ],
+     "k": 52,
+     "n": 60,
+     "wrong": 5,
+     "wrate": 0.08333333333333333,
+     "top": [
+      [
+       "E2",
+       "38/60"
+      ],
+      [
+       "O6",
+       "29/60"
+      ],
+      [
+       "O12",
+       "18/60"
+      ]
+     ],
+     "mean": 0.8517236965467122,
+     "ci90": [
+      0.7753197817525481,
+      0.916270227827996
+     ],
+     "var": 0.0018569865805875144,
+     "p80": 0.87885,
+     "share": 8.604009357970385e-05,
+     "units": 0.01720801871594077,
+     "cost": [
+      0.018780506223291905,
+      0.02012283722809864,
+      0.022194737089054308
+     ],
+     "api": 0.096510171471426,
+     "idle_fit": 0.006840944211796449
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "yigdzin>agy-flash-low",
+   "before": "switch → yigdzin>agy-flash-low"
+  },
+  {
+   "id": "zh-paddle-dice-lt090",
+   "title": "Chinese Paddle, Kanripo dice < 0.90",
+   "pages_waiting": 453715,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>agy-flash-high",
+   "vs_bar": {
+    "bar": "paddle>opus",
+    "bar_mean": 0.8232134095293008,
+    "alt": "paddle>agy-flash-high",
+    "alt_mean": 0.5797293116094372,
+    "gap": -0.24348409791986358,
+    "p_within": 0.0553,
+    "alt_wrate": 0.26666666666666666,
+    "bar_wrate": 0.03333333333333333
+   },
+   "decision_flat_price": "HOLD paddle>agy-flash-high",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 11.84877105842593,
+   "v2_weeks": 130,
+   "test_score": 0.09247219868698696,
+   "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      14,
+      30,
+      12
+     ],
+     "k": 14,
+     "n": 30,
+     "wrong": 12,
+     "wrate": 0.4,
+     "top": [
+      [
+       "O6",
+       "18/30"
+      ],
+      [
+       "O11",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ]
+     ],
+     "mean": 0.4685689897358056,
+     "ci90": [
+      0.3273786732898985,
+      0.6133800941972656
+     ],
+     "var": 0.007546164772727273,
+     "p80": 2.5e-05,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "channel": "claude",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010431055013098357,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01043,
+      "low": 0.00328,
+      "high": 0.01117,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      4.45,
+      2.55
+     ],
+     "prior_model": {
+      "mean": 0.6356999999999999,
+      "basis": "pooled"
+     },
+     "eff": [
+      26,
+      30,
+      1
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "wrate": 0.03333333333333333,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "7/30"
+      ],
+      [
+       "O8",
+       "7/30"
+      ]
+     ],
+     "mean": 0.8232134095293008,
+     "ci90": [
+      0.7123520554056395,
+      0.9135160543964651
+     ],
+     "var": 0.003833952750567068,
+     "p80": 0.673225,
+     "share": 5.2155275065491785e-05,
+     "units": 0.010431055013098357,
+     "cost": [
+      0.011418578757206263,
+      0.012582225098114488,
+      0.01464311773082276
+     ],
+     "api": 0.09985260085474135
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      4.46,
+      2.54
+     ],
+     "prior_model": {
+      "mean": 0.63655,
+      "basis": "pooled"
+     },
+     "eff": [
+      17,
+      30,
+      8
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 8,
+     "wrate": 0.26666666666666666,
+     "top": [
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "O5",
+       "10/30"
+      ],
+      [
+       "O11",
+       "9/30"
+      ]
+     ],
+     "mean": 0.5797293116094372,
+     "ci90": [
+      0.44389603313938947,
+      0.7098144073348852
+     ],
+     "var": 0.006410998246463034,
+     "p80": 0.0013,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.43699534619163,
+      1.7554978189667394,
+      2.2978353574962136
+     ],
+     "api": null
+    },
+    {
+     "id": "paddle>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      15,
+      29,
+      12
+     ],
+     "k": 15,
+     "n": 29,
+     "wrong": 12,
+     "wrate": 0.41379310344827586,
+     "top": [
+      [
+       "O11",
+       "9/29"
+      ],
+      [
+       "O6",
+       "8/29"
+      ],
+      [
+       "O5",
+       "6/29"
+      ]
+     ],
+     "mean": 0.5161077573937031,
+     "ci90": [
+      0.3704836072704394,
+      0.6603022186654124
+     ],
+     "var": 0.007804370447450572,
+     "p80": 0.00025,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.54474719479453,
+      1.973016323430328,
+      2.753158250414674
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 3,
+   "decision_week": "HOLD",
+   "route_week": "paddle>agy-flash-high",
+   "before": "HOLD → paddle>agy-flash-high"
+  },
+  {
+   "id": "zh-6561-served",
+   "title": "Chinese Paddle, served Opus correction (#6561)",
+   "pages_waiting": 0,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD paddle",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      3,
+      30,
+      24
+     ],
+     "k": 3,
+     "n": 30,
+     "wrong": 24,
+     "wrate": 0.8,
+     "top": [
+      [
+       "O6",
+       "22/30"
+      ],
+      [
+       "O5",
+       "16/30"
+      ],
+      [
+       "O11",
+       "16/30"
+      ]
+     ],
+     "mean": 0.12479758912365556,
+     "ci90": [
+      0.04499853164027967,
+      0.23115774034857076
+     ],
+     "var": 0.0033143939393939395,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "channel": "claude",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010431615370606448,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01043,
+      "low": 0.00328,
+      "high": 0.01097,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      24,
+      30,
+      3
+     ],
+     "k": 24,
+     "n": 30,
+     "wrong": 3,
+     "wrate": 0.1,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "4/30"
+      ],
+      [
+       "O16",
+       "4/30"
+      ]
+     ],
+     "mean": 0.7813708286979839,
+     "ci90": [
+      0.6527026204860868,
+      0.8890301102357538
+     ],
+     "var": 0.00517874053030303,
+     "p80": 0.4289,
+     "share": 5.215807685303224e-05,
+     "units": 0.010431615370606448,
+     "cost": [
+      0.01173370311140551,
+      0.013254223553218899,
+      0.015982187053022276
+     ],
+     "api": 0.10519972973264402
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "paddle",
+   "before": "HOLD → paddle"
+  },
+  {
+   "id": "chinese-flash3",
+   "title": "Chinese OCR, 3 Flash",
+   "pages_waiting": 103878,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD 3flash",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": 104,
+   "test_score": 0.014048757053176163,
+   "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      7,
+      30,
+      21
+     ],
+     "k": 7,
+     "n": 30,
+     "wrong": 21,
+     "wrate": 0.7,
+     "top": [
+      [
+       "O6",
+       "23/30"
+      ],
+      [
+       "O5",
+       "15/30"
+      ],
+      [
+       "O11",
+       "10/30"
+      ]
+     ],
+     "mean": 0.2502050416200301,
+     "ci90": [
+      0.13587997646649408,
+      0.38264951830752764
+     ],
+     "var": 0.005681818181818182,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@1",
+     "channel": "claude",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.011029195560100678,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01103,
+      "low": 0.00347,
+      "high": 0.01195,
+      "pages_per_call": 1
+     },
+     "tested": false,
+     "prior": [
+      5.29,
+      1.71
+     ],
+     "prior_model": {
+      "mean": 0.75625,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.7558145828569156,
+     "ci90": [
+      0.4661640700740975,
+      0.9575175041019939
+     ],
+     "var": 0.023041992187500002,
+     "p80": 0.4543,
+     "share": 5.514597780050339e-05,
+     "units": 0.011029195560100678,
+     "cost": [
+      0.011518531528511731,
+      0.014095436255630643,
+      0.023659471564051623
+     ],
+     "api": 0.1087568325147828
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      6,
+      30,
+      22
+     ],
+     "k": 6,
+     "n": 30,
+     "wrong": 22,
+     "wrate": 0.7333333333333333,
+     "top": [
+      [
+       "O6",
+       "23/30"
+      ],
+      [
+       "O5",
+       "12/30"
+      ],
+      [
+       "O8",
+       "11/30"
+      ]
+     ],
+     "mean": 0.21796937565986982,
+     "ci90": [
+      0.11118606794480416,
+      0.3463443400900915
+     ],
+     "var": 0.00517874053030303,
+     "p80": 0.0,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      2.945045961295849,
+      4.821098608533195,
+      9.173811241408018
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "3flash",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "zh-frame-6871",
+   "title": "Chinese tables + mixed, guarded Paddle (#6871)",
+   "pages_waiting": 22220,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>agy-flash-low",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD paddle>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.5802754877361872,
+   "v2_weeks": 104,
+   "test_score": 0.014361324905969971,
+   "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.49931815100025867,
+     "ci90": [
+      0.04868284531951246,
+      0.9498912541940449
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.1993,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "channel": "claude",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010219800232548367,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01022,
+      "low": 0.00321,
+      "high": 0.01073,
+      "pages_per_call": 1
+     },
+     "tested": false,
+     "prior": [
+      5.83,
+      1.17
+     ],
+     "prior_model": {
+      "mean": 0.8331,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.8335513320736009,
+     "ci90": [
+      0.5690968075184316,
+      0.9855525573539725
+     ],
+     "var": 0.017380548750000002,
+     "p80": 0.6737,
+     "share": 5.109900116274184e-05,
+     "units": 0.010219800232548367,
+     "cost": [
+      0.010369614645399178,
+      0.011809772955335335,
+      0.017957929296971806
+     ],
+     "api": 0.09861420267365358
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      5.1,
+      1.9
+     ],
+     "prior_model": {
+      "mean": 0.72805,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.7283345029278016,
+     "ci90": [
+      0.436393184391585,
+      0.9444959674114443
+     ],
+     "var": 0.024749149687500006,
+     "p80": 0.377525,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0799410851858773,
+      1.3598031436301352,
+      2.3373417287029215
+     ],
+     "api": null
+    },
+    {
+     "id": "paddle>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      3.5,
+      3.5
+     ],
+     "prior_model": {
+      "mean": 0.5,
+      "basis": "pooled"
+     },
+     "eff": [
+      19,
+      30,
+      9
+     ],
+     "k": 19,
+     "n": 30,
+     "wrong": 9,
+     "wrate": 0.3,
+     "top": [
+      [
+       "O6",
+       "11/30"
+      ],
+      [
+       "O11",
+       "7/30"
+      ],
+      [
+       "E2",
+       "5/30"
+      ]
+     ],
+     "mean": 0.607913384824427,
+     "ci90": [
+      0.47413446204408777,
+      0.7354568133068494
+     ],
+     "var": 0.0062713851831917265,
+     "p80": 0.00395,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.3868931275702692,
+      1.6723737533867504,
+      2.1512884669943153
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "paddle>agy-flash-low",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "hebrew-flash3",
+   "title": "Hebrew OCR, 3 Flash",
+   "pages_waiting": 51360,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash>agy-flash-low",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD 3flash>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.34126683393927,
+   "v2_weeks": 104,
+   "test_score": 0.008461038092233388,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      7,
+      30,
+      22
+     ],
+     "k": 7,
+     "n": 30,
+     "wrong": 22,
+     "wrate": 0.7333333333333333,
+     "top": [
+      [
+       "O6",
+       "17/30"
+      ],
+      [
+       "O1",
+       "15/30"
+      ],
+      [
+       "O16",
+       "14/30"
+      ]
+     ],
+     "mean": 0.2496787757291095,
+     "ci90": [
+      0.13499349423421164,
+      0.3827313295267959
+     ],
+     "var": 0.005681818181818182,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004876784405998336,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00488,
+      "low": 0.00153,
+      "high": 0.00955,
+      "pages_per_call": 8.20345
+     },
+     "tested": false,
+     "prior": [
+      5.99,
+      1.01
+     ],
+     "prior_model": {
+      "mean": 0.85505,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.8551363774877396,
+     "ci90": [
+      0.6032498368743233,
+      0.991270408608428
+     ],
+     "var": 0.0154924371875,
+     "p80": 0.73045,
+     "share": 2.438392202999168e-05,
+     "units": 0.004876784405998336,
+     "cost": [
+      0.0049197316530859595,
+      0.0054862448731083785,
+      0.008084186862390035
+     ],
+     "api": 0.09612501837600579
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      7,
+      28,
+      18
+     ],
+     "k": 7,
+     "n": 28,
+     "wrong": 18,
+     "wrate": 0.6428571428571429,
+     "top": [
+      [
+       "O6",
+       "17/28"
+      ],
+      [
+       "O16",
+       "11/28"
+      ],
+      [
+       "O5",
+       "11/28"
+      ]
+     ],
+     "mean": 0.2668179302888097,
+     "ci90": [
+      0.14426869349154017,
+      0.40616768361516864
+     ],
+     "var": 0.006308243727598566,
+     "p80": 0.0,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      2.5112780783574564,
+      3.8957962964185824,
+      7.07014096623681
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "3flash>agy-flash-low",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "arabic-flash3",
+   "title": "Arabic OCR, 3 Flash",
+   "pages_waiting": 30244,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash>agy-flash-low",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD 3flash>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.7898223155307491,
+   "v2_weeks": 104,
+   "test_score": 0.006112698721914616,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      4.12,
+      2.88
+     ],
+     "prior_model": {
+      "mean": 0.588,
+      "basis": "measured"
+     },
+     "eff": [
+      10,
+      30,
+      17
+     ],
+     "k": 10,
+     "n": 30,
+     "wrong": 17,
+     "wrate": 0.5666666666666667,
+     "top": [
+      [
+       "O6",
+       "18/30"
+      ],
+      [
+       "O12",
+       "8/30"
+      ],
+      [
+       "O16",
+       "8/30"
+      ]
+     ],
+     "mean": 0.38152987266254995,
+     "ci90": [
+      0.25550327114429444,
+      0.5151588612309516
+     ],
+     "var": 0.006209498750528623,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003988886101106285,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00399,
+      "low": 0.00125,
+      "high": 0.00559,
+      "pages_per_call": 7.57002
+     },
+     "tested": false,
+     "prior": [
+      6.21,
+      0.79
+     ],
+     "prior_model": {
+      "mean": 0.886494,
+      "basis": "pooled"
+     },
+     "eff": null,
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "wrate": null,
+     "top": [],
+     "mean": 0.885711038520898,
+     "ci90": [
+      0.6532555257152179,
+      0.9964618992701121
+     ],
+     "var": 0.012577798495499998,
+     "p80": 0.810225,
+     "share": 1.9944430505531425e-05,
+     "units": 0.003988886101106285,
+     "cost": [
+      0.004003049292730673,
+      0.004329553342490585,
+      0.006106165113167694
+     ],
+     "api": 0.09280679185987194
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "channel": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      13,
+      29,
+      13
+     ],
+     "k": 13,
+     "n": 29,
+     "wrong": 13,
+     "wrate": 0.4482758620689655,
+     "top": [
+      [
+       "O6",
+       "16/29"
+      ],
+      [
+       "O16",
+       "9/29"
+      ],
+      [
+       "O8",
+       "8/29"
+      ]
+     ],
+     "mean": 0.451157921580367,
+     "ci90": [
+      0.30707184932775705,
+      0.5982333496811622
+     ],
+     "var": 0.007739334027055151,
+     "p80": 0.0,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.7050202910680674,
+      2.2670979796051105,
+      3.321698170095983
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "3flash>agy-flash-low",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "zh-lite",
+   "title": "Chinese OCR, Flash-Lite (#7568)",
+   "pages_waiting": 18720,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.7592278074357806,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.5046493068895613,
+    "gap": -0.2545785005462192,
+    "p_within": 0.256175,
+    "alt_wrate": 0.49333333333333335,
+    "bar_wrate": 0.06666666666666667
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.517630190998003,
+   "v2_weeks": null,
+   "test_score": 0.021566544277740796,
+   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 75 pages in 3 books (the terminal frame held 5 lite-read Chinese books): the thinnest cell. Upper bound until names are checked (see zh-6561-served). On a torn scroll the correction restored lost characters from the canonical sutra (tagged unclear). Opus points per page measured at ~0.006 (#7568), above the flat 0.004 used here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      0.72,
+      3.0,
+      2.28
+     ],
+     "k": 18,
+     "n": 75,
+     "wrong": 57,
+     "wrate": 0.7600000000000001,
+     "top": [
+      [
+       "O6",
+       "50/75"
+      ],
+      [
+       "O5",
+       "47/75"
+      ],
+      [
+       "O12",
+       "21/75"
+      ]
+     ],
+     "mean": 0.34405091433529056,
+     "ci90": [
+      0.0688042249494787,
+      0.6935312540163683
+     ],
+     "var": 0.03761066666666667,
+     "p80": 0.01345,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004,
+     "points_flat": 0.004,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      2.8,
+      3.0,
+      0.2
+     ],
+     "k": 70,
+     "n": 75,
+     "wrong": 5,
+     "wrate": 0.06666666666666667,
+     "top": [
+      [
+       "O12",
+       "13/75"
+      ],
+      [
+       "O6",
+       "7/75"
+      ],
+      [
+       "O5",
+       "6/75"
+      ]
+     ],
+     "mean": 0.7592278074357806,
+     "ci90": [
+      0.41951060433796566,
+      0.9768230398711368
+     ],
+     "var": 0.030399999999999996,
+     "p80": 0.4907,
+     "share": 2e-05,
+     "units": 0.004,
+     "cost": [
+      0.00409490750804535,
+      0.005029177144414462,
+      0.009534919877204165
+     ],
+     "api": 0.10826789956182276
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      1.52,
+      3.0,
+      1.48
+     ],
+     "k": 38,
+     "n": 75,
+     "wrong": 37,
+     "wrate": 0.49333333333333335,
+     "top": [
+      [
+       "O6",
+       "48/75"
+      ],
+      [
+       "O5",
+       "23/75"
+      ],
+      [
+       "O12",
+       "20/75"
+      ]
+     ],
+     "mean": 0.5046493068895613,
+     "ci90": [
+      0.17050672428477961,
+      0.8381702308358256
+     ],
+     "var": 0.041664,
+     "p80": 0.079075,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.28852106680408,
+      2.1364700945715582,
+      6.334061043810733
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "greek-lite",
+   "title": "Greek OCR, Flash-Lite (#7568; manuscripts)",
+   "pages_waiting": 42916,
+   "current": "lite",
+   "decision": "held",
+   "route": "lite",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.6270598307178845,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.17932036516587788,
+    "gap": -0.4477394655520066,
+    "p_within": 0.0227,
+    "alt_wrate": 0.884,
+    "bar_wrate": 0.348
+   },
+   "decision_flat_price": "held lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.013473362549581095,
+   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages in 10 manuscripts (all 14 candidates were manuscripts). On 2 manuscripts every page of the lite text is invented or a loop: the corrector answered CONTAIN on 65 pages, which serve the lite text here. Opus points ~0.008 a page (#7568).",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      0.2,
+      10.0,
+      9.8
+     ],
+     "k": 5,
+     "n": 250,
+     "wrong": 245,
+     "wrate": 0.9800000000000001,
+     "top": [
+      [
+       "O6",
+       "193/250"
+      ],
+      [
+       "O1",
+       "93/250"
+      ],
+      [
+       "O4",
+       "60/250"
+      ]
+     ],
+     "mean": 0.09947344180073943,
+     "ci90": [
+      0.008691092608389892,
+      0.2656308828647411
+     ],
+     "var": 0.006923076923076923,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004,
+     "points_flat": 0.004,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      6.52,
+      10.0,
+      3.48
+     ],
+     "k": 163,
+     "n": 250,
+     "wrong": 87,
+     "wrate": 0.348,
+     "top": [
+      [
+       "O6",
+       "133/250"
+      ],
+      [
+       "O4",
+       "47/250"
+      ],
+      [
+       "O8",
+       "40/250"
+      ]
+     ],
+     "mean": 0.6270598307178845,
+     "ci90": [
+      0.39492775899685445,
+      0.8355995061156067
+     ],
+     "var": 0.017996581196581197,
+     "p80": 0.097925,
+     "share": 2e-05,
+     "units": 0.004,
+     "cost": [
+      0.00478698224535163,
+      0.006308702744915379,
+      0.010128434653872634
+     ],
+     "api": 0.13108796955769592
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      1.16,
+      10.0,
+      8.84
+     ],
+     "k": 29,
+     "n": 250,
+     "wrong": 221,
+     "wrate": 0.884,
+     "top": [
+      [
+       "O6",
+       "203/250"
+      ],
+      [
+       "O5",
+       "41/250"
+      ],
+      [
+       "O1",
+       "35/250"
+      ]
+     ],
+     "mean": 0.17932036516587788,
+     "ci90": [
+      0.039661719721257455,
+      0.3798329304447854
+     ],
+     "var": 0.011353846153846154,
+     "p80": 0.0,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      2.8433553634628708,
+      6.691774036330746,
+      27.23028672458581
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "held",
+   "route_week": "lite",
+   "before": "held"
+  },
+  {
+   "id": "sanskrit-lite",
+   "title": "Sanskrit OCR, Flash-Lite (#7568)",
+   "pages_waiting": 39499,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.8302439405948279,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.5005217867019025,
+    "gap": -0.32972215389292536,
+    "p_within": 0.08105,
+    "alt_wrate": 0.5,
+    "bar_wrate": 0.10400000000000001
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.092194172768703,
+   "v2_weeks": null,
+   "test_score": 0.021003734091705827,
+   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages in 10 Devanagari printed books. Opus points ~0.005 a page (#7568).",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      1.68,
+      10.0,
+      8.32
+     ],
+     "k": 42,
+     "n": 250,
+     "wrong": 208,
+     "wrate": 0.8320000000000001,
+     "top": [
+      [
+       "O6",
+       "226/250"
+      ],
+      [
+       "O11",
+       "53/250"
+      ],
+      [
+       "O8",
+       "50/250"
+      ]
+     ],
+     "mean": 0.22286512796788197,
+     "ci90": [
+      0.06218903782887858,
+      0.4354307490108433
+     ],
+     "var": 0.013342735042735043,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004,
+     "points_flat": 0.004,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      8.96,
+      10.0,
+      1.04
+     ],
+     "k": 224,
+     "n": 250,
+     "wrong": 26,
+     "wrate": 0.10400000000000001,
+     "top": [
+      [
+       "O6",
+       "65/250"
+      ],
+      [
+       "O8",
+       "61/250"
+      ],
+      [
+       "O7",
+       "19/250"
+      ]
+     ],
+     "mean": 0.8302439405948279,
+     "ci90": [
+      0.6315346403270385,
+      0.9652068183794675
+     ],
+     "var": 0.01085384615384615,
+     "p80": 0.666525,
+     "share": 2e-05,
+     "units": 0.004,
+     "cost": [
+      0.004144189539311164,
+      0.0047112273647978145,
+      0.006333777665669472
+     ],
+     "api": 0.09900704597868892
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      5.0,
+      10.0,
+      5.0
+     ],
+     "k": 125,
+     "n": 250,
+     "wrong": 125,
+     "wrate": 0.5,
+     "top": [
+      [
+       "O6",
+       "184/250"
+      ],
+      [
+       "O8",
+       "71/250"
+      ],
+      [
+       "O3",
+       "29/250"
+      ]
+     ],
+     "mean": 0.5005217867019025,
+     "ci90": [
+      0.2697970858775727,
+      0.7287807972929243
+     ],
+     "var": 0.019230769230769232,
+     "p80": 0.011925,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.4819270815198327,
+      2.155657816448533,
+      4.003008396058354
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "arabic-lite",
+   "title": "Arabic OCR, Flash-Lite (#7568)",
+   "pages_waiting": 27659,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": {
+    "bar": "lite>opus",
+    "bar_mean": 0.7693280720520602,
+    "alt": "agy-flash-low-read",
+    "alt_mean": 0.43675516543035225,
+    "gap": -0.33257290662170796,
+    "p_within": 0.089025,
+    "alt_wrate": 0.576,
+    "bar_wrate": 0.176
+   },
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.7648041374366327,
+   "v2_weeks": null,
+   "test_score": 0.01447179384505095,
+   "caveat": "#7568 (no v2 cell; current = the served lite text). One blind Opus Step T reader per book judged lite, the Opus correction and the Flash re-read against the image; wrong text = misleading, accept = not misleading. 250 pages: 6 printed books, 4 manuscripts. 4 corrections of a modern book declined to reproduce the page and returned only tags (judged misleading); correct.mjs needs a body-letters guard before any write. Opus points ~0.005 a page (#7568). Plus #7341 (2026-10-25/26, backfill-all): 13 held Jabir manuscripts x 2 pages and the Kraus 1935 print (29 pages, one book, its own source), three fresh reads a page judged by Opus with judge.py (MISLEADING = wrong text; FAILED = not accepted). Its lite read is fresh (weight 0.5); its agy read uses the #6544 diplomatic READ prompt (its own route). Its Opus read (26/26 MSS, 29/29 Kraus) stays in the score files as a record, not as a route (switch.bar: no Opus read arm).",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      2.72,
+      4.28
+     ],
+     "prior_model": {
+      "mean": 0.389,
+      "basis": "measured"
+     },
+     "eff": [
+      7.0128,
+      17.0,
+      9.9872
+     ],
+     "k": 102,
+     "n": 305,
+     "wrong": 203,
+     "wrate": 0.5874847870182556,
+     "top": [
+      [
+       "O6",
+       "190/305"
+      ],
+      [
+       "O5",
+       "110/305"
+      ],
+      [
+       "O12",
+       "56/305"
+      ]
+     ],
+     "mean": 0.4060124150225664,
+     "ci90": [
+      0.24877832275515274,
+      0.571158709656417
+     ],
+     "var": 0.009643972984459638,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "channel": "claude",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004,
+     "points_flat": 0.004,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      8.24,
+      10.0,
+      1.76
+     ],
+     "k": 206,
+     "n": 250,
+     "wrong": 44,
+     "wrate": 0.176,
+     "top": [
+      [
+       "O6",
+       "93/250"
+      ],
+      [
+       "O8",
+       "36/250"
+      ],
+      [
+       "O5",
+       "29/250"
+      ]
+     ],
+     "mean": 0.7693280720520602,
+     "ci90": [
+      0.5531440407036803,
+      0.9337480208769923
+     ],
+     "var": 0.013623076923076922,
+     "p80": 0.449925,
+     "share": 2e-05,
+     "units": 0.004,
+     "cost": [
+      0.004283810953883609,
+      0.005096087061825357,
+      0.007231389485659854
+     ],
+     "api": 0.10684648459628487
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      4.24,
+      10.0,
+      5.76
+     ],
+     "k": 106,
+     "n": 250,
+     "wrong": 144,
+     "wrate": 0.576,
+     "top": [
+      [
+       "O6",
+       "145/250"
+      ],
+      [
+       "O12",
+       "48/250"
+      ],
+      [
+       "O8",
+       "43/250"
+      ]
+     ],
+     "mean": 0.43675516543035225,
+     "ci90": [
+      0.21599585866012413,
+      0.6704583813214466
+     ],
+     "var": 0.018922222222222222,
+     "p80": 0.0028,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.610838241549555,
+      2.4962492808172896,
+      5.000095866187008
+     ],
+     "api": null
+    },
+    {
+     "id": "agy-flash-low-read-diplomatic",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      4.931,
+      14.0,
+      1.0
+     ],
+     "k": 35,
+     "n": 55,
+     "wrong": 2,
+     "wrate": 0.07142857142857142,
+     "top": [
+      [
+       "FAILED",
+       "18/55"
+      ]
+     ],
+     "mean": 0.3710938935811065,
+     "ci90": [
+      0.18548947555717607,
+      0.574417991847853
+     ],
+     "var": 0.013722284395327692,
+     "p80": 5e-05,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.8801639491230653,
+      2.954366398466387,
+      5.822432764747864
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "italian-lite",
+   "title": "Italian OCR, Flash-Lite (#6553)",
+   "pages_waiting": 46950,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      10.5,
+      15.0,
+      4.5
+     ],
+     "k": 21,
+     "n": 30,
+     "wrong": 9,
+     "wrate": 0.3,
+     "top": [],
+     "mean": 0.6758480571636929,
+     "ci90": [
+      0.4809174748504735,
+      0.845751235956717
+     ],
+     "var": 0.012158785082660516,
+     "p80": 0.13365,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "spanish-lite",
+   "title": "Spanish OCR, Flash-Lite (#6553)",
+   "pages_waiting": 16866,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      11.5,
+      13.5,
+      2.0
+     ],
+     "k": 23,
+     "n": 27,
+     "wrong": 4,
+     "wrate": 0.14814814814814814,
+     "top": [
+      [
+       "empty",
+       "1/27"
+      ]
+     ],
+     "mean": 0.8069963957487148,
+     "ci90": [
+      0.6260624869109583,
+      0.9409671388426628
+     ],
+     "var": 0.009459842966606754,
+     "p80": 0.5783,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "korean-lite",
+   "title": "Korean OCR, Flash-Lite (#6553)",
+   "pages_waiting": 16580,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.4584566542065646,
+   "v2_weeks": null,
+   "test_score": 0.0036315025297365875,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      2.0,
+      14.0,
+      12.0
+     ],
+     "k": 4,
+     "n": 28,
+     "wrong": 24,
+     "wrate": 0.8571428571428571,
+     "top": [
+      [
+       "invented",
+       "1/28"
+      ]
+     ],
+     "mean": 0.18776878823821053,
+     "ci90": [
+      0.05708901309352753,
+      0.3638427418509676
+     ],
+     "var": 0.008961397058823529,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      16,
+      28,
+      11
+     ],
+     "k": 16,
+     "n": 28,
+     "wrong": 11,
+     "wrate": 0.39285714285714285,
+     "top": [
+      [
+       "refusal",
+       "1/28"
+      ]
+     ],
+     "mean": 0.566622407202368,
+     "ci90": [
+      0.4167083381251642,
+      0.7085413407977745
+     ],
+     "var": 0.007921146953405019,
+     "p80": 0.002,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.524258272331697,
+      1.900445068339033,
+      2.591740796114348
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "russian-lite",
+   "title": "Russian OCR, Flash-Lite (#6553)",
+   "pages_waiting": 18952,
+   "current": "lite",
+   "decision": "switch",
+   "route": "agy-flash-low-read",
+   "vs_bar": null,
+   "decision_flat_price": "switch agy-flash-low-read",
+   "other_wrong_text_bar": "keep lite",
+   "margin_010": "no change",
+   "weeks_to_clear": 0.5240452660146449,
+   "v2_weeks": null,
+   "test_score": 0.0015214217400425175,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      11.5,
+      14.0,
+      2.5
+     ],
+     "k": 23,
+     "n": 28,
+     "wrong": 5,
+     "wrate": 0.17857142857142858,
+     "top": [],
+     "mean": 0.7811309014494765,
+     "ci90": [
+      0.5978328070660239,
+      0.923514284526021
+     ],
+     "var": 0.010052849264705883,
+     "p80": 0.472275,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      26,
+      28,
+      2
+     ],
+     "k": 26,
+     "n": 28,
+     "wrong": 2,
+     "wrate": 0.07142857142857142,
+     "top": [
+      [
+       "refusal",
+       "1/28"
+      ]
+     ],
+     "mean": 0.9002619047019959,
+     "ci90": [
+      0.7999394870307632,
+      0.9710818315124891
+     ],
+     "var": 0.002903225806451613,
+     "p80": 0.94985,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.1121616788132753,
+      1.1878316304177963,
+      1.3501021233603219
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "agy-flash-low-read",
+   "before": "switch → agy-flash-low-read"
+  },
+  {
+   "id": "portuguese-lite",
+   "title": "Portuguese OCR, Flash-Lite (#6553)",
+   "pages_waiting": 2130,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      6.0,
+      9.0,
+      3.0
+     ],
+     "k": 12,
+     "n": 18,
+     "wrong": 6,
+     "wrate": 0.3333333333333333,
+     "top": [
+      [
+       "empty",
+       "1/18"
+      ]
+     ],
+     "mean": 0.6378015666377423,
+     "ci90": [
+      0.39460938183742017,
+      0.8496008648861071
+     ],
+     "var": 0.01928374655647383,
+     "p80": 0.12135,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "danish-lite",
+   "title": "Danish OCR, Flash-Lite (#6553)",
+   "pages_waiting": 5620,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      4.5,
+      5.0,
+      0.5
+     ],
+     "k": 9,
+     "n": 10,
+     "wrong": 1,
+     "wrate": 0.1,
+     "top": [],
+     "mean": 0.7854317997535623,
+     "ci90": [
+      0.5043345245377141,
+      0.9694512013024481
+     ],
+     "var": 0.021045918367346938,
+     "p80": 0.533575,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "hindi-lite",
+   "title": "Hindi OCR, Flash-Lite (#6553)",
+   "pages_waiting": 65,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 2.5922986328024992e-05,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      5.0,
+      5.0,
+      0.0
+     ],
+     "k": 10,
+     "n": 10,
+     "wrong": 0,
+     "wrate": 0.0,
+     "top": [],
+     "mean": 0.8579128544872976,
+     "ci90": [
+      0.6108227285617892,
+      0.9914364935553514
+     ],
+     "var": 0.015306122448979591,
+     "p80": 0.739125,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      8,
+      10,
+      2
+     ],
+     "k": 8,
+     "n": 10,
+     "wrong": 2,
+     "wrate": 0.2,
+     "top": [],
+     "mean": 0.750612488340118,
+     "ci90": [
+      0.5299266776945168,
+      0.9214313434162179
+     ],
+     "var": 0.014423076923076924,
+     "p80": 0.38625,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.1720894971901943,
+      1.4119238245298937,
+      2.038017796534826
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "middle-english-lite",
+   "title": "Middle English OCR, Flash-Lite (#6553)",
+   "pages_waiting": 4773,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      2.0,
+      4.0,
+      2.0
+     ],
+     "k": 4,
+     "n": 8,
+     "wrong": 4,
+     "wrate": 0.5,
+     "top": [
+      [
+       "empty",
+       "1/8"
+      ]
+     ],
+     "mean": 0.5002989269803019,
+     "ci90": [
+      0.18760439744874693,
+      0.8107551463649404
+     ],
+     "var": 0.03571428571428571,
+     "p80": 0.05685,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "mhg-lite",
+   "title": "Middle High German OCR, Flash-Lite (#6553)",
+   "pages_waiting": 1049,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      0.5,
+      5.0,
+      4.5
+     ],
+     "k": 1,
+     "n": 10,
+     "wrong": 9,
+     "wrate": 0.9,
+     "top": [],
+     "mean": 0.21483782296762424,
+     "ci90": [
+      0.03003947192979337,
+      0.49351458947104093
+     ],
+     "var": 0.021045918367346938,
+     "p80": 0.000375,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "old-french-lite",
+   "title": "Old French OCR, Flash-Lite (#6553)",
+   "pages_waiting": 2307,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      3.0,
+      4.5,
+      1.5
+     ],
+     "k": 6,
+     "n": 9,
+     "wrong": 3,
+     "wrate": 0.3333333333333333,
+     "top": [],
+     "mean": 0.6145823205911232,
+     "ci90": [
+      0.3024165331986818,
+      0.8825638817131665
+     ],
+     "var": 0.03155818540433925,
+     "p80": 0.16105,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  },
+  {
+   "id": "ottoman-lite",
+   "title": "Ottoman Turkish OCR, Flash-Lite (#6553)",
+   "pages_waiting": 131,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0036223052895693582,
+   "v2_weeks": null,
+   "test_score": 5.2244787830327285e-05,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      1.5,
+      5.0,
+      3.5
+     ],
+     "k": 3,
+     "n": 10,
+     "wrong": 7,
+     "wrate": 0.7,
+     "top": [],
+     "mean": 0.35681728348686287,
+     "ci90": [
+      0.1032031406909483,
+      0.6585145145335533
+     ],
+     "var": 0.028698979591836735,
+     "p80": 0.004875,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      8,
+      10,
+      2
+     ],
+     "k": 8,
+     "n": 10,
+     "wrong": 2,
+     "wrate": 0.2,
+     "top": [],
+     "mean": 0.7501345701014785,
+     "ci90": [
+      0.5314416502472536,
+      0.9224710841536936
+     ],
+     "var": 0.014423076923076924,
+     "p80": 0.386125,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.1707684051590939,
+      1.4140383468307263,
+      2.032208050493463
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "tamil-lite",
+   "title": "Tamil OCR, Flash-Lite (#6553)",
+   "pages_waiting": 225,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "agy-flash-low-read",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD agy-flash-low-read",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.006221516718725997,
+   "v2_weeks": null,
+   "test_score": 6.646919571288458e-05,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      3.0,
+      5.0,
+      2.0
+     ],
+     "k": 6,
+     "n": 10,
+     "wrong": 4,
+     "wrate": 0.4,
+     "top": [],
+     "mean": 0.5703038593962176,
+     "ci90": [
+      0.2692884261570298,
+      0.8470626832966642
+     ],
+     "var": 0.030612244897959183,
+     "p80": 0.10075,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "agy-flash-low-read",
+     "stage": "agy-read",
+     "channel": "agy",
+     "lane": "cli-ocr.mjs read (agy gemini-3.8-flash-low, one page a call)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      9,
+      10,
+      1
+     ],
+     "k": 9,
+     "n": 10,
+     "wrong": 1,
+     "wrate": 0.1,
+     "top": [],
+     "mean": 0.8332723883487588,
+     "ci90": [
+      0.6359432246720459,
+      0.9669588647442534
+     ],
+     "var": 0.010683760683760684,
+     "p80": 0.6767,
+     "share": 2.7651185416559988e-05,
+     "units": 1.08,
+     "cost": [
+      1.1169037684820693,
+      1.2677884312773533,
+      1.6982648105999605
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "agy-flash-low-read",
+   "before": "HOLD → agy-flash-low-read"
+  },
+  {
+   "id": "turkish-lite",
+   "title": "Turkish OCR, Flash-Lite (#6553)",
+   "pages_waiting": 50,
+   "current": "lite",
+   "decision": "HOLD",
+   "route": "lite",
+   "vs_bar": null,
+   "decision_flat_price": "HOLD lite",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "channel": null,
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "prior_model": {
+      "mean": null,
+      "basis": "flat"
+     },
+     "eff": [
+      2.0,
+      4.5,
+      2.5
+     ],
+     "k": 4,
+     "n": 9,
+     "wrong": 5,
+     "wrate": 0.5555555555555556,
+     "top": [],
+     "mean": 0.46196222917414226,
+     "ci90": [
+      0.16732889814486807,
+      0.7699595977010986
+     ],
+     "var": 0.033136094674556214,
+     "p80": 0.032775,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "lite",
+   "before": "HOLD → lite"
+  }
+ ],
+ "tests": [
+  {
+   "rank": 1,
+   "cell": "latin-lite",
+   "routes": [
+    "agy-flash-low-read"
+   ],
+   "pages": 30,
+   "claude_points": 0.372,
+   "agy_calls": 32.400000000000006,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0008295355624967997
+  },
+  {
+   "rank": 2,
+   "cell": "latin-flash3",
+   "routes": [
+    "3flash>agy-flash-low"
+   ],
+   "pages": 30,
+   "claude_points": 0.372,
+   "agy_calls": 30.6,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0007834502534691997
+  },
+  {
+   "rank": 3,
+   "cell": "zh-paddle-dice-lt090",
+   "routes": [
+    "paddle>agy-flash-low"
+   ],
+   "pages": 30,
+   "claude_points": 0.372,
+   "agy_calls": 30.6,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0007834502534691997
+  }
+ ],
+ "prior_vs_pilot": [
+  [
+   "latin-lite",
+   "lite",
+   [
+    0.25,
+    6.75
+   ],
+   "447/732"
+  ],
+  [
+   "latin-lite",
+   "lite>opus",
+   [
+    5.63,
+    1.37
+   ],
+   "689/780"
+  ],
+  [
+   "latin-lite",
+   "lite>agy-flash-low",
+   [
+    5.45,
+    1.55
+   ],
+   "429/530"
+  ],
+  [
+   "latin-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "448/500"
+  ],
+  [
+   "latin-lite",
+   "gpu>agy-flash-low",
+   [
+    5.45,
+    1.55
+   ],
+   "22/26"
+  ],
+  [
+   "latin-flash3",
+   "3flash",
+   [
+    5.15,
+    1.85
+   ],
+   "43/54"
+  ],
+  [
+   "latin-flash3",
+   "3flash>agy-flash-low",
+   [
+    6.55,
+    0.45
+   ],
+   "23/30"
+  ],
+  [
+   "german-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "208/280"
+  ],
+  [
+   "german-lite",
+   "lite>opus",
+   [
+    6.21,
+    0.79
+   ],
+   "272/280"
+  ],
+  [
+   "german-lite",
+   "lite>agy-flash-low",
+   [
+    6.15,
+    0.85
+   ],
+   "28/30"
+  ],
+  [
+   "german-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "243/280"
+  ],
+  [
+   "german-flash3",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "29/30"
+  ],
+  [
+   "german-flash3",
+   "3flash>opus",
+   [
+    6.12,
+    0.88
+   ],
+   "29/29"
+  ],
+  [
+   "german-flash3",
+   "3flash>agy-flash-low",
+   [
+    5.98,
+    1.02
+   ],
+   "26/30"
+  ],
+  [
+   "german-tr-flash3",
+   "flash3",
+   [
+    1,
+    1
+   ],
+   "41/60"
+  ],
+  [
+   "german-tr-flash3",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "german-tr-lite",
+   "flash-lite",
+   [
+    1,
+    1
+   ],
+   "26/60"
+  ],
+  [
+   "german-tr-lite",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "french-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "22/30"
+  ],
+  [
+   "french-lite",
+   "lite>agy-flash-low",
+   [
+    6.04,
+    0.96
+   ],
+   "27/29"
+  ],
+  [
+   "french-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "23/30"
+  ],
+  [
+   "tibetan-tr",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "27/30"
+  ],
+  [
+   "tibetan-tr",
+   "agy-flash-low@4",
+   [
+    1,
+    1
+   ],
+   "22/30"
+  ],
+  [
+   "tengyur-tr",
+   "agy-flash-low@1",
+   [
+    1,
+    1
+   ],
+   "16/21"
+  ],
+  [
+   "tengyur-tr",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "11/21"
+  ],
+  [
+   "zh-siku-tr",
+   "stored",
+   [
+    1,
+    1
+   ],
+   "12/30"
+  ],
+  [
+   "zh-siku-tr",
+   "agy-flash-low@1",
+   [
+    1,
+    1
+   ],
+   "26/30"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin",
+   [
+    1,
+    1
+   ],
+   "34/60"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>agy-flash-low",
+   [
+    5.48,
+    1.52
+   ],
+   "53/60"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>opus",
+   [
+    5.07,
+    1.93
+   ],
+   "52/60"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "14/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>opus",
+   [
+    4.45,
+    2.55
+   ],
+   "26/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>agy-flash-high",
+   [
+    4.46,
+    2.54
+   ],
+   "17/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>agy-flash-low",
+   [
+    1,
+    1
+   ],
+   "15/29"
+  ],
+  [
+   "zh-6561-served",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "3/30"
+  ],
+  [
+   "zh-6561-served",
+   "paddle>opus",
+   [
+    1,
+    1
+   ],
+   "24/30"
+  ],
+  [
+   "chinese-flash3",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "7/30"
+  ],
+  [
+   "chinese-flash3",
+   "3flash>agy-flash-low",
+   [
+    1,
+    1
+   ],
+   "6/30"
+  ],
+  [
+   "zh-frame-6871",
+   "paddle>agy-flash-low",
+   [
+    3.5,
+    3.5
+   ],
+   "19/30"
+  ],
+  [
+   "hebrew-flash3",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "7/30"
+  ],
+  [
+   "hebrew-flash3",
+   "3flash>agy-flash-low",
+   [
+    1,
+    1
+   ],
+   "7/28"
+  ],
+  [
+   "arabic-flash3",
+   "3flash",
+   [
+    4.12,
+    2.88
+   ],
+   "10/30"
+  ],
+  [
+   "arabic-flash3",
+   "3flash>agy-flash-low",
+   [
+    1,
+    1
+   ],
+   "13/29"
+  ],
+  [
+   "zh-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "18/75"
+  ],
+  [
+   "zh-lite",
+   "lite>opus",
+   [
+    1,
+    1
+   ],
+   "70/75"
+  ],
+  [
+   "zh-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "38/75"
+  ],
+  [
+   "greek-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "5/250"
+  ],
+  [
+   "greek-lite",
+   "lite>opus",
+   [
+    1,
+    1
+   ],
+   "163/250"
+  ],
+  [
+   "greek-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "29/250"
+  ],
+  [
+   "sanskrit-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "42/250"
+  ],
+  [
+   "sanskrit-lite",
+   "lite>opus",
+   [
+    1,
+    1
+   ],
+   "224/250"
+  ],
+  [
+   "sanskrit-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "125/250"
+  ],
+  [
+   "arabic-lite",
+   "lite",
+   [
+    2.72,
+    4.28
+   ],
+   "102/305"
+  ],
+  [
+   "arabic-lite",
+   "lite>opus",
+   [
+    1,
+    1
+   ],
+   "206/250"
+  ],
+  [
+   "arabic-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "106/250"
+  ],
+  [
+   "arabic-lite",
+   "agy-flash-low-read-diplomatic",
+   [
+    1,
+    1
+   ],
+   "35/55"
+  ],
+  [
+   "italian-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "21/30"
+  ],
+  [
+   "spanish-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "23/27"
+  ],
+  [
+   "korean-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "4/28"
+  ],
+  [
+   "korean-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "16/28"
+  ],
+  [
+   "russian-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "23/28"
+  ],
+  [
+   "russian-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "26/28"
+  ],
+  [
+   "portuguese-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "12/18"
+  ],
+  [
+   "danish-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "9/10"
+  ],
+  [
+   "hindi-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "10/10"
+  ],
+  [
+   "hindi-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "8/10"
+  ],
+  [
+   "middle-english-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "4/8"
+  ],
+  [
+   "mhg-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "1/10"
+  ],
+  [
+   "old-french-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "6/9"
+  ],
+  [
+   "ottoman-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "3/10"
+  ],
+  [
+   "ottoman-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "8/10"
+  ],
+  [
+   "tamil-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "6/10"
+  ],
+  [
+   "tamil-lite",
+   "agy-flash-low-read",
+   [
+    1,
+    1
+   ],
+   "9/10"
+  ],
+  [
+   "turkish-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "4/9"
+  ]
+ ]
+}

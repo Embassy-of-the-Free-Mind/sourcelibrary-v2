@@ -17,9 +17,11 @@
  * STILL NOT SEEN: an update built in another file, a computed key (`$set: { [f]: v }`), an insert. It is a lint.
  */
 import { booksSetBlocks, topKeys } from './books-set-attribution.mjs';
-import { IMPRINT_FIELDS } from './catalogue-fields.mjs';
+import { CATALOGUE_FIELDS } from './catalogue-fields.mjs';
 
-export { IMPRINT_FIELDS };
+// The gate covers every field setCatalogueFields() writes: the imprint family (#6327) and title/author (#7673).
+// The file keeps its imprint- name so the CI step, the baseline and the pragma stay where people already look.
+export const IMPRINT_FIELDS = CATALOGUE_FIELDS;
 
 /** The helper and the libraries it is built from; everything else writes through them. */
 export const IMPRINT_WRITE_EXEMPT = new Set([

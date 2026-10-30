@@ -11,6 +11,18 @@
    }
   ]
  },
+ "/articles/beeckman-on-drebbel/drebbel-submarine.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/d12056654fc4-1280.avif",
+    "w": 1028
+   },
+   {
+    "src": "/articles/heroes/d12056654fc4-1920.avif",
+    "w": 1028
+   }
+  ]
+ },
  "/articles/one-sentence-of-hermes/1532-asclepius-32.jpg": {
   "srcset": [
    {
@@ -572,6 +584,18 @@
    {
     "src": "/articles/heroes/31fa6959fcea-1920.avif",
     "w": 1000
+   }
+  ]
+ },
+ "https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/8dd2f60a72fb-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/8dd2f60a72fb-1920.avif",
+    "w": 1920
    }
   ]
  },

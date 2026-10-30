@@ -1,0 +1,19 @@
+# cloudlayer (earthai-live) crontab: a snapshot of root's live crontab, taken 2026-10-28 when the #7611 lane-judge sampler lines
+# were installed by hand (backup: /root/backups/crontab-2026-10-28-lane-judge). This file installs nothing: a change here is
+# copied to the box by hand (crontab -l > /root/backups/crontab-<date>; edit; crontab -). Not yet in scripts/lib/lanes.mjs
+# CRONTAB_SNAPSHOTS (that needs every line below classified for the coverage test; a separate PR).
+# Source Library guest checkout: hourly fast-forward; reinstall deps only when the lockfile moved (inside the capped slice)
+23 * * * * cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-pull.lock bash -c 'old=$(git rev-parse HEAD:package-lock.json); git pull -q --ff-only origin main && [ "$old" != "$(git rev-parse HEAD:package-lock.json)" ] && systemd-run --quiet --wait --collect --slice=sourcelibrary.slice -p WorkingDirectory=/data/scratch/sl/sourcelibrary /usr/bin/npm ci --no-audit --no-fund --loglevel=error' >> /data/scratch/sl/logs/pull.log 2>&1
+# #5705 work board (/admin/work): push this box claude-job state to ops_reports every 10 min
+*/10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /data/scratch/sl/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box cloudlayer' >> /var/log/sourcelibrary/work-board.log 2>&1
+*/10 * * * * /root/bin/claude-job.sh sweep >/dev/null 2>&1  # resume DIED jobs, #5709 (2026-10-04)
+28 * * * * [ -f /data/scratch/sl/sourcelibrary/scripts/workers/install-claude-job.sh ] && bash /data/scratch/sl/sourcelibrary/scripts/workers/install-claude-job.sh >> /data/scratch/sl/logs/pull.log 2>&1  # the job wrapper is a copy of the repo file (#6358)
+# Spare lane (#6395): spend this box Claude account expiring allowance on small issues; inert until the script is on main.
+5,35 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && /usr/bin/python3 $f >> /data/scratch/sl/logs/spare-lane.log 2>&1  # #6395
+*/10 * * * * flock -n /tmp/keyword-search-delta.lock /usr/bin/node --disable-warning=ExperimentalWarning --env-file=/root/sourcelibrary/.env.production.local /data/keyword-search/app/sync-delta.mjs >> /data/keyword-search/logs/delta.log 2>&1
+# Disk alarm on every mount (#6223, 2026-10-26; PR #7404): ntfy sourcelibrary-uptime at 85%/95%.
+*/15 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
+# #7611 lane-judge sampler: MOVED to l7a on 2026-10-29 (this box's Claude account was at 100% of its week and judged 0 pages that night); see infrastructure/l7a-crontab.
+
+# Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
+11 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box cloudlayer >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)

@@ -4,6 +4,7 @@ import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 import { pageStatusSources } from './src/lib/page-status';
+import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -41,6 +42,12 @@ const nextConfig: NextConfig = {
     '/talks/ai-case-study/[[...path]]': ['./src/content/talks/ai-case-study/**'],
     '/api/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
     '/api/[tenant]/books/[id]/download': ['./src/assets/fonts/**', './node_modules/pdfkit/js/data/**'],
+  },
+  // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
+  // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
+  // page's images are served statically and never through it: keep them out (#7710).
+  outputFileTracingExcludes: {
+    '/api/image': ['./public/ai-partners/img/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -482,6 +489,8 @@ const nextConfig: NextConfig = {
         destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
+      // A map whose concept has a conceptual history became that history's sources view (#7646).
+      ...MAP_THEMES.flatMap((t) => { const to = sourcesHref(t); return to ? [{ source: `/explore/maps/${t.slug}`, destination: to, permanent: true }] : []; }),
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {

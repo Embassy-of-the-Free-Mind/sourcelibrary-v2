@@ -4,7 +4,7 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
-import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 
 // Shared server loader for the v2 reader design previews (/v2a, /v2c).
@@ -30,10 +30,10 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
 
   // Same inclusion list as the production reader (reader-page-projection.ts),
   // so the previews render from the same field set.
-  const currentPage = await db.collection('pages').findOne(
+  const currentPage = withoutTextLayer(await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
-  );
+  )); // #5942: the stored text layer never reaches the payload
   if (!currentPage) notFound();
 
   const [bookResult, navPages] = await Promise.all([

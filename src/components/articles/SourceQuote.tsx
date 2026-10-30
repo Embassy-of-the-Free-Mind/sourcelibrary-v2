@@ -30,6 +30,7 @@ export default function SourceQuote({
   original,
   pageAlt,
   linkToPage = false,
+  href: hrefOverride,
   children,
 }: {
   book: string;
@@ -42,9 +43,11 @@ export default function SourceQuote({
   pageAlt?: string;
   /** Clicking the page image opens the page in the reader instead of the lightbox. */
   linkToPage?: boolean;
+  /** Where the page number links, when it should be a citation link (a /q/ shortlink) instead of the reader URL. */
+  href?: string;
   children: ReactNode;
 }) {
-  const href = `/book/${book}?page=${page}`;
+  const href = hrefOverride ?? `/book/${book}?page=${page}`;
   return (
     <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">

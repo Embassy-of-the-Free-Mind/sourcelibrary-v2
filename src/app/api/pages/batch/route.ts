@@ -6,6 +6,7 @@ import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { poolRefFor } from '@/lib/suspected-pool';
+import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
 
 export const preferredRegion = 'fra1';
 
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     let pages = await db.collection('pages').find(
       filter,
-      { projection: { detected_images: 0 } }
+      { projection: PAGE_API_PROJECTION }
     ).toArray();
 
     // Metered reader (#4357): strip gated text for anonymous callers beyond

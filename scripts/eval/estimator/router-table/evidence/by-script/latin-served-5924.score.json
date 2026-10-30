@@ -1,0 +1,73 @@
+{
+ "cells": {
+  "latin-served|print": {
+   "routes": {
+    "3flash": {
+     "n": 12,
+     "books": 4,
+     "accept": "12/12",
+     "wrong_text_pages": "0/12",
+     "classes_k_of_n": {
+      "O11": "4/12",
+      "O6": "6/12",
+      "O5": "1/12",
+      "O8": "3/12",
+      "O9": "3/12",
+      "O7": "2/12",
+      "O3": "1/12",
+      "O12": "2/12"
+     },
+     "script_basis": {
+      "book": 6,
+      "page": 6
+     }
+    },
+    "lite": {
+     "n": 12,
+     "books": 4,
+     "accept": "9/12",
+     "wrong_text_pages": "3/12",
+     "classes_k_of_n": {
+      "O15": "2/12",
+      "O6": "7/12",
+      "O9": "2/12",
+      "O5": "1/12",
+      "O11": "3/12",
+      "O8": "2/12",
+      "O12": "1/12",
+      "O7": "2/12",
+      "O14": "1/12"
+     },
+     "script_basis": {
+      "page": 12
+     }
+    }
+   }
+  },
+  "latin-served|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 12,
+     "books": 4,
+     "accept": "10/12",
+     "wrong_text_pages": "2/12",
+     "classes_k_of_n": {
+      "O8": "2/12",
+      "O6": "6/12",
+      "O9": "8/12",
+      "O13": "1/12",
+      "O12": "3/12",
+      "O11": "3/12",
+      "O5": "1/12",
+      "O7": "1/12"
+     },
+     "script_basis": {
+      "none": 12
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/latin-served-5924.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

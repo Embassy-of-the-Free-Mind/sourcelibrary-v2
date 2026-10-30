@@ -127,9 +127,31 @@ export async function decodeJp2(jp2Path) {
  *
  * @returns {Promise<null | { route, fileFor(p): string|null, decode(file): Promise<{buffer,width,height}>, close(): Promise<void>, bytes: number }>}
  */
+// A run killed mid-book (cron `timeout`, OOM, a deploy restart) never reaches close(), and its
+// half-downloaded zip or unzipped JP2s stay in tmp: on gex45 on 2026-10-28, eleven of these held
+// 9.7 GB and the root disk reached 95% (#6223). Each open sweeps leftovers older than STALE_MS, which
+// is far past one book (download cap 60 min, unzip 10 min, pages minutes), so a live book is never hit.
+const STALE_MS = 6 * 3600_000;
+export function sweepStaleZipDirs(tmpRoot, { now = Date.now(), log = () => {} } = {}) {
+  let names = [];
+  try { names = fs.readdirSync(tmpRoot).filter(n => n.startsWith('sl-iazip-')); } catch { return 0; }
+  let removed = 0;
+  for (const n of names) {
+    const d = path.join(tmpRoot, n);
+    try {
+      if (now - fs.statSync(d).mtimeMs < STALE_MS) continue;
+      fs.rmSync(d, { recursive: true, force: true });
+      removed++;
+      log(`IA zip: removed stale scratch dir ${d}`);
+    } catch { /* gone already, or not ours to stat: leave it */ }
+  }
+  return removed;
+}
+
 export async function openIaZip({ manifestUrl, photos, onRefuse = () => {}, log = () => {}, fetchImpl = fetch,
   tmpRoot = os.tmpdir(), decode = decodeJp2, accessLeaves = fetchAccessLeaves, maxZipBytes = 6e9 }) {
   const refuse = (r) => { onRefuse(r); return null; };
+  sweepStaleZipDirs(tmpRoot, { log });
   if (!zipToolsAvailable()) return refuse('opj_decompress/unzip not on this box');
   const iaId = iaIdFromManifest(manifestUrl);
   if (!iaId) return refuse('manifest URL names no IA identifier');

@@ -10,7 +10,7 @@
 /**
  * siku-translate-lane — translate the held Siku Quanshu cohort (#5600) on agy 3.8 Flash, in waves, on spare quota.
  *
- * WHO RUNS IT: cron on main every 2 h (flock'd), and a session by hand. No paid API: reads go through `agy -p`
+ * WHO RUNS IT: cron on main every 15 min (flock'd; a wave reads for --max-minutes), and a session by hand. No paid API: reads go through `agy -p`
  * (cli-translate.mjs read, 1 page per call, reads ON) and are written by `cli-translate.mjs apply --apply`, which
  * recounts each book. Derek, 2026-10-27: "yes" to translating the held Siku books, "lower the bar, keep them as drafts".
  *
@@ -22,7 +22,8 @@
  *
  * POOL GATE. Every agy pool on the box is read with `agy -p /quota --output-format json` (0 tokens): the default HOME,
  * and each AGY_HOME in POOL_HOMES that exists. A non-default pool that another process is using (AGY_HOME in its
- * environment, e.g. a measurement job) is skipped. The pool with the most Gemini weekly remaining is used, and only if
+ * environment, e.g. a measurement job) is skipped; a lane marked AGY_POOL_SHARED=1 (cli-ocr-lane correct) only shares
+ * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if
  * weekly remaining > 0.35, or > 0.05 when its weekly reset is < 24 h away (quota idle before a reset is free, Derek
  * 2026-10-26). The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
  * that fails twice in a row stops the wave and pings ntfy.
@@ -42,18 +43,31 @@
  *
  * SPOT CHECK. After every 5,000 pages written (state.json), 10 pages drawn at random across the books written since
  * the last check are judged by Opus through `claude -p` against the page image (sealed folder, Read/Write only, the
- * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. The tally is
+ * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. A check
+ * deferred for 6 h pages ntfy once, so a box whose account is spent does not leave the lane unchecked silently (it was
+ * deferred 19 h on 2026-10-29); run `spot-check --force` on a box whose account has room, with --state pointing at a copy. The tally is
  * posted on #5600 against the bar: 0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3. An invented or wrong-leaf
  * page is CONTAINED (containment-on-finding.md: the book is already held; withhold-stale-translations --by-eye-pages
  * --apply) and the lane PAUSES: the stop file is written and ntfy is pinged.
+ *
+ * WAVE LENGTH. --max-pages caps a wave's pages; --max-minutes=M (#5600, 2026-10-29) instead stops TAKING new books M
+ * minutes after the wave starts, so the parallel readers stay full until then and only the last books drain. With the
+ * cron firing every 15 min under flock, the next wave starts within 15 min of the last one ending. (A 4,000-page cap
+ * left 6 slots draining for the last ~20 min of each ~3 h wave and the hourly cron idle up to 60 min after it.)
+ *
+ * BOOKS THE READER REFUSES. A read that exits 2 (cli-translate's own refusal, e.g. "30% of these pages rest on a
+ * flash-lite transcription ... open 3 pages against their images first") is recorded in <state>/book-skips.jsonl with
+ * the reader's reason, and the book is not offered again: it needs an OCR check or re-OCR, not another wave.
  *
  * PAUSE / RESUME: `touch <state>/STOP` pauses (checked before each wave and each book); `rm <state>/STOP` resumes.
  *
  * --per-call=N (N > 1) reads N pages per call through claude-translate.mjs --cli=agy. OFF by default: on only once
  * block-drift covers caseless (Han) scripts for that reader in production (#7503).
+ *
+ * LEAF LINES (#5600): the 1/call reader gets LEAF_LINES on every page (--instructions-file, written per book): leave the
+ * margin furniture out of the English; stop where the leaf stops. Measured in scripts/eval/siku-percall-5600 (arm C).
  */
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -62,12 +76,20 @@ import { UNTRANSLATED } from './cli-translate-lane.mjs';
 import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
+import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName } from '../lib/agy-pools.mjs';
+
+export { POOL_HOMES, parseQuota, poolName };
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 export const ISSUE = 5600;
 export const JOB = 'siku-lane-5600';
-export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660']);
+// zh-histories-7546: the Four Histories (Shiji, Hanshu, Hou Hanshu, Sanguozhi), Siku copies OCR'd by the Paddle lane on
+// 2026-10-28 (#7546). Derek 2026-10-29: "get more chinese translated". They go first, his 10-27 priority volumes first.
+export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']);
+export const FIRST_HOLD = 'zh-histories-7546';
+// Derek's 10-27 translation priority list (#7546 comment, section 3): the 21 volumes holding those chapters.
+export const PRIORITY_IDS = Object.freeze(new Set(['6ae0bab64adf2ffb52f71058', '6ae0baf94adf2ffb52f7121a', '6ae0bb854adf2ffb52f7166f', '6ae0bb894adf2ffb52f7170c', '6ae0bbc74adf2ffb52f7176e', '6ae0bd3d4adf2ffb52f72384', '6ae0bdca4adf2ffb52f72677', '6ae0bdce4adf2ffb52f72711', '6ae0beb34adf2ffb52f72f36', '6ae0bef64adf2ffb52f7304b', '6ae0befa4adf2ffb52f730c0', '6ae0befe4adf2ffb52f7311a', '6ae0bf3b4adf2ffb52f731bb', '6ae0bf3f4adf2ffb52f7321e', '6ae0bf424adf2ffb52f732bf', '6ae0bf884adf2ffb52f73494', '6ae0bf9a4adf2ffb52f73668', '6ae0bfa24adf2ffb52f736b3', '6ae0c5d74adf2ffb52f75eba', '6ae0c5db4adf2ffb52f75f31', '6ae0c61d4adf2ffb52f76087']));
 export const RUNGS = Object.freeze(['transcribed', 'translating']);
 export const MIN_OCR_SHARE = 0.8;
 export const FLOOR = Object.freeze({ weekly: 0.35, nearReset: 0.05, nearResetHours: 24 });
@@ -75,27 +97,20 @@ export const SPOT_EVERY = 5000;
 export const SPOT_N = 10;
 export const MODEL = 'gemini-3.8-flash-low';
 export const REASON = 'Siku lane #5600, Derek 2026-10-27';
-/** Other agy logins this box may carry (scripts/workers/agy-guard.sh AGY_HOME, #7517). */
-export const POOL_HOMES = Object.freeze(['/root/.agy-james']);
 /** #7090: reader requests, translated by their own job. */
 export const ISSUE_7090_BOOKS = Object.freeze(['6a3cbe33ec254ff6cadfe195', '6a3cbd2eec254ff6cadf6bf3']);
+/** #5600 (scripts/eval/siku-percall-5600): appended to every page's prompt by the 1/call reader (cli-translate
+ *  --instructions-file, lane-local, never the shared prompt). Margin furniture rendered as English fell from 12 to 7
+ *  of 120 pages, acceptance unchanged (79 vs 78 of 120). */
+export const LEAF_LINES = [
+  'The leaf\'s margin text (欽定四庫全書, the juan number, the folio number) is not part of the text: leave it out of the English.',
+  'Translate only what is on this leaf. If the last sentence breaks off, stop where the leaf stops; do not complete it.',
+].join('\n');
+export const leafInstructions = (pageIds) => Object.fromEntries(pageIds.map((id) => [id, LEAF_LINES]));
 /** A chat model's reply inside stored OCR (not leaf text). */
 export const CHAT_REPLY_RE = /作为一个人工智能|人工智能语言模型|我还没学习如何回答|作為一個人工智能|As an AI(?: language)? model|I(?:'m| am) (?:sorry|unable)[^.\n]{0,40}(?:assist|help|transcribe)/i;
 
 // ── pool gate (pure) ──
-
-/** `agy -p /quota --output-format json` stdout → { weekly, weeklyReset, fiveHour, fiveHourReset } (fractions), or null. */
-export function parseQuota(stdout) {
-  let j;
-  try { j = JSON.parse(String(stdout).trim().split('\n').filter((l) => l.startsWith('{')).pop()); } catch { return null; }
-  const groups = j?.command?.data?.groups;
-  if (j?.status !== 'SUCCESS' || !Array.isArray(groups)) return null;
-  const g = groups.find((x) => /gemini/i.test(x.name || ''));
-  const b = (w) => g?.buckets?.find((x) => x.window === w);
-  const wk = b('weekly');
-  if (!wk || typeof wk.remaining_fraction !== 'number') return null;
-  return { weekly: wk.remaining_fraction, weeklyReset: wk.reset_time ?? null, fiveHour: b('5h')?.remaining_fraction ?? null, fiveHourReset: b('5h')?.reset_time ?? null };
-}
 
 /** May a pool spend now? reading = parseQuota(). The 5-hour bucket is not gated: agy's own reply stops the reader. */
 export function poolGate(reading, { now = Date.now() } = {}) {
@@ -109,9 +124,7 @@ export function poolGate(reading, { now = Date.now() } = {}) {
 
 /** The pool to use: the open pool with most weekly remaining. pools = [{ home, reading, busy }]. */
 export function choosePool(pools, opts) {
-  const ok = pools.filter((p) => !p.busy && p.reading).map((p) => ({ ...p, gate: poolGate(p.reading, opts) }));
-  ok.sort((a, b) => b.reading.weekly - a.reading.weekly);
-  return ok[0]?.gate.open ? ok[0] : null;
+  return choosePoolBy(pools, (r) => poolGate(r, opts));
 }
 
 // ── book picker (pure) ──
@@ -136,18 +149,24 @@ export function rankBooks(books, { exclude = new Set(), sealRe = null } = {}) {
     if (!(ts.whole > 0) || (ts.ocr ?? 0) / ts.whole < MIN_OCR_SHARE) return false;
     if (sealRe && sealRe.test(b.title || '')) return false;
     return true;
-  }).sort((a, b) => (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+  }).sort((a, b) => rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+}
+/** 2 = a priority Four Histories volume, 1 = another Four Histories volume, 0 = the Siku cohort. */
+function rankKey(b) {
+  if (b.pipeline_auto?.hold?.reason !== FIRST_HOLD) return 0;
+  return PRIORITY_IDS.has(b.id) ? 2 : 1;
 }
 
 // ── state, ledger, log ──
 
 const arg = (n, d = null) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const STATE_DIR = path.resolve(arg('state', '/mnt/HC_Volume_105839809/siku-lane-5600'));
-const P = { stop: path.join(STATE_DIR, 'STOP'), state: path.join(STATE_DIR, 'state.json'), ledger: path.join(STATE_DIR, 'ledger.jsonl'), readings: path.join(STATE_DIR, 'pool-readings.jsonl'), written: path.join(STATE_DIR, 'written.jsonl') };
+const P = { stop: path.join(STATE_DIR, 'STOP'), state: path.join(STATE_DIR, 'state.json'), ledger: path.join(STATE_DIR, 'ledger.jsonl'), readings: path.join(STATE_DIR, 'pool-readings.jsonl'), written: path.join(STATE_DIR, 'written.jsonl'), skips: path.join(STATE_DIR, 'book-skips.jsonl') };
 const log = (...a) => console.log(new Date().toISOString().slice(0, 19) + 'Z', ...a);
 const readState = () => { try { return JSON.parse(fs.readFileSync(P.state, 'utf8')); } catch { return { written_total: 0, spot_at: 0, last_comment_day: null, waves: [] }; } };
 const saveState = (s) => fs.writeFileSync(P.state, JSON.stringify(s, null, 1));
 const readLedger = () => new Set(fs.existsSync(P.ledger) ? fs.readFileSync(P.ledger, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
+const readSkips = () => new Set(fs.existsSync(P.skips) ? fs.readFileSync(P.skips, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).book_id) : []);
 const ledger = (row) => fs.appendFileSync(P.ledger, JSON.stringify({ ...row, at: new Date().toISOString() }) + '\n');
 
 async function ntfy(title, msg) {
@@ -160,39 +179,14 @@ function comment(body) {
 
 // ── pools (live) ──
 
-/** Is another process using this AGY_HOME (e.g. a measurement job)? Our own children are excluded by pid ancestry. */
-function homeBusy(home) {
-  for (const pid of fs.readdirSync('/proc').filter((d) => /^\d+$/.test(d))) {
-    if (Number(pid) === process.pid) continue;
-    let env;
-    try { env = fs.readFileSync(`/proc/${pid}/environ`, 'utf8'); } catch { continue; }
-    if (!env.split('\0').includes(`AGY_HOME=${home}`)) continue;
-    if (env.split('\0').includes(`SIKU_LANE_CHILD=1`)) continue;
-    return Number(pid);
-  }
-  return null;
-}
-function readPool(home) {
-  const env = { ...process.env, SIKU_LANE_CHILD: '1' };
-  if (home) env.AGY_HOME = home; else delete env.AGY_HOME;
-  for (let i = 0; i < 2; i++) {
-    const r = spawnSync('agy', ['-p', '/quota', '--output-format', 'json', '--model', MODEL], { encoding: 'utf8', env, timeout: 120e3, cwd: os.tmpdir() });
-    const q = parseQuota(r.stdout);
-    if (q) return q;
-  }
-  return null;
-}
+// The reader and the busy check live in scripts/lib/agy-pools.mjs (shared with cli-ocr-lane.mjs correct, #7263).
+const readPool = (home) => readPoolBy(home, { model: MODEL, env: { SIKU_LANE_CHILD: '1' } });
 export function readPools() {
-  const homes = [null, ...POOL_HOMES.filter((h) => fs.existsSync(h))];
-  const pools = homes.map((home) => {
-    const busy = home ? homeBusy(home) : null;
-    return { home, busy, reading: readPool(home) };
-  });
+  const pools = readPoolsBy({ model: MODEL, env: { SIKU_LANE_CHILD: '1' } });
   fs.mkdirSync(STATE_DIR, { recursive: true });
   for (const p of pools) fs.appendFileSync(P.readings, JSON.stringify({ at: new Date().toISOString(), home: p.home ?? 'default', busy_pid: p.busy, ...p.reading }) + '\n');
   return pools;
 }
-const poolName = (p) => p?.home ? path.basename(p.home) : 'default';
 
 // ── the plan (live) ──
 
@@ -256,6 +250,8 @@ async function runWave(db) {
   const MAX = Number(arg('max-pages', 1500));
   const PAR = Math.max(1, Number(arg('parallel', 3)));
   const PER_CALL = Number(arg('per-call', 1));
+  const MAX_MIN = Number(arg('max-minutes', 0));
+  const T0 = Date.now();
   if (fs.existsSync(P.stop)) { log(`paused: ${P.stop} exists (${fs.readFileSync(P.stop, 'utf8').trim().slice(0, 200)}); rm it to resume`); return; }
   const pools = readPools();
   for (const p of pools) log(`pool ${poolName(p)}: ${p.reading ? `weekly ${p.reading.weekly.toFixed(3)} (reset ${p.reading.weeklyReset}), 5h ${p.reading.fiveHour?.toFixed(3) ?? '-'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}${p.reading ? `; ${poolGate(p.reading).why}` : ''}`);
@@ -272,8 +268,9 @@ async function runWave(db) {
   log(`using pool ${poolName(pool)} (${pool.gate.why})`);
 
   const done = readLedger();
-  const books = await candidates(db);
-  log(`cohort: ${books.length} books eligible before the per-book checks`);
+  const skipped = readSkips();
+  const books = (await candidates(db)).filter((b) => !skipped.has(b.id));
+  log(`cohort: ${books.length} books eligible before the per-book checks (${skipped.size} refused by the reader earlier, left out)`);
   const env = { ...process.env, CLI_JOB_NAME: JOB, JOB_NAME: process.env.JOB_NAME || JOB, JOB_LANDS: `#${ISSUE}`, SIKU_LANE_CHILD: '1' };
   if (pool.home) env.AGY_HOME = pool.home; else delete env.AGY_HOME;
   const day = new Date().toISOString().slice(0, 10);
@@ -298,6 +295,7 @@ async function runWave(db) {
   };
 
   const next = async () => {
+    if (MAX_MIN > 0 && Date.now() - T0 > MAX_MIN * 60e3) { stop = stop || `time: ${MAX_MIN} min`; return null; }
     while (cursor < books.length && budget > 0) {
       const b = books[cursor++];
       if (await hasDupe(db, b)) { log(`  ${b.id} skipped: a work_id sibling is another edition with English`); continue; }
@@ -323,16 +321,27 @@ async function runWave(db) {
       fs.writeFileSync(ids, JSON.stringify(pages.map((p) => p.id)));
       log(`  ${label}: reading ${pages.length} pages (${PER_CALL > 1 ? `${PER_CALL}/call, claude-translate --cli=agy` : '1/call'})`);
       // #7503: the 4/call reader stays OFF until block-drift covers caseless scripts in production.
+      // #5600: the two leaf lines go to the 1/call reader only (tested there); the block reader was not tested with them.
+      const instr = path.join(dir, 'instructions.json');
+      if (!(PER_CALL > 1)) fs.writeFileSync(instr, JSON.stringify(leafInstructions(pages.map((p) => p.id))));
       const readArgs = PER_CALL > 1
         ? [path.join(HERE, 'claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, '--cli=agy', `--model=${MODEL}`, `--per-call=${PER_CALL}`, `--job=${JOB}`]
-        : [path.join(HERE, 'cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${MODEL}`];
+        : [path.join(HERE, 'cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${MODEL}`, `--instructions-file=${instr}`];
       const t0 = Date.now();
       const rc = await runNode(readArgs, env, path.join(dir, 'read.log'));
       const metas = fs.readdirSync(dir).filter((f) => f.endsWith('.meta.json')).length;
       wave.read += metas;
       log(`  ${label}: read exit ${rc}, ${metas} reads in ${Math.round((Date.now() - t0) / 60e3)} min`);
       if (rc === 3) stop = stop || `quota reply from agy (pool ${poolName(pool)})`;
-      else if (rc !== 0) { log(`  ${label}: reader failed; book left for the next wave`); continue; }
+      else if (rc === 2) {
+        // The reader's own refusal (not a crash): record why and do not offer the book again.
+        const rl = fs.readFileSync(path.join(dir, 'read.log'), 'utf8').trim().split('\n');
+        const why = (rl.find((l) => /translat|re-OCR|refus/i.test(l) && !/page ids found/.test(l)) || rl.at(-1) || '').slice(0, 300);
+        fs.appendFileSync(P.skips, JSON.stringify({ book_id: book.id, title: book.title, wave: waveId, rc, why, at: new Date().toISOString() }) + '\n');
+        log(`  ${label}: reader refused (exit 2); recorded in book-skips.jsonl, not offered again: ${why.slice(0, 120)}`);
+        continue;
+      }
+      else if (rc !== 0) { log(`  ${label}: reader failed (exit ${rc}); book left for the next wave`); continue; }
       if (!metas) continue;
       if (!(await stillHeld(db, book.id))) { log(`  ${label}: hold moved during the read; not applied`); continue; }
       const arc = await runNode([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${dir}`, `--reason=${REASON}`, ...(APPLY ? ['--apply'] : [])], env, path.join(dir, 'apply.log'));
@@ -404,6 +413,16 @@ Write OUTPUT_FILE as a JSON array, one object per item: {"page_id", "wrong_leaf"
 "sense_errors", "from_ocr", "verdict", "note"}. No prose outside the file.`;
 
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
+/** The judge's claude binary: /usr/bin/claude first (an older ~/.local/bin/claude lacks --restricted), else the first
+ *  one on this box that has it. l7a has no /usr/bin/claude (2026-10-29: the spot check died with ENOENT there). */
+function claudeBin() {
+  for (const c of ['/usr/bin/claude', path.join(process.env.HOME || '/root', '.local/bin/claude')]) {
+    if (!fs.existsSync(c)) continue;
+    const h = spawnSync(c, ['--help'], { encoding: 'utf8', timeout: 30e3 });
+    if (/--restricted/.test(h.stdout || '')) return c;
+  }
+  return '/usr/bin/claude';
+}
 function judgeSealed(dir, items) {
   fs.mkdirSync(path.join(dir, 'images'), { recursive: true });
   fs.writeFileSync(path.join(dir, 'JUDGE.md'), JUDGE);
@@ -412,8 +431,7 @@ function judgeSealed(dir, items) {
   const prompt = 'Your instructions are the full text of `JUDGE.md` in this folder; follow them exactly. Work only inside this folder.\nITEMS_FILE: `items.json`\nOUTPUT_FILE: `review.json`';
   return new Promise((resolve) => {
     const out = fs.openSync(path.join(dir, 'transcript.jsonl'), 'w');
-    // /usr/bin/claude: an older ~/.local/bin/claude lacks --restricted.
-    const child = spawn('/usr/bin/claude', ['-p', prompt, '--model', 'opus', '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'stream-json', '--verbose'], { cwd: dir, stdio: ['ignore', out, out], env: claudeEnv() });
+    const child = spawn(claudeBin(), ['-p', prompt, '--model', 'opus', '--restricted', '--tools', 'Read', 'Write', '--allowedTools', 'Read', 'Write', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'stream-json', '--verbose'], { cwd: dir, stdio: ['ignore', out, out], env: claudeEnv() });
     const timer = setTimeout(() => child.kill('SIGKILL'), 45 * 60e3);
     child.on('close', () => {
       clearTimeout(timer); fs.closeSync(out);
@@ -438,7 +456,15 @@ export function tallyBar(verdicts) {
 async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   const s = readState();
   const u = claudeUsage();
-  if (u?.weekly != null && u.weekly >= 90 && !force) { log(`spot check deferred: this box's Claude account is at ${u.weekly}% weekly`); return; }
+  if (u?.weekly != null && u.weekly >= 90 && !force) {
+    log(`spot check deferred: this box's Claude account is at ${u.weekly}% weekly`);
+    s.spot_deferred_since = s.spot_deferred_since || new Date().toISOString();
+    if (!s.spot_deferred_paged && Date.now() - Date.parse(s.spot_deferred_since) > 6 * 3600e3) {
+      await ntfy('Siku lane: spot check deferred 6 h', `siku-translate-lane: the Opus spot check has been deferred since ${s.spot_deferred_since} (this box's Claude account at ${u.weekly}% weekly); ${s.written_total - (s.spot_at || 0)} pages written unchecked. Run spot-check --force on a box with room (#${ISSUE})`);
+      s.spot_deferred_paged = true;
+    }
+    saveState(s); return;
+  }
   const rows = fs.existsSync(P.written) ? fs.readFileSync(P.written, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
   const since = s.spot_written_rows || 0;
   const pool = rows.slice(since).flatMap((r) => r.page_ids.map((id) => ({ id, book_id: r.book_id })));
@@ -489,6 +515,7 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
     ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.`] : []),
     ...(!t.pass && !bad.length ? ['', 'The sense-error rate is over the bar; the lane keeps running (the bar\'s stop is invented or wrong-leaf text). Raising it here for a look.'] : []),
   ].join('\n'));
+  delete s.spot_deferred_since; delete s.spot_deferred_paged;
   s.spot_at = s.written_total; s.spot_written_rows = rows.length; s.spots = [...(s.spots || []), { at: new Date().toISOString(), dir, ...t }]; saveState(s);
 }
 

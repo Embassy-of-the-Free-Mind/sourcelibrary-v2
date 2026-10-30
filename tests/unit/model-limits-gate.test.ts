@@ -20,6 +20,7 @@ beforeAll(async () => {
   fs.mkdirSync(home, { recursive: true });
   fs.writeFileSync(path.join(home, '.claude.json'), JSON.stringify({ oauthAccount: { emailAddress: 'box@example.org' } }));
   process.env.HOME = home;
+  delete process.env.CLAUDE_CONFIG_DIR;   // the login comes from HOME here, not a second login dir (claudeLoginFiles)
   process.env.MODEL_LIMITS_DIR = path.join(dir, 'stops');
   process.env.AGY_QUOTA_STATUS = agyMeter;
   process.env.CLAUDE_LIMITS_FILE = claudeMeter;

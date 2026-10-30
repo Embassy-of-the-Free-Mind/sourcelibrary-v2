@@ -172,7 +172,7 @@
 # after the daily meter resets because OCR/translation spend the dial before morning and
 # an embedder that runs later is refused every day (#4865). Tell it has regressed: the
 # log says "CEILING REACHED" or site_pages' newest indexed_at is more than two days old.
-20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
+20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs --operator" >> /var/log/sourcelibrary/site-pages.log 2>&1
 
 # warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 
@@ -250,10 +250,10 @@
 # 21/30, 22/30), written by cli-ocr.mjs apply with its guards, stamped ocr.pipeline agy-correct-lite-7558, English flagged stale.
 # Spends only spare quota: before each 40-page chunk it reads agy /quota and stops when the Gemini week is under the straight line
 # to its reset or the 5 h bucket is under 25%. 3 books at a time, no new chunk after 95 min. Queue at install: 335,862 pages.
-50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=3 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558
+# RETIRED 2026-10-28 (#7263, PR #7594 merged): the correction lane runs on gex45 for both pools (infrastructure/gex45-crontab). Was: 50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && ! grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=4 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558 #7517: second account (jamesdereklomas@) pool since 2026-10-28 | #7263: retires itself once the lane takes --agy-home; the lane then runs on gex45 (infrastructure/gex45-crontab)
 # Siku Quanshu translation lane (#5600, Derek 2026-10-27 "yes" + "lower the bar, keep them as drafts"): every 2 h at :25,
 # one wave of up to ~1,500 pages of the held Siku cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660) on agy 3.8 Flash
 # low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
 # left, `agy -p /quota`) is above 0.35 weekly remaining, or 0.05 in the last 24 h before its reset; stops mid-wave below.
 # Opus spot check per 5,000 pages written. Pause: touch /mnt/HC_Volume_105839809/siku-lane-5600/STOP (rm to resume).
-25 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600
+*/15 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply --max-minutes=180 --max-pages=100000 --parallel=6 >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600  (2026-10-29: waves read for 180 min (room under the 4 h timeout for the drain and a spot check), then drain; cron every 15 min under flock starts the next. Was hourly, 4,000 pages a wave: ~1,300 pages/h against ~1,800 the 6 readers can do)

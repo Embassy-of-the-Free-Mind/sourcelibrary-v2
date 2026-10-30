@@ -1,0 +1,47 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#6567 (2026-10-12), scripts/eval/stale-retranslate-6567/pilot-results.json + pilot-map.json: 30 random pages, one a book, of the 289 the stale-Siku retranslation pilot wrote; both texts judged blind against the page image and the Paddle reading (MQM spans).",
+ "judge": "claude-opus-5-5 (claude -p), MQM against the image; the Gemini 3.1 Pro High judge is recorded per route, not used",
+ "mapping": "wrong_text = >= 1 material (major / critical accuracy) error; accept = none",
+ "cells": {
+  "zh-siku-tr": {
+   "task": "translation",
+   "lang": "Classical Chinese",
+   "pages": 30,
+   "routes": {
+    "agy-flash-low@1": {
+     "served": "agy gemini-3.8-flash-low, Standard Translation v13 + CLI suffix, one page a call, from the Paddle reading",
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "4/30",
+     "classes_k_of_n": {
+      "mistranslation": "3/30",
+      "omission": "1/30"
+     },
+     "wrong_text_classes": {
+      "mistranslation": "3/30",
+      "omission": "1/30"
+     },
+     "gemini_3_1_pro_judge_accept": "11/30"
+    },
+    "stored": {
+     "served": "the stored (stale) English, made from the old 3 Flash / Flash-Lite OCR",
+     "n": 30,
+     "books": 30,
+     "accept": "12/30",
+     "wrong_text_pages": "18/30",
+     "classes_k_of_n": {
+      "mistranslation": "18/30",
+      "omission": "2/30"
+     },
+     "wrong_text_classes": {
+      "mistranslation": "18/30",
+      "omission": "2/30"
+     },
+     "gemini_3_1_pro_judge_accept": "7/30"
+    }
+   }
+  }
+ }
+}

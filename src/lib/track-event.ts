@@ -40,7 +40,12 @@ export function trackEvent(
     // `source` ('header' | 'footer'). The referrer cannot answer this — see the
     // note in analytics-event-allowlist.ts. Relies on this function's sendBeacon
     // transport to survive the navigation it triggers.
-    | 'give_nav_click',
+    | 'give_nav_click'
+    // giving_banner_view / _dismiss: the year-end appeal on book pages
+    // (GivingSeasonBanner). Views are the denominator for its give_nav_click
+    // (source=book_banner); dismissals say how many saw it and said no.
+    | 'giving_banner_view'
+    | 'giving_banner_dismiss',
   props?: Record<string, string | number | boolean | undefined>,
 ): void {
   if (typeof window === 'undefined') return;

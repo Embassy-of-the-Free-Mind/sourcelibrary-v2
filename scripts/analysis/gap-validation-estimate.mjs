@@ -26,7 +26,24 @@ const __dir = path.dirname(fileURLToPath(import.meta.url));
 const EVAL = path.join(__dir, 'eval-data');
 const rd = (f) => JSON.parse(fs.readFileSync(path.join(EVAL, f), 'utf8'));
 
-const results = rd('gap-validation-n250-results.json');
+// --verdicts <file.jsonl> --tag <name>: estimate from ONE adjudicator's verdicts instead
+// of the dual-adjudicator consensus (the Sonnet replication, #7691). Same strata, same
+// weights, same binary rule as gap-validation-score.mjs toBinary; era from that adjudicator.
+const argv = process.argv.slice(2);
+const opt = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : null; };
+const VERDICTS = opt('--verdicts'), TAG = opt('--tag');
+const toBinary = (v) => v.relationship === 'container' ? null
+  : v.translation_verdict === 'translated' ? true : v.translation_verdict === 'untranslated' ? false : null;
+function rowsFromVerdicts(file) {
+  const byKey = new Map();
+  for (const line of fs.readFileSync(file, 'utf8').trim().split('\n')) {
+    const v = JSON.parse(line);
+    if (v.translation_verdict !== 'FAIL' || !byKey.has(v.key)) byKey.set(v.key, v); // last good row wins
+  }
+  return [...byKey.values()].map((v) => ({ key: v.key, label: v.key.startsWith('T') ? 'translated' : 'gap',
+    era: v.composition_era, consensus: toBinary(v) }));
+}
+const results = VERDICTS ? { rows: rowsFromVerdicts(VERDICTS) } : rd('gap-validation-n250-results.json');
 const frame = rd('gap-validation-n250-frame.json');
 const POOL_T = frame.pool_sizes.translated;   // pipeline-translated population in window
 const POOL_G = frame.pool_sizes.gap;          // pipeline-gap population in window
@@ -96,7 +113,8 @@ const out = {
   well_posed_subrates: desc,
   excluded_illposed: results.rows.filter((r) => r.consensus == null).length,
 };
-fs.writeFileSync(path.join(EVAL, 'gap-validation-n250-estimate.json'), JSON.stringify(out, null, 2));
+if (VERDICTS) { out.adjudicator = TAG || path.basename(VERDICTS); out.n_rows = results.rows.length; }
+fs.writeFileSync(path.join(EVAL, `gap-validation-n250-estimate${TAG ? '-' + TAG : ''}.json`), JSON.stringify(out, null, 2));
 
 const f = (c) => `${(100 * c.point).toFixed(1)}% [${(100 * c.lo).toFixed(1)}–${(100 * c.hi).toFixed(1)}]`;
 console.log(`\n=== DEBIASED POPULATION ESTIMATE (window ${frame.window[0]}–${frame.window[1]}) ===`);
@@ -108,4 +126,4 @@ console.log(`\nWell-posed sub-rates (translated-stratum precision / gap-stratum 
 console.log(`  translated-stratum precision: all ${desc.translated_stratum.all.translated}/${desc.translated_stratum.all.n}, ren ${desc.translated_stratum.ren.translated}/${desc.translated_stratum.ren.n}, anc/med ${desc.translated_stratum.ancmed.translated}/${desc.translated_stratum.ancmed.n}`);
 console.log(`  gap-stratum translated(missed): all ${desc.gap_stratum.all.translated}/${desc.gap_stratum.all.n}, ren ${desc.gap_stratum.ren.translated}/${desc.gap_stratum.ren.n}, anc/med ${desc.gap_stratum.ancmed.translated}/${desc.gap_stratum.ancmed.n}`);
 console.log(`  ill-posed/uncertain excluded: ${out.excluded_illposed}/${results.rows.length}`);
-console.log(`\nwrote gap-validation-n250-estimate.json`);
+console.log(`\nwrote gap-validation-n250-estimate${TAG ? '-' + TAG : ''}.json`);

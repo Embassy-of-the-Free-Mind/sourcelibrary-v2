@@ -1,0 +1,566 @@
+{
+ "pages": 160,
+ "answered_parsed": 160,
+ "unparsed": [],
+ "by_lang": {
+  "bo": {
+   "bad": {
+    "k": 50,
+    "n": 160,
+    "rate": 0.313,
+    "ci95": [
+     0.246,
+     0.388
+    ]
+   },
+   "caveat": {
+    "k": 77,
+    "n": 160,
+    "rate": 0.481,
+    "ci95": [
+     0.405,
+     0.558
+    ]
+   },
+   "usable": {
+    "k": 33,
+    "n": 160,
+    "rate": 0.206,
+    "ci95": [
+     0.151,
+     0.275
+    ]
+   },
+   "with_reversal": {
+    "k": 10,
+    "n": 160,
+    "rate": 0.063,
+    "ci95": [
+     0.034,
+     0.111
+    ]
+   },
+   "with_invention": {
+    "k": 43,
+    "n": 160,
+    "rate": 0.269,
+    "ci95": [
+     0.206,
+     0.342
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 18,
+    "n": 160,
+    "rate": 0.113,
+    "ci95": [
+     0.072,
+     0.171
+    ]
+   },
+   "with_omission": {
+    "k": 36,
+    "n": 160,
+    "rate": 0.225,
+    "ci95": [
+     0.167,
+     0.296
+    ]
+   },
+   "with_untranslated": {
+    "k": 3,
+    "n": 160,
+    "rate": 0.019,
+    "ci95": [
+     0.006,
+     0.054
+    ]
+   },
+   "with_chatter": {
+    "k": 43,
+    "n": 160,
+    "rate": 0.269,
+    "ci95": [
+     0.206,
+     0.342
+    ]
+   },
+   "ocr": {
+    "pages_legible": 114,
+    "illegible": 46,
+    "spans_per_page_mean": 11.67,
+    "median": 7,
+    "pages_with_0": 10,
+    "pages_capped_40": 9
+   }
+  }
+ },
+ "by_arm": {
+  "cut": {
+   "bad": {
+    "k": 33,
+    "n": 80,
+    "rate": 0.412,
+    "ci95": [
+     0.311,
+     0.522
+    ]
+   },
+   "caveat": {
+    "k": 33,
+    "n": 80,
+    "rate": 0.412,
+    "ci95": [
+     0.311,
+     0.522
+    ]
+   },
+   "usable": {
+    "k": 14,
+    "n": 80,
+    "rate": 0.175,
+    "ci95": [
+     0.107,
+     0.273
+    ]
+   },
+   "with_reversal": {
+    "k": 7,
+    "n": 80,
+    "rate": 0.087,
+    "ci95": [
+     0.043,
+     0.17
+    ]
+   },
+   "with_invention": {
+    "k": 29,
+    "n": 80,
+    "rate": 0.362,
+    "ci95": [
+     0.266,
+     0.472
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 15,
+    "n": 80,
+    "rate": 0.188,
+    "ci95": [
+     0.117,
+     0.287
+    ]
+   },
+   "with_omission": {
+    "k": 26,
+    "n": 80,
+    "rate": 0.325,
+    "ci95": [
+     0.232,
+     0.434
+    ]
+   },
+   "with_untranslated": {
+    "k": 2,
+    "n": 80,
+    "rate": 0.025,
+    "ci95": [
+     0.007,
+     0.087
+    ]
+   },
+   "with_chatter": {
+    "k": 25,
+    "n": 80,
+    "rate": 0.313,
+    "ci95": [
+     0.222,
+     0.421
+    ]
+   },
+   "ocr": {
+    "pages_legible": 55,
+    "illegible": 25,
+    "spans_per_page_mean": 12.82,
+    "median": 9,
+    "pages_with_0": 5,
+    "pages_capped_40": 6
+   }
+  },
+  "reread": {
+   "bad": {
+    "k": 17,
+    "n": 80,
+    "rate": 0.212,
+    "ci95": [
+     0.137,
+     0.314
+    ]
+   },
+   "caveat": {
+    "k": 44,
+    "n": 80,
+    "rate": 0.55,
+    "ci95": [
+     0.441,
+     0.654
+    ]
+   },
+   "usable": {
+    "k": 19,
+    "n": 80,
+    "rate": 0.237,
+    "ci95": [
+     0.158,
+     0.341
+    ]
+   },
+   "with_reversal": {
+    "k": 3,
+    "n": 80,
+    "rate": 0.037,
+    "ci95": [
+     0.013,
+     0.105
+    ]
+   },
+   "with_invention": {
+    "k": 14,
+    "n": 80,
+    "rate": 0.175,
+    "ci95": [
+     0.107,
+     0.273
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 3,
+    "n": 80,
+    "rate": 0.037,
+    "ci95": [
+     0.013,
+     0.105
+    ]
+   },
+   "with_omission": {
+    "k": 10,
+    "n": 80,
+    "rate": 0.125,
+    "ci95": [
+     0.069,
+     0.215
+    ]
+   },
+   "with_untranslated": {
+    "k": 1,
+    "n": 80,
+    "rate": 0.013,
+    "ci95": [
+     0.002,
+     0.067
+    ]
+   },
+   "with_chatter": {
+    "k": 18,
+    "n": 80,
+    "rate": 0.225,
+    "ci95": [
+     0.147,
+     0.328
+    ]
+   },
+   "ocr": {
+    "pages_legible": 59,
+    "illegible": 21,
+    "spans_per_page_mean": 10.59,
+    "median": 5,
+    "pages_with_0": 5,
+    "pages_capped_40": 3
+   }
+  }
+ },
+ "by_stratum": {
+  "RECUT": {
+   "bad": {
+    "k": 8,
+    "n": 20,
+    "rate": 0.4,
+    "ci95": [
+     0.219,
+     0.613
+    ]
+   },
+   "caveat": {
+    "k": 9,
+    "n": 20,
+    "rate": 0.45,
+    "ci95": [
+     0.258,
+     0.658
+    ]
+   },
+   "usable": {
+    "k": 3,
+    "n": 20,
+    "rate": 0.15,
+    "ci95": [
+     0.052,
+     0.36
+    ]
+   },
+   "with_reversal": {
+    "k": 0,
+    "n": 20,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.161
+    ]
+   },
+   "with_invention": {
+    "k": 8,
+    "n": 20,
+    "rate": 0.4,
+    "ci95": [
+     0.219,
+     0.613
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 1,
+    "n": 20,
+    "rate": 0.05,
+    "ci95": [
+     0.009,
+     0.236
+    ]
+   },
+   "with_omission": {
+    "k": 4,
+    "n": 20,
+    "rate": 0.2,
+    "ci95": [
+     0.081,
+     0.416
+    ]
+   },
+   "with_untranslated": {
+    "k": 2,
+    "n": 20,
+    "rate": 0.1,
+    "ci95": [
+     0.028,
+     0.301
+    ]
+   },
+   "with_chatter": {
+    "k": 5,
+    "n": 20,
+    "rate": 0.25,
+    "ci95": [
+     0.112,
+     0.469
+    ]
+   },
+   "ocr": {
+    "pages_legible": 12,
+    "illegible": 8,
+    "spans_per_page_mean": 3.08,
+    "median": 2,
+    "pages_with_0": 1,
+    "pages_capped_40": 0
+   }
+  },
+  "SAME": {
+   "bad": {
+    "k": 13,
+    "n": 84,
+    "rate": 0.155,
+    "ci95": [
+     0.093,
+     0.247
+    ]
+   },
+   "caveat": {
+    "k": 53,
+    "n": 84,
+    "rate": 0.631,
+    "ci95": [
+     0.524,
+     0.726
+    ]
+   },
+   "usable": {
+    "k": 18,
+    "n": 84,
+    "rate": 0.214,
+    "ci95": [
+     0.14,
+     0.313
+    ]
+   },
+   "with_reversal": {
+    "k": 5,
+    "n": 84,
+    "rate": 0.06,
+    "ci95": [
+     0.026,
+     0.132
+    ]
+   },
+   "with_invention": {
+    "k": 16,
+    "n": 84,
+    "rate": 0.19,
+    "ci95": [
+     0.121,
+     0.287
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 1,
+    "n": 84,
+    "rate": 0.012,
+    "ci95": [
+     0.002,
+     0.064
+    ]
+   },
+   "with_omission": {
+    "k": 8,
+    "n": 84,
+    "rate": 0.095,
+    "ci95": [
+     0.049,
+     0.177
+    ]
+   },
+   "with_untranslated": {
+    "k": 1,
+    "n": 84,
+    "rate": 0.012,
+    "ci95": [
+     0.002,
+     0.064
+    ]
+   },
+   "with_chatter": {
+    "k": 17,
+    "n": 84,
+    "rate": 0.202,
+    "ci95": [
+     0.13,
+     0.3
+    ]
+   },
+   "ocr": {
+    "pages_legible": 49,
+    "illegible": 35,
+    "spans_per_page_mean": 6.33,
+    "median": 3,
+    "pages_with_0": 8,
+    "pages_capped_40": 2
+   }
+  },
+  "SEAM": {
+   "bad": {
+    "k": 29,
+    "n": 56,
+    "rate": 0.518,
+    "ci95": [
+     0.39,
+     0.643
+    ]
+   },
+   "caveat": {
+    "k": 15,
+    "n": 56,
+    "rate": 0.268,
+    "ci95": [
+     0.17,
+     0.396
+    ]
+   },
+   "usable": {
+    "k": 12,
+    "n": 56,
+    "rate": 0.214,
+    "ci95": [
+     0.127,
+     0.338
+    ]
+   },
+   "with_reversal": {
+    "k": 5,
+    "n": 56,
+    "rate": 0.089,
+    "ci95": [
+     0.039,
+     0.193
+    ]
+   },
+   "with_invention": {
+    "k": 19,
+    "n": 56,
+    "rate": 0.339,
+    "ci95": [
+     0.229,
+     0.47
+    ]
+   },
+   "with_wrong_leaf": {
+    "k": 16,
+    "n": 56,
+    "rate": 0.286,
+    "ci95": [
+     0.184,
+     0.415
+    ]
+   },
+   "with_omission": {
+    "k": 24,
+    "n": 56,
+    "rate": 0.429,
+    "ci95": [
+     0.308,
+     0.559
+    ]
+   },
+   "with_untranslated": {
+    "k": 0,
+    "n": 56,
+    "rate": 0,
+    "ci95": [
+     0,
+     0.064
+    ]
+   },
+   "with_chatter": {
+    "k": 21,
+    "n": 56,
+    "rate": 0.375,
+    "ci95": [
+     0.26,
+     0.506
+    ]
+   },
+   "ocr": {
+    "pages_legible": 53,
+    "illegible": 3,
+    "spans_per_page_mean": 18.55,
+    "median": 17,
+    "pages_with_0": 1,
+    "pages_capped_40": 7
+   }
+  }
+ },
+ "controls": {
+  "n": 15,
+  "caught": 15,
+  "by_kind": {
+   "invention": "5/5",
+   "reversal": "10/10"
+  },
+  "missed": []
+ }
+}

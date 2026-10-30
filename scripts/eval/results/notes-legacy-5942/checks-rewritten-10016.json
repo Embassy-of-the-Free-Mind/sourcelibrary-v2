@@ -1,0 +1,709 @@
+{
+ "pages": 10016,
+ "current": 10016,
+ "served_from_store": 10016,
+ "withheld_on_page": 44,
+ "placeholder": 213,
+ "conservation": {
+  "comparable": 8797,
+  "not_comparable": 1219,
+  "pages_lost": 41,
+  "pages_leaked": 38,
+  "words_lost": 440,
+  "words_leaked": 88,
+  "pages_chars_off": 3,
+  "chars_lost": 1300,
+  "chars_leaked": 0,
+  "examples": [
+   {
+    "page": "1db83121-ba8c-4c87-b45b-59a8bb9de0ad",
+    "lost": [
+     [
+      "seers",
+      1
+     ],
+     [
+      "stles",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "seersstles",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "59211580-224a-4e6a-8a1d-6d1c88109d19",
+    "lost": [
+     [
+      "8",
+      1
+     ],
+     [
+      "The",
+      3
+     ],
+     [
+      "9",
+      1
+     ],
+     [
+      "10",
+      1
+     ],
+     [
+      "An",
+      1
+     ],
+     [
+      "11",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "8The",
+      1
+     ],
+     [
+      "9The",
+      1
+     ],
+     [
+      "10An",
+      1
+     ],
+     [
+      "11The",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "5b5d117f-10e6-40ac-a7ca-e51e5a87c251",
+    "lost": [
+     [
+      "5",
+      1
+     ],
+     [
+      "6",
+      1
+     ],
+     [
+      "The",
+      3
+     ],
+     [
+      "4",
+      1
+     ],
+     [
+      "In",
+      1
+     ],
+     [
+      "7",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "4The",
+      1
+     ],
+     [
+      "5In",
+      1
+     ],
+     [
+      "6The",
+      1
+     ],
+     [
+      "7The",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "685a9b32cdbe778e22823a70",
+    "lost": [
+     [
+      "Plato",
+      1
+     ],
+     [
+      "P",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "PPlato",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "685a9b32cdbe778e22823a72",
+    "lost": [
+     [
+      "Plato",
+      1
+     ],
+     [
+      "u",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "uPlato",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "68d55785110616ec557a383a",
+    "lost": [
+     [
+      "trine",
+      1
+     ],
+     [
+      "an",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "trinean",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "68d55787110616ec557a3840",
+    "lost": [
+     [
+      "the",
+      1
+     ],
+     [
+      "trine",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "trinethe",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6902eefe583dd7d2641409b7",
+    "lost": [
+     [
+      "Heav",
+      1
+     ],
+     [
+      "enly",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "Heavenly",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6902ef8b583dd7d264140a13",
+    "lost": [
+     [
+      "48",
+      1
+     ]
+    ],
+    "leaked": [],
+    "chars_lost": 2,
+    "chars_leaked": 0
+   },
+   {
+    "page": "69098caecf28baa1b4cae359",
+    "lost": [
+     [
+      "on",
+      1
+     ],
+     [
+      "the",
+      16
+     ],
+     [
+      "of",
+      5
+     ],
+     [
+      "a",
+      1
+     ],
+     [
+      "be",
+      1
+     ],
+     [
+      "certain",
+      2
+     ],
+     [
+      "or",
+      1
+     ],
+     [
+      "things",
+      1
+     ]
+    ],
+    "leaked": [],
+    "chars_lost": 1019,
+    "chars_leaked": 0
+   },
+   {
+    "page": "69099859cf28baa1b4cae88b",
+    "lost": [
+     [
+      "the",
+      4
+     ],
+     [
+      "from",
+      2
+     ],
+     [
+      "in",
+      2
+     ],
+     [
+      "of",
+      3
+     ],
+     [
+      "to",
+      1
+     ],
+     [
+      "and",
+      1
+     ],
+     [
+      "natural",
+      1
+     ],
+     [
+      "causes",
+      1
+     ]
+    ],
+    "leaked": [],
+    "chars_lost": 279,
+    "chars_leaked": 0
+   },
+   {
+    "page": "69099ef0cf28baa1b4caeb49",
+    "lost": [
+     [
+      "O",
+      1
+     ],
+     [
+      "V",
+      1
+     ],
+     [
+      "iew",
+      1
+     ],
+     [
+      "f",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "View",
+      1
+     ],
+     [
+      "Of",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909aa46cf28baa1b4caeee1",
+    "lost": [
+     [
+      "the",
+      4
+     ],
+     [
+      "to",
+      1
+     ],
+     [
+      "4",
+      2
+     ],
+     [
+      "make",
+      1
+     ],
+     [
+      "14",
+      2
+     ],
+     [
+      "And",
+      1
+     ],
+     [
+      "21",
+      1
+     ],
+     [
+      "she",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "4make",
+      1
+     ],
+     [
+      "14to",
+      1
+     ],
+     [
+      "21she",
+      1
+     ],
+     [
+      "13name",
+      1
+     ],
+     [
+      "32Fourteenthly",
+      1
+     ],
+     [
+      "20the",
+      1
+     ],
+     [
+      "Psalmsnamely",
+      1
+     ],
+     [
+      "8Isaiah",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909aaa5cf28baa1b4caef05",
+    "lost": [
+     [
+      "Concerning",
+      1
+     ],
+     [
+      "dot",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "dotConcerning",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909ad2fcf28baa1b4caefdf",
+    "lost": [
+     [
+      "My",
+      1
+     ],
+     [
+      "D",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "DMy",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909ae5ecf28baa1b4caf03b",
+    "lost": [
+     [
+      "sa",
+      1
+     ],
+     [
+      "ys",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "says",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909b564cf28baa1b4caf2a9",
+    "lost": [
+     [
+      "unend",
+      1
+     ],
+     [
+      "licher",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "unendlicher",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909ed16cf28baa1b4cb0a31",
+    "lost": [
+     [
+      "He",
+      1
+     ],
+     [
+      "A",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "AHe",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909ed34cf28baa1b4cb0a41",
+    "lost": [
+     [
+      "known",
+      1
+     ],
+     [
+      "D",
+      1
+     ],
+     [
+      "After",
+      1
+     ],
+     [
+      "For",
+      1
+     ],
+     [
+      "E",
+      1
+     ],
+     [
+      "saic",
+      1
+     ],
+     [
+      "F",
+      1
+     ],
+     [
+      "guest",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "DAfter",
+      1
+     ],
+     [
+      "Esaic",
+      1
+     ],
+     [
+      "Fguest",
+      1
+     ],
+     [
+      "Aknown",
+      1
+     ],
+     [
+      "BFor",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   },
+   {
+    "page": "6909ed53cf28baa1b4cb0a51",
+    "lost": [
+     [
+      "D",
+      1
+     ],
+     [
+      "Observe",
+      1
+     ]
+    ],
+    "leaked": [
+     [
+      "DObserve",
+      1
+     ]
+    ],
+    "chars_lost": 0,
+    "chars_leaked": 0
+   }
+  ]
+ },
+ "anchors": {
+  "annotations": 164411,
+  "anchored": 114543,
+  "slice_mismatch": 0,
+  "unresolved": 0,
+  "orphans": 0
+ },
+ "duplicates": {
+  "annotations_with_repeated_exact": 17856,
+  "resolved_to_own": 17856,
+  "resolved_elsewhere": 0,
+  "refused": 0
+ },
+ "scripts": {
+  "astral": {
+   "pages": 25,
+   "anchors": 684,
+   "slice_mismatch": 0
+  },
+  "Hebrew": {
+   "pages": 154,
+   "anchors": 1932,
+   "slice_mismatch": 0
+  },
+  "Greek": {
+   "pages": 1037,
+   "anchors": 14295,
+   "slice_mismatch": 0
+  },
+  "combining": {
+   "pages": 98,
+   "anchors": 1550,
+   "slice_mismatch": 0
+  },
+  "Cyrillic": {
+   "pages": 162,
+   "anchors": 1341,
+   "slice_mismatch": 0
+  },
+  "Arabic": {
+   "pages": 2,
+   "anchors": 22,
+   "slice_mismatch": 0
+  },
+  "Han": {
+   "pages": 39,
+   "anchors": 706,
+   "slice_mismatch": 0
+  },
+  "Devanagari": {
+   "pages": 5,
+   "anchors": 30,
+   "slice_mismatch": 0
+  },
+  "Tibetan": {
+   "pages": 2,
+   "anchors": 21,
+   "slice_mismatch": 0
+  }
+ },
+ "malformed": {
+  "pages": 101,
+  "unclosed": 40,
+  "stray": 125
+ },
+ "reader_diff": {
+  "equal": 9043,
+  "differ": 973
+ },
+ "longest": {
+  "chars": 70434,
+  "split_ms": 282,
+  "page": "2fdbe3d5-ccec-4275-bbee-9bd8c888d7f6"
+ },
+ "annotations_doc": {
+  "with_doc": 9867,
+  "doc_count_matches": 9867,
+  "doc_hash_current": 9867
+ },
+ "gone_since": 0
+}

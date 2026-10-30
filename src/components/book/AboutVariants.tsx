@@ -4,8 +4,9 @@ import { type ReactNode } from 'react';
 import Link from 'next/link';
 import type { Page } from '@/lib/types';
 import BookAboutPicker from './BookAboutPicker';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
-type Visual = { src: string; href: string; caption?: string };
+type Visual = { src: string; href?: string; caption?: string };
 type PlateLite = { id: string; thumbnail_url?: string; extracted_url?: string; image_url?: string; description?: string };
 
 /**
@@ -39,10 +40,12 @@ export default function AboutVariants({
   pages?: Page[];
   plates?: PlateLite[];
 }) {
+  // Inside a partner frame (/embed/<tenant>) the tag search stays in the frame.
+  const embedHref = useEmbedHref();
   const tagRow = tags.length > 0 ? (
     <div className="flex flex-wrap gap-1.5 md:gap-2 mt-6 md:mt-8">
       {tags.map((tag) => (
-        <Link key={tag} href={`/search?q=${encodeURIComponent(tag)}`} className="text-[11px] md:text-[13px] px-2 py-0.5 md:px-3 md:py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
+        <Link key={tag} href={embedHref(`/search?q=${encodeURIComponent(tag)}`)} className="text-[11px] md:text-[13px] px-2 py-0.5 md:px-3 md:py-1 transition-colors hover:bg-[#f0eadd]" style={{ border: '1px solid #ddd5c5', color: '#5c5546' }}>{tag}</Link>
       ))}
     </div>
   ) : null;
@@ -65,15 +68,19 @@ export default function AboutVariants({
           {/* Interesting page / plate: desktop only (hidden on mobile), 2/5 wide.
               No shadow — sits flush on the cream background. */}
           {visual && (() => {
-            const visualEl = (
-              <Link href={visual.href} className="block group">
+            const visualInner = (
+              <>
                 <div className="overflow-hidden border" style={{ borderColor: '#e6e0d3', background: '#fff' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={visual.src} alt={visual.caption || ''} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" />
                 </div>
                 {visual.caption && <div className="mt-3 text-[13px] italic" style={{ color: '#948d80' }}>{visual.caption}</div>}
-              </Link>
+              </>
             );
+            // No href when the plate's only target is the gallery and the page is embedded.
+            const visualEl = visual.href
+              ? <Link href={visual.href} className="block group">{visualInner}</Link>
+              : <div className="block group">{visualInner}</div>;
             return (
               <div className="hidden md:block order-1 md:order-2 md:col-span-2">
                 {bookId ? (

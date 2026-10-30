@@ -199,9 +199,9 @@ export const LANES = [
     stamps: [{ field: 'ocr', call_site: 'scripts/batch/cli-ocr.mjs', engine: 'gemini' }],
     routes: { hold: 'ocr-flash-cli-7075' },
     reason: 'Runs named page lists, often of books held FOR it (the hold is the router\'s queue). A locked model is never called (agy-cli.mjs → model-limits.mjs agyBlocked): the run sleeps to the quoted reset, it never falls to the API. No pause check: a person or a job is the switch.', gap: true },
-  { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/lib/agy-cli.mjs'],
-    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600), and page lists by hand',
-    trigger: 'cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); one-off claude-job runs (book list recorded per job until R6)',
+  { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/batch/reader-request-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600), books a reader asked for (open translation-request feedback rows passing translation-request-eligibility.mjs; reader-request-lane.mjs OCRs their missing pages first and emails the reader, #7599), and page lists by hand',
+    trigger: 'cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); reader-request-lane.mjs every 2 h on the second agy pool (#7599); one-off claude-job runs (book list recorded per job until R6)',
     budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
     stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'gemini' }],
     routes: { hold: 'translate-cli-7075', engines: ['gemini-3.8-flash+agy-cli'] },
@@ -250,6 +250,11 @@ export const LANES = [
   { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
     selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
+  { name: 'agy-flash-enrich', serves: 'enrich', files: ['scripts/workers/lib/enrich-agy-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'the batch lane\'s gap (live translated books past the realtime statuses with no summary / index / chapters), reads then translated pages; each book claimed in enrich_batch_books before its call so the API batch lane skips it, and handed back to it on failure (#7628)',
+    trigger: 'cron on main every 2 h: enrich-worker.mjs --agy (#7628), Gemini 3.8 Flash low, one conversation per book; stops at its daily request cap (about a quarter of one agy pool\'s week, Derek 2026-10-28), at the pool\'s quota floor (cli-ocr-lane.mjs quotaFloor) and at the first quota reply',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: 'marker', pause: 'enrich',
+    reason: 'Its model calls are the subscription CLI only. The writes it shares with the API lanes (finishEnrichBook) still upsert the book and page embeddings through the embedding API, as every enrich lane does: that is the embedding step, not a fallback for the enrichment call.' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],
@@ -283,6 +288,7 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/eval/lane-judge-sampler.mjs', reason: 'measurement: reads pages/books/page_revisions, writes only lane_judge_verdicts, lane_judge_runs and ops_reports (#7611); the write libs come in through the lane constants it imports from cli-ocr-lane.mjs' },
   { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
   { file: 'scripts/workers/sync-worker.mjs', reason: 'the stamp writer: counters, translation_state and pipeline_next (#5477); does no step work' },
   { file: 'scripts/workers/scheduler.mjs', reason: 'launcher; its stalled-image-job drain clears job bookkeeping, not steps' },
@@ -349,7 +355,7 @@ export const OFF_REPO_CRON = [
   { match: '/root/tib-step2/tend.py', reason: 'tends the #5320 Tibetan step-2 job; remove when step 2 is done' },
   { match: '/root/tibetan-reocr/relaunch.sh', reason: 'NOT A REGISTERED LANE YET: relaunches the Tibetan Yigdzin re-OCR reads on main (#4523, routing row `tibetan`); its pages are written by hand through scripts/maintenance/apply-reocr-verdicts.mjs after adjudication. Remove when the re-OCR is done, or register it if it becomes standing' },
   { match: '/root/tibetan-eval/relaunch_reacquire.sh', reason: 'relaunches the British Library image re-acquisition (#4646): images, no model spend; remove when reacquire-done.txt is complete' },
-  { match: '/root/jobs/siglip2-6871/code-full/siglip2-requeue.sh', reason: 'queues the next SigLIP2 page-embedding chunk on the gex45 GPU queue when nothing else is pending (#6871 row 8); an installed copy of scripts/gpu/siglip2-6871/siglip2-requeue.sh. Writes embedding shards, no page text' },
+  { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
 
 /**

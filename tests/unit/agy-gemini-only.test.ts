@@ -32,7 +32,9 @@ describe('agy runs Gemini models only', () => {
   it('allows Claude only once the Gemini weekly bucket reads 0, and only while the Claude buckets hold 10%', () => {
     const args = ['-p', 'x', '--model', 'claude-opus-5-5-low'];
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0)) })).not.toThrow();
-    expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0.0001)) })).toThrow(/Gemini weekly/);
+    // A spent pool keeps a residue (0.00028 read on 2026-10-30, shown as 0%): that counts as empty.
+    expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0.00028)) })).not.toThrow();
+    expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0.006)) })).toThrow(/Gemini weekly/);
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0, 0.09)) })).toThrow(/Claude weekly/);
     expect(() => assertGeminiModel(args, { gate: gateOn(quotaReply(0, 1, 0.05)) })).toThrow(/Claude h5/);
   });

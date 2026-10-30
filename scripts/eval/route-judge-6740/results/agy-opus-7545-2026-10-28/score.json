@@ -1,0 +1,502 @@
+{
+ "generated_at": "2026-10-28T10:09:32.209Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 112,
+  "unparsed": 0,
+  "list_usd_equiv": 8.39
+ },
+ "meter": null,
+ "cells": {
+  "latin-lite-7545": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15739,
+    "books_walked": 51,
+    "held_or_hidden": 0,
+    "no_eligible_page": 36,
+    "rule": "visible Latin books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-opus": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 15,
+     "books": 15,
+     "accept": "8/15",
+     "accept_rate": 0.53,
+     "accept_ci": {
+      "ci95": [
+       0.267,
+       0.8
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_pages": "7/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       0.733
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_classes": {
+      "O5": "5/15",
+      "O6": "5/15",
+      "O12": "1/15",
+      "O10": "1/15",
+      "O4": "1/15"
+     },
+     "classes_k_of_n": {
+      "O6": "11/15",
+      "E2": "7/15",
+      "O8": "7/15",
+      "O5": "6/15",
+      "O11": "5/15",
+      "O12": "4/15",
+      "O16": "2/15",
+      "O10": "1/15",
+      "O4": "1/15",
+      "O7": "1/15"
+     },
+     "fidelity_mean": 3.53,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b51e3447b06ecd5818bd7c:80",
+       "quote": "ΠΕΡΙ ΩΡΩΠΟΥ ΚΑΙ ΩΡΩΠΟΥ ΠΟΛΕΜΟΙ</foreign> et",
+       "severity": "wrong_text",
+       "what": "Drops the whole Latin rendering of the Strabo quotation ('contingit vt saepenumero de locis quibusdam iudicium fiat, quemadmodum Argiuis quidem et Lacedaemoniis de Thyrea, Atheniensibus aut et Boeotiis de Oropo, et iterum') and runs the Greek together wrongly"
+      },
+      {
+       "page": "69b51e3447b06ecd5818bd7c:80",
+       "quote": "vnde tractum est, puerbium, ad eos",
+       "severity": "wrong_text",
+       "what": "Leaves out 'aeris Dodonei'"
+      },
+      {
+       "page": "69b51e3447b06ecd5818bd7c:80",
+       "quote": "multo acutius veteres",
+       "severity": "wrong_text",
+       "what": "Drops 'quam' ('acutius quam veteres'), so the comparison is lost"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00278
+     },
+     "counts": true,
+     "contain_answers": "0/15",
+     "contain_reasons": [],
+     "unchanged": "0/15",
+     "skipped": 0
+    },
+    "lite>opus-correct": {
+     "served": "this run's correction of the stored draft, not served (opus)",
+     "n": 15,
+     "books": 15,
+     "accept": "15/15",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_pages": "0/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "2/15",
+      "E2": "2/15",
+      "O16": "1/15",
+      "O5": "1/15"
+     },
+     "fidelity_mean": 4.93,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6a4927c01bbf4176e1e88175:32",
+       "quote": "nullumque tuberculum",
+       "severity": "cosmetic",
+       "what": "the page prints the abbreviation 'nullumq;'; the candidate silently expands it"
+      },
+      {
+       "page": "69dbcc600f8c5edf20f4aaca:418",
+       "quote": "vt fortitudinem suam ad illum custodiat",
+       "severity": "cosmetic",
+       "what": "the print appears to read 'ad illam'; the candidate gives the expected Augustinian 'illum'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "draft + one Opus image call (route-costs claude_points_per_call (a Sonnet text call; images not metered); correct.mjs at one page a call here)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00148
+     },
+     "counts": true,
+     "contain_answers": "0/15",
+     "contain_reasons": [],
+     "unchanged": "1/15",
+     "skipped": 0
+    },
+    "lite>agy-opus": {
+     "served": "this run's correction of the stored draft, not served (agy claude-opus-5-5-low)",
+     "n": 15,
+     "books": 15,
+     "accept": "15/15",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_pages": "0/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 15
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "T6": "4/15",
+      "O8": "3/15",
+      "O16": "2/15",
+      "O6": "2/15",
+      "E2": "1/15",
+      "O11": "1/15"
+     },
+     "fidelity_mean": 4.73,
+     "commonest": "T6",
+     "examples": [
+      {
+       "page": "69b697c6080b19f98fcf4664:114",
+       "quote": "ſed potiùs\n\n<meta>Catchword: potiùs</meta>",
+       "severity": "cosmetic",
+       "what": "catchword 'potiùs' kept in the body text and also tagged as catchword"
+      },
+      {
+       "page": "69b51eba47b06ecd581960d3:77",
+       "quote": "ita animus unus",
+       "severity": "cosmetic",
+       "what": "The page's text ends at 'ita ani-'. The candidate completed the word and added 'unus' from the catchword 'mus unus', so the catchword is read into the main text."
+      },
+      {
+       "page": "6a42be1097284560a2b08577:29",
+       "quote": "ali-\naliquando*\n\n<meta>Catchword: quando</meta>",
+       "severity": "cosmetic",
+       "what": "The catchword 'quando' is transcribed as body text, continuing 'ali-', and is also tagged as the catchword, so it appears twice."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy claude-opus-5-5-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00148,
+      "agy_share": 0.00000225
+     },
+     "counts": true,
+     "contain_answers": "0/15",
+     "contain_reasons": [],
+     "unchanged": "2/15",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>opus-correct": {
+     "pairs": 15,
+     "identical_text": 1,
+     "fidelity_diff": 1.4,
+     "fidelity_diff_ci": [
+      0.867,
+      1.933
+     ],
+     "worse": "0/15",
+     "better": "12/15",
+     "accept_lost": "0/15",
+     "accept_gained": "7/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": []
+    },
+    "lite -> lite>agy-opus": {
+     "pairs": 15,
+     "identical_text": 2,
+     "fidelity_diff": 1.2,
+     "fidelity_diff_ci": [
+      0.733,
+      1.667
+     ],
+     "worse": "0/15",
+     "better": "12/15",
+     "accept_lost": "0/15",
+     "accept_gained": "7/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": []
+    }
+   }
+  },
+  "german-7545": {
+   "task": "translation",
+   "lang": "German",
+   "frame": {
+    "books": 5881,
+    "routes": {
+     "flash3": {
+      "pages": 299611,
+      "books": 1209
+     },
+     "flash-lite": {
+      "pages": 144623,
+      "books": 988
+     }
+    },
+    "salt": "agy-opus-7545",
+    "books_left_out": 60,
+    "note": "visible German books dated 1500-1800; English newer than the OCR; one page per book, alternating 3 Flash / Flash-Lite served English"
+   },
+   "controls": {
+    "opus-cli": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-opus-tr": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "opus-cli": {
+     "served": "this run's reads, not served (claude-translate.mjs read --model=opus, one page a call)",
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "accept_rate": 0.87,
+     "accept_ci": {
+      "ci95": [
+       0.733,
+       0.967
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.233
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O4": "2/30",
+      "T7": "1/30",
+      "I4": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "12/30",
+      "T10": "12/30",
+      "T15": "8/30",
+      "O8": "5/30",
+      "T6": "5/30",
+      "O6": "4/30",
+      "T5": "2/30",
+      "O4": "2/30",
+      "I4": "2/30",
+      "O5": "1/30",
+      "O11": "1/30",
+      "T7": "1/30",
+      "T8": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 4.1,
+     "commonest": "O4",
+     "examples": [
+      {
+       "page": "6a267f5888f11913ee9c8dbb:8",
+       "quote": "->the Author<-\n->has wished to add these few words<-",
+       "severity": "wrong_text",
+       "what": "'the Author' appears twice in the centred heading, once at the top as well as in the final line, but the page has it only once"
+      },
+      {
+       "page": "69b525db9658af9164709ef7:1",
+       "quote": "**A small redoubt** on the Count of Hohenlohe's side.",
+       "severity": "wrong_text",
+       "what": "The same entry repeats verbatim for items 46–49, and items 39 and 41 also duplicate each other. This comes from a looped source read."
+      },
+      {
+       "page": "6a267f5888f11913ee9c8dbb:8",
+       "quote": "->the Author<-\n->has wished to add these few words<-",
+       "severity": "wrong_text",
+       "what": "'the Author' appears twice in the centred heading, once at the top as well as in the final line, but the page has it only once"
+      }
+     ],
+     "cost": null,
+     "cost_per_usable_page": null,
+     "counts": true
+    },
+    "agy-opus-tr": {
+     "served": "this run's reads, not served (cli-translate.mjs read --model=claude-opus-5-5-low, one page a call)",
+     "n": 26,
+     "books": 26,
+     "accept": "23/26",
+     "accept_rate": 0.88,
+     "accept_ci": {
+      "ci95": [
+       0.769,
+       1
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "2/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.192
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_classes": {
+      "T7": "2/26",
+      "O4": "2/26",
+      "I4": "1/26",
+      "O1": "1/26"
+     },
+     "classes_k_of_n": {
+      "E2": "12/26",
+      "T10": "12/26",
+      "T15": "9/26",
+      "O8": "5/26",
+      "T6": "5/26",
+      "T8": "3/26",
+      "O6": "3/26",
+      "T5": "2/26",
+      "O12": "2/26",
+      "I4": "2/26",
+      "T7": "2/26",
+      "O4": "2/26",
+      "O7": "1/26",
+      "O1": "1/26",
+      "D1": "1/26"
+     },
+     "fidelity_mean": 4.12,
+     "commonest": "T7",
+     "examples": [
+      {
+       "page": "69b525db9658af9164709ef7:1",
+       "quote": "28. **A redoubt** on the Count of Mansfeld's side, by the quarters of the Count of Solms. ... 51. **The quarters of the Count of Mansfeld**, on the Count of Hoh",
+       "severity": "wrong_text",
+       "what": "The source key from item 22 on looks machine-invented. It puts the enemy commander Mansfeld's quarters inside the Dutch siege lines, and the scan's right column has long, varied entries, not these short repeats. The candidate renders all of it as smooth English with no flag."
+      },
+      {
+       "page": "69c84b0e6c6f3cc53c852100:786",
+       "quote": "The Lord himself has said that in the hour some rejoice, that they can do nothing other than good, and that they have earned eternal life through the grace of G",
+       "severity": "wrong_text",
+       "what": "Fluent theological statements over invented source, with no uncertainty marked."
+      },
+      {
+       "page": "69b525db9658af9164709ef7:1",
+       "quote": "28. **A redoubt** on the Count of Mansfeld's side, by the quarters of the Count of Solms. ... 51. **The quarters of the Count of Mansfeld**, on the Count of Hoh",
+       "severity": "wrong_text",
+       "what": "The source key from item 22 on looks machine-invented. It puts the enemy commander Mansfeld's quarters inside the Dutch siege lines, and the scan's right column has long, varied entries, not these short repeats. The candidate renders all of it as smooth English with no flag."
+      }
+     ],
+     "cost": null,
+     "cost_per_usable_page": null,
+     "counts": true
+    }
+   }
+  }
+ },
+ "contain_candidates": []
+}

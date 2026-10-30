@@ -1,0 +1,1449 @@
+{
+ "lang": "el",
+ "pages": 250,
+ "books": 10,
+ "C_outcomes": {
+  "corrected": 185,
+  "contain": 65
+ },
+ "misleading": {
+  "L": [
+   245,
+   [
+    95.4,
+    99.1
+   ]
+  ],
+  "C": [
+   87,
+   [
+    29.2,
+    40.9
+   ]
+  ],
+  "R": [
+   221,
+   [
+    83.8,
+    91.8
+   ]
+  ]
+ },
+ "bar_a_halves": {
+  "C": true,
+  "R": false
+ },
+ "worse_than_L": {
+  "C": 65,
+  "R": 14
+ },
+ "bar_b_no_page_worse": {
+  "C": false,
+  "R": false
+ },
+ "bar_c_C_beats_R": true,
+ "prefer": {
+  "CR": {
+   "C": 173,
+   "R": 59,
+   "tie": 18,
+   "material_loss_R": 155,
+   "material_loss_C": 58
+  },
+  "CL": {
+   "C": 185,
+   "L": 0,
+   "tie": 65,
+   "material_loss_L": 180,
+   "material_loss_C": 0
+  },
+  "RL": {
+   "R": 213,
+   "L": 14,
+   "tie": 23,
+   "material_loss_L": 208,
+   "material_loss_R": 14
+  }
+ },
+ "sign_test_CR_p": 3.54e-14,
+ "route": "C: Opus correction",
+ "contains": [
+  {
+   "slug": "6993898ace15387065947977-p155",
+   "true_contain": false,
+   "reason": "The draft is made up: it is Greek about nosebleeds that does not match this page's text, and it contains a runaway string of thousands of dashes, a column break that is not on the page, and a generic image description, so it cannot be fixed one line at a time."
+  },
+  {
+   "slug": "6993898ace15387065947977-p167",
+   "true_contain": false,
+   "reason": "The draft is a loose paraphrase about Hephaestus and Aphrodite, not a reading of the page's lines, and it garbles the rubric (which begins \"Τίνα ῥητέον πρὸς τὰς τοῦ Σωκράτους ἐπιστάσεις περὶ φιλοχρηματίας…\") and the marginal marks."
+  },
+  {
+   "slug": "6993898ace15387065947977-p180",
+   "true_contain": false,
+   "reason": "The draft is made up: apart from its first few lines it repeats \"καὶ τῆς ἀναπνοῆς\" over and over, and it does not match the handwritten text on this page."
+  },
+  {
+   "slug": "6993898ace15387065947977-p192",
+   "true_contain": false,
+   "reason": "The draft is made up: it is full of the filler \"ὧδε ὧδε ὧδε\" repeated many times and does not follow the lines of this page."
+  },
+  {
+   "slug": "6993898ace15387065947977-p204",
+   "true_contain": false,
+   "reason": "The draft is made up: it loops on \"τῆς οὐσίας ὡς εἶπον οὐδὲ τῆς ἀρχῆς\" and \"τῆς ἐναρίθμου\" instead of transcribing what is written on this page."
+  },
+  {
+   "slug": "6993898ace15387065947977-p216",
+   "true_contain": false,
+   "reason": "The draft is made up: it is unaccented text that keeps repeating \"αληθεια και\" and \"φρονησις\", with invented marginal notes, and it does not match this page."
+  },
+  {
+   "slug": "6993898ace15387065947977-p228",
+   "true_contain": false,
+   "reason": "The draft is largely made up: it invents marginal letters spelling \"ΣΧΟΛΙΟΝ\" and repeated \"μιμεῖσθαι\" phrases, and except for a rough version of the rubric (\"Τίνα … τὸν Ὅμηρον … πολιτικόν\") it does not follow the page's text."
+  },
+  {
+   "slug": "6993898ace15387065947977-p240",
+   "true_contain": false,
+   "reason": "The draft is made up: it repeats \"ἀποδείξεως ἀρχή\" over and over, and its version of the left-margin note does not match the note in the image."
+  },
+  {
+   "slug": "6993898ace15387065947977-p252",
+   "true_contain": false,
+   "reason": "The draft is made up: it repeats the nonsense word \"φρόμοισι\" throughout and does not transcribe this page, which begins \"φρόνιμος λέγουσι…\"."
+  },
+  {
+   "slug": "6993898ace15387065947977-p266",
+   "true_contain": false,
+   "reason": "The draft is a made-up passage about soul and perception that does not follow this page, which begins \"φανερὸν ὅτι τὸ μνημονικὸν καὶ τὸ αἰσθανόμενον…\"."
+  },
+  {
+   "slug": "6993898ace15387065947977-p279",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text: from about the tenth line it repeats invented filler (\"ἄλλο γὰρ\", \"ὕδατι ὕδατι\") that the Greek minuscule on the page does not show, it gives a folio number of 137 where the leaf has 137 and 138, and its marginal gloss \"ἐννοια\" doesn't match the note written beside the sixth line."
+  },
+  {
+   "slug": "6993898ace15387065947977-p291",
+   "true_contain": false,
+   "reason": "The draft's three-line heading roughly matches the page (\"περὶ τοῦ ἐν τῷ πέμπτῳ τῆς πολιτείας λόγου δεικνύντος τίς ἡ τῶν φιλοσόφων φιλομαθία καὶ τίς ἡ τῶν πολλῶν\"), but its body text is invented, built from repeated phrases (\"ὡς ἂν εἴποι τις\", \"ὡς εἴρηται\") that do not match the manuscript's lines."
+  },
+  {
+   "slug": "6993898ace15387065947977-p303",
+   "true_contain": false,
+   "reason": "Apart from a heading close to the page's \"περὶ τοῦ ἐν πολιτείᾳ λόγου τοῦ δεικνύντος τί ποτέ ἐστιν τἀγαθόν\", the draft is invented: its body repeats \"οὐσῶν\", \"φαντασίας\" and \"μᾶς\" where the manuscript reads otherwise, and it misses the marginal notes in the right margin."
+  },
+  {
+   "slug": "6993898ace15387065947977-p316",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text: it is invented filler that keeps repeating \"ἐκείνου\" and adds words like \"θεός\" and \"τύχη\" that the Greek minuscule on the page does not support."
+  },
+  {
+   "slug": "6993898ace15387065947977-p328",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text: it squeezes the page's roughly 35 manuscript lines into four run-on paragraphs of loosely related, largely invented Greek that does not follow the written lines."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p37",
+   "true_contain": false,
+   "reason": "The draft is a passage from Lucian's *True History* (the voyage past the Pillars of Heracles and the river of wine), but this leaf (fol. 6) has a different text, about offerings, a temple and a bull, so the draft was not made from this page."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p66",
+   "true_contain": false,
+   "reason": "Apart from the heading \"περὶ τοῦ οἴκου\", the draft is invented: after a few lines it falls into endless repetition of \"ἃ ἂρ οὐδὲ οἴομαι\", none of which matches the minuscule text on this leaf."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p96",
+   "true_contain": false,
+   "reason": "The draft is an invented story about people on the moon, written as a list of body parts; it does not match this leaf, which describes a sea voyage with winds, islands and coasts."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p121",
+   "true_contain": false,
+   "reason": "The draft for fol. 48 is made-up pseudo-Greek that turns into rows of repeated \"ὅτι\"; neither its main text nor its marginal notes match this leaf, and the right-margin glosses on the page are missing."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p158",
+   "true_contain": false,
+   "reason": "The draft is invented text that turns into endless repetition of \"ἄνθρωπος ἦν\", and its marginal notes are invented too; none of it matches this leaf's text, its line markers or its marginal glosses."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p194",
+   "true_contain": false,
+   "reason": "The draft is pseudo-Greek gibberish that does not match this leaf's minuscule text line by line, and it misses the actual marginal notes on the left."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p214",
+   "true_contain": false,
+   "reason": "Apart from a first word close to the page's opening \"εὐδαιμονεστάτους\", the draft is invented and garbled text that does not follow this leaf, and it leaves out the column of marginal symbols down the left side."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p238",
+   "true_contain": false,
+   "reason": "The draft is a made-up discussion of dance and philosophy that ends in repeated \"ὡς ἂν εἴποιμεν\"; it does not follow this leaf's text, and it misses the real marginal notes."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p267",
+   "true_contain": false,
+   "reason": "The draft for fol. 121 turns into hundreds of repeated \"ἐμὲ\" and does not match this leaf's text; its marginal readings are guesses rather than what the page shows."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p288",
+   "true_contain": false,
+   "reason": "Only the opening words (\"τὸ σῶμα … ἀπὸ δυσουρίας\") match this leaf; after that the draft is garbled invented text with duplicated lines, and it leaves out the note across the top margin and the marginalia on both sides."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p310",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text; its first lines are loosely shaped Greek, then it turns into invented filler that repeats \"ὡς ῥητορικῆς\" over and over, while the image shows about 37 lines of continuous Greek minuscule prose and a marginal note."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p331",
+   "true_contain": false,
+   "reason": "The draft is invented text, mostly the phrase \"ἐπὶ τοῖς οὖσιν\" repeated, and does not match the Greek minuscule prose on this leaf (folio 157 with marginal notes)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p361",
+   "true_contain": false,
+   "reason": "The draft is garbled at the start and from about line 21 on is just \"ς ἄλλο\" repeated, which is invented filler that does not match the Greek minuscule text on this leaf (folio 168)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p389",
+   "true_contain": false,
+   "reason": "The draft is pseudo-Greek nonsense that does not match the leaf; for example, it never gives the plague oracle line \"Φοῖβος ἀκερσεκόμης λοιμοῦ νεφέλην ἀπερύκει\" that the page shows near the bottom (folio 180)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p411",
+   "true_contain": false,
+   "reason": "The draft is invented text made of the same few sentences repeated in a loop, and it does not match the Greek minuscule prose on this leaf (folio 191)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p442",
+   "true_contain": false,
+   "reason": "The draft is invented text, mostly \"ἃ δὲ ῥήματα\" repeated; it leaves out the rubricated title \"περὶ τῆς ἀστρολογίης\" and misreads the opening of the new treatise (\"Ἀμφί τε τοῦ οὐρανοῦ ἀμφί τε ἀστέρων…\") at the foot of the leaf."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p473",
+   "true_contain": false,
+   "reason": "The draft is invented text, mostly \"ἃ δὲ ἀμείψομαι· ἃ δὲ ἐκλείψω\" repeated, and does not match the Greek minuscule prose on this leaf (folio 222), including the rubricated title and the opening of the new treatise near the bottom."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p515",
+   "true_contain": false,
+   "reason": "The draft is an invented moralising passage about ignorant book-buyers, built on a repeated pattern, and is not the text written on this leaf (folio 243)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p552",
+   "true_contain": false,
+   "reason": "The draft is an invented passage about history and the fatherland covering only a few lines, plus a made-up second column, while the leaf has about 39 lines of single-column Greek minuscule text."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p580",
+   "true_contain": false,
+   "reason": "The draft is invented text, mostly \"ὅσα ἐστὶν… ἃ μὲν ἂν ὡς ἂν εἴη\" repeated, and does not match the Greek minuscule prose on this leaf."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p611",
+   "true_contain": false,
+   "reason": "Apart from the opening heading (ἑρμότιμος ἢ περὶ αἱρέσεων) and a few words, the draft is invented Greek that turns into \"ἑρμότιμε\" repeated line after line; it does not match the leaf, and the minuscule at this resolution can't be re-read reliably enough to replace it."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p644",
+   "true_contain": false,
+   "reason": "After a few roughly plausible lines, the draft turns into \"ὥσπερ\" repeated for most of the page, so it is not this leaf's text, and the dense minuscule can't be re-read reliably at this resolution."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p667",
+   "true_contain": false,
+   "reason": "The draft is mostly made-up filler (\"ἐπὶ τῆς ἀληθείας ὡς οὐδὲν ἐστιν\" repeated) that matches none of the leaf's lines, and the dense minuscule can't be re-read reliably at this resolution."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p691",
+   "true_contain": false,
+   "reason": "The draft is invented prose about Hades and the soul that does not match the leaf: it misreads the second dialogue heading (Μενίππου καὶ Αἰακοῦ) as a repeat of the first, and it leaves out the numerous speaker marks and marginal notes; the minuscule can't be re-read reliably at this resolution."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p723",
+   "true_contain": false,
+   "reason": "The draft turns into \"ὡς ἐκείνῳ\" repeated for most of the page and misreads the dialogue heading (Ἀπόλλωνος καὶ Διονύσου) as \"ἀπολλωνος· κλειτονικον\", so it is not this leaf's text, and the minuscule can't be re-read reliably at this resolution."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p32",
+   "true_contain": false,
+   "reason": "The draft is invented: it repeats \"παραλληλογραμμαι τω αυτω\" and \"τω αυτω\" over and over and doesn't match the two columns of Greek minuscule on this leaf, which treat parallelograms (παραλληλόγραμμον, ἑτερόμηκες, ῥόμβος)."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p44",
+   "true_contain": false,
+   "reason": "The draft gives the text of Euclid I.37 (triangles on the same base between the same parallels), but this leaf carries a different proposition about two straight lines constructed inside a triangle from the ends of one side (\"ἐὰν τριγώνου… ἀπὸ τῶν περάτων δύο εὐθεῖαι ἐντὸς συσταθῶσιν\"), along with dense scholia and diagrams."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p59",
+   "true_contain": false,
+   "reason": "The draft is a placeholder plus two invented paragraphs that repeat \"πρὸς τῷδε τῷ σημείῳ, τῇ δὲ αὐτῇ γωνίᾳ, ἃ συνέστηκεν\"; none of it matches this leaf's columns, scholia and diagrams on constructing a triangle from three straight lines and an angle equal to a given rectilinear angle."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p74",
+   "true_contain": false,
+   "reason": "The draft prints the enunciation of Euclid I.35 twice (once per column), but this leaf has the end of I.35's proof, then I.36 (parallelograms on equal bases, ΑΒΓΔ, ΕΖΗΘ) and the start of I.37, together with scholia that the draft leaves out."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p88",
+   "true_contain": false,
+   "reason": "The draft invents a proposition about rectangles in a compound ratio and repeats it in two columns; this leaf actually holds the end of Euclid I.47 with its diagram, the subscription \"ΕΥΚΛΕΙΔΟΥ ΣΤΟΙΧΕΙΩΝ Α\", and then the \"ΕΥΚΛΕΙΔΟΥ ΣΤΟΙΧΕΙΩΝ Β\" definitions and II.1, with scholia."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p101",
+   "true_contain": false,
+   "reason": "The draft repeats one invented sentence about the radius (\"ἥτις ἐστὶν ἡ ἐκ τοῦ κέντρου\") about forty times; this leaf's two columns are a Book II proof about squares and right angles with a rectangle-and-triangle diagram."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p115",
+   "true_contain": false,
+   "reason": "The draft is an invented astrological text (ὡροσκόπον, δωμάτιον, ἀνατέλλον) that isn't on this leaf; the leaf is a Euclid Book III proof about straight lines drawn from a point to a circle and finding a circle's centre, with a circle diagram."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p129",
+   "true_contain": false,
+   "reason": "The draft repeats invented sentences about \"ἀντιπερίστασις\"; this leaf is a Euclid Book III text (completing a circle from a given segment, and equal angles standing on equal arcs in equal circles), with four circle diagrams."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p143",
+   "true_contain": false,
+   "reason": "The draft gives other propositions (two circles touching each other, and circumscribing a circle about a triangle), but this leaf carries the Book IV propositions on inscribing a triangle equiangular with a given one in a circle and circumscribing one about it, with circle-and-triangle diagrams."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p155",
+   "true_contain": false,
+   "reason": "The draft collapses into runaway repetition of \"ἐπὶ τῆς ΑΒ εὐθείας / τῷ πρὸς τῷ Ζ σημείῳ\" for hundreds of lines; this leaf has the end of the pentagon proposition with a circle-and-pentagon diagram, then proposition ΙΕ, which inscribes an equilateral, equiangular hexagon in a circle."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p169",
+   "true_contain": false,
+   "reason": "The draft is invented: it repeats \"ὑπερβολῇ καὶ τῷ\" and then loops \"τὸ αὐτὸ\" for about twenty lines, while this leaf (fol. 80) carries a Euclid Book V proof in two columns, with letter diagrams and scholia in the margins."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p183",
+   "true_contain": false,
+   "reason": "The draft is meaningless unaccented letter strings that run words together, and it does not reproduce this leaf (fol. 87), which has the heading \"κατὰ δὲ σημεῖα\", text from Euclid VI.2–3, a triangle diagram and marginal scholia."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p195",
+   "true_contain": false,
+   "reason": "The draft is a runaway loop of \"πρὸς ὀρθὰς\" repeated hundreds of times and has nothing to do with this leaf (fol. 93), which carries text from Euclid VI.14–15 in two columns, a rectangle diagram and a long marginal scholion."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p208",
+   "true_contain": false,
+   "reason": "The draft is a generic invented Euclid VI.28 text, copied twice, and does not match this leaf, which opens \"τοῦ ζ ὅμοιον ἄρα τὸ αζ…\" and is crowded with scholia at the top, left margin and foot around a square diagram."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p221",
+   "true_contain": false,
+   "reason": "The draft is invented filler that repeats \"μέρος ἄρα καὶ τοῦ γὰρ\", \"σωμαμφότερος\" and \"ἡμέρη\", and does not reproduce this leaf (fol. 106), which carries number-theory propositions from Euclid VII on parts of numbers, with line diagrams."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p234",
+   "true_contain": false,
+   "reason": "The draft is invented text: it repeats \"ἡ α' πρὸς τὴν β'\" about lines and then turns into word salad, while this leaf carries Euclid VII material on least numbers (\"ἐλάχιστοι\") with a diagram, a top scholion and notes in the margins."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p247",
+   "true_contain": false,
+   "reason": "The draft is invented word salad (\"ἡγεμονικὸν\", \"γεωμετρικὸν ἀριθμὸν\", \"πῶμα\", \"ἡμέρας\") and does not match this leaf (fol. 119), which opens \"καὶ ὁ δ ἄρα ἀριθμὸς τὸν β μετρεῖ κατὰ τὰς ἐν αὐτῷ μονάδας\" and continues a Euclid VII proof."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p261",
+   "true_contain": false,
+   "reason": "The draft is meaningless unaccented filler that repeats \"ομοιως\" and \"μετρον\", and does not reproduce this leaf (fol. 126), which carries text from Euclid VII on multiplication of numbers (\"πολλαπλασιάσας… ποιῇ\"), with two line diagrams."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p273",
+   "true_contain": false,
+   "reason": "The draft is a short invented passage on \"πρῶτοι πρὸς ἀλλήλους\", written out twice, and does not match this leaf (fol. 132), which has a three-line scholion at the top and four lines at the foot, two columns of Euclid VIII/IX text with diagrams, and a marginal scholion."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p287",
+   "true_contain": false,
+   "reason": "The draft is invented: summary sentences about commensurables followed by \"ὡς ἐδείχθη\" repeated hundreds of times, while this leaf (fol. 139) carries \"ἄλλως τὸ ϛ\", a scholion at the top and Euclid X propositions on commensurable magnitudes, with diagrams and marginal scholia."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p300",
+   "true_contain": false,
+   "reason": "The draft is not a transcription of this leaf: it gives a generic description and invented placeholder prose instead of the text on the page, which is Euclid, *Elements* Book X in a Byzantine minuscule hand (on ῥητός/σύμμετρος magnitudes), with dense scholia in the top, bottom and left margins and three small rectangle diagrams marked ΙΘ and Κ."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p315",
+   "true_contain": false,
+   "reason": "The draft is invented filler: one sentence about ἀσύμμετροι δυνάμεις is repeated many times in both columns and does not match this leaf, which carries a Euclid *Elements* X text with a semicircle diagram (Α, Ζ, Β, Ε, Γ), folio number 153, and dense scholia at the top, right and bottom."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p330",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text: apart from a few opening words, it is a runaway repetition of \"τῆς ῥα\" for dozens of lines. The leaf is a two-column Euclid *Elements* X page headed ΛΗΜΜΑ, with line diagrams and a two-line numerical scholion at the foot."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p342",
+   "true_contain": false,
+   "reason": "The draft is an invention: it repeats one generic sentence about λόγος in the body, the second column and the margin, but none of it is on this leaf. The leaf has a two-column Euclid *Elements* X text (ἐκ δύο ὀνομάτων, ῥητή, σύμμετρος μήκει) with a divided-rectangle diagram (Α Γ Β / Λ Κ Μ Ν Η), a numerical scholion at the top and marginal notes."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p354",
+   "true_contain": false,
+   "reason": "The draft is not this leaf's text. It is a made-up list of proposition statements about ἀποτομή that does not match the manuscript lines, and it ends with an invented run of numerals. The leaf is a two-column Euclid *Elements* X page with a rectangle diagram (Α Β Γ Δ), proposition numbers ΠΑ and ΠΒ, and a three-line numerical scholion at the foot."
+  }
+ ],
+ "R_unread": 0,
+ "R_filter_cut": 32,
+ "books_failing_25_check_L": 10,
+ "strip": {
+  "visible": 183,
+  "in_L": 8,
+  "in_C": 0,
+  "in_R": 13
+ },
+ "identical_C_L_verdict_mismatch": 0,
+ "worse_C_list": [
+  {
+   "slug": "6993898ace15387065947977-p155",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "No arm reads the page. Y and Z are byte-identical: five invented lines about nosebleeds (αἱμορραγεῖν ... ῥινὸς) then a runaway dash loop, where the hand has πρὸς μὲν οὖν τὰ τοιαῦτα ... and a short dash lacuna in line 6; X is a blocked-request stub."
+  },
+  {
+   "slug": "6993898ace15387065947977-p167",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y and Z are identical and mostly invented (συζεύξασθαι, πυροφάγῳ) with a garbled chapter title (Πληρωτέον ... παρόμης); X gets the title right (Τίνα ῥητέον ... φιλοχρηματίας, τῆς παρ' Ὁμήρῳ) and the gist of the Hephaestus/Aphrodite passage, but misreads lines (ἄξιος ὁ μῆρος for ἣ καὶ Ὅμηρος, drops ὁ Τίμαιος)."
+  },
+  {
+   "slug": "6993898ace15387065947977-p180",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X and Z are identical repetition loops (καὶ τῆς ἀναπνοῆς ...). Y keeps the line structure and some true words (τῆς τοῦ σώματος ἁρμονίας, ὁμολογῶν, ἡμῖν αὐτοῖς) but misreads most lines and invents 'οἱ περὶ Ἀναξαγόραν'; misleading too, though far better. Hard hand; checked the top third."
+  },
+  {
+   "slug": "6993898ace15387065947977-p192",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "No arm reads the page: X and Z are identical invented text collapsing into an 'ὧδε ὧδε ὧδε' loop; Y is a blocked-request stub with four words. Not zoomed beyond the overview since none offers a reading to check."
+  },
+  {
+   "slug": "6993898ace15387065947977-p204",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X and Z are identical loops (τῆς οὐσίας ὡς εἶπον οὐδὲ τῆς ἀρχῆς). Y keeps the structure (α/β/γ marginal numerals, τὴν μὲν ἀρίστην καὶ τελεωτάτην, ἄρρητον) but misreads key lines (συγγράψαι for συνάπτεται, invented ἄφρων οὕτω παρανοῦσα); misleading, but the better read."
+  },
+  {
+   "slug": "6993898ace15387065947977-p216",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "No arm reads the page: X and Y are identical unaccented loops ('αληθεια και αληθεια και ... η φρονησις'); Z is a blocked-request stub with no text. Not zoomed since no arm offers a reading to check."
+  },
+  {
+   "slug": "6993898ace15387065947977-p228",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y gets the uncial chapter title nearly right (τίνα ἄν τις ἀπολογήσαιτο πρὸς τοὺς ἐλέγχοντας λόγους, ὡς οὐκ ὄντα τὸν Ὅμηρον ἀνθρώπων παιδευτικόν) and the gist of the upper block, but misreads many lines (πρὸ μόσχατος, ἵππος ὄνος); X=Z garble the title and repeat lines. All misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p240",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "No arm reads the page: Y and Z are identical repetition loops (ἀποδείξεως ἀρχὴ ἀποδείξεως ...); X is a blocked-request stub. Not zoomed since no arm offers a reading to check."
+  },
+  {
+   "slug": "6993898ace15387065947977-p252",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z are a 'φρόμοισι' loop. Y has the line structure and many true words (τὴν δικαιοσύνην ... φύσει; ἐπὶ τὰς τῶν ψυχικῶν μορίων; τριχῇ) but misreads key verbs (καθαρίζειν/ῥυθμίζομεν for μερίζεται) and invents ῥυθμοῖς; misleading, but the better read."
+  },
+  {
+   "slug": "6993898ace15387065947977-p266",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "All misread the first line (τὸ μνημονικὸν καὶ τὸ αἰσθανόμενον ἕτερον). Z keeps more of the middle (τῶν παιδευομένων ὑπ' αὐτῆς; Πορφύρι-; περὶ τῶν μορίων τῆς ψυχῆς; μέρη ποιοῦντος καὶ διαιροῦντος, τριμερῆ) though it garbles Longinus; X=Y lose Porphyry and fall into repetition in the second half."
+  },
+  {
+   "slug": "6993898ace15387065947977-p279",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y collapse into 'ἄλλο γὰρ ἄλλο γὰρ' / 'ὕδατι ὕδατι'. Z has the right topic and some words (ταῖς γυναιξὶ, ὄργανα, ἐν τοῖς ὁμολογουμένοις, ἔργοις ἐρρωμενέστεροι, ὑφάνσεως) but misreads the opening (ἄμοιρα ἦμεν for ἀνδρῶν εἶναι) and much else; misleading, but the better read."
+  },
+  {
+   "slug": "6993898ace15387065947977-p291",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X follows the hand line by line (ἀτεροτάτας φύσεις ἔχοντας ... ὑποδέχεσθαι καὶ παιδεύειν; μόνοις ἀνδράσιν; ὕλην — — — ; correct title περὶ τοῦ ἐν τῷ πέμπτῳ τῆς πολιτείας λόγου) but loses 'οὐ μέντοι τὴν ἀκροτάτην τῶν ἀρχῶν', so still misleading; Y=Z are an 'ὡς ἂν εἴποι τις' loop."
+  },
+  {
+   "slug": "6993898ace15387065947977-p303",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z reads the title and the opening of the new chapter well (τοὺς γνησίως φιλομαθεῖς ... ὁ Σωκράτης ἄρχοντας τῆς ἀρίστης πολιτείας) but adds a negation (μὴ θαρροῦντας) and garbles the upper block; X=Y are a 'μᾶς ... οὐσῶν ... φαντασίαι' loop around a roughly-right title. All misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p316",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "No arm reads the page. X=Y are an 'ἐκείνου ἐκείνου' loop; Z is fluent-looking invention (ὥσπερ ἡλίου, μεθεξιοδικαμόσεθαι) where the hand argues the Good is neither δοξαστόν nor ἐπιστητόν. Each keeps a few true words (τοῦ ἀγαθοῦ ἰδέας ἀξιοῖ, μάθημα ἔσχατον); no basis to prefer one."
+  },
+  {
+   "slug": "6993898ace15387065947977-p328",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y follows the line structure and gets much of the Divided Line passage (ἀνάλογον ἔσται; τὰ ἐν τοῖς ἐσόπτροις φανταζόμενα, εἰκόνας προσαγορεύσας; τέταρτον τμήματος ... γραμμῆς; τοῦ νοουμένου) but misreads ζῷον/σκεύη and κοινῶς (μὰ Δί᾽); X=Z run the page into paragraphs of invented text (πνεύματος). All misleading; Y the better read."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p37",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y=Z recite Lucian's True History (wine river, Heracles' footprints), not this page; X follows the page's lines but misreads names: 'εἰ βαβυλωνίοις' where the hand has Λυδοῖς/Πέρσαις/Φοίνιξιν, 'ἐνδοξείωσιν' for 'ἐν Δελφοῖς'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p66",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y collapse into a loop ('ἃ ἂρ οὐδὲ οἴομαι') for most of the page; Z reads every line but misreads, e.g. 'ταλὰς ἀνδρὸς μὲν ἐπεθύμησεν ἐπὶ πλεῖον δαπανᾶσθαι' for 'Ἀλέξανδρος μὲν ἐπεθύμησεν ἐν τῷ Κύδνῳ λούσασθαι'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p96",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z invent fluent moon-people text in a formula ('καὶ οὐκ ἔχουσιν ..., ἀλλὰ διὰ τῶν σωμάτων αὐτῶν') that a reader would take as the page; Y is an API refusal after 'ὅσον δὲ' — empty but not misleading about content, so preferred."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p121",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Hard page. X=Y track letters for ~30 lines in gibberish ('ὁ δὲ ἀρισταίμων' ~ Ἀρισταίνετος) then loop 'ὅτι ὅτι'; Z is fluent but largely invented ('τὸ ἄῤῥυθμον μιμούμενος', Heracles). Neither gives the reader the page; called a tie."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p158",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z degrade into 'ἄνθρωπος ἦν' repeated for most of the page; Y reads the whole page and the foot scholia ('ἀκροβολισμὸς λέγεται ... βάλλουσι τοῖς βόλοις') fairly well, though the body is heavily misread."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p194",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y are letter-salad ('θραπιομβαταδρα μαμᾶτὸ'); Z follows Icaromenippus but turns the school names into 'γηΐνους ... ἀλαζονεύματοις ... ἐπίλευκοις' for Στωϊκούς/Ἀκαδημαϊκούς/Ἐπικουρείους."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p214",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X keeps the line structure and many words of Charon (Croesus, Pythian gold) though it misreads ('τοὺς τῆς ἑορτῆς φαύλως' for 'τοὺς τῆς ἱερείας παῖδας'); Y=Z slide into non-words ('λυμόμομαι καὶ περὶ μάλτον')."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p238",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Both misread throughout; X keeps the page's sequence and words (πυρρίχην, τραγῳδῶν, παρρησία), Y=Z drift into generic phrases and end looping 'ὡς ἂν εἴποιμεν'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p267",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y=Z loop 'ἐμὲ ἐμὲ' for two thirds of the page; X reads every line, garbled but grounded, and keeps the marginal 'χύτραις ...' and 'κεκλώνων'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p288",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z is readable De parasito but invents the pairs ('τὸ νομίζειν ... παρανομίζειν' for 'τὸ ἱππεύειν ἢ τὸ παριππεύειν'); X=Y degrade into gibberish and a repeated line. Z clearly better."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p310",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "De mercede conductis 1. Both misread the opening ('μυστικῶν' / 'μουσεῖα' for μουσικούς); X=Z then loop 'ὡς ῥητορικῆς' over the last third, Y covers the whole page."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p331",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y loop 'ἐπὶ τοῖς οὖσιν'; Z is misread but keeps real Anacharsis sentences ('ὅπως οἱ πολῖται ἀγαθοὶ ... ἰσχυροὶ δὲ τὰ σώματ'). Z clearly better."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p361",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X is an API refusal (no text); Y=Z give ~20 lines of non-words then loop 'ς ἄλλο'. Neither gives the reader the page; called a tie."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p389",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y reads the first line nearly right ('συνιδὼν δὲ ὅτι ἂν μὲν τοῖς πλουσίοις') then is blocked; X=Z run the whole page in near-gibberish ('ἐπὶ φοῖκος ἁλις ῥύομεῖνο λοιμοῦ' for the Phoebus oracle). Neither is usable; tie."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p411",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y invent six fluent lines and repeat them three times; Z starts right ('εὐνοέοντας ἐπαραμένους' ~ εὐνοοῦντας ἐπαραμυθεῖν) and is then blocked. An empty page misleads less than invented text."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p442",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y loop 'ἃ δὲ ῥήματα'; Z reads the page but titles the new work 'περὶ μετεωρολογίας' where the hand has 'περὶ τῆς ἀστρολογίας'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p473",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y loop 'ἃ δὲ ἀμείψομαι· ἃ δὲ ἐκλείψω'; Z reads the page and the heading but miscalls the title 'Ἐνδολογιστικὴ' for 'Ψευδολογιστής'."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p515",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z write an invented homily on the ignorant book-collector ('ὥσπερ ὁ ἵππος, κἂν χρύσεον χαλινὸν ἔχῃ'), not this dialogue; Y keeps the ξενι/φι sigla and reads the lines, though misread, and transcribes the facing-page strip as a margin."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p552",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y=Z give ten invented, repetitive lines ('τὰς ἀρετὰς τῶν ἀρχαίων μαθητῶν') and drop the rest; X covers the page with misreads ('πρέσβεις εἰς Ῥώμην')."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p580",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z loop 'ὅσα ἐστὶν ... ὡς ἂν εἴη' from the first lines; Y is fluent and largely misread but follows the page and hits its words (συμπολιτευομένους, χρυσοστόμους, μορίοις, τρόπαια)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p611",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Both misread the Hermotimus opening; X=Y then loop 'ἑρμότιμε' over the last third, while Z covers the page (and transcribes the facing-page strip as a margin)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p644",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z start close ('μέχρι μὲν δὴ θαυμάσιον') then loop 'ὥσπερ'; Y misreads from the first line ('μέγα μὲν φρονεῖν') but covers the page and its words (μυριάδας, ἐπὶ τὴν διαφορὰν δυνάμεως)."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p667",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y loop 'ἐπὶ τῆς ἀληθείας'; Z covers the page with misreads ('ὑπὸ μὲν ἑτέρων' for 'ὑπὸ μητέρων', 'σοφιστὰς τρίτον')."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p691",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y=Z invent a fluent Menippus-Hermes exchange ('ὅθεν καὶ οὐκ ἔχουσι ...') under the right title; X keeps the sigla and both headings but misreads ('ΜΕΝΙΠΠΟΥ ΚΑΙ ἘΛΙΣΣΟΥ' for ΑΙΑΚΟΥ, 'οἱ δεκοί' for 'οἱ καλοί')."
+  },
+  {
+   "slug": "699383a150654cbbe29179f7-p723",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y invent 'ὁ δὲ θρασύμαχος' and loop 'ὡς ἐκείνῳ'; Z reads the Hermes-Pan close and the Apollo-Dionysus heading and opening, misreading the ΠΑ siglum as 'Ἀ' and many words."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p32",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y=Z collapse into a \"τω αυτω\" repetition loop; X opens right (\"τῶν δὲ παραλληλογράμμων τὰ μὲν … ἑτερομήκη … ῥόμβοι\") but misreads \"οὐδέτερα τούτων ὥσπερ ῥομβοειδῆ\" and turns much of the right column into fluent invention."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p44",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Page is Elements I.21; X gives I.21 in good order but drops the large left-margin scholion; Y=Z serve I.37 (\"ἐπὶ τῆς αὐτῆς βάσεως … τρίγωνα\"), text that is not on this leaf."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p59",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y loop \"πρὸς τῷδε τῷ σημείῳ\"; Z invents the I.22 column (\"παραλληλόγραμμα ἑρμηνεύομεν\") but gets the I.23 enunciation \"πρὸς τῇ δοθείσῃ εὐθείᾳ … συστήσασθαι\" right."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p74",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z gives I.36 and I.37 correctly but runs I.37 past the page end (\"τὰ δὲ τῶν ἴσων ἡμίση …\"); X=Y repeat I.35 twice, which is not this page's text."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p88",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y gets the Book II definitions and II.1 right (\"Πᾶν παραλληλόγραμμον ὀρθογώνιον περιέχεσθαι λέγεται …\") but garbles the end of I.48 and appends text from the next leaf; X=Z invent a ratio theorem and duplicate it."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p101",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z loop \"πρὸς ὀρθὰς τῇ περιφερείᾳ\"; Y follows II.10 in places (\"ἐκβεβλήσθωσαν καὶ συμπιπτέτωσαν κατὰ τὸ ζ\") but invents whole lines (\"βοήσει με αἰδὼς … τρεῖς ἄνδρας\")."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p115",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Z invent an astrological text (\"ὡροσκόπου … ἀνατέλλοντος\"); Y keeps the III.9 argument (\"κέντρον ἐστὶ τοῦ αὐτοῦ κύκλου· ἐπεζεύχθωσαν γὰρ\") but garbles many lines."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p129",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X gives III.25 and the III.26 enunciation (\"Ἐν τοῖς ἴσοις κύκλοις αἱ ἴσαι γωνίαι …\") but adds ~13 lines from the previous leaf; Y=Z have no main text, only an invented \"ἀντιπερίστασις\" loop."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p143",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z has IV.2 and IV.3 essentially right (\"Περὶ τὸν δοθέντα κύκλον τῷ δοθέντι τριγώνῳ ἰσογώνιον τρίγωνον περιγράψαι\") but invents the top scholion and a four-line bridge; X=Y serve III.12 and IV.5, which are not this page."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p155",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y transcribes IV.15 faithfully (\"Εἰς τὸν δοθέντα κύκλον ἑξάγωνον ἰσόπλευρόν τε καὶ ἰσογώνιον ἐγγράψαι …\"), with the end of IV.14 loosely paraphrased; X=Z loop on \"τῆς ΑΒ εὐθείας\"."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p169",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y carries V.12 (\"Ἐὰν ᾖ ὁποσαοῦν μεγέθη ἀνάλογον …\") correctly, but garbles several proof lines and invents the foot scholion; X=Z degenerate into \"τὸ αὐτὸ\" loops."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p183",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Both fail on VI.2–3: X=Z are unreadable letter-strings (\"αμωσμαντουδβτριγομομ\"); Y keeps the shape of the proof (\"ὑπὸ γὰρ τὸ αὐτὸ ὕψος ὄντα … ὡς αἱ βάσεις\") but invents phrasing (\"ἀμμισθὰν\", \"ἠλεγμένοις\")."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p195",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y has the VI.16 proof that is on the page (\"Ἤχθωσαν γὰρ ἀπὸ τῶν Α, Γ … πρὸς ὀρθὰς αἱ ΑΗ, ΓΘ\"), but prepends all of VI.14 and drops the converse; X=Z loop \"πρὸς ὀρθὰς\"."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p208",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z carries VI.28 correctly (\"Παρὰ τὴν δοθεῖσαν εὐθεῖαν τῷ δοθέντι εὐθυγράμμῳ ἴσον παραλληλόγραμμον παραβαλεῖν ἐλλεῖπον …\") but garbles the end of VI.27 and omits the scholia; X=Y invent an enunciation and duplicate it."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p221",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X gives the VII.9 enunciation and proof frame (\"Ἐὰν ἀριθμὸς ἀριθμοῦ μέρος ᾖ, καὶ ἕτερος ἑτέρου τὸ αὐτὸ μέρος …\"), with fluent garble in the VII.8 lines; Y=Z are word salad (\"τοῦ γὰρ μέρος ἄρα … ἡμέρη\")."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p234",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X gives VII.34 correctly (\"Δύο ἀριθμῶν δοθέντων ἀριθμὸν ἐλάχιστον εὑρεῖν ὃν μετροῦσιν …\") but garbles the left column; Y=Z invent a ratio argument and lapse into word salad."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p247",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z follows the VIII.2 proof but repeatedly reads \"ἡ Γ μονὰς\" as \"ἡγεμόνας\" and garbles the close; X=Y are invented word salad (\"ἡγεμονικὸν … πῶμα\")."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p261",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Both misleading. Z echoes the topic (\"δύο μέσοι ἀνάλογον\", \"ἑαυτὸν πολλαπλασιάσας\") but turns solids into cubes and compresses two columns; X=Y repeat \"ομοιως\"."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p273",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Neither reads the page: X=Z repeat a garbled IX.16/17 enunciation (\"οὐκ ἔσται ὡς ὁ πρῶτος πρὸς τὸν δεύτερον\"), Y invents the left column and serves VII.21 for IX.20. Tie."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p287",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X has X.7, X.8 and the X.9 enunciation (\"Τὰ ἀπὸ τῶν μήκει συμμέτρων εὐθειῶν τετράγωνα …\") but drops the porism column and the scholia; Y=Z degenerate into \"ὡς ἐδείχθη\" loops."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p300",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "X=Y describe instead of transcribing (\"The manuscript contains dense … text\"); Z gets X.20 (\"Ἐὰν ῥητὸν παρὰ ῥητὴν παραβληθῇ, πλάτος ποιεῖ ῥητήν …\") right but garbles the left column (\"βλείᾳ\")."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p315",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z has the topic and X.37 heading (\"καλείσθω δὲ ἐκ δύο μέσων πρώτη\") but reads \"ῥηταί\" as \"ὀνόματα\" and invents \"ἀποτομή\" conclusions; X=Y loop on \"αἱ δυνάμεις τῶν ἀσυμμέτρων\"."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p330",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Z's first lines match (\"ὃν τετράγωνος ἀριθμὸς πρὸς τετράγωνον ἀριθμόν· οὐδὲ τὸ ἀπὸ …\") before drifting into invention, and the lemma is fluent nonsense (\"ἰσοπάλη\"); X=Y loop \"τῆς ῥα\"."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p342",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Neither is usable. X=Y give one invented sentence; Z is fluent but wrong throughout (\"παραλληλόγραμμος\" where the page has \"ἐκ δύο ὀνομάτων\"). Tie."
+  },
+  {
+   "slug": "6993881574305116d72cef37-p354",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Y tracks X.80–81 (\"τῇ ἄρα μέσῃ ἀποτομῇ ἑτέρα μία μόνον προσαρμόζει …\") through heavy garble; X=Z invent a classification of apotomes that is not on the page."
+  }
+ ],
+ "worse_R_list": [
+  {
+   "slug": "6993898ace15387065947977-p45",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z tracks the hand (ἀλλοιοῦσθαι ..., τῶν μερικῶν ψυχῶν / κατιουσῶν καὶ ἀνιουσῶν, ... μήθ' ὑφ' ἑαυτοῦ μήθ' ὑπ' ἄλλου) and the three τύποι; X is a blocked-request stub with five words of text; Y is fluent-looking gibberish (οὖν οὖν οὖν). X vs Y both worthless; Y preferred only because it at least spans the page, still misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p57",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y matches the hand line by line (ἀνατραφέντας οὖν ποιηταῖς τοῖς τοιούτοις / συντρόφους ὄντας ... / καὶ ἀπλάστων μιμήσεως, σημείωσαι sign in margin); Z keeps some anchor words but invents most lines (ἀρετῇ τραφῆναι, ἁρμονίουσαν); X is a blocked-request stub. Z beats X only because some lines are right."
+  },
+  {
+   "slug": "6993898ace15387065947977-p94",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z reads the hand (ἐν τοῖς ἀϊδίοις γένεσιν περιέχεσθαι τὴν αἰτίαν· ἃ δὴ καὶ οἱ τῶν ἱερῶν θεσμῶν ἡγεμόνες κατανοήσαντες, περιόδοις ὡρισμέναις); Y keeps anchor words but garbles every line and invents a margin note; X is a blocked-request stub. Y over X only because it covers the page, both misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p107",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads the page (ἔξεστι λέγειν αὐτοὺς μὲν τοὺς θεοὺς ἀμερίστως ἀλλήλοις συμφύεσθαι ... ἀποτεμαχιζούσας καὶ διαιρούσας); Z is unaccented near-gibberish that keeps some syllable shapes; X is a blocked-request stub. Z over X only for covering the page; both misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p119",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads the hand including the diple-marked Iliad quotation (ὣς μὲν καὶ Πηλῆϊ θεοὶ δόσαν ἀγλαὰ δῶρα), with flagged gaps; Z drops Plato/Homer (δουσι γὰρ ἡμῖν οἷς ...) and turns the Homer lines into gibberish; Y is a blocked-request stub. Z over Y only for coverage; both misleading."
+  },
+  {
+   "slug": "6993898ace15387065947977-p143",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads the hand where it commits (προσπερονῶσι μὲν αὐτὰς καὶ προσηλοῦσι τοῖς σώμασιν; ἦχος τρισμῷ παραπλήσιος; τὰ ὑπὸ γῆς δικαστήρια καὶ τοὺς ποταμούς), leaving flagged gaps; Z is invented prose keeping a few anchor words; X is a blocked-request stub."
+  },
+  {
+   "slug": "6993831850654cbbe2916010-p186",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z is a refusal message, the whole page lost; X inverts two negations (οὐκ ηλήτειρα for εὐκηλήτειρα, ὦ μάλα χαίρε for οὐ μάλα χαίρων); Y faithful incl. the struck-through Ἔνδρυον."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p30",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X is a filter-block message (page omitted). Y reads the abbreviations right (κύκλος, ὀρθός ἐστι πρὸς τὸν ηκ, ἐν ᾧ ἄρα χρόνῳ); Z turns κύκλος into 'πηλ' and replaces abbreviations with image-desc."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p63",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'ἐν πλείονι ἄρα χρόνῳ ἀνατέλλει τὸ μετὰ τὸν καρκίνον ἡμικύκλιον' faithfully; Z has 'Κρονίνον ἐπικύκλιον' and 'ἐπαφήν'; X blocked."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p69",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z reads ἀνατέλλει/δύσει, 'μετακεκινήσθω γὰρ ... ὁ τῶν ζῳδίων κύκλος', 'κατὰ διάμετρόν ἐστι τὸ ζ σημεῖον'; X turns rise/set into ἀναλύει/δάνει; Y is a filter block."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p109",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'ἐν ᾧ ἄρα χρόνῳ ἡ δμ περιφέρεια ἀνατέλλει, ἐν τούτῳ ἡ πκ δύνει'; Z garbles to 'μισοῦμεν', 'χεῖρον', 'ἀναλήψει'; X blocked (both near-empty)."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p141",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y reads 'οὐκ ἐν ἴσῳ χρόνῳ διεξίασι τὸ ἀφανὲς ἡμισφαίριον, ἀλλ' ἐν πλείονι'; X stops after 6 lines (filter block); Z is nonce-words ('χομεινὸς δὲ βροτῶν', 'ἀλδόνι')."
+  },
+  {
+   "slug": "6993832950654cbbe29163fb-p154",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "X reads 'δοκεῖ δὲ ὁρᾶσθαι διὰ τὸ κινεῖσθαι τὰς ὄψεις ὑπερβολῇ τάχους'; Y garbles to 'οἰκίδος', 'αἰτίαν βιαίαν'; Z is a filter block."
+  },
+  {
+   "slug": "69e8b23d2ff2a8dc09e77073-p138",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z is an engine refusal message with no text. X leaves ~80% illegible but what it reads is right ('χαροπός, λευκόχρως', 'τάχα δὲ οὐδὲ κατ' αὐτήν', 'ὁ Ἄρατος'); Y covers the page but as garble ('ἁμαρτῶν' recurring, 'Σκεπτικὸν μὲν οὖν ... πολιτείαν')."
+  }
+ ],
+ "judge2": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "drawn": 30,
+  "parsed": 30,
+  "gemini_prefer": {
+   "C": 13,
+   "R": 17,
+   "tie": 0
+  },
+  "opus_prefer_same_pages": {
+   "C": 13,
+   "R": 13,
+   "tie": 4
+  },
+  "gemini_misleading": {
+   "C": 16,
+   "R": 11
+  },
+  "opus_misleading_same_pages": {
+   "C": 14,
+   "R": 25
+  },
+  "pages": [
+   {
+    "slug": "6993898ace15387065947977-p45",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993898ace15387065947977-p167",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993898ace15387065947977-p204",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993898ace15387065947977-p266",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p238",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p267",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p331",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p389",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "tie",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p580",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699383a150654cbbe29179f7-p644",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993881574305116d72cef37-p101",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993881574305116d72cef37-p208",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993881574305116d72cef37-p221",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993881574305116d72cef37-p234",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993890e0f04c37dcfa6065c-p30",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993890e0f04c37dcfa6065c-p155",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993890e0f04c37dcfa6065c-p167",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993831850654cbbe2916010-p172",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6993831850654cbbe2916010-p279",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6993831850654cbbe2916010-p350",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6993831850654cbbe2916010-p364",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6993881f74305116d72cf3c3-p241",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993832950654cbbe29163fb-p130",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993832950654cbbe29163fb-p141",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "6993832950654cbbe29163fb-p185",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69b51ebb47b06ecd581961e6-p110",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699389e61075be7d320556aa-p358",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "699389e61075be7d320556aa-p445",
+    "gemini": "C",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "699389e61075be7d320556aa-p618",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69e8b23d2ff2a8dc09e77073-p118",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "misleading",
+    "opus_R": "misleading"
+   }
+  ]
+ },
+ "claude_correction_tokens": {
+  "calls": 46,
+  "input": 768,
+  "output": 1182598,
+  "cache_read": 6811709,
+  "list_cost_usd": 42.05
+ },
+ "by_book": [
+  {
+   "book_id": "6993898ace15387065947977",
+   "title": "Proclus, Commentary on Plato Republic",
+   "n": 25,
+   "L": 25,
+   "C": 15,
+   "R": 25,
+   "worse_C": 15,
+   "worse_R": 6,
+   "CR": {
+    "C": 10,
+    "R": 10,
+    "tie": 5
+   },
+   "outcomes": {
+    "corrected": 10,
+    "contain": 15
+   }
+  },
+  {
+   "book_id": "699383a150654cbbe29179f7",
+   "title": "Lucian of Samosata (MS, 9th-10th c.)",
+   "n": 25,
+   "L": 25,
+   "C": 25,
+   "R": 25,
+   "worse_C": 25,
+   "worse_R": 0,
+   "CR": {
+    "C": 0,
+    "R": 22,
+    "tie": 3
+   },
+   "outcomes": {
+    "contain": 25
+   }
+  },
+  {
+   "book_id": "6993881574305116d72cef37",
+   "title": "Euclid, Elements (Books I-XIII)",
+   "n": 25,
+   "L": 25,
+   "C": 25,
+   "R": 24,
+   "worse_C": 25,
+   "worse_R": 0,
+   "CR": {
+    "C": 0,
+    "R": 23,
+    "tie": 2
+   },
+   "outcomes": {
+    "contain": 25
+   }
+  },
+  {
+   "book_id": "6993890e0f04c37dcfa6065c",
+   "title": "Proclus, Commentary on the Republic",
+   "n": 25,
+   "L": 25,
+   "C": 2,
+   "R": 25,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 25,
+    "R": 0,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6993831850654cbbe2916010",
+   "title": "Hesiod, Cebes, Theognis and Homerocentones (MS)",
+   "n": 25,
+   "L": 20,
+   "C": 1,
+   "R": 11,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 17,
+    "R": 2,
+    "tie": 6
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6993881f74305116d72cf3c3",
+   "title": "Plato, Republic and Timaeus",
+   "n": 25,
+   "L": 25,
+   "C": 4,
+   "R": 17,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 23,
+    "R": 1,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "6993832950654cbbe29163fb",
+   "title": "Euclid, Phaenomena and Optics (MS)",
+   "n": 25,
+   "L": 25,
+   "C": 0,
+   "R": 20,
+   "worse_C": 0,
+   "worse_R": 6,
+   "CR": {
+    "C": 25,
+    "R": 0,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51ebb47b06ecd581961e6",
+   "title": "Eiusdem Iamblichi in epistolam Porphyrii - BSB Cod.graec. 361 b",
+   "n": 25,
+   "L": 25,
+   "C": 1,
+   "R": 25,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 25,
+    "R": 0,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "699389e61075be7d320556aa",
+   "title": "Origen, Homiliae in Psalmos (29 homilies, discovered 2012)",
+   "n": 25,
+   "L": 25,
+   "C": 4,
+   "R": 24,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 24,
+    "R": 0,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e8b23d2ff2a8dc09e77073",
+   "title": "Sextus Empiricus (manuscript)",
+   "n": 25,
+   "L": 25,
+   "C": 10,
+   "R": 25,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 24,
+    "R": 1,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  }
+ ]
+}

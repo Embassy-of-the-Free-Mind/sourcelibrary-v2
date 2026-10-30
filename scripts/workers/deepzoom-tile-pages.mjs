@@ -47,7 +47,7 @@ const FORCE = has('--force');
 const TILE_SIZE = 256;
 const OVERLAP = 1;
 const JPEG_QUALITY = 85;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 if (!PROVIDERS.length && !BOOK_ID) {
   console.error('Pass --providers <a,b> or --book-id <id>.');

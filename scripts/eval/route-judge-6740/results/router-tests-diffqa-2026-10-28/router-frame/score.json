@@ -1,0 +1,780 @@
+{
+ "generated_at": "2026-10-28T10:52:46.819Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 152,
+  "unparsed": 0,
+  "list_usd_equiv": 10.29
+ },
+ "meter": null,
+ "cells": {
+  "latin": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "pages": 225,
+    "books": 9,
+    "note": "the pilot's pages (2026-10-25); #5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out",
+    "pilot_pages": 30,
+    "still_lite": 30
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low+diffqa-r1": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low+diffqa": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 9,
+     "accept": "17/30",
+     "accept_rate": 0.57,
+     "accept_ci": {
+      "ci95": [
+       0.29,
+       0.857
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "12/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.143,
+       0.667
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O5": "9/30",
+      "O6": "7/30",
+      "O4": "2/30",
+      "O12": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "21/30",
+      "O5": "12/30",
+      "E2": "11/30",
+      "O12": "9/30",
+      "O8": "9/30",
+      "O16": "8/30",
+      "T6": "5/30",
+      "O4": "2/30",
+      "O10": "2/30",
+      "D1": "2/30",
+      "O11": "2/30",
+      "O17": "1/30",
+      "O14": "1/30"
+     },
+     "fidelity_mean": 3.77,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b51eba47b06ecd581960d3:141",
+       "quote": "quid sit ignis, & reliqua. & quæ dicturus est",
+       "severity": "wrong_text",
+       "what": "drops 'Proponens in his Plato', the main verb and subject of the sentence"
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "illicò materia extruditur",
+       "severity": "wrong_text",
+       "what": "'à' is dropped: the page reads 'illicò à materia extruditur'"
+      },
+      {
+       "page": "69b51eba47b06ecd581960d3:160",
+       "quote": "pyramidis apex siue angulus solidus multo longius latus.",
+       "severity": "wrong_text",
+       "what": "drops 'erit maior angulis planis, ex quibus componitur: quia basis pyramidis integer æquilater est, & quasi' (about two lines) and fuses the remnants into a non-sentence"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "Flash-Lite Batch list price"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00261
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>opus-correct": {
+     "served": "experiment read, not served (#5924 oc-reads)",
+     "n": 30,
+     "books": 9,
+     "accept": "30/30",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "7/30",
+      "O8": "5/30",
+      "O12": "4/30",
+      "D1": "4/30",
+      "O16": "3/30",
+      "O6": "3/30",
+      "T6": "2/30",
+      "O11": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 4.83,
+     "commonest": "E2",
+     "examples": [
+      {
+       "page": "69b638be1c1c21a373839d77:294",
+       "quote": "q tecu sunt. Scimus quia peccauimus in deu",
+       "severity": "cosmetic",
+       "what": "Abbreviation marks are dropped in the early lines (tecū, deū, consiliū, dederūt) but kept later (respōdēs, eū), so the convention is inconsistent within the page."
+      },
+      {
+       "page": "69dc557bcb6f7429748b8d13:85",
+       "quote": "<vocab>Aristoteles, philosophia, phisica, vegetabilia, plante, animalia, methaphisica, theoria, mathesis, mathematica</vocab>",
+       "severity": "cosmetic",
+       "what": "added keyword list that is not on the page; it is outside the transcribed text"
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "quote": "| ⊕ | 10000 | Ↄ | 5000 |",
+       "severity": "cosmetic",
+       "what": "special glyphs (target-circle, D with inner arc) only approximated by Unicode, as the note already says"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "lite + one Opus call (route-costs claude_points_per_call (a Sonnet text call; images not metered))"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00148
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 9,
+     "accept": "24/30",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.677,
+       0.931
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "4/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.036,
+       0.226
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O12": "1/30",
+      "O6": "1/30",
+      "O5": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "16/30",
+      "E2": "10/30",
+      "O8": "9/30",
+      "O12": "5/30",
+      "O11": "5/30",
+      "O5": "5/30",
+      "O10": "3/30",
+      "T6": "3/30",
+      "O17": "1/30",
+      "O7": "1/30",
+      "D1": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 4.2,
+     "commonest": "O12",
+     "examples": [
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "non quidem ratione instantaneæ formæ, acci- introductionis formæ substantialis",
+       "severity": "wrong_text",
+       "what": "words from the marginal note 'Si in aduentu formæ, accidentia corrumpantur' were pulled into the main text; the page reads 'instantaneæ introductionis'"
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:247",
+       "quote": "<margin>Plato.</margin>",
+       "severity": "cosmetic",
+       "what": "Several sidenotes are grouped at the start of the chapter, away from their lines. 'Plato.' sits beside 'genus. Cæterùm' near the foot of the page, and 'Substantia…Homo' sits beside the Porphyry quotation."
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "non quidem ratione instantaneæ formæ, acci- introductionis formæ substantialis",
+       "severity": "wrong_text",
+       "what": "words from the marginal note 'Si in aduentu formæ, accidentia corrumpantur' were pulled into the main text; the page reads 'instantaneæ introductionis'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00185,
+      "agy_share": 0.00000281
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "1/30",
+     "skipped": 0
+    },
+    "agy-flash-low": {
+     "served": "a fresh agy gemini-3.8-flash-low read of the image alone (kept reads of flash-reread-agy2-5924, 2026-10-24, the same model and live prompt), not served",
+     "n": 30,
+     "books": 9,
+     "accept": "23/30",
+     "accept_rate": 0.77,
+     "accept_ci": {
+      "ci95": [
+       0.633,
+       0.9
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "4/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.286
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O18": "2/30",
+      "O5": "2/30",
+      "O3": "1/30",
+      "O11": "1/30",
+      "O7": "1/30",
+      "O1": "1/30",
+      "O16": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "12/30",
+      "E2": "11/30",
+      "O12": "8/30",
+      "O11": "7/30",
+      "O8": "7/30",
+      "O7": "5/30",
+      "O16": "4/30",
+      "O5": "4/30",
+      "O10": "3/30",
+      "O18": "2/30",
+      "O15": "2/30",
+      "O1": "2/30",
+      "T6": "1/30",
+      "O3": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 3.83,
+     "commonest": "O18",
+     "examples": [
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "quote": "<warning>Page image could not be loaded via tool; transcribed based on available context</warning>",
+       "severity": "wrong_text",
+       "what": "No page text was transcribed. The running head 'Origo & Fabrica Numerorum' with page number 37, the italic title 'Epilogismus omnium numerorum…', the whole table of numeral signs and the closing lines 'Alterum monumentum habetur apud Fuluium Vrsinum…' are all missing."
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:116",
+       "quote": "<unclear>Entire page illegible / inaccessible</unclear>",
+       "severity": "wrong_text",
+       "what": "No text transcribed, though the page is a clear, legible printed page: running head 'Pronicorum proprietatibus. 85', about 30 lines of Latin body text, a side note 'Dispositio numerorũ cæterorũ in interioribus cellis.' and the catchword 'Cu-'"
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "quote": "<warning>Page image could not be loaded via tool; transcribed based on available context</warning>",
+       "severity": "wrong_text",
+       "what": "No page text was transcribed. The running head 'Origo & Fabrica Numerorum' with page number 37, the italic title 'Epilogismus omnium numerorum…', the whole table of numeral signs and the closing lines 'Alterum monumentum habetur apud Fuluium Vrsinum…' are all missing."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000293
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low+diffqa-r1": {
+     "served": "ROUND 1 rules (revert on judge other/unclear; META tags without attributes only): this run's diff-QA merge of the stored lite>agy-flash-low correction (cli-ocr apply guards, then latin-diffqa-7591: fresh agy flash-low read as the vote, agy flash-high span judge); a page the guards refuse serves the draft; not served",
+     "n": 30,
+     "books": 9,
+     "accept": "20/30",
+     "accept_rate": 0.67,
+     "accept_ci": {
+      "ci95": [
+       0.444,
+       0.897
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "10/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.1,
+       0.6
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O5": "6/30",
+      "O6": "3/30",
+      "O17": "1/30",
+      "O1": "1/30",
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "E2": "9/30",
+      "O5": "9/30",
+      "O12": "8/30",
+      "O8": "7/30",
+      "O11": "5/30",
+      "O10": "3/30",
+      "D1": "3/30",
+      "T6": "3/30",
+      "O16": "3/30",
+      "O1": "2/30",
+      "O9": "1/30",
+      "O17": "1/30",
+      "O7": "1/30",
+      "O4": "1/30"
+     },
+     "fidelity_mean": 3.97,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b51eba47b06ecd581960d3:141",
+       "quote": "lementa uniuerfalia initia ponit, ignarus na",
+       "severity": "wrong_text",
+       "what": "the word 'rerum' is dropped; the page reads 'uniuersalia rerum initia ponit'"
+      },
+      {
+       "page": "69dc557bcb6f7429748b8d13:29",
+       "quote": "Et hoc declaratur ex a-\nlio.",
+       "severity": "wrong_text",
+       "what": "drops the clause 'clarat in simili de corda remissa q grauit sonat. Etia declarat'; two sentences merged into one"
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "quote": "amore puro ac pleno *ulla intermissione*",
+       "severity": "wrong_text",
+       "what": "a word after 'pleno' is cut off at the right edge (almost certainly 'sine'). Dropping it silently turns 'without any intermission' into 'with any intermission'."
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_calls": 2.633,
+      "agy_share": 0.00000592,
+      "basis": "draft + 2.633 agy calls a page, measured on this run (agy-diffqa)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00222,
+      "agy_calls": 3.95,
+      "agy_share": 0.00000888
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low+diffqa": {
+     "served": "ROUND 2 rules (revert only where the fresh read or the judge saw the draft; attribute-aware META tags; set after round 1's result on these pages): this run's diff-QA merge of the stored lite>agy-flash-low correction (cli-ocr apply guards, then latin-diffqa-7591: fresh agy flash-low read as the vote, agy flash-high span judge); a page the guards refuse serves the draft; not served",
+     "n": 30,
+     "books": 9,
+     "accept": "20/30",
+     "accept_rate": 0.67,
+     "accept_ci": {
+      "ci95": [
+       0.444,
+       0.897
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "7/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.065,
+       0.448
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O5": "4/30",
+      "O6": "1/30",
+      "I4": "1/30",
+      "O1": "1/30",
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "17/30",
+      "O12": "9/30",
+      "E2": "8/30",
+      "O5": "8/30",
+      "O8": "7/30",
+      "O11": "5/30",
+      "D1": "4/30",
+      "O10": "3/30",
+      "T6": "3/30",
+      "O16": "2/30",
+      "O4": "2/30",
+      "O9": "1/30",
+      "O17": "1/30",
+      "I4": "1/30",
+      "O7": "1/30",
+      "O1": "1/30"
+     },
+     "fidelity_mean": 4.03,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69dc557bcb6f7429748b8d13:29",
+       "quote": "Et hoc declaratur ex a-\nlio.",
+       "severity": "wrong_text",
+       "what": "drops the clause 'clarat in simili de corda remissa q grauit sonat. Etia declarat'; two sentences merged into one"
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "quote": "amore puro ac pleno *ulla intermissione*",
+       "severity": "wrong_text",
+       "what": "drops the word cut off after 'pleno' (likely 'sine'/'absque'), which turns 'without any interruption' into nonsense"
+      },
+      {
+       "page": "69dc557bcb6f7429748b8d13:54",
+       "quote": "ita quod nullum valet ad generationem, et vbi impeditur sequitur destructio prolis",
+       "severity": "wrong_text",
+       "what": "the rest of line 5 and all of line 6 are dropped: 'vel ut plus impedit et semen aliud simul et mediante'. 'Quo impeditur' was changed to 'et vbi impeditur' to cover the gap"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_calls": 2.567,
+      "agy_share": 0.00000578,
+      "basis": "draft + 2.567 agy calls a page, measured on this run (agy-diffqa)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00222,
+      "agy_calls": 3.85,
+      "agy_share": 0.00000867
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>opus-correct": {
+     "pairs": 30,
+     "identical_text": 4,
+     "fidelity_diff": 1.07,
+     "fidelity_diff_ci": [
+      0.667,
+      1.485
+     ],
+     "worse": "0/30",
+     "better": "23/30",
+     "accept_lost": "0/30",
+     "accept_gained": "13/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    },
+    "lite -> lite>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 1,
+     "fidelity_diff": 0.43,
+     "fidelity_diff_ci": [
+      0.179,
+      0.656
+     ],
+     "worse": "2/30",
+     "better": "13/30",
+     "accept_lost": "2/30",
+     "accept_gained": "9/30",
+     "wrong_text_added": "1/30",
+     "worse_pages": [
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "In the first block of the table the halves (D, IↃ, I⊐, QC) are paired with the wrong thousand-signs, one row too high; the rest of the table and the closing sentence match the page."
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The scan cuts off the right edge of the text block. The transcription fills in some lost word endings without saying so, and drops others: 'sine' before 'ulla intermissione' and 'fide' after 'nudaque'."
+      }
+     ]
+    },
+    "lite -> agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 0,
+     "fidelity_diff": 0.07,
+     "fidelity_diff_ci": [
+      -0.467,
+      0.516
+     ],
+     "worse": "7/30",
+     "better": "13/30",
+     "accept_lost": "3/30",
+     "accept_gained": "9/30",
+     "wrong_text_added": "3/30",
+     "worse_pages": [
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "draft": 4,
+       "after": 1,
+       "accept": "true->false",
+       "note": "The transcription pane is blank apart from a tool-error note, while the image shows page 37: a printed table of millenary numeral signs (M, CIↃ, ∞, X̄, CCCIↃↃↃ…) with their values 1000–1000000 and half-values 500–500000, followed by two lines of Latin text."
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:116",
+       "draft": 4,
+       "after": 1,
+       "accept": "true->false",
+       "note": "The page clearly shows printed Latin text on how to arrange the numbers in the magic square of Jupiter ('quadratum Iouis', sum 34, total 134), page 85 with a side note, but the candidate has no text at all and falsely calls the page an illegible handwritten manuscript."
+      },
+      {
+       "page": "69b51e67768235dc65992a5f:70",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a complete and accurate transcription of p. 48. The only slips are 'celebrandi' where the page has 'celebranda' and an odd glyph in 'Biblicus'."
+      },
+      {
+       "page": "69bd9d726120d54bd0376d18:90",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The transcription follows the page closely, line by line, including the italic commentary at the top and bottom. The only slip is one obvious typo, 'egressronis' for 'egressionis'."
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:353",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "In the Commentum, about four lines are missing (the Isaiah 64 gloss and the whole Jeremiah 3 passage). The text on either side is joined so that Jerome's words seem to continue straight into 'qui nolunt ad meliora conuerti', which is not what the page says."
+      },
+      {
+       "page": "69b51e7f9a81ef7feb3d64c8:238",
+       "draft": 4,
+       "after": 1,
+       "accept": "true->false",
+       "note": "The page shows p. 82 of a Latin polemical letter ('Epistola Tertia') arguing about syllogisms and the Austrian baptismal Agenda, but the transcription prints an unrelated De re metallica passage with an invented woodcut."
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:168",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text matches the page line for line. The only slips are long-s read as f in 'luminofa' and 'ſuaviffimum', the page's misprint 'experimut' silently corrected, and italics that cover more words than the page does."
+      }
+     ]
+    },
+    "lite -> lite>agy-flash-low+diffqa-r1": {
+     "pairs": 30,
+     "identical_text": 9,
+     "fidelity_diff": 0.2,
+     "fidelity_diff_ci": [
+      0.032,
+      0.355
+     ],
+     "worse": "3/30",
+     "better": "7/30",
+     "accept_lost": "3/30",
+     "accept_gained": "6/30",
+     "wrong_text_added": "2/30",
+     "worse_pages": [
+      {
+       "page": "69b51e18efd8df28f2db058d:247",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The main text matches the page closely, but nine of the ten marginal notes are missing, including the 'Arbor Porphyrij' labels (Substantia, Corpus, Animal, Homo and others), and the initial is wrongly described as a V."
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The table pairs most of the half-notes in the first group (1000s) with the wrong whole-number symbols, and it adds two ↀ rows that are not on the page. The rest of the text and numerals are right."
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The scan is cropped on the right. The transcription quietly fills in the cut-off words, and it drops the cut-off 'sine' before 'ulla intermissione', which reverses the sense."
+      }
+     ]
+    },
+    "lite -> lite>agy-flash-low+diffqa": {
+     "pairs": 30,
+     "identical_text": 9,
+     "fidelity_diff": 0.27,
+     "fidelity_diff_ci": [
+      0.129,
+      0.406
+     ],
+     "worse": "2/30",
+     "better": "8/30",
+     "accept_lost": "2/30",
+     "accept_gained": "5/30",
+     "wrong_text_added": "1/30",
+     "worse_pages": [
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The table's numbers are right, but the 500 half-notes are listed one row too high next to the wrong 1000 symbols. One symbol, CXƆ, is printed as CXD, and the stray \"tes\" fragment is tagged as meta."
+      },
+      {
+       "page": "69c81aed6c6f3cc53c849851:413",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The text follows the page in order, but the right edge of the page is cropped, and the candidate silently fills in the missing words. It also loses the word before 'ulla intermissione', which garbles that phrase."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": []
+}

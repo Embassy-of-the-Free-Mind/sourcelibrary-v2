@@ -5,6 +5,8 @@ import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
+import { HISTORIES } from '@/app/explore/histories/histories';
+import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -171,6 +173,7 @@ export default async function sitemap({
       ...staticPages(),
       ...blogPosts(),
       ...categoryPages(),
+      ...historyPages(),
     ]);
   }
 
@@ -223,6 +226,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/developers`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -271,6 +275,25 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The conceptual histories (#7623): index, each concept, its essays, its
+// claims index, its sources view (#7646) and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
+// site_pages; it crawls the static routes plus this chunk, and these are dynamic.
+function historyPages(): MetadataRoute.Sitemap {
+  const lastModified = new Date(`${HISTORIES.generated}T00:00:00Z`);
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified, changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/explore/histories', 0.7),
+    ...HISTORIES.concepts.flatMap((c) => [
+      at(`/explore/histories/${c.slug}`, 0.7),
+      ...c.essays.map((e) => at(`/explore/histories/${c.slug}/${e.slug}`, 0.6)),
+      at(`/explore/histories/${c.slug}/claims`, 0.5),
+      // the sources view, where the concept has a map (#7646); its old /explore/maps/<c> address redirects here and is not listed
+      ...(() => { const t = mapThemeForConcept(c.slug); const href = t && sourcesHref(t); return href ? [at(href, 0.6)] : []; })(),
+      ...c.domains.map((d) => at(`/explore/histories/${c.slug}/claims/${d}`, 0.5)),
+    ]),
+  ];
 }
 
 function categoryPages(): MetadataRoute.Sitemap {

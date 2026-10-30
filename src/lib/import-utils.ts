@@ -15,6 +15,7 @@ import { usableManifestLabel } from '@/lib/manifest-label';
 import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -312,7 +313,7 @@ export async function importBookFromIIIF(
   }
 
   // Fetch IIIF manifest
-  const manifestRes = await fetch(config.manifest_url, {
+  const manifestRes = await outboundFetch(config.manifest_url, {
     headers: { 'Accept': 'application/json, application/ld+json' },
   });
 

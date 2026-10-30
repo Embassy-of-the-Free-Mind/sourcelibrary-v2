@@ -11,9 +11,18 @@ tool. The infra to resolve it already exists — this skill runs the loop instea
 of the throwaway `_tmp_fb_*` scripts that used to do it ad-hoc.
 
 ## Lifecycle (don't invent new states)
-- **unread** — `read != true`
-- **read** — `read == true && addressed != true` (triaged, not resolved)
-- **addressed** — `addressed == true` (done)
+- **unread** — `read != true` (admin tab: **New**)
+- **read** — `read == true && addressed != true` (triaged, not resolved; tab: **Open**)
+- **addressed** — `addressed == true` (done; tab: **Done**, undone with **Reopen**)
+
+Three more fields on a row (#7678), all written from `/admin/feedback`:
+- **`notes[]`** `{text, by, at}` — internal, never emailed. **A note is an
+  instruction to you**: the triage script prints each one under its item
+  (`📝 NOTE`), and Derek uses them to tell the next job what to do. Read and
+  act on them before proposing a disposition.
+- **`reply_draft`** — an unsent message to the submitter (`✎` in the report).
+- **`replies[]`** `{message, link, to, by, at}` — every email actually sent.
+  `reply_sent_at` is the first one; the done-email fires only if it is unset.
 
 Resolving via the admin API (`PATCH /api/feedback/[id]`) auto-emails the
 submitter once if they left an email (`feedback-reply-email.ts`, idempotent via
@@ -55,7 +64,7 @@ is the main backlog source. Cross-check, don't guess:
 Propose a disposition per item: `already-fixed (link PR/page)` · `real, route it` · `wontfix/explain` · `praise (ack)`.
 
 ## Step 3 — route the real ones
-- **translation-request** → page-precise pipeline demand. Collect the `book_id`/page and hand to the daily pipeline queue (the corpus is paused as of 2026-06-08 — note that; don't unpause without Derek's say-so). Mark addressed once queued.
+- **translation-request** → handled by the **reader-request lane** (#7599: `scripts/batch/reader-request-lane.mjs`, Hetzner cron every 2 h, log `/var/log/sourcelibrary/reader-request-lane.log`). It OCRs/translates the requested pages on the agy CLI, emails the reader and marks the row addressed. Your job is only its **refusals** (`refuse <id> … — book is on pipeline hold` etc.): those readers hear nothing until someone releases the hold or replies by hand. Processing spend is governed by the dial (`set-dial.mjs --show`), not `processing_control.paused`.
 - **metadata-correction** (scholars correcting editions/dates) → fix the record or open an issue; these are high-trust. Reply if email present.
 - **partner-cms** (Paul's `/catalog/*/edit` notes) → one GitHub issue for the BPH catalog editor; tag EFM-facing.
 - **feature-request** → issue or note; ack the submitter.
@@ -87,9 +96,12 @@ node scripts/analytics/feedback-triage.mjs --mark-read <id,id,...> --apply
 ```
 Always dry-run first (omit `--apply`). The note becomes `addressed_action`.
 
-**Items WITH an email that deserve a reply:** these must go through the
-`/admin/feedback` UI (or the authed `PATCH /api/feedback/[id]`) so the canonical
-reply email fires. Script-marking sets state but does NOT email — the script
+**Items WITH an email that deserve a reply:** these go through the
+`/admin/feedback` UI (or the authed `PATCH /api/feedback/[id]`): **Send reply**
+emails the message now and leaves the item open (`send_reply`, plain "here is
+our reply" wording); **Mark done** with *email them* ticked sends the "we acted
+on it" wording once. To hand Derek a reply to approve, write it as the row's
+`reply_draft` — it appears pre-filled in the UI and he sends it with one click. Script-marking sets state but does NOT email — the script
 warns when a marked id has an email. **Sending an email is outward-facing and
 unsendable: draft it, show Derek, and only resolve-with-reply on his explicit
 approval.** Per-item, not blanket.
@@ -118,7 +130,8 @@ triage pass so resolved items drop off before you look at the queue.
 - **Never blanket-resolve.** Mark by explicit `_id` list, after classifying. A wrong "addressed" can fire a wrong email.
 - **Verify "already fixed" against code/data**, not memory of a fix. The whole reason for the backlog is fixes that landed without the row being marked — so confirm the fix is live before claiming it.
 - **Geo caveat:** submitter IPs are often Cloudflare edge addresses (`172.x`), so logged country ≠ real location. Don't infer audience geography from feedback rows.
-- The corpus pipeline is **paused** (`system_config.processing_control.paused`) — translation-requests queue but won't process until unpaused.
+- **Page reports** (`[page report] missing_text | garbled_source | …`) come from the reader's report-a-page control, often several pages of one book in a row; treat them as one book-level finding. Invented or wrong-leaf text found with the image open → contain on finding (`.claude/docs/invariants/containment-on-finding.md`).
+- **Sister sites** (thenaturelibrary.org, Maaya) post into the same collection with a `site` field (`src/lib/sister-sites.ts`); route their items to that project, not this one.
 
 ## Doctrine (moved from CLAUDE.md, 2026-09-26)
 Feedback is a first-class signal — it's how real readers and AI clients tell us what's broken or missing. Know where it lives and how to handle it.
