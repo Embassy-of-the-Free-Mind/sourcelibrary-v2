@@ -927,6 +927,7 @@ const promptVersion = WITH_OCR ? `spread-v2+ocr-v${ocrVersion}` : (existingPages
 let coverPage = null;
 
 const newDocs = [];
+const leavesBySource = new Map(); // spread index → its leaves' ids, in reading order (split_into, #5842)
 for (let i = 0; i < newPages.length; i++) {
   const p = newPages[i];
   const pageNum = i + 1;
@@ -934,6 +935,7 @@ for (let i = 0; i < newPages.length; i++) {
   if (!p._photo) continue; // skip failed pages
 
   const id = new ObjectId().toHexString();
+  leavesBySource.set(p.sourceIdx, [...(leavesBySource.get(p.sourceIdx) || []), id]);
   const doc = {
     _id: new ObjectId(id),
     id,
@@ -1023,6 +1025,14 @@ await db.collection('pages').updateMany(
     updated_at: new Date(),
   } }]
 );
+// Each archived spread names its leaves (#5842, #7605). Without split_into the reader opened an old page URL on the
+// book's first page; with it, the URL redirects to the spread's first leaf in reading order.
+const splitInto = existingPages.map((p, idx) => [p.id, leavesBySource.get(idx)]).filter(([, ids]) => ids?.length);
+if (splitInto.length) {
+  await db.collection('pages').bulkWrite(splitInto.map(([id, ids]) => ({
+    updateOne: { filter: { id, book_id: book.id, page_type: 'archived-spread' }, update: { $set: { split_into: ids } } },
+  })));
+}
 // The archived spreads must stop being served by semantic search: their rows carry the old
 // positive page_number, which now belongs to one of the halves (#6270).
 await withdrawPageVectors(allExistingPages.map(p => p.id), { reason: 'archived', writer: 'split-book' });
