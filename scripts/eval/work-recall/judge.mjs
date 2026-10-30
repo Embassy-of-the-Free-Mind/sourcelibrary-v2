@@ -1,6 +1,6 @@
 // PRIOR ART: scripts/analysis/gap-validation-cli-adjudicate.mjs (lean claude -p flags, reused); rubric from .claude/docs/work-identity-gold-rubric.md (#7761).
 // Sonnet judge over the claude CLI (subscription). usage: node judge.mjs <frame|pairs> <in.jsonl> <out.jsonl> [perCall] [concurrency]
-import fs from 'fs'; import { spawn } from 'child_process';
+import fs from 'fs'; import { spawn } from 'child_process'; import { claudeSubscriptionEnv } from '../../lib/claude-cli-env.mjs';
 const [,, mode, inF, outF, PER = mode === 'frame' ? '4' : '12', CONC = '3'] = process.argv;
 const items = fs.readFileSync(inF, 'utf8').trim().split('\n').map(l => JSON.parse(l));
 const done = new Set(fs.existsSync(outF) ? fs.readFileSync(outF, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).key) : []);
@@ -29,7 +29,7 @@ For each PAIR decide the relation of B to A. Output ONLY a JSON array: [{"pair":
 ${batch.map(it => `PAIR ${keyOf(it)}\nA: ${JSON.stringify(strip(it.a))}\nB: ${JSON.stringify(strip(it.b))}`).join('\n\n')}`;
 }
 const strip = b => ({ id: b.id, title: b.title, author: b.author, year: b.year, language: b.language, pages: b.pages });
-function run(p) { return new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'] });
+function run(p) { return new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'], env: claudeSubscriptionEnv() });
   let o = '', e = ''; c.stdout.on('data', d => o += d); c.stderr.on('data', d => e += d); c.on('close', code => res({ code, o, e })); c.stdin.end(p); }); }
 const batches = []; for (let i = 0; i < todo.length; i += +PER) batches.push(todo.slice(i, i + +PER));
 const w = fs.createWriteStream(outF, { flags: 'a' }); let bi = 0, fails = 0;
