@@ -10,6 +10,7 @@
 //   survey rows: {winner, author_id, canonical, titles[], langs[], bookTitles[]} (one per merged work)
 //   out rows:    {winner, current, proposed, title, pick}  pick = now | new | edit
 import { spawn } from 'child_process';
+import { claudeSubscriptionEnv } from '../../lib/claude-cli-env.mjs';
 import fs from 'fs';
 
 const [inF, outF] = process.argv.slice(2);
@@ -21,7 +22,7 @@ const todo = rows.filter(r => !done.has(r.winner));
 
 const RULES = `Each WORK below groups editions and translations of one text. Choose the title a work page should show: the work's uniform title as library catalogues give it, in the ORIGINAL language of the work (the language it was first written in, not a later translation's), concise (no author name, no imprint, no "edited by", no title-page puffery), in normal modern capitalisation. Keep a volume or part number only if every book in the work is that one volume.
 For each work answer pick "now" (CURRENT is already right), "new" (PROPOSED is right), or "edit" (neither; give the right title). Output ONLY a JSON array: [{"w":"<id>","pick":"now|new|edit","title":"<the title to show>"}].`;
-const run = (prompt) => new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'] });
+const run = (prompt) => new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'], env: claudeSubscriptionEnv() });
   let o = ''; c.stdout.on('data', d => o += d); c.on('close', () => res(o)); c.stdin.end(prompt); });
 
 const PER = 25, CONC = 4; const batches = []; for (let i = 0; i < todo.length; i += PER) batches.push(todo.slice(i, i + PER));

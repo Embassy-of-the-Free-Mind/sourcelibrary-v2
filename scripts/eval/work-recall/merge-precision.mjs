@@ -7,6 +7,7 @@
 // then:  node scripts/eval/work-recall/merge-precision.mjs --score <out.jsonl>
 import fs from 'fs';
 import { spawn } from 'child_process';
+import { claudeSubscriptionEnv } from '../../lib/claude-cli-env.mjs';
 
 const wilson = (k, n, z = 1.96) => { if (!n) return [0, 0]; const p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [+((c - m) / d * 100).toFixed(1), +((c + m) / d * 100).toFixed(1)]; };
 
@@ -63,7 +64,7 @@ Answer for each GROUP with exactly one verdict:
 Judge from the records only. Prefer unsure over a confident wrong call. Output ONLY a JSON array: [{"group":"<id>","verdict":"<verdict>","why":"<12 words max>"}].`;
 const done = new Set(fs.existsSync(outF) ? fs.readFileSync(outF, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l).key) : []);
 const todo = sample.filter(p => !done.has(key(p)));
-const run = (prompt) => new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'] });
+const run = (prompt) => new Promise(res => { const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--tools', '', '--strict-mcp-config', '--setting-sources', 'local', '--disable-slash-commands', '--no-session-persistence', '--system-prompt', 'You are a careful rare-books cataloguer. Answer only with the requested JSON array.'], { stdio: ['pipe', 'pipe', 'pipe'], env: claudeSubscriptionEnv() });
   let o = ''; c.stdout.on('data', d => o += d); c.on('close', () => res(o)); c.stdin.end(prompt); });
 const PER = 6, CONC = 3; const batches = []; for (let i = 0; i < todo.length; i += PER) batches.push(todo.slice(i, i + PER));
 const w = fs.createWriteStream(outF, { flags: 'a' }); let bi = 0, fails = 0;
