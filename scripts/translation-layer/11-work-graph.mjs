@@ -60,7 +60,13 @@
  * node), and the report counts, per source, x works landing on a USTC work and
  * USTC works carrying a prior — before (non-staged sources) vs after (all).
  *
+ * Newspapers (#7751): the issues of one newspaper are ONE work, flagged
+ * newspaper:true (rows carry ustc_ids, since issues have no sn); the report's
+ * `newspapers` block gives works with each newspaper as one beside works
+ * excluding newspapers. See NEWS_* below.
+ *
  * Usage: node --env-file=.env.production.local scripts/translation-layer/11-work-graph.mjs [--refresh] [--lang german] [--external <file>]
+ *        WG_NEWSPAPERS=0 … → the old one-work-per-issue count
  */
 import fs from 'fs';
 import path from 'path';
@@ -88,14 +94,63 @@ const CONTAIN = Number(process.env.WG_CONTAIN ?? 0.6); // IDF-weighted containme
 const STRONG_IDF = 6.0, MID_IDF = 5.0, FLOOR_IDF = 3.0;
 const X_FULL_IDF = 4.0;  // x nodes only: summed idf a fully-contained external title needs (#7769)
 
+// NEWSPAPERS (#7751). USTC catalogues every newspaper ISSUE as its own record
+// (type Issue, no sn), and phase 11 made each one a work: 31% of German works,
+// 28% of Dutch. A newspaper is one work. Issues are recognised by USTC's own
+// classification_1 = 'Newspapers' — not by a missing sn, which also marks
+// periodical numbers and single volumes ("Pars secunda", "Tome II"), and misses
+// the Gaceta de Madrid issues that carry an sn. They are grouped by place +
+// the title with issue numbers, dates and years stripped, kept out of the
+// title passes, and flagged newspaper:true. WG_NEWSPAPERS=0 restores the old
+// one-work-per-issue count (the "before" column).
+const GROUP_NEWS = process.env.WG_NEWSPAPERS !== '0';
+const isNews = (e) => e.classification_1 === 'Newspapers';
+const NEWS_NOISE = new Set(('num numb numer numero nummer nr no nro n an anno ao a ad vol volume tom tome stuck stueck stück woche week semaine '
+  + 'den der des dem vom von de du le la les el of the et und and y en het van vor pour par date day jour datum '
+  + 'januar januarius januarii janvier january enero januari jenner jaenner februar februarius februarii fevrier février february febrero februari hornung '
+  + 'martius martii mars mertz maerz märz march marzo maart april aprilis aprilii avril abril mai maius maii may mayo mei meye junius junii juin june junio juni '
+  + 'julius julii juillet july julio juli augustus augusti aout août august agosto augusti september septembris septembre settembre septiembre '
+  + 'october octobris octobre ottobre octubre oktober october octobr novembre november novembris noviembre novemb december decembris decembre décembre diciembre dezember decemb '
+  + 'jan febr mart apr jun jul aug sept sep oct okt nov dec dez '
+  + 'au aus auss auff auf iahr iahrs iahres dises dieses deß dess das littera prima secunda tertia quarta stuck stucke fol uon uom page places correspondence').split(' '));
+// The head of the title names the paper; what follows is the issue (number,
+// date, the datelines "Auß Wien/ Turin/ Ceuta"). So the key is place + the
+// first NEWS_HEAD content tokens, each folded to a consonant skeleton so that
+// Erzaehlung/Erzehlung and Zeitung/Zeitungen agree:
+// "Num: 40. An: 1646. Post/ Hamburger und Reichs-Zeitung." and
+// "Num: 4 An: 1644. Post, Hambürger …" → one key.
+const NEWS_HEAD = 3;
+const skel = (t) => t.replace(/(en|n|e|s)$/, '').replace(/[aeiouy]/g, '').replace(/(.)\1+/g, '$1');
+function newsKey(e) {
+  const toks = normTitle(e.title).split(' ') // bracket content stays: "[Gazette de Paris (Rouen), 07.05.1667]" is the supplied title
+    .filter((t) => t.length >= 3 && !/\d/.test(t) && !/^[ivxlcdm]+$/.test(t) && !/^(.)\1+$/.test(t)) // numbers, roman numerals, signatures "Ttt"
+    .filter((t) => !NEWS_NOISE.has(t) && !NEWS_NOISE.has(orth(t)) && !/^(extra)?ordin/.test(t)) // ordinari / extraordinari issues are the same paper
+    .map((t) => orth(t));
+  const head = toks.slice(0, NEWS_HEAD).map(skel).filter(Boolean);
+  return head.length ? `${newsPlace(e)}|${head.sort().join(' ')}` : null;
+}
+const newsPlace = (e) => normTitle(orth(e.place || '')) || '?';
+// The earliest papers title each issue by its news ("No 88. Extraordinaire du
+// XXVII. Juillet … Contenant …", Verhoeven's Antwerp Tijdinghen, Butter's
+// London corantos), and an issue titled only "No. 14." has no head at all, so
+// an issue whose title key is held by fewer than NEWS_MIN issues joins its
+// printer's series at that place instead. Never an unnamed printer: s.n.
+// in London is 84 unrelated sheets.
+const NEWS_MIN = 3;
+const newsPrinter = (e) => { const p = normTitle(orth(e.printer_1 || '')); return p && !/^(s n|sn|sine nomine|n n|unknown)$/.test(p) ? p : null; };
+
 async function pullEditions() {
-  if (fs.existsSync(EDITIONS) && !process.argv.includes('--refresh')) return readJsonl(EDITIONS);
+  if (fs.existsSync(EDITIONS) && !process.argv.includes('--refresh')) {
+    const cached = readJsonl(EDITIONS);
+    if (cached.length && 'classification_1' in cached[0]) return cached;
+    console.log('  cache predates the newspaper fields (#7751): refreshing');
+  }
   const sb = supa();
   const out = [];
   let last = 0;
   while (true) {
     const { data, error } = await sb.from('ustc_editions')
-      .select('id,sn,work_cluster_id,author_1,title,year,source_library_id')
+      .select('id,sn,work_cluster_id,author_1,title,year,source_library_id,type,classification_1,place,printer_1')
       .eq('language_1', LANG_NAME).gte('year', 1400).lte('year', 1700)
       .gt('id', last).order('id', { ascending: true }).limit(1000);
     if (error) throw new Error(error.message);
@@ -202,11 +257,31 @@ async function main() {
     if (j !== undefined) { union(i, j); linked.add(i); direct++; }
   });
 
+  // newspapers: every issue of one paper (place + stripped title) is one work
+  let newsIssues = 0;
+  if (GROUP_NEWS) {
+    const keyOf = new Map(), held = new Map();
+    nodes.forEach((n, i) => {
+      if (n.k !== 'u' || !isNews(n.ref)) return;
+      n.news = true; newsIssues++;
+      const k = newsKey(n.ref);
+      keyOf.set(i, k);
+      if (k) held.set(k, (held.get(k) || 0) + 1);
+    });
+    const newsKeyIdx = new Map();
+    for (const [i, k0] of keyOf) {
+      const p = newsPrinter(nodes[i].ref);
+      const key = (!k0 || held.get(k0) < NEWS_MIN) && p ? `${newsPlace(nodes[i].ref)}|#${p}` : k0;
+      if (!key) continue; // no title head and no printer: an issue of its own
+      if (newsKeyIdx.has(key)) union(i, newsKeyIdx.get(key)); else newsKeyIdx.set(key, i);
+    }
+  }
+
   // anonymous: identical first-6 key
   const anonKey = new Map();
   let anon = 0;
   nodes.forEach((n, i) => {
-    if (n.stems.length || linked.has(i) || n.k === 'x') return;
+    if (n.stems.length || linked.has(i) || n.k === 'x' || n.news) return;
     const key = normTitle(orth(n.title)).split(' ').slice(0, 6).join(' ');
     if (key.split(' ').length < 3) return;
     anon++;
@@ -220,7 +295,7 @@ async function main() {
   // chain can form: single-linkage union-find fused all 4,772 Aquinas editions,
   // and all of Cicero, through omnibus title pages — do not revert to it. An
   // omnibus edition joins ONE of its works (the best-scoring), never bridges two.
-  const order = nodes.map((n, i) => i).filter((i) => nodes[i].k !== 'x' && nodes[i].w > 0 && nodes[i].stems.length && !linked.has(i));
+  const order = nodes.map((n, i) => i).filter((i) => nodes[i].k !== 'x' && !nodes[i].news && nodes[i].w > 0 && nodes[i].stems.length && !linked.has(i));
   order.sort((a, b) => nodes[a].w - nodes[b].w || nodes[b].k.localeCompare(nodes[a].k));
   const leaderIdx = new Map(); // "stem|token" → leader node ids
   let leaders = 0, joins = 0, scored = 0;
@@ -306,7 +381,8 @@ async function main() {
     const ext = extBefore || xSources.size > 0;
     const sl = s.reduce((a, i) => (rank[bookStatus(nodes[i].ref)] > rank[a] ? bookStatus(nodes[i].ref) : a), s.length ? 'none' : null);
     const years = u.map((i) => nodes[i].ref.year).filter(Boolean);
-    works.push({ r, u: u.length, s: s.length, x, xSources, extBefore, ext, sl, year_min: years.length ? Math.min(...years) : null,
+    const newspaper = u.some((i) => nodes[i].news);
+    works.push({ r, u: u.length, s: s.length, x, xSources, extBefore, ext, sl, newspaper, year_min: years.length ? Math.min(...years) : null,
       old_clusters: new Set(u.map((i) => nodes[i].ref.work_cluster_id)).size,
       title: nodes[(u[0] ?? s[0])].title.slice(0, 140), author: nodes[(u[0] ?? s[0])].author, mem });
   }
@@ -331,6 +407,9 @@ async function main() {
   };
   console.log('external landing:', JSON.stringify(external_landing));
   console.log(`works with ≥1 USTC edition: ${ustcWorks.length} (was ${new Set(eds.map((e) => e.work_cluster_id)).size} clusters) | SL-only works: ${works.length - ustcWorks.length}`);
+  const bookWorks = ustcWorks.filter((w) => !w.newspaper);
+  const newsWorks = ustcWorks.filter((w) => w.newspaper);
+  console.log(`newspapers${GROUP_NEWS ? '' : ' (NOT grouped: WG_NEWSPAPERS=0)'}: ${newsIssues} issues → ${newsWorks.length} works | works with newspapers as one each ${ustcWorks.length} | excluding newspapers ${bookWorks.length}`);
 
   // --- gold fragmentation tests ---
   const gold = [
@@ -359,11 +438,11 @@ async function main() {
   const byCentury = (min) => Object.fromEntries([[1400, 1499], [1500, 1599], [1600, 1700]].map(([a, z]) => [`${a}s`, grid(ustcWorks.filter((w) => w.year_min >= a && w.year_min <= z), min)]));
   const sizes = { 1: 0, '2-5': 0, '6-20': 0, '21-100': 0, '101+': 0 };
   for (const w of ustcWorks) { const n = w.u; sizes[n === 1 ? 1 : n <= 5 ? '2-5' : n <= 20 ? '6-20' : n <= 100 ? '21-100' : '101+']++; }
-  const biggest = [...ustcWorks].sort((a, b) => b.u - a.u).slice(0, 25).map((w) => ({ editions: w.u, sl: w.s, old_clusters: w.old_clusters, author: w.author, title: w.title }));
+  const biggest = [...bookWorks].sort((a, b) => b.u - a.u).slice(0, 25).map((w) => ({ editions: w.u, sl: w.s, old_clusters: w.old_clusters, author: w.author, title: w.title }));
 
   // over-merge audit sample: random multi-edition works, two member titles each
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const multi = ustcWorks.filter((w) => w.old_clusters >= 2);
+  const multi = bookWorks.filter((w) => w.old_clusters >= 2);
   const sample = [];
   for (let k = 0; k < 40 && multi.length; k++) {
     const w = multi[Math.floor(rnd() * multi.length)];
@@ -378,6 +457,11 @@ async function main() {
     edges: { direct, leaders, joins, anon_nodes: anon },
     works_with_ustc: ustcWorks.length, old_clusters: new Set(eds.map((e) => e.work_cluster_id)).size,
     sl_only_works: works.length - ustcWorks.length,
+    // works_with_ustc counts each newspaper as ONE work; excluding_newspapers drops them (#7751)
+    newspapers: { grouped: GROUP_NEWS, rule: "classification_1 = 'Newspapers'; key = place + title minus numbers/dates", issues: newsIssues, works: newsWorks.length,
+      works_with_newspapers_as_one: ustcWorks.length, works_excluding_newspapers: bookWorks.length,
+      held_excluding: grid(bookWorks, 'none'), readable_excluding: grid(bookWorks, 'readable'),
+      biggest: [...newsWorks].sort((a, b) => b.u - a.u).slice(0, 25).map((w) => ({ issues: w.u, years: [w.year_min, Math.max(...w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.year || 0))], place: nodes[w.mem.find((i) => nodes[i].k === 'u')].ref.place, title: w.title })) },
     editions_per_work: sizes, gold: goldOut,
     lang: LANG, external_file: path.basename(EXTERNAL), external_landing,
     held: grid(ustcWorks, 'none'), translated_any: grid(ustcWorks, 'partial'), readable: grid(ustcWorks, 'readable'),
@@ -386,7 +470,7 @@ async function main() {
   };
   fs.writeFileSync(path.join(OUT, `work-graph-report${SUFFIX}.json`), JSON.stringify(report, null, 2));
   const w1 = fs.createWriteStream(path.join(OUT, `work-graph${SUFFIX}.jsonl`));
-  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext_refs: w.x.flatMap((i) => nodes[i].ref.staged_refs || nodes[i].ref.sources || []).slice(0, 200), ext_before: w.extBefore, ext: w.ext, sl: w.sl, year_min: w.year_min, author: w.author, title: w.title }) + '\n');
+  for (const w of works) w1.write(JSON.stringify({ work: w.r, ustc_sns: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.sn), sl_books: w.mem.filter((i) => nodes[i].k === 's').map((i) => nodes[i].ref.id), ext_refs: w.x.flatMap((i) => nodes[i].ref.staged_refs || nodes[i].ref.sources || []).slice(0, 200), ext_before: w.extBefore, ext: w.ext, sl: w.sl, ...(w.newspaper ? { newspaper: true, ustc_ids: w.mem.filter((i) => nodes[i].k === 'u').map((i) => nodes[i].ref.id) } : {}), year_min: w.year_min, author: w.author, title: w.title }) + '\n');
   w1.end();
   for (const [k, g] of Object.entries({ held: report.held, translated_any: report.translated_any, readable: report.readable, ...Object.fromEntries(Object.entries(report.readable_by_century).map(([a, b]) => [`readable ${a}`, b])) })) {
     console.log(`${k}: of ${g.works} works — SL ${g.sl} (${g.sl_pct}%), external ${g.external} (${g.external_pct}%), grid ${JSON.stringify(g.grid)}`);
