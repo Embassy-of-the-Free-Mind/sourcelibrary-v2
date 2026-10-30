@@ -104,7 +104,11 @@ function bookExclusion(book, contained) {
   return null;
 }
 
-const languageOf = (b) => String(b.language || (Array.isArray(b.languages) && b.languages[0]) || 'Unknown').trim() || 'Unknown';
+/** Bare ISO codes some importers stored in place of a name; the rest of the label is the catalogue's own. */
+const CODE_NAMES = { lat: 'Latin', la: 'Latin', ger: 'German', deu: 'German', de: 'German', gre: 'Greek', grc: 'Ancient Greek', ell: 'Greek', fre: 'French', fra: 'French', fr: 'French', ita: 'Italian', it: 'Italian', eng: 'English', en: 'English', dut: 'Dutch', nld: 'Dutch', spa: 'Spanish', es: 'Spanish', heb: 'Hebrew', ara: 'Arabic', chi: 'Chinese', zho: 'Chinese', san: 'Sanskrit' };
+const languageOf = (b) => { const l = String(b.language || (Array.isArray(b.languages) && b.languages[0]) || 'Unknown').trim() || 'Unknown'; return CODE_NAMES[l.toLowerCase()] ?? l; };
+/** Labels that do not name a language: such pages stay in the manifest but are not drawn for the sample. */
+const NO_LANGUAGE = /^(und|unknown|auto-detect|multiple|mul|zxx|none)$/i;
 const centuryOf = (y) => (typeof y === 'number' ? (y < 0 ? `${Math.ceil(-y / 100)}c BCE` : `${Math.floor(y / 100) + 1}c`) : 'unknown');
 const words = (s) => (s ? s.split(/\s+/).filter(Boolean).length : 0);
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
@@ -211,7 +215,7 @@ async function scanBooks(P, books) {
       if (english) { r.pages_english++; r.words_english += words(english); r.chars_english += english.length; inc(r.translation_engines, engineOf(p.translation)); }
     }
     // Sample candidates: Tier A triples (image + original + English) from a split, non-English book.
-    if (english && r.tier === 'A' && !r.english_original && !r.unsplit_spread) {
+    if (english && r.tier === 'A' && !r.english_original && !r.unsplit_spread && !NO_LANGUAGE.test(r.language)) {
       const res = st.reservoir; const k = rand();
       if (res.length < PER_BOOK) res.push({ k, page_number: p.page_number });
       else { let mi = 0; for (let i = 1; i < res.length; i++) if (res[i].k > res[mi].k) mi = i; if (k < res[mi].k) res[mi] = { k, page_number: p.page_number }; }
@@ -274,9 +278,13 @@ function finishBook(book, r, reservoir) {
 function allocate(cands, n) {
   const byLang = new Map();
   for (const c of cands) (byLang.get(c.lang) || byLang.set(c.lang, []).get(c.lang)).push(c);
-  // Water-fill: every language gets an equal share, capped by what it has; the remainder goes round again.
+  // Half the sample in proportion to each language's candidates (so it looks like the corpus), half
+  // water-filled: every language an equal share, capped by what it has, the remainder round again (so the
+  // small languages a buyer asks about are there at all).
   const quota = new Map([...byLang.keys()].map((l) => [l, 0]));
-  let left = Math.min(n, cands.length);
+  const total = Math.min(n, cands.length);
+  for (const [l, list] of byLang) quota.set(l, Math.min(list.length, Math.floor((total / 2) * (list.length / cands.length))));
+  let left = total - [...quota.values()].reduce((a, b) => a + b, 0);
   while (left > 0) {
     const open = [...byLang.keys()].filter((l) => quota.get(l) < byLang.get(l).length);
     if (!open.length) break;
@@ -353,8 +361,8 @@ function datasheet(meta, sample) {
 
 ## What this is
 
-[Source Library](https://sourcelibrary.org) holds scans of historical books and manuscripts from about 70 holding
-libraries, with an AI transcription of each page in its own language and an AI English translation. This dataset is
+[Source Library](https://sourcelibrary.org) holds scans of historical books and manuscripts from ${fmt(meta.providers)} image
+sources (holding libraries and aggregators), with an AI transcription of each page in its own language and an AI English translation. This dataset is
 the part of the public corpus that can be offered for licence: one row per book, with the rights basis of its page
 images, the engines that wrote its text, and how much text it holds. It is built read-only from the production
 database by \`scripts/dataset/build-sellable-manifest.mjs\` at commit \`${meta.commit}\`.
@@ -485,13 +493,16 @@ kept for text but kept out of the sample.
 - **Common Pile v0.1: estimate, no id match.** ${fmt(agg.overlap.bhlOrLoc.books)} eligible books (${fmt(agg.overlap.bhlOrLoc.pages)} pages) came from
   the Biodiversity Heritage Library or the Library of Congress, both Common Pile sources; its public-domain book
   subsets also draw on Archive scans, so part of the Archive overlap above may apply. Not checked item by item.
-- What exists nowhere else: the English translations (${fmt(sum('pages_english'))} pages) and, for manuscripts and non-Latin scripts,
-  the transcriptions themselves.
+- What the other corpora do not hold: Source Library's own English translations (${fmt(sum('pages_english'))} pages), aligned page by
+  page with the transcription and the image, and model transcriptions of manuscripts and non-Latin scripts for which
+  no other machine-readable text is known to us (not measured).
 
 ## The sample
 
 \`sample-5000.jsonl\`: ${fmt(sample.length)} Tier A pages from ${fmt(new Set(sample.map((r) => r.book_id)).size)} books, at most ${PER_BOOK} per book, drawn with seed
-${SEED} and balanced across languages (each language an equal share, capped by what it has):
+${SEED}. Half is allocated in proportion to each language's Tier A candidate pages, half in equal shares per language
+(capped by what it has), so the large languages are represented as they are and the small ones are present at all.
+Books whose catalogue gives no language (\`und\`, \`auto-detect\`, \`Multiple\`) are not drawn. Pages per language:
 ${Object.entries(sampleLangs).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${fmt(v)}`).join(', ')}.
 Only non-English editions with both a transcription and an English translation are drawn. \`original\` and \`english\`
 are the served text (editorial wrappers stripped, as \`/api/books/<id>/quote\` serves it, without its watermark).
@@ -585,6 +596,7 @@ await withMongo(async (db) => {
   meta.claude = { pages: agg.claude.pages, books: agg.claude.books.size, ocr: agg.claude.ocr, translation: agg.claude.translation, models: agg.claude.models };
   meta.languages_top = Object.entries(agg.langs).sort((a, b) => b[1].pages_text - a[1].pages_text).slice(0, 25).map(([l, t]) => ({ language: l, ...t }));
   meta.overlap = agg.overlap;
+  meta.providers = new Set([...manifestById.values()].map((r) => r.image_provider).filter(Boolean)).size;
   fs.writeFileSync(path.join(OUT, 'DATASHEET.md'), datasheet(meta, sample));
 }, { timeoutMs: 4 * 3600_000, socketTimeoutMs: 600_000, maxPoolSize: CONC + 2 });
 
