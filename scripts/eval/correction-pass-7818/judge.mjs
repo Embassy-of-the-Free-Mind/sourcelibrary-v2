@@ -37,12 +37,30 @@ function items() {
   const wsDone = jsonl(path.join(OUT, 'ws', 'corrections.jsonl')).filter((r) => !r.quota);
   const set = fs.existsSync(path.join(OUT, 'ws', 'set.json')) ? J('ws/set.json').kept : [];
   for (const r of wsDone) { const p = set.find((x) => x.slug === r.slug); if (p && fs.existsSync(path.join(OUT, 'texts', `W-${p.slug}.served.txt`))) add(p.slug, 'W', p.lang, `W-${p.slug}`, p.image_url); }
+  // Amendment 1, W-G: the raw GPU draft and what the arm-c lane serves from its correction, as arm WG. A text identical
+  // to one already queued for the page (a put-back to the lite draft, say) is not judged again: analyze.mjs reads a
+  // verdict by (page, text hash). wg-roles.json maps every page's four rows to their text hashes.
+  const roles = {};
+  for (const r of wsDone) {
+    const p = set.find((x) => x.slug === r.slug); if (!p) continue;
+    const key = `W-${p.slug}`, f = (k) => path.join(OUT, 'texts', `${key}.${k}.txt`);
+    const h16 = (k) => (fs.existsSync(f(k)) ? sha(fs.readFileSync(f(k), 'utf8').trim()).slice(0, 16) : null);
+    roles[p.slug] = { lite: h16('draft'), litecorr: h16('served'), gpu: h16('gpu'), gpucorr: h16('gpuserved') };
+    for (const [role, k] of [['gpu', 'gpu'], ['gpuserved', 'gpuserved']]) {
+      const hh = h16(k); if (!hh || out.some((i) => i.page === p.slug && i.text_sha === hh)) continue;
+      out.push({ id: `j${sha(`WG:${key}:${role}:${sha(fs.readFileSync(f(k), 'utf8').trim())}`).slice(0, 12)}`, arm: 'WG', lang: p.lang, page: p.slug, key, role, text_file: `${key}.${k}.txt`, text_sha: hh, image: p.image_url });
+    }
+  }
+  W('wg-roles.json', roles);
   W('items.json', out);
   const t = {}; for (const i of out) t[`${i.arm}/${i.lang}/${i.role}`] = (t[`${i.arm}/${i.lang}/${i.role}`] ?? 0) + 1;
   console.log(`items: ${out.length} ${JSON.stringify(t)}`);
 }
 
-const callsSoFar = () => jsonl(VO).filter((r) => r.cls !== 'skipped').length + jsonl(VP).length;
+// A call the box's pace guard (/usr/local/bin/claude) kept waiting past opusCall's 15-minute kill never reached the
+// model (no usage, no verdict): it is not counted against the study's budget, and the item is judged again.
+const made = (r) => r.verdict || r.answer || r.usage;
+const callsSoFar = () => jsonl(VO).filter(made).length + jsonl(VP).filter(made).length;
 /** Run `jobs` (each an async fn returning a record or null) with the pace guard and the call budget. */
 async function runQueue(jobs, file) {
   const limits = await import('../../lib/model-limits.mjs');

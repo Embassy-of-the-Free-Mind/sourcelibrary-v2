@@ -17,6 +17,7 @@ import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/package
@@ -138,6 +139,7 @@ function buildReadme(opts: {
   lines.push('-'.repeat(60));
   lines.push(`Downloaded: ${now}`);
   lines.push('License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)');
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('='.repeat(60));

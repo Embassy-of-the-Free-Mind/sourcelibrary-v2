@@ -8,7 +8,7 @@ import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
-import { CONTENT_LICENSE } from '@/lib/license-info';
+import { CONTENT_LICENSE, AI_TRAINING_NOTICE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
@@ -410,6 +410,7 @@ export const GET = withApiAuth(async (
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
+      lines.push(`# ${AI_TRAINING_NOTICE}`);
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.

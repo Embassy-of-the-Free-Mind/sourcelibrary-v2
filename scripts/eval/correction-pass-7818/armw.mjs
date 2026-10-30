@@ -12,13 +12,17 @@
  *   ... armw.mjs holdings     drop works we hold (title + year match against books)
  *   ... armw.mjs drafts       Flash-Lite drafts (paid API, flash-lite only, hard cap $3)
  *   ... armw.mjs correct [--agy-home=DIR]    the lane's correction of each draft (agy, subscription)
+ *   Amendment 1, W-G (GPU draft, then the #7567 arm-c correction over the stored lite draft):
+ *   ... armw.mjs gpu-collect   PERO drafts made on gex45 (pero-draft.py, the #7263 TEST's CPU config) -> texts/W-<slug>.gpu.txt
+ *   ... armw.mjs gpu-correct [--agy-home=DIR]   agy Flash-low on the GPU template, served by servedArmc (E3 put-back)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
-import { OUT, ROOT, J, W, sha, SEED, arg, imageFor, correctionRead, servedCorrection, shuffle, makeRng } from './lib.mjs';
-import { CORRECT_MODEL } from '../../batch/cli-ocr-lane.mjs';
+import { OUT, ROOT, J, W, sha, SEED, arg, imageFor, correctionRead, servedCorrection, servedArmc, shuffle, makeRng } from './lib.mjs';
+import { CORRECT_MODEL, GPU_TEMPLATE } from '../../batch/cli-ocr-lane.mjs';
 import { contentHash } from '../../lib/write-provenance.mjs';
 
 export const PER_LANGUAGE = 40;
@@ -126,6 +130,47 @@ async function correct() {
   }
 }
 
-const stages = { harvest, holdings, drafts, correct };
+export const GEX45 = 'root@65.108.136.89', WG_REMOTE = '/root/jobs/correction-pass-7818/wg';
+/** The PERO drafts (scripts/batch/pero-draft.py <img dir> <out> --device=cpu, run on gex45 over OUT/wg/img). */
+async function gpuCollect() {
+  const f = path.join(OUT, 'wg', 'pero-drafts.json');
+  if (!fs.existsSync(f)) { const r = spawnSync('scp', ['-q', `${GEX45}:${WG_REMOTE}/pero-drafts.json`, f]); if (r.status) throw new Error('scp pero-drafts.json failed'); }
+  const d = JSON.parse(fs.readFileSync(f, 'utf8'));
+  let n = 0, short = 0, badImage = 0;
+  for (const p of J('ws/set.json').kept) {
+    const x = d[p.slug]; if (!x) continue;
+    const img = path.join(OUT, 'img', `W-${p.slug}.jpg`);
+    if (!fs.existsSync(img) || crypto.createHash('sha256').update(fs.readFileSync(img)).digest('hex') !== x.image_sha256) { badImage++; continue; }
+    if (String(x.text || '').replace(/\W/g, '').length < 30) { short++; continue; }   // the GPU-draft read's own floor
+    fs.writeFileSync(path.join(OUT, 'texts', `W-${p.slug}.gpu.txt`), x.text); n++;
+  }
+  W('wg/collect.json', { engine: d._engine, drafts: n, under_30_word_chars: short, image_mismatch: badImage });
+  console.log(`gpu-collect: ${n} drafts (${short} under 30 word characters, ${badImage} image mismatches); engine ${JSON.stringify(d._engine)?.slice(0, 200)}`);
+}
+
+async function gpuCorrect() {
+  if (arg('agy-home')) process.env.AGY_HOME = path.resolve(arg('agy-home'));
+  const template = fs.readFileSync(path.join(ROOT, GPU_TEMPLATE.file), 'utf8');
+  if (contentHash(template) !== GPU_TEMPLATE.hash) throw new Error(`GPU template hash ${contentHash(template)} is not the lane's ${GPU_TEMPLATE.hash}`);
+  const set = J('ws/set.json').kept;
+  const ledger = path.join(OUT, 'wg', 'corrections.jsonl');
+  const done = new Set(fs.existsSync(ledger) ? fs.readFileSync(ledger, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((r) => r.slug) : []);
+  for (const p of shuffle(set, makeRng(SEED.queue + 3))) {
+    const gf = path.join(OUT, 'texts', `W-${p.slug}.gpu.txt`), lf = path.join(OUT, 'texts', `W-${p.slug}.draft.txt`);
+    if (done.has(p.slug) || !fs.existsSync(gf) || !fs.existsSync(lf)) continue;
+    const gpu = fs.readFileSync(gf, 'utf8'), lite = fs.readFileSync(lf, 'utf8');
+    const ws = path.join(OUT, 'wg', 'agy', p.slug); fs.rmSync(ws, { recursive: true, force: true });
+    const r = await correctionRead({ template, draft: gpu, imageBuf: await imageFor(`W-${p.slug}`, p.image_url), ws, key: p.slug, model: CORRECT_MODEL });
+    if (r.quota) { console.log(`quota (${r.err}): stop, the next run resumes`); break; }
+    const s = servedArmc(r, lite, { languages: [p.language], language: p.language });
+    fs.writeFileSync(path.join(OUT, 'texts', `W-${p.slug}.gpuread.txt`), r.text);
+    fs.writeFileSync(path.join(OUT, 'texts', `W-${p.slug}.gpuserved.txt`), s.served);
+    fs.appendFileSync(ledger, JSON.stringify({ slug: p.slug, model: CORRECT_MODEL, template_hash: GPU_TEMPLATE.hash, outcome: s.outcome, why: s.why, put_back: s.put_back ?? null, flags: s.flags ?? null, exit: r.exit, cls: r.cls, wrapper: r.wrapper, calls: r.calls, prompt_sha: r.prompt_sha, agy_home: process.env.AGY_HOME || null, at: new Date().toISOString() }) + '\n');
+    fs.rmSync(ws, { recursive: true, force: true });
+    console.log(`  ${p.slug}: ${s.outcome} (${s.why})`);
+  }
+}
+
+const stages = { harvest, holdings, drafts, correct, 'gpu-collect': gpuCollect, 'gpu-correct': gpuCorrect };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();

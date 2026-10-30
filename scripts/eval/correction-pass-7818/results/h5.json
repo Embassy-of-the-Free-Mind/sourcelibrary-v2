@@ -1,0 +1,68 @@
+{
+ "at": "2026-10-30T20:50:55.161Z",
+ "n": 72,
+ "all": {
+  "accept": "35/72",
+  "wilson95": [
+   0.374,
+   0.599
+  ],
+  "wrong_text": "31/72",
+  "books": 4
+ },
+ "by_stratum": {
+  "flagged": {
+   "accept": "35/72",
+   "wilson95": [
+    0.374,
+    0.599
+   ],
+   "wrong_text": "31/72",
+   "books": 4
+  }
+ },
+ "by_route": {
+  "pero>agy-flash-low-written": {
+   "accept": "35/72",
+   "wilson95": [
+    0.374,
+    0.599
+   ],
+   "wrong_text": "31/72",
+   "books": 4
+  }
+ },
+ "by_lane": {
+  "pero-agy-first-read-7701": {
+   "accept": "35/72",
+   "wilson95": [
+    0.374,
+    0.599
+   ],
+   "wrong_text": "31/72",
+   "books": 4
+  }
+ },
+ "by_script": {
+  "print": {
+   "accept": "35/72",
+   "wilson95": [
+    0.374,
+    0.599
+   ],
+   "wrong_text": "31/72",
+   "books": 4
+  }
+ },
+ "by_route_and_stratum": {
+  "pero>agy-flash-low-written | flagged": {
+   "accept": "35/72",
+   "wilson95": [
+    0.374,
+    0.599
+   ],
+   "wrong_text": "31/72",
+   "books": 4
+  }
+ }
+}
