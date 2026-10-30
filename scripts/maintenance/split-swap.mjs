@@ -48,7 +48,7 @@ await client.connect();
 const db = client.db('bookstore');
 const pages = db.collection('pages');
 try {
-  const book = await db.collection('books').findOne({ id: bookId }, { projection: { id: 1, slug: 1, title: 1, cover_page: 1, needs_splitting: 1, split_completed: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1 } });
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { id: 1, slug: 1, title: 1, cover_page: 1, needs_splitting: 1, split_completed: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, 'pipeline_auto.hold': 1 } });
   if (!book) throw new Error(`book ${bookId} not found`);
   const frames = await pages.find({ book_id: bookId, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, translation: 1 } }).sort({ page_number: 1 }).toArray();
   const leaves = await pages.find(stagedLeavesQuery(bookId), { projection: { id: 1, page_number: 1, page_type: 1, staged_split: 1, split_side: 1, ocr: 1, translation: 1 } }).toArray();
@@ -59,7 +59,10 @@ try {
   const carries = leaves.map((l) => [l, carriedTranslation(l, frameById.get(l.staged_split.frame_id))]).filter(([, t]) => t);
   for (const [l, t] of carries) l.translation = t;
   if (carries.length) console.log(`  ${carries.length} whole-frame leaf/leaves keep their frame's English: ${carries.map(([l]) => leafNumberOf(l)).join(', ')}`);
-  const why = swapRefusal({ frames, leaves, translatable });
+  // A held book is out of every lane until its holder releases it: a containment hold (#7605: recited Qur'an text on
+  // 6a20329e…) means the text under these leaves is in question, so they do not go live either.
+  const held = book.pipeline_auto?.hold?.reason;
+  const why = held ? `book is held (${held}): release it first` : swapRefusal({ frames, leaves, translatable });
   console.log(`${bookId} ${String(book.title).slice(0, 60)}: ${frames.length} live spreads, ${leaves.length} staged leaves`);
   if (why) { console.log(`REFUSED: ${why}`); process.exitCode = 1; }
   else {
