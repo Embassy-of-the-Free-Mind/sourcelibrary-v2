@@ -10,6 +10,8 @@ import { spawn } from 'child_process';
 
 const wilson = (k, n, z = 1.96) => { if (!n) return [0, 0]; const p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [+((c - m) / d * 100).toFixed(1), +((c + m) / d * 100).toFixed(1)]; };
 
+const key = p => `${p.author_id}::${p.canonical_title}::${p.bookIds.slice().sort()[0]}`;
+
 if (process.argv[2] === '--score') {
   const rows = fs.readFileSync(process.argv[3], 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l));
   const t = {}; for (const r of rows) t[r.verdict] = (t[r.verdict] || 0) + 1;
@@ -18,17 +20,28 @@ if (process.argv[2] === '--score') {
   console.log(JSON.stringify({ groups: rows.length, verdicts: t }));
   console.log(`group precision: ${ok}/${rows.length} = ${(100 * ok / rows.length).toFixed(1)}% [${wilson(ok, rows.length).join('–')}]`);
   console.log(`book-weighted:   ${okBooks}/${books} = ${(100 * okBooks / books).toFixed(1)}%`);
-  for (const r of rows.filter(r => r.verdict !== 'all_same_work')) console.log(`- ${r.verdict}: [${r.author}] ${r.canonical_title} :: ${r.why}`);
+  if (!process.argv.includes('--quiet')) for (const r of rows.filter(r => r.verdict !== 'all_same_work')) console.log(`- ${r.verdict}: [${r.author}] ${r.canonical_title} :: ${r.why}`);
+  // --approved-out FILE --proposals A.json [B.json]: write the HIGH groups this judge accepted, in the
+  // proposals shape llm-verify-work-merges.mjs --apply-from reads. Nothing else may reach --apply-from.
+  const ai = process.argv.indexOf('--approved-out');
+  if (ai > -1) {
+    const pi = process.argv.indexOf('--proposals');
+    const files = process.argv.slice(pi + 1).filter(a => a.endsWith('.json'));
+    const okKeys = new Set(rows.filter(r => r.verdict === 'all_same_work').map(r => r.key));
+    const approved = files.flatMap(f => JSON.parse(fs.readFileSync(f, 'utf8')).proposals).filter(p => p.confidence === 'high' && okKeys.has(key(p)));
+    fs.writeFileSync(process.argv[ai + 1], JSON.stringify({ source: 'merge-precision approved (#7761)', judged: rows.length, proposals: approved }, null, 2));
+    console.log(`approved groups written: ${approved.length} (${approved.reduce((s, p) => s + p.bookIds.length, 0)} books) -> ${process.argv[ai + 1]}`);
+  }
   process.exit(0);
 }
 
 const [,, booksF, outF, ...rest] = process.argv;
-const N = rest.includes('--n') ? +rest[rest.indexOf('--n') + 1] : 150;
+const nArg = rest.includes('--n') ? rest[rest.indexOf('--n') + 1] : '150';
+const N = nArg === 'all' ? Infinity : +nArg;
 const propFiles = rest.filter((a, i) => a.endsWith('.json') && rest[i - 1] !== '--n');
 const books = new Map(fs.readFileSync(booksF, 'utf8').trim().split('\n').map(l => JSON.parse(l)).map(b => [b.id, b]));
 const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
 const high = propFiles.flatMap(f => JSON.parse(fs.readFileSync(f, 'utf8')).proposals.filter(p => p.confidence === 'high'));
-const key = p => `${p.author_id}::${p.canonical_title}::${p.bookIds.slice().sort()[0]}`;
 const sample = high.sort((a, b) => hash('mp7761:' + key(a)) - hash('mp7761:' + key(b))).slice(0, N);
 console.log(`HIGH groups ${high.length}, judging ${sample.length}`);
 
