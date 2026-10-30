@@ -9,6 +9,7 @@
 //   node run.mjs plan  --work=DIR                       DIR/runs.json: the 17 runs a language, phase, shuffled order
 //   node --env-file=… run.mjs read --work=DIR --lang=de --run=B05 [--agy-home=/root/.agy-james] [--concurrency=4]
 //   node --env-file=… run.mjs phase --work=DIR --phase=A|B [--langs=de,la] [--agy-home=…] [--parallel=2]
+//   node --env-file=… run.mjs batch --work=DIR --runs=de:C1,la:C1 [--agy-home=…] [--parallel=3]   (Amendment 2: sequential batches)
 // A run reads into DIR/runs/<lang>/<run>/ through cli-ocr.mjs read (--fresh, --image-cache, --no-alone at 4 and 8 a
 // call). Re-running a run resumes it (cli-ocr skips pages already read). Writes no page or book.
 import fs from 'node:fs';
@@ -93,7 +94,23 @@ async function phase(ph, langs, opts, parallel) {
   }));
 }
 
-if (STAGE === 'plan') plan();
+// batch (Amendment 2, sequential): named runs, e.g. --runs=de:C1,la:C1,de:L2, `parallel` at a time.
+async function batch(list, opts, parallel) {
+  const todo = list.split(',').map((x) => { const [lang, id] = x.split(':'); return { lang, id }; });
+  let quota = false;
+  await Promise.all(Array.from({ length: parallel }, async () => {
+    while (todo.length && !quota) {
+      const q = todo.shift(), t0 = Date.now();
+      const code = await readRun(q.lang, q.id, opts);
+      console.log(`${new Date().toISOString()} ${q.lang} ${q.id} exit ${code} (${Math.round((Date.now() - t0) / 1000)}s)`);
+      if (code === 3) { quota = true; console.log('quota: stopping the batch'); }
+    }
+  }));
+}
+
+const MAIN = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);   // fit.mjs imports DESIGN
+if (!MAIN) { /* imported */ } else if (STAGE === 'plan') plan();
+else if (STAGE === 'batch') await batch(arg('runs'), { agyHome: arg('agy-home'), concurrency: Number(arg('concurrency', 4)) }, Number(arg('parallel', 3)));
 else if (STAGE === 'read') process.exit(await readRun(arg('lang'), arg('run'), { agyHome: arg('agy-home'), concurrency: Number(arg('concurrency', 4)) }));
 else if (STAGE === 'phase') await phase(arg('phase'), arg('langs', 'de,la').split(','), { agyHome: arg('agy-home'), concurrency: Number(arg('concurrency', 4)) }, Number(arg('parallel', 2)));
 else if (STAGE) { console.error('usage: run.mjs plan|read|phase (see header)'); process.exit(2); }

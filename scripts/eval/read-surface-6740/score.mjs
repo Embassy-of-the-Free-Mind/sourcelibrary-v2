@@ -35,98 +35,103 @@ export function bodyOf(t) {
 }
 const letters = (t) => (t.normalize('NFC').toLowerCase().match(/\p{L}|\p{N}/gu) || []).length;
 
-const panel = JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8'));
-const plan = JSON.parse(fs.readFileSync(path.join(WORK, 'runs.json'), 'utf8'));
-const refs = new Map(zlib.gunzipSync(fs.readFileSync(path.join(WORK, 'refs.jsonl.gz'))).toString('utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return [r.slug, r.ref_text]; }));
+// Run only when called as a script (prior-score.mjs imports bodyOf).
+if (process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname) main();
 
-// By-eye check of each target image (eye/verdicts-<lang>.jsonl: face, leaf_match). A leaf that is not the typed page
-// (eval-design §4.1: no reference without a leaf check) leaves every run.
-const eye = new Map();
-for (const lang of Object.keys(panel.langs)) {
-  const items = JSON.parse(fs.readFileSync(path.join(WORK, 'eye', `items-${lang}.json`), 'utf8'));
-  const v = new Map(jsonl(path.join(WORK, 'eye', `verdicts-${lang}.jsonl`)).map((r) => [r.item, r]));
-  for (const it of items) eye.set(it.slug, v.get(it.item) || null);
-}
-const out = { scored_at: new Date().toISOString(), scorer: 'metrics.mjs scoreAgainstReference latin, windowed; read body per score.mjs bodyOf', langs: {} };
-for (const lang of Object.keys(panel.langs)) {
-  const targets = panel.langs[lang].targets;
-  const runs = [];
-  for (const run of plan.runs[lang]) {
-    const dir = path.join(WORK, 'runs', lang, run.id);
-    if (!fs.existsSync(path.join(dir, 'page-ids.json'))) continue;
-    const ids = JSON.parse(fs.readFileSync(path.join(dir, 'page-ids.json'), 'utf8'));
-    const exits = jsonl(path.join(dir, 'exits.jsonl'));
-    const unread = new Map(jsonl(path.join(dir, 'not-read.jsonl')).map((r) => [r.page_id, r.from]));
-    const blockCalls = jsonl(path.join(dir, 'calls.jsonl'));
-    let calls = 0, secs = 0, read = 0, missing = 0;
-    const tok = { input: 0, output: 0, thinking: 0 };
-    const addUsage = (u) => { for (const x of u || []) if (x) { tok.input += x.input || 0; tok.output += x.output || 0; tok.thinking += x.thinking || 0; } };
-    // Per book (each book's window is its own block, so calls, seconds and pages split cleanly by book).
-    const byBook = {};
-    const bk = (b) => (byBook[b] ||= { calls: 0, secs: 0, pages: 0, unread: 0, thinking: 0 });
-    const thinkOf = (u) => (u || []).reduce((a, x) => a + (x?.thinking || 0), 0);
-    for (const c of blockCalls) { calls += c.calls; secs += c.secs; addUsage(c.usage); const b = bk(c.book_id); b.calls += c.calls; b.secs += c.secs; b.thinking += thinkOf(c.usage); }
-    for (const r of jsonl(path.join(dir, 'not-read.jsonl'))) bk(r.book_id).unread++;
-    const metas = new Map();
-    for (const id of ids) {
-      const mf = path.join(dir, `${id}.meta.json`);
-      if (!fs.existsSync(mf)) { if (!unread.has(id)) missing++; continue; }
-      const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
-      metas.set(id, m);
-      read++;
-      // A page read alone (1 a call, or a remainder) carries its own calls; a block's pages carry the block's.
-      if (!m.call_id) { const sec = (Date.parse(m.finished_at) - Date.parse(m.started_at)) / 1000; calls += m.calls || 0; secs += sec; addUsage(m.usage); const b = bk(m.book_id); b.calls += m.calls || 0; b.secs += sec; b.thinking += thinkOf(m.usage); }
-    }
-    for (const t of targets) bk(t.book_id).pages += run.ppc;
-    const pages = targets.map((t) => {
-      const m = metas.get(t.page_id);
-      const base = { slug: t.slug, book_id: t.book_id };
-      if (!m) return { ...base, status: unread.has(t.page_id) ? `unread:${unread.get(t.page_id)}` : 'missing' };
-      // Amendment 1: a read cli-ocr's own guards refuse (a Gemini filter stub, a restarted or cut reply) is not
-      // usable: apply would never write it, so it counts as a page the setting did not deliver, not as a misread.
-      if (m.chatter || ['truncated', 'loop', 'empty'].includes(m.write_guard)) return { ...base, status: 'unusable', chatter: m.chatter, write_guard: m.write_guard };
-      const txt = fs.readFileSync(path.join(dir, `${t.page_id}.txt`), 'utf8');
-      const body = bodyOf(txt);
-      if (!body.trim()) return { ...base, status: 'empty', exit: m.exit, error_class: m.error_class };
-      const s = scoreAgainstReference(refs.get(t.slug), body, 'latin');
-      const cerW = s.charAccuracyWindowed == null ? 1 : Math.min(1, Math.max(0, 1 - s.charAccuracyWindowed));
-      return { ...base, status: 'read', cer: cerW, cer_free: Math.min(1, 1 - s.charAccuracy), aligned: s.aligned, guard: s.guard?.value ?? null, letters: letters(body), fit: m.image_fit ?? null, call_position: m.call_position ?? null, block_fallback: m.block_fallback ?? null };
-    });
-    runs.push({ id: run.id, phase: run.phase, x1: run.x1, x2: run.x2, x3: run.x3, ppc: run.ppc, edge: run.edge, think: run.think, live: run.live,
-      finished: exits.some((e) => e.code === 0), pages_in_run: ids.length, pages_read: read, pages_unread: unread.size, pages_missing: missing,
-      calls, secs: Math.round(secs), tokens: tok, by_book: byBook, targets: pages });
+function main() {
+  const panel = JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8'));
+  const plan = JSON.parse(fs.readFileSync(path.join(WORK, 'runs.json'), 'utf8'));
+  const refs = new Map(zlib.gunzipSync(fs.readFileSync(path.join(WORK, 'refs.jsonl.gz'))).toString('utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return [r.slug, r.ref_text]; }));
+
+  // By-eye check of each target image (eye/verdicts-<lang>.jsonl: face, leaf_match). A leaf that is not the typed page
+  // (eval-design §4.1: no reference without a leaf check) leaves every run.
+  const eye = new Map();
+  for (const lang of Object.keys(panel.langs)) {
+    const items = JSON.parse(fs.readFileSync(path.join(WORK, 'eye', `items-${lang}.json`), 'utf8'));
+    const v = new Map(jsonl(path.join(WORK, 'eye', `verdicts-${lang}.jsonl`)).map((r) => [r.item, r]));
+    for (const it of items) eye.set(it.slug, v.get(it.item) || null);
   }
-  // Loop / cut against the page's median over runs (score.py's rule); wrong text = guard failed where most runs pass.
-  for (const t of targets) {
-    const rows = runs.map((r) => r.targets.find((p) => p.slug === t.slug)).filter((p) => p?.status === 'read');
-    const med = rows.map((p) => p.letters).sort((a, b) => a - b)[rows.length >> 1] || 0;
-    const passShare = rows.length ? rows.filter((p) => p.aligned).length / rows.length : 0;
-    for (const p of rows) {
-      p.loop = med > 0 && p.letters > 2 * med; p.cut = med > 0 && p.letters < 0.5 * med;
-      p.wrong_text = passShare > 0.5 && !p.aligned;
+  const out = { scored_at: new Date().toISOString(), scorer: 'metrics.mjs scoreAgainstReference latin, windowed; read body per score.mjs bodyOf', langs: {} };
+  for (const lang of Object.keys(panel.langs)) {
+    const targets = panel.langs[lang].targets;
+    const runs = [];
+    for (const run of plan.runs[lang]) {
+      const dir = path.join(WORK, 'runs', lang, run.id);
+      if (!fs.existsSync(path.join(dir, 'page-ids.json'))) continue;
+      const ids = JSON.parse(fs.readFileSync(path.join(dir, 'page-ids.json'), 'utf8'));
+      const exits = jsonl(path.join(dir, 'exits.jsonl'));
+      const unread = new Map(jsonl(path.join(dir, 'not-read.jsonl')).map((r) => [r.page_id, r.from]));
+      const blockCalls = jsonl(path.join(dir, 'calls.jsonl'));
+      let calls = 0, secs = 0, read = 0, missing = 0;
+      const tok = { input: 0, output: 0, thinking: 0 };
+      const addUsage = (u) => { for (const x of u || []) if (x) { tok.input += x.input || 0; tok.output += x.output || 0; tok.thinking += x.thinking || 0; } };
+      // Per book (each book's window is its own block, so calls, seconds and pages split cleanly by book).
+      const byBook = {};
+      const bk = (b) => (byBook[b] ||= { calls: 0, secs: 0, pages: 0, unread: 0, thinking: 0 });
+      const thinkOf = (u) => (u || []).reduce((a, x) => a + (x?.thinking || 0), 0);
+      for (const c of blockCalls) { calls += c.calls; secs += c.secs; addUsage(c.usage); const b = bk(c.book_id); b.calls += c.calls; b.secs += c.secs; b.thinking += thinkOf(c.usage); }
+      for (const r of jsonl(path.join(dir, 'not-read.jsonl'))) bk(r.book_id).unread++;
+      const metas = new Map();
+      for (const id of ids) {
+        const mf = path.join(dir, `${id}.meta.json`);
+        if (!fs.existsSync(mf)) { if (!unread.has(id)) missing++; continue; }
+        const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
+        metas.set(id, m);
+        read++;
+        // A page read alone (1 a call, or a remainder) carries its own calls; a block's pages carry the block's.
+        if (!m.call_id) { const sec = (Date.parse(m.finished_at) - Date.parse(m.started_at)) / 1000; calls += m.calls || 0; secs += sec; addUsage(m.usage); const b = bk(m.book_id); b.calls += m.calls || 0; b.secs += sec; b.thinking += thinkOf(m.usage); }
+      }
+      for (const t of targets) bk(t.book_id).pages += run.ppc;
+      const pages = targets.map((t) => {
+        const m = metas.get(t.page_id);
+        const base = { slug: t.slug, book_id: t.book_id };
+        if (!m) return { ...base, status: unread.has(t.page_id) ? `unread:${unread.get(t.page_id)}` : 'missing' };
+        // Amendment 1: a read cli-ocr's own guards refuse (a Gemini filter stub, a restarted or cut reply) is not
+        // usable: apply would never write it, so it counts as a page the setting did not deliver, not as a misread.
+        if (m.chatter || ['truncated', 'loop', 'empty'].includes(m.write_guard)) return { ...base, status: 'unusable', chatter: m.chatter, write_guard: m.write_guard };
+        const txt = fs.readFileSync(path.join(dir, `${t.page_id}.txt`), 'utf8');
+        const body = bodyOf(txt);
+        if (!body.trim()) return { ...base, status: 'empty', exit: m.exit, error_class: m.error_class };
+        const s = scoreAgainstReference(refs.get(t.slug), body, 'latin');
+        const cerW = s.charAccuracyWindowed == null ? 1 : Math.min(1, Math.max(0, 1 - s.charAccuracyWindowed));
+        return { ...base, status: 'read', cer: cerW, cer_free: Math.min(1, 1 - s.charAccuracy), aligned: s.aligned, guard: s.guard?.value ?? null, letters: letters(body), fit: m.image_fit ?? null, call_position: m.call_position ?? null, block_fallback: m.block_fallback ?? null };
+      });
+      runs.push({ id: run.id, phase: run.phase, x1: run.x1, x2: run.x2, x3: run.x3, ppc: run.ppc, edge: run.edge, think: run.think, live: run.live,
+        finished: exits.some((e) => e.code === 0), pages_in_run: ids.length, pages_read: read, pages_unread: unread.size, pages_missing: missing,
+        calls, secs: Math.round(secs), tokens: tok, by_book: byBook, targets: pages });
     }
-    t._pass_share = passShare;
+    // Loop / cut against the page's median over runs (score.py's rule); wrong text = guard failed where most runs pass.
+    for (const t of targets) {
+      const rows = runs.map((r) => r.targets.find((p) => p.slug === t.slug)).filter((p) => p?.status === 'read');
+      const med = rows.map((p) => p.letters).sort((a, b) => a - b)[rows.length >> 1] || 0;
+      const passShare = rows.length ? rows.filter((p) => p.aligned).length / rows.length : 0;
+      for (const p of rows) {
+        p.loop = med > 0 && p.letters > 2 * med; p.cut = med > 0 && p.letters < 0.5 * med;
+        p.wrong_text = passShare > 0.5 && !p.aligned;
+      }
+      t._pass_share = passShare;
+    }
+    // Amendment 1: a target no 1-a-call run read usably cannot be read by this route at all (production leaves it
+    // scans-only); it leaves the CER analysis and is counted as unreadable.
+    const oneRuns = runs.filter((r) => r.ppc === 1 && r.finished);
+    const unreadable = oneRuns.length ? targets.filter((t) => oneRuns.every((r) => r.targets.find((p) => p.slug === t.slug)?.status !== 'read')).map((t) => t.slug) : [];
+    const excluded = [
+      ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no').map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` })),
+      ...unreadable.filter((sl) => eye.get(sl)?.leaf_match !== 'no').map((sl) => ({ slug: sl, why: 'unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)' })),
+      ...targets.filter((t) => eye.get(t.slug)?.leaf_match !== 'no' && !unreadable.includes(t.slug) && runs.length >= 3 && t._pass_share <= 0.5).map((t) => ({ slug: t.slug, pass_share: t._pass_share, why: 'most runs fail the identity guard: a reference or leaf problem, not a read' })),
+    ];
+    const faces = Object.fromEntries(targets.map((t) => [t.slug, eye.get(t.slug)?.face ?? null]));
+    out.langs[lang] = { n_targets: targets.length, excluded, faces, runs };
   }
-  // Amendment 1: a target no 1-a-call run read usably cannot be read by this route at all (production leaves it
-  // scans-only); it leaves the CER analysis and is counted as unreadable.
-  const oneRuns = runs.filter((r) => r.ppc === 1 && r.finished);
-  const unreadable = oneRuns.length ? targets.filter((t) => oneRuns.every((r) => r.targets.find((p) => p.slug === t.slug)?.status !== 'read')).map((t) => t.slug) : [];
-  const excluded = [
-    ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no').map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` })),
-    ...unreadable.filter((sl) => eye.get(sl)?.leaf_match !== 'no').map((sl) => ({ slug: sl, why: 'unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)' })),
-    ...targets.filter((t) => eye.get(t.slug)?.leaf_match !== 'no' && !unreadable.includes(t.slug) && runs.length >= 3 && t._pass_share <= 0.5).map((t) => ({ slug: t.slug, pass_share: t._pass_share, why: 'most runs fail the identity guard: a reference or leaf problem, not a read' })),
-  ];
-  const faces = Object.fromEntries(targets.map((t) => [t.slug, eye.get(t.slug)?.face ?? null]));
-  out.langs[lang] = { n_targets: targets.length, excluded, faces, runs };
-}
-fs.writeFileSync(OUTF, JSON.stringify(out, null, 1));
-for (const [lang, L] of Object.entries(out.langs)) {
-  console.log(`${lang}: excluded ${L.excluded.length} (${L.excluded.map((e) => e.slug).join(', ')})`);
-  const ex = new Set(L.excluded.map((e) => e.slug));
-  for (const r of L.runs) {
-    const rs = r.targets.filter((p) => p.status === 'read' && !ex.has(p.slug));
-    const mean = rs.length ? rs.reduce((a, p) => a + p.cer, 0) / rs.length : NaN;
-    const med = rs.map((p) => p.cer).sort((a, b) => a - b)[rs.length >> 1];
-    console.log(`  ${r.id.padEnd(4)} ppc ${r.ppc} edge ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} ${r.finished ? 'done' : 'part'}  read ${r.pages_read}/${r.pages_in_run} unread ${r.pages_unread} miss ${r.pages_missing}  calls ${r.calls}  targets ${rs.length}  CER mean ${(100 * mean).toFixed(2)}% med ${(100 * (med ?? NaN)).toFixed(2)}%  wrong ${rs.filter((p) => p.wrong_text).length}`);
+  fs.writeFileSync(OUTF, JSON.stringify(out, null, 1));
+  for (const [lang, L] of Object.entries(out.langs)) {
+    console.log(`${lang}: excluded ${L.excluded.length} (${L.excluded.map((e) => e.slug).join(', ')})`);
+    const ex = new Set(L.excluded.map((e) => e.slug));
+    for (const r of L.runs) {
+      const rs = r.targets.filter((p) => p.status === 'read' && !ex.has(p.slug));
+      const mean = rs.length ? rs.reduce((a, p) => a + p.cer, 0) / rs.length : NaN;
+      const med = rs.map((p) => p.cer).sort((a, b) => a - b)[rs.length >> 1];
+      console.log(`  ${r.id.padEnd(4)} ppc ${r.ppc} edge ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} ${r.finished ? 'done' : 'part'}  read ${r.pages_read}/${r.pages_in_run} unread ${r.pages_unread} miss ${r.pages_missing}  calls ${r.calls}  targets ${rs.length}  CER mean ${(100 * mean).toFixed(2)}% med ${(100 * (med ?? NaN)).toFixed(2)}%  wrong ${rs.filter((p) => p.wrong_text).length}`);
+    }
   }
 }

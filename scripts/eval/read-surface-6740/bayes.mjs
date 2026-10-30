@@ -60,8 +60,9 @@ export function estimateA0(pairs) {
  * cheap: settings x (coded) at the cheap end; live: the coded point standing for live; returns candidates ranked.
  */
 export function rankNext(post, candidates, cheap, live, vRun) {
-  const gl = terms(live);
-  const dvec = (x) => terms(x).map((t, i) => t - gl[i]);
+  // live = null: live is measured, not on the surface (as here), so the difference's variance is the prediction's.
+  const gl = live ? terms(live) : null;
+  const dvec = (x) => (gl ? terms(x).map((t, i) => t - gl[i]) : terms(x));
   const total = (cov) => cheap.reduce((s, x) => s + quad(dvec(x), cov), 0);
   const base = total(post.cov);
   return candidates.map((c) => {

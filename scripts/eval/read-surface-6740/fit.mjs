@@ -10,6 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { makeRng } from '../lib/paired-stats.mjs';
+import { posterior, predict as bpredict, estimateA0, rankNext } from './bayes.mjs';
+import { DESIGN as DESIGN_RUNS } from './run.mjs';
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const WORK = path.resolve(arg('work', '.'));
@@ -79,35 +81,74 @@ for (const [lang, L] of Object.entries(score.langs)) {
     const pts = design.map((r) => ({ x: [r.x1, r.x2, r.x3], ...agg(r.id, bs) }));
     return { cer: fit(pts.map((p) => ({ x: p.x, y: p.cer }))), calls: fit(pts.map((p) => ({ x: p.x, y: p.calls }))), secs: fit(pts.map((p) => ({ x: p.x, y: p.secs }))), live: lives.length ? mean(lives.map((r) => agg(r.id, bs).cer)) : null };
   };
-  if (design.length < 10) { result.langs[lang] = { status: `only ${design.length} design runs finished: no fit`, runs: runs.map((r) => ({ id: r.id, ...agg(r.id, books) })) }; continue; }
-  const point = surfaces(books);
-  const rng = makeRng(6740);
-  const boots = [];
-  for (let i = 0; i < B; i++) { const bs = books.map(() => books[Math.floor(rng() * books.length)]); boots.push({ s: surfaces(bs), bs }); }
-  // Per grid setting: predicted CER, δ vs live with its bootstrap bound, calls, seconds.
-  const settings = grid.map((x) => {
-    const d = boots.map(({ s }) => predict(s.cer, x) - s.live);
-    return { x, ppc: LEVELS.ppc[x[0] + 1], edge: LEVELS.edge[x[1] + 1], think: LEVELS.think[x[2] + 1],
-      cer: predict(point.cer, x), delta: predict(point.cer, x) - point.live, delta_lo: q(d, 0.025), delta_hi: q(d, 0.975),
-      calls: predict(point.calls, x), calls_lo: q(boots.map(({ s }) => predict(s.calls, x)), 0.025), calls_hi: q(boots.map(({ s }) => predict(s.calls, x)), 0.975),
-      secs: predict(point.secs, x), run: design.find((r) => r.x1 === x[0] && r.x2 === x[1] && r.x3 === x[2])?.id ?? null };
-  });
   const liveAgg = lives.length ? lives.map((r) => ({ id: r.id, ...agg(r.id, books) })) : [];
   const liveCalls = liveAgg.length ? mean(liveAgg.map((r) => r.calls)) : null;
+  const liveCer = liveAgg.length ? mean(liveAgg.map((r) => r.cer)) : null;
   const liveWrong = liveAgg.length ? mean(liveAgg.map((r) => r.wrong)) : 0;
+  // By-book bootstrap: the variance of every run's means (the Bayesian fit's noise), the noise floor, the LS fit.
+  const rng = makeRng(6740);
+  const boots = [];
+  for (let i = 0; i < B; i++) { const bs = books.map(() => books[Math.floor(rng() * books.length)]); boots.push({ bs, runs: Object.fromEntries(runs.map((r) => [r.id, agg(r.id, bs)])) }); }
+  const variance = (xs) => { const m = mean(xs); return xs.reduce((a, x) => a + (x - m) ** 2, 0) / Math.max(1, xs.length - 1); };
+  const varOf = (rid, key) => variance(boots.map((b) => b.runs[rid][key]));
+  const liveVar = (key) => (lives.length ? variance(boots.map((b) => mean(lives.map((r) => b.runs[r.id][key])))) : 0);
+  // ── the Bayesian surface (Amendment 2): design runs + power-prior points ──
+  const VFLOOR = { cer: 1e-6, calls: 1e-4 };
+  const designPts = (key) => design.map((r) => ({ x: [r.x1, r.x2, r.x3], y: agg(r.id, books)[key], v: Math.max(VFLOOR[key], varOf(r.id, key)) }));
+  const medianV = (key) => { const vs = designPts(key).map((p) => p.v).sort((a, b) => a - b); return vs.length ? vs[vs.length >> 1] : VFLOOR[key]; };
+  // Prior points. CER: earlier plain reads at (1 a call, served, low), one point per prompt version (prior-score.mjs);
+  // a singleton's variance is the design's between-book variance of a run mean scaled to its books. Calls: #7701's
+  // measured read@4 / read@8 on queue pages; variance: the live runs' bootstrap variance scaled to 30 books.
+  const pp = fs.existsSync(path.join(WORK, 'prior', 'points.json')) ? JSON.parse(fs.readFileSync(path.join(WORK, 'prior', 'points.json'), 'utf8')).points.filter((p) => p.lang === lang) : [];
+  const bookVar = (key) => medianV(key) * books.length;   // the variance of one book's value
+  const priorCer = pp.map((p) => ({ x: [-1, 1, -1], y: p.cer, v: p.v ?? bookVar('cer') / p.books, label: `${p.prompt} (${p.books} books)` }));
+  const routes = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'routes-7701.json'), 'utf8')).routes.filter((r) => r.lang === lang && /^read@[48]\b/.test(r.route) && !/correct/.test(r.route));
+  const priorCalls = routes.map((r) => ({ x: [r.route.startsWith('read@8') ? 1 : 0, 1, -1], y: r.calls, v: Math.max(VFLOOR.calls, (lives.length ? liveVar('calls') : medianV('calls')) * books.length / r.n), label: `${r.route} (#7701, ${r.n} pages)` }));
+  // a0 by empirical Bayes where an earlier and a new result share a setting.
+  const pool = (pts) => { if (!pts.length) return null; const w = pts.map((p) => 1 / p.v); const W = w.reduce((a, b) => a + b, 0); return { y: pts.reduce((a, p, i) => a + w[i] * p.y, 0) / W, v: 1 / W }; };
+  const b05 = design.find((r) => r.id === 'B05');
+  const pc = pool(priorCer), pr4 = pool(priorCalls.filter((p) => p.x[0] === 0));
+  const a0 = {
+    cer: pc && b05 ? { ...estimateA0([{ y0: pc.y, v0: pc.v, y1: agg('B05', books).cer, v1: varOf('B05', 'cer') }]), against: 'B05 (1 a call, 1,600 px, low): no earlier read at the centre or live setting' } : { a0: null, why: 'no prior CER point or no B05' },
+    calls: pr4 && lives.length ? { ...estimateA0([{ y0: pr4.y, v0: pr4.v, y1: liveCalls, v1: liveVar('calls') }]), against: 'the live runs (4 a call, served, low)' } : { a0: null, why: 'no earlier read@4 or no live run' },
+  };
+  const scaled = (pts, a) => (a ? pts.map((p) => ({ ...p, v: p.v / a })) : []);
+  const TAU = { cer: 0.05, calls: 1 };
+  const M0 = { cer: liveCer ?? 0.01, calls: liveCalls ?? 0.5 };
+  const PRIOR = { cer: scaled(priorCer, a0.cer.a0), calls: scaled(priorCalls, a0.calls.a0) };
+  const postOf = (key, withDesign) => posterior([...PRIOR[key], ...(withDesign ? designPts(key) : [])], { tau: TAU[key], m0: M0[key] });
+  const post = { cer: postOf('cer', true), calls: postOf('calls', true) };
+  const priorOnly = { cer: postOf('cer', false), calls: postOf('calls', false) };
+  const lvC = liveVar('cer');
+  const settings = grid.map((x) => {
+    const c = bpredict(post.cer, x), k = bpredict(post.calls, x), sd = Math.sqrt(c.sd ** 2 + lvC);
+    const pc0 = bpredict(priorOnly.cer, x), pk0 = bpredict(priorOnly.calls, x);
+    return { x, ppc: LEVELS.ppc[x[0] + 1], edge: LEVELS.edge[x[1] + 1], think: LEVELS.think[x[2] + 1],
+      cer: c.mean, cer_sd: c.sd, delta: c.mean - liveCer, delta_lo: c.mean - liveCer - 1.96 * sd, delta_hi: c.mean - liveCer + 1.96 * sd,
+      calls: k.mean, calls_lo: k.mean - 1.96 * k.sd, calls_hi: k.mean + 1.96 * k.sd, secs: null,
+      prior_cer: pc0.mean, prior_cer_sd: pc0.sd, prior_calls: pk0.mean, prior_calls_sd: pk0.sd,
+      run: design.find((r) => r.x1 === x[0] && r.x2 === x[1] && r.x3 === x[2])?.id ?? null };
+  });
   for (const s of settings) {
     const ran = s.run && agg(s.run, books);
     s.wrong = ran ? ran.wrong : null;
-    s.non_inferior = s.delta_hi <= MARGIN && (s.wrong === null || s.wrong <= liveWrong + 1);
+    if (ran) s.secs = ran.secs;
+    s.non_inferior = liveCer !== null && s.delta_hi <= MARGIN && (s.wrong === null || s.wrong <= liveWrong + 1);
   }
-  const nonInf = settings.filter((s) => s.non_inferior).sort((a, b) => (Math.abs(a.calls - b.calls) > 0.02 ? a.calls - b.calls : a.secs - b.secs) || (Math.abs(a.x[0]) + Math.abs(a.x[1] - 1) + Math.abs(a.x[2] + 1)) - (Math.abs(b.x[0]) + Math.abs(b.x[1] - 1) + Math.abs(b.x[2] + 1)));
+  const nonInf = settings.filter((s) => s.non_inferior).sort((a, b) => (Math.abs(a.calls - b.calls) > 0.02 ? a.calls - b.calls : (a.secs ?? 1e9) - (b.secs ?? 1e9)) || (Math.abs(a.x[0]) + Math.abs(a.x[1] - 1) + Math.abs(a.x[2] + 1)) - (Math.abs(b.x[0]) + Math.abs(b.x[1] - 1) + Math.abs(b.x[2] + 1)));
   const best = nonInf[0] || null;
   const saving = best && liveCalls ? 1 - best.calls / liveCalls : null;
-  const optimum = !best ? { verdict: 'no setting is non-inferior to live: nothing switches' }
-    : saving < MIN_SAVING ? { verdict: `the cheapest non-inferior setting saves ${(100 * saving).toFixed(0)} % of live's calls (< ${100 * MIN_SAVING} %): nothing switches`, setting: best, saving }
+  const optimum = !best ? { verdict: 'no setting is shown non-inferior to live: nothing switches' }
+    : saving < MIN_SAVING ? { verdict: `the cheapest non-inferior setting saves ${(100 * saving).toFixed(0)} % of live's calls (under ${100 * MIN_SAVING} %): nothing switches`, setting: best, saving }
     : { verdict: 'optimum found: confirm on queue pages', setting: best, saving };
+  // Sequential design: is every cheap-end setting that would save ≥ 10 % decided? which runs next?
+  const cheap = settings.filter((s) => s.x[0] >= 0);
+  const open = cheap.filter((s) => liveCalls !== null && s.calls <= 0.9 * liveCalls && !(s.delta_hi <= MARGIN || s.delta_lo > MARGIN));
+  const doneIds = new Set(runs.map((r) => r.id));
+  const remaining = DESIGN_RUNS.filter((d) => !doneIds.has(d.id) && !d.id.startsWith('C') && !d.id.startsWith('L')).map((d) => ({ id: d.id, x: [d.x1, d.x2, d.x3] }));
+  const next = rankNext(post.cer, remaining, cheap.map((s) => s.x), null, medianV('cer')).map((r) => ({ id: r.id, x: r.x, gain_pp2: 1e4 * r.gain }));
   // Noise floor: the A-vs-A spread of the centre runs and of the two live runs, paired bootstrap by book.
-  const pair = (a, b) => { if (!cell[a] || !cell[b]) return null; const d = boots.map(({ bs }) => agg(a, bs).cer - agg(b, bs).cer); return { a, b, delta: agg(a, books).cer - agg(b, books).cer, lo: q(d, 0.025), hi: q(d, 0.975) }; };
+  const pair = (a, b) => { if (!cell[a] || !cell[b]) return null; const d = boots.map(({ runs: R }) => R[a].cer - R[b].cer); return { a, b, delta: agg(a, books).cer - agg(b, books).cer, lo: q(d, 0.025), hi: q(d, 0.975) }; };
   const centres = design.filter((r) => r.id.startsWith('C')).map((r) => r.id);
   const centreCers = centres.map((c) => agg(c, books).cer);
   const noise = {
@@ -117,28 +158,39 @@ for (const [lang, L] of Object.entries(score.langs)) {
     live_pair: pair('L1', 'L2'),
   };
   noise.band = Math.max(noise.centre_range ?? 0, ...noise.centre_pairs.map((p) => Math.max(Math.abs(p.lo), Math.abs(p.hi))));
+  // The preregistered least-squares fit with its bootstrap, beside the posterior, where 10 or more runs exist.
+  let ls = null;
+  if (design.length >= 10) {
+    const lsFit = (R) => { const pts = design.map((r) => ({ x: [r.x1, r.x2, r.x3], ...R[r.id] })); return { cer: fit(pts.map((p) => ({ x: p.x, y: p.cer }))), calls: fit(pts.map((p) => ({ x: p.x, y: p.calls }))), live: lives.length ? mean(lives.map((r) => R[r.id].cer)) : null }; };
+    const P0 = lsFit(Object.fromEntries(runs.map((r) => [r.id, agg(r.id, books)])));
+    const LB = boots.map((b) => lsFit(b.runs));
+    ls = { coef: P0, settings: grid.map((x) => { const d = LB.map((s) => predict(s.cer, x) - s.live); return { x, cer: predict(P0.cer, x), delta: predict(P0.cer, x) - P0.live, delta_lo: q(d, 0.025), delta_hi: q(d, 0.975), calls: predict(P0.calls, x) }; }) };
+  }
   // Slices for the contour plots: x1 (pages a call) × x2 (long edge) at each thinking level, 25 × 25 coded points.
   const N = 25, axis = Array.from({ length: N }, (_, i) => -1 + (2 * i) / (N - 1));
-  const slices = [-1, 0, 1].map((c) => ({ x3: c, think: LEVELS.think[c + 1],
-    cer: axis.map((b) => axis.map((a) => predict(point.cer, [a, b, c]))), calls: axis.map((b) => axis.map((a) => predict(point.calls, [a, b, c]))) }));
+  const sliceOf = (P) => [-1, 0, 1].map((c) => ({ x3: c, think: LEVELS.think[c + 1],
+    cer: axis.map((b) => axis.map((a) => bpredict(P.cer, [a, b, c]).mean)), calls: axis.map((b) => axis.map((a) => bpredict(P.calls, [a, b, c]).mean)),
+    cer_sd: axis.map((b) => axis.map((a) => bpredict(P.cer, [a, b, c]).sd)) }));
   result.langs[lang] = {
     books: books.length, excluded: L.excluded, faces: L.faces, c1, axis,
-    runs: runs.map((r) => ({ id: r.id, x: [r.x1, r.x2, r.x3], ppc: r.ppc, edge: r.edge, think: r.think, live: r.live, phase: r.phase, ...agg(r.id, books),
+    runs: runs.map((r) => ({ id: r.id, x: [r.x1, r.x2, r.x3], ppc: r.ppc, edge: r.edge, think: r.think, live: r.live, phase: r.phase, ...agg(r.id, books), cer_sd: Math.sqrt(varOf(r.id, 'cer')),
       imputed: books.filter((b) => cell[r.id][b].imputed).length, unread: r.pages_unread, calls_made: r.calls, pages_in_run: r.pages_in_run, tokens: r.tokens })),
-    coef: { cer: point.cer, calls: point.calls, secs: point.secs },
-    coef_ci: { cer: point.cer.map((_, i) => [q(boots.map(({ s }) => s.cer[i]), 0.025), q(boots.map(({ s }) => s.cer[i]), 0.975)]) },
-    live: { cer: point.live, calls: liveCalls, wrong: liveWrong, runs: liveAgg },
-    settings, optimum, noise, slices,
+    prior: { cer: priorCer, calls: priorCalls, a0, tau: TAU },
+    coef: { cer: post.cer.mean, calls: post.calls.mean },
+    live: { cer: liveCer, calls: liveCalls, wrong: liveWrong, runs: liveAgg },
+    settings, optimum, noise, ls,
+    sequential: { open: open.map((s) => ({ x: s.x, delta: s.delta, delta_lo: s.delta_lo, delta_hi: s.delta_hi, calls: s.calls })), decided: open.length === 0 && liveCalls !== null, next, remaining: remaining.map((r) => r.id) },
+    slices: sliceOf(post), prior_slices: sliceOf(priorOnly),
   };
 }
 const OUT = arg('out', path.join(WORK, 'surface.json'));
 fs.writeFileSync(OUT, JSON.stringify(result, null, 1));
 for (const [lang, R] of Object.entries(result.langs)) {
-  if (R.status) { console.log(lang, R.status); continue; }
-  console.log(`\n${lang}: ${R.books} books; c1 ${R.c1.toFixed(2)}; live CER ${(100 * R.live.cer).toFixed(2)}% calls ${R.live.calls?.toFixed(3)}; noise band ${(100 * R.noise.band).toFixed(2)} pp`);
-  for (const r of R.runs) console.log(`  ${r.id.padEnd(4)} ${String(r.ppc).padStart(1)} ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} CER ${(100 * r.cer).toFixed(2)}%  calls/page ${r.calls.toFixed(3)}  s/page ${r.secs.toFixed(1)}  wrong ${r.wrong}  imputed ${r.imputed}`);
-  console.log('  coef CER (pp):', R.coef.cer.map((b, i) => `${TERM_NAMES[i]} ${(100 * b).toFixed(2)}`).join(', '));
-  console.log('  optimum:', R.optimum.verdict, R.optimum.setting ? `${R.optimum.setting.ppc}/${R.optimum.setting.edge}/${R.optimum.setting.think} calls ${R.optimum.setting.calls.toFixed(3)} δ ${(100 * R.optimum.setting.delta).toFixed(2)} [${(100 * R.optimum.setting.delta_lo).toFixed(2)}, ${(100 * R.optimum.setting.delta_hi).toFixed(2)}] pp` : '');
+  console.log(`\n${lang}: ${R.books} books; c1 ${R.c1.toFixed(2)}; live CER ${R.live.cer === null ? '-' : (100 * R.live.cer).toFixed(2) + '%'} calls ${R.live.calls?.toFixed(3) ?? '-'}; noise band ${(100 * R.noise.band).toFixed(2)} pp; a0 cer ${R.prior.a0.cer.a0} calls ${R.prior.a0.calls.a0}`);
+  for (const r of R.runs) console.log(`  ${r.id.padEnd(4)} ${String(r.ppc).padStart(1)} ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} CER ${(100 * r.cer).toFixed(2)}% ±${(100 * r.cer_sd).toFixed(2)}  calls/page ${r.calls.toFixed(3)}  s/page ${r.secs.toFixed(1)}  wrong ${r.wrong}  imputed ${r.imputed}`);
+  for (const s of R.settings.filter((x) => x.x[0] >= 0)) console.log(`   ${s.ppc}/${s.edge}/${s.think.padEnd(6)} ${s.run ?? '  - '} CER ${(100 * s.cer).toFixed(2)}% δ ${(100 * s.delta).toFixed(2)} [${(100 * s.delta_lo).toFixed(2)}, ${(100 * s.delta_hi).toFixed(2)}] calls ${s.calls.toFixed(3)}${s.non_inferior ? ' NI' : ''}`);
+  console.log('  optimum:', R.optimum.verdict, R.optimum.setting ? `${R.optimum.setting.ppc}/${R.optimum.setting.edge}/${R.optimum.setting.think}` : '');
+  console.log(`  sequential: ${R.sequential.decided ? 'DECIDED' : `${R.sequential.open.length} cheap settings open`}; next: ${R.sequential.next.slice(0, 4).map((n) => `${n.id} (${n.gain_pp2.toFixed(3)})`).join(', ')}`);
 }
 if (arg('data')) {
   // The admin page's data: everything but per-book rows (no reference text is in any of it).
