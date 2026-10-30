@@ -72,3 +72,40 @@ export function isReaderListedPage(page: object | null | undefined): boolean {
   return !isRepeatCapture(p);
 }
 
+/** The fields `resolveRepeatKeeper` reads from a page. */
+export const REPEAT_KEEPER_PROJECTION = { _id: 0, id: 1, page_number: 1, repeat_of: 1, split_into: 1 } as const;
+
+type KeeperCandidate = { id?: unknown; page_number?: unknown; repeat_of?: unknown; split_into?: unknown };
+
+/**
+ * The listed page a hidden repeat capture stands for, or null (#5056).
+ *
+ * Starts at `repeatOf` and follows, up to `maxHops` lookups:
+ *  - a page that is itself a repeat, to its `repeat_of` (the sweep never writes
+ *    chains, but a later sweep could);
+ *  - an archived split parent (negative `page_number` with `split_into`), to
+ *    its first leaf: a keeper split after the hide still has a listed page, so
+ *    the leaf is not orphaned out of every list (PR #7777 review S6).
+ * A missing page, or one soft-hidden without `split_into`, answers null: the
+ * repeat then renders at its own URL, and scripts/audit/repeat-of-orphans.mjs
+ * lists it.
+ */
+export async function resolveRepeatKeeper(
+  lookup: (id: string) => Promise<KeeperCandidate | null>,
+  repeatOf: string,
+  maxHops = 4,
+): Promise<string | null> {
+  let id = repeatOf;
+  for (let hop = 0; hop < maxHops; hop++) {
+    const p = await lookup(id);
+    if (!p || typeof p.page_number !== 'number') return null;
+    if (p.page_number < 0) {
+      if (!Array.isArray(p.split_into) || typeof p.split_into[0] !== 'string') return null;
+      id = p.split_into[0];
+      continue;
+    }
+    if (typeof p.repeat_of === 'string') { id = p.repeat_of; continue; }
+    return typeof p.id === 'string' ? p.id : null;
+  }
+  return null;
+}

@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { Book, Page } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { resolveRepeatKeeper, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
 
 // Shared book+page lookup for the reader segment's shells.
 //
@@ -71,26 +72,16 @@ export const getSplitLeafId = cache(async function getSplitLeafId(bookId: string
 
 /**
  * The page a hidden repeat capture should redirect to, or null (#5056).
- *
- * `repeat_of` is the `id` of the kept capture of the same leaf. The sweep that
- * writes it resolves chains to the earliest capture, but a few hops are
- * followed anyway, and only a page in the same book that is itself listed
- * answers — a dangling id renders the repeat as before.
+ * Only a page in the same book answers; the rule (chains, a keeper split after
+ * the hide) is resolveRepeatKeeper in src/lib/reader-pages.ts.
  */
 export const getRepeatKeeperId = cache(async function getRepeatKeeperId(bookId: string, repeatOf: string): Promise<string | null> {
   try {
     const db = await getReadDb();
-    let keptId = repeatOf;
-    for (let hop = 0; hop < 3; hop++) {
-      const kept = await db.collection('pages').findOne(
-        { id: keptId, book_id: bookId },
-        { projection: { _id: 0, id: 1, page_number: 1, repeat_of: 1 } },
-      );
-      if (!kept || typeof kept.page_number !== 'number' || kept.page_number < 0) return null;
-      if (typeof kept.repeat_of !== 'string') return kept.id as string;
-      keptId = kept.repeat_of;
-    }
-    return null;
+    return await resolveRepeatKeeper(
+      (id) => db.collection('pages').findOne({ id, book_id: bookId }, { projection: REPEAT_KEEPER_PROJECTION }),
+      repeatOf,
+    );
   } catch {
     return null;
   }

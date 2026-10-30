@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { planBookRepeats, namesOcclusion, wordCount } from '../../scripts/lib/repeat-captures.mjs';
-import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES, readerPageCountFilters, countReaderListedPages } from '@/lib/reader-pages';
+import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES, readerPageCountFilters, countReaderListedPages, resolveRepeatKeeper } from '@/lib/reader-pages';
 import { VISIBLE_PAGE_MATCH as TS_VISIBLE, isRepeatCapture } from '@/lib/page-counts';
+import { classifyRepeatTarget, FAILING } from '../../scripts/audit/repeat-of-orphans.mjs';
 import { VISIBLE_PAGE_MATCH as MJS_VISIBLE, isVisiblePage } from '../../scripts/lib/page-counts.mjs';
 
 const words = (n: number, seed = 'w') => Array.from({ length: n }, (_, i) => `${seed}${i}`).join(' ');
@@ -65,6 +66,42 @@ describe('reader page count without fetching pages (PR #7777 review S1)', () => 
     expect(n).toBe(93);
     expect(seen).toHaveLength(2);
     expect(await countReaderListedPages(async (q) => ('repeat_of' in q ? 5 : 0), 'B')).toBe(0);
+  });
+});
+
+describe('resolveRepeatKeeper (PR #7777 review S6)', () => {
+  const store = (...ps: Record<string, unknown>[]) => {
+    const m = new Map(ps.map(p => [p.id as string, p]));
+    return async (id: string) => (m.get(id) ?? null) as never;
+  };
+  it('answers the kept page', async () => {
+    expect(await resolveRepeatKeeper(store({ id: 'k', page_number: 4 }), 'k')).toBe('k');
+  });
+  it('follows a keeper split after the hide to its first leaf', async () => {
+    const s = store({ id: 'k', page_number: -4, split_into: ['k-L', 'k-R'] }, { id: 'k-L', page_number: 4 });
+    expect(await resolveRepeatKeeper(s, 'k')).toBe('k-L');
+  });
+  it('follows a chain of repeats', async () => {
+    expect(await resolveRepeatKeeper(store({ id: 'a', page_number: 6, repeat_of: 'k' }, { id: 'k', page_number: 4 }), 'a')).toBe('k');
+  });
+  it('answers null for a missing or soft-hidden keeper, and for a cycle', async () => {
+    expect(await resolveRepeatKeeper(store(), 'k')).toBeNull();
+    expect(await resolveRepeatKeeper(store({ id: 'k', page_number: -4 }), 'k')).toBeNull();
+    expect(await resolveRepeatKeeper(store({ id: 'a', page_number: 6, repeat_of: 'b' }, { id: 'b', page_number: 7, repeat_of: 'a' }), 'a')).toBeNull();
+  });
+});
+
+describe('repeat-of-orphans audit classes (PR #7777 review S6)', () => {
+  const hid = { id: 'h', book_id: 'B', page_number: 9, repeat_of: 'k' };
+  it('classifies each way a keeper can leave the list', () => {
+    expect(classifyRepeatTarget(hid, { id: 'k', book_id: 'B', page_number: 4 })).toBe('ok');
+    expect(classifyRepeatTarget(hid, null)).toBe('missing');
+    expect(classifyRepeatTarget(hid, { id: 'k', book_id: 'OTHER', page_number: 4 })).toBe('missing');
+    expect(classifyRepeatTarget(hid, { id: 'k', book_id: 'B', page_number: -4 })).toBe('soft-hidden');
+    expect(classifyRepeatTarget(hid, { id: 'k', book_id: 'B', page_number: -4, split_into: ['kL', 'kR'] })).toBe('split');
+    expect(classifyRepeatTarget(hid, { id: 'k', book_id: 'B', page_number: 4, repeat_of: 'x' })).toBe('chain');
+    expect(classifyRepeatTarget({ ...hid, repeat_of: 'h' }, hid)).toBe('self');
+    expect(FAILING).not.toContain('split'); // the redirect follows split_into[0]
   });
 });
 
