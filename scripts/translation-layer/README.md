@@ -28,7 +28,7 @@ node scripts/translation-layer/11-work-graph.mjs            # real WORK unit ove
 # staged English-translation sets, one JSONL per source → scripts/output/translation-staging/
 node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --out $JOB_SCRATCH/loc-bulk --staging $JOB_SCRATCH/loc.jsonl
 node scripts/enrichment/ingest-openlibrary-translations.mjs --dumps <ol dump dir> --out $JOB_SCRATCH/openlibrary.jsonl
-node scripts/enrichment/ingest-wikidata-translations.mjs --staging $JOB_SCRATCH/wikidata.jsonl
+node scripts/enrichment/ingest-wikidata-translations.mjs --staging --staging-out $JOB_SCRATCH/wikidata.jsonl
 node scripts/translation-layer/01-build-external-works.mjs --staging   # → external-translation-works-staging.jsonl
 node scripts/translation-layer/11-work-graph.mjs --lang german         # any of the 8 target languages
 ```
