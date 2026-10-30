@@ -175,13 +175,37 @@ const RIGHTS_CLASS_NAMES: Record<string, string> = {
   'terms-of-use': 'The library’s terms of use',
 };
 
+const STANDARD_RIGHTS_URI = /^https?:\/\/(creativecommons\.org|rightsstatements\.org)\//i;
+const CLASS_RIGHTS_URIS: Record<string, string> = {
+  'noc-nc': 'http://rightsstatements.org/vocab/NoC-NC/1.0/',
+  'in-copyright': 'http://rightsstatements.org/vocab/InC/1.0/',
+  'public-domain': 'http://creativecommons.org/publicdomain/mark/1.0/',
+};
+
+/**
+ * The rights URI the holding library stated, for machine-readable surfaces (IIIF `rights`,
+ * schema.org `license`) that take one Creative Commons or rightsstatements.org URI (#7771).
+ *  - `undefined`: the library has not spoken (no statement, or an importer assumption). The
+ *    caller keeps its old path, the stored licence.
+ *  - a URI: the library's own, or the standard one for its class.
+ *  - `null`: the library spoke but gave no standard URI (its own terms of use). The caller must
+ *    NOT fall back to a public-domain default, which would contradict the library.
+ */
+export function libraryRightsUri(src?: { rights_normalized?: LibraryRightsStatement | null } | null): string | null | undefined {
+  const rn = src?.rights_normalized;
+  const stated = !!rn && (rn.status === 'stated' || rn.status === 'stated-from-import') && !!rn.class && rn.class !== 'unknown';
+  if (!stated) return undefined;
+  if (rn.statement_uri && STANDARD_RIGHTS_URI.test(rn.statement_uri)) return rn.statement_uri;
+  return CLASS_RIGHTS_URIS[rn.class!] ?? null;
+}
+
 /**
  * The licence, credit and terms a book page shows for its images (#7771). The holding library's
  * own statement wins when we have read one (status `stated`, or `stated-from-import`, which is the
  * library's field captured at import). Otherwise the importer's stored values are shown, as before:
  * for 32% of books that value is an importer default (`publicdomain`), not a library statement.
  */
-export function displayedImageRights(src?: (Partial<ImageSource> & { rights_normalized?: LibraryRightsStatement | null }) | null): {
+export function displayedImageRights(src?: { license?: string | null; attribution?: string | null; rights_normalized?: LibraryRightsStatement | null } | null): {
   license: { name: string; url?: string } | null;
   credit: string | null;
   terms: string | null;
