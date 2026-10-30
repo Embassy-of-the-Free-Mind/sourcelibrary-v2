@@ -1,0 +1,123 @@
+---
+stage: ocr
+measure: [accuracy]
+languages: [de, la]
+scripts: [Latn]
+canons: []
+n_books: 80
+n_pages: 80
+verdict: "PREREGISTERED 2026-10-30 (job read-surface-6740): no result yet. Box-Behnken tuning of the agy Flash first read (pages a call × image long edge × thinking) on 40 DTA German and 40 CAMENA Latin books."
+status: undecided
+decision: null
+superseded_by: null
+issue: [6740, 7701]
+router_evidence: []
+---
+PRIOR ART: `2026-10-30-german-cheaper-first-reads-7701.md` and `2026-10-29-cheap-routes-7701.md` (one knob at a time:
+read@1 vs @4 vs @8, judged blind by Opus against the image; they own the ENGINE choice, this owns the knobs of the agy
+read); `2026-10-06-typed-references-dta-camena-eebo-6012.md` (the typed references and the page alignment used as the
+key here); `2026-10-28-euro-print-gpu-draft-flash-correct-7567.md` (CER against typed references, its `score.py`
+conventions: wrappers out, letters only, infix alignment). None varies more than one setting of a read at a time.
+
+## 2026-10-30 · Which combination of pages a call, image size and thinking gives the fewest agy calls a page without losing accuracy? Box-Behnken over the agy first read (#6740)
+
+### Preregistration (committed before any agy call of this design)
+
+**Question.** The agy first read (`cli-ocr.mjs read`, gemini-3.8-flash, live: 4 pages a call, the image as served,
+thinking low) has three continuous or ordinal settings. Settings were compared one at a time (read@1 vs @4 vs @8).
+Which combination gives the fewest agy calls per accepted page, per language, at no loss of accuracy?
+
+**Factors (3 levels each, coded −1 / 0 / +1).**
+
+| factor | −1 | 0 | +1 | note |
+|---|---|---|---|---|
+| x1 pages a call | 1 | 4 | 8 | ordinal coding (4 is the live setting) |
+| x2 image long edge | 1024 px | 1600 px | 2400 px | `--long-edge`: never enlarged, so an image already within the edge is sent as served |
+| x3 thinking | low | medium | high | the model id names the tier (`gemini-3.8-flash-{low,medium,high}`) |
+
+- **Deviation from the brief, decided before any call:** the brief asked for thinking {minimal, low, medium}. agy offers
+  no minimal tier (`agy models`, 2026-10-30: Flash low / medium / high only), so the levels are low / medium / high and
+  the live setting (low) sits on the face of the design, not at its centre.
+- **Design.** Box-Behnken, 12 edge-midpoint runs + 3 centre replicates = 15 runs per language, plus **2 live runs**
+  (4 a call, image as served, low): the reference arm of the non-inferiority test and a second A-vs-A pair.
+
+| run | x1 | x2 | x3 | | run | x1 | x2 | x3 |
+|---|---|---|---|---|---|---|---|---|
+| B01 | −1 | −1 | 0 | | B09 | 0 | −1 | −1 |
+| B02 | +1 | −1 | 0 | | B10 | 0 | +1 | −1 |
+| B03 | −1 | +1 | 0 | | B11 | 0 | −1 | +1 |
+| B04 | +1 | +1 | 0 | | B12 | 0 | +1 | +1 |
+| B05 | −1 | 0 | −1 | | C1–C3 | 0 | 0 | 0 |
+| B06 | +1 | 0 | −1 | | L1, L2 | 0 (4) | served | −1 (low) |
+| B07 | −1 | 0 | +1 | | | | | |
+| B08 | +1 | 0 | +1 | | | | | |
+
+- **Pools.** The `.agy-james` account is held to flash-low (`allowed-model`), and the default pool is spent until
+  2026-10-30 22:00Z. So phase A (James, now) runs the low-thinking runs B05, B06, B09, B10 and L1; phase B (default,
+  after the refill) runs the rest and L2. Within a phase the order is shuffled (seed 6740). L1 vs L2 is also the
+  pool-vs-pool A-vs-A check; if they differ by more than the centre runs' spread, the thinking factor's low level is
+  confounded with the pool and that is reported.
+
+**Blocking: every run reads the same pages.** `scripts/eval/read-surface-6740/panel.mjs`, seed 6740.
+- German: 40 books from the DTA (#6012 same-edition books), one target page each. Latin: 40 books from CAMENA.
+  Century quotas: German 1500s 2 / 1600s 14 / 1700s 14 / 1800s 14 (drawn 1 / 12 / 14 / 13: only one 1500s book is
+  eligible); Latin 1500s 16 / 1600s 18 / 1700s 6 / undated 2 (drawn 16 / 18 / 4 / 2).
+- The target is a typed page whose page breaks fall on ours (`congruent`, one typed page, no typed notes, ≥ 400
+  letters), interior for German (front 15 % and back 5 % skipped). CAMENA targets may sit from page 4 on: #6012 aligned
+  most CAMENA books only on their first 25 OCR'd pages, and the front rule leaves 12 books.
+- Each target has an 8-page window of its own book (t−3 … t+4). A 1-a-call run reads the target alone; a 4-a-call run
+  reads t−1 … t+2 in one call; an 8-a-call run reads the window in one call. Only the target is scored; every page read
+  counts in calls a page. The same image bytes go to every run (`--image-cache`).
+- Faces (Fraktur / Antiqua) are labelled by eye from the target image before scoring, and reported as a split.
+- **French is not in this design.** The one typed French set (#7567's 40 fr.wikisource proofread pages) is of
+  Wikisource's own scans, not our library pages, and has no 8-page windows of our books. No library French page has a
+  typed reference. Skipped, as the brief allows.
+
+**Responses (per run, per language).**
+1. **CER** (`measure: accuracy`): `scripts/eval/lib/metrics.mjs` `scoreAgainstReference(ref, read, 'latin')`, the
+   windowed CER (1 − `charAccuracyWindowed`; the lower bound on accuracy, the one for comparing reads), after the read's
+   header tags and their content are removed (`score.py`'s list). Capped at 1. The reference is the typed page body.
+2. **Wrong text**: the identity guard (`aligned: false`, word guard > 0.35) on a target page where most runs pass it.
+   A target where most runs fail the guard is a reference or leaf problem, not a read: it is excluded from every run
+   before the fit, listed, and checked by eye. **Loop / cut**: letters > 2× or < 0.5× the page's median over runs.
+3. **agy calls a page**, production-equivalent: (calls made in the run + c1 × pages left unread) ÷ pages in the run.
+   `--no-alone` leaves a twice-refused block's pages unread instead of reading them one a call (the production
+   fallback), to keep the design inside the budget; c1 is the language's measured calls a page over its 1-a-call runs.
+   A target left unread takes, for CER, its read from the 1-a-call run at the same image size and thinking level
+   where the design has one, else the mean of the 1-a-call runs (disclosed per run).
+4. **Wall seconds a page**: the summed duration of the run's calls ÷ pages read. **Tokens**: agy's own usage per call
+   (input, output, thinking), reported because the pool may meter tokens, not calls.
+
+**Fit.** Per language and response, a full quadratic in the coded factors (10 terms) by least squares on the 15 BBD
+run means (the live runs are not design points: "served" is not a level). Uncertainty: 2,000 by-book bootstrap
+resamples (the same books resampled for every run, so runs stay paired), refit each time.
+
+**Noise floor.** The A-vs-A spread: the range of the three centre runs' mean CER, and the 95 % paired bootstrap
+interval of C1 − C2, C1 − C3, C2 − C3; the same for L1 − L2. Printed as a band on every chart.
+
+**The optimum, and the rule (fixed now).**
+- Candidates: the 27 settings of the 3 × 3 × 3 grid, plus "live".
+- A setting is **non-inferior** when the 95 % bootstrap upper bound of δ = predicted CER(setting) − mean CER(L1, L2)
+  is ≤ **1.0 percentage point** (eval-design §10.2 card 1, the registered CER margin for a cheaper route), and its
+  wrong-text count, where it was run, is ≤ the live runs' mean + 1 per 40 books.
+- **Optimum** = the non-inferior setting with the fewest predicted agy calls a page; ties (within 0.02 calls) go to
+  fewer wall seconds a page, then to the setting nearest live.
+- If the optimum is live, or saves under 10 % of live's calls a page, **nothing switches** and no confirmation runs.
+- **Early stop, per language:** if after C1–C3 and L1 the A-vs-A range exceeds 2 pp CER, the design cannot resolve a
+  1 pp margin; that language's remaining runs are not made.
+
+**Confirmation (only if an optimum is found).** 30 real queue pages per language (the first-read frame,
+`judge.mjs draw --cells=de-blank,la-blank`, new books, none in this panel or the #7701 draws), each read by live and by
+the optimum, **paired**, judged blind by Opus against the page image (route-judge-6740 harness, its wrong-page and
+planted controls), scored by the router rule (`scripts/eval/estimator/router-table/rules.json`, the paired gate). The
+live setting changes only through a PR, only if the router picks the optimum. Latin first reads are now arm c
+(PERO draft > agy, #7752), so a Latin optimum is confirmed against read@4 here and can replace arm c only after a paired
+test against arm c on gex45 (a follow-up brief, not this job).
+
+**Budget.** At most 2,000 agy calls in all; the design is capped at 1,500 (a run in progress finishes; runs not
+started are dropped, B runs before centre and live runs). Planned: about 45–70 calls a run × 34 runs.
+
+**Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
+or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
+read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book
+list (`lane_job_books`).
