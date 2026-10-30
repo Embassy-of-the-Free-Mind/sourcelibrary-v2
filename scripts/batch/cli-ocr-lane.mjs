@@ -185,6 +185,8 @@ import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
+import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByArmcFirstRead } from '../lib/router-binding.mjs';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -391,12 +393,27 @@ async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   return rows.filter((p) => isInterior(p.page_number, last));
 }
 
+/**
+ * #7809: at start, compare the routes this run serves with the current router table's decisions
+ * (scripts/lib/router-binding.mjs). --route-check=warn (default) prints and pages once a day per cell;
+ * refuse also exits 9 on a mismatch; off skips it.
+ */
+function routeCheck(served, arg) {
+  const mode = arg('route-check') || 'warn';
+  if (!['off', 'warn', 'refuse'].includes(mode)) { console.error('--route-check: off | warn | refuse'); process.exit(2); }
+  return laneRouteCheck(served, {
+    mode,
+    page: (title, body) => ntfyPost('https://ntfy.sh/sourcelibrary-uptime', { method: 'POST', headers: { Title: title, Priority: 'high', Tags: 'twisted_rightwards_arrows' }, body }),
+  });
+}
+
 async function correctMain(mode, arg) {
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
   if (mode === 'correct' && !OUT) { console.error('correct needs --out=DIR'); process.exit(2); }
   const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'correct-ledger.jsonl') : null);
   const CLAIMS = OUT ? path.join(path.dirname(OUT), 'correct-contain-claims.jsonl') : null;
+  if (mode === 'correct') await routeCheck(servedByCorrect({ languages: CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|') }), arg);
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../lib/translate-core.mjs');
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
@@ -802,6 +819,7 @@ async function armcMain(mode, arg) {
   if (!ARMC_FRAMES.includes(FRAME)) { console.error(`--frame must be ${ARMC_FRAMES.join(' or ')}`); process.exit(2); }
   // first-read: only the languages the router picked arm c for on unread pages (Latin, #7701)
   const LANGS = (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l] && (FRAME !== 'first-read' || ARMC_FIRST_READ_LANGS.includes(l)));
+  if (mode === 'armc' && FRAME === 'first-read') await routeCheck(servedByArmcFirstRead({ langs: LANGS }), arg);
   const ledger = new Set(), tailState = { offset: 0 };
   ledgerTail(P.ledger, ledger, tailState);
   if (mode === 'armc-left') { const u = armcUndrafted(L).filter((p) => !ledger.has(p.id)); console.log(`${u.length} ${new Set(u.map((p) => p.bid)).size}`); return; }
@@ -1149,6 +1167,7 @@ async function firstReadMain(mode, arg) {
   const LANGS = arg('languages') ? arg('languages').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : null;
   // --correct=deu[,…]: the languages whose first reads get the second pass (the router picks it per cell, #7701 arm B)
   const CORRECT_LANGS = arg('correct') ? arg('correct').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : [];
+  if (mode === 'run') await routeCheck(servedByFirstRead({ languages: LANGS, correct: CORRECT_LANGS, perCall: Number(arg('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }), arg);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
