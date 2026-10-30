@@ -229,3 +229,156 @@ export async function imageFor(key, url) {
   fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, buf);
   return buf;
 }
+
+// ═══ AMENDMENT 1 (2026-10-30, Derek's notes; experiment file §Amendment 1) ═══
+import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../../lib/correction-diff-guard.mjs';
+import { levenshtein } from '../lib/metrics.mjs';
+
+/** A1(a): MQM-style weights on the judge's own severity tags; the main set and the two sensitivity sets. */
+export const SEVERITY_WEIGHTS = Object.freeze({ main: { cosmetic: 1, misleads: 5, wrong_text: 25 }, flat: { cosmetic: 1, misleads: 5, wrong_text: 10 }, steep: { cosmetic: 1, misleads: 10, wrong_text: 100 } });
+const bodyWords = (t) => String(t || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter((w) => /\p{L}|\d/u.test(w)).length;
+/** Severity-weighted error score of one verdict per 100 words of the text it judged. */
+export function severityScore(verdict, text, w = SEVERITY_WEIGHTS.main) {
+  const n = Math.max(1, bodyWords(text));
+  const s = (verdict?.defects || []).reduce((a, d) => a + (w[d.severity] ?? 0), 0);
+  return 100 * s / n;
+}
+
+/**
+ * A2: model-free severity of every difference between a text and the human reference (Arm W). Words are aligned by
+ * their folded key (normalizeForScript 'latin': case, diacritics, long-s, u/v, i/j, punctuation folded), so a span is a
+ * run of unaligned or unequal keys. Rule (Derek 2026-10-30):
+ *   wrong_text  a span holding a digit on either side; an inserted run (no reference words) whose words are in neither
+ *               the reference nor the draft (when a draft is given); a dropped run of >= 5 reference words (a line);
+ *               French only: a substituted reference word that is capitalised and not sentence-initial (a name). German
+ *               capitalises every noun, so names are not detected there (declared limitation).
+ *   misleads    every other substitution, insertion or a dropped run of < 5 words.
+ *   cosmetic    an aligned word whose key matches but whose spelling differs (long-s, ligature, case, accent, u/v,
+ *               punctuation attached to the word).
+ * OCR-only words before the first and after the last aligned word are free, as in the windowed CER (running heads and
+ * text the reference keeps elsewhere); reference words missing there still count.
+ */
+const rawTokens = (t) => preFold(stripFurniture(t)).replace(/(\p{L})[-¬]\s*\n\s*(\p{L})/gu, '$1$2').replace(/<[^>]+>/g, ' ').normalize('NFC').split(/\s+/).filter(Boolean);
+const keyOf = (w) => normalizeForScript(w, SCORE_SCRIPT).replace(/ /g, '');
+export function spanSeverity(reference, hyp, { draft = null, lang = 'de' } = {}) {
+  const Rr = rawTokens(reference).map((w) => ({ w, k: keyOf(w) })).filter((x) => x.k);
+  const Hr = rawTokens(hyp).map((w) => ({ w, k: keyOf(w) })).filter((x) => x.k);
+  const refSet = new Set(Rr.map((x) => x.k)), draftSet = draft == null ? null : new Set(rawTokens(draft).map(keyOf).filter(Boolean));
+  const al = alignSyllables(Rr.map((x) => x.k), Hr.map((x) => x.k));
+  const matched = al.map(([i, j]) => i != null && j != null && Rr[i].k === Hr[j].k);
+  const first = matched.indexOf(true), last = matched.lastIndexOf(true);
+  const spans = [], counts = { cosmetic: 0, misleads: 0, wrong_text: 0 };
+  const push = (sev, kind, ref, hy) => { counts[sev]++; if (spans.length < 200) spans.push({ sev, kind, ref: ref.join(' ').slice(0, 120), hyp: hy.join(' ').slice(0, 120) }); };
+  let hunk = null;
+  const close = () => {
+    if (!hunk) return;
+    const ref = hunk.r.map((i) => Rr[i].w), hy = hunk.h.map((j) => Hr[j].w);
+    if (/\d/.test(ref.join('') + hy.join(''))) push('wrong_text', 'number', ref, hy);
+    else if (!ref.length) {
+      const novel = hunk.h.filter((j) => !refSet.has(Hr[j].k) && (!draftSet || !draftSet.has(Hr[j].k)));
+      push(novel.length ? 'wrong_text' : 'misleads', novel.length ? 'invented' : 'insertion', ref, hy);
+    } else if (!hy.length) push(ref.length >= 5 ? 'wrong_text' : 'misleads', ref.length >= 5 ? 'dropped line' : 'omission', ref, hy);
+    else if (lang === 'fr' && hunk.r.some((i) => /^\p{Lu}/u.test(Rr[i].w) && i > 0 && !/[.!?:»"]$/.test(Rr[i - 1].w))) push('wrong_text', 'name', ref, hy);
+    else push('misleads', 'substitution', ref, hy);
+    hunk = null;
+  };
+  al.forEach(([i, j], x) => {
+    if ((x < first || x > last) && i == null) return;   // OCR text before the first / after the last aligned word: free
+    if (matched[x]) { close(); if (Rr[i].w !== Hr[j].w) push('cosmetic', 'spelling', [Rr[i].w], [Hr[j].w]); return; }
+    hunk ??= { r: [], h: [] };
+    if (i != null) hunk.r.push(i); if (j != null) hunk.h.push(j);
+  });
+  close();
+  const refWords = Rr.length;
+  const per100 = (w) => (refWords ? 100 * (w.cosmetic * counts.cosmetic + w.misleads * counts.misleads + w.wrong_text * counts.wrong_text) / refWords : null);
+  return { counts, ref_words: refWords, score: per100(SEVERITY_WEIGHTS.main), score_flat: per100(SEVERITY_WEIGHTS.flat), score_steep: per100(SEVERITY_WEIGHTS.steep), spans };
+}
+
+/**
+ * A3: order-independent character accuracy, after Clausner, Pletschacher & Antonacopoulos (2020): the reference is cut
+ * into chunks (its lines; a line over 120 characters into ~80-character pieces at word breaks), each chunk is matched to
+ * its best substring of what is left of the OCR (fitting alignment, longest chunks first), the matched OCR is used up,
+ * and OCR characters left at the end count as insertions. FCA = 1 - (chunk distances + leftover) / reference characters,
+ * floored at 0. Characters: normalizeForScript 'latin', spaces removed. Not Clausner's exact chunking; declared.
+ */
+export function fca(reference, hyp) {
+  const norm = (s) => normalizeForScript(preFold(s), SCORE_SCRIPT).replace(/ /g, '');
+  const lines = preFold(reference).split('\n').flatMap((l) => {
+    if (l.length <= 120) return [l];
+    const out = []; let cur = '';
+    for (const w of l.split(/\s+/)) { if ((cur + ' ' + w).length > 80 && cur) { out.push(cur); cur = w; } else cur = cur ? `${cur} ${w}` : w; }
+    if (cur) out.push(cur); return out;
+  }).map(norm).filter(Boolean).sort((a, b) => b.length - a.length);
+  const H = [...norm(stripFurniture(hyp))];
+  const used = new Uint8Array(H.length);
+  const refChars = lines.reduce((a, l) => a + l.length, 0);
+  if (!refChars) return { fca: null, ref_chars: 0 };
+  let dist = 0;
+  for (const line of lines) {
+    const R = [...line], m = H.length;
+    let prev = new Int32Array(m + 1), prevS = new Int32Array(m + 1).map((_, j) => j);
+    for (let i = 1; i <= R.length; i++) {
+      const cur = new Int32Array(m + 1), curS = new Int32Array(m + 1);
+      cur[0] = i; curS[0] = 0;
+      for (let j = 1; j <= m; j++) {
+        const eq = !used[j - 1] && R[i - 1] === H[j - 1];
+        const sub = prev[j - 1] + (eq ? 0 : 1), del = prev[j] + 1, ins = cur[j - 1] + 1;
+        if (sub <= del && sub <= ins) { cur[j] = sub; curS[j] = prevS[j - 1]; } else if (del <= ins) { cur[j] = del; curS[j] = prevS[j]; } else { cur[j] = ins; curS[j] = curS[j - 1]; }
+      }
+      prev = cur; prevS = curS;
+    }
+    let best = Infinity, end = 0;
+    for (let j = 0; j <= m; j++) if (prev[j] < best) { best = prev[j]; end = j; }
+    if (best >= R.length) { dist += R.length; continue; }   // no useful match: the chunk is missing
+    dist += best;
+    for (let j = prevS[end]; j < end; j++) used[j] = 1;
+  }
+  const leftover = used.reduce((a, u) => a + (u ? 0 : 1), 0);
+  return { fca: Math.max(0, 1 - (dist + leftover) / refChars), ref_chars: refChars, chunk_distance: dist, leftover };
+}
+
+/**
+ * W-G: what the #7567 arm-c lane SERVES from one correction of a GPU draft written over a stored Flash-Lite draft
+ * (cli-ocr.mjs apply, `gpu` + `--over-stored`), restated as servedCorrection is: on any refusal the stored text (the
+ * lite draft) stands; else the E3 guards against it (long-s pass, every flagged number / negation / expansion put back
+ * to the stored reading; a flag spanning a tag or not like-for-like refuses the page).
+ */
+export function servedArmc(read, lite, { languages = [], language = '' } = {}) {
+  const stand = (outcome, why) => ({ outcome, why, served: lite });
+  let text = String(read.text ?? '').trim();
+  if (read.exit !== 0) return stand('other', `cli exit ${read.exit}`);
+  if (read.wrapper) return stand('other', `reply wrapper: ${read.wrapper}`);
+  if (text.length < 5) return stand('other', 'empty read');
+  if (/^UNCHANGED\.?$/i.test(text)) return stand('unchanged', 'corrector: UNCHANGED (a headerless GPU draft is not written; the stored text stands)');
+  const contain = text.match(/^CONTAIN\s*:\s*([\s\S]+)$/i);
+  if (contain && contain[1].length < 600 && !/<page-type>/.test(text)) return stand('contain', 'corrector: CONTAIN');
+  if (text.length > 25000) return stand('other', 'over 25k chars');
+  if (!/<page-type>/.test(text)) return stand('other', 'no <page-type> tag');
+  if ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1) return stand('other', 'more than one transcription header');
+  if (REFUSAL.test(text)) return stand('other', 'refusal');
+  const chatter = ocrReadProblem(text, { header: true });
+  if (chatter) return stand('other', `chatter guard: ${chatter}`);
+  if (loopVerdict(text).refuse) return stand('other', 'repetition loop');
+  const guard = checkWrittenText(text, { kind: 'ocr' });
+  if (guard.verdict === 'truncated') return stand('other', 'write guard: truncated');
+  if (guard.verdict === 'repaired_mid') text = guard.repaired;
+  if (foreignScriptReason(text, { languages, served: lite })) return stand('other', 'letters outside the book\'s scripts');
+  const hand = (text.match(/<script>\s*(\w+)\s*<\/script>/i)?.[1] || '').toLowerCase();
+  if (hand !== 'printed') return stand('other', `corrector tags the page <script>${hand || 'none'}</script>: print only`);
+  const longWords = (t) => new Set((String(t).replace(/<[^>]+>/g, ' ').replace(/-\n/g, '').toLowerCase().replace(/æ/g, 'ae').replace(/ſ/g, 's').replace(/v/g, 'u').match(/\p{L}{5,}/gu) || []));
+  const was = longWords(lite), now = longWords(text);
+  const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
+  if (was.size >= 40 && shared < 0.4) return stand('other', `only ${Math.round(shared * 100)}% of its words are in the stored read`);
+  const lang = LANG_OF(language);
+  const ls = longSPass(text, { lang, convention: lite });
+  const { flags } = correctionDiffs(lite, ls.text, { lang });
+  const tagIn = (t, [x, y]) => /[<>]/.test(String(t).slice(x, y));
+  if (flags.some((f) => tagIn(lite, f.a) || tagIn(ls.text, f.b))) return stand('other', 'a diff-guard flag spans a tag');
+  const nWords = (s) => String(s).split(/\s+/).filter(Boolean).length;
+  if (flags.some((f) => !nWords(f.draft) || nWords(f.draft) !== nWords(f.next))) return stand('other', 'a diff-guard flag is not like-for-like');
+  const back = applyDiffVerdicts(lite, ls.text, flags, flags.map((f) => ({ i: f.i, winner: 'draft' })));
+  const tagShape = (t) => (String(t).match(/<\/?[a-z-]+/g) || []).join(' ');
+  if (tagShape(back.text) !== tagShape(ls.text)) return stand('other', 'the put-back changed the tag structure');
+  if (back.text.trim() === lite.trim()) return stand('other', 'every change was put back by the diff guard');
+  return { outcome: 'written', why: 'written', served: back.text, put_back: back.reverted, flags: flags.length };
+}

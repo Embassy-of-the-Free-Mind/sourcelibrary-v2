@@ -159,6 +159,80 @@ The restore uses `scripts/maintenance/revert-run.mjs --run-id <the lane run> --p
 | Wikisource harvest | 20261031 |
 | bootstrap | 7818–7822 |
 
+## Amendment 1 (2026-10-30, 22:00Z; Derek's notes of 20:57Z–21:18Z, which arrived after #7819 merged)
+
+Made before any judge call on the arms it adds, and before any CER, WER, FCA or span scoring of any arm.
+
+**What existed when this was written:**
+- every preregistered absolute Opus verdict: 295 Arm P and Arm W items, plus the 30 noise-floor repeats;
+- 290 of 295 second-judge (agy) verdicts;
+- 25 of 114 preregistered pairwise verdicts;
+- no controls;
+- PERO drafts of the Wikisource pages, still being made.
+
+Severity outcomes computed from those verdicts are allowed, because the judge output already carries severity. Everything below is reported **apart** from the preregistered outcomes. Code: `lib.mjs` (`severityScore`, `spanSeverity`, `fca`, `servedArmc`), `armw.mjs gpu-collect | gpu-correct`, `judge.mjs items` (arm WG), `analyze.mjs` (`amendment_1`).
+
+**A1. Severity from the judge's own tags.** Every arm and route (Arm P draft / served; Arm W lite, lite+correct, gpu, gpu+correct).
+- **(a) Severity-weighted error per 100 words.** MQM-style weights are applied to the judge's defect severities: cosmetic 1, misleads 5, wrong_text 25. Freitag et al. (2021) weight a minor error 1, a major error 5 and a non-translation 25; 25 is their non-translation weight, not a "critical" one (RELATED-WORK-SOURCES.md). Words are the judged text's whitespace tokens holding a letter or digit, tags removed.
+  - Reported as paired differences, with page-bootstrap 95% CIs (one page per book or work) and the Wilcoxon signed-rank test.
+  - Sensitivity sets: 1/5/10 and 1/10/100.
+- **(b) Share of pages with ANY wrong_text, paired.** Exact McNemar.
+- **(c) Made worse, by severity.** Pages where the correction has more wrong_text, misleads or cosmetic defects than its draft. A correction that ADDS a wrong_text defect is listed page by page, apart.
+
+**A2. Model-free severity of every reference diff (Arm W).**
+- **Alignment.** The text and the reference are aligned word by word on folded keys (`normalizeForScript` 'latin'). A span is a run of words that are unaligned or unequal. OCR-only words before the first aligned word or after the last are free; reference words missing there count.
+- **wrong_text:**
+  - a span with a digit on either side;
+  - an inserted run (no reference words) holding a word found in neither the reference nor the draft. For the corrections, the draft is lite for lite+correct, and lite plus gpu for gpu+correct;
+  - a dropped run of 5 or more reference words (a line);
+  - French only: a substituted reference word that is capitalised and not sentence-initial (a name).
+  - **German capitalises every noun, so names are not detected in German.** This is a declared limitation.
+- **misleads:** every other substitution or insertion, and a dropped run of under 5 words.
+- **cosmetic:** an aligned word whose folded key matches but whose spelling differs (long-s, ligature, case, accent, u/v, attached punctuation).
+- **Score.** Severity-weighted error per 100 reference words, with A1's weights, reported beside CER.
+
+**A3. Flexible Character Accuracy beside CER (Arm W).** An order-independent accuracy after Clausner, Pletschacher and Antonacopoulos (2020).
+- The reference is cut into chunks: its lines, with a line over 120 characters cut into pieces of about 80 characters at word breaks.
+- Each chunk, longest first, is matched to its best substring among the OCR characters not yet used (fitting alignment). Those characters are then used up.
+- OCR characters left over count as insertions.
+- FCA = 1 − (chunk distances + leftover) / reference characters, floored at 0.
+- This is not Clausner's exact chunking, and it is declared as such.
+
+**A4. Normalisation level (OCR-D).** Scoring folds more than OCR-D Level 1: long-s, ligatures and u/v, i/j, and also case, diacritics, punctuation and line-break hyphens. The German Wikisource references are word-faithful: the harvest found no long-s in any de reference. So no diplomatic (Level 2/3) score can be computed on this set, and none is claimed.
+
+**A5. H3 on REAL errors.** On every judged Arm W text whose lite draft has a clean reference:
+- the page-level confusion of the judge's wrong_text against the span rule's wrong_text;
+- the judge's recall of span-rule wrong_text pages (the judge rejects the page or tags wrong_text) and its precision;
+- the AUC of accept against span severity, and against CER;
+- per span kind (number / invented / dropped line / name): the share of span-rule wrong_text spans the judge NAMED (a defect quote holds a word of 3+ letters of the span).
+
+This answers #5647's warning: planted catch (143/144) is not real recall.
+
+**A6. Agreement as κ and Krippendorff's α.** For the Opus test-retest (accept nominal, fidelity ordinal) and for Opus against agy (accept; wrong_text).
+
+**A7. Arm W-G, the GPU route, and H6.**
+- **Draft.** PERO-OCR `pero_eu_cz_print_newspapers_2022-09-26` drafts the same Wikisource images on gex45, through `scripts/batch/pero-draft.py --device=cpu`. That is the #7263 TEST's configuration. The arm-c lane uses the same model on the card, with a config that differs only in USE_CPU.
+  - TAKEN: it is run directly on gex45's CPU (no cost) rather than through the GPU queue, whose order other jobs reshuffle.
+  - A draft under 30 word characters is dropped, as the GPU-draft read does.
+- **Correction.** The lane's GPU template (`GPU_TEMPLATE`, hash 0601ef30e816f7a7, checked) through the same agy Flash-low call.
+- **Served text.** `servedArmc`: `cli-ocr.mjs apply`'s gpu + `--over-stored` rules, restated:
+  - print only;
+  - the 40% shared-words floor against the stored lite draft;
+  - the long-s pass;
+  - every flagged number, negation and expansion put back to the lite reading (#7567 E3 / #7695);
+  - a page refused at any step serves the lite draft.
+- **Rows.** Four per page: lite, lite+correct, gpu, gpu+correct. All are scored by CER, WER, FCA and span severity, and judged the same way: absolute Opus, one text per call. A text identical to one already judged for that page is not judged again.
+- **Budget.** The study's 650 Opus calls stand. If W-G does not fit, it is judged in seeded queue order as far as it goes, and the cut is reported.
+- **H6.** In a language, gpu+correct REACHES lite+correct when both hold:
+  - the 95% CI upper bound of the mean paired CER difference (gpu+correct − lite+correct) is ≤ +0.005;
+  - the 95% CI lower bound of the paired accept difference is ≥ −10 points.
+- **Fraktur rule.** If raw PERO's median CER on a language's pages exceeds 0.25, the engine is recorded as unable to read that language's type. Most German Wikisource pages of 1500–1850 are Fraktur, and typeface is not recorded per page. H6 is then reported for the other language.
+- **Arm P GPU comparison: not possible.** Production has arm-c-written pages only in Latin (103) and Italian (102), and none in German or French (Mongo `ocr.pipeline = gpu-agy-correct-lite-7567`, 2026-10-30). This is recorded as a result.
+
+**A8. Not done.** The ICDAR 2019 post-OCR benchmark arm (optional) is listed as future work.
+
+**A9. Docs.** `scripts/eval/correction-pass-7818/METHODS-REVIEW.md` and `RELATED-WORK-SOURCES.md` are Derek's review, committed with each kept citation checked against the paper itself. A citation that could not be opened is dropped.
+
 ## Results
 
-Not yet: they are added below this line after judging.
+Not yet: they are added below this line after judging. Preregistered and amended outcomes are reported apart.
