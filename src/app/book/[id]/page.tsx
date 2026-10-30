@@ -7,7 +7,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { resolveReaderPages, LazyPagesNotReadyError } from '@/lib/lazy-pages';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Book, Page, TranslationEdition } from '@/lib/types';
+import { Book, Page, TranslationEdition, imageAccessFor } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
@@ -1052,33 +1052,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const hasTranslations = verdict !== null
     ? verdict === 'complete' || verdict === 'translated'
     : translatedCount > totalPages / 2;
-  // Image-download access classification (mirrors classifyImageAccess in lib/purchases.ts):
+  // Image-download access: the same rule as classifyImageAccess in lib/purchases.ts
+  // (`imageAccessFor`, which reads `year`, never `year_published` — #4131).
   //  - 'open': PD / CC-BY / BPH / pre-1930 → flows through the normal member/pay gate
-  //  - 'nc-free': NC-licensed → free for any signed-in user, never charged
+  //  - 'nc-free': the library restricts reuse → free for any signed-in user, never charged
   //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
-  const imgLicense = (book as any).image_source?.license || 'unknown';
-  const imgProvider = (book as any).image_source?.provider;
-  // `year`, NOT `year_published` (#4131). Every read in this file named a field
-  // that ZERO of 104,690 books have, so all of them silently evaluated to
-  // undefined: the pre-1930 image release below never fired once, and the
-  // DublinCoreMeta `year=` prop — the date library crawlers harvest — was empty
-  // on every book page, in both of this component's returns. `books.published`
-  // is the free-text twin and must not be parsed here (#3718); `year` is the
-  // numeric field, present on 49,959 books.
-  const yearPublished = (book as unknown as { year?: number }).year;
   // DC.date is a bibliographic claim, so it must not carry a year the record's
   // own provenance marks as an import placeholder (#3307). The image-access
-  // test below keeps the raw value: it is a rights heuristic, not a claim.
+  // rule below keeps the raw `year`: it is a rights heuristic, not a claim.
   const dcYear = assertableYear(book as unknown as Parameters<typeof assertableYear>[0]);
-  const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
-  const imageAccess: 'open' | 'nc-free' | 'blocked' =
-    imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
-      ? 'open'
-      : isNcLicense
-        ? 'nc-free'
-        : (!imgLicense || imgLicense === 'unknown')
-          ? 'blocked'
-          : 'open';
+  const imageAccess = imageAccessFor(book as unknown as Parameters<typeof imageAccessFor>[0]);
   const imageRestricted = imageAccess === 'blocked';
   const candidate = (book as unknown as { summary_candidate?: { brief?: string; abstract?: string; detailed?: string } }).summary_candidate;
   const bookSummaryObj = previewProposed && candidate?.brief
