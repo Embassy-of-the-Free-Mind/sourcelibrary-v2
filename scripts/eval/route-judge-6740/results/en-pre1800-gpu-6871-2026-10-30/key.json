@@ -1,0 +1,352 @@
+[
+ {
+  "id": "kc59ca6a4e2",
+  "judged_as": "j604ed03054",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a08fd4c25e3a402b23b3d6d",
+  "book_id": "6a08fd4c25e3a402b23b3d46",
+  "page_number": 39
+ },
+ {
+  "id": "kdc247bf166",
+  "judged_as": "j8f6fe50ee3",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69e961ab2beefe2f6f72c561",
+  "book_id": "69e961ab2beefe2f6f72c3b6",
+  "page_number": 427
+ },
+ {
+  "id": "k08b8cbde24",
+  "judged_as": "j79911fd207",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ac502524ba7223afefa2f34",
+  "book_id": "6ac502504ba7223afefa2d22",
+  "page_number": 528
+ },
+ {
+  "id": "k3ce342305d",
+  "judged_as": "j3b459e5a14",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69f677d8882924d65d4cdb7c",
+  "book_id": "6909b22fcf28baa1b4caf185",
+  "page_number": 51
+ },
+ {
+  "id": "k260047d709",
+  "judged_as": "jbec8db3eaa",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ad832ba0a79ec6fc00ed27f",
+  "book_id": "6ad832ba0a79ec6fc00ed091",
+  "page_number": 494
+ },
+ {
+  "id": "k534302770d",
+  "judged_as": "j70d27d3ab8",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ab5a4089e89e2a1f41393ad",
+  "book_id": "6ab5a4089e89e2a1f4139348",
+  "page_number": 101
+ },
+ {
+  "id": "kc3affb38ca",
+  "judged_as": "j0a8be97c30",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6957ebcc57a4c14a9879ad3b",
+  "book_id": "6957ebcc57a4c14a9879ab9c",
+  "page_number": 415
+ },
+ {
+  "id": "kf54fe70e24",
+  "judged_as": "j84e07865eb",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ac510f04ba7223afe0518b2",
+  "book_id": "6ac510ef4ba7223afe051880",
+  "page_number": 48
+ },
+ {
+  "id": "k7041cbdd95",
+  "judged_as": "ja2546b07a6",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69ee472c6dd925d126f41886",
+  "book_id": "69ee472c6dd925d126f4179a",
+  "page_number": 236
+ },
+ {
+  "id": "kfe4b012118",
+  "judged_as": "ja94a4dc7d8",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6972d08ec48d0f305929a62b",
+  "book_id": "6970e3549b09d309d780a240",
+  "page_number": 142
+ },
+ {
+  "id": "kfc461ba449",
+  "judged_as": "j36a36c87a6",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ac382e8966464312757c5e7",
+  "book_id": "6ac382e7966464312757c442",
+  "page_number": 419
+ },
+ {
+  "id": "k002b0a2a99",
+  "judged_as": "jf3ae561180",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6aa3602eba2a5c2cc348ce1a",
+  "book_id": "6aa3602eba2a5c2cc348ce02",
+  "page_number": 24
+ },
+ {
+  "id": "k5f88150a7d",
+  "judged_as": "j408a8e4f15",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a76d5156ba8d6d1d3f8eece",
+  "book_id": "6a76d5156ba8d6d1d3f8ee80",
+  "page_number": 78
+ },
+ {
+  "id": "k22cfdca87a",
+  "judged_as": "jca8696ff25",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69bd9e746120d54bd037d2ce",
+  "book_id": "69bd9e746120d54bd037d283",
+  "page_number": 75
+ },
+ {
+  "id": "k9b9721b352",
+  "judged_as": "ja6813ca08d",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69bd9ebbf6d63c919747ca2e",
+  "book_id": "69bd9ebbf6d63c919747c99a",
+  "page_number": 148
+ },
+ {
+  "id": "kdfaa32649c",
+  "judged_as": "jd51343cfdf",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ac4fa234ba7223afef6c37b",
+  "book_id": "6ac4fa224ba7223afef6c370",
+  "page_number": 9
+ },
+ {
+  "id": "k04296ac8d9",
+  "judged_as": "jf21dee7877",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69d6667abf5afe33937f98a8",
+  "book_id": "69d6667abf5afe33937f9858",
+  "page_number": 80
+ },
+ {
+  "id": "kff38f2843b",
+  "judged_as": "ja11bff0434",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a243f7a0f0e4f405e635474",
+  "book_id": "6a243f7a0f0e4f405e6353db",
+  "page_number": 153
+ },
+ {
+  "id": "kca8867fc12",
+  "judged_as": "j7abc03adba",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69ac8e65e54b190acc1d4124",
+  "book_id": "69ac8e65e54b190acc1d40d6",
+  "page_number": 78
+ },
+ {
+  "id": "k8103cbcd7a",
+  "judged_as": "jc739a97c8c",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6991be1a2e5d8f25d7e87d57",
+  "book_id": "6991be1a2e5d8f25d7e87c29",
+  "page_number": 302
+ },
+ {
+  "id": "ka089d2c943",
+  "judged_as": "jbf9e0c6bf3",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "69924f4c5976b55115ffdc8a",
+  "book_id": "69924f4c5976b55115ffdc5e",
+  "page_number": 44
+ },
+ {
+  "id": "ka6f362e2d1",
+  "judged_as": "j6a4301f0cc",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6991e178b53cae6bb602479d",
+  "book_id": "6991e177b53cae6bb602477b",
+  "page_number": 34
+ },
+ {
+  "id": "k97295b17fa",
+  "judged_as": "jc9342d73f5",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a76d4a3b13a2814115465f1",
+  "book_id": "6a76d4a3b13a2814115465a7",
+  "page_number": 74
+ },
+ {
+  "id": "k743afb36af",
+  "judged_as": "j03e7694394",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a08fd3425e3a402b23b3c6e",
+  "book_id": "6a08fd3425e3a402b23b3c3a",
+  "page_number": 52
+ },
+ {
+  "id": "k671678a023",
+  "judged_as": "jd6aa6074a5",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a8f6236ddd2f57fe0f816fa",
+  "book_id": "6a8f6236ddd2f57fe0f8144f",
+  "page_number": 683
+ },
+ {
+  "id": "kd2ee5e017d",
+  "judged_as": "jcc76e17f4b",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6ab5a40d9e89e2a1f41394dd",
+  "book_id": "6ab5a40d9e89e2a1f413948c",
+  "page_number": 81
+ },
+ {
+  "id": "k57fcc2b5dc",
+  "judged_as": "jc7cac925d4",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6aa35f05d1e28a213beeaae1",
+  "book_id": "6aa35f05d1e28a213beeaab0",
+  "page_number": 49
+ },
+ {
+  "id": "k01894bd408",
+  "judged_as": "j70252286dc",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a357e8f2aadc65cf09076b9",
+  "book_id": "6a357e8f2aadc65cf0907659",
+  "page_number": 96
+ },
+ {
+  "id": "k81d6e2650d",
+  "judged_as": "j50d1500913",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "item",
+  "page_id": "6a94b59e1041a1eb1e96cf7a",
+  "book_id": "6a94b59e1041a1eb1e96cf24",
+  "page_number": 86
+ },
+ {
+  "id": "ka1fa9f68f0",
+  "judged_as": "ja1fa9f68f0",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "wrong_page",
+  "page_id": "69924f4c5976b55115ffdc8a",
+  "book_id": "69924f4c5976b55115ffdc5e",
+  "page_number": 44,
+  "other": "6ab5a4089e89e2a1f41393ad"
+ },
+ {
+  "id": "k252c99b372",
+  "judged_as": "j252c99b372",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "wrong_page",
+  "page_id": "6ac382e8966464312757c5e7",
+  "book_id": "6ac382e7966464312757c442",
+  "page_number": 419,
+  "other": "6957ebcc57a4c14a9879ad3b"
+ },
+ {
+  "id": "kb977b69d17",
+  "judged_as": "j2038bbeca2",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "planted",
+  "page_id": "6ac510f04ba7223afe0518b2",
+  "book_id": "6ac510ef4ba7223afe051880",
+  "source_item": "j84e07865eb",
+  "plant": {
+   "kind": "D",
+   "mode": "paragraph",
+   "line": 2,
+   "offset": 1523,
+   "before": "Muſte it not needes be ſaide that we would not haue any thing too do with God? ",
+   "after": "",
+   "context": "eat treasure of his secretes? Muſte it not needes be ſaide that we would not haue any thing too do with God? For if we had any regard of hi"
+  }
+ },
+ {
+  "id": "k3133bb7ea2",
+  "judged_as": "ja695e2c02b",
+  "cell": "en-pre1800",
+  "route": "lighton",
+  "kind": "planted",
+  "page_id": "6991e178b53cae6bb602479d",
+  "book_id": "6991e177b53cae6bb602477b",
+  "source_item": "j6a4301f0cc",
+  "plant": {
+   "kind": "D",
+   "mode": "paragraph",
+   "line": 2,
+   "offset": 122,
+   "before": "Now Money is necessary to all these sorts of Men, as serving both for Counters and for Pledges, and so carrying with it even Reckoning and Security that he that receives it shall have the same Value for it again, of other things that he wants, whenever he pleases. ",
+   "after": "",
+   "context": "he Consumer, who spends them. Now Money is necessary to all these sorts of Men, as serving both for Counters and for Pledges, and so carrying with it even Reckoning and Security that he that receives it shall have the same Value for it again, of other things that he wants, whenever he pleases. The one of these it does by it"
+  }
+ }
+]
