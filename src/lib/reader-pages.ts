@@ -91,13 +91,13 @@ type KeeperCandidate = { id?: unknown; page_number?: unknown; repeat_of?: unknow
  * lists it.
  */
 export async function resolveRepeatKeeper(
-  lookup: (id: string) => Promise<KeeperCandidate | null>,
+  lookup: (id: string) => Promise<object | null>,
   repeatOf: string,
   maxHops = 4,
 ): Promise<string | null> {
   let id = repeatOf;
   for (let hop = 0; hop < maxHops; hop++) {
-    const p = await lookup(id);
+    const p = (await lookup(id)) as KeeperCandidate | null;
     if (!p || typeof p.page_number !== 'number') return null;
     if (p.page_number < 0) {
       if (!Array.isArray(p.split_into) || typeof p.split_into[0] !== 'string') return null;

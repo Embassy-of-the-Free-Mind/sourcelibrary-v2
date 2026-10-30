@@ -38,8 +38,8 @@ export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTU
 export const IS_REPEAT_CAPTURE = { repeat_of: { $type: 'string' } } as const;
 
 /** True iff a page is a hidden repeat capture of another page (#5056). */
-export function isRepeatCapture(page: { repeat_of?: unknown } | null | undefined): boolean {
-  return page?.repeat_of != null;
+export function isRepeatCapture(page: object | null | undefined): boolean {
+  return (page as { repeat_of?: unknown } | null | undefined)?.repeat_of != null;
 }
 
 /**
