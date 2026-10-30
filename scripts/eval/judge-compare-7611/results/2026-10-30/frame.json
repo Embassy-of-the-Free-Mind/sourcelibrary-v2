@@ -1,0 +1,114 @@
+{
+ "seed": 7611,
+ "built_at": "2026-10-30T17:20:32.994Z",
+ "log": {
+  "router-tests-2026-10-28": {
+   "key_items": 292,
+   "matched": 271
+  },
+  "latin-diffqa-7591-rt-conf": {
+   "key_items": 110,
+   "matched": 110
+  },
+  "latin-diffqa-7591-rt-dq": {
+   "key_items": 180,
+   "matched": 180
+  },
+  "pilot-2026-10-26": {
+   "key_items": 300,
+   "matched": 116
+  },
+  "mongo:tibetan-30-2026-10-27": {
+   "key_items": 30,
+   "matched": 30
+  },
+  "mongo:router-tests-2026-10-26": {
+   "key_items": 30,
+   "matched": 30
+  },
+  "mongo:pilot-2026-10-26": {
+   "key_items": 30,
+   "matched": 30
+  },
+  "lane_judge_verdicts": {
+   "records": 374,
+   "matched": 349,
+   "text_changed": 25
+  },
+  "group:GPU>GEM": {
+   "candidates": 329,
+   "books": 111,
+   "picked": 90
+  },
+  "group:GEM": {
+   "candidates": 448,
+   "books": 167,
+   "picked": 90
+  },
+  "group:GPU": {
+   "candidates": 129,
+   "books": 129,
+   "picked": 90
+  },
+  "group:TR": {
+   "candidates": 90,
+   "books": 90,
+   "picked": 90
+  }
+ },
+ "n": 540,
+ "noise": [
+  "rc0a912eac806",
+  "racc4ae255516",
+  "r06bfc34b9e5c",
+  "r9aa29d722e27",
+  "r3b07181a3c79",
+  "r9e9629c35238",
+  "rf4b649889832",
+  "r17c33770661f",
+  "r29efe4434ecd",
+  "rbb3a3e955789",
+  "rad87cbe8a758",
+  "r2821402ce33b",
+  "rc9059e3ee289",
+  "r533647553f0d",
+  "rfa8db7b7734c",
+  "ra6a3ec816db3",
+  "rbdc4e3ca21cf",
+  "r852ef0b58ecb",
+  "r3e7a05c68c80",
+  "rf94998b34051",
+  "r717974c32a74",
+  "r76b4b6075660",
+  "r89a72a4091ff",
+  "r9c0f33fddfc2",
+  "r36e8b4734c60",
+  "r7fd36f54effc",
+  "r1188a2c6836f",
+  "ra7e7ecefd08a",
+  "rdc3267f15306",
+  "rd720a52e0eec"
+ ],
+ "by": {
+  "real/GEM": 90,
+  "real/TR": 90,
+  "planted/planted": 180,
+  "real/GPU>GEM": 90,
+  "real/GPU": 90
+ },
+ "by_lang": {
+  "GPU>GEM/Chinese": 41,
+  "GPU>GEM/Italian": 9,
+  "GPU>GEM/Latin": 40,
+  "GEM/Arabic": 15,
+  "GEM/Chinese": 15,
+  "GEM/French": 15,
+  "GEM/German": 15,
+  "GEM/Hebrew": 15,
+  "GEM/Latin": 15,
+  "GPU/Chinese": 45,
+  "GPU/Tibetan": 45,
+  "TR/Classical Chinese": 30,
+  "TR/German": 60
+ }
+}
