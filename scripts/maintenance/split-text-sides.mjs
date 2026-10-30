@@ -15,6 +15,11 @@
  * — lr: A is the left leaf, rl: A is the right leaf, null: unsure or neither, so both leaves are read fresh. Frames
  * kept whole or with no single break are not asked (split-book.mjs gives them no cut text anyway). Each answer is kept
  * in text-sides.jsonl. Writes nothing to Mongo or R2. Resumable.
+ *
+ * --sample=N (left-to-right books only): ask N evenly spaced frames first. When every one answers lr, the rest take lr
+ * on that evidence (logged as `sampled`); any rl or unsure answer and every frame is asked. In a left-to-right book the
+ * prompt's order and the reading order agree. In a right-to-left book they pull apart (the gate book's frame 7), so
+ * those are always asked frame by frame.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -65,11 +70,17 @@ async function main() {
   const db = client.db('bookstore');
   const pages = new Map((await db.collection('pages').find({ id: { $in: proposal.frames.map((f) => f.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
   await client.close();
-  const ask = proposal.frames.filter((f) => typeof f.fold === 'number' && cutSpreadText(pages.get(f.page_id)?.ocr?.data).kind === 'cut');
+  const cuttable = proposal.frames.filter((f) => typeof f.fold === 'number' && cutSpreadText(pages.get(f.page_id)?.ocr?.data).kind === 'cut');
+  const SAMPLE = Number(arg('sample') || 0);
+  if (SAMPLE && proposal.page_order !== 'ltr') console.log(`--sample ignored: page order ${proposal.page_order}, every frame is asked`);
+  const sampled = SAMPLE && proposal.page_order === 'ltr' && cuttable.length > SAMPLE
+    ? Array.from({ length: SAMPLE }, (_, i) => cuttable[Math.floor(((i + 0.5) / SAMPLE) * cuttable.length)])
+    : null;
+  let ask = sampled || cuttable;
   const wsRoot = path.join(dir, '.sides');
   fs.mkdirSync(wsRoot, { recursive: true });
   let k = 0, stop = false;
-  await Promise.all(Array.from({ length: conc }, async () => {
+  const runAsk = () => Promise.all(Array.from({ length: conc }, async () => {
     while (k < ask.length && !stop) {
       const f = ask[k++];
       if (done.has(f.page_number)) continue;
@@ -90,6 +101,18 @@ async function main() {
       console.log(`  p.${f.page_number}: ${row.sides ?? 'UNSURE'} ${row.answer?.replace(/\s+/g, ' ').slice(0, 140) ?? row.cls}`);
     }
   }));
+  await runAsk();
+  if (sampled && !stop) {
+    if (sampled.every((f) => done.get(f.page_number)?.sides === 'lr')) {
+      for (const f of cuttable) if (!done.has(f.page_number)) done.set(f.page_number, { page_number: f.page_number, sides: 'lr', why: `sampled: ${SAMPLE}/${SAMPLE} asked frames lr` });
+      console.log(`  sample ${SAMPLE}/${SAMPLE} lr: the other ${cuttable.length - SAMPLE} frames take lr`);
+    } else {
+      console.log('  sample not all lr: asking every frame');
+      ask = cuttable; k = 0;
+      await runAsk();
+    }
+  }
+  ask = cuttable;
   fs.rmSync(wsRoot, { recursive: true, force: true });
   const sides = Object.fromEntries(ask.map((f) => [String(f.page_number), done.get(f.page_number)?.sides ?? null]));
   if (stop || ask.some((f) => !done.has(f.page_number))) { console.log('incomplete: text-sides.json not written'); process.exit(3); }

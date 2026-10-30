@@ -14,7 +14,9 @@
  *   - each spread is archived as split-book.mjs archives it (page_number -(n+1), page_type archived-spread, hidden) and
  *     names its leaves in split_into, so /book/<id>/page/<spreadId> redirects to its first leaf (#5842);
  *   - each leaf takes its number (page_number = staged_split.leaf) and loses `hidden`.
- * After it: the spreads' search vectors are withdrawn, the book is recounted and its split flags set, and every KNOWN
+ * After it: the spreads' search vectors are withdrawn, the book's rows in Supabase `pages` are re-synced (the
+ * incremental sync keys on ocr/translation timestamps, which a renumbering does not move), the book is recounted and
+ * its split flags set, and every KNOWN
  * shortlink to an old page number gets a `shortlink_redirects` row ({ code, book_id, page_number, page_id }) sending it
  * to that spread's first leaf. Known = seen in analytics_events (shortlink_visit) or listed in --codes-file (codes
  * found in the repo's own pages and articles). A code is the book and the page number and nothing else, so a NEW
@@ -23,6 +25,9 @@
  * Leaves a book_events row and a sweep_log row with readable and translated pages before and after.
  */
 import fs from 'node:fs';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { swapRefusal, stagedLeavesQuery, splitIntoByFrame, firstLeafByOldNumber, leafNumberOf, carriedTranslation } from '../lib/split-stage.mjs';
 import { isTranslatablePage } from '../lib/translate-core.mjs';
@@ -93,7 +98,11 @@ try {
           const carried = new Map(carries.map(([l, t]) => [l.id, t]));
           const r2 = await pages.bulkWrite(leaves.map((l) => ({ updateOne: {
             filter: { id: l.id, book_id: bookId, page_number: l.page_number },
-            update: { $set: { page_number: leafNumberOf(l), 'staged_split.swapped_at': now, updated_at: now, ...(carried.has(l.id) ? { translation: carried.get(l.id) } : {}) }, $unset: { hidden: '' } },
+            // translation.updated_at = the moment this English reached a live page. Three readers key on it: the stale
+            // sweep (OCR newer than English = stale; a carried translation is older than the cut OCR under it), and the
+            // keyword and embedding deltas, which skipped the leaf while it sat below zero.
+            update: { $set: { page_number: leafNumberOf(l), 'staged_split.swapped_at': now, updated_at: now,
+              ...(carried.has(l.id) ? { translation: { ...carried.get(l.id), updated_at: now } } : l.translation?.data ? { 'translation.updated_at': now } : {}) }, $unset: { hidden: '' } },
           } })), { session });
           if (r2.modifiedCount !== leaves.length) throw new Error(`promoted ${r2.modifiedCount}/${leaves.length} leaves: aborting the swap`);
         });
@@ -113,6 +122,10 @@ try {
       const detail = { issue: 7605, run: leaves[0].staged_split.run, frames: frames.length, leaves: leaves.length, page_order: pageOrder, english_carried: carries.map(([l]) => leafNumberOf(l)), before, after, redirects: redirects.map((r) => r.code), vectors_withdrawn: withdrawn?.withdrawn ?? null };
       await db.collection('book_events').insertOne({ book_id: bookId, type: 'spread_split', at: now, source: 'split-swap', details: detail });
       await recordSweepAction(db, { sweep: 'split-swap-7605', book_id: bookId, action: 'swapped-in-staged-leaves', detail });
+      // Supabase `pages` (keyword search) is synced by ocr/translation timestamps, which a swap does not move: without
+      // this the archived spreads keep their old positive numbers there beside the leaves (gate book, 2026-10-30).
+      const sync = spawnSync(process.execPath, [path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'workers', 'sync-pages-content.mjs'), `--book=${bookId}`], { encoding: 'utf8', env: process.env, timeout: 300_000 });
+      console.log(`  supabase pages: ${(sync.stdout || sync.stderr || '').trim().split('\n').pop()}`);
       console.log(`  SWAPPED: pages ${before.pages} → ${after.pages}, readable ${before.readable} → ${after.readable}, translated ${before.translated} → ${after.translated}; ${redirects.length} redirect(s)`);
       console.log(`  check: https://sourcelibrary.org/book/${book.slug || bookId}`);
     }
