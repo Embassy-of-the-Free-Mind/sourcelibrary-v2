@@ -124,7 +124,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "checked": "2026-10-16"
   },
   {
@@ -139,7 +139,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "checked": "2026-10-16"
   },
   {
@@ -154,7 +154,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "measured_via": "api",
    "note": "measured via API; we run it on the subscription, $0 billed",
    "checked": "2026-10-16"
@@ -172,7 +172,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "checked": "2026-10-16"
   },
   {
@@ -187,7 +187,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "measured_via": "api",
    "note": "measured via API; we run it on the subscription, $0 billed",
    "checked": "2026-10-16"
@@ -204,7 +204,7 @@
    "available": true,
    "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
-   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "rule": "Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0",
    "checked": "2026-10-16"
   },
   {
