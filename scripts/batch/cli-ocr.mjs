@@ -89,7 +89,7 @@
  * sent and the same image bytes (correct mode: the same draft, in the prompt), and uses it instead of calling; the meta
  * then carries `reused_from`. `--fresh` always calls (a repeat-noise eval needs fresh reads; kept ones are its noise).
  *
- * SEVERAL PAGES A CALL (#7522): `read --per-call=N` (2-4; default 1, the one-page call above, unchanged) sends up to N
+ * SEVERAL PAGES A CALL (#7522): `read --per-call=N` (2-8; default 1, the one-page call above, unchanged) sends up to N
  * consecutive pages of one book (in the page-ids file's order; a gap or a new book starts a new call) in ONE agy call:
  * the images under neutral names p01.jpg … in one workspace, the live prompt, then the block wrapper (agy-cli.mjs
  * ocrBlockInstruction) asking for each page between <<<PAGE n BEGIN>>> / <<<PAGE n END>>>. The reply is split ONLY by
@@ -166,7 +166,8 @@ const OVER_STORED = process.argv.includes('--over-stored');
 if (STAGE === 'read' && OVER_STORED && !GPU_DRAFT) { console.error('--over-stored is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
-if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 4)) { console.error('--per-call must be 1 to 4'); process.exit(2); }
+// up to 8 (#7701 german-cheaper: the read@8 arm); the lanes still cap themselves at 4 (cli-ocr-lane.mjs --per-call 1-4)
+if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 8)) { console.error('--per-call must be 1 to 8'); process.exit(2); }
 // --per-call with --correct-prompt (#7701 arm C): N drafts and their images in one call (agy-cli.mjs correctBlockPrompt);
 // the template must carry the one-page correction paragraph that prompt replaces, or nothing is read.
 if (STAGE === 'read' && PER_CALL > 1 && CORRECT_PROMPT && !correctBlockPrompt(fs.readFileSync(CORRECT_PROMPT, 'utf8'), ['a', 'b'])) { console.error(`--per-call with --correct-prompt: ${CORRECT_PROMPT} has no one-page correction paragraph to rebuild as a block`); process.exit(2); }

@@ -1,0 +1,144 @@
+{
+ "written": {
+  "agy-flash-low@4": {
+   "written": 24,
+   "n": 30,
+   "not_written": {
+    "reply wrapper: reply cut before <<<END>>>": 4,
+    "reply wrapper: text outside the markers": 1,
+    "more than one transcription header: restarted or refused read": 1
+   }
+  },
+  "agy-flash-low@8": {
+   "written": 22,
+   "n": 30,
+   "not_written": {
+    "reply wrapper: reply cut before <<<END>>>": 6,
+    "more than one transcription header: restarted or refused read": 2
+   }
+  },
+  "lighton": {
+   "written": 30,
+   "n": 30,
+   "not_written": {}
+  },
+  "pero": {
+   "written": 29,
+   "n": 30,
+   "not_written": {
+    "no GPU draft": 1
+   }
+  },
+  "lighton>agy-flash-low@4": {
+   "written": 25,
+   "n": 30,
+   "not_written": {
+    "a diff-guard flag spans a tag: the put-back cannot be spliced, the pag": 2,
+    "a diff-guard flag is not a like-for-like substitution: the put-back ca": 2,
+    "corrector: UNCHANGED (a headerless GPU draft is not written; the page ": 1
+   }
+  },
+  "pero>agy-flash-low@4": {
+   "written": 22,
+   "n": 30,
+   "not_written": {
+    "reply wrapper: reply cut before <<<END>>>": 1,
+    "a diff-guard flag is not a like-for-like substitution: the put-back ca": 6,
+    "not read": 1
+   }
+  },
+  "kraken": {
+   "written": 18,
+   "n": 18,
+   "not_written": {}
+  },
+  "kraken>agy-flash-low@4": {
+   "written": 3,
+   "n": 18,
+   "not_written": {
+    "only 23% of its words are in the GPU draft: check by eye": 1,
+    "a diff-guard flag is not a like-for-like substitution: the put-back ca": 12,
+    "reply wrapper: reply cut before <<<END>>>": 1,
+    "cli exit -9": 1
+   }
+  },
+  "lighton>agy-flash-low@4#diff_guard": {
+   "pages_flagged": 5,
+   "put_back": 5,
+   "negation": 1,
+   "number": 2,
+   "expansion": 2,
+   "long_s_tells": 0
+  },
+  "pero>agy-flash-low@4#diff_guard": {
+   "pages_flagged": 8,
+   "put_back": 25,
+   "negation": 0,
+   "number": 20,
+   "expansion": 5,
+   "long_s_tells": 0
+  },
+  "kraken>agy-flash-low@4#diff_guard": {
+   "pages_flagged": 2,
+   "put_back": 2,
+   "negation": 0,
+   "number": 2,
+   "expansion": 0,
+   "long_s_tells": 0
+  }
+ },
+ "engines": {
+  "lighton": {
+   "name": "lightonocr",
+   "model": "lightonai/LightOnOCR-3-1B",
+   "read": "scripts/eval/euro-gpu-correct-7567/read.py lighton (temperature 0.2, top_p 0.9, max_tokens 6000; drive.sh LO, UTIL 0.6)",
+   "exit": 0,
+   "pages": 221,
+   "run": {
+    "mode": "lighton",
+    "model": "m",
+    "pages_this_pass": 221,
+    "clients": 16,
+    "wall_secs": 197.1,
+    "pages_per_hour": 4037,
+    "errors": 0,
+    "hit_cap": 0,
+    "out_tok": 118903,
+    "in_tok": 442274
+   }
+  },
+  "pero": {
+   "name": "pero-ocr",
+   "version": "git 4301bdffe9205dff11579dae27b3f80458c27e89",
+   "model": "pero_eu_cz_print_newspapers_2022-09-26",
+   "config": "config.ini",
+   "config_sha256": "093800d612b85891f6ca7d2a438151ba475cc2b12c6d041f17c1ca09370bbf1b",
+   "ocr_weights_sha256": "aee50ecc0b392bf8f76d82aaa2d00a9ee862096b956f2811ae21614f21771d5f",
+   "device": "gpu",
+   "exit": 0,
+   "pages": 221,
+   "wall_secs": 71.5,
+   "secs_per_page": 0.32,
+   "collect": "pero-collect.py (#7567): regions in document order"
+  },
+  "kraken": {
+   "name": "kraken",
+   "model": "austriannewspapers.mlmodel (UB Mannheim, doi 10.5281/zenodo.7933402, CER 0.75)",
+   "version": "kraken 7.1.1",
+   "read": "kraken -i <img> <txt> segment -bl ocr -m austriannewspapers.mlmodel (blla segmenter), CPU",
+   "exit": 0,
+   "pages": 71,
+   "secs_per_page": 2.771,
+   "secs_basis": "box wall time a page, 6 pages at a time x 3 threads (18 of 20 threads); the first page was read alone before the batch",
+   "run": {
+    "wall_secs": 194,
+    "pages": 71,
+    "parallel": 6,
+    "threads_each": 3,
+    "device": "cpu"
+   },
+   "model_sha256": "376a3aa7af40161913bfbf25a799943ca1497cb9360f2cc18e6f3ea0e7feb069",
+   "model_doi": "10.5281/zenodo.7933402"
+  }
+ }
+}

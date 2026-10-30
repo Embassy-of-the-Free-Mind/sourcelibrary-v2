@@ -183,6 +183,12 @@ const RT = {
   'de-blank-r2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' }, 'agy-flash-low@4>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4', perCall: 4 } } },
   'fr-blank-r2': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 } } },
   'la-armc': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'pero>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img' }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4 } } },
+  // #7701 german-cheaper (job german-cheaper-7701): 30 NEW German books (draw --exclude-from=<both earlier #7701 draws>),
+  // each page in a block of up to 8 unread neighbours. A = read@4 (the live route), R8 = read@8, and arm C's shape on
+  // two GPU drafts of the block (DIR/lighton.json LightOnOCR-3-1B, DIR/pero.json PERO-OCR, made on gex45 from DIR/img):
+  // the draft corrected by agy Flash-low with the image, 4 a call. The GPU drafts ALONE are routes too, judged from the
+  // draft files by german-cheaper-7701/run.mjs (no agy call).
+  'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'kraken>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'kraken.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -373,7 +379,8 @@ async function drawBlank(db, name, t, isInterior) {
   const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
     .filter((b) => !lane.firstReadSkip(b, { languages: [t.blank] }));
   // --exclude-from=<sample.json> (#7701 cheap routes): no book any cell of that draw used
-  const excluded = new Set(arg('exclude-from') ? Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id)) : []);
+  // (comma-separated: several draws)
+  const excluded = new Set(arg('exclude-from') ? arg('exclude-from').split(',').flatMap((f) => Object.values(JSON.parse(fs.readFileSync(f, 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id))) : []);
   for (const b of [...books]) if (excluded.has(b.id)) books.splice(books.indexOf(b), 1);
   const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
   const pages = [], tally = { books_in_frame: books.length, books_left_out: excluded.size, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
@@ -551,7 +558,10 @@ async function correct() {
         const used = agyCalls();
         if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
         // perCall (#7701 blank cells): each drawn page with its block of neighbours, read N a call as the lane reads.
-        let readIds = cor.perCall > 1 ? cs.pages.flatMap((p) => p.block ?? [p.page_id]) : ids;
+        // blockPages (#7701 german-cheaper, the agy budget): only the blockPages-page piece of the drawn page's block that
+        // holds it, cut as a perCall=blockPages read cuts the block (the call the read@4 route made for that page)
+        const piece = (p) => { const b = p.block ?? [p.page_id], n = cor.blockPages; if (!n) return b; for (let i = 0; i < b.length; i += n) if (b.slice(i, i + n).includes(p.page_id)) return b.slice(i, i + n); return [p.page_id]; };
+        let readIds = cor.perCall > 1 ? cs.pages.flatMap(piece) : ids;
         // draftFrom (#7701 arm B): the draft is the named route's read of each page in this DIR (a page it did not deliver
         // has no draft and is not corrected), handed to cli-ocr.mjs as --draft-file.
         let draftsFile = null;
