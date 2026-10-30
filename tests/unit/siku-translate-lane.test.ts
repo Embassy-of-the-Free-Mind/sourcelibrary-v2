@@ -10,6 +10,7 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
+import { claudeQuota } from '../../scripts/lib/agy-pools.mjs';
 import { parseQuota, poolGate, choosePool, rankBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
 
 const fx = (f: string) => fs.readFileSync(path.join(__dirname, '../fixtures/siku-lane', f), 'utf8');
@@ -24,6 +25,13 @@ describe('siku lane: pool gate', () => {
     const spent = parseQuota(fx('quota-spent.json'));
     expect(spent.weekly).toBe(0);
     expect(spent.fiveHour).toBeNull();
+  });
+  it('reads the Claude and GPT group as its own pool, for display', () => {
+    const c = parseQuota(fx('quota-default.json')).claude;
+    expect(c.weekly).toBeGreaterThanOrEqual(0);
+    expect(c.weekly).toBeLessThanOrEqual(1);
+    expect(typeof c.weeklyReset).toBe('string');
+    expect(claudeQuota('')).toBeNull();
   });
   it('a reply that is not a quota reading is null', () => {
     expect(parseQuota('')).toBeNull();
