@@ -67,7 +67,7 @@ import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence
 import TranslationSearchNotice, { FRESH_SEARCH_METHOD, translationSearchNoticeKind, type FreshSearch } from '@/components/book/TranslationSearchNotice';
 import PreviewBadge from '@/components/book/PreviewBadge';
 import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
-import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
+import { cardLabel, cardOutranksSearchNotice, loadCard, type TranslationCard } from '@/lib/first-translation/card';
 import {
   classifyFirstTranslationClaim,
   type ScreenedBook,
@@ -889,7 +889,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   }
 
   const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard, freshSearch } = data;
-  const searchNotice = translationSearchNoticeKind(book, freshSearch);
+  // A first-modern card (#7797) is the reviewed answer over an old translation
+  // the fresh search credited as a modern one; it outranks that notice.
+  const searchNotice = cardOutranksSearchNotice(translationCard, book as { pages_translated?: number | null })
+    ? null
+    : translationSearchNoticeKind(book, freshSearch);
   // `ocr_head` (1,200 characters of each page's OCR) is for the cover and
   // representative-page choice made on the server below; no client component
   // reads it. Strip it before the page list is serialised to the browser, so
