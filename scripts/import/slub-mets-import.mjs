@@ -27,7 +27,7 @@ const DRY_RUN = 'dry-run' in args;
 
 const API_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 const AUTH = process.env.CRON_SECRET;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 if (!AUTH) { console.error('CRON_SECRET not set'); process.exit(1); }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 

@@ -1,0 +1,142 @@
+{
+ "la-blank": {
+  "route": "agy-flash-low@4",
+  "control_passed": true,
+  "all_drawn": {
+   "accept": "24/30",
+   "wrong_text": "1/30",
+   "posterior": {
+    "mean": 0.781,
+    "ci90": [
+     0.654,
+     0.888
+    ],
+    "p_ge_080": 0.432
+   },
+   "wrong_text_bar_004": true
+  },
+  "written": {
+   "accept": "17/19",
+   "wrong_text": "1/19",
+   "posterior": {
+    "mean": 0.857,
+    "ci90": [
+     0.718,
+     0.958
+    ],
+    "p_ge_080": 0.794
+   },
+   "wrong_text_bar_004": false,
+   "hold": true
+  },
+  "not_written": {
+   "reply wrapper": 4,
+   "letters outside the book's scripts": 6,
+   "reader tags the page <script>mixed</script>": 1
+  },
+  "wrong_text_pages": [
+   {
+    "page_id": "69b676a3b3f4fc04415c318f",
+    "written": true,
+    "defects": [
+     "O6: Tuttlingischen Closed Flecken — page reads 'ampts Flecken'; an English word 'Closed' has been substituted"
+    ]
+   }
+  ],
+  "decision": "NOT SCHEDULED"
+ },
+ "de-blank": {
+  "route": "agy-flash-low@4",
+  "control_passed": true,
+  "all_drawn": {
+   "accept": "26/30",
+   "wrong_text": "1/30",
+   "posterior": {
+    "mean": 0.844,
+    "ci90": [
+     0.729,
+     0.934
+    ],
+    "p_ge_080": 0.775
+   },
+   "wrong_text_bar_004": true
+  },
+  "written": {
+   "accept": "23/24",
+   "wrong_text": "0/24",
+   "posterior": {
+    "mean": 0.923,
+    "ci90": [
+     0.823,
+     0.986
+    ],
+    "p_ge_080": 0.973
+   },
+   "wrong_text_bar_004": true,
+   "hold": false
+  },
+  "not_written": {
+   "reply wrapper": 2,
+   "letters outside the book's scripts": 3,
+   "reader tags the page <script>handwritten</script>": 1
+  },
+  "wrong_text_pages": [
+   {
+    "page_id": "6a940511a4ad12cb35ec7a70",
+    "written": false,
+    "defects": [
+     "O7: 24\n       ---\n         4\n       ---\n         6 — The page has 8 under the 24, not 4. The sum 8+6=14 and 24−14=10 only works with 8."
+    ]
+   }
+  ],
+  "decision": "SCHEDULE"
+ },
+ "fr-blank": {
+  "route": "agy-flash-low",
+  "control_passed": true,
+  "all_drawn": {
+   "accept": "24/30",
+   "wrong_text": "1/30",
+   "posterior": {
+    "mean": 0.781,
+    "ci90": [
+     0.654,
+     0.888
+    ],
+    "p_ge_080": 0.425
+   },
+   "wrong_text_bar_004": true
+  },
+  "written": {
+   "accept": "24/24",
+   "wrong_text": "0/24",
+   "posterior": {
+    "mean": 0.962,
+    "ci90": [
+     0.886,
+     0.998
+    ],
+    "p_ge_080": 0.996
+   },
+   "wrong_text_bar_004": true,
+   "hold": false
+  },
+  "not_written": {
+   "reply wrapper": 4,
+   "more than one transcription header": 1,
+   "letters outside the book's scripts": 1
+  },
+  "wrong_text_pages": [
+   {
+    "page_id": "69bc855d173577a337420736",
+    "written": false,
+    "defects": [
+     "O4: l'on nous vante enfin *les raisins* de Zeuxis, *le rideau* de Parrhasius, les *c — The same opening passage and metadata block appear twice, one after the other.",
+     "O5: Sa gloire passera d'âge en âge — The text stops partway through the first paragraph. Everything from 'avec les célèbres écrits' onward is missing, including sections V–VII and the verse.",
+     "O18: <unclear>Transcription withheld due to automated safety filter restrictions on f — The final block withholds the text and marks a clearly legible page as unclear."
+    ]
+   }
+  ],
+  "decision": "SCHEDULE"
+ }
+}

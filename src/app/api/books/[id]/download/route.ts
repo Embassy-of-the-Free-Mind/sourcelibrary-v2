@@ -6,6 +6,8 @@ import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
+import { ANON_EMBED_DAILY_BOOK_CAP } from '@/lib/partner-embed-download';
+import { anonymousDownloadCapKey, ANON_EMBED_LIMIT_MESSAGE, isPartnerEmbedDownload } from '@/lib/partner-embed-download-server';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
@@ -2402,14 +2404,23 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    // All downloads require sign-in.
+    // All downloads require sign-in — except a free-tier format of a partner's
+    // own book requested from inside that partner's embed, where signing in is
+    // impossible (#7702). That exception is capped per IP below.
     const session = await auth();
     const userId = session?.user?.id || null;
+    let anonCapKey: string | null = null;
     if (!userId) {
-      return NextResponse.json(
-        { error: 'Sign in required', requires_signin: true },
-        { status: 401 },
-      );
+      const ownerProbe = isPremiumFormat(format)
+        ? null
+        : await (await getDb()).collection('books').findOne({ id }, { projection: { tenantId: 1 } });
+      if (!ownerProbe || !(await isPartnerEmbedDownload(request, ownerProbe as { tenantId?: string }))) {
+        return NextResponse.json(
+          { error: 'Sign in required', requires_signin: true },
+          { status: 401 },
+        );
+      }
+      anonCapKey = anonymousDownloadCapKey(request.headers);
     }
 
     // Get optional edition_id for scholarly format
@@ -2466,7 +2477,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // becoming a bulk-export path. Members, per-book purchasers, and
     // editor/admin sessions are exempt. Runs after the sign-in/402/403 gates
     // and before any expensive generation work below.
-    if (!isPremiumFormat(format)) {
+    if (anonCapKey) {
+      const cap = await checkAndRecordDownload(anonCapKey, id, ANON_EMBED_DAILY_BOOK_CAP);
+      if (!cap.allowed) {
+        return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
+      }
+    } else if (userId && !isPremiumFormat(format)) {
       const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
       const isExemptEditor = await isInnerCircle();
       const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);

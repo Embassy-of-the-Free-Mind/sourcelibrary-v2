@@ -124,16 +124,46 @@ bytes from the source institution. Three hosts blocked us inside 48 hours in Aug
 2026 (MDZ #4395, plus the IA and Wellcome incidents). The audit runs **serially with a
 650ms gap** for that reason. Do not parallelise it to make a report finish sooner.
 
-## What is actually backed up (as of 2026-08-30)
+## What is actually backed up (as of 2026-10-29)
 
-| store | covered by | where | frequency |
-|---|---|---|---|
-| `books`, `deleted_books` | `backup-books.sh` → restic | Hetzner Object Storage nbg1, encrypted | daily 04:00 |
-| `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | one restic snapshot at retirement (#5470); not backed up daily — no code writes them | same repo | once |
-| `pages`, `page_revisions`, `chapter_texts`, `entities`, `first_translation_attempts`, `gallery_images` | `backup-corpus-text.sh` → restic | same repo, streamed (never lands on disk) | weekly, Sun 06:00 |
-| `bph_works` | 4 layers incl. revisions + JSON export | `bph-catalogue-disaster-recovery.md` | daily |
-| Supabase (`page_translations`, embeddings) | Supabase managed backups | Supabase | daily, 8 retained, **PITR off** |
-| **R2 objects (~21.7 TB)** | **nothing — single copy** | Cloudflare R2 | — |
+All restic snapshots go to ONE repo — Hetzner Object Storage nbg1, encrypted, deduplicated,
+compressed; credentials in `/root/.config/restic-hetzner.env` on each box. **Every tag has its
+own retention, and no script may run a bare `restic forget`** — always `--tag <its own>`.
+
+| store | covered by | restic tag / where | frequency | retention |
+|---|---|---|---|---|
+| `books`, `deleted_books` | `backup-books.sh` → `/root/restic-backup.sh` (main) | `mongodump` | daily 04:00 | pruned by `restic-backup.sh` |
+| `pages`, `page_revisions`, `chapter_texts`, `entities`, `first_translation_attempts`, `gallery_images` | `backup-corpus-text.sh` (main) | `corpus-text`, streamed | weekly, Sun 06:00 | 6 weekly + 12 monthly |
+| **every other `bookstore` collection** (196 on 2026-10-29, ~44 GB: `audit_log`, `sweep_log`, `iiif_manifests`, `book_indexes`, `jobs`, `import_candidates`, users, collections, …) — enumerated with `listCollections` at run time, so new collections are included | `backup-mongo-rest.sh` (gex45, #7708) | `mongo-rest`, one uncompressed archive | weekly, Mon 03:00 | 8 weekly + 12 monthly |
+| `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | one snapshot at retirement (#5470) | same repo | once | — |
+| **Supabase, whole database** (PG 17.6, 201 GB on disk: `page_translations`, `pages`, `ngram_series`, embeddings, `bph_works`, …) | `backup-supabase.sh` (gex45, #7708), `pg_dump` 17 plain | `supabase` | weekly, Wed 03:00 | 8 weekly + 12 monthly |
+| `bph_works` (+ revisions, pending changes) | 4 layers incl. revisions + daily JSON export | `bph-catalogue-disaster-recovery.md` | daily | — |
+| Supabase (managed) | Supabase managed backups | Supabase | daily, 8 retained, **PITR off** | — |
+| Claude Code transcripts, all four boxes | `/root/restic-transcripts.sh` on each box (#7673) | `transcripts` | nightly 02:30 | **never pruned** |
+| **R2 objects (~21.7 TB)** | `cold-copy-r2.mjs` → AWS S3 Glacier Deep Archive, one tar per book + manifest (#7708) — **written and dry-run tested; not yet running** (bucket pending) | AWS | — | Object Lock |
+
+Each weekly database backup is checked by **reading it back**, not by the job exiting 0:
+the script `restic dump`s the snapshot it just wrote and pipes it through
+`scripts/workers/lib/verify-dump-stream.mjs`, which checks the mongodump magic `6de29981` /
+the `-- PostgreSQL database dump` header and trailer, and counts every document per
+collection / row per table against the live estimates taken just before the dump. Results land
+in `/var/log/sourcelibrary/backup-rehearsals/` and a failure pages via ntfy.
+
+### How to restore each one
+
+```
+source /root/.config/restic-hetzner.env          # then `restic snapshots --tag <tag>`
+# books / deleted_books (tag mongodump): restic restore <id> --target /tmp/r; mongorestore --gzip --dir …
+# corpus-text:  restic dump <id> pages.archive.gz | mongorestore --uri "$MONGODB_URI" --gzip --archive
+# mongo-rest:   restic dump <id> bookstore-rest.archive | mongorestore --uri "$MONGODB_URI" --archive --nsInclude 'bookstore.<coll>'
+# supabase:     restic dump <id> supabase.sql | psql -X "<EMPTY target db>"
+#               one table: restic dump <id> supabase.sql | sed -n '/^COPY public.<t> /,/^\\\.$/p'
+# transcripts:  restic restore <id> --target /tmp/r --include /root/.claude/projects/<project>
+# bph_works:    see bph-catalogue-disaster-recovery.md
+# R2 (cold):    restore the tar from Deep Archive (bulk tier, ≤48 h), then `tar -xf`; members are
+#               named by their R2 key, and <tar>.manifest.json (STANDARD class) lists key, size,
+#               ETag and SHA-256 for each, so the restore can be checked before re-uploading.
+```
 
 **The gap that was closed on 2026-08-30.** `backup-books.sh` stops at book metadata,
 on the stated reasoning *"Images live on R2; pages can be re-OCR'd from R2 if needed."*
@@ -145,8 +175,10 @@ back out of restic, `gzip -t` the whole stream, confirm the mongodump magic
 
 **The gap that is still open: R2 has no second copy.** Tier-1 and tier-2 objects are
 re-acquirable in principle; tier-0 (BPH, Kloss, Allard Pierson) is not. A bucket-level
-accident is currently unrecoverable for those. The preservation manifest exists and is
-described as "the deliverable even if no bytes ever move" — no bytes have moved.
+accident is currently unrecoverable for those. `scripts/maintenance/cold-copy-r2.mjs`
+(#7708) is the mover — EFM/BPH first (`archive/` JP2 masters, then every prefix of books with
+`image_source.provider: 'bph'`, then a `bph_works` export), then the other masters, the restic
+repo, and the rest of R2. Until it has run, no bytes have moved.
 
 **Unverified: MongoDB Atlas cluster snapshots.** The cluster is dedicated (MongoDB
 9.0.0 Enterprise), and Atlas enables Cloud Backup by default on dedicated tiers — but

@@ -119,7 +119,7 @@ export function parseManifest(manifest_url, manifest) {
 }
 
 const USER_AGENT =
-  'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
+  'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /**
  * Extract the Internet Archive item identifier from its IIIF manifest URL.

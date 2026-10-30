@@ -49,6 +49,7 @@ const SOURCE_LABELS: Record<string, string> = {
   cross_reference: 'Cross-ref',
   ai_generation: 'AI',
   ustc_enrichments: 'USTC',
+  source_catalogue: 'Source catalogue',
 };
 
 const SOURCE_COLORS: Record<string, string> = {
@@ -59,6 +60,7 @@ const SOURCE_COLORS: Record<string, string> = {
   ustc_catalog: 'bg-accent-gold/15 text-accent-gold-dark',
   ustc_enrichments: 'bg-accent-gold/15 text-accent-gold-dark',
   bph_catalogue: 'bg-accent-gold/15 text-accent-gold-dark',
+  source_catalogue: 'bg-accent-gold/15 text-accent-gold-dark',
   cross_reference: 'bg-accent-gold/15 text-accent-gold-dark',
   admin_edit: 'bg-accent-rust/15 text-accent-rust',
   manual: 'bg-accent-rust/15 text-accent-rust',
@@ -654,7 +656,9 @@ export default function BibliographicInfo({
                     const sourceLabel = SOURCE_LABELS[prov.source] || prov.source;
                     const sourceColor = SOURCE_COLORS[prov.source] || 'bg-stone-700 text-stone-300';
                     const dateStr = formatProvenanceDate(prov.date);
-                    const prevVal = formatPreviousValue(prov.previous_value);
+                    // A reconstructed stamp (#7673) attests the value already stored; its previous_value is that same
+                    // value, so "was:" would only repeat it.
+                    const prevVal = prov.reconstructed ? null : formatPreviousValue(prov.previous_value);
 
                     return (
                       <div key={field} className="flex flex-col gap-1 py-1.5 border-b border-stone-700/30 last:border-0">

@@ -80,7 +80,14 @@ export const CSP_IMG_HOSTS = [
  * iaMasterUrl, #5679); a stored ia*.us.archive.org URL must not start passing
  * isBrowserRenderableImageUrl, or thumb/display tiers would pull masters.
  */
-export const CSP_ONLY_IMG_HOSTS = ['https://*.us.archive.org'];
+export const CSP_ONLY_IMG_HOSTS = [
+  'https://*.us.archive.org',
+  // /ai-partners is a rewrite to the separate partners app (next.config.ts), whose
+  // pictures are absolute URLs on its own host. Without it every image on that
+  // page was blocked while each returned 200 to curl (Derek's feedback, 2026-10-29).
+  // Not a cover host, so it stays out of the "renderable" list above.
+  'https://sourcelibrary-partners.vercel.app',
+];
 
 /** The full img-src directive value, consumed by next.config.ts. */
 export const CSP_IMG_SRC = `img-src 'self' data: blob: ${[...CSP_IMG_HOSTS, ...CSP_ONLY_IMG_HOSTS].join(' ')}`;

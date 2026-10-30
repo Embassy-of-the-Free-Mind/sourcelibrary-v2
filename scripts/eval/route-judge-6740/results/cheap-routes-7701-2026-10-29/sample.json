@@ -1,0 +1,1660 @@
+{
+ "drawn_at": "2026-10-29T20:36:46.523Z",
+ "n": 30,
+ "router_tests": true,
+ "cells": {
+  "de-blank-r2": {
+   "task": "ocr",
+   "lang": "German",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": null,
+   "routes": [
+    "agy-flash-low@4",
+    "agy-flash-low@4>agy-flash-low",
+    "agy-flash-low@4>agy-flash-low@4"
+   ],
+   "correctors": {
+    "agy-flash-low@4": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "fresh": true,
+     "perCall": 4
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "draftFrom": "agy-flash-low@4"
+    },
+    "agy-flash-low@4>agy-flash-low@4": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "draftFrom": "agy-flash-low@4",
+     "perCall": 4
+    }
+   },
+   "kanripo": false,
+   "blank": true,
+   "served": {
+    "agy-flash-low@4": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+    "agy-flash-low@4>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+    "agy-flash-low@4>agy-flash-low@4": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "6a26cf6b9aa67024da7ba838",
+     "book_id": "6a26cf6b9aa67024da7ba73e",
+     "page_number": 250,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26cf6b9aa67024da7ba835",
+      "6a26cf6b9aa67024da7ba836",
+      "6a26cf6b9aa67024da7ba837",
+      "6a26cf6b9aa67024da7ba838"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 75
+    },
+    {
+     "page_id": "6a9405541cd9a117d308947c",
+     "book_id": "6a9405541cd9a117d30893c1",
+     "page_number": 149,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a9405541cd9a117d308947c",
+      "6a9405541cd9a117d308947d",
+      "6a9405541cd9a117d308947e",
+      "6a9405541cd9a117d308947f"
+     ],
+     "book_language": "German",
+     "provider": "iiif",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "69b51e5e9a81ef7feb3d3ed4",
+     "book_id": "69b51e5e9a81ef7feb3d3e1e",
+     "page_number": 182,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b51e5e9a81ef7feb3d3ed4",
+      "69b51e5e9a81ef7feb3d3ed5",
+      "69b51e5e9a81ef7feb3d3ed6",
+      "69b51e5e9a81ef7feb3d3ed7"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 66
+    },
+    {
+     "page_id": "6a26ce305ac5aecc53cf917b",
+     "book_id": "6a26ce2f5ac5aecc53cf9148",
+     "page_number": 51,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26ce305ac5aecc53cf917b",
+      "6a26ce305ac5aecc53cf917c",
+      "6a26ce305ac5aecc53cf917d",
+      "6a26ce305ac5aecc53cf917e"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a493e473c715f5afcd520b0",
+     "book_id": "6a493e473c715f5afcd51f55",
+     "page_number": 347,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a493e473c715f5afcd520b0",
+      "6a493e473c715f5afcd520b1",
+      "6a493e473c715f5afcd520b2",
+      "6a493e473c715f5afcd520b3"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26c9de5ac5aecc53ce3bed",
+     "book_id": "6a26c9de5ac5aecc53ce3bcd",
+     "page_number": 32,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26c9de5ac5aecc53ce3bec",
+      "6a26c9de5ac5aecc53ce3bed",
+      "6a26c9de5ac5aecc53ce3bee",
+      "6a26c9de5ac5aecc53ce3bef"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26cbbe5ac5aecc53cece7c",
+     "book_id": "6a26cbbe5ac5aecc53cecdfd",
+     "page_number": 127,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26cbbe5ac5aecc53cece7b",
+      "6a26cbbe5ac5aecc53cece7c",
+      "6a26cbbe5ac5aecc53cece7d",
+      "6a26cbbe5ac5aecc53cece7e"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 73
+    },
+    {
+     "page_id": "69bda03ef6d63c9197485c2b",
+     "book_id": "69bda03ef6d63c9197485c22",
+     "page_number": 9,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bda03ef6d63c9197485c2a",
+      "69bda03ef6d63c9197485c2b"
+     ],
+     "book_language": "German",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a26d9aa863cf28d8f649a9a",
+     "book_id": "6a26d9aa863cf28d8f649a80",
+     "page_number": 26,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d9aa863cf28d8f649a9a",
+      "6a26d9aa863cf28d8f649a9b",
+      "6a26d9aa863cf28d8f649a9c",
+      "6a26d9aa863cf28d8f649a9d"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26c5f5aad44c98627db9b5",
+     "book_id": "6a26c5f5aad44c98627db995",
+     "page_number": 32,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26c5f5aad44c98627db9b4",
+      "6a26c5f5aad44c98627db9b5",
+      "6a26c5f5aad44c98627db9b6",
+      "6a26c5f5aad44c98627db9b7"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "69aebe8cc0472fef6455b329",
+     "book_id": "69aebe8cc0472fef6455b1e5",
+     "page_number": 324,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69aebe8cc0472fef6455b329",
+      "69aebe8cc0472fef6455b32a",
+      "69aebe8cc0472fef6455b32b",
+      "69aebe8cc0472fef6455b32c"
+     ],
+     "book_language": "German",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 24
+    },
+    {
+     "page_id": "6a4942c53c715f5afcd52e29",
+     "book_id": "6a4942c53c715f5afcd52dfb",
+     "page_number": 46,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a4942c53c715f5afcd52e27",
+      "6a4942c53c715f5afcd52e28",
+      "6a4942c53c715f5afcd52e29",
+      "6a4942c53c715f5afcd52e2a"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a493d5cf36483abc5bbb739",
+     "book_id": "6a493d5cf36483abc5bbb512",
+     "page_number": 319,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a493d5cf36483abc5bbb737",
+      "6a493d5cf36483abc5bbb738",
+      "6a493d5cf36483abc5bbb739",
+      "6a493d5cf36483abc5bbb73a"
+     ],
+     "book_language": "German",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa35e06e213def30d6caa40",
+     "book_id": "6aa35e06e213def30d6ca8d2",
+     "page_number": 366,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa35e06e213def30d6caa3d",
+      "6aa35e06e213def30d6caa3e",
+      "6aa35e06e213def30d6caa3f",
+      "6aa35e06e213def30d6caa40"
+     ],
+     "book_language": "German",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 10
+    },
+    {
+     "page_id": "6a26d8276be3d771538c06c2",
+     "book_id": "6a26d8276be3d771538c066d",
+     "page_number": 85,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d8276be3d771538c06c0",
+      "6a26d8276be3d771538c06c1",
+      "6a26d8276be3d771538c06c2",
+      "6a26d8276be3d771538c06c3"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a4950cab9cd91959af3bc5a",
+     "book_id": "6a4950cab9cd91959af3bc2c",
+     "page_number": 46,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a4950cab9cd91959af3bc58",
+      "6a4950cab9cd91959af3bc59",
+      "6a4950cab9cd91959af3bc5a",
+      "6a4950cab9cd91959af3bc5b"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26c638aad44c98627dda4d",
+     "book_id": "6a26c638aad44c98627dda1a",
+     "page_number": 51,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26c638aad44c98627dda4d",
+      "6a26c638aad44c98627dda4e",
+      "6a26c638aad44c98627dda4f",
+      "6a26c638aad44c98627dda50"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6aa1d4e977169abff162186d",
+     "book_id": "6aa1d4e777169abff16217c1",
+     "page_number": 172,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d4e977169abff162186d",
+      "6aa1d4e977169abff162186e",
+      "6aa1d4e977169abff162186f"
+     ],
+     "book_language": "German",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 88
+    },
+    {
+     "page_id": "6a26d94ab93c5428e7451af7",
+     "book_id": "6a26d94ab93c5428e7451a9e",
+     "page_number": 89,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d94ab93c5428e7451af4",
+      "6a26d94ab93c5428e7451af5",
+      "6a26d94ab93c5428e7451af6",
+      "6a26d94ab93c5428e7451af7"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a26c67eaad44c98627df610",
+     "book_id": "6a26c67eaad44c98627df59c",
+     "page_number": 116,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26c67eaad44c98627df60e",
+      "6a26c67eaad44c98627df60f",
+      "6a26c67eaad44c98627df610",
+      "6a26c67eaad44c98627df611"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a26d7816be3d771538bc7d0",
+     "book_id": "6a26d7816be3d771538bc7b2",
+     "page_number": 30,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d7816be3d771538bc7ce",
+      "6a26d7816be3d771538bc7cf",
+      "6a26d7816be3d771538bc7d0",
+      "6a26d7816be3d771538bc7d1"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26d20cf5273a8d907a2535",
+     "book_id": "6a26d20cf5273a8d907a24ee",
+     "page_number": 71,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d20cf5273a8d907a2534",
+      "6a26d20cf5273a8d907a2535",
+      "6a26d20cf5273a8d907a2536",
+      "6a26d20cf5273a8d907a2537"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 49
+    },
+    {
+     "page_id": "6a26d8956be3d771538c3854",
+     "book_id": "6a26d8956be3d771538c37eb",
+     "page_number": 105,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d8956be3d771538c3851",
+      "6a26d8956be3d771538c3852",
+      "6a26d8956be3d771538c3853",
+      "6a26d8956be3d771538c3854"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa1d18277169abff16198d7",
+     "book_id": "6aa1d17d77169abff1619812",
+     "page_number": 197,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d18277169abff16198d7",
+      "6aa1d18277169abff16198d8",
+      "6aa1d18277169abff16198d9",
+      "6aa1d18277169abff16198da"
+     ],
+     "book_language": "German",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26d10cf5273a8d9079bf93",
+     "book_id": "6a26d10cf5273a8d9079bef5",
+     "page_number": 158,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d10cf5273a8d9079bf90",
+      "6a26d10cf5273a8d9079bf91",
+      "6a26d10cf5273a8d9079bf92",
+      "6a26d10cf5273a8d9079bf93"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "69b6ee19b1a3146c0525ee3f",
+     "book_id": "69b6ee19b1a3146c0525ee03",
+     "page_number": 60,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6ee19b1a3146c0525ee3e",
+      "69b6ee19b1a3146c0525ee3f",
+      "69b6ee19b1a3146c0525ee40",
+      "69b6ee19b1a3146c0525ee41"
+     ],
+     "book_language": "German",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 36
+    },
+    {
+     "page_id": "6a26d8a36be3d771538c3bee",
+     "book_id": "6a26d8a36be3d771538c3b77",
+     "page_number": 119,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d8a36be3d771538c3bec",
+      "6a26d8a36be3d771538c3bed",
+      "6a26d8a36be3d771538c3bee",
+      "6a26d8a36be3d771538c3bef"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 75
+    },
+    {
+     "page_id": "6a26c7f0aad44c98627e8aad",
+     "book_id": "6a26c7f0aad44c98627e8a35",
+     "page_number": 120,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26c7f0aad44c98627e8aab",
+      "6a26c7f0aad44c98627e8aac",
+      "6a26c7f0aad44c98627e8aad",
+      "6a26c7f0aad44c98627e8aae"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a491d75ae20621d947eb088",
+     "book_id": "6a491d75ae20621d947eb05e",
+     "page_number": 42,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a491d75ae20621d947eb087",
+      "6a491d75ae20621d947eb088",
+      "6a491d75ae20621d947eb089",
+      "6a491d75ae20621d947eb08a"
+     ],
+     "book_language": "German",
+     "provider": "goettingen",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a493d8dc643e4e3d3072465",
+     "book_id": "6a493d8dc643e4e3d30722c9",
+     "page_number": 192,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a493d8dc643e4e3d3072463",
+      "6a493d8dc643e4e3d3072464",
+      "6a493d8dc643e4e3d3072465",
+      "6a493d8dc643e4e3d3072466"
+     ],
+     "book_language": "German",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    }
+   ],
+   "frame": {
+    "books_in_frame": 3100,
+    "books_left_out": 90,
+    "books_walked": 78,
+    "spread_wait": 47,
+    "no_interior_unread": 1,
+    "no_ocr_books": 1546,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   }
+  },
+  "fr-blank-r2": {
+   "task": "ocr",
+   "lang": "French",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": null,
+   "routes": [
+    "agy-flash-low",
+    "agy-flash-low@4"
+   ],
+   "correctors": {
+    "agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "fresh": true
+    },
+    "agy-flash-low@4": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "fresh": true,
+     "perCall": 4
+    }
+   },
+   "kanripo": false,
+   "blank": true,
+   "served": {
+    "agy-flash-low": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+    "agy-flash-low@4": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "6a26d2cdf5273a8d907a646f",
+     "book_id": "6a26d2cdf5273a8d907a6451",
+     "page_number": 30,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d2cdf5273a8d907a646e",
+      "6a26d2cdf5273a8d907a646f",
+      "6a26d2cdf5273a8d907a6470",
+      "6a26d2cdf5273a8d907a6471"
+     ],
+     "book_language": "French",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa35d73e213def30d6c8bb6",
+     "book_id": "6aa35d73e213def30d6c8b34",
+     "page_number": 130,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa35d73e213def30d6c8bb5",
+      "6aa35d73e213def30d6c8bb6",
+      "6aa35d73e213def30d6c8bb7",
+      "6aa35d73e213def30d6c8bb8"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a477ce21874da9b1a9a52e1",
+     "book_id": "6a477ce21874da9b1a9a524a",
+     "page_number": 151,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a477ce21874da9b1a9a52e0",
+      "6a477ce21874da9b1a9a52e1",
+      "6a477ce21874da9b1a9a52e2",
+      "6a477ce21874da9b1a9a52e3"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa331a30583d2ccd3f13587",
+     "book_id": "6aa331a30583d2ccd3f1353f",
+     "page_number": 72,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa331a30583d2ccd3f13585",
+      "6aa331a30583d2ccd3f13586",
+      "6aa331a30583d2ccd3f13587",
+      "6aa331a30583d2ccd3f13588"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 9
+    },
+    {
+     "page_id": "6a9f3f8a83c3b522416e3486",
+     "book_id": "6a9f3f8a83c3b522416e341d",
+     "page_number": 105,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a9f3f8a83c3b522416e3483",
+      "6a9f3f8a83c3b522416e3484",
+      "6a9f3f8a83c3b522416e3485",
+      "6a9f3f8a83c3b522416e3486"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 49
+    },
+    {
+     "page_id": "6aa1d31d77169abff161d833",
+     "book_id": "6aa1d31777169abff161d680",
+     "page_number": 435,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d31d77169abff161d832",
+      "6aa1d31d77169abff161d833",
+      "6aa1d31d77169abff161d834",
+      "6aa1d31d77169abff161d835"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 437
+    },
+    {
+     "page_id": "6a26dae005d7c1d9b1089d3d",
+     "book_id": "6a26dae005d7c1d9b1089d04",
+     "page_number": 57,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26dae005d7c1d9b1089d3a",
+      "6a26dae005d7c1d9b1089d3b",
+      "6a26dae005d7c1d9b1089d3c",
+      "6a26dae005d7c1d9b1089d3d"
+     ],
+     "book_language": "French",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a94b1f3281341c253e71297",
+     "book_id": "6a94b1f3281341c253e7122d",
+     "page_number": 106,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a94b1f3281341c253e71295",
+      "6a94b1f3281341c253e71296",
+      "6a94b1f3281341c253e71297"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 101
+    },
+    {
+     "page_id": "69bed3606e375f0fb686f683",
+     "book_id": "69bed3606e375f0fb686f610",
+     "page_number": 115,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bed3606e375f0fb686f681",
+      "69bed3606e375f0fb686f682",
+      "69bed3606e375f0fb686f683",
+      "69bed3606e375f0fb686f684"
+     ],
+     "book_language": "French",
+     "provider": null,
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 20
+    },
+    {
+     "page_id": "6a243c3e0f0e4f405e62d598",
+     "book_id": "6a243c3e0f0e4f405e62d34b",
+     "page_number": 589,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a243c3e0f0e4f405e62d598",
+      "6a243c3e0f0e4f405e62d599",
+      "6a243c3e0f0e4f405e62d59a",
+      "6a243c3e0f0e4f405e62d59b"
+     ],
+     "book_language": "French",
+     "provider": "gallica",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa1d22277169abff161aa41",
+     "book_id": "6aa1d21677169abff161a95e",
+     "page_number": 227,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d22277169abff161aa3e",
+      "6aa1d22277169abff161aa3f",
+      "6aa1d22277169abff161aa40",
+      "6aa1d22277169abff161aa41"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26ced1d8d546457e31ea0d",
+     "book_id": "6a26ced1d8d546457e31e9a5",
+     "page_number": 104,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26ced1d8d546457e31ea0d",
+      "6a26ced1d8d546457e31ea0e",
+      "6a26ced1d8d546457e31ea0f",
+      "6a26ced1d8d546457e31ea10"
+     ],
+     "book_language": "French",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6a26d8f7774aa3596e88bf5d",
+     "book_id": "6a26d8f7774aa3596e88bb67",
+     "page_number": 1014,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d8f7774aa3596e88bf5c",
+      "6a26d8f7774aa3596e88bf5d",
+      "6a26d8f7774aa3596e88bf5e",
+      "6a26d8f7774aa3596e88bf5f"
+     ],
+     "book_language": "French",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6aa1d4c477169abff1620e58",
+     "book_id": "6aa1d4c277169abff1620e0f",
+     "page_number": 73,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d4c477169abff1620e58",
+      "6aa1d4c477169abff1620e59",
+      "6aa1d4c477169abff1620e5a",
+      "6aa1d4c477169abff1620e5b"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a9f3fba83c3b522416e5764",
+     "book_id": "6a9f3fb983c3b522416e5601",
+     "page_number": 355,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a9f3fba83c3b522416e5764",
+      "6a9f3fba83c3b522416e5765",
+      "6a9f3fba83c3b522416e5766",
+      "6a9f3fba83c3b522416e5767"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 71
+    },
+    {
+     "page_id": "69b9056dcdb14f317fb521dd",
+     "book_id": "69b9056dcdb14f317fb521b1",
+     "page_number": 44,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b9056dcdb14f317fb521da",
+      "69b9056dcdb14f317fb521db",
+      "69b9056dcdb14f317fb521dc",
+      "69b9056dcdb14f317fb521dd"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "69bd9e95f6d63c919747bcf2",
+     "book_id": "69bd9e95f6d63c919747bcb0",
+     "page_number": 66,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bd9e95f6d63c919747bcf1",
+      "69bd9e95f6d63c919747bcf2",
+      "69bd9e95f6d63c919747bcf3",
+      "69bd9e95f6d63c919747bcf4"
+     ],
+     "book_language": "French",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 35
+    },
+    {
+     "page_id": "6aa35dbae213def30d6c9aee",
+     "book_id": "6aa35dbae213def30d6c9a56",
+     "page_number": 152,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa35dbae213def30d6c9aee",
+      "6aa35dbae213def30d6c9aef",
+      "6aa35dbae213def30d6c9af0",
+      "6aa35dbae213def30d6c9af1"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 10
+    },
+    {
+     "page_id": "6a243de50f0e4f405e6324b2",
+     "book_id": "6a243de50f0e4f405e632488",
+     "page_number": 42,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a243de50f0e4f405e6324b0",
+      "6a243de50f0e4f405e6324b1",
+      "6a243de50f0e4f405e6324b2",
+      "6a243de50f0e4f405e6324b3"
+     ],
+     "book_language": "French",
+     "provider": "gallica",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "69bed1566e375f0fb686f247",
+     "book_id": "69bed1556e375f0fb686f221",
+     "page_number": 38,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bed1566e375f0fb686f246",
+      "69bed1566e375f0fb686f247",
+      "69bed1566e375f0fb686f248",
+      "69bed1566e375f0fb686f249"
+     ],
+     "book_language": "French",
+     "provider": null,
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 58
+    },
+    {
+     "page_id": "69bc81b6173577a33741eaa1",
+     "book_id": "69bc81b6173577a33741ea8b",
+     "page_number": 22,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bc81b6173577a33741eaa1"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6a26d8b26be3d771538c45d4",
+     "book_id": "6a26d8b26be3d771538c45b1",
+     "page_number": 35,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a26d8b26be3d771538c45d4",
+      "6a26d8b26be3d771538c45d5",
+      "6a26d8b26be3d771538c45d6",
+      "6a26d8b26be3d771538c45d7"
+     ],
+     "book_language": "French",
+     "provider": "mdz",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa1d35777169abff161df4e",
+     "book_id": "6aa1d34f77169abff161de2b",
+     "page_number": 291,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d35777169abff161df4c",
+      "6aa1d35777169abff161df4d",
+      "6aa1d35777169abff161df4e",
+      "6aa1d35777169abff161df4f"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 50
+    },
+    {
+     "page_id": "6aa1d33a77169abff161dbee",
+     "book_id": "6aa1d33277169abff161da5a",
+     "page_number": 404,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d33a77169abff161dbed",
+      "6aa1d33a77169abff161dbee",
+      "6aa1d33a77169abff161dbef",
+      "6aa1d33a77169abff161dbf0"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 59
+    },
+    {
+     "page_id": "6a9f3f8e83c3b522416e3799",
+     "book_id": "6a9f3f8d83c3b522416e368e",
+     "page_number": 267,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6a9f3f8e83c3b522416e3798",
+      "6a9f3f8e83c3b522416e3799",
+      "6a9f3f8e83c3b522416e379a",
+      "6a9f3f8e83c3b522416e379b"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "69ac5fbc4f76006bddda3be2",
+     "book_id": "69ac5fbc4f76006bddda3abf",
+     "page_number": 291,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69ac5fbc4f76006bddda3be2"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 988
+    },
+    {
+     "page_id": "69bd9e016120d54bd037a879",
+     "book_id": "69bd9e016120d54bd037a838",
+     "page_number": 65,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69bd9e016120d54bd037a877",
+      "69bd9e016120d54bd037a878",
+      "69bd9e016120d54bd037a879",
+      "69bd9e016120d54bd037a87a"
+     ],
+     "book_language": "French",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa1d24477169abff161b557",
+     "book_id": "6aa1d24077169abff161b377",
+     "page_number": 480,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d24477169abff161b554",
+      "6aa1d24477169abff161b555",
+      "6aa1d24477169abff161b556",
+      "6aa1d24477169abff161b557"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 89
+    },
+    {
+     "page_id": "6aa1d20077169abff161a8c7",
+     "book_id": "6aa1d1f977169abff161a6a3",
+     "page_number": 548,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa1d20077169abff161a8c6",
+      "6aa1d20077169abff161a8c7",
+      "6aa1d20077169abff161a8c8",
+      "6aa1d20077169abff161a8c9"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    },
+    {
+     "page_id": "6aa3314d0583d2ccd3f12a7b",
+     "book_id": "6aa3314c0583d2ccd3f1287b",
+     "page_number": 512,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "6aa3314d0583d2ccd3f12a7b",
+      "6aa3314d0583d2ccd3f12a7c",
+      "6aa3314d0583d2ccd3f12a7d",
+      "6aa3314d0583d2ccd3f12a7e"
+     ],
+     "book_language": "French",
+     "provider": "internet_archive",
+     "hold": "scans-only-publish-7270",
+     "pages_ocr": 25
+    }
+   ],
+   "frame": {
+    "books_in_frame": 882,
+    "books_left_out": 90,
+    "books_walked": 327,
+    "spread_wait": 295,
+    "no_interior_unread": 2,
+    "no_ocr_books": 736,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   }
+  },
+  "la-armc": {
+   "task": "ocr",
+   "lang": "Latin",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": null,
+   "routes": [
+    "pero>agy-flash-low",
+    "pero>agy-flash-low@4"
+   ],
+   "correctors": {
+    "pero>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "gpuDraft": "pero.json",
+     "imageDir": "img"
+    },
+    "pero>agy-flash-low@4": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "gpuDraft": "pero.json",
+     "imageDir": "img",
+     "perCall": 4
+    }
+   },
+   "kanripo": false,
+   "blank": true,
+   "served": {
+    "pero>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+    "pero>agy-flash-low@4": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "69b6a39b080b19f98fd1b59f",
+     "book_id": "69b6a39b080b19f98fd1b3d9",
+     "page_number": 454,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6a39b080b19f98fd1b59f",
+      "69b6a39b080b19f98fd1b5a0",
+      "69b6a39b080b19f98fd1b5a1",
+      "69b6a39b080b19f98fd1b5a2"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6f7463c7947b468d60844",
+     "book_id": "69b6f7463c7947b468d6081e",
+     "page_number": 38,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6f7463c7947b468d60842",
+      "69b6f7463c7947b468d60843",
+      "69b6f7463c7947b468d60844",
+      "69b6f7463c7947b468d60845"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6e6e9f8a84d859cddd289",
+     "book_id": "69b6e6e9f8a84d859cddd24b",
+     "page_number": 62,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6e6e9f8a84d859cddd288",
+      "69b6e6e9f8a84d859cddd289",
+      "69b6e6e9f8a84d859cddd28a",
+      "69b6e6e9f8a84d859cddd28b"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6c5f48566c8381466d69d",
+     "book_id": "69b6c5f48566c8381466d68d",
+     "page_number": 16,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6c5f48566c8381466d69d",
+      "69b6c5f48566c8381466d69e",
+      "69b6c5f48566c8381466d69f",
+      "69b6c5f48566c8381466d6a0"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6be278566c83814642b5e",
+     "book_id": "69b6be278566c83814642b3f",
+     "page_number": 31,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6be278566c83814642b5c",
+      "69b6be278566c83814642b5d",
+      "69b6be278566c83814642b5e",
+      "69b6be278566c83814642b5f"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6f82d3c7947b468d67862",
+     "book_id": "69b6f82d3c7947b468d677cd",
+     "page_number": 149,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6f82d3c7947b468d67860",
+      "69b6f82d3c7947b468d67861",
+      "69b6f82d3c7947b468d67862",
+      "69b6f82d3c7947b468d67863"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6326f1c1c21a373810f25",
+     "book_id": "69b6326f1c1c21a373810ebc",
+     "page_number": 105,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6326f1c1c21a373810f24",
+      "69b6326f1c1c21a373810f25",
+      "69b6326f1c1c21a373810f26",
+      "69b6326f1c1c21a373810f27"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b641641c1c21a373883206",
+     "book_id": "69b641641c1c21a3738831f6",
+     "page_number": 16,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b641641c1c21a373883204",
+      "69b641641c1c21a373883205",
+      "69b641641c1c21a373883206",
+      "69b641641c1c21a373883207"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b66ce1b3f4fc04415897ac",
+     "book_id": "69b66ce1b3f4fc04415897a8",
+     "page_number": 4,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b66ce1b3f4fc04415897ac",
+      "69b66ce1b3f4fc04415897ad",
+      "69b66ce1b3f4fc04415897ae",
+      "69b66ce1b3f4fc04415897af"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b63ba11c1c21a37384e56a",
+     "book_id": "69b63ba11c1c21a37384e549",
+     "page_number": 33,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b63ba11c1c21a37384e568",
+      "69b63ba11c1c21a37384e569",
+      "69b63ba11c1c21a37384e56a",
+      "69b63ba11c1c21a37384e56b"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6f07db1a3146c0526dd47",
+     "book_id": "69b6f07db1a3146c0526dd27",
+     "page_number": 32,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6f07db1a3146c0526dd45",
+      "69b6f07db1a3146c0526dd46",
+      "69b6f07db1a3146c0526dd47",
+      "69b6f07db1a3146c0526dd48"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6512518b87551bfca5ae8",
+     "book_id": "69b6512518b87551bfca5ab2",
+     "page_number": 54,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6512518b87551bfca5ae8",
+      "69b6512518b87551bfca5ae9",
+      "69b6512518b87551bfca5aea",
+      "69b6512518b87551bfca5aeb"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b66609b3f4fc0441558885",
+     "book_id": "69b66609b3f4fc0441558870",
+     "page_number": 21,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b66609b3f4fc0441558885",
+      "69b66609b3f4fc0441558886",
+      "69b66609b3f4fc0441558887",
+      "69b66609b3f4fc0441558888"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b68dae2368e1fad3227f34",
+     "book_id": "69b68dae2368e1fad3227f2a",
+     "page_number": 10,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b68dae2368e1fad3227f32",
+      "69b68dae2368e1fad3227f33",
+      "69b68dae2368e1fad3227f34",
+      "69b68dae2368e1fad3227f35"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6e8baf8a84d859cde9b20",
+     "book_id": "69b6e8baf8a84d859cde997f",
+     "page_number": 417,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6e8baf8a84d859cde9b1e",
+      "69b6e8baf8a84d859cde9b1f",
+      "69b6e8baf8a84d859cde9b20",
+      "69b6e8baf8a84d859cde9b21"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b691c3080b19f98fce488b",
+     "book_id": "69b691c3080b19f98fce487d",
+     "page_number": 14,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b691c3080b19f98fce4889",
+      "69b691c3080b19f98fce488a",
+      "69b691c3080b19f98fce488b",
+      "69b691c3080b19f98fce488c"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6bec98566c838146465f3",
+     "book_id": "69b6bec98566c83814646577",
+     "page_number": 124,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6bec98566c838146465f2",
+      "69b6bec98566c838146465f3",
+      "69b6bec98566c838146465f4",
+      "69b6bec98566c838146465f5"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6c32d8566c8381465f25f",
+     "book_id": "69b6c32d8566c8381465f253",
+     "page_number": 12,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6c32d8566c8381465f25d",
+      "69b6c32d8566c8381465f25e",
+      "69b6c32d8566c8381465f25f",
+      "69b6c32d8566c8381465f260"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6fb6a3c7947b468d7be32",
+     "book_id": "69b6fb6a3c7947b468d7bde0",
+     "page_number": 82,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6fb6a3c7947b468d7be30",
+      "69b6fb6a3c7947b468d7be31",
+      "69b6fb6a3c7947b468d7be32",
+      "69b6fb6a3c7947b468d7be33"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b66423b3f4fc044154e2fe",
+     "book_id": "69b66423b3f4fc044154e2a0",
+     "page_number": 94,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b66423b3f4fc044154e2fe",
+      "69b66423b3f4fc044154e2ff",
+      "69b66423b3f4fc044154e300",
+      "69b66423b3f4fc044154e301"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b679ee70c69d645a6f9652",
+     "book_id": "69b679ee70c69d645a6f94ab",
+     "page_number": 423,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b679ee70c69d645a6f9651",
+      "69b679ee70c69d645a6f9652",
+      "69b679ee70c69d645a6f9653",
+      "69b679ee70c69d645a6f9654"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "warehouse-promotion-5470",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6b75718823df6d699700f",
+     "book_id": "69b6b75718823df6d6997002",
+     "page_number": 13,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6b75718823df6d699700c",
+      "69b6b75718823df6d699700d",
+      "69b6b75718823df6d699700e",
+      "69b6b75718823df6d699700f"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b689d52368e1fad3217bfc",
+     "book_id": "69b689d52368e1fad3217bbb",
+     "page_number": 65,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b689d52368e1fad3217bfa",
+      "69b689d52368e1fad3217bfb",
+      "69b689d52368e1fad3217bfc",
+      "69b689d52368e1fad3217bfd"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6381a1c1c21a373834f0d",
+     "book_id": "69b6381a1c1c21a373834e29",
+     "page_number": 228,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6381a1c1c21a373834f0b",
+      "69b6381a1c1c21a373834f0c",
+      "69b6381a1c1c21a373834f0d",
+      "69b6381a1c1c21a373834f0e"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6f4733c7947b468d4519b",
+     "book_id": "69b6f4733c7947b468d45171",
+     "page_number": 42,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6f4733c7947b468d45199",
+      "69b6f4733c7947b468d4519a",
+      "69b6f4733c7947b468d4519b",
+      "69b6f4733c7947b468d4519c"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6870b70c69d645a747704",
+     "book_id": "69b6870b70c69d645a7476ff",
+     "page_number": 5,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6870b70c69d645a747704",
+      "69b6870b70c69d645a747705",
+      "69b6870b70c69d645a747706",
+      "69b6870b70c69d645a747707"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6c7ba6bf2c798f8400a0a",
+     "book_id": "69b6c7ba6bf2c798f84009e8",
+     "page_number": 34,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6c7ba6bf2c798f8400a0a",
+      "69b6c7ba6bf2c798f8400a0b",
+      "69b6c7ba6bf2c798f8400a0c",
+      "69b6c7ba6bf2c798f8400a0d"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6b5e296dc15d4a16ea3c7",
+     "book_id": "69b6b5e296dc15d4a16ea3c0",
+     "page_number": 7,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6b5e296dc15d4a16ea3c7",
+      "69b6b5e296dc15d4a16ea3c8",
+      "69b6b5e296dc15d4a16ea3c9",
+      "69b6b5e296dc15d4a16ea3ca"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b6b2b7ddbd97d443a9f063",
+     "book_id": "69b6b2b7ddbd97d443a9ef41",
+     "page_number": 290,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b6b2b7ddbd97d443a9f061",
+      "69b6b2b7ddbd97d443a9f062",
+      "69b6b2b7ddbd97d443a9f063",
+      "69b6b2b7ddbd97d443a9f064"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    },
+    {
+     "page_id": "69b685bd70c69d645a73c5e2",
+     "book_id": "69b685bd70c69d645a73c586",
+     "page_number": 92,
+     "draft_model": null,
+     "draft_sha": null,
+     "block": [
+      "69b685bd70c69d645a73c5e2",
+      "69b685bd70c69d645a73c5e3",
+      "69b685bd70c69d645a73c5e4",
+      "69b685bd70c69d645a73c5e5"
+     ],
+     "book_language": "Latin",
+     "provider": "e-rara",
+     "hold": "scans-only-publish-7176",
+     "pages_ocr": 0
+    }
+   ],
+   "frame": {
+    "books_in_frame": 15326,
+    "books_left_out": 90,
+    "books_walked": 37,
+    "spread_wait": 7,
+    "no_interior_unread": 0,
+    "no_ocr_books": 15304,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   }
+  }
+ }
+}

@@ -1,0 +1,25 @@
+[
+ {
+  "at": "2026-10-29T15:05:24.324Z",
+  "calls": 180,
+  "stop": null,
+  "meter_before": {
+   "source": "climits",
+   "email": "dereklomas@gmail.com",
+   "weekly": 88,
+   "session": 9,
+   "weekly_reset": "2026-11-03T11:00:00.401501+00:00",
+   "session_reset": "2026-10-29T18:20:00.401479+00:00",
+   "at": "2026-10-29T14:54:04.394Z"
+  },
+  "meter_after": {
+   "source": "climits",
+   "email": "dereklomas@gmail.com",
+   "weekly": 88,
+   "session": 13,
+   "weekly_reset": "2026-11-03T11:00:00.917524+00:00",
+   "session_reset": "2026-10-29T18:20:00.917503+00:00",
+   "at": "2026-10-29T15:05:24.324Z"
+  }
+ }
+]

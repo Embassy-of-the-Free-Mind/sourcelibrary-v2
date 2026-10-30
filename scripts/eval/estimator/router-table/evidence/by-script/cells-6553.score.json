@@ -1,0 +1,601 @@
+{
+ "cells": {
+  "Danish|print": {
+   "routes": {
+    "lite": {
+     "n": 9,
+     "books": 9,
+     "accept": "8/9",
+     "wrong_text_pages": "1/9",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 9
+     }
+    }
+   }
+  },
+  "Danish|unknown": {
+   "routes": {
+    "lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 1
+     }
+    }
+   }
+  },
+  "Hindi|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 8,
+     "books": 8,
+     "accept": "7/8",
+     "wrong_text_pages": "1/8",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 6
+     }
+    },
+    "lite": {
+     "n": 8,
+     "books": 8,
+     "accept": "8/8",
+     "wrong_text_pages": "0/8",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 6
+     }
+    }
+   }
+  },
+  "Hindi|unknown": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    },
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "2/2",
+     "wrong_text_pages": "0/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    }
+   }
+  },
+  "Italian|print": {
+   "routes": {
+    "lite": {
+     "n": 14,
+     "books": 14,
+     "accept": "9/14",
+     "wrong_text_pages": "5/14",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 12,
+      "book": 2
+     }
+    }
+   }
+  },
+  "Italian|unknown": {
+   "routes": {
+    "lite": {
+     "n": 16,
+     "books": 16,
+     "accept": "12/16",
+     "wrong_text_pages": "4/16",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 16
+     }
+    }
+   }
+  },
+  "Korean|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 11,
+     "books": 11,
+     "accept": "5/11",
+     "wrong_text_pages": "5/11",
+     "classes_k_of_n": {
+      "refusal": "1/11"
+     },
+     "script_basis": {
+      "page": 11
+     }
+    },
+    "lite": {
+     "n": 11,
+     "books": 11,
+     "accept": "2/11",
+     "wrong_text_pages": "9/11",
+     "classes_k_of_n": {
+      "invented": "1/11"
+     },
+     "script_basis": {
+      "page": 11
+     }
+    }
+   }
+  },
+  "Korean|manuscript": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 14,
+     "books": 14,
+     "accept": "9/14",
+     "wrong_text_pages": "5/14",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 14
+     }
+    },
+    "lite": {
+     "n": 14,
+     "books": 14,
+     "accept": "2/14",
+     "wrong_text_pages": "12/14",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 14
+     }
+    }
+   }
+  },
+  "Korean|unknown": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 3,
+     "books": 3,
+     "accept": "2/3",
+     "wrong_text_pages": "1/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 3
+     }
+    },
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "0/3",
+     "wrong_text_pages": "3/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 3
+     }
+    }
+   }
+  },
+  "Middle English|print": {
+   "routes": {
+    "lite": {
+     "n": 4,
+     "books": 4,
+     "accept": "3/4",
+     "wrong_text_pages": "1/4",
+     "classes_k_of_n": {
+      "empty": "1/4"
+     },
+     "script_basis": {
+      "page": 4
+     }
+    }
+   }
+  },
+  "Middle English|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "Middle English|unknown": {
+   "routes": {
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    }
+   }
+  },
+  "Middle High German|print": {
+   "routes": {
+    "lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "1/1",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "Middle High German|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 4,
+     "books": 4,
+     "accept": "0/4",
+     "wrong_text_pages": "4/4",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 1,
+      "page": 3
+     }
+    }
+   }
+  },
+  "Middle High German|unknown": {
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 5,
+     "accept": "1/5",
+     "wrong_text_pages": "4/5",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 5
+     }
+    }
+   }
+  },
+  "Old French|print": {
+   "routes": {
+    "lite": {
+     "n": 6,
+     "books": 6,
+     "accept": "6/6",
+     "wrong_text_pages": "0/6",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 3,
+      "page": 3
+     }
+    }
+   }
+  },
+  "Old French|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "0/3",
+     "wrong_text_pages": "3/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "Ottoman Turkish|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 4,
+     "books": 4,
+     "accept": "3/4",
+     "wrong_text_pages": "1/4",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 3,
+      "page": 1
+     }
+    },
+    "lite": {
+     "n": 4,
+     "books": 4,
+     "accept": "1/4",
+     "wrong_text_pages": "3/4",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 3,
+      "page": 1
+     }
+    }
+   }
+  },
+  "Ottoman Turkish|manuscript": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 4,
+     "books": 4,
+     "accept": "4/4",
+     "wrong_text_pages": "0/4",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 2
+     }
+    },
+    "lite": {
+     "n": 4,
+     "books": 4,
+     "accept": "2/4",
+     "wrong_text_pages": "2/4",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 2
+     }
+    }
+   }
+  },
+  "Ottoman Turkish|unknown": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    },
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    }
+   }
+  },
+  "Portuguese|print": {
+   "routes": {
+    "lite": {
+     "n": 13,
+     "books": 13,
+     "accept": "10/13",
+     "wrong_text_pages": "3/13",
+     "classes_k_of_n": {
+      "empty": "1/13"
+     },
+     "script_basis": {
+      "page": 10,
+      "book": 3
+     }
+    }
+   }
+  },
+  "Portuguese|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "1/3",
+     "wrong_text_pages": "2/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "Portuguese|unknown": {
+   "routes": {
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 2
+     }
+    }
+   }
+  },
+  "Russian|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 17,
+     "books": 17,
+     "accept": "15/17",
+     "wrong_text_pages": "2/17",
+     "classes_k_of_n": {
+      "refusal": "1/17"
+     },
+     "script_basis": {
+      "book": 4,
+      "page": 13
+     }
+    },
+    "lite": {
+     "n": 17,
+     "books": 17,
+     "accept": "13/17",
+     "wrong_text_pages": "4/17",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 4,
+      "page": 13
+     }
+    }
+   }
+  },
+  "Russian|unknown": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 11,
+     "books": 11,
+     "accept": "11/11",
+     "wrong_text_pages": "0/11",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 11
+     }
+    },
+    "lite": {
+     "n": 11,
+     "books": 11,
+     "accept": "10/11",
+     "wrong_text_pages": "1/11",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 11
+     }
+    }
+   }
+  },
+  "Spanish|print": {
+   "routes": {
+    "lite": {
+     "n": 10,
+     "books": 10,
+     "accept": "9/10",
+     "wrong_text_pages": "1/10",
+     "classes_k_of_n": {
+      "empty": "1/10"
+     },
+     "script_basis": {
+      "book": 6,
+      "page": 4
+     }
+    }
+   }
+  },
+  "Spanish|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "2/3",
+     "wrong_text_pages": "1/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "Spanish|unknown": {
+   "routes": {
+    "lite": {
+     "n": 14,
+     "books": 14,
+     "accept": "12/14",
+     "wrong_text_pages": "2/14",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 14
+     }
+    }
+   }
+  },
+  "Tamil|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 3,
+     "books": 3,
+     "accept": "3/3",
+     "wrong_text_pages": "0/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 1
+     }
+    },
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "2/3",
+     "wrong_text_pages": "1/3",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2,
+      "page": 1
+     }
+    }
+   }
+  },
+  "Tamil|unknown": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 7,
+     "books": 7,
+     "accept": "6/7",
+     "wrong_text_pages": "1/7",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 7
+     }
+    },
+    "lite": {
+     "n": 7,
+     "books": 7,
+     "accept": "4/7",
+     "wrong_text_pages": "3/7",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 7
+     }
+    }
+   }
+  },
+  "Turkish|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "book": 2
+     }
+    }
+   }
+  },
+  "Turkish|unknown": {
+   "routes": {
+    "lite": {
+     "n": 7,
+     "books": 7,
+     "accept": "4/7",
+     "wrong_text_pages": "3/7",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "none": 7
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

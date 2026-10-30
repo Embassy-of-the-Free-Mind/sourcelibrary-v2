@@ -1,7 +1,10 @@
+import { Fragment } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import PageFigure from '@/components/articles/PageFigure';
 import { PASSAGES } from './passages';
+import WhatWeKnow from './WhatWeKnow';
 import { withArticleMeta } from '@/lib/article-metadata';
 
 
@@ -9,7 +12,9 @@ import { withArticleMeta } from '@/lib/article-metadata';
 // from /collections/drebbel/beeckman to /articles on 2026-10-18 (redirected).
 //
 // The edition these passages were read from stays hidden (rights), so nothing
-// here links to it and no page image from it is shown.
+// here links to it and no page image from it is shown. The exception is
+// Beeckman's own drawings, wherever a passage refers to one: faithful copies of
+// public-domain figures, shown without de Waard's surrounding page (Derek, 2026-10-28).
 
 export const metadata: Metadata = withArticleMeta('beeckman-on-drebbel', {
   title: 'Beeckman on Drebbel: the journal passages, 1619–1634 - Articles - Source Library',
@@ -32,8 +37,8 @@ export default function BeeckmanOnDrebbelPage() {
         <ContentHeader feature headerVariant="dark"
           title="Beeckman on Drebbel"
           subtitle="What Isaac Beeckman wrote in his journal about Cornelis Drebbel&rsquo;s machines, 1619 to 1634, in his own words with an English translation"
-          image="https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg"
-          imageAlt="Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing."
+          image="/articles/beeckman-on-drebbel/drebbel-submarine.jpg"
+          imageAlt="Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving."
         >
           <p>6 October 2026</p>
         </ContentHeader>
@@ -58,6 +63,12 @@ export default function BeeckmanOnDrebbelPage() {
           is Beeckman&rsquo;s own heading, written in his margin.
         </p>
 
+        <p className="text-sm text-muted leading-relaxed mb-8 font-body">
+          The picture at the top is a later artist&rsquo;s idea of the boat, not a drawing from
+          Drebbel&rsquo;s time; no picture of it made in his lifetime survives. Public domain, via{' '}
+          <a href="https://commons.wikimedia.org/wiki/File:Drebbel_submarine.jpg" className="underline">Wikimedia Commons</a>.
+        </p>
+
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The manuscript is kept at the ZB, the library of Zeeland, in Middelburg. The text here
           follows the transcription of Cornelis de Waard (<em>Journal tenu par Isaac Beeckman de
@@ -72,38 +83,53 @@ export default function BeeckmanOnDrebbelPage() {
         <hr className="border-border-light my-12" />
 
         {PASSAGES.map((p) => (
-          <section key={p.id} id={p.id} className="mb-16 scroll-mt-24">
-            <h2 className="font-serif text-2xl md:text-3xl text-primary mb-2">{p.title}</h2>
-            <p className="text-sm text-muted mb-6">
-              {p.date} &middot; {p.source}
-            </p>
+          <Fragment key={p.id}>
+            <section id={p.id} className="mb-16 scroll-mt-24">
+              <h2 className="font-serif text-2xl md:text-3xl text-primary mb-2">{p.title}</h2>
+              <p className="text-sm text-muted mb-6">
+                {p.date} &middot; {p.source}
+              </p>
 
-            <div className="bg-warm rounded-xl p-6 border border-border-light">
-              {p.head && (
-                <p lang="la" className="text-secondary italic font-body leading-relaxed mb-4">
-                  {p.head}
-                </p>
-              )}
-              <div className="grid gap-8 md:grid-cols-2">
-                <div lang={p.lang}>
-                  {p.original.map((para, i) => (
-                    <p key={i} className="text-secondary font-body leading-relaxed mb-4 last:mb-0">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-                <div>
-                  {p.translation.map((para, i) => (
-                    <p key={i} className="text-primary font-body leading-relaxed mb-4 last:mb-0">
-                      {para}
-                    </p>
-                  ))}
+              <div className="bg-warm rounded-xl p-6 border border-border-light">
+                {p.head && (
+                  <p lang="la" className="text-secondary italic font-body leading-relaxed mb-4">
+                    {p.head}
+                  </p>
+                )}
+                <div className="grid gap-8 md:grid-cols-2">
+                  <div lang={p.lang}>
+                    {p.original.map((para, i) => (
+                      <p key={i} className="text-secondary font-body leading-relaxed mb-4 last:mb-0">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                  <div>
+                    {p.translation.map((para, i) => (
+                      <p key={i} className="text-primary font-body leading-relaxed mb-4 last:mb-0">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {p.note && <p className="text-sm text-muted leading-relaxed mt-4">{p.note}</p>}
-          </section>
+              {p.figures && (
+                <div className="flex flex-wrap justify-center gap-8 mt-8">
+                  {p.figures.map((f) => (
+                    <div key={f.src} className="w-full max-w-sm">
+                      <PageFigure src={f.src} alt={f.alt}>
+                        {f.caption}
+                      </PageFigure>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {p.note && <p className="text-sm text-muted leading-relaxed mt-4">{p.note}</p>}
+            </section>
+            {p.id === 'submarine-1620' && <WhatWeKnow />}
+          </Fragment>
         ))}
 
         <hr className="border-border-light my-12" />

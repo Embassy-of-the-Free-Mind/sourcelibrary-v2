@@ -37,7 +37,7 @@ async function archiveToR2(url, key) {
   }
 
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (collection-image-archiver)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) collection-image-archiver' },
     signal: AbortSignal.timeout(30000),
   });
   if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);

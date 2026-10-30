@@ -41,7 +41,7 @@ if (!bookId) {
 async function manifestPageUrls(iaId) {
   const url = `https://iiif.archive.org/iiif/${encodeURIComponent(iaId)}/manifest.json`;
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
   });
   if (!res.ok) throw new Error(`manifest fetch ${res.status} for ${iaId}`);
   const manifest = await res.json();

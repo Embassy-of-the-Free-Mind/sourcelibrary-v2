@@ -100,6 +100,8 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
+  '/admin/pipeline/now',
   // Inner-circle curation surfaces (#3846): identity adjudication over the
   // whole corpus (work merges, edition keeper choices). Corpus-wide by
   // construction and actuating, so a partner host must refuse it outright —

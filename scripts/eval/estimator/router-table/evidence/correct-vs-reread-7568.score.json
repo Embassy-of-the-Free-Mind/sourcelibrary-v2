@@ -1,0 +1,660 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#7568 waves 1-2 (PR #7571), scripts/eval/flash-reread-5924/results-7568/<lang>/step-t.json, unblinded by w-score.mjs; judge: claude-opus-5-5 (claude -p), one blind reader per book, three texts per page against the page image (T-TASK.md)",
+ "judge": "claude-opus-5-5, Step T reader (T-TASK.md): misleading / flawed / sound against the image; not the route-judge prompt",
+ "mapping": "wrong_text = misleading (meaning change, omitted passage, another leaf); accept = not misleading",
+ "cells": {
+  "zh-lite": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "wave": "wave 1",
+   "pages": 75,
+   "source": "scripts/eval/flash-reread-5924/results-7568/zh/step-t.json",
+   "routes": {
+    "lite": {
+     "served": "served (the stored Flash-Lite text)",
+     "n": 75,
+     "books": 3,
+     "accept": "18/75",
+     "wrong_text_pages": "57/75",
+     "verdicts": {
+      "sound": 0,
+      "flawed": 18,
+      "misleading": 57
+     },
+     "wrong_text_classes": {
+      "O6": "37/75",
+      "O5": "29/75",
+      "O1": "10/75",
+      "O3": "6/75",
+      "O12": "6/75",
+      "O7": "3/75",
+      "T8": "2/75",
+      "O16": "2/75",
+      "O4": "2/75",
+      "I1": "2/75",
+      "O17": "1/75"
+     },
+     "classes_k_of_n": {
+      "O6": "50/75",
+      "O5": "47/75",
+      "O12": "21/75",
+      "O1": "10/75",
+      "O16": "7/75",
+      "O4": "7/75",
+      "O3": "6/75",
+      "O8": "5/75",
+      "O7": "5/75",
+      "O11": "5/75",
+      "T8": "2/75",
+      "I1": "2/75",
+      "T5": "1/75",
+      "O17": "1/75",
+      "O13": "1/75"
+     },
+     "not_this_leaf": "2/75"
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text; the lite text where unchanged / contain / no-answer",
+     "n": 75,
+     "books": 3,
+     "accept": "70/75",
+     "wrong_text_pages": "5/75",
+     "verdicts": {
+      "sound": 59,
+      "flawed": 11,
+      "misleading": 5
+     },
+     "wrong_text_classes": {
+      "O6": "2/75",
+      "I1": "2/75",
+      "O1": "1/75",
+      "O5": "1/75",
+      "O3": "1/75",
+      "O4": "1/75"
+     },
+     "classes_k_of_n": {
+      "O12": "13/75",
+      "O6": "7/75",
+      "O5": "6/75",
+      "O8": "4/75",
+      "O13": "3/75",
+      "O11": "2/75",
+      "O3": "2/75",
+      "I1": "2/75",
+      "O16": "1/75",
+      "O1": "1/75",
+      "O4": "1/75"
+     },
+     "not_this_leaf": "2/75",
+     "C_outcomes": {
+      "corrected": 71,
+      "no-answer": 2,
+      "contain": 2
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft (a filter-cut reply judged as returned)",
+     "n": 75,
+     "books": 3,
+     "accept": "38/75",
+     "wrong_text_pages": "37/75",
+     "verdicts": {
+      "sound": 6,
+      "flawed": 32,
+      "misleading": 37
+     },
+     "wrong_text_classes": {
+      "O6": "21/75",
+      "O5": "11/75",
+      "O15": "6/75",
+      "O1": "4/75",
+      "O7": "3/75",
+      "O12": "2/75",
+      "O3": "1/75"
+     },
+     "classes_k_of_n": {
+      "O6": "48/75",
+      "O5": "23/75",
+      "O12": "20/75",
+      "O11": "14/75",
+      "O16": "7/75",
+      "O4": "6/75",
+      "O15": "6/75",
+      "O8": "5/75",
+      "O7": "4/75",
+      "O1": "4/75",
+      "O13": "3/75",
+      "D1": "3/75",
+      "T5": "2/75",
+      "O10": "2/75",
+      "O3": "1/75"
+     },
+     "not_this_leaf": "0/75",
+     "filter_cut": "6/75"
+    }
+   }
+  },
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "wave": "wave 1",
+   "pages": 250,
+   "source": "scripts/eval/flash-reread-5924/results-7568/de/step-t.json",
+   "routes": {
+    "lite": {
+     "served": "served (the stored Flash-Lite text)",
+     "n": 250,
+     "books": 10,
+     "accept": "187/250",
+     "wrong_text_pages": "63/250",
+     "verdicts": {
+      "sound": 21,
+      "flawed": 166,
+      "misleading": 63
+     },
+     "wrong_text_classes": {
+      "O6": "34/250",
+      "O5": "14/250",
+      "O1": "10/250",
+      "O7": "9/250",
+      "O12": "1/250",
+      "O10": "1/250",
+      "O13": "1/250",
+      "O17": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "148/250",
+      "O8": "145/250",
+      "O11": "71/250",
+      "O5": "43/250",
+      "O12": "20/250",
+      "O1": "15/250",
+      "O7": "13/250",
+      "I4": "13/250",
+      "O16": "6/250",
+      "O10": "4/250",
+      "O13": "3/250",
+      "O15": "2/250",
+      "O17": "2/250",
+      "O14": "1/250"
+     },
+     "not_this_leaf": "0/250"
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text; the lite text where unchanged / contain / no-answer",
+     "n": 250,
+     "books": 10,
+     "accept": "244/250",
+     "wrong_text_pages": "6/250",
+     "verdicts": {
+      "sound": 218,
+      "flawed": 26,
+      "misleading": 6
+     },
+     "wrong_text_classes": {
+      "O7": "3/250",
+      "O1": "1/250",
+      "O5": "1/250",
+      "O6": "1/250"
+     },
+     "classes_k_of_n": {
+      "O8": "42/250",
+      "O6": "23/250",
+      "O11": "9/250",
+      "O12": "3/250",
+      "O1": "3/250",
+      "O16": "3/250",
+      "O13": "3/250",
+      "O7": "3/250",
+      "O5": "2/250",
+      "O17": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "C_outcomes": {
+      "unchanged": 16,
+      "corrected": 233,
+      "contain": 1
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft (a filter-cut reply judged as returned)",
+     "n": 250,
+     "books": 10,
+     "accept": "227/250",
+     "wrong_text_pages": "23/250",
+     "verdicts": {
+      "sound": 84,
+      "flawed": 143,
+      "misleading": 23
+     },
+     "wrong_text_classes": {
+      "O6": "10/250",
+      "O5": "9/250",
+      "O7": "3/250",
+      "O15": "2/250",
+      "O1": "2/250",
+      "O10": "1/250",
+      "O17": "1/250"
+     },
+     "classes_k_of_n": {
+      "O8": "102/250",
+      "O6": "101/250",
+      "O11": "40/250",
+      "O16": "18/250",
+      "O5": "11/250",
+      "O1": "9/250",
+      "O13": "5/250",
+      "D1": "5/250",
+      "O7": "4/250",
+      "O15": "4/250",
+      "O12": "3/250",
+      "O17": "2/250",
+      "O10": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "filter_cut": "2/250"
+    }
+   }
+  },
+  "el-lite": {
+   "task": "ocr",
+   "lang": "Greek",
+   "wave": "wave 1",
+   "pages": 250,
+   "source": "scripts/eval/flash-reread-5924/results-7568/el/step-t.json",
+   "routes": {
+    "lite": {
+     "served": "served (the stored Flash-Lite text)",
+     "n": 250,
+     "books": 10,
+     "accept": "5/250",
+     "wrong_text_pages": "245/250",
+     "verdicts": {
+      "sound": 0,
+      "flawed": 5,
+      "misleading": 245
+     },
+     "wrong_text_classes": {
+      "O6": "187/250",
+      "O1": "92/250",
+      "O4": "57/250",
+      "O5": "13/250",
+      "O3": "5/250",
+      "O14": "4/250",
+      "O12": "2/250",
+      "O11": "2/250",
+      "O7": "2/250"
+     },
+     "classes_k_of_n": {
+      "O6": "193/250",
+      "O1": "93/250",
+      "O4": "60/250",
+      "O12": "18/250",
+      "O5": "14/250",
+      "O11": "9/250",
+      "I4": "7/250",
+      "O8": "6/250",
+      "O16": "6/250",
+      "O7": "6/250",
+      "O3": "5/250",
+      "O14": "5/250",
+      "O15": "2/250"
+     },
+     "not_this_leaf": "0/250"
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text; the lite text where unchanged / contain / no-answer",
+     "n": 250,
+     "books": 10,
+     "accept": "163/250",
+     "wrong_text_pages": "87/250",
+     "verdicts": {
+      "sound": 40,
+      "flawed": 123,
+      "misleading": 87
+     },
+     "wrong_text_classes": {
+      "O4": "47/250",
+      "O6": "29/250",
+      "O1": "23/250",
+      "O5": "15/250",
+      "O3": "8/250",
+      "O12": "1/250",
+      "O11": "1/250",
+      "O14": "1/250",
+      "O7": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "133/250",
+      "O4": "47/250",
+      "O8": "40/250",
+      "O5": "24/250",
+      "O1": "23/250",
+      "O12": "18/250",
+      "O3": "14/250",
+      "O16": "5/250",
+      "O11": "4/250",
+      "O7": "3/250",
+      "O14": "2/250"
+     },
+     "not_this_leaf": "0/250",
+     "C_outcomes": {
+      "corrected": 185,
+      "contain": 65
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft (a filter-cut reply judged as returned)",
+     "n": 250,
+     "books": 10,
+     "accept": "29/250",
+     "wrong_text_pages": "221/250",
+     "verdicts": {
+      "sound": 4,
+      "flawed": 25,
+      "misleading": 221
+     },
+     "wrong_text_classes": {
+      "O6": "181/250",
+      "O5": "35/250",
+      "O1": "34/250",
+      "O15": "19/250",
+      "O12": "15/250",
+      "O3": "7/250",
+      "O18": "5/250",
+      "I4": "4/250",
+      "O7": "2/250",
+      "T5": "1/250",
+      "O11": "1/250",
+      "O4": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "203/250",
+      "O5": "41/250",
+      "O1": "35/250",
+      "O12": "33/250",
+      "O11": "24/250",
+      "O15": "21/250",
+      "I4": "13/250",
+      "O3": "11/250",
+      "O7": "8/250",
+      "O8": "8/250",
+      "O16": "5/250",
+      "O18": "5/250",
+      "O4": "2/250",
+      "O13": "2/250",
+      "T5": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "filter_cut": "32/250"
+    }
+   }
+  },
+  "sa-lite": {
+   "task": "ocr",
+   "lang": "Sanskrit",
+   "wave": "wave 2",
+   "pages": 250,
+   "source": "scripts/eval/flash-reread-5924/results-7568/sa/step-t.json",
+   "routes": {
+    "lite": {
+     "served": "served (the stored Flash-Lite text)",
+     "n": 250,
+     "books": 10,
+     "accept": "42/250",
+     "wrong_text_pages": "208/250",
+     "verdicts": {
+      "sound": 2,
+      "flawed": 40,
+      "misleading": 208
+     },
+     "wrong_text_classes": {
+      "O6": "193/250",
+      "O5": "23/250",
+      "O7": "17/250",
+      "O12": "7/250",
+      "O3": "5/250",
+      "O11": "3/250",
+      "O8": "3/250",
+      "O10": "1/250",
+      "O4": "1/250",
+      "O1": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "226/250",
+      "O11": "53/250",
+      "O8": "50/250",
+      "O7": "43/250",
+      "O3": "32/250",
+      "O5": "31/250",
+      "O12": "19/250",
+      "O16": "2/250",
+      "O10": "1/250",
+      "O4": "1/250",
+      "O1": "1/250"
+     },
+     "not_this_leaf": "0/250"
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text; the lite text where unchanged / contain / no-answer",
+     "n": 250,
+     "books": 10,
+     "accept": "224/250",
+     "wrong_text_pages": "26/250",
+     "verdicts": {
+      "sound": 135,
+      "flawed": 89,
+      "misleading": 26
+     },
+     "wrong_text_classes": {
+      "O6": "24/250",
+      "O8": "3/250",
+      "O12": "1/250",
+      "O7": "1/250",
+      "O3": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "65/250",
+      "O8": "61/250",
+      "O7": "19/250",
+      "O12": "11/250",
+      "O3": "11/250",
+      "O11": "10/250",
+      "O16": "2/250",
+      "O15": "2/250",
+      "O10": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "C_outcomes": {
+      "corrected": 247,
+      "unchanged": 3
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft (a filter-cut reply judged as returned)",
+     "n": 250,
+     "books": 10,
+     "accept": "125/250",
+     "wrong_text_pages": "125/250",
+     "verdicts": {
+      "sound": 11,
+      "flawed": 114,
+      "misleading": 125
+     },
+     "wrong_text_classes": {
+      "O6": "113/250",
+      "O7": "8/250",
+      "O15": "4/250",
+      "O12": "3/250",
+      "O5": "3/250",
+      "O1": "2/250",
+      "O3": "2/250",
+      "T1": "2/250",
+      "O4": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "184/250",
+      "O8": "71/250",
+      "O3": "29/250",
+      "O7": "24/250",
+      "O11": "19/250",
+      "O15": "18/250",
+      "O12": "15/250",
+      "O16": "8/250",
+      "O5": "5/250",
+      "O1": "2/250",
+      "O4": "2/250",
+      "T1": "2/250",
+      "O13": "1/250",
+      "O10": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "filter_cut": "3/250"
+    }
+   }
+  },
+  "ar-lite": {
+   "task": "ocr",
+   "lang": "Arabic",
+   "wave": "wave 2",
+   "pages": 250,
+   "source": "scripts/eval/flash-reread-5924/results-7568/ar/step-t.json",
+   "routes": {
+    "lite": {
+     "served": "served (the stored Flash-Lite text)",
+     "n": 250,
+     "books": 10,
+     "accept": "57/250",
+     "wrong_text_pages": "193/250",
+     "verdicts": {
+      "sound": 16,
+      "flawed": 41,
+      "misleading": 193
+     },
+     "wrong_text_classes": {
+      "O6": "152/250",
+      "O5": "76/250",
+      "O7": "30/250",
+      "O1": "19/250",
+      "O4": "11/250",
+      "O12": "4/250",
+      "T7": "3/250",
+      "I6": "2/250",
+      "O3": "2/250",
+      "O17": "2/250",
+      "O8": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "190/250",
+      "O5": "110/250",
+      "O12": "56/250",
+      "O7": "32/250",
+      "O11": "22/250",
+      "O4": "21/250",
+      "O1": "20/250",
+      "O8": "16/250",
+      "O16": "9/250",
+      "O3": "5/250",
+      "I4": "5/250",
+      "O17": "4/250",
+      "T7": "3/250",
+      "O15": "2/250",
+      "I6": "2/250",
+      "O14": "1/250"
+     },
+     "not_this_leaf": "0/250"
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text; the lite text where unchanged / contain / no-answer",
+     "n": 250,
+     "books": 10,
+     "accept": "206/250",
+     "wrong_text_pages": "44/250",
+     "verdicts": {
+      "sound": 107,
+      "flawed": 99,
+      "misleading": 44
+     },
+     "wrong_text_classes": {
+      "O6": "22/250",
+      "O5": "8/250",
+      "O1": "8/250",
+      "O4": "8/250",
+      "O7": "7/250",
+      "I6": "1/250",
+      "O8": "1/250",
+      "T7": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "93/250",
+      "O8": "36/250",
+      "O5": "29/250",
+      "O12": "24/250",
+      "O7": "12/250",
+      "O1": "8/250",
+      "O16": "8/250",
+      "O4": "8/250",
+      "O15": "4/250",
+      "O11": "4/250",
+      "O3": "1/250",
+      "I6": "1/250",
+      "T7": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "C_outcomes": {
+      "corrected": 213,
+      "unchanged": 18,
+      "contain": 14,
+      "no-answer": 5
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft (a filter-cut reply judged as returned)",
+     "n": 250,
+     "books": 10,
+     "accept": "106/250",
+     "wrong_text_pages": "144/250",
+     "verdicts": {
+      "sound": 49,
+      "flawed": 57,
+      "misleading": 144
+     },
+     "wrong_text_classes": {
+      "O6": "104/250",
+      "O5": "27/250",
+      "O15": "17/250",
+      "O7": "14/250",
+      "I6": "4/250",
+      "T1": "3/250",
+      "O12": "2/250",
+      "O1": "2/250",
+      "O17": "2/250",
+      "O4": "1/250",
+      "O8": "1/250",
+      "I4": "1/250"
+     },
+     "classes_k_of_n": {
+      "O6": "145/250",
+      "O12": "48/250",
+      "O8": "43/250",
+      "O5": "29/250",
+      "O15": "18/250",
+      "O11": "16/250",
+      "O7": "16/250",
+      "I4": "12/250",
+      "O16": "5/250",
+      "O17": "5/250",
+      "I6": "4/250",
+      "O1": "3/250",
+      "D1": "3/250",
+      "T1": "3/250",
+      "O4": "1/250"
+     },
+     "not_this_leaf": "0/250",
+     "filter_cut": "17/250"
+    }
+   }
+  }
+ }
+}

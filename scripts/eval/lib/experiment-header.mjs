@@ -43,7 +43,7 @@ export const STAGES = ['ocr', 'translation', 'metadata', 'image', 'pipeline'];
 // `none` is for an entry that measured nothing: a plan, a census, a repair log.
 export const MEASURES = ['accuracy', 'agreement', 'stability', 'preference', 'judged', 'judged_vs_reference', 'none'];
 export const STATUSES = ['adopted', 'rejected', 'undecided', 'superseded', 'informational'];
-export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'superseded_by', 'issue'];
+export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'superseded_by', 'issue', 'router_evidence'];
 const REQUIRED = ['stage', 'measure', 'verdict', 'status'];
 const LISTS = ['languages', 'scripts', 'canons'];
 
@@ -54,6 +54,22 @@ export function canonIds() {
   if (!files.length) return null;
   const j = JSON.parse(fs.readFileSync(path.join(dir, files[files.length - 1]), 'utf8'));
   return new Set([...(j.corpora || []).map((c) => c.id), ...(j.traditions || []).map((t) => t.id)]);
+}
+
+/** The router table's cell ids (scripts/eval/estimator/router-table/rules.json), or null when the file is absent. */
+export function routerCellIds() {
+  const f = path.join(HERE, '..', 'estimator', 'router-table', 'rules.json');
+  if (!fs.existsSync(f)) return null;
+  return new Set((JSON.parse(fs.readFileSync(f, 'utf8')).cells || []).map((c) => c.id));
+}
+
+/**
+ * A judged OCR or translation result is evidence the router must see (#7263): before 2026-10-28 hundreds of judged
+ * tests lived only in write-ups, and the router table decided from four test sets. A NEW entry like that names the
+ * router-table cells it added evidence to, or says why it added none.
+ */
+export function needsRouterEvidence(h) {
+  return ['ocr', 'translation'].includes(h.stage) && asList(h.measure).some((m) => m === 'judged' || m === 'judged_vs_reference');
 }
 
 /** Split a file into { header (raw text or null), body }. The body is everything after the closing `---`. */
@@ -136,6 +152,12 @@ export function validateHeader(h, ctx = {}) {
   for (const k of ['n_books', 'n_pages']) if (h[k] != null && !(Number.isInteger(h[k]) && h[k] >= 0)) p.push(`'${k}' must be a whole number or null`);
   if (typeof h.verdict === 'string' && /\n/.test(h.verdict)) p.push('verdict must be one line');
   for (const i of asList(h.issue)) if (!(Number.isInteger(i) && i > 0)) p.push(`issue '${i}' must be an issue number`);
+  if (h.router_evidence != null) {
+    if (typeof h.router_evidence === 'string') {
+      if (!/^none\s+[—-]+\s*\S/.test(h.router_evidence)) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
+    } else if (!Array.isArray(h.router_evidence) || !h.router_evidence.length) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
+    else if (ctx.routerCells) for (const c of h.router_evidence) if (!ctx.routerCells.has(c)) p.push(`router_evidence cell '${c}' is not a cell in scripts/eval/estimator/router-table/rules.json`);
+  }
   if (h.status === 'superseded' && !h.superseded_by) p.push("status 'superseded' needs superseded_by: <file>");
   if (h.superseded_by != null) {
     if (h.status !== 'superseded') p.push("superseded_by is set but status is not 'superseded'");

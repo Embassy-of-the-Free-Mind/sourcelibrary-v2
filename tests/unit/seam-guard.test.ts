@@ -6,13 +6,15 @@
  *  - joinsToCheck: the join before and after the written page, only with an eligible, non-stale neighbour that was
  *    already there at the write (a replay hides neighbours written later).
  *  - perBookSample is seeded by the book's rank.
+ *  - The held-book sample (#7118): a seeded share of held-book writes is checked on agy only, dry whatever the mode,
+ *    with rows tagged `held` and reported apart.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, it, expect, afterEach } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { guardMode, runSeamGuard, seamGuardAfterWrite, joinsToCheck, claudeGate, claudeCountToday, guardReport, applyScope } from '../../scripts/maintenance/seam-repair-6742/guard.mjs';
+import { guardMode, runSeamGuard, seamGuardAfterWrite, joinsToCheck, claudeGate, claudeCountToday, guardReport, applyScope, heldSampled, heldSampleRate, HELD_SAMPLE } from '../../scripts/maintenance/seam-repair-6742/guard.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { seamGuardOn } from '../../scripts/lib/translate-core.mjs';
@@ -218,7 +220,7 @@ describe('the Sonnet fallback (#7118)', () => {
   it('records a held book as a write seen, and checks nothing', async () => {
     out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-held-'));
     const d = { collection: (name: string) => name === 'books' ? { findOne: async () => ({ id: 'b', language: 'Latin', pipeline_auto: { hold: { reason: 'x' } } }) } : { find: () => { throw new Error('no page read for a held book'); } } };
-    const t = await seamGuardAfterWrite(d, { page: pg(5), mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn: gemini, geminiFn: gemini, agyOpenFn: () => false });
+    const t = await seamGuardAfterWrite(d, { page: pg(5), mode: 'dry', out, env: { SEAM_GUARD_HELD_SAMPLE: '0' }, usageFn: okUsage, sonnetFn: gemini, geminiFn: gemini, agyOpenFn: () => false });
     expect(t.skipped).toBe('book-held-or-missing');
     expect(t.error).toBeUndefined();
     expect(guardReport({ out }).writeSkips).toEqual({ 'book-held-or-missing': 1 });
@@ -268,3 +270,69 @@ describe('perBookSample', () => {
     expect(perBookSample([1, 2], 25, 1).size).toBe(2);
   });
 });
+
+describe('the held-book sample (#7118)', () => {
+  const LAT = 'Cum autem natura rerum omnium sit admirabilis, tamen in hac parte maxime elucet, quod ea quae inter se contraria videntur ad unum finem conspirant. ';
+  const EN = 'Since the nature of all things is wonderful, it shines most of all in this part, that the things which seem contrary to one another conspire to a single end. ';
+  const pg = (n: number, tag: string) => ({ id: `h${n}-${tag}`, book_id: 'b', page_number: n, page_type: 'content', ocr: { data: LAT.repeat(4) + `Pagina ${n}.` },
+    translation: { data: EN.repeat(4) + `Page ${n} ${tag}.`, source: 'ai', model: 'gemini-3.1-flash-lite', updated_at: new Date('2026-10-16T01:00:00Z') } });
+  const heldDb = (rows: unknown[], updates: unknown[] = []) => ({ collection: (name: string) => name === 'books'
+    ? { findOne: async () => ({ id: 'b', language: 'Latin', visible: false, pages_count: 9, pipeline_auto: { hold: { reason: 'x' } } }) }
+    : { find: () => ({ toArray: async () => rows }), updateOne: async (...a: unknown[]) => { updates.push(a); } } });
+  const okUsage = () => ({ email: 'x', weekly: 20, session: 5, checked_at: '' });
+  const noSonnet = async () => { throw new Error('a held book never goes to Claude'); };
+  // the duplication repair the guard accepts (edge-placed, nothing lost), on page 5's tail
+  const dupFn = (tag: string) => async (pk: { id: string; p: number }[]) => ({ byId: new Map(pk.map(it => [it.id, it.p === 5
+    ? { label: 'catchword', labels: ['catchword'], severity: 'major', repair: { tail_old: `Page 5 ${tag}.`, tail_new: '', head_old: '', head_new: '' } } : { label: 'ok' }])), r: { secs: 1, cls: null, calls: 1 } });
+  // a page id in the sample and one out of it, at the default rate (the sample is a hash of the id)
+  const ids = Array.from({ length: 400 }, (_, i) => `h5-${i}`);
+  const inId = ids.find(id => heldSampled(id, HELD_SAMPLE))!, outId = ids.find(id => !heldSampled(id, HELD_SAMPLE))!;
+  let out = '';
+  afterEach(() => { if (out) fs.rmSync(out, { recursive: true, force: true }); out = ''; });
+
+  it('the sample is seeded by page id, near its rate, and off at 0', () => {
+    expect(heldSampleRate({})).toBe(HELD_SAMPLE);
+    expect(heldSampleRate({ SEAM_GUARD_HELD_SAMPLE: '0.2' })).toBe(0.2);
+    expect(heldSampleRate({ SEAM_GUARD_HELD_SAMPLE: 'x' })).toBe(HELD_SAMPLE);
+    const n = Array.from({ length: 20000 }, (_, i) => `p${i}`).filter(id => heldSampled(id, 0.1)).length;
+    expect(n).toBeGreaterThan(1800); expect(n).toBeLessThan(2200);
+    expect(heldSampled(inId, HELD_SAMPLE)).toBe(heldSampled(inId, HELD_SAMPLE));
+    expect(ids.some(id => heldSampled(id, 0))).toBe(false);
+  });
+
+  it('checks a sampled held write on agy, dry in apply mode, tags its rows held, and reports them apart', async () => {
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-hs-'));
+    const tag = inId.split('-')[1];
+    const rows = [pg(4, tag), { ...pg(5, tag), id: inId }, pg(6, tag)];
+    const updates: unknown[] = [];
+    const t = await seamGuardAfterWrite(heldDb(rows, updates), { page: rows[1], mode: 'apply', out, env: {}, usageFn: okUsage, sonnetFn: noSonnet, geminiFn: dupFn(tag), agyOpenFn: () => true });
+    expect(t.error).toBeUndefined();
+    expect(t.held).toBe(true);
+    expect(t.mode).toBe('dry');
+    expect(t.skipped).toBeNull();
+    expect(t.arms).toEqual({ gemini: 2 });
+    expect(t.accepted).toBe(1);
+    expect(t.write).toBeNull();
+    expect(updates).toEqual([]);
+    const log = fs.readFileSync(path.join(out, 'guard.jsonl'), 'utf8').trim().split('\n').map(l => JSON.parse(l));
+    expect(log.every(r => r.held === true && r.mode === 'dry')).toBe(true);
+    const rep = guardReport({ out });
+    expect(rep.joinsChecked).toBe(0);   // the public rates do not carry the held sample
+    expect(rep.held).toMatchObject({ writesSampled: 1, joinsChecked: 2, labelled: 2, defective: 1, shareDefective: 0.5, majors: 1 });
+  });
+
+  it('a held write out of the sample is skipped as before, and a sampled one never falls to Sonnet when agy is shut', async () => {
+    out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'seam-guard-hs2-'));
+    const no = async () => { throw new Error('no model call'); };
+    const t0 = await seamGuardAfterWrite(heldDb([]), { page: { ...pg(5, 'o'), id: outId }, mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn: no, geminiFn: no, agyOpenFn: () => true });
+    expect(t0.skipped).toBe('book-held-or-missing');
+    const tag = inId.split('-')[1];
+    const rows = [pg(4, tag + 'L'), { ...pg(5, tag + 'L'), id: inId }, pg(6, tag + 'L')];
+    const t1 = await seamGuardAfterWrite(heldDb(rows), { page: rows[1], mode: 'dry', out, env: {}, usageFn: okUsage, sonnetFn: noSonnet, geminiFn: no, agyOpenFn: () => false });
+    expect(t1.error).toBeUndefined();
+    expect(t1.skipped).toBe('agy-locked+held-agy-only');
+    expect(t1.claudeCalls).toBeUndefined();
+    expect(claudeCountToday(out)).toBe(0);
+  });
+});
+

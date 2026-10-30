@@ -62,7 +62,7 @@ function unescapeHtml(s) {
 
 async function scrape(handle) {
   const url = `${FRAG}/handle/10024/${handle}`;
-  const html = await (await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' } })).text();
+  const html = await (await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } })).text();
   const meta = (name) => [...html.matchAll(new RegExp(`<meta name="${name}"[^>]*content="([^"]*)"`, 'g'))].map(m => unescapeHtml(m[1]));
   const title = (meta('DC.title')[0] || `Fragmenta 10024/${handle}`).trim();
   const desc = meta('DC.description');
@@ -87,7 +87,7 @@ async function scrape(handle) {
 
 async function rehost(handle, signum, leaf) {
   const tifUrl = `${FRAG}/bitstream/handle/10024/${handle}/${leaf.file}.tif?sequence=${leaf.seq}&isAllowed=y`;
-  const res = await fetch(tifUrl, { headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' } });
+  const res = await fetch(tifUrl, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
   if (!res.ok) throw new Error(`fetch ${leaf.file} → ${res.status}`);
   const tif = Buffer.from(await res.arrayBuffer());
   const full = await sharp(tif).rotate().resize({ width: 2200, height: 2200, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();

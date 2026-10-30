@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Heart, BookOpen, FileText, ArrowRight, Loader2 } from 'lucide-react';
 import { likes as likesApi } from '@/lib/api-client';
 import { useIdentity } from '@/hooks/useIdentity';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
@@ -62,6 +63,8 @@ const ACTION_BTN_STYLE = {
 export default function SavePanel({ page, book, url }: SavePanelProps) {
   const identity = useIdentity();
   const t = getReaderStrings(useLocale()).save;
+  // /favorites has no embed route: inside a partner frame the saving works, the list link is left out.
+  const isEmbedded = useIsEmbedded();
 
   const [pageLike, setPageLike] = useState<LikeState>({ liked: false, count: 0 });
   const [bookLike, setBookLike] = useState<LikeState>({ liked: false, count: 0 });
@@ -193,14 +196,18 @@ export default function SavePanel({ page, book, url }: SavePanelProps) {
         <p className="px-4 pt-2 font-sans text-[12px]" style={{ color: 'var(--status-error)' }}>{error}</p>
       )}
 
-      <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.yourLibrary}</CapsLabel>
-      <Link href="/favorites" className={ROW} style={{ borderColor: 'var(--border-light)' }}>
-        <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
-          <FileText size={16} style={{ color: 'var(--text-muted)' }} />
-          {t.everythingSaved}
-        </span>
-        <ArrowRight size={14} style={{ color: 'var(--text-faint)' }} />
-      </Link>
+      {!isEmbedded && (
+        <>
+          <CapsLabel className="block px-4 pt-5 pb-2" style={{ color: 'var(--text-faint)' }}>{t.yourLibrary}</CapsLabel>
+          <Link href="/favorites" className={ROW} style={{ borderColor: 'var(--border-light)' }}>
+            <span className="flex items-center gap-2.5 font-sans text-[13.5px]" style={{ color: 'var(--text-primary)' }}>
+              <FileText size={16} style={{ color: 'var(--text-muted)' }} />
+              {t.everythingSaved}
+            </span>
+            <ArrowRight size={14} style={{ color: 'var(--text-faint)' }} />
+          </Link>
+        </>
+      )}
     </div>
   );
 }

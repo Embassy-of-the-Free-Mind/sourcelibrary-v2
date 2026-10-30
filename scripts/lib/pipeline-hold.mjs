@@ -36,6 +36,25 @@ export const HOLD_SWEEP = 'pipeline-hold-2026-09';
 export const NOT_HELD = { 'pipeline_auto.hold': { $exists: false } };
 
 /**
+ * SPLIT BEFORE READ (#7605). A book flagged `needs_splitting` and not yet `split_completed` serves two leaves (or a
+ * pecha frame of several) per page image. No OCR or translation lane may read it: whole-spread reads drop text at the
+ * seam (#6099), invent lines between leaves (#6948) and cannot be cited by page (#5771). In the 14 days to
+ * 2026-10-28 five writers did anyway (paddle-print 2,488 pages, Phase 2's spread prompt 1,149, cli-ocr 368,
+ * Yigdzin 753, cli-translate 177). The splitters (split-book, split-pecha) are the only readers of these books.
+ * A page that is already a leaf (cut from a spread, or cropped) is not refused, whatever the book flag says.
+ */
+export const UNSPLIT_SPREAD = Object.freeze({ needs_splitting: true, split_completed: { $ne: true } });
+/** Spread into a book selector so it cannot pick an unsplit spread book. Uses `$nor`, so it composes with `$or`. */
+export const NOT_UNSPLIT_SPREAD = Object.freeze({ $nor: [{ needs_splitting: true, split_completed: { $ne: true } }] });
+export const isUnsplitSpread = (book) => book?.needs_splitting === true && book?.split_completed !== true;
+export const isLeafPage = (page) => !!(page?.split_from_spread || page?.split_from_pecha || page?.cropped_photo || page?.crop);
+/** Why this page may not be read (a sentence), or null. `book` needs `needs_splitting` and `split_completed`. */
+export function unsplitReadRefusal(book, page) {
+  if (!isUnsplitSpread(book) || isLeafPage(page)) return null;
+  return 'book needs_splitting and is not split: split it first (split-book.mjs --gutter-only / split-pecha.mjs), #7605';
+}
+
+/**
  * ARCHIVING IGNORES THE HOLD (#5448 step 3). A hold stops paid OCR and translation; fetching a
  * book's page images to R2 costs storage only, and a held book still needs its images preserved
  * (preservation-policy.md). Containment holds are about TEXT, not images. So the archivers never

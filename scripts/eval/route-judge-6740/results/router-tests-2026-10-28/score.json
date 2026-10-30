@@ -1,0 +1,2601 @@
+{
+ "generated_at": "2026-10-28T11:55:36.700Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 283,
+  "unparsed": 0,
+  "list_usd_equiv": 19.72
+ },
+ "meter": null,
+ "cells": {
+  "zh-dice": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "books": 10985,
+    "books_walked": 39,
+    "held_or_hidden": 0,
+    "no_eligible_page": 9,
+    "rule": "paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han",
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "paddle>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "paddle>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "19/29",
+     "accept_rate": 0.66,
+     "accept_ci": {
+      "ci95": [
+       0.483,
+       0.828
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "9/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0.138,
+       0.483
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O5": "4/29",
+      "O6": "3/29",
+      "O4": "1/29",
+      "O1": "1/29",
+      "O8": "1/29"
+     },
+     "classes_k_of_n": {
+      "O11": "9/29",
+      "O6": "8/29",
+      "O5": "6/29",
+      "O12": "4/29",
+      "O8": "3/29",
+      "O4": "2/29",
+      "O7": "2/29",
+      "O14": "1/29",
+      "E2": "1/29",
+      "O1": "1/29",
+      "D1": "1/29"
+     },
+     "fidelity_mean": 4.31,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "6a3c655f39b4508b04e2e4a7:103",
+       "quote": "語曰\n東",
+       "severity": "wrong_text",
+       "what": "small-print note after 語曰 omitted: 炬是泰養即筠並小字也"
+      },
+      {
+       "page": "6a3c617a879008ba7e15e724:57",
+       "quote": "物象朝\n簪裾溢上京",
+       "severity": "wrong_text",
+       "what": "The page has 物象朝丨丨 (that is, 高殿) before 簪裾溢上京; the candidate drops the repeat mark, so the line from Yang Juyuan's poem is cut short."
+      },
+      {
+       "page": "6a3cbe91f9474f825c1638ac:29",
+       "quote": "雲外濕勝地",
+       "severity": "wrong_text",
+       "what": "the 丨丨 that closes the 石堂煙 quotation (top of the last column, before 沈香煙) is dropped, which truncates the quote"
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000139,
+      "agy_share": 0.00000343
+     },
+     "counts": true,
+     "contain_answers": "0/29",
+     "contain_reasons": [],
+     "unchanged": "0/29",
+     "skipped": 1,
+     "name_check": {
+      "accepted": 19,
+      "checked": 18,
+      "unchecked": 1,
+      "with_name_error": 3,
+      "accept_after_name_check": "15/29",
+      "accept_after_name_check_strict": "15/29",
+      "rule": "accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count",
+      "errors": [
+       {
+        "page": "6a3c637993327f06e8350792:37",
+        "names": [
+         {
+          "kind": "person",
+          "image": "丁文杲",
+          "reference": "丁文杲",
+          "candidate": "丁文果"
+         }
+        ]
+       },
+       {
+        "page": "6a3c6b6239b4508b04e4380b:109",
+        "names": [
+         {
+          "kind": "person",
+          "image": "楚懐",
+          "reference": "楚懐",
+          "candidate": "楚懷"
+         },
+         {
+          "kind": "place",
+          "image": "武闗",
+          "reference": "武闗",
+          "candidate": "武關"
+         }
+        ]
+       },
+       {
+        "page": "6a3c72f201fe4f593c1e458a:29",
+        "names": [
+         {
+          "kind": "person",
+          "image": "榮駕鵞",
+          "reference": "榮駕鵞",
+          "candidate": "榮駕鵝"
+         }
+        ]
+       }
+      ],
+      "errors_strict": [
+       {
+        "page": "6a3c637993327f06e8350792:37",
+        "names": [
+         {
+          "kind": "person",
+          "image": "丁文杲",
+          "reference": "丁文杲",
+          "candidate": "丁文果"
+         },
+         {
+          "kind": "person",
+          "image": "徐恵",
+          "reference": "徐恵",
+          "candidate": "徐惠"
+         }
+        ]
+       },
+       {
+        "page": "6a3c6b6239b4508b04e4380b:109",
+        "names": [
+         {
+          "kind": "person",
+          "image": "楚懐",
+          "reference": "楚懐",
+          "candidate": "楚懷"
+         },
+         {
+          "kind": "place",
+          "image": "武闗",
+          "reference": "武闗",
+          "candidate": "武關"
+         }
+        ]
+       },
+       {
+        "page": "6a3c72f201fe4f593c1e458a:29",
+        "names": [
+         {
+          "kind": "person",
+          "image": "榮駕鵞",
+          "reference": "榮駕鵞",
+          "candidate": "榮駕鵝"
+         }
+        ]
+       }
+      ]
+     }
+    }
+   },
+   "made_worse": {
+    "paddle -> paddle>agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   },
+   "reference": {
+    "name": "Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)",
+    "align_status": {
+     "aligned:own": 30
+    },
+    "leaf_misplaced": 1,
+    "given_to_judge": true,
+    "per_route": {
+     "paddle>agy-flash-low": {
+      "n": 28,
+      "mean": 0.0997,
+      "ci95": [
+       0.067,
+       0.14
+      ]
+     }
+    },
+    "pages_with_ref": 28,
+    "pair_min_gap": 0.01,
+    "ordered_pairs": 0,
+    "judge_agrees": 0,
+    "judge_disagrees": 0,
+    "judge_ties": 0,
+    "agreement": null,
+    "disagreements": [],
+    "ref_mean_accepted": 0.0761,
+    "ref_mean_not_accepted": 0.1423
+   }
+  },
+  "latin-gpu": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "pages": 225,
+    "books": 9,
+    "note": "the pilot's pages (2026-10-25); #5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out",
+    "pilot_pages": 30,
+    "still_lite": 30,
+    "pages_from": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json"
+   },
+   "controls": {
+    "gpu>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "gpu>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 26,
+     "books": 9,
+     "accept": "22/26",
+     "accept_rate": 0.85,
+     "accept_ci": {
+      "ci95": [
+       0.708,
+       0.963
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "2/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.192
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O6": "2/26"
+     },
+     "classes_k_of_n": {
+      "O6": "11/26",
+      "O8": "9/26",
+      "O12": "7/26",
+      "E2": "6/26",
+      "T6": "4/26",
+      "O10": "2/26",
+      "D1": "2/26",
+      "O5": "2/26",
+      "O11": "1/26",
+      "O7": "1/26"
+     },
+     "fidelity_mean": 4.27,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69dc557bcb6f7429748b8d13:85",
+       "quote": "didicit ab illis mores et prudentum philosophiam",
+       "severity": "wrong_text",
+       "what": "page reads 'prudētū ꝯsilia' = prudentum consilia, not philosophiam"
+      },
+      {
+       "page": "69bd9d726120d54bd0376d18:256",
+       "quote": "vnde potest eius augere requi-\nsitum",
+       "severity": "wrong_text",
+       "what": "page reads 'requi-/rit exitum'; candidate turns it into one word, 'requisitum', and the word 'exitum' is lost"
+      },
+      {
+       "page": "69b638be1c1c21a373839d77:294",
+       "quote": "occurrerunt obuia",
+       "severity": "cosmetic",
+       "what": "The page has 'obuiã', which expands to 'obuiam'; the candidate drops the final m."
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "agy_share": 0.00000266
+     },
+     "counts": true,
+     "contain_answers": "0/26",
+     "contain_reasons": [],
+     "unchanged": "0/26",
+     "skipped": 4
+    }
+   },
+   "made_worse": {
+    "gpu -> gpu>agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  },
+  "hebrew-flash3": {
+   "task": "ocr",
+   "lang": "Hebrew",
+   "frame": {
+    "books": 266,
+    "books_walked": 34,
+    "held_or_hidden": 0,
+    "no_eligible_page": 4,
+    "rule": "visible Hebrew books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "7/30",
+     "accept_rate": 0.23,
+     "accept_ci": {
+      "ci95": [
+       0.1,
+       0.4
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "22/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O1": "15/30",
+      "O6": "10/30",
+      "O5": "8/30",
+      "O3": "6/30",
+      "O7": "5/30",
+      "O12": "4/30",
+      "O2": "2/30",
+      "O4": "2/30",
+      "O17": "1/30",
+      "T8": "1/30",
+      "I4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "17/30",
+      "O1": "15/30",
+      "O16": "14/30",
+      "O5": "10/30",
+      "O12": "9/30",
+      "E2": "9/30",
+      "O7": "8/30",
+      "O11": "6/30",
+      "O3": "6/30",
+      "O17": "5/30",
+      "O8": "4/30",
+      "I3": "3/30",
+      "O2": "3/30",
+      "O14": "2/30",
+      "I4": "2/30",
+      "O4": "2/30",
+      "T8": "1/30",
+      "T10": "1/30",
+      "D1": "1/30",
+      "T6": "1/30",
+      "O10": "1/30"
+     },
+     "fidelity_mean": 2.6,
+     "commonest": "O1",
+     "examples": [
+      {
+       "page": "69b3e5fe304c1c6b3950aad6:103",
+       "quote": "ואומר בזה ואומר",
+       "severity": "wrong_text",
+       "what": "These words are not on the page."
+      },
+      {
+       "page": "69c1bba28522835be8460588:2",
+       "quote": "بسم الله الرحمن الرحيم\nوصلى الله على سيدنا محمد وعلى اله وصحبه وسلم",
+       "severity": "wrong_text",
+       "what": "An Islamic opening formula that is not on the leaf; the top block is faint Hebrew cursive."
+      },
+      {
+       "page": "69c1bba28522835be8460588:2",
+       "quote": "<unclear>عقرب</unclear>",
+       "severity": "wrong_text",
+       "what": "The Arabic word 'scorpion' is invented; it is not on the page."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0147
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 28,
+     "books": 28,
+     "accept": "7/28",
+     "accept_rate": 0.25,
+     "accept_ci": {
+      "ci95": [
+       0.107,
+       0.429
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_pages": "18/28",
+     "wrong_text_ci": {
+      "ci95": [
+       0.464,
+       0.821
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_classes": {
+      "O6": "10/28",
+      "O1": "10/28",
+      "O5": "6/28",
+      "O12": "4/28",
+      "I3": "2/28",
+      "O18": "1/28",
+      "O8": "1/28",
+      "O3": "1/28",
+      "O4": "1/28",
+      "O7": "1/28"
+     },
+     "classes_k_of_n": {
+      "O6": "17/28",
+      "O16": "11/28",
+      "O5": "11/28",
+      "O12": "10/28",
+      "O1": "10/28",
+      "O11": "7/28",
+      "O7": "5/28",
+      "I3": "4/28",
+      "T6": "4/28",
+      "E2": "2/28",
+      "O3": "2/28",
+      "O8": "2/28",
+      "O18": "1/28",
+      "D1": "1/28",
+      "O14": "1/28",
+      "O17": "1/28",
+      "O15": "1/28",
+      "T10": "1/28",
+      "O4": "1/28",
+      "O10": "1/28"
+     },
+     "fidelity_mean": 2.79,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b3e5fe304c1c6b3950aad6:103",
+       "quote": "הינם במין מהו שהקוטר <gloss>אינו</gloss> משותף לצלע וקוטר",
+       "severity": "wrong_text",
+       "what": "page reads 'בזמן כמו שהקוטר … משותף לצלע והזמן'; 'במין מהו' and 'וקוטר' are misreads"
+      },
+      {
+       "page": "69b3e5fe304c1c6b3950aad6:103",
+       "quote": "אשר יכללם המין הם הדברים הנמצאים לכל א'",
+       "severity": "wrong_text",
+       "what": "page has 'יכללם הזמן הם הדברים המציאותיים ר\"ל'"
+      },
+      {
+       "page": "69b3e5fe304c1c6b3950aad6:103",
+       "quote": "שהוא במין שהזמן משותף",
+       "severity": "wrong_text",
+       "what": "page has 'שהוא בזמן בענין שהזמן'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0137,
+      "agy_share": 0.000009
+     },
+     "counts": true,
+     "contain_answers": "2/30",
+     "contain_reasons": [
+      "CONTAIN: The draft transcribes a medal of Byzantine Emperor John VIII Palaiologos with a Greek inscription, whereas this image shows an ancient coin or medallion depicting a radiate bust with Hebrew o",
+      "CONTAIN: The draft transcribes the biblical Book of Ruth (Chapter 1) in printed Hebrew, whereas the image is a manuscript written in cursive Sephardic/Judeo-Arabic or Judeo-Spanish/Hebrew script and d"
+     ],
+     "unchanged": "0/28",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 28,
+     "identical_text": 0,
+     "fidelity_diff": 0.07,
+     "fidelity_diff_ci": [
+      -0.107,
+      0.286
+     ],
+     "worse": "3/28",
+     "better": "5/28",
+     "accept_lost": "1/28",
+     "accept_gained": "1/28",
+     "wrong_text_added": "1/28",
+     "worse_pages": [
+      {
+       "page": "69b4cd3dd5b6c3815e1a504b:291",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The left page (folio לא) is transcribed faithfully. The whole right-hand page of the spread, with the end of the Shoftim haftarah and the start of the Ki Tavo haftarah, is missing, and a notice says so."
+      },
+      {
+       "page": "69c1bbfb8522835be8460ff9:50",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false",
+       "note": "The text's layout follows the page, but many words in the Sephardic cursive are guessed as plausible Hebrew rather than read, so the candidate cannot be trusted word for word against the image."
+      },
+      {
+       "page": "69c1bc5f8522835be84622f6:1",
+       "draft": 2,
+       "after": 1,
+       "accept": "false->false",
+       "note": "The letterhead and English note roughly match the page, but the Hebrew deed beside the image is invented: a different, shorter text with a made-up date and made-up signatories, while most of the page's roughly 40 handwritten lines are missing."
+      }
+     ]
+    }
+   }
+  },
+  "arabic-flash3": {
+   "task": "ocr",
+   "lang": "Arabic",
+   "frame": {
+    "books": 261,
+    "books_walked": 78,
+    "held_or_hidden": 0,
+    "no_eligible_page": 48,
+    "rule": "visible Arabic books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "10/30",
+     "accept_rate": 0.33,
+     "accept_ci": {
+      "ci95": [
+       0.167,
+       0.5
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "17/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.4,
+       0.733
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "11/30",
+      "O3": "4/30",
+      "O1": "4/30",
+      "O12": "2/30",
+      "O5": "1/30",
+      "O8": "1/30",
+      "I6": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "O12": "8/30",
+      "O16": "8/30",
+      "O8": "5/30",
+      "D1": "4/30",
+      "O3": "4/30",
+      "O7": "4/30",
+      "O11": "4/30",
+      "O1": "4/30",
+      "E2": "3/30",
+      "O5": "3/30",
+      "I3": "2/30",
+      "I6": "1/30"
+     },
+     "fidelity_mean": 3.5,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b3e5db304c1c6b3950a6a1:1",
+       "quote": "البطريق من هذه من الهياكل التي ودعت احدا فيها اسرارها",
+       "severity": "wrong_text",
+       "what": "Garbled line. The page reads roughly 'لم ادع هيكلا من الهياكل التي اودعت الحكما فيها اسرارها'."
+      },
+      {
+       "page": "69b3e5db304c1c6b3950a6a1:1",
+       "quote": "والاعظم من عظما الرهبان الذين لطفوا لمعرفتها الالهية وقصده",
+       "severity": "wrong_text",
+       "what": "Misread. The sense on the page is 'nor any great one of the monks... but I went to him'."
+      },
+      {
+       "page": "69b3e5db304c1c6b3950a6a1:1",
+       "quote": "على الممالك بتوفيق من امتثالهم على الممالكة",
+       "severity": "wrong_text",
+       "what": "Garbled reading of the line about their boldness and their ambition to rule."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0103
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 29,
+     "books": 29,
+     "accept": "13/29",
+     "accept_rate": 0.45,
+     "accept_ci": {
+      "ci95": [
+       0.276,
+       0.621
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_pages": "13/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0.276,
+       0.621
+      ],
+      "unit": "book",
+      "units": 29
+     },
+     "wrong_text_classes": {
+      "O6": "10/29",
+      "O1": "4/29",
+      "O3": "2/29",
+      "O12": "1/29",
+      "O5": "1/29",
+      "O8": "1/29"
+     },
+     "classes_k_of_n": {
+      "O6": "16/29",
+      "O16": "9/29",
+      "O8": "8/29",
+      "O12": "8/29",
+      "E2": "4/29",
+      "O1": "4/29",
+      "O5": "3/29",
+      "I3": "2/29",
+      "O3": "2/29",
+      "O7": "2/29",
+      "D1": "2/29",
+      "O10": "1/29",
+      "O11": "1/29"
+     },
+     "fidelity_mean": 3.72,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69c1b7acfe4b8f25b9200ccf:505",
+       "quote": "واجتماعهم غير منتفع به",
+       "severity": "wrong_text",
+       "what": "page reads واحتجاجهم (their argument), not واجتماعهم (their coming together)"
+      },
+      {
+       "page": "69b3e5db304c1c6b3950a6a1:1",
+       "quote": "وهذا اعن كتاب العلما في قديم الايام يضنون به على",
+       "severity": "wrong_text",
+       "what": "garbled; page reads وهذا الكتاب كان العلما ... يضنون به على غير اهله"
+      },
+      {
+       "page": "69b3e5db304c1c6b3950a6a1:1",
+       "quote": "ودعت احكاما فيها اسرارها الالهياه",
+       "severity": "wrong_text",
+       "what": "page reads اودعت الحكما فيها اسرارها الا اتاه"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00763,
+      "agy_share": 0.00000502
+     },
+     "counts": true,
+     "contain_answers": "1/30",
+     "contain_reasons": [
+      "CONTAIN: The draft is not this leaf's text (it transcribes a page from Surah al-An'am, whereas this image shows a page from Surah al-A'raf, page 457)."
+     ],
+     "unchanged": "3/29",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 29,
+     "identical_text": 3,
+     "fidelity_diff": 0.14,
+     "fidelity_diff_ci": [
+      -0.069,
+      0.379
+     ],
+     "worse": "4/29",
+     "better": "6/29",
+     "accept_lost": "0/29",
+     "accept_gained": "3/29",
+     "wrong_text_added": "1/29",
+     "worse_pages": [
+      {
+       "page": "69c1b7acfe4b8f25b9200ccf:505",
+       "draft": 4,
+       "after": 4,
+       "accept": "false->false",
+       "note": "The transcription is complete and in the right order, but a few words are misread: most importantly واحتجاجهم (their argument) is given as واجتماعهم (their coming together), and the phrase كيفية تصور هذا is garbled."
+      },
+      {
+       "page": "6a3c5e4f40c88a541d8e0d0e:14",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a complete, faithful transcription of the English Heart Sutra page (page 五). It runs from 'from] the realm of sight' to the mantra 'Gate, gate…Svāhā !', and the only slips are diacritics and italics."
+      },
+      {
+       "page": "6953dd3e77f38f6761be722c:95",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The prose matches the page closely. But on two lines (where the page prints أينما through ...الله) the print shows broken, overlapping Quranic glyphs, and the candidate quietly swaps in clean verses that aren't on the page."
+      },
+      {
+       "page": "6a2032a318654bf8e1903330:15",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "Both pages of the spread (6 and 7) are transcribed in full and in order, but a few misreads change the meaning, most notably 'ليفوز' where the page says 'لايفوز', and 'وجذب' where it says 'وجنّب'."
+      }
+     ]
+    }
+   }
+  },
+  "chinese-flash3": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "books": 1441,
+    "books_walked": 58,
+    "held_or_hidden": 0,
+    "no_eligible_page": 28,
+    "rule": "visible Chinese books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "3flash": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "7/30",
+     "accept_rate": 0.23,
+     "accept_ci": {
+      "ci95": [
+       0.1,
+       0.4
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "21/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.533,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "17/30",
+      "O5": "12/30",
+      "E2": "4/30",
+      "T4": "3/30",
+      "O1": "3/30",
+      "O12": "2/30",
+      "O8": "2/30",
+      "O7": "1/30",
+      "T5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "23/30",
+      "O5": "15/30",
+      "O11": "10/30",
+      "O16": "9/30",
+      "O8": "9/30",
+      "E2": "9/30",
+      "O12": "6/30",
+      "O7": "4/30",
+      "T4": "3/30",
+      "O1": "3/30",
+      "D1": "1/30",
+      "O17": "1/30",
+      "O15": "1/30",
+      "T5": "1/30",
+      "I6": "1/30"
+     },
+     "fidelity_mean": 3.13,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "視之如望之如星",
+       "severity": "wrong_text",
+       "what": "Page reads 視之如｜｜望之如｜里; the 里 is misread as 星 and the repeat marks are dropped"
+      },
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "郭氏為王",
+       "severity": "wrong_text",
+       "what": "Adds 為王; page reads 郭氏室夜曰晝星"
+      },
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "室夜曰晝室富無匹",
+       "severity": "wrong_text",
+       "what": "Should be 晝星, not 晝室"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "basis": "gemini-3-flash-preview (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0147
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "6/30",
+     "accept_rate": 0.2,
+     "accept_ci": {
+      "ci95": [
+       0.067,
+       0.367
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "22/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "16/30",
+      "O5": "6/30",
+      "O4": "5/30",
+      "E2": "4/30",
+      "O17": "2/30",
+      "O8": "2/30",
+      "O1": "2/30",
+      "O3": "2/30",
+      "O7": "1/30",
+      "O11": "1/30",
+      "O12": "1/30",
+      "T4": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "23/30",
+      "O5": "12/30",
+      "O8": "11/30",
+      "O11": "8/30",
+      "O4": "6/30",
+      "E2": "6/30",
+      "O12": "6/30",
+      "O16": "5/30",
+      "O7": "4/30",
+      "O17": "2/30",
+      "O1": "2/30",
+      "O3": "2/30",
+      "T4": "1/30",
+      "O15": "1/30",
+      "I6": "1/30"
+     },
+     "fidelity_mean": 3.27,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "<gloss>見拾遺記</gloss>",
+       "severity": "wrong_text",
+       "what": "The gloss on the page reads 見上, not 見拾遺記."
+      },
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "郭氏為王 <gloss>王嘉拾遺記太始元年魏帝</gloss>",
+       "severity": "wrong_text",
+       "what": "The headword 爲衣 is missing and the made-up words 為王 stand in its place."
+      },
+      {
+       "page": "6a3c659a39b4508b04e2f0ec:22",
+       "quote": "室夜曰晝星富無匹為王陳留王之歲",
+       "severity": "wrong_text",
+       "what": "日 is misread as 曰. The text has also been reordered and 為王 inserted where the page has 為陳留王 inside the gloss."
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.0171,
+      "agy_share": 0.0000112
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "1/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 30,
+     "identical_text": 3,
+     "fidelity_diff": 0.13,
+     "fidelity_diff_ci": [
+      -0.067,
+      0.333
+     ],
+     "worse": "6/30",
+     "better": "5/30",
+     "accept_lost": "2/30",
+     "accept_gained": "1/30",
+     "wrong_text_added": "3/30",
+     "worse_pages": [
+      {
+       "page": "6a3cf0858642f0445b16526b:23",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "All lines are present and in order, but the final line silently changes the page's 抄 and 豪 to the standard 秒 and 毫, so the transcription does not match the image there."
+      },
+      {
+       "page": "6a3c73cc01fe4f593c1eb765:23",
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "Nearly complete and in order, but the text adds 郜 to 納鼎 and turns the page's 縱辠/罪 into 縱賊."
+      },
+      {
+       "page": "6a3cb7d83dce6cfad7488b0c:20",
+       "draft": 4,
+       "after": 4,
+       "accept": "false->false",
+       "note": "The main text matches the page except for one added 此 in the second line, but the fold title wrongly names a different book (金川學志) instead of 欽定禮記義疏."
+      },
+      {
+       "page": "6a3c6327879008ba7e166554:19",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "All 16 columns are there in the right order, with headwords and the small two-line text placed correctly, but three characters are misread: 潴 as 潛, 諸 as 諮 and 敝 as 敵."
+      },
+      {
+       "page": "69aec898cd78930315cda0fb:18",
+       "draft": 3,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The two half-pages are in reverse order, and the heading 一諸器利益 appears twice even though the page has it only once."
+      },
+      {
+       "page": "6a3c5e7d40c88a541d8e286d:25",
+       "draft": 3,
+       "after": 2,
+       "accept": "false->false"
+      }
+     ]
+    }
+   }
+  },
+  "zh-frame-6871": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "books": 190,
+    "books_walked": 30,
+    "held_or_hidden": 0,
+    "no_eligible_page": 0,
+    "rule": "paddle_zh_guarded_ocr books, visible (their lane holds allowed, no other hold); ocr.pipeline paddle-zh-guarded-2026-10, Paddle text (not the Flash fallback), interior, >= 40 Han"
+   },
+   "controls": {
+    "paddle": {
+     "n": 0,
+     "passed": false,
+     "verdicts": []
+    },
+    "paddle>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "paddle": {
+     "served": "served (the stored draft)",
+     "n": 9,
+     "books": 9,
+     "accept": "5/9",
+     "accept_rate": 0.56,
+     "accept_ci": {
+      "ci95": [
+       0.222,
+       0.889
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "2/9",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.556
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O6": "2/9",
+      "O1": "1/9",
+      "O4": "1/9",
+      "O5": "1/9"
+     },
+     "classes_k_of_n": {
+      "O6": "4/9",
+      "O11": "3/9",
+      "O12": "3/9",
+      "E2": "2/9",
+      "O17": "1/9",
+      "O1": "1/9",
+      "O4": "1/9",
+      "O5": "1/9"
+     },
+     "fidelity_mean": 4.33,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3c770f01fe4f593c1ff7e4:33",
+       "quote": "臣明鼎",
+       "severity": "wrong_text",
+       "what": "The monk's name on the page reads 明昂 (日 over 卬), not 明鼎."
+      },
+      {
+       "page": "6a3c74e301fe4f593c1f3538:44",
+       "quote": "噉",
+       "severity": "wrong_text",
+       "what": "Page has 嗽 in column 心, not 噉"
+      },
+      {
+       "page": "6a3c74e301fe4f593c1f3538:44",
+       "quote": "黜\n任叱\n齧\n釋",
+       "severity": "wrong_text",
+       "what": "The page has 齜 with note 仕叱切齧聲; the candidate gives 黜/釋 instead"
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "basis": "paddleocr-vl-1.6 (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000164
+     },
+     "counts": false,
+     "contain_answers": "0/9",
+     "contain_reasons": [],
+     "unchanged": "0/9",
+     "skipped": 0
+    },
+    "paddle>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 30,
+     "books": 30,
+     "accept": "19/30",
+     "accept_rate": 0.63,
+     "accept_ci": {
+      "ci95": [
+       0.467,
+       0.8
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "9/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.133,
+       0.467
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "8/30",
+      "O8": "1/30",
+      "O5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "11/30",
+      "O11": "7/30",
+      "E2": "5/30",
+      "O8": "5/30",
+      "D1": "4/30",
+      "O12": "2/30",
+      "O7": "2/30",
+      "O1": "1/30",
+      "O16": "1/30",
+      "O15": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 4.27,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6a3ceaf595fcd4556305229e:86",
+       "quote": "棘\n清角\n仉\n蘞\n清變宮\n仉",
+       "severity": "wrong_text",
+       "what": "In the second 笛譜 column, the left-side notation signs beside 棘, 蘞, 蔓 and 域 read as 伬 or 仕 on the leaf. The candidate gives 仉 for all of them."
+      },
+      {
+       "page": "6a3ceaf595fcd4556305229e:86",
+       "quote": "亡\n清變徵\n仉\n此\n清角\n仉\n誰\n清角\n仉\n與\n清變徵\n仉\n獨\n清商\n仉",
+       "severity": "wrong_text",
+       "what": "In the third column, the leaf has 仕 or 伬 beside 亡, 此, 誰, 與 and 獨. The candidate turns them all into 仉."
+      },
+      {
+       "page": "6a3cf02d8642f0445b1632e3:48",
+       "quote": "->𢽽<-",
+       "severity": "wrong_text",
+       "what": "The second heading (the lyric character) is 帳/悵 (巾 or 忄 radical with 長) on the page. 𢽽 is a different character."
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000144,
+      "agy_share": 0.00000355
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "paddle -> paddle>agy-flash-low": {
+     "pairs": 9,
+     "identical_text": 0,
+     "fidelity_diff": 0.33,
+     "fidelity_diff_ci": [
+      0,
+      0.667
+     ],
+     "worse": "0/9",
+     "better": "3/9",
+     "accept_lost": "0/9",
+     "accept_gained": "2/9",
+     "wrong_text_added": "0/9",
+     "worse_pages": []
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5fe304c1c6b3950ab3d",
+   "book_id": "69b3e5fe304c1c6b3950aad6",
+   "page_number": 103,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "הינם במין מהו שהקוטר",
+     "severity": "wrong_text",
+     "what": "The page reads 'הינם בזמן כמו שהקוטר'."
+    },
+    {
+     "class": "O6",
+     "quote": "משותף לצלע וקוטר",
+     "severity": "wrong_text",
+     "what": "The page reads 'לצלע והזמן'."
+    },
+    {
+     "class": "O6",
+     "quote": "יכללם המין הם הדברים הנמצאים לכל א'",
+     "severity": "wrong_text",
+     "what": "The page reads 'יכללם הזמן הם הדברים המצויים ר\"ל'."
+    },
+    {
+     "class": "O6",
+     "quote": "בקצת העצם ויעדרו בקצת העצם ואמנם יאחד",
+     "severity": "wrong_text",
+     "what": "The page reads 'העתים … העתים … יאמר'."
+    },
+    {
+     "class": "O6",
+     "quote": "שהוא במין שהזמן",
+     "severity": "wrong_text",
+     "what": "The page reads 'בזמן'."
+    },
+    {
+     "class": "T8",
+     "quote": "ופי' יעדיף אחד מהם",
+     "severity": "wrong_text",
+     "what": "The page reads 'ולא יעדיף'; the candidate drops the negation."
+    },
+    {
+     "class": "O6",
+     "quote": "יכלה וישכח ולא נאמר בו שהוא יקיף ויספר",
+     "severity": "wrong_text",
+     "what": "The page reads 'יבלה … יחדש ויוסיף'."
+    },
+    {
+     "class": "O6",
+     "quote": "לפני התנועה אשר קנין פרק לה ובזה",
+     "severity": "wrong_text",
+     "what": "The page reads 'מפני התנועה אשר הזמן קרך לה ולזה'."
+    },
+    {
+     "class": "O6",
+     "quote": "מקבוץ",
+     "severity": "wrong_text",
+     "what": "The page reads 'מקביל'."
+    },
+    {
+     "class": "O6",
+     "quote": "ומהלך ומה שיהיה לו",
+     "severity": "wrong_text",
+     "what": "The page reads 'והרגל ולזה היו ק''."
+    },
+    {
+     "class": "O6",
+     "quote": "קצת הקדמות יחסוהו אל החכמה והכתב אל הסכלות אחר שיקנה הניסיון בשכחה",
+     "severity": "wrong_text",
+     "what": "The page reads 'הקדמונים … וקצתם אל הסכלות … הריסותו השכחה'."
+    },
+    {
+     "class": "O12",
+     "quote": "<margin>ואומר שהעתיד במקרה לא במקצת</margin>",
+     "severity": "wrong_text",
+     "what": "This is body text flanking the heading, not a marginal note. The page reads 'ואומר שהעתה יאמר באמת ויאמר במקרה ר\"ל בהנחה'."
+    },
+    {
+     "class": "O1",
+     "quote": "ואומר בזה ואומר",
+     "severity": "wrong_text",
+     "what": "These words are not on the page."
+    },
+    {
+     "class": "O6",
+     "quote": "הוא אשר דבריו קווין ובדיוקו מה שהוא ידביק החולק לו",
+     "severity": "wrong_text",
+     "what": "The page reads 'הוא אשר ידביק הזמן ויבדילהו וזה שהוא ידביק החולף'."
+    },
+    {
+     "class": "O6",
+     "quote": "נפול משותף למה שיבדיל העובר ובין העתיד",
+     "severity": "wrong_text",
+     "what": "The page reads 'גבול משותף להם ויבדיל העובר מן העתיד'."
+    },
+    {
+     "class": "O6",
+     "quote": "כמו מה שיקרא בנאמר לו שהוא ידביק בזמן בקו",
+     "severity": "wrong_text",
+     "what": "The page reads 'שיקרה לנקודה ר\"ל שהיא תדביק הקו בקו'."
+    },
+    {
+     "class": "O6",
+     "quote": "שהנקודה נוספת בפועל והזמן אינו עומד וישכון כן ומהו'",
+     "severity": "wrong_text",
+     "what": "The page reads 'עומדת בפועל ודמות אלה והעתה איננו כן ולזה'."
+    },
+    {
+     "class": "T8",
+     "quote": "הצדדים לא בנושא ובמחובר",
+     "severity": "wrong_text",
+     "what": "The page reads 'ר\"ל בנושא ובמאמר'; the candidate turns 'ר\"ל' into a negation."
+    }
+   ],
+   "note": "Every line is in place and the closing line is right, but almost every line has misread words, two negations are wrong, and the text around the chapter heading is invented and tagged as a marginal note."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bba28522835be846058a",
+   "book_id": "69c1bba28522835be8460588",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O2",
+     "quote": "<language>Arabic</language>",
+     "severity": "wrong_text",
+     "what": "The page is in Hebrew cursive, not Arabic."
+    },
+    {
+     "class": "O1",
+     "quote": "بسم الله الرحمن الرحيم\nوصلى الله على سيدنا محمد وعلى اله وصحبه وسلم",
+     "severity": "wrong_text",
+     "what": "An Islamic opening formula that is not on the leaf; the top block is faint Hebrew cursive."
+    },
+    {
+     "class": "O3",
+     "quote": "تسليماً كثيراً إلى يوم الدين",
+     "severity": "wrong_text",
+     "what": "A stock Arabic formula is supplied where the page has its own Hebrew text."
+    },
+    {
+     "class": "O5",
+     "quote": "<unclear>Word list</unclear>\n<unclear>...</unclear>",
+     "severity": "wrong_text",
+     "what": "None of the column words, the five-line paragraph or the line of words above the figures is transcribed."
+    },
+    {
+     "class": "O1",
+     "quote": "<unclear>عقرب</unclear>",
+     "severity": "wrong_text",
+     "what": "The Arabic word 'scorpion' is invented; it is not on the page."
+    }
+   ],
+   "note": "A reader would see Hebrew cursive on the page, with four columns of words and two curved figures, beside an Arabic basmala that isn't there and almost no real text."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b4cd46d5b6c3815e1a540a",
+   "book_id": "69b4cd46d5b6c3815e1a53f2",
+   "page_number": 24,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<sig>יז:ט</sig>",
+     "severity": "wrong_text",
+     "what": "signature mark not on the page; the foot of the Hebrew page shows only the catchword זרועך and a few small marks"
+    }
+   ],
+   "note": "The Hebrew and Spanish text of this Kiddush Levanah spread is complete and in order, but the signature mark 'יז:ט' is invented, and 'faltaren' should read 'ſaltaren' (they leap)."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1be708522835be846c19e",
+   "book_id": "69c1be708522835be846c19d",
+   "page_number": 1,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "-> ΙΑΝΝΗΣ ΒΑΣΙΛΕΥΣ ΠΑΛΑΙΟΛΟΓΟΣ <-",
+     "severity": "wrong_text",
+     "what": "The well-known John VIII Palaiologos legend is given in place of what the medal says. The medal has no Greek legend. Its few large, crude letters around the field look Hebrew and are not transcribed."
+    },
+    {
+     "class": "O1",
+     "quote": "Obverse of a bronze portrait medal of the Byzantine Emperor John VIII Palaiologos (r. 1425–1448).",
+     "severity": "wrong_text",
+     "what": "Invented identification. The image shows a beardless profile bust wearing a radiate crown, not John VIII."
+    },
+    {
+     "class": "O1",
+     "quote": "a short, pointed beard",
+     "severity": "wrong_text",
+     "what": "The figure has no beard. The spiked radiate crown is not mentioned."
+    }
+   ],
+   "note": "The medal plainly shows a beardless, crowned bust with a few large letters that look Hebrew, but the caption names John VIII Palaiologos and gives a Greek legend that does not appear anywhere on the object."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb5a8522835be845f2d5",
+   "book_id": "69c1bb5a8522835be845f27d",
+   "page_number": 88,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ויהי בימי שפוט השופטים ויהי רעב בארץ וילך איש מבית לחם יהודה",
+     "severity": "wrong_text",
+     "what": "The whole body is Ruth chapter 1 from a printed Bible. The handwritten page is not Ruth; it reads as halakhic notes in cursive script (e.g. on Pesach)."
+    },
+    {
+     "class": "O1",
+     "quote": "->משפטים צדיקים<-",
+     "severity": "wrong_text",
+     "what": "This centred title is not on the page. The real heading is a short cursive line at the top."
+    },
+    {
+     "class": "O1",
+     "quote": "פרק א' /",
+     "severity": "wrong_text",
+     "what": "This chapter label is invented and is not on the page."
+    },
+    {
+     "class": "O12",
+     "quote": "<meta>Cursive Ashkenazic script; some ink bleed-through",
+     "severity": "wrong_text",
+     "what": "Several things on the page are left out: the vertical notes in the right margin, the boxed note at the upper left, and the text at the curled flourishes."
+    },
+    {
+     "class": "O5",
+     "quote": "בתחלת קציר שערים:",
+     "severity": "wrong_text",
+     "what": "None of the roughly 30 handwritten lines on the page are transcribed, including the closing line with its flourish."
+    }
+   ],
+   "note": "A reader would see a clean, printed-style text of Ruth chapter 1 next to a dense handwritten page of cursive notes, with a large drawn enclosure, that has nothing to do with Ruth."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc858522835be8463880",
+   "book_id": "69c1bc858522835be8463804",
+   "page_number": 124,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "נתבאר אצל וירא והנה כל הארץ שקט",
+     "severity": "wrong_text",
+     "what": "the page reads 'אצל אחשורוש', not 'וירא'"
+    },
+    {
+     "class": "O1",
+     "quote": "רעה לתת טעם וזה זה קטן לא קדם על דעתו ויחמיר בשל בית המלך",
+     "severity": "wrong_text",
+     "what": "invented line; the page reads roughly 'מה זה המן לא בקש על נפשו מאחשורוש בעוד היות המלך עם'"
+    },
+    {
+     "class": "O6",
+     "quote": "לבלתי בשם שלפניו מעמדו בבית המלך עם המלכה",
+     "severity": "wrong_text",
+     "what": "the page reads 'לבלתי בקש על נפשו מאחשורוש בהיות המלך עם'"
+    },
+    {
+     "class": "O6",
+     "quote": "שכן שחשב להוסיף לומר לו קום ובבוא את",
+     "severity": "wrong_text",
+     "what": "the page reads 'לרעתו שמצא אחשורוש לומר לו הגם לכבוש את', alluding to Esther 7:8"
+    },
+    {
+     "class": "O6",
+     "quote": "מגזרת המלך לפני המלך ככל היה כוחו המלך",
+     "severity": "wrong_text",
+     "what": "the page reads 'מאת אסתר לפני המלך ... היה רואה המלך'"
+    },
+    {
+     "class": "O6",
+     "quote": "שכוונתו לכבוד המלכה",
+     "severity": "wrong_text",
+     "what": "the page reads 'לכבוש המלכה'; 'honour' reverses the sense of 'to assault'"
+    },
+    {
+     "class": "O6",
+     "quote": "שהסיתה סוס המן והכריחו לעשות לו לשתות עמו ביום פשט",
+     "severity": "wrong_text",
+     "what": "the page reads 'שהשקתה כוס ... הכריחה ... לשתות עמו ביום הקטן כמו שנתבאר'"
+    },
+    {
+     "class": "O6",
+     "quote": "בבואו אל המלכה שבתהו ועתה כאשר ראה שהשחית היה המן שגם ביום פשט",
+     "severity": "wrong_text",
+     "what": "the page reads 'בהקודם ... ועתה כאשר ראה שהשקתה היה המן אף ביום השני'"
+    },
+    {
+     "class": "O6",
+     "quote": "מה שאלתך עד מחצה היין",
+     "severity": "wrong_text",
+     "what": "the page reads 'על משתה היין'"
+    },
+    {
+     "class": "O6",
+     "quote": "בהקימו ומכה למה לה קודם חזרו המלך",
+     "severity": "wrong_text",
+     "what": "the page reads 'בזה טעם ... למה לא הלך אחרי המלך'"
+    },
+    {
+     "class": "I4",
+     "quote": "<margin>\nאלקי\nעזר\nהמן\n</margin>",
+     "severity": "wrong_text",
+     "what": "letters from the facing page's strip at the left edge were transcribed as marginalia"
+    }
+   ],
+   "note": "The header line and the large-script Esther 7:7 verse are correct, but most commentary lines are garbled or partly invented: 'אחשורוש' became 'וירא' and 'לכבוש המלכה' became 'לכבוד המלכה', and a 'margin' note is really text from the facing page."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bae58522835be845b597",
+   "book_id": "69c1bae58522835be845b540",
+   "page_number": 87,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "אלא בשעה ולא פחות עד שישלים רצונו ומפני את פלו' אדם וקח קלף וכתיב",
+     "severity": "wrong_text",
+     "what": "the page reads roughly 'ולא ישקוט ולא ינוח עד שישלים רצונו ותאהב את ... אדם'; the opening is misread"
+    },
+    {
+     "class": "O1",
+     "quote": "חז חז חז פה יום תפ' יך : פה זה השם יוצא תפסוק ותניח חן ושכל פלו'",
+     "severity": "wrong_text",
+     "what": "text not on the page; the leaf has different wording here"
+    },
+    {
+     "class": "O1",
+     "quote": "הכו שינה רחמין מבין ולכל אדם מכוסה",
+     "severity": "wrong_text",
+     "what": "a garbled reconstruction of the line after the stars"
+    },
+    {
+     "class": "O1",
+     "quote": "פה פלו' בן פלו' בשם קדוש פ' פלו' בן תשמיע עם שיעף ויחזור לכל",
+     "severity": "wrong_text",
+     "what": "a confabulated reading of the last lines"
+    },
+    {
+     "class": "O6",
+     "quote": "פלו' המוכרס אלו והן רבש חיל .. אה .. אהן פלו' .. פה",
+     "severity": "wrong_text",
+     "what": "a garbled line; the page reads roughly '... אם והיא הבאה תמיד .. ואחר ... פה'"
+    }
+   ],
+   "note": "Only the first line or two and a few phrases follow the page. Much of the rest is garbled or made up and full of 'פלו'' filler, and the candidate has the wrong folio number and miscounts the hexagrams (four instead of five)."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bae08522835be845b312",
+   "book_id": "69c1bae08522835be845b1f6",
+   "page_number": 284,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ויהי ביום השלישי בהיות הבקר\nויהי קולת וברקים וענן כבד על ההר",
+     "severity": "wrong_text",
+     "what": "The top lines are Exodus 19:16-17 supplied from memory. The leaf's three opening prose lines are different text, a liturgical frame (roughly '...עבר היום ...')."
+    },
+    {
+     "class": "O3",
+     "quote": "והר סיני עשן כלו\nמפני אשר ירד עליו",
+     "severity": "wrong_text",
+     "what": "The whole two-column block is Exodus 19:18-23 supplied from memory. The page's short columns read things like 'ויאמר יי אל משה / הנה אנכי בא אליך', 'וירד משה מן ההר אל העם' and 'וידבר אלהים את כל הדברים האלה לאמר'."
+    },
+    {
+     "class": "O5",
+     "quote": "בתחתית ההר:",
+     "severity": "wrong_text",
+     "what": "The centred line above the columns and the closing line under them (roughly 'תם ... אלתן ...') are left out."
+    },
+    {
+     "class": "O3",
+     "quote": "ויהי\nבקולות וברקים ובענן כבד והופיע מהר פארן",
+     "severity": "wrong_text",
+     "what": "The lower block has an Exodus phrase inserted. It also drops the page's 'ויאמר יי מסיני בא וזרח משעיר למו' (Deut 33:2) that comes before 'הופיע מהר פארן'."
+    }
+   ],
+   "note": "Only the 'האזינו ושמעו את עשרת' passage at the bottom roughly matches the leaf, and even that is altered. Everything above it is Exodus 19 supplied from memory, not this manuscript's liturgical text."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc4a8522835be84622f0",
+   "book_id": "69c1bc4a8522835be84622ee",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O2",
+     "quote": "<unclear>... श्री ...</unclear>",
+     "severity": "wrong_text",
+     "what": "Devanagari fragments made up; the faint lines on the leaf are Hebrew-script writing, not Devanagari"
+    },
+    {
+     "class": "O1",
+     "quote": "<unclear>... तस्मात् ...</unclear>",
+     "severity": "wrong_text",
+     "what": "Whole Sanskrit words (यथा, तस्मात्) invented on a nearly illegible leaf"
+    }
+   ],
+   "note": "The leaf has only faint fragments of Hebrew-script lines, but the candidate offers invented Sanskrit/Devanagari fragments, so it is not this page's text."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1ba808522835be84591d9",
+   "book_id": "69c1ba808522835be8459109",
+   "page_number": 208,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "אחרי שנתנו ההנחה כי כל חלקי הגלגל דבקים במקומם והנחה וסדר <insert>להם</insert> אינם משתנים במעמד הזמן ובהפרד המקומות",
+     "severity": "wrong_text",
+     "what": "invented astronomy line; the page discusses the soul not perishing with the body"
+    },
+    {
+     "class": "O4",
+     "quote": "בסוד המכתב והמכתב והמכתב כי הוא זר וכתוב ואין כריתה נחתך",
+     "severity": "wrong_text",
+     "what": "repeated word plus garble; the page has 'בסוד המכתב ובכרתה... לשון כריתה'"
+    },
+    {
+     "class": "O6",
+     "quote": "הנפש החכמה תשתוקק אליהן לה שוה ומשוה",
+     "severity": "wrong_text",
+     "what": "the page reads roughly 'הנפש החכמה מהגוף אין לה טובה'"
+    },
+    {
+     "class": "O6",
+     "quote": "משפט תעשו. וזהו פשוטו המלה והענינהם כי כל הדברים האלו בנמצאים האלה נתנו ומה יחזיקו",
+     "severity": "wrong_text",
+     "what": "the page reads 'ולא משפטי הגוים ותועבותיהם כי כל הרגלים ומשפטיהם...'"
+    },
+    {
+     "class": "O5",
+     "quote": "יבין. <margin>",
+     "severity": "wrong_text",
+     "what": "the in-text line 'איש איש · יש אומרים להכליל הדבר כלומר...' is dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>וזהו שאמר הכתוב וחי בהם כלומר חיי עולם הבא שאין בו מיתה</margin>",
+     "severity": "wrong_text",
+     "what": "invented marginal note"
+    },
+    {
+     "class": "O6",
+     "quote": "א' אחות אמו או אחות אביו עד למעלה בקו הפסק.",
+     "severity": "wrong_text",
+     "what": "the page reads 'אחת אם אמו עד למעלה בלי הפסק', so the wrong relation is listed"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>והבת מן האנוסה אינה מן התורה</margin>",
+     "severity": "wrong_text",
+     "what": "the left-margin gloss is different (it ends 'הראשון'); this one is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>מ' חס'</margin>",
+     "severity": "wrong_text",
+     "what": "marginal note not on the page"
+    }
+   ],
+   "note": "Only the opening words, the general topic (the forbidden relations and the 'secondary' prohibitions) and the closing catchword 'מיתה' match the page. Many lines in between are garbled or invented, marginal glosses are made up, and the enumerated list is wrongly turned into a table with misread relations."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5ba304c1c6b39509e13",
+   "book_id": "69b3e5ba304c1c6b39509ddb",
+   "page_number": 56,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "נשמת הצדיקים ובכללם נשמת\nדוד המלך עליו השלום מלובשים",
+     "severity": "wrong_text",
+     "what": "Column 1 starts close to the page (נשמות הצדיקים... היכלה... הספירות... עדן ועולם הבא ומקדש). After that, most lines are generic kabbalistic phrasing that does not match the cursive hand."
+    },
+    {
+     "class": "O1",
+     "quote": "אמרתי כי הנשמה למעלה מן\nהשמים רחוקה עד מאד ואיך",
+     "severity": "wrong_text",
+     "what": "Column 2 opening only roughly matches (page reads something like שאומרים כי האומר למעלה מן השמים). Most of the column is fluent invented text."
+    },
+    {
+     "class": "O1",
+     "quote": "וכתב למעלה ואומר הנשמות\nהן סוד לחכמה לא בינה",
+     "severity": "wrong_text",
+     "what": "Column 3 first line is partly right (וכתב ... ואומר). The next line on the page reads roughly לא עור לא כח לא גבורה, and the rest of the column is largely invented."
+    },
+    {
+     "class": "O7",
+     "quote": "פ\"ג",
+     "severity": "wrong_text",
+     "what": "The mark below the left column reads roughly צ\"ב, not פ\"ג."
+    }
+   ],
+   "note": "Apart from the first line or two of each column, the transcription does not follow the manuscript. It reads as made-up kabbalistic prose, and the running heads and the mark at the foot are wrong."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bab38522835be8459cee",
+   "book_id": "69c1bab38522835be8459bf4",
+   "page_number": 250,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "בן זומא אומר איזהו חכם הלמד מכל אדם שנאמר מכל מלמדי השכלתי",
+     "severity": "wrong_text",
+     "what": "The leaf is a commentary on Avot ch. 3. It begins with Akavya ben Mahalalel ('הסתכל בשלשה דברים'), not Ben Zoma (Avot 4:1). The whole body is a different, well-known passage put in its place."
+    },
+    {
+     "class": "O1",
+     "quote": "ואמרו בפרקי דרבי אליעזר בן הורקנוס ז\"ל הילד המסכן והחכם זה יצר הטוב",
+     "severity": "wrong_text",
+     "what": "This long homiletic commentary does not appear on the leaf. It is invented."
+    },
+    {
+     "class": "O6",
+     "quote": "# פרק שלשה עשר",
+     "severity": "wrong_text",
+     "what": "The large heading on the page reads 'פרק שלישי עקביא'. 'Chapter thirteen' is wrong."
+    },
+    {
+     "class": "O5",
+     "quote": "ברכו את יי המבורך לעולם ועד ברוך יי המבורך לעולם ועד",
+     "severity": "wrong_text",
+     "what": "The real first line, ending chapter 2 ('...לעשות רצון אביו שבשמים ... סליק פרק שני'), is replaced by an invented liturgical formula."
+    },
+    {
+     "class": "O12",
+     "quote": "ועיין בפירוש הרב\nר' יצחק עראמה\nז\"ל בפרשת וישלח",
+     "severity": "wrong_text",
+     "what": "The marginal note on the page reads something like 'ואין אתה הולך למקום ...'. The cross-reference to Arama's commentary is invented."
+    },
+    {
+     "class": "O5",
+     "quote": "# איזהו עשיר",
+     "severity": "wrong_text",
+     "what": "The large heading at the foot of the page, the start of the next chapter ('פרק רבי חנינא סגן הכהנים'), is missing and replaced by invented text."
+    }
+   ],
+   "note": "None of the transcription matches the leaf: the page holds the Avot ch. 3 commentary (Akavya ben Mahalalel, then the heading for R. Hanina Segan ha-Kohanim), but the candidate gives an invented Ben Zoma (Avot 4) passage and an invented margin note."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb308522835be845d5ef",
+   "book_id": "69c1bb308522835be845d5d5",
+   "page_number": 26,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "אודות מעזבון המנוח הגביר ר' אברהם דוד שטון",
+     "severity": "wrong_text",
+     "what": "page reads 'אודות מזל טוב בת הגביר ר' עבדאלה דוד שטון'; a person's name and the sense are changed"
+    },
+    {
+     "class": "O6",
+     "quote": "בארץ הודו בברכתה",
+     "severity": "wrong_text",
+     "what": "page has 'בכלכתה' (Calcutta)"
+    },
+    {
+     "class": "O6",
+     "quote": "וכן כתוב ב' דברים\nי\"ט וד' שופטים",
+     "severity": "wrong_text",
+     "what": "page has 'וכן כתוב ב' אלהים יבוא דבר שניהם'"
+    },
+    {
+     "class": "O6",
+     "quote": "שתתחמו עלי בדין יען א\"ש עני ואבי'",
+     "severity": "wrong_text",
+     "what": "page has 'שתרחמו עלי בדין יען איש עני אנכי'"
+    },
+    {
+     "class": "O6",
+     "quote": "חיים שני מוכרך לבריות",
+     "severity": "wrong_text",
+     "what": "page has 'איש עני מוכרך'"
+    },
+    {
+     "class": "O3",
+     "quote": "ככתוב ותמצא חן ושכל טוב",
+     "severity": "wrong_text",
+     "what": "a known verse put in place of the page's own quotation (ends 'ידבר רש')"
+    },
+    {
+     "class": "O6",
+     "quote": "צעקת ה' החמורה",
+     "severity": "wrong_text",
+     "what": "page has 'שבועת ה' החמורה'"
+    },
+    {
+     "class": "O6",
+     "quote": "אשר אנכיי <insert>יחמרו</insert> בעניהם",
+     "severity": "wrong_text",
+     "what": "page has 'אשר אנכי יושבתי ביניהם'; the 'יאמרו' insertion belongs elsewhere"
+    },
+    {
+     "class": "O1",
+     "quote": "ומתנכר למתים לא יפגשו בעזובים ובמעונוענים ויזיקוס",
+     "severity": "wrong_text",
+     "what": "garbled, invented text; page has 'במעינו למתים לא יפגעו בשוטים ובמשוגעים ויזיקום'"
+    },
+    {
+     "class": "O1",
+     "quote": "וחקירתם נמצאו כל חכמים והם\nרחמי עם ישראל ומנהיגיהם ומעצום להן ה' קודשים לטובתה וסימן זאת שינהם בחשך חושך וחפיפה",
+     "severity": "wrong_text",
+     "what": "page has 'ואחריהם נמשכו כל חכמים והם ראשי עם ישראל… לטבחה וסימו את עיניהם במסוה חושך ואפילה'"
+    }
+   ],
+   "note": "The layout is right, but many words are misread, including names (עבדאלה, Calcutta), a quoted verse is swapped for a familiar one, and the last lines are largely invented."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc188522835be846170b",
+   "book_id": "69c1bc188522835be84616e7",
+   "page_number": 36,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ומשם יצאו גבורות קשות",
+     "severity": "wrong_text",
+     "what": "line 3 on the leaf reads roughly 'ומשם יצא במדות הקב\"ה'; the candidate's reading is not on the page"
+    },
+    {
+     "class": "O1",
+     "quote": "ועל ידי גילוי הגבורות נמתק מדת",
+     "severity": "wrong_text",
+     "what": "the visible letters don't support this reading; it looks invented"
+    },
+    {
+     "class": "O7",
+     "quote": "לגבי ג' חוליות כגון שבע ונה\"י",
+     "severity": "wrong_text",
+     "what": "the numeral and the sefirot list don't match the leaf, which reads 'לגבי ?' חוליות כגון חב\"ד ...'"
+    },
+    {
+     "class": "O1",
+     "quote": "ועל ידי הלילה משם יתגלו הדיני'",
+     "severity": "wrong_text",
+     "what": "not what the line says"
+    },
+    {
+     "class": "O1",
+     "quote": "מעורר הדין בתוך הרחמים",
+     "severity": "wrong_text",
+     "what": "the last line on the leaf (roughly 'קטנ... יהיה ...') is replaced with invented doctrine"
+    }
+   ],
+   "note": "Only the opening lines and the repeated 'ואם יעשה' structure match the leaf; most of the content lines and the closing line are plausible kabbalistic filler that doesn't match the handwriting."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bb978522835be846053e",
+   "book_id": "69c1bb978522835be846051e",
+   "page_number": 32,
+   "defects": [
+    {
+     "class": "O12",
+     "quote": "א\nח\nר\nג\nה\n-\nנ\nט\n,\nצ\nח",
+     "severity": "wrong_text",
+     "what": "The large square letters on the right number the lines in order, א ב ג ד ה ו ז ח ט י יא יב. The candidate gives a garbled string with stray punctuation and calls it an acrostic."
+    },
+    {
+     "class": "O1",
+     "quote": "->נחום בזה עפר יסודו<-",
+     "severity": "wrong_text",
+     "what": "Line 1 clearly ends with יפתח, which the candidate replaces with an invented ending."
+    },
+    {
+     "class": "O1",
+     "quote": "->זכרו יפיץ לך מור וקדה<-",
+     "severity": "wrong_text",
+     "what": "Line 2 does not match the cursive, which reads something like ...ים ...ידיו לך ... ו...ים."
+    },
+    {
+     "class": "O1",
+     "quote": "->ספר בזה תמצא בבואו וצאתו<-",
+     "severity": "wrong_text",
+     "what": "The words do not match the letter shapes of line 3."
+    },
+    {
+     "class": "O1",
+     "quote": "->מלא מכל צד יפה פה<-",
+     "severity": "wrong_text",
+     "what": "Lines 4–5 are fluent but invented; they don't match the cursive."
+    },
+    {
+     "class": "O1",
+     "quote": "->חכמתו נשגבה מבינת אדם<-",
+     "severity": "wrong_text",
+     "what": "Lines 8–11 are smooth invented verse that doesn't follow the handwriting."
+    }
+   ],
+   "note": "The heading יפתח and the 12-line layout are right, but most of the cursive verse is invented, smooth Hebrew that doesn't match the handwriting, and the line numbers א–יב on the right have been turned into a nonsense acrostic."
+  },
+  {
+   "cell": "hebrew-flash3",
+   "route": "3flash",
+   "page_id": "69c1bc5f8522835be84622f7",
+   "book_id": "69c1bc5f8522835be84622f6",
+   "page_number": 1,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "הן אנחנו חתומי מטה עדי אמת וצדק הלא המה יראי ה' חכמי הקהלה המבורכה",
+     "severity": "wrong_text",
+     "what": "The whole Hebrew body is an invented gift-deed formula. The page has about 39 handwritten lines that open with 'אני החתום מטה' and have different content, such as a 'תבנית החצר' section."
+    },
+    {
+     "class": "O5",
+     "quote": "והכל שריר ובריר וקיים ---",
+     "severity": "wrong_text",
+     "what": "The candidate has 18 lines where the page has about 39, so more than half the handwritten deed is missing."
+    },
+    {
+     "class": "O7",
+     "quote": "ביום חמישי בשבת שמונה עשר ימים לחדש (אייר) שנת התרל\"ח",
+     "severity": "wrong_text",
+     "what": "This date, 18 Iyar 5638, does not appear on the leaf. The pencil note at the bottom right reads 1895, not 1878."
+    },
+    {
+     "class": "O1",
+     "quote": "->משה כהן ע\"ה<-\n->יצחק כהן ע\"ה<-",
+     "severity": "wrong_text",
+     "what": "These witness signatures are invented. The text runs to the bottom edge and no signature block is visible."
+    }
+   ],
+   "note": "The letterhead and the English pencil note are right, but the Hebrew deed beneath them is a made-up formula that is about half the length of the handwritten text on the page, with an invented 1878 date and invented signatures."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "6953dd3e77f38f6761be728b",
+   "book_id": "6953dd3e77f38f6761be722c",
+   "page_number": 95,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "<insert>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ أَلَّا تَعْلُوا عَلَيَّ وَأْتُونِي مُسْلِمِينَ يَدُ اللَّهِ فَوْقَ أَيْدِيهِمْ</insert>",
+     "severity": "wrong_text",
+     "what": "The page has a garbled Quranic-font span here: 'أينا' followed by the glyphs ﴿…الرحمن الرحيم ألا تعلوا علي … مسلمين الله﴾. The candidate replaces it with a clean, fully vowelled Basmala plus Q 27:31 plus 'يد الله فوق أيديهم'. 'بسم' and 'يد الله فوق أيديهم' are not on the leaf, and nothing marks the span as garbled in the original."
+    }
+   ],
+   "note": "The page is transcribed accurately except one line: where the printed page has a garbled Quranic-font span, the transcription shows a clean Basmala and Quran verses that are not on the page, and the word 'أينا' is missing."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69c1b8c88522835be844b4a4",
+   "book_id": "69c1b8c88522835be844b371",
+   "page_number": 307,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "نَزَّلَ عَلَيْكَ الْكِتَابَ بِالْحَقِّ مُصَدِّقًا\nلِمَا بَيْنَ يَدَيْهِ وَأَنْزَلَ التَّوْرَاةَ وَالْإِنْجِيلَ مِنْ قَبْلُ هُدًى",
+     "severity": "wrong_text",
+     "what": "On the leaf, line 6 reads 'نزل عليك الكتاب من قبل هدى': the scribe skipped 'بالحق مصدقا لما بين يديه وأنزل التوراة والإنجيل'. The candidate fills this in from the standard Quran text and adds a whole line that is not on the page (12 lines instead of the page's 11)."
+    }
+   ],
+   "note": "The page has a scribal omission in Al Imran 3 that the transcription hides by supplying the standard Quran wording, which adds a line the page doesn't have. The page number is also wrong (151 on the leaf)."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69908a7793003de39c965929",
+   "book_id": "69908a7693003de39c9658e5",
+   "page_number": 68,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "وبلاؤه ان يحفظه الله تعا",
+     "severity": "wrong_text",
+     "what": "page reads roughly 'ومن جملة ما كان في حفظ الله تعالى'"
+    },
+    {
+     "class": "O6",
+     "quote": "وهيبة هيبة هبيله يدخل على الملوك",
+     "severity": "wrong_text",
+     "what": "garbled; page has 'هيبة وقوة عظيمة لمن يدخل'"
+    },
+    {
+     "class": "O6",
+     "quote": "كما يحمى السكينه غيصة الذيب",
+     "severity": "wrong_text",
+     "what": "simile misread; page has 'kama yahmi ... ghanamahu min al-dhib' (sheep protected from the wolf)"
+    },
+    {
+     "class": "O1",
+     "quote": "ويصلي في جلده بله وارواحهم العاجزة في الحينه احرقه ومن نفسه فضاقت وصدق",
+     "severity": "wrong_text",
+     "what": "line invented; page is about the jinn/possession (العارض في الجثة) and engraving the name on a silver ring (نقشه في خاتم فضة)"
+    },
+    {
+     "class": "O1",
+     "quote": "ويكون النافذ في صماغم الختم فلا يقع عليها ما يديه احد لا الحيه ونحوها",
+     "severity": "wrong_text",
+     "what": "garbled; page says the engraver should be fasting (الناقش صائم)"
+    },
+    {
+     "class": "O6",
+     "quote": "ومن يخشى الحريق يكون",
+     "severity": "wrong_text",
+     "what": "page says 'ومن خرج للحرب يكون' (going to war), not fear of fire"
+    },
+    {
+     "class": "O6",
+     "quote": "في حكاية بئر",
+     "severity": "wrong_text",
+     "what": "page says 'في مكان خزينة وغيرها' (a treasury)"
+    },
+    {
+     "class": "O6",
+     "quote": "المكر والحمله ... وكالمركوده ... ويجدد زاد علقة",
+     "severity": "wrong_text",
+     "what": "page reads 'البكر واذا حمله ... وكل امر مكروه ... ويجد واذا علق'"
+    },
+    {
+     "class": "O6",
+     "quote": "امدنا بلا تعب وعين",
+     "severity": "wrong_text",
+     "what": "page reads 'امددنا بالادعية' (help us with prayers)"
+    },
+    {
+     "class": "O6",
+     "quote": "ان رجلا من اليون صودرت طلبه الملك",
+     "severity": "wrong_text",
+     "what": "page names the caliph (جعفر المنصور); candidate garbled"
+    },
+    {
+     "class": "O6",
+     "quote": "تعبأ له فلف في تعاقبها ... وسقط",
+     "severity": "wrong_text",
+     "what": "page reads roughly 'رفع له رقعة فيها ... فرجفت يده عن سيفه'"
+    },
+    {
+     "class": "O1",
+     "quote": "فاكتبها في خرقه صلحنا في فية ريك بيض البراق ومحو شر",
+     "severity": "wrong_text",
+     "what": "page reads 'بزعفران وعلقها في رقبة ديك ابيض'"
+    },
+    {
+     "class": "O6",
+     "quote": "فاختم الخاتم بعمل طيب ينبعث علي المار ارض خاتم\nعلى الفضة",
+     "severity": "wrong_text",
+     "what": "garbled; the page has the ring stamped on wax (شمع), not silver"
+    },
+    {
+     "class": "O6",
+     "quote": "فخذ عصفورا كبيرا وقل آذان راسة وارسم الخاتم في قميص حجر الحلى لم تسمه",
+     "severity": "wrong_text",
+     "what": "page reads 'عصفورا ذكرا ... في رقعة مع اسم المطلوب واسم امه'"
+    },
+    {
+     "class": "O6",
+     "quote": "هذه لا يعاد",
+     "severity": "wrong_text",
+     "what": "page reads 'هذه الاسماء'"
+    },
+    {
+     "class": "O6",
+     "quote": "الحمار ورشه في المحل الذي كاد ان ياتي من احد",
+     "severity": "wrong_text",
+     "what": "page has 'هات الحمام' (bath), not donkey; the rest is garbled"
+    },
+    {
+     "class": "O6",
+     "quote": "لا يرى لا مساكنهم الرب",
+     "severity": "wrong_text",
+     "what": "Qur'anic tag 'لا ترى الا مساكنهم الآية' corrupted"
+    },
+    {
+     "class": "O6",
+     "quote": "حجارة ويجعل",
+     "severity": "wrong_text",
+     "what": "page reads 'حجارة من سجيل'"
+    },
+    {
+     "class": "O6",
+     "quote": "فلما اقبل المنادى للاحمال المكبوبة",
+     "severity": "wrong_text",
+     "what": "page reads 'فلما نقل النار الى الاسماء المكتوبة'"
+    },
+    {
+     "class": "O6",
+     "quote": "حار في ذلك هو وبين\nعبده",
+     "severity": "wrong_text",
+     "what": "page reads 'فهلك هو ومن عنده' (he perished)"
+    },
+    {
+     "class": "O1",
+     "quote": "اذا ارد الدخول في الحولة يكتب الخاتم ويجلفه في مطار قبالي من\nبخيط حرير ابيض فمن يحج الاصول",
+     "severity": "wrong_text",
+     "what": "last lines garbled; page has 'ويعلقه في مكان عالي ... فتسبح الامواج'"
+    }
+   ],
+   "note": "The page is split correctly into 151 and 152, but almost every line has serious misreadings or invented filler that change the recipes and stories. It can't stand as the transcription."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69907c1e5f855ec553e71ed4",
+   "book_id": "69907c165f855ec553e71de7",
+   "page_number": 237,
+   "defects": [
+    {
+     "class": "O8",
+     "quote": "يعقوب بن اسحق بن ابراهيم عليهم السَّلام",
+     "severity": "wrong_text",
+     "what": "the page reads only 'يعقوب عليه السلام'; the genealogy is added"
+    },
+    {
+     "class": "O1",
+     "quote": "بعون الله وحسن توفيقه",
+     "severity": "wrong_text",
+     "what": "the title line reads roughly 'بعون الله وجاد عليه', not 'وحسن توفيقه'"
+    },
+    {
+     "class": "O6",
+     "quote": "كان له مع عيصوا ابنه يكونا في رحم واحد",
+     "severity": "wrong_text",
+     "what": "makes Esau Jacob's son; the page has Jacob together with Esau in one womb ('في بطن واحد وعند')"
+    },
+    {
+     "class": "O1",
+     "quote": "ان تقتله امُّه فتأخَّر عن عيصوا في بطنها فسبق عيصوا",
+     "severity": "wrong_text",
+     "what": "the page reads roughly 'ان تهلك امه من اجله ... في بطنها فسمي يعقوب'"
+    },
+    {
+     "class": "O1",
+     "quote": "لانه كان يحب إخوانه",
+     "severity": "wrong_text",
+     "what": "invented; the page gives the reason for the name Jacob, roughly 'لانه عرقب في بطن امه'"
+    },
+    {
+     "class": "O1",
+     "quote": "وخرجت معه رجلي يعقوب لتمكُّنه من الخروج وسمِّي يعقوب",
+     "severity": "wrong_text",
+     "what": "the page says the mother loved Jacob for holding back from coming out and for his concern for her"
+    },
+    {
+     "class": "O6",
+     "quote": "ويعظم منه ابوه ويكرم ابو يوسف",
+     "severity": "wrong_text",
+     "what": "the page reads roughly 'ويطعم منه اباه وكان ابوه يحبه'; 'ابو يوسف' is not there"
+    },
+    {
+     "class": "O6",
+     "quote": "ان لا تدعوا لأحد بدعوة تجيب له بل الموت",
+     "severity": "wrong_text",
+     "what": "reverses the revelation: the page reads roughly 'ادع لاحد بنيك ... اجيب له', with no prohibition and no 'death'"
+    }
+   ],
+   "note": "The heading and the middle lines about Isaac and hunting match the page, but the birth story and the last line are largely invented. Esau is turned into Jacob's son and the closing revelation is reversed."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b3e5e0304c1c6b3950a6aa",
+   "book_id": "69b3e5e0304c1c6b3950a6a9",
+   "page_number": 1,
+   "defects": [
+    {
+     "class": "I6",
+     "quote": "Left Column:\n<margin>لا</margin>\nلا تكون من الفن المجاز",
+     "severity": "wrong_text",
+     "what": "the continuation page (left) is put before the opening page (right), so the text runs backwards"
+    },
+    {
+     "class": "O1",
+     "quote": "اذ كان كثير من الناس يظن فيه انه كتاب في التوحيد والصفات وان العلم الذي تحت هذا الكتاب",
+     "severity": "wrong_text",
+     "what": "page reads roughly 'المعروف بما بعد الطبيعة والى الاقسام الاولى التي له اذ كثير من الناس...'; candidate invents wording"
+    },
+    {
+     "class": "O1",
+     "quote": "ممن حذق في العلوم الرياضية يخوض فيه خاليا عن فهم الاغراض التي ضمنت فيه كما كان\nخاصة ممن لا يعرفها الا بوحي من الاله في المجادلة",
+     "severity": "wrong_text",
+     "what": "fluent text that is not on the leaf"
+    },
+    {
+     "class": "O1",
+     "quote": "والعقل والعمل والحس والتحاتت والتباض وغيرها كما يظهر لنا في البدن البشري",
+     "severity": "wrong_text",
+     "what": "garbled or invented line in the right page's lower half"
+    },
+    {
+     "class": "O1",
+     "quote": "لا تكون من الفن المجاز ليس عامة بل تجب بما بني على العلم الطبيعي",
+     "severity": "wrong_text",
+     "what": "left page's opening lines are confabulated, not read"
+    },
+    {
+     "class": "O1",
+     "quote": "هذا العلم المقال الأول مشتمل على التقدير والتقديم للكتاب ولماذا يحتاج",
+     "severity": "wrong_text",
+     "what": "the description of the treatise's sections is paraphrased or invented rather than transcribed"
+    }
+   ],
+   "note": "This is a two-page spread (the opening of al-Farabi's treatise on the aims of the Metaphysics), but the transcription puts the left page first and much of it is made-up or paraphrased Arabic, so it doesn't match the image line by line."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69b63e852a1dde00d5a9e60f",
+   "book_id": "69b63e852a1dde00d5a9e472",
+   "page_number": 413,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "حَرَّمْنَا مِن شَيْءٍ ۗ كَذَٰلِكَ كَذَّبَ الَّذِينَ مِن قَبْلِهِمْ",
+     "severity": "wrong_text",
+     "what": "The whole transcription is a commentary passage on al-An'am 6:148-150. The page actually has al-A'raf 7:75-79, the story of Salih and the she-camel, with its commentary. None of the page's text is reproduced."
+    },
+    {
+     "class": "O7",
+     "quote": "<page-num>٤٣٢</page-num>",
+     "severity": "wrong_text",
+     "what": "The page is numbered (٤٥٧), not ٤٣٢. The footer signature ١١٥ is also missing."
+    },
+    {
+     "class": "O12",
+     "quote": "سورة الانعام ٦\nالجزء ٨\nع ٥",
+     "severity": "wrong_text",
+     "what": "The margin reads سورة الاعراف ٧ / الجزء ٨ / ع ١٧, not al-An'am 6 and ع ٥."
+    }
+   ],
+   "note": "The transcription belongs to a different page. It gives a passage of al-An'am commentary, but the image shows page ٤٥٧ with al-A'raf 7:75-79 (Salih, the she-camel, the earthquake) and its commentary."
+  },
+  {
+   "cell": "arabic-flash3",
+   "route": "3flash",
+   "page_id": "69a5e66085fa13e734e425b7",
+   "book_id": "69a5e66085fa13e734e42582",
+   "page_number": 53,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "هو الذى خلقكم من طين ثم قضى اجلا واجل مسمى عنده ثم انتم تمترون",
+     "severity": "wrong_text",
+     "what": "The standard text of al-An'am 6:2–10 was supplied in place of a reading of this leaf. On this image the lower text is mostly illegible, so none of these words can be checked."
+    },
+    {
+     "class": "O1",
+     "quote": "ما كانوا به يستهزءون",
+     "severity": "wrong_text",
+     "what": "The whole block is clean and fluent, with only token <unclear> marks. That fluency is not supported by the faint, masked script on the leaf. It also gives no sign of the variant readings this lower text is known to carry."
+    }
+   ],
+   "note": "A reader gets the standard text of al-An'am 6:2–10 laid out as if read from the leaf. The leaf itself is a masked palimpsest whose lower text can barely be made out, so the words, line breaks and any variants can't be checked against the image."
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c62d540c88a541d8f678f",
+   "book_id": "6a3c62d540c88a541d8f6779",
+   "page_number": 21,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "出焉者國",
+     "severity": "wrong_text",
+     "what": "The page reads 出焉耆國, and it belongs to 綠鹽, not 狄鹽. The candidate misreads 耆 as 者 and attaches the phrase to the wrong entry."
+    },
+    {
+     "class": "O5",
+     "quote": "綠鹽水中石下，狀若扁青，為眼藥之要",
+     "severity": "wrong_text",
+     "what": "Drops 出焉耆國 and 空青. The page reads 綠鹽出焉耆國水中石下狀若扁青空青為眼藥之要."
+    },
+    {
+     "class": "O6",
+     "quote": "出邯鄲及河東池澤",
+     "severity": "wrong_text",
+     "what": "This phrase is part of the 大鹽 entry (本草大鹽出邯鄲及河東池澤), but the candidate places it under 木鹽."
+    },
+    {
+     "class": "O1",
+     "quote": "大鹽一名胡鹽。虞毓《胡鹽賦》：河東有大鹽",
+     "severity": "wrong_text",
+     "what": "Invented. The page has 虞龢冀州論河東有大鹽; there is no 虞毓 and no 胡鹽賦 on the page."
+    },
+    {
+     "class": "O5",
+     "quote": "# 胡鹽\n\n《本草》：大鹽一名胡鹽。",
+     "severity": "wrong_text",
+     "what": "The 沈約 樂歌 quotation (楚桂胡鹽芼芳卉…) belongs here and has been dropped from this entry."
+    },
+    {
+     "class": "O6",
+     "quote": "《冀州論》：河東有鹵鹽。",
+     "severity": "wrong_text",
+     "what": "The 冀州論 citation belongs to 大鹽 and reads 大鹽, not 鹵鹽."
+    },
+    {
+     "class": "O6",
+     "quote": "沈約《樂歌》：楚桂鹵鹽，芼芳卉，加邊列",
+     "severity": "wrong_text",
+     "what": "This quotation belongs under 胡鹽, and its repetition mark stands for 胡鹽, not 鹵鹽. 邊 should also read 籩."
+    },
+    {
+     "class": "O6",
+     "quote": "以河鹽為勝",
+     "severity": "wrong_text",
+     "what": "The page reads 以河東者為勝."
+    },
+    {
+     "class": "O6",
+     "quote": "蓬鹽生於草，東者為勝",
+     "severity": "wrong_text",
+     "what": "東者為勝 is the end of the 山鹽 entry and does not belong to 蓬鹽."
+    }
+   ],
+   "note": "Several entries are garbled: citations are moved under the wrong headwords (大鹽/胡鹽/鹵鹽/木鹽/蓬鹽), and a 虞毓《胡鹽賦》 that is not on the page has been invented."
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cbbd6ec254ff6cadeb1d8",
+   "book_id": "6a3cbbd5ec254ff6cadeb1c1",
+   "page_number": 23,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "父子尊故馮尸在先",
+     "severity": "wrong_text",
+     "what": "The page reads 父母尊, but the candidate has 父子尊."
+    },
+    {
+     "class": "O1",
+     "quote": "君於臣撫之案尸心身不服膺也",
+     "severity": "wrong_text",
+     "what": "The page reads 君尊但以手撫案尸心; the candidate replaces it with a repeat of 君於臣撫之."
+    },
+    {
+     "class": "O6",
+     "quote": "盧云賤者垝也",
+     "severity": "wrong_text",
+     "what": "The page has 畧, but the candidate reads it as 垝."
+    },
+    {
+     "class": "O5",
+     "quote": "舅姑於婦撫之者<gloss>亦手案尸心</gloss>\n<gloss>云尊故捧當心上衣也</gloss>",
+     "severity": "wrong_text",
+     "what": "The candidate leaves out 婦於舅姑奉之者盧, scrambles the order of the last two columns, and so attaches the 盧云 comment to the wrong clause."
+    }
+   ],
+   "note": "The last four columns are badly garbled: a phrase is invented, the clause 婦於舅姑奉之 is missing, the commentary is out of order and wrongly tagged as glosses, and there are misreadings such as 父子 for 父母 and 垝 for 畧."
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3c5e7d40c88a541d8e2886",
+   "book_id": "6a3c5e7d40c88a541d8e286d",
+   "page_number": 25,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "犀兼訓𤛙",
+     "severity": "wrong_text",
+     "what": "page reads 犀兼訓瓠中; a variant character replaces 瓠中"
+    },
+    {
+     "class": "O6",
+     "quote": "# **犛**",
+     "severity": "wrong_text",
+     "what": "the headword on the page is 犂, marked 【增】; 犛 is a different character"
+    },
+    {
+     "class": "O1",
+     "quote": "集韻。無切音。釐",
+     "severity": "wrong_text",
+     "what": "the page has 正韻鄰溪切同犁詳後犁字註 here; 集韻…音釐 is invented, and 無切音 and 敎義同 belong to the column above"
+    },
+    {
+     "class": "O5",
+     "quote": "正韻。鄰溪切。同。**梨**。",
+     "severity": "wrong_text",
+     "what": "drops 詳後犁字註 and the stray 敎義同"
+    },
+    {
+     "class": "O5",
+     "quote": "# **牬**",
+     "severity": "wrong_text",
+     "what": "the whole preceding entry (headword, then 玉篇同牪) is left out"
+    }
+   ],
+   "note": "The main 犀 entry is mostly right, apart from 文 for 又 and a dropped 瓠中. The small entries at the end of the page are wrong: the headword is given as 犛 instead of 犂, one gloss is made up, a whole entry and the 八 stroke marker are missing, and 步 appears where the page has 芳."
+  }
+ ]
+}

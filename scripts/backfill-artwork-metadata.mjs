@@ -13,7 +13,7 @@
 
 import { MongoClient } from 'mongodb';
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
 
 function cleanHtml(html) {

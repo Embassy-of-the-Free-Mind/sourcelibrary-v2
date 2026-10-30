@@ -100,4 +100,29 @@ describe('experiments-lint', () => {
     const { errors } = lintExperiments(tmp({ ...files, '2026-09-01-old.md': entry('---\nstage: ocr\n---\n', '2026-09-01') }), { canons });
     expect(errors.some((e) => e.includes("'measure' is required"))).toBe(true);
   });
+
+  // #7263: a judged OCR/translation result must reach the router table, or say why not.
+  const judged = { stage: 'ocr', measure: ['accuracy', 'judged'], verdict: 'x', status: 'informational' };
+  const routerCells = new Set(['latin-lite', 'german-lite']);
+  const one = (h: object) => ({ '2026-10-28-route.md': entry(serializeHeader(h), '2026-10-28') });
+
+  it('refuses a NEW judged OCR result without router_evidence (negative control: passes when not new)', () => {
+    const d = tmp(one(judged));
+    expect(lintExperiments(d, { canons, routerCells, added: ['2026-10-28-route.md'] }).errors).toEqual([expect.stringContaining('needs router_evidence')]);
+    expect(lintExperiments(d, { canons, routerCells }).errors).toEqual([]);
+  });
+
+  it('accepts router_evidence as known cell ids or "none — why"; refuses an unknown cell or a bare "none"', () => {
+    const lint = (re: unknown) => lintExperiments(tmp(one({ ...judged, router_evidence: re })), { canons, routerCells, added: ['2026-10-28-route.md'] }).errors;
+    expect(lint(['latin-lite', 'german-lite'])).toEqual([]);
+    expect(lint('none — judged a prompt, not a route')).toEqual([]);
+    expect(lint(['latin-lite', 'klingon-lite'])).toEqual([expect.stringContaining("cell 'klingon-lite'")]);
+    expect(lint('none')).toEqual([expect.stringContaining('router_evidence must be')]);
+  });
+
+  it('does not ask an unjudged or non-routing entry for router_evidence', () => {
+    for (const h of [{ ...judged, measure: 'accuracy' }, { ...judged, stage: 'metadata' }]) {
+      expect(lintExperiments(tmp(one(h)), { canons, routerCells, added: ['2026-10-28-route.md'] }).errors).toEqual([]);
+    }
+  });
 });

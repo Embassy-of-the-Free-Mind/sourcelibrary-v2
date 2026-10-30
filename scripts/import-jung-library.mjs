@@ -126,7 +126,7 @@ async function harvestSet(setSpec) {
   while (url) {
     page++;
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (Jung Library crossref; team@sourcelibrary.org)' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) jung-library-crossref' },
       signal: AbortSignal.timeout(60000),
     });
     if (!res.ok) {

@@ -1,0 +1,282 @@
+[
+ {
+  "set": "A",
+  "n": 1,
+  "page_id": "69e787604a6785cfd60cb887",
+  "book_id": "69e787604a6785cfd60cb761",
+  "page_number": 294,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 2,
+  "page_id": "69e7aae75f1a22ab19a8f760",
+  "book_id": "69e7aae75f1a22ab19a8f584",
+  "page_number": 476,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "A",
+  "n": 3,
+  "page_id": "69e7ac065f1a22ab19aa26a4",
+  "book_id": "69e7ac065f1a22ab19aa262c",
+  "page_number": 120,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 4,
+  "page_id": "69e787654a6785cfd60cbc0f",
+  "book_id": "69e787654a6785cfd60cbaaf",
+  "page_number": 352,
+  "lines": 17,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 5,
+  "page_id": "69e787424a6785cfd60cb305",
+  "book_id": "69e787424a6785cfd60cb29e",
+  "page_number": 103,
+  "lines": 16,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 6,
+  "page_id": "69e7ab4c5f1a22ab19a962d1",
+  "book_id": "69e7ab4c5f1a22ab19a9622c",
+  "page_number": 165,
+  "lines": 17,
+  "book_mode_lines": 14,
+  "by_eye": "undecided"
+ },
+ {
+  "set": "A",
+  "n": 7,
+  "page_id": "69e761f9cc48e59ad74f29db",
+  "book_id": "69e761f9cc48e59ad74f292b",
+  "page_number": 176,
+  "lines": 25,
+  "book_mode_lines": 21,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 8,
+  "page_id": "69e7ac295f1a22ab19aa4ae4",
+  "book_id": "69e7ac295f1a22ab19aa4967",
+  "page_number": 381,
+  "lines": 16,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 9,
+  "page_id": "69e7ab575f1a22ab19a97040",
+  "book_id": "69e7ab575f1a22ab19a96ea6",
+  "page_number": 410,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "A",
+  "n": 10,
+  "page_id": "69e7abc75f1a22ab19a9df1f",
+  "book_id": "69e7abc75f1a22ab19a9deba",
+  "page_number": 101,
+  "lines": 17,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 1,
+  "page_id": "69e786b54a6785cfd60c944a",
+  "book_id": "69e786b54a6785cfd60c9444",
+  "page_number": 6,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 2,
+  "page_id": "69e787a24a6785cfd60cca60",
+  "book_id": "69e787a24a6785cfd60cca3f",
+  "page_number": 33,
+  "lines": 25,
+  "book_mode_lines": 24,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 3,
+  "page_id": "69e788b54a6785cfd60d1d0f",
+  "book_id": "69e788b54a6785cfd60d1cf0",
+  "page_number": 31,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "B",
+  "n": 4,
+  "page_id": "69e787214a6785cfd60cb206",
+  "book_id": "69e787214a6785cfd60cb0f4",
+  "page_number": 274,
+  "lines": 16,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 5,
+  "page_id": "69e77aa60fc6fc955e361283",
+  "book_id": "69e77aa60fc6fc955e361201",
+  "page_number": 130,
+  "lines": 24,
+  "book_mode_lines": 21,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 6,
+  "page_id": "69e788b04a6785cfd60d1b52",
+  "book_id": "69e788b04a6785cfd60d1adb",
+  "page_number": 119,
+  "lines": 17,
+  "book_mode_lines": 16,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 7,
+  "page_id": "69e76144cc48e59ad74eecd3",
+  "book_id": "69e76144cc48e59ad74eec94",
+  "page_number": 63,
+  "lines": 16,
+  "book_mode_lines": 12,
+  "by_eye": "undecided"
+ },
+ {
+  "set": "B",
+  "n": 8,
+  "page_id": "6a14e13d311a9edd4621dab7",
+  "book_id": "6a14e13d311a9edd4621da85",
+  "page_number": 50,
+  "lines": 16,
+  "book_mode_lines": 14,
+  "by_eye": "undecided"
+ },
+ {
+  "set": "B",
+  "n": 9,
+  "page_id": "69e7613fcc48e59ad74ee737",
+  "book_id": "69e7613fcc48e59ad74ee727",
+  "page_number": 16,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "B",
+  "n": 10,
+  "page_id": "69e7aaf95f1a22ab19a90a5d",
+  "book_id": "69e7aaf95f1a22ab19a909e5",
+  "page_number": 120,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "C",
+  "n": 1,
+  "page_id": "69e7ab4a5f1a22ab19a961ee",
+  "book_id": "69e7ab4a5f1a22ab19a96014",
+  "page_number": 474,
+  "lines": 17,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "C",
+  "n": 2,
+  "page_id": "69e7abfc5f1a22ab19aa1b09",
+  "book_id": "69e7abfc5f1a22ab19aa1917",
+  "page_number": 498,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "C",
+  "n": 3,
+  "page_id": "69e7ab1a5f1a22ab19a92f61",
+  "book_id": "69e7ab1a5f1a22ab19a92e84",
+  "page_number": 221,
+  "lines": 20,
+  "book_mode_lines": 14,
+  "by_eye": "invented line on page"
+ },
+ {
+  "set": "C",
+  "n": 4,
+  "page_id": "69e7ab605f1a22ab19a97b3c",
+  "book_id": "69e7ab605f1a22ab19a97afe",
+  "page_number": 62,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "undecided"
+ },
+ {
+  "set": "C",
+  "n": 5,
+  "page_id": "69e7ac325f1a22ab19aa54d0",
+  "book_id": "69e7ac325f1a22ab19aa53a1",
+  "page_number": 303,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "C",
+  "n": 6,
+  "page_id": "69e788124a6785cfd60ceed8",
+  "book_id": "69e788124a6785cfd60ceea9",
+  "page_number": 47,
+  "lines": 16,
+  "book_mode_lines": 15,
+  "by_eye": "not checked"
+ },
+ {
+  "set": "C",
+  "n": 7,
+  "page_id": "69e7ac035f1a22ab19aa247d",
+  "book_id": "69e7ac035f1a22ab19aa22e1",
+  "page_number": 412,
+  "lines": 16,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ },
+ {
+  "set": "C",
+  "n": 8,
+  "page_id": "69e7ab655f1a22ab19a9811d",
+  "book_id": "69e7ab655f1a22ab19a98091",
+  "page_number": 140,
+  "lines": 15,
+  "book_mode_lines": 14,
+  "by_eye": "repeat is on the leaf / line count matches"
+ }
+]

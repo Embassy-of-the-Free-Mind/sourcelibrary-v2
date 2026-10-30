@@ -1,0 +1,892 @@
+{
+ "de-blank-r2": {
+  "agy-flash-low@4": {
+   "6a26cf6b9aa67024da7ba838": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a9405541cd9a117d308947c": {
+    "written": true,
+    "text_chars": 2135
+   },
+   "69b51e5e9a81ef7feb3d3ed4": {
+    "written": true,
+    "text_chars": 1678
+   },
+   "6a26ce305ac5aecc53cf917b": {
+    "written": true,
+    "text_chars": 2287
+   },
+   "6a493e473c715f5afcd520b0": {
+    "written": true,
+    "text_chars": 5196
+   },
+   "6a26c9de5ac5aecc53ce3bed": {
+    "written": true,
+    "text_chars": 1765
+   },
+   "6a26cbbe5ac5aecc53cece7c": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "69bda03ef6d63c9197485c2b": {
+    "written": false,
+    "why": "reader tags the page <script>mixed</script>: --print-only"
+   },
+   "6a26d9aa863cf28d8f649a9a": {
+    "written": true,
+    "text_chars": 1290
+   },
+   "6a26c5f5aad44c98627db9b5": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "69aebe8cc0472fef6455b329": {
+    "written": true,
+    "text_chars": 2492
+   },
+   "6a4942c53c715f5afcd52e29": {
+    "written": true,
+    "text_chars": 2226
+   },
+   "6a493d5cf36483abc5bbb739": {
+    "written": true,
+    "text_chars": 2833
+   },
+   "6aa35e06e213def30d6caa40": {
+    "written": true,
+    "text_chars": 3970
+   },
+   "6a26d8276be3d771538c06c2": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a4950cab9cd91959af3bc5a": {
+    "written": true,
+    "text_chars": 1333
+   },
+   "6a26c638aad44c98627dda4d": {
+    "written": true,
+    "text_chars": 1901
+   },
+   "6aa1d4e977169abff162186d": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6a26d94ab93c5428e7451af7": {
+    "written": true,
+    "text_chars": 2119
+   },
+   "6a26c67eaad44c98627df610": {
+    "written": true,
+    "text_chars": 1959
+   },
+   "6a26d7816be3d771538bc7d0": {
+    "written": true,
+    "text_chars": 2624
+   },
+   "6a26d20cf5273a8d907a2535": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d8956be3d771538c3854": {
+    "written": true,
+    "text_chars": 1512
+   },
+   "6aa1d18277169abff16198d7": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d10cf5273a8d9079bf93": {
+    "written": true,
+    "text_chars": 172
+   },
+   "69b6ee19b1a3146c0525ee3f": {
+    "written": true,
+    "text_chars": 1757
+   },
+   "6a26d8a36be3d771538c3bee": {
+    "written": true,
+    "text_chars": 2337
+   },
+   "6a26c7f0aad44c98627e8aad": {
+    "written": true,
+    "text_chars": 1796
+   },
+   "6a491d75ae20621d947eb088": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a493d8dc643e4e3d3072465": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   }
+  },
+  "agy-flash-low@4>agy-flash-low": {
+   "6a26cf6b9aa67024da7ba838": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a9405541cd9a117d308947c": {
+    "written": true,
+    "text_chars": 2138
+   },
+   "69b51e5e9a81ef7feb3d3ed4": {
+    "written": true,
+    "text_chars": 1682
+   },
+   "6a26ce305ac5aecc53cf917b": {
+    "written": true,
+    "text_chars": 2287
+   },
+   "6a493e473c715f5afcd520b0": {
+    "written": true,
+    "text_chars": 5189
+   },
+   "6a26c9de5ac5aecc53ce3bed": {
+    "written": true,
+    "text_chars": 1765,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26cbbe5ac5aecc53cece7c": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "69bda03ef6d63c9197485c2b": {
+    "written": false,
+    "why": "agy-flash-low@4: reader tags the page <script>mixed</script>: --print-only"
+   },
+   "6a26d9aa863cf28d8f649a9a": {
+    "written": true,
+    "text_chars": 1290,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26c5f5aad44c98627db9b5": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "69aebe8cc0472fef6455b329": {
+    "written": true,
+    "text_chars": 2492,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a4942c53c715f5afcd52e29": {
+    "written": true,
+    "text_chars": 2224
+   },
+   "6a493d5cf36483abc5bbb739": {
+    "written": true,
+    "text_chars": 2833
+   },
+   "6aa35e06e213def30d6caa40": {
+    "written": true,
+    "text_chars": 3966
+   },
+   "6a26d8276be3d771538c06c2": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a4950cab9cd91959af3bc5a": {
+    "written": true,
+    "text_chars": 1342
+   },
+   "6a26c638aad44c98627dda4d": {
+    "written": true,
+    "text_chars": 1901
+   },
+   "6aa1d4e977169abff162186d": {
+    "written": false,
+    "why": "agy-flash-low@4: letters outside the book's scripts"
+   },
+   "6a26d94ab93c5428e7451af7": {
+    "written": true,
+    "text_chars": 2119
+   },
+   "6a26c67eaad44c98627df610": {
+    "written": true,
+    "text_chars": 1959,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26d7816be3d771538bc7d0": {
+    "written": true,
+    "text_chars": 2640
+   },
+   "6a26d20cf5273a8d907a2535": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d8956be3d771538c3854": {
+    "written": true,
+    "text_chars": 1512,
+    "served_base_read": "UNCHANGED"
+   },
+   "6aa1d18277169abff16198d7": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d10cf5273a8d9079bf93": {
+    "written": true,
+    "text_chars": 172,
+    "served_base_read": "UNCHANGED"
+   },
+   "69b6ee19b1a3146c0525ee3f": {
+    "written": true,
+    "text_chars": 1755
+   },
+   "6a26d8a36be3d771538c3bee": {
+    "written": true,
+    "text_chars": 2333
+   },
+   "6a26c7f0aad44c98627e8aad": {
+    "written": true,
+    "text_chars": 1811
+   },
+   "6a491d75ae20621d947eb088": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a493d8dc643e4e3d3072465": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   }
+  },
+  "agy-flash-low@4>agy-flash-low@4": {
+   "6a26cf6b9aa67024da7ba838": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a9405541cd9a117d308947c": {
+    "written": true,
+    "text_chars": 2136
+   },
+   "69b51e5e9a81ef7feb3d3ed4": {
+    "written": true,
+    "text_chars": 1678
+   },
+   "6a26ce305ac5aecc53cf917b": {
+    "written": true,
+    "text_chars": 2287
+   },
+   "6a493e473c715f5afcd520b0": {
+    "written": true,
+    "text_chars": 5196
+   },
+   "6a26c9de5ac5aecc53ce3bed": {
+    "written": true,
+    "text_chars": 1765,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26cbbe5ac5aecc53cece7c": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "69bda03ef6d63c9197485c2b": {
+    "written": false,
+    "why": "agy-flash-low@4: reader tags the page <script>mixed</script>: --print-only"
+   },
+   "6a26d9aa863cf28d8f649a9a": {
+    "written": true,
+    "text_chars": 1338
+   },
+   "6a26c5f5aad44c98627db9b5": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "69aebe8cc0472fef6455b329": {
+    "written": true,
+    "text_chars": 2492,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a4942c53c715f5afcd52e29": {
+    "written": true,
+    "text_chars": 2226,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a493d5cf36483abc5bbb739": {
+    "written": true,
+    "text_chars": 2831
+   },
+   "6aa35e06e213def30d6caa40": {
+    "written": true,
+    "text_chars": 3970
+   },
+   "6a26d8276be3d771538c06c2": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a4950cab9cd91959af3bc5a": {
+    "written": true,
+    "text_chars": 1333
+   },
+   "6a26c638aad44c98627dda4d": {
+    "written": true,
+    "text_chars": 1900
+   },
+   "6aa1d4e977169abff162186d": {
+    "written": false,
+    "why": "agy-flash-low@4: letters outside the book's scripts"
+   },
+   "6a26d94ab93c5428e7451af7": {
+    "written": true,
+    "text_chars": 2119,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26c67eaad44c98627df610": {
+    "written": true,
+    "text_chars": 1957
+   },
+   "6a26d7816be3d771538bc7d0": {
+    "written": true,
+    "text_chars": 2624,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26d20cf5273a8d907a2535": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d8956be3d771538c3854": {
+    "written": true,
+    "text_chars": 1512
+   },
+   "6aa1d18277169abff16198d7": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26d10cf5273a8d9079bf93": {
+    "written": true,
+    "text_chars": 172,
+    "served_base_read": "UNCHANGED"
+   },
+   "69b6ee19b1a3146c0525ee3f": {
+    "written": true,
+    "text_chars": 1756
+   },
+   "6a26d8a36be3d771538c3bee": {
+    "written": true,
+    "text_chars": 2337,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a26c7f0aad44c98627e8aad": {
+    "written": true,
+    "text_chars": 1796,
+    "served_base_read": "UNCHANGED"
+   },
+   "6a491d75ae20621d947eb088": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a493d8dc643e4e3d3072465": {
+    "written": false,
+    "why": "agy-flash-low@4: reply wrapper: reply cut before <<<END>>>"
+   }
+  }
+ },
+ "fr-blank-r2": {
+  "agy-flash-low": {
+   "6a26d2cdf5273a8d907a646f": {
+    "written": true,
+    "text_chars": 1878
+   },
+   "6aa35d73e213def30d6c8bb6": {
+    "written": true,
+    "text_chars": 680
+   },
+   "6a477ce21874da9b1a9a52e1": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6aa331a30583d2ccd3f13587": {
+    "written": false,
+    "why": "more than one transcription header: restarted or refused read"
+   },
+   "6a9f3f8a83c3b522416e3486": {
+    "written": true,
+    "text_chars": 2411
+   },
+   "6aa1d31d77169abff161d833": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26dae005d7c1d9b1089d3d": {
+    "written": true,
+    "text_chars": 1217
+   },
+   "6a94b1f3281341c253e71297": {
+    "written": false,
+    "why": "more than one transcription header: restarted or refused read"
+   },
+   "69bed3606e375f0fb686f683": {
+    "written": true,
+    "text_chars": 1545
+   },
+   "6a243c3e0f0e4f405e62d598": {
+    "written": true,
+    "text_chars": 4059
+   },
+   "6aa1d22277169abff161aa41": {
+    "written": true,
+    "text_chars": 2056
+   },
+   "6a26ced1d8d546457e31ea0d": {
+    "written": true,
+    "text_chars": 974
+   },
+   "6a26d8f7774aa3596e88bf5d": {
+    "written": true,
+    "text_chars": 1094
+   },
+   "6aa1d4c477169abff1620e58": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6a9f3fba83c3b522416e5764": {
+    "written": true,
+    "text_chars": 1219
+   },
+   "69b9056dcdb14f317fb521dd": {
+    "written": true,
+    "text_chars": 2314
+   },
+   "69bd9e95f6d63c919747bcf2": {
+    "written": true,
+    "text_chars": 1715
+   },
+   "6aa35dbae213def30d6c9aee": {
+    "written": true,
+    "text_chars": 1466
+   },
+   "6a243de50f0e4f405e6324b2": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "69bed1566e375f0fb686f247": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "69bc81b6173577a33741eaa1": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6a26d8b26be3d771538c45d4": {
+    "written": true,
+    "text_chars": 1431
+   },
+   "6aa1d35777169abff161df4e": {
+    "written": true,
+    "text_chars": 2167
+   },
+   "6aa1d33a77169abff161dbee": {
+    "written": true,
+    "text_chars": 1362
+   },
+   "6a9f3f8e83c3b522416e3799": {
+    "written": true,
+    "text_chars": 2276
+   },
+   "69ac5fbc4f76006bddda3be2": {
+    "written": false,
+    "why": "reply wrapper: no <<<BEGIN>>> marker"
+   },
+   "69bd9e016120d54bd037a879": {
+    "written": true,
+    "text_chars": 2385
+   },
+   "6aa1d24477169abff161b557": {
+    "written": true,
+    "text_chars": 2032
+   },
+   "6aa1d20077169abff161a8c7": {
+    "written": true,
+    "text_chars": 1208
+   },
+   "6aa3314d0583d2ccd3f12a7b": {
+    "written": true,
+    "text_chars": 1847
+   }
+  },
+  "agy-flash-low@4": {
+   "6a26d2cdf5273a8d907a646f": {
+    "written": true,
+    "text_chars": 1937
+   },
+   "6aa35d73e213def30d6c8bb6": {
+    "written": true,
+    "text_chars": 674
+   },
+   "6a477ce21874da9b1a9a52e1": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6aa331a30583d2ccd3f13587": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a9f3f8a83c3b522416e3486": {
+    "written": true,
+    "text_chars": 2396
+   },
+   "6aa1d31d77169abff161d833": {
+    "written": false,
+    "why": "reply wrapper: reply cut before <<<END>>>"
+   },
+   "6a26dae005d7c1d9b1089d3d": {
+    "written": true,
+    "text_chars": 1339
+   },
+   "6a94b1f3281341c253e71297": {
+    "written": false,
+    "why": "more than one transcription header: restarted or refused read"
+   },
+   "69bed3606e375f0fb686f683": {
+    "written": true,
+    "text_chars": 1539
+   },
+   "6a243c3e0f0e4f405e62d598": {
+    "written": true,
+    "text_chars": 4019
+   },
+   "6aa1d22277169abff161aa41": {
+    "written": true,
+    "text_chars": 2068
+   },
+   "6a26ced1d8d546457e31ea0d": {
+    "written": true,
+    "text_chars": 980
+   },
+   "6a26d8f7774aa3596e88bf5d": {
+    "written": true,
+    "text_chars": 890
+   },
+   "6aa1d4c477169abff1620e58": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6a9f3fba83c3b522416e5764": {
+    "written": true,
+    "text_chars": 1251
+   },
+   "69b9056dcdb14f317fb521dd": {
+    "written": true,
+    "text_chars": 2319
+   },
+   "69bd9e95f6d63c919747bcf2": {
+    "written": true,
+    "text_chars": 1671
+   },
+   "6aa35dbae213def30d6c9aee": {
+    "written": true,
+    "text_chars": 1458
+   },
+   "6a243de50f0e4f405e6324b2": {
+    "written": true,
+    "text_chars": 834
+   },
+   "69bed1566e375f0fb686f247": {
+    "written": true,
+    "text_chars": 1702
+   },
+   "69bc81b6173577a33741eaa1": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "6a26d8b26be3d771538c45d4": {
+    "written": true,
+    "text_chars": 1396
+   },
+   "6aa1d35777169abff161df4e": {
+    "written": true,
+    "text_chars": 2157
+   },
+   "6aa1d33a77169abff161dbee": {
+    "written": true,
+    "text_chars": 1323
+   },
+   "6a9f3f8e83c3b522416e3799": {
+    "written": true,
+    "text_chars": 2286
+   },
+   "69ac5fbc4f76006bddda3be2": {
+    "written": true,
+    "text_chars": 2601
+   },
+   "69bd9e016120d54bd037a879": {
+    "written": true,
+    "text_chars": 2276
+   },
+   "6aa1d24477169abff161b557": {
+    "written": true,
+    "text_chars": 2070
+   },
+   "6aa1d20077169abff161a8c7": {
+    "written": true,
+    "text_chars": 1051
+   },
+   "6aa3314d0583d2ccd3f12a7b": {
+    "written": true,
+    "text_chars": 1786
+   }
+  }
+ },
+ "la-armc": {
+  "pero>agy-flash-low": {
+   "69b6a39b080b19f98fd1b59f": {
+    "written": true,
+    "text_chars": 5032
+   },
+   "69b6f7463c7947b468d60844": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6e6e9f8a84d859cddd289": {
+    "written": false,
+    "why": "not read"
+   },
+   "69b6c5f48566c8381466d69d": {
+    "written": true,
+    "text_chars": 1769
+   },
+   "69b6be278566c83814642b5e": {
+    "written": true,
+    "text_chars": 1807
+   },
+   "69b6f82d3c7947b468d67862": {
+    "written": true,
+    "text_chars": 1367
+   },
+   "69b6326f1c1c21a373810f25": {
+    "written": true,
+    "text_chars": 1321
+   },
+   "69b641641c1c21a373883206": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b66ce1b3f4fc04415897ac": {
+    "written": true,
+    "text_chars": 1600
+   },
+   "69b63ba11c1c21a37384e56a": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6f07db1a3146c0526dd47": {
+    "written": true,
+    "text_chars": 2061
+   },
+   "69b6512518b87551bfca5ae8": {
+    "written": true,
+    "text_chars": 1573
+   },
+   "69b66609b3f4fc0441558885": {
+    "written": true,
+    "text_chars": 1482
+   },
+   "69b68dae2368e1fad3227f34": {
+    "written": true,
+    "text_chars": 2494
+   },
+   "69b6e8baf8a84d859cde9b20": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b691c3080b19f98fce488b": {
+    "written": true,
+    "text_chars": 2022
+   },
+   "69b6bec98566c838146465f3": {
+    "written": true,
+    "text_chars": 1113
+   },
+   "69b6c32d8566c8381465f25f": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6fb6a3c7947b468d7be32": {
+    "written": true,
+    "text_chars": 1993
+   },
+   "69b66423b3f4fc044154e2fe": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b679ee70c69d645a6f9652": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6b75718823df6d699700f": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b689d52368e1fad3217bfc": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6381a1c1c21a373834f0d": {
+    "written": true,
+    "text_chars": 3364
+   },
+   "69b6f4733c7947b468d4519b": {
+    "written": true,
+    "text_chars": 646
+   },
+   "69b6870b70c69d645a747704": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6c7ba6bf2c798f8400a0a": {
+    "written": true,
+    "text_chars": 1452
+   },
+   "69b6b5e296dc15d4a16ea3c7": {
+    "written": true,
+    "text_chars": 2600
+   },
+   "69b6b2b7ddbd97d443a9f063": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b685bd70c69d645a73c5e2": {
+    "written": true,
+    "text_chars": 2485
+   }
+  },
+  "pero>agy-flash-low#diff_guard": {
+   "pages_flagged": 5,
+   "put_back": 6,
+   "negation": 2,
+   "number": 4,
+   "expansion": 0,
+   "long_s_tells": 0
+  },
+  "pero>agy-flash-low@4": {
+   "69b6a39b080b19f98fd1b59f": {
+    "written": true,
+    "text_chars": 4993
+   },
+   "69b6f7463c7947b468d60844": {
+    "written": true,
+    "text_chars": 1331
+   },
+   "69b6e6e9f8a84d859cddd289": {
+    "written": false,
+    "why": "not read"
+   },
+   "69b6c5f48566c8381466d69d": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6be278566c83814642b5e": {
+    "written": true,
+    "text_chars": 1839
+   },
+   "69b6f82d3c7947b468d67862": {
+    "written": true,
+    "text_chars": 1354
+   },
+   "69b6326f1c1c21a373810f25": {
+    "written": false,
+    "why": "corrector tags the page <script>handwritten</script>: the GPU-draft route is print only"
+   },
+   "69b641641c1c21a373883206": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b66ce1b3f4fc04415897ac": {
+    "written": true,
+    "text_chars": 1674
+   },
+   "69b63ba11c1c21a37384e56a": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6f07db1a3146c0526dd47": {
+    "written": true,
+    "text_chars": 2058
+   },
+   "69b6512518b87551bfca5ae8": {
+    "written": true,
+    "text_chars": 1596
+   },
+   "69b66609b3f4fc0441558885": {
+    "written": true,
+    "text_chars": 1502
+   },
+   "69b68dae2368e1fad3227f34": {
+    "written": true,
+    "text_chars": 2508
+   },
+   "69b6e8baf8a84d859cde9b20": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b691c3080b19f98fce488b": {
+    "written": true,
+    "text_chars": 1983
+   },
+   "69b6bec98566c838146465f3": {
+    "written": true,
+    "text_chars": 1151
+   },
+   "69b6c32d8566c8381465f25f": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6fb6a3c7947b468d7be32": {
+    "written": true,
+    "text_chars": 1906
+   },
+   "69b66423b3f4fc044154e2fe": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b679ee70c69d645a6f9652": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6b75718823df6d699700f": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b689d52368e1fad3217bfc": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6381a1c1c21a373834f0d": {
+    "written": true,
+    "text_chars": 3157
+   },
+   "69b6f4733c7947b468d4519b": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b6870b70c69d645a747704": {
+    "written": false,
+    "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread"
+   },
+   "69b6c7ba6bf2c798f8400a0a": {
+    "written": true,
+    "text_chars": 1394
+   },
+   "69b6b5e296dc15d4a16ea3c7": {
+    "written": true,
+    "text_chars": 2515
+   },
+   "69b6b2b7ddbd97d443a9f063": {
+    "written": false,
+    "why": "letters outside the book's scripts"
+   },
+   "69b685bd70c69d645a73c5e2": {
+    "written": true,
+    "text_chars": 2400
+   }
+  },
+  "pero>agy-flash-low@4#diff_guard": {
+   "pages_flagged": 7,
+   "put_back": 8,
+   "negation": 2,
+   "number": 6,
+   "expansion": 0,
+   "long_s_tells": 0
+  }
+ }
+}

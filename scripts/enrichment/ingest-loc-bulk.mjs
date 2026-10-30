@@ -361,7 +361,7 @@ async function download(url, dest) {
       '--retry', '5', '--retry-delay', '3', '--retry-all-errors',
       '--connect-timeout', '30', '--max-time', '1800',
       '-C', '-', // resume a partial file rather than restarting 70MB
-      '--user-agent', 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set build)',
+      '--user-agent', 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) reference-set-build',
       '-o', dest, url,
     ], { encoding: 'utf8' });
 

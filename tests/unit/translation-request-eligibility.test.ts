@@ -45,6 +45,17 @@ describe('requestVerdict', () => {
     expect(requestVerdict({ ...base, book: { ...book, visible: false }, repeat: undefined, tail: 1 }).verdict).toBe('refuse');
   });
 
+  it('lane options (#7599): an allowlisted hold and a page awaiting OCR pass; nothing else loosens', () => {
+    const held = { ...book, pipeline_auto: { status: 'held', hold: { reason: 'x' } } };
+    expect(requestVerdict({ ...base, book: held, holdAllowed: true }).verdict).toBe('auto');
+    expect(requestVerdict({ ...base, book: held }).verdict).toBe('refuse');
+    const noOcr = { page_number: 7, translation: {} };
+    expect(requestVerdict({ ...base, page: noOcr }).reason).toMatch(/no-ocr/);
+    expect(requestVerdict({ ...base, page: noOcr, ocrPending: true }).verdict).toBe('auto');
+    expect(requestVerdict({ ...base, page: { ...noOcr, page_number: 0 }, ocrPending: true }).verdict).toBe('refuse');
+    expect(requestVerdict({ ...base, book: { ...held, visible: false }, holdAllowed: true }).verdict).toBe('refuse');
+  });
+
   it('an already-translated page is done, not spent on', () => {
     expect(requestVerdict({ ...base, page: { ...page, translation: { data: 'x'.repeat(40) } } }).verdict).toBe('done');
   });

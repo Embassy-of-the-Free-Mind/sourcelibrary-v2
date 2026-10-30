@@ -33,12 +33,30 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # GPU task queue (#6871): `gpu-queue.sh add <task.sh>` queues; this starts the next one when nothing is running.
 */5 * * * * /root/bin/gpu-queue.sh run >> /var/log/sourcelibrary/gpu-queue.log 2>&1  # GPU task queue, one at a time under /root/gpu.lock (#6871)
-# SigLIP2 full page embed (#6871 row 8): queue the next zz-siglip2-full-cNNN chunk only when no other task is pending, at most
-# two ahead (scripts/gpu/siglip2-6871/siglip2-requeue.sh; installed copy in /root/jobs/siglip2-6871/code-full/). INSTALLED
-# 2026-10-26 17:02 UTC by job siglip-full-6871-mv. Pause: touch /root/jobs/siglip2-6871/full/PAUSE. Remove when all 16 chunks are done.
-2,32 * * * * /root/jobs/siglip2-6871/code-full/siglip2-requeue.sh >> /var/log/sourcelibrary/siglip2-requeue.log 2>&1  # next SigLIP2 embed chunk only when no other GPU task is pending, max 2 ahead (#6871)
+# OCR filler (#6871, Derek 2026-10-28 "we have plenty of GPU OCR to do"): when nothing is pending or running and nobody holds
+# /root/gpu.lock, queue ONE zy-ocr-<route>-cNNN chunk of the first gated route in ocr-filler-routes.tsv with pages left
+# (scripts/gpu/ocr-filler.sh; installed copy + routes file in /root/bin/). Pause: touch /root/gpu-queue/ocr-filler/PAUSE.
+# It replaces the SigLIP2 requeue line (2,32 … /root/jobs/siglip2-6871/code-full/siglip2-requeue.sh), removed 2026-10-28 by job
+# gpu-ocr-filler-6871. Since 2026-10-29 the filler itself runs that script as the BACKFILL when no OCR route has
+# pages (Derek: no idle card), and pages ntfy after 2 h idle. The requeue line stays out of cron.
+*/10 * * * * /root/bin/ocr-filler.sh run >> /var/log/sourcelibrary/ocr-filler.log 2>&1  # #6871
 
 # Archiver host lanes (#5448): start the gex45 lanes of scripts/catalog-coverage/archive-lanes.json (ia-lazy) that have no tmux
 # session. INSTALLED 2026-10-26 ~08:00 UTC from the laptop session, with libopenjp2-tools + unzip (needed by --ia-zip; without
 # them the lane archives page by page). Previous crontab: /root/crontab.bak.*
 */10 * * * * f=/root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh; [ -x $f ] && ARCHIVE_LANES_BOX=gex45 $f >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1  # #5448
+
+# CLI OCR correction lane (#7558, moved off CPU-bound main by #7263): Flash-Lite drafts of visible German/French books corrected by
+# 3.8 Flash low through agy, on BOTH Gemini pools, each run stopping when its pool's weekly is under the straight line to its reset
+# (so each pool is spent toward ~0 by then, Derek 2026-10-28) or its 5 h bucket is under 25%. The two runs share one ledger and claim
+# books, so they never take the same page. Guarded until the lane code takes --agy-home (PR #7594).
+50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/root/jobs/cli-ocr-correct/$(date +\%F) --max-pages=2400 --concurrency=4 --book-chunk=40 --deadline-min=95 --agy-home=default --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558 #7263 main pool (dereklomas@)
+20 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct-james.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/root/jobs/cli-ocr-correct/$(date +\%F) --max-pages=3000 --concurrency=6 --book-chunk=40 --deadline-min=95 --agy-home=/root/.agy-james --apply >> /var/log/sourcelibrary/cli-ocr-correct-james.log 2>&1  # #7263 second pool (jamesdereklomas@)
+
+# Weekly offsite database backups -> restic (Hetzner Object Storage), each with a read-back rehearsal; #7708 (2026-10-29).
+# Mongo: every bookstore collection not in backup-books/backup-corpus-text (tag mongo-rest). Supabase: whole DB, pg_dump 17 (tag supabase).
+0 3 * * 1 f=/root/sourcelibrary/scripts/workers/backup-mongo-rest.sh; [ -x $f ] && flock -n /tmp/sl-backup-mongo-rest.lock $f  # #7708
+0 3 * * 3 f=/root/sourcelibrary/scripts/workers/backup-supabase.sh; [ -x $f ] && flock -n /tmp/sl-backup-supabase.lock $f  # #7708
+
+# Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
+9 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box gex45 >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)

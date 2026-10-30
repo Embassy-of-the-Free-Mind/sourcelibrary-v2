@@ -1,0 +1,879 @@
+{
+ "generated_by": "scripts/eval/router-next-7263/waiting-split.mjs",
+ "at": "2026-10-28T12:11:51.602Z",
+ "books_per_cell": 120,
+ "cells": {
+  "latin-lite": {
+   "frame": {
+    "language": "Latin",
+    "draft": "lite"
+   },
+   "candidates": 4832,
+   "exact": false,
+   "books_counted": 115,
+   "pages_counted": 63159,
+   "conflict_pages": 3,
+   "by_book_majority_pages": 107,
+   "share": {
+    "print": 0.9695095418449952,
+    "manuscript": 0.03049045815500484,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9462603035290441,
+      0.9911864519003862
+     ],
+     "manuscript": [
+      0.008813548099613605,
+      0.05373969647095573
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "latin-flash3": {
+   "frame": {
+    "language": "Latin",
+    "draft": "flash3"
+   },
+   "candidates": 14295,
+   "exact": false,
+   "books_counted": 117,
+   "pages_counted": 57413,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 15632,
+   "share": {
+    "print": 0.5253568727688047,
+    "manuscript": 0.05797646056452866,
+    "unknown": 0.4166666666666667,
+    "ci90": {
+     "print": [
+      0.45083857608528105,
+      0.5913783349149578
+     ],
+     "manuscript": [
+      0.025836109962380248,
+      0.09429470281419983
+     ],
+     "unknown": [
+      0.35,
+      0.5
+     ]
+    }
+   }
+  },
+  "german-lite": {
+   "frame": {
+    "language": "German",
+    "draft": "lite"
+   },
+   "candidates": 2363,
+   "exact": false,
+   "books_counted": 111,
+   "pages_counted": 103221,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 235,
+   "share": {
+    "print": 0.9784825717767122,
+    "manuscript": 0.021517428223288323,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9587156954768392,
+      0.9927681609238196
+     ],
+     "manuscript": [
+      0.007231839076180539,
+      0.041284304523160675
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "german-flash3": {
+   "frame": {
+    "language": "German",
+    "draft": "flash3"
+   },
+   "candidates": 3892,
+   "exact": false,
+   "books_counted": 109,
+   "pages_counted": 55675,
+   "conflict_pages": 2,
+   "by_book_majority_pages": 8546,
+   "share": {
+    "print": 0.3949635146226077,
+    "manuscript": 0.005052208647832586,
+    "unknown": 0.5999842767295597,
+    "ci90": {
+     "print": [
+      0.32151705820634496,
+      0.47111816063576195
+     ],
+     "manuscript": [
+      0.002385654612132955,
+      0.007816360048622524
+     ],
+     "unknown": [
+      0.5249842767295597,
+      0.6749842767295597
+     ]
+    }
+   }
+  },
+  "german-tr-flash3": {
+   "frame": {
+    "language": "German",
+    "draft": null,
+    "tr": "^gemini-3-flash"
+   },
+   "candidates": 4622,
+   "exact": false,
+   "books_counted": 119,
+   "pages_counted": 36803,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 4942,
+   "share": {
+    "print": 0.6581677222905081,
+    "manuscript": 0.019798379404407044,
+    "unknown": 0.3220338983050847,
+    "ci90": {
+     "print": [
+      0.5572575810711924,
+      0.7625634824858876
+     ],
+     "manuscript": [
+      0.0012218284442837585,
+      0.054378601471890685
+     ],
+     "unknown": [
+      0.22033898305084745,
+      0.42105263157894735
+     ]
+    }
+   }
+  },
+  "german-tr-lite": {
+   "frame": {
+    "language": "German",
+    "draft": null,
+    "tr": "flash-lite"
+   },
+   "candidates": 4622,
+   "exact": false,
+   "books_counted": 118,
+   "pages_counted": 11348,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 538,
+   "share": {
+    "print": 0.906249095523105,
+    "manuscript": 0.0028418135678042115,
+    "unknown": 0.09090909090909091,
+    "ci90": {
+     "print": [
+      0.8213422828057839,
+      0.9947662057727165
+     ],
+     "manuscript": [
+      0.00041357289623610726,
+      0.005942648745254517
+     ],
+     "unknown": [
+      0,
+      0.17647058823529413
+     ]
+    }
+   }
+  },
+  "french-lite": {
+   "frame": {
+    "language": "French",
+    "draft": "lite"
+   },
+   "candidates": 571,
+   "exact": false,
+   "books_counted": 97,
+   "pages_counted": 87105,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 741,
+   "share": {
+    "print": 0.9486293795296735,
+    "manuscript": 0.05137062047032665,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9150167357922252,
+      0.973774998376132
+     ],
+     "manuscript": [
+      0.026225001623868472,
+      0.08498326420777455
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "greek-flash3": {
+   "frame": {
+    "language": "Greek",
+    "draft": "flash3"
+   },
+   "candidates": 1191,
+   "exact": false,
+   "books_counted": 114,
+   "pages_counted": 68547,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 10982,
+   "share": {
+    "print": 0.4973921519534526,
+    "manuscript": 0.110957781645485,
+    "unknown": 0.3916500664010624,
+    "ci90": {
+     "print": [
+      0.4220052840782948,
+      0.5679376543242415
+     ],
+     "manuscript": [
+      0.06764890731595367,
+      0.15660798375177062
+     ],
+     "unknown": [
+      0.3249667994687915,
+      0.4666500664010624
+     ]
+    }
+   }
+  },
+  "tibetan-yigdzin": {
+   "frame": {
+    "language": "Tibetan",
+    "draft": "yigdzin"
+   },
+   "candidates": 1464,
+   "exact": false,
+   "books_counted": 111,
+   "pages_counted": 41784,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 28458,
+   "share": {
+    "print": 0.02047199065009874,
+    "manuscript": 0.9712301370094757,
+    "unknown": 0.008297872340425531,
+    "ci90": {
+     "print": [
+      0.0036063517781338233,
+      0.04403296478972372
+     ],
+     "manuscript": [
+      0.9466942309412231,
+      0.9892858731656972
+     ],
+     "unknown": [
+      0,
+      0.024893617021276595
+     ]
+    }
+   }
+  },
+  "zh-paddle-dice-lt090": {
+   "frame": {
+    "language": "Chinese",
+    "draft": "paddle",
+    "guarded": false,
+    "dice": "lt0.90"
+   },
+   "candidates": 10114,
+   "exact": false,
+   "books_counted": 119,
+   "pages_counted": 12086,
+   "conflict_pages": 1178,
+   "by_book_majority_pages": 0,
+   "share": {
+    "print": 0,
+    "manuscript": 1,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0,
+      0
+     ],
+     "manuscript": [
+      1,
+      1
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "chinese-flash3": {
+   "frame": {
+    "language": "Chinese",
+    "draft": "flash3"
+   },
+   "candidates": 10800,
+   "exact": false,
+   "books_counted": 116,
+   "pages_counted": 12656,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 2710,
+   "share": {
+    "print": 0.8155815172258986,
+    "manuscript": 0.10108514944076773,
+    "unknown": 0.08333333333333333,
+    "ci90": {
+     "print": [
+      0.7609616092995052,
+      0.866765234652263
+     ],
+     "manuscript": [
+      0.06777851163412997,
+      0.14103263904266905
+     ],
+     "unknown": [
+      0.041666666666666664,
+      0.13333333333333333
+     ]
+    }
+   }
+  },
+  "zh-frame-6871": {
+   "frame": {
+    "language": "Chinese",
+    "draft": "paddle",
+    "guarded": true
+   },
+   "candidates": 190,
+   "exact": false,
+   "books_counted": 83,
+   "pages_counted": 16494,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 0,
+   "share": {
+    "print": 0,
+    "manuscript": 1,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0,
+      0
+     ],
+     "manuscript": [
+      1,
+      1
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "hebrew-flash3": {
+   "frame": {
+    "language": "Hebrew",
+    "draft": "flash3"
+   },
+   "candidates": 237,
+   "exact": false,
+   "books_counted": 78,
+   "pages_counted": 55756,
+   "conflict_pages": 2,
+   "by_book_majority_pages": 18375,
+   "share": {
+    "print": 0.10703558863704633,
+    "manuscript": 0.28466217255698356,
+    "unknown": 0.6083022388059701,
+    "ci90": {
+     "print": [
+      0.06561082561605439,
+      0.15642054762378296
+     ],
+     "manuscript": [
+      0.2093750042302814,
+      0.35108746065291285
+     ],
+     "unknown": [
+      0.5333333333333333,
+      0.6916355721393034
+     ]
+    }
+   }
+  },
+  "arabic-flash3": {
+   "frame": {
+    "language": "Arabic",
+    "draft": "flash3"
+   },
+   "candidates": 231,
+   "exact": false,
+   "books_counted": 66,
+   "pages_counted": 50036,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 10328,
+   "share": {
+    "print": 0.22404590593937318,
+    "manuscript": 0.4759540940606269,
+    "unknown": 0.3,
+    "ci90": {
+     "print": [
+      0.16582978020414163,
+      0.2799470184420997
+     ],
+     "manuscript": [
+      0.40802981701480434,
+      0.5496927858433246
+     ],
+     "unknown": [
+      0.24166666666666667,
+      0.36666666666666664
+     ]
+    }
+   }
+  },
+  "zh-siku-tr": {
+   "frame": {
+    "language": "Chinese",
+    "draft": "paddle",
+    "note": "proxy: the Paddle (Siku) pages; the cell is the 10-12 Siku retranslation census"
+   },
+   "candidates": 11282,
+   "exact": false,
+   "books_counted": 120,
+   "pages_counted": 18301,
+   "conflict_pages": 2069,
+   "by_book_majority_pages": 0,
+   "share": {
+    "print": 0,
+    "manuscript": 1,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0,
+      0
+     ],
+     "manuscript": [
+      1,
+      1
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "zh-lite": {
+   "frame": {
+    "language": "Chinese",
+    "draft": "lite"
+   },
+   "candidates": 377,
+   "exact": false,
+   "books_counted": 77,
+   "pages_counted": 26230,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 328,
+   "share": {
+    "print": 0.9907818052471373,
+    "manuscript": 0.009218194752862875,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9866542567741505,
+      0.9943908721878848
+     ],
+     "manuscript": [
+      0.0056091278121155295,
+      0.013345743225849483
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "greek-lite": {
+   "frame": {
+    "language": "Greek",
+    "draft": "lite"
+   },
+   "candidates": 431,
+   "exact": false,
+   "books_counted": 71,
+   "pages_counted": 51494,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 213,
+   "share": {
+    "print": 0.298226901736298,
+    "manuscript": 0.7017730982637016,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.232720499881762,
+      0.3669766784212153
+     ],
+     "manuscript": [
+      0.633023321578785,
+      0.767279500118238
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "sanskrit-lite": {
+   "frame": {
+    "language": "Sanskrit",
+    "draft": "lite"
+   },
+   "candidates": 416,
+   "exact": false,
+   "books_counted": 89,
+   "pages_counted": 57347,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 51,
+   "share": {
+    "print": 0.9272122456459478,
+    "manuscript": 0.06278775435405225,
+    "unknown": 0.01,
+    "ci90": {
+     "print": [
+      0.8769418632087458,
+      0.9695758410039702
+     ],
+     "manuscript": [
+      0.02381098920686694,
+      0.11197646303051381
+     ],
+     "unknown": [
+      0,
+      0.02922077922077922
+     ]
+    }
+   }
+  },
+  "arabic-lite": {
+   "frame": {
+    "language": "Arabic",
+    "draft": "lite"
+   },
+   "candidates": 146,
+   "exact": false,
+   "books_counted": 62,
+   "pages_counted": 52813,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 346,
+   "share": {
+    "print": 0.6259001587461545,
+    "manuscript": 0.3740998412538457,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.5546232027868583,
+      0.6924529336049297
+     ],
+     "manuscript": [
+      0.30754706639507007,
+      0.4453767972131418
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "italian-lite": {
+   "frame": {
+    "language": "Italian",
+    "draft": "lite"
+   },
+   "candidates": 323,
+   "exact": false,
+   "books_counted": 63,
+   "pages_counted": 64116,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 256,
+   "share": {
+    "print": 0.9627732683195579,
+    "manuscript": 0.03722673168044206,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9371729689442263,
+      0.987428433681891
+     ],
+     "manuscript": [
+      0.012571566318109158,
+      0.06282703105577359
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "spanish-lite": {
+   "frame": {
+    "language": "Spanish",
+    "draft": "lite"
+   },
+   "candidates": 167,
+   "exact": false,
+   "books_counted": 77,
+   "pages_counted": 15337,
+   "conflict_pages": 1,
+   "by_book_majority_pages": 158,
+   "share": {
+    "print": 0.9732324174202426,
+    "manuscript": 0.02676758257975734,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9588711464133824,
+      0.9846397919875758
+     ],
+     "manuscript": [
+      0.015360208012424463,
+      0.04112885358661757
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "korean-lite": {
+   "frame": {
+    "language": "Korean",
+    "draft": "lite"
+   },
+   "candidates": 260,
+   "exact": false,
+   "books_counted": 73,
+   "pages_counted": 7145,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 110,
+   "share": {
+    "print": 0.4406578683953515,
+    "manuscript": 0.5593421316046485,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.33212161656990574,
+      0.550147237328691
+     ],
+     "manuscript": [
+      0.44985276267130914,
+      0.6678783834300944
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "russian-lite": {
+   "frame": {
+    "language": "Russian",
+    "draft": "lite"
+   },
+   "candidates": 310,
+   "exact": false,
+   "books_counted": 97,
+   "pages_counted": 11011,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 24,
+   "share": {
+    "print": 0.9988455363727885,
+    "manuscript": 0.0011544636272114816,
+    "unknown": 0,
+    "ci90": {
+     "print": [
+      0.9974877789798454,
+      0.999858276643991
+     ],
+     "manuscript": [
+      0.0001417233560090703,
+      0.002512221020154666
+     ],
+     "unknown": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  "portuguese-lite": {
+   "frame": {
+    "language": "Portuguese",
+    "draft": "lite"
+   },
+   "candidates": 19,
+   "exact": true,
+   "books_counted": 19,
+   "pages_counted": 2130,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 28,
+   "share": {
+    "print": 0.9352112676056338,
+    "manuscript": 0.0647887323943662,
+    "unknown": 0
+   }
+  },
+  "danish-lite": {
+   "frame": {
+    "language": "Danish",
+    "draft": "lite"
+   },
+   "candidates": 14,
+   "exact": true,
+   "books_counted": 14,
+   "pages_counted": 5620,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 88,
+   "share": {
+    "print": 0.9991103202846975,
+    "manuscript": 0.0008896797153024911,
+    "unknown": 0
+   }
+  },
+  "hindi-lite": {
+   "frame": {
+    "language": "Hindi",
+    "draft": "lite"
+   },
+   "candidates": 13,
+   "exact": true,
+   "books_counted": 13,
+   "pages_counted": 65,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 0,
+   "share": {
+    "print": 1,
+    "manuscript": 0,
+    "unknown": 0
+   }
+  },
+  "middle-english-lite": {
+   "frame": {
+    "language": "Middle English",
+    "draft": "lite"
+   },
+   "candidates": 29,
+   "exact": true,
+   "books_counted": 29,
+   "pages_counted": 4773,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 53,
+   "share": {
+    "print": 0.6723234862769747,
+    "manuscript": 0.32767651372302536,
+    "unknown": 0
+   }
+  },
+  "mhg-lite": {
+   "frame": {
+    "language": "Middle High German",
+    "draft": "lite"
+   },
+   "candidates": 10,
+   "exact": true,
+   "books_counted": 10,
+   "pages_counted": 1049,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 24,
+   "share": {
+    "print": 0.2917063870352717,
+    "manuscript": 0.7082936129647283,
+    "unknown": 0
+   }
+  },
+  "old-french-lite": {
+   "frame": {
+    "language": "Old French",
+    "draft": "lite"
+   },
+   "candidates": 17,
+   "exact": true,
+   "books_counted": 17,
+   "pages_counted": 2307,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 37,
+   "share": {
+    "print": 0.8344169917641959,
+    "manuscript": 0.16558300823580407,
+    "unknown": 0
+   }
+  },
+  "ottoman-lite": {
+   "frame": {
+    "language": "Ottoman Turkish",
+    "draft": "lite"
+   },
+   "candidates": 20,
+   "exact": true,
+   "books_counted": 20,
+   "pages_counted": 131,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 9,
+   "share": {
+    "print": 0.03816793893129771,
+    "manuscript": 0.9618320610687023,
+    "unknown": 0
+   }
+  },
+  "tamil-lite": {
+   "frame": {
+    "language": "Tamil",
+    "draft": "lite"
+   },
+   "candidates": 16,
+   "exact": true,
+   "books_counted": 16,
+   "pages_counted": 225,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 5,
+   "share": {
+    "print": 0.9377777777777778,
+    "manuscript": 0.06222222222222222,
+    "unknown": 0
+   }
+  },
+  "turkish-lite": {
+   "frame": {
+    "language": "Turkish",
+    "draft": "lite"
+   },
+   "candidates": 4,
+   "exact": true,
+   "books_counted": 4,
+   "pages_counted": 50,
+   "conflict_pages": 0,
+   "by_book_majority_pages": 2,
+   "share": {
+    "print": 0.02,
+    "manuscript": 0.98,
+    "unknown": 0
+   }
+  }
+ }
+}

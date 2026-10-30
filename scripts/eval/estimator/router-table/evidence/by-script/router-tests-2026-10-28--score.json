@@ -1,0 +1,421 @@
+{
+ "cells": {
+  "arabic-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 10,
+     "books": 10,
+     "accept": "4/10",
+     "wrong_text_pages": "4/10",
+     "classes_k_of_n": {
+      "O8": "3/10",
+      "D1": "1/10",
+      "O6": "6/10",
+      "O7": "2/10",
+      "O16": "4/10",
+      "O12": "2/10",
+      "E2": "2/10",
+      "O5": "1/10",
+      "O3": "1/10"
+     },
+     "script_basis": {
+      "page": 9,
+      "book": 1
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 9,
+     "books": 9,
+     "accept": "6/9",
+     "wrong_text_pages": "1/9",
+     "classes_k_of_n": {
+      "O8": "3/9",
+      "E2": "1/9",
+      "O7": "1/9",
+      "O6": "3/9",
+      "O16": "2/9",
+      "O12": "2/9",
+      "D1": "2/9",
+      "O5": "1/9"
+     },
+     "script_basis": {
+      "page": 9
+     }
+    }
+   }
+  },
+  "arabic-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "O12": "1/2",
+      "E2": "1/2",
+      "O5": "1/2"
+     },
+     "script_basis": {
+      "book": 2
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "books": 2,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "O16": "1/2",
+      "O8": "1/2"
+     },
+     "script_basis": {
+      "book": 2
+     }
+    }
+   }
+  },
+  "arabic-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 18,
+     "books": 18,
+     "accept": "6/18",
+     "wrong_text_pages": "12/18",
+     "classes_k_of_n": {
+      "O6": "10/18",
+      "I3": "2/18",
+      "O16": "4/18",
+      "D1": "3/18",
+      "O5": "1/18",
+      "O3": "3/18",
+      "O7": "2/18",
+      "O11": "4/18",
+      "O1": "4/18",
+      "O12": "5/18",
+      "O8": "2/18",
+      "I6": "1/18"
+     },
+     "script_basis": {
+      "none": 18
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 18,
+     "books": 18,
+     "accept": "7/18",
+     "wrong_text_pages": "10/18",
+     "classes_k_of_n": {
+      "O6": "11/18",
+      "I3": "2/18",
+      "O12": "6/18",
+      "O16": "6/18",
+      "O8": "4/18",
+      "O10": "1/18",
+      "O5": "2/18",
+      "O3": "2/18",
+      "E2": "3/18",
+      "O1": "4/18",
+      "O11": "1/18",
+      "O7": "1/18"
+     },
+     "script_basis": {
+      "none": 18
+     }
+    }
+   }
+  },
+  "chinese-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 30,
+     "books": 30,
+     "accept": "7/30",
+     "wrong_text_pages": "21/30",
+     "classes_k_of_n": {
+      "O16": "9/30",
+      "O6": "23/30",
+      "T4": "3/30",
+      "D1": "1/30",
+      "O5": "15/30",
+      "O17": "1/30",
+      "O7": "4/30",
+      "O11": "10/30",
+      "O12": "6/30",
+      "O8": "9/30",
+      "E2": "9/30",
+      "O1": "3/30",
+      "O15": "1/30",
+      "T5": "1/30",
+      "I6": "1/30"
+     },
+     "script_basis": {
+      "page": 30
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "6/30",
+     "wrong_text_pages": "22/30",
+     "classes_k_of_n": {
+      "O6": "23/30",
+      "O5": "12/30",
+      "O4": "6/30",
+      "O17": "2/30",
+      "O7": "4/30",
+      "O11": "8/30",
+      "E2": "6/30",
+      "O12": "6/30",
+      "O8": "11/30",
+      "O16": "5/30",
+      "O1": "2/30",
+      "O15": "1/30",
+      "T4": "1/30",
+      "O3": "2/30",
+      "I6": "1/30"
+     },
+     "script_basis": {
+      "page": 30
+     }
+    }
+   }
+  },
+  "hebrew-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 4,
+     "books": 4,
+     "accept": "1/4",
+     "wrong_text_pages": "3/4",
+     "classes_k_of_n": {
+      "O17": "2/4",
+      "O6": "3/4",
+      "O16": "2/4",
+      "O5": "1/4",
+      "E2": "2/4",
+      "O11": "1/4",
+      "I3": "1/4",
+      "O7": "2/4"
+     },
+     "script_basis": {
+      "book": 3,
+      "page": 1
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 4,
+     "books": 4,
+     "accept": "0/4",
+     "wrong_text_pages": "2/4",
+     "classes_k_of_n": {
+      "O6": "3/4",
+      "E2": "1/4",
+      "O16": "1/4",
+      "O5": "1/4",
+      "O11": "2/4",
+      "I3": "1/4",
+      "O7": "1/4"
+     },
+     "script_basis": {
+      "book": 3,
+      "page": 1
+     }
+    }
+   }
+  },
+  "hebrew-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 4,
+     "books": 4,
+     "accept": "0/4",
+     "wrong_text_pages": "4/4",
+     "classes_k_of_n": {
+      "O14": "2/4",
+      "O1": "4/4",
+      "O16": "3/4",
+      "O12": "3/4",
+      "O3": "2/4",
+      "O5": "2/4",
+      "O6": "3/4",
+      "I4": "1/4",
+      "O8": "1/4",
+      "D1": "1/4"
+     },
+     "script_basis": {
+      "book": 4
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 3,
+     "books": 3,
+     "accept": "0/3",
+     "wrong_text_pages": "3/3",
+     "classes_k_of_n": {
+      "O1": "3/3",
+      "O16": "1/3",
+      "O6": "2/3",
+      "O14": "1/3",
+      "O5": "2/3",
+      "O11": "1/3",
+      "O12": "1/3",
+      "T10": "1/3"
+     },
+     "script_basis": {
+      "book": 3
+     }
+    }
+   }
+  },
+  "hebrew-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 22,
+     "books": 22,
+     "accept": "6/22",
+     "wrong_text_pages": "15/22",
+     "classes_k_of_n": {
+      "O11": "5/22",
+      "I3": "2/22",
+      "O1": "11/22",
+      "T8": "1/22",
+      "O12": "6/22",
+      "O6": "11/22",
+      "O17": "3/22",
+      "O16": "9/22",
+      "O2": "3/22",
+      "O3": "4/22",
+      "O5": "7/22",
+      "T10": "1/22",
+      "O8": "3/22",
+      "O7": "6/22",
+      "E2": "7/22",
+      "O4": "2/22",
+      "T6": "1/22",
+      "I4": "1/22",
+      "O10": "1/22"
+     },
+     "script_basis": {
+      "none": 22
+     }
+    },
+    "3flash>agy-flash-low": {
+     "n": 21,
+     "books": 21,
+     "accept": "7/21",
+     "wrong_text_pages": "13/21",
+     "classes_k_of_n": {
+      "I3": "3/21",
+      "T6": "4/21",
+      "O16": "9/21",
+      "O11": "4/21",
+      "O6": "12/21",
+      "O12": "9/21",
+      "O18": "1/21",
+      "D1": "1/21",
+      "O5": "8/21",
+      "O17": "1/21",
+      "O1": "7/21",
+      "O3": "2/21",
+      "O8": "2/21",
+      "O15": "1/21",
+      "O7": "4/21",
+      "O4": "1/21",
+      "O10": "1/21",
+      "E2": "1/21"
+     },
+     "script_basis": {
+      "none": 21
+     }
+    }
+   }
+  },
+  "latin-gpu|print": {
+   "routes": {
+    "gpu>agy-flash-low": {
+     "n": 26,
+     "books": 9,
+     "accept": "22/26",
+     "wrong_text_pages": "2/26",
+     "classes_k_of_n": {
+      "O6": "11/26",
+      "O10": "2/26",
+      "O12": "7/26",
+      "O8": "9/26",
+      "D1": "2/26",
+      "T6": "4/26",
+      "E2": "6/26",
+      "O11": "1/26",
+      "O5": "2/26",
+      "O7": "1/26"
+     },
+     "script_basis": {
+      "page": 26
+     }
+    }
+   }
+  },
+  "zh-dice|manuscript": {
+   "routes": {
+    "paddle>agy-flash-low": {
+     "n": 29,
+     "books": 29,
+     "accept": "19/29",
+     "wrong_text_pages": "9/29",
+     "classes_k_of_n": {
+      "O4": "2/29",
+      "O6": "8/29",
+      "O12": "4/29",
+      "O5": "6/29",
+      "O8": "3/29",
+      "O14": "1/29",
+      "E2": "1/29",
+      "O11": "9/29",
+      "D1": "1/29",
+      "O1": "1/29",
+      "O7": "2/29"
+     },
+     "name_check": {
+      "accept_after_name_check": "15/29",
+      "with_name_error": 3
+     },
+     "script_basis": {
+      "page": 1,
+      "tag": 28
+     }
+    }
+   }
+  },
+  "zh-frame-6871|manuscript": {
+   "routes": {
+    "paddle>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "19/30",
+     "wrong_text_pages": "9/30",
+     "classes_k_of_n": {
+      "O6": "11/30",
+      "E2": "5/30",
+      "O1": "1/30",
+      "O11": "7/30",
+      "O16": "1/30",
+      "O12": "2/30",
+      "O8": "5/30",
+      "O7": "2/30",
+      "D1": "4/30",
+      "O15": "1/30",
+      "O5": "1/30"
+     },
+     "script_basis": {
+      "tag": 30
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/route-judge-6740/results/router-tests-2026-10-28/score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

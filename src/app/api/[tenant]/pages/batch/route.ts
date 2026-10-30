@@ -5,6 +5,7 @@ import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
+import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
 
 export const preferredRegion = 'fra1';
 
@@ -49,7 +50,7 @@ export async function POST(
     const db = await getDb();
     let pages = await db.collection('pages').find(
       { id: { $in: limitedIds }, tenantId: tenantFilter },
-      { projection: { detected_images: 0 } }
+      { projection: PAGE_API_PROJECTION }
     ).toArray();
 
     // Metered reader (#4357): 'default' tenant = the main library, metered

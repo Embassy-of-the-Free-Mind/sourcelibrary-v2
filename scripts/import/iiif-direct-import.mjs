@@ -69,7 +69,7 @@ async function fetchWithRetry(url, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)', 'Accept': 'application/json, application/ld+json' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)', 'Accept': 'application/json, application/ld+json' },
         signal: AbortSignal.timeout(45000),
       });
       if (res.ok) return await res.json();

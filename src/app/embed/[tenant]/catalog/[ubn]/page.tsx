@@ -259,7 +259,10 @@ async function fetchExternalBook(id: string): Promise<SlBook | null> {
   try {
     const db = await getReadDb();
     const book = await db.collection('books').findOne(
-      { id },
+      // Same rule as the BPH-native lookup below: only a readable book, or the
+      // "Read the … scan" link dead-ends at the reader's visibility gate (#7702:
+      // rights-review and removed copies still named by sl_external_book_id).
+      { id, visible: { $ne: false }, pages_count: { $gt: 0 } },
       {
         projection: {
           id: 1, slug: 1, title: 1, display_title: 1, english_title: 1,

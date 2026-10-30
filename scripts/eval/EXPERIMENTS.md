@@ -76,6 +76,7 @@ issue: [5695, 5740]
 | `decision` | no | what it changed, with the PR or issue: `"v19.1 is the production OCR prompt (PR #5655)"` |
 | `superseded_by` | with `superseded` | the later file's name in this directory |
 | `issue` | no | the issue number, or a list |
+| `router_evidence` | for a judged `ocr` / `translation` result | the router-table cells (`scripts/eval/estimator/router-table/rules.json` `cells[].id`) this run added evidence to, `[latin-lite, german-lite]` — or `"none — <why>"` (a prompt test, no route compared). Required on NEW entries whose `measure` includes `judged` or `judged_vs_reference` (#7263): a judged result the router never reads does not change a route |
 
 Strings are double-quoted; lists sit on one line; nothing else of YAML is read
 (`scripts/eval/lib/experiment-header.mjs`). **Changing a result's status is
@@ -84,7 +85,8 @@ editing the header only** — e.g. when a later run overturns this one, set
 file. Never rewrite the body of an entry that has already landed: add a new entry.
 
 CI (`scripts/eval/experiments-lint.mjs`, in `unit-tests.yml`) refuses a new dated
-entry without a valid header, and an invalid header on any file. A weekly detector
+entry without a valid header, a new judged OCR or translation entry without
+`router_evidence`, and an invalid header on any file. A weekly detector
 (`scripts/audit/experiments-garden.mjs`) lists entries with no header, `undecided`
 entries left over 21 days, public pages that cite a superseded entry, and live
 entries whose verdicts disagree.
@@ -134,6 +136,5493 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | month | books | ≥ 4 % (CI) | ≤ 2 % | any major % (CI) | omission % | invention % | garble % | Latin-script / non-Latin ≥ 4 | controls swap / drop / repeat |
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
+
+## 2026-10-30 · Siku translations: which errors, at what risk? (#5600)
+<!-- PRIOR ART: scripts/eval/agy-per-call-7503/ (the judge setup, claude -p Opus with the page image; it counts "sense errors" as one bucket); .claude/docs/page-error-taxonomy.md (T7/T8/T10/O1/O6/T6 classes, used for the kinds). -->
+
+**Question.** The #7503 route judge counts "sense errors" as one bucket (17/30 served pages). That bucket mixes wording slips with invented names. Which kinds of error do readers of the Siku English meet, and how many of them mislead?
+
+**Design.** Frame: books held under the Siku lane's `HOLD_REASONS` (`scripts/batch/siku-translate-lane.mjs`). Arm A = the served lane (`translation.engine.call_site` `scripts/batch/cli-translate.mjs`, model `gemini-3.8-flash-low`, 349 books); arm B = the older block Batch lane (`scripts/lib/translate-batch-chained.mjs`, Gemini 3 Flash preview, 292 books). One page per book, seeded draw (mulberry32, seed 5600), AI translation, OCR ≥ 150 characters, translatable page (not furniture-only). Arm B books are disjoint from arm A. Judge: Opus via `claude -p` (l7a subscription, $0), one page per call, blind to arm (packets P01…P52 in seeded order). Each call saw the page image, the OCR, the served English (summary and keywords cut), and the last 2 lines of the previous page's source and English and the first 2 of the next page's source. Every error was returned as a span {source, English, kind, risk, evidence}. Kinds: INVENTED, WRONG-SENSE, OCR-CARRIED, OMITTED, SEAM, JUNK, STYLE. Risk: HIGH (a reader is misled and cannot tell), MEDIUM (misleading but noticeable, or a lost clause), LOW (cosmetic). A second, independent Opus pass read 10 pages (5 per arm, seeded). Intervals: by-book bootstrap (one page per book, so page = book), Wilson for shares.
+
+**Errors per page, by kind** (pages with at least one in brackets):
+
+| kind | A served (n=30) | B Batch (n=20) |
+|---|---|---|
+| WRONG-SENSE | 0.97 [0.60–1.33] (17) | 2.55 [1.35–4.10] (15) |
+| STYLE | 0.37 (11) | 0.40 (7) |
+| JUNK (furniture carried) | 0.23 (6) | 0.20 (4) |
+| OCR-CARRIED | 0.20 [0.03–0.47] (4) | 1.40 [0.35–2.80] (9) |
+| INVENTED | 0.13 [0–0.30] (3) | 0.55 [0.25–0.90] (8) |
+| SEAM | 0.13 (4) | 0.25 (5) |
+| OMITTED | 0.07 (2) | 0.30 (5) |
+| **all** | **2.10 [1.57–2.67]** | **5.65 [3.70–7.95]** |
+
+**By risk**
+
+| risk | A | B |
+|---|---|---|
+| HIGH per page | 0.23 [0.07–0.43] (7 errors) | 1.75 [0.85–2.80] (35) |
+| MEDIUM per page | 0.77 [0.40–1.20] | 2.20 [1.25–3.25] |
+| LOW per page | 1.10 [0.83–1.40] | 1.70 [1.20–2.25] |
+| pages with ≥ 1 HIGH | 6/30, 20% [10–37] | 10/20, 50% [30–70] |
+| page verdict show / caveat / don't | 16 / 13 / 1 | 3 / 9 / 8 |
+
+**Where the HIGH errors come from**
+- **Arm A (7):** 6 made by the translator (4 WRONG-SENSE: a gloss reversed, 'Crown Prince' for the Son of Heaven, an edict's meaning reversed, a numbered list shifted by one; 1 OMITTED entry in that list; 1 INVENTED gloss giving 召南 a wrong surname and dates). 1 OCR-carried (希 for 帣). None at the seam. The served lane's risk is in translation: polarity, attribution, and glosses that add names or dates.
+- **Arm B (35):** 20 translator-made (15 WRONG-SENSE, 5 INVENTED), 12 OCR-carried, 2 seam, 1 margin furniture read as a quotation. 25 of the 35 are on the 10 pages from the repeat-mark encyclopaedias (佩文韻府, 子史精華, 駢字類編), and 19 of the 35 involve the 丨 marks that repeat a headword: the translator invents a term for them or files a quotation under the wrong headword. The 12 OCR-carried errors are rare characters in dictionary and lexicon entries (康熙字典 headwords, rhyme-group words). Arm B drew no histories or classics and arm A drew 27 of 30, so **the A–B gap (1.52 more HIGH per page, [0.58–2.62]) measures lane and genre together, not the lane alone.**
+
+**The two named seam pages, read by eye with the previous page and both images open.** 圖書編 vol 22 p33: 為正 completes p32's sentence (the year begins in the Yin month, taken as the first month), and the English instead makes the Zi and Chou months 'correct'. That is a HIGH seam error, and the page also carries the margin title as '<unclear>Shu Shu Bian</unclear>'. 圖書編 vol 77 p30: 王之 completes p29's 欲以火德王之 ('wished to rule by the Virtue of Fire'), and the English reads it as 'King Wen of Han'. The 宣室受釐 allusion does refer to Emperor Wen, so the name is an inference with the wrong title, not text from nowhere. The judge rated it MEDIUM. Neither page meets the containment bar: in both, the rest of the English is this leaf's text.
+
+**Judge agreement (10 pages, two independent Opus passes).** Page verdict 9/10 (κ 0.84). Whether a page has a HIGH error: 10/10 (κ 1.0), and the HIGH count was identical on all 10 pages. Presence of each kind on a page: 64/70 page×kind cells (κ 0.79). STYLE was the least stable (7/10, κ 0.44), and INVENTED and WRONG-SENSE agreed 10/10. Risk presence: 28/30 cells (κ 0.86). Error totals per page differ by 0–4 (mostly STYLE and LOW).
+
+**Contained (by eye, image open, `withhold-stale-translations.mjs --by-eye-pages`, #5600).** 御定佩文韻府 vol 719 p47: the 丨丨 marks for 拂拭 are rendered 11 times as an invented term 'shanghui' ('producing brilliance'). 御定子史精華 vol 71 p70: 因丨丨丨丨而丨丨丨丨 (斟酌前史 / 譏正得失) is rendered as invented terms 'Zheng Qi Ci Ju' and 'Shen Qi Tan Lun'. Both books were already held. The other INVENTED findings are notes or glosses on pages whose body is the leaf's text (前漢書 vol 33 p47; 子史精華 vol 129 p4 and vol 70 p39). They are recorded as findings, not contained.
+
+**Not checked.** No human reader of classical Chinese. One AI judge family (Opus) for both passes. 50 pages, so a kind seen on 2–4 pages has a wide interval. Arm B's books are a different genre mix from arm A's. The served lane was not measured on the encyclopaedias, so this does not show that it fixes the 丨 problem.
+
+Artifacts: `scripts/eval/siku-error-types-5600/` (`draw.mjs`, `draw.json`, `prep.mjs`, `judge.mjs`, `score.mjs`, `results.json` with every HIGH finding and its page URL, `eye.mjs`). Packets, images and raw replies are in the job's scratch directory.
+
+## 2026-10-29 · Does the USTC translation-gap estimate survive a different adjudicator? (#7691)
+<!-- PRIOR ART: .claude/docs/translation-gap-paper.md (design, seed 2684, Gemini on 1,000 + Claude on 419, κ 0.82); scripts/analysis/gap-validation-estimate.mjs (the estimator, reused here with --verdicts); scripts/analysis/gap-validation-score.mjs (toBinary rule, copied unchanged). -->
+
+**Design.** The same 1,000 seeded USTC works (300 pipeline-"translated", 700 pipeline-"gap", print 1480–1620), re-keyed O0001… with mulberry32(7691) so the T/G prefix cannot leak the stratum. Same prompt and JSON schema as the Claude pass. One `claude -p --model sonnet` call per work, web search and fetch only (`scripts/analysis/gap-validation-cli-adjudicate.mjs`, the #7598 first-translation search setup), team@ subscription, concurrency 4. Estimated with `gap-validation-estimate.mjs --verdicts … --tag sonnet`: same stratum weights (6,744 / 158,737), post-stratified by Sonnet's own composition era (it agrees with the original era on 960 of 1,000), 5,000-rep bootstrap.
+
+**Run.** 1,000 of 1,000 answered. 145 replies first logged as failures: 106 were intact verdicts whose last JSON string Sonnet left unclosed (`…weak.}`), recovered from the kept reply and now handled by the runner's parser; 33 timeouts or truncated replies were re-run. Sonnet: 269 translated, 702 untranslated, 29 uncertain; 112 marked container (excluded, as in the original).
+
+| | Renaissance-composed gap | All-print gap | well-posed n |
+|---|---|---|---|
+| Gemini + Claude consensus (2026-06) | 93.3% [91.3–95.2] | 84.9% [82.3–87.3] | — |
+| Sonnet alone (this run) | 96.8% [95.5–98.0] | 88.9% [86.9–90.9] | 881 |
+
+Sub-rates: translated-stratum precision 166/224 (Renaissance 37/75); gap-stratum missed translations 55/657 (Renaissance 14/569).
+
+**Replicated?** Yes in direction and magnitude: both instruments put nine in ten or more Renaissance-composed Latin works without an English translation. Sonnet sits higher because it finds fewer priors. Still no human gold standard.
+
+Artifacts: `scripts/analysis/eval-data/gap-validation-sonnet-verdicts.jsonl` (one row per work, reply kept), `scripts/analysis/eval-data/gap-validation-n250-estimate-sonnet.json`.
+
+## 2026-10-29 · Which model, and what sheet size, should check proposed split cuts? (#7605)
+
+PRIOR ART: `scripts/eval/experiments/2026-10-28-split-cuts-agy-flash-low-5771.md` asks whether Flash can PLACE a
+cut. This asks who can CHECK one, and in what layout. `scripts/eval/experiments/2026-10-04-clef-vs-jev-instruction-page-screen.md`
+is the Clef/Jev price and quality baseline.
+
+**Decision it changes:** how the 73 BPH spread books (9,861 proposed cuts, 543 contact sheets) are checked before
+`split-spreads-agy.mjs apply` writes. The plan before this test was a Gemini strip screen, then Claude on what it
+flagged.
+
+**Set.** Book 6a1a5df783fe2fc6d969c0ea, a German manuscript (*Beschreibung einiger Wissenschafften*). Its fold of
+506/1000 was checked by eye before the book was split. Frames 61–100: two sets of 20.
+- **Planted bad cuts (9):** shifts of ±45, ±60, ±80 and ±100 per mille, and one spread marked WHOLE in each set.
+- **Borderline (3):** shifts of ±30. These sit inside the 3% overlap each leaf keeps, so they are scored apart.
+- **Clean (28).**
+
+Rendered by `_tmp-sheetfmt.mjs` (scratch, gex45) in four layouts:
+- T20: 20 whole-frame thumbnails, 300 px, in a 5-wide grid. This is the production `sheet-NN.jpg`.
+- S10, S20 and S40: 10, 20 or 40 strips cut from the full-resolution frame at fold ± 15% of its width.
+
+Each layout went to each model twice through `claude -p --model <m>` (one call per sheet; the Read tool only). Every
+model got the same rule: OK when the gutter is inside the overlap band and the line crosses no writing.
+
+| model · layout | bad caught (2 runs) | clean flagged | borderline flagged | API-equivalent $/frame |
+|---|---|---|---|---|
+| **Opus · T20** | **18/18** | **0/56** | 4/6 | 0.0047 |
+| Opus · S10 | 16/18 | 1/56 | 4/6 | 0.0096 |
+| Opus · S20 | 12/18 | 1/56 | 2/6 | 0.0052 |
+| Opus · S40 | 10/18 | 2/56 | 2/6 | 0.0025 |
+| Opus · 2 × T20 in one call | 16/18 (missed p.89, a 45/1000 shift, both runs) | 0/56 | 2/2 | 0.0031 |
+| Sonnet · T20 | 15/18 (missed 45/1000 shifts) | 0/56 | 3/6 | 0.0019 |
+| Sonnet · S10 | 16/18 | 2/56 | 6/6 | 0.0035 |
+| Sonnet · S20 | 15/18 | 4/56 | 3/6 | 0.0018 |
+| Haiku · S10 | 16/18 | 6/56 | 5/6 | 0.0003 |
+| Haiku · T20 | 10/18 | 2/56 | 1/6 | 0.0002 |
+| Haiku · S20 / S40 | 4/18 | 0–1/56 | 0–1/6 | 0.0001 |
+
+Opus · T20 gave the same answer in both runs. Its borderline flags (63 and 92, 30/1000 off) are cuts close to a
+written line, a defensible call.
+
+**Other instruments on the same frames:**
+- **Clef and Clef-flash** (Cloudflare System One, image input; Jev itself reads only text). One strip per call, a
+  `noul` "is the gutter inside the band" question, 38 strips. AUC 0.765 and 0.760: the scores for bad cuts (0.32–0.83)
+  overlap the clean median (0.78 / 0.73). About $0.00001 a strip.
+- **agy Gemini 3.8 Flash low** (2026-10-29, frames 61–80, 5 planted). Whole sheet per call: 1–2/5. Strips on one
+  sheet: 2–3/5. Flash medium: 1–4/5, erratic. One strip per call, yes/no: all 4 shifts, 1–2 false flags in 19.
+  On the 73 BPH books that screen flagged 2,464 of 9,861 real cuts (25%). By eye, on the 131-cut gate book, all 25
+  of its flags were cuts inside the overlap.
+
+**Reading.**
+- A whole-frame thumbnail shows where the fold is, both page edges and the binding. A strip shows only the line's
+  neighbourhood, and Claude models judged the fold worse from it at every strip count.
+- Most of a `claude -p` call's cost is fixed context, so batching looks cheap. But two sheets in one call lost a
+  real error in both runs: one sheet per call.
+- The cheap screens (Flash strips, Clef) save nothing here. Flash over-flags so much that Opus must still read
+  about half the sheets, and Clef cannot rank.
+
+**Limits.** One book, one hand, one scan style. The planted errors are horizontal shifts and wrong WHOLE frames.
+Untested: a cut frame that is really a single leaf, a plate or fold-out, and a skewed gutter. The production run
+reads the real sheets, where those cases occur. Its results land on #7605.
+
+**Cost of the production run.** 543 sheets × one Opus call, about $55 at API prices. It runs on the Max
+subscription (team@), so no money is spent.
+
+## 2026-10-29 · Siku lane: 4 pages per agy call, and two leaf lines in the prompt (#5600)
+
+**Question.** Two questions about the Siku lane:
+1. Does reading 4 pages per agy call (B) keep quality while drawing well under half the quota per page?
+2. Do two prompt lines (C) stop margin furniture appearing as English, and stop the last sentence being completed
+   from the next leaf? Both faults were seen in the 2026-10-29 spot check.
+
+**Draw** (`siku-percall-5600/draw.mjs`, seed 5600, committed before any read).
+- **Frame:** 8,780 books, the lane's cohort as `rankBooks` picks it: three hold reasons; rung transcribed or
+  translating; OCR on 80% or more of pages; residue, seal and #7090 books excluded.
+- **Sample:** 30 books. From each, one untranslated, translatable Paddle page, uniform among the pages that sit
+  inside a run of 4 such pages. That run of 4 is the page's block, and the drawn page's position in it is seeded.
+- **Which pages each arm read:** every arm read all 120 block pages in page order, so the drawn page has its real
+  neighbour context. For B, the block is one 4-page call.
+- Read-only: nothing was applied.
+
+**Arms.** All arms used gemini-3.8-flash-low on the james pool (`AGY_HOME=/root/.agy-james`), with `--fresh`, and
+kept their reads.
+- **A:** `cli-translate.mjs read`, 1 page per call (the lane's route).
+- **B:** `claude-translate.mjs read --cli=agy --per-call=4`.
+- **C:** A plus the two lines (`--instructions-file`).
+- **D** (B plus the lines) was not run, because B failed its bar.
+
+**Judge** (`siku-percall-5600/judge.mjs`).
+- Opus via `claude -p` on l7a's subscription, `--restricted` with Read only, one output per call, blind (hashed ids;
+  the key is never in a prompt).
+- The prompt is route-judge-6740's `judgePrompt` (accept, fidelity, taxonomy defects). Added to it: the lane's
+  spot-check rubric (wrong_leaf, invented, sense_errors, verdict), `margin_furniture_in_english`,
+  `next_leaf_bleed` / `prev_leaf_bleed`, and the neighbouring pages' OCR.
+- A verdict counts only if its stream-json transcript shows `page.jpg` opened. All 268 calls did (57 supplement verdicts were reused from the drawn-page run: same page, arm and text).
+- **Controls:** 2 planted next-leaf bleeds and 2 wrong-leaf controls. **4/4 caught**, each flagged and rejected.
+- **Which pages were judged:**
+  - Primary test: the 30 drawn pages, in every arm.
+  - Supplement, added after the primary test because n = 30 was too small for C's flag: all 120 block pages, A and C
+    only.
+
+**Gemini's filter.** On 證治準繩 (a medical book), Flash replied "This request was blocked by Gemini's filters…".
+- B refused those calls (page tags mismatch), so the page has no read.
+- In A and C the notice came back with exit 0, but `cli-translate.mjs apply` refuses it ("reply cut before
+  <<<END>>>"; dry runs: 4 of 120 in each arm).
+- None of the 711 cohort books that already have English holds the notice.
+- Scoring: such a page counts as **no read**, which means not accepted. It is never counted as invented.
+
+### Decision rule, fixed in the brief, decided by it
+
+- **B passes** if all of: wrong-leaf 0; invented 0; acceptance within 0.08 of A; quota per page below 0.5 of A.
+- **C passes** if the margin/bleed flags drop and acceptance is not lower than A.
+
+### Results: the 30 drawn pages (`results/score-drawn.json`)
+
+| arm | accept | accept 95% CI (by book) | wrong text | fidelity | wrong-leaf | invented (judge) | sense-error pages | margin furniture in English | next-leaf bleed | no read |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A 1/call | **19/30** | 0.47–0.80 | 5 | 4.00 | 0 | 0 | 10 | 5 | 0 | 2 (filter) |
+| B 4/call | **21/30** | 0.53–0.87 | 6 | 4.00 | 0 | 1 | 8 | 6 | 0 | 1 (filter) |
+| C 1/call + lines | **20/30** | 0.50–0.83 | 5 | 3.97 | 0 | 1 | 10 | 3 | 0 | 1 (filter) |
+
+Paired by book:
+
+| comparison | accept difference | 95% CI | lost | gained |
+|---|---|---|---|---|
+| B − A | +0.067 | −0.10 to +0.23 | 2 | 4 |
+| C − A | +0.033 | −0.17 to +0.23 | 4 | 5 |
+
+**The one "invented" in B and C is the same page**, read by eye: 全芳備祖集 vol 6, p.15.
+- The leaf's 欽定四庫全書 head is cut at the edge, and Paddle read it as 自以工人之.
+- All three arms translated that OCR line: "considered by workers…" (A), "from the craftsmanship of human artisans" (B),
+  "work of human craftsmanship" (C). The judge flagged only B and C.
+- It is OCR-borne margin furniture, so **translator-invented = 0 in every arm.**
+
+### Supplement: all 120 block pages, A and C (`results/score-all.json`)
+
+| arm | accept | accept 95% CI (by book) | wrong text | fidelity | sense-error pages | margin furniture in English | next-leaf bleed | invented (judge) |
+|---|---|---|---|---|---|---|---|---|
+| A | **79/120** | 0.55–0.77 | 21 | 3.87 | 40 | **12** | 1 | 3 |
+| C | **78/120** | 0.58–0.73 | 21 | 3.95 | 40 | **7** | 1 | 4 |
+
+C − A, paired, by-book bootstrap:
+
+| measure | difference | 95% CI | pages |
+|---|---|---|---|
+| accept | −0.008 | −0.10 to +0.08 | 19 better, 20 worse |
+| margin flag | −0.042 | −0.092 to +0.008 | 8 fixed, 3 new |
+| bleed | 0 | | 1 page in each arm |
+
+The judge's "invented" flags, read by their notes:
+- 3 of A's and 2 of C's are OCR-borne: a garbled running head, or a fabricated OCR line.
+- The translator's own: A 1 ("until we reach the Yellow Springs", finishing the Zuozhuan story from memory); C 2
+  ("became disordered", and one name that reads as a sense error).
+
+### Quota
+
+| arm | agy calls | calls / page | refused calls | pages re-read alone | input / page | cached | output + thinking / page | token index / page | vs A | vs A, uncached |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A | 120 | 1.00 | 0 | 0 | 8,023 | 1,961 | 814 | 12,906 | 1.00 | 1.00 |
+| B | 64 (17×4, 6×3, 5×2, 36×1) | **0.53** | 5 (all Gemini's filter) | 5 | 4,237 | 1,219 | 697 | 8,417 | **0.65** | 0.66 |
+| C | 120 | 1.00 | 0 | 0 | 7,055 | 2,977 | 674 | 11,096 | 0.86 | 0.74 |
+
+How to read it:
+- **The token index is input + 6 × (output + thinking).** As in #7518, the 6 is assumed, not measured.
+- **Token counts are noisy.** C sends a longer prompt than A, yet agy reported about 1,000 fewer input tokens per
+  page. Run-to-run noise in agy's counts is about ±10–15%, as #7518 found between its two 1/call runs.
+- **Calls per page are exact.**
+- **Why B makes so many single calls: the block floor.** 23% of Siku pages (991 of 4,357 untranslated pages in the 30
+  books) are under translate-batch-seam's `MIN_OCR_CHARS_FOR_BLOCK` (200), and each is read alone. On those books'
+  whole untranslated page lists, 4/call **plans 0.48 calls a page** (`lane-calls.mjs`), before retries and re-reads.
+  With B's in-sample overhead (7 extra calls in 120 pages) that is about 0.54. **That floor is the lever.** Siku
+  pages are short (median OCR about 225 characters). This test did not try a lower floor.
+- **The meter did not resolve the arms** (`results/meter-readings.jsonl`, one reading a minute, 22:11–22:43Z).
+  - The lane on main drew from the same james account the whole time, at 0.00012–0.00025 of the week per minute (its
+    rate doubled between the baselines before and after).
+  - Readings from different processes disagree by up to 0.001.
+  - Over the measured window (22:14:53–22:28:31) the week fell 0.0036. The lane accounts for 0.0016–0.0034 of that,
+    which leaves 0.0003–0.0020 for this test's 304 calls.
+  - Per arm, the meter is unreadable, so the ratio rests on calls and tokens.
+  - The mesh cannot touch main's STOP file, and its verbs cannot read main's `pool-readings.jsonl`. So the arms were
+    run in tight blocks (177, 126 and 178 s) and the lane's rate was read from this job's own readings of the same
+    pool between arms.
+- A stale local lock (`/root/.model-limits/agy_.agy-james-gemini-3.8-flash-low.json`, written 2026-10-27 09:44Z while
+  the account was still on Starter quota) blocked every james-pool agy call on l7a until 2026-11-03. It was moved
+  aside (`.stale-2026-10-27`); the pool read 54% left and calls succeeded.
+
+### The Han page-break guard (#7503 condition) (`results/drift.json`)
+
+The floor: `detectCaselessDrift` flags **4.58%** of this lane's breaks at 1/call (13,937 breaks, 138 books; measured
+2026-10-29 21:25Z).
+
+| arm | breaks tested | flagged | rate | P(≥ k flags at the 4.58% floor) | guard fired in production | pages re-read alone | index after re-reads | flags on final texts (90 breaks) |
+|---|---|---|---|---|---|---|---|---|
+| A (each break read as if in a block) | 90 | 4 | 4.4% | 0.60 | n/a | 0 | 1.00 | 4 |
+| B (in-block breaks the guard saw) | 61 | 1 | **1.6%** | 0.94 | **yes, once** (涇野子內篇 54→55, shift 0.44) | 2 for drift (+3 for Gemini's filter) | **0.65** | 3 |
+| C (each break read as if in a block) | 90 | 4 | 4.4% | 0.60 | n/a | 0 | 0.86 | 4 |
+
+The guard ran on the agy 4/call reader as the lane would run it, and fired once. B's in-block flag rate (1/61) is not
+above the 1/call floor; no flag in B exceeds it. 61 breaks cannot show a false-flag rate on this lane: that needs the
+guard on the reader in production, as #7503 asks.
+
+### Decisions (by the rule)
+
+**B does not pass.**
+- Quality passes: wrong-leaf 0; translator-invented 0 by eye; acceptance +0.07 against A.
+- Quota fails: 0.53 calls and 0.65 of the token index per page are not below 0.5 of A, and the whole-book projection
+  is 0.48 calls before re-reads.
+- So D was not run, and no router-table cell was added.
+- **Conditional recommendation for #7503:** per Derek's 2026-10-29 condition, nothing changes until the caseless guard
+  runs on the agy 4/call reader in production with its false-flag rate confirmed on this lane. If 4/call is
+  reconsidered, test it together with a lower `MIN_OCR_CHARS_FOR_BLOCK` for Siku. At no floor at all, 4,357 pages
+  would take 1,126 calls (0.26 a page) instead of 2,089.
+
+**C passes, narrowly.**
+- Margin furniture in English: 5 → 3 on the drawn pages, and 12 → 7 of 120 in the supplement. The interval just
+  touches 0.
+- Next-leaf bleed: 0 → 0 drawn, 1 → 1 of 120. It is rare at 1/call, so the second line shows no measured effect and
+  no measured harm (omission 3 vs 3).
+- Acceptance: 20 vs 19 drawn, 78 vs 79 of 120 (a difference of −0.008).
+- The two lines go to the lane's 1/call reader (`siku-translate-lane.mjs` `LEAF_LINES`, `--instructions-file`, written
+  per book). They do not go into cli-translate's shared prompt, nor into the block reader, where they were not tested.
+
+**Caveats.**
+- One judge, with a stricter prompt than the lane's spot check. On it, all three arms miss the lane's own bar
+  (sense-error pages are about 1 in 3), which the 2026-10-29 spot check passed with 20 pages on a lighter prompt.
+- n = 30 drawn pages: an acceptance difference under about 15 points cannot be detected there.
+- The supplement's pages are 4 per book, so its intervals are by book.
+
+**Cost.**
+- 304 agy calls, about 0.2–0.4% of the james week.
+- 268 Opus judge calls on l7a's subscription, $17.3 list-equivalent.
+- Nothing written to pages or books. The readers' `lane_job_books` label uses the job name
+  `siku-lane-5600-percall-test`, so the lane does not skip these 30 books.
+
+Files: `scripts/eval/siku-percall-5600/`
+- `draw.json`
+- `results/`: `score-drawn.json`, `score-all.json`, `drift.json`, `lane-calls.json`, `arm-runs.json`, `calls-B.jsonl`,
+  `meter-readings.jsonl`, `reads.jsonl.gz` (all 360 reads), `verdicts-opus.jsonl.gz`, `judge-key-*.json`
+
+The reads are also kept in R2 `candidate-reads/`.
+
+## 2026-10-29 · How good is the live Siku translation lane, as the router's sampler judges it? (#7611)
+<!-- PRIOR ART: the Siku lane's own spot check (siku-translate-lane.mjs JUDGE, every 5,000 pages, posted on #5600: a different rubric, wrong-leaf / invented / sense errors, against a draft bar); the #6567 stale-retranslation pilot (cell zh-siku-tr, a different task: English that existed before); siku-error-types-5600 (queued on #5600, error kinds and risk levels). This is the router's instrument: route-judge judgePrompt, translation form. -->
+
+**Design.** `lane-judge-sampler.mjs run --lane=siku-translate-5600` (new: one lane only; it does not move the nightly window). The frame is the pages the lane wrote from 2026-10-27 to 2026-10-29 22:19Z. A page qualifies by its own stamps: `translation.engine.run.reason` = `Siku lane #5600, Derek 2026-10-27`, model gemini-3.8-flash-low through agy, and the page_revisions row the writer left, with that reason, an empty prior, and a `next_hash` that still matches the page. That gave 47,177 pages. The 22,072 in hidden books (the Four Histories, zh-histories-7546) were left out, leaving 25,105 pages in 334 visible books. Books were drawn weighted by 1 + ln(1 + human_read_count), one page per book, seed 20261029. The first 30 in draw order were judged, together with 2 wrong-page controls (this page's image and OCR, another book's English). Judge: Opus 5.5 through `claude -p` on the subscription; prompt template 6c73d24dbbc9c9df. No planted controls: the planter plants OCR errors only.
+
+**Result.** 20/30 accepted. Wrong text on 6/30: 3 O6 (a variant character or a term misread into the sense), 2 O7 (numbers: a 丈/尺 slip; an astronomical table garbled), 1 T3 (a broken note tag hiding the main text), plus O4 / O5 / O17 / T9 on the table page. The judge also flagged T10 (unsupported glosses in notes) on 16/30 pages, mostly as "misleads" or "cosmetic". It rejected both wrong-page controls at fidelity 1.
+
+**Replicated?** No. n = 30, one draw. The nightly sampler now draws this lane: every book until 60 are judged, then 5%.
+
+**Artifact.** Verdicts: Mongo `lane_judge_verdicts` (run `lane-judge-20261029221909-lane`). The export: `scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json`, cell `zh-siku-first-tr`.
+
+## 2026-10-29 · Do folio markers and a catchword label stop broken page joins on 3.8 Flash? (#7118)
+
+PRIOR ART:
+- `2026-10-04-seam-markers-confirm-5678.md`: markers on Lite 26 → 19 and on the old Flash 16 → 11 per 100 breaks (p 0.105 and 0.18), on the paid Batch lane.
+- `2026-10-16-seam-prompt-candidate-6742.md`: one edge instruction on 3.8 Flash had no effect, and the A-vs-A swing was 6.7 per 100. Its harness (`seam-prompt-6742/ab.mjs`) is followed call for call here.
+
+**Answer for Derek.** Yes for markers, which are now on in the CLI lane; not yet for the catchword label. On 3.8 Flash, markers more than halve broken joins (35.5 → 16.4 per 100) and cut majors from 10 to 3. The catchword label is kept on every catchword page, but it also labels words that are not catchwords too often.
+
+**Design.**
+- Preregistered in `PREREGISTRATION-seam-prevent-7118.md` (commit a5b280a7a) before any arm ran.
+  - Amendment 1 came after the draw, before any arm ran: the spurious-label denominator.
+  - Amendment 2 came during translation, before any judging or scoring. N+1's own foot catchword no longer counts as "doubled".
+- Sample:
+  - 120 true mid-sentence page breaks, one per book, on served Latin-script prose, with no book from the #6742 set.
+  - The source runs on by both tests: N's body is unpunctuated or ends on a hyphen, and N+1 opens on a lowercase clause.
+  - 40 have a catchword the production device detects. 165 books were scanned to find them.
+  - Languages: Latin 66, German 23, French 10, 6 catalogued as Greek but with Latin-script source pages, and 15 others.
+- Arms, all `gemini-3.8-flash-low` via agy (the second account, `AGY_HOME=/root/.agy-james`):
+  - **A**: production (v13 + `PAGE_BREAK_SCOPED`, one page per call, N seeded with the stored N−1, N+1 with the arm's N).
+  - **A2**: A again.
+  - **M**: one marked call for (N, N+1) with the stored N−1 as continuity.
+  - **C**: A + a catchword rule (`<catchword>word</catchword>` once at N's foot, the word translated on N+1).
+  - **MC**: M + C.
+- Judge: one blind Opus call per break. It sees the source edges and six versions (A, A2, M, C, MC, plus an identical copy of A), with labels, `<summary>`, `<meta>` and `<catchword>` removed, as the continuous view reads them. Each version gets an `opus-reference` label and severity. A second call shows the versions in reverse order. A version is defective or major only when both calls say so.
+- 110 breaks are compared. 10 were dropped because Gemini's filter or a cut reply left one arm unread ("This request was blocked by Gemini's filters", on alchemical and chemical pages, in every arm alike). A marked reply that did not parse counts as a defect.
+
+**Result (110 breaks; per 100 joins, defective in both orders).**
+
+| | A | A2 | M | C | MC |
+|---|---:|---:|---:|---:|---:|
+| defective | **35.5** | 27.3 | **16.4** | 26.4 | **10.9** |
+| major | 9.1 (10) | 3.6 (4) | 2.7 (3) | 5.5 (6) | 3.6 (4) |
+| broken syntax / forced closure | 19 | 15 | 4 | 15 | 2 |
+| duplication | 10 | 8 | 0 | 6 | 1 |
+| catchword label (mishandled) | 12 | 9 | 2 | 9 | 1 |
+| omission | 8 | 4 | 4 | 7 | 3 |
+| drift (≥ 6 words on the wrong side) | 0 | 0 | 5 | 0 | 4 |
+| marked reply unparsed (counted defective) | — | — | 1 | — | 2 |
+| catchword stratum (n = 36), defective | 27.8 | 19.4 | 16.7 | 22.2 | 8.3 |
+
+- **Paired against A (discordant breaks, one-sided sign test):**
+  - M: 28 better, 7 worse, p 0.0003.
+  - MC: 32 vs 5, p < 0.0001.
+  - C: 17 vs 7, p 0.032.
+  - A2: 12 vs 3, p 0.018.
+- **The A/A swing is 8.2 per 100**, and A2 itself beats A at p 0.018. Two draws of the same request differ a lot: A was an unlucky draw. M also beats A2: 24 vs 12, p 0.033.
+- **Judge floor:** the copy of A got A's verdict on 110 of 110 breaks.
+- **Catchword label** (36 catchword breaks):
+  - C kept the label on 36 of 36; MC kept it on 33 of 36 and dropped 3. Neither ever doubled one.
+  - Spurious labels on the 53 breaks whose OCR records no catchword: C 9 (18%), MC 5 (10%). The guard was ≤ 5%.
+  - Read by eye, about half of these spurious labels are real printed catchwords the OCR never tagged: `in sua`, `Be-|sol`, `Sed ni|hil`, `reli-`. The rest are invented: `Per tanto`, `aux`, `licet`, an Arabic `من`.
+- **Rule output:**
+  - M: Δ 19.1 > swing 8.2, p < 0.10, majors 3 ≤ 10. **Ships.**
+  - MC passes the arm rule as well. C passes it on noise of the same size as A2's.
+  - The catchword rule fails for C and for MC, on spurious labels only: catchword and duplication labels fall, and omissions do not rise.
+  - Registered tie-break: M and MC both pass but the catchword rule does not, so **M ships**.
+
+**What markers change.**
+- They remove forced closures and duplications at the turn (broken syntax 19 → 4, duplication 10 → 0), as on the old models in #5678.
+- What is left is drift: a marker set a clause or more early or late (0 → 5). That costs nothing in the continuous view, but the page view shows words on the wrong page.
+- Example, `69b51e35…:71` ("Sed ni|hil ad hunc locum"): A renders `ni` as "unless" and the join does not parse (major in both draws). M gives "But this is noth|ing to the present discussion".
+- Example, `69af423a…:112`: A drops `consociaret`, leaving a verbless clause; M reads "namely to connect Propertius with ancient | myths".
+
+**Post hoc, not registered: a balance guard in the shipped code.**
+- One of M's majors, `69b52594…:8`, is a marker set half a page early: page N+1's span opens with page N's second half. MC's one drift major (`69b51de5…:14`) is the same shape.
+- For every one-page read in this run, a page's English-per-source length divided by its neighbour's fell between 0.6 and 1.48. These two fell at 0.33 and 0.5.
+- The shipped split refuses a pair outside [0.6, 1.67] and reads the two pages one by one, which is production's behaviour before this change.
+- Replayed on M's 116 reads, it refuses 4: the major, one ok join, and 2 breaks dropped from the comparison.
+- Unparsed replies take the same fallback. So in the lane, 2 of M's 3 majors would have been one-page reads.
+
+**What shipped** (same PR):
+- `cli-translate.mjs read` translates two consecutive Latin-script pages that both need a read in one marked call (`buildBlockTranslationPrompt` with `folioMarkers`).
+- Each page gets its own span, with the block's summary and keywords. The meta records `prompt_variant: sentinels-6523+folio-markers-7118` and `folio_block`.
+- The fallback, or any instruction-file line, gives the old one-page read.
+- Default ON; `TRANSLATE_FOLIO_MARKERS_CLI=0` turns it off.
+- Not touched:
+  - the chained Batch lane's `TRANSLATE_FOLIO_MARKERS` (flash-lite, still off);
+  - non-Latin scripts, never measured here;
+  - `stale-retranslate-6567.mjs` (Chinese).
+- Only every other join sits inside a pair. The joins between pairs stay page-bounded, as A, so the expected lane-wide drop is about half the measured one.
+
+**What this cannot say.**
+- The judge reads a window at the turn, not whole-page accuracy.
+- The run used two-page blocks only.
+- Latin script only.
+- The A/A difference is large, so a single run's ranking of C against A means little.
+
+**Next.** Re-test MC (best measured, 10.9) with the spurious guard scored against catchwords read off the page image, not the OCR tag. Also test longer marked blocks (3–4 pages), so that more joins fall inside a call.
+
+**Spend.** $0.
+- agy (subscription, second account): 963 translation calls, including the failures. The box's default agy login had no token (8 calls failed on an auth prompt), so the run used the second account.
+- Claude CLI (subscription): 220 Opus judge calls, $19.16 list-equivalent, not billed. Weekly meter at 0% at the start.
+
+**Artifact.** `scripts/eval/results/seam-prevent-7118/markers-catchword/` holds `report.json` (the rule output and every break's verdict per arm), `reads.jsonl.gz`, `judge.jsonl.gz`, `key.jsonl` and `build.json`. Harness: `scripts/eval/seam-prevent-7118/ab.mjs build|translate|judge|score`. The OCR context (`ctx.jsonl`) is rebuilt from Mongo by `build` and not committed.
+
+## 2026-10-29 · Rescued eval artifacts: where they are (#6740)
+<!-- PRIOR ART: none — this is a finding aid, not a result; searched scripts/eval/experiments/ and scripts/eval/INDEX.md for "rescue" (no index of the rescue branches existed). -->
+
+Old job worktrees on the boxes held eval files that were never committed. On 2026-10-29 they were pushed as
+`rescue/<worktree>-20261029` branches (one commit each on top of the worktree's own branch), and the large
+outputs that do not belong in git went to R2. **Nothing here is merged.** A file on a rescue branch may be older
+than main's copy of the same path; diff against `origin/main` before landing anything.
+
+Every experiment record (`scripts/eval/experiments/*.md`) that the 2026-10-29 branches add is **already on main**.
+The branches hold what sits behind those records: code, frozen packets, references and raw outputs.
+
+### Rescue branches (2026-10-29)
+
+`git fetch origin rescue/<name>` and then `git diff --stat origin/main...origin/rescue/<name>`.
+
+| branch | issue | what it holds | records it backs (on main) |
+|---|---|---|---|
+| `rescue/job-ocr-pareto-6293-20261029` | #6293 | OCR Pareto bench: preregistration, ~1,000 reference files in `scripts/eval/benchmark/refs/` (Chinese cohort #5547 and others) | `2026-10-09-ocr-pareto-*-6293.md` |
+| `rescue/job-cli-queue-6293-20261029` | #6293, #6295 | the same bench refs + the CLI queue arms and outputs (1,040 files) | `2026-10-08-syriac-cli-flash-tiers-6295.md`, `2026-10-09-ocr-pareto-gemini-3-8-flash-cli-6293.md` |
+| `rescue/job-cli-queue-b-6293-20261029` | #6293, #6295 | second CLI queue worktree: refs + 3.6/3.7/3.8 Flash arm outputs (1,051 files) | `2026-10-09-ocr-pareto-gemini-3-7-3-6-flash-cli-6293.md`, `2026-10-09-ocr-pareto-gemini-3-8-flash-cli-6293.md` |
+| `rescue/job-cli-queue-6293-p2-20261029` | #6293 | `scripts/eval/ocr-pareto-6293/` build-bench / run-arms / transport-check, `results/ocr-pareto-6293/pages.json` | as above |
+| `rescue/job-embed-integrity-6175-20261029` | #6175 | `scripts/lib/vector-truth.mjs`, `scripts/audit/page-vector-truth.mjs`, `scripts/eval/vector-truth/stores.mjs`, an `embed-gemini.mjs` edit | `2026-10-07-embedding-vector-truth.md` |
+| `rescue/job-embed-integrity-6175b-20261029` | #6175 | `vector-truth/e5-enum.mjs`, `recall-stored-vs-fresh.mjs`, `recall-6175.jsonl`; **also edits to `2026-10-07-embedding-vector-truth.md` that main does not have** | `2026-10-07-page-vector-repair-and-drift-recall-6175.md` |
+| `rescue/job-embed-next-6173-20261029` | #6173 | `scripts/eval/embed-format/` 100K design, pool builder, batch embed, `gold-100k/` | `2026-10-07-embedding-prefix-100k.md` |
+| `rescue/job-fix-shifts-5803-20261029` | #5803 | `scripts/eval/jev/clef-book-offset-map.mjs`, `clef-shift-check.mjs`, two repair scripts in `scripts/maintenance/` (not run from here) | none |
+| `rescue/job-paddle-qa-6388-20261029` | #6388 | `scripts/eval/paddle-zh-qa-6388/` draw, controls, Kanripo refs, packet map | none |
+| `rescue/job-paddle-qa2-6388-20261029` | #6388 | the same directory, second pass (20 files) | none |
+| `rescue/job-paddle-zh-5600c-20261029` | #5600, #5568 | Paddle zh optimisation preregistration, `paddle-zh-5600-optimize.mjs`, `results/paddle-zh-5600/`, `zh-skqs-5568-kanripo.mjs` | none |
+| `rescue/job-page-profile-5643-20261029` | #5643 | `quality-covariates.mjs` and the small page-profile outputs (summary, descriptors, gzipped profile) | `2026-10-02-corpus-page-profile-5643.md` |
+| `rescue/job-quality-round-1-20261029` | quality round 1 | `scripts/eval/quality-round-1/` preregistration, draw, enrol / measure / watch (same files as the 2026-10-01 rescue) | none |
+| `rescue/job-v14-ab-20261029` | translation restraint A/B | an edit to `scripts/eval/translation-restraint-ab.mjs` | none |
+
+Earlier rescues (2026-10-01, same convention): `rescue/job-brakes-5492-20261001` (#5492 spend brakes, docs +
+`scripts/lib/pause.mjs`), `rescue/job-eternity-ab-pr-20261001` (#5513), `rescue/job-page-5527-20261001` and
+`rescue/job-research-quality-20261001` (`src/app/research/` pages), `rescue/job-quality-round-1-20261001`.
+
+### R2: `eval-rescue/2026-10-29/` (bucket `sourcelibrary`, not public-listed)
+
+Corpus page-profile outputs, #5643 (`2026-10-02-corpus-page-profile-5643.md`), 177 MB in total:
+
+| key | bytes |
+|---|---|
+| `eval-rescue/2026-10-29/job-page-profile-5643/corpus-page-profile-2026-10-02.jsonl` | 33,903,210 |
+| `eval-rescue/2026-10-29/job-page-profile-5643/corpus-page-profile-2026-10-02.walk.jsonl` | 30,134,847 |
+| `eval-rescue/2026-10-29/job-page-profile-5643/corpus-page-profile-2026-10-02.books.jsonl` | 8,084,772 |
+| `eval-rescue/2026-10-29/job-page-profile-5643/corpus-page-profile-2026-10-02.descriptors.jsonl` | 3,134,167 |
+| `eval-rescue/2026-10-29/job-page-profile-typeface/corpus-page-profile-2026-10-02-typeface.jsonl` | 45,409,367 |
+| `eval-rescue/2026-10-29/job-page-profile-typeface/corpus-page-profile-2026-10-02.walk.jsonl` | 30,134,847 |
+| `eval-rescue/2026-10-29/job-page-profile-typeface/corpus-page-profile-2026-10-02.books.jsonl` | 8,084,772 |
+| `eval-rescue/2026-10-29/job-page-profile-typeface/corpus-page-profile-2026-10-02.descriptors.jsonl` | 18,217,931 |
+
+Read with the R2 credentials in `.env.production.local` (`ListObjectsV2`, prefix `eval-rescue/2026-10-29/`).
+
+## 2026-10-29 · Can a GPU engine serve 1800+ European print alone, fill lite's refusals, or draft for Flash? (#6871, #5660)
+<!-- PRIOR ART: 2026-10-03-later-the-second-open-engine-olmocr-2-7b-fp8-5660.md (olmOCR-2 on English 1700+, CER 0.002 vs lite 0.022, kept off by one loop); 2026-09-28-is-flash-lite-adequate-on-modern-english-print-or-5216.md (lite refuses 14.9% of English reference pages); 2026-10-12-dropped-lines-two-engine-reads-6326.md (10 of 12 real dropped runs were lite's); 2026-10-28-euro-print-gpu-draft-flash-correct-7567.md and 2026-10-28-euro-print-gpu-correct-e3-e5-7567.md (E1 per-language engine choice and arm c, all on print before 1800; this is the 1800+ frame they left out, with their read.py, drive.sh and score.py reused). -->
+
+### Census (Mongo, read-only, 2026-10-28; `print1800-gpu-6871/census.mjs`)
+Books with `year` 1800+ and `language` starting with the language name, visible and hidden. Pages by state: **none** = no text and no refusal stamp; **refused** = no text with a refusal or failure stamp; **lite** = a Flash-Lite text; other = any other engine's text.
+
+| lang | books | books owed OCR | none | refused | lite | other |
+|---|---|---|---|---|---|---|
+| en | 3,838 | 2,192 | 267,671 | 10,009 | 346,945 | 534,163 |
+| la | 657 | 459 | 88,554 | 281 | 60,277 | 143,996 |
+| de | 1,080 | 578 | 86,579 | 1,044 | 65,129 | 116,167 |
+| fr | 635 | 287 | 46,822 | 731 | 41,970 | 81,228 |
+| es | 39 | 32 | 8,587 | 20 | 4,744 | 2,893 |
+| it | 99 | 45 | 7,818 | 33 | 6,684 | 17,435 |
+| nl | 78 | 33 | 2,271 | 136 | 5,044 | 6,869 |
+| **all** | 6,426 | 3,626 | **508,302** | **12,254** | **530,793** | 902,751 |
+
+- **"none" overstates OCR owed:** it includes blank leaves, plates and pages of hidden books. It is an upper bound.
+- **English is 53% of the unread pages and 82% of the refusals.** That is why olmOCR-2, the engine with the strongest prior English 1700+ result, is re-downloaded and tested here.
+- **GPU-days at the card's alone rates** (capability card 2026-10-18; E5 for LightOnOCR and CHURRO fp8). All of "none" + "refused" (520,556 pages): LightOnOCR-3-1B 3,578/h → **6.1 days**; Surya 2 ~2,000/h → 10.8; CHURRO fp8 1,871/h → 11.6; GLM-OCR 1,462/h → 14.8; olmOCR-2 1,092/h → **19.9 days**. English alone (277,680): LightOnOCR 3.2 days, olmOCR 10.6. Redrafting every lite page (530,793) doubles each.
+
+### Preregistration (committed before any engine output is scored)
+
+**Panels.**
+- **Typed** (`build-panel.py`, 146 pages, one per book or Wikisource work, `year` ≥ 1800):
+  - en 97: the #5216/#5182 English IA pages with Wikisource/Gutenberg references, the 8 by-eye `reference_error` rows dropped. Lite = the stored #5216 realtime read; **16 are lite RECITATION refusals**, kept as refusals.
+  - de 20, la 29: Wikisource proofread pages (`scripts/eval/ground-truth-ws`, the #5660/#6740 ref-ws bench). Lite = the bench reads (4 are empty).
+- **Judged a** (`draw-judged.mjs --set=a`): one interior page per visible, idle, unheld 1800+ book whose stored OCR is a Flash-Lite draft of 300+ characters: fr 40, it 20 (all the frame had), de 40.
+- **Judged b** (`--set=b`): one page per 1800+ book with no text that lite refused or returned empty: en 30, de 30, fr 25.
+
+**Engines** (gex45, through `/root/gpu-queue` task `40-print1800-6871`, one at a time, temperature 0 except LightOnOCR's card settings): olmOCR-2-7B-1025-FP8 (O; #5660's recipe), LightOnOCR-3-1B (LO), Surya 2 (S), CHURRO-3B fp8 (CH8), GLM-OCR (G). Same prompts and flags as E1 (`drive.sh`, `read.py`).
+
+**Scorer.** E2's `score.py` unchanged: letters only, infix CER, raw and folded views; folded is the decision view. A page with no text (refusal, empty, error) scores CER 1.0.
+
+**Guard.** `scripts/lib/gpu-ocr-loop-guard.mjs` (`tests/unit/gpu-ocr-loop-guard.test.ts`), written before any output was read: refuses a read that hit the token cap, that #4850's guard refuses, that ends in a periodic run of 150+ code points (8+ repeats), or that repeats one 12+-letter line 4+ times in a row.
+
+**(a) The engine alone replaces lite** (typed languages en, de, la; per engine). The engine's guarded read: a guard-refused page has no text (CER 1.0, catastrophic). Passes for a language when ALL hold, on every page of the language's panel:
+1. median folded CER(engine) ≤ median folded CER(lite);
+2. catastrophic(engine) ≤ catastrophic(lite), where catastrophic = no text, or CER > 0.5;
+3. loops(engine) ≤ loops(lite) after the guard, where a loop is score.py's: hit the cap, or more than 2× the letters of the page's median arm.
+
+Reported beside it, never deciding: median Δ with a 95% paired bootstrap CI, wins/losses, answered-only medians.
+
+**Candidate engine for the judged languages.** Chosen from the typed results before any judge call: the engine that passes (a) in the most typed languages; ties go to the lower pooled median folded CER. One candidate for every judged packet.
+
+**(a), judged** (fr, it, and de beside its 20 typed pages). Blind Opus (`claude -p`, #7522's `judge.mjs`, neighbouring leaves attached), two versions per packet: the stored lite draft and the candidate's guarded read (a guard-refused page is shown with no text and counts as misleading). Passes when misleading(engine) ≤ misleading(lite) AND the pages where the engine has more faults than lite ≤ the pages where lite has more than the engine. Misleading = not usable.
+
+**(b) The engine fills lite's refusals and empties only.**
+- Typed: the 16 en refusal pages and the 4 empty de/la pages, every engine. Passes when the guarded median folded CER ≤ 2% and catastrophic ≤ 2 of 16. The stored MinerU-fn read (ladder tier 3 today) is reported beside it on the en pages.
+- Judged b: the candidate's guarded read alone, against the image. Pages the judge calls blank or without text are left out. Passes for a language when invented text (additions or bleed) is on at most 1 page AND at least 80% of the judged pages are usable.
+
+**(c) GPU draft → agy Flash correction vs lite → agy Flash** (typed panel; E2's `e2-correct.mjs`, template `0601ef30`, Gemini 3.8 Flash low, one page a call). Arm a = lite draft → Flash; arm c = the candidate's draft → Flash. Passes for a language when the mean folded CER difference (c − a), on pages both arms answered, has a 95% paired bootstrap CI whose upper end is ≤ +0.25 points, AND catastrophic(c) ≤ catastrophic(a) over all the language's pages. Pages where lite refused have no arm-a draft: they count as catastrophic for a unless Flash answered from the image.
+
+**Landing.** If (a) or (b) passes for a language, its lane is added as an `ocr-filler` kind with `cli-ocr.mjs apply` guards, provenance, the human-edit guard, and unread-only writes for (b). Then 10 books are piloted with `--apply` and 10 pages spot-checked by eye before any cron. If no language passes, this record reports the measured gap and stops.
+
+**Not run.** PERO-OCR (E1's Latin pick, pre-1800 only); a lite A-vs-A floor (no Gemini API in this job); no new lite reads.
+
+### Results (scored after the preregistration commit 954f2a3b8)
+
+**The run.** gpu-queue task `40-print1800-6871`, 2026-10-29 00:40–01:39Z, card otherwise empty, util 0.6, 16 clients, 331 pages per engine, 0 errors.
+
+| engine | pages/h | token-cap hits | guard refusals |
+|---|---|---|---|
+| LightOnOCR-3-1B (LO) | 2,899 | 5 | 5 |
+| olmOCR-2-7B FP8 (O), pages at 1,288 px | 2,078 | 8 | 8 |
+| CHURRO-3B fp8 (CH8) | 1,781 | 7 | 7 |
+| Surya 2 (S) | 1,707 | — | 1 |
+| GLM-OCR (G) | 1,553 | 14 | 14 |
+
+**(a) Typed panel, the engine alone against lite** (`decide.py`; median folded CER %, catastrophic, loops after the guard; W/L = pages better/worse than lite by > 0.2 pt):
+
+| lang | lite | LO | S | G | O | CH8 | verdict |
+|---|---|---|---|---|---|---|---|
+| en (97) | 0.27, 17, 1 | 0.12, 0, 0 (W/L 29/10) | 0.11, 0, 0 (26/5) | 0.12, 1, 0 (29/8) | 0.13, 0, 0 (28/8) | 0.16, 0, 0 (26/17) | **every engine passes** |
+| de (20) | 0.27, 1, 0 | 1.27, 0, 0 (1/13) | 1.70, 1, 0 | 3.08, 1, 0 | 1.16, 1, 0 | 0.52, 0, 0 (2/11) | **every engine fails** |
+| la (29) | 1.00, 4, 0 | 0.99, 0, 0 (6/13) | 1.14, 1, 0 | 1.51, 2, 0 | 1.73, 1, 0 | 2.19, 0, 0 | LO passes, the rest fail |
+
+- **English.** Lite's median carries its 16 RECITATION refusals. On the 81 pages lite answered, the engines and lite are close: LO 0.17% against 0.19%, olmOCR 0.12%, Surya 0.12%. The gain is that no engine refuses, and every engine reads fewer pages worse than lite than better. MinerU, today's tier-3 refusal reader, is 0.24% on the same pages (stored read, descriptive).
+- **German** (Wikisource proofread pages, mostly Fraktur, 1803–1847). Lite is better on 11–19 of 20 pages against every engine. The best engine, CHURRO, has twice lite's median.
+- **Latin** (Wikisource, 1800+). LO passes by the letter: median 0.99% against 1.00%, 0 catastrophic against 4. The pass is carried by lite's 4 empty bench reads. On the 26 pages both answered, LO is 0.97% against 0.93%, and worse on 13 pages against 6. Treated as a tie (TAKEN below).
+- **Candidate** (the preregistered rule: the most typed passes, then pooled median): **LightOnOCR-3-1B**, which passes en and la. It is also the fastest engine.
+
+**(b) Typed: lite's 16 English refusals** (+ 4 empty de/la bench reads): LO median 0.09%, Surya 0.10, GLM 0.13, olmOCR 0.17, CHURRO 0.27, all with 0 catastrophic; MinerU-fn 0.21. **Pass** for every engine.
+
+**Judged** (blind Opus, `claude -p`, #7522's `judge.mjs`, one call a page with the neighbouring leaves; 180 calls, 0 without a verdict; `judge-table.py`):
+
+| set | lang | pages | result | verdict |
+|---|---|---|---|---|
+| a: lite draft vs LO | fr | 40 | misleading lite 2 / LO 3; LO more faults on 13 pages, lite on 7 | fail |
+| | it | 20 | misleading 0 / 1; more faults 5 / 3 | fail |
+| | de | 40 | misleading 4 / 15; more faults 26 / 5 | fail |
+| b: LO on lite-refused pages | en | 30 | usable 24 (80%), invented 1, not delivered 2 (a token-cap loop; a plate) | **pass** |
+| | fr | 25 | usable 22 (88%), invented 0, not delivered 2 | **pass** |
+| | de | 30 | usable 20 (67%), invented 2 | fail |
+
+- **The English b-failures are all one kind.** 3 pages are English with a Sanskrit, Devanagari or Chinese span, where LO garbled the span and read the English right. 1 page has a line of engine commentary appended ("Note: The original image contains a decorative brown scroll…").
+
+**(c) GPU draft → agy Flash** (`decide-c.py`; mean folded CER difference c − a on pages both arms answered, 95% bootstrap CI; catastrophic over all pages):
+
+| lang | both answered | Δ (c − a) | median a / c | catastrophic a / c | verdict |
+|---|---|---|---|---|---|
+| en | 81 of 97 | −0.41 [−1.25, +0.12] | 0.23 / 0.10 | 16 / 0 | **pass** |
+| de | 19 of 20 | −0.10 [−0.62, +0.38] | 0.20 / 0.14 | 1 / 0 | fail (CI upper end above +0.25) |
+| la | 26 of 29 | −0.04 [−0.26, +0.15] | 0.86 / 0.52 | 3 / 0 | **pass** |
+
+- Arm a's catastrophic pages are lite's refusals: they have no draft to correct. 272 agy calls; the Gemini weekly bucket went 0.28 → 0.24, other pool traffic included.
+
+### Routing proposal
+
+| language, 1800+ | pages with no text (census) | proposal | evidence |
+|---|---|---|---|
+| **English** | 267,671 none + 10,009 refused | **LightOnOCR-3-1B on gex45 for pages with no text**; stored lite drafts stay | (a), (b) and (c) pass |
+| German | 86,579 + 1,044 | Flash-Lite, unchanged | every use fails. Gap: typed median 0.52% (best engine) vs 0.27%; judged misleading 15 vs 4 |
+| Latin | 88,554 + 281 | Flash-Lite + the long-s pass, unchanged | (a) a tie carried by lite's empties; refusals too few for a (b) lane |
+| French | 46,822 + 731 | Flash-Lite. A refusal-fill route for the 731 refused pages is a follow-up | (a) judged fail by 1 page; (b) judged pass |
+| Italian | 7,818 + 33 | Flash-Lite, unchanged | (a) judged fail, n=20 |
+| Dutch, Spanish | 2,271 / 8,587 | not measured | no references; below the judged-panel budget |
+
+- **The English frame is smaller than the census.** Visible English 1800+ pages with no text: 213K. Of these, 162,747 are in 984 books held `scans-only-publish-7270` (#7270 published them as scans, OCR undecided) and 31,653 are held `ia-free-text-first-4966` (branch 0: Archive text first). Only 25,051 are in free books.
+- **The lane takes the scans-only books.** These are the holds the #7263 Latin GPU lane already reads (`GPU_LANE_HOLDS`). The lane writes OCR into them and keeps the hold, so no translation follows and no hold is released.
+- **At LO's rate** (2,899 pages/h on the panel, 4,860 on the pilot's library pages) the frame is **1.4–2.3 GPU-days**. All 277,680 English pages with no text would take 3.2–4.0 days.
+
+### The lane (built here, `scripts/workers/gpu-print-lane.mjs`, `scripts/lib/gpu-print-lane.mjs`, `scripts/gpu/gpu-print-{gpu.sh,read.py}`)
+- **`frame` → `plan` → GPU → `apply`**, the Paddle print lane's shape (#6101).
+- **It writes only pages with no text** (never read, or lite-refused/empty) in English books dated 1800+ under a GPU-lane hold. With `--free`, an unheld book is held `gpu-print-6871` first.
+- **Guards at apply:** the page still has no text and is not human-edited; the book is still under a lane hold; `gpu-ocr-loop-guard` (token cap, #4850 loop, tail runaway, repeated lines); a 30-word-character floor (a blank leaf stays unread); ≤ 3 letters of a non-Latin script; no engine-commentary line; ≤ 15 ‰ Indic transliteration letters.
+- **The last three guards were added AFTER the judge and the pilot (post hoc).** They only turn pages away. On the typed English pages they turn away 6 of 97 pages, all pages where lite read better than LO. On the judged b set they turn away all 4 English failures.
+- **Every write goes through `writePageText`:** a revision row, CAS on the prior field, and a run id, so `revert-run.mjs` undoes it. The page is stamped `ocr.source: 'lightonocr'`, with an engine block (model, HF snapshot, vLLM version, host, GPU, decode settings, image URL and sha256). `missingProvenance` now checks `lightonocr` with the other specialist engines.
+- Each written book also gets sweep_log rows before and after, a recount, and one `book_events` row.
+
+### Deviations
+1. **The guard's front-matter strip was wrong** in the first version. LightOnOCR opens with a bare `---` rule, and the strip took everything up to the next rule. It was fixed (and tested) before any judge packet was built. Guard counts on all five engines were unchanged by the fix.
+2. **The (b) judged rule.** The rule said pages the judge calls blank are left out. The judge prompt has no blank verdict, so usable is counted over every drawn page, which is stricter. One English "not delivered" page is a plate, where LO's 14 letters were right.
+3. **olmOCR read pages at 1,288 px** (its own recipe, #5660); every other engine read at 2,400 px.
+4. **The typed panel's lite reads are bench reads,** not the stored library text: realtime #5216 for English, #6740/E2 for de/la.
+
+### What this does not show
+- **The English references are Wikisource/Gutenberg books,** which are legible, canonical and memorised. That inflates lite's refusal rate (16/97 here against 10,009 of 357K read pages in the corpus, 2.8%) and understates every engine's CER. Without refusals, LO and lite are close on English. The case for the lane is refusals, catastrophic pages and $0 marginal cost, not a better reading of clean pages.
+- **German, Latin, Italian and French n are small** (20–40 a cell), and the judge is one Opus pass.
+- **No pilot pages are in the tables above:** see the pilot section.
+
+### Pilot: 10 books, `--apply` (2026-10-29)
+
+**The books.** The first 10 frame books with 30–250 owed pages (seeded order), all held `scans-only-publish-7270`, so no hold was added or released. 1,064 pages had no text.
+
+**The read.** Queue task `41-gpu-print-pilot-6871`, LightOnOCR (HF snapshot `23d54408…`, vLLM 0.31.0): **4,860 pages/h**, 0 errors.
+
+**v1 (run `gpu-print-en-2026-10/lo-20261029T020001Z`).** 852 written, 95 textless (blank leaves: one checked by eye), 117 turned away (115 other script, 2 token cap). By eye, 10 random written pages:
+- 8 right; one slip, "chris-tians" read as "Christians".
+- **Sanskrit phonetics, p.121:** the transliteration's diacritics were misread (ç as ṣ or ḍ, macrons added), and the LaTeX `$…\ …$` that wraps them was stored.
+- **Gibran, *Sand and Foam*, p.31:** the text was right, but empty `<div>`s were stored, and so was an appended engine note: "Note: The actual image URLs are placeholders…". That note is invented text.
+- **The note was not one page.** 56 of the 852 written pages carried one ("Note: The page number … is preserved as it appears…"), 50 of them on that book's ornamented pages. On the 331 eval pages it was 3.
+
+**The fix.**
+- **The converter** drops HTML tags and blockquote marks, and unwraps `$…$` spans that hold no LaTeX command.
+- **The commentary guard** catches any "Note:" line about the image, markdown, placeholders or the page number.
+- **A new transliteration guard** turns away a page with more than 15 ‰ Indic transliteration letters. The Sanskrit pages are at 16–111 ‰; English pages naming a Rāma stay under 7 ‰.
+- All are unit-tested (`tests/unit/gpu-print-lane.test.ts`).
+- **The v1 run was reverted whole** (`revert-run.mjs`: 852 restorable, 0 changed since) and applied again.
+
+**v2 (`…/v2`, the pages as they now stand).**
+- **780 written**, 0 conflicts, 95 textless.
+- **189 turned away:** 115 other script, 56 commentary, 16 transliteration-dense, 2 token cap.
+- **All 780 pass `missingProvenance`**, `ocr.source: 'lightonocr'`, and none carries a note. The two defective pages above are empty again.
+- **By eye, 10 newly drawn written pages:** 10 usable, 0 invented, 0 omissions. They include a two-column index (right column order) and a portrait plate's caption.
+  - Minor faults: one page silently corrects two printer's typos ("is ot" → "is of", "resuccitation" → "resuscitation"); markdown italics (`*…*`) and list bullets are kept.
+
+**Turned-away pages stay unread in their held books.** No other lane reads them while the hold stands. They are listed in `rejected.jsonl` on gex45.
+
+**Recommendation.** Turn on route `gpu-print-en` (`-` → `on` in `ocr-filler-routes.tsv`) after this PR is reviewed. The frame (984 books, 162,747 pages) is about 1.4 GPU-days at the pilot's rate.
+
+## 2026-10-29 · The notes-layer parser and the reader's legacy note syntaxes (#5942)
+
+PRIOR ART: `scripts/eval/notes-layer-5942/` (the parser's first measurement and the storage pilot). Those used a one-page-per-book
+draw, which undersamples the early prompt versions. They also compared `reader(data)` with `reader(text)`, which cannot see a syntax the
+parser leaves behind, because the reader strips it from both. `scripts/eval/notes-legacy-5942/` adds a page-uniform draw with
+targeted top-ups and a direct oracle. Scripts and raw outputs: `scripts/eval/notes-legacy-5942/`, `scripts/eval/results/notes-legacy-5942/`.
+
+**Why.** Derek's session paused the full backfill (`notes-layer-backfill-5942-full-20261029`) at about 9,000 pages. annotation-layer/2
+left `[[vocabulary:]]`, `[[image:]]` and the other legacy syntaxes in `translation.text` as if they were book words.
+
+### 1. Inventory
+
+**Where the syntaxes came from.** The prompt history was read with `git log -S` over every prompt file.
+- The translation prompt used `[[label: …]]` syntax from 2025-12-12 to 12-27. That is DB translation v0; DB v1 switched to XML on 2025-12-27/28.
+- Every bracket page in the corpus carries prompt version `none`, `v1` or `v2` and was written in Jan–Feb 2026, by workers still running
+  older prompts.
+
+**No prompt ever asked for these:**
+- single `[interpolations]` (banned outright from v7/v8 onward)
+- bracketed image paragraphs
+- plain `Summary:` lines
+- preambles
+- "# Title Page" label lines
+- free-text Vocabulary sections
+- `[[page type:]]` and `[[note:]]` (singular)
+- `[[original page:]]`, `[[catchword:]]` and `[[sig:]]`
+- `«…»`, `<<…>>`, `{{…}}`, `(Note: …)` and `Translator's note:`
+
+**The draws:**
+- **Uniform:** 59,387 pages. A book is drawn with probability ∝ `pages_translated`, then a random page in it. Seed 5942; the books'
+  counters give 5,726,305 pages in all.
+- **Top-up by scan:** a server-side regex scan of every page whose translation was updated 2026-01-01 – 03-16 found 1,828 pages with
+  `[[label:]]`.
+- **Top-up by book:** every page of the 72 books where the uniform draw found a rare syntax gave 11,401 more pages.
+- **Estimated pages:** uniform share × 5.73M. The estimate is "–" where the uniform draw found none; for those, "found" is the
+  whole population in the scanned window.
+
+| syntax | found (conformance n) | est. pages | prompt versions | reader, notes off | /2 conforms* | /3 |
+|---|---:|---:|---|---|---:|---|
+| `[[notes:]]` / `[[note:]]` | 816 | ~580 | none, v2 | hidden | 815 | commentary note → 816 |
+| `[[meta:]]` `[[summary:]]` `[[keywords:]]` | 816 / 802 / 802 | ~580 | none | hidden (panel) | all | page block → all |
+| `[[page number:]]` | 607 | ~290 | v2, none | hidden | 607 | page block → 607 |
+| `[[language:]]` `[[signature:]]` `[[abbrev:]]` `[[warning:]]` | 35 / 11 / 7 / 1 | – | none, v1, v2 | hidden | all | page block → all |
+| `[[vocabulary:]]` | 368 | ~190 | v2, none, v1 | hidden | **0** | vocab page block → 368 |
+| `[[image:]]` | 90 | ~190 | v1, none, v2 | hidden | **0** | image note → 90 |
+| `[[header:]]` `[[markup:]]` (`[[page type:]]`: none found) | 16 / 11 | – | v2, none | hidden | **0** | page block → all |
+| `[[margin:]]` `[[gloss:]]` `[[insert:]]` `[[unclear:]]` `[[term:]]` | 458 / 80 / 12 / 3 / 17 | ~290 | none, v2, v1 | words kept | **0–1** | mark (words stay) → all |
+| `[[original page:]]` `[[catchword:]]` `[[sig:]]` `[[vocab:]]` `[[heading:]]` `[[crossed out:]]` | 302 | ~190 | none, v1, v2 | **shown as book text** | (=) | page block / mark: **listed diff** |
+| bracketed image paragraph | 603 | ~2,500 | v10, none, v1, 1, v2 | hidden (image-desc) | **0** | image note → 603 |
+| single `[interpolation]` | 23,635 | **~1.18M** (20.7%) | all; none 77%, v6 39%, v1/v2 31%, 13 10.5% | dropped | 993 | kept in text under an `interp` mark → 23,628 |
+| `[Note: …]` | 94 | ~1,200 | none, v10, 11 | dropped (as interpolation) | 8 | interp → 94 |
+| plain `Summary:` line | 25 | ~290 | 13, v10 | hidden | 1 | page block → 25 |
+| preamble ("Here is the translation") | 8 | ~390 | v10, 11, 13 | stripped | (=5) | page block (=7) |
+| code fence | 2 | – | none | stripped | (=1) | page block (=2) |
+| free-text Vocabulary section | 278 | ~2,700 | v2, v5.1, 13 | deletes to page end, **wherever "vocabulary:" stands** | (=13) | own-line heading only: **listed diff** |
+| "# Title Page"-style heading | 280 | ~24,000 | v10, v2, 11 | **deletes the label word** ("## INDEX 421" → "421") | (=0) | kept: book headings, **listed diff** |
+| `[…]` lacuna | 178 | ~14,000 | all | kept | (=61) | kept, no annotation (=170) |
+| `(Note: …)`, `Translator's note:`, `«…»`, `<<…>>`, `→` in a term | 27 / 53 / 27 / 2 / 1 | 1.4k / 3.6k / 2.6k / 0.2k / – | all | **shown as text** | (=) | kept, as the reader does |
+
+\* **"conforms"** is the differential oracle (§3): the reader and the parser disagree on the same words whether or not the syntax is on
+the page, so the syntax itself is never why they differ. "(=N)" marks a syntax with no deletion rule; there the count is of whole pages
+whose words are equal.
+
+### 2. annotation-layer/3
+
+**Shared rules.** The reader's bracket rules moved to `scripts/lib/legacy-note-syntax.mjs` verbatim (`BRACKETED_PARAGRAPH`,
+`looksLikeImageDescription`, `INTERP_PATTERN`, `isLacunaMark`). `NotesRenderer.tsx` imports them; the reader's behaviour is unchanged,
+and its tests pass. The parser imports the same rules.
+
+**Passes.** The parser runs its passes in the reader's notes-off order (`extractMetadata` → `cleanOcrArtifacts` → `preprocessBracketTags`).
+Each pass runs on the page as the reader sees it at that stage: every earlier removal is cut out, with a map back to the stored offsets.
+Nested blocks therefore close as the reader closes them. In `[[margin: Agrypnia [[gloss: by sickness]]]]`, the margin closes at the
+first `]]` and the gloss at the second.
+
+**Interpolations** stay in `text`, brackets and all, under an `interp` mark made of two zero-width pieces. `notesOffText(split)` drops
+them as the reader does, except those flagged `printed` (see §4). `renderInline` still rebuilds the stored markup byte for byte.
+
+**Where /3 departs from the reader on purpose.** In each case the reader deletes the book's own words or shows the model's as the book's;
+each is pinned by a "listed" test:
+- **Headings:** the reader drops the word "Index" from 249 of 249 "# Index…" headings in the uniform draw, all of them the book's own.
+- **"Vocabulary:" anywhere:** the reader deletes the whole rest of the page. Every page of one Mayan dictionary goes blank under its
+  running head "GENERAL VOCABULARY"; on another page it is "**Technical" that is left behind.
+- **Invented labels:** `[[original page: 68]]`, `[[catchword:]]` and the other labels no reader rule reads are shown by the reader as
+  book text.
+
+### 3. Conformance (the oracle is the reader's own function)
+
+**What is compared.** The oracle is `prepareNotesMarkdown(data, { showNotes: false })`: the exported pure function `NotesRenderer`
+renders, empty on a description-only page. It is compared with `notesOffText(splitAnnotations(data))` as bags of words, with no reader
+pass over the parser's side.
+
+**The differential check.** The comparison is repeated with the syntax deleted from the page. When the disagreement is the same with
+and without the syntax, the syntax is not its cause.
+
+**Totals, 72,188 pages:**
+- whole-page equal: 68,348 (/2: 46,562);
+- legacy pages equal: 23,232 of 25,354 (/2: 1,446);
+- round trip byte for byte: 72,040. The other 148 have their term definitions lifted, the same pages as /2.
+
+**What still differs.** Every remaining whole-page difference also occurs on pages with no legacy syntax. Each is an old, known class:
+- a note nested in a margin, which the reader shows as book text;
+- an unclosed tag;
+- LaTeX the reader rewrites (`\frac`);
+- a description-only page, which the reader hides whole;
+- the listed headings.
+
+**What /3 changes on non-legacy pages.** Text: none. On the uniform draw, /3 text equals /2 text on every page without a legacy syntax;
+the 55 pages whose text changed all carry one. Annotations: interpolations are new annotations.
+
+**Unit tests.** `tests/unit/annotation-layer-legacy.test.ts` has one fixture per syntax (29) against the reader. It also pins the listed
+differences and the printed-bracket flag.
+
+### 4. The image-grounded check (Derek's inbox note, 2026-10-29)
+
+**Design.**
+- **Draw:** 107 pages, 15 syntaxes, stratified by prompt version, one page per book, seed 5942.
+- **Reader:** Opus `claude -p` with the page image (`getPageSource`) and the OCR. It judged each span: printed, model, mixed or unclear.
+- **Re-judged spans:** removed spans were judged again on their removed words alone (`--removed-only`). The first prompt marked the
+  anchor, and Opus judged the anchor instead.
+- **Second reader:** Gemini 3.8 Flash low on 30 pages. It agrees on 37 of 38 kept spans (97%). On removed spans it saw only the first,
+  ambiguous prompt, so that figure (52%) is not a measure of agreement.
+
+**Results.** Table: `scripts/eval/results/notes-legacy-5942/spot-report.md`.
+- **Interpolations:** 71% model, 14% printed, 14% mixed; 6 of 49 had their brackets printed in the source ("[Σ 392]", "[Fig. 164 :]",
+  "[10]"). All 6 stood on pages whose OCR carries bracket runs; none of the model's did.
+  - **Rule changed:** given the OCR, /3 flags an interpolation `printed` when the OCR has the same bracketed words, or at least as many
+    bracket runs as the translation has interpolations. Against the judge: 6/6 found, 2 false positives (model labels on a page that
+    brackets throughout). This is in-sample.
+  - Printed interpolations stay with notes off; the reader drops them (reader error, listed).
+  - `backfill.mjs` and `rewrite-stale.mjs` now read `ocr.data`.
+- **Legacy blocks:** `[[notes:]]` 97% model (32 spans, 0 lost); `[[margin|gloss|term:]]` 6/6 printed, kept.
+- **Page blocks:** the 4 "losses" are page numbers and signatures, page furniture removed by design.
+- **Bracketed image paragraphs:** 88% model. One printed "[Diagram]" in Richter's Leonardo is removed, as the reader removes it.
+- **`Summary:` lines:** 1 of 2 is a manuscript's own summary verse (Kanjur), which both the reader and /3 remove.
+
+**Current (XML) syntax, measured alongside.** Not legacy, and not changed here:
+- `<gloss>` marks as printed: 38% are the model's definitions, 5 leaks.
+- `<unclear>`: 35% are placeholders ("[illegible — 1 line]"), 9 leaks.
+- `<term>`: 19% are model additions (Sanskrit equivalents, transliterations), 5 leaks.
+- `<note>`: 18% printed (footnotes, stage directions), 3 losses.
+- `<gloss>` after a `<term>`: 97% model, as /2 assumes.
+
+**Leaf check.** Opus judged 5 pages "no" and 13 "partly" on whether the English is this leaf's. I opened 3 of the "no" pages myself and
+confirmed them: Ficino's Plato, Boissard and Boethius. Those are **contained** (#7685: books held, pages withheld). The rest are listed
+there, flagged and not contained.
+
+### 5. The pages the paused run wrote
+
+`rewrite-stale.mjs` covers the full run and the pilot runs: 10,016 pages, 0 conflicts, 2 with no text.
+- **Rewritten:** 2,822 pages. Their text and annotations changed, so each got a new `page_annotations` doc under its own run id and a
+  revision row.
+- **Re-stamped:** 7,194 pages. Their split was identical, so only `text_from.parser_version` changed, with a revision row and no
+  duplicate doc.
+- **Run ids:** `notes-legacy-5942-rewrite-20261029`, then `-20261029b` for 4 more pages once the invented labels were added.
+
+**Undo order.** Undo `-b` first, then the first rewrite run, then the full run. `undo.mjs` compare-and-sets on the parser version a row
+wrote.
+
+**State after.** All 10,016 pages are current and served from the store. Every anchor slices back to its phrase (114,543) and none is
+orphaned. 17,856 repeated phrases resolve to their own place.
+
+**Resume.** `backfill.mjs` skips a page only when `text_from.parser_version` is current, so a resumed run redoes any page that is still
+/1–/2. That includes pages translation writers stored under /2 since #7652.
+
+### 6. Step 4: the pilot checks again
+- **Stratified draw** (2,364 pages, up to 220 per old prompt version):
+  - round trip 2,355 (+9 term-lifted);
+  - stored = parser 2,364; orphans 0;
+  - anchors 24,622: 0 slice mismatches, 0 unresolved, repeated 6,744/6,744 to their own place;
+  - character ledger off on 3 pages, the same as /2.
+- **The pilot's 1,000:** round trip 995 (+4); orphans 0; anchors 10,281/10,281; character ledger 0.
+
+## 2026-10-29 · Does the router's Opus judge catch subtle wrong text on Latin, German and French print? (#7611)
+
+PRIOR ART:
+- `scripts/eval/route-judge-6740/judge.mjs`: the judge being tested. Its `judgePrompt`, `opusCall` and `parseVerdict` are imported unchanged. Its own planted controls are Tibetan only (`tib-kangyur`: catch < 0.80 hands the cell to Derge).
+- `scripts/eval/pro-translate-6545/plant.mjs`: #6545's planter, the last broad measurement (Opus caught 43/46). It works on English translations only, so it cannot be used on a transcription. The new planter is `scripts/eval/lib/plant-ocr-errors.mjs`.
+- `scripts/eval/lane-judge-sampler.mjs`: the store this frame is drawn from. Its only standing control is the wrong-page control (another book's text against this image), which tests gross failure.
+
+**Why.** The router's k/n for Latin, German and French print all come from one Opus judge. Subtle wrong text is the failure that matters, and page metrics hide it. Derek asked (2026-10-29): "can we test the test?"
+
+### Preregistration (committed before any judge call)
+
+**Frame.** Pages that the judge ACCEPTED, with the exact text it accepted:
+- `lane_judge_verdicts`: kinds item and draft, print, cells german-lite, french-lite, latin-lite and latin-gpu-7263. The record's `text_hash` is re-checked against the text.
+- The router tests of 2026-10-26: the stored `lite` drafts of fr-lite and de-lite. These count only if the page's OCR is older than the verdict.
+
+One page is taken per book. Books are taken in a seeded order (seed 7611), and from each book the first page where every variant B to E finds a site. A page is skipped when its body is not in the cell's language: the latin-gpu cell holds e-rara licence leaves in German, French and Italian. The frame has 12 pages per language, 36 pages in all (frame.json gives the counts tried and skipped).
+
+**Variants.** There are five per page. Each is a separate blind judge call, so the judge never sees the variant or a sibling. The plants go in body text only, never in markup, headers, the first or last printed line, or footnotes. They are kept grammatical.
+- **A:** unchanged.
+- **B:** one number changed: a numeral (1596 → 1591), a number word (duabus → tribus, zwey → drey, quatre → six), or a Roman numeral (XVIII → XX).
+- **C:** one content noun swapped for a noun of the same inflection class that is not on the page (pietatem → humiditatem, Erfahrung → Wirckung, occupation → préparation).
+- **D:** one printed line dropped from the middle. Where the text is set as paragraphs, one whole sentence is dropped instead.
+- **E:** one invented sentence inserted at a sentence boundary, in the page's language and register (an early-modern bank for old spelling, with ſ where the page uses it).
+
+Each plant is recorded in plants.json as page, variant, line, offset, before → after.
+
+**Score.** A plant is *caught* if the verdict is not accepted, OR if a defect names the plant: the quote holds the planted word or number (B, C), shares three words with the inserted sentence (E), or reports an omission (D: class O5 or "missing" in the note). The named rate is reported apart. Each language × variant cell is reported as k/n with a Wilson 95% interval. For A, the re-accept rate is reported.
+
+**Bar (the same as Tibetan's).** A language passes if its catch rate on B to E pooled (n = 48) is at least **0.80**. Below that, the router table flags the language's k/n from this judge as *judge-unvalidated*. A's re-accept rate is the false-alarm baseline: if A is rejected at rate r, then roughly r of any "catch" is the judge rejecting the page for other reasons. It is reported beside the catch rate, and the bar is not adjusted for it.
+
+**Known bias, declared.** Variant B needs a number in the body, and about a third of accepted pages have none. The frame is therefore pages with a number. German needed 33 books to fill 12 pages.
+
+**Budget.** 180 calls at 0.0124 points a call, about 2.2 Claude points. The run stops if this login's weekly meter reaches 92% (it read 88% at the start).
+
+### Results (judged 2026-10-29, after the preregistration above was pushed in PR #7719)
+
+**Judge and cost.** 180 calls to `claude-opus-5-5` (`claude -p`, gex45 subscription), 4 in parallel, with the image attached. All 180 parsed. The weekly meter stayed at 88% (an integer reading). The 5-hour meter went from 9% to 13%. The list-price equivalent was $11.25 (not billed). Artifacts are in `scripts/eval/judge-planted-7611/results/2026-10-29/`: frame, plants, items, texts, verdicts and score.
+
+**Catch rate.** A plant is caught if the verdict was not accepted or the plant was named. Each cell gives k/n, the rate, and a Wilson 95% interval; n = 12 per cell.
+
+| language | A: re-accepted | B number | C noun | D line dropped | E sentence inserted | **B to E pooled** | bar 0.80 |
+|---|---|---|---|---|---|---|---|
+| Latin | 12/12 | 12/12 | 12/12 | 12/12 | 12/12 | **48/48 = 1.00 [0.93, 1.00]** | pass |
+| German | 11/12 | 12/12 | 12/12 | 12/12 | 12/12 | **48/48 = 1.00 [0.93, 1.00]** | pass |
+| French | 12/12 | 12/12 | 12/12 | 12/12 | 11/12 | **47/48 = 0.98 [0.89, 1.00]** | pass |
+| all | 35/36 = 0.97 [0.86, 1.00] | 36/36 | 36/36 | 36/36 | 35/36 | 143/144 | |
+
+The single-cell intervals at 12/12 are [0.76, 1.00].
+
+**Named, not just rejected.** The stricter count is whether a defect quoted the plant. B, C and D were named on 36/36 each, and E on 34/36. Every D verdict named the dropped line or sentence verbatim, as "a whole line is missing: '…'". So the catch does not ride on rejections for other reasons. The one German E that was caught without being named was rejected on other grounds (the same page's A was also rejected).
+
+**The miss.** On French `69bd935f2d11455793b3f121` (a 19th-century essay on the cult of Mithra, set in paragraphs), the judge accepted the inserted sentence "Il faut y prendre garde avec soin." at fidelity 5, with no defect.
+
+**What this does and does not show.**
+- **It shows** the judge reads the leaf: a changed number, a swapped noun, a dropped line or an invented sentence is found and quoted, on 143 of 144 plants.
+- **It does not show** that the judge catches a model's *own* subtle misreads (letter-level confusions, a normalised spelling, a dropped abbreviation mark). Those are less salient than a plant, and the A re-accept rate (35/36) says nothing about them.
+- The plants are single errors on clean pages. A page with five real errors has its own dynamics.
+- The frame is pages with a number in the body (declared above).
+
+**Standing control.** `lane-judge-sampler.mjs` now plants K = 2 errors per cell × route per ISO week (`--planted=K`). It uses pages the judge accepted that still hold that text. The kind rotates B → C → D → E and is held across pages: a page with no number does not skip B.
+- The catch rate is written to score.json (`controls[route].planted`, and `judge_planted` on every route block).
+- build.py prints it next to k/n ("judge caught k/n planted").
+- A route whose catch rate over the last 56 days is below 0.80, counted once it has 8 plants, is listed under `routes_not_counted` as judge-unvalidated, as a failed wrong-page control already is.
+- At 2 per week per route, the 8-plant floor is reached in about 4 weeks.
+
+## 2026-10-29 · Can agy Flash-low give a first read to pages with no OCR in visible scans-only books? (#7701)
+
+Derek, 2026-10-29: "I want to focus on books that haven't been OCRd yet." 23,691 visible books serve scans only (6.95M
+pages). The lane's frame is `cli-ocr-lane.mjs count --cohort=visible-unread`. It takes visible books held as scans only
+(the four scans-only/acquisition holds), on a print route, that are not a manuscript by library, title or date, and are
+not a possible unsplit spread. That frame holds 11,538 books with no OCR (2.07M pages, almost all Latin from e-rara) and
+1,199 partly read books (355K pages, mostly German). Skipped: 6,673 books are possible unsplit spreads (not
+split_checked, no crop data; most Heidelberg, BSB and erara books), and 4,773 are manuscripts.
+
+**Design** (the rule was fixed before judging, `RULE.md`). Each cell takes 30 books, one interior page with no OCR per
+book, in a seeded order. Two arms run on the SAME pages:
+- **A, a fresh read.** `cli-ocr.mjs read` on the live OCR prompt, as the lane reads it. Latin and German send 4 pages a
+  call (the drawn page sits inside a block of its unread neighbours, and only the drawn page is judged). French sends 1.
+- **B, read then correct.** A's read, then the #7558 correction pass on it (the fc template, the image, one page a call).
+  Its draft came from A's read on disk.
+
+All reads went through `AGY_HOME=.agy-james`. Opus judged every output blind against the image (`claude -p`, the
+route-judge prompt). Outputs with identical text shared one verdict. The wrong-page controls passed on all 6 routes.
+**Written** means the drawn pages the lane would write: delivered, and past `apply --first-read-only --print-only`
+(dry run). A page that is not written stays scans-only, which is today's state.
+
+**Result** (`score.json`, router evidence `evidence/first-read-7701.score.json`):
+
+| cell | arm | all drawn (a cut = not accepted) | wrong text | written | wrong text (written) | agy calls a page |
+|---|---|---|---|---|---|---|
+| Latin | A @4 | 24/30 | 1/30 | **17/19** | **1/19** | 0.60 |
+| | B @4 > correct | 24/30 | 1/30 | 17/19 | 1/19 | 1.60 |
+| German | A @4 | 26/30 | 1/30 | 23/24 | 0/24 | 0.55 |
+| | B @4 > correct | 26/30 | 1/30 | **23/24** | **0/24** | 1.55 |
+| French | A @1 | 24/30 | 1/30 | **24/24** | **0/24** | 1.23 |
+| | B > correct | 25/30 | 1/30 | 24/24 | 0/24 | 2.23 |
+
+- **Paired, B against A** on delivered pages: Latin 4 better / 1 worse, German 3 / 2, French 1 / 1. B added no
+  wrong-text page in any language.
+- **The router's decision** (`router-table/2026-10-29-first-read-7701.md`, print cells; the rule is
+  `rules.json` switch/hold):
+  - Latin: HOLD.
+  - German: switch to `agy-flash-low@4>agy-flash-low-written` (arm B). Arm A has the same k/n, but on 24 pages its
+    posterior does not clear P(acc ≥ best − 0.08) ≥ 0.9, because the gate treats the two arms as independent. At a
+    0.10 margin A passes and is 2.8x cheaper per accepted page.
+  - French: switch to `agy-flash-low-written` (arm A).
+- **Latin fails on one page.** In a Latin book, a German legal footnote was transcribed with an English word in place of
+  the printed one: "Tuttlingischen **Closed** Flecken" (the print reads "ampts Flecken"). The correction pass kept it.
+  Six of the 30 Latin pages were refused by the existing foreign-script guard, which was built for corrections. Five
+  carried real Greek quotations and one Hebrew. Under that guard, about 1 Latin page in 5 of humanist print is never
+  written.
+- **Filter cuts.** Gemini cut 4/30 Latin, 2/30 German and 4/30 French reads before `<<<END>>>`. None of them is written.
+- **Arm C** (the correction at 4 pages a call) was not run. `cli-ocr.mjs` refuses `--per-call` with `--correct-prompt`.
+
+**Note.** The decision rule fixed before judging used the written row and agrees with the router on all three cells.
+The German and French arm-A reads of this test were applied at 14:56Z (118 pages). Derek's arm-B steer reached the job
+inbox at 14:53Z and was read after that apply. Those pages carry the first read only.
+
+## 2026-10-29 · Arm-c production pilot, Latin + Italian (#7567)
+<!-- PRIOR ART: 2026-10-28-euro-print-gpu-correct-e3-e5-7567.md (E5: arm c passed la and it; its E3 guards, image-checked there, put back here without an image check); 2026-10-28-gpu-latin-route-pilot-7263.md (the unread-page GPU lane's pilot, the same judge in book-depth mode). -->
+
+**As run, the pilot failed; the failure is the put-back splice, not the reads.** Fixed and partly undone the same session; the cron is not installed.
+
+### Lane (scripts/batch/cli-ocr-lane.mjs `armc*`, scripts/gpu/euro-draft-task.sh, cli-ocr.mjs `read --over-stored`)
+- **Frame.** The correct lane's frame (stored Flash-Lite draft ≥ 300 chars, visible idle unheld book, interior, not edited, withheld or handwritten), plus E5's `year` 1450–1800, plus: no page whose stored read says illustration, plate, map, blank or script none. (The first plan drew a tarot deck whose 300+ chars were an image description.)
+- **Draft.** la PERO-OCR on the GPU (`pero-draft.py --device=gpu`, new venv `/root/pero-ocr/venv-gpu`, 1.3 s/page; the CPU config ran ~15 s/page on the loaded box and hung on one page). it LightOnOCR-3-1B through vLLM at 0.45 of the card, beside the SigLIP chunk and another tenant (1,283 pages/h). 300/300 drafted, 5 under 30 word characters.
+- **Correct + write.** agy 3.8 Flash low, template 0601ef30, one page a call; 306 calls on the second pool (jamesdereklomas@).
+- **Ledger.** 300 tried:
+  - 269 written;
+  - 12 foreign-script guard;
+  - 8 reply cut before `<<<END>>>`;
+  - 7 left the frame since the plan;
+  - 3 under the 40% shared-words floor;
+  - 1 with no draft.
+- **No human-edited page was touched** (269/269 prior texts were Flash-Lite drafts, none edited). 268 pages with English were flagged `translation_stale` (a flag; nothing re-translates on it).
+
+### Quota (a choice made here)
+- Both pools were under their pace lines all night (main 26.9% vs 27.1%; second 76.7% vs 84.2%), drawn by tib-wave3-7263 (1,567 calls an hour) and the de/fr correction lane, which spends each pool to its line.
+- The pilot ran on the second pool with a fixed floor (`--weekly-floor=0.5`, as E2/E5 ran at 0.40), about 0.6% of that pool's week. The cron line keeps the pace-line floor.
+- **This means the lane, once on, runs only when a pool rises above its line.** Every lane on the pools spends to the line, so it gets slices. Whether la/it arm c (E5: stored lite misleading on 68/160 la pages) should go ahead of de/fr correction is a priority call for Derek.
+
+### Guard: put-back without an image check (E3 rule, production form)
+- **The rule as built.** Every flag (number, negation, expansion) is put back to the stored reading. Put-back is the safe direction for the reading: E5's image check gave the stored reading back on 78 of 198 changed numbers, so a put-back keeps a wrong stored number about as often as it saves a right one.
+- **What it did.** 84/269 written pages flagged, 126 changes put back.
+- **By eye, 4 of the 5 put-back pages checked were damaged by the SPLICE itself:**
+  - running heads and signatures crossed (`<header>DEL THEAT. 97</header>` / `<sig>E.</header>`); the tag structure changed on 30 of the 84;
+  - "CAP. XIII." deleted: a number flag on a heading the stored text lacked, put back to nothing;
+  - "structione z ipedimētū et impedimentum" doubled: an uneven hunk whose neighbours the corrector had re-aligned.
+- **Fixed** (`cli-ocr.mjs`). A put-back is spliced only when every flag is a like-for-like substitution: the same number of words a side, no tag in either span, and the tag structure unchanged after. Otherwise the page is not written and the stored text stands.
+  - Re-run on the 269 written pages, the fixed rule refuses 64 (31 tag, 33 uneven) and writes the other 205 byte for byte as before.
+  - The 64 were reverted (`revert-run.mjs --run-id … --page-ids-file`, 17 runs, 64/64 restored) and their stale flags cleared.
+  - This rule was fixed before any verdict was read: the judge was at 19/84 calls.
+
+### Judge (scripts/eval/lane-judge-sampler.mjs, book-depth 4 a book, Opus blind with the image; draft-share 0)
+| | la accepted | it accepted |
+|---|---|---|
+| all judged (the pilot as written) | 32/40 | 31/36 |
+| pages the fixed rule writes | **28/30** | **22/22** |
+| pages the fixed rule refuses (reverted) | 4/10 | 9/14 |
+| bar: misleading ≤ | 7.5% (≤ 2/30) | 6.3% (≤ 1/22) |
+
+- **Controls.** All 4 wrong-page controls were rejected: they caught the swap.
+- **Not measured.** "Worse than stored": the stored drafts were not judged beside the output (draft-share 0, to fit the meter).
+- **Meter.** The job's Claude login (milolomas) went 95% → 98% weekly and the run stopped itself at its raised limit after 80 of 84 calls.
+- **"Misleading" here** means the judge did not accept the page (a wrong_text or misleads defect). That is the router judge's accept, the nearest to E5's "not usable".
+
+### By eye (10 written pages, image opened; 5 la, 5 it, seeded)
+- **Clean, as good as or better than stored:**
+  - Steganographia p.330: line breaks now kept;
+  - Clavis absconditorum p.74: show-through header dropped, rightly;
+  - Ficino *Sopra l'amore* p.60;
+  - Aretino *Lettere* III p.279: markdown `###`/`---` carried in from the LightOnOCR draft;
+  - *Rosarium* p.177: marginal notes added that the stored text lacked.
+- **Ramelli p.550 (by eye):** a French page in a book catalogued Italian. Accurate, with one misread (maniuella for maniuelle).
+- **Put-back damage (by eye):**
+  - Steuco *De perenni philosophia* p.362: CAP. XIII heading deleted;
+  - *Flores astrologiae* p.18: phrase doubled;
+  - Camillo p.97: tags crossed;
+  - Scappi p.409: tags crossed.
+  - All four are among the 64 reverted.
+
+### What this does not show
+- The fixed rule is judged on the subset of the same draw that it would write (30 + 22 pages, 10 books a language). That is a post-hoc split of one pilot, not a fresh pilot.
+- With n = 30, 2 misleading pages sit at the bar's edge.
+
+### Cron (not installed; for when the lane is enabled)
+```
+35 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && grep -q -- 'armc-plan' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-armc.lock timeout 110m sh -c "node --no-warnings --env-file=.env.production.local $f armc-plan --lane-dir=/root/jobs/euro-armc-7567 && node --no-warnings --env-file=.env.production.local $f armc --lane-dir=/root/jobs/euro-armc-7567 --out=/root/jobs/euro-armc-7567/correct/\$(date +\%F) --max-pages=1200 --concurrency=4 --deadline-min=95 --agy-home=auto --apply" >> /var/log/sourcelibrary/cli-ocr-armc.log 2>&1  # #7567
+```
+Plus `on` for `euro-armc-7567` in `scripts/gpu/ocr-filler-routes.tsv`, and a reinstall of `/root/bin/ocr-filler.sh`.
+
+Undo the 205 pilot writes that stand: `revert-run.mjs --run-id <run>`, for the 20 runs listed in `/root/jobs/euro-armc-7567/armc-ledger.jsonl`.
+
+## 2026-10-29 · Cheaper agy routes for first reads, and Latin arm c (#7701, #7567)
+
+Derek, 2026-10-29: "do 1,2,3 — that seems clear" (German read@4 alone; French read@4; the correction at 4 a call), plus
+Latin arm c. The live routes cost 2-3x what the cheapest passing arm might, and Latin (2.07M visible pages) had no route.
+
+**Design** (the rule was committed before any judge call: `RULE.md`, authored 20:41Z, commit 1d92b27bf after the rebase; the first verdict is 20:53Z). Each cell takes 30 NEW books in
+the first-read lane's frame (the 2026-10-29 test's 90 books left out), one interior unread page a book, read inside its
+block of up to 4 unread neighbours where a route reads 4 a call. Every route of a cell ran on the same pages:
+- **German:** A = read@4 alone; B = A > the fc correction one page a call (the live route); C = A > the same correction 4
+  pages a call (`cli-ocr.mjs read --correct-prompt --per-call=4`, new here: one prompt with each page's draft between its
+  own DRAFT n lines, answers split by the page markers, each page then applied with every correct-mode guard). A against B
+  also counts the earlier test's 24 written German pages (n = 60 drawn).
+- **French:** read@1 (live) and read@4.
+- **Latin arm c:** the page's PERO-OCR draft (pero-draft.py, CPU config; the GPU config differs only in USE_CPU; the card
+  was held by a 5-hour gpu-print chunk) corrected by agy Flash-low with the image, one page a call (c1) and 4 a call (c4),
+  written by the GPU-draft apply with #7695's put-back rule run against the draft (`apply --diff-guard=gpu-draft`, new).
+
+Reads: agy gemini-3.8-flash-low, `AGY_HOME=.agy-james`. **Written** = what each route's own dry apply would write
+(`apply --emit-written`, new): first reads only, printed only; B and C on A's written pages, their correction where they
+gave one, else A's read. Judge: Opus (`claude -p`), route-judge-6740 `judgePrompt` against the image, one output a call,
+blind, shuffled across cells; 140 items (14 wrong-page controls, 6 planted). **Every wrong-page control was refused;
+every planted error was caught and named (6/6).**
+
+**Result** (`score.json`; router table `router-table/2026-10-29-cheap-routes-7701.md`):
+
+| cell | route | written accepted | wrong text | all drawn | agy calls a page | $ per accepted page |
+|---|---|---|---|---|---|---|
+| German | read@4 alone | 19/20 (n60: **42/44**) | 0 (n60: 0/44) | 19/30 | 1.03 | **0.00141** |
+| | read@4 > correct (live) | 20/20 (n60: 43/44) | 0 | 20/30 | 2.03 | 0.00264 |
+| | read@4 > correct@4 (arm C) | 20/20 | 0 | 20/30 | 1.39 | 0.00182 |
+| French | read@1 (live) | 20/21 | **1/21** | 20/30 | 1.27 | 0.00165 |
+| | read@4 | **24/24** | 0 | 24/30 | 0.71 | **0.00077** |
+| Latin | pero > agy (c1) | **18/18** | 0 | 18/30 | 1.03 + GPU | **0.00198** |
+| | pero > agy@4 (c4) | 14/16 | **1/16** | 14/30 | 0.27 + GPU | 0.00112 |
+
+$ per accepted page: agy $0.00087 a call (the #6740 fee basis) over every page read, divided by the share of DRAWN pages
+accepted; GPU drafting at 3 s a page of gex45 ($249 a month), the card's measured 1-5 s (#7567 E1).
+
+- **Paired** (pages both routes wrote and the judge read; Dirichlet over the four outcomes, the router's new gate):
+  German A vs B 1 vs 2 of 44 (P(acc_A >= acc_B - 0.08) 0.907); C vs B 0 vs 0 of 20 (0.926); C vs A 1 vs 0 of 20.
+  French read@4 vs read@1 1 vs 0 of 21 (0.965). Latin c4 vs c1 0 vs 1 of 15 (0.657).
+- **Wrong text.** French read@1: an invented catchword "vn" at the foot of a page that has none. Latin c4: "½ AE" read as
+  "1/AE" in a theorem. German: none.
+- **Not written.** German: 8 of 30 drawn pages cut by Gemini's recitation filter (a block refused is re-read one a call;
+  that is most of read@4's 1.03 calls a page, against 0.55 in the first test). French: 3 foreign-script refusals, 3 cuts,
+  2 restarted reads (read@1); read@4 lost 6. Latin: 7 pages refused by the foreign-script guard (Greek and Hebrew
+  quotations, as before), 4 by the put-back rule (a flagged change that is not a like-for-like substitution).
+- **The router** (`build.py`, now with the paired gate; `rules.json` cells german-blank, french-blank, latin-blank):
+  German switch to read@4 alone, French switch to read@4, Latin switch from scans-only to pero > agy one a call (it was
+  HOLD). The decision rule fixed before judging agrees on all three.
+- **Pages written** (the best accepted read of each page, no wrong-text defect, under the route's guards): 61 (German 19,
+  French 24, Latin 18), runs cli-ocr-20261029211736-636418, -211744-636457, -211752-636506, -211753-636541; every hold
+  kept, no translation.
+
+**Not tested here:** arm C on the lite correction lane's own cell (lite drafts), Italian arm c on unread pages, and
+manuscripts.
+
+## 2026-10-28 · Tibetan Flash-low correction, wave 3 (#7263, #6740)
+
+PRIOR ART: `2026-10-26-tibetan-flash-correct-wave2-6740.md` (the rule, the guards, the Derge check, the rolling audit and
+diff-QA, all reused unchanged). Code: `scripts/eval/tibetan-correct-6560/pass/` (`run-volume.sh` read stage,
+`apply-volume.sh` + `derge-guard.mjs` = the wave-2 apply, `diffqa.mjs`, `leafcheck.mjs`, `rescore.mjs`).
+Results: `results/tibetan-correct-6560/pass-wave3-7263/`, tranche files `results/tibetan-correct-6560/diffqa-6740/w3*`.
+
+### What ran
+- **Frame:** the next Kangyur volumes in `volume-ids.mjs order`, skipping every volume already corrected. All are visible and held only by the #4523 translation hold.
+  - That is Thadrak rGyud 'bum Ga … Tsa and rNying rgyud Ka/Kha/Ga: 21 volumes, about 8.6K Yigdzin pages.
+- **Reads:** agy `gemini-3.8-flash-low` on the second pool (`AGY_HOME=/root/.agy-james`, `AGY_POOL_SHARED=1`), with the #6560 CORR request.
+  - gex45 made 7,027 calls: 4,161 on 10-28 (4% over the 4,000 a day cap) and 2,866 on 10-29.
+  - The pool went from 89% to 70% of its week. That drop includes cloudlayer, the correction lane and Siku.
+- **Apply:** the wave-2 rule.
+  - Every `cli-ocr.mjs apply` guard; ya-btags changes kept only where Opus saw them.
+  - The Derge rule: no page whose Derge identity falls by more than 0.01 where the draft has a parallel (identity ≥ 0.85).
+  - `--mark-stale=tib-correct-6560`, with one run id per volume (`runs.json`).
+- **Two hosts.** The first run of the job (cloudlayer) hit its Claude weekly cap, but its detached driver kept reading and applying. It walked the same order forward, one volume at a time.
+  - The job moved to gex45 (`-mv`), which read four volumes at a time and, after the overlap was found, took the far end of the order.
+  - Both hosts read rGyud 'bum Ca, Cha and Ja: about 1,400 wasted calls.
+  - Kept-read reuse did not dedupe across boxes (3 of 416 pages), because the image bytes differ across boxes (Cloudflare Polish, `import-kept-reads.mjs` header).
+  - No page was written twice by two reads of the same draft. The apply refuses a page whose draft is no longer stored. Pages one host's guards refused were sometimes written by the other host's fresh read (about 170 pages: 130 written by cloudlayer on gex45 volumes, 42 the other way).
+
+### Written
+| | gex45 | cloudlayer |
+|---|---|---|
+| pages written | 4,356 | 3,534 |
+| refused: line count / 25% cap / Latin | 120 / 29 / 3 | not visible from gex45 |
+| kept for Derge | 179 | not visible |
+| reply unusable (cut before `<<<END>>>`, refusal) | 481 | not visible |
+| put back after the audits | 3 | 1 |
+
+Per volume: `pass-wave3-7263/written-by-volume.md`.
+
+### Diff-QA (`diffqa.mjs spans`)
+- 7,626 pages changed, carrying 55,824 spans:
+  - **LOW: 17,419**, auto-accepted;
+  - **RISKY: 38,405**, queued and not accepted.
+- **Tranches for the #6740 judge loop**, in the tranche-2 request format (`leafcheck.mjs audit-req --pages --spans`, judge B with tiles, 2 controls a page):
+
+  | tranche | pages | RISKY spans |
+  |---|---|---|
+  | `w3a` | 3,291 | 17,531 |
+  | `w3b` | 2,951 | 16,623 |
+  | `w3c` | 661 | 4,258 |
+
+- Request images are on gex45 scratch. Each request's page id resolves to its archived image.
+- **List rows for `merge`:** `diffqa.mjs list --run=<run id>` (drafts from `page_revisions`).
+- No tranche was judged here: this box's Claude account was at 78% and then 86% of its week.
+
+### Rolling audits (10 seeded written pages per ~4K, judge B with tiles, Opus, controls)
+| audit | written so far | pages judged | pass (re-score) | fixed / introduced (severe) | pages with severe introduced | controls | rule |
+|---|---|---|---|---|---|---|---|
+| 1 (10-28 16:45Z) | 3,847 | 10 | 8 | 51 (1) / 14 (3) | 1 | 18/20 | continue |
+| 2 (10-29 03:00Z, pages written after audit 1) | 7,890 | 8 | 3 | 24 (8) / 8 (3) | 3 | 11/16 | **STOP** |
+
+**Audit 1.** The seeded draw's 10th page differed from its draft in whitespace only, so it had nothing to judge.
+- That slot was filled with the next page of the same seeded sequence that has a span (`audit-1/replacement.json`).
+- On the 9 pages first judged, controls were 16/18 (88.9%), which by itself would have stopped writing.
+
+**Audit 2.** Two drawn pages had no syllable change and were not refilled: the rule had already fired at 8.
+- The severe introductions:
+  - རྨག→ཉི་མ. Counted as a "negation" because ཉི་མ contains the syllable མ, a classifier artifact; but the leaf shows the draft.
+  - ནྲི→ནྲྀ and ཧ→ཧཱ: mantra respellings.
+- All 5 control misses were "unclear". On rNying rgyud Ka p.363 the judge reported neither reading's phrase on the leaf. I checked it by eye: the text is the right leaf, so there is nothing to contain.
+
+### Undo
+- Each run: `node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id <run> [--apply]`. Run ids are in `pass-wave3-7263/runs.json`.
+- The restores are runs `diffqa-6740-w3-audit1-restore` and `diffqa-6740-w3-audit2-restore` (`restores.json`).
+
+## 2026-10-28 · Can Gemini Flash through the agy CLI place page and leaf split cuts? (#5771, #6114)
+
+PRIOR ART: `scripts/lib/gutter-detect.mjs` (the free pixel detector, run on the same images as the baseline); the split-leaves-5771 crop spans on gex45 (`/root/jobs/split-leaves-5771/out/crops/*.json`, 64 ledger cuts and 14 by eye) as the pecha reference; `split_position` on pages with `split_method: reviewed(…)` as the spread reference.
+
+**Decision it changes:** which engine both splitters ask. Both called `gemini-3-flash-preview` on the paid API, which the 2026-10-08 rule no longer allows.
+
+**Set.** 33 spreads from 25 books, one right-half page per spread, `$sample` over pages with a reviewed cut (Chinese woodblock and Arabic manuscript books dominate); 10 single portrait pages from Latin/German/Italian/French books; all 80 frames of the split-leaves-5771 gate (2–6 leaves). One call per image, the image downscaled to ≤2000 px, `--mode plan`, the tool gate, ~16 s a call, 0 failed calls, 0 quota.
+
+**Spreads.** CLI: 33/33 two pages; |cut − reviewed| median 3/1000, ≤10 on 24/33, ≤20 on 31/33, max 24. Pixel detector: median 1 where it answered, but off by more than 20/1000 on 8/32 (max 164), several at `high` confidence, three cuts through woodblock text. Every CLI cut more than 15/1000 off was drawn on the image and lies in the blank strip between the pages. Note the reference is not independent of the pixel detector (reviewers confirmed pixel-seeded cuts), so its median-1 agreement is flattered.
+
+**Pecha.** 80/80 leaf counts right, including the 14 frames whose ledger cut was wrong and was set by eye. Cuts: median 3/1000, p90 13, max 53. The five over 20/1000 were opened: four sit in the gap between leaves (a064's is better than the stored cut); a072 cuts a blank cover leaf above the stored cut, no text lost.
+
+**Singles.** 9/10 called one page; the tenth (a page photographed with a strip of the facing leaf) was called two pages at 42/1000, a cut that would remove that strip.
+
+**End to end.** `split-book.mjs --gutter-only --dry-run` on a 13-spread MDZ German book (6a26ca485ac5aecc53ce5bb1): 8 sample calls, 7 agree with pixel, 1 disagreement snapped to the book median 502.
+
+Raw rows (local, not committed): `scratchpad/splitcli/out-gemini-3.8-flash-low.jsonl`, `leaves-gemini-3.8-flash-low.jsonl`.
+
+## 2026-10-28 · Router tests: agy Flash-low on the cells with no agy measurement, and a GPU draft on Latin (#7263)
+
+PRIOR ART: `2026-10-26-router-tests-idle-quota-6740.md`, whose harness this extends (`scripts/eval/route-judge-6740/judge.mjs`, same judge prompt,
+blind, one output a call, page image attached, two wrong-page controls a route). `2026-10-28-euro-print-gpu-draft-flash-correct-7567.md`
+measured GPU draft → agy Flash-low against lite → Flash by CER on a reference panel. This run puts one GPU route on the router's own
+instrument, the Opus judge against the image.
+
+**Cells added to judge.mjs** (`RT`): `zh-frame-6871` (pages of the guarded Paddle lane, `ocr.pipeline paddle-zh-guarded-2026-10`, Paddle's
+text, interior, ≥ 40 Han), `hebrew-flash3`, `arabic-flash3` and `chinese-flash3` (visible books not held, stored 3 Flash OCR, interior,
+≥ 300 characters), and `latin-gpu`. `zh-dice` gains `paddle>agy-flash-low` on the 2026-10-26 pages (`draw --from`). One page per book,
+seeded (salt `rt-<cell>`).
+
+**latin-gpu.** The 30 pages of the 2026-10-26 latin cell (9 books). They were read on gex45 by stock GLM-OCR (gpu-queue task
+`71-latin-gpu-7263`; vLLM, MTP 1, `read.py glm`, 6,000 tokens). That took 78 s; one page hit the token cap in a loop. GLM-OCR was the
+open engine that did best on Latin print in #5924's gex45 bake-off; MinerU was about twice its median CER there. The read is kept in
+`gpu-drafts.json.gz`. `cli-ocr.mjs read --draft-file` gives it to the agy corrector in place of the stored OCR. That flag is eval only:
+apply refuses such a read.
+
+**Correctors.** agy `gemini-3.8-flash-low` on the second pool (jamesdereklomas@), the #5924 one-page template, `--fresh`, nothing kept or
+written. 180 agy calls. No new Opus read (Derek 09:50Z and 11:24Z): Opus is the judge only.
+
+**Results** (`results/router-tests-2026-10-28/score.json`; k/n accepted, wrong-text pages; controls 2/2 rejected on every route scored):
+
+| cell | route | accepted | wrong text | top defects | measured before (2026-10-26 / v2) |
+|---|---|---|---|---|---|
+| Chinese Paddle, dice < 0.90 | paddle > agy Flash-low | 19/29 judged, **15/29 after the name check** | 9/29 | O5 4, O6 3 | paddle 14/30, > agy Flash high 17/30, > Opus 26/30 |
+| Chinese tables + mixed, guarded Paddle | paddle > agy Flash-low | **19/30** | 9/30 | O6 8 | paddle 5/9 (partial, below) |
+| Hebrew, 3 Flash | 3 Flash (served) | **7/30** | 22/30 | O1 15, O6 10, O5 8 | — |
+| | 3 Flash > agy Flash-low | 7/28 | 18/28 | O6 10, O1 10 | |
+| Arabic, 3 Flash | 3 Flash (served) | **10/30** | 17/30 | O6 11 | — |
+| | 3 Flash > agy Flash-low | 13/29 | 13/29 | O6 10 | |
+| Chinese, 3 Flash | 3 Flash (served) | **7/30** | 21/30 | O6 17, O5 12 | — |
+| | 3 Flash > agy Flash-low | 6/30 | 22/30 | O6 16 | |
+| Latin print, lite cell | GLM-OCR > agy Flash-low | **22/26** (4 replies cut) | 2/26 | O6 2 | lite > agy Flash-low 24/30, lite > Opus 30/30 |
+
+**Print vs manuscript** (Derek 11:55Z; `script-split.json`, each verdict with its page's `script_type`, or the `<script>handwritten` tag when the field is unset):
+- **Manuscript.** Every judged page of zh-dice and zh-frame-6871 is `handwritten`; these are the Siku Quanshu manuscript copies, so their k/n above are manuscript k/n.
+- **Print.** Every judged page of the Hebrew, Arabic and Chinese 3 Flash cells and of latin-gpu is print (`printed`, `mixed`, or no field and no handwritten tag). The 3 Flash frames left out `<script>handwritten` pages.
+- No cell has both kinds, so no k/n splits further.
+
+**Made worse by the agy corrector** (paired with the served draft): Hebrew 3 worse / 5 better of 28, Arabic 4 / 6 of 29 (3 accepts gained),
+Chinese 6 / 5 of 30 (wrong text added on 3).
+
+**Name check (zh-dice).** I checked 18 of 19 accepted pages with new Opus calls. The 2026-10-26 checks are tied to that run's
+candidates, so they could not be reused. 3 pages drop a name the leaf prints: 丁文杲 → 丁文果, 楚懐 → 楚懷 with 武闗 → 武關, and
+榮駕鵞 → 榮駕鵝. The last two are glyph variants not in `GLYPH_VARIANTS`.
+
+**Deviation: zh-dice was judged without the Kanripo leaf.** The committed `kanripo-align.jsonl.gz` carries no leaf text. I rebuilt it with
+`refs` only after the verdicts. The name check then ran with the leaf, as in the 2026-10-26 protocol. The 2026-10-26 routes were judged
+WITH it.
+
+**Router table** (`router-table/2026-10-28-agy-gpu-7263.md`, before: `2026-10-28-backfill-all`, #7612's table):
+
+| cell | before | after |
+|---|---|---|
+| latin-lite | HOLD → agy Flash-low read | unchanged (GLM-OCR > agy 22/26, in book group 5924-latin) |
+| zh-paddle-dice-lt090 | HOLD → paddle > agy Flash high | unchanged (Flash-low 15/29 named) |
+| chinese-flash3 | keep (UNTESTED) | HOLD (the served text 7/30; agy 6/30) |
+| hebrew-flash3 | keep (UNTESTED) | HOLD (served 7/30; agy 7/28) |
+| arabic-flash3 | keep (UNTESTED) | HOLD (served 10/30; agy 13/29) |
+| zh-frame-6871 | keep (UNTESTED) | HOLD (agy 19/30, 9 wrong text) |
+
+HOLD's arrow names the best measured route. In a cell where only the agy route and the draft are measured, that arrow is not a
+recommendation. Under Derek's 11:24Z rule the served route stays.
+
+**Did not finish.** The judge stops when this box's Claude account reaches 85% of its week, and it reached that at 11:54Z. The zh-frame
+Paddle draft has 9 of 30 pages judged and no controls, so it does not count, and it has no `evidence` entry. The account resets on
+2026-10-30 at 12:00Z.
+
+**Contain candidates (judge, not by eye).** 26 SERVED 3 Flash pages carry an invented or wrong-leaf defect at wrong-text severity:
+Hebrew 16, Arabic 7, Chinese 3 (`score.json contain_candidates`). One Hebrew page is labelled `<language>Arabic</language>` on a Hebrew
+cursive leaf. No page was contained: the account was at its cap, so no by-eye check could run. They are listed on #7263 for one.
+
+**Spend.** $0. agy: 180 corrections (second pool). Opus (claude -p, milolomas200921@): 285 judge calls (283 verdicts) and 18 name checks. The account
+went from 82% to 85%, shared with this session. gex45 GPU: 78 s.
+
+## 2026-10-28 · Router table backfill: the 10-27/28 judged tests as evidence (#7263)
+
+PRIOR ART: `scripts/eval/estimator/router-table/` (`build.py`, `rules.json`; #7417, #7588) is the table these tests feed. `scripts/eval/route-judge-6740/judge.mjs` defines the score.json schema. `scripts/eval/flash-reread-5924/w-score.mjs` unblinds #7568. Neither of those wrote router-table evidence, so the results stayed in experiment files.
+
+**Why.** Derek, 2026-10-28: "are all of these tests ... updating the bayesian estimates". They were not. The table's evidence stopped at router-tests-2026-10-26, tibetan-30-2026-10-27 and the Tibetan translation router.
+
+**Method.** `router-table/evidence/derive_backfill.py` reads only the stored verdict files and writes route-judge-format score.json files beside itself. Each file has a provenance line.
+- **#7568** (`flash-reread-5924/results-7568/<lang>/step-t.json`): one blind Opus reader per book judged three texts per page against the image.
+  - wrong text = *misleading* (a meaning change, an omitted passage, or another leaf's text: route-judge's `wrong_text` severity).
+  - accept = not misleading.
+  - In these files every misleading verdict carries a material defect, and every not_this_leaf is misleading, so the cut is unambiguous.
+  - Check against route-judge on the same kind of page: German lite was accepted 21/30 in the router tests and 187/250 (75%) here. Latin lite was 17/30 in the pilot and 139/250 (56%) not misleading in #5924.
+- **#7517** (`route-judge-6740/results/fresh-7517-2026-10-27/`): the route-judge itself. Following the experiment's rule, a read that Gemini's filter cut counts as not accepted, because it is never written: German 16/30, French 23/30. The lite and lite>agy-flash-low rows on those pages are already in the table, so they are not repeated.
+- **`build.py`: per-source book scaling.** Each evidence source's pages are scaled by its own books / pages, for the posterior and for the wrong-text gate. Before, pooled sources were scaled together, and wrong text was a raw page count. Without the change, #7568's 25 pages a book would have outweighed the router tests' one page a book by 8 to 1. With the old rules.json the rebuilt table equals 2026-10-28 on every decision.
+- **New stage `agy-read`**: a fresh agy Flash-low read, 1.08 calls a page (#7568: 1,166 calls for 1,075 pages).
+- **New cells**: zh-lite, greek-lite, sanskrit-lite and arabic-lite, with pages waiting from the 10-25 draft census.
+  - Sanskrit was not in that census, so it was counted on 2026-10-28 with the same script: 39,499 lite pages.
+  - current = the served lite text.
+  - greek-lite carries the greek-flash3 hold (#6694).
+
+**Result** (old → new posterior mean [90%]; decision)
+
+| cell | route | old | new | decision |
+|---|---|---|---|---|
+| German Flash-Lite | lite | 21/30 0.69 | 208/280 0.70 [0.58, 0.81] | **switch → lite>agy-flash-low ⇒ keep lite>opus** |
+| | lite>opus | 28/30 0.93 | 272/280 0.94 [0.87, 0.99] | |
+| | lite>agy-flash-low | 28/30 0.93 | unchanged | |
+| | agy-flash-low-read (new) | — | 243/280 0.62 [0.50, 0.74] | |
+| French Flash-Lite | agy-flash-low-read (new) | — | 23/30 0.75 [0.62, 0.86] | switch → lite>agy-flash-low (unchanged) |
+| Chinese Flash-Lite (new) | lite / lite>opus / read | — | 0.34 / **0.76** [0.42, 0.98] / 0.51 | HOLD → lite>opus |
+| Greek Flash-Lite, MSS (new) | | — | 0.10 / **0.63** / 0.18 | held |
+| Sanskrit Flash-Lite (new) | | — | 0.22 / **0.83** [0.63, 0.97] / 0.50 | HOLD → lite>opus |
+| Arabic Flash-Lite (new) | | — | 0.27 / **0.77** [0.55, 0.93] / 0.44 | HOLD → lite>opus |
+
+All other cells are unchanged. Test-next is unchanged: chinese-flash3, latin-lite, latin-flash3.
+
+**The German change is a knife edge.**
+- The gate asks P(acc_agy ≥ acc_best − 0.08) ≥ 0.9. That probability was 0.907 and is now 0.891 (200K draws).
+- All the new evidence is on Opus: 10 books, 6/250 misleading. The agy correction still has only its 30 router-test pages.
+- At margin 0.10 the table still picks agy (acceptance −0.01, 1.8× cheaper per accepted page).
+- Under the raw-page wrong-text rate the old code used, agy would also fail the wrong-text bar: 2/30 = 0.067 against 7/280 + 0.04 = 0.065.
+- Read it as "the agy correction is under-measured next to Opus", not as "agy is worse". The cheap way to settle it is to run lite>agy-flash-low on #7568's 250 German pages and judge them.
+
+**Not ingested** (reasons in the #7263 comment):
+- #7522 and #7503 pages-per-call: a "usable" judge with neighbour images, and no draft route judged on the same pages.
+- #6740 pages-per-call: re-reads of the router tests' own de-lite pages (pseudo-replication), and 2 a call is not a lane.
+- #6948 Opus image-attached, leaf translation and re-translate: a bad/not-bad translation audit, or by eye only; held books.
+- #6560 Flash-pass production, severity recheck, and the 10-26 Tibetan gates: better/same/worse span judgments, not acceptance.
+- #7503 Siku pilot and #7570: CER or accuracy against a text key.
+- #7341 Kraus: one book, no cell.
+- #5771: split cuts, not OCR.
+- #7567, gpu-flash-vs-opus-7263 and agy-shift-7263 ingest their own results.
+- #5924 (Latin, 2026-10-24) is outside this window and the same instrument as #7568. It is the next candidate for latin-lite.
+
+Files: `scripts/eval/estimator/router-table/evidence/` (`derive_backfill.py`, `correct-vs-reread-7568.score.json`, `fresh-7517.score.json`), `rules.json`, `build.py`, `2026-10-28-backfill.{md,json}`.
+
+## 2026-10-28 · Prior calibration held out, print vs manuscript cells, and two agy tests on waiting pages (#7263)
+
+PRIOR ART:
+- `2026-10-28-router-backfill-all-and-prior-weight-7263.md` (#7612): it fitted the prior weight (7 pages) and an in-sample calibration slope of 0.40, applied neither, and set the evidence conventions kept here.
+- `2026-10-28-router-tests-agy-flash-low-gpu-draft-7263.md` (#7615): it reported its own cells' k/n by script type (`script-split.json`). It did not split the router.
+- `route-judge-6740/judge.mjs`: the judge, unchanged except `correct --keep-reads`.
+- `euro-gpu-correct-7567/write-back.mjs`: the write-back pattern.
+
+**Inbox notes acted on:**
+- Derek 11:54Z: split every cell by print vs manuscript before the calibration and the tests, and draw print waiting pages.
+- Derek 12:06Z, on classification:
+  - The `<script>` tag of the current OCR where the field is missing.
+  - The tag wins on a conflict.
+  - Otherwise the book's majority, else unknown.
+  - Nothing is written to `pages.script_type`.
+- Derek 12:06Z, on Opus: in manuscript cells Opus is a candidate; Greek manuscripts are planned on Opus.
+
+### Part 0: print vs manuscript
+**Classification.** `router-next-7263/script-type.mjs` classifies each page. Mixed counts as print.
+
+**Coverage of the judged evidence** (2,244 distinct pages, 92 source × cell × route pairs; `evidence_pages.py` reconciles each pair page by page with its score.json, so k/n, wrong text, books and the zh name check are all exact):
+
+| basis | print | manuscript | unknown |
+|---|---|---|---|
+| page field, agreeing with the tag | 1,389 | 438 | |
+| tag only | | 78 | |
+| tag, conflicting with the field | | 10 | |
+| book majority | 56 | 92 | |
+| unknown | | | 181 |
+
+**Waiting pages.** `waiting-split.mjs` counts frames of up to 120 books in full. Larger frames are estimated from a draw of 120 books, weighted by their frame pages, with a 90% bootstrap interval in `results/waiting-split-2026-10-28.json`. Pages with no page-level type are the "book-majority" and "unknown" counts there. Main cells:
+
+| cell | print | manuscript | unknown |
+|---|---|---|---|
+| Latin lite | 97% | 3% [1, 5] | 0% |
+| Latin 3 Flash | 53% | 6% | 42% [35, 50] |
+| German 3 Flash | 40% | 0.5% | 60% |
+| Greek lite | 30% | 70% | 0% |
+| Arabic lite | 63% | 37% | 0% |
+| Arabic 3 Flash | 22% | 48% | 30% |
+| Hebrew 3 Flash | 11% | 29% | 61% |
+| Korean lite | 44% | 56% | 0% |
+| Tibetan Yigdzin | 2% | 97% | 1% |
+| Chinese Paddle and Siku | 0% | 100% | 0% |
+
+- **The Siku copies are manuscripts.** That is the Wenyuange tag. 2,069 of 18,301 sampled Siku pages carry `script_type: printed` against a `handwritten` tag; the tag wins.
+- **Most 3 Flash pages have no type.** Their OCR predates the tag, and many of their books have no `script_type`. The unknown share is the coverage gap: Latin 3 Flash 42%, German 3 Flash 60%. A backfill is a separate job (script-type-backfill-7263).
+
+**Split rules** (`build.py expand_by_script`; `rules.json script_split`):
+- `<cell>/print`, `/manuscript` and `/unknown` each get their share of the pages waiting, and the evidence of their own pages (`evidence/by-script/`).
+- A manuscript cell takes no v1/v2 prior, because both were fitted on print.
+- In a manuscript or unknown cell, a route with fewer than 10 judged pages counts as unmeasured, and the cell says `UNTESTED` or `HOLD (… < 10 pages a route)`.
+- `switch.bar_scope = print`.
+- Greek manuscripts are `planned → Opus`.
+- `--no-script-split` builds the same evidence pooled.
+
+**Decisions that change with the split** (2026-10-28-router-next against -unsplit, same evidence): 49 rows; the full list is on #7263. Three matter most:
+- **russian-lite/print: switch → HOLD.** The pooled switch leaned on unknown-type pages.
+- **tibetan-yigdzin.** The switch to agy holds on the 97% manuscript part; the small print and unknown parts fall to `UNTESTED`/`HOLD`.
+- **zh-paddle-dice-lt090/manuscript: HOLD → paddle>opus.** Opus is now a candidate, but nothing reaches P(acc ≥ 0.8) ≥ 0.9.
+
+### Part 1: calibration of the prior means
+`fit_prior.py` fits (alpha, beta, W) on a fine grid, then holds out one cell at a time.
+
+| table | in sample | held out, calibrated | held out, uncalibrated | MAE cal / uncal |
+|---|---|---|---|---|
+| backfill-all (15 routes) | 1.12 + 0.38·logit m, W 16.9 | -205.3 | -202.1 | 0.139 / 0.119 |
+| same, without the Latin lite draft | | -191.6 | -184.3 | 0.087 / 0.084 |
+| router-next, split (20 routes) | 0.78 + 0.44·logit m, W 8.6 | -165.0 | -155.2 | 0.207 / 0.155 |
+| same, without the Latin lite draft | | -155.2 | -136.7 | 0.127 / 0.130 |
+
+- **Intercept only** (+0.36 logit, W 10): a wash (-202.7 against -202.1).
+- **What is built in:** the mapping, with `rules.json prior.calibration.in_force = false`. The calibrated decision is a sensitivity column.
+- **It differs on two cells:** zh-6561-served/manuscript (keep → switch paddle>opus, 0 pages waiting) and arabic-flash3/print (HOLD names 3flash instead of 3flash>agy-flash-low).
+- **The weight is about the same:** W = 7.4 pages, 90% [3.6, 16], on 20 routes; rules.json keeps 7.
+
+### Part 2: the test-next cells, on waiting pages
+**Draw** (`router-next-7263/draw.mjs`):
+- From the cell's census bucket, one page per book.
+- Books drawn without replacement with probability ∝ read_count + 1. Median reads of the books drawn: 5 for Latin lite, 8 for 3 Flash; the corpus mean is 2.0.
+- Print pages only.
+- Held and unsplit books and 69bd9d05 are left out.
+
+**Reads** (judge.mjs `correct --keep-reads`):
+- `findRead` was checked first: 0 kept reads existed.
+- 80 agy calls on the second pool (jamesdereklomas@, Flash-low only).
+- Every read is kept in R2.
+
+**Judge:** 64 Opus calls, blind, image attached, the same prompt and template as the router tests.
+
+| cell / route | accepted | wrong text | notes | router after |
+|---|---|---|---|---|
+| latin-lite / agy-flash-low-read (fresh read) | 22/34 (22/26 delivered) | 2/34 | 8 replies cut (no `<<<END>>>`) after retries; counted as not delivered, as fresh-7517 | the route's posterior 0.70 [0.58, 0.80], was 0.83; cell HOLD → gpu>agy-flash-low (0.82, P within 0.08 of the Opus bar 0.65) |
+| latin-flash3 / 3flash>agy-flash-low | 28/34 | 4/34 | | 47/60 pooled → 0.80 [0.71, 0.87]; HOLD (no route has P(acc ≥ 0.8) ≥ 0.9) |
+| zh-paddle-dice-lt090 / paddle>agy-flash-high | — | — | not run (see below) | HOLD → paddle>opus (manuscript) |
+
+**Why the zh test did not run.** The second pool runs only Flash-low (`allowed-model`). Flash-high therefore needs the default pool, and it stood at 31% weekly against its 34% pace line. The brief says to stop under the floor.
+- The draw is ready for a resume: 36 Siku manuscript pages, 32 of them with a Kanripo leaf.
+- #7615 measured paddle>agy-flash-low 19/29 on the same frame. That is the arm test-next now proposes.
+
+**Pages written.** Each accepted read went through `cli-ocr.mjs apply --apply` with every guard.
+- Latin lite: 16 pages, run `cli-ocr-20261028122723-644561`.
+- Latin 3 Flash: 17 pages, run `cli-ocr-20261028122726-644639`.
+- Undo with `revert-run.mjs --run-id`.
+- 17 accepted reads were refused by apply's guards and keep their text:
+  - Greek letters in a Latin book: 8.
+  - Correction changes ≥ 26% of the words: 6.
+  - < 40% shared words: 2.
+  - An extra transcription header: 1.
+- Per-page plan: `route-judge-6740/results/router-next-2026-10-28/apply/plan.json`.
+
+**What the writes queue.**
+- Neither lane is a `WITHHOLD_LANE`, so no English is withheld.
+- 3 written pages already in English sit in `ocr_complete` books: the translate lane re-translates them when it takes the book (Flash-Lite, cents).
+- 4 written pages without English are in books that already wait for translation.
+- The other 26 pages are in books a gap-fill does not select; their English is flagged stale by rule (OCR newer) and nothing is queued.
+
+**Rejected:** 10 pages (4 + 6). They keep their text and go on #7611 as the GPU-draft>agy retry list.
+- **No containment candidates.** No page was judged wrong-leaf or invented.
+- **One corrector output** substituted letters to fit an expected word (O3/O8, "Emeth"). It was never written, and it is the corrector's error, not the served text's.
+
+### What this does not show
+- **The unknown cells are large** (Latin 3 Flash 549K pages waiting) and decided by little evidence. The script-type backfill will move pages out of them.
+- **Waiting shares outside the census languages are exact counts**; the others come from samples, with the 90% intervals in the results file.
+- **The new tests' draw is read-weighted**, not the cell's page mix. The router pools it with the earlier draws.
+
+Files:
+- Code: `scripts/eval/router-next-7263/` (draw, script-type, classify-evidence, evidence_pages, split_evidence, waiting-split, derive_score, accepted).
+- Router evidence: `evidence/router-next-7263.score.json`, `evidence/by-script/`.
+- Judge results: `route-judge-6740/results/router-next-2026-10-28/`.
+- Tables: `router-table/2026-10-28-router-next{,-unsplit}.md`.
+- Prior fit: `router-table/prior-fit-2026-10-28-router-next.json`.
+
+## 2026-10-28 · Every earlier image-judged route test into the router table, and a learned prior weight (#7263)
+
+PRIOR ART: `2026-10-28-router-table-backfill-7263.md` (#7606) ingested the 10-27/28 tests and set the conventions kept here unchanged: the score.json schema, per-source book weighting, wrong text = misleading, and the shape of a new cell. `router-table/evidence/derive_backfill.py` is its derive script; `derive_backfill_all.py` is the same job for the earlier tests. `scripts/eval/estimator/ocr/failure-observations.jsonl` holds some of these k/n as hand-copied rate rows for the failure model. It is not router evidence. The prior's 4 / 2 pages were set by hand in #7417; `loo_v1.py` / `loo_v2.py` score v1/v2 against their own references, not against acceptance.
+
+**Why.** Derek, 2026-10-28: "we've run hundreds of tests and they aren't part of the estimates?" and "I'm surprised that the previous findings wouldn't update the priors".
+
+### Part 1: the gap
+
+There are 472 dated write-ups. 214 have stage ocr or translation and a judged measure (`experiment-header.mjs needsRouterEvidence`, #7609); that is the brief's 213 plus #7606's own entry. Four readers classified a quarter each, and every (a) was checked by hand against its stored verdict files. The per-file table is on #7263.
+
+| class | files | what happens |
+|---|---|---|
+| (a) per-page accept / wrong text against the image, by route | 32 | 9 ingested now (6 sources), 7 already in the table, 16 not ingestable |
+| (b) typed-reference CER / accuracy, or a 1-5 / 0-5 score | 69 | not acceptance. 18 feed the v2 translation model (xlref t1-t5, 5606, 6182, 6331, 6545, 6690, 6729); 2 feed the v1 OCR model; 49 feed nothing |
+| (c) other judged kinds (better / same / worse, prompt-only, judge calibration, catch rates) | 61 | not ingested |
+| (d) not a route test | 52 | count only |
+
+- #6545 and #6729, named in the brief as candidates, are (b): 1-5 fidelity against source and reference. Both already feed v2 translation.
+- #6865 is (b) and feeds nothing.
+- The #6561 candidate is (a) by shape but is not ingested: it has a Gemini judge, and 5 of the 5 "invented" calls checked by eye were printed text.
+- #6560 is (b) or (c), except the flash-pass production audit, whose pages were drawn only from those the correction changed.
+
+### Part 2: ingested, oldest first (one commit each)
+
+The rules are in `rules.json evidence_rules`:
+- An Opus judge, against the image, with accept and wrong text split.
+- The lane's frame, not a set selected for difficulty.
+- Stored per-page verdicts.
+- Another prompt or model enters as its own route.
+- The same route under another prompt or model vintage enters at weight 0.5. Here that means a fresh Flash-Lite read standing in for the stored drafts (#6553, #7341).
+- Sources drawn from the same books form one `book_group`, scaled together.
+- Every judged reading counts once; a reading a packet copied from an earlier step does not count again.
+
+Before the rules.json changes, `build.py` with the two new options reproduces 2026-10-28-backfill on every row.
+
+| source | cells, routes | accepted (book weight) |
+|---|---|---|
+| #6361 Tengyur CLI gate (10-10) | new tengyur-tr (nothing waits) | agy Flash-low v13 16/21, stored 3 Flash 11/21 (7 volumes) |
+| #6567 Siku retranslation pilot (10-12) | new zh-siku-tr (50,676 pages, the 10-12 census) | agy Flash-low v13 26/30, stored English 12/30 |
+| #5924 served Latin pages (10-22) | latin-lite lite, latin-flash3 3flash | 9/12 (4 books), 22/24 (8 books) |
+| #5924 Latin 250, Step C / C2-C5 (10-23/24) | latin-lite, all 4 routes incl. a new agy-flash-low-read; book group 5924-latin with the pilot and router-test reads (the same 10 books) | readings: lite 421/690, Opus correction 659/750, agy correction 405/500, agy read 448/500 |
+| #6553 untested cells (10-25) | 13 new language cells (lite at weight 0.5; agy read where measured) | see below |
+| #7341 Jabir MSS + Kraus (10-25/26) | arabic-lite: lite (weight 0.5), new agy-flash-low-read-diplomatic (#6544 READ prompt) | MSS (13 books): lite 17/26, agy 8/26 (16 reads never came); Kraus (1 book): 28 and 27 of 29. Opus's read (26/26, 29/29) stays in the score files, not as a route |
+
+**Opus is the bar, not a candidate** (Derek, 2026-10-28 11:24Z, job inbox: "the route search is agy Gemini CLI and GPU routes ONLY. Opus is the judge and the bar to match, never a candidate route ... recommend only agy/GPU routes (or keep the served route if none clears the bar)"). It is now `rules.json switch.bar = opus`:
+- The gate's reference is the best measured Opus route in the cell.
+- Only agy / GPU routes and the served draft can be picked. A cell with none that passes keeps its current route.
+- HOLD names the best candidate, not Opus.
+- Test-next proposes no Opus arm.
+- The #7341 Opus read, briefly a route here (where it had flipped Arabic to "switch → opus-read"), is removed as a route.
+
+The best agy / GPU route in each cell against the Opus bar, ranked by the gap. P = P(acc_route ≥ acc_Opus − 0.08), the gate's test, which needs ≥ 0.9:
+
+| cell | pages waiting | Opus bar | best agy / GPU route | gap | P | wrong text (route / bar) | decision |
+|---|---|---|---|---|---|---|---|
+| Tibetan, Yigdzin (#6560) | 280,623 | yigdzin>opus 0.85 | yigdzin>agy-flash-low 0.87 | +0.02 | 0.96 | 8.3% / 8.3% | switch → yigdzin>agy-flash-low |
+| German OCR, Flash-Lite | 418,603 | lite>opus 0.94 | lite>agy-flash-low 0.92 | -0.01 | 0.89 | 6.7% / 3.1% | keep |
+| Latin print, Flash-Lite text (#5924) | 861,506 | lite>opus 0.85 | agy-flash-low-read 0.83 | -0.02 | 0.69 | 10.4% / 11.7% | HOLD → agy-flash-low-read |
+| German OCR, 3 Flash | 353,186 | 3flash>opus 0.98 | 3flash>agy-flash-low 0.86 | -0.11 | 0.32 | 3.3% / 0.0% | keep |
+| Tibetan translation, corrected Kangyur text (#6948) | 0 | opus-cli 0.88 | agy-flash-low@4 0.72 | -0.16 | 0.21 | 13.3% / 3.3% | HOLD → agy-flash-low@4 |
+| Chinese Paddle, Kanripo dice < 0.90 | 453,715 | paddle>opus 0.82 | paddle>agy-flash-high 0.58 | -0.24 | 0.05 | 26.7% / 3.3% | HOLD → paddle>agy-flash-high |
+| Chinese OCR, Flash-Lite (#7568) | 18,720 | lite>opus 0.76 | agy-flash-low-read 0.51 | -0.26 | 0.26 | 49.3% / 6.7% | HOLD → agy-flash-low-read |
+| Sanskrit OCR, Flash-Lite (#7568) | 39,499 | lite>opus 0.83 | agy-flash-low-read 0.50 | -0.33 | 0.08 | 50.0% / 10.4% | HOLD → agy-flash-low-read |
+| Arabic OCR, Flash-Lite (#7568) | 27,659 | lite>opus 0.77 | agy-flash-low-read 0.44 | -0.33 | 0.09 | 57.6% / 17.6% | HOLD → agy-flash-low-read |
+| Greek OCR, Flash-Lite (#7568; manuscripts) | 42,916 | lite>opus 0.63 | agy-flash-low-read 0.18 | -0.45 | 0.02 | 88.4% / 34.8% | held |
+
+Only Tibetan Yigdzin clears the bar (agy correction 0.87 against Opus 0.85; it already switched before this PR). German Flash-Lite's agy correction misses by a hair (P 0.89). No agy route is within reach on Chinese, Sanskrit, Arabic or Greek. There a fresh agy read is 0.33 to 0.45 below the Opus correction, so those cells keep their served lite text, under HOLD.
+
+**Decisions that change** (against 2026-10-28-backfill; every Opus target is renamed to the best candidate):
+1. **Latin Flash-Lite: keep lite>opus ⇒ HOLD → agy-flash-low-read.**
+   - Every route drops. One of the 10 #5924 books is another leaf's text on all 25 pages. The correctors CONTAIN it, so lite is served, and every reading of those pages is misleading.
+   - Without that book, the Opus correction is 659/675 (0.98) and the agy read 407/450 (0.90). This is a containment case (`containment-on-finding.md`), not a corrector failure.
+   - Bar 0.85; agy read 0.83 (P 0.69); agy correction 0.80.
+2. **HOLD targets move off Opus** (no change in what is served): zh-lite, sanskrit-lite, arabic-lite → agy-flash-low-read; zh-paddle-dice → paddle>agy-flash-high; zh-6561-served → paddle; tibetan-tr → agy-flash-low@4; german-tr-flash3 / german-tr-lite → their served flash3 / flash-lite.
+
+**New cells.** All 13 language cells come from #6553 (one page a book; the lite reads at weight 0.5). The other two are tengyur-tr and zh-siku-tr.
+
+| cell | pages waiting | routes (judged) | decision |
+|---|---|---|---|
+| tengyur-tr | 0 | agy@1 16/21, 3flash 11/21 (no Opus bar measured) | HOLD → agy@1 |
+| zh-siku-tr | 50,676 | agy@1 26/30, stored 12/30 (no Opus bar measured) | HOLD → agy@1 |
+| russian-lite | 18,952 | lite 23/28, agy read 26/28 (no Opus bar: the gate falls back to the best route) | **switch → agy-flash-low-read** |
+| korean-lite | 16,580 | lite 4/28, agy read 16/28 | HOLD → agy read |
+| ottoman-lite / tamil-lite | 131 / 225 | lite 3/10, 6/10; agy read 8/10, 9/10 | HOLD → agy read |
+| italian, spanish, portuguese, danish, hindi, middle-english, mhg, old-french, turkish | 50 – 46,950 | lite only (lowest: MHG 1/10, Turkish 4/9; highest: Hindi 10/10, Danish 9/10) | HOLD → lite |
+
+**Not ingested (a).**
+- Already in the table: the route-judge pilot, router tests, Tibetan 30, Tibetan translation router, #7517, and #7568 waves 1 and 2.
+- Kept out under #7606's convention: #7567 (its own job), #7522, #7503, #6740 pages-per-call, #7558 ("usable" with neighbour images, no wrong-text count), and #6560 flash-pass production (changed pages only).
+- Verdicts not in the repo: the three #6948 audits, and #5100 NDL (which also had one unblinded reader).
+- Selected frame: #5313 (disagreement pages, a retired prompt) and #6567's English gate (CER bins).
+- Gemini judge: #6388 tables and #6561 gate.
+- #6388 random QA: two-family adjudication, any-span "material", and no cell has its frame.
+- #5664 Mongolian: a probe, nothing accepted, no cell.
+
+### Part 3: the prior's weight
+
+`fit_prior.py` takes the 15 tested routes whose prior comes from v1/v2, with the book-scaled k of n the posterior uses. It models p_i ~ Beta(m_i W, (1 − m_i) W) and k_i ~ Bin(n_i, p_i), and finds W by maximum marginal likelihood.
+
+| fit | routes | W (pages) | profile 90% | bootstrap 90% |
+|---|---|---|---|---|
+| **all (used)** | 15 | **7.0** | [3.5, 14.5] | [3.4, 25.8] |
+| measured inputs | 5 | 4.3 | [1.4, 12.5] | [1.7, ∞] |
+| pooled inputs | 10 | 10.5 | [4.1, 29.2] | [5.3, 25.8] |
+
+- **One weight for both.** Splitting by input type gains 0.52 log-likelihood for one more parameter, so the data do not support the hand-set rule that pooled priors are worth half.
+- **Calibration.** logit(acceptance) = 1.2 + 0.40 [0.20, 0.60] × logit(prior mean). The prior predicts the order of the routes, but its means are too extreme and too low. It is not a zero-information prior.
+- **One misfire dominates.** v1 gives Latin Flash-Lite 0.035, its P(passes the absolute CER floors), against 0.65 judged. That is a different quantity from acceptance. Without that route W = 14.9; leaving out any other route moves W between 6.5 and 8.2.
+
+Posterior mean [90%], old weight (4 / 2) → new (7 / 7), same evidence. This shows every route with a model prior that moved by more than 0.005; the rest are unchanged.
+
+| route | prior | judged | old | new |
+|---|---|---|---|---|
+| latin-lite / lite | 0.04 | 447/732 | 0.51 [0.32, 0.70] | 0.44 [0.27, 0.62] |
+| latin-lite / lite>opus | 0.80 | 689/780 | 0.86 [0.69, 0.97] | 0.85 [0.69, 0.96] |
+| latin-flash3 / 3flash>agy | 0.94 | 23/30 | 0.78 [0.65, 0.89] | 0.80 [0.68, 0.90] |
+| german-lite / lite>opus | 0.89 | 272/280 | 0.94 [0.87, 0.99] | 0.94 [0.87, 0.98] |
+| german-flash3 / 3flash>opus | 0.87 | 29/29 | 0.99 [0.96, 1.00] | 0.98 [0.93, 1.00] |
+| french-lite / lite>agy | 0.86 | 27/29 | 0.93 [0.84, 0.98] | 0.92 [0.83, 0.98] |
+| tibetan-yigdzin / >agy, >opus | 0.78, 0.72 | 53/60, 52/60 | 0.88, 0.86 | 0.87, 0.85 |
+| zh-paddle-dice / paddle>opus | 0.64 | 26/30 | 0.85 [0.74, 0.94] | 0.82 [0.71, 0.91] |
+| untested: chinese-flash3 / 3flash>opus | 0.76 | — | 0.76 [0.23, 1.00] | 0.76 [0.47, 0.96] |
+
+**Flips from the weight alone: none.** The weight narrows the untested routes most, because they carry only the prior. Test-next now names only agy arms: latin-lite agy-flash-low-read, latin-flash3 3flash>agy-flash-low, and zh-paddle-dice paddle>agy-flash-high. Each is 30 pages, about 32 agy calls and 0.37 Claude points of judging.
+
+**Files.**
+- `scripts/eval/estimator/router-table/evidence/`: `derive_backfill_all.py` and the eight new score.json files.
+- `rules.json`: evidence_rules, switch.bar, a new stage agy-text@1, 15 cells, evidence on latin-lite, latin-flash3 and arabic-lite, and the prior's `_learned` note.
+- `build.py`: book_group, weight, switch.bar = opus (is_bar), the ranked agy-against-Opus section, and prior_model / eff / vs_bar in the JSON. Test-next also counts agy calls for agy-read stages.
+- `fit_prior.py`.
+- `2026-10-28-backfill-all.{md,json}`.
+
+## 2026-10-28 · Notes-layer storage: does a 1,000-page backfill pilot store the book's words and the notes apart without losing, leaking or actuating anything? (#5942)
+<!-- PRIOR ART: 2026-10-24-notes-as-anchored-layer-5942.md (the parser, annotation-layer.mjs, measured from files on 3,000 pages; anchors re-found across revisions). This entry measures what the storage build of PR #7652 WROTE to production: translation.text + text_from on pages, page_annotations docs, page_revisions rows. Then it tries each failure mode Derek listed (inbox, 2026-10-28). -->
+
+**Who this is for.** Anyone who will read `translation.text` once surfaces switch to it, and Derek, deciding the full run.
+
+**Design.**
+- The draw is seed 5942, one translated page per book, 1,000 of the 26,899 books with `pages_translated > 0`.
+- The writer is `scripts/maintenance/notes-layer-backfill-5942/backfill.mjs`. It is $0 and calls no model.
+  - run `notes-layer-backfill-5942-pilot-1` (parser /1), 20:14 UTC;
+  - run `pilot-2` (parser /2, after the two fixes below), 20:27 UTC.
+- The live checks are `scripts/eval/notes-layer-5942/pilot-checks.mts`. The lane check is `verify-untouched.mjs`. The tests are `tests/unit/notes-layer-failure-modes.test.ts`, `tests/unit/translation-text.test.ts` and `tests/integration/notes-layer-backfill.test.ts`.
+
+### Numbers (pilot-2, parser annotation-layer/2)
+
+| | value |
+|---|---|
+| pages written / conflicts / skipped | 1,000 / 0 / 0 |
+| `getTranslationText` served the stored text (hash current) | 1,000 of 1,000 |
+| markup rebuilt byte for byte from text + layout (`renderInline`) | 996 (4 = term definitions lifted, as every reader does) |
+| stored annotations re-render the same markup as the parser's own | 1,000 of 1,000; 0 orphans |
+| malformed tags | 24 pages: 3 unclosed, 36 stray close tags |
+| character ledger: book characters lost / note characters leaked | **0 / 0** on 996 comparable pages |
+| word ledger uneven | 3 pages, all a tag inside one word (`<unclear>ek</unclear>tinō`); characters equal |
+| anchors: slice back to `exact` / re-resolve | 9,479 / 9,479 |
+| `text` vs today's notes-off reader | 968 identical, 32 differ (extremes in the sheet; the text is right in the ones read by eye) |
+| bytes per page, logical (BSON) | text + text_from 2,068 · page_annotations 2,698 (876 docs, 3,080 each) · revision row 413 = **~5.2 KB** |
+| bytes per page, on disk (pages compress 0.42, page_annotations 0.46 on first insert) | ~870 + ~1,240 + ~190 + indexes ~250 = **~2.5 KB** |
+
+**Full-run estimate.** The brief said ~4.9M pages. The books' `pages_translated` counters sum to **5.72M** today.
+- **Bytes:** ~25–30 GB logical, **~12.5–14.6 GB on disk**. The `pages` collection is 35.4 GB on disk today; it gains ~4.3–5 GB of that, and `page_annotations` takes ~6–7 GB plus indexes.
+- **Time:** at the pilot's throttle (batch 50, 300 ms pause) the backfill wrote ~10 pages/s, which is **~6–7 days**. With batch 200 and the same pause, about 2–3 days. Each page costs 3 writes (one revision insert, one page update, one annotations upsert).
+
+### Failure modes: what was tried, and what happened
+
+| # | failure mode | what was tried | n | result | example |
+|---|---|---|---:|---|---|
+| 1 | a writer updates `data` but not `text` | unit tests (both twins) and an integration test: rewrite `data` after the backfill, then read through the accessor | 5 tests | **pass**: falls back to a live parse of the new data | — |
+| 2 | page edited between read and write | integration test: `data` changed in the gap between read and CAS write | 1 test; live 0 of 2,000 writes raced | **pass**: skipped, nothing written, revision row `aborted: 'conflict'` | — |
+| 3 | malformed / unclosed / nested / overlapping tags | 6 fixtures; character ledger over the pilot | 6 + 996 pages | **pass**: 0 characters lost, 0 leaked; the markup rebuilds byte for byte. Caveat: an unclosed `<gloss>` keeps its two words in the text, by design (unclosed means the words stay). Today's reader drops the whole sentence after it instead. | [sheet #22](https://sourcelibrary.org/book/tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius/page/69b680c270c69d645a71ccfc) |
+| 4 | a note nested in a margin or an insert | fixture; pilot pages | 1 + 1 | **pass**: the note leaves the text. **Today's notes-off reader shows 5 model notes on this page as the book's words.** | [sheet #27](https://sourcelibrary.org/book/royal-ms-12-e-xx-various-hippocrates/page/6991bf73734f402cad48a1fb) |
+| 5 | `<term>X<gloss>definition</gloss></term>` (gloss inside the term) | **found in pilot-1** by the word ledger ("KabbalahThe Jewish mystical tradition") | 1 of 1,000 pages, 5 definitions | **failed under /1** (the model's definition stayed in the text as a page mark). **Fixed in annotation-layer/2**, test added, page rewritten | [Sefer matzat shimurim p.57](https://sourcelibrary.org/book/book-of-the-unleavened-bread-of-watchfulness-sefer-matzat-spira/page/6988b2a7dfcf56881b1eaba8) |
+| 6 | a book line that starts with a number plus term + note | **found in pilot-1**: "164 `<term>folios</term>` `<note>…</note>`" was read as a numbered glossary line | 1 of 1,000 | **failed under /1** ("164 folios" lost from the text; today's reader loses it too). **Fixed in /2**: a number counts as list numbering only before `.` or `)` | [sheet #27](https://sourcelibrary.org/book/royal-ms-12-e-xx-various-hippocrates/page/6991bf73734f402cad48a1fb) |
+| 7 | non-Latin scripts, RTL, combining marks, astral characters | 6 fixtures (Arabic, Hebrew with points, Chinese, Tibetan, combining, surrogate pairs); live anchors by script | pages/anchors: Greek 52/853 · Han 38/685 · Hebrew 8/95 · combining 10/91 · Devanagari 5/28 · Tibetan 2/20 · Arabic 1/14 · Cyrillic 1/4 · astral 1/75 | **pass**: 0 slice mismatches, 0 unresolved, no anchor ends before a combining mark. Offsets are UTF-16 code units, not code points (documented in the parser) | sheet #29 (Arabic), #32 (Tibetan), #37 (astral) |
+| 8 | empty, placeholder and withheld translations | 4 placeholder fixtures; integration test with withheld, empty and no-translation pages; pilot pages | 4 + 3 + 11 placeholder pages | **pass**: placeholders give text = the placeholder and no annotations. Pages without `data` are skipped, and `translation_withheld` is deep-equal after. 44 pilot pages carry `translation_withheld` beside a live `data`; it was untouched (lane check) | — |
+| 9 | very long pages | fixture: 330 KB, 3,000 notes; the longest pilot page | 1 + 1 | **pass**: the 3,000-note fixture splits, rebuilds and balances its ledger; the longest pilot page (15,293 chars) splits in 2 ms | sheet #38 |
+| 10 | the same phrase twice on a page | fixture; every pilot annotation whose `exact` occurs ≥2× | 1 + 2,628 | **pass**: 2,628 of 2,628 resolve to their own occurrence, 0 elsewhere | sheet #15 (one heading phrase per bird) |
+| 11 | undo restores byte for byte | integration test (BSON hex compare, plus a page another writer moved on); **live on 20 pilot pages**: undo, compare, re-apply, compare | 1 test + 20 pages | **pass**: unset path 20/20 byte-exact, re-apply 20/20 byte-exact, restore path 20/20 with all other bytes identical. Caveat: undoing a RE-run puts back the earlier text but not the earlier run's `page_annotations` doc, which the re-run replaced. Reads then parse live. On the full run (a first write) undo is exact. | — |
+| 12 | a lane picks the pilot pages up (embeddings, gap-fill, showcase, sync, pipeline status) | snapshot of every lane key (page and book `updated_at`, `translation.updated_at`, data hash, stale/withheld, `pipeline_auto.status`, `pages_translated`, `translation_state.rung`, new `page_revisions`, Supabase `page_translations`) taken after the write; compared 7 min and 30+ min later | 1,000 pages, 1,000 books, 948 Supabase rows | **pass**: 0 changed (results below) | — |
+| 13 | the reader ships `translation` whole in its RSC payload | read `READER_PAGE_PROJECTION` and `/api/pages/*` | — | **finding, not a test.** A backfilled page sends `text` + `text_from` to the client too (~2 KB per page). Harmless at 1,000 pages. **Strip them before the full run** | — |
+| 14 | an inferred anchor names the wrong phrase | read by eye | — | **known, unchanged.** #7319 measured 14% of inferred anchors on the wrong words. Here `original: "MS."` is anchored to "12 F XX", the phrase before it. These are stored as `anchor_kind: 'inferred'` | sheet #27, row 7 |
+
+**Lane check:**
+- 7 min after the write: 0 pages, 0 books, 0 revisions and 0 Supabase rows changed.
+- 31 min after (20:48 UTC, against the snapshot taken at 20:17):
+  - **0 of 1,000 pages changed** on any lane key, and no new `page_revisions` row.
+  - **261 of 1,000 books changed `updated_at` only.** Counters, `pipeline_auto.status` and `translation_state.rung` did not change. That is background: 24.2% of the 25,905 translated books *outside* the pilot changed `updated_at` in the same window, against 26.1% inside it.
+  - **1 Supabase `page_translations` row changed.** Its `mongo_updated_at` is 18:48:37, before the pilot started, so it carries an earlier Mongo write and not this one.
+  - **No lane picked up the pilot pages.**
+
+### Read by eye (10 pages of the sheet)
+Entries #1, #12, #15, #21, #22, #23, #27, #29, #32 and #37, plus the two pilot-1 defects above.
+- **#22 (unclosed gloss).** The model's "mixing bowls" stays in the text, as designed. Today's reader instead drops the next sentence, and with notes off it shows "kerasai", "Greek historian" and other glosses as the author's words. The new text removes those.
+- **#27 (insert holding notes).** The text is right; today's reader is wrong (row 4).
+- **#23 (nested `<unclear>`).** Every word is kept. The model's spaces inside the tags leave double spaces, which is cosmetic.
+- **#15 (Chinese, `<header>`).** The running heads become page annotations (bodies kept) and leave the flow.
+- **#12, #29, #21, #1.** Clean.
+- **#32 (Tibetan).** The term repeats the title ("*Bodhisattva Pratimokṣa* bodhisattva pratimokṣa"), as it does in today's reader. That is in the model's output, not added by the parser.
+- **#37 (hieratic papyrus).** The storage is right. The translation itself looks suspect: six identical columns of "The name is Itf-Amen, Imy-ra Per. The name is Senty." The image was not opened here, so it is flagged for a check, not contained.
+
+### Artifacts
+- Run ids: `notes-layer-backfill-5942-pilot-1`, `-pilot-2`, `-pilot-2b`, `-pilot-2c` (the live undo test). Undo any of them with `undo.mjs --run-id <id> --apply`.
+- The numbers, the per-page records and the lane snapshot are in the job scratch (`/root/jobs/notes-storage-5942/` on gex45). They are not committed: they quote page text.
+
+### Spot-check sheet
+- 20 random pilot pages (seed 5942), then the extremes: most annotations, every unclosed tag, stray close tags, the largest diffs against today's notes-off reader, one page per non-Latin script, the longest page, and the pages whose word ledger is uneven.
+- There were no orphaned anchors.
+- Raw and clean text are capped at 2,500 characters each, and the annotation lists at 40 rows.
+
+### 1. Carmen genethliacon. In natalem filii, illustrissimi principis ac domini, domini Joachimi  — p. 5 (random (seed 5942))
+
+https://sourcelibrary.org/book/carmen-genethliacon-in-natalem-filii-illustrissimi-frenzel/page/6a4ad699f624d013ada60468 · language Latin · prompt v13 · 697 chars stored, 314 in text · 1 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+# BIRTH POEM.
+
+## ON THE BIRTH OF THE SON OF THE MOST
+## ILLUSTRIOUS PRINCE AND LORD,
+## Lord JOACHIM ERNEST,
+### Prince of Anhalt, Count of Ascania, Lord in Bernburg, Zerbst, et cetera.
+
+-> * * <-
+-> * <-
+
+->Author<-
+
+## BARTHOLOMÄUS FRENCELIUS.
+
+<note>A woodcut depicts the coat of arms for the House of Anhalt. The escutcheon is divided into multiple quarterings: the top-left quartering shows a bear walking on a crenellated city wall; other sections feature horizontal bars, a crancelin (a diagonal rue-crown), and checkered patterns. The design is rendered with fine line-work and cross-hatching for heraldic detail.</note>
+
+# WITTENBERG
+
+## PRINTED BY LAURENTIUS
+### SCHVENCK.
+
+### 1 5 6 7.
+````
+
+**Clean `translation.text`**
+
+````text
+# BIRTH POEM.
+
+## ON THE BIRTH OF THE SON OF THE MOST
+## ILLUSTRIOUS PRINCE AND LORD,
+## Lord JOACHIM ERNEST,
+### Prince of Anhalt, Count of Ascania, Lord in Bernburg, Zerbst, et cetera.
+
+-> * * <-
+-> * <-
+
+->Author<-
+
+## BARTHOLOMÄUS FRENCELIUS.
+
+# WITTENBERG
+
+## PRINTED BY LAURENTIUS
+### SCHVENCK.
+
+### 1 5 6 7.
+````
+
+**Annotations** (1)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | note | commentary | “” | A woodcut depicts the coat of arms for the House of Anhalt. The escutcheon is divided into multiple quarterings: the top-left quartering sho |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 2. Opus insigne cypriani leovitii à leouicia, mathematici excellentissimi, de magnis superior — p. 67 (random (seed 5942))
+
+https://sourcelibrary.org/book/opus-insigne-cypriani-leovitii-a-leouicia-mathematici-leowitz/page/6a4acba6eecacd70e4717c2e · language Latin · prompt v13 · 1118 chars stored, 1079 in text · 2 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+more. Cattle and herds wasted away in many places. The imperial cities encamped at the Lech river and forced the Duke of Bavaria to restore Regensburg completely. Alfonso, King of Portugal, fell with his horse and died. Furthermore, a third
+
+<margin>Opposition in Aquarius and Leo, then in Pisces and Virgo.</margin>
+
+great opposition of the superior planets occurred under Emperor Frederick III in the extremity of Aquarius and Leo in the month of August in the year of our Lord 1493. At that time, the powers of the previous eclipse had not yet subsided. In such a configuration of the stars, the French disease <note>syphilis</note> arose in the Neapolitan kingdom. Emperor Frederick, a most praiseworthy prince, also died then; no one had ruled the empire longer since Augustus Caesar, for he reigned for 53 years and 5 months. He was succeeded by his son Maximilian, who had already been elected King of the Romans by the princes of the empire in the year of our Lord 1486. In the following year of our Lord 1494, in the months of January and February, the great opposition of the superior planets occurred again.
+````
+
+**Clean `translation.text`**
+
+````text
+more. Cattle and herds wasted away in many places. The imperial cities encamped at the Lech river and forced the Duke of Bavaria to restore Regensburg completely. Alfonso, King of Portugal, fell with his horse and died. Furthermore, a third
+
+Opposition in Aquarius and Leo, then in Pisces and Virgo.
+
+great opposition of the superior planets occurred under Emperor Frederick III in the extremity of Aquarius and Leo in the month of August in the year of our Lord 1493. At that time, the powers of the previous eclipse had not yet subsided. In such a configuration of the stars, the French disease arose in the Neapolitan kingdom. Emperor Frederick, a most praiseworthy prince, also died then; no one had ruled the empire longer since Augustus Caesar, for he reigned for 53 years and 5 months. He was succeeded by his son Maximilian, who had already been elected King of the Romans by the princes of the empire in the year of our Lord 1486. In the following year of our Lord 1494, in the months of January and February, the great opposition of the superior planets occurred again.
+````
+
+**Annotations** (2)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | margin | mark | “Opposition in Aquarius and Leo, then in Pisces and Virgo.” |  |
+| 2 | note | commentary | “the French disease” | syphilis |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 3. Martial: Epigrams II (Loeb Classical Library, Vol. 95) — p. 25 (random (seed 5942))
+
+https://sourcelibrary.org/book/martial-epigrams-ii-loeb-classical-library-vol-95-martial/page/6a08979aced7f688b87f0671 · language Latin · prompt v11 · 2326 chars stored, 2082 in text · 2 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+### BIBLIOGRAPHY
+
+2. The Delphin Edition by Vinc. Colleſſo, with a paraphrase and variorum notes, Paris, 1680, 1823. Published by command of Louis XIV.
+3. An edition, containing old and new notes and occasional Greek versions, by five Professors of the French Academy, Lemaire, Paris, 1825.
+4. An edition by F. G. Schneidewin, Grimae, 1842.
+5. *Select Epigrams of Martial*, with English notes by F. A. Paley and W. H. Stone ("Grammar School Classics”), Whittaker & Co. and George Bell, 1868. A useful and handy edition.
+6. The *Epigrams of Martial*, with explanatory notes by L. Friedlander, Leips. 1886, 2 vols. A standard edition.
+7. *Selected Epigrams of Martial*, edited, with introduction, notes, and appendices, by Rev. H. M Stephenson, Macmillan, 1880-1895.
+8. *Select Epigrams of Martial*, edited according to the text of Prof. Lindsay, by R. T Bridge and E. D. C. Lake, Oxford, Clarendon Press, 1908, 2 vols.
+There is a good introduction by Prof. Sellar in *Extracts from Martial*, Edinburgh, 1884 ; and a valuable discussion of the epigrams in Lessing’s Prose Works.
+
+### TRANSLATIONS
+
+An English prose translation (the obscene epigrams being, however, in Graglia’s Italian) is published in Bohn’s “Classical Library.” The versions are not unsatisfactory as regards correctness, but the style in the case of the more serious epigrams often falls below the dignity of the subject. A selection of 150 epigrams has also been translated, with an introduction and notes, by Alfred S. West (*Wit and Wisdom from Martial*, Hampstead Priory Press, 1912).
+Among verse translations are: a MS. of the age of Elizabeth; Thomas May, poet and playwright, 1629; R. Fletcher, 1656; Anon. 1695; J. Hughes, 1737; William Hay, M.P. for Seaford, 1755; Wright, 1763; E. B. Greene, 1774. Specimens of the preceding and of many others will be found in the Bohn Martial. Other translators are W. F. Shaw (Juvenal, Persius, Martial and Catullus, an experiment in translation, 1882), forty-three epigrams in unrhymed trochaics, a close rendering, the metre being, however, sometimes rugged; Goldwin
+
+<summary>Continuation of the bibliography including prominent scholarly editions and a historical summary of English verse and prose translations of Martial.</summary>
+<keywords>bibliography, Martial, translations, editions, poetry</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+### BIBLIOGRAPHY
+
+2. The Delphin Edition by Vinc. Colleſſo, with a paraphrase and variorum notes, Paris, 1680, 1823. Published by command of Louis XIV.
+3. An edition, containing old and new notes and occasional Greek versions, by five Professors of the French Academy, Lemaire, Paris, 1825.
+4. An edition by F. G. Schneidewin, Grimae, 1842.
+5. *Select Epigrams of Martial*, with English notes by F. A. Paley and W. H. Stone ("Grammar School Classics”), Whittaker & Co. and George Bell, 1868. A useful and handy edition.
+6. The *Epigrams of Martial*, with explanatory notes by L. Friedlander, Leips. 1886, 2 vols. A standard edition.
+7. *Selected Epigrams of Martial*, edited, with introduction, notes, and appendices, by Rev. H. M Stephenson, Macmillan, 1880-1895.
+8. *Select Epigrams of Martial*, edited according to the text of Prof. Lindsay, by R. T Bridge and E. D. C. Lake, Oxford, Clarendon Press, 1908, 2 vols.
+There is a good introduction by Prof. Sellar in *Extracts from Martial*, Edinburgh, 1884 ; and a valuable discussion of the epigrams in Lessing’s Prose Works.
+
+### TRANSLATIONS
+
+An English prose translation (the obscene epigrams being, however, in Graglia’s Italian) is published in Bohn’s “Classical Library.” The versions are not unsatisfactory as regards correctness, but the style in the case of the more serious epigrams often falls below the dignity of the subject. A selection of 150 epigrams has also been translated, with an introduction and notes, by Alfred S. West (*Wit and Wisdom from Martial*, Hampstead Priory Press, 1912).
+Among verse translations are: a MS. of the age of Elizabeth; Thomas May, poet and playwright, 1629; R. Fletcher, 1656; Anon. 1695; J. Hughes, 1737; William Hay, M.P. for Seaford, 1755; Wright, 1763; E. B. Greene, 1774. Specimens of the preceding and of many others will be found in the Bohn Martial. Other translators are W. F. Shaw (Juvenal, Persius, Martial and Catullus, an experiment in translation, 1882), forty-three epigrams in unrhymed trochaics, a close rendering, the metre being, however, sometimes rugged; Goldwin
+````
+
+**Annotations** (2)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | summary | page | *page* | Continuation of the bibliography including prominent scholarly editions and a historical summary of English verse and prose translations of  |
+| 2 | keywords | page | *page* | bibliography, Martial, translations, editions, poetry |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 4. Theatrum anatomicum — p. 705 (random (seed 5942))
+
+https://sourcelibrary.org/book/theatrum-anatomicum-bauhin-2/page/69b51db3f23ccdcced3090e6 · language Latin · prompt v13 · 421 chars stored, 44 in text · 2 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+### LIB. III. TAB. XVIII.
+
+FIG. I.
+
+<note>An anatomical engraving shows the human brain viewed from the underside, displaying the cranial nerves, the brainstem, and optic nerves with identifying letters and numbers.</note>
+
+FIG. II.
+
+<note>An anatomical engraving depicts the human brain viewed from above, revealing the cerebral hemispheres, corpus callosum, and internal structures, marked with labels for study.</note>
+````
+
+**Clean `translation.text`**
+
+````text
+### LIB. III. TAB. XVIII.
+
+FIG. I.
+
+FIG. II.
+````
+
+**Annotations** (2)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | note | commentary | “” | An anatomical engraving shows the human brain viewed from the underside, displaying the cranial nerves, the brainstem, and optic nerves with |
+| 2 | note | commentary | “FIG. II” | An anatomical engraving depicts the human brain viewed from above, revealing the cerebral hemispheres, corpus callosum, and internal structu |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 5. Cosmographia — p. 25 (random (seed 5942))
+
+https://sourcelibrary.org/book/cosmographia-aethicus/page/6a26bcecd6b178e5aad86ca3 · language Latin · prompt v11 · 1157 chars stored, 1144 in text · 1 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+# DEDICATORIA.
+)( 2
+
+composed his learned and laborious Geographical work from the distances of places and the observation of things appearing from the heavens. For I do not believe anyone to be so ignorant as to think that the longitudes and latitudes of all places were observed from the heavens by <term>Ptolemy</term> himself or others. But when the longitude and latitude of the principal and more famous places were established, the rest were discovered and added from the accurate observation and measurement of the routes. Knowledge of routes also brings much light to the reading of histories. For often the various marches of armies by land and sea are described by historians, and sometimes the scatterings of fleets caused by storms; all these things are better understood if you know the distances and intervals of places. Furthermore, the method of routes should be known to leaders and commanders, and for that reason, great emperors once spent both effort and expense on this matter, so that they might have all routes known and diligently described. The management of the routes was prescribed by these same soldiers; regarding which matter
+````
+
+**Clean `translation.text`**
+
+````text
+# DEDICATORIA.
+)( 2
+
+composed his learned and laborious Geographical work from the distances of places and the observation of things appearing from the heavens. For I do not believe anyone to be so ignorant as to think that the longitudes and latitudes of all places were observed from the heavens by Ptolemy himself or others. But when the longitude and latitude of the principal and more famous places were established, the rest were discovered and added from the accurate observation and measurement of the routes. Knowledge of routes also brings much light to the reading of histories. For often the various marches of armies by land and sea are described by historians, and sometimes the scatterings of fleets caused by storms; all these things are better understood if you know the distances and intervals of places. Furthermore, the method of routes should be known to leaders and commanders, and for that reason, great emperors once spent both effort and expense on this matter, so that they might have all routes known and diligently described. The management of the routes was prescribed by these same soldiers; regarding which matter
+````
+
+**Annotations** (1)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | term | mark | “Ptolemy” |  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 6. Sophoclis quae extant omnia — p. 191 (random (seed 5942))
+
+https://sourcelibrary.org/book/sophoclis-quae-extant-omnia-estienne/page/69b2f4250e2f024dfbfbb77a · language Latin · prompt v10 · 3633 chars stored, 2053 in text · 70 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+<meta>Continuity: Continues the philological analysis of Greek plays, specifically focusing on textual emendations from old codices.</meta>
+
+<header>HENR. STEPHANI</header>
+
+examples rather than that it would be necessary to adduce them; but since examples of this usage of the verb <term>perainō</term> <gloss>to finish/bring to an end</gloss> are likewise obvious, I will bring forward a single one, which is found in the same poet, namely in the *Medea*, page 24, "finish the speech for me" <note>original: "πέραίνέ μοι λόγον"</note>.
+
+**V. <term>ex aseb.</term> <gloss>from impiety</gloss>:** This passage is most beautifully restored from the old codices, which have the contrary for <term>asebeias</term> <gloss>of impiety</gloss>, namely <term>dysebeias</term> <gloss>of ungodliness</gloss>, and <term>nin</term> <gloss>him</gloss> for <term>nun</term> <gloss>now</gloss>. However, <term>ex asebeias</term> <gloss>from impiety</gloss> has a certain novelty <note>original: "καινοπρέπειαν"</note> instead of <term>ex asebous</term> <gloss>from the impious one</gloss>, in this way: "if I punished him as holy," that is, impious, from ungodly; that is, making him who was formerly ungodly into a holy one. Unless someone interprets <term>ek dysebeias</term> <gloss>from ungodliness</gloss> (while the sense otherwise remains the same) as "after the ungodliness which he practiced."
+
+->P A G E XXXVIII.<-
+
+**V. <term>rhipaisin</term> <gloss>with gusts/dashing</gloss>:** For <term>melean</term> <gloss>miserable</gloss>, the old codices have <term>meleon</term> <gloss>miserable</gloss>; concerning this reading, Brodæus had also given notice. But another reading is also noted in the old [codices], namely <term>meleōn</term> <gloss>of the miserable</gloss>.
+
+->P A G E XXXIX.<-
+
+**V. <term>alidra</term>:** Replace with <term>oi’ oiea melea</term> <gloss>such miserable things</gloss>.
+**V. <term>hote sy to</term> <gloss>when you the</gloss>:** For <term>sy</term> <gloss>you</gloss>, Brodæus suspected that <term>se</term> <gloss>you (accusative)</gloss> should be put in its place, though I do not know what sense he derives from this passage thus emended. We learn from the old codices that this verse certainly suffers from a different disease, in which there is indeed the syllable <term>sy</term> <gloss>you</gloss>, but joined with <term>to</term> <gloss>the</gloss>; for there it is written <term>syto</term> <gloss>he rushed</gloss>: which I accept for <term>esyto</term> <gloss>he ru
+… [1133 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+examples rather than that it would be necessary to adduce them; but since examples of this usage of the verb perainō are likewise obvious, I will bring forward a single one, which is found in the same poet, namely in the *Medea*, page 24, "finish the speech for me".
+
+**V. ex aseb.:** This passage is most beautifully restored from the old codices, which have the contrary for asebeias, namely dysebeias, and nin for nun. However, ex asebeias has a certain novelty instead of ex asebous, in this way: "if I punished him as holy," that is, impious, from ungodly; that is, making him who was formerly ungodly into a holy one. Unless someone interprets ek dysebeias (while the sense otherwise remains the same) as "after the ungodliness which he practiced."
+
+->P A G E XXXVIII.<-
+
+**V. rhipaisin:** For melean, the old codices have meleon; concerning this reading, Brodæus had also given notice. But another reading is also noted in the old [codices], namely meleōn.
+
+->P A G E XXXIX.<-
+
+**V. alidra:** Replace with oi’ oiea melea.
+**V. hote sy to:** For sy, Brodæus suspected that se should be put in its place, though I do not know what sense he derives from this passage thus emended. We learn from the old codices that this verse certainly suffers from a different disease, in which there is indeed the syllable sy, but joined with to; for there it is written syto: which I accept for esyto. No one, I think, will deny that this is most fitting for this passage. From the same [source] is epesyto, on the page immediately following, "the flame of Zeus rushed upon". But at the end of the verse, write apopro from the same codices.
+**V. hoti:** Write ho, ti instead, just as the old codices have it, so that it might be a pronoun.
+**V. ti phēs:** In the same [codices] is written ti phaiē.
+
+->P A G E XL.<-
+
+**V. pycha:** For phlogeros, phlochmos is found in the old [codices].
+**V. hopi pathea:** For the verb pherein, it is necessary to replace it with pherousa, so that it may be "the flame rushed upon, bearing." But Brodæus, when he noticed that...
+````
+
+**Annotations** (70)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | Continuity: Continues the philological analysis of Greek plays, specifically focusing on textual emendations from old codices. |
+| 2 | pagedata | page | *page* | HENR. STEPHANI |
+| 3 | term | mark | “perainō” |  |
+| 4 | definition | commentary | “perainō” | to finish/bring to an end |
+| 5 | original | commentary | “speech for me” | original: "πέραίνέ μοι λόγον" |
+| 6 | term | mark | “ex aseb.” |  |
+| 7 | definition | commentary | “ex aseb.” | from impiety |
+| 8 | term | mark | “asebeias” |  |
+| 9 | definition | commentary | “asebeias” | of impiety |
+| 10 | term | mark | “dysebeias” |  |
+| 11 | definition | commentary | “dysebeias” | of ungodliness |
+| 12 | term | mark | “nin” |  |
+| 13 | definition | commentary | “nin” | him |
+| 14 | term | mark | “nun” |  |
+| 15 | definition | commentary | “nun” | now |
+| 16 | term | mark | “ex asebeias” |  |
+| 17 | definition | commentary | “ex asebeias” | from impiety |
+| 18 | original | commentary | “a certain novelty” | original: "καινοπρέπειαν" |
+| 19 | term | mark | “ex asebous” |  |
+| 20 | definition | commentary | “ex asebous” | from the impious one |
+| 21 | term | mark | “ek dysebeias” |  |
+| 22 | definition | commentary | “ek dysebeias” | from ungodliness |
+| 23 | term | mark | “rhipaisin” |  |
+| 24 | definition | commentary | “rhipaisin” | with gusts/dashing |
+| 25 | term | mark | “melean” |  |
+| 26 | definition | commentary | “melean” | miserable |
+| 27 | term | mark | “meleon” |  |
+| 28 | definition | commentary | “meleon” | miserable |
+| 29 | term | mark | “meleōn” |  |
+| 30 | definition | commentary | “meleōn” | of the miserable |
+| 31 | term | mark | “alidra” |  |
+| 32 | term | mark | “oi’ oiea melea” |  |
+| 33 | definition | commentary | “oi’ oiea melea” | such miserable things |
+| 34 | term | mark | “hote sy to” |  |
+| 35 | definition | commentary | “hote sy to” | when you the |
+| 36 | term | mark | “sy” |  |
+| 37 | definition | commentary | “sy” | you |
+| 38 | term | mark | “se” |  |
+| 39 | definition | commentary | “se” | you (accusative) |
+| 40 | term | mark | “sy” |  |
+
+… 30 more
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 7. Canon medicinae [Latin] (Lib. I-V) (Tr: Gerardus Cremonensis). Ed: Petrus Rochabonella. Co — p. 151 (random (seed 5942))
+
+https://sourcelibrary.org/book/canon-medicinae-latin-lib-i-v-tr-gerardus-cremonensis-ed-pet-avicenna-2/page/69dbc85c1040d1d5e2098920 · language Latin · prompt v11 · 8356 chars stored, 7482 in text · 23 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<header>Book 1, Fen 3</header>
+
+<column-break/>
+they provide for a good scent, and they favor the principal members.
+Chapter 19: On <term>embrocations</term> <gloss>medicinal liquids applied to the body</gloss>.
+There are still medicines for the heaviness that comes from the head, or to resolve such a state when it is necessary to change the complexion <note>the humoral balance of the body</note>. As for members that are to be embrocated, if they are from heat and cold, and if fluids do not flow within them and descend, let the embrocation be made of a heated substance. Afterward, let it be made of cold water so that they may constrict. But if the matter is different, let it begin from the cold. Chapter 20: On <term>phlebotomy</term> <gloss>bloodletting</gloss>.
+
+Phlebotomy is a practice whose use and frequency are beneficial. However, excess is the increase of this beyond its equity, since everyone is prone to those illnesses that occur when their blood has become excessive. Such is the danger in them. Every one of them has a need for phlebotomy due to a multitude of blood, or its corruption, or both. And the illnesses to which one is prone are these: sciatic <note>hip pain</note> and gout, and the <term>fombr</term> <gloss>perhaps an ancient term for joint inflammation</term> and the arthritic pain of blood, or that person to whom blood spitting occurs from a fissure in the vein of the lung, and it comes out thin and solidified, since when blood has multiplied for him, it is to be believed. And they are apt for epilepsy and melancholy, when there is a multitude of blood, and for trembling and for the beginning of ophthalmia <note>eye inflammation</note>. And for those to whom blood from hemorrhoids used to flow and was retained, and for women to whom menstrual blood is restricted; these people show in their color and appearance that they need to be phlebotomized because of the obscurity, or whiteness, or greenness of the skin. And those who suffer in the internal members due to a weakness in heat. But it is also necessary for them to be aware of the manual procedures if these illnesses occur. And to those to whom a blow occurs, or a cause by which blood is diminished, so that an <term>apoplexy</term> <gloss>stroke</gloss> does not occur to them, because this helps to diminish it; one must fear that an apoplexy might ripen, and if he had need, and there was no multitude there. And you must know that when these illnesses are feared and have not yet fallen 
+… [5856 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+<column-break/>
+they provide for a good scent, and they favor the principal members.
+Chapter 19: On embrocations.
+There are still medicines for the heaviness that comes from the head, or to resolve such a state when it is necessary to change the complexion. As for members that are to be embrocated, if they are from heat and cold, and if fluids do not flow within them and descend, let the embrocation be made of a heated substance. Afterward, let it be made of cold water so that they may constrict. But if the matter is different, let it begin from the cold. Chapter 20: On phlebotomy.
+
+Phlebotomy is a practice whose use and frequency are beneficial. However, excess is the increase of this beyond its equity, since everyone is prone to those illnesses that occur when their blood has become excessive. Such is the danger in them. Every one of them has a need for phlebotomy due to a multitude of blood, or its corruption, or both. And the illnesses to which one is prone are these: sciatic and gout, and the fombr perhaps an ancient term for joint inflammation and the arthritic pain of blood, or that person to whom blood spitting occurs from a fissure in the vein of the lung, and it comes out thin and solidified, since when blood has multiplied for him, it is to be believed. And they are apt for epilepsy and melancholy, when there is a multitude of blood, and for trembling and for the beginning of ophthalmia. And for those to whom blood from hemorrhoids used to flow and was retained, and for women to whom menstrual blood is restricted; these people show in their color and appearance that they need to be phlebotomized because of the obscurity, or whiteness, or greenness of the skin. And those who suffer in the internal members due to a weakness in heat. But it is also necessary for them to be aware of the manual procedures if these illnesses occur. And to those to whom a blow occurs, or a cause by which blood is diminished, so that an apoplexy does not occur to them, because this helps to diminish it; one must fear that an apoplexy might ripen, and if he had need, and there was no multitude there. And you must know that when these illnesses are feared and have not yet fallen upon them, the evacuation proceeds to cure them; but when they have fallen into the beginning of them, let phlebotomy be omitted because it stirs the humors and they flow through the body and mix with the healthy blood. And when nothing helps from that which is necessary to be a medicinal sedative
+… [4982 more characters]
+````
+
+**Annotations** (23)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | pagedata | page | *page* | Book 1, Fen 3 |
+| 2 | term | mark | “embrocations” |  |
+| 3 | definition | commentary | “embrocations” | medicinal liquids applied to the body |
+| 4 | note | commentary | “change the complexion” | the humoral balance of the body |
+| 5 | term | mark | “phlebotomy” |  |
+| 6 | definition | commentary | “phlebotomy” | bloodletting |
+| 7 | note | commentary | “are these: sciatic” | hip pain |
+| 8 | term | mark | “fombr” |  |
+| 9 | definition (unclosed) | commentary | “” |  |
+| 10 | term (stray-close) | mark | — |  |
+| 11 | note | commentary | “beginning of ophthalmia” | eye inflammation |
+| 12 | term | mark | “apoplexy” |  |
+| 13 | definition | commentary | “apoplexy” | stroke |
+| 14 | term | mark | “crisis” |  |
+| 15 | definition | commentary | “crisis” | a turning point in the disease |
+| 16 | note | commentary | “will generate. Syncope” | fainting |
+| 17 | note | commentary | “with the colicky” | severe abdominal pain |
+| 18 | note | commentary | “if bad choleric” | bile-related |
+| 19 | term | mark | “julep” |  |
+| 20 | definition | commentary | “julep” | a sweet, syrupy drink |
+| 21 | note | commentary | “has been tonal” | perhaps referring to a specific pallor or tension |
+| 22 | summary | page | *page* | This page discusses the medical necessity, procedures, and risks of phlebotomy (bloodletting), emphasizing the importance of timing, patient |
+| 23 | keywords | page | *page* | phlebotomy, bloodletting, humors, crisis, fevers, syncope, medicine, patient care |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): 
+
+````text
+{+perhaps an ancient term for joint inflammation and the arthritic pain of blood, or that person to whom blood spitting occurs from a fissure in the vein of the lung, and it comes out thin and solidified, since when blood has multiplied for him, it is to be believed. And they are apt for epilepsy and melancholy, when there is a multitude of blood, and for trembling and for the beginning of ophthalmia. And for those to whom blood from hemorrhoids used to flow and was retained, and for women to whom menstrual blood is restricted; these people show in their color and appearance that they need to be phlebotomized because of the obscurity, or whiteness, or greenness of the skin. And those who suffer in the internal members due to a weakness in heat. But it is also necessary for them to be aware of the manual procedures if these illnesses occur. And to those to whom a blow occurs, or a cause by which blood is diminished, so that an apoplexy does not occur to them, because this helps to diminish it; one must fear that an apoplexy might ripen, and if he had need, and there was no multitude there. And you must know that when these illnesses are feared and have not yet fallen upon them, the evacuation proceeds to cure them; but when they have fallen into the beginning of them, let phlebotomy be omitted because it stirs the humors and they flow through the body and mix with the healthy blood. And when nothing helps from that which is necessary to be a medicinal sedative. If maturation has appeared and the illness is at the beginning or has passed immediately, and if it is fitting that an evacuation be made, if there is nothing that prohibits it, let phlebotomy be performed. Also, the evacuation of the belly is to be done on the day of the intensity of the illness, because it is the day of cooling and entering into sleep, and the day of the boiling of the illness. And if the illness has a crisis at that time, and it is a long one, in no way should blood be diminished if it can be avoided. But if it is necessary to resist in the crises, since if the time of the crisis passes, from which a person might be relieved, let it be diminished and let the blood be stored as if in a treasury. Furthermore, because phlebotomy draws to different parts, many humors will generate. Syncope also occurs in the first evacuation when it happens suddenly to someone who was not accustomed to it, and the same occurs in vomiting. One must also be careful in an evacuation where disturbance occ
+… [286 more characters]
+````
+
+### 8. Разрушающий и созидающий миры — p. 2 (random (seed 5942))
+
+https://sourcelibrary.org/book/destroying-and-creating-worlds/page/69aff43745364012cf421cb3 · language Russian · prompt v10 · 3017 chars stored, 2958 in text · 2 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<page-num>26</page-num>
+<header>Russian Thought.</header>
+
+on earth; now the whole world hears him. But even now his loud protest, like his silent indignation then, has no effect. They hear him, but they do not take him into account and they continue to execute. Tolstoy does not yield and will not yield; the world also does not yield and will not yield, it will never yield: everyone knows this, and Tolstoy himself knows it.
+
+This incident is unusually characteristic of Tolstoy. His whole life is a continuous struggle. He wants to overcome and reshape reality, which he sincerely, with all his soul, hates, and in his struggle with it, he develops extraordinary, titanic power and strength.
+
+People admire Tolstoy, they bow down before him, but reality does not yield, remaining the same as before. It even seems to triumph doubly: after all, Tolstoy, the huge, colossal Tolstoy, is also its child, flesh of its flesh, blood of its blood. He belongs to it, he, who protests against and curses it. It will not give up its great Tolstoy to anyone...
+
+At that same time, while abroad, Tolstoy happened to witness a second death, though not at the hands of man. His older brother died—a kind, intelligent, good man. Suddenly, for no known reason, he fell ill and, after a year of heavy suffering, passed away. Again, horror; again, Tolstoy could have repeated that if all people existing and all who had existed from the creation of the world were to try to convince him that this was necessary, that this was good, he knows that it is evil, absolutely unnecessary, that it should not be. But he does not even say this anymore, and now, fifty years later, he does not appeal to nature as he appealed to men with his passionate call: "I cannot remain silent."
+
+It seems possible to struggle with men; it is madness to feel indignation against nature.
+
+Everyone knows how and with what Tolstoy answered these two deaths. He returned to Russia, at first busying himself with literature and literary-pedagogical activity, but soon he married and dedicated himself exclusively to his family life, personal affairs, and artistic creation. And if at that time, that is, in the sixties and seventies, someone had tried to tell Tolstoy that his answer was no answer, that he had no right to family happiness, nor to business joys, nor to artistic creation, he would have known how to repel anyone and defend his rights from uninvited teachers. "I am standing by my house with a dagger and a revolver; let any
+… [517 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+on earth; now the whole world hears him. But even now his loud protest, like his silent indignation then, has no effect. They hear him, but they do not take him into account and they continue to execute. Tolstoy does not yield and will not yield; the world also does not yield and will not yield, it will never yield: everyone knows this, and Tolstoy himself knows it.
+
+This incident is unusually characteristic of Tolstoy. His whole life is a continuous struggle. He wants to overcome and reshape reality, which he sincerely, with all his soul, hates, and in his struggle with it, he develops extraordinary, titanic power and strength.
+
+People admire Tolstoy, they bow down before him, but reality does not yield, remaining the same as before. It even seems to triumph doubly: after all, Tolstoy, the huge, colossal Tolstoy, is also its child, flesh of its flesh, blood of its blood. He belongs to it, he, who protests against and curses it. It will not give up its great Tolstoy to anyone...
+
+At that same time, while abroad, Tolstoy happened to witness a second death, though not at the hands of man. His older brother died—a kind, intelligent, good man. Suddenly, for no known reason, he fell ill and, after a year of heavy suffering, passed away. Again, horror; again, Tolstoy could have repeated that if all people existing and all who had existed from the creation of the world were to try to convince him that this was necessary, that this was good, he knows that it is evil, absolutely unnecessary, that it should not be. But he does not even say this anymore, and now, fifty years later, he does not appeal to nature as he appealed to men with his passionate call: "I cannot remain silent."
+
+It seems possible to struggle with men; it is madness to feel indignation against nature.
+
+Everyone knows how and with what Tolstoy answered these two deaths. He returned to Russia, at first busying himself with literature and literary-pedagogical activity, but soon he married and dedicated himself exclusively to his family life, personal affairs, and artistic creation. And if at that time, that is, in the sixties and seventies, someone had tried to tell Tolstoy that his answer was no answer, that he had no right to family happiness, nor to business joys, nor to artistic creation, he would have known how to repel anyone and defend his rights from uninvited teachers. "I am standing by my house with a dagger and a revolver; let anyone dare to enter it." And his voice sounds with such decis
+… [458 more characters]
+````
+
+**Annotations** (2)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | pagedata | page | *page* | 26 |
+| 2 | pagedata | page | *page* | Russian Thought. |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 9. Theophrasti Characteres ethici — p. 158 (random (seed 5942))
+
+https://sourcelibrary.org/book/theophrasti-characteres-ethici-theophrastus/page/6a21985ef11c08f10b202b72 · language Latin · prompt v11 · 4490 chars stored, 3468 in text · 46 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+<header>Is. Casaub. ad Theophr. Cap. 2.</header>
+
+...often profited them by catering for his king. In *Adelphi*, however, Act V, verse 7, he indicates that for Demea to do the catering himself, just as to bring in a prostitute, is the duty of a person of no consequence. Hence he had his name among Apollodorus, from whom Terence translated his *Phormio*, namely the parasite Phormio: for the poet attributes this name to the parasite in the prologue, alluding to <term>phormida</term> <gloss>basket</gloss>. Now, a <term>phormis</term> <gloss>wicker basket</gloss> was like a small shopping bag, which they carried with them when they went to the market and the forum. Such is what the French call a *cabas*; whence we have <term>phormis karyōn</term> <gloss>basket of nuts</gloss> and <term>phormis sykōn</term> <gloss>basket of figs</gloss> in Athenaeus. Cicero, in *Pro Flacco* chapter 17, called it a *fiscinam ficorum* <gloss>basket of figs</gloss>; Plutarch, in *On the Love of Wealth*, calls it an <term>arrichēn ichthyōn</term> <gloss>fish-basket</gloss>. Xiphilinus, from Dio, calls it an <term>arrichon</term> (for it is also spelled that way) <term>epōrean echousan</term> <gloss>having a handle</gloss>. Aristotle, in *Rhetoric* III, chapter 11, § 41, calls it a <term>talaron sykophantēn</term> <gloss>sycophant's basket</gloss>. We can prove, even by the testimony of Pollux himself, that not only vessels but almost every kind of provision was sold in the <term>Gynaikēiā agorā</term> <gloss>women's market</gloss>; he seems to take the <term>Kyklon</term> <gloss>Circle</gloss> and the <term>gynaikeian agoran</term> as the same thing. In the <term>Cyclos</term>, moreover, all things of this kind, except for meat, were on sale. The Scholiast of Aristophanes, on *Knights*, Act I, Scene 1, says: The <term>Cyclos</term> in Athens is like a meat market, taking its name from its construction; there indeed other wares are sold, apart from meat; especially fish. That he says this forum obtained the name "Circle" from its shape, since it was round, is true; for it is established that most ancient forums were of that shape. For that reason Homer, as the Ancients note, calls the forum a <term>hieron kyklon</term> <gloss>sacred circle</gloss> (*Iliad* Σ, verse 514), and Sophocles called it <term>kyklōenta topon agoras</term> <gloss>the circular place of the market</gloss> (in printed books today, <term>thronon</term> <gloss>throne/seat</gloss>). Euripides also writes, <term>ago
+… [1990 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+...often profited them by catering for his king. In *Adelphi*, however, Act V, verse 7, he indicates that for Demea to do the catering himself, just as to bring in a prostitute, is the duty of a person of no consequence. Hence he had his name among Apollodorus, from whom Terence translated his *Phormio*, namely the parasite Phormio: for the poet attributes this name to the parasite in the prologue, alluding to phormida. Now, a phormis was like a small shopping bag, which they carried with them when they went to the market and the forum. Such is what the French call a *cabas*; whence we have phormis karyōn and phormis sykōn in Athenaeus. Cicero, in *Pro Flacco* chapter 17, called it a *fiscinam ficorum* basket of figs; Plutarch, in *On the Love of Wealth*, calls it an arrichēn ichthyōn. Xiphilinus, from Dio, calls it an arrichon (for it is also spelled that way) epōrean echousan. Aristotle, in *Rhetoric* III, chapter 11, § 41, calls it a talaron sykophantēn. We can prove, even by the testimony of Pollux himself, that not only vessels but almost every kind of provision was sold in the Gynaikēiā agorā; he seems to take the Kyklon and the gynaikeian agoran as the same thing. In the Cyclos, moreover, all things of this kind, except for meat, were on sale. The Scholiast of Aristophanes, on *Knights*, Act I, Scene 1, says: The Cyclos in Athens is like a meat market, taking its name from its construction; there indeed other wares are sold, apart from meat; especially fish. That he says this forum obtained the name "Circle" from its shape, since it was round, is true; for it is established that most ancient forums were of that shape. For that reason Homer, as the Ancients note, calls the forum a hieron kyklon (*Iliad* Σ, verse 514), and Sophocles called it kyklōenta topon agoras (in printed books today, thronon). Euripides also writes, agoras chrainōn kyklon. Thus, in Dio Chrysostom, you may read tēs Euboikēs agoras kyklon.
+
+Hōs malakōs esthieis.] These are very similar to the words of the flatterers of Dionysius the tyrant, which Diogenes the Cynic reports in a letter to him. He says: "You, like children, have brought in I know not what 'little fathers' and nurses, who say to you, 'Take this, child. Pour in a little more if you love me. Just eat this much more.'" But it might not be displeasing if hestiās were written instead of esthieis, which we find annotated based on the conjecture of a certain learned man. The sense will be: "How gently you receive your guest
+… [968 more characters]
+````
+
+**Annotations** (46)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | pagedata | page | *page* | Is. Casaub. ad Theophr. Cap. 2. |
+| 2 | term | mark | “phormida” |  |
+| 3 | definition | commentary | “phormida” | basket |
+| 4 | term | mark | “phormis” |  |
+| 5 | definition | commentary | “phormis” | wicker basket |
+| 6 | term | mark | “phormis karyōn” |  |
+| 7 | definition | commentary | “phormis karyōn” | basket of nuts |
+| 8 | term | mark | “phormis sykōn” |  |
+| 9 | definition | commentary | “phormis sykōn” | basket of figs |
+| 10 | gloss | mark | “basket of figs” |  |
+| 11 | term | mark | “arrichēn ichthyōn” |  |
+| 12 | definition | commentary | “arrichēn ichthyōn” | fish-basket |
+| 13 | term | mark | “arrichon” |  |
+| 14 | term | mark | “epōrean echousan” |  |
+| 15 | definition | commentary | “epōrean echousan” | having a handle |
+| 16 | term | mark | “talaron sykophantēn” |  |
+| 17 | definition | commentary | “talaron sykophantēn” | sycophant's basket |
+| 18 | term | mark | “Gynaikēiā agorā” |  |
+| 19 | definition | commentary | “Gynaikēiā agorā” | women's market |
+| 20 | term | mark | “Kyklon” |  |
+| 21 | definition | commentary | “Kyklon” | Circle |
+| 22 | term | mark | “gynaikeian agoran” |  |
+| 23 | term | mark | “Cyclos” |  |
+| 24 | term | mark | “Cyclos” |  |
+| 25 | term | mark | “hieron kyklon” |  |
+| 26 | definition | commentary | “hieron kyklon” | sacred circle |
+| 27 | term | mark | “kyklōenta topon agoras” |  |
+| 28 | definition | commentary | “kyklōenta topon agoras” | the circular place of the market |
+| 29 | term | mark | “thronon” |  |
+| 30 | definition | commentary | “thronon” | throne/seat |
+| 31 | term | mark | “agoras chrainōn kyklon” |  |
+| 32 | definition | commentary | “agoras chrainōn kyklon” | polluting the circle of the market |
+| 33 | term | mark | “tēs Euboikēs agoras kyklon” |  |
+| 34 | definition | commentary | “tēs Euboikēs agoras kyklon” | the circle of the Euboean market |
+| 35 | term | mark | “Hōs malakōs esthieis” |  |
+| 36 | definition | commentary | “Hōs malakōs esthieis” | How softly you eat |
+| 37 | term | mark | “hestiās” |  |
+| 38 | definition | commentary | “hestiās” | you entertain |
+| 39 | term | mark | “esthieis” |  |
+| 40 | definition | commentary | “esthieis” | you eat |
+
+… 6 more
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 10. De Iure Singulorum Circa Res Hostiles Mobiles In Bello A Se Captas, Ex §. XVII. Institut.  — p. 35 (random (seed 5942))
+
+https://sourcelibrary.org/book/de-iure-singulorum-circa-res-hostiles-mobiles-in-bello-a-se-nerger/page/6a43a05dc3ccb765a9842c65 · language Latin · prompt v13 · 1621 chars stored, 1587 in text · 2 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+But since by the Constitution of Antoninus all who were in the Roman world were made Roman citizens, it follows that all Christians TODAY are the Roman people. Those who do not acknowledge the seat of CHRIST in Asia, Africa, and other provinces have fallen from this right; for these are enemies of the Roman people and have lost the right of the Roman City. Hence it is that war is declared on us with the Turks and Saracens, and in turn, the Laws of Postliminy apply, and those captured in War become the property of the captors. But among Christians it is different, for since all are brothers by the Law of CHRIST, the arms that are moved between them are MORE THAN CIVIL, whence the Right of Postliminy does not exist among them.
+
+<margin>And here to Tr. Vol. 1. Disput. 2. bk. 2. lit. f. there, either because there is no just war among them: which he repeats in Disput. 24. bk. XII. f.</margin>
+
+In this, however, I cannot help but praise Alciatus for writing, now that the Roman Empire is extinct, <margin>(The Empire fights bitterly for the existence of the Roman Empire today. Jacob Gothofredus, in his treatise on the Dominion of the Sea, ch. VII, quibbles that it still exists today.)</margin> (concerning the provinces that were of the Roman Empire), that they have departed or arisen into their own kingdoms and dominions.
+
+Since the divine oracles promised this Empire happiness that would last through the ages, and that as long as the Sun exists, it will endure: and let it be granted that the most powerful limbs were once torn away, for it is not circumscribed by a place, but wanders through the world
+````
+
+**Clean `translation.text`**
+
+````text
+But since by the Constitution of Antoninus all who were in the Roman world were made Roman citizens, it follows that all Christians TODAY are the Roman people. Those who do not acknowledge the seat of CHRIST in Asia, Africa, and other provinces have fallen from this right; for these are enemies of the Roman people and have lost the right of the Roman City. Hence it is that war is declared on us with the Turks and Saracens, and in turn, the Laws of Postliminy apply, and those captured in War become the property of the captors. But among Christians it is different, for since all are brothers by the Law of CHRIST, the arms that are moved between them are MORE THAN CIVIL, whence the Right of Postliminy does not exist among them.
+
+And here to Tr. Vol. 1. Disput. 2. bk. 2. lit. f. there, either because there is no just war among them: which he repeats in Disput. 24. bk. XII. f.
+
+In this, however, I cannot help but praise Alciatus for writing, now that the Roman Empire is extinct, (The Empire fights bitterly for the existence of the Roman Empire today. Jacob Gothofredus, in his treatise on the Dominion of the Sea, ch. VII, quibbles that it still exists today.) (concerning the provinces that were of the Roman Empire), that they have departed or arisen into their own kingdoms and dominions.
+
+Since the divine oracles promised this Empire happiness that would last through the ages, and that as long as the Sun exists, it will endure: and let it be granted that the most powerful limbs were once torn away, for it is not circumscribed by a place, but wanders through the world
+````
+
+**Annotations** (2)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | margin | mark | “And here to Tr. Vol. 1. Disput. 2. bk. 2. lit. f. there, either because there is” |  |
+| 2 | margin | mark | “(The Empire fights bitterly for the existence of the Roman Empire today. Jacob G” |  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 11. Genji Monogatari: Miotsukushi (源氏物語 澪標) — p. 7 (random (seed 5942))
+
+https://sourcelibrary.org/book/genji-monogatari-miotsukushi/page/69dfede98d34461cbe7f4ed6 · language Japanese · prompt v10 · 718 chars stored, 718 in text · 0 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<column-break/>
+In the distance, the people who gathered speak of the path taken by Genji. They look on with envy toward the gardens of the Imperial Palace, where the light seems to bathe the very air. They speak of the path that opens before him, though it is a road that remains hidden and difficult to tread. The Prince, who pulls at the strings of fate, moves forward, while those who wait behind are left with only the falling leaves. As the people of the Second Ward speak of these events, they pause, caught by the weight of their own memories. The letter from the mountains is dropped, and the moon sets over the veranda of the Second Ward. In every corner of the world, the story scatters like dust on a path.
+````
+
+**Clean `translation.text`**
+
+````text
+<column-break/>
+In the distance, the people who gathered speak of the path taken by Genji. They look on with envy toward the gardens of the Imperial Palace, where the light seems to bathe the very air. They speak of the path that opens before him, though it is a road that remains hidden and difficult to tread. The Prince, who pulls at the strings of fate, moves forward, while those who wait behind are left with only the falling leaves. As the people of the Second Ward speak of these events, they pause, caught by the weight of their own memories. The letter from the mountains is dropped, and the moon sets over the veranda of the Second Ward. In every corner of the world, the story scatters like dust on a path.
+````
+
+**Annotations:** none
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 12. Who are the Rosicrucians? — p. 1 (random (seed 5942))
+
+https://sourcelibrary.org/book/who-are-the-rosicrucians-hamilton-jones/page/69d36bfbbd7c5e689c08af62 · language English · prompt v10 · 856 chars stored, 270 in text · 5 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>This is the title page of a pamphlet concerning the Rosicrucian Order, specifically the S.R.I.A. (Societas Rosicruciana in Anglia). It introduces Colonel F. M. Rickard and the author, J. W. Hamilton-Jones.</meta>
+
+# S.R.I.A. <note>Societas Rosicruciana in Anglia; the Rosicrucian Society in England</note>
+
+### Colonel F. M. RICKARD
+->Most Worthy Supreme Magus, IX°<-
+
+# Who are the Rosicrucians?
+
+->by<-
+
+### Brother <note>original: "Frater"</note> J. W. Hamilton-Jones, II°
+
+<image-desc size="small" type="symbol" significance="low">A small horizontal divider featuring a six-pointed star (hexagram) in the center of a line.</image-desc>
+
+*Read at the Metropolitan Study Group, S.R.I.A. on April 9th, 1953, and reprinted by the kind permission of the Author.*
+
+<vocab>S.R.I.A., Rosicrucians, Supreme Magus, Brother, Metropolitan Study Group</vocab>
+````
+
+**Clean `translation.text`**
+
+````text
+# S.R.I.A.
+
+### Colonel F. M. RICKARD
+->Most Worthy Supreme Magus, IX°<-
+
+# Who are the Rosicrucians?
+
+->by<-
+
+### Brother J. W. Hamilton-Jones, II°
+
+*Read at the Metropolitan Study Group, S.R.I.A. on April 9th, 1953, and reprinted by the kind permission of the Author.*
+````
+
+**Annotations** (5)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This is the title page of a pamphlet concerning the Rosicrucian Order, specifically the S.R.I.A. (Societas Rosicruciana in Anglia). It intro |
+| 2 | note | commentary | “S.R.I.A” | Societas Rosicruciana in Anglia; the Rosicrucian Society in England |
+| 3 | original | commentary | “Brother” | original: "Frater" |
+| 4 | image | commentary | “” | A small horizontal divider featuring a six-pointed star (hexagram) in the center of a line. |
+| 5 | vocab | page | *page* | S.R.I.A., Rosicrucians, Supreme Magus, Brother, Metropolitan Study Group |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 13. Marsilii Ficini Florentini medici atq[ue] philosophi celeberrimi, de vita libri tres, rece — p. 305 (random (seed 5942))
+
+https://sourcelibrary.org/book/three-books-on-life-ficino/page/699259218812793469fe2b75 · language Latin · prompt v2 · 2329 chars stored, 1472 in text · 6 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the discussion on the nature of pestilential infection, specifically addressing the speed of transmission and the power of the causal agent.</meta>
+
+# THE ANTIDOTE
+
+On the contrary: Whatever cause is most powerful will act even upon matter that is not predisposed to it. Although sulfur receives the action of fire more quickly than wood—and dry wood, cut into small pieces, more easily than other types of wood—nevertheless, a burning furnace immediately seizes even large and green logs into a flame, because the supreme power of the active agent quickly prepares and shapes them. And many times, a pestilential vapor of this kind becomes most powerful by the force of its own causes, and you cannot know exactly when this happens. Even if such a predisposition is not present at one time, it may yet be present in another.
+
+->In what manner, and which temperaments, the plague<-
+->strikes most swiftly through contagion.<-
+
+### CHAPTER III.
+
+This poisonous vapor <note>original: "Venenosus iste uapor"</note> is often so subtle that it cannot be discerned by sight. Sometimes it is dissipated, but it is easily regenerated from that point as long as the predisposing celestial influence <note>original: "influentia"; referring to the astrological belief that planetary alignments "flowed" into the body to cause disease</note> remains. And now, even if it were tiny at the beginning, it nevertheless expands from place to place with a much faster course than sulfur when it is ignited. It is far more opposed to the vital spirit <note>a refined vapor produced from the blood in the heart, believed in Galenic medicine to sustain life and heat</note> of the heart than sulfur is to the nose. A vapor of this kind is ignited by the infected air only in bodies predisposed to it; but after it has been ignited in those bodies, it spreads everywhere with wonderful speed and ease, just like ignited sulfur, even more than before.
+
+<summary>This page explains that while some people are more naturally susceptible to plague, a powerful enough "poisonous vapor" can infect anyone regardless of their constitution, comparing the spread of disease to the rapid ignition of sulfur.</summary>
+<keywords>plague, contagion, vital spirit, poisonous vapor, predisposition, medical theory, sulfur analogy</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+# THE ANTIDOTE
+
+On the contrary: Whatever cause is most powerful will act even upon matter that is not predisposed to it. Although sulfur receives the action of fire more quickly than wood—and dry wood, cut into small pieces, more easily than other types of wood—nevertheless, a burning furnace immediately seizes even large and green logs into a flame, because the supreme power of the active agent quickly prepares and shapes them. And many times, a pestilential vapor of this kind becomes most powerful by the force of its own causes, and you cannot know exactly when this happens. Even if such a predisposition is not present at one time, it may yet be present in another.
+
+->In what manner, and which temperaments, the plague<-
+->strikes most swiftly through contagion.<-
+
+### CHAPTER III.
+
+This poisonous vapor is often so subtle that it cannot be discerned by sight. Sometimes it is dissipated, but it is easily regenerated from that point as long as the predisposing celestial influence remains. And now, even if it were tiny at the beginning, it nevertheless expands from place to place with a much faster course than sulfur when it is ignited. It is far more opposed to the vital spirit of the heart than sulfur is to the nose. A vapor of this kind is ignited by the infected air only in bodies predisposed to it; but after it has been ignited in those bodies, it spreads everywhere with wonderful speed and ease, just like ignited sulfur, even more than before.
+````
+
+**Annotations** (6)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the discussion on the nature of pestilential infection, specifically addressing the speed of transmission and the power  |
+| 2 | original | commentary | “This poisonous vapor” | original: "Venenosus iste uapor" |
+| 3 | original | commentary | “predisposing celestial influence” | original: "influentia"; referring to the astrological belief that planetary alignments "flowed" into the body to cause disease |
+| 4 | note | commentary | “the vital spirit” | a refined vapor produced from the blood in the heart, believed in Galenic medicine to sustain life and heat |
+| 5 | summary | page | *page* | This page explains that while some people are more naturally susceptible to plague, a powerful enough "poisonous vapor" can infect anyone re |
+| 6 | keywords | page | *page* | plague, contagion, vital spirit, poisonous vapor, predisposition, medical theory, sulfur analogy |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 14. Dogme et rituel de la haute magie — p. 51 (random (seed 5942))
+
+https://sourcelibrary.org/book/dogme-et-rituel-de-la-haute-magie-levi/page/6a21981d5ce215cb9ac7120c · language French · prompt v11 · 1144 chars stored, 1144 in text · 0 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+# PRELIMINARY DISCOURSE.
+
+most advanced of the tendencies of human intelligence at the time in which we live, these doctrines, sensed for several years by a small number of elite minds, can be issued today with the hope of seeing them welcomed; but, barely a few months ago, they would have found neither a sympathetic attention, nor a platform, nor an echo anywhere.
+
+This is because, at that time, the extreme parties had not yet been compelled to abdicate their pretensions before the omnipotence of providential events, and one could with difficulty remain neutral in the midst of their fierce war; any concession from one to the other was then considered a true betrayal, and men who never abandon justice, being compelled to seek it separately and successively in the two separate causes, became suspects to everyone, like renegades or deserters. To have convictions energetic enough to prefer one's conscientious independence to the encouragements of cliques was to condemn oneself to a solitude that was not without apprehensions and anguishes. To remain isolated between two armies that attack each other, is one not exposed to all the
+````
+
+**Clean `translation.text`**
+
+````text
+# PRELIMINARY DISCOURSE.
+
+most advanced of the tendencies of human intelligence at the time in which we live, these doctrines, sensed for several years by a small number of elite minds, can be issued today with the hope of seeing them welcomed; but, barely a few months ago, they would have found neither a sympathetic attention, nor a platform, nor an echo anywhere.
+
+This is because, at that time, the extreme parties had not yet been compelled to abdicate their pretensions before the omnipotence of providential events, and one could with difficulty remain neutral in the midst of their fierce war; any concession from one to the other was then considered a true betrayal, and men who never abandon justice, being compelled to seek it separately and successively in the two separate causes, became suspects to everyone, like renegades or deserters. To have convictions energetic enough to prefer one's conscientious independence to the encouragements of cliques was to condemn oneself to a solitude that was not without apprehensions and anguishes. To remain isolated between two armies that attack each other, is one not exposed to all the
+````
+
+**Annotations:** none
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 15. 御定佩文韻府·卷七十七之四 (vol 591) — p. 62 (random (seed 5942))
+
+https://sourcelibrary.org/book/vol-591/page/6a3c649f39b4508b04e2898f · language Chinese · prompt v13 · 4860 chars stored, 3437 in text · 37 annotations · scripts: Han
+
+**Raw `translation.data`**
+
+````text
+<header>Imperial Sanctioned Complete Library of the Four Treasuries</header>
+<header>Volume 77, Part 4</header>
+
+<note>original: "欽定四庫全書" referring to the Qianlong Emperor's massive collection of Chinese literature.</note>
+
+One thousand five hundred. Haladai and Wang Shiqiang jointly led them to attack the Song dynasty. Also, in the *Book of Northern Qi*, in the Biography of Gao Qian: When Erzhu Zhao entered Luoyang, he sent his army supervisor Sun <unclear>blank</unclear> with over one hundred cavalry to Ji Province. He falsely claimed to be requisitioning horses from the people, but his true intention was to wait for Gao Qian and his brothers to deliver the horses so he could arrest them. Gao Qian already had intentions of retaliation, and when Sun <unclear>blank</unclear> arrived, Gao knew he was being plotted against. Thus, he acted first and devised a plan, secretly leading brave warriors to seize the provincial capital. They killed Sun <unclear>blank</unclear> and captured the regional governor.
+
+### Red Sparrow-Hawk <note>original: "赤鷂" (Chi Yao)</note>
+
+In the *Forest of Changes* <note>original: "Yi Lin", a Han dynasty work on divination</note> it says:
+Two <term>red sparrow-hawks</term> <gloss>a type of bird of prey</gloss> followed five falcons. They chirped and held arrows in their beaks. Without the lash of a whip, you were released from your duty; do not shoot.
+
+### Fierce Sparrow-Hawk <note>original: "鷙鷂" (Zhi Yao)</note>
+
+In the *Forest of Changes*: Amidst the hard ice, the yellow bird cries in sorrow. Gripped by many fears and worries, the <term>fierce sparrow-hawk</term> <gloss>a predatory hawk</gloss> soars, becoming a source of grief for me.
+
+### Sea Sparrow-Hawk <note>original: "海鷂" (Hai Yao)</note>
+
+In the *Records of the Chamber of Prophecies* <note>original: "Xuan Shi Zhi"</note>: When Xue Song governed Wei, there was a man from Ye Prefecture who enjoyed raising hawks and falcons. Someone brought a hawk to the market to sell; the hawk was exceptionally spirited and handsome. A person from the Eastern Barbarian tribes saw it and said, "This is a <term>sea sparrow-hawk</term>. It is skilled at warding off the disasters caused by <term>jiaochi</term> <gloss>flood dragons or water monsters</gloss>." Previously, a dragon in the southern marsh of Ye City had frequently caused trouble. The person from Ye then took the hawk there. The <term>sea sparrow-hawk</term> suddenly dived into the marsh water. After a while, it emerged having caught a
+… [2360 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+One thousand five hundred. Haladai and Wang Shiqiang jointly led them to attack the Song dynasty. Also, in the *Book of Northern Qi*, in the Biography of Gao Qian: When Erzhu Zhao entered Luoyang, he sent his army supervisor Sun blank with over one hundred cavalry to Ji Province. He falsely claimed to be requisitioning horses from the people, but his true intention was to wait for Gao Qian and his brothers to deliver the horses so he could arrest them. Gao Qian already had intentions of retaliation, and when Sun blank arrived, Gao knew he was being plotted against. Thus, he acted first and devised a plan, secretly leading brave warriors to seize the provincial capital. They killed Sun blank and captured the regional governor.
+
+### Red Sparrow-Hawk
+
+In the *Forest of Changes* it says:
+Two red sparrow-hawks followed five falcons. They chirped and held arrows in their beaks. Without the lash of a whip, you were released from your duty; do not shoot.
+
+### Fierce Sparrow-Hawk
+
+In the *Forest of Changes*: Amidst the hard ice, the yellow bird cries in sorrow. Gripped by many fears and worries, the fierce sparrow-hawk soars, becoming a source of grief for me.
+
+### Sea Sparrow-Hawk
+
+In the *Records of the Chamber of Prophecies*: When Xue Song governed Wei, there was a man from Ye Prefecture who enjoyed raising hawks and falcons. Someone brought a hawk to the market to sell; the hawk was exceptionally spirited and handsome. A person from the Eastern Barbarian tribes saw it and said, "This is a sea sparrow-hawk. It is skilled at warding off the disasters caused by jiaochi." Previously, a dragon in the southern marsh of Ye City had frequently caused trouble. The person from Ye then took the hawk there. The sea sparrow-hawk suddenly dived into the marsh water. After a while, it emerged having caught a small dragon, which it ate almost entirely. Because of this, the people of Ye were freed from the disaster. Xue Song ordered the man from Ye to be questioned about the matter, and the man subsequently presented the sea sparrow-hawk as a gift. Also, in the *Compendium of Materia Medica*: The sea sparrow-hawk fish is also called the Shaoyang fish. Its name comes from the sea sparrow-hawk because its shape resembles it.
+
+### Rival Sparrow-Hawk
+
+In Su Ting's *Preface to the Eulogy of the Pair of White Hawks*: Observing how they act according to the seasons and follow the autumnal spirit of killing, their maneuvers are swift. Looking around at other powerful birds, they deserv
+… [937 more characters]
+````
+
+**Annotations** (37)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | pagedata | page | *page* | Imperial Sanctioned Complete Library of the Four Treasuries |
+| 2 | pagedata | page | *page* | Volume 77, Part 4 |
+| 3 | original | commentary | “” | original: "欽定四庫全書" referring to the Qianlong Emperor's massive collection of Chinese literature. |
+| 4 | unclear | mark | “blank” |  |
+| 5 | unclear | mark | “blank” |  |
+| 6 | unclear | mark | “blank” |  |
+| 7 | original | commentary | “Red Sparrow-Hawk” | original: "赤鷂" (Chi Yao) |
+| 8 | original | commentary | “In the *Forest of Changes” | original: "Yi Lin", a Han dynasty work on divination |
+| 9 | term | mark | “red sparrow-hawks” |  |
+| 10 | definition | commentary | “red sparrow-hawks” | a type of bird of prey |
+| 11 | original | commentary | “Fierce Sparrow-Hawk” | original: "鷙鷂" (Zhi Yao) |
+| 12 | term | mark | “fierce sparrow-hawk” |  |
+| 13 | definition | commentary | “fierce sparrow-hawk” | a predatory hawk |
+| 14 | original | commentary | “Sea Sparrow-Hawk” | original: "海鷂" (Hai Yao) |
+| 15 | original | commentary | “Chamber of Prophecies” | original: "Xuan Shi Zhi" |
+| 16 | term | mark | “sea sparrow-hawk” |  |
+| 17 | term | mark | “jiaochi” |  |
+| 18 | definition | commentary | “jiaochi” | flood dragons or water monsters |
+| 19 | term | mark | “sea sparrow-hawk” |  |
+| 20 | term | mark | “sea sparrow-hawk” |  |
+| 21 | term | mark | “sea sparrow-hawk fish” |  |
+| 22 | definition | commentary | “sea sparrow-hawk fish” | likely a stingray or manta ray |
+| 23 | term | mark | “sea sparrow-hawk” |  |
+| 24 | original | commentary | “Rival Sparrow-Hawk” | original: "仇鷂" (Chou Yao) |
+| 25 | term | mark | “rival sparrow-hawk” |  |
+| 26 | original | commentary | “Wild Sparrow-Hawk” | original: "野鷂" (Ye Yao) |
+| 27 | term | mark | “wild sparrow-hawk” |  |
+| 28 | original | commentary | “Yellow Sparrow-Hawk” | original: "黃鷂" (Huang Yao) |
+| 29 | term | mark | “yellow sparrow-hawk” |  |
+| 30 | term | mark | “yellow sparrow-hawk” |  |
+| 31 | term | mark | “zouyu” |  |
+| 32 | definition | commentary | “zouyu” | a mythical righteous beast |
+| 33 | original | commentary | “Brushing Sparrow-Hawk” | original: "拂鷂" (Fu Yao) |
+| 34 | term | mark | “brushing sparrow-hawk” |  |
+| 35 | original | commentary | “Sparrow-Hawk” | original: "雀鷂" (Que Yao) |
+| 36 | summary | page | *page* | This page lists various literary and historical references to different species of sparrow-hawks, including their roles in divination, local |
+| 37 | keywords | page | *page* | sparrow-hawk, Northern Qi, Forest of Changes, Sea Sparrow-Hawk, dragons, Chinese poetry, Han Yu, Yuan Zhen, falconry |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 16. བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁི (Derge Tengyur, vol. 33) — p. 105 (random (seed 5942))
+
+https://sourcelibrary.org/book/derge-tengyur-vol-33/page/6abe932d6a920ffd924d741b · language Tibetan · prompt v13 · 2600 chars stored, 2252 in text · 6 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>continues from previous page: through the generation stage, the Great Vajra-Holder</meta>
+Having taught the generation of the body of the <note>Great Vajra-Holder</note>, it will now be taught by means of the completion stage. Through phrases such as "The Subsequent Tantra of the Secret Assembly" <note>original: Guhyasamaja-uttaratantra</note> and so forth, the distinction between the two stages is shown. The phrase "by the distinction of the common and the supreme" refers to two types of service <note>term: sevā; spiritual practice to approach a deity</note>: common service and supreme service. 
+
+Regarding these, common service consists of the four vajras previously explained. Supreme service is characterized by the six branches <note>the six-fold yoga of the completion stage</note>, because by relying on the six branches, one perfectly becomes the Great Vajra-Holder. The phrase "desiring liberation through service" means that because one desires the liberation characterized by the perfection of the Great Vajra-Holder, one trains in it; hence it is called "service." 
+
+The "completely pure deity's body" refers to the body of the Great Vajra-Holder, which is the wisdom body or the vajra body. Wisdom is the completion stage. That itself is the nectar; one should take it as nourishment <note>term: rasāyana; alchemy or rejuvenation</note> and make it the cause of the yoga of the six branches. "The nature of all aspects" refers to the body, speech, and mind. "At all times" refers to all sessions, as well as day and night. "In all postures" refers to the four: rising, sitting, lying down, and walking. As it is said:
+
+->Whether naked or not naked,<-
+->In whatever way and wherever one is,<-
+->Having visualized one's own superior deity,<-
+->One should meditate on that reality alone.<-
+
+This is shown by phrases such as "this is," stating that one should perform service through those very six yogas. "Snake" and so forth refers to terms like "snake," "headless," "endless," "summarized," and so forth; these names are shown. "The reality of the deity" refers to the deities who are the objects expressed by the mantra; that is the meaning. Therefore, it is called the "yoga of six branches." Because its nature is the reality of the mantra and the deity, one should perform service by the sequence of the yoga of the six branches; this means one should meditate on the supreme service. Through "its" and so forth, the Subsequent Tantra is shown to be an authoritative sour
+… [100 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+Having taught the generation of the body of the, it will now be taught by means of the completion stage. Through phrases such as "The Subsequent Tantra of the Secret Assembly" and so forth, the distinction between the two stages is shown. The phrase "by the distinction of the common and the supreme" refers to two types of service: common service and supreme service. 
+
+Regarding these, common service consists of the four vajras previously explained. Supreme service is characterized by the six branches, because by relying on the six branches, one perfectly becomes the Great Vajra-Holder. The phrase "desiring liberation through service" means that because one desires the liberation characterized by the perfection of the Great Vajra-Holder, one trains in it; hence it is called "service." 
+
+The "completely pure deity's body" refers to the body of the Great Vajra-Holder, which is the wisdom body or the vajra body. Wisdom is the completion stage. That itself is the nectar; one should take it as nourishment and make it the cause of the yoga of the six branches. "The nature of all aspects" refers to the body, speech, and mind. "At all times" refers to all sessions, as well as day and night. "In all postures" refers to the four: rising, sitting, lying down, and walking. As it is said:
+
+->Whether naked or not naked,<-
+->In whatever way and wherever one is,<-
+->Having visualized one's own superior deity,<-
+->One should meditate on that reality alone.<-
+
+This is shown by phrases such as "this is," stating that one should perform service through those very six yogas. "Snake" and so forth refers to terms like "snake," "headless," "endless," "summarized," and so forth; these names are shown. "The reality of the deity" refers to the deities who are the objects expressed by the mantra; that is the meaning. Therefore, it is called the "yoga of six branches." Because its nature is the reality of the mantra and the deity, one should perform service by the sequence of the yoga of the six branches; this means one should meditate on the supreme service. Through "its" and so forth, the Subsequent Tantra is shown to be an authoritative source. The six branches are as previously explained. Service is the meditation on the completion stage.
+````
+
+**Annotations** (6)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | continues from previous page: through the generation stage, the Great Vajra-Holder |
+| 2 | note | commentary | “of the body of the” | Great Vajra-Holder |
+| 3 | original | commentary | “the Secret Assembly” | original: Guhyasamaja-uttaratantra |
+| 4 | note | commentary | “types of service” | term: sevā; spiritual practice to approach a deity |
+| 5 | note | commentary | “by the six branches” | the six-fold yoga of the completion stage |
+| 6 | note | commentary | “it as nourishment” | term: rasāyana; alchemy or rejuvenation |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 17. De Natura Rerum, IX Bücher. Ph. Theophrasti von Hohenheim, genant Paracelsi — p. 25 (random (seed 5942))
+
+https://sourcelibrary.org/book/de-natura-rerum-ix-bucher-ph-theophrasti-von-hohenheim-paracelsus/page/6a26bd615189f4e1b4475991 · language German · prompt v11 · 1307 chars stored, 703 in text · 13 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>continues from previous page</meta>
+
+know what is prepared in a good way, how they are transformed, what the separator in the human stomach is, with which outer fire the <term>Calor Ventriculi</term> <gloss>heat of the stomach</gloss> and the heat of all limbs should be compared, and finally what signs are present by which all completed things may be recognized, not only in natural growths, medicines, etc. But I speak of the signs concerning the human body: whether the limbs have completed all their natural functions, whether that which has died, that is, has become food, has been <term>Resuscititert</term> <gloss>resuscitated</gloss>, <term>Transmutiert</term> <gloss>transmuted</gloss>, and properly separated, whether every <term>membrum</term> <gloss>organ/limb</gloss> has received its <term>nutrimentum</term> <gloss>nourishment</gloss>, or whether it has brought a foreign guest with it, etc.
+
+->For this purpose such books serve.<-
+
+<summary>This page explains that the nine books serve as a guide for understanding the transformation of food into nourishment within the human body and the signs that reveal whether the organs have properly processed these substances.</summary>
+<keywords>human digestion, transmutation, stomach heat, signs of health, nourishment, separator</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+know what is prepared in a good way, how they are transformed, what the separator in the human stomach is, with which outer fire the Calor Ventriculi and the heat of all limbs should be compared, and finally what signs are present by which all completed things may be recognized, not only in natural growths, medicines, etc. But I speak of the signs concerning the human body: whether the limbs have completed all their natural functions, whether that which has died, that is, has become food, has been Resuscititert, Transmutiert, and properly separated, whether every membrum has received its nutrimentum, or whether it has brought a foreign guest with it, etc.
+
+->For this purpose such books serve.<-
+````
+
+**Annotations** (13)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | continues from previous page |
+| 2 | term | mark | “Calor Ventriculi” |  |
+| 3 | definition | commentary | “Calor Ventriculi” | heat of the stomach |
+| 4 | term | mark | “Resuscititert” |  |
+| 5 | definition | commentary | “Resuscititert” | resuscitated |
+| 6 | term | mark | “Transmutiert” |  |
+| 7 | definition | commentary | “Transmutiert” | transmuted |
+| 8 | term | mark | “membrum” |  |
+| 9 | definition | commentary | “membrum” | organ/limb |
+| 10 | term | mark | “nutrimentum” |  |
+| 11 | definition | commentary | “nutrimentum” | nourishment |
+| 12 | summary | page | *page* | This page explains that the nine books serve as a guide for understanding the transformation of food into nourishment within the human body  |
+| 13 | keywords | page | *page* | human digestion, transmutation, stomach heat, signs of health, nourishment, separator |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 18. 新編纂圖增類羣書類要事林廣記 — p. 61 (random (seed 5942))
+
+https://sourcelibrary.org/book/forest-of-affairs-shilin-guangji/page/6992ce273ea667fbac82853a · language Chinese · prompt v2 · 4705 chars stored, 2711 in text · 16 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>The transcription transitions from the previous discussion of the Earth God festivals into the specific rituals of the lunar calendar. Note that while the heading indicates the First Month, the astronomical positions in the gloss—the Big Dipper pointing to the Dragon (Chen) and the sun's position in the Bond (Lou) constellation—traditionally align with the third lunar month. This may reflect a regional variation or a historical shift in the calendar used by the original author. The focus of this page is the Cold Food Festival, a precursor to the Tomb Sweeping Festival (Qingming).</meta>
+
+# The First Month
+<gloss>The Auspicious Month, the New Moon. The handle of the Big Dipper points to the Chen [Dragon] direction; the Sun is in the Lou [Bond] constellation.</gloss>
+
+On the fifteenth day of the month, the legal statutes mandate that local governing officials, in order to exert a transformative moral influence, shall go out to the suburbs at sunrise to encourage the people in their farming duties.
+
+---
+
+The Cold Food Festival <note>original: "Hanshi Jie," a festival where lighting fires was forbidden</note> has no fixed date; it occurs sometimes in the third month and sometimes in the second month. The *Record of the Seasons of the Jing and Chu Regions* <note>original: "Jingchu Suishi Ji," a 6th-century text on southern customs</note> states that one hundred and five days after the Winter Solstice, there will be strong winds and heavy rains; this is called the Cold Food Festival. It is also known as the "One Hundred and Five Festival." The people of Qin <note>referring to the region of Shaanxi</note> call Cold Food "Cooked Food Day," meaning that no fires are lit and people prepare cooked food in advance to last through the festival. The people of Qi <note>referring to the region of Shandong</note> call it the "Singing Smoke Festival" or the "Forbidden Smoke Festival." 
+
+The *New Preface* <note>original: "Xin Xu," an anecdotal collection from the 1st century BCE</note> says: When Duke Wen of the Jin state returned to his kingdom, his loyal follower Jie Zitui left with his mother to live in seclusion on Mount Mian. The Duke sought him but could not find him; he then set fire to the mountain to force him out. Jie Zitui was burned to death. Consequently, the Duke forbade the lighting of fires to honor him. However, upon consulting the *Commentary of Zuo* <note>original: "Zuo Zhuan," one of the earliest Chinese historical works</note> and the *Records of t
+… [2205 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+# The First Month
+The Auspicious Month, the New Moon. The handle of the Big Dipper points to the Chen [Dragon] direction; the Sun is in the Lou [Bond] constellation.
+
+On the fifteenth day of the month, the legal statutes mandate that local governing officials, in order to exert a transformative moral influence, shall go out to the suburbs at sunrise to encourage the people in their farming duties.
+
+---
+
+The Cold Food Festival has no fixed date; it occurs sometimes in the third month and sometimes in the second month. The *Record of the Seasons of the Jing and Chu Regions* states that one hundred and five days after the Winter Solstice, there will be strong winds and heavy rains; this is called the Cold Food Festival. It is also known as the "One Hundred and Five Festival." The people of Qin call Cold Food "Cooked Food Day," meaning that no fires are lit and people prepare cooked food in advance to last through the festival. The people of Qi call it the "Singing Smoke Festival" or the "Forbidden Smoke Festival." 
+
+The *New Preface* says: When Duke Wen of the Jin state returned to his kingdom, his loyal follower Jie Zitui left with his mother to live in seclusion on Mount Mian. The Duke sought him but could not find him; he then set fire to the mountain to force him out. Jie Zitui was burned to death. Consequently, the Duke forbade the lighting of fires to honor him. However, upon consulting the *Commentary of Zuo* and the *Records of the Grand Historian*, neither contains any mention of Jie Zitui being burned by fire. 
+
+According to the *Rites of Zhou*, the Master of Fire Rituals used a wooden-clapper bell in mid-spring to announce a prohibition on fire throughout the capital. The commentary explains this was because "fire was about to be brought out" in late spring. Thus, the prohibition of fire was an ancient system of the Zhou Dynasty and not originally created for Jie Zitui. 
+
+*The Eastern Capital: A Record of the Dream of Splendor* says: Usually, in the capital, the 105th day after the Winter Solstice is observed as the Great Cold Food. The day before is called "Cooking to Ripeness." People use flour and dates to make "Flying Swallows," which they thread onto willow branches and stick above their doorframes; these are called "Jie Zitui Swallows." An edict from Emperor Minghuang of the Tang Dynasty stated: "The practice of visiting ancestral graves during Cold Food is not found in the classic texts of ritual, but as modern generations have followed this
+… [211 more characters]
+````
+
+**Annotations** (16)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | The transcription transitions from the previous discussion of the Earth God festivals into the specific rituals of the lunar calendar. Note  |
+| 2 | gloss | mark | “The Auspicious Month, the New Moon. The handle of the Big Dipper points to the C” |  |
+| 3 | original | commentary | “The Cold Food Festival” | original: "Hanshi Jie," a festival where lighting fires was forbidden |
+| 4 | original | commentary | “and Chu Regions” | original: "Jingchu Suishi Ji," a 6th-century text on southern customs |
+| 5 | note | commentary | “people of Qin” | referring to the region of Shaanxi |
+| 6 | note | commentary | “festival. The people of Qi” | referring to the region of Shandong |
+| 7 | original | commentary | “The *New Preface” | original: "Xin Xu," an anecdotal collection from the 1st century BCE |
+| 8 | original | commentary | “*Commentary of Zuo” | original: "Zuo Zhuan," one of the earliest Chinese historical works |
+| 9 | original | commentary | “the Grand Historian” | original: "Shi Ji," the definitive history of early China |
+| 10 | original | commentary | “of Fire Rituals” | original: "Si Xuan Shi," an official responsible for managing seasonal fires |
+| 11 | note | commentary | “be brought out” | this refers to the ritual of "renewing the fire," where old winter fires were extinguished and new spring fires were kindled |
+| 12 | original | commentary | “Dream of Splendor” | original: "Dongjing Meng Hua Lu," a memoir of the Northern Song capital Kaifeng |
+| 13 | original | commentary | “*Record of Sundries” | original: "Suisui Lu" |
+| 14 | note | commentary | “people of Shu” | modern-day Sichuan |
+| 15 | summary | page | *page* | This page discusses the origins and customs of the Cold Food Festival, debating whether its fire prohibition stems from the legend of Jie Zi |
+| 16 | keywords | page | *page* | Cold Food Festival, Jie Zitui, agricultural rituals, fire prohibition, Tang Emperor Minghuang, Rites of Zhou, local officials |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 19. A key to physic, and the occult sciences — p. 107 (random (seed 5942))
+
+https://sourcelibrary.org/book/a-key-to-physic-and-the-occult-sciences-sibly/page/6980eeb6a4813df78d8bcd46 · language English · prompt v2 · 4126 chars stored, 3016 in text · 12 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the detailed description of microscopic life forms, specifically the "Proteus" animalcule and the "Wheel-animal" (now known as a rotifer).</meta>
+
+->AND OCCULT SCIENCE.<-
+
+...represented at No. 7, the motions of which draw a current of water toward it from a considerable distance. After repeatedly pulling in and thrusting out this short head—sometimes with and sometimes without using its internal "wheel-work"—the creature will remain motionless for a while as if weary. Then its head and long neck will be very slowly stretched out <note>original: "protruded"</note>, as shown in No. 8, and it soon resumes its former agility. Sometimes it positions its neck and head as represented in the plate at No. 9.
+
+4. ***The Wheel-animal, or Vorticella.*** <note>original: "Vorticella" is Latin for "little whirlpool." This organism is now known to modern science as a rotifer.</note> This wonderful microscopic organism <note>original: "animalcule"</note> is found in rainwater that has stood for some days in lead gutters, or in hollows of lead on the tops of houses, or in the slime or sediment left by such water; it may perhaps also be found in other places. However, if the water standing in lead gutters, or the sediment left behind, has any reddish color in it, one may be almost certain of finding them there. Although it shows no signs of life except when in water, it is capable of remaining alive for many months after it is taken out of the water and kept in a state as dry as dust. 
+
+In this dry state, it is globular in shape and no larger than a grain of sand, showing no signs of life. But when put into water, within half an hour a slow <note>original: "languid"</note> motion begins; the globule turns itself about, lengthens itself by slow degrees, and takes on the form of a lively maggot <note>The author uses "maggot" to describe the larva-like, elongated body of the rotifer.</note>. Most commonly, a few minutes later, it puts out its "wheels" and swims vigorously through the water as if in search of food; otherwise, fixing itself by the tail, it works the wheels in such a manner as to draw food toward itself. Numbers 10, 11, 12, and 13 show the different appearances of its wheels, and Numbers 14 and 15 show its globular form. 
+
+The most remarkable part of this organism is its wheel-work. This consists of a couple of semicircular instruments around the edges of which many little fibers <note>original: "fibrillæ"; these are cilia, hair-like str
+… [1626 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+->AND OCCULT SCIENCE.<-
+
+...represented at No. 7, the motions of which draw a current of water toward it from a considerable distance. After repeatedly pulling in and thrusting out this short head—sometimes with and sometimes without using its internal "wheel-work"—the creature will remain motionless for a while as if weary. Then its head and long neck will be very slowly stretched out, as shown in No. 8, and it soon resumes its former agility. Sometimes it positions its neck and head as represented in the plate at No. 9.
+
+4. ***The Wheel-animal, or Vorticella.*** This wonderful microscopic organism is found in rainwater that has stood for some days in lead gutters, or in hollows of lead on the tops of houses, or in the slime or sediment left by such water; it may perhaps also be found in other places. However, if the water standing in lead gutters, or the sediment left behind, has any reddish color in it, one may be almost certain of finding them there. Although it shows no signs of life except when in water, it is capable of remaining alive for many months after it is taken out of the water and kept in a state as dry as dust. 
+
+In this dry state, it is globular in shape and no larger than a grain of sand, showing no signs of life. But when put into water, within half an hour a slow motion begins; the globule turns itself about, lengthens itself by slow degrees, and takes on the form of a lively maggot. Most commonly, a few minutes later, it puts out its "wheels" and swims vigorously through the water as if in search of food; otherwise, fixing itself by the tail, it works the wheels in such a manner as to draw food toward itself. Numbers 10, 11, 12, and 13 show the different appearances of its wheels, and Numbers 14 and 15 show its globular form. 
+
+The most remarkable part of this organism is its wheel-work. This consists of a couple of semicircular instruments around the edges of which many little fibers move themselves very briskly, sometimes with a kind of rotation and sometimes in a trembling or vibrating manner. When in this state, it sometimes unfastens its tail and swims along with great swiftness, seemingly in pursuit of its prey. Sometimes the wheels seem to be entire circles armed with small teeth, like those of the balance-wheel of a watch, appearing projected forward beyond the head and extending sideways somewhat wider than its diameter. The teeth or cogs of these wheels seem to stand very regularly at equal distances, but their shape varies 
+… [516 more characters]
+````
+
+**Annotations** (12)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the detailed description of microscopic life forms, specifically the "Proteus" animalcule and the "Wheel-animal" (now kn |
+| 2 | original | commentary | “slowly stretched out” | original: "protruded" |
+| 3 | original | commentary | “Wheel-animal, or Vorticella” | original: "Vorticella" is Latin for "little whirlpool." This organism is now known to modern science as a rotifer. |
+| 4 | original | commentary | “wonderful microscopic organism” | original: "animalcule" |
+| 5 | original | commentary | “hour a slow” | original: "languid" |
+| 6 | note | commentary | “a lively maggot” | The author uses "maggot" to describe the larva-like, elongated body of the rotifer. |
+| 7 | original | commentary | “many little fibers” | original: "fibrillæ"; these are cilia, hair-like structures used for swimming and feeding |
+| 8 | original | commentary | “to imply intelligence” | original: "sagacity" |
+| 9 | pagedata | page | *page* | S |
+| 10 | meta | page | *page* | catchword: Besides |
+| 11 | summary | page | *page* | This page describes the physical characteristics and behaviors of two microscopic organisms: the shape-shifting Proteus and the "Wheel-anima |
+| 12 | keywords | page | *page* | microscopy, animalcule, Proteus, Wheel-animal, Vorticella, rotifer, anhydrobiosis, cilia, biological observation |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 20. Histoire de ma fuite des prisons de la République de Venise — p. 124 (random (seed 5942))
+
+https://sourcelibrary.org/book/histoire-de-ma-fuite-des-prisons-de-la-republique-de-venise-/page/6a08a2c343d85a6ece189614 · language French · prompt v11 · 1170 chars stored, 1170 in text · 0 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+the circumspect P. B., secretary of the Council of Ten, had to say to me. Astonished by this order, which is always an ill omen, and very angry at having to obey it, I went at the prescribed hour into the presence of the minister, who, without saying a single word, ordered that I be deposited here. That is all.
+
+Nothing was as innocent as this fault, but there are laws in the world that one can violate innocently, and the transgressors are nonetheless guilty. I complimented him on the fact that he knew his crime, and on the form of his detention; and as his fault was very light, I told him that he would only remain with me for eight days, and that after a small reprimand he would be told to go spend six months at his home in Brescia. The abbé told me sincerely that he did not believe they would leave him there for eight days. And that is the man who, not feeling guilty, cannot conceive that one could punish him. I let him flatter himself, but what I told him came to pass to the letter. I became determined to keep him good company to relieve with all my power the great sensitivity that his detention caused him. I appropriated his misfortune to the point
+````
+
+**Clean `translation.text`**
+
+````text
+the circumspect P. B., secretary of the Council of Ten, had to say to me. Astonished by this order, which is always an ill omen, and very angry at having to obey it, I went at the prescribed hour into the presence of the minister, who, without saying a single word, ordered that I be deposited here. That is all.
+
+Nothing was as innocent as this fault, but there are laws in the world that one can violate innocently, and the transgressors are nonetheless guilty. I complimented him on the fact that he knew his crime, and on the form of his detention; and as his fault was very light, I told him that he would only remain with me for eight days, and that after a small reprimand he would be told to go spend six months at his home in Brescia. The abbé told me sincerely that he did not believe they would leave him there for eight days. And that is the man who, not feeling guilty, cannot conceive that one could punish him. I let him flatter himself, but what I told him came to pass to the letter. I became determined to keep him good company to relieve with all my power the great sensitivity that his detention caused him. I appropriated his misfortune to the point
+````
+
+**Annotations:** none
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 21. Kitab obat-obatan - Or. 3198 — p. 24 (most annotations)
+
+https://sourcelibrary.org/book/kitab-obat-obatan-or-3198/page/6a20327818654bf8e1902e37 · language Malay · prompt v13 · 12997 chars stored, 7197 in text · 286 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<unclear>dekat</unclear> with <unclear>makendi</unclear> that is <unclear>berchent</unclear> from <unclear>dekat</unclear> with snake, then <unclear>detarak matan</unclear> and when <unclear>makendi</unclear> inside <unclear>chengkan asmi</unclear> three from the <unclear>tampukan</unclear> proven more than sprinkling in this property and when placed <unclear>alendi</unclear> inside hair <unclear>wumpuan</unclear> certainly <unclear>seker berbua</unclear> and cancels the strength and <unclear>jaug</unclear> devil <unclear>lesbet</unclear> inside the throat when <unclear>bersem sama mitqali</unclear> it is thrown away <unclear>fermat</unclear> inside <unclear>chengchen</unclear> weight two <term>mitqal</term> <gloss>a unit of weight</gloss> mixed with gold and <unclear>firadengan berseman</unclear> and must be <unclear>ta'ali mizan</unclear> and the sun inside <unclear>al-bruj</unclear> that is <unclear>huwa huamu</unclear> <unclear>shekkan kah</unclear> and acceptance and awe in the state not walking that <unclear>menangkelndi</unclear> to need unless two <unclear>ulu</unclear> that is, and when drunk from <unclear>bua dufen kak</unclear> <unclear>santosakan</unclear> from <unclear>matan</unclear> poison. **Theriac** <unclear>stur</unclear> antidote, hot dry, the <unclear>alkmd</unclear> and when it is <unclear>dikusakkan</unclear> <unclear>bilang</unclear> and <unclear>fanu</unclear> eliminated and when it is <unclear>detangkelr</unclear> on top of <unclear>tengklu</unclear> <unclear>dengkskan rejki</unclear> from <unclear>juda u</unclear> that is that <unclear>dekefta tawn kemb</unclear> from <unclear>feruman kak tangan</unclear> and <unclear>kejua ulung fermul</unclear> given at this amount from poison and <unclear>fefis</unclear> spinach leaves that are said by Chinese people, <unclear>daun sunghiu</unclear> then <unclear>chepwa</unclear> on top of <unclear>tengker zenbur</unclear> that is divine benefit, and <unclear>asupa</unclear> that is white and <unclear>belir ag</unclear> that is fine <unclear>alkendi</unclear>. **Verdigris** <unclear>rusi</unclear> hot dry, inside inside <unclear>meprada</unclear> poison that kills, no medicine, it is very <unclear>esate</unclear> at <unclear>sen tahim</unclear> eating, and very beneficial, like <unclear>kung</unclear> and <unclear>fanu</unclear> and leaves <unclear>salam</unclear> to improve, becoming it <unclear>wakbar</unclear> drying <unclear>mefai</unclear> beneficial to prevent boils that are large and to
+… [10497 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+dekat with makendi that is berchent from dekat with snake, then detarak matan and when makendi inside chengkan asmi three from the tampukan proven more than sprinkling in this property and when placed alendi inside hair wumpuan certainly seker berbua and cancels the strength and jaug devil lesbet inside the throat when bersem sama mitqali it is thrown away fermat inside chengchen weight two mitqal mixed with gold and firadengan berseman and must be ta'ali mizan and the sun inside al-bruj that is huwa huamu shekkan kah and acceptance and awe in the state not walking that menangkelndi to need unless two ulu that is, and when drunk from bua dufen kak santosakan from matan poison. **Theriac** stur antidote, hot dry, the alkmd and when it is dikusakkan bilang and fanu eliminated and when it is detangkelr on top of tengklu dengkskan rejki from juda u that is that dekefta tawn kemb from feruman kak tangan and kejua ulung fermul given at this amount from poison and fefis spinach leaves that are said by Chinese people, daun sunghiu then chepwa on top of tengker zenbur that is divine benefit, and asupa that is white and belir ag that is fine alkendi. **Verdigris** rusi hot dry, inside inside meprada poison that kills, no medicine, it is very esate at sen tahim eating, and very beneficial, like kung and fanu and leaves salam to improve, becoming it wakbar drying mefai beneficial to prevent boils that are large and to cleanse chemer at fer buru and desufu and one hemorrhoid that is better than ten very green if cooked that medicine, beneficial from thick kolfu t matan and itching and ringworm matan and mahkamah matan. **Ginger** helbi hot, beneficial wet, opens the throat, hot, gives benefit that is phlegm mucus and wet that is bad which happens inside the stomach afma samfeker al-ruah and if damilq it becomes it becomes it becomes al-manan faha and balayang and open from that tawn lendir and helba that is hot dry, three to reject mucus from the throat and beneficial kal-zaman of the past to it and to deminir and cold stomach and large liver and it is compatible alkendi and strengthens the heart and holds lengker weight inside the stomach, eliminates wind and cold the soul lengker and titik sini and mixes it nature and improves semen and fights poison inside hebsi at mengilkan cold bakan matan and menjaya white of the eye and thick, and it is beneficial from the property when eating it lengker prevents thirst and improves this kejak kelendir inside the stomach, and wh
+… [4697 more characters]
+````
+
+**Annotations** (286)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | unclear | mark | “dekat” |  |
+| 2 | unclear | mark | “makendi” |  |
+| 3 | unclear | mark | “berchent” |  |
+| 4 | unclear | mark | “dekat” |  |
+| 5 | unclear | mark | “detarak matan” |  |
+| 6 | unclear | mark | “makendi” |  |
+| 7 | unclear | mark | “chengkan asmi” |  |
+| 8 | unclear | mark | “tampukan” |  |
+| 9 | unclear | mark | “alendi” |  |
+| 10 | unclear | mark | “wumpuan” |  |
+| 11 | unclear | mark | “seker berbua” |  |
+| 12 | unclear | mark | “jaug” |  |
+| 13 | unclear | mark | “lesbet” |  |
+| 14 | unclear | mark | “bersem sama mitqali” |  |
+| 15 | unclear | mark | “fermat” |  |
+| 16 | unclear | mark | “chengchen” |  |
+| 17 | term | mark | “mitqal” |  |
+| 18 | definition | commentary | “mitqal” | a unit of weight |
+| 19 | unclear | mark | “firadengan berseman” |  |
+| 20 | unclear | mark | “ta'ali mizan” |  |
+| 21 | unclear | mark | “al-bruj” |  |
+| 22 | unclear | mark | “huwa huamu” |  |
+| 23 | unclear | mark | “shekkan kah” |  |
+| 24 | unclear | mark | “menangkelndi” |  |
+| 25 | unclear | mark | “ulu” |  |
+| 26 | unclear | mark | “bua dufen kak” |  |
+| 27 | unclear | mark | “santosakan” |  |
+| 28 | unclear | mark | “matan” |  |
+| 29 | unclear | mark | “stur” |  |
+| 30 | unclear | mark | “alkmd” |  |
+| 31 | unclear | mark | “dikusakkan” |  |
+| 32 | unclear | mark | “bilang” |  |
+| 33 | unclear | mark | “fanu” |  |
+| 34 | unclear | mark | “detangkelr” |  |
+| 35 | unclear | mark | “tengklu” |  |
+| 36 | unclear | mark | “dengkskan rejki” |  |
+| 37 | unclear | mark | “juda u” |  |
+| 38 | unclear | mark | “dekefta tawn kemb” |  |
+| 39 | unclear | mark | “feruman kak tangan” |  |
+| 40 | unclear | mark | “kejua ulung fermul” |  |
+
+… 246 more
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 22. Tractatus novus de magnetica vulnerum curatione, citra ullum et dolorem, et remedii applic — p. 167 (unclosed tag)
+
+https://sourcelibrary.org/book/tractatus-novus-de-magnetica-vulnerum-curatione-citra-ullum-goclenius/page/69b680c270c69d645a71ccfc · language Latin · prompt v10 · 1519 chars stored, 962 in text · 29 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+# TREATISE ON
+
+Furthermore, there is no doubt that their shapes and carvings were various, for some were pot-bellied and wide, others narrower and tighter. I find <term>crateres</term> <gloss>mixing bowls</term>, <term>paterae</term> <gloss>libation bowls</gloss>, <term>calices</term> <gloss>drinking cups</gloss>, <term>cyathi</term> <gloss>ladles</gloss>, <term>scyphi</term> <gloss>cups</gloss>, and <term>carchesia</term> <gloss>tall cups</gloss> in more frequent use among the Latins. In the triumph of <term>Paulus Aemilius</term> <gloss>Roman general</gloss>, silver mixing bowls, horns, phials, and very large cups, skillfully made and beautifully decorated, were carried.
+
+The <term>crater</term> <gloss>mixing bowl</gloss>, as the Greeks think, is named from <term>κεράσαι</term> <gloss>kerasai</gloss>, that is, to mix and temper water with wine, or from <term>ἀπὸ τοῦ κέρατος</term> <gloss>apo tou keratos</gloss>, that is, <term>κερατὴς</term> <gloss>kerates</gloss>, because wine was once poured into a horn. For it was the custom for the ancients to drink from horns first, and <term>Xenophon</term> <gloss>Greek historian</gloss> taught that the Thracians did this; indeed, they even say that <term>Philip of Macedon</term> <gloss>King of Macedon</gloss> served wine to the Athenians in a horn. They say that the Paeonians raise oxen that bear horns of such great size that they can hold three or four <term>choas</term> <gloss>a unit of liquid measure</gloss>, which is why they make cups out of them,
+````
+
+**Clean `translation.text`**
+
+````text
+# TREATISE ON
+
+Furthermore, there is no doubt that their shapes and carvings were various, for some were pot-bellied and wide, others narrower and tighter. I find crateres mixing bowls, paterae, calices, cyathi, scyphi, and carchesia in more frequent use among the Latins. In the triumph of Paulus Aemilius, silver mixing bowls, horns, phials, and very large cups, skillfully made and beautifully decorated, were carried.
+
+The crater, as the Greeks think, is named from κεράσαι, that is, to mix and temper water with wine, or from ἀπὸ τοῦ κέρατος, that is, κερατὴς, because wine was once poured into a horn. For it was the custom for the ancients to drink from horns first, and Xenophon taught that the Thracians did this; indeed, they even say that Philip of Macedon served wine to the Athenians in a horn. They say that the Paeonians raise oxen that bear horns of such great size that they can hold three or four choas, which is why they make cups out of them,
+````
+
+**Annotations** (29)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | term | mark | “crateres” |  |
+| 2 | definition (unclosed) | commentary | “” |  |
+| 3 | term (stray-close) | mark | — |  |
+| 4 | term | mark | “paterae” |  |
+| 5 | definition | commentary | “paterae” | libation bowls |
+| 6 | term | mark | “calices” |  |
+| 7 | definition | commentary | “calices” | drinking cups |
+| 8 | term | mark | “cyathi” |  |
+| 9 | definition | commentary | “cyathi” | ladles |
+| 10 | term | mark | “scyphi” |  |
+| 11 | definition | commentary | “scyphi” | cups |
+| 12 | term | mark | “carchesia” |  |
+| 13 | definition | commentary | “carchesia” | tall cups |
+| 14 | term | mark | “Paulus Aemilius” |  |
+| 15 | definition | commentary | “Paulus Aemilius” | Roman general |
+| 16 | term | mark | “crater” |  |
+| 17 | definition | commentary | “crater” | mixing bowl |
+| 18 | term | mark | “κεράσαι” |  |
+| 19 | definition | commentary | “κεράσαι” | kerasai |
+| 20 | term | mark | “ἀπὸ τοῦ κέρατος” |  |
+| 21 | definition | commentary | “ἀπὸ τοῦ κέρατος” | apo tou keratos |
+| 22 | term | mark | “κερατὴς” |  |
+| 23 | definition | commentary | “κερατὴς” | kerates |
+| 24 | term | mark | “Xenophon” |  |
+| 25 | definition | commentary | “Xenophon” | Greek historian |
+| 26 | term | mark | “Philip of Macedon” |  |
+| 27 | definition | commentary | “Philip of Macedon” | King of Macedon |
+| 28 | term | mark | “choas” |  |
+| 29 | definition | commentary | “choas” | a unit of liquid measure |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): 
+
+````text
+[-The-]
+{+mixing+}
+[-crater-]
+{+bowls,+}
+{+paterae, calices, cyathi, scyphi, and carchesia in more frequent use among the Latins. In the triumph of Paulus Aemilius, silver+}
+[-bowl-]
+{+bowls+}
+{+horns, phials, and very large cups, skillfully made and beautifully decorated, were carried. The crater,+}
+[-κεράσαι-]
+{+κεράσαι,+}
+[-kerasai,-]
+[-κέρατος-]
+{+κέρατος,+}
+[-apo tou keratos,-]
+[-κερατὴς-]
+{+κερατὴς,+}
+[-kerates,-]
+[-Greek historian-]
+[-King of Macedon-]
+[-a unit of liquid measure-]
+````
+
+### 23. Motuum Monasteriensium Novissimique Belli & Pacis Synoptica Enarratio, Nec Non Celsissimi, — p. 8 (unclosed tag)
+
+https://sourcelibrary.org/book/motuum-monasteriensium-novissimique-belli-pacis-synoptica-jordanaeus/page/6a4f3c1172a0f5a8d380a737 · language Latin · prompt v13 · 886 chars stored, 559 in text · 8 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<warning>Extremely heavy bleed-through from the reverse side obscures much of the primary text. Ghost text from the verso is visible in mirror image; only the upright text has been transcribed.</warning>
+Your kingdom <unclear> spirit </unclear>
+prayers 
+
+by which <unclear> abundantly and to be explained the divinity <unclear> I do not doubt </unclear>
+
+
+distinguished by your Virtue. Yours in God 
+only by your most clement 
+
+
+Light shines, to the ruler, with brightness 
+ancient <unclear> at this time undoubtedly </unclear>
+family <unclear> proper </unclear>
+and 
+prince <unclear> this labor </unclear>
+
+
+
+<unclear> and the honor to complete it.</unclear>
+
+-> Nothing would please more <-
+-> than if it were to prove itself to you alone <-
+-> Which the mind owes <-
+
+## Most Reverend & Most Illustrious
+### Of Your Lordship
+-> Most devoted in spirit & study <-
+### JOANNES IORDANEUS
+````
+
+**Clean `translation.text`**
+
+````text
+Your kingdom  spirit 
+prayers 
+
+by which  abundantly and to be explained the divinity  I do not doubt 
+
+
+distinguished by your Virtue. Yours in God 
+only by your most clement 
+
+
+Light shines, to the ruler, with brightness 
+ancient  at this time undoubtedly 
+family  proper 
+and 
+prince  this labor 
+
+
+
+ and the honor to complete it.
+
+-> Nothing would please more <-
+-> than if it were to prove itself to you alone <-
+-> Which the mind owes <-
+
+## Most Reverend & Most Illustrious
+### Of Your Lordship
+-> Most devoted in spirit & study <-
+### JOANNES IORDANEUS
+````
+
+**Annotations** (8)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | warning | page | *page* | Extremely heavy bleed-through from the reverse side obscures much of the primary text. Ghost text from the verso is visible in mirror image; |
+| 2 | unclear | mark | “ spirit ” |  |
+| 3 | unclear (unclosed) | mark | “” |  |
+| 4 | unclear | mark | “ I do not doubt ” |  |
+| 5 | unclear | mark | “ at this time undoubtedly ” |  |
+| 6 | unclear | mark | “ proper ” |  |
+| 7 | unclear | mark | “ this labor ” |  |
+| 8 | unclear | mark | “ and the honor to complete it.” |  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 24. Siddhanta Sarvabhauma Purvardha — p. 114 (stray close tag)
+
+https://sourcelibrary.org/book/siddhanta-sarvabhauma-part-1-munisvara/page/69907c465f855ec553e72d08 · language Sanskrit · prompt v10 · 1905 chars stored, 1236 in text · 20 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+In this statement, the <term>ahargaṇa</term> is subtracted from the year. The complexity of the mathematical operation <term>gaṇita-karma</term> is mentioned here for the sake of clarity. Because the <term>hagdṛśā</term> <gloss>observed observation</gloss> is equal, the modification of the measurement is for the purpose of proving the existence of the day.
+
+In the previous table of the <term>grahakautuka</term> <gloss>curiosity of the planets</gloss> (a <term>karaṇa-grantha</term> <gloss>manual of astronomical calculation</gloss>), the subtraction of the <term>ahargaṇa</term> from the year has been well stated for the sake of simplicity by our noble teacher. Even for the sake of simplicity, one who knows the truth of the principles satisfies [the inquiry]. 
+
+In this treatise, the <term>siddhānta</term> <gloss>established conclusion/text</gloss> is presented. By this, it is also noted in our previous part of the <term>siddhānta</term> text and the <term>gaṇita-prakāśa</term> <gloss>illumination of mathematics</gloss> how the calculation is done. 
+
+<insert></insert>
+In the stated measure, the <term>ahargaṇa</term> is done... [calculation fragment]... the era count is 32.
+</insert>
+
+The method for finding the desired <term>ahargaṇa</term> begins with finding the count of all path-traversed units. Having multiplied the part and increased it by the Sun, the day count is divided by the standard measures. The result is the elapsed [time]. The path-traversed [units] are equal to that. This is clear. The proof here: the entire world is determined by the days [1577917828] and the division of the era.
+
+<summary>This page discusses the pedagogical approach to 'ahargaṇa' calculation, citing established 'siddhānta' texts and the necessity of mathematical rigor in planetary observation.</summary>
+<keywords>Siddhānta, Gaṇita-prakāśa, Ahargaṇa, Karana-grantha, astronomical proof</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+In this statement, the ahargaṇa is subtracted from the year. The complexity of the mathematical operation gaṇita-karma is mentioned here for the sake of clarity. Because the hagdṛśā is equal, the modification of the measurement is for the purpose of proving the existence of the day.
+
+In the previous table of the grahakautuka (a karaṇa-grantha), the subtraction of the ahargaṇa from the year has been well stated for the sake of simplicity by our noble teacher. Even for the sake of simplicity, one who knows the truth of the principles satisfies [the inquiry]. 
+
+In this treatise, the siddhānta is presented. By this, it is also noted in our previous part of the siddhānta text and the gaṇita-prakāśa how the calculation is done. 
+
+
+In the stated measure, the ahargaṇa is done... [calculation fragment]... the era count is 32.
+
+
+The method for finding the desired ahargaṇa begins with finding the count of all path-traversed units. Having multiplied the part and increased it by the Sun, the day count is divided by the standard measures. The result is the elapsed [time]. The path-traversed [units] are equal to that. This is clear. The proof here: the entire world is determined by the days [1577917828] and the division of the era.
+````
+
+**Annotations** (20)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | term | mark | “ahargaṇa” |  |
+| 2 | term | mark | “gaṇita-karma” |  |
+| 3 | term | mark | “hagdṛśā” |  |
+| 4 | definition | commentary | “hagdṛśā” | observed observation |
+| 5 | term | mark | “grahakautuka” |  |
+| 6 | definition | commentary | “grahakautuka” | curiosity of the planets |
+| 7 | term | mark | “karaṇa-grantha” |  |
+| 8 | definition | commentary | “karaṇa-grantha” | manual of astronomical calculation |
+| 9 | term | mark | “ahargaṇa” |  |
+| 10 | term | mark | “siddhānta” |  |
+| 11 | definition | commentary | “siddhānta” | established conclusion/text |
+| 12 | term | mark | “siddhānta” |  |
+| 13 | term | mark | “gaṇita-prakāśa” |  |
+| 14 | definition | commentary | “gaṇita-prakāśa” | illumination of mathematics |
+| 15 | insert | mark | “” |  |
+| 16 | term | mark | “ahargaṇa” |  |
+| 17 | insert (stray-close) | mark | — |  |
+| 18 | term | mark | “ahargaṇa” |  |
+| 19 | summary | page | *page* | This page discusses the pedagogical approach to 'ahargaṇa' calculation, citing established 'siddhānta' texts and the necessity of mathematic |
+| 20 | keywords | page | *page* | Siddhānta, Gaṇita-prakāśa, Ahargaṇa, Karana-grantha, astronomical proof |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 25. Stoicorum Veterum Fragmenta, vol. 3: Chrysippus (Ethica) — p. 75 (stray close tag)
+
+https://sourcelibrary.org/book/stoicorum-veterum-fragmenta-vol-3-chrysippus-ethica-arnim/page/69a97a32f3f3d2fb7de27297 · language Latin · prompt v10 · 4162 chars stored, 3310 in text · 22 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+# ON VIRTUE.
+
+Good order <term>eutaxia</term> <gloss>orderliness</gloss> is the experience of the classification of actions, or it contains within itself the certainty of actions, or the classifications of actions.
+Self-sufficiency <term>autarkeia</term> <gloss>self-reliance</gloss> is a state satisfied with what is necessary, and capable through itself of providing for the duties of life.
+
+**273** Andronicus, *On the Passions* p. 25, 9 Schuchardt.
+Liberality <term>eleutheriotēs</term> <gloss>generosity</gloss> is a state providing those who are engaged in giving and receiving with consistency.
+Kindness <term>chrēstotēs</term> <gloss>usefulness/goodness</gloss> is a state willingly inclined to do good.
+Judicial skill is the knowledge of judgments, punishments, and offenses.
+Gratitude <term>eugnōmosynē</term> <gloss>goodwill/thankfulness</gloss> is voluntary justice.
+Piety <term>eusebeia</term> <gloss>reverence</gloss> is the knowledge of the service of the gods.
+Thanksgiving <term>eucharistia</term> <gloss>gratitude</gloss> is the knowledge of to whom, when, how, and from whom one should give and receive thanks.
+Holiness <term>hosiotēs</term> <gloss>piety toward divine law</gloss> is the knowledge that makes one faithful and observant of what is just toward the divine.
+Fair dealing <term>eusynallaxia</term> <gloss>honesty in exchange</gloss> is a state that preserves justice in transactions.
+Legislative skill is the knowledge of political ordinances referred to the community.
+
+**274** Sextus, *Against the Mathematicians* IX 153 (Carneades uses the Stoic definitions of virtues):
+For temperance is an insurmountable disposition regarding things that happen according to right reason, or a virtue making us superior to those things that seem difficult to endure. For they say that one is temperate not when one abstains from a dying old woman, but when one is able to enjoy the company of Lais, Phryne, or someone of that sort, and yet abstains. Perseverance is the knowledge of what must be endured and what must not, or a virtue making us superior to those things that seem difficult to bear.
+*Ibid.* 158. If one possesses courage, one possesses the knowledge of terrible things, non-terrible things, and those in between.
+*Ibid.* 161. If one possesses magnanimity, one possesses the knowledge that makes one superior to what happens.
+*Ibid.* 162. If one possesses prudence, one also possesses the knowledge of good, bad, and indifferent things.
+*Ibid.* 167. If the divine i
+… [1662 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+# ON VIRTUE.
+
+Good order eutaxia is the experience of the classification of actions, or it contains within itself the certainty of actions, or the classifications of actions.
+Self-sufficiency autarkeia is a state satisfied with what is necessary, and capable through itself of providing for the duties of life.
+
+**273** Andronicus, *On the Passions* p. 25, 9 Schuchardt.
+Liberality eleutheriotēs is a state providing those who are engaged in giving and receiving with consistency.
+Kindness chrēstotēs is a state willingly inclined to do good.
+Judicial skill is the knowledge of judgments, punishments, and offenses.
+Gratitude eugnōmosynē is voluntary justice.
+Piety eusebeia is the knowledge of the service of the gods.
+Thanksgiving eucharistia is the knowledge of to whom, when, how, and from whom one should give and receive thanks.
+Holiness hosiotēs is the knowledge that makes one faithful and observant of what is just toward the divine.
+Fair dealing eusynallaxia is a state that preserves justice in transactions.
+Legislative skill is the knowledge of political ordinances referred to the community.
+
+**274** Sextus, *Against the Mathematicians* IX 153 (Carneades uses the Stoic definitions of virtues):
+For temperance is an insurmountable disposition regarding things that happen according to right reason, or a virtue making us superior to those things that seem difficult to endure. For they say that one is temperate not when one abstains from a dying old woman, but when one is able to enjoy the company of Lais, Phryne, or someone of that sort, and yet abstains. Perseverance is the knowledge of what must be endured and what must not, or a virtue making us superior to those things that seem difficult to bear.
+*Ibid.* 158. If one possesses courage, one possesses the knowledge of terrible things, non-terrible things, and those in between.
+*Ibid.* 161. If one possesses magnanimity, one possesses the knowledge that makes one superior to what happens.
+*Ibid.* 162. If one possesses prudence, one also possesses the knowledge of good, bad, and indifferent things.
+*Ibid.* 167. If the divine is perfectly virtuous and possesses prudence, it also possesses good counsel, insofar as good counsel is prudence regarding things that are to be deliberated upon.
+*Ibid.* 174. For temperance is a state that, in choices and avoidances, preserves the judgments of prudence.
+
+**275** Clement of Alexandria, *Stromateis* II p. 470 Pott. Since they define courage as the knowledge of terrible things,
+… [810 more characters]
+````
+
+**Annotations** (22)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | term | mark | “eutaxia” |  |
+| 2 | definition | commentary | “eutaxia” | orderliness |
+| 3 | term | mark | “autarkeia” |  |
+| 4 | definition | commentary | “autarkeia” | self-reliance |
+| 5 | term | mark | “eleutheriotēs” |  |
+| 6 | definition | commentary | “eleutheriotēs” | generosity |
+| 7 | term | mark | “chrēstotēs” |  |
+| 8 | definition | commentary | “chrēstotēs” | usefulness/goodness |
+| 9 | term | mark | “eugnōmosynē” |  |
+| 10 | definition | commentary | “eugnōmosynē” | goodwill/thankfulness |
+| 11 | term | mark | “eusebeia” |  |
+| 12 | definition | commentary | “eusebeia” | reverence |
+| 13 | term | mark | “eucharistia” |  |
+| 14 | definition | commentary | “eucharistia” | gratitude |
+| 15 | term | mark | “hosiotēs” |  |
+| 16 | definition | commentary | “hosiotēs” | piety toward divine law |
+| 17 | term | mark | “eusynallaxia” |  |
+| 18 | definition | commentary | “eusynallaxia” | honesty in exchange |
+| 19 | margin | mark | “” |  |
+| 20 | margin (stray-close) | mark | — |  |
+| 21 | summary | page | *page* | This page defines various Stoic virtues and their subcategories, including self-sufficiency, liberality, and the cardinal virtues like coura |
+| 22 | keywords | page | *page* | Eutaxia, Autarkeia, Andronicus, Eleutheriotēs, Chrestotēs, Judicial Skill, Eusebeia, Hosiotēs, Temperance, Perseverance, Courage, Magnanimit |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 26. Wy ondergesz., ons zullende begeven in den huwelyke staat, en ten opzichte van het middel  — p. 1 (stray close tag)
+
+https://sourcelibrary.org/book/wy-ondergesz-ons-zullende-begeven-in-den-huwelyke-staat-en/page/69b525b22f891867c1ae43cf · language Dutch · prompt v10 · 1583 chars stored, 543 in text · 17 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the documentation of the marriage tax registry for Amsterdam, dated 1773. The following is a translation of the official administrative form used to declare one's marriage tax classification.</meta>
+
+<note>A woodcut displays the coat of arms of the city of Amsterdam, which features a central shield containing three vertical Saint Andrew’s crosses, supported by two rampant lions and topped with the Imperial Crown of Austria.</note>
+
+<margin>De Huijsbert</margin>
+
+**W**E, the undersigned, intending to enter into the <term>Huwelyke Staat</term> <gloss>state of matrimony</gloss>, and with respect to the <term>Middel op het Trouwen</term> <gloss>tax on marriage</gloss> issued, in accordance with the content of the Ordinance regarding this, each belonging to the class of three guilders, declare that we report ourselves accordingly in order to subsequently satisfy the aforementioned tax. Done in <term>Amſterdam</term> <gloss>Amsterdam</gloss>, the <insert>14th of April 1773.</insert>
+
+<insert></insert>
+Johan George groom <note>original: "bräütigam"</note>
+Tryntje van den Bergh
+</insert>
+
+Received by me, Secretary, the
+above-mentioned six guilders,
+Today the date as above.
+
+<insert></insert>
+A J de Huijsbert
+</insert>
+
+<summary>This document is a formal marriage tax declaration from 1773 in which a couple registers their intent to marry and pays the required six-guilder fee according to Amsterdam ordinances.</summary>
+<keywords>marriage tax, 1773, Amsterdam, ordinances, administrative records, Johan George, Tryntje van den Bergh</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+De Huijsbert
+
+**W**E, the undersigned, intending to enter into the Huwelyke Staat, and with respect to the Middel op het Trouwen issued, in accordance with the content of the Ordinance regarding this, each belonging to the class of three guilders, declare that we report ourselves accordingly in order to subsequently satisfy the aforementioned tax. Done in Amſterdam, the 14th of April 1773.
+
+
+Johan George groom
+Tryntje van den Bergh
+
+
+Received by me, Secretary, the
+above-mentioned six guilders,
+Today the date as above.
+
+
+A J de Huijsbert
+
+````
+
+**Annotations** (17)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the documentation of the marriage tax registry for Amsterdam, dated 1773. The following is a translation of the official |
+| 2 | note | commentary | “” | A woodcut displays the coat of arms of the city of Amsterdam, which features a central shield containing three vertical Saint Andrew’s cross |
+| 3 | margin | mark | “De Huijsbert” |  |
+| 4 | term | mark | “Huwelyke Staat” |  |
+| 5 | definition | commentary | “Huwelyke Staat” | state of matrimony |
+| 6 | term | mark | “Middel op het Trouwen” |  |
+| 7 | definition | commentary | “Middel op het Trouwen” | tax on marriage |
+| 8 | term | mark | “Amſterdam” |  |
+| 9 | definition | commentary | “Amſterdam” | Amsterdam |
+| 10 | insert | mark | “14th of April 1773.” |  |
+| 11 | insert | mark | “” |  |
+| 12 | original | commentary | “Johan George groom” | original: "bräütigam" |
+| 13 | insert (stray-close) | mark | — |  |
+| 14 | insert | mark | “” |  |
+| 15 | insert (stray-close) | mark | — |  |
+| 16 | summary | page | *page* | This document is a formal marriage tax declaration from 1773 in which a couple registers their intent to marry and pays the required six-gui |
+| 17 | keywords | page | *page* | marriage tax, 1773, Amsterdam, ordinances, administrative records, Johan George, Tryntje van den Bergh |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 27. Medical Compendium: Hippocrates, Galen, Medicina Plinii (Royal MS 12 E XX) — p. 333 (text vs today's notes-off reader: 133 words differ)
+
+https://sourcelibrary.org/book/royal-ms-12-e-xx-various-hippocrates/page/6991bf73734f402cad48a1fb · language Latin · prompt v5.2026-02 · 1637 chars stored, 136 in text · 12 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<meta>This page is a modern archival flyleaf or pastedown, likely added by library staff at the British Museum (now the British Library) during the 19th or 20th century. It documents the physical count of the manuscript's pages and its conservation history, following the medieval content of Royal MS 12 E XX.</meta>
+
+<insert>
+164 <term>folios</term> <note>A "folio" is a single leaf of parchment or paper. Unlike modern books where every page is numbered, manuscripts are usually numbered by the leaf; one folio consists of two pages (the "recto" or front, and the "verso" or back).</note>
+</insert>
+
+<insert>
+Number of <term>MS.</term> 12 F XX <note>original: "MS."; an abbreviation for "Manuscript." This is the shelfmark used to locate the book in the library. Note that while the volume is known as 12 E XX, this slip reflects a variant or clerical error "12 F XX."</note>
+
+Number of Folios: 164
+
+Date: ? <note>The archivist left the date blank on this form, though the manuscript is historically dated to approximately 1125.</note>
+
+Folioed by: ? <note>A record of which staff member performed the official numbering of the leaves.</note>
+
+Examined by: ?
+
+Checked after binding: May 1957 BA <note>This indicates that the manuscript underwent a physical inspection or rebinding in 1957, verified by a staff member with the initials "BA."</note>
+</insert>
+
+<summary>This page contains modern archival notes and library processing information documenting the manuscript's 164 leaves and a binding check performed in 1957.</summary>
+<keywords>archival notes, British Library, foliation, shelfmark, conservation, 20th century</keywords>
+````
+
+**Clean `translation.text`**
+
+````text
+
+164 folios
+
+
+
+Number of MS. 12 F XX
+
+Number of Folios: 164
+
+Date: ?
+
+Folioed by: ?
+
+Examined by: ?
+
+Checked after binding: May 1957 BA
+
+````
+
+**Annotations** (12)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page is a modern archival flyleaf or pastedown, likely added by library staff at the British Museum (now the British Library) during th |
+| 2 | insert | mark | “ 164 folios ” |  |
+| 3 | term | mark | “folios” |  |
+| 4 | definition | commentary | “folios” | A "folio" is a single leaf of parchment or paper. Unlike modern books where every page is numbered, manuscripts are usually numbered by the  |
+| 5 | insert | mark | “ Number of MS. 12 F XX Number of Folios: 164 Date: ? Folioed by: ? Examined by: ” |  |
+| 6 | term | mark | “MS.” |  |
+| 7 | original | commentary | “12 F XX” | original: "MS."; an abbreviation for "Manuscript." This is the shelfmark used to locate the book in the library. Note that while the volume  |
+| 8 | note | commentary | “Date” | The archivist left the date blank on this form, though the manuscript is historically dated to approximately 1125. |
+| 9 | note | commentary | “Folioed by” | A record of which staff member performed the official numbering of the leaves. |
+| 10 | note | commentary | “May 1957 BA” | This indicates that the manuscript underwent a physical inspection or rebinding in 1957, verified by a staff member with the initials "BA." |
+| 11 | summary | page | *page* | This page contains modern archival notes and library processing information documenting the manuscript's 164 leaves and a binding check perf |
+| 12 | keywords | page | *page* | archival notes, British Library, foliation, shelfmark, conservation, 20th century |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): 
+
+````text
+[-A "folio" is a single leaf of parchment or paper. Unlike modern books where every page is numbered, manuscripts are usually numbered by the leaf; one folio consists of two pages (the "recto" or front, and the "verso" or back).-]
+[-original: "MS."; an abbreviation for "Manuscript." This is the shelfmark used to locate the book in the library. Note that while the volume is known as 12 E XX, this slip reflects a variant or clerical error "12 F XX."-]
+[-The archivist left the date blank on this form, though the manuscript is historically dated to approximately 1125.-]
+[-A record of which staff member performed the official numbering of the leaves.-]
+[-This indicates that the manuscript underwent a physical inspection or rebinding in 1957, verified by a staff member with the initials "BA."-]
+````
+
+### 28. Anti-Cotton, oder kurtze und gegründte Widerlegung dess durch den Jesuiten Cotton aussgesp — p. 14 (text vs today's notes-off reader: 71 words differ)
+
+https://sourcelibrary.org/book/anti-cotton-plaix/page/69750f1640760ddb6b77548b · language German · prompt v2 · 4855 chars stored, 2158 in text · 20 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<warning>The left margin of the page is partially cut off, resulting in incomplete words in the marginal annotations.</warning>
+<meta>This page continues the critique of Jesuit political theory, specifically focusing on the power of the Pope to depose monarchs. It transitions from a discussion of Henry Garnet and the "Seal of Confession" to specific citations from influential Jesuit theologians like Bellarmine, Gretser, and Toletus, who argue that the Papacy holds the authority to release subjects from their oaths of allegiance.</meta>
+
+<margin>[The Pope] can change kingdoms, take them away, and give them to another, as the supreme spiritual prince. <note>original: "potest mutare regna i auferre atq; alteri erre, tanquam sum- spiritualis princeps." The Latin here is partially abbreviated.</note></margin>
+...and to release [subjects] from loyalty and grace; and Bellarmine's <note>Robert Bellarmine (1542–1621), a Cardinal and major Jesuit theologian.</note> words concerning this, in the 5th Book on the Pope, in the 6th Chapter, read as follows:
+> **The Pope may change kingdoms, take them from one person, and give them to another, as the highest spiritual prince.** 
+
+Likewise, the Jesuit Gretser <note>Jacob Gretser (1562–1625), a prolific Jesuit polemicist known for his sharp attacks on Protestants.</note> writes in his *Heretico-Political Bat* <note>original: "Ketzerpolitischen Fledermaus." This refers to Gretser's work *Vespertilio Haereticopoliticus* (1608), where he mocks his opponents' arguments.</note> as follows: 
+<margin>The Heretico-Political Bat. We are not so timid or trembling that we would not dare to openly assert that the Roman Pontiff can, if necessity requires, release Catholic subjects from the oath of fidelity if the prince treats them tyrannically, etc. <note>The Latin margin is partially cut off. Reconstructed: "Vespertilio hæreticopoliticus. ...timidi & trepidi non sumus, ut asserere palàm audeamus Rom. Pont. possit, si necessitas exigat, subditos Catholicos juramento fidelitatis solvere, si princeps tyrannice illos tractet, &c."</note></margin>
+> **We are not fearful nor terrified, so that we would not dare to publicly say and maintain that the Pope has the full power, in case of necessity, to release Catholic subjects from their loyalty and oath, when the ruler treats them tyrannically.** 
+
+And he adds further: 
+> **When the Pope undertakes such a thing wisely and cautiously, it is a meritorious work.** 
+
+But is this new kind of "merit
+… [2355 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+[The Pope] can change kingdoms, take them away, and give them to another, as the supreme spiritual prince.
+...and to release [subjects] from loyalty and grace; and Bellarmine's words concerning this, in the 5th Book on the Pope, in the 6th Chapter, read as follows:
+> **The Pope may change kingdoms, take them from one person, and give them to another, as the highest spiritual prince.** 
+
+Likewise, the Jesuit Gretser writes in his *Heretico-Political Bat* as follows: 
+The Heretico-Political Bat. We are not so timid or trembling that we would not dare to openly assert that the Roman Pontiff can, if necessity requires, release Catholic subjects from the oath of fidelity if the prince treats them tyrannically, etc.
+> **We are not fearful nor terrified, so that we would not dare to publicly say and maintain that the Pope has the full power, in case of necessity, to release Catholic subjects from their loyalty and oath, when the ruler treats them tyrannically.** 
+
+And he adds further: 
+> **When the Pope undertakes such a thing wisely and cautiously, it is a meritorious work.** 
+
+But is this new kind of "merit" not something to be wary of, when one incites mutiny and commands perjury? From which nothing else follows but that one makes an attempt on the life of his lord? Since it is easy to see that the lord will protect himself against the rebels and meet force with force—which cannot happen without danger to his life.
+
+Subjects are [not] bound by the oath of loyalty to an excommunicated person.
+Tolet writes in his 1st book of *Instruction for Priests*, in the 13th Chapter:
+> **Subjects are not obligated to keep an oath to one who is under the Ban. Likewise, one who is under the Ban cannot perform any act of his jurisdiction.** 
+
+An excommunicated person cannot perform an act of jurisdiction.
+From this rule, then, King Henry III was no longer king; therefore, the one who murdered him did not murder a king.
+
+The Spanish Jesuit Mariana published a book on the king and royal discipline and instruction, which was printed first in the year 1599 at Toledo by Peter Rodrigo, and then a second time at Mainz by Balthasar Lipp, in the year
+````
+
+**Annotations** (20)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | warning | page | *page* | The left margin of the page is partially cut off, resulting in incomplete words in the marginal annotations. |
+| 2 | meta | page | *page* | This page continues the critique of Jesuit political theory, specifically focusing on the power of the Pope to depose monarchs. It transitio |
+| 3 | margin | mark | “[The Pope] can change kingdoms, take them away, and give them to another, as the” |  |
+| 4 | original | commentary | “supreme spiritual prince” | original: "potest mutare regna i auferre atq; alteri erre, tanquam sum- spiritualis princeps." The Latin here is partially abbreviated. |
+| 5 | note | commentary | “grace; and Bellarmine's” | Robert Bellarmine (1542–1621), a Cardinal and major Jesuit theologian. |
+| 6 | note | commentary | “the Jesuit Gretser” | Jacob Gretser (1562–1625), a prolific Jesuit polemicist known for his sharp attacks on Protestants. |
+| 7 | original | commentary | “his *Heretico-Political Bat” | original: "Ketzerpolitischen Fledermaus." This refers to Gretser's work *Vespertilio Haereticopoliticus* (1608), where he mocks his opponent |
+| 8 | margin | mark | “The Heretico-Political Bat. We are not so timid or trembling that we would not d” |  |
+| 9 | note | commentary | “them tyrannically, etc” | The Latin margin is partially cut off. Reconstructed: "Vespertilio hæreticopoliticus. ...timidi & trepidi non sumus, ut asserere palàm audea |
+| 10 | margin | mark | “Subjects are [not] bound by the oath of loyalty to an excommunicated person.” |  |
+| 11 | note | commentary | “an excommunicated person” | Reconstructed Latin: "Excommunicato subditi non tenentur juramento fidelitatis." |
+| 12 | note | commentary | “Tolet” | Francisco Toledo (1532–1596), the first Jesuit to be made a Cardinal. |
+| 13 | note | commentary | “to one who is under the Ban” | The "Ban" refers to excommunication, a formal exclusion from the Church which, in this political context, was argued to strip a monarch of t |
+| 14 | margin | mark | “An excommunicated person cannot perform an act of jurisdiction.” |  |
+| 15 | note | commentary | “act of jurisdiction” | Reconstructed Latin: "Excommunicatus non potest jurisdictionis actum exercere." |
+| 16 | note | commentary | “King Henry III” | Henry III of France (reigned 1574–1589), who was assassinated by a Dominican friar after being excommunicated by the Pope. |
+| 17 | note | commentary | “Spanish Jesuit Mariana” | Juan de Mariana (1536–1624), whose book *De rege et regis institutione* (On the King and the Education of a King) became notorious for justi |
+| 18 | meta | page | *page* | catchword: Year |
+| 19 | summary | page | *page* | This page cites several Jesuit theologians to demonstrate their support for the Pope's power to depose kings and release subjects from their |
+| 20 | keywords | page | *page* | Robert Bellarmine, Jacob Gretser, Francisco Toledo, Juan de Mariana, Henry III of France, excommunication, deposition, regicide, tyranny, Je |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): 
+
+````text
+[-original: "potest mutare regna i auferre atq; alteri erre, tanquam sum- spiritualis princeps." The Latin here is partially abbreviated.-]
+[-The Latin margin is partially cut off. Reconstructed: "Vespertilio hæreticopoliticus. ...timidi & trepidi non sumus, ut asserere palàm audeamus Rom. Pont. possit, si necessitas exigat, subditos Catholicos juramento fidelitatis solvere, si princeps tyrannice illos tractet, &c."-]
+[-Reconstructed Latin: "Excommunicato subditi non tenentur juramento fidelitatis."-]
+[-Reconstructed Latin: "Excommunicatus non potest jurisdictionis actum exercere."-]
+````
+
+### 29. إحياء علوم الدين (Iḥyāʾ ʿUlūm al-Dīn) — p. 119 (script: Arabic)
+
+https://sourcelibrary.org/book/ihya-ulum-al-din-al-ghazali/page/69e8b2a72ff2a8dc09e78684 · language Arabic · prompt v11 · 6278 chars stored, 5717 in text · 16 annotations · scripts: Arabic
+
+**Raw `translation.data`**
+
+````text
+<meta>continues from previous page</meta>
+
+-> 109 <-
+
+**Explaining the Knowledge of the Attributes of God the Exalted**
+
+<note>original: "بيان العلم بصفات الله تعالى"</note>
+
+His knowledge and His power necessarily prove His life. If one could imagine a powerful and knowing agent who directs affairs without being alive, it would be possible to doubt the life of animals when they move or stay still. It would even be possible to doubt the life of craftsmen and laborers. Such a thought is a plunge into the depths of ignorance and error.
+
+**The Fourth Foundation:** Knowledge that He, the Exalted, is the Willer of His actions. There is no existing thing except that it is grounded in His volition and issued from His will. He is the Beginner, the Restorer, and the Doer of whatever He wills. How could He not be a Willer when every action that issues from Him could have been its opposite? For those things that have no opposite, it would have been possible for them to issue exactly as they are either earlier or later. Power relates to two opposites or two different times in the same way. Therefore, there must be a will that directs power toward one of the two possibilities. If knowledge were enough to specify what is known without the need for will—to the point where one says "it existed at the time it was previously known to exist"—then knowledge would also be enough to replace power, and one would say "it existed without power because its existence was previously known."
+
+**The Fifth Foundation:** Knowledge that He, the Exalted, is Hearing and Seeing. The whispers of the heart and the secrets of imagination and thought do not escape His vision. The crawling of a black ant on a hard, dark rock on a pitch-black night does not elude His hearing. How could He not be Hearing and Seeing when hearing and sight are perfections without doubt, not deficiencies? How could the creature be more perfect than the Creator, or the thing made be more noble and complete than the Maker? How would the balance be fair if deficiency were on His side and perfection on the side of His creation and handiwork? How would the argument of Abraham <gloss>peace be upon him</gloss> against his father stand? His father used to worship idols out of ignorance and error, and Abraham said to him: "Why do you worship that which does not hear, does not see, and cannot avail you anything?" <note>Quran 19:42</note>. If these same deficiencies applied to Abraham's own Deity, his argument would be refuted a
+… [3778 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+-> 109 <-
+
+**Explaining the Knowledge of the Attributes of God the Exalted**
+
+His knowledge and His power necessarily prove His life. If one could imagine a powerful and knowing agent who directs affairs without being alive, it would be possible to doubt the life of animals when they move or stay still. It would even be possible to doubt the life of craftsmen and laborers. Such a thought is a plunge into the depths of ignorance and error.
+
+**The Fourth Foundation:** Knowledge that He, the Exalted, is the Willer of His actions. There is no existing thing except that it is grounded in His volition and issued from His will. He is the Beginner, the Restorer, and the Doer of whatever He wills. How could He not be a Willer when every action that issues from Him could have been its opposite? For those things that have no opposite, it would have been possible for them to issue exactly as they are either earlier or later. Power relates to two opposites or two different times in the same way. Therefore, there must be a will that directs power toward one of the two possibilities. If knowledge were enough to specify what is known without the need for will—to the point where one says "it existed at the time it was previously known to exist"—then knowledge would also be enough to replace power, and one would say "it existed without power because its existence was previously known."
+
+**The Fifth Foundation:** Knowledge that He, the Exalted, is Hearing and Seeing. The whispers of the heart and the secrets of imagination and thought do not escape His vision. The crawling of a black ant on a hard, dark rock on a pitch-black night does not elude His hearing. How could He not be Hearing and Seeing when hearing and sight are perfections without doubt, not deficiencies? How could the creature be more perfect than the Creator, or the thing made be more noble and complete than the Maker? How would the balance be fair if deficiency were on His side and perfection on the side of His creation and handiwork? How would the argument of Abraham peace be upon him against his father stand? His father used to worship idols out of ignorance and error, and Abraham said to him: "Why do you worship that which does not hear, does not see, and cannot avail you anything?". If these same deficiencies applied to Abraham's own Deity, his argument would be refuted and his proof would fail. Then the word of the Exalted would not be true: "And that was Our argument which We gave to Abraham against his 
+… [3217 more characters]
+````
+
+**Annotations** (16)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | continues from previous page |
+| 2 | original | commentary | “” | original: "بيان العلم بصفات الله تعالى" |
+| 3 | gloss | mark | “peace be upon him” |  |
+| 4 | note | commentary | “avail you anything” | Quran 19:42 |
+| 5 | note | commentary | “against his people” | Quran 6:83 |
+| 6 | term | mark | “qadim” |  |
+| 7 | definition | commentary | “qadim” | eternal |
+| 8 | term | mark | “Ba” |  |
+| 9 | term | mark | “Sin” |  |
+| 10 | term | mark | “Bismillah” |  |
+| 11 | definition | commentary | “Bismillah” | In the name of God |
+| 12 | term | mark | “Sin” |  |
+| 13 | term | mark | “Ba” |  |
+| 14 | note | commentary | “is no guide” | Quran 13:33 |
+| 15 | gloss | mark | “peace be upon him” |  |
+| 16 | vocab | page | *page* | إحياء علوم الدين, Iḥyāʾ ʿUlūm al-Dīn, الغزالي, Al-Ghazali, صفات الله, Attributes of God, القدرة, Power, الإرادة, Will, السمع, Hearing, البصر |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 30. Tomi secundi tractatus secundus; De praeternaturali utriusque mundi historia — p. 151 (script: Hebrew)
+
+https://sourcelibrary.org/book/on-the-preternatural-history-of-both-worlds-fludd/page/6985ee1e270aa6cc9231cf2a · language Latin · prompt v2 · 7347 chars stored, 5553 in text · 18 annotations · scripts: Hebrew
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the discussion of light and fire as fundamental elements of creation. Having previously established the symbolic significance of the Hebrew letters, the author now categorizes the various types of fire mentioned in Scripture—ranging from the divine pillar of fire to the material fire of everyday life—and transitions into a deep philosophical exploration of "Uncreated Light" as the Word of God (the Logos) and the animating "Soul of the World."</meta>
+
+<page-num>121</page-num>
+<header>CONCERNING THE PRIMARY ELEMENTS OF NATURE. 121</header>
+
+...Holy Scripture has made mention of the pillar of fire in Exodus 13:22. It also speaks of the fire of Jehovah descending and consuming the burnt offering, the stones, and the wood, and licking up all the water in the trench in 1 Kings 18:38. By this same spirit, the captain of fifty with his fifty men was consumed in 2 Kings 1:12. In this same way, there is the fire or light of the sun and the other stars; likewise, there is the light of fiery meteors, which we find mentioned throughout the Holy Bible. Similarly, there is common fire, which is called material fire. Finally, there is the fire of Gehenna <note>Gehenna: A term used in the New Testament for the place of ultimate punishment or "hell fire."</note>, of which Matthew 18:9 speaks. 
+
+However, proceeding in a more exact method and order, we divide light into the **invisible** and the **visible**. Furthermore, we recognize that invisible light is either **uncreated**, eternal, and "supersubstantial" <note>original: "supersubstantialem," meaning existing beyond the nature of physical matter</note>, or it is that **created** light of the first day, from which the other species of invisible light were formed—namely, the angels of every order and holy souls. Into this category, we may also place the dark fire of Gehenna. 
+
+We also distinguish visible light into the **manifest** and the **hidden**. We define manifest light as either proceeding from the luminous face of Jehovah (covered by a bright and visible garment), or celestial light proceeding from the stars, or elementary light perceived in meteors, or finally that common and material fire. We call that light **hidden** which is accustomed to lie concealed in metals, stones, wood, herbs, and animals; for indeed, it can be drawn out from these by motion or art <note>The author refers to friction or chemical extraction</note> in such a way that it is rendered visible, subjected to the sense
+… [4847 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+...Holy Scripture has made mention of the pillar of fire in Exodus 13:22. It also speaks of the fire of Jehovah descending and consuming the burnt offering, the stones, and the wood, and licking up all the water in the trench in 1 Kings 18:38. By this same spirit, the captain of fifty with his fifty men was consumed in 2 Kings 1:12. In this same way, there is the fire or light of the sun and the other stars; likewise, there is the light of fiery meteors, which we find mentioned throughout the Holy Bible. Similarly, there is common fire, which is called material fire. Finally, there is the fire of Gehenna, of which Matthew 18:9 speaks. 
+
+However, proceeding in a more exact method and order, we divide light into the **invisible** and the **visible**. Furthermore, we recognize that invisible light is either **uncreated**, eternal, and "supersubstantial", or it is that **created** light of the first day, from which the other species of invisible light were formed—namely, the angels of every order and holy souls. Into this category, we may also place the dark fire of Gehenna. 
+
+We also distinguish visible light into the **manifest** and the **hidden**. We define manifest light as either proceeding from the luminous face of Jehovah (covered by a bright and visible garment), or celestial light proceeding from the stars, or elementary light perceived in meteors, or finally that common and material fire. We call that light **hidden** which is accustomed to lie concealed in metals, stones, wood, herbs, and animals; for indeed, it can be drawn out from these by motion or art in such a way that it is rendered visible, subjected to the senses, and observed by the eyes. We shall discuss these briefly in their proper order in the following chapter.
+
+---
+
+# C H A P T E R V.
+
+### *Concerning uncreated invisible light, and how it is compared to the nature of visible fire: Furthermore, it is proved that visible light is a certain reflection of the uncreated and invisible light into the "garments" which it puts on.*
+
+That invisible and uncreated light, from which heaven, earth, and all things both visible and invisible were formed, is that unique, sacrosanct, ineffable, and eternal **Word of God**, or the Messiah, and the true power of the Tetragrammaton. And this Word was in the beginning with God, and the Word was God. All things were made through this Word, and without Him was nothing made that was made; in Him was life. This is that Word in which all things firmly subsist
+… [3053 more characters]
+````
+
+**Annotations** (18)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the discussion of light and fire as fundamental elements of creation. Having previously established the symbolic signifi |
+| 2 | pagedata | page | *page* | 121 |
+| 3 | pagedata | page | *page* | CONCERNING THE PRIMARY ELEMENTS OF NATURE. 121 |
+| 4 | note | commentary | “the fire of Gehenna” | Gehenna: A term used in the New Testament for the place of ultimate punishment or "hell fire." |
+| 5 | original | commentary | “eternal, and "supersubstantial” | original: "supersubstantialem," meaning existing beyond the nature of physical matter |
+| 6 | note | commentary | “motion or art” | The author refers to friction or chemical extraction |
+| 7 | note | commentary | “of the Tetragrammaton” | Tetragrammaton: The four-letter Hebrew name of God, YHWH. |
+| 8 | term | mark | “יהי” |  |
+| 9 | definition | commentary | “יהי” | Hebrew: "Yehi," meaning "Let there be." |
+| 10 | note | commentary | “Word יהי **FIAT” | Latin: "Let it be done." |
+| 11 | original | commentary | “before its "clarification” | original: "clarificationem," referring to the theological concept of glorification or the transformation of the body into a spiritual state |
+| 12 | original | commentary | “that **peaceful knot” | original: "nodus pacificus" |
+| 13 | original | commentary | “the Universal World” | original: "mundi universalis anima" |
+| 14 | note | commentary | “and unique "act” | In the Aristotelian sense of "actualization" or "driving force" |
+| 15 | pagedata | page | *page* | M |
+| 16 | meta | page | *page* | Catchword: decay [from Latin 'corrumpuntur'] |
+| 17 | summary | page | *page* | This page classifies light and fire into various spiritual and physical categories, identifying the "Uncreated Light" with the Word of God ( |
+| 18 | keywords | page | *page* | Uncreated Light, Word of God, Messiah, Tetragrammaton, Fiat, Trinity, Soul of the World, Gehenna, elemental fire, divine wisdom |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 31. 道藏目錄詳註 (Daozang Catalogue with Detailed Notes) Vol 2 — p. 84 (script: Han)
+
+https://sourcelibrary.org/book/daozang-catalogue-with-detailed-notes-vol-2/page/6992ca02d4d545ae73fed79f · language Chinese · prompt v5.2026-02 · 3047 chars stored, 1193 in text · 15 annotations · scripts: Han
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues from the previous section focusing on longevity and health practices. It transitions from general "Great Clarity" methods to the "Shen" (Deep) character section, which cataloged specific manuals on seasonal hygiene, dietary regulation, and methods for living a healthy life while remaining in secular society.</meta>
+
+<margin>Volume Three</margin>
+
+# Section Marked with the Character "Shen" (Deep): Total Nine Volumes
+<note>In the Daoist Canon, volumes were organized using the Thousand Character Classic as a numbering system. "Shen" (深) is one such classification character.</note>
+
+<column-break/>
+
+**Talismans for Delivering People** by [Name Unclear]
+**Chapter on Suitable Foods**, **Chapter on Monthly Suitability**
+These chapters all concern the regulation of diet
+and are **techniques for nourishing Qi**.
+<term>Yangqi</term> <note>A fundamental Daoist practice involving breathing exercises and lifestyle choices to cultivate and preserve the body's vital energy.</note>
+
+<column-break/>
+
+# Secret Records of Cultivating Reality
+<term>Xiuzhen</term> <note>A term for the process of Daoist internal alchemy and self-transformation, aiming to return the practitioner to their original, "true" state of being.</note>
+
+<gloss>Included in the same volume as the Record of Essential Statutes.</gloss>
+
+<column-break/>
+
+# Essential Records for Preserving Life
+
+Written by Pu Dushi, Bureau Director for Deliberation.
+
+Regulation 6
+Regulation for Consumption Fatigue 7 <note>original: "huanlao." Refers to chronic wasting diseases or fatigue caused by overwork and spiritual depletion.</note>
+Regulation for Wind Disorders 8 <note>In traditional medicine, "Wind" is considered a primary cause of many illnesses, ranging from the common cold to strokes.</note>
+Domestic Regulation 9
+Prohibitions and Regulation 10
+
+<column-break/>
+
+Compiled by Liu Xun, the Recluse of Mount Mao.
+<note>Mount Mao (Maoshan) was the center of the Highest Clarity school of Daoism, famous for its focus on visualization and longevity techniques.</note>
+Regulation of Food and Drink 1
+Regulation of Drinking Alcohol 2
+Regulation for the Spring Season 3
+Regulation for the Summer Season 4
+Regulation for the Autumn Season 5
+Regulation for the Winter [Season 6]
+
+<column-break/>
+
+# Records for Nourishing Life While Living Among the Mundane
+<note>original: "Hunsu Yisheng Lu." This title suggests a manual for people who want to practice Daoist health cultivation without becoming monks or retreati
+… [547 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+Volume Three
+
+# Section Marked with the Character "Shen" (Deep): Total Nine Volumes
+<column-break/>
+
+**Talismans for Delivering People** by [Name Unclear]
+**Chapter on Suitable Foods**, **Chapter on Monthly Suitability**
+These chapters all concern the regulation of diet
+and are **techniques for nourishing Qi**.
+Yangqi
+
+<column-break/>
+
+# Secret Records of Cultivating Reality
+Xiuzhen
+
+Included in the same volume as the Record of Essential Statutes.
+
+<column-break/>
+
+# Essential Records for Preserving Life
+
+Written by Pu Dushi, Bureau Director for Deliberation.
+
+Regulation 6
+Regulation for Consumption Fatigue 7
+Regulation for Wind Disorders 8
+Domestic Regulation 9
+Prohibitions and Regulation 10
+
+<column-break/>
+
+Compiled by Liu Xun, the Recluse of Mount Mao.
+Regulation of Food and Drink 1
+Regulation of Drinking Alcohol 2
+Regulation for the Spring Season 3
+Regulation for the Summer Season 4
+Regulation for the Autumn Season 5
+Regulation for the Winter [Season 6]
+
+<column-break/>
+
+# Records for Nourishing Life While Living Among the Mundane
+Upper and Lower parts are in the same volume.
+
+<column-break/>
+
+Compiled and Edited by Lu Zunyuan,
+Master of the Rosy Tower.
+
+<column-break/>
+````
+
+**Annotations** (15)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues from the previous section focusing on longevity and health practices. It transitions from general "Great Clarity" method |
+| 2 | margin | mark | “Volume Three” |  |
+| 3 | note | commentary | “” | In the Daoist Canon, volumes were organized using the Thousand Character Classic as a numbering system. "Shen" (深) is one such classificatio |
+| 4 | term | mark | “Yangqi” |  |
+| 5 | definition | commentary | “Yangqi” | A fundamental Daoist practice involving breathing exercises and lifestyle choices to cultivate and preserve the body's vital energy. |
+| 6 | term | mark | “Xiuzhen” |  |
+| 7 | definition | commentary | “Xiuzhen” | A term for the process of Daoist internal alchemy and self-transformation, aiming to return the practitioner to their original, "true" state |
+| 8 | gloss | mark | “Included in the same volume as the Record of Essential Statutes.” |  |
+| 9 | original | commentary | “Consumption Fatigue 7” | original: "huanlao." Refers to chronic wasting diseases or fatigue caused by overwork and spiritual depletion. |
+| 10 | note | commentary | “Wind Disorders 8” | In traditional medicine, "Wind" is considered a primary cause of many illnesses, ranging from the common cold to strokes. |
+| 11 | note | commentary | “” | Mount Mao (Maoshan) was the center of the Highest Clarity school of Daoism, famous for its focus on visualization and longevity techniques. |
+| 12 | original | commentary | “” | original: "Hunsu Yisheng Lu." This title suggests a manual for people who want to practice Daoist health cultivation without becoming monks  |
+| 13 | gloss | mark | “Upper and Lower parts are in the same volume.” |  |
+| 14 | summary | page | *page* | This page lists several key Daoist manuals regarding "nourishing life" (Yanggsheng), focusing on seasonal hygiene, dietary prohibitions, and |
+| 15 | keywords | page | *page* | Nourishing Life, Qi cultivation, dietary regulation, seasonal health, Maoshan, Pu Dushi, Liu Xun, longevity manuals |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): 
+
+````text
+{+Yangqi+}
+{+Xiuzhen+}
+````
+
+### 32. བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111) — p. 48 (script: Tibetan)
+
+https://sourcelibrary.org/book/derge-tengyur-vol-111/page/6abeb4e8896ea18127c84a25 · language Tibetan · prompt v13 · 2705 chars stored, 1838 in text · 9 annotations · scripts: Tibetan, combining
+
+**Raw `translation.data`**
+
+````text
+One should protect the body and so forth. From the *Bodhisattva Pratimokṣa* <term>bodhisattva pratimokṣa</term> <gloss>Individual Emancipation vow of a Bodhisattva</gloss>: "Śāriputra, if one thinks, 'I shall protect others,' one should protect oneself. Likewise, Śāriputra, a bodhisattva mahāsattva endowed with the wish to benefit others does not perform unwholesome actions even for the sake of life itself," and so forth, as it was spoken.
+
+From the *Sūtra Requested by the Householder Śrīgupta* <note>Tibetan: ཁྱིམ་བདག་དཔལ་བྱིན་གྱིས་ཞུས་པའི་མདོ, Śrīguptaparipṛcchā-sūtra</note> as well: "Like a chariot for bearing a load, it should be held purely with the thought of Dharma," so it was said.
+
+Likewise, from the *Noble Sūtra Taught by Akṣayamati* <note>Tibetan: འཕགས་པ་བློ་གྲོས་མི་ཟད་པས་བསྟན་པའི་མདོ, Akṣayamatinirdeśa-sūtra</note> as well: "By looking upon sentient beings, one is not completely worn out by bodily suffering," so it was said.
+
+If one asks how to care for the body and so forth in that way: one must not forsake the spiritual mentor <term>kalyāṇamitra</term> <gloss>spiritual friend or virtuous guide</gloss>. As the noble Śrīsaṃbhava taught in the *Gaṇḍavyūha Sūtra* <note>Tibetan: སྡོང་པོ་བཀོད་པའི་མདོ, Array of Stalks Sūtra</note>:
+
+"Noble son, bodhisattvas who are genuinely held by a spiritual mentor do not fall into lower realms. Bodhisattvas who are kept in mind by a spiritual mentor do not transgress the trainings of a bodhisattva. Bodhisattvas who are cared for by a spiritual mentor rise above the world. Bodhisattvas who venerate a spiritual mentor act without forgetfulness in all conduct. Bodhisattvas who are embraced by a spiritual mentor are difficult to overcome by karmas and afflictions. A spiritual mentor brings about the realization of what is to be done and what is not to be done. They genuinely turn one away from states of heedlessness. They deliver one from the city of saṃsāra.
+
+"Noble son, therefore, with such continuous mindfulness, you must go into the presence of spiritual mentors: with a mind like the earth, so as never to grow weary from carrying every burden; with a mind like a vajra, so as to be indivisible; and [to endure] all suffering..."
+
+<summary>This passage cites the Bodhisattva Pratimokṣa, the Śrīguptaparipṛcchā, and the Akṣayamatinirdeśa Sūtra on preserving the body for the Dharma and the benefit of others, followed by teachings from the Gaṇḍavyūha Sūtra on the vital role and qualities of relying on a spiritual friend.
+… [205 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+One should protect the body and so forth. From the *Bodhisattva Pratimokṣa* bodhisattva pratimokṣa: "Śāriputra, if one thinks, 'I shall protect others,' one should protect oneself. Likewise, Śāriputra, a bodhisattva mahāsattva endowed with the wish to benefit others does not perform unwholesome actions even for the sake of life itself," and so forth, as it was spoken.
+
+From the *Sūtra Requested by the Householder Śrīgupta* as well: "Like a chariot for bearing a load, it should be held purely with the thought of Dharma," so it was said.
+
+Likewise, from the *Noble Sūtra Taught by Akṣayamati* as well: "By looking upon sentient beings, one is not completely worn out by bodily suffering," so it was said.
+
+If one asks how to care for the body and so forth in that way: one must not forsake the spiritual mentor kalyāṇamitra. As the noble Śrīsaṃbhava taught in the *Gaṇḍavyūha Sūtra*:
+
+"Noble son, bodhisattvas who are genuinely held by a spiritual mentor do not fall into lower realms. Bodhisattvas who are kept in mind by a spiritual mentor do not transgress the trainings of a bodhisattva. Bodhisattvas who are cared for by a spiritual mentor rise above the world. Bodhisattvas who venerate a spiritual mentor act without forgetfulness in all conduct. Bodhisattvas who are embraced by a spiritual mentor are difficult to overcome by karmas and afflictions. A spiritual mentor brings about the realization of what is to be done and what is not to be done. They genuinely turn one away from states of heedlessness. They deliver one from the city of saṃsāra.
+
+"Noble son, therefore, with such continuous mindfulness, you must go into the presence of spiritual mentors: with a mind like the earth, so as never to grow weary from carrying every burden; with a mind like a vajra, so as to be indivisible; and [to endure] all suffering..."
+````
+
+**Annotations** (9)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | term | mark | “bodhisattva pratimokṣa” |  |
+| 2 | definition | commentary | “bodhisattva pratimokṣa” | Individual Emancipation vow of a Bodhisattva |
+| 3 | note | commentary | “the Householder Śrīgupta” | Tibetan: ཁྱིམ་བདག་དཔལ་བྱིན་གྱིས་ཞུས་པའི་མདོ, Śrīguptaparipṛcchā-sūtra |
+| 4 | note | commentary | “Taught by Akṣayamati” | Tibetan: འཕགས་པ་བློ་གྲོས་མི་ཟད་པས་བསྟན་པའི་མདོ, Akṣayamatinirdeśa-sūtra |
+| 5 | term | mark | “kalyāṇamitra” |  |
+| 6 | definition | commentary | “kalyāṇamitra” | spiritual friend or virtuous guide |
+| 7 | note | commentary | “the *Gaṇḍavyūha Sūtra” | Tibetan: སྡོང་པོ་བཀོད་པའི་མདོ, Array of Stalks Sūtra |
+| 8 | summary | page | *page* | This passage cites the Bodhisattva Pratimokṣa, the Śrīguptaparipṛcchā, and the Akṣayamatinirdeśa Sūtra on preserving the body for the Dharma |
+| 9 | keywords | page | *page* | bodhisattva pratimoksha, bodily protection, benefit of others, Śrīgupta, Akṣayamati, spiritual mentor, kalyanamitra, Gandavyuha Sutra, mind  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 33. Oedipus Aegyptiacus Vol II — p. 567 (script: Greek)
+
+https://sourcelibrary.org/book/oedipus-aegyptiacus-tomus-ii-kircher/page/695273a1ab34727b1f049de6 · language Latin · prompt v2 · 4621 chars stored, 2422 in text · 14 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the alphabetical index for Kircher’s *Oedipus Aegyptiacus*, picking up at the end of the letter 'P' with the conclusion of the entry on Pyramids. It then moves through the letters 'Q' (focusing on the mathematical mysteries of magic squares), 'R' (dealing with cosmic wheels and Rabbinical traditions), and begins 'S' (covering Egyptian priesthood and sacred symbols).</meta>
+
+# INDEX.
+
+[the Pyramids'] architecture . . . 296
+their size . . . Ibid. <note>original: "Ibidem," meaning in the same place.</note>
+& following.
+The hieroglyphic mysteries of the Pyramid. 109
+The Pythagorean problem seems to have been taken from the Egyptians . . . 26 <note>Kircher argues that the famous Pythagorean theorem (a² + b² = c²) originated in Egyptian geometric wisdom.</note>
+
+## Q
+
+**Q**uadrangle: what it denotes. 103
+The use of the quadrant in calculating hours among the Egyptians. 229
+Cubic squares, and their arrangement. 67. & seqq.
+The mysteries of square numbers. 44
+Which ones are dedicated to which Gods . . . 45
+Their production . . . Ibid.
+Their arrangement . . . 46
+The square of Saturn . . . 46
+of Jupiter . . . 47
+of Mars . . . Ibid.
+of the Sun . . . 48
+of Venus . . . 49
+of Mercury . . . Ibid.
+of the Moon . . . 50 <note>These entries refer to "magic squares"—grids of numbers where every row and column adds up to the same sum—which Kircher associated with planetary influences.</note>
+The square from the number two is imperfect. 51
+How the square of three is arranged . . . Ibid.
+Likewise the square of four . . . 56
+of five . . . 58
+of six . . . 60. 61
+of seven . . . 62
+of eight . . . 64
+of nine . . . 67
+The Mathematical Quadrivium . . . 4 <note>The "four ways" or higher division of the liberal arts: Arithmetic, Geometry, Music, and Astronomy.</note>
+The fifth essence of things. 372 <note>The "quintessence," a pure, celestial element beyond the four earthly elements of earth, air, fire, and water.</note>
+"Anything in anything": how it occurs. 528 <note>original: "Quodlibet in quolibet." A philosophical principle suggesting that every part of the universe contains the essence of the whole.</note>
+
+## R
+
+**R**abbinical blasphemy against Christ . . . 477
+against the Eucharist . . . 478
+
+Things of Saturn . . . 366
+Things of Jupiter . . . Ibid.
+Things of Mars . . . 367
+Things of the Sun . . . Ibid.
+Things of Venus . . . Ibid.
+Things of Mercury . . . 368
+Things of the Moon . . . Ibid. <note>In the "Great Chain of Being," Kircher categorized plants, mi
+… [2121 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+# INDEX.
+
+[the Pyramids'] architecture . . . 296
+their size . . . Ibid.
+& following.
+The hieroglyphic mysteries of the Pyramid. 109
+The Pythagorean problem seems to have been taken from the Egyptians . . . 26
+
+## Q
+
+**Q**uadrangle: what it denotes. 103
+The use of the quadrant in calculating hours among the Egyptians. 229
+Cubic squares, and their arrangement. 67. & seqq.
+The mysteries of square numbers. 44
+Which ones are dedicated to which Gods . . . 45
+Their production . . . Ibid.
+Their arrangement . . . 46
+The square of Saturn . . . 46
+of Jupiter . . . 47
+of Mars . . . Ibid.
+of the Sun . . . 48
+of Venus . . . 49
+of Mercury . . . Ibid.
+of the Moon . . . 50
+The square from the number two is imperfect. 51
+How the square of three is arranged . . . Ibid.
+Likewise the square of four . . . 56
+of five . . . 58
+of six . . . 60. 61
+of seven . . . 62
+of eight . . . 64
+of nine . . . 67
+The Mathematical Quadrivium . . . 4
+The fifth essence of things. 372
+"Anything in anything": how it occurs. 528
+
+## R
+
+**R**abbinical blasphemy against Christ . . . 477
+against the Eucharist . . . 478
+
+Things of Saturn . . . 366
+Things of Jupiter . . . Ibid.
+Things of Mars . . . 367
+Things of the Sun . . . Ibid.
+Things of Venus . . . Ibid.
+Things of Mercury . . . 368
+Things of the Moon . . . Ibid.
+The chronological wheel according to the Egyptian mindset. 265
+The divining wheel of the Hebrews from Hebrew letters . . . 471
+of the Egyptians . . . 472
+Turning wheels producing the water necessary for purification rituals . . . 536
+A turning wheel displaying the ritual dances of the Gods . . . 537
+The wheel of life & death . . . 491
+Its structure . . . Ibid.
+Its use . . . 492
+Its refutation . . . Ibid.
+
+## S
+
+**S**Aa. . . 217
+Egyptian priests, who prayed with rituals . . . 152
+They sought after sacrificial rites. Ibid.
+They used to threaten the Gods . . . Ibid.
+They thought that the Spirits feared men who were worshipers.
+Egyptian priests invoked darkness upon a supplicant God . . . 506
+The Cabalistic seal of Solomon. 477
+The salt of individual Planets and metals . . . 411
+The method of dragging stones among the Egyptians. 513
+The sun-dial bowl of the Egyptians. 229
+The hieroglyphic of the Scarab. It denotes the Chymical art . . . 405
+A diagram of the order of things and of the Worlds, and its explanation . . . 15. & seqq.
+The use of secret message-sticks . . . 31
+Semiramis erected three enormous statues . . . 390
+````
+
+**Annotations** (14)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the alphabetical index for Kircher’s *Oedipus Aegyptiacus*, picking up at the end of the letter 'P' with the conclusion  |
+| 2 | original | commentary | “size . . . Ibid” | original: "Ibidem," meaning in the same place. |
+| 3 | note | commentary | “. . 26” | Kircher argues that the famous Pythagorean theorem (a² + b² = c²) originated in Egyptian geometric wisdom. |
+| 4 | note | commentary | “Moon . . . 50” | These entries refer to "magic squares"—grids of numbers where every row and column adds up to the same sum—which Kircher associated with pla |
+| 5 | note | commentary | “Quadrivium . . . 4” | The "four ways" or higher division of the liberal arts: Arithmetic, Geometry, Music, and Astronomy. |
+| 6 | note | commentary | “of things. 372” | The "quintessence," a pure, celestial element beyond the four earthly elements of earth, air, fire, and water. |
+| 7 | original | commentary | “it occurs. 528” | original: "Quodlibet in quolibet." A philosophical principle suggesting that every part of the universe contains the essence of the whole. |
+| 8 | note | commentary | “Moon . . . Ibid” | In the "Great Chain of Being," Kircher categorized plants, minerals, and animals according to the planet they were thought to be governed by |
+| 9 | original | commentary | “sacrificial rites. Ibid” | original: θυηπολίας (thuyēpolias), referring to the act of offering burnt sacrifices. |
+| 10 | original | commentary | “who were worshipers” | original: λάτρεις (latreis), meaning servants or religious devotees. |
+| 11 | note | commentary | “. . 405” | Kircher identifies the Egyptian dung beetle (scarab) as a symbol for the alchemical process of transformation. |
+| 12 | original | commentary | “. . 31” | original: "Scytalae." Ancient devices used for cryptography. |
+| 13 | summary | page | *page* | This index page provides a finding aid for Kircher's investigations into planetary magic squares, the Egyptian origins of geometry, and the  |
+| 14 | keywords | page | *page* | Pyramids, magic squares, planetary gods, Quadrivium, quintessence, chronological wheels, Egyptian priests, scarabs, alchemy, Solomon's seal |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 34. Stri Jataka — p. 179 (script: Devanagari)
+
+https://sourcelibrary.org/book/female-horoscopy-stri-jataka-publishers/page/699068e42e4efe9106769d1a · language Sanskrit · prompt v2 · 3034 chars stored, 1778 in text · 16 annotations · scripts: Devanagari, combining
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the astrological analysis of Venus (Shukra) in various houses of a woman's birth chart, following the discussion of the fourth house on the previous page.</meta>
+
+<page-num>155</page-num>
+<header>With Hindi Commentary</header>
+
+...always the leader within her own lineage. ||65||
+**Meaning—** The woman at whose birth **Venus** is seated in the **fifth house** <note>The house of children and intelligence</note> will certainly be endowed with prosperity, many daughters, and a beautiful form; she remains detached yet is always the leader among her kin. ||65||
+
+### Now, the result of Venus situated in the sixth house
+
+When Venus is placed in the house of enemies, it makes a woman foremost in jealousy, filled with great anger, possessing a fierce temperament, one who has conquered the ranks of her enemies, but is always neglected by her husband and sons. ||66||
+**Meaning—** The woman at whose birth **Venus** is located in the **sixth house** <note>The house of enemies, debt, and disease</note> is chief among those who bear malice, is very wrathful, and has a sharp nature. Although she defeats her enemies, she is always treated with disrespect by her husband, children, and family. ||66||
+
+### Now, the result of Venus situated in the seventh house
+
+The <term>Preceptor of the Daityas</term> <note>original: "Daitya-guru" — a title for Venus/Shukra, who in mythology is the teacher of the Titans</note> situated in the house of the spouse produces a woman of great power and wealth, beloved by her husband, devoted to the <term>Shastras</term> <note>Sacred scriptures or sciences</note>, bold, a benefactor to the <term>Brahmins</term> <note>The priestly/scholarly class</note>, and dear to the people. ||67||
+**Meaning—** The woman at whose birth <note>The printed text reads 'अष्टमभवन' (8th house) here, which appears to be a clerical error as the heading and verse refer to the 7th house (सप्तम/कलत्र).</note> Venus is located in the **seventh house** <note>The house of marriage and partnerships</note> is possessed of the influence of great wealth, is dear to her husband, diligent in the scriptures, confident, does good for the priestly class, and is liked by all people. ||67||
+
+### Now, the result of Venus situated in the eighth house
+
+Venus in the eighth house makes a woman intoxicated with pride, sorrowful, deprived of riches, devoid of compassion, distressed by the deception of others, wearing dirty clothes, and abandoned by righteousness. ||68||
+… [534 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+...always the leader within her own lineage. ||65||
+**Meaning—** The woman at whose birth **Venus** is seated in the **fifth house** will certainly be endowed with prosperity, many daughters, and a beautiful form; she remains detached yet is always the leader among her kin. ||65||
+
+### Now, the result of Venus situated in the sixth house
+
+When Venus is placed in the house of enemies, it makes a woman foremost in jealousy, filled with great anger, possessing a fierce temperament, one who has conquered the ranks of her enemies, but is always neglected by her husband and sons. ||66||
+**Meaning—** The woman at whose birth **Venus** is located in the **sixth house** is chief among those who bear malice, is very wrathful, and has a sharp nature. Although she defeats her enemies, she is always treated with disrespect by her husband, children, and family. ||66||
+
+### Now, the result of Venus situated in the seventh house
+
+The Preceptor of the Daityas situated in the house of the spouse produces a woman of great power and wealth, beloved by her husband, devoted to the Shastras, bold, a benefactor to the Brahmins, and dear to the people. ||67||
+**Meaning—** The woman at whose birth Venus is located in the **seventh house** is possessed of the influence of great wealth, is dear to her husband, diligent in the scriptures, confident, does good for the priestly class, and is liked by all people. ||67||
+
+### Now, the result of Venus situated in the eighth house
+
+Venus in the eighth house makes a woman intoxicated with pride, sorrowful, deprived of riches, devoid of compassion, distressed by the deception of others, wearing dirty clothes, and abandoned by righteousness. ||68||
+**Meaning—** The woman at whose birth **Venus** is located in the **eighth house** is...
+````
+
+**Annotations** (16)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the astrological analysis of Venus (Shukra) in various houses of a woman's birth chart, following the discussion of the  |
+| 2 | pagedata | page | *page* | 155 |
+| 3 | pagedata | page | *page* | With Hindi Commentary |
+| 4 | note | commentary | “the **fifth house” | The house of children and intelligence |
+| 5 | note | commentary | “the **sixth house” | The house of enemies, debt, and disease |
+| 6 | term | mark | “Preceptor of the Daityas” |  |
+| 7 | definition | commentary | “Preceptor of the Daityas” | original: "Daitya-guru" — a title for Venus/Shukra, who in mythology is the teacher of the Titans |
+| 8 | term | mark | “Shastras” |  |
+| 9 | definition | commentary | “Shastras” | Sacred scriptures or sciences |
+| 10 | term | mark | “Brahmins” |  |
+| 11 | definition | commentary | “Brahmins” | The priestly/scholarly class |
+| 12 | note | commentary | “**Meaning—** The woman at whose birth” | The printed text reads 'अष्टमभवन' (8th house) here, which appears to be a clerical error as the heading and verse refer to the 7th house (सप |
+| 13 | note | commentary | “the **seventh house” | The house of marriage and partnerships |
+| 14 | note | commentary | “the **eighth house” | The house of longevity and hidden things |
+| 15 | summary | page | *page* | This page details the astrological effects of the planet Venus (Shukra) when positioned in the fifth, sixth, seventh, and eighth houses of a |
+| 16 | keywords | page | *page* | Venus, Shukra, Astrology, Fifth House, Sixth House, Seventh House, Eighth House, Women's Horoscopes, Jyotish, Shastras |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 35. Полное собрание сочинений Ф.М. Достоевского, Т. 11: Дневник писателя — p. 87 (script: Cyrillic)
+
+https://sourcelibrary.org/book/11-dostoevsky/page/69af3c17e2921802c6c77be5 · language Russian · prompt v10 · 2480 chars stored, 2211 in text · 5 annotations · scripts: Cyrillic
+
+**Raw `translation.data`**
+
+````text
+# POOR FOLK.
+
+<note>original: "БѢДНЫЕ ЛЮДИ."</note>
+
+...waters—you are already there; you stand before me, preening yourself, and keep looking into my eyes, as if you were showing me your own possessions. This proves that you have a kind heart, Makar Alexeyevich. That is why I love you. Well, goodbye. I am ill again today: I got my feet wet yesterday and caught a cold because of it; Fedora is also sick with something, so we are both ailing now. Do not forget me, visit more often.
+
+->Yours<-
+->*V. D.*<-
+
+->June 12.<-
+
+<meta>An ornamental drop cap 'Г' [G] decorated with floral patterns and leaves.</meta>
+
+My dear, Varvara Alexeyevna!
+
+And I thought, my dear, that you would describe all of yesterday to me in real verse, but you ended up with just one simple little sheet. I say this because, although you wrote little to me in your note, you described it all unusually well and sweetly. Both nature, and the various rural scenes, and everything else concerning feelings—in a word, you described it all very well. But I have no talent for it. Even if I scribbled ten pages, nothing comes of it, I cannot describe anything. I have already tried. You write to me, my dear, that I am a kind man, not malicious, incapable of harming my neighbor, and that I understand the goodness of the Lord as manifested in nature, and, finally, you bestow various praises upon me. All this is true, my dear, all this is absolute truth; I am indeed as you say, and I know it myself; but as one reads what you write, one's heart softens involuntarily, and then various heavy thoughts arise. But listen to me, my dear, I will tell you something, my own dear.
+
+I will begin with the fact that I was only seventeen years old when I entered service, and my service career will soon hit thirty years. Well, there is nothing to say, I have worn out enough service coats <term>vits-mundir</term> <gloss>a formal frock coat or uniform worn by Russian civil servants</gloss>; I have matured, become wiser, seen people; I have lived, I can say that I have lived in this world, so much so that they even wanted to present me for a cross <note>referring to a medal or order of merit</note> once. You might not believe it, but I am truly not lying to you. And what of it, my dear—there were wicked people for all of this! But I will tell you, my dear, that although I am an obscure man, a foolish man perhaps, my heart is just the same as anyone else's. So do you know, Varinka, what that wicked man did...
+````
+
+**Clean `translation.text`**
+
+````text
+# POOR FOLK.
+
+...waters—you are already there; you stand before me, preening yourself, and keep looking into my eyes, as if you were showing me your own possessions. This proves that you have a kind heart, Makar Alexeyevich. That is why I love you. Well, goodbye. I am ill again today: I got my feet wet yesterday and caught a cold because of it; Fedora is also sick with something, so we are both ailing now. Do not forget me, visit more often.
+
+->Yours<-
+->*V. D.*<-
+
+->June 12.<-
+
+My dear, Varvara Alexeyevna!
+
+And I thought, my dear, that you would describe all of yesterday to me in real verse, but you ended up with just one simple little sheet. I say this because, although you wrote little to me in your note, you described it all unusually well and sweetly. Both nature, and the various rural scenes, and everything else concerning feelings—in a word, you described it all very well. But I have no talent for it. Even if I scribbled ten pages, nothing comes of it, I cannot describe anything. I have already tried. You write to me, my dear, that I am a kind man, not malicious, incapable of harming my neighbor, and that I understand the goodness of the Lord as manifested in nature, and, finally, you bestow various praises upon me. All this is true, my dear, all this is absolute truth; I am indeed as you say, and I know it myself; but as one reads what you write, one's heart softens involuntarily, and then various heavy thoughts arise. But listen to me, my dear, I will tell you something, my own dear.
+
+I will begin with the fact that I was only seventeen years old when I entered service, and my service career will soon hit thirty years. Well, there is nothing to say, I have worn out enough service coats vits-mundir; I have matured, become wiser, seen people; I have lived, I can say that I have lived in this world, so much so that they even wanted to present me for a cross once. You might not believe it, but I am truly not lying to you. And what of it, my dear—there were wicked people for all of this! But I will tell you, my dear, that although I am an obscure man, a foolish man perhaps, my heart is just the same as anyone else's. So do you know, Varinka, what that wicked man did...
+````
+
+**Annotations** (5)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | original | commentary | “” | original: "БѢДНЫЕ ЛЮДИ." |
+| 2 | meta | page | *page* | An ornamental drop cap 'Г' [G] decorated with floral patterns and leaves. |
+| 3 | term | mark | “vits-mundir” |  |
+| 4 | definition | commentary | “vits-mundir” | a formal frock coat or uniform worn by Russian civil servants |
+| 5 | note | commentary | “for a cross” | referring to a medal or order of merit |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 36. Instruction à la France sur la verité de l'histoire des frères de la Roze-Croix — p. 20 (script: combining)
+
+https://sourcelibrary.org/book/instruction-to-france-on-the-truth-of-the-history-of-the-naude/page/697e27c65ac4b1bfa22baed6 · language French · prompt v2 · 2835 chars stored, 1281 in text · 11 annotations · scripts: combining
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the "To the Reader" preface. It transitions from the author's internal conflict and feelings of inadequacy to his resolution, inspired by Seneca, to write a definitive account debunking the Rosicrucian "Chimera."</meta>
+
+->### TO THE READER.<-
+
+from my studies the fruits of such erudition that I judged necessary to combat this Chimera <note>A 'Chimera' refers to a monstrous, mythical illusion or a groundless fancy; here, the author uses it to describe the Rosicrucian rumors as a fabrication.</note> and erroneous persuasion. This is why I utterly despaired of being able to give some testimony of my affection to *France*, until, to deliver myself from all these anxieties and irresolutions, I relied upon this judgment of *Seneca*: *"To achieve a sound mind, few books are needed"* <note>original Latin: "Paucis ad bonam mentem opus est literis." From Seneca’s *Moral Letters*, 106. The author uses this to justify his work despite his modest library or study.</note>; of whom I can say that it is truly he who gave me the boldness, through the truth of his maxim, to set pen to paper, to unseal the eyes of your understanding, to strike down the films <term>tayes</term> <note>a medical term of the era for a white spot or opaque membrane covering the eye, like a leucoma</note> and cataracts of falsehood, and to make you recognize the truth that you must follow to instruct yourself in the history of the Rosicrucians (as *Mr. Boucher* calls them in his *Mystical Crown* <note>Jean Boucher (1548–1644) was a prominent and controversial doctor of theology; his "Mystical Crown" was a contemporary religious work.</note>) or Brothers of the *Rose-Cross*. To effect this more easily, I judged it appropriate to draft this Preface <note>original: "Aduertiſſemēt" — an introductory notice or warning to the reader.</note> to facilitate your understanding of the entire discourse following, and to first advise you that regarding the name of this Society, Father *Garasse* <note>François Garasse (1585–1631) was a Jesuit polemicist famous for his 1623 attacks on "libertines" and the Rosicrucians.</note> has most happily of all conjectured the reasons that moved its Author to give it this title of *Rose-Cross*; persuading himself that he had wished to oblige them by this symbol of silence to live hidden and covered, and to keep the secret
+
+<sig>ẽ</sig>
+
+<summary>The author explains his decision to write against the Rosicrucian "Chimera," citing Seneca as his insp
+… [335 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+->### TO THE READER.<-
+
+from my studies the fruits of such erudition that I judged necessary to combat this Chimera and erroneous persuasion. This is why I utterly despaired of being able to give some testimony of my affection to *France*, until, to deliver myself from all these anxieties and irresolutions, I relied upon this judgment of *Seneca*: *"To achieve a sound mind, few books are needed"*; of whom I can say that it is truly he who gave me the boldness, through the truth of his maxim, to set pen to paper, to unseal the eyes of your understanding, to strike down the films tayes and cataracts of falsehood, and to make you recognize the truth that you must follow to instruct yourself in the history of the Rosicrucians (as *Mr. Boucher* calls them in his *Mystical Crown*) or Brothers of the *Rose-Cross*. To effect this more easily, I judged it appropriate to draft this Preface to facilitate your understanding of the entire discourse following, and to first advise you that regarding the name of this Society, Father *Garasse* has most happily of all conjectured the reasons that moved its Author to give it this title of *Rose-Cross*; persuading himself that he had wished to oblige them by this symbol of silence to live hidden and covered, and to keep the secret
+````
+
+**Annotations** (11)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the "To the Reader" preface. It transitions from the author's internal conflict and feelings of inadequacy to his resolu |
+| 2 | note | commentary | “combat this Chimera” | A 'Chimera' refers to a monstrous, mythical illusion or a groundless fancy; here, the author uses it to describe the Rosicrucian rumors as a |
+| 3 | note | commentary | “books are needed” | original Latin: "Paucis ad bonam mentem opus est literis." From Seneca’s *Moral Letters*, 106. The author uses this to justify his work desp |
+| 4 | term | mark | “tayes” |  |
+| 5 | definition | commentary | “tayes” | a medical term of the era for a white spot or opaque membrane covering the eye, like a leucoma |
+| 6 | note | commentary | “his *Mystical Crown” | Jean Boucher (1548–1644) was a prominent and controversial doctor of theology; his "Mystical Crown" was a contemporary religious work. |
+| 7 | original | commentary | “draft this Preface” | original: "Aduertiſſemēt" — an introductory notice or warning to the reader. |
+| 8 | note | commentary | “Society, Father *Garasse” | François Garasse (1585–1631) was a Jesuit polemicist famous for his 1623 attacks on "libertines" and the Rosicrucians. |
+| 9 | pagedata | page | *page* | ẽ |
+| 10 | summary | page | *page* | The author explains his decision to write against the Rosicrucian "Chimera," citing Seneca as his inspiration to speak out despite his own d |
+| 11 | keywords | page | *page* | Seneca, Rosicrucians, Rose-Cross, Jean Boucher, Father Garasse, 17th-century polemic, secret societies, Paris history |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 37. Papyrus inscribed with an account and a religious text (reign of Senwosret I) — p. 1 (script: astral)
+
+https://sourcelibrary.org/book/papyrus-inscribed-with-an-account-and-a-religious-text-reign-of-senwosret-i/page/69e11b22918f5a3cda71f834 · language Egyptian hieroglyphs · prompt v11 · 3288 chars stored, 806 in text · 77 annotations · scripts: astral
+
+**Raw `translation.data`**
+
+````text
+<note>A fragment of Egyptian papyrus depicts vertical columns of Hieratic script. This style of cursive writing was used for everyday documents, such as accounts and letters, rather than formal inscriptions on stone.</note>
+
+### Fragment of an Account or Religious Registry
+#### Reign of Senwosret I
+
+<note>The following text is highly repetitive and appears to be a formal register or an administrative list of personnel and their titles, likely for a temple or a royal estate. Each entry follows a specific formula identifying the individuals by their name and office.</note>
+
+**Column 1**
+Controller <note>original: 𓐍𓂋𓊪</note>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>.
+
+**Column 2**
+The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>.
+
+**Column 3**
+The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>.
+
+**Column 4**
+The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>.
+
+**Column 5**
+The name is <term>Itf-Amen</term> <gloss>The Father of Amun</gloss>, <term>Imy-ra Per</term> <gloss>Overseer of the House</gloss>. The name is <term>Senty</term> <gloss>The Two Sisters</gloss>. The name is <term>Itf-Amen</term> <gloss>The Father of Amun</glo
+… [788 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+### Fragment of an Account or Religious Registry
+#### Reign of Senwosret I
+
+**Column 1**
+Controller. The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+
+**Column 2**
+The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+
+**Column 3**
+The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+
+**Column 4**
+The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+
+**Column 5**
+The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+
+**Column 6**
+The name is Itf-Amen, Imy-ra Per. The name is Senty. The name is Itf-Amen, Imy-ra Per. The name is Senty.
+````
+
+**Annotations** (77)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | note | commentary | “” | A fragment of Egyptian papyrus depicts vertical columns of Hieratic script. This style of cursive writing was used for everyday documents, s |
+| 2 | note | commentary | “” | The following text is highly repetitive and appears to be a formal register or an administrative list of personnel and their titles, likely  |
+| 3 | original | commentary | “Controller” | original: 𓐍𓂋𓊪 |
+| 4 | term | mark | “Itf-Amen” |  |
+| 5 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 6 | term | mark | “Imy-ra Per” |  |
+| 7 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 8 | term | mark | “Senty” |  |
+| 9 | definition | commentary | “Senty” | The Two Sisters |
+| 10 | term | mark | “Itf-Amen” |  |
+| 11 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 12 | term | mark | “Imy-ra Per” |  |
+| 13 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 14 | term | mark | “Senty” |  |
+| 15 | definition | commentary | “Senty” | The Two Sisters |
+| 16 | term | mark | “Itf-Amen” |  |
+| 17 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 18 | term | mark | “Imy-ra Per” |  |
+| 19 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 20 | term | mark | “Senty” |  |
+| 21 | definition | commentary | “Senty” | The Two Sisters |
+| 22 | term | mark | “Itf-Amen” |  |
+| 23 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 24 | term | mark | “Imy-ra Per” |  |
+| 25 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 26 | term | mark | “Senty” |  |
+| 27 | definition | commentary | “Senty” | The Two Sisters |
+| 28 | term | mark | “Itf-Amen” |  |
+| 29 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 30 | term | mark | “Imy-ra Per” |  |
+| 31 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 32 | term | mark | “Senty” |  |
+| 33 | definition | commentary | “Senty” | The Two Sisters |
+| 34 | term | mark | “Itf-Amen” |  |
+| 35 | definition | commentary | “Itf-Amen” | The Father of Amun |
+| 36 | term | mark | “Imy-ra Per” |  |
+| 37 | definition | commentary | “Imy-ra Per” | Overseer of the House |
+| 38 | term | mark | “Senty” |  |
+| 39 | definition | commentary | “Senty” | The Two Sisters |
+| 40 | term | mark | “Itf-Amen” |  |
+
+… 37 more
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 38. Thesaurus Graecae Linguae (vol. 3) — p. 280 (longest page)
+
+https://sourcelibrary.org/book/thesaurus-graecae-linguae-vol-3-estienne/page/69b2f4110e2f024dfbfbaaeb · language Greek · prompt v10 · 15293 chars stored, 9141 in text · 204 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+<meta>Continuity: This page continues the dictionary entries for Greek terms derived from the root πρέσβυς (elder/ambassador).</meta>
+
+# Π Ρ Ε
+
+According to Hesychius, <term>πρέσβης</term> <gloss>ambassador/elder</gloss> refers not only to <term>γέροντες</term> <gloss>old men</gloss>, but also to <term>βασιλεῖς</term> <gloss>kings</gloss>, <term>ἄρχοντες</term> <gloss>rulers</gloss>, and <term>θεσμοφύλακοι</term> <gloss>guardians of the law</gloss>. Thus, those to whom this honor and reverence, usually shown to old men, is extended are called <term>πρέσβεις</term> <gloss>ambassadors</gloss>. ¶ Regarding "Senator," it is cited from an Epigram. According to Hesychius, it is <term>ἀγορανόμος</term> <gloss>a market official</gloss>. ¶ According to the same Hesychius, <term>πρέσβις</term> <gloss>elder/small bird</gloss> is also used to refer to <term>ὄρνις ὁ τρόχιλος</term> <gloss>the wren</gloss>. Likewise, Aristotle in the *History of Animals*, book 9, chapter 11, writes about the wren: <term>καλεῖται δὲ πρέσβις καὶ βασιλεύς</term> <gloss>it is called both "elder" and "king"</gloss>. As Pliny also writes in book 8, chapter 25: "A small bird, which is there called the wren, [is called] the king of birds in Italy."
+
+<margin>A</margin>
+<term>FEMININE.</term> <term>Πρέσβειρα</term> <gloss>Elder/Venerable (female)</gloss>, old woman, ancient. As in: <term>θήλεια δὲ πρέσβειρα ἡμίσεια ἀπ’ ὤμους</term> <gloss>a female elder, half [of the way] from the shoulders</gloss>. From this, by syncope <note>the contraction of a word by omitting sounds or letters</note>, comes <term>Πρέσβα</term> <gloss>elder/venerable (female)</gloss>, like <term>πότνια</term> <gloss>mistress/queen</gloss> from <term>πότνια</term>. These are discussed in my old lexicon, where <term>πρέσβα</term> is explained as <term>ἡ γεγηρακυῖα, πρεσβυτάτη, ἐντιμοτάτη</term> <gloss>the aged one, the most elder, the most honored</gloss>. This is read in Homer’s *Iliad*, books 5 and 8: <term>Ἥρη πρέσβα θεὰ, θυγάτηρ μεγάλοιο Κρόνοιο</term> <gloss>Hera, ancient and venerable goddess, daughter of great Cronus</gloss>. Elsewhere he says <term>πότνια Ἥρη</term> <gloss>venerable Hera</gloss>. In *Iliad* 19: <term>Πρέσβα Διὸς θυγάτηρ ἄτη</term> <gloss>Venerable Atë, daughter of Zeus</gloss>. Hesychius also explains <term>πρέσβα</term> as <term>τιμιωτάτη, ἔντιμος, σεμνή</term> <gloss>most honored, esteemed, holy</gloss>: just as Eustathius also notes that <term>πρέσβα</term> is said of one who is venerable either by t
+… [12793 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+# Π Ρ Ε
+
+According to Hesychius, πρέσβης refers not only to γέροντες, but also to βασιλεῖς, ἄρχοντες, and θεσμοφύλακοι. Thus, those to whom this honor and reverence, usually shown to old men, is extended are called πρέσβεις. ¶ Regarding "Senator," it is cited from an Epigram. According to Hesychius, it is ἀγορανόμος. ¶ According to the same Hesychius, πρέσβις is also used to refer to ὄρνις ὁ τρόχιλος. Likewise, Aristotle in the *History of Animals*, book 9, chapter 11, writes about the wren: καλεῖται δὲ πρέσβις καὶ βασιλεύς. As Pliny also writes in book 8, chapter 25: "A small bird, which is there called the wren, [is called] the king of birds in Italy."
+
+A
+FEMININE. Πρέσβειρα, old woman, ancient. As in: θήλεια δὲ πρέσβειρα ἡμίσεια ἀπ’ ὤμους. From this, by syncope, comes Πρέσβα, like πότνια from πότνια. These are discussed in my old lexicon, where πρέσβα is explained as ἡ γεγηρακυῖα, πρεσβυτάτη, ἐντιμοτάτη. This is read in Homer’s *Iliad*, books 5 and 8: Ἥρη πρέσβα θεὰ, θυγάτηρ μεγάλοιο Κρόνοιο. Elsewhere he says πότνια Ἥρη. In *Iliad* 19: Πρέσβα Διὸς θυγάτηρ ἄτη. Hesychius also explains πρέσβα as τιμιωτάτη, ἔντιμος, σεμνή: just as Eustathius also notes that πρέσβα is said of one who is venerable either by time or by honor. From the same, some think Πρέσβια is the origin of Πρέσβεια, which has the same meaning as πρέσβα, such as πρέσβειρα Ἥρη in Homer. Also cited is πρέσβειρα Ἐριννύων for the first-born of the Furies.
+
+B
+COMPARATIVE. Πρεσβύτερος, senior, older in age, greater by birth. Xenophon, *Hellenica* 4: "Pharnabazus spoke first, for he was the elder." To this is opposed νεώτερος, younger in age. Plutarch: "He is now an elder, but was a younger [man] when at the oracle." Regarding a man, Aristophanes in *The Frogs*: "I am departing, more than thirty years plus twenty." Aeschines, *On the False Embassy*: πρεσβύτεροι ταῖς ἡλικίαις. Usually, οἱ πρεσβύτεροι are those whose age is already verging toward old age. Indeed, they are opposed sometimes to οἱ νεώτεροι, and sometimes to οἱ ἀκμάζοντες. Aristotle, *Rhetoric* 2: "the elders or those past their prime." Isocrates, *On the Peace*: "I am amazed at the elders if they no longer remember any of the agricultural exercises." Aristotle: "For the young are courageous and intemperate, but the elders are cowardly and prudent." Plutarch, *Lycurgus*: "They commanded [him] as one who was older." Plato, *Epistle 7*: "to the one who has fewer votes [compared] to the elders," i.e., veteran soldiers. And πρεσβύτερα δέν
+… [6641 more characters]
+````
+
+**Annotations** (204)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | Continuity: This page continues the dictionary entries for Greek terms derived from the root πρέσβυς (elder/ambassador). |
+| 2 | term | mark | “πρέσβης” |  |
+| 3 | definition | commentary | “πρέσβης” | ambassador/elder |
+| 4 | term | mark | “γέροντες” |  |
+| 5 | definition | commentary | “γέροντες” | old men |
+| 6 | term | mark | “βασιλεῖς” |  |
+| 7 | definition | commentary | “βασιλεῖς” | kings |
+| 8 | term | mark | “ἄρχοντες” |  |
+| 9 | definition | commentary | “ἄρχοντες” | rulers |
+| 10 | term | mark | “θεσμοφύλακοι” |  |
+| 11 | definition | commentary | “θεσμοφύλακοι” | guardians of the law |
+| 12 | term | mark | “πρέσβεις” |  |
+| 13 | definition | commentary | “πρέσβεις” | ambassadors |
+| 14 | term | mark | “ἀγορανόμος” |  |
+| 15 | definition | commentary | “ἀγορανόμος” | a market official |
+| 16 | term | mark | “πρέσβις” |  |
+| 17 | definition | commentary | “πρέσβις” | elder/small bird |
+| 18 | term | mark | “ὄρνις ὁ τρόχιλος” |  |
+| 19 | definition | commentary | “ὄρνις ὁ τρόχιλος” | the wren |
+| 20 | term | mark | “καλεῖται δὲ πρέσβις καὶ βασιλεύς” |  |
+| 21 | definition | commentary | “καλεῖται δὲ πρέσβις καὶ βασιλεύς” | it is called both "elder" and "king" |
+| 22 | margin | mark | “A” |  |
+| 23 | term | mark | “FEMININE.” |  |
+| 24 | term | mark | “Πρέσβειρα” |  |
+| 25 | definition | commentary | “Πρέσβειρα” | Elder/Venerable (female) |
+| 26 | term | mark | “θήλεια δὲ πρέσβειρα ἡμίσεια ἀπ’ ὤμους” |  |
+| 27 | definition | commentary | “θήλεια δὲ πρέσβειρα ἡμίσεια ἀπ’ ὤμους” | a female elder, half [of the way] from the shoulders |
+| 28 | note | commentary | “this, by syncope” | the contraction of a word by omitting sounds or letters |
+| 29 | term | mark | “Πρέσβα” |  |
+| 30 | definition | commentary | “Πρέσβα” | elder/venerable (female) |
+| 31 | term | mark | “πότνια” |  |
+| 32 | definition | commentary | “πότνια” | mistress/queen |
+| 33 | term | mark | “πότνια” |  |
+| 34 | term | mark | “πρέσβα” |  |
+| 35 | term | mark | “ἡ γεγηρακυῖα, πρεσβυτάτη, ἐντιμοτάτη” |  |
+| 36 | definition | commentary | “ἡ γεγηρακυῖα, πρεσβυτάτη, ἐντιμοτάτη” | the aged one, the most elder, the most honored |
+| 37 | term | mark | “Ἥρη πρέσβα θεὰ, θυγάτηρ μεγάλοιο Κρόνοιο” |  |
+| 38 | definition | commentary | “Ἥρη πρέσβα θεὰ, θυγάτηρ μεγάλοιο Κρόνοιο” | Hera, ancient and venerable goddess, daughter of great Cronus |
+| 39 | term | mark | “πότνια Ἥρη” |  |
+| 40 | definition | commentary | “πότνια Ἥρη” | venerable Hera |
+
+… 164 more
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 39. Les mécaniques ou L'élévateur de Héron (Carra de Vaux 1894) — p. 43 (word ledger not even)
+
+https://sourcelibrary.org/book/les-mecaniques-ou-l-elevateur-de-heron-carra-de-vaux-1894-trans/page/695aa9bfbe4023bd34bd6dac · language French · prompt v2 · 3134 chars stored, 1346 in text · 20 annotations · scripts: Greek
+
+**Raw `translation.data`**
+
+````text
+<meta>This page continues the scholarly analysis of Hero of Alexandria’s sources. While the previous page (numbered 17 in the provided context) discussed Hero’s connection to Apollonius and Pappus, this page (numbered 29) concludes the introduction by identifying references to Poseidonius and Philo, while acknowledging the difficulties of working with corrupted manuscripts.</meta>
+
+<page-num>29</page-num>
+
+“...they remain in such a way that the point of suspension and the center of gravity of the suspended object are placed on the perpendicular. For this too has been demonstrated.” <note>original Latin: "ita manent, ut punctum suspendii et centrum gravitatis suspensi in perpendiculari posita sint. Nam hoc quoque demonstratum est"</note> Heiberg <note>Johan Ludvig Heiberg (1854–1928), a Danish philologist and historian of mathematics who rediscovered many of Archimedes' works.</note> adds: “without doubt in the book <term>On Balances</term> <note>original Greek: *Περὶ ζυγῶν* (Peri zygon)</note>.” We agree with his opinion.
+
+The doubtful name¹ to which we have alluded appears to be that of the famous Stoic philosopher <term>Poseidonius</term>² <note>Poseidonius of Rhodes (c. 135–51 BC), a polymath who studied everything from astronomy to history.</note>. <term>Hero</term> attributes to him a definition of the center of gravity, which he compares to the one given by <term>Archimedes</term>. This citation made by the author of the <term>Mechanics</term> would be a new element for determining his age <note>Scholars use these citations to narrow down when Hero lived, as he must have lived after the authors he quotes.</note>. Unfortunately, the text is quite obscure in this passage.
+
+We would venture even further into the unknown if we recalled the names of <term>Philo</term> <note>Philo of Byzantium, an earlier Greek engineer who wrote on artillery and pneumatics.</note> or other more obscure mechanicians who have a part in <term>Hero’s</term> work, but to whom we cannot do exact justice, given our very incomplete knowledge of their work.
+
+In concluding these remarks, we wish to express our gratitude to the management of the *Asiatic Journal* <note>original French: *Journal asiatique*</note> to whom we are indebted for the printing of our work; we must also ask the indulgence of scholars for the numerous imperfections they will find in this publication: They should not all be attributed to us. We were dealing with a text that was too often incorrect that—
+
+---
+¹
+… [634 more characters]
+````
+
+**Clean `translation.text`**
+
+````text
+“...they remain in such a way that the point of suspension and the center of gravity of the suspended object are placed on the perpendicular. For this too has been demonstrated.” Heiberg adds: “without doubt in the book On Balances.” We agree with his opinion.
+
+The doubtful name¹ to which we have alluded appears to be that of the famous Stoic philosopher Poseidonius². Hero attributes to him a definition of the center of gravity, which he compares to the one given by Archimedes. This citation made by the author of the Mechanics would be a new element for determining his age. Unfortunately, the text is quite obscure in this passage.
+
+We would venture even further into the unknown if we recalled the names of Philo or other more obscure mechanicians who have a part in Hero’s work, but to whom we cannot do exact justice, given our very incomplete knowledge of their work.
+
+In concluding these remarks, we wish to express our gratitude to the management of the *Asiatic Journal* to whom we are indebted for the printing of our work; we must also ask the indulgence of scholars for the numerous imperfections they will find in this publication: They should not all be attributed to us. We were dealing with a text that was too often incorrect that—
+
+---
+¹ *Mechanics*, Book I, 24.
+² We owe to Mr. Clermont-Ganneau this very probable reading.
+````
+
+**Annotations** (20)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | meta | page | *page* | This page continues the scholarly analysis of Hero of Alexandria’s sources. While the previous page (numbered 17 in the provided context) di |
+| 2 | pagedata | page | *page* | 29 |
+| 3 | note | commentary | “has been demonstrated” | original Latin: "ita manent, ut punctum suspendii et centrum gravitatis suspensi in perpendiculari posita sint. Nam hoc quoque demonstratum  |
+| 4 | note | commentary | “been demonstrated.” Heiberg” | Johan Ludvig Heiberg (1854–1928), a Danish philologist and historian of mathematics who rediscovered many of Archimedes' works. |
+| 5 | term | mark | “On Balances” |  |
+| 6 | definition | commentary | “On Balances” | original Greek: *Περὶ ζυγῶν* (Peri zygon) |
+| 7 | term | mark | “Poseidonius” |  |
+| 8 | note | commentary | “Stoic philosopher Poseidonius²” | Poseidonius of Rhodes (c. 135–51 BC), a polymath who studied everything from astronomy to history. |
+| 9 | term | mark | “Hero” |  |
+| 10 | term | mark | “Archimedes” |  |
+| 11 | term | mark | “Mechanics” |  |
+| 12 | note | commentary | “determining his age” | Scholars use these citations to narrow down when Hero lived, as he must have lived after the authors he quotes. |
+| 13 | term | mark | “Philo” |  |
+| 14 | definition | commentary | “Philo” | Philo of Byzantium, an earlier Greek engineer who wrote on artillery and pneumatics. |
+| 15 | term | mark | “Hero’s” |  |
+| 16 | note | commentary | “the *Asiatic Journal” | original French: *Journal asiatique* |
+| 17 | term | mark | “Clermont-Ganneau” |  |
+| 18 | definition | commentary | “Clermont-Ganneau” | Charles Simon Clermont-Ganneau (1846–1923), a French diplomat and archaeologist famous for his work on ancient inscriptions. |
+| 19 | summary | page | *page* | The author concludes their introduction by identifying a potential reference to the philosopher Poseidonius in Hero's work and acknowledges  |
+| 20 | keywords | page | *page* | Hero of Alexandria, Poseidonius, Archimedes, center of gravity, Philo of Byzantium, On Balances, mechanics, Greek mathematics, manuscript tr |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 40. Pal. gr. 108: Greek lexicon — p. 105 (word ledger not even)
+
+https://sourcelibrary.org/book/greek-glossary-pal-gr-108-anonymous/page/69942f45b2f6748db4ac018a · language Greek · prompt v1 · 2079 chars stored, 1834 in text · 15 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+Passives through <gloss>ai</gloss> [and] i. <insert>ai</insert> These are: *pinō* [I drink]; *krinō* [I judge]; *klinō* [I incline]; *sinomai* [meaning] I harm, from which *sinos* [is] the harm; *orinō* [meaning] I rouse; *tinō* [meaning] I repay, and with the <gloss>k</gloss> prefix, *<unclear>ek</unclear>tinō*; *ōdinō* [meaning] I am in labor; *phthinō* [meaning] I perish; and others. <insert>T</insert>he following are through the <gloss>ei</gloss> diphthong: <gloss>ei</gloss> *ktainō* [meaning] I slay; *teinō* [meaning] I stretch and I look toward; *aleiphō* [meaning] I squeeze out; *oreinō* [meaning] I rouse; *phainō* [meaning] I shine; *geinō* [meaning] I beget; *geinō* [meaning] I cover, whence the "leaf-covered mountain," that which is shaded by leaves; and *peinō* [meaning] I hunger. <margin>inō</margin> But *peinō*, insofar as it means "to starve," is through <gloss>ō</gloss>; *pinō* [meaning] I am filthy; *dinō* [meaning] I whirl and move, with i; *tithenō* [meaning] I nourish, with i. <insert>ē</insert> *kinō* [meaning] I leap, with ē; these are customary in Doric. And otherwise: those beginning from the <gloss>ti</gloss> syllable are conjugated through <gloss>i</gloss>; and *tinō* through i; and the *namai*... <unclear>dia</unclear>. Through <gloss>i</gloss> are these: *piptō* [I fall]; *pissō* [I pound]; *pistō* [meaning] I believe; and in addition to these, *potēros*; *piptō*; *pissa* [meaning] the sow, from which [comes] *pissazein* [to act like a sow]; *pinos*, a marine creature; *pinos* [meaning] the filth; *pinō* [meaning] I am filthy; *pinō* [I drink]; *piomai* [I shall drink]; *pietai* [he shall drink]; *pithēkos* [ape]; *pithēkios* [apish]; *pikros* [bitter]; *pityron* [bran]; *pitys* the plant; *pilon*, the conical [hat] and the *pilon* [felt]; *ptainō* [meaning] I sift; *pion* [meaning] the fat; *pisaō*; *pisis*; *Pissa* the mountain; *pithos* [jar]; the *thaknon*, a small *pithos*; *pithoigia*, the opening of the <unclear>pi</unclear>thoi; *pynytos* [meaning] the wise; *pissō* [meaning] I trust; *pynyskō* [I make wise].
+````
+
+**Clean `translation.text`**
+
+````text
+Passives through ai [and] i. ai These are: *pinō* [I drink]; *krinō* [I judge]; *klinō* [I incline]; *sinomai* [meaning] I harm, from which *sinos* [is] the harm; *orinō* [meaning] I rouse; *tinō* [meaning] I repay, and with the k prefix, *ektinō*; *ōdinō* [meaning] I am in labor; *phthinō* [meaning] I perish; and others. The following are through the ei diphthong: ei *ktainō* [meaning] I slay; *teinō* [meaning] I stretch and I look toward; *aleiphō* [meaning] I squeeze out; *oreinō* [meaning] I rouse; *phainō* [meaning] I shine; *geinō* [meaning] I beget; *geinō* [meaning] I cover, whence the "leaf-covered mountain," that which is shaded by leaves; and *peinō* [meaning] I hunger. inō But *peinō*, insofar as it means "to starve," is through ō; *pinō* [meaning] I am filthy; *dinō* [meaning] I whirl and move, with i; *tithenō* [meaning] I nourish, with i. ē *kinō* [meaning] I leap, with ē; these are customary in Doric. And otherwise: those beginning from the ti syllable are conjugated through i; and *tinō* through i; and the *namai*... dia. Through i are these: *piptō* [I fall]; *pissō* [I pound]; *pistō* [meaning] I believe; and in addition to these, *potēros*; *piptō*; *pissa* [meaning] the sow, from which [comes] *pissazein* [to act like a sow]; *pinos*, a marine creature; *pinos* [meaning] the filth; *pinō* [meaning] I am filthy; *pinō* [I drink]; *piomai* [I shall drink]; *pietai* [he shall drink]; *pithēkos* [ape]; *pithēkios* [apish]; *pikros* [bitter]; *pityron* [bran]; *pitys* the plant; *pilon*, the conical [hat] and the *pilon* [felt]; *ptainō* [meaning] I sift; *pion* [meaning] the fat; *pisaō*; *pisis*; *Pissa* the mountain; *pithos* [jar]; the *thaknon*, a small *pithos*; *pithoigia*, the opening of the pithoi; *pynytos* [meaning] the wise; *pissō* [meaning] I trust; *pynyskō* [I make wise].
+````
+
+**Annotations** (15)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | gloss | mark | “ai” |  |
+| 2 | insert | mark | “ai” |  |
+| 3 | gloss | mark | “k” |  |
+| 4 | unclear | mark | “ek” |  |
+| 5 | insert | mark | “T” |  |
+| 6 | gloss | mark | “ei” |  |
+| 7 | gloss | mark | “ei” |  |
+| 8 | margin | mark | “inō” |  |
+| 9 | gloss | mark | “ō” |  |
+| 10 | insert | mark | “ē” |  |
+| 11 | gloss | mark | “ti” |  |
+| 12 | gloss | mark | “i” |  |
+| 13 | unclear | mark | “dia” |  |
+| 14 | gloss | mark | “i” |  |
+| 15 | unclear | mark | “pi” |  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+### 41. Bodleian Library MS. Auct. T. inf. 2. 7 — p. 17 (word ledger not even)
+
+https://sourcelibrary.org/book/bodleian-library-ms-auct-t-inf-2-7-anonymous/page/69bfce738ab50eb88e8c85c8 · language Greek · prompt v10 · 1303 chars stored, 458 in text · 27 annotations · scripts: Latin only
+
+**Raw `translation.data`**
+
+````text
+<column-break/>
+
+<unclear>arom</unclear><gloss>a</gloss>
+let him follow me:
+<margin>From the according to Matthew</margin>
+<meta>Ornate gold and blue decorative initial 'E' (epsilon) with red accents.</meta>The <term>Lord</term> <gloss>Kyrios</gloss> said to his
+own disciples: If anyone
+wishes to come after me,
+let him deny
+himself and take up his
+<term>cross</term> <gloss>stauros</gloss>
+and let him follow me. +
+For whoever wishes to save his
+soul will lose it; + but whoever
+loses his
+soul for the sake of
+me will find it. +
+For what is a man
+profited, if he gains the whole
+world
+<note>A detailed illustration of a peacock in the lower right margin, rendered in blue, gold, and red, holding a decorative bar with hanging ornaments in its beak.</note>
+
+<column-break/>
+
+<note>The right-hand column of the original manuscript is only partially visible at the edge of the image and contains fragmentary text.</note>
+<unclear>mst</unclear>
+<unclear>amo</unclear>
+<unclear>dox</unclear>
+<unclear>ma</unclear>
+<unclear>aut</unclear>
+<unclear>tw</unclear>
+<unclear>ta</unclear>
+<unclear>tou</unclear>
+<unclear>go</unclear>
+<unclear>ta</unclear>
+<unclear>tim</unclear>
+<unclear>tha</unclear>
+<unclear>ida</unclear>
+<unclear>amo</unclear>
+<unclear>th</unclear>
+<unclear>e</unclear>
+8
+<unclear>sw</unclear>
+````
+
+**Clean `translation.text`**
+
+````text
+<column-break/>
+
+aroma
+let him follow me:
+From the according to Matthew
+The Lord said to his
+own disciples: If anyone
+wishes to come after me,
+let him deny
+himself and take up his
+cross
+and let him follow me. +
+For whoever wishes to save his
+soul will lose it; + but whoever
+loses his
+soul for the sake of
+me will find it. +
+For what is a man
+profited, if he gains the whole
+world
+<column-break/>
+
+mst
+amo
+dox
+ma
+aut
+tw
+ta
+tou
+go
+ta
+tim
+tha
+ida
+amo
+th
+e
+8
+sw
+````
+
+**Annotations** (27)
+
+| # | type | kind | anchor phrase (exact) | body |
+|---|---|---|---|---|
+| 1 | unclear | mark | “arom” |  |
+| 2 | gloss | mark | “a” |  |
+| 3 | margin | mark | “From the according to Matthew” |  |
+| 4 | meta | page | *page* | Ornate gold and blue decorative initial 'E' (epsilon) with red accents. |
+| 5 | term | mark | “Lord” |  |
+| 6 | definition | commentary | “Lord” | Kyrios |
+| 7 | term | mark | “cross” |  |
+| 8 | definition | commentary | “cross” | stauros |
+| 9 | note | commentary | “” | A detailed illustration of a peacock in the lower right margin, rendered in blue, gold, and red, holding a decorative bar with hanging ornam |
+| 10 | note | commentary | “” | The right-hand column of the original manuscript is only partially visible at the edge of the image and contains fragmentary text. |
+| 11 | unclear | mark | “mst” |  |
+| 12 | unclear | mark | “amo” |  |
+| 13 | unclear | mark | “dox” |  |
+| 14 | unclear | mark | “ma” |  |
+| 15 | unclear | mark | “aut” |  |
+| 16 | unclear | mark | “tw” |  |
+| 17 | unclear | mark | “ta” |  |
+| 18 | unclear | mark | “tou” |  |
+| 19 | unclear | mark | “go” |  |
+| 20 | unclear | mark | “ta” |  |
+| 21 | unclear | mark | “tim” |  |
+| 22 | unclear | mark | “tha” |  |
+| 23 | unclear | mark | “ida” |  |
+| 24 | unclear | mark | “amo” |  |
+| 25 | unclear | mark | “th” |  |
+| 26 | unclear | mark | “e” |  |
+| 27 | unclear | mark | “sw” |  |
+
+**Against today's notes-off reader** (word diff, `[-reader only-]` `{+text only+}`): identical
+
+## 2026-10-28 · Latin diff-QA with a three-way vote: router eval and positive control (#7591)
+
+PRIOR ART: `scripts/eval/tibetan-correct-6560/pass/diffqa.mjs` (spans / merge / write for Tibetan; Opus leaf
+check) is the shape copied. `scripts/eval/route-judge-6740/judge.mjs` is the instrument, unchanged except that a
+corrector carrying `calls_per_page` is priced at that many agy calls. `fresh-gate-7517.mjs` gives the #7517 rows.
+
+### The tool
+`scripts/lib/latin-diffqa.mjs` (pure, unit-tested in `tests/unit/latin-diffqa.test.ts`) and
+`scripts/eval/latin-diffqa-7591/diffqa.mjs` (list / spans / judge-req / judge / merge / write / control).
+- Words are aligned on a fold key: ſ→s, æ→ae, œ→oe, v→u, j→i, lower case, edge punctuation out. Whitespace-only
+  punctuation tokens and the model's judgement tags (`<language>`, `<page-type>`, `<meta>`, `<vocab>`,
+  `<image-desc …>`, …) are not words.
+- A run of word-for-word substitutions is split into one span per word.
+- **LOW** (kept from the text alone): case and punctuation, joins and splits (hyphenation, `A.D.` = `A. D.`),
+  and f↔ſ / s↔ſ (the long-s misread).
+- **RISKY**, in order: a line's worth (>6 words, or ±4), a negation count change, a digit, a roman numeral, a
+  capitalised word, anything else.
+- **Vote** on a RISKY span: the fresh read's words between the nearest correction words it shares on either side
+  (up to 4 out) are compared with the correction's and the draft's over the same window. Strict comparison first,
+  then with f read as s. The outcome is correction (kept), draft (put back), split or no-anchor (to the judge).
+- **Judge**: one agy `gemini-3.8-flash-high` call per page, holding all of the page's split spans as A/B items in
+  random order plus one known-answer control (leafcheck.mjs's read-off, worded for print).
+- **Write**: through `writePageText`, compare-and-set on the draft, page_revisions under the run id, `ocr.diffqa`.
+  It never ran on Catalogi (below).
+
+### Positive control (Catalogi pages, 20 plants on 20 pages: shelfmark ×4, year ×4, page number ×4, name ×4, dropped negation ×4)
+Plants go on words that the draft and the correction agree on, at least 8 words from any change.
+- **With the fresh read: 20/20 put back**, all by vote. The 15 judged pages' controls: 14/15 right.
+- **Judge alone** (`--drop-fresh`, all 603 RISKY spans of those pages to the judge): **19/20**. It missed the
+  name swap Physick → Pyhsick. Controls: 20/20 right.
+- Vote and judge agree on 373/420 voted natural spans (89%): 279 correction/correction, 94 draft/draft, 22 + 23
+  opposite, 2 other.
+
+### Router eval: frame 1, the 30 router-test `latin` pages (router-tests-2026-10-26, 9 books)
+Inputs are paired: the stored lite drafts (all 30 unchanged since 2026-10-26) and the stored lite>agy-flash-low
+corrections, copied from gex45 `spare-router-tests-6740`. The fresh reads were kept reads of the same model, live
+prompt and image (`flash-reread-agy2-5924`, 2026-10-24): no new agy calls. The blind Opus judge's verdicts for
+lite / lite>agy-flash-low / lite>opus-correct are reused (same text, same id).
+
+The cli-ocr apply guards (dry run) refuse 9/30 corrections: 4 change over 25% of the words, 3 have letters outside
+the book's scripts, 1 changes 2020%, and 1 answers UNCHANGED. Those pages serve the draft.
+
+| route | accept | wrong text | fid | on the 21 guarded-through pages | on the 9 refused |
+|---|---|---|---|---|---|
+| lite | 17/30 | 12/30 | 3.77 | 11/21, 9 wrong | 6/9, 3 wrong |
+| lite>agy-flash-low | 24/30 | 4/30 | 4.20 | 17/21, 3 wrong | 7/9, 1 |
+| agy-flash-low (fresh) | 23/30 | 4/30 | 3.83 | 15/21, 4 | 8/9, 0 |
+| diff-QA round 1 | 20/30 | 10/30 | 3.97 | 14/21, 7 | = lite |
+| diff-QA round 2 (post hoc) | 20/30 | 7/30 | 4.03 | 14/21, 4 | = lite |
+| lite>opus-correct | 30/30 | 0/30 | 4.83 | 21/21, 0 | 9/9, 0 |
+
+**Round 1 failed for two reasons, both read off its worse pages:**
+1. A META regex bug. `<image-desc size=…>` with attributes was taken for words, so a correction's picture
+   description was put back as a span.
+2. A judge answer of `other` or `unclear` put the span back. On a roman-numeral table that re-inserted two
+   invented ↀ rows that the correction had dropped.
+
+There was one plain judge error: on Greek it said "base" and put garbled μένον back over the right μόνον.
+
+Round 2 puts a span back only on evidence (the fresh read or the judge saw the draft's reading) and fixes the regex.
+It was set after seeing round 1 on these pages, so it is post hoc. It still does not beat the bare correction.
+Judged sides in round 1: 107 correction / 23 draft / 8 other.
+
+Opus's verdicts move between near-identical texts. In round 2 it flagged a dropped `rerum` on the diff-QA text and
+accepted the correction text that also lacks it. At n = 21, differences of 2-3 pages are within that noise.
+
+### Router eval: frame 2, the confirmation (rules frozen before the draw; `preregistration.md`, `frozen-rules.txt`)
+`judge.mjs draw --cells=latin-lite`: 30 pages, one per book, 30 books. The correction and the fresh read were made
+on the second agy pool (AGY_HOME=/root/.agy-james, flash-low, `--fresh`, CANDIDATE_READS=off). The apply guards
+refuse 18/30 corrections; one more page merged with no change. **Pre-registered GO rule:** diff-QA's wrong text <
+lite>agy-flash-low's on this frame.
+
+| route | accept | wrong text | fid | on the 11 merged pages | on the 19 others |
+|---|---|---|---|---|---|
+| lite | 7/30 | 22/30 | 3.07 | 2/11, 9 | 5/19, 13 |
+| lite>agy-flash-low | 17/28 | 7/28 | 4.07 | 6/11, 3 | 11/17, 4 |
+| agy-flash-low (fresh) | 14/22 delivered (8 cut before <<<END>>>) | 7/22 | 3.82 | 5/7, 1 | 9/15, 6 |
+| **diff-QA** | **11/30** | **15/30** | 3.30 | **6/11, 2** | = lite |
+
+**GO rule: 15 > 7 → FAIL. Catalogi is not written.** All wrong-page controls passed in both frames.
+
+Pooled over the merged pages of both frames (round 2 rules): diff-QA 20/32 accepted with 6 wrong-text pages; the
+bare correction 23/32 with 6. The vote and the judge do not add a measurable gain over the correction. What
+decides the production route is the apply guards, which hand a third to two-thirds of Latin lite pages back to a
+draft that carries wrong text on 40-73% of pages.
+
+### Cost
+agy calls a page: 2.57 (frame 1), 2.73 (frame 2). That is correction 1, fresh read 1, and a flash-high judge call
+on 63% of pages. A judge call thought 4K-86K tokens (median ~28K): it is far heavier than a flash-low read.
+Rebuilt table (`router-table/2026-10-28-latin-diffqa.md`): the diff-QA route pools 31/60, 0.52 [0.39, 0.64],
+wrong text 22/60, 5.14 agy calls per accepted page. lite>agy-flash-low pools 41/58 (11 wrong); latin-lite keeps
+lite>opus.
+
+_Rebased 2026-10-29 (job land-evals, #6740): the table was rebuilt on main's rules.json (margin 0.08, print /
+manuscript split, #7588/#7621). This test's two score files have no by-script file yet, so they enter the
+`latin-lite/unknown` cell only (diff-QA 31/60 there); `latin-lite/print` still keeps lite>opus._
+
+### Catalogi itself (69b51ddb47b06ecd581852a2, 1,026 Flash-Lite pages)
+1,026 fresh reads were made (second pool, 3 readers, about 2 h, no quota stop). On the first 334 corrections, the
+apply guards refuse 107 (32%), 37 of them for Greek: the catalogue lists Greek manuscripts. A Catalogi-specific
+point: the corrector writes f for long s (Afhmole, defcription) where the draft and the fresh read have s/ſ. The
+vote puts those back, which is a real fix on this book. 117 of the 420 voted spans on the 20 control pages were
+draft-side votes, most of them of this kind. No Catalogi page was written and no Opus spot check was run, because
+there is no merged page to check.
+
+### Containment found on the way (#7613)
+The confirmation frame's Opus judge flagged 3 served lite pages as invented; 2 were confirmed by eye.
+- *Disputatio Apologetica* p.26: the image is mirrored, and the OCR invents an "Ad lectorem" paragraph and §VI.
+- Gafurius p.9: the image is a 2001×220 strip of six openings, and the OCR is invented textbook prose.
+
+Both books are held (`contained-invented-ocr-7591`) and Gafurius p.9's English is withheld. The third
+(Manly P. Hall MS 181 p.178, a hard hand with one confabulated clause) is a quality finding, not containment.
+
+### Files
+`scripts/eval/route-judge-6740/results/router-tests-diffqa-2026-10-28/`
+- `router-frame/`, `confirm-frame/`: judge.mjs sample, key, score, verdicts and fresh-gate.
+- `diffqa/`: spans, merge rows without the texts, and the control plants and scores.
+- `preregistration.md`, `frozen-rules.txt`.
+
+Texts and images stay in the job scratch (`/mnt/HC_Volume_105839809/jobs/latin-diffqa-7591`).
+
+## 2026-10-28 · Lane-judge sampler, first real run: the #7558 correction lane, German and French (#7611)
+
+PRIOR ART:
+- `scripts/eval/route-judge-6740/judge.mjs`: the judge. It is reused unchanged (same `judgePrompt`, same rubric, same template hash), and the page image is attached.
+- `2026-10-28-router-tests-agy-flash-low-gpu-draft-7263.md`: the hand-run router tests of the same route. Those were pages drawn for the test. This run judges pages the lane actually served.
+- `2026-10-28-router-next-print-manuscript-split-7263.md`: the print/manuscript cell split that this evidence feeds.
+
+**What was judged.** These are pages the live correction lane wrote: `ocr.pipeline = agy-correct-lite-7558`, with the writer's `page_revisions` row still the page's text. There were 5,806 pages in 68 books from 2026-10-27 00:00Z to 2026-10-28 12:41Z. One page was drawn per book, with seed `20261028`. Books were weighted by `1 + ln(1 + books.human_read_count)`. Every book was eligible, because no cell yet had 60 judged books. That gives 68 pages and a queue of 140 calls (each corrected page, its draft, and 4 wrong-page controls). The judge was Opus via `claude -p` on the gex45 subscription (job lane-judge-run1-7611). The run stopped at the **weekly cap: 80 calls**. In those calls it judged 37 corrected pages, 38 drafts and 4 controls. One reply did not parse (an empty exit). The 4 controls all failed, as they should (fidelity 1), so both routes count.
+
+**Results. Print pages only are counted as cell evidence. 95% CIs are a book-cluster bootstrap.**
+
+| cell | route | accepted | 95% CI | wrong text | books |
+|---|---|---|---|---|---|
+| german-lite (print) | lite>agy-flash-low (served) | 16/20 | 0.60–0.95 | 1/20 | 20 |
+| german-lite (print) | lite (the draft it replaced) | 14/21 | 0.48–0.86 | 4/21 | 21 |
+| french-lite (print) | lite>agy-flash-low (served) | 14/15 | 0.80–1.00 | 0/15 | 15 |
+| french-lite (print) | lite (the draft it replaced) | 13/15 | 0.67–1.00 | 0/15 | 15 |
+| french-lite (manuscript) | lite>agy-flash-low | 2/2 | | 0/2 | 2 |
+
+**Worse than the draft.** Each corrected page was compared with its draft on the same page.
+
+| cell | pairs | fidelity change | 95% CI | worse | better | acceptance lost | acceptance gained | wrong text added |
+|---|---|---|---|---|---|---|---|---|
+| German | 20 | +0.35 | +0.10 to +0.65 | 1 | 7 | 0 | 3 | 0 |
+| French | 15 | +0.07 | −0.20 to +0.33 | 2 | 3 | 0 | 1 | 0 |
+
+All three "worse" pages are a one-point fidelity drop on a page that stayed accepted:
+- German p. 56: a symbol is described wrongly.
+- French p. 68: "fons" for "sons".
+- French p. 121: a glyph is read as "M".
+
+**Rejected corrected pages (5).** These form the retry queue for a GPU-draft>agy attempt. No page was changed.
+- German `6a0a24020eca358f15e84edc` p. 119: O7, the numbers in "32 1/10 stadia".
+- German `698420e4e8a1d0539ce47e1d` p. 589: O6.
+- German `69b51ed3ff09e4fe943b565f` p. 225: O6 wrong text, "2c" for "&c".
+- German `69b51e9647b06ecd58193ed8` p. 29: O6, two misreads.
+- French `6a8ee22390f5a0e4155ea8f7` p. 191: O6, "font" for long-s "ſont", three times.
+
+**What the router decides.** I ran `build.py` on main `5c8a6e0a0`, with this export pooled into the existing evidence. It was book-weighted as in #7606 and cut by script type.
+- **german-lite/print: keep lite>opus.** lite>agy-flash-low was 28/30 from the router tests. With this run it is 44/50, with wrong text on 3 pages (mean 0.88, 90% CI 0.80–0.94). Opus is 272/280 (0.94). agy-flash-low is not within the switch margin of the Opus bar.
+- **french-lite/print: switch to lite>agy-flash-low, unchanged.** It is now 41/44, with wrong text on 2 (mean 0.92, 0.85–0.97).
+- **french-lite/manuscript: UNTESTED → HOLD.** This changes the decision's label, not its route. Two manuscript pages are under the 10-page floor.
+
+The served German rate (16/20) is lower than the router test's (28/30). The intervals overlap, but the gap is the direction to watch as the nightly adds books.
+
+**Price.** The cap is computed as 1 point of a week ÷ rules.json `judge_points_per_output` 0.0124 = 80 calls. During this run the account meter moved 73% → 77% weekly, and 13% → 45% on the 5-hour window. That is at most 0.05 points a call. It is an upper bound: the account is shared with about five other Opus jobs on gex45 that ran over the same 2.5 hours. The export carries this reading (`meter.points_per_call`) on every run, so a cleaner measurement can replace the 0.0124 if one is ever taken on a quiet account.
+
+**Also in this PR.** I fixed two gaps in the nightly rebuild that would have broken tonight's cron:
+- `build.py`'s script split (#7621) opens `script_split.waiting`, which the rebuild never copied. `build.py` crashed on the first line.
+- The export had no by-script file, so `build.py` would have put the lane's pages only in `/unknown` cells. The export now writes `evidence/by-script/lane-judge-sampler.score.json`, with mixed pages counted as print as `split_evidence.py` does. The weekly PR commits that file too.
+
+Store: Mongo `lane_judge_verdicts` (run `lane-judge-20261028124149`) and `lane_judge_runs`. Export: `lane-judge-sampler.mjs export`.
+
+## 2026-10-28 · Route C in production: PERO draft -> agy Flash-low with the image, pilot of 20 books (#7263)
+
+PRIOR ART: `2026-10-28-gpu-flash-vs-opus-7263.md` (the TEST this pilot checks: Latin print, 108 pages one a book, arm C
+105/108 usable, Wilson 92-99%, 3 misleading), `scripts/batch/cli-ocr-lane.mjs` correct mode (#7558, the lane shape),
+`scripts/eval/lane-judge-sampler.mjs` (#7611, the judge of what lanes write), reused.
+
+**Decision being checked (Derek, 2026-10-28, "defaults"):** route C for Latin print pages with no OCR yet, with a check
+flag where Flash changed >= 27% of the draft's words.
+
+### Rule, fixed before any judge call (commit a70b69fd7)
+- **Frame judged:** the pages the pilot run WROTE (`ocr.pipeline = pero-agy-flash-low-7263`), in the 20 pilot books.
+- **Draw:** `lane-judge-sampler.mjs run --book=<the 20> --per-book=3`, seed 7263: 3 written pages a book, uniform, plus
+  every check-flagged page not drawn (the flagged stratum, judged always, reported apart, never evidence).
+- **Judge:** Opus via `claude -p`, the route-judge prompt unchanged, page image attached, blind; two wrong-page controls.
+- **PASS** (cron line + routing-table row) if the random stratum's acceptance rate is inside or above the TEST interval
+  for arm C on Latin print, i.e. >= 0.92. **FAIL** (stop and report, no cron) if it is below 0.92, or if the wrong-page
+  controls do not both fail. Wrong text (misleading) is reported with its interval, against the TEST's 3/108.
+
+### The pilot run (one run, no cron, `--apply`)
+- **Books:** the first 20 of the lane's queue: visible Latin books held `scans-only-publish-7176`, most-read first
+  (`gpu-count --list=20`). 8 of the 20 are music treatises. One chunk of 15 unread pages a book, in page order, so the
+  frame is FRONT-MATTER HEAVY (title pages, dedications, prefaces, calendars), unlike the TEST's interior pages.
+- **Engine:** PERO-OCR `pero_eu_cz_print_newspapers_2022-09-26`, CPU config (as in the TEST), `/root/pero-ocr` on gex45;
+  agy `gemini-3.8-flash-low` on the main pool, template `0601ef30e816f7a7` byte for byte, page image attached.
+- **First attempt stopped and fixed:** the image host served two different JPEG byte-variants of the same URL from one
+  request to the next, so the reader's re-fetch rarely matched the bytes PERO read and the hash guard refused 21 of 30
+  pages. The reader now sends the lane's own download (`--image-dir`). The wrongly ledgered pages were un-ledgered.
+
+| outcome (299 pages taken) | pages |
+|---|---|
+| written | 197 (196 after containment) |
+| blank (PERO draft < 30 word characters) | 45 |
+| refused: Greek or other letters outside the book's languages (existing guard) | 35 |
+| refused: Flash tags the page handwritten or mixed (route is print only) | 16 |
+| CONTAIN answer (an e-rara cover sheet), agy timeouts, cut replies, no draft | 1, 2, 2, 1 |
+
+Cost: 255 agy calls (main pool weekly 29.88% -> 29.57%), 1,160 s of PERO wall time on 8 CPU threads, 0 GPU seconds
+(PERO's CPU config is the one the TEST used; on the card the drafts differed more). Per ACCEPTED page (197 x 0.883):
+1.47 agy calls and 6.7 s of PERO CPU wall time.
+
+### Judged (64 Opus calls, the meter 81% -> 82%; stopped after the random stratum, see below)
+| stratum | accepted | 95% (Wilson) | wrong text | books |
+|---|---|---|---|---|
+| **random, 3 a book (the rule)** | **53/60 (0.88)** | 0.78-0.94 | 5/60 (0.04-0.18) | 20 |
+| random, page flagged | 20/23 | 0.68-0.96 | 2/23 | 13 |
+| random, page not flagged | 33/37 | 0.75-0.96 | 3/37 | 17 |
+| random, body text (`page-type` text) | 31/34 | | 1/34 | |
+| random, front matter (title, dedication, preface, index, toc) | 22/26 | | 4/26 | |
+| flagged stratum (beyond the draw) | 1/3 | | 2/3 | 1 |
+| wrong-page controls | 0/2 (both failed, as they should) | | | |
+
+- **FAIL:** 0.88 < 0.92.
+- The judge was stopped after 3 of the 61 flagged-stratum pages: the decision rests on the random stratum, and the
+  Claude account (shared with the Opus translation and Tibetan jobs on gex45) was at 82% of its week, with the pace guard at 85%.
+- **What failed:** a liturgical calendar (Breviarium, 1490s: numerals and feast names in tables, 3 of 3 judged pages),
+  title pages and dedications (an invented woodcut and date, misread verse), a two-column index with repeated lines.
+- **The check flag** fired on 84 of 197 written pages (43%; the TEST: 10%) and did not pick out the bad pages here.
+  PERO drafts on this early print are far from the corrector's text, so the TEST's p90 threshold is not this frame's.
+
+### Containment (same run, by eye)
+Guillaume Postel, *De originibus* (Paris, Lescuier) p.2, the title page: the stored read added an `<image-desc>` of a
+woodcut printer's device (a sow under a tree) and the date "1538."; the leaf has neither (the imprint names the sign
+*sub Porcelli signo*). The page was restored to its prior state, no OCR (`writePageText`, run
+`contain-gpu-latin-route-7263-20261028`, revision `206b4c8427cc`), counters recounted, search mirror re-synced. The book
+was and stays held. The other wrong-text findings are misreadings (calendar numerals, words), not text from elsewhere.
+
+### What this does not show
+- **Interior pages.** The pilot read each book's first 15 unread pages. Body-text pages did better (31/34) than front
+  matter (22/26), but the rule was fixed on all pages and the split is exploratory.
+- **The flagged stratum** is 3 pages, not 61.
+- **What a book queues next:** nothing. All 20 books are `held` (`scans-only-publish-7176`) and stay held; no pipeline
+  phase selects a held book, and new paid translation is braked (`lane_budgets.translate.enrol_paused`).
+
+Files: `scripts/batch/cli-ocr-lane.mjs` (`gpu-correct`, `gpu-count`), `scripts/batch/pero-draft.py`,
+`scripts/batch/cli-ocr.mjs` (`--gpu-draft`, `--image-dir`), `scripts/lib/draft-change-share.mjs`,
+`scripts/eval/lane-judge-sampler.mjs` (`--book=`, the flagged stratum). Verdicts: Mongo `lane_judge_verdicts`,
+`lane: pero-agy-flash-low-7263`. Ledger and logs: `/root/jobs/gpu-latin-route-7263/` on gex45.
+Undo the pilot's writes: `revert-run.mjs --run-id <run>` for each `cli-ocr-2026102820*` run in that ledger.
+
+## 2026-10-28 · GPU draft + agy Flash 3.8 correction vs Opus reading the page (#7263)
+
+PRIOR ART: `2026-10-28-euro-print-gpu-draft-flash-correct-7567.md` (#7567 E0–E2: the 326-page panel, typed references, every GPU
+draft, arm c's reads and arm e's, the two-draft template, `score.py`), reused, not rebuilt. `scripts/eval/ocr-per-call-7522/judge.mjs`
+(the blind Opus judge against the image), unchanged. `2026-10-28-router-tests-agy-flash-low-gpu-draft-7263.md` tested a stock GLM draft
+on 30 Latin router pages; this one tests each language's best draft, two drafts with their diff, and Flash alone.
+
+**Question (Derek, 2026-10-28):** does a GPU draft plus an agy Flash 3.8 correction that reads the page (optionally two drafts and
+their diff) read about as well as Opus reading the page, much cheaper? From measured data.
+
+**Prereg** `scripts/eval/gpu-flash-vs-opus-7263/PREREG.md`, committed before any arm ran (1f3b8a32e, 09:46Z; first pushed as 3ee8da28f before a rebase onto main), with two amendments, each
+committed before the data it governs: amendment 1 (be58ac3f5, 10:14Z) and amendment 2 (2ad1ac45e, 12:31Z).
+- **Amendment 1** (Derek 09:43Z, 09:50Z): O is existing Opus work, no new reads, plus escalation triggers.
+- **Amendment 2** (10:31Z–12:06Z): arm E (Flash alone) as a separate judge pass; Opus is the bar, never a candidate route;
+  print/manuscript split; router evidence.
+
+### Frame and arms
+- **Pages:** the #7567 panel, 326 pages, **one per book**, with typed references.
+- **Split:** DEV = 10 per language (seed 7263); TEST = the other 276. The O frame is TEST ∩ lite pages: la 116, en 45, de 24.
+- **O:** #6740's stored **Opus 5.5 correction of the lite read, with the image** (`f`).
+  - It is not a draft-free direct read: arm O's fresh reads were stopped after 61 (Derek 09:50Z).
+  - Its 8 CONTAINs are answers on bad lite drafts.
+- **C:** best E1 draft (la PERO-OCR, en/it LightOnOCR-3-1B, de CHURRO-3B, fr Surya 2) → agy `gemini-3.8-flash-low`, the #6740
+  template, with the image. These are #7567's stored arm-c reads.
+- **C′:** C again, 326 fresh calls (the noise floor).
+- **D:** both drafts (X, plus Y = the next-best non-GLM engine) + a numbered word-level X↔Y diff + the image → Flash-low (`d-diff.mjs`).
+  - One DEV round (template `59a8ae36`): usable 49/50, 0.46 misreads/page against C's 0.90. Nothing was left to revise, so it was frozen.
+  - D2 (a self-check pass) was not run: D did not fall short of O.
+- **E:** #7567 arm e, Flash-low with the image and no draft (stored).
+- **Judge:** Opus via `claude -p`, one page per call, every version blind under shuffled letters. The main pass shows O, C, C′, D,
+  X, S and O-direct; the E pass shows E, O and C.
+  - Drift check: C agrees on 182/184 pages between the passes, O on 173/176.
+  - 189 of the main pass's first calls hit the account's 5-hour session limit. They were re-judged unchanged after the reset.
+
+### TEST results, print pages (`score-judge.py --script=print`; Wilson 95%)
+Usable = delivered and judged usable; misleading = delivered and judged not usable; no-answer = nothing delivered.
+
+| cell | n | O (Opus, stored) | C | C′ | D | E (Flash alone) | X (draft) | rule C / D / E |
+|---|---|---|---|---|---|---|---|---|
+| Latin | 108 | 99 (85–96%), mis 2, na 7 | **105** (92–99%), mis 3 | 104, mis 4 | **104** (91–99%), mis 3, na 1 | 97 (83–94%), mis 9 | 52 | **pass / pass** / fail |
+| English | 42 | 42 (92–100%) | 41 (88–100%), mis 1 | 42 | 42 (92–100%) | 32 (61–87%), mis 8 | 33 | underpowered |
+| German | 23 | 22 (79–99%), na 1 | 23 (86–100%) | 22, mis 1 | 23 (86–100%) | 21, mis 1 | — | underpowered |
+| **all print** | **173** | **163** (90–97%), mis 2, na 8 | **169** (94–99%), mis 4 | 168, mis 5 | **169** (94–99%), mis 3, na 1 | 150 (81–91%), mis 18 | — | C fail (mis +2 > NF 1) / **D pass** / E fail |
+
+- **The rule:** an arm clears the O bar when Wilson LB(usable) ≥ O's usable rate − 5 pt, and misleading(arm) − misleading(O) ≤
+  NF = max(1, |C − C′|) = 1 page.
+- **Power:** the rule needs n ≈ 90–130 per cell, so English, German, French and Italian cannot pass it at n 23–45.
+- **Sensitivity, O's CONTAINs removed** (165 pages): O 163/165; D 161/165, LB 0.939 against a bar of 0.938 (passes by a hair); C 161/165,
+  misleading 4 against 2 (fails).
+- **French and Italian** (no Opus read stored; compared against the published Wikisource text, no O):
+  - C 28/29 and 30/30; C′ 29/29 and 30/30; D 29/29 and 30/30.
+  - Folded CER vs the reference: C 0.43 / 0.87 % median; D − C −0.09 [−0.20, 0.00] and +0.01 pt.
+- **Manuscript pages** (13 in the O frame: la 8, en 3, de 2; script type per the 12:06Z rule, `script-type.json`):
+  - C 13/13 and D 12/13 (1 no answer) against O 11/12.
+  - n is too small to route; they are reported in `score-test-7263.json` `<lang>|manuscript` and HOLD in the router.
+
+### Folded CER against the typed references (TEST, lite frame; δ vs O, paired bootstrap 95%)
+| | la (106) | en (45) | de (24) |
+|---|---|---|---|
+| C − O | +0.13 [−0.11, +0.35] | +0.16 [+0.01, +0.35] | −4.83 (O's 1 CONTAIN scores 1.0) |
+| C′ − O | +0.33 [+0.06, +0.65] | +0.21 [+0.04, +0.41] | −4.70 |
+| D − O | +0.84 [−0.46, +2.94] | +0.28 [+0.05, +0.60] | −4.80 |
+| E − O | +2.00 [0.00, +4.87] | **+8.01** [+2.14, +15.21] | +0.08 |
+
+Medians: O 5.15 / 3.36 / 0.26 %; C 5.49 / 3.63 / 0.23 %.
+
+On words, O is slightly closer to the reference (a few tenths of a point). On pages, the judge finds C and D at least as usable as O.
+
+### Span check, word swaps (O vs D, 50 seeded TEST pages, 46 answered; Opus with the image, readings blind as 1/2)
+- **356 disagreeing spans:** the page prints D's reading on 256, O's on 96, neither on 4, can't tell 1.
+- **By page it is even:** D more right on 15 pages, O on 15, tie 16. The D-favoured spans sit on a few pages: la 135–33, en 110–18.
+- **German favours O, 45–11:** mostly ß/fs and similar letter forms.
+- So page metrics are not hiding a systematic word-swap problem in D.
+
+### Cross-family judge (agy `gemini-3.8-flash-high`, 60 seeded TEST pages, same packets and prompt)
+- **Usable:** C 57/60, C′ 58/60, D 58/60, X 23/60.
+- **Agreement with Opus:** 58/60 on C, C′ and D.
+- **On O it is harsher than Opus:** 21/27 usable, agreeing with Opus on 21/27. Self-preference may run either way; the direction of the C/D vs O call does not depend on which judge you pick.
+
+### Escalation (amendment 1 §2; triggers known before any Opus read; pooled lite frame, 185 pages)
+| trigger | pages flagged | C's bad pages caught | blended usable (flagged → O) |
+|---|---|---|---|
+| T3 Flash changed ≥ p90 (27%) of draft words | 10.3% | 3/4 | 184/185 (97–100%) |
+| T1 X↔Y draft disagreement ≥ p90 (32%) | 10.3% | 2/4 | 181/185 |
+| T2 CONTAIN / no answer | 0% | 0/4 | 181/185 |
+| T4 page kind (non-text page-type, columns, margin, table, warning) | 47.6% | 1/4 | 176/185 |
+
+- For D, T3 ≥ p80 flags 20% and catches 4/4.
+- **Derek 11:24Z rules out Opus as a print route,** so the blended route is reported, not recommended. The usable recommendation is to
+  hold T3-flagged pages for a check: 10% of pages, 3/4 of the bad ones.
+
+### Cost (measured, and how firm each figure is)
+- **agy:** C, D and E are one call per page (1.03–1.14 agy calls per *accepted* page in the router table). Per call, input/output tokens
+  are about 24.5K / 0.62K (C), 28.1K / 0.62K (D, the diff adds about 3.5K), 22.0K / 0.63K (E). Median wall time is 10–12.5 s.
+  - The main Gemini weekly pool went 0.4027 → 0.2931 (09:47–14:11Z) over this job's ~710 Flash-low calls and 60 flash-high judge calls. That reading is shared with other
+    jobs (the E5 job ran beside it), so it is an upper bound only.
+  - The router prices agy at `rules.json` stages.agy, unchanged.
+- **Opus:** O's reads already existed, so this job bought no Opus reads beyond the 61 direct reads made before the 09:50Z stop.
+  - The router's lite>opus route is 0.0041–0.0044 Claude points per page, from capacity.json, unchanged.
+  - Judge overhead: 459 TEST and 50 DEV judge calls plus 46 span calls, median list $0.081 per judge call. The account meter went
+    60 → 77 % over the job, shared with the E5 job's judge and this session.
+- **Per accepted page** (router build, default plan fee convention): gpu>agy routes cost about 0.46× lite>opus. That does not price
+  GPU card time: about 1–5 s a page per draft beside another tenant (#7567 E1), and D needs two drafts.
+- **This is a capacity choice more than a price one.** agy's spare pool is the binding limit (#7263, 2026-10-27).
+
+### Router (Derek 10:32Z)
+- **`route-score.py`** writes this TEST and #7567 E2's judged arms as route-judge-format score files. Each has whole-language cells
+  and `<lang>|<script>` cuts, and a copy goes in `evidence/by-script/`.
+- **Mapping:** accept = usable; wrong text = delivered and not usable; no-answer is counted in n and as neither.
+- **`add-evidence.py`** takes one source per route and cell, so no page counts twice: TEST for O, X, C, D, E; E2 for lite, lite>agy and GLM.
+- **Table `2026-10-28-gpu-7263`:**
+  - Every `<language>-gpu-7263/print` cell switches to an agy route. The pick among C, D and GLM→Flash is a near-tie at ~1.05 calls.
+  - `german-lite/print`: keep → **switch to lite>agy-flash-low**.
+  - `latin-lite/print`: keep **lite>opus**. lite>agy is 135/146 with 9 wrong-text pages against Opus's 0/147, which fails the relative wrong-text bar.
+  - Manuscript variants HOLD (< 10 pages a route).
+
+### Written (useful output)
+- **7 library pages** got arm D's read, the best judged read that beat the stored text inside the same call, through
+  `cli-ocr.mjs apply --apply`. Run `cli-ocr-20261028140316-1740366`; undo with `revert-run.mjs --run-id`.
+- **Refused:**
+  - 4 by the foreign-script guard (Greek letters);
+  - 9 in held books;
+  - 57 whose stored text #7567 had already rewritten with an arm this judge never saw. Its picks are kept.
+- **Containment:**
+  - The one wrong-leaf page the judge found (Velser p.18) was already contained by #7567.
+  - Two pages whose stored text invented words in faded citations were among the 7 rewritten.
+  - Nothing new to contain.
+
+### What this does not show
+- **O is Opus correcting lite, not Opus reading with no draft.** The 61 direct reads are too few to score apart.
+- **Per-language verdicts beyond Latin are underpowered.** Every arm sits at 41–49 of 42–49 accepted there; the panel has no more typed pages.
+- **The noise floor is one page,** so the misleading clause decides on single pages: C fails pooled by one.
+- **Chinese (Paddle) and Tibetan (Yigdzin) cells were not run.** Each has one GPU engine (no D), and Tibetan Flash-low correction has a
+  NO-GO (#7477). #7568's zh Opus corrections (75 pages, 3 books) are the frame for a next row.
+
+Files: `scripts/eval/gpu-flash-vs-opus-7263/` holds the prereg, code, `split.json` and `results/score-*.json`. Scratch, with reads,
+packets and verdicts, is in `/root/jobs/gpu-flash-vs-opus-7263` on gex45.
+
+## 2026-10-28 · How many untranslated books would be FIRST English translations, by language group and period?
+
+**Who this is for.** Anyone choosing what to translate next. It also answers anyone asking "how many first English translations does Source Library hold, or could it hold?"
+
+**Design (pre-registered in commit 7450dd67e, before any search).**
+- **Frame:** live books (`visible && pages_count>0`) with no translated page and a language that is not English. That is 43,608 books in 31,645 works. A book with no `work_id` counts as its own work. 2,940 English-language books are excluded.
+- **Strata:** seven language groups. We drew 50 works per group with seed 7651 and took one random book from each work.
+- **Search:** one unprimed `claude -p` Sonnet per book, run on the subscription. The brief is `results/ft-untranslated-7651-brief.md`, adapted from `r5-oracle-brief.md`. Each searcher first identified the work from OUR scan (OCR text of the first pages, or the page images). It then searched for a published English translation. A 6-search floor was added after a 2-book pilot. A positive-control query was required before any `no_prior_known`. The searcher never saw our cards, attempts or badges.
+- **Verdicts:** `no_prior_known` / `prior_exists` / `partial_only` / `not_a_single_work` / `identity_unresolved` / `already_english` / `could_not_search`. The last one, "could not ask", stays out of the rate denominator. It occurred 0 times.
+- **Controls:** 10 books from reviewed `prior_exists` cards, mixed blind into the run order.
+- **Re-judge:** 20 random sample books, re-run by Opus in fresh processes that never saw the first verdict.
+- **Estimator:** stratum rate × stratum frame. Wilson CIs per stratum. Works use a normal CI with finite-population correction. Books use a ratio estimator (each work weighted by its books in the frame) with a stratified bootstrap (2,000 reps). Period rates are post-stratified on the drawn book's edition year.
+- **Cost:** $43.77 API-equivalent for the first pass (360 calls), $6.21 for the re-judge (20 Opus calls). Subscription only; the box account's week went 79% → 81%.
+
+### Untranslated pool — by language group (measured, n=50 each)
+
+| group | no prior known (works) | works | books (ratio est.) | prior exists | partial | not a single work | identity unresolved |
+|---|---|---|---|---|---|---|---|
+| Latin | **82%** [69–90] | 17,347 of 21,155 | 17,935 of 22,747 | 4% | 4% | 8% | 2% |
+| Chinese | **86%** [74–93] | 740 of 860 | 9,015 of 10,450 | 8% | 6% | 0% | 0% |
+| German | **66%** [52–78] | 3,784 of 5,733 | 4,129 of 6,079 | 6% | 2% | 26% | 0% |
+| French/Italian/Spanish/Dutch | **56%** [42–69] | 1,030 of 1,839 | 1,042 of 1,935 | 28% | 6% | 10% | 0% |
+| Greek | **30%** [19–44] | 106 of 352 | 112 of 414 | 52% | 0% | 12% | 4% |
+| Hebrew/Arabic/Persian/Syriac | **40%** [28–54] | 415 of 1,038 | 415 of 1,078 | 24% | 14% | 12% | 10% |
+| Sanskrit/Tibetan/Japanese/Korean/other | **38%** [26–52] | 283 of 746 | 437 of 905 | 26% | 10% | 16% | 4% |
+| **Corpus** | **75%** | **23,705** [21,312–26,097] of 31,645 | **33,085** [28,821–36,328] of 43,608 | 8% | 4% | 12% | 2% |
+
+Among single, identified works only (no_prior / (no_prior + prior + partial)), the no-prior share is: Latin 91%, Chinese 86%, German 89%, Fr/It/Es/Nl 62%, Greek 37%, Hebrew/Arabic/Persian/Syriac 51%, other 51%.
+
+### Untranslated pool — by period of the edition (post-stratified)
+
+| period | n | no prior known (works) | books |
+|---|---|---|---|
+| <1500 | 19 (thin) | 48% [6–80] | ≈670 of 1,389 |
+| 1500s | 72 | 75% [60–88] | ≈7,750 of 10,324 |
+| 1600s | 46 | 84% [69–96] | ≈8,600 of 11,182 |
+| 1700s | 88 | 74% [54–89] | ≈5,060 of 6,815 |
+| 1800s | 24 (thin) | 9% [1–33] | ≈110 of 662 |
+| 1900+ | 12 (thin) | 6% [0–24] | ≈15 of 246 |
+| unknown year | 89 | 82% [66–90] | ≈11,070 of 12,990 |
+
+The period CIs are wide because a Latin draw carries ~420 works of weight and a Greek draw carries ~7. Read the period rows for direction only. The 1800s and 1900+ untranslated books are mostly editions of classics (Greek, Sanskrit, Persian) whose works are already in English.
+
+### Instrument checks
+
+- **Controls (blind, n=10):** 7 `prior_exists`, 1 `partial_only` (Paracelsus → Waite 1894), 1 `already_english`, 1 `identity_unresolved`. The `already_english` control was a 1920 Herodotus that is a Loeb Greek–English edition, so that control was mis-chosen. The `identity_unresolved` control (*Das Buch der Weisheit Salomonis*) failed because its six scanned images were all binding and flyleaves. **No control came back `no_prior_known`.** Strict recall on the 9 valid controls is 7/9, or 8/9 counting partial.
+- **Re-judge (Opus vs Sonnet, n=20):** 18/20 exact agreement and 19/20 on the first / not-first call (κ 0.83). One disagreement is partial vs complete; the other is identity_unresolved vs no_prior_known.
+- **"Could not ask" vs "asked, none found":** all 199 `no_prior_known` verdicts record a passing control query and `search_worked: true`. The median is 7 queries; 6 verdicts fell below the 6-search floor.
+- **Identity source:** 142 books were identified from title-page text and 111 from page images. 97 were identified from the catalogue alone, mostly because the first six scanned pages were binding, endpapers and bookplates. The no-prior share is 63% where the scan identified the work and 40% where only the catalogue did. That gap reflects composition, not cause: catalogue-only books cluster in the Greek and other strata, where classics dominate.
+- **Prior links:** 38 of 73 cited URLs answered 2xx/3xx from this box. openlibrary.org timed out throughout, and several citations are catalogue search URLs rather than item pages.
+
+### Sensitivity
+
+The controls missed about 1 in 5 priors, and they are famous works, which are easy to find. If the search misses priors at that rate across the sample, the true prior-plus-partial share rises from ~12% to ~15%. That takes ~1,100 works off the corpus total, about 3.5pp. Treat 23,700 works as an upper-leaning point estimate and ~22,600 as a recall-adjusted one. Both sit inside the CI.
+
+### Translated side (no new searches; carried over and re-weighted)
+
+The frame is today's 24,422 translated live books, minus 2,391 English-language books, which leaves 22,031. The rates come from three instruments that are never pooled. They are re-weighted to today's frame by language group × period (`results/ft-translated-side-7651.json`):
+
+| group | books | fresh search #7598 (n) → no prior | est. books | round-5 Tier-1 (n) | reviewed cards (works) |
+|---|---|---|---|---|---|
+| Latin | 9,242 | 65% [62–68] (943) | 6,025 | 43% (141) | 62% (673) |
+| Chinese | 2,519 | 83% [78–87] (273) | 2,031 | 30% (43) | 50% (40) |
+| German | 2,684 | 69% [63–75] (212) | 1,898 | 42% (39) | 48% (165) |
+| Fr/It/Es/Nl | 2,126 | 42% [36–49] (207) | 907 | 30% (46) | 45% (225) |
+| Greek | 1,094 | 15% [9–22] (124) | 168 | 33% (24) | 62% (216) |
+| He/Ar/Fa/Syr | 679 | 54% [42–66] (61) | 359 | 45% (22) | 29% (56) |
+| other | 3,687 | 34% [29–40] (262) | 1,682 | 49% (175) | 71% (422) |
+| **total** | **22,031** | **58%** [56–61] (2,082) | **13,071** | 41% (490) | 62% (1,699) |
+
+| period | books | fresh search → no prior | est. books |
+|---|---|---|---|
+| <1500 | 2,402 | 37% (237) | 900 |
+| 1500s | 4,051 | 51% (396) | 2,090 |
+| 1600s | 5,489 | 65% (535) | 3,677 |
+| 1700s | 3,906 | 66% (239) | 2,604 |
+| 1800s | 2,200 | 36% (232) | 811 |
+| 1900+ | 1,242 | 30% (123) | 442 |
+| unknown | 2,741 | 94% (320) | 2,546 |
+
+**Measured vs carried.** Of the 49 group × period cells, 17 are measured (≥30 fresh searches, 17,774 books). 17 are thin (10–29 searches, 3,345 books). 15 have fewer than 10 searches (912 books) and carry their group's rate.
+
+The fresh search drew books by priority tier (never-searched first), not uniformly, and it has no `not_a_single_work` class, so its rate is not exactly comparable with the untranslated table. Round 5's oracle figure (8,565 of 16,151, 53%) applied to today's 22,031 gives ≈11,700. The fresh-search re-weight gives ≈13,100. Round-5 Tier-1 rows survive for only 490 of 1,165 books.
+
+### Result
+
+If everything in the untranslated pool were translated, ≈33,000 more books (≈23,700 works) would carry no English translation known to us. That is on top of ≈11,700–13,100 translated books that already do. Latin and Chinese hold about 80% of those books (26,950 of 33,085). Greek, the Near-Eastern languages and "other" are mostly works that are already in English. The Latin rate (82%) agrees with the #4617 excluded tail (76.7% ±7.6pp, n=120).
+
+**Replicated?** In part. The Latin rate is consistent with #4617, and the re-judge agrees on the first / not-first call 19 times in 20. The language split itself is new.
+
+**Artifacts:** `scripts/eval/ft-untranslated-sample-7651.mjs` (draw), `ft-untranslated-7651-prompts.mjs`, `ft-untranslated-7651-search.sh`, `ft-untranslated-7651-score.mjs`, `ft-translated-side-7651.mjs`. Results: `results/ft-untranslated-sample-7651-manifest.json`, `ft-untranslated-7651-verdicts.jsonl` (370 rows), `ft-untranslated-7651-scores.json`, `ft-translated-side-7651.json`. Measure-only: no book, card or badge writes.
+
+## 2026-10-28 · Can a GPU draft corrected by Flash 3.8 (image + draft) replace lite on European print? (#7567, E0–E2)
+<!-- PRIOR ART: 2026-10-23-latin-open-engines-adoption-bar-6871.md (no engine alone beats lite + long-s), 2026-10-24-latin-lite-flash-correct-four-arms-5924.md (lite→Flash-low correction, 11/250 worse), 2026-10-24-lite-corrects-gpu-drafts-7263.md (lite as corrector of GPU drafts, rejected; no-image control), 2026-10-26-ocr-pareto-chained-routes-6740.md (#6740's lite→Opus and lite→agy chains, reused here as arm f and a stored replicate of a), 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane). -->
+
+**Yes, for Latin, English and German, by the issue's rule. Not decided for French and Italian (no lite comparator).**
+
+### E0 · Panel (`panel.json`, `refs.jsonl.gz`, `build-panel.py`)
+- **326 pages, 306 books, typed references only.** Non-canonical first.
+  - EEBO-TCP 58 en + 15 la (`eebo-tcp-5488`).
+  - latin-period-5126 77: CAMENA and Wikisource same-edition text; the corrected-OCR references were dropped.
+  - Wikisource proofread `ref-ws`: la 34 (pre-1800) and de 30.
+  - **DTA** German 1557–1780: 16 works × 2 interior pages, seed 7567, page-aligned diplomatic TEI with ſ.
+  - **Wikisource validated fr 40, it 40** (1500–1800, `harvest-wikisource-gt.mjs` unchanged).
+- **CATMuS was not used.** CATMuS/modern is line crops with no pages, and its Italian print is 266 lines. GT4HistOCR lines are shuffled. latin-r4-acc has no images or lite reads on this box.
+- **16 pages are out of every CER table** (`excluded_from_scoring`, recorded before any judge or decision table):
+  - **9 library pages whose served image is now another leaf than the reference's.** Every image reader reads the same other leaf at CER ≈ 0.70; the served image equals the read's image (corr ≥ 0.99).
+  - **2 DTA Logau section-title pages.** My parser missed `[printed/scan]` markers; Walter's two references were cut at them by hand.
+  - **2 pages of a DTA manuscript.**
+  - **3 Wikisource pages:** 2 image/transcription mismatches and 1 wiki-table reference.
+- **Scorer** (`score.py`): letters only, infix CER (free extra text at the ends). Two views:
+  - raw;
+  - folded: ſ/f/s, u/v, i/j, ß, æ/œ and the abbreviation marks merged.
+
+  Loops and truncation are judged against the page's median arm, not the reference: a Wikisource newspaper page transcribes one article of several.
+
+### E1 · Draft screen (median CER %, folded; pages every engine read; loops in brackets)
+
+| engine | la (116) | en (58) | de (58) | fr (40) | it (38) | all (310) | raw all | pages/h beside the 14.5 GB Tibetan job |
+|---|---|---|---|---|---|---|---|---|
+| **LightOnOCR-3-1B** | 6.38 (1) | **3.31** | 2.18 | 0.64 | **2.16** (1) | **3.07** (2) | 5.39 | 2,556 |
+| Surya 2 | 6.25 | 3.40 | 2.26 | **0.63** | 2.35 | 3.55 | 5.69 | 2,008 |
+| PERO-OCR (eu print 2022, CPU 8 threads) | **5.99** | 3.50 | 2.49 | 1.61 | 2.80 | 3.59 | 7.28 | 707 (CPU) |
+| CHURRO-3B (fp8 weights) | 7.26 (2) | 3.74 | **1.18** (1) | 0.80 (1) | 3.17 | 3.73 (4) | 7.49 | 1,069 |
+| Infinity-Parser2-Flash | 6.88 (1) | 3.58 | 2.60 (1) | 1.34 | 2.78 | 3.81 (2) | 5.83 | 1,813 |
+| GLM-OCR (anchor) | 6.81 | 3.69 | 3.21 (2) | 1.05 (1) | 2.79 | 3.96 (3) | 5.86 | 1,092 |
+| dots.ocr (anchor) | 6.75 (2) | 3.92 | 1.92 | 1.11 (1) | 2.68 | 3.96 (3) | 6.60 | 1,459 |
+| *lite (stored bench read, 199 pages)* | 5.39 | 3.36 | 0.87 | — | — | 4.13 | 6.67 | — |
+
+- **Every engine installed.** PERO took about 1 minute (pip + the `pero_eu_cz_print_newspapers_2022-09-26` model).
+- **The card was shared.** The Tibetan re-read held 14.5 GB at util 0.6 all night, outside the queue. Five of six vLLM servers OOM'd in the first pass at util 0.365, so `rerun-tight.sh` re-read the failed pages at util 0.30–0.35 with 8 sequences.
+- **CHURRO bf16 no longer fitted**, so it ran with fp8 weights on every page. On the 91 pages read both ways, bf16 vs fp8 letter distance is median 0.08%.
+- **Throughput is a beside-another-tenant number.** GLM ran 1,092/h here against 1,757/h alone on 10-23 (factor ≈ 0.62).
+- **Latin medians are high in every arm** because CAMENA references expand abbreviations.
+- **Arm (c)'s draft is the best non-GLM engine per language:** la PERO, en LightOnOCR, de CHURRO, fr Surya, it LightOnOCR (`c-pick.json`).
+
+### E2 · Correction arms (agy Gemini 3.8 Flash low, main pool, one page per call; #6740 template `0601ef30`)
+- **Arms:**
+  - (a) lite→Flash; (a2) the same again;
+  - (b) GLM→Flash; (c) X→Flash, where X is the best E1 draft for the page's language; (d) GLM + X→Flash (`e97253381edfd7e0`, the template with the draft sentence made plural);
+  - (e) fresh Flash read (`63266ce8e814161e`, the template's own OCR prompt);
+  - (f) lite→Opus, #6740's stored correction (`correct.mjs` instruction); not re-run.
+- **No-image control (Derek, inbox 21:15Z)** for a, b, c and d.
+  - Taken literally (no attachment), agy hunts for the file and answers CONTAIN/UNCHANGED: 10 CONTAIN of 20 pages. That measures nothing.
+  - The control run everywhere puts one sentence where the image was ("could not be attached … correct as well as you can").
+- **Decision rule** (`e2-table.py`, committed d1e26065a before arms c and d existed):
+  - CER: δ = mean(arm − a), folded, with a 95% paired bootstrap CI. Within the noise floor when the CI's upper end ≤ NF, the larger |end| of a2 − a.
+  - Judge: no more worse-than-draft pages than a.
+
+**Decision table, the 209 lite pages** (`results/decision.json`; misleading = the judge did not call it usable; worse = worse than its own draft)
+
+| lang (NF) | arm | δ CER vs a [95%] | misleading | worse than draft | verdict |
+|---|---|---|---|---|---|
+| la (±2.59 pt), n 125 | a / a2 | — | 6 / 10 | 5 / 6 | |
+| | b GLM→F | −0.63 [−2.43, +0.35] | 7 | 0 | **pass** |
+| | c X→F | −0.64 [−2.57, +0.52] | **2** | 2 | **pass** |
+| | d 2 drafts | −0.79 [−2.63, +0.22] | 4 | 3 | pass |
+| | f lite→Opus | −0.76 | 8 (all CONTAIN) | 3 | |
+| en (±0.19), n 55 | a / a2 | — | 1 / 1 | 2 / 2 | |
+| | b | −0.01 [−0.11, +0.08] | 0 | 1 | **pass** |
+| | c | −0.01 [−0.13, +0.11] | 1 | 2 | **pass** |
+| | d | −0.01 [−0.12, +0.11] | 1 | **4** | fail |
+| de (±1.15), n 29 | a / a2 | — | 1 / 1 | 0 / 0 | |
+| | b | −0.11 [−0.48, +0.13] | 0 | 0 | **pass** |
+| | c | −0.35 [−0.91, +0.02] | 0 | 0 | **pass** |
+| | d | +0.25 [−0.52, **+1.18**] | 0 | 1 | fail |
+| all, n 209 | a / a2 | — | 8 / 12 | 7 / 8 | |
+| | c | −0.42 [−1.55, +0.26] | **3** | 4 | pass |
+
+**All pages, judged** (`results/judge-table.txt`). French and Italian have no (a):
+
+| arm | misleading of 324 | fr (40) | it (40) |
+|---|---|---|---|
+| c | 5 | 1 | 0 |
+| d | 5 | 0 | 0 |
+| b | 12 | 1 | 1 |
+| e fresh Flash | 30 (8 filter cuts / no answer) | 0 | 1 |
+| X best draft alone | 115 | 9 | 13 |
+| G GLM alone | 203 | 19 | 24 |
+
+**Reading the tables:**
+- **The draft barely matters once Flash has the image.** GLM is the worst draft, misleading on 63% of pages, yet b, c and d end within the noise floor of each other and of a.
+- **The best draft still helps:** c has the fewest misleading pages in every language.
+- **Worse-than-draft is measured against each arm's own draft.** A bad draft (GLM) makes "worse" rare, so the c/d counts are the comparable ones.
+- **Fresh Flash with no draft (e) is weaker:** 30/324 misleading, 14/55 on English, from filter cuts and truncations.
+- **The corrector reads the image.** On the judged sample of 60 pages (12 per language, both arms in one call), for b the image arm has fewer faults on 35 pages and the no-image arm on 2; misleading 2 with the image vs 11 without. For a: 12 vs 1, misleading 2 vs 4.
+  - By CER, no-image is worse in de, fr and it for b and c (e.g. de c +3.42 [+1.27, +6.28]).
+  - In la and en the CER difference is within ±0.5: the image pass adds marginalia and catchwords the references leave out.
+  - This is unlike the #7263 Tibetan lite corrector, which gained as much with no image.
+- **Judge controls:** 6 packets with one version holding a dropped line and one an inserted line from another page: **12/12 caught**, and the original was clean in 5/6.
+
+**Cost.** $0 API.
+- **agy:** about 3,100 calls; about 27K input and 0.7K output tokens per page with the image, 11K without.
+  - The Gemini weekly bucket went 0.587 → 0.471 over 21:42–03:00Z, other pool traffic included. That is ≈ 3e-5 of a week per call (noisy, see #7558).
+- **Opus judge:** 602 `claude -p` calls (210 lite, 326 GPU, 60 no-image, 6 controls) on dereklomas@ and, while that login's 5-hour window was at 88%, on the box's second login (milo).
+- **GPU:** about 4 h on gex45, beside the Tibetan job.
+
+### Useful output (Derek, inbox 21:15Z)
+- **91 library pages rewritten** with the best judged read, through `cli-ocr.mjs apply --apply` with every guard: run `cli-ocr-20261028030021-609322`; undo with `revert-run.mjs --run-id`.
+  - The rule is #7522's: clean (usable, no omission, addition, bleed or order error), fewest misreads, and it must beat the stored OCR **inside the same judge call**. Ties keep the stored text.
+- **Picks by arm:** a 45, f 31, b 14, e 8, a2 4, c 3, d 3.
+- **Refused before apply:**
+  - 9 pages in held books, including the 8 image/reference-mismatch books, which were already held;
+  - 1 Opus UNCHANGED;
+  - at apply, 7 by the foreign-script guard.
+- **Image check:** each read's image was checked to be the leaf the page serves (`image-check.py`, corr ≥ 0.95; same leaf 0.997, neighbouring leaf 0.17).
+- **No `--mark-stale`.** The stale-translation sweep finds these pages; no re-translation queue was created. List: `results/written-page-ids.json`.
+- **Contained (by eye, the brief's exception).** Velser, *Opera historica* (`6a0b351d…`, not visible): the stored OCR runs one leaf behind the images. Archived 17.jpg opens with stored p16's text; 18.jpg opens with p17's.
+  - The book is held as `ocr-leaf-offset-7567`, and pp. 17–18 are withheld.
+  - The repair is the #3368/#4790 leaf re-pointing.
+
+### What this does not show
+- **French and Italian have no lite comparator.** $0 API meant no new lite reads, so "replaces lite" is untested there. c leaves 1/40 and 0/40 pages misleading.
+- **The references and the drafts are different texts on the lite side.** Lite here is the 10-03 bench read; the stored OCR is mostly `gemini-3-flash-preview`.
+- **n is small per language** (de 29 lite pages, en 55), and the Latin noise floor is wide (±2.6 pt): the CER clause is weak there and the judge carries the call.
+- **Throughput was measured beside another tenant.**
+
+**Recommended next (not run here):**
+- **E3 guards** (long-s pass, negation/numeral/expansion diffs) on arm c.
+- **E4** only if the drafts matter. They barely do: skip, or fine-tune for speed alone.
+- **E5:** 20 books × 25 pages per language, including a lite read for fr/it.
+
+Files: `scripts/eval/euro-gpu-correct-7567/` (code, `panel.json`, `refs.jsonl.gz`, `results/`: E1 reads, E2 outputs and prompts, verdicts, key, tables, decision, write choice, apply summary).
+
+## 2026-10-28 · E3 guards and the E5 scale test: GPU draft → agy Flash correction against lite → Flash on 2,500 library pages (#7567)
+<!-- PRIOR ART: 2026-10-28-euro-print-gpu-draft-flash-correct-7567.md (E0–E2: arm c chosen on 209 reference pages; this is its scale test on our own pages, and E2's tools reused unchanged where possible); 2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md (the live lite→Flash correction lane arm a stands for). -->
+
+**Arm c is less often misleading than lite→Flash in every language but French. By the rule fixed in advance it passes Latin and Italian only.** The fails are narrow, and they are the number and one-word changes the E3 guard exists to catch.
+
+### Panel (`e5-draw.mjs`, `results-e5/panel.json.gz`)
+- **Frame.** Visible, idle, unheld books dated 1470–1800 (`year`). Each has 25+ interior pages whose stored OCR is a Flash-Lite draft of 300+ characters, not handwritten and not edited (the correction lane's own page frame).
+- **Draw.** Books in a seeded order (7567, E2 panel books excluded). 25 pages per book, spread evenly; 20 books per language.
+- **Colophons were read for every drawn book** (`results-e5/colophon2.txt`). 7 books were rejected:
+  - 2 German books catalogued as Latin (*Chymische Hochzeit*, Paracelsus *Opera*);
+  - 2 Russian books catalogued as English;
+  - a Manly P. Hall manuscript box;
+  - Galileo's *Dialogo* in its 1874 Livorno edition;
+  - Piranesi's *Carceri* (plates, no text).
+- **2 pages served no image** (BSB served a tiny file) and are out of every count.
+- **The lite read fr/it lacked in E2 is the stored Flash-Lite draft:** no paid read was needed.
+
+### Arms (agy Gemini 3.8 Flash low, main pool, one page a call, E2's template `0601ef30`, `e2-correct.mjs --panel`)
+- **a:** stored Flash-Lite draft → Flash. **a2:** the same again, on 2 pages a book (200).
+- **c:** the language's best E2 draft → Flash. The drafts were read on gex45 through the GPU queue, one engine at a time:
+
+  | lang | engine | pages read |
+  |---|---|---|
+  | la | PERO-OCR on the GPU | 499 (6.5 min) |
+  | en, it | LightOnOCR-3-1B | 991 at 3,578 pages/h |
+  | de | CHURRO-3B fp8 | 500 at 1,871 pages/h |
+  | fr | Surya 2 | 495 |
+
+- **Delivered:** a 2,498, c 2,478. c had no draft on 22 pages (an empty or too-short GPU read).
+- **Quota:** 5,176 agy calls. The Gemini weekly bucket went 0.409 → 0.300, other pool traffic included (≈2e-5 a call).
+
+### Agreement (`e5-table.py`; no typed references on library pages, so this is agreement, not accuracy)
+- **Measure.** d(x) is the folded letter distance from x to a. a2 is a's own repeat, on 199 pages.
+- **Result.** c differs from a by more than a differs from itself in every language. The CI of d(c) − d(a2) is above 0 everywhere; all languages: 2.04% vs 1.03%, CI [+0.66, +1.41].
+- Agreement cannot say which text is right. The judge does.
+
+### Judge (blind Opus, `claude -p`, #7522's `judge.mjs`, neighbouring leaves attached; 790 pages, 8 a book)
+**Decision table** (the rule was committed in `e5-table.py` before arm c had results):
+- **pass** = misleading(c) ≤ misleading(a), AND worse-than-stored(c) ≤ worse-than-stored(a).
+- Misleading = not usable. L = the stored lite text; X = the bare GPU draft.
+
+| lang | judged | misleading L / X / a / c | worse than stored a / c | better than stored a / c | c fewer / more faults than a | verdict |
+|---|---|---|---|---|---|---|
+| la | 160 | 68 / 82 / 23 / **4** | 6 / 2 | 132 / 144 | 101 / 13 | **pass** |
+| en | 157 | 17 / 37 / 1 / **0** | 9 / **10** | 76 / 83 | 47 / 18 | fail |
+| de | 160 | 52 / 52 / 11 / **7** | 9 / **11** | 112 / 130 | 83 / 20 | fail |
+| fr | 159 | 14 / 13 / 1 / **2** | 8 / 8 | 63 / 95 | 50 / 14 | fail |
+| it | 154 | 46 / 40 / 8 / **2** | 4 / 4 | 129 / 137 | 88 / 29 | **pass** |
+| all | 790 | 197 / 224 / 44 / **15** | 36 / 35 | 512 / 589 | 369 / 94 | pass |
+
+- **What c's worse-than-stored pages are.** Of the 29 in en/de/fr, 25 are one extra minor misread on a page both arms keep usable.
+- **Four change the sense:**
+  - a quantity read 30 for 10 (de);
+  - an editorial *den* inserted (de);
+  - cropped line ends filled with guessed text (de);
+  - *plus* dropped, so "more or less deeply striate" becomes "less deeply striate" (fr).
+- **One finding applies to every arm:** no engine alone serves readers. The stored lite text is misleading on 197/790 pages and the bare GPU draft on 224/790.
+
+### E3 · guards (`scripts/lib/correction-diff-guard.mjs`, `tests/unit/correction-diff-guard.test.ts`)
+- **Long-s pass.** It repairs f-for-ſ forms that are never words in the language (eft, ift, fhall, quefto). It folds ſ to s when the library's text for the page has none.
+  - On arm c: tells on 60 pages (359 forms); ſ folded on 766 pages, mostly German (430).
+  - The #5924 lexicon pass (`longs-orthography.mjs`) needs a model file that is not on gex45, so it was not used.
+- **Diff guard.** It flags a local change (≤ 3 tokens a side) when the page's count of a negation, or of a number value, changes, or when an abbreviation is expanded into a word that does not contain it.
+  - It does not flag: page numbers moved into `<page-num>`; spacing fixes; nõ→non and nec→neque; a Tironian 7; 3m/q2 glyphs.
+  - The first version flagged 486/499 Latin pages; the rules above came from reading those flags.
+  - On all arm-c output against its own draft: 658/2,475 pages flagged. Against the stored text: 824.
+- **Image check.** On the 600 pages chosen to write, 175 carried flags. Opus checked each flag against the image, shown blind as "reading 1 / 2" (`e5-write.mjs confirm`):
+
+  | change | the pick confirmed | the stored reading was right | undecided |
+  |---|---|---|---|
+  | number | 108 | **78** | 12 |
+  | negation | 136 | **28** | 7 |
+  | expansion | 22 | 1 | 0 |
+
+  - A confirmed change stays. A change given to the stored reading is put back (92 put back).
+  - A page with an undecided change is held (17 pages).
+  - **Numbers are where the corrector is least safe:** French 19 of 23 number changes went back to the stored reading.
+
+### Useful output
+- **557 library pages rewritten** with the best judged read. Run `cli-ocr-20261028140539-1746942`; undo with `revert-run.mjs --run-id`.
+  - **Pick rule (#7522's):** clean (usable, no omission, addition, bleed or order error), fewest misreads, and it must beat the stored OCR inside the same judge call.
+  - **By arm:** c 472, a 75, a2 10.
+  - **By language:** it 135, la 119, de 118, fr 97, en 88.
+- **Refused:**
+  - 17 held by the image check;
+  - 2 with flags that were never checked;
+  - at apply: 20 by the foreign-script guard (Greek in Latin and vernacular books), 3 under the 40% shared-words floor, and 1 rewritten by the correction lane meanwhile.
+- **No `--mark-stale`.**
+- **Contained (by eye).** On two pages the stored Flash-Lite OCR, and the English made from it, invent a whole second column from the sliver of the facing page at the scan's edge:
+  - Saint-Martin, *Le nouvel homme*, p.118 ("loin de nous, et l'impression de l'infinité…");
+  - *La Magie Naturelle*, p.512 / printed 494 ("aduertir, non sans quelque diligence…").
+  - The OCR is now the judged-clean read. Both books are held as `invented-facing-column-7567`, and those pages' English is withheld until re-translated.
+  - The judge flagged the same shape on three more pages of *La Magie Naturelle* (fragments, not invented text). They were not contained.
+
+### What this does not show
+- **Agreement is not accuracy.** E5 has no typed references; E2 measured CER on 209 reference pages.
+- **The judge is one Opus pass.** a's own repeat (a2) is judged on 199 pages only. Differences of 1–2 pages per language are inside what one judge call can flip.
+- **The image check reads only the flagged stretches.** Its 39% of numbers given back to the stored text is measured on picks, not on the whole lane.
+- **Arm c's drafting cost is the GPU queue on gex45:** about 1 h for 2,500 pages. Arm a's draft is already paid for.
+- **SigLIP stays paused.** Derek, inbox 09:39Z: the GPU stays on OCR, so the brief's resume step was skipped.
+
+Files: `scripts/eval/euro-gpu-correct-7567/` (`e5-*.mjs|py`, `results-e5/`).
+
+## 2026-10-28 · Can enrichment run on agy, one conversation a book? (#7628)
+
+**Why.** Enrichment ran on the paid Batch API (flash-lite) and stopped 10-25 to 10-28 when its envelopes expired;
+~5,300 live books lack a summary and index. Derek, 2026-10-28: "build it", with about a quarter of one agy pool's week.
+
+**Transport, found on the way (agy 1.4.9).**
+- One argv string is capped at 128 KB, so the prompt goes on stdin: `--input-format stream-json` (needs
+  `--output-format stream-json`), `-p ''`, message `{"event":"user","message":{"role":"user","content":[{"type":"text","text":…}]}}`.
+- **agy cuts one message at ~190K characters, silently.** Asked about a 265K-character message, the model said the text
+  stopped at line 2540 "at the truncation limit". Several messages in one conversation all arrive (3 messages, 380K
+  characters: the last turn quoted all three). So a book goes as messages of ≤150K characters, each answered "OK",
+  tasks in the last; one model request a message. Every turn re-reads the conversation, so input grows with the
+  square of the turns: an 18-turn chapter prompt read 11.7M tokens. Cap: 8 turns, over that the API lane.
+- With the instructions only after the text, the first whole-book call came back as prose with no JSON. Said first and
+  last, every call returned the JSON object. One reply wrapped it in a ```json fence (accepted); one book's quotes came
+  back keyed `quote` instead of `text` (renamed before grounding, else all are dropped).
+
+**Pilot.** 20 books with API-lane output already written: 5 Siku (paddle-zh-5600 cohort), 5 Latin, 5 German, 5 long
+(640-1,300 pages). Compare mode: nothing written. Read both outputs for each book.
+
+| set | book | pages | text | agy requests | s | API requests | quotes on page | chapters agy / API |
+|---|---|---|---|---|---|---|---|---|
+| Siku | Continuation of Rhyming Binomes | 177 | 397K | 2 | 36 | 11 | 18/27 | 11 / 4 |
+| Siku | Brocade Valley of Ten Thousand Flowers | 98 | 195K | 1 | 69 | 6 | 13/15 | 55 / 23 |
+| Siku | Sea of Meanings of the Book of Changes | 161 | 329K | 2 | 60 | 9 | 27/28 | 25 / 10 |
+| Siku | Kangxi Dictionary vol 1 | 247 | 579K | 2 | 43 | 15 | 32/39 | 13 / 8 |
+| Siku | Kangxi Dictionary vol 31 | 250 | 1134K | 7 (2 parts) | 102 | 26 | 84/91 | 14 / 4 |
+| Latin | Sapientia veterum Hebraeorum | 178 | 545K | 4 | 75 | 14 | 34/36 | 9 / 8 |
+| Latin | Principium et finis politicae doctrinae | 200 | 641K | 6 (2 parts) | 117 | 16 | 44/56 | 14 / 13 |
+| Latin | De Ieiunio et abstinentia | 186 | 275K | 2 | 71 | 8 | 21/24 | 23 / 23 |
+| Latin | Oracula magica Zoroastris | 184 | 261K | 2 | 35 | 8 | 19/22 | 5 / 5 |
+| Latin | Historia philosophiae orientalis | 242 | 516K | 3 | 148 | 13 | 33/44 | 72 / 35 |
+| German | Verzeichniss der altdeutschen Bilder | 36 | 38K | 1 | 36 | 3 | 4/4 | 11 / 11 |
+| German | Albertus Magnus von Weibern | 112 | 132K | 2 | 39 | 5 | 10/12 | 11 / 11 |
+| German | Geschichte der Talismannischen Kunst | 220 | 292K | 2 | 40 | 8 | 19/20 | 6 / 6 |
+| German | Das Konjugationssystem der Mayasprachen | 59 | 182K | 1 | 46 | 6 | 13/16 | 9 / 9 |
+| German | Material zur Sprache von Comalapa | 245 | 622K | 4 (2 parts) | 73 | 15 | 25/40 | 9 / 9 |
+| long | Bibliographie instructive [2] | 854 | 1177K | 8 (2 parts) | 116 | 26 | 49/72 | 13 / 13 |
+| long | Bodin, Les six livres de la République | 1300 | 4093K | 22 (7 parts) | 357 | 87 | 263/322 | 23 / 23 |
+| long | Evangeliarium … Aztecum | 640 | 2084K | 13 (4 parts) | 206 | 46 | 132/156 | 27 / 27 |
+| long | Sermonario en lengua mexicana | 860 | 2985K | 17 (6 parts) | 290 | 65 | 179/224 | 21 / 21 |
+| long | Diccionario de Motul vol 1 | 944 | 2416K | 14 (5 parts) | 200 | 52 | 131/150 | 16 / 16 |
+
+"API requests" is what the batch lane sends for the same book: one per 50K-character page batch, one summary, one
+chapters. "Quotes on page": the extraction quotes `quote-grounding.mjs` finds on the page, the check every enrich
+write applies (a quote not found is dropped, never written). A book over 600K characters is read in parts: extractions
+part by part, then the batch lane's own summary prompt over them, plus chapters, in one last call.
+
+**Reading both.** On 19 of 20 books the agy summary is the better one. It is more specific, and the specific claims
+checked against the text all held. agy named Georg Schütz, who signs the Frankfurt catalogue (p. 8), where the API
+lane called the catalogue anonymous. It found Viringus as canon of Arras (p. 12), the refutation of Cornarius and Fuchs
+(pp. 139-143), Colberg at Greifswald (p. 1), and the King's Library copies in de Bure (pp. 50, 209). Its chapter lists
+are as complete or more: the Psellus sections of the *Oracula* (pp. 77, 146), every radical of Kangxi vol 31 (the API
+list stops at the first), and Stanley's chapters III-IV. The exception was Kangxi vol 31 read whole (1.1M characters
+in one conversation): a one-sentence brief, and 3 of 75 quotes on the page. Read in two parts it was fine (84/91 on
+the page, a normal brief), which is where the 600K cap comes from. Over all conversations above ~650K characters,
+4-55% of quotes were on the page. Read in parts: 83%.
+
+**Style.** Without the end-of-prompt check, the agy summaries broke the summary prompt's style list 18 times in 20 books
+("comprehensive" 8, "testament" 3, "intricate" 2, em-dashes 2, "seminal", "you", "readers"); the API lane's 3 in 20.
+With the check: 3 in 14 (the 6 books read in parts were not re-run with it).
+
+**Quota.** Two windows of /quota on the shared default pool while other lanes ran: a request here (≤150K characters
+plus the conversation so far) weighed about 10 ordinary agy calls (rough). So 600 requests a day ≈ 6,000
+call-equivalents ≈ 40K a week ≈ a quarter to a third of a pool's week at ~104-150K. Lowered if the meter says so.
+
+**Writes (pilot):** none in compare mode. The write path was checked on 2 gap books: Reg. lat. 1278 (1,118 pages, 15
+requests, summary + index with `engine` blocks) and the Complutensian Polyglot (chapters only, 114 chapters with
+`field_provenance.chapters`; 18 requests, which is why the 8-turn cap exists).
+
+## 2026-10-28 · The correction lane's production acceptance, German and French (#7263)
+
+PRIOR ART: `2026-10-26-router-tests-idle-quota-6740.md` (the router tests: the lite>agy-flash-low route judged on 30 pages a
+language, with the instrument used here: `route-judge-6740/judge.mjs` judgePrompt / opusCall / parseVerdict, unchanged) and
+`2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md` (the German pages of the top-up). #7618's `lane-judge-sampler.mjs`
+does the same as a nightly sampler, but it had not run yet; its store gets nothing from this job (see Caveats).
+
+**Question.** The router's German cell put lite>agy-flash-low just below the Opus bar (P 0.891 against 0.90; #7606), with
+agy measured on only 30 pages. Meanwhile the #7558 lane has been writing that correction to German and French pages
+since 2026-10-27 21:00Z. How good is what it now serves?
+
+**Design** (Derek's inbox notes, 2026-10-28 10:59–12:06Z; they replaced the paired design in the brief).
+- **Frame.** The gex45 lane ledger (`/root/jobs/cli-ocr-correct/correct-ledger.jsonl`, 8,101 pages at 13:0xZ). That is this
+  box's shard. The other box's shard keeps its own ledger, which could not be reached from here.
+  - The ledger holds 43 German and 26 French books. Two pages were drawn per book, seeded, from **every** ledgered outcome,
+    not only the written ones. Where the corrector answered UNCHANGED or CONTAIN, or a guard refused the write, the route
+    serves the Flash-Lite draft, and that draft is part of the route's output.
+  - What was judged is the page's **current** `ocr.data`, checked to be the lane's output. A written page must carry the
+    template stamp `0601ef30e816f7a7`; any other page must still hold the lite draft. One page had been rewritten since and
+    was skipped.
+- **German top-up** (the note's rule: fewer than 60 books). Before the 10:59Z note was read, this job had run the same
+  corrector and template (`cli-ocr.mjs read --correct-prompt`, `--lane=route-judge-6740-eval`) on the 250 German pages of
+  #7568 wave 1: **250 agy calls, main pool, weekly 33% → 32%**, never written.
+  - Two of those pages per book (10 books, 20 pages) were judged as the top-up, with no further agy call. They had no
+    apply guard, so they are reported apart and enter rules.json as their own source (`lite>agy-flash-low-unguarded`).
+  - That gives 53 German books, not 60. The other 230 reads were left unjudged, per the 10:59Z note.
+- **Judge.** Opus (`claude -p`), the route-judge prompt, one output per call against the page image, blind, in a hashed order.
+  - Two wrong-page controls per language: both passed in both languages.
+  - Where a written correction was rejected, the draft it replaced (the lane's `page_revisions` row) was judged too.
+- **Script type** (11:55Z / 12:06Z rule): the `ocr.data` `<script>` tag, else `pages.script_type`, else the book's
+  majority. Manuscript pages (German 2, French 6) are reported apart and kept out of the print cells' evidence.
+
+**Result** (`route-judge-6740/results/lane-accept-7263-2026-10-28/score.json`; 95% intervals by book bootstrap)
+
+| | pages (books) | accepted | wrong text |
+|---|---|---|---|
+| **German print, lane as served** | 84 (42) | **74/84** [0.80, 0.95] | 6/84 |
+| — correction written | 69 (37) | 64/69 | 1/69 |
+| — draft served (guard refused / UNCHANGED / CONTAIN) | 15 (10) | 10/15 | 5/15 |
+| German print, unguarded top-up (#7568 pages) | 20 (10) | 17/20 [0.65, 1] | 3/20 |
+| German manuscript, lane (1 book) | 2 (1) | 0/2 | 2/2 |
+| **French print, lane as served** | 45 (23) | **37/45** [0.72, 0.91] | 4/45 |
+| — correction written | 28 (18) | 26/28 | 1/28 |
+| — draft served | 17 (13) | 11/17 | 3/17 |
+| French manuscript, lane | 6 (4) | 5/6 | 0/6 |
+
+- **Worse than the draft.**
+  - German lane: 0 of the rejected written corrections; their drafts were rejected too.
+  - French: 2 of 28 written corrections.
+    - `69b51e2b…` p62: *piratisme* → *piratage*.
+    - `6a08dd9f…` p103: the speaker *Angelique* → *Agathe*.
+  - The top-up has one such page, an O4 repetition (`69c80b2b…` p293).
+- **What the lane refuses is the weak half.** Pages where the guard kept the draft (mostly "changes over 25% of the
+  draft's words") read at 10/15 and 11/17.
+  - They include a page carrying the previous page's text (`69ef2b26…` p103, fidelity 1).
+  - They include an unsplit spread (`6a2121ed…`).
+  - They include two engraved plates with handwritten captions, and a Fraktur page that drops half a line.
+  - The guard holds back changes it cannot check. It does not tell a good correction from a bad draft.
+- **Router** (`router-table/2026-10-28-lane-accept-7263.md`, `--before 2026-10-28-agy-gpu-7263.json`):
+  - **German OCR, Flash-Lite.** lite>agy-flash-low pooled 119/134 → **0.89 [0.84, 0.94]**, against lite>opus 0.94.
+    - Gap −0.04, P = 0.80 (the gate needs 0.90).
+    - Wrong text 7.9% against a bar of 3.1% + 4%.
+    - **keep**, as before. The "knife edge" of #7606 is no longer one: with 42 more books, agy sits clearly below the bar.
+  - **French OCR, Flash-Lite.** lite>agy-flash-low 64/74 → **0.88 [0.81, 0.94]**. **switch → lite>agy-flash-low**, as
+    before. The French Opus bar is still untested.
+  - No other cell changes.
+- **Against the served lite text** (German lite 0.70 [0.58, 0.81] in the table), the lane's output is a clear gain. The
+  router's question is different: does it match Opus? It does not.
+- **Cost.**
+  - Judge: 178 Opus calls (157 served, 4 controls, 10 drafts, 7 timeouts behind the box's pace guard, re-run), $10.86
+    list-price equivalent on the subscription. The milolomas meter read 86% → 87% of its week while the judge ran; the
+    account is shared.
+  - agy: the 250 top-up calls above. The lane's own calls were already spent: the table prices the route at 1.14 agy calls
+    per accepted page.
+
+**Rejected pages** (21 lane pages, `rejected-pages.json`; for a GPU-draft > agy retry, Derek 11:24Z, not Opus correction)
+- German: 5 written corrections, 5 print drafts, 2 manuscript drafts.
+- French: 2 written corrections, 5 print drafts, 1 unchanged draft, 1 manuscript draft.
+
+**Caveats**
+- **This is one box's shard.** The other box's lane writes to other books.
+- **Two pages a book.** Books are the unit; the intervals are by book.
+- **The German manuscript result is one book** (0/2).
+- **Double counting.** The #7618 sampler (`lane-judge-sampler.mjs`, nightly from 2026-10-29) draws from the same lane. It
+  does not know these 157 verdicts and may judge some of the same pages again. If its export also goes into rules.json, a
+  page judged twice would count twice. Its store was deliberately not written to: it is the input of a cron.
+- **The top-up is not production.** It is the same corrector without the apply guard, kept as its own source.
+
+Files:
+- `scripts/eval/route-judge-6740/lane-accept-7263.mjs`: draw, judge, drafts, score, evidence.
+- `results/lane-accept-7263-2026-10-28/`: score.json, sample.json.gz with the judged texts, verdicts-opus.jsonl.gz and
+  rejected-pages.json.
+- `estimator/router-table/evidence/lane-accept-7263.score.json`.
+
+## 2026-10-28 · Correct or re-read, wave 2: Sanskrit and Arabic (#7568)
+<!-- PRIOR ART: 2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md (wave 1, whose clear answer opened this wave) and 2026-10-27-correct-vs-reread-wave1-prereg-7568.md (design, and amendment 2 for this wave, committed before its draws). -->
+
+**Design.** Same as wave 1 (amendment 2 to the preregistration):
+- draws `w-draw.mjs` with seeds 75684 (sa) and 75685 (ar), from books in terminal status `complete`, ≥ 70% lite-read;
+- a format screen that keeps manuscripts;
+- arms L / C (`correct.mjs --model=opus`) / R (`cli-ocr.mjs read`, agy `gemini-3.8-flash-low`);
+- one blind Opus reader per book over all three texts (Step T);
+- agy Flash-low on 30 seeded C ≠ R pages.
+
+**Sample.**
+- **Sanskrit:** the first 10 of 13 that passed, all Devanagari print. The screen failed one book with full Hindi translations.
+- **Arabic:** the first 10 of 14, 6 print and 4 manuscripts (a Ḥāwāshī commentary, al-Ḥāwī, a Qurʾān, a Maghribī *Majisṭī*).
+
+**Outcomes of the correction call.**
+- **Sanskrit:** 247 corrected, 3 unchanged.
+- **Arabic:** 213 corrected, 18 unchanged, 14 contain, 5 no-answer. The no-answers are all in one two-page-spread book; the chatter guard restarted the read.
+- **R** read every page. Gemini's filter cut the text short on 3 Sanskrit and 17 Arabic pages.
+
+**Result** (`flash-reread-5924/results-7568/{sa,ar}/score.json`; Wilson 95%)
+
+| | n | misleading L | misleading **C** | misleading R | C vs R preferred (tie) | worse than L: C / R | agy C–R (Opus, same pages) |
+|---|---|---|---|---|---|---|---|
+| Sanskrit (print) | 250 | 208 (78–87%) | **26 (7–15%)** | 125 (44–56%) | **214–14** (22), p < 10⁻⁴⁶ | **0** / 21 | 20–8 (25–1) |
+| Arabic | 250 | 193 (72–82%) | **44 (13–23%)** | 144 (51–64%) | **175–41** (34), p < 10⁻²⁰ | 24 / 32 | 19–11 (21–5) |
+| …Arabic print (6 books) | 150 | 111 | **24** | 66 | 98–29 (23) | | |
+| …Arabic MSS (4 books) | 100 | 82 | **20** | 78 | 77–12 (11) | | |
+
+- **Route (preregistered rule): C in both.** C halves L in both languages; R halves L in neither.
+- **Bar (b) for C fails in Arabic on 24 pages.** By kind:
+  - **14 contains.** By rule they count as "false contains", because readers mark only another leaf's text as `not_this_leaf`. But the readers called L misleading on 14/14:
+    - 3 are blank leaves where L serves an invented "preface";
+    - 11 are *Majisṭī* pages where L is a repetition loop.
+  - **5 no-answers.** C serves L there.
+  - **4 non-transcriptions** (below).
+  - **1 real C misreading:** *al-Aʿlāq* p64, where C turns حرب لاقح ابدا into حرب لا تقع ابدا.
+- **Self-preference.** The cross-family judge agrees in both languages, by smaller margins than Opus.
+
+**The guard gap.** *Al-Durra al-Fākhira* (`6a08a754871243dce9def039`) is a modern typeset book, probably in copyright. On pp. 6, 12, 16 and 18 the corrector:
+- declined to reproduce the page;
+- answered with only the metadata tags and a `<warning>` that lists its corrections ("The full corrected page is not reproduced here …");
+- and `correct.mjs` scored it `corrected`. The chatter guard and the write guard both passed it.
+
+Applied, those pages would lose their whole body. Across the five languages it happened on these 4 pages only: no other correction has a body under 30% of its draft's letters, except two that cut a looping draft down to the page. A guard of "body letters ≥ some share of the draft's" would catch it. Whether that book should be public at all is a separate question.
+
+**By eye** (image open, crops, unblinded; C is the one to serve on all 4)
+- **sa `6a0eb388…` p51.** C fixes ललाटाद्यै, विलया, सशब्दं and सूक्ष्म. It also silently emends the print's own typo नन्तविधानात् to चिन्तनविधानात्. R has वरदात्तार, प्रपञ्च → पपञ्च and -तन्रे.
+- **sa `69e13a96…` p37.** C fixes महार्थदृष्ट्या, रज्यति, आपद्यते and the footnote महादृगादि, with no new errors. R splits अलंग्रास and misreads the footnote.
+- **ar `69ef3d42…` p60 (two-page spread).**
+  - C fixes the page numbers, المساقط and الزمان, and emends الحتم → الختم.
+  - C inherits L's omission of السعيد and the ف of فحينئذ, which R has.
+  - R reverses the order of the two pages.
+- **ar `6a477ce5…` p287 (Khiṭaṭ).** C repairs a heavily garbled L, checked against the print in 8 spots; its one slip is a lost و. R has وألوز برمحه for والوزير معه, توفيرا, ويقيمون and وتندب.
+- **Pattern across the five languages:**
+  - **C sometimes emends toward the expected text instead of the print.** In wave 1 the cases were the Lotus Sutra lacunae and the Homeric cento. Here they are चिन्तनविधानात् and الختم.
+  - **C keeps what L dropped only when it notices the gap.**
+
+**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed)
+
+| Language | Pages | Calls | Output tokens | List price | Per 1K pages |
+|---|---|---|---|---|---|
+| Sanskrit | 250 | 30 | 650K | $24.35 | $97 |
+| Arabic | 250 | 37 | 668K | $26.15 | $105 |
+
+- On wave 1's scale (Latin's $20.28 per 250 pages ≈ 1% of an account-week), the correction costs **about 5% of an account-week per 1K pages in both languages**.
+- **Wave 2 as a whole** (corrections, 2 screens, 20 readers, by-eye): the weekly meter went **46% → 53%** (02:35Z → 04:40Z). That is an upper bound, because the account is shared.
+- **R:** 530 agy calls for 500 pages.
+
+**Human check (#7573):** `scripts/eval/dataset/judge-human-check-7573/{sanskrit,arabic}.jsonl`. It has the same shape as wave 1, with 30 `review: true` rows per language.
+
+**Caveats.**
+- Exploratory: 10 books per language, a single-family judge with a 30-page cross-family check, and no human calibration (#7573).
+- The reader packets carried only the first line of each language's `lang_note`. The readers had the full note in `T-TASK.md`, and one used it explicitly. `w-packets.mjs` is fixed for later runs.
+
+Files: `scripts/eval/flash-reread-5924/results-7568/{sa,ar}/` and the `w-*.mjs` scripts there.
+
+## 2026-10-28 · Correct the lite text with Opus, or re-read with Flash: Chinese, German, Greek (#7568, wave 1)
+<!-- PRIOR ART: 2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md (the Latin result repeated here) and 2026-10-27-correct-vs-reread-wave1-prereg-7568.md (this run's preregistration, a766b3241, and amendment 1, 0b6739837). -->
+
+**Question.** On 250 lite-read Latin pages, Opus correcting the stored lite text in place beat a Flash re-read on every measure (#5924). Does that hold for Chinese, German and Greek?
+
+**Design** (preregistered in `2026-10-27-correct-vs-reread-wave1-prereg-7568.md` before any draw or model read; amendment 1 came after the draws, before any read).
+- **Sample.** For each language, books in terminal status `complete`, at least 70% lite-read, with the 25-page `spread` rule (`flash-reread-5924/w-draw.mjs`, seeds 75681/2/3) and a format screen by an Opus reader.
+  - **Chinese: 3 books.** The terminal frame holds only 5 lite-read Chinese books. The screen dropped a Siku Quanshu hand copy and a Japanese kunten edition. Most Chinese lite pages are in `held` books, which are out of the frame.
+  - **German: 10 printed books.**
+  - **Greek: 10 manuscripts.** All 14 Greek candidates were manuscripts; per amendment 1, manuscripts stay in.
+- **Arms.**
+  - L: the stored lite text.
+  - C: `correct.mjs --model=opus --per-call=10`, unchanged. C serves the correction, or L where the outcome is unchanged, contain or no-answer.
+  - R: `cli-ocr.mjs read --model=gemini-3.8-flash-low`, unchanged, one page per call through agy.
+- **Step T.** One blind Opus reader per book saw the image and all three texts as X/Y/Z, in a seeded order. It gave a verdict per text (misleading / flawed / sound, using #5924's `C-TASK.md` words) and the three pairwise preferences (`T-TASK.md`).
+  - This differs from Latin, where each pair of arms had its own reader. Here one reader judges every arm under the same conditions.
+- **(d) Second-family check.** agy Flash-low judged C vs R blind on 30 seeded pages per language where C ≠ R.
+
+**Outcomes of the correction call.**
+- Chinese: 71 corrected, 2 contain, 2 no-answer. Both no-answers were Opus output blocked by a content filter on the Lotus Sutra.
+- German: 233 corrected, 16 unchanged, 1 contain.
+- Greek: 185 corrected, 65 contain.
+- R read every page. Gemini's filter cut the text short on 6 Chinese, 2 German and 32 Greek pages.
+
+**Result** (`flash-reread-5924/results-7568/<lang>/score.json`; Wilson 95%)
+
+| | n | misleading L | misleading **C** | misleading R | C vs R preferred (tie) | worse than L: C / R | agy judge C vs R (Opus, same pages) |
+|---|---|---|---|---|---|---|---|
+| Chinese (print) | 75 | 57 (65–84%) | **5 (3–15%)** | 37 (38–60%) | **61–7** (7), p < 10⁻¹¹ | 2 / 9 | 20–10 (26–3) |
+| German (print) | 250 | 63 (20–31%) | **6 (1–5%)** | 23 (6–13%) | **167–22** (61), p < 10⁻²⁸ | 1 / 11 | **14–15** (21–1) |
+| Greek (MSS) | 250 | 245 (95–99%) | **87 (29–41%)** | 221 (84–92%) | **173–59** (18), p < 10⁻¹³ | 65 / 14 | 13–17 (13–13) |
+| Greek, the 185 pages C corrected | 185 | 180 | **22** | 157 | **173–4** (8) | 0 / — | 12–5 (13–1) |
+| Greek, the 65 pages C contained | 65 | 65 | 65 (serves L) | 64 | 0–55 (10) | 65 by rule / — | 1–12 (0–12) |
+| *Latin, #5924 (for reference)* | 250 | 111 | 31 | 20–32 | 131–43 | 1 / 7 | — |
+
+- **Route (preregistered rule): C in all three languages.** Misleading(C) ≤ misleading(R), C is preferred, the sign test gives p < 0.05, and C halves L.
+- **Bar (a), halving L:** C passes in all three languages. R passes only in German.
+- **Bar (b), no page worse than L:** fails for both arms in every language, as in Latin. Every C page that failed is one where C serves L unchanged:
+  - zh: 2 no-answers.
+  - de: 1 contain on a blank image (below).
+  - el: 65 contains. The prereg's "false contain" test only credits a reader's `not_this_leaf`. Here the readers called L misleading on 65/65 of these pages and named its text invented or looping; the corrector's reasons say the same.
+  - **No correction made a page worse than lite.**
+  - The R pages that failed bar (b) are misreads, Gemini filter cuts, and one German spread where R read only the right-hand page (by eye, below).
+- **Bar (c), C beats R:** passes in all three.
+- **Self-preference.**
+  - Chinese: agy agrees, 20–10.
+  - German: agy splits 14–15, against Opus's 21–1 on the same pages. Both families find few misleading pages there (agy: C 2, R 1 of 30). Read the German margin over R as "both good, C at least as good", not as a 167–22 rout.
+  - Greek: agy and Opus agree once the pages are split. On corrected pages both prefer C (agy 12–5). On contained pages, where C serves the invented lite text, both prefer R.
+- **Reader-noise check:** where C's text equalled L's, no reader gave the two different verdicts (0 mismatches in all three languages).
+- **Facing strip.**
+  - de: visible on 38 pages; read in by L on 13, C on 0, R on 0.
+  - el: visible on 183; L 8, C 0, R 13.
+
+**By eye** (image open, crops)
+- **zh p82 (Lotus Sutra scroll).** C fixes L's 多寶佛塔品 → 分別功德品 and 八生, and keeps 六百八十萬億 where R has 八百.
+  - Where the scroll is torn, C restores the lost characters (無生法, 陀羅尼門, most of panel 4) from the canonical sutra and tags them `<unclear>`. R restores them silently.
+  - The reader counted L's "omission" of text that is lost from the leaf. On this damaged scroll the reader and C both lean on the known text. This is a caveat for damaged canonical texts.
+- **zh p102.** C is sound. L drops two sentences. R has 梵王華 for 宿王華.
+- **de 6a20…p15.**
+  - C fixes L's invented margin note *Rom. 5.* → *v. 12.*, the initial (*Der Meinunge*) and *jhrer*. One slip: *verunehret* for *vervnehret*.
+  - R normalises *außdrückliches* and *jhrer*.
+- **de 69c8…p142 (a two-page spread).** R read only the right-hand page and dropped all 18 lines of p. 210. C keeps both pages, and puts one catchword into the body.
+- **el 6993…p99 (Homeric cento).** Neither is clean.
+  - C has *Ὀτρηρὸς* for *Ὀπτῆρ(ας)* and *Versus perfectus* for *ipfectus*.
+  - R invents *φεύξασθαι*.
+  - Both drift toward the printed Homer. C is better on layout and glosses.
+- **el 69e8…p159 (Sextus).**
+  - C rebuilds L's nonsense into the text, confirmed word by word: *ὁ ἄνθρωπος ἐπιβάλλει κρίνειν*, *τοὐναντίον συστηματική*, *ὁ νήπιος καὶ ὁ μεμηνὼς*.
+  - R invents whole phrases (*ὁ ἄνεμος*, *ἐκ πλειόνων σύγκειται*).
+- **de `69b51cda…` p264, the only German C "worse" page.** The archived image is a 267-byte blank JPEG (so are pp. 263 and 265). C correctly answered CONTAIN ("the leaf cannot be read"). L serves a Latin page that nobody can check against an image.
+
+**Served text that is not the page** (found by the corrector, confirmed by the blind readers; not contained by this job, which writes nothing)
+- **Greek, whole books:**
+  - Lucian MS `699383a150654cbbe29179f7`: 25/25 pages are invented Greek or repetition loops.
+  - Euclid *Elements* MS `6993881574305116d72cef37`: 25/25 pages are invented propositions or loops.
+  - Proclus *in Rempublicam* MS `6993898ace15387065947977`: 15/25 pages.
+- **Chinese:** Kunqu `69de98851b234a773e438912`, pp. 269 and 341 serve another leaf's text.
+
+**Cost** (Claude subscription, box account dereklomas@gmail.com; $0 billed. agy: plan fee)
+- **Corrections (list-price equivalent of the tokens):**
+
+  | Language | Pages | Calls | Output tokens | List price | Per 1K pages |
+  |---|---|---|---|---|---|
+  | Chinese | 75 | 31 | 219K | $8.98 | $120 |
+  | German | 250 | 30 | 377K | $18.53 | $74 |
+  | Greek MSS | 250 | 46 | 1.18M | $42.05 | $168 |
+
+  - Latin's $20.28 per 250 pages moved the account-week about 1%. On that scale a correction costs about **4% (de), 6% (zh) and 8% (Greek MSS) of an account-week per 1K pages**.
+  - Greek manuscript calls ran 7–25 min each.
+- **Whole job, wave 1** (corrections, 3 screens, 23 readers, by-eye): the weekly meter went **26% → 46%** (2026-10-27 21:00Z → 2026-10-28 02:35Z). Treat that as an upper bound, because the account is shared. Per language it was about zh 5, de 5, el 10 points.
+  - The pace guard paused the Greek correction once (burn 6%/h, against a budget of 0.4%/h). It resumed after the window.
+- **Flash re-read:** 636 agy calls for 575 pages (1.1 a page), about $0.66 per 1K pages at the plan fee.
+
+**Human check** (Derek's addendum, for #7573): `scripts/eval/dataset/judge-human-check-7573/{chinese,german,greek}.jsonl`.
+- Each file has one row per judged page: reader URL, image URL, the three arm texts, the Opus verdicts, defects and rationale, and the agy verdicts where drawn.
+- 30 rows per language are marked `review: true`: the pages with the widest verdict spread, the C/R ties and the cross-family disagreements (`w-human.mjs`).
+
+**Grade.** Exploratory. The samples are 3 to 10 books, the judge is single-family (with a 30-page cross-family check), and there is no human calibration yet (#7573 is that calibration). Chinese at n = 75 from 3 books is the thinnest.
+
+Files: `scripts/eval/flash-reread-5924/`
+- Scripts: `w-draw.mjs`, `w-set.mjs`, `w-packets.mjs`, `w-score.mjs`, `w-judge2.mjs`, `w-byeye.mjs`, `w-human.mjs` and `T-TASK.md`.
+- `results-7568/<lang>/`: `sample.json`, `screen.json`, `stored-check.json`, `step-t.json` and `score.json`.
+
+## 2026-10-28 · Is Opus through agy as good as Opus through claude -p on the cells routed to Opus? (#7545)
+<!-- PRIOR ART: scripts/eval/route-judge-6740/judge.mjs (the router tests' instrument, reused unchanged except for two cells: latin-lite-7545 and german-7545); 2026-10-26 router tests (lite>opus-correct 30/30 on the Latin pilot; German opus-cli 49/60). Nothing before this run had measured Claude through agy: it was refused by assertGeminiModel until #7545. -->
+
+**Latin correction: yes. German translation: not yet, because of a format failure rather than a reading failure.**
+
+### Design
+- **The exception.** Derek's rule (2026-10-27, restated 2026-10-28) allows Claude through agy only on an account whose Gemini weekly bucket reads 0. This test is the one exception, and it ran while Gemini quota remained. It used gex45's default login (dereklomas@, Gemini weekly 41%, Claude group 100%) on Derek's inbox note (09:21Z). The second login (`/root/.agy-james`) is held to `gemini-3.8-flash-low` and was not used. To open the gate in-process, the run pointed `AGY_QUOTA_CACHE` at a scratch reading with the Gemini weekly bucket set to 0. Nothing on any shared path was changed.
+- **Pages.** Drawn with `judge.mjs draw --cells=latin-lite-7545,german-7545`, seeded, one page per book, visible books, interior pages.
+  - **Latin, 15 pages.** Stored Flash-Lite OCR of at least 300 characters, books not held (the router-test frame, salt `rt-latin-lite-7545`).
+  - **German, 30 pages.** Visible German books from 1500 to 1800 whose served English is 3 Flash or Flash-Lite and newer than the OCR, alternating between the two (salt `agy-opus-7545`, the pilot's 60 books left out). The cell was drawn at 15 pages and then extended to 30, because at n = 15 even 15/15 against 15/15 gives P = 0.87 under a flat prior. The first 15 pages are the same in both draws.
+- **Routes.** Each pair ran on the same pages, with `CANDIDATE_READS=off` and `--fresh`. Nothing was kept or written.
+  - Latin `lite>opus-correct`: `correct.mjs --model=opus` through `claude -p`, one page per call.
+  - Latin `lite>agy-opus`: `cli-ocr.mjs read --correct-prompt` (the correction lane's own call and fc template) with `--model=claude-opus-5-5-low`. All 15 calls opened the image with `read_file`.
+  - German `opus-cli`: `claude-translate.mjs read --model=opus --per-call=1`.
+  - German `agy-opus-tr`: `cli-translate.mjs read --model=claude-opus-5-5-low`.
+- **Judge.** `judge.mjs judge`: Opus through `claude -p`, blind, one output per call, the page image attached, two wrong-page controls per route. Every control passed.
+
+### Result (`results/agy-opus-7545-2026-10-28/score.json`)
+| cell | route | accepted | wrong text | fidelity |
+|---|---|---|---|---|
+| Latin lite | lite (the draft) | 8/15 | 7/15 | 3.53 |
+| Latin lite | lite>opus-correct (claude -p) | **15/15** | 0/15 | 4.93 |
+| Latin lite | lite>agy-opus | **15/15** | 0/15 | 4.73 |
+| German tr | opus-cli (claude -p) | 26/30 | 3/30 | 4.10 |
+| German tr | agy-opus-tr | 23/26 (+4 not written) | 2/26 | 4.12 |
+
+- **Paired by page.** Latin: both routes accepted all 15 pages. agy answered UNCHANGED on 2 pages and claude -p on 1. German: both accepted 21 pages and both rejected 2. claude -p alone was accepted on 1 page, agy alone on 2. The remaining 4 were the agy marker failures, all of which claude -p got accepted.
+- **The marker failure.** On 4/30 German pages, agy-Opus wrote the translation inside `<<<BEGIN>>>`/`<<<END>>>` and then the prompt's `<summary>` and `<keywords>` blocks after `<<<END>>>`. `unwrapRead` calls that "text outside the markers", and `cli-translate.mjs apply` refuses it. The translation inside the markers is complete. Fixing the call (a prompt line, or accepting a trailing summary/keywords block) and re-testing would likely clear the cell. That is a change to the writer's guard and is not made here.
+- **The router's gate** (rules.json as of PR #7588: P(acc ≥ acc_ref − 0.08) ≥ 0.9, wrong text at most the reference rate + 4%):
+  - Latin: P = **0.915** under the route prior Beta(3.22, 0.78), which `lite>opus` uses and the same model inherits; 0.873 under a flat prior. Wrong text 0 against 0. **Passes.**
+  - German: 23/30 against 26/30 as the lane would count it, P = **0.45**. On the judged outputs alone (23/26), P = 0.85; against the pooled opus-cli record (75/90), P = 0.92. **Does not pass** until the 4 marker failures are fixed.
+
+### Draw on the agy Claude group (`quota-readings.jsonl`, `agy-usage.json`)
+Readings of `agy -p "/quota"` (free) on the main account, taken before and after each run. Nothing else on that account calls Claude models.
+
+| run | pages | weekly bucket | 5-hour bucket |
+|---|---|---|---|
+| 15 Latin corrections + 15 German translations | 30 | 99.93% → 92.68% | 100% → 85.51% |
+| 15 German translations alone | 15 | 92.08% → 90.52% | 85.30% → 81.18% |
+
+- **Per page.** German translation: 0.104% of the week and 0.27% of the 5-hour bucket. Latin correction, by difference: about 0.38% of the week and 0.69% of the 5-hour bucket. The weekly bucket also fell 0.6% between the runs with no calls, which is probably late accounting; with it, Latin is about 0.42%.
+- **Tokens.** Latin median input is 25.6K (15.5K of it cache read: agy's system prompt plus the fc template and the image). German median input is 11.0K. The median call took 19 s for Latin and 11 s for German.
+- **What that buys.** With the fallback stopping at the 10% floor, one account's Claude group holds about 235 Latin corrections, or about 870 German translations, per week. The 5-hour bucket allows about 130 Latin pages per window. This is a small pool next to the claude -p subscription: `correct.mjs` at 10 pages a call draws about 0.004% of a week per page.
+
+### Replicated?
+No. One draw per cell. The Latin result agrees with the 2026-10-26 pilot, where `lite>opus-correct` accepted 30/30.
+
+### Artifact
+`scripts/eval/route-judge-6740/results/agy-opus-7545-2026-10-28/`: sample, key, score, verdicts, per-page agy usage and the /quota readings. The reads themselves stayed on gex45 under `$JOB_SCRATCH`. The router's entries are the `fallback_routes` of the `latin-lite`, `german-tr-flash3` and `german-tr-lite` cells in `scripts/eval/estimator/router-table/rules.json`.
 
 ## 2026-10-27 · Tibetan translation router test: agy Flash-low, 4 pages a call, against Opus, 10 a call (#6948, #6740)
 
@@ -763,6 +6252,77 @@ Either one is a new pre-registration, not a re-cut of this bar.
 Artifacts: `scripts/eval/results/tibetan-correct-6560/pass-prod-gate-69e7aab880b52390feb197a8/`. That holds the reads,
 the dry apply, the ya-btags files, both judges' requests and replies, the audit key, and `audit40-gate.json.gz` (per
 page: both verdicts and the pooled one).
+
+## 2026-10-27 · Invented repeated lines in Tibetan OCR, and Flash corrections under the severity rule (#6740)
+
+PRIOR ART: `2026-10-27-tibetan-flash-pass-production-6560.md` (#7477: rGyud 'bum Ka gate, NO-GO pooled worse 6/40),
+`2026-10-15-tibetan-flash-pass-gate-6560.md` (rGyud 'bum Kha, NO-GO 10/40), `2026-10-27-tibetan-router-30-6740.md`
+(the 30 folios re-audited here), and job tib-flash-correct-vol1-6740 (Neyphug rGyud Tsha, not touched here). The
+detector's walk shape is `scripts/audit/ocr-loop-corpus.mjs`.
+
+**Brief** (Derek, 2026-10-26 23:15Z): find invented repeated lines corpus-wide, surface existing agy Flash corrections
+that pass the new rule, and correct the flagged pages. **The rule:** write a correction when it passes the automatic
+guards (25% cap, END sentinel, ya-btags), does not lower Derge identity by more than 0.01 where a parallel exists, and a
+10-page audit per 1,000 pages written (Opus judge B with controls) finds a severe error introduced on fewer than 2 of
+10. SEVERE means an invented, duplicated or dropped line, a change of meaning or negation, or a wrong mantra.
+
+### 1. Detector (`scripts/audit/tibetan-duplicate-lines.mjs`)
+- **Walk:** 2,402 Tibetan books, 889,974 pages with OCR, read-only, checkpointed per book, about 13 minutes.
+- **Cut 0, the brief's scan** (two lines of 12 or more syllables sharing 50% of their syllable trigrams) misses p.128 itself.
+  Yigdzin's copies differ every few syllables, which breaks trigrams. It was replaced by a syllable Smith-Waterman score.
+- **Cut 1** (score of 15 or more, and one or more lines over the book's usual count): 20 pages checked by eye
+  (`detector-calibration.json`, sets A and B). 14 real, 3 false, 3 undecided.
+- **Cut 2, the shipped `flag`** (the extra line, plus a near-copy pair at most 3 lines apart, score of 15 or more and at least 40% of
+  the shorter line): tuned on those 20 pages, where it kept every decided true page and dropped every false one.
+  **Checked on fresh pages (set C): 2 real of 6 decided** (1 undecided, the rest not reached). This is far under the
+  90% bar, so the detector was not used to choose writes.
+- **Why text cannot do it.** On C8 the leaf repeats lines 2 and 4 nearly word for word, and the OCR is right. On C5, C7
+  and C8 the frames are 8+8 lines in volumes whose usual frame is 7+7, so "one line too many" is the scribe's. A
+  whole-line character-similarity measure does not separate them either: the false pages score 0.83 to 0.96.
+- **An ink-row line counter** (a projection profile over a margin strip) was prototyped to read the leaf's own line
+  count. In two tuning passes it was off by 2 to 5 lines on most frames, so it was dropped and not shipped.
+- **Counts, for the worklist only:** 7,568 pages flagged in 849 books (761 public). 2,272 of them carry served English.
+  By engine: Yigdzin 6,318, woodblock-easter2 1,038, Gemini 212. At the measured precision, expect about a third to
+  be real.
+
+### 2. Inventory of existing correction reads (R2 `candidate-reads`, all boxes)
+| run | model | pages | written | draft still stored | under the rule |
+|---|---|---|---|---|---|
+| tib-flash-pass-6560, rGyud 'bum Kha | Flash low | 415 | never | yes | not surfaced: #6758 judge B 10/40 worse; draft-wins include a lost negation (མ་ཡིན→མར), word swaps (གསུངས→བསམ, ཐོན→གནོད) and mantra changes |
+| tib-flash-pass-6560, rGyud 'bum Ka | Flash low | 524 | never | yes | not surfaced: #7477 NO-GO; 48 substituted words, 2 dropped lines, 1 doubled verse in its 40-page audit |
+| tib-g4-gate-6560, rGyud 'bum Kha | Gemini 4 Argon low | 426 | never | yes | not surfaced: its gate NO-GO (5/40), and the brief's rule is for Flash |
+| tib-flash-correct-vol1-6740, wave 2 | Flash low | 120 (20 books) | never | yes | not surfaced: one-judge draft-wins that read as severe on about 11 of 38 audited pages; the confirmed run was cut off twice by session ends |
+| tib-router-30-6740 | Flash low | 30 (30 books) | never | yes | **audited end to end: FAIL** (below) |
+| tib-flash-correct-vol1-6740, Neyphug rGyud Tsha | Flash low | 960 | — | — | excluded: that job's volume |
+The 6948 and 5771 pilots left no OCR correction reads in R2: 6948 was translation, and 5771 was Yigdzin re-reads.
+
+### 3. The severity audit, run on router-30 (`pass/severity-batch.sh`)
+- **Guards:** 30/30 pass. No ya-btags hits.
+- **Derge guard (`derge-guard-allow.mjs`):** 30/30 placed. 0 refused. Mean identity rose from 0.944 to 0.967.
+- **Audit:** 10 seeded pages.
+  - Judge B with severity labels: 148 items.
+  - A second sealed Opus on every severe draft-win (`confirm-req`).
+  - The whole-page judge on the draft and on the correction (`page-req`).
+- **Result:**
+  - Severe error introduced on **4 of 10** pages, confirmed by both judges (bar: fewer than 2). **FAIL.**
+  - Severe errors fixed on 7 of 10 pages: 17 severe spans fixed, 94 minor.
+  - Controls 20/20, and the confirming judge's 10/10.
+  - The introduced errors: བདུན་པ→བ་དགུ ("seventh"→"nine"), ཀར→པ་ན, བལ་གླང→བ་ལང, ཨཱ→ཞཱ (mantra), and བུ་མོས
+    ("girl")→ཁྱིམ་ས་པ. The leaf shows the draft each time.
+- **Read plainly.** Flash fixes more than it breaks on almost every page. But it puts a wrong word on about a third of
+  pages, and the Derge identity guard cannot see it, because the many small fixes outweigh the one wrong word.
+
+### 4. Pilot reads of flagged pages
+56 of 120 flagged public pages were read by agy Flash-low with the CORR request. agy ran at 30–180 s a page, and two
+session ends killed the run. Of those 56, Flash dropped one line of the detector's pair on only 2. It kept the same
+line count on 27 and wrote fewer long lines on 14. Nothing was audited or written. The reads are kept in R2 (#7075).
+
+### Undo
+No page was written, so there is nothing to undo. `severity-batch.sh --apply` writes through `cli-ocr.mjs apply`
+(`writePageText`, run id `cli-ocr-<stamp>`). `scripts/maintenance/revert-run.mjs --run-id <run>` undoes such a run.
+
+Artifacts: `scripts/eval/results/tibetan-correct-6560/severity-6740/`.
+Cost: $0. About 70 agy calls (56 reads plus re-reads) and about 45 Opus calls: 10 span, 20 page, 5 confirm, plus ya-btags checks for wave 2.
 
 ## 2026-10-27 · Tibetan correction: do error profiles in the prompt help, and can a diff-hunk QA replace the line-count refusal? (#6560, #6740)
 
@@ -1763,6 +7323,113 @@ test would otherwise have locked Flash-low for every lane on l7a's main account 
 
 **Not done.** Latin (0 of 30 fresh reads; 6 of 30 corrections read, not judged). A view_file-free prompt (could cut
 input about 3x). A rerun after 2026-11-03 once the account's tier is known.
+
+## 2026-10-27 · Preregistration: correct the lite text with Opus, or re-read with Flash — Chinese, German, Greek (#7568, wave 1)
+
+Written and committed **before any draw, correction, re-read or judgment** (job `correct-vs-reread-7568`, gex45).
+Grade: **exploratory** (10 books per language, eval-design §10.2): a result can recommend a route with its price,
+nothing is applied. **No production write to `pages` or `books`.** Corrections and re-reads are kept in R2
+`candidate-reads/` by the scripts' own keep-read path (#7075), which is not a page write.
+
+### Question
+On lite-read Latin, Opus correcting the stored lite text in place beat a Flash re-read. Does that hold for Chinese,
+German and Greek? Per language: which route upgrades a lite page — **C** (Opus corrects the lite text) or **R**
+(Flash re-reads the image) — or neither?
+
+### Sample (per language, one language at a time: zh, then de, then el)
+- `flash-reread-5924/w-draw.mjs`, `LANG7568=<lang>`. Frame: visible books with `pipeline_auto.status: complete`
+  (terminal), `language` in the language's names (zh: Chinese, Classical Chinese; de: German, de; el: Greek,
+  Ancient Greek, grc), not `duplicate_of`, not catalogued manuscript, ≥ 50 OCR pages. Mulberry32 seed zh 75681,
+  de 75682, el 75683 shuffles the frame (sorted by book id).
+- In shuffled order a book is a candidate when ≥ 70% of its OCR'd pages are flash-lite reads, ≥ 50 pages are eligible
+  body pages (page_type text/null, flash-lite, ≥ 400 letters — **150 for zh**, where a half-leaf holds ~200
+  characters — and an image), and the script check passes on a sample of its eligible text (zh: ≥ 60% Han letters;
+  de: the stopword classifier says German; el: ≥ 60% Greek letters). 14 candidates are drawn.
+- **Format screen** (one Opus reader per language, 2 drawn pages per candidate — the 8th and the 18th of 25 — image
+  only): drops a candidate that is a manuscript, not this language's print (woodblock and lithograph count as
+  print), or not a text page. The **first 10 that pass** are the sample.
+- Pages: `spread` over the eligible pages, `v[floor((i + 0.5) · n / 25)]`, 25 per book = 250 per language. A page
+  whose stored `ocr.data` changed since the draw, or whose image fails to download, is dropped and listed.
+
+### Arms
+- **L** — the stored lite OCR (what readers are served today).
+- **C** — `scripts/batch/ocr-convergence/correct.mjs --model=opus --per-call=10 --concurrency=3`, unchanged (live OCR
+  prompt + correction block, sealed `claude -p --restricted --tools Read`, opened-files check, chatter guard).
+  C serves the correction where the outcome is `corrected`, else L (as #5924).
+- **R** — `scripts/batch/cli-ocr.mjs read --model=gemini-3.8-flash-low`, unchanged defaults (one page per call, live
+  OCR prompt, tool gate), `--concurrency=3`. `apply` is never called. A page R fails to read is judged as an empty
+  transcription and counts as **R worse**.
+- Opus runs only through `claude -p` (subscription); Gemini Flash only through `agy`. No paid-API call, no fallback.
+
+### Judgment: Step T (blind, three transcriptions, one reader)
+- One fresh Opus subagent per book, `T-TASK.md`: image (crop helper for zoom) and the three texts labelled X/Y/Z,
+  the arm order one of the 6 permutations drawn per page with Mulberry32(seed + 1) in sample order. Verdict per text
+  (misleading / flawed / sound, `C-TASK.md`'s definitions verbatim) and the three pairwise preferences with
+  `loser_material`. Language conventions (`lang_note` in T-TASK) say what is minor in that script.
+- Change from #5924: Latin used one reader per pair (Step C L–F, C2 O–L, C3 O–F). Here one reader judges all three
+  arms of a page together, so every arm's verdict comes from the same reader under the same conditions (in #5924 the
+  same F text was called misleading 20 times next to L and 32 times next to O). Where C = L by text, both are shown;
+  differing verdicts on identical texts are counted as a reader-noise check.
+- Controls: no arm names in packets; readers see no key, no other packet; keys only in the job scratch, read by the
+  scorer (`w-score.mjs`).
+- **(d) second-family check, not a bar:** agy `gemini-3.8-flash-low` judges C vs R blind on 30 pages per language
+  (Mulberry32(seed + 3) over the pages where C ≠ R, X/Y from Mulberry32(seed + 4); `w-judge2.mjs`). Opus judging an
+  Opus correction may favour C; Gemini judging a Gemini read may favour R. **Self-preference is suspected** when the
+  two families' C-vs-R preferences on those pages point opposite ways.
+
+### Measures and bars (per language, pooled over its pages; Wilson 95%)
+- misleading(L), misleading(C), misleading(R) from Step T.
+- **(a) halves:** misleading(arm) ≤ ½ · misleading(L), per arm.
+- **(b) no page worse than L**, per arm: arm misleading and L not; or L preferred over the arm with a material loss;
+  C `no-answer`, or a false contain (contain where the reader did not mark L `not_this_leaf`); R unread. Every page
+  listed.
+- **(c) C vs R:** misleading(C) ≤ misleading(R) and C preferred over R on more pages than R over C.
+- **Route per language** (the recommendation):
+  - misleading(L) ≤ 2% of pages → **leave lite** (no upgrade worth its price).
+  - else **C** when misleading(C) ≤ misleading(R) and the C/R preference favours C with a two-sided sign test
+    p < 0.05 over non-tied pages; **R** symmetrically.
+  - else **no clear answer**.
+  - A winner that does not halve L is reported as "weak".
+- Reported, not bars: per-book counts, contains, R refusals/filter cuts, books failing the 25-page check
+  (≥ 2 misleading on L), facing-strip handling, and the (d) agreement.
+
+### Cost
+Claude: the box account's weekly % (`/root/.claude-limits/latest.json`, the `claude auth` account) before and after
+each language's correction run and its readers, and the correction's token totals (`calls.jsonl`). Other jobs share
+the account, so meter deltas are upper bounds. agy: calls per page. Projection in account-weeks per 1K pages.
+
+### Stop rules
+- Weekly Claude usage of the box account at **≥ 70%**: stop, comment on #7568 with a resume note.
+- A language with < 6 books passing the screen runs on those it has, reported with its n; < 3 → the language is skipped
+  and reported.
+- A usage-limit stop in `correct.mjs` (exit 3) waits for the 5-hour window and resumes (it skips answered pages).
+- **Wave 2** (Sanskrit, Arabic: seeds 75684, 75685, same design, its own preregistration amendment) runs only if at
+  least one wave-1 language gets route C or R. Otherwise the job says so and stops.
+
+### By eye (after scoring)
+Per language, every page where the winning arm is worse than L, and 2 random pages where C and R differ
+(Mulberry32(seed + 5)), opened against the image.
+
+### Amendment 1 (2026-10-27, after the draws, before any model read)
+- **Draw fix.** The script check and the letter count now run on the body with the OCR metadata block stripped
+  (`stripOcrMetadata`). Before, `<page-type>text</page-type>` and the other tags counted as Latin letters and sank the
+  Han share of short Chinese pages. This changes no seed and no rule.
+- **Chinese: 5 books.** The terminal-status frame has 42 Chinese books with ≥ 50 OCR pages. Only 5 of them are lite
+  reads in Chinese. The other lite-read books are an English translation (諸蕃志, 佛國記), Japanese-glossed (韓非子),
+  stored refusals ("mojibake", 佛說無量壽經), or diagrams. Most Chinese lite pages are in `held` books, which the
+  brief puts out of the frame. Per the stop rule (≥ 3 and < 6), Chinese runs on the 5 books that pass, n ≤ 125.
+- **Greek: manuscripts stay in.** 12 of the 14 Greek candidates are catalogued or titled as manuscripts. In
+  this frame, the lite-read Greek pages *are* mostly manuscripts. So the Greek screen drops only a candidate that is
+  not Greek or not a text page, and keeps manuscripts. The result is reported split MS / print. (#6769 is
+  pilot-testing an Argon re-read of Greek manuscripts. This job writes nothing, so the two do not collide.)
+
+### Amendment 2 (2026-10-28, wave 2: Sanskrit and Arabic; before any wave-2 draw or read)
+Wave 1 gave route C in all three languages, so wave 2 runs as the stop rule allows. The design is unchanged:
+`w-draw.mjs` with seeds sa 75684 and ar 75685, frames named in its `LANGS`, the same arms, Step T, (d), bars and
+route rule. Two settings carry over from amendment 1. First, the screen keeps manuscripts and reports the MS/print
+split, because the lite frames outside Latin are mostly manuscripts. Second, a language with fewer than 6 books
+runs on what it has (fewer than 3: skipped). A contain where the readers call L misleading is reported as a
+justified contain beside the strict rule's count. The result goes in its own experiments file. Stop at 70% weekly.
 
 ## 2026-10-27 · A page-break drift guard for unpunctuated Chinese (#7503, job caseless-drift-7503)
 
@@ -3315,6 +8982,128 @@ Artifacts:
 
 *Replicated?* No.
 
+## 2026-10-26 · Chained routes (draft → corrector) on the OCR Pareto charts, re-run on each panel's own pages (#6740)
+
+PRIOR ART: the correction write-ups (#5924's Latin Opus and Flash corrections, PR #7258/#7269; #6560 Tibetan; #6561
+Chinese; PR #7275, Flash-Lite as a corrector fails) and the router tests (PR #7434) measured corrections on other pages,
+judged by Opus against the image. Their numbers are not on these charts. Here every correction was run again on the pages
+of the panel it is drawn on, from that panel's own read by the draft engine, and scored by the panel's scorer against the
+panel's reference.
+
+**Question.** On the pages each OCR Pareto chart already measures, what does a correction step buy over its draft, and
+what does it cost, beside every single-engine route?
+
+**Method.**
+- **Drafts:** each chart's engine in use (Flash-Lite for Latin, English, other Latin-script and Armenian; Gemini 3 Flash
+  for Greek and Chinese print; PaddleOCR-VL 1.6 for Chinese manuscript), plus Paddle on Chinese print. 981 drafts on 7
+  charts. The benchmark reads came from the scoring box (export job `pareto-drafts-6740`,
+  `results/drafts.jsonl.gz`). 83 Paddle reads were not kept there. For 76 of them, the Paddle production lane's stored
+  read was used (same model, a later run; `results/stored-drafts.json`). The chain is compared with that draft on those
+  pages. 7 pages have no Paddle read on record, and their chains count as not read.
+- **Correctors:**
+  - Claude Opus 5.5 through `claude -p` (sealed folder with the image and the draft; the transcript must show both
+    opened). Prompt: the live OCR prompt (Standard OCR v19.1) plus `correct.mjs` `correctInstruction(1)`, the
+    production correction lane's instruction. Sent hash `0e94c1082ca6e456`.
+  - Gemini 3.8 Flash low through `agy` (plan mode, tool gate, markers). Prompt: the #5924 one-page template that
+    `fc-prompt.mjs` builds from the same live prompt, with its hash check passing. Template hash `0601ef30e816f7a7`.
+  - One page a call (each panel page is a different work).
+  - Flash-Lite is not a corrector (#7275). No Argon or Pro.
+- **Images:** re-fetched and sealed as the benchmark sealed them, then checked against the scoring box's sha256 for
+  each page.
+  - 236 match byte for byte.
+  - 650 differ in bytes at the same pixel size.
+  - Where only the scale differed, the image was resized to the bench's size.
+  - 4 differ by a crop or a pixel. 2 could not be fetched (HTTP 403); their chains count as not read.
+- **Scoring:** `benchmark-score.mjs`, then the #6523 extractor for Latin-script strata. The reference tiers use the
+  digits-dropped rule their dots were scored with (`rescore-extract.mjs` `V3_DIGITS`). The Chinese cohort's bundled
+  references were unpacked into scratch.
+- **Control:** every draft is re-scored and must reproduce its dot's committed CER.
+  - 881 of 887 do. 8 have no image or draft here.
+  - The 6 that do not (2 English pages whose dot's read is no longer on the scoring box, 4 German Wikisource pages
+    whose reference changed since) are listed in `scored-chains.json`. Their chains count as not read there.
+- **Failure rule** (#6523):
+  - A `CONTAIN` answer (the corrector judged the draft not to be this page's text) is counted as not read, kind
+    refusal.
+  - Where the draft itself was not read (copy filter), the chain was not read either, for the same reason.
+- **Price:**
+  - The draft's price, plus the correction at the API price for the same request, $0 billed on the subscription.
+  - The request is priced on the #6293 x-axis formula, extended by the draft: 3,736 input tokens, plus the draft at the
+    corrector's own tokens per character, plus the reply tokens the CLI reported.
+  - Gemini at its Batch price, as the CLI read points are. Opus at its realtime list price, as the Claude API points are.
+  - Quota share in the detail: Opus about 0.0124 account-week points a page at one page a call (the pilot's meter, an
+    upper bound); agy 4.36e-6 of the month's calls a call (`route-costs.json`).
+  - Draft prices: Flash-Lite and Gemini 3 Flash at their metered Batch prices; Paddle at its GPU rental.
+- **Pages made worse:** pages where the chain's CER is more than 1 point above its draft's (the charts' margin).
+
+**Results** (primary panels; accuracy = 1 − mean CER over the pages read; difference against the engine in use, paired,
+work-clustered 95% interval):
+
+| chart (grade, pages) | route | accuracy | vs in use | worse / better of n | per 1,000 pages |
+|---|---|---|---|---|---|
+| Latin print (Decide, 44) | Flash-Lite (in use) | 96.2% | | | $1.28 |
+| | → Gemini 3.8 Flash | 98.4% | +2.1 (+0.3 to +5.5), better | 0 / 7 of 44 | $4.62 |
+| | → Claude Opus 5.5 | 98.1% | +1.9 (−0.1 to +5.2) | 1 / 6 of 44 | $51.28 |
+| German, French, other Latin-script (Decide, 22) | Flash-Lite (in use) | 99.1% | | | $1.28 |
+| | → Gemini 3.8 Flash | 99.4% | +0.3 (+0.1 to +0.5), better | 0 / 2 of 19 | $4.39 |
+| | → Claude Opus 5.5 | 99.5% | +0.3 (+0.2 to +0.5), better | 0 / 1 of 19 | $51.72 |
+| Greek, Wikisource (Decide, 24) | Gemini 3 Flash (in use) | 90.8% | | | $2.71 |
+| | → Claude Opus 5.5 | 94.7% | +3.9 (−1.0 to +13.0) | 2 / 1 of 23 | $90.30 |
+| | → Gemini 3.8 Flash | 94.5% | −0.4 (−1.2 to 0.0) | 2 / 0 of 22 | $7.30 |
+| Chinese manuscript (Directional, 498) | Paddle (in use) | 79.0% | | | $1.04 |
+| | → Gemini 3.8 Flash | 74.4% | −4.5 (−5.4 to −3.8) | 341 / 67 of 491 | $3.29 |
+| | → Claude Opus 5.5 | 69.4% | −9.6 (−10.5 to −8.7) | 411 / 40 of 491 | $40.40 |
+
+In the Greek row, the corrections' accuracy is over the pages they read, and the in-use comparison is over the pages
+both read. Gemini 3 Flash did not read 2 of the 24 pages.
+
+The not-fit panels (Early English, Chinese print, Armenian) carry their chains too, without verdicts. Early English:
+Flash-Lite → Opus +0.8, → 3.8 Flash +0.5. Chinese print: all four chains lower, for the reason below. Armenian: 5
+pages.
+
+**Chinese: the scorer, not the correction.** Every corrected page is in the library's tagged format, because the live
+prompt asks for it: `<vocab>` (a list of key terms), `<language>`, `<meta>`, a `<header>` running title. On a
+Latin-script page, the scorer drops those tags with their text (`normAlpha`). On a CJK page it drops the tags and
+keeps the text (`normCJK`), so the term list and the edition's running title (欽定四庫全書) are scored as characters
+the page does not print. No other engine on these panels writes the format: the CLI arms' and the API arms' Chinese
+outputs hold no `<vocab>`. With `normAlpha`'s tag list removed first, on the 491 manuscript pages all three read:
+- Paddle 79.0%;
+- Paddle → Claude Opus 5.5 80.2%;
+- Paddle → Gemini 3.8 Flash 79.1%.
+
+This check is in `results/cjk-tags-sensitivity.json` and is shown as a note under the chart, never plotted. The chart
+keeps the panel's scorer unchanged, as this run's rule requires.
+
+**What this does not measure.**
+- The correctors' changes are scored against typed editions. A correction that fixes the page toward the image where the
+  edition differs (a variant glyph, a name) can read as an error. #7434 found the opposite failure as well: a name kept
+  wrong by every route.
+- Time: no draft engine here was timed (they are API or GPU reads), so chains are not on the time view. Their correctors'
+  medians were 16.5 s a page (Opus) and 9.7 s (agy).
+
+**Spend.**
+- Claude: 962 Opus calls on milolomas200921@'s idle quota (`JOB_CLAUDE_HOME`). The account went from 12% to 19% of its
+  week during the run, which it shared with main's jobs, so at most 7%.
+- agy: about 990 Gemini 3.8 Flash low calls (981 pages, 9 retries on a no-answer). The agy meter is not readable from
+  gex45; no quota reply came back.
+- $0 billed.
+
+**Files.** `scripts/eval/ocr-pareto-chains-6740/`:
+- `run-chains.mjs`, stages `prep | correct | collect | score | cjk-tags`;
+- `results/` holds the drafts, the stored-draft record, every corrector answer (`outputs-*.jsonl.gz`), its meter row
+  (`meter-*.jsonl`: prompt id and hash, image and draft sha256, tokens, seconds), the scored rows with the control, and
+  the CJK sensitivity.
+
+`build-ocr-pareto.mjs` reads `scored-chains.json`. A chain joins a panel that holds its draft and has a row for every page
+of it. It is never picked by the greedy engine selection, so no existing panel's pages, engines, accuracies or paired
+differences changed (checked against main). What changed:
+- The frontiers are recomputed with the chains. The Greek Wikisource panel had two priced engines and so drew no
+  frontier; with the chains it has four and draws one.
+- Three verdict sentences name chains:
+  - other Latin-script: "Also better" lists both chains;
+  - Latin: one more "also better";
+  - Greek editions: the evidence points toward Gemini 3 Flash → Claude Opus 5.5.
+- Each panel's date is 2026-10-26.
+
 ## 2026-10-26 · Kraus 1935: 25 more pages so the router can route the cell (#7341, #6740)
 
 PRIOR ART: the gate `2026-10-25-arabic-manuscript-ocr-gate-jabir-7341.md` and its glue
@@ -3686,6 +9475,139 @@ of $0.00222, so translation had to be cut short at the $1 stop.
 Files: `explore/cells-6553/` (`draw.mjs`, `run-lite.mjs`, `judge.mjs`, `JUDGE-CELLS.md`, `results/*.jsonl`).
 Reads made by agy were also copied to R2 `candidate-reads/` by `cli-ocr.mjs` (its standing behaviour, #7075). Nothing
 was written to `pages`, `books` or `system_config`.
+
+## 2026-10-25 · Does splitting multi-leaf Tibetan photos into single leaves fix the seam damage the #6948 gate found? (#5771)
+
+PRIOR ART:
+- The #6948 Opus gate harness and its scratch (`scripts/eval/opus-tib-sa-6948/`, the same 80 audited frames, the blind
+  image-grounded auditor, the same 15 planted controls; copied from l7a, not redrawn).
+- The #4523 Yigdzin leaf ledgers (cuts) and `yig_leaf_worker.py` (the production per-leaf reader).
+- The #5771 Neyphug split (pair-rule order).
+- `yig_page.py` (#6871, the HF recipe on gex45).
+- The vLLM 0.29 parity run (job yig-vllm-6871).
+
+Harness: `scripts/eval/split-leaf-5771/`. Results: `scripts/eval/split-leaf-5771/results/`.
+
+**Who it is for.** Readers of the ~1,400 public Tibetan books photographed as two (or more) pecha leaves per frame (EAP Kangyur, Thadrak, Neyphug, Gangtey and similar). A served page is two leaves; the transcription can invent, duplicate or truncate lines where the leaves meet, and the English inherits it.
+
+### What the stored reads are (a finding before any model ran)
+Of the 80 audited frames:
+- **52 were already read leaf by leaf** (production `partition` crops, runs 09-25 to 10-14).
+- **28 serve the 2026-09-15 whole-page read.** These 28 held **21 of the 28 bad pages** in #6948 (75%); the 52 leaf-read frames held 7 (13%).
+
+For the whole-page frames a leaf read already existed. The step-2 run of 2026-10-01 read them per leaf, and its decision pass did not serve that read: decision class `align`, reason **`fewer-syllables`**. The whole-page read was longer *because* it carried the invented and duplicated seam lines (a019: 19 transcribed lines for two 7-line leaves).
+
+Corpus-wide that rule sent 39,283 pages to `align`. Today 50,946 photos in the 1,406 frame books still serve a whole-page read, 10,236 of them without English.
+
+The ledger cuts are also not always right. On the contact sheets, 12 of the 76 frames with a ledger cut had a wrong one:
+- a cut through a leaf's text;
+- two or three leaves in one crop;
+- a third "band" sliced off the bottom of leaf 2.
+
+They were re-cut by eye. Two frames the detector could not cut were cut by eye; one is a single leaf.
+
+### Design (pre-registered on #5771 before any audit reply: [bar](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5771#issuecomment-6402728071), [three arms + triage labels](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5771#issuecomment-6403372742))
+- **Arms:**
+  - **SEAM**: the stored read and its #6948 audit.
+  - **CUT**: the exact transcription #6948 audited, cut onto leaves at `<leaf-break/>` or at the ledger's line counts, with no re-OCR.
+  - **REREAD**: 188 leaf crops cut from the R2 master, each read alone with Yigdzin 1.
+- **Engine for REREAD.** The production `yig_leaf_worker.py` on **vLLM 0.29.0** on gex45 (batch 128; job yig-vllm-6871, Derek's note of 10-26 09:10Z).
+  - It passed its parity bar against my HF port: median similarity 0.9994, 0 added lines, n=64.
+  - The HF port's 64 reads were kept as a cross-check.
+- **Translation.** CUT and REREAD were translated by Opus (`claude -p`) per leaf, 1 per call, on the production prompt, with no previous-leaf seed. The leaves on one photo are consecutive rectos, so the leaf before each one is on another frame.
+- **Audit.** The #6948 auditor, unchanged: the same frame image and full-resolution tiles, and the leaves joined by `<leaf-break/>`.
+  - CUT and REREAD went in one shuffled packet with opaque uids, plus the 15 controls.
+  - Bad pages were attributed OCR vs translator by the #6948 text-only pass.
+- **Strata, fixed from metadata:** SEAM 28 (whole-page read), RECUT 12 (crop changed by this job), SAME 40.
+- **By eye:** 20 leaves.
+
+### Result
+**Controls: 15 of 15 caught** (10/10 reversals, 5/5 inventions). The auditor's verdicts count.
+
+**Translation, bad pages (Wilson 95%):**
+
+| | SEAM (stored) | CUT | REREAD |
+|---|---|---|---|
+| all 80 | 28 (35%, 26–46) | 33 (41%, 31–52) | **17 (21%, 14–31)** |
+| SEAM stratum (28) | 21 (75%, 57–87) | 23 (82%, 64–92) | **6 (21%, 10–40)** |
+| RECUT (12) | 2 (17%) | 2 (17%) | 6 (50%, 25–75) |
+| SAME (40) | 5 (13%) | 8 (20%) | 5 (13%) |
+| CANON (40) | 19 (48%) | 21 (53%) | 5 (13%, 6–26) |
+| OTHER (40) | 9 (23%) | 12 (30%) | 12 (30%) |
+| … OCR-caused / translator-caused | 18 / 10 | 14 / 19 | 5 / 12 |
+
+**OCR, auditor spans where the leaf differs from the transcription (paired, frames legible in both):**
+
+| | n | median before → after | median ratio (95% bootstrap) | fewer / same / more |
+|---|---|---|---|---|
+| REREAD, SEAM stratum (the bar) | 27 | 21 → 13 | **0.86 (0.68–0.97)** | 19 / 3 / 5 |
+| REREAD, SAME | 21 | 4 → 4 | 1.00 | 8 / 7 / 6 |
+| CUT, all (test-retest: the same text) | 53 | 10 → 9 | 1.00 (1.00–1.00) | 19 / 17 / 17 |
+
+Spans per leaf (frame spans ÷ leaves), median: SEAM 4 → REREAD 2.7 overall; on the SEAM stratum 10.5 → 6.5.
+
+**Against the bar:**
+1. **OCR (median ratio ≤ 0.5): fails.** The ratio is 0.86. The span count weighs a removed copied line the same as one wrong vowel, and the letter-level misreads (the same engine) stay. CUT's ratio of exactly 1 and its 17/53 frames that move either way show the instrument's noise.
+2. **By eye, 0 invented or duplicated seam lines: passes.** All six named seam cases (a008, a010, a011, a019, a037, a040) read clean at the seam. But the split read is not clean:
+   - 3 of the 20 leaves invent or duplicate a line elsewhere:
+     - a045-L2, a near-blank leaf, gets "na na na na na da o";
+     - a006-L2 repeats a clause of a formula, and only on vLLM (the HF read of the same crop is right);
+     - a034-L2 repeats a formula line.
+   - On a040-L1, two lines are merged and dropped.
+3. **Controls: pass** (15/15).
+
+**Stage 1 therefore fails as registered.** Re-read, the frames that were damaged give readers about a quarter as many bad translations (SEAM stratum 21/28 → 6/28, CANON 19/40 → 5/40).
+
+**Why the other strata do not improve:**
+- **CUT never helps.** It is the same text: SEAM stratum 82%.
+- **The re-read gains nothing where the stored read was already per leaf** (SAME 13% → 13%).
+- **It loses on RECUT (17% → 50%)** for two reasons, both new failure points of a per-leaf lane:
+  - Read alone, a near-blank title leaf makes Yigdzin invent repeated title formulas (a045, a050, a068, a080; a075 in the SEAM stratum), and the translator renders them.
+  - Translated alone, a leaf's keywords pick up catalogue facts (a monastery name) from the book's metadata (a045, a066, a068, a076, a080).
+- **Translator-caused bad pages rise** when the English is made per leaf without context: SEAM 10, CUT 19, REREAD 12.
+
+**Triage (Derek's B), leave-one-book-out, one frame per book:**
+- **L2, "the seam read is bad because of the OCR"** (23 of 80): the fitted rule `whole-page read OR leaf asymmetry ≥ 0.4` reaches sensitivity **0.87 (0.68–0.96)** and specificity **0.79 (0.67–0.88)**.
+- **"The stored read is a whole-page read"** alone (free metadata) gives 0.87 and 0.86.
+- The text-only features add nothing over it. The best are stored lines ≠ ledger lines (0.57 / 0.81) and a near-copied line pair (0.48 / 0.95).
+- **L1, "the re-read halves the spans"**, has 5 positives in 55, too few to fit (0.8 / 0.6).
+
+**Engine and cost:**
+- HF transformers port: **~200 s per leaf** alone on gex45's card (2,400 × ~800 px input after the production resize; ~4 tokens/s). Six parallel HF processes made it slower (Derek's note 10-26 07:26Z).
+- **vLLM 0.29: 2.10 leaves/s**, about 400× faster. That decides the #6871 gutter fix.
+- Claude, list-equivalent:
+  - translations: CUT $12.73 (178 calls), REREAD $13.00 (185 calls);
+  - audit: $44.65 (175 calls);
+  - attribution: 50 pages.
+- Accounts: started on team@ (over its weekly cap, so it waited), then dereklomas@ (hit 85%), then milolomas200921@ (15% week).
+- $0 paid; no Gemini; 0 flash-lite bbox calls.
+
+### What this means
+- **Splitting fixes the seam, and only the seam.** Frames read whole-page should be re-read per leaf. Frames already read per leaf gain nothing from a re-read. Cutting a stored whole-page read at its line counts is worthless: the inventions are inside it.
+- **A per-leaf lane needs two guards before it runs at scale.**
+  - A blank or title-leaf guard: a leaf under a few syllables, or one whose read repeats one formula, is held, as the Paddle split lane does.
+  - Keywords must not take facts from the catalogue.
+- **The decision pass that preferred the longer read was the cause.** The fix is "never prefer a whole-photo read over its own leaf reads because it is longer", plus the re-read of the 50,946 whole-page photos (about 117K leaves, about 15 GPU-hours on vLLM, $0).
+- **Translation still fails #6948's 5% bar on every arm.** The translator's own share (12 of 80 on REREAD) needs its own fix (#6948).
+- **Quality Center:**
+  - The k-of-n rows are in `scripts/eval/estimator/ocr/failure-observations.jsonl`: `not_of_leaf` per arm, `bad_translation` (not fitted by `failures_v0.py`), and the controls.
+  - The Yigdzin GPU route is in `route-costs.json`; the multi-leaf cell volume is in `planner/cells-tibetan-two-leaf.json`.
+  - Not done here:
+    - The refits (`failures_v0.py` needs the Pareto `ocr-table.jsonl` on cloudlayer; the fits need numpy/numpyro, absent on main).
+    - The translation estimator: its likelihood is 1–5 fidelity and these verdicts are 3-class.
+    - A routing row: the OCR router has no Tibetan CER chart and the planner no cell input.
+
+### Artifacts
+- `scripts/eval/split-leaf-5771/`:
+  - `frames.mjs`, `frames.jsonl` (cuts, with every by-eye recut marked);
+  - `yig_leaf_read.py` (HF port; crops);
+  - `contact.mjs` and `gaps.mjs`;
+  - `cut.mjs`, `leaf-translate.mjs`, `packet.mjs`, `run.sh`;
+  - `compare.mjs`, `triage.mjs`, `evidence.mjs`;
+  - `results/` (compare, triage, labels, 20 by-eye notes, audit score and key).
+- Scratch: `$JOB_SCRATCH` on main (`/mnt/HC_Volume_105839809/jobs/split-leaves-5771`): crops, contact sheets, leaf reads (vLLM and HF), translations, audit replies.
+- Nothing was written to `pages` or `books`.
+- Replicated? No.
 
 ## 2026-10-25/26 · Same-judge, image-grounded read of production routes: the pilot, run (#6740)
 

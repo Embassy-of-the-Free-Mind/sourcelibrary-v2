@@ -105,7 +105,7 @@
 50 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-classify-text-role.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/classify-text-role.mjs --only-missing" >> /var/log/sourcelibrary/classify-text-role.log 2>&1
 30 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-lang-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/audit-language-mismatch.mjs --flag" >> /var/log/sourcelibrary/lang-audit.log 2>&1
 0 4 * * * /root/sourcelibrary/scripts/workers/backup-bph-catalog.sh
-30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
+30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden --remint-local && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
 # Refresh book locations[] (publication/author/tradition) before the map-cache rebuild at 05:45
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-geocode.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/geocode-publication-places.mjs --ustc --ia --title-pages && node scripts/enrichment/backfill-author-locations.mjs --write-books && node scripts/enrichment/geocode-origin-by-tradition.mjs" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
 # Thesaurus-grounded author locations (canonical authors path); file-guarded until PR #2783 merges + box pulls
@@ -146,7 +146,8 @@
 40 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-identity.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/identity-worker.mjs" >> /var/log/sourcelibrary/identity-worker.log 2>&1
 # Stage coverage snapshot — nightly semantic monitoring (#3756)
 15 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-stage-coverage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/stage-coverage-snapshot.mjs" >> /var/log/sourcelibrary/stage-coverage.log 2>&1
-40 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
+# Author links, hidden books included, BEFORE the 02:30 work-id mint so a new link reaches its work_id the same night (#3780: imports land hidden, and without --include-backlog the 410K-book wave got 13 author_ids)
+10 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
@@ -271,6 +272,14 @@
 # Both lines share one lock. Guarded on the lane module so the lines are inert until #6129 is on main.
 */15 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -n /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=0" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
 40 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -w 600 /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=200 --max-usd=10" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
+# agy CLI enrichment (#7628): the same summary + index + chapters on Gemini 3.8 Flash through the subscription, one
+# conversation per book, $0 API. Each book is claimed in enrich_batch_books before its call, so the batch lane above
+# skips it; a book that fails here is handed back to the batch lane (the fallback). Stops at 600 model requests a day
+# (job ledger AGY_JOB=enrich-agy; a request is one message of up to 150K characters, which the pilot measured at
+# ~10 ordinary agy calls of /quota each, so 600 a day is about a quarter of one pool's week, the share Derek allowed),
+# when the chosen pool's weekly bucket is under the straight line to its reset or its 5-hour bucket under 25%, and at
+# the first quota reply. Guarded on the lane module so the line is inert until it is on main.
+35 */2 * * * export PATH=/usr/local/bin:/usr/bin:/bin; cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-agy-lane.mjs ] && flock -n /tmp/sl-enrich-agy.lock timeout 2h bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --agy --limit=300 --max-calls-day=600 --deadline-min=110 --concurrency=2" >> /var/log/sourcelibrary/enrich-agy.log 2>&1
 # #5705 work board (/admin/work): push this box's claude-job state + the GitHub side to ops_reports every 10 min. Script lands on main with the #5705 PR; until then this logs 'Cannot find module'.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box hetzner; node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --github' >> /var/log/sourcelibrary/work-board.log 2>&1
 
@@ -298,7 +307,7 @@
 # ntfy morning digest to Derek's phone channel
 0 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/ntfy-morning-digest.mjs ] && flock -n /tmp/sl-morning-digest.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/ntfy-morning-digest.mjs >> /var/log/sourcelibrary/morning-digest.log 2>&1
 # Weekly embed of site pages
-20 0 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
+20 0 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs --operator" >> /var/log/sourcelibrary/site-pages.log 2>&1
 # Daily digest (#5441): ONE message a day to Derek — yesterday's spend vs the dial by lane, jobs on the box,
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
@@ -350,10 +359,20 @@
 # 21/30, 22/30), written by cli-ocr.mjs apply with its guards, stamped ocr.pipeline agy-correct-lite-7558, English flagged stale.
 # Spends only spare quota: before each 40-page chunk it reads agy /quota and stops when the Gemini week is under the straight line
 # to its reset or the 5 h bucket is under 25%. 3 books at a time, no new chunk after 95 min. Queue at install: 335,862 pages.
-50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=3 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558
+# RETIRED 2026-10-28 (#7263, PR #7594 merged): the correction lane runs on gex45 for both pools (infrastructure/gex45-crontab). Was: 50 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; [ -f $f ] && ! grep -q -- '--agy-home' $f && cd /root/sourcelibrary && flock -n /tmp/cli-ocr-correct.lock timeout 110m node --no-warnings --env-file=.env.production.local $f correct --out=/data/scratch/sl/cli-ocr-correct/$(date +\%F) --max-pages=2000 --concurrency=4 --book-chunk=40 --deadline-min=95 --apply >> /var/log/sourcelibrary/cli-ocr-correct.log 2>&1  # #7558 #7517: second account (jamesdereklomas@) pool since 2026-10-28 | #7263: retires itself once the lane takes --agy-home; the lane then runs on gex45 (infrastructure/gex45-crontab)
+# Reader-request lane (#7599, Derek 2026-10-28 "finish which ever books they request"): every 2 h at :05 on odd hours,
+# takes the open "request translation" feedback rows that pass translation-request-eligibility.mjs, OCRs the requested
+# book's missing pages (agy 3.8 Flash low), translates the rest on the book's CLI row (else agy 3.8 Flash), requested
+# pages first, up to 200 pages a run (one reader call at a time, ~20 s each, inside the 110 min timeout); then emails each reader whose page now has English (canonical reply email,
+# reply_sent_at). Held books stay held; only waiting-for-a-lane holds (LANE_HOLDS) are worked. Second agy pool.
+5 1-23/2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin AGY_HOME=/root/.agy-james; f=/root/sourcelibrary/scripts/batch/reader-request-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/reader-request-lane.lock timeout 110m node --no-warnings --env-file=.env.production.local $f run --out=/data/scratch/sl/reader-request-lane/$(date +\%F-\%H) --max-pages=200 --apply >> /var/log/sourcelibrary/reader-request-lane.log 2>&1  # #7599
 # Siku Quanshu translation lane (#5600, Derek 2026-10-27 "yes" + "lower the bar, keep them as drafts"): every 2 h at :25,
 # one wave of up to ~1,500 pages of the held Siku cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660) on agy 3.8 Flash
 # low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
 # left, `agy -p /quota`) is above 0.35 weekly remaining, or 0.05 in the last 24 h before its reset; stops mid-wave below.
 # Opus spot check per 5,000 pages written. Pause: touch /mnt/HC_Volume_105839809/siku-lane-5600/STOP (rm to resume).
-25 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600
+*/15 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply --max-minutes=180 --max-pages=100000 --parallel=6 >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600  (2026-10-29: waves read for 180 min (room under the 4 h timeout for the drain and a spot check), then drain; cron every 15 min under flock starts the next. Was hourly, 4,000 pages a wave: ~1,300 pages/h against ~1,800 the 6 readers can do)
+
+# Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
+7 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box hetzner >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+50 2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-corpus.lock timeout 20m node --no-warnings --env-file=.env.production.local $f --corpus >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)

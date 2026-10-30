@@ -65,7 +65,7 @@ const r2 = new S3Client({
 
 async function fetchImage(url) {
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
     signal: AbortSignal.timeout(30000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

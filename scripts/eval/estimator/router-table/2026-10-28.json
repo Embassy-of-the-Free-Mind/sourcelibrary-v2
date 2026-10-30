@@ -1,0 +1,2277 @@
+{
+ "as_of": "2026-10-28",
+ "rules": {
+  "pilot": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+  "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
+  "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
+  "capacity": "scripts/eval/estimator/chain/capacity.json",
+  "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json"
+ },
+ "fees": "default plan fee (rules.json fees, the v2 / #7417 convention)",
+ "size_rate": {
+  "by_reading": {
+   "pilot (one-page Opus image calls)": 5.603575080901616e-07,
+   "correct.mjs, 10 Latin pages a call": 5.387545773941811e-07,
+   "claude-translate.mjs, 10 German pages a call": 1.7616001383926886e-07
+  },
+  "low": 1.7616001383926886e-07,
+  "central": {
+   "correct": 5.603575080901616e-07,
+   "translate": 1.7616001383926886e-07
+  },
+  "high": 5.603575080901616e-07,
+  "overhead_eq": 16150
+ },
+ "idle": {
+  "claude": {
+   "share": 0.08537671471397873,
+   "units": 34.15068588559149,
+   "unit": "points",
+   "meter": "scripts/eval/estimator/chain/results/claude-weekly-2026-10-25.json",
+   "as_of": "2026-10-25T23:40:00+00:00"
+  },
+  "agy": {
+   "share": 0.0,
+   "units": 0.0,
+   "unit": "calls",
+   "meter": "agy meter not read: it is on Hetzner main (/root/agy-quota), not on the job box; 0 = no idle credit"
+  }
+ },
+ "idle_after_tests": {
+  "claude": 32.216668090639345,
+  "agy": 0.0
+ },
+ "rows": [
+  {
+   "id": "latin-lite",
+   "title": "Latin print, Flash-Lite text (#5924)",
+   "pages_waiting": 861506,
+   "current": "lite>opus",
+   "decision": "keep",
+   "route": "lite>opus",
+   "decision_flat_price": "keep lite>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": "no change",
+   "weeks_to_clear": 18.6421819225446,
+   "v2_weeks": 78,
+   "test_score": 0.26336556118050913,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      0.14,
+      3.86
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 12,
+     "top": [
+      [
+       "O6",
+       "21/30"
+      ],
+      [
+       "O5",
+       "12/30"
+      ],
+      [
+       "E2",
+       "11/30"
+      ]
+     ],
+     "mean": 0.4029079678041933,
+     "ci90": [
+      0.19656405376654068,
+      0.6278773825976862
+     ],
+     "var": 0.01718613693998309,
+     "p80": 0.00085,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.0043278124406666,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00433,
+      "low": 0.00136,
+      "high": 0.00875,
+      "pages_per_call": 8.43882
+     },
+     "tested": true,
+     "prior": [
+      3.22,
+      0.78
+     ],
+     "k": 30,
+     "n": 30,
+     "wrong": 0,
+     "top": [
+      [
+       "E2",
+       "7/30"
+      ],
+      [
+       "O8",
+       "5/30"
+      ],
+      [
+       "O12",
+       "4/30"
+      ]
+     ],
+     "mean": 0.9391715844186524,
+     "ci90": [
+      0.8086723514558499,
+      0.9983275433597054
+     ],
+     "var": 0.00404960606090279,
+     "p80": 0.956375,
+     "share": 2.1639062203333e-05,
+     "units": 0.0043278124406666,
+     "cost": [
+      0.0043350626449732785,
+      0.004508188602319127,
+      0.005351750227240062
+     ],
+     "api": 0.08752394276375156,
+     "idle_fit": 0.008640798653423362
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      3.11,
+      0.89
+     ],
+     "k": 24,
+     "n": 30,
+     "wrong": 4,
+     "top": [
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ],
+      [
+       "O8",
+       "9/30"
+      ]
+     ],
+     "mean": 0.7922760165076447,
+     "ci90": [
+      0.5884804700458979,
+      0.9425474558056062
+     ],
+     "var": 0.011706053563142855,
+     "p80": 0.526325,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0821736282001784,
+      1.2632337145116714,
+      1.7332775715062325
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "test_next": 2,
+   "decision_week": "keep",
+   "route_week": "lite>opus",
+   "before": "keep"
+  },
+  {
+   "id": "latin-flash3",
+   "title": "Latin print, 3 Flash text (most-read books)",
+   "pages_waiting": 1317806,
+   "current": "3flash>opus",
+   "decision": "HOLD",
+   "route": "3flash>agy-flash-low",
+   "decision_flat_price": "HOLD 3flash>agy-flash-low",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 34.41451482410774,
+   "v2_weeks": 78,
+   "test_score": 0.2172937130193702,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      2.94,
+      1.06
+     ],
+     "k": 21,
+     "n": 30,
+     "wrong": 4,
+     "top": [
+      [
+       "O8",
+       "16/30"
+      ],
+      [
+       "O6",
+       "14/30"
+      ],
+      [
+       "E2",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7046458126924425,
+     "ci90": [
+      0.5708816583657468,
+      0.8243582336122307
+     ],
+     "var": 0.00595108413247652,
+     "p80": 0.1025,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.0038380642716376954,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00384,
+      "low": 0.00121,
+      "high": 0.00577,
+      "pages_per_call": 9.07441
+     },
+     "tested": false,
+     "prior": [
+      3.82,
+      0.18
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.9556768862028461,
+     "ci90": [
+      0.7611524875908806,
+      0.9999999889479216
+     ],
+     "var": 0.008592379158527992,
+     "p80": 0.934725,
+     "share": 1.9190321358188477e-05,
+     "units": 0.0038380642716376954,
+     "cost": [
+      0.003838064314056283,
+      0.003853772414454178,
+      0.005042438058352185
+     ],
+     "api": 0.08601233448953868
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.87,
+      0.13
+     ],
+     "k": 23,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "O6",
+       "11/30"
+      ],
+      [
+       "O8",
+       "10/30"
+      ],
+      [
+       "E2",
+       "6/30"
+      ]
+     ],
+     "mean": 0.7767352065766808,
+     "ci90": [
+      0.6473321395670582,
+      0.8850806142826743
+     ],
+     "var": 0.005246153520133031,
+     "p80": 0.4051,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.1524373978371145,
+      1.3033611406399086,
+      1.5756980654199955
+     ],
+     "api": null
+    }
+   ],
+   "test_next": 3,
+   "decision_week": "HOLD",
+   "route_week": "3flash>agy-flash-low",
+   "before": "HOLD → 3flash>agy-flash-low"
+  },
+  {
+   "id": "german-lite",
+   "title": "German OCR, Flash-Lite",
+   "pages_waiting": 418603,
+   "current": "lite>opus",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "decision_flat_price": "switch lite>agy-flash-low",
+   "other_wrong_text_bar": "keep lite>opus",
+   "margin_010": "no change",
+   "weeks_to_clear": 10.93182088176558,
+   "v2_weeks": 104,
+   "test_score": 0.021579744859736454,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 21,
+     "n": 30,
+     "wrong": 5,
+     "top": [
+      [
+       "O8",
+       "18/30"
+      ],
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.6876016963142262,
+     "ci90": [
+      0.547641199040544,
+      0.8135825470519982
+     ],
+     "var": 0.006510416666666667,
+     "p80": 0.075875,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003625527956200217,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00363,
+      "low": 0.00114,
+      "high": 0.00534,
+      "pages_per_call": 8.87311
+     },
+     "tested": true,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": 28,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O8",
+       "5/30"
+      ],
+      [
+       "O12",
+       "3/30"
+      ],
+      [
+       "E2",
+       "3/30"
+      ]
+     ],
+     "mean": 0.9305288370941156,
+     "ci90": [
+      0.8460372826618147,
+      0.9855108001894425
+     ],
+     "var": 0.0019615645214843755,
+     "p80": 0.987325,
+     "share": 1.8127639781001083e-05,
+     "units": 0.003625527956200217,
+     "cost": [
+      0.0036788312776514375,
+      0.003858902607836761,
+      0.004285305187489526
+     ],
+     "api": 0.0883368647195252,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.76,
+      0.24
+     ],
+     "k": 28,
+     "n": 30,
+     "wrong": 2,
+     "top": [
+      [
+       "O8",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "7/30"
+      ]
+     ],
+     "mean": 0.9300511395764736,
+     "ci90": [
+      0.8445422721912176,
+      0.9854545208560399
+     ],
+     "var": 0.0019740302272727274,
+     "p80": 0.986025,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0350553763901265,
+      1.0863765854934055,
+      1.2077548200796941
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "lite>agy-flash-low",
+   "before": "keep"
+  },
+  {
+   "id": "german-flash3",
+   "title": "German OCR, 3 Flash",
+   "pages_waiting": 353186,
+   "current": "3flash>opus",
+   "decision": "keep",
+   "route": "3flash>opus",
+   "decision_flat_price": "keep 3flash>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": "no change",
+   "weeks_to_clear": 6.068147587665485,
+   "v2_weeks": 78,
+   "test_score": 0.03245268001960485,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 29,
+     "n": 30,
+     "wrong": 0,
+     "top": [
+      [
+       "O8",
+       "22/30"
+      ],
+      [
+       "O6",
+       "12/30"
+      ],
+      [
+       "E2",
+       "10/30"
+      ]
+     ],
+     "mean": 0.9377369322553876,
+     "ci90": [
+      0.8569024973811509,
+      0.988421589397167
+     ],
+     "var": 0.0017755681818181818,
+     "p80": 0.9916,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003436233365799032,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00344,
+      "low": 0.00108,
+      "high": 0.00479,
+      "pages_per_call": 9.72763
+     },
+     "tested": true,
+     "prior": [
+      1.75,
+      0.25
+     ],
+     "k": 29,
+     "n": 29,
+     "wrong": 0,
+     "top": [
+      [
+       "O8",
+       "11/29"
+      ],
+      [
+       "O16",
+       "4/29"
+      ],
+      [
+       "E2",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9920421385007736,
+     "ci90": [
+      0.9612256731090486,
+      0.9999998686848053
+     ],
+     "var": 0.00025008292111082205,
+     "p80": 0.9999,
+     "share": 1.718116682899516e-05,
+     "units": 0.003436233365799032,
+     "cost": [
+      0.003436233817028745,
+      0.0034410207569772777,
+      0.00357484559758445
+     ],
+     "api": 0.08285938349778667,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "3flash>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.71,
+      0.29
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O8",
+       "18/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ]
+     ],
+     "mean": 0.8659165699529211,
+     "ci90": [
+      0.7576460393305515,
+      0.9489326031664546
+     ],
+     "var": 0.0035184948268821028,
+     "p80": 0.8626,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0748919328900741,
+      1.1678773888595293,
+      1.3462751034787457
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "keep",
+   "route_week": "3flash>opus",
+   "before": "keep"
+  },
+  {
+   "id": "german-tr-flash3",
+   "title": "German translation, 3 Flash English (#7263)",
+   "pages_waiting": 306784,
+   "current": "flash3",
+   "decision": "HOLD",
+   "route": "opus-cli",
+   "decision_flat_price": "HOLD opus-cli",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.4629391245612695,
+   "v2_weeks": null,
+   "test_score": 0.003624545673061963,
+   "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
+   "routes": [
+    {
+     "id": "flash3",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 41,
+     "n": 60,
+     "wrong": 11,
+     "top": [
+      [
+       "T10",
+       "29/60"
+      ],
+      [
+       "E2",
+       "27/60"
+      ],
+      [
+       "O6",
+       "22/60"
+      ]
+     ],
+     "mean": 0.6774624373680698,
+     "ci90": [
+      0.5776598896853241,
+      0.7708862143558919
+     ],
+     "var": 0.00346860908775581,
+     "p80": 0.012775,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.0009537258296138453,
+     "points_flat": 0.000923,
+     "size": {
+      "central": 0.00095,
+      "low": 0.00095,
+      "high": 0.00472,
+      "pages_per_call": 9.02527
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8067849055651419,
+     "ci90": [
+      0.7196240787700336,
+      0.8829195867369938
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.579525,
+     "share": 4.768629148069226e-06,
+     "units": 0.0009537258296138453,
+     "cost": [
+      0.0010801955737991158,
+      0.0011771559221265741,
+      0.0013253111697484239
+     ],
+     "api": 0.07399741813238432
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "opus-cli",
+   "before": "HOLD → opus-cli"
+  },
+  {
+   "id": "german-tr-lite",
+   "title": "German translation, Flash-Lite English (#7263)",
+   "pages_waiting": 151361,
+   "current": "flash-lite",
+   "decision": "HOLD",
+   "route": "opus-cli",
+   "decision_flat_price": "HOLD opus-cli",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.5817188110802768,
+   "v2_weeks": null,
+   "test_score": 0.0014412536818796807,
+   "caveat": "Each German route was judged on its own 30 pages, not paired.",
+   "routes": [
+    {
+     "id": "flash-lite",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 26,
+     "n": 60,
+     "wrong": 19,
+     "top": [
+      [
+       "E2",
+       "31/60"
+      ],
+      [
+       "O6",
+       "20/60"
+      ],
+      [
+       "T8",
+       "16/60"
+      ]
+     ],
+     "mean": 0.4355057687162528,
+     "ci90": [
+      0.334081598345657,
+      0.5398884520965034
+     ],
+     "var": 0.003902185223725286,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.0007686508560068668,
+     "points_flat": 0.000923,
+     "size": {
+      "central": 0.00077,
+      "low": 0.00077,
+      "high": 0.00358,
+      "pages_per_call": 9.3633
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 49,
+     "n": 60,
+     "wrong": 7,
+     "top": [
+      [
+       "T10",
+       "31/60"
+      ],
+      [
+       "E2",
+       "23/60"
+      ],
+      [
+       "T15",
+       "22/60"
+      ]
+     ],
+     "mean": 0.8066337637878646,
+     "ci90": [
+      0.720301065634039,
+      0.8820961539522965
+     ],
+     "var": 0.0024775779198255785,
+     "p80": 0.57735,
+     "share": 3.843254280034334e-06,
+     "units": 0.0007686508560068668,
+     "cost": [
+      0.0008713912338953869,
+      0.0009489717194478681,
+      0.001067124418773792
+     ],
+     "api": 0.07401128328630244
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "opus-cli",
+   "before": "HOLD → opus-cli"
+  },
+  {
+   "id": "french-lite",
+   "title": "French OCR, Flash-Lite",
+   "pages_waiting": 151443,
+   "current": "lite>opus",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "decision_flat_price": "switch lite>agy-flash-low",
+   "other_wrong_text_bar": "keep lite>opus",
+   "margin_010": "no change",
+   "weeks_to_clear": 3.954935224537867,
+   "v2_weeks": 104,
+   "test_score": 0.08937294385268756,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "lite",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "top": [
+      [
+       "O8",
+       "9/30"
+      ],
+      [
+       "O6",
+       "8/30"
+      ],
+      [
+       "E2",
+       "8/30"
+      ]
+     ],
+     "mean": 0.7190298619110234,
+     "ci90": [
+      0.5829423940945773,
+      0.8393153500518562
+     ],
+     "var": 0.006125710227272727,
+     "p80": 0.152225,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "lite>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.00345819150512764,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00346,
+      "low": 0.00109,
+      "high": 0.00517,
+      "pages_per_call": 9.14077
+     },
+     "tested": false,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.882987843165127,
+     "ci90": [
+      0.4475233545789471,
+      0.9999986990357925
+     ],
+     "var": 0.03413012000000001,
+     "p80": 0.793925,
+     "share": 1.72909575256382e-05,
+     "units": 0.00345819150512764,
+     "cost": [
+      0.0034581960041168637,
+      0.003543370984307867,
+      0.007727398960845929
+     ],
+     "api": 0.09309301440136342,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.72,
+      0.28
+     ],
+     "k": 27,
+     "n": 29,
+     "wrong": 2,
+     "top": [
+      [
+       "E2",
+       "11/29"
+      ],
+      [
+       "O8",
+       "10/29"
+      ],
+      [
+       "O6",
+       "3/29"
+      ]
+     ],
+     "mean": 0.9265059999645402,
+     "ci90": [
+      0.8389325570132341,
+      0.9839757431609797
+     ],
+     "var": 0.0021253027416103017,
+     "p80": 0.9836,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0366109196180935,
+      1.090304818986867,
+      1.2158307500085608
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "lite>agy-flash-low",
+   "before": "switch → lite>agy-flash-low"
+  },
+  {
+   "id": "greek-flash3",
+   "title": "Greek OCR, 3 Flash",
+   "pages_waiting": 419150,
+   "current": "3flash",
+   "decision": "held",
+   "route": "3flash",
+   "decision_flat_price": "held 3flash",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0,
+   "caveat": "Derek 2026-10-14 (#6694): Greek stays on lane A",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.49974053945404223,
+     "ci90": [
+      0.04914678338921639,
+      0.9491316751910429
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.1986,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    }
+   ],
+   "decision_week": "held",
+   "route_week": "3flash",
+   "before": "held"
+  },
+  {
+   "id": "tibetan-tr",
+   "title": "Tibetan translation, corrected Kangyur text (#6948)",
+   "pages_waiting": 0,
+   "current": "opus-cli",
+   "decision": "HOLD",
+   "route": "opus-cli",
+   "decision_flat_price": "HOLD opus-cli",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.0,
+   "caveat": "Router test 2026-10-27 (job tib-corr-profiles-6560): 30 pages, one per book, of the #6560 profile experiment's arm-A Flash corrections (never written; no arm passed its rule), each translated as the first page of a block of its book (agy 4 a call, Opus 10 a call, cut at 20K chars) and judged blind by Opus against the image and the corrected transcription. Paired, same pages. The pages were drawn from a DIAGNOSTIC set (pages earlier audits judged worse), not the lane's frame.",
+   "routes": [
+    {
+     "id": "opus-cli",
+     "stage": "opus-text",
+     "lane": "claude-translate.mjs (--per-call=10)",
+     "points": 0.000923,
+     "points_flat": 0.000923,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 27,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "E2",
+       "17/30"
+      ],
+      [
+       "T10",
+       "10/30"
+      ],
+      [
+       "O6",
+       "6/30"
+      ]
+     ],
+     "mean": 0.8745593932487115,
+     "ci90": [
+      0.7678772726491079,
+      0.9543202538424522
+     ],
+     "var": 0.0033143939393939395,
+     "p80": 0.889925,
+     "share": 4.615e-06,
+     "units": 0.000923,
+     "cost": [
+      0.0009671805625875117,
+      0.0010458641065422926,
+      0.0012020150001519547
+     ],
+     "api": 0.06826294527377197
+    },
+    {
+     "id": "agy-flash-low@4",
+     "stage": "agy-text@4",
+     "lane": "claude-translate.mjs --cli=agy --per-call=4 (#7503)",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 22,
+     "n": 30,
+     "wrong": 4,
+     "top": [
+      [
+       "E2",
+       "20/30"
+      ],
+      [
+       "O6",
+       "15/30"
+      ],
+      [
+       "T9",
+       "8/30"
+      ]
+     ],
+     "mean": 0.71865081676894,
+     "ci90": [
+      0.5821604086667218,
+      0.8390907823769307
+     ],
+     "var": 0.006125710227272727,
+     "p80": 0.152925,
+     "share": 6.835987505760664e-06,
+     "units": 0.267,
+     "cost": [
+      0.31820156484576906,
+      0.36914373031089887,
+      0.45863647892423676
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "opus-cli",
+   "before": null
+  },
+  {
+   "id": "tibetan-yigdzin",
+   "title": "Tibetan, Yigdzin (#6560)",
+   "pages_waiting": 280623,
+   "current": "yigdzin>opus",
+   "decision": "switch",
+   "route": "yigdzin>agy-flash-low",
+   "decision_flat_price": "switch yigdzin>agy-flash-low",
+   "other_wrong_text_bar": "keep yigdzin>opus",
+   "margin_010": "no change",
+   "weeks_to_clear": 7.32847201597624,
+   "v2_weeks": 104,
+   "test_score": 0.045573476216294456,
+   "caveat": "Judged on the Kangyur stratum only: 60 folios, one per book (the pilot's 30, and 30 more on 2026-10-27, all two-leaf frames, #6740). Derge agrees with the judge's order on 25/27 pairs (pilot) and 31/32 (new); planted syllables caught 8/10 and 8/10.",
+   "routes": [
+    {
+     "id": "yigdzin",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 34,
+     "n": 60,
+     "wrong": 23,
+     "top": [
+      [
+       "O6",
+       "53/60"
+      ],
+      [
+       "E2",
+       "50/60"
+      ],
+      [
+       "O5",
+       "19/60"
+      ]
+     ],
+     "mean": 0.5646133407862199,
+     "ci90": [
+      0.4599148973615252,
+      0.665657880208787
+     ],
+     "var": 0.003902185223725286,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0,
+     "idle_fit": 1.0
+    },
+    {
+     "id": "yigdzin>agy-flash-low",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.57,
+      0.43
+     ],
+     "k": 53,
+     "n": 60,
+     "wrong": 5,
+     "top": [
+      [
+       "O12",
+       "23/60"
+      ],
+      [
+       "O6",
+       "19/60"
+      ],
+      [
+       "E2",
+       "17/60"
+      ]
+     ],
+     "mean": 0.8801238606748102,
+     "ci90": [
+      0.8066500430903507,
+      0.9398504855045817
+     ],
+     "var": 0.0016751396645359497,
+     "p80": 0.96185,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.085279005258361,
+      1.1535925497835735,
+      1.264488868174216
+     ],
+     "api": null,
+     "idle_fit": 0.0
+    },
+    {
+     "id": "yigdzin>opus",
+     "stage": "opus-img@1",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.01720801871594077,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01721,
+      "low": 0.00541,
+      "high": 0.02242,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      1.45,
+      0.55
+     ],
+     "k": 52,
+     "n": 60,
+     "wrong": 5,
+     "top": [
+      [
+       "E2",
+       "38/60"
+      ],
+      [
+       "O6",
+       "29/60"
+      ],
+      [
+       "O12",
+       "18/60"
+      ]
+     ],
+     "mean": 0.8620719298261407,
+     "ci90": [
+      0.7849416316342268,
+      0.9259902344492467
+     ],
+     "var": 0.0018875046029681384,
+     "p80": 0.914375,
+     "share": 8.604009357970385e-05,
+     "units": 0.01720801871594077,
+     "cost": [
+      0.01858336953863841,
+      0.019872677664161197,
+      0.021922673001958312
+     ],
+     "api": 0.09535167212390011,
+     "idle_fit": 0.0
+    }
+   ],
+   "decision_week": "switch",
+   "route_week": "yigdzin>agy-flash-low",
+   "before": "switch → yigdzin>agy-flash-low"
+  },
+  {
+   "id": "zh-paddle-dice-lt090",
+   "title": "Chinese Paddle, Kanripo dice < 0.90",
+   "pages_waiting": 453715,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>opus",
+   "decision_flat_price": "HOLD paddle>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 23.663630626339604,
+   "v2_weeks": 130,
+   "test_score": 0.09030410493767663,
+   "caveat": "Router tests 2026-10-26: k is what survived the NAME CHECK (accepted, Kanripo leaf given to the judge, every personal and place name the image prints present in the candidate, glyph variants folded); a page with no usable Kanripo leaf does not count. As judged: Paddle 15/30, agy Flash high 19/30, Opus 29/30; strict character by character: 13, 13, 17. Frame: own Kanripo screen 0.6 <= dice < 0.90 (the v2 cell also holds dice < 0.6 pages).",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 14,
+     "n": 30,
+     "wrong": 12,
+     "top": [
+      [
+       "O6",
+       "18/30"
+      ],
+      [
+       "O11",
+       "14/30"
+      ],
+      [
+       "E2",
+       "9/30"
+      ]
+     ],
+     "mean": 0.46833631789936664,
+     "ci90": [
+      0.3260626459242889,
+      0.6123945741492017
+     ],
+     "var": 0.007546164772727273,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010431055013098357,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01043,
+      "low": 0.00328,
+      "high": 0.01117,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      1.27,
+      0.73
+     ],
+     "k": 26,
+     "n": 30,
+     "wrong": 1,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "7/30"
+      ],
+      [
+       "O8",
+       "7/30"
+      ]
+     ],
+     "mean": 0.8524158182002866,
+     "ci90": [
+      0.7400124163765023,
+      0.940302248097435
+     ],
+     "var": 0.003816155955255682,
+     "p80": 0.809675,
+     "share": 5.2155275065491785e-05,
+     "units": 0.010431055013098357,
+     "cost": [
+      0.011093300089629778,
+      0.012132454629266017,
+      0.014095783776405264
+     ],
+     "api": 0.09643180973993376
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1.27,
+      0.73
+     ],
+     "k": 17,
+     "n": 30,
+     "wrong": 8,
+     "top": [
+      [
+       "O6",
+       "16/30"
+      ],
+      [
+       "O5",
+       "10/30"
+      ],
+      [
+       "O11",
+       "9/30"
+      ]
+     ],
+     "mean": 0.5702167742464938,
+     "ci90": [
+      0.4269171736912986,
+      0.7100733595730796
+     ],
+     "var": 0.007422852047526042,
+     "p80": 0.00185,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.4364712972942104,
+      1.784709467921169,
+      2.389222225896108
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "paddle>opus",
+   "before": "HOLD → paddle>opus"
+  },
+  {
+   "id": "zh-6561-served",
+   "title": "Chinese Paddle, served Opus correction (#6561)",
+   "pages_waiting": 0,
+   "current": "paddle>opus",
+   "decision": "HOLD",
+   "route": "paddle>opus",
+   "decision_flat_price": "HOLD paddle>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.0,
+   "v2_weeks": null,
+   "test_score": 0.0,
+   "caveat": "UPPER bound: the judge accepted a correction that turns 章德懋 into 童德懋 (by eye, 1 of 3 pages read). Kanripo agrees with the order on 16/16 pairs, but CER cannot see a one-character name change. Until a by-eye or Kanripo check of names confirms it, read 24/30 as at most 24/30.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 3,
+     "n": 30,
+     "wrong": 24,
+     "top": [
+      [
+       "O6",
+       "22/30"
+      ],
+      [
+       "O5",
+       "16/30"
+      ],
+      [
+       "O11",
+       "16/30"
+      ]
+     ],
+     "mean": 0.12523330951560482,
+     "ci90": [
+      0.04619932400406897,
+      0.23192771043586774
+     ],
+     "var": 0.0033143939393939395,
+     "p80": 0.0,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010431615370606448,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01043,
+      "low": 0.00328,
+      "high": 0.01097,
+      "pages_per_call": 1
+     },
+     "tested": true,
+     "prior": [
+      1,
+      1
+     ],
+     "k": 24,
+     "n": 30,
+     "wrong": 3,
+     "top": [
+      [
+       "O6",
+       "9/30"
+      ],
+      [
+       "E2",
+       "4/30"
+      ],
+      [
+       "O16",
+       "4/30"
+      ]
+     ],
+     "mean": 0.7812930775238075,
+     "ci90": [
+      0.6549697795634805,
+      0.8880835694713235
+     ],
+     "var": 0.00517874053030303,
+     "p80": 0.42825,
+     "share": 5.215807685303224e-05,
+     "units": 0.010431615370606448,
+     "cost": [
+      0.011746209173553783,
+      0.013251971567539647,
+      0.015926865171640187
+     ],
+     "api": 0.1052101987906007
+    }
+   ],
+   "decision_week": "HOLD",
+   "route_week": "paddle>opus",
+   "before": "HOLD → paddle>opus"
+  },
+  {
+   "id": "chinese-flash3",
+   "title": "Chinese OCR, 3 Flash",
+   "pages_waiting": 103878,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "decision_flat_price": "keep (UNTESTED) 3flash>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 5.728453881960691,
+   "v2_weeks": 104,
+   "test_score": 0.35198663891891285,
+   "caveat": "Chinese acceptance is an upper bound until names are checked (see zh-6561-served). v1's chinese-print floors are left out: v1 says they measure its reference panel's variant forms, not the readers.",
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.5013140202618758,
+     "ci90": [
+      0.05054748949308667,
+      0.9510257717195508
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.202525,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@1",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.011029195560100678,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01103,
+      "low": 0.00347,
+      "high": 0.01195,
+      "pages_per_call": 1
+     },
+     "tested": false,
+     "prior": [
+      1.51,
+      0.49
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.7578036713576672,
+     "ci90": [
+      0.2393357909224325,
+      0.9986558436055181
+     ],
+     "var": 0.06144531250000001,
+     "p80": 0.563,
+     "share": 5.514597780050339e-05,
+     "units": 0.011029195560100678,
+     "cost": [
+      0.011044040477729736,
+      0.013035110694728165,
+      0.046082516608120606
+     ],
+     "api": 0.10847136680234337
+    }
+   ],
+   "test_next": 1,
+   "decision_week": "keep (UNTESTED)",
+   "route_week": "3flash>opus",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "zh-frame-6871",
+   "title": "Chinese tables + mixed, guarded Paddle (#6871)",
+   "pages_waiting": 22220,
+   "current": "paddle>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "paddle>opus",
+   "decision_flat_price": "keep (UNTESTED) paddle>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.1354198058361236,
+   "v2_weeks": 104,
+   "test_score": 0.05262458476546743,
+   "caveat": "Tables: the one served table page in the pilot had every rod numeral reversed. Upper bound, as above.",
+   "routes": [
+    {
+     "id": "paddle",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.4996964147151215,
+     "ci90": [
+      0.04856175341283012,
+      0.9516445624837006
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.2022,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "paddle>opus",
+     "stage": "opus-img@1",
+     "lane": "one page a call (paddle-correct-6561 / tibetan-correct-6560 harness)",
+     "points": 0.010219800232548367,
+     "points_flat": 0.0124,
+     "size": {
+      "central": 0.01022,
+      "low": 0.00321,
+      "high": 0.01073,
+      "pages_per_call": 1
+     },
+     "tested": false,
+     "prior": [
+      1.67,
+      0.33
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.8332092749166732,
+     "ci90": [
+      0.3514781172161729,
+      0.9999379291541756
+     ],
+     "var": 0.046348130000000015,
+     "p80": 0.70025,
+     "share": 5.109900116274184e-05,
+     "units": 0.010219800232548367,
+     "cost": [
+      0.010220434623570146,
+      0.01096410690856148,
+      0.02907663303050752
+     ],
+     "api": 0.09865468673307864
+    },
+    {
+     "id": "paddle>agy-flash-high",
+     "stage": "agy",
+     "lane": "agy, one page a call",
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1.46,
+      0.54
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.7266939774191983,
+     "ci90": [
+      0.20605378651943962,
+      0.9972916939571321
+     ],
+     "var": 0.0659977325,
+     "p80": 0.50585,
+     "share": 2.6115008448973322e-05,
+     "units": 1.02,
+     "cost": [
+      1.0227699741013225,
+      1.2681170545279659,
+      4.950163824840805
+     ],
+     "api": null
+    }
+   ],
+   "decision_week": "keep (UNTESTED)",
+   "route_week": "paddle>opus",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "hebrew-flash3",
+   "title": "Hebrew OCR, 3 Flash",
+   "pages_waiting": 51360,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "decision_flat_price": "keep (UNTESTED) 3flash>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 1.2523582354603726,
+   "v2_weeks": 104,
+   "test_score": 0.05173888346431509,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      1,
+      1
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.4984272224605611,
+     "ci90": [
+      0.04913568379117768,
+      0.9481019772995564
+     ],
+     "var": 0.08333333333333333,
+     "p80": 0.1968,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.004876784405998336,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00488,
+      "low": 0.00153,
+      "high": 0.00955,
+      "pages_per_call": 8.20345
+     },
+     "tested": false,
+     "prior": [
+      1.71,
+      0.29
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.855788173586806,
+     "ci90": [
+      0.39229219124337916,
+      0.9999862807411344
+     ],
+     "var": 0.04131316583333334,
+     "p80": 0.73965,
+     "share": 2.438392202999168e-05,
+     "units": 0.004876784405998336,
+     "cost": [
+      0.004876851312783945,
+      0.005112598340599799,
+      0.012431510274372923
+     ],
+     "api": 0.09605180643649328
+    }
+   ],
+   "decision_week": "keep (UNTESTED)",
+   "route_week": "3flash>opus",
+   "before": "keep (UNTESTED)"
+  },
+  {
+   "id": "arabic-flash3",
+   "title": "Arabic OCR, 3 Flash",
+   "pages_waiting": 30244,
+   "current": "3flash>opus",
+   "decision": "keep (UNTESTED)",
+   "route": "3flash>opus",
+   "decision_flat_price": "keep (UNTESTED) 3flash>opus",
+   "other_wrong_text_bar": null,
+   "margin_010": null,
+   "weeks_to_clear": 0.6031993562092924,
+   "v2_weeks": 104,
+   "test_score": 0.02023178654670882,
+   "caveat": null,
+   "routes": [
+    {
+     "id": "3flash",
+     "stage": "none",
+     "lane": null,
+     "points": null,
+     "points_flat": null,
+     "size": null,
+     "tested": false,
+     "prior": [
+      2.35,
+      1.65
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.5870869759406353,
+     "ci90": [
+      0.20290801823280313,
+      0.9190556688250987
+     ],
+     "var": 0.0484512,
+     "p80": 0.19665,
+     "share": 0.0,
+     "units": 0.0,
+     "cost": null,
+     "api": 0.0
+    },
+    {
+     "id": "3flash>opus",
+     "stage": "opus-img@10",
+     "lane": "correct.mjs (--per-call, default 10)",
+     "points": 0.003988886101106285,
+     "points_flat": 0.004,
+     "size": {
+      "central": 0.00399,
+      "low": 0.00125,
+      "high": 0.00559,
+      "pages_per_call": 7.57002
+     },
+     "tested": false,
+     "prior": [
+      1.77,
+      0.23
+     ],
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "top": [],
+     "mean": 0.8872367640236349,
+     "ci90": [
+      0.45822515866370855,
+      0.9999991188274449
+     ],
+     "var": 0.033540795988,
+     "p80": 0.80205,
+     "share": 1.9944430505531425e-05,
+     "units": 0.003988886101106285,
+     "cost": [
+      0.00398888961600634,
+      0.004079584833651731,
+      0.008705078771184907
+     ],
+     "api": 0.09264719783163797
+    }
+   ],
+   "decision_week": "keep (UNTESTED)",
+   "route_week": "3flash>opus",
+   "before": "keep (UNTESTED)"
+  }
+ ],
+ "tests": [
+  {
+   "rank": 1,
+   "cell": "chinese-flash3",
+   "routes": [
+    "3flash",
+    "3flash>opus"
+   ],
+   "pages": 30,
+   "claude_points": 1.0748758668030203,
+   "agy_calls": 0,
+   "account_week_share": 0.0053743793340151015,
+   "agy_week_share": 0.0
+  },
+  {
+   "rank": 2,
+   "cell": "latin-lite",
+   "routes": [
+    "lite>agy-flash-low"
+   ],
+   "pages": 30,
+   "claude_points": 0.372,
+   "agy_calls": 30.6,
+   "account_week_share": 0.0018599999999999999,
+   "agy_week_share": 0.0007834502534691997
+  },
+  {
+   "rank": 3,
+   "cell": "latin-flash3",
+   "routes": [
+    "3flash>opus"
+   ],
+   "pages": 30,
+   "claude_points": 0.4871419281491308,
+   "agy_calls": 0,
+   "account_week_share": 0.002435709640745654,
+   "agy_week_share": 0.0
+  }
+ ],
+ "prior_vs_pilot": [
+  [
+   "latin-lite",
+   "lite",
+   [
+    0.14,
+    3.86
+   ],
+   "17/30"
+  ],
+  [
+   "latin-lite",
+   "lite>opus",
+   [
+    3.22,
+    0.78
+   ],
+   "30/30"
+  ],
+  [
+   "latin-lite",
+   "lite>agy-flash-low",
+   [
+    3.11,
+    0.89
+   ],
+   "24/30"
+  ],
+  [
+   "latin-flash3",
+   "3flash",
+   [
+    2.94,
+    1.06
+   ],
+   "21/30"
+  ],
+  [
+   "latin-flash3",
+   "3flash>agy-flash-low",
+   [
+    1.87,
+    0.13
+   ],
+   "23/30"
+  ],
+  [
+   "german-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "21/30"
+  ],
+  [
+   "german-lite",
+   "lite>opus",
+   [
+    1.77,
+    0.23
+   ],
+   "28/30"
+  ],
+  [
+   "german-lite",
+   "lite>agy-flash-low",
+   [
+    1.76,
+    0.24
+   ],
+   "28/30"
+  ],
+  [
+   "german-flash3",
+   "3flash",
+   [
+    1,
+    1
+   ],
+   "29/30"
+  ],
+  [
+   "german-flash3",
+   "3flash>opus",
+   [
+    1.75,
+    0.25
+   ],
+   "29/29"
+  ],
+  [
+   "german-flash3",
+   "3flash>agy-flash-low",
+   [
+    1.71,
+    0.29
+   ],
+   "26/30"
+  ],
+  [
+   "german-tr-flash3",
+   "flash3",
+   [
+    1,
+    1
+   ],
+   "41/60"
+  ],
+  [
+   "german-tr-flash3",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "german-tr-lite",
+   "flash-lite",
+   [
+    1,
+    1
+   ],
+   "26/60"
+  ],
+  [
+   "german-tr-lite",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "49/60"
+  ],
+  [
+   "french-lite",
+   "lite",
+   [
+    1,
+    1
+   ],
+   "22/30"
+  ],
+  [
+   "french-lite",
+   "lite>agy-flash-low",
+   [
+    1.72,
+    0.28
+   ],
+   "27/29"
+  ],
+  [
+   "tibetan-tr",
+   "opus-cli",
+   [
+    1,
+    1
+   ],
+   "27/30"
+  ],
+  [
+   "tibetan-tr",
+   "agy-flash-low@4",
+   [
+    1,
+    1
+   ],
+   "22/30"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin",
+   [
+    1,
+    1
+   ],
+   "34/60"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>agy-flash-low",
+   [
+    1.57,
+    0.43
+   ],
+   "53/60"
+  ],
+  [
+   "tibetan-yigdzin",
+   "yigdzin>opus",
+   [
+    1.45,
+    0.55
+   ],
+   "52/60"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "14/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>opus",
+   [
+    1.27,
+    0.73
+   ],
+   "26/30"
+  ],
+  [
+   "zh-paddle-dice-lt090",
+   "paddle>agy-flash-high",
+   [
+    1.27,
+    0.73
+   ],
+   "17/30"
+  ],
+  [
+   "zh-6561-served",
+   "paddle",
+   [
+    1,
+    1
+   ],
+   "3/30"
+  ],
+  [
+   "zh-6561-served",
+   "paddle>opus",
+   [
+    1,
+    1
+   ],
+   "24/30"
+  ]
+ ]
+}

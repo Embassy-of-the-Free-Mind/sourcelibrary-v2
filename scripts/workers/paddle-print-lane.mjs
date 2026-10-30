@@ -41,7 +41,7 @@ import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
@@ -221,8 +221,10 @@ async function plan() {
   const tally = { books: 0, pages: 0, keep: {}, no_image: 0, skipped_books: [] };
   await withMongo(async (db) => {
     for (const bid of ids) {
-      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1 } });
+      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
+      // split before read (#7605): two leaves read here still land on ONE page record, uncitable and stranded by the split
+      if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && book.pipeline_auto.hold.reason !== HOLD_REASON) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       // canary by eye 2026-10-23: on kanji-katakana print Paddle reads katakana as look-alike kanji (ヲ→之, ス→入)
       // and invented a garbled near-repeat line; #7184 measured Chinese only. Japanese stays out of this lane.
@@ -454,8 +456,9 @@ async function apply() {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pages: prepped } of ready) {
       const pl = readJson(planFile(bid));
-      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1 } });
+      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { log(`${bid} not found — skipping`); continue; }
+      if (isUnsplitSpread(book)) { log(`${bid} needs_splitting — split it first, not written (#7605)`); continue; }
       // the hold is the lane's guarantee that no paid re-translation follows the write
       if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
       const language = laneLanguage(book.language);
