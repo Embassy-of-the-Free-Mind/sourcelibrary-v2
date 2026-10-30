@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { EditionsPerWorkChart, LanguageCoverageChart, LatinCenturyChart } from './Charts';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg';
 const HERO_ALT =
@@ -93,6 +94,7 @@ export default function HowMuchInEnglishPage() {
             into works means grouping every printing of the same text together, which is how the
             work counts below were made.
           </p>
+          <EditionsPerWorkChart />
         </section>
 
         <section className="mb-16">
@@ -115,6 +117,7 @@ export default function HowMuchInEnglishPage() {
               ['Spanish', '83,510', 'about 60,000', '176', '28', 'no estimate'],
             ]}
           />
+          <LanguageCoverageChart />
           <p className={P}>
             <strong>Latin</strong> is the only European language where the translated share has
             been measured. A blind sample of 1,000 works, each searched for any published English
@@ -126,6 +129,7 @@ export default function HowMuchInEnglishPage() {
             are described in <Link href="/articles/counting-the-gap">Counting the gap</Link> and on
             the <Link href="/census">census</Link> page.
           </p>
+          <LatinCenturyChart />
           <p className={P}>
             <strong>Scanning.</strong> About 58% of early modern Latin works have at least one
             digitised copy somewhere, counting only copies with a working IIIF image link, so this
