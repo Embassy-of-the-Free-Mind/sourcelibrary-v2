@@ -17,7 +17,7 @@
 // Unit = one interior page of one book (15% front / 5% back skipped; ocr.data ≥ 200 chars; translation.data
 // ≥ 100 chars; translation.source ∈ {ai, batch_api}; no edited_by; page_type not in EXCLUDED_TYPES).
 // Strata = books.language (15 languages) with a quota per translation-model arm inside each language
-// (lite = gemini-3.1-flash-lite*, flash = gemini-3-flash-preview). Period is recorded as a covariate.
+// (lite = gemini-3.1-flash-lite*, flash = gemini-3-flash-preview; every arm: arm.mjs). Period is recorded as a covariate.
 // Controls (blinded, drawn from EXTRA books not in the main sample):
 //   swap   translation replaced by another page's translation in the same language  → expect fidelity 1
 //   drop   contiguous middle ~35% of the translation removed                           → expect omission
@@ -30,6 +30,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { resetSeed, seededRand } from '../lib/paired-stats.mjs';
+import { armOf, MACHINE_ARMS } from './arm.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true] : []).filter(Boolean));
 const OUT = args.out || 'scripts/eval/results/translation-corpus-audit-2026-09-30';
@@ -49,7 +50,7 @@ const EXCLUDED_TYPES = ['archived-spread', 'blank', 'title-page', 'toc', 'index'
 const MIN_OCR = 200, MIN_TR = 100;
 const MODERNIZATION_HASHES = ['d0e82fa7c2', '45790074ee']; // English Modernization v1/v2 prompt hashes (prompts.content_hash prefix)
 
-const armOf = (m) => !m ? 'none' : /^gemini-3\.1-flash-lite/.test(m) ? 'lite' : /^gemini-3-flash-preview/.test(m) ? 'flash' : 'other';
+// armOf: arm.mjs (#5274 wave 2). Before it, every model after gemini-3-flash-preview read `other` and was excluded.
 const periodOf = (published) => {
   const m = String(published || '').match(/\b(1[0-9]\d\d|20[0-2]\d|[5-9]\d\d)\b/);
   if (!m) return 'unknown';
@@ -94,7 +95,7 @@ async function drawPage(book) {
     if (p.tl < MIN_TR) { bump(log.exclusions, 'short_translation'); return false; }
     if (!['ai', 'batch_api'].includes(p.ts)) { bump(log.exclusions, 'source_' + p.ts); return false; }
     if (p.ted) { bump(log.exclusions, 'edited_by'); return false; }
-    if (armOf(p.tm) === 'other' || armOf(p.tm) === 'none') { bump(log.exclusions, 'arm_' + armOf(p.tm)); return false; }
+    if (!MACHINE_ARMS.includes(armOf(p.tm))) { bump(log.exclusions, 'arm_' + armOf(p.tm)); return false; }
     return true;
   });
   if (!ok.length) return null;
@@ -124,6 +125,7 @@ function toItem(kind, book, page, extra = {}) {
 const main = [], extras = [], texts = {};
 for (const lang of Object.keys(QUOTA)) {
   const target = Math.max(1, Math.round(QUOTA[lang] * SCALE));
+  // The 09-30 arm quota split lite/flash 50/50; any other arm is uncapped (it only applies when --arm-quota is on).
   const armCap = { lite: Math.ceil(target / 2), flash: Math.ceil(target / 2) };
   const got = { lite: 0, flash: 0 };
   let taken = 0, visits = 0, extra = 0;
@@ -134,11 +136,11 @@ for (const lang of Object.keys(QUOTA)) {
     const r = await drawPage(book).catch((e) => { bump(log.exclusions, 'error'); console.error('draw error', book.id, e.message); return null; });
     if (!r) { bump(log.exclusions, 'no_candidate_page'); continue; }
     const arm = armOf(r.page.translation.model);
-    if (taken < target && (!ARM_QUOTA || got[arm] < armCap[arm] || (visits > target * 4))) {
+    if (taken < target && (!ARM_QUOTA || !(arm in armCap) || got[arm] < armCap[arm] || (visits > target * 4))) {
       // after 4× the quota in visits, relax the arm cap so a one-arm language still fills its quota
       const it = toItem('main', { ...book, language: lang }, r.page, { n_candidates: r.n_candidates });
       main.push(it); texts[it.id] = { source: r.page.ocr.data, translation: r.page.translation.data };
-      got[arm]++; taken++;
+      got[arm] = (got[arm] || 0) + 1; taken++;
     } else if (extra < EXTRA_PER_LANG) {
       const it = toItem('extra', { ...book, language: lang }, r.page);
       extras.push(it); texts[it.id] = { source: r.page.ocr.data, translation: r.page.translation.data };
@@ -146,7 +148,7 @@ for (const lang of Object.keys(QUOTA)) {
     }
   }
   log.visits[lang] = { visits, taken, extra, arms: got };
-  console.error(`${lang}: took ${taken}/${target} (lite ${got.lite}, flash ${got.flash}) + ${extra} extra in ${visits} visits`);
+  console.error(`${lang}: took ${taken}/${target} (${Object.entries(got).map(([a, n]) => `${a} ${n}`).join(', ')}) + ${extra} extra in ${visits} visits`);
 }
 
 // 3. Controls.

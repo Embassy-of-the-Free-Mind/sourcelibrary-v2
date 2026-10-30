@@ -155,7 +155,7 @@ function weightedBy(pred, mode) {
     const share = W[lang].translated_pages / totalPages;
     if (mode === 'arm' && armShares && armShares[lang]) {
       let langRate = 0, covered = 0;
-      for (const arm of ['lite', 'flash']) {
+      for (const arm of Object.keys(armShares[lang])) { // every arm in arm-shares.json (wave 2: arm.mjs), not only lite/flash
         const cell = items.filter((m) => m.arm === arm);
         if (!cell.length) continue;
         langRate += armShares[lang][arm] * cell.filter((m) => pred(V[m.id])).length / cell.length; covered += armShares[lang][arm];
@@ -174,7 +174,7 @@ report.sensitivity = {
   ...Object.fromEntries([['pct_fidelity_ge4', (v) => v.fidelity >= 4], ['pct_fidelity_5', (v) => v.fidelity === 5], ['pct_fidelity_le2', (v) => v.fidelity <= 2], ['any_major_defect', (v) => v.defects.some((d) => d.severity === 'major')], ['omission', (v) => v.flags.omission], ['invention', (v) => v.flags.invention], ['garble_passthrough', (v) => v.flags.garble_passthrough]]
     .map(([k, p]) => [k, { language: weightedBy(p, 'language'), language_x_arm: armShares ? weightedBy(p, 'arm') : null, page_weighted: bookW ? weightedBy(p, 'page') : null }])),
   by_language_arm_weighted: armShares ? Object.fromEntries(Object.entries(byLang).map(([lang, items]) => {
-    const f = (pred) => { let r = 0, c = 0; for (const arm of ['lite', 'flash']) { const cell = items.filter((m) => m.arm === arm); if (!cell.length || !armShares[lang]) continue; r += armShares[lang][arm] * cell.filter((m) => pred(V[m.id])).length / cell.length; c += armShares[lang][arm]; } return c ? +(100 * r / c).toFixed(1) : null; };
+    const f = (pred) => { let r = 0, c = 0; for (const arm of Object.keys(armShares[lang] || {})) { const cell = items.filter((m) => m.arm === arm); if (!cell.length) continue; r += armShares[lang][arm] * cell.filter((m) => pred(V[m.id])).length / cell.length; c += armShares[lang][arm]; } return c ? +(100 * r / c).toFixed(1) : null; };
     return [lang, { pct_ge4: f((v) => v.fidelity >= 4), pct_le2: f((v) => v.fidelity <= 2), any_major: f((v) => v.defects.some((d) => d.severity === 'major')) }];
   })) : null,
 };
