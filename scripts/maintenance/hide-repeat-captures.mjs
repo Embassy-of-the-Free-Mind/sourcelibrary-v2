@@ -143,10 +143,11 @@ try {
           const meta = { by: `system:${SWEEP}`, at: new Date(), issue: 5056, method: 'thumb-r>=0.99+ocr-dice (page-repeat-images.mjs)', verdict: pr.verdict ?? null, r: pr.r ?? null, dice: pr.dice ?? null, kept_page: c.keep_page, keep_rule: c.why, run: RUN };
           logAction({ action: 'hide', book_id: bookId, page_id: h.id, page_number: h.page_number, repeat_of: c.keep, kept_page: c.keep_page, keep_rule: c.why, apply: APPLY });
           if (APPLY) {
-            await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'hide-repeat-capture', detail: { page_id: h.id, page_number: h.page_number, repeat_of: c.keep, kept_page: c.keep_page, keep_rule: c.why, run: RUN } });
             // Guarded: only a page that is still unhidden, and only while the kept page is itself unhidden.
-            const kept = await pages.findOne({ id: c.keep, book_id: bookId, repeat_of: null }, { projection: { _id: 1 } });
-            if (!kept) throw new Error(`book ${bookId}: kept page ${c.keep} is gone or hidden; stopping`);
+            // Checked BEFORE the sweep_log row, so the log never records a hide that was not written.
+            const kept = await pages.findOne({ id: c.keep, book_id: bookId, repeat_of: null, page_number: { $gt: 0 } }, { projection: { _id: 1 } });
+            if (!kept) throw new Error(`book ${bookId}: kept page ${c.keep} is gone, soft-hidden or hidden; stopping`);
+            await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'hide-repeat-capture', detail: { page_id: h.id, page_number: h.page_number, repeat_of: c.keep, kept_page: c.keep_page, keep_rule: c.why, run: RUN } });
             await pages.updateOne({ id: h.id, book_id: bookId, repeat_of: null }, { $set: { repeat_of: c.keep, repeat_of_meta: meta } });
           }
           row.hide++; summary.hide++;
