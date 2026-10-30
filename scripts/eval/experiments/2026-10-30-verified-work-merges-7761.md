@@ -7,8 +7,8 @@ canons: []
 n_books: 5372
 n_pages: null
 verdict: "The author-blocked flash-lite merge lane proposes 1,777 HIGH work merges over 53,111 author-linked live books. A Sonnet judge reading every book in every group accepts 64.6% [62.1–66.9] of the normal groups and 49.1% [43.1–55.0] of the 37 largest authors' groups; about 10% of all groups contain a different work outright. Of the 1,106 groups both models accept, 60/60 read by hand are right (95% lower bound ~94%). Applying them moves 1,620 books (101 hidden) off 1,370 retired ids."
-status: undecided
-decision: "Flash-lite HIGH alone is not safe to apply (the June 16/16 check was too small). Apply only groups a second model accepts, with scripts/maintenance/apply-verified-work-merges.mjs (full before-state backup, hidden carriers moved, slugs aligned, aliases kept). Waits on Derek (bulk work_id write)."
+status: adopted
+decision: "Flash-lite HIGH alone is not safe to apply (the June 16/16 check was too small). Apply only groups a second model accepts, with scripts/maintenance/apply-verified-work-merges.mjs (full before-state backup, hidden carriers moved, slugs aligned, aliases kept). Applied 2026-10-30 on Derek's go: 1,620 books moved, 0 stale, books_catalog synced (3,345 rows)."
 superseded_by: null
 issue: [7761, 3887, 4246]
 router_evidence: "none — a catalogue-identity measurement, no OCR or translation route"
@@ -31,4 +31,6 @@ The 40-author pilot (the largest normal blocks) was worse, 6/20, with the Suyuti
 
 **Apply plan (dry run).** 1,106 accepted groups → 1,105 planned (1 has no existing id), 1,620 book writes, 101 of them hidden books that carry a retired id, 1,370 retired ids kept as aliases. Backup: `scripts/output/verified-work-merges-backup-*.json` holds each book's full before-state.
 
-**Not established.** Recall gain: re-run the 2026-10-29 frame after apply. The 17,795 live books with no `author_id` are outside this lane.
+**Applied 2026-10-30.** 1,620 books moved (0 changed since plan), 1,105 `work_id_merges` rows, `sync-books-catalog.mjs` 3,345 rows, 0 errors. Of the 59 frame books the judge found with an unlinked sibling on 2026-10-29, **15 now share a work_id with it** (27 of 228 judged pairs), so the judge-as-called miss rate on that frame falls from 59/291 (20.3%) to 44/291 (15.1%). Known flaw: the surviving work_title is the winner id's own, so Alberti's work page now reads *L'architettura* rather than *De re aedificatoria*; the proposal's uniform title should win.
+
+**Not established.** The 17,795 live books with no `author_id` are outside this lane.
