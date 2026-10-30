@@ -1,0 +1,247 @@
+{
+  "date": "2026-10-30",
+  "issue": 4916,
+  "pair": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite"
+  ],
+  "strata": [
+    "ref-ws",
+    "ref-pinned"
+  ],
+  "definitions": {
+    "disagree": "whole-page letter Levenshtein between the two reads / mean length",
+    "bad": "Flash-Lite reference CER > 0.05",
+    "agree": "disagree <= 0.02"
+  },
+  "skipped": {
+    "not_aligned": 27,
+    "missing_output": 0,
+    "under_100_letters": 0
+  },
+  "reference_fault": {
+    "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20": "reference is wiki table markup (style=, |-)",
+    "ws-la-gauss-carl-friedrich-werke-1870-djvu-p21": "reference writes congruence as LaTeX \\equiv"
+  },
+  "all": {
+    "n": 148,
+    "n_bad": 27,
+    "spearman": 0.685,
+    "auc": 0.864,
+    "auc_ci95": [
+      0.779,
+      0.931
+    ],
+    "agree": {
+      "n": 94,
+      "bad": 4,
+      "rate_ci95": [
+        0.017,
+        0.104
+      ],
+      "slugs": [
+        "ws-la-apocalypsis-revelata-djvu-p3",
+        "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+        "ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+        "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77"
+      ]
+    },
+    "apart": {
+      "n": 54,
+      "bad": 23,
+      "rate_ci95": [
+        0.303,
+        0.558
+      ]
+    },
+    "bad_pages_flagged": "23/27"
+  },
+  "without_reference_faults": {
+    "n": 146,
+    "n_bad": 25,
+    "spearman": 0.712,
+    "auc": 0.903,
+    "auc_ci95": [
+      0.84,
+      0.954
+    ],
+    "agree": {
+      "n": 92,
+      "bad": 2,
+      "rate_ci95": [
+        0.006,
+        0.076
+      ],
+      "slugs": [
+        "ws-la-apocalypsis-revelata-djvu-p3",
+        "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77"
+      ]
+    },
+    "apart": {
+      "n": 54,
+      "bad": 23,
+      "rate_ci95": [
+        0.303,
+        0.558
+      ]
+    },
+    "bad_pages_flagged": "23/25"
+  },
+  "by_language": {
+    "Latin": {
+      "n": 62,
+      "n_bad": 19,
+      "spearman": 0.757,
+      "auc": 0.851,
+      "auc_ci95": [
+        0.733,
+        0.935
+      ],
+      "agree": {
+        "n": 37,
+        "bad": 4,
+        "rate_ci95": [
+          0.043,
+          0.247
+        ],
+        "slugs": [
+          "ws-la-apocalypsis-revelata-djvu-p3",
+          "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+          "ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+          "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77"
+        ]
+      },
+      "apart": {
+        "n": 25,
+        "bad": 15,
+        "rate_ci95": [
+          0.407,
+          0.766
+        ]
+      },
+      "bad_pages_flagged": "15/19"
+    },
+    "Greek": {
+      "n": 37,
+      "n_bad": 3,
+      "spearman": 0.459,
+      "auc": 0.941,
+      "auc_ci95": [
+        0.844,
+        1
+      ],
+      "agree": {
+        "n": 27,
+        "bad": 0,
+        "rate_ci95": [
+          0,
+          0.125
+        ],
+        "slugs": []
+      },
+      "apart": {
+        "n": 10,
+        "bad": 3,
+        "rate_ci95": [
+          0.108,
+          0.603
+        ]
+      },
+      "bad_pages_flagged": "3/3"
+    },
+    "German": {
+      "n": 34,
+      "n_bad": 1,
+      "spearman": 0.704,
+      "auc": 0.97,
+      "auc_ci95": [
+        0.906,
+        1
+      ],
+      "agree": {
+        "n": 29,
+        "bad": 0,
+        "rate_ci95": [
+          0,
+          0.117
+        ],
+        "slugs": []
+      },
+      "apart": {
+        "n": 5,
+        "bad": 1,
+        "rate_ci95": [
+          0.036,
+          0.624
+        ]
+      },
+      "bad_pages_flagged": "1/1"
+    },
+    "Armenian": {
+      "n": 8,
+      "n_bad": 1,
+      "spearman": 0.325,
+      "auc": 1,
+      "agree": {
+        "n": 1,
+        "bad": 0,
+        "rate_ci95": [
+          0,
+          0.793
+        ],
+        "slugs": []
+      },
+      "apart": {
+        "n": 7,
+        "bad": 1,
+        "rate_ci95": [
+          0.026,
+          0.513
+        ]
+      },
+      "bad_pages_flagged": "1/1"
+    },
+    "Hebrew": {
+      "n": 4,
+      "n_bad": 2,
+      "spearman": 0.2,
+      "auc": 0.5,
+      "agree": {
+        "n": 0,
+        "bad": 0,
+        "rate_ci95": null,
+        "slugs": []
+      },
+      "apart": {
+        "n": 4,
+        "bad": 2,
+        "rate_ci95": [
+          0.15,
+          0.85
+        ]
+      },
+      "bad_pages_flagged": "2/2"
+    },
+    "Chinese": {
+      "n": 3,
+      "n_bad": 1,
+      "spearman": -1,
+      "auc": 0,
+      "agree": {
+        "n": 0,
+        "bad": 0,
+        "rate_ci95": null,
+        "slugs": []
+      },
+      "apart": {
+        "n": 3,
+        "bad": 1,
+        "rate_ci95": [
+          0.061,
+          0.792
+        ]
+      },
+      "bad_pages_flagged": "1/1"
+    }
+  }
+}
