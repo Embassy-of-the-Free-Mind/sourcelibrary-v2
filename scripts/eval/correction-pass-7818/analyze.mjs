@@ -13,9 +13,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { OUT, RESULTS, ROOT, J, jsonl, sha, scoreText, unexplainedInsertions, wrongText, NORMALISATION, SEED } from './lib.mjs';
+import { OUT, RESULTS, ROOT, J, jsonl, sha, scoreText, unexplainedInsertions, wrongText, NORMALISATION, SEED, severityScore, SEVERITY_WEIGHTS, spanSeverity, fca } from './lib.mjs';
 import { binomTwoSided, makeRng } from '../lib/paired-stats.mjs';
-import { wilson, binaryAgreement, aucLowerIsPositive } from '../lib/agreement-stats.mjs';
+import { wilson, binaryAgreement, aucLowerIsPositive, krippendorffAlpha } from '../lib/agreement-stats.mjs';
 import { clusterCI } from '../route-judge-6740/judge.mjs';
 import { exportScore, PLANT_BAR } from '../lane-judge-sampler.mjs';
 import { CORRECT_LANE } from '../../batch/cli-ocr-lane.mjs';
@@ -186,11 +186,97 @@ function score() {
       logit: { b0: r3(fit.b0), b1: r3(fit.b1) }, cer_at_50pct_accept: r3(fit.x50), cer50_ci95: boots.length > 100 ? [r3(boots[Math.floor(0.025 * boots.length)]), r3(boots[Math.floor(0.975 * boots.length)])] : null,
       accept_by_cer_band: Object.fromEntries([[0, 0.02], [0.02, 0.05], [0.05, 0.1], [0.1, 0.2], [0.2, 1.01]].map(([lo, hi]) => { const g = aucRows.filter((r) => r.cer >= lo && r.cer < hi); return [`${lo}-${hi}`, `${g.filter((r) => r.accept).length}/${g.length}`]; })) };
   }
+  out.amendment_1 = amended({ items, vo, abs, agy, F, frameOf });
   R('score.json', out);
   R('tables.md', tables(out));
   // Router evidence (Arm P) in the route-judge format the router pools, built by the sampler's own exportScore.
   R('router-evidence.score.json', evidence(items, vo, frameOf));
   console.log(JSON.stringify({ H1: Object.fromEntries(Object.entries(out.H1).map(([l, x]) => [l, { before: x.accept_before, after: x.accept_after, gained: x.gained, lost: x.lost, p: x.mcnemar_exact_p, eff: x.effect_points, ci: x.effect_ci95_points }])), H2: Object.fromEntries(Object.entries(out.H2).map(([l, x]) => [l, { cer: [x.cer_draft_mean, x.cer_served_mean, x.cer_diff_ci95], p: x.cer_wilcoxon.p }])), H3: out.H3, writeback: writeback.length }, null, 1));
+}
+
+/**
+ * AMENDMENT 1 (2026-10-30). Reported apart from the preregistered outcomes. A1 severity from the judge's own tags; A2
+ * model-free span severity and FCA on Arm W; H6 the GPU route W-G; H3-real the judge against the span rule; alpha.
+ */
+function amended({ items, vo, abs, agy, F, frameOf }) {
+  const A = { note: 'Amendment 1 outcomes; reported apart from the preregistered ones.' };
+  const textOf = (it) => fs.readFileSync(path.join(OUT, 'texts', it.text_file), 'utf8');
+  const sev = (v, it, w) => severityScore(v, textOf(it), w);
+  const paired = (a, b, seed) => { const d = a.map((x, i) => b[i] - x); return { mean_before: r3(mean(a)), mean_after: r3(mean(b)), mean_diff: r3(mean(d)), ci95: d.length ? ci(d, seed).map(r3) : null, wilcoxon: wilcoxon(d) }; };
+  // A1 on Arm P: severity per 100 words, any wrong_text (paired), made worse by severity.
+  A.A1_P = {};
+  for (const lang of ['de', 'fr']) {
+    const ps = pagesOf(items, abs, 'P').filter((p) => p.lang === lang && p.vb && p.va);
+    const cnt = (v, k) => (v.defects || []).filter((d) => d.severity === k).length;
+    const wtB = ps.map((p) => wrongText(p.vb)), wtA = ps.map((p) => wrongText(p.va));
+    const b = ps.filter((p, i) => wtB[i] && !wtA[i]).length, c = ps.filter((p, i) => !wtB[i] && wtA[i]).length;
+    A.A1_P[lang] = { pages: ps.length,
+      severity_per100: Object.fromEntries(Object.entries(SEVERITY_WEIGHTS).map(([k, w]) => [k, paired(ps.map((p) => sev(p.vb, p.draft, w)), ps.map((p) => sev(p.va, p.served, w)), 7830)])),
+      any_wrong_text: { before: `${wtB.filter(Boolean).length}/${ps.length}`, after: `${wtA.filter(Boolean).length}/${ps.length}`, removed: b, added: c, mcnemar_exact_p: +binomTwoSided(b, b + c).toPrecision(3) },
+      made_worse: { wrong_text_added_pages: ps.filter((p) => cnt(p.va, 'wrong_text') > cnt(p.vb, 'wrong_text')).length, misleads_added_pages: ps.filter((p) => cnt(p.va, 'misleads') > cnt(p.vb, 'misleads')).length, cosmetic_added_pages: ps.filter((p) => cnt(p.va, 'cosmetic') > cnt(p.vb, 'cosmetic')).length,
+        wrong_text_added_list: ps.filter((p) => !wrongText(p.vb) && wrongText(p.va)).map((p) => ({ page_id: p.page, defects: (p.va.defects || []).filter((d) => d.severity === 'wrong_text').map((d) => `${d.class} "${String(d.quote || '').slice(0, 80)}"`) })) } };
+  }
+  // Arm W, four rows per page: lite, lite+correct, gpu, gpu+correct. Verdict by (page, text hash).
+  const roles = fs.existsSync(path.join(OUT, 'wg-roles.json')) ? J('wg-roles.json') : {};
+  const set = fs.existsSync(path.join(OUT, 'ws', 'set.json')) ? J('ws/set.json').kept : [];
+  const byPageSha = new Map(items.filter((i) => i.arm !== 'P').map((i) => [`${i.page}|${i.text_sha}`, i]));
+  const ROWS = { lite: 'draft', litecorr: 'served', gpu: 'gpu', gpucorr: 'gpuserved' };
+  const wrows = [];
+  for (const p of set) {
+    const r = roles[p.slug]; if (!r?.lite || !r?.litecorr) continue;
+    const row = { slug: p.slug, lang: p.lang };
+    for (const [k, file] of Object.entries(ROWS)) {
+      const f = path.join(OUT, 'texts', `W-${p.slug}.${file}.txt`); if (!r[k] || !fs.existsSync(f)) continue;
+      const t = fs.readFileSync(f, 'utf8'), it = byPageSha.get(`${p.slug}|${r[k]}`), v = it && abs.get(it.id)?.verdict;
+      const draft = k === 'litecorr' ? fs.readFileSync(path.join(OUT, 'texts', `W-${p.slug}.draft.txt`), 'utf8') : k === 'gpucorr' ? fs.readFileSync(path.join(OUT, 'texts', `W-${p.slug}.draft.txt`), 'utf8') + '\n' + fs.readFileSync(path.join(OUT, 'texts', `W-${p.slug}.gpu.txt`), 'utf8') : null;
+      const sc = scoreText(p.reference, t), sp = spanSeverity(p.reference, t, { draft, lang: p.lang }), fc = fca(p.reference, t);
+      row[k] = { cer: sc.cer, wer: sc.wer, aligned: sc.aligned, fca: fc.fca, span: { counts: sp.counts, score: sp.score, score_flat: sp.score_flat, score_steep: sp.score_steep, ref_words: sp.ref_words }, spans: sp.spans,
+        accept: v?.accept ?? null, judge_wrong_text: v ? wrongText(v) : null, judge_sev: v ? severityScore(v, t) : null, quotes: v ? (v.defects || []).map((d) => String(d.quote || '')) : [] };
+    }
+    row.aligned = row.lite?.aligned === true;
+    wrows.push(row);
+  }
+  const ok = wrows.filter((r) => r.aligned);
+  const col = (g, k, f) => g.filter((r) => r[k]).map((r) => f(r[k]));
+  A.A2_W = {};
+  for (const lang of ['de', 'fr']) {
+    const g = ok.filter((r) => r.lang === lang);
+    A.A2_W[lang] = Object.fromEntries(Object.keys(ROWS).map((k) => [k, { n: g.filter((r) => r[k]).length, cer: r3(mean(col(g, k, (x) => x.cer))), wer: r3(mean(col(g, k, (x) => x.wer))), fca: r3(mean(col(g, k, (x) => x.fca))),
+      span_severity_per100: r3(mean(col(g, k, (x) => x.span.score))), span_wrong_text_pages: `${col(g, k, (x) => x.span.counts.wrong_text > 0).filter(Boolean).length}/${g.filter((r) => r[k]).length}`,
+      judge_accept: `${col(g, k, (x) => x.accept).filter((x) => x === true).length}/${col(g, k, (x) => x.accept).filter((x) => x != null).length}` }]));
+    const pr = (a, b, f, seed) => { const gg = g.filter((r) => r[a] && r[b]); return { n: gg.length, ...paired(gg.map((r) => f(r[a])), gg.map((r) => f(r[b])), seed) }; };
+    A.A2_W[lang].lite_to_litecorr = { cer: pr('lite', 'litecorr', (x) => x.cer, 7831), fca: pr('lite', 'litecorr', (x) => x.fca, 7832), span_severity: pr('lite', 'litecorr', (x) => x.span.score, 7833) };
+    // H6: does gpu+correct reach lite+correct? Margins fixed in the amendment: CER +0.005, accept -10 points.
+    const h6 = g.filter((r) => r.gpucorr && r.litecorr);
+    const dCer = h6.map((r) => r.gpucorr.cer - r.litecorr.cer), dAcc = h6.filter((r) => r.gpucorr.accept != null && r.litecorr.accept != null).map((r) => (r.gpucorr.accept ? 1 : 0) - (r.litecorr.accept ? 1 : 0));
+    const ciC = dCer.length ? ci(dCer, 7834) : null, ciA = dAcc.length ? ci(dAcc, 7835) : null;
+    A.A2_W[lang].H6 = { n: h6.length, gpu_raw_cer_median: (() => { const a = col(g, 'gpu', (x) => x.cer).sort((x, y) => x - y); return a.length ? r3(a[Math.floor(a.length / 2)]) : null; })(),
+      engine_cannot_read: (() => { const a = col(g, 'gpu', (x) => x.cer).sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] > 0.25 : null; })(),
+      cer_diff: { mean: r3(mean(dCer)), ci95: ciC?.map(r3), wilcoxon: wilcoxon(dCer) }, fca: pr('litecorr', 'gpucorr', (x) => x.fca, 7836), span_severity: pr('litecorr', 'gpucorr', (x) => x.span.score, 7837),
+      accept_diff_points: { mean: r3(100 * mean(dAcc)), ci95: ciA?.map((x) => r3(100 * x)) },
+      reaches: ciC && ciA ? ciC[1] <= 0.005 && ciA[0] >= -0.10 : null, outcomes: (() => { const t = {}; for (const r of jsonl(path.join(OUT, 'wg', 'corrections.jsonl')).filter((x) => g.some((y) => y.slug === x.slug))) t[r.outcome] = (t[r.outcome] ?? 0) + 1; return t; })() };
+  }
+  // H3 on REAL errors: the judge against the model-free span rule, every judged Arm W text with a clean reference.
+  const texts = ok.flatMap((r) => Object.keys(ROWS).filter((k) => r[k] && r[k].accept != null).map((k) => ({ slug: r.slug, lang: r.lang, row: k, ...r[k] })));
+  const spanWT = texts.filter((t) => t.span.counts.wrong_text > 0), judgeWT = texts.filter((t) => t.judge_wrong_text);
+  const named = (sp, quotes) => { const ws = (sp.hyp || sp.ref).toLowerCase().split(/\s+/).filter((w) => w.length > 2); return ws.length > 0 && quotes.some((q) => ws.some((w) => q.toLowerCase().includes(w))); };
+  const byKind = {};
+  for (const t of texts) for (const sp of t.spans.filter((x) => x.sev === 'wrong_text')) { const k = (byKind[sp.kind] ??= { spans: 0, named: 0, on_rejected_pages: 0 }); k.spans++; if (named(sp, t.quotes)) k.named++; if (!t.accept) k.on_rejected_pages++; }
+  A.H3_real = { texts: texts.length,
+    page_confusion: { span_wt_and_judge_wt: texts.filter((t) => t.span.counts.wrong_text > 0 && t.judge_wrong_text).length, span_wt_only: texts.filter((t) => t.span.counts.wrong_text > 0 && !t.judge_wrong_text).length, judge_wt_only: texts.filter((t) => !(t.span.counts.wrong_text > 0) && t.judge_wrong_text).length, neither: texts.filter((t) => !(t.span.counts.wrong_text > 0) && !t.judge_wrong_text).length },
+    judge_recall_of_span_wt_pages: kn(spanWT.filter((t) => t.judge_wrong_text || !t.accept).length, spanWT.length), judge_wt_precision_vs_span: kn(judgeWT.filter((t) => t.span.counts.wrong_text > 0).length, judgeWT.length),
+    auc_accept_lower_span_severity: texts.some((t) => t.accept) && texts.some((t) => !t.accept) ? r3(aucLowerIsPositive(texts, (t) => t.span.score, (t) => t.accept)) : null,
+    auc_accept_lower_cer: texts.some((t) => t.accept) && texts.some((t) => !t.accept) ? r3(aucLowerIsPositive(texts, (t) => t.cer, (t) => t.accept)) : null,
+    span_wrong_text_by_kind: byKind, note: 'named = a defect quote of the judge holds a word (3+ letters) of the span; rule and limits in Amendment 1 §A2' };
+  // Agreement as kappa AND Krippendorff alpha: Opus test-retest, Opus vs agy.
+  const noiseIds = fs.existsSync(path.join(OUT, 'noise-items.json')) ? J('noise-items.json') : [];
+  const rep = (id, n) => vo.find((r) => r.id === id && r.set === 'abs' && r.rep === n && r.verdict)?.verdict;
+  const retest = noiseIds.map((id) => [rep(id, 1), rep(id, 2)]).filter(([a, b]) => a && b);
+  const both = items.filter((i) => abs.get(i.id) && agy.get(i.id));
+  A.agreement = { opus_retest: { n: retest.length, accept_kappa: retest.length ? r3(binaryAgreement(retest.map(([a, b]) => [a.accept, b.accept])).kappa) : null, accept_alpha: retest.length ? r3(krippendorffAlpha(retest.map(([a, b]) => [a.accept ? 1 : 0, b.accept ? 1 : 0]), 'nominal')) : null, fidelity_alpha_ordinal: retest.length ? r3(krippendorffAlpha(retest.map(([a, b]) => [Number(a.fidelity), Number(b.fidelity)]), 'ordinal')) : null },
+    opus_vs_agy: { n: both.length, accept_kappa: both.length ? r3(binaryAgreement(both.map((i) => [abs.get(i.id).verdict.accept, agy.get(i.id).verdict.accept])).kappa) : null, accept_alpha: both.length ? r3(krippendorffAlpha(both.map((i) => [abs.get(i.id).verdict.accept ? 1 : 0, agy.get(i.id).verdict.accept ? 1 : 0]), 'nominal')) : null, wrong_text_kappa: both.length ? r3(binaryAgreement(both.map((i) => [wrongText(abs.get(i.id).verdict), wrongText(agy.get(i.id).verdict)])).kappa) : null } };
+  R('arm-w-four-rows.json', wrows.map(({ slug, lang, aligned, ...r }) => ({ slug, lang, aligned, ...Object.fromEntries(Object.entries(r).map(([k, x]) => [k, x && { cer: r3(x.cer), wer: r3(x.wer), fca: r3(x.fca), span: x.span, accept: x.accept, judge_wrong_text: x.judge_wrong_text }])) })));
+  return A;
 }
 
 /** Store-shaped records for exportScore: the served verdict as `item` (route lite>agy-flash-low), the draft's as `draft`. */
