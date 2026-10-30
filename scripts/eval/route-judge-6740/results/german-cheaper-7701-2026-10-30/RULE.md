@@ -55,3 +55,15 @@ rule is unchanged): A and R8 read the whole 8-page blocks and took 214 and 180 r
 blocks to one page a call). To keep the test under 800 calls, the two GC routes read only the 4-page piece of each block
 that holds the drawn page, cut as A cut it (judge.mjs `blockPages: 4`): the drawn page is corrected inside the same
 4-page call A read it in. Their calls a page are measured over the pages they read, as for every route.
+
+Amendment 2, 2026-10-30 ~18:20Z: Derek's steer (inbox 17:33Z, "GPU Fraktur?"), added after the A/R8 verdicts but before
+any Kraken read is corrected or judged and before any score is computed. Two more routes, on the 18 FRAKTUR pages only:
+- `kraken` — UB Mannheim's Fraktur model (austriannewspapers.mlmodel, doi 10.5281/zenodo.7933402, the 2026-03 version
+  of the bench-2 model) after kraken's blla segmenter, CPU on gex45, ALONE; written by the same rule as the GPU drafts.
+- `kraken>agy-flash-low@4` — that draft corrected by agy Flash-low with the image, 4 a call, on the drawn page's 4-page
+  piece (as the other GC routes).
+Its machine time is priced like the GPU's: box wall seconds a page x $249 / 30 days (2.77 s a page: 6 pages at a time on
+18 of the box's 20 threads).
+6. A face-limited route is scored on its own face only (the pooled stratum leaves it out). It takes that face when the
+   face's own rules 1-3 (on the face's pages, paired against A) pick it and it is cheaper per accepted page than the
+   route rule 4 gives the face.

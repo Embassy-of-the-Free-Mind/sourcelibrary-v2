@@ -12,6 +12,7 @@
  *   node --env-file=… run.mjs fetch    --out=DIR [--drawn-only]   page images -> DIR/img/<page_id>.jpg (block pages too)
  *   node run.mjs select   --out=DIR --pool=POOL_DIR --scripts=FILE [--per-fraktur=N --per-antiqua=N]  by-eye labels -> sample.json
  *   node run.mjs lighton  --out=DIR                    DIR/out/LO.jsonl (drive.sh LO over DIR/img) -> DIR/lighton.json
+ *   node run.mjs kraken   --out=DIR                    DIR/kraken/txt/<page_id>.txt (kraken segment -bl ocr) -> DIR/kraken.json
  *   node --env-file=… run.mjs written  --out=DIR       dry applies: the text each route would WRITE on each drawn page
  *   node --env-file=… run.mjs packet   --out=DIR       blind, shuffled items + 2 wrong-page controls a route
  *   ROUTE_JUDGE_WEEKLY_MAX=99 node judge.mjs judge --out=DIR
@@ -55,6 +56,10 @@ export const ROUTES = {
   pero: { kind: 'draft', file: 'pero.json' },
   'lighton>agy-flash-low@4': { kind: 'gpu', draft: 'lighton' },
   'pero>agy-flash-low@4': { kind: 'gpu', draft: 'pero' },
+  // Derek's steer 2026-10-30 17:33Z: a Fraktur-specific Kraken model (UB Mannheim austriannewspapers, zenodo 7933402;
+  // bench-2) alone and as the draft under agy, on the Fraktur pages only (CPU on gex45, priced as box time)
+  kraken: { kind: 'draft', file: 'kraken.json', faces: ['fraktur'] },
+  'kraken>agy-flash-low@4': { kind: 'gpu', draft: 'kraken', faces: ['fraktur'] },
 };
 const LIVE = 'agy-flash-low@4';
 const LATER_READ = /the page has OCR now|OCR was rewritten after this read/;
@@ -110,6 +115,18 @@ async function lighton() {
   console.log(`lighton.json: ${rows.length} drafts (${jsonl(f).length - rows.length} errors)`);
 }
 
+// ── kraken: one plain-text file a page (kraken -i img out.txt segment -bl ocr -m austriannewspapers.mlmodel) -> drafts ──
+function kraken() {
+  const d = path.join(OUT, 'kraken'), run = JSON.parse(fs.readFileSync(path.join(d, 'run.json'), 'utf8'));
+  const out = { _engine: { name: 'kraken', model: 'austriannewspapers.mlmodel (UB Mannheim, doi 10.5281/zenodo.7933402, CER 0.75)', version: 'kraken 7.1.1', read: 'kraken -i <img> <txt> segment -bl ocr -m austriannewspapers.mlmodel (blla segmenter), CPU', exit: 0, pages: run.pages, secs_per_page: +(run.wall_secs / Math.max(1, run.pages - 1)).toFixed(3), secs_basis: 'box wall time a page, 6 pages at a time x 3 threads (18 of 20 threads); the first page was read alone before the batch', run } };
+  for (const f of fs.readdirSync(path.join(d, 'txt')).filter((x) => x.endsWith('.txt'))) {
+    const id = f.slice(0, -4);
+    out[id] = { text: fs.readFileSync(path.join(d, 'txt', f), 'utf8').trim(), image_sha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(OUT, 'img', `${id}.jpg`))).digest('hex') };
+  }
+  W('kraken.json', out);
+  console.log(`kraken.json: ${Object.keys(out).length - 1} drafts, ${out._engine.secs_per_page} s a page`);
+}
+
 // ── written ──
 function dryApply(route, ids, extra) {
   const dir = dirOf(route), emit = path.join(dir, 'written-dry.jsonl'), only = path.join(dir, 'only-drawn.json');
@@ -143,12 +160,14 @@ function written() {
   for (const [route, R] of Object.entries(ROUTES)) {
     if (R.kind === 'draft') {
       const f = path.join(OUT, R.file), drafts = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : {};
-      out[route] = Object.fromEntries(ids.map((id) => [id, drafts[id] ? gpuAloneWritten(drafts[id]) : { why: 'no GPU draft' }]));
+      const faceOf = new Map(s.cells[CELL].pages.map((p) => [p.page_id, p.script_face]));
+      out[route] = Object.fromEntries(ids.filter((id) => !R.faces || R.faces.includes(faceOf.get(id))).map((id) => [id, drafts[id] ? gpuAloneWritten(drafts[id]) : { why: 'no GPU draft' }]));
     } else {
       if (!fs.existsSync(dirOf(route))) { console.log(`${route}: not read yet`); continue; }
       const extra = R.kind === 'read' ? ['--first-read-only', '--print-only'] : ['--diff-guard=gpu-draft', '--print-only'];
       const d = dryApply(route, ids, extra);
-      out[route] = Object.fromEntries(ids.map((id) => {
+      const faceOf = new Map(s.cells[CELL].pages.map((p) => [p.page_id, p.script_face]));
+      out[route] = Object.fromEntries(ids.filter((id) => !R.faces || R.faces.includes(faceOf.get(id))).map((id) => {
         if (d.rows.has(id)) return [id, { text: d.rows.get(id) }];
         const why = d.skipped[id] ?? 'not read';
         // the live lane read the page after this test did: the page was unread when read, so it counts
@@ -181,7 +200,7 @@ async function packet() {
     key.push({ id: `k${h(`${kind}:${CELL}:${route}:${sp.page_id}:${extra.other ?? ''}`).slice(0, 10)}`, judged_as: id, cell: CELL, route, kind, page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, script_face: sp.script_face, ...extra });
   };
   for (const route of Object.keys(ROUTES).filter((r) => wr[r])) {
-    const ok = sps.filter((sp) => wr[route][sp.page_id]?.text);
+    const ok = sps.filter((sp) => wr[route][sp.page_id]?.text);   // a face-limited route (kraken) has rows on its face only
     for (const sp of ok) add(route, sp, 'item', wr[route][sp.page_id].text);
     // two wrong-page controls: this page's image, this route's written text of a page of ANOTHER book
     const rng = makeRng(parseInt(h(`wp-${CELL}-${route}`).slice(0, 8), 16));
@@ -267,6 +286,8 @@ function scoreRoutes(sps, wr, key, V, seedBase) {
   const vOf = (route, id) => { const k = key.find((x) => x.route === route && x.kind === 'item' && x.page_id === id); return k ? V.get(k.judged_as) ?? null : null; };
   const R = {}; let seed = seedBase;
   for (const [route, RR] of Object.entries(ROUTES).filter(([r]) => wr[r])) {
+    // RULE.md 6: a face-limited route is scored on its own face only (the pooled stratum leaves it out)
+    if (RR.faces && !sps.every((sp) => RR.faces.includes(sp.script_face))) continue;
     const rows = sps.map((sp) => { const w = wr[route][sp.page_id]; const v = w?.text ? vOf(route, sp.page_id) : null;
       return { page_id: sp.page_id, book_id: sp.book_id, face: sp.script_face, written: !!w?.text, judged: !!v, accept: !!v?.accept, wt: wt(v), inv: invented(v).length > 0, fidelity: v?.fidelity ?? null, why: w?.why ?? null,
         wrong_text: (v?.defects || []).filter((d) => d.severity === 'wrong_text').map((d) => `${d.class}: ${String(d.quote).slice(0, 80)} — ${d.what ?? ''}`.slice(0, 200)) }; });
@@ -324,7 +345,11 @@ function score() {
   out.decision = { pooled_pick: all, by_face: Object.fromEntries(['fraktur', 'antiqua'].map((f) => {
     const x = out.strata[f], r = x.routes[all], p = x.paired[`${all}|${LIVE}`];
     const veto = all !== LIVE && r && (Number(r.written.wrong_text.split('/')[0]) > 0 || Number(r.written.invented_or_wrong_leaf.split('/')[0]) > 0 || (p && p.b_only - p.a_only > 1));
-    return [f, { route: veto ? LIVE : all, veto: !!veto }];
+    // RULE.md 6: a face-limited route (kraken) that the face's own rule picks takes that face when it is cheaper
+    const own = x.decision.pick, ownR = own && ROUTES[own]?.faces?.includes(f) ? x.routes[own] : null;
+    const base = veto ? LIVE : all;
+    if (ownR && (ownR.usd_per_accepted_page ?? 9) < (x.routes[base]?.usd_per_accepted_page ?? 9)) return [f, { route: own, veto: !!veto, face_limited: true }];
+    return [f, { route: base, veto: !!veto }];
   })) };
   console.log(`\ndecision: ${JSON.stringify(out.decision)}`);
   W('score.json', out);
@@ -344,7 +369,7 @@ function evidence() {
   const bys = { generated_by: gen, cells: {} };
   for (const [stratum, pages] of [['all', s.cells[CELL].pages], ['fraktur', s.cells[CELL].pages.filter((p) => p.script_face === 'fraktur')], ['antiqua', s.cells[CELL].pages.filter((p) => p.script_face === 'antiqua')]]) {
     const routes = {};
-    for (const route of Object.keys(ROUTES).filter((r) => wr[r])) {
+    for (const route of Object.keys(ROUTES).filter((r) => wr[r] && (!ROUTES[r].faces || pages.every((sp) => ROUTES[r].faces.includes(sp.script_face))))) {
       const rows = pages.filter((sp) => wr[route][sp.page_id]?.text).map((sp) => ({ ...sp, v: vOf(route, sp.page_id) })).filter((r) => r.v);
       routes[`${route}-written`] = { ...agg(rows), note: 'the drawn pages the route writes, judged; a page not written stays scans-only' };
     }
@@ -387,6 +412,6 @@ function apply() {
   W(`apply-${APPLY ? 'done' : 'dry'}.json`, res);
 }
 
-const stages = { fetch: fetchImages, select, lighton, written, packet, plant, score, evidence, apply };
+const stages = { fetch: fetchImages, select, lighton, kraken, written, packet, plant, score, evidence, apply };
 if (!stages[STAGE]) { console.error(`usage: run.mjs ${Object.keys(stages).join('|')} --out=DIR`); process.exit(2); }
 await stages[STAGE]();

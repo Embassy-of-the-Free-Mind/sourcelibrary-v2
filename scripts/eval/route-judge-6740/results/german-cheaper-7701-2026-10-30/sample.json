@@ -43,6 +43,14 @@
      "imageDir": "img",
      "perCall": 4,
      "blockPages": 4
+    },
+    "kraken>agy-flash-low@4": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "gpuDraft": "kraken.json",
+     "imageDir": "img",
+     "perCall": 4,
+     "blockPages": 4
     }
    },
    "kanripo": false,
