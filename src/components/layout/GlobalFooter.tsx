@@ -39,7 +39,7 @@ const PARTNERS: Partner[] = [
 // wordmark sits at the same visual weight as the stacked logos beside it.
 const GLOBAL_PARTNERS: Partner[] = [
   { name: 'Folium', src: '/ai-partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
-  { name: 'Wisdom Frontiers', src: '/ai-partners/wisdom-frontiers-white.svg', href: 'https://wisdomfrontiers.org', width: 246, height: 24, invert: false },
+  { name: 'Wisdom Frontiers', src: '/ai-partners/wisdom-frontiers-white.svg', href: 'https://wisdomfrontiers.org', width: 151, height: 25, invert: false },
 ];
 
 // Source Library's own accounts. Kept beside PARTNERS so the two lists that
@@ -235,7 +235,7 @@ export default function GlobalFooter() {
                     width={partner.width}
                     height={partner.height}
                     sizes="auto"
-                    className={`w-auto ${partner.name === 'Folium' ? 'h-[26px] md:h-7' : partner.name === 'TU Delft' ? 'h-5 md:h-[21px]' : partner.name === 'Wisdom Frontiers' ? 'h-4 md:h-5' : 'h-6'} ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    className={`w-auto ${partner.name === 'Folium' ? 'h-[26px] md:h-7' : partner.name === 'TU Delft' ? 'h-5 md:h-[21px]' : partner.name === 'Wisdom Frontiers' ? 'h-[22px]' : 'h-6'} ${partner.invert ? 'brightness-0 invert' : ''}`}
                     unoptimized
                   />
                 </a>
