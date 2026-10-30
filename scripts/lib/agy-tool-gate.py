@@ -35,7 +35,12 @@ REASONS = {
     'geometry': ('That tool is disabled here. The only tool available is view_file (or read_file) on the image in this '
                  'directory. Open it if you have not yet, then answer directly in your reply, following the '
                  'instructions exactly. Do not transcribe any text.'),
+    # AGY_GATE_TASK=search (scripts/analysis/gap-validation-cli-adjudicate.mjs --engine agy, #7751): a grounded
+    # bibliographic lookup. Web search and reading a web page are allowed (read-only network); nothing else.
+    'search': ('That tool is disabled here. The only tools available are web search (search_web) and reading a web '
+               'page. Use them, then answer directly in your reply, following the instructions exactly.'),
 }
+SEARCH_TOOLS = {'search_web', 'read_url_content', 'read_url', 'fetch_url', 'web_fetch'}
 
 
 def decide(call, root, task='ocr'):
@@ -44,6 +49,8 @@ def decide(call, root, task='ocr'):
     # agy 1.4.6 (self-updated 2026-10-23 07:16Z) opens the image with `read_file {Path}`, not `view_file`. Denied, the
     # model never saw the page and wrote an invented one that every chatter guard passed (#4763, #5924). Same rule:
     # a path inside the workspace, read only.
+    if task == 'search':
+        return {'decision': 'allow'} if name in SEARCH_TOOLS else {'decision': 'deny', 'reason': REASONS['search']}
     if name in ('view_file', 'read_file') and root:
         p = os.path.realpath(str(args.get('AbsolutePath') or args.get('Path') or ''))
         if p.startswith(os.path.realpath(root) + os.sep):
