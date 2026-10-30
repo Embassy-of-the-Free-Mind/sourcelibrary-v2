@@ -165,6 +165,7 @@ const SUMS = ['pages_text', 'pages_english', 'pages_english_original', 'words_or
 const addT = (o, k, r) => { const t = (o[k] ||= { books: 0, ...Object.fromEntries(SUMS.map((f) => [f, 0])) }); t.books++; for (const f of SUMS) t[f] += r[f]; };
 
 const sampleCands = []; // { book_id, page_number, lang, r }
+const sampleDropped = { duplicate_page_number: 0, no_image_url: 0 };
 
 // ---------------------------------------------------------------- page scan
 
@@ -297,7 +298,9 @@ function allocate(cands, n) {
 }
 
 async function buildSample(P, manifestById) {
-  const picked = allocate(sampleCands, SAMPLE_N);
+  // Draw 3% over: pages that turn out unusable below are dropped, then the rows are cut to SAMPLE_N in
+  // sample_id (hash) order, which is a random order.
+  const picked = allocate(sampleCands, Math.ceil(SAMPLE_N * 1.03));
   const byBook = new Map();
   for (const c of picked) (byBook.get(c.book_id) || byBook.set(c.book_id, []).get(c.book_id)).push(c.page_number);
   const rows = [];
@@ -306,17 +309,20 @@ async function buildSample(P, manifestById) {
   for (const [bookId, nums] of byBook) {
     const b = manifestById.get(bookId);
     const book = { language: b.language, translation_state: { english_original: b.english_original } };
-    for (const p of await P.find({ book_id: bookId, page_number: { $in: nums } }, { projection: proj }).toArray()) {
-      if (p.repeat_of != null) continue;
+    const found = (await P.find({ book_id: bookId, page_number: { $in: nums } }, { projection: proj }).toArray()).filter((p) => p.repeat_of == null);
+    const perNumber = new Map(); for (const p of found) perNumber.set(p.page_number, (perNumber.get(p.page_number) || 0) + 1);
+    for (const p of found) {
+      // Two page documents under one number: which one a reader sees is not defined, so neither is sampled.
+      if (perNumber.get(p.page_number) > 1) { sampleDropped.duplicate_page_number++; continue; }
       const original = (stripEditorialWrappers(p.ocr?.data || '') || '').trim();
       const english = servesTranscriptionInsteadOfTranslation(p, book) ? '' : (stripEditorialWrappers(p.translation?.data || '') || '').trim();
       if (!original || !english) continue;
       const img = pageImage(p);
+      if (!img.url) { sampleDropped.no_image_url++; continue; }
       const flags = [];
       if (p.page_type && p.page_type !== 'text') flags.push(`page_type:${p.page_type}`);
       if (p.scan_quality?.label || typeof p.scan_quality === 'string') flags.push(`scan_quality:${p.scan_quality?.label ?? p.scan_quality}`);
       if (img.crop) flags.push('image_needs_crop');
-      if (!img.url) flags.push('no_image_url');
       if (/<marginalia|\[marginal/i.test(p.ocr?.data || '')) flags.push('marginalia');
       if (b.quality_score != null && b.quality_score < 0.5) flags.push('book_quality_score_below_0.5');
       if (b.translation_rung && !['readable', 'complete'].includes(b.translation_rung)) flags.push(`book_rung:${b.translation_rung}`);
@@ -338,7 +344,7 @@ async function buildSample(P, manifestById) {
     }
   }
   rows.sort((a, b) => a.sample_id.localeCompare(b.sample_id));
-  return rows;
+  return rows.slice(0, SAMPLE_N);
 }
 
 // ---------------------------------------------------------------- datasheet
@@ -504,7 +510,8 @@ ${SEED}. Half is allocated in proportion to each language's Tier A candidate pag
 (capped by what it has), so the large languages are represented as they are and the small ones are present at all.
 Books whose catalogue gives no language (\`und\`, \`auto-detect\`, \`Multiple\`) are not drawn. Pages per language:
 ${Object.entries(sampleLangs).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${fmt(v)}`).join(', ')}.
-Only non-English editions with both a transcription and an English translation are drawn. \`original\` and \`english\`
+Only non-English editions with both a transcription and an English translation are drawn. Dropped after the draw:
+${sampleDropped.duplicate_page_number} pages whose number two page documents share, ${sampleDropped.no_image_url} pages with no image URL. \`original\` and \`english\`
 are the served text (editorial wrappers stripped, as \`/api/books/<id>/quote\` serves it, without its watermark).
 \`content_hash\` is the sha256 of \`original + "\\n\\0\\n" + english\`. \`quality_flags\`: \`page_type:*\` (not a plain
 text page), \`scan_quality:*\`, \`image_needs_crop\` (apply \`image_crop\`, x fractions of the full image),
@@ -587,7 +594,7 @@ await withMongo(async (db) => {
   console.log(`sample candidates ${sampleCands.length}`);
   const sample = await buildSample(P, manifestById);
   const langs = new Set(sample.map((r) => r.language));
-  if (!LIMIT && (sample.length < SAMPLE_N * 0.98 || langs.size < 5)) throw new Error(`sample too small: ${sample.length} rows, ${langs.size} languages`);
+  if (!LIMIT && (sample.length < SAMPLE_N || langs.size < 5)) throw new Error(`sample too small: ${sample.length} rows, ${langs.size} languages`);
   fs.writeFileSync(path.join(OUT, 'sample-5000.jsonl'), sample.map((r) => JSON.stringify(r)).join('\n') + '\n');
 
   const count = (f) => fs.readFileSync(path.join(OUT, f), 'utf8').split('\n').filter(Boolean).length;
