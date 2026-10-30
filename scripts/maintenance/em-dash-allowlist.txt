@@ -246,7 +246,7 @@ src/app/embed/[tenant]/catalog/[ubn]/history/page.tsx 6  # rewritten in a #6215 
 src/app/embed/[tenant]/catalog/[ubn]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalogue/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalog/workspace/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/embed/[tenant]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/(library)/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
