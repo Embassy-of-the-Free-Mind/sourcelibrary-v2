@@ -49,3 +49,9 @@ Rule (the router's: within 0.08, p 0.9, wrong-text bar 0.04; ZERO tolerance for 
 
 Budget: under 800 agy calls (judge.mjs correct --agy-max=800). Nothing is written to Mongo before the score; then each
 page's best accepted agy read (A or R8) is written under the lane's guards, holds kept.
+
+Amendment, 2026-10-30 ~18:40Z, after the A and R8 reads and before any GPU draft, GC read or judge call (the decision
+rule is unchanged): A and R8 read the whole 8-page blocks and took 214 and 180 real agy calls (recitation cuts sent many
+blocks to one page a call). To keep the test under 800 calls, the two GC routes read only the 4-page piece of each block
+that holds the drawn page, cut as A cut it (judge.mjs `blockPages: 4`): the drawn page is corrected inside the same
+4-page call A read it in. Their calls a page are measured over the pages they read, as for every route.

@@ -33,14 +33,16 @@
      "model": "gemini-3.8-flash-low",
      "gpuDraft": "lighton.json",
      "imageDir": "img",
-     "perCall": 4
+     "perCall": 4,
+     "blockPages": 4
     },
     "pero>agy-flash-low@4": {
      "by": "agy",
      "model": "gemini-3.8-flash-low",
      "gpuDraft": "pero.json",
      "imageDir": "img",
-     "perCall": 4
+     "perCall": 4,
+     "blockPages": 4
     }
    },
    "kanripo": false,

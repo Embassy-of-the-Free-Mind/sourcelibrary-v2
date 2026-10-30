@@ -188,7 +188,7 @@ const RT = {
   // two GPU drafts of the block (DIR/lighton.json LightOnOCR-3-1B, DIR/pero.json PERO-OCR, made on gex45 from DIR/img):
   // the draft corrected by agy Flash-low with the image, 4 a call. The GPU drafts ALONE are routes too, judged from the
   // draft files by german-cheaper-7701/run.mjs (no agy call).
-  'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4 } } },
+  'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -558,7 +558,10 @@ async function correct() {
         const used = agyCalls();
         if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
         // perCall (#7701 blank cells): each drawn page with its block of neighbours, read N a call as the lane reads.
-        let readIds = cor.perCall > 1 ? cs.pages.flatMap((p) => p.block ?? [p.page_id]) : ids;
+        // blockPages (#7701 german-cheaper, the agy budget): only the blockPages-page piece of the drawn page's block that
+        // holds it, cut as a perCall=blockPages read cuts the block (the call the read@4 route made for that page)
+        const piece = (p) => { const b = p.block ?? [p.page_id], n = cor.blockPages; if (!n) return b; for (let i = 0; i < b.length; i += n) if (b.slice(i, i + n).includes(p.page_id)) return b.slice(i, i + n); return [p.page_id]; };
+        let readIds = cor.perCall > 1 ? cs.pages.flatMap(piece) : ids;
         // draftFrom (#7701 arm B): the draft is the named route's read of each page in this DIR (a page it did not deliver
         // has no draft and is not corrected), handed to cli-ocr.mjs as --draft-file.
         let draftsFile = null;
