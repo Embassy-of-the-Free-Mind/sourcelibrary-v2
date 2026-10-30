@@ -161,6 +161,21 @@ sequential surface.**
   least-squares bootstrap fit is reported beside it wherever 10 or more runs exist. The admin page draws the
   prior-only and the posterior surfaces.
 
+**Amendment 3 (23:20Z, before any run it names and before any CER of phase B was looked at).**
+- *What happened.* The first phase-B batch (C1–C3 and L2, both languages, 8 runs × 4 calls at once on the default
+  pool) timed out: 257 of 339 calls ended at the CLI's 300 s limit (first at 22:05Z). The box was at load 180 on 16
+  cores (52 agy processes, most of them other jobs started on the 22:00Z refill). Those 8 runs are discarded
+  (`aborted/runs-overload-2310/`; their 339 calls count against the budget). A medium-thinking 4-page call that does
+  finish takes 200–285 s, against 25–60 s at low.
+- *Clean re-run.* C1 is re-run alone per language (2 runs × 3 calls at once). C2, C3 follow only if C1 finishes with
+  under 10 % of its calls timed out; otherwise the noise floor is taken from L1 vs L2 (both low) and the medium and
+  high planes are decided on cost alone: a setting whose calls a page (timeouts included, priced as refused blocks)
+  is not below live's cannot be the optimum, whatever its CER.
+- *Candidates.* The sequential pick (Amendment 2) may choose any of the 27 grid settings, not only Box-Behnken
+  points: the steer asks for the runs where the posterior is least sure near the cheap end, and with thinking at low
+  those are the two corners at 8 a call, X01 (8, 1,024 px, low) and X02 (8, 2,400 px, low), run on the James pool.
+- *Wall seconds* now carry the box's load: they are reported per run with the time it ran, and do not break a tie.
+
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book

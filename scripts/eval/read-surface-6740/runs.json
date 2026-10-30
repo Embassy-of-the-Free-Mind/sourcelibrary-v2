@@ -206,6 +206,28 @@
     "think": "medium",
     "live": false,
     "phase": "B"
+   },
+   {
+    "id": "X01",
+    "x1": 1,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   },
+   {
+    "id": "X02",
+    "x1": 1,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "S"
    }
   ],
   "la": [
@@ -395,6 +417,28 @@
     "think": "high",
     "live": false,
     "phase": "B"
+   },
+   {
+    "id": "X01",
+    "x1": 1,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   },
+   {
+    "id": "X02",
+    "x1": 1,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "S"
    }
   ]
  }

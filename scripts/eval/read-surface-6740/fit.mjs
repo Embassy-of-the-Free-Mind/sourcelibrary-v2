@@ -145,7 +145,9 @@ for (const [lang, L] of Object.entries(score.langs)) {
   const cheap = settings.filter((s) => s.x[0] >= 0);
   const open = cheap.filter((s) => liveCalls !== null && s.calls <= 0.9 * liveCalls && !(s.delta_hi <= MARGIN || s.delta_lo > MARGIN));
   const doneIds = new Set(runs.map((r) => r.id));
-  const remaining = DESIGN_RUNS.filter((d) => !doneIds.has(d.id) && !d.id.startsWith('C') && !d.id.startsWith('L')).map((d) => ({ id: d.id, x: [d.x1, d.x2, d.x3] }));
+  // Amendment 3: any grid setting not yet run is a candidate (named by its design id where it has one).
+  const ranX = new Set(design.map((r) => [r.x1, r.x2, r.x3].join()));
+  const remaining = grid.filter((x) => !ranX.has(x.join())).map((x) => ({ id: DESIGN_RUNS.find((d) => [d.x1, d.x2, d.x3].join() === x.join() && !d.id.startsWith('C'))?.id ?? `(${LEVELS.ppc[x[0] + 1]}, ${LEVELS.edge[x[1] + 1]}, ${LEVELS.think[x[2] + 1]})`, x }));
   const next = rankNext(post.cer, remaining, cheap.map((s) => s.x), null, medianV('cer')).map((r) => ({ id: r.id, x: r.x, gain_pp2: 1e4 * r.gain }));
   // Noise floor: the A-vs-A spread of the centre runs and of the two live runs, paired bootstrap by book.
   const pair = (a, b) => { if (!cell[a] || !cell[b]) return null; const d = boots.map(({ runs: R }) => R[a].cer - R[b].cer); return { a, b, delta: agg(a, books).cer - agg(b, books).cer, lo: q(d, 0.025), hi: q(d, 0.975) }; };
@@ -167,7 +169,7 @@ for (const [lang, L] of Object.entries(score.langs)) {
     ls = { coef: P0, settings: grid.map((x) => { const d = LB.map((s) => predict(s.cer, x) - s.live); return { x, cer: predict(P0.cer, x), delta: predict(P0.cer, x) - P0.live, delta_lo: q(d, 0.025), delta_hi: q(d, 0.975), calls: predict(P0.calls, x) }; }) };
   }
   // Slices for the contour plots: x1 (pages a call) × x2 (long edge) at each thinking level, 25 × 25 coded points.
-  const N = 25, axis = Array.from({ length: N }, (_, i) => -1 + (2 * i) / (N - 1));
+  const N = 17, axis = Array.from({ length: N }, (_, i) => -1 + (2 * i) / (N - 1));
   const sliceOf = (P) => [-1, 0, 1].map((c) => ({ x3: c, think: LEVELS.think[c + 1],
     cer: axis.map((b) => axis.map((a) => bpredict(P.cer, [a, b, c]).mean)), calls: axis.map((b) => axis.map((a) => bpredict(P.calls, [a, b, c]).mean)),
     cer_sd: axis.map((b) => axis.map((a) => bpredict(P.cer, [a, b, c]).sd)) }));
@@ -197,5 +199,6 @@ if (arg('data')) {
   const routes = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'routes-7701.json'), 'utf8')).routes;
   const lean = { ...result, prereg_commit: 'fdadfab', experiment: 'scripts/eval/experiments/2026-10-30-read-surface-box-behnken-6740.md', routes,
     langs: Object.fromEntries(Object.entries(result.langs).map(([k, v]) => [k, { ...v, faces: undefined, face_counts: Object.values(v.faces || {}).reduce((m, f) => ({ ...m, [f]: (m[f] || 0) + 1 }), {}), coef_ci: undefined }])) };
-  fs.writeFileSync(path.resolve(arg('data')), JSON.stringify(lean));
+  // Four significant figures are more than any chart or table here prints; it keeps the page's data small.
+  fs.writeFileSync(path.resolve(arg('data')), JSON.stringify(lean, (k, v) => (typeof v === 'number' && !Number.isInteger(v) ? Number(v.toPrecision(4)) : k === 'cer_sd' && Array.isArray(v) ? undefined : v)));
 }

@@ -32,6 +32,8 @@ export const DESIGN = [
   ['B09', 0, -1, -1], ['B10', 0, 1, -1], ['B11', 0, -1, 1], ['B12', 0, 1, 1],
   ['C1', 0, 0, 0], ['C2', 0, 0, 0], ['C3', 0, 0, 0],
   ['L1', 0, null, -1], ['L2', 0, null, -1],
+  // Amendment 3: the sequential picks off the Box-Behnken points (the cheap corners at low thinking).
+  ['X01', 1, -1, -1], ['X02', 1, 1, -1],
 ].map(([id, x1, x2, x3]) => ({ id, x1, x2, x3, ppc: LEVELS.ppc[x1 + 1], edge: x2 === null ? null : LEVELS.edge[x2 + 1], think: LEVELS.think[x3 + 1], live: id.startsWith('L') }));
 // Phase A: the James pool (held to flash-low): the low-thinking runs and L1. Phase B: the default pool, the rest.
 export const phaseOf = (r) => (r.think === 'low' && r.id !== 'L2' ? 'A' : 'B');
