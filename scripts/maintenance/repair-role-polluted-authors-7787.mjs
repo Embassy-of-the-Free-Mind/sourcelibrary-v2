@@ -73,7 +73,7 @@ const index = await loadAuthorIndex(db);
 const anchored = (d) => !!(d.wikidata_id || d.viaf_id || (d.gnd_ids || []).length);
 
 const plan = { rename: [], merge: [], skip: [] };
-for await (const d of authors.find({ _id: POLLUTED_SLUG, merged_into: { $exists: false } })) {
+for await (const d of authors.find({ _id: POLLUTED_SLUG, merged_into: { $exists: false } }).batchSize(500)) {
   const name = d.canonical_name || '';
   const shape = classifyVariant(name).shape;
   const parts = ['script_pair', 'institutional'].includes(shape) ? [] : splitContributors(name);
@@ -134,7 +134,7 @@ for (const r of plan.merge) {
     $addToSet: { variant_slugs: r.slug },
     $push: { merged_from: { run: RUN, slug: r.slug, canonical_name: d.canonical_name, variants: d.variants ?? [], at } },
   });
-  for await (const b of books.find({ author_id: r.slug }, { projection: { _id: 1 } })) {
+  for await (const b of books.find({ author_id: r.slug }, { projection: { _id: 1 } }).batchSize(500)) {
     const u = await books.updateOne({ _id: b._id, author_id: r.slug }, { $set: { author_id: r.into } });
     if (!u.modifiedCount) continue;
     moved++;
