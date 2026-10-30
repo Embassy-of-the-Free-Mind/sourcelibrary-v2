@@ -159,8 +159,11 @@ export function agyQuota(agyHome = process.env.AGY_HOME || '', { now = Date.now(
 export const agyAllowedModel = (agyHome = process.env.AGY_HOME || '') => { try { return agyHome ? fs.readFileSync(path.join(agyHome, 'allowed-model'), 'utf8').trim() || null : null; } catch { return null; } };
 // The Claude group is left alone below this much of either bucket (#7545): the fallback stops before the pool is dry.
 export const AGY_CLAUDE_FLOOR = 0.10;
+// "Empty" is below this, not exactly 0: a spent pool reads a residue such as 0.00028 (shown as 0% by /quota) and never
+// reaches 0 exactly, so a strict zero test kept the gate shut on 2026-10-30 with the pool spent (#7545).
+export const AGY_GEMINI_EMPTY = 0.005;
 /**
- * May this account run Claude through agy right now? Only when its Gemini WEEKLY bucket reads 0 and both of its Claude
+ * May this account run Claude through agy right now? Only when its Gemini WEEKLY bucket is empty (under AGY_GEMINI_EMPTY) and both of its Claude
  * buckets are at or above AGY_CLAUDE_FLOOR (#7545; Derek 2026-10-27/28). Fails CLOSED: an unreadable quota is "no".
  * Returns { ok, reason, quota }.
  */
@@ -170,7 +173,7 @@ export function agyClaudeGate(agyHome = process.env.AGY_HOME || '', { quota, hel
   if (held && !/^claude-/.test(held)) return { ok: false, reason: `${acct} is held to ${held} (allowed-model)`, quota: null };
   if (quota === undefined) quota = agyQuota(agyHome);
   if (!quota) return { ok: false, reason: `quota for ${acct} unreadable`, quota };
-  if (quota.gemini.weekly > 0) return { ok: false, reason: `${acct} Gemini weekly ${(quota.gemini.weekly * 100).toFixed(1)}% left`, quota };
+  if (quota.gemini.weekly >= AGY_GEMINI_EMPTY) return { ok: false, reason: `${acct} Gemini weekly ${(quota.gemini.weekly * 100).toFixed(1)}% left`, quota };
   const low = ['weekly', 'h5'].find((k) => !(quota.claude[k] >= AGY_CLAUDE_FLOOR));
   if (low) return { ok: false, reason: `${acct} Claude ${low} ${quota.claude[low] == null ? 'unreadable' : `${(quota.claude[low] * 100).toFixed(1)}% left`} (< ${AGY_CLAUDE_FLOOR * 100}%)`, quota };
   return { ok: true, reason: `${acct} Gemini weekly empty; Claude weekly ${(quota.claude.weekly * 100).toFixed(0)}%, 5h ${(quota.claude.h5 * 100).toFixed(0)}%`, quota };
