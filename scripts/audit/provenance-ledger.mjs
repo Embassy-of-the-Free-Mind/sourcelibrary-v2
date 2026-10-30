@@ -24,7 +24,8 @@
  *                                    (also: stated from the importer's stored field; assumed-by-importer;
  *                                    silent = manifest-silent | no-manifest | fetch-failed)
  *   h  any rights record             image_source.rights_normalized exists
- *   i  catalogue cites its source    field_provenance.title / field_provenance.author (#7673 stamps)
+ *   i  catalogue cites its source    field_provenance.title / field_provenance.author (#7673 stamps); also any
+ *                                    field in CATALOGUE_FIELDS (scripts/lib/catalogue-fields.mjs)
  *
  * Pages: a random $sample of pages, kept only if their book is public, until --sample are kept.
  *   c  transcribed pages naming the model     ocr.data non-empty; ocr.model | ocr.engine.model.
@@ -63,6 +64,7 @@ import { MongoClient } from 'mongodb';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { missingProvenance, inferHistoricalGeneration, ENGINE_SCHEMA } from '../lib/write-provenance.mjs';
 import { isMaintenanceSource, MAINTENANCE_RE } from '../eval/lib/revision-source.mjs';
+import { CATALOGUE_FIELDS } from '../lib/catalogue-fields.mjs';
 
 const arg = (k, d) => { const m = process.argv.find((a) => a.startsWith(`--${k}=`)); return m ? m.slice(k.length + 3) : d; };
 const has = (k) => process.argv.includes(`--${k}`);
@@ -95,7 +97,7 @@ try {
     id: 1, contributing_library: 1, 'image_source.provider': 1, 'image_source.provider_name': 1,
     'image_source.contributing_library': 1, 'image_source.source_url': 1, 'image_source.rights_normalized.status': 1,
     'image_source.rights_normalized.source': 1, 'image_source.rights_normalized.manifest_url': 1,
-    'field_provenance.title': 1, 'field_provenance.author': 1,
+    ...Object.fromEntries(CATALOGUE_FIELDS.map((f) => [`field_provenance.${f}`, 1])),
   } }).toArray();
   const N = books.length;
   const publicIds = new Set(books.map((b) => b.id));
@@ -150,7 +152,9 @@ try {
   row('     author stamped', iAuthor, N);
   row('     title AND author', iBoth, N);
   row('     title OR author', iEither, N);
-  Object.assign(out.books, { public: N, a: N - noLib.length, a_missing: noLib.map((b) => b.id), b: N - noLink.length, b_gap_by_provider: gapBy, bph, g_read: gRead, g_importer_field: gImporter, g_assumed: gAssumed, g_silent: gSilent, g_silent_by: silentBy, h: gAny, i_title: iTitle, i_author: iAuthor, i_both: iBoth, i_either: iEither });
+  const iAnyCat = books.filter((b) => CATALOGUE_FIELDS.some((f) => fp(b)[f])).length;
+  row('     any catalogue field (CATALOGUE_FIELDS: imprint, title, author)', iAnyCat, N);
+  Object.assign(out.books, { public: N, a: N - noLib.length, a_missing: noLib.map((b) => b.id), b: N - noLink.length, b_gap_by_provider: gapBy, bph, g_read: gRead, g_importer_field: gImporter, g_assumed: gAssumed, g_silent: gSilent, g_silent_by: silentBy, h: gAny, i_title: iTitle, i_author: iAuthor, i_both: iBoth, i_either: iEither, i_any_catalogue_field: iAnyCat });
 
   const revCount = await db.collection('page_revisions').estimatedDocumentCount();
   console.log(`\nf  earlier page versions kept (page_revisions, estimated): ${revCount.toLocaleString('en-US')}`);
