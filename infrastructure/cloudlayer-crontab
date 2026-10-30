@@ -13,6 +13,9 @@
 */10 * * * * flock -n /tmp/keyword-search-delta.lock /usr/bin/node --disable-warning=ExperimentalWarning --env-file=/root/sourcelibrary/.env.production.local /data/keyword-search/app/sync-delta.mjs >> /data/keyword-search/logs/delta.log 2>&1
 # Disk alarm on every mount (#6223, 2026-10-26; PR #7404): ntfy sourcelibrary-uptime at 85%/95%.
 */15 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
+# Disk steward, hourly (#6223): HF cache to 50 GB; idle /data/scratch/sl/jobs/* and /data/scratch/moved-from-*/* archived to R2
+# while their disk is above 75%. It never scans /root here (the box is a guest of a live service).
+25 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /data/scratch/sl/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
 # #7611 lane-judge sampler: MOVED to l7a on 2026-10-29 (this box's Claude account was at 100% of its week and judged 0 pages that night); see infrastructure/l7a-crontab.
 
 # Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.

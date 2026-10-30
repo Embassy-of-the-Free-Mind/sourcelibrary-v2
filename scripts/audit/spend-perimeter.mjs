@@ -85,7 +85,7 @@ const UNATTENDED = [
   { match: 'agy-wal-checkpoint.py', spends: false, gated: false,
     note: 'SQLite WAL checkpoint on the Gemini CLI\'s local db; no model call (#6223)' },
   { match: 'disk-steward.sh', spends: false, gated: false,
-    note: 'reaps merged worktrees, moves idle /root folders to the volume, removes agy .tmp leftovers; no model call (#6223)' },
+    note: 'reaps merged worktrees, trims the HF cache, archives idle job folders to R2 (private bucket, $0.015/GB-month, approved ~$3-5/month) while a disk is above 75%, removes agy .tmp leftovers; no model call (#6223)' },
   { match: 'cli-translate-lane.mjs', spends: false, gated: false,
     note: 'drains books held for the CLI translation lane: Opus through claude -p and 3.8 Flash through agy -p, both on the box\'s subscriptions; no paid API; skips at >= 70% of the Claude account\'s week, 95% in its last 24 h (#7075)' },
   { match: 'siku-translate-lane.mjs', spends: false, gated: false,
