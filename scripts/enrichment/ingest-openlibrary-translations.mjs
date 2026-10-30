@@ -15,12 +15,9 @@
  * `scripts/translation-layer/01-build-external-works.mjs --staging`.
  *
  * WHAT COUNTS AS A TRANSLATION HERE
- *   An edition with `languages` ∋ /languages/eng AND (`translated_from` OR
- *   `translation_of`). The original language is:
- *     - `translated_from` when present (orig_lang_basis: 'translated_from'); else
- *     - the ONE target language among the work's other, non-English editions
- *       (orig_lang_basis: 'sibling_editions'). Ambiguous or absent → not staged,
- *       but counted in the summary so the loss is visible.
+ *   An edition with `languages` ∋ /languages/eng AND `translated_from` naming a
+ *   target language. Editions with only `translation_of` (a title, no language)
+ *   are counted in the summary but not staged — see the note at the emit step.
  *   orig_title = `translation_of` (a free-text original title) when present, else
  *   the title of the earliest sibling edition in the original language, else the
  *   OL work title (often English — orig_title_basis says which).
@@ -38,7 +35,6 @@
  */
 import fs from 'fs';
 import path from 'path';
-import readline from 'readline';
 import { spawn } from 'child_process';
 
 const argOf = (f) => { const i = process.argv.indexOf(f); return i === -1 ? null : process.argv[i + 1]; };
@@ -58,58 +54,90 @@ const TARGET = {
 const langCode = (l) => (l?.key || '').replace('/languages/', '');
 const yearOf = (s) => { const m = String(s || '').match(/\b(1[0-9]\d\d|20[0-2]\d)\b/); return m ? Number(m[1]) : null; };
 
-/** Stream a gzipped dump line by line. Each line: type \t key \t revision \t last_modified \t json */
+/**
+ * Stream a gzipped dump line by line. Each line: type \t key \t revision \t last_modified \t json.
+ * Raw chunks rather than readline: readline's async iterator buffers lines ahead of a
+ * fast consumer, and the first full run died of heap exhaustion (4 GB) in pass 4.
+ */
 async function* lines(file) {
   const gz = spawn('gzip', ['-dc', file], { stdio: ['ignore', 'pipe', 'inherit'] });
-  const rl = readline.createInterface({ input: gz.stdout, crlfDelay: Infinity });
-  for await (const line of rl) yield line;
-  const code = await new Promise((r) => (gz.exitCode != null ? r(gz.exitCode) : gz.on('close', r)));
+  const closed = new Promise((r) => gz.on('close', r));
+  let rest = '';
+  gz.stdout.setEncoding('utf8');
+  for await (const chunk of gz.stdout) {
+    const parts = (rest + chunk).split('\n');
+    rest = parts.pop();
+    for (const line of parts) yield line;
+  }
+  if (rest) yield rest;
   // A truncated dump must not read as a complete one.
+  const code = await closed;
   if (code !== 0) throw new Error(`gzip -dc ${file} exited ${code}`);
 }
 const jsonOf = (line) => { const i = line.lastIndexOf('\t{'); try { return JSON.parse(line.slice(i + 1)); } catch { return null; } };
 const progress = (n, label) => { if (n % 5_000_000 === 0) console.log(`    ${label}: ${(n / 1e6).toFixed(0)}M lines`); };
 
-// ── pass 1: English editions marked as translations ─────────────────────────
-console.log('pass 1: editions → English translation candidates');
-const cands = [];
-let n = 0;
-for await (const line of lines(dump('editions'))) {
-  progress(++n, 'editions');
-  if (!line.includes('"translated_from"') && !line.includes('"translation_of"')) continue;
-  const e = jsonOf(line);
-  if (!e || !(e.languages || []).some((l) => langCode(l) === 'eng')) continue;
-  const from = (e.translated_from || []).map(langCode).filter(Boolean);
-  if (from.length && from.every((c) => c === 'eng')) continue;
-  cands.push({
-    key: e.key,
-    title: [e.title, e.subtitle].filter(Boolean).join(': '),
-    publish_date: e.publish_date || '',
-    work: e.works?.[0]?.key || null,
-    authors: (e.authors || []).map((a) => a.key).filter(Boolean),
-    from: from.filter((c) => c !== 'eng'),
-    translation_of: e.translation_of || '',
-  });
-}
-console.log(`  ${n.toLocaleString()} editions read, ${cands.length.toLocaleString()} English translation candidates`);
+// Passes 1–2 are two full reads of a 12.6 GB dump (~40 min); cache their result
+// so a failure later does not repeat them.
+const CACHE = `${OUT}.pass12.json`;
+let cands; let siblings;
+if (fs.existsSync(CACHE) && !process.argv.includes('--no-cache')) {
+  ({ cands, siblings } = JSON.parse(fs.readFileSync(CACHE, 'utf8')));
+  siblings = new Map(siblings);
+  console.log(`passes 1–2 from cache ${CACHE}: ${cands.length.toLocaleString()} candidates`);
+} else {
+  // ── pass 1: English editions marked as translations ───────────────────────
+  console.log('pass 1: editions → English translation candidates');
+  cands = [];
+  let n = 0;
+  for await (const line of lines(dump('editions'))) {
+    progress(++n, 'editions');
+    if (!line.includes('"translated_from"') && !line.includes('"translation_of"')) continue;
+    const e = jsonOf(line);
+    if (!e || !(e.languages || []).some((l) => langCode(l) === 'eng')) continue;
+    const from = (e.translated_from || []).map(langCode).filter(Boolean);
+    if (from.length && from.every((c) => c === 'eng')) continue;
+    cands.push({
+      key: e.key,
+      title: [e.title, e.subtitle].filter(Boolean).join(': '),
+      publish_date: e.publish_date || '',
+      work: e.works?.[0]?.key || null,
+      authors: (e.authors || []).map((a) => a.key).filter(Boolean),
+      from: from.filter((c) => c !== 'eng'),
+      translation_of: e.translation_of || '',
+    });
+  }
+  console.log(`  ${n.toLocaleString()} editions read, ${cands.length.toLocaleString()} English translation candidates`);
 
-// ── pass 2: sibling editions of the candidate works ──────────────────────────
-console.log('pass 2: editions → siblings of candidate works');
-const workSet = new Set(cands.map((c) => c.work).filter(Boolean));
-const siblings = new Map(); // work → [{lang, year, title}]
-n = 0;
-for await (const line of lines(dump('editions'))) {
-  progress(++n, 'editions');
-  const m = line.match(/"works": \[\{"key": "(\/works\/OL\d+W)"/);
-  if (!m || !workSet.has(m[1])) continue;
-  const e = jsonOf(line);
-  if (!e) continue;
-  const langs = (e.languages || []).map(langCode).filter((c) => c && c !== 'eng');
-  if (!langs.length) continue;
-  if (!siblings.has(m[1])) siblings.set(m[1], []);
-  for (const lang of langs) siblings.get(m[1]).push({ lang, year: yearOf(e.publish_date), title: e.title || '' });
+  // ── pass 2: sibling editions of the candidate works ────────────────────────
+  // Per work and language keep only the count and the earliest dated edition.
+  console.log('pass 2: editions → siblings of candidate works');
+  const workSet = new Set(cands.map((c) => c.work).filter(Boolean));
+  siblings = new Map(); // work → { [lang]: { n, year, title } }
+  n = 0;
+  for await (const line of lines(dump('editions'))) {
+    progress(++n, 'editions');
+    const m = line.match(/"works": \[\{"key": "(\/works\/OL\d+W)"/);
+    if (!m || !workSet.has(m[1])) continue;
+    const e = jsonOf(line);
+    if (!e) continue;
+    const langs = (e.languages || []).map(langCode).filter((c) => c && c !== 'eng');
+    if (!langs.length) continue;
+    if (!siblings.has(m[1])) siblings.set(m[1], {});
+    const byLang = siblings.get(m[1]);
+    const year = yearOf(e.publish_date);
+    for (const lang of langs) {
+      const s = byLang[lang] || (byLang[lang] = { n: 0, year: null, title: '' });
+      s.n++;
+      if (year != null && (s.year == null || year < s.year)) { s.year = year; s.title = e.title || ''; }
+      if (!s.title) s.title = e.title || '';
+    }
+  }
+  console.log(`  ${siblings.size.toLocaleString()} candidate works have a non-English sibling edition`);
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(CACHE, JSON.stringify({ cands, siblings: [...siblings] }));
 }
-console.log(`  ${siblings.size.toLocaleString()} candidate works have a non-English sibling edition`);
+const workSet = new Set(cands.map((c) => c.work).filter(Boolean));
 
 // ── pass 3 + 4: works and authors ────────────────────────────────────────────
 console.log('pass 3: works');
@@ -140,27 +168,25 @@ for await (const line of lines(dump('authors'))) {
 // ── emit ─────────────────────────────────────────────────────────────────────
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 const out = fs.createWriteStream(OUT);
-const tally = { staged: 0, non_target: 0, sibling_ambiguous: 0, no_language: 0 };
+const tally = { staged: 0, non_target: 0, no_language: 0 };
 const byLang = {};
 for (const c of cands) {
-  const sib = siblings.get(c.work) || [];
-  let codes = [...new Set(c.from)];
-  let basis = 'translated_from';
-  if (!codes.length) {
-    basis = 'sibling_editions';
-    const sibTargets = [...new Set(sib.map((s) => TARGET[s.lang]).filter(Boolean))];
-    if (sibTargets.length > 1) { tally.sibling_ambiguous++; continue; }
-    if (!sibTargets.length) { tally.no_language++; continue; }
-    codes = sib.filter((s) => TARGET[s.lang] === sibTargets[0]).map((s) => s.lang).slice(0, 1);
-  }
+  const sib = siblings.get(c.work) || {};
+  // translated_from only. Inferring the language from the work's other editions
+  // (the one target language among them) was tried and dropped: 3 of the 3
+  // inferred rows in the first 30-row precision draw were wrong (two manga with a
+  // French/Spanish sibling, a translation from Russian with a Spanish one) — the
+  // original-language edition is often not in OL at all. It was 269 rows of 25K.
+  const codes = [...new Set(c.from)];
+  if (!codes.length) { tally.no_language++; continue; }
   const langs = [...new Set(codes.map((cd) => TARGET[cd]).filter(Boolean))];
   if (!langs.length) { tally.non_target++; continue; }
   const w = works.get(c.work);
   const authorKeys = w?.authors?.length ? w.authors : c.authors;
   for (const lang of langs) {
-    const orig = sib.filter((s) => TARGET[s.lang] === lang);
-    const years = orig.map((s) => s.year).filter((y) => y != null);
-    const earliest = orig.filter((s) => s.year != null).sort((a, b) => a.year - b.year)[0];
+    const orig = Object.entries(sib).filter(([cd]) => TARGET[cd] === lang).map(([, v]) => v);
+    const years = orig.map((v) => v.year).filter((y) => y != null);
+    const earliest = orig.filter((v) => v.year != null).sort((a, b) => a.year - b.year)[0];
     let origTitle = c.translation_of; let titleBasis = 'translation_of';
     if (!origTitle && earliest?.title) { origTitle = earliest.title; titleBasis = 'sibling_edition'; }
     if (!origTitle) { origTitle = w?.title || ''; titleBasis = 'ol_work_title'; }
@@ -176,7 +202,6 @@ for (const c of cands) {
       en_year: yearOf(c.publish_date),
       orig_year: years.length ? Math.min(...years) : null,
       ol_work: c.work,
-      orig_lang_basis: basis,
       orig_title_basis: titleBasis,
       orig_year_basis: years.length ? 'earliest_ol_edition_in_orig_lang' : null,
     })}\n`);
@@ -191,6 +216,5 @@ console.log(`  English translation candidates : ${cands.length.toLocaleString()}
 console.log(`  staged rows (target languages) : ${tally.staged.toLocaleString()}`);
 for (const [l, k] of Object.entries(byLang).sort((a, b) => b[1] - a[1])) console.log(`    ${l.padEnd(11)} ${k}`);
 console.log(`  dropped — non-target language  : ${tally.non_target.toLocaleString()}`);
-console.log(`  dropped — no language at all   : ${tally.no_language.toLocaleString()} (translation_of only, no non-English sibling)`);
-console.log(`  dropped — siblings ambiguous   : ${tally.sibling_ambiguous.toLocaleString()}`);
+console.log(`  dropped — no translated_from   : ${tally.no_language.toLocaleString()} (translation_of only; language unknown)`);
 console.log(`\nWrote ${OUT}`);
