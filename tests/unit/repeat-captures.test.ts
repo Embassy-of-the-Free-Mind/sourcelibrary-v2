@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { planBookRepeats, namesOcclusion, wordCount } from '../../scripts/lib/repeat-captures.mjs';
-import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES } from '@/lib/reader-pages';
+import { readerPageListFilter, isReaderListedPage, READER_HIDDEN_PAGE_TYPES, readerPageCountFilters, countReaderListedPages } from '@/lib/reader-pages';
 import { VISIBLE_PAGE_MATCH as TS_VISIBLE, isRepeatCapture } from '@/lib/page-counts';
 import { VISIBLE_PAGE_MATCH as MJS_VISIBLE, isVisiblePage } from '../../scripts/lib/page-counts.mjs';
 
@@ -51,6 +51,20 @@ describe('reader page list (#5056)', () => {
     expect(isVisiblePage(p)).toBe(false);
     delete p.repeat_of;
     expect(isVisiblePage(p)).toBe(true);
+  });
+});
+
+describe('reader page count without fetching pages (PR #7777 review S1)', () => {
+  it('counts every page, then subtracts the repeats, on index-boundable filters', async () => {
+    const f = readerPageCountFilters('B');
+    expect(f.all).toEqual({ book_id: 'B', page_number: { $gte: 0 } }); // no repeat_of: stays a COUNT_SCAN
+    expect(f.repeats).toEqual({ book_id: 'B', repeat_of: { $type: 'string' }, page_number: { $gte: 0 } });
+    expect(readerPageCountFilters('B', 't1').repeats).toMatchObject({ tenantId: 't1' });
+    const seen: unknown[] = [];
+    const n = await countReaderListedPages(async (q) => { seen.push(q); return 'repeat_of' in q ? 7 : 100; }, 'B');
+    expect(n).toBe(93);
+    expect(seen).toHaveLength(2);
+    expect(await countReaderListedPages(async (q) => ('repeat_of' in q ? 5 : 0), 'B')).toBe(0);
   });
 });
 

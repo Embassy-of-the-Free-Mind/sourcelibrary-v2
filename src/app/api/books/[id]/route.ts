@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
+import { NOT_REPEAT_CAPTURE, countReaderListedPages } from '@/lib/reader-pages';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -187,7 +187,7 @@ export const GET = withApiAuth(async (
       limit: pageLimit,
       returned: pages.length,
       total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
-        () => db.collection('pages').countDocuments(pageFilter)),
+        () => countReaderListedPages(f => db.collection('pages').countDocuments(f), bookId, tenantId)),
     };
 
     // Keyed on wantsFull, not includeFull: the same URL answers differently for

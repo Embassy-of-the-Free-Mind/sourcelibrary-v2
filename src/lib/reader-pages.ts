@@ -20,9 +20,37 @@
  */
 
 import { HIDDEN_PAGE_TYPES } from '@/lib/types/prompts/defaults';
-import { NOT_REPEAT_CAPTURE, isRepeatCapture } from '@/lib/page-counts';
+import { NOT_REPEAT_CAPTURE, IS_REPEAT_CAPTURE, isRepeatCapture } from '@/lib/page-counts';
 
 export { NOT_REPEAT_CAPTURE, isRepeatCapture };
+
+/** The two count queries a caller runs; kept apart so a test can pin their shape. */
+export function readerPageCountFilters(bookId: string, tenantId?: string | null) {
+  const scope: Record<string, unknown> = tenantId ? { tenantId } : {};
+  return {
+    // Covered by pages_book_pagenum_idx (COUNT_SCAN) when there is no tenant scope.
+    all: { book_id: bookId, page_number: { $gte: 0 }, ...scope },
+    // Covered by pages_book_repeat_of_partial: a small partial index.
+    repeats: { book_id: bookId, ...IS_REPEAT_CAPTURE, page_number: { $gte: 0 }, ...scope },
+  };
+}
+
+/**
+ * Number of pages `readerPageListFilter` matches, without fetching a page.
+ * `countDocuments(readerPageListFilter(...))` itself cannot be answered from
+ * any index (`repeat_of: null` is not boundable on pages_book_pagenum_idx), so
+ * it FETCHed every page document of the book, OCR and translation included.
+ * Count everything, then subtract the repeats (PR #7777 review S1).
+ */
+export async function countReaderListedPages(
+  count: (filter: Record<string, unknown>) => Promise<number>,
+  bookId: string,
+  tenantId?: string | null,
+): Promise<number> {
+  const f = readerPageCountFilters(bookId, tenantId);
+  const [all, repeats] = await Promise.all([count(f.all), count(f.repeats)]);
+  return Math.max(0, all - repeats);
+}
 
 /** Page types the reader's list leaves out (still reachable by direct URL). */
 export const READER_HIDDEN_PAGE_TYPES: ReadonlySet<string> = new Set([...HIDDEN_PAGE_TYPES, 'archived-spread']);
@@ -43,3 +71,4 @@ export function isReaderListedPage(page: object | null | undefined): boolean {
   if (typeof p.page_number === 'number' && p.page_number < 0) return false;
   return !isRepeatCapture(p);
 }
+
