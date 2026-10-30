@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
+  // The type check runs in CI, not in the Vercel build. `next build` type-checks after compiling, in the same 8 GB
+  // container, and that step is what was SIGKILLed for OOM on 2026-10-29 21:16 and 2026-10-30 13:54 (release
+  // builds, cache restored, compile passed). Every PR already runs `npx tsc --noEmit` in the required `test` job
+  // (.github/workflows/unit-tests.yml), and production builds only merged PRs, so the in-build check was a second
+  // copy of the same gate. Run `npx tsc --noEmit` before opening a PR (CLAUDE.md).
+  typescript: { ignoreBuildErrors: true },
   experimental: {
     // Turbopack's build cache (on by default since Next 16) is what pushed
     // prod builds into OOM (#5887). It grows ~0.05–0.3 GB per build inside
