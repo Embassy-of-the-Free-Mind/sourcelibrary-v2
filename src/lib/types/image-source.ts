@@ -205,6 +205,45 @@ export function displayedImageRights(src?: (Partial<ImageSource> & { rights_norm
   };
 }
 
+/** How a book's page images can be downloaded. */
+export type ImageAccess =
+  | 'open'      // No license concern — flows through the normal member-or-pay gate
+  | 'nc-free'   // Reuse restricted by the library — free for any signed-in user, never enters the paid flow
+  | 'blocked';  // Unknown license + no public-domain signal — withheld entirely
+
+/** Licenses that prohibit commercial use of page images. */
+const NC_LICENSE_PATTERNS = [
+  /\bnc\b/i,        // NoC-NC, CC-BY-NC, CC-BY-NC-ND, CC-BY-NC-SA
+  /non.?commercial/i,
+];
+
+/** Library statements under which we must not charge for the scans. */
+const NO_CHARGE_CLASSES = new Set(['noc-nc', 'cc-by-nc', 'cc-by-nc-sa', 'cc-by-nc-nd', 'terms-of-use', 'in-copyright']);
+
+/**
+ * The one rule for image downloads, shared by the download routes (`classifyImageAccess`) and the
+ * book page. Order matters (#7771): a reuse restriction is tested BEFORE the pre-1930 release.
+ * The year test used to come first, so a 1650 Gallica scan that BnF marks "No Copyright –
+ * Non-Commercial Use Only" was 'open' and offered for $5 — 4,554 public books on 2026-10-30.
+ * The holding library's own statement (`rights_normalized`, when stated) wins over the stored
+ * licence, which for many books is an importer default.
+ */
+export function imageAccessFor(book: {
+  year?: number | null;
+  image_source?: { provider?: string | null; license?: string | null; rights_normalized?: LibraryRightsStatement | null } | null;
+}): ImageAccess {
+  const src = book.image_source;
+  if (src?.provider === 'bph') return 'open';
+  const rn = src?.rights_normalized;
+  const stated = !!rn && (rn.status === 'stated' || rn.status === 'stated-from-import');
+  if (stated && rn!.class && NO_CHARGE_CLASSES.has(rn!.class)) return 'nc-free';
+  const license = src?.license;
+  if (license && NC_LICENSE_PATTERNS.some(p => p.test(license))) return 'nc-free';
+  if (typeof book.year === 'number' && book.year < 1930) return 'open';
+  if (!license || license === 'unknown') return 'blocked';
+  return 'open';
+}
+
 // Image source and licensing info
 export interface ImageSource {
   provider: ImageSourceProvider;
