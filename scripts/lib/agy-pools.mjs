@@ -36,7 +36,22 @@ export function parseQuota(stdout) {
   const b = (w) => buckets?.find((x) => x.window === w);
   const wk = b('weekly');
   if (!wk || typeof wk.remaining_fraction !== 'number') return null;
-  return { weekly: wk.remaining_fraction, weeklyReset: wk.reset_time ?? null, fiveHour: b('5h')?.remaining_fraction ?? null, fiveHourReset: b('5h')?.reset_time ?? null };
+  return { weekly: wk.remaining_fraction, weeklyReset: wk.reset_time ?? null, fiveHour: b('5h')?.remaining_fraction ?? null, fiveHourReset: b('5h')?.reset_time ?? null, claude: claudeQuota(stdout) };
+}
+
+/**
+ * The same reply's "Claude and GPT models" group, a separate pool per login: { weekly, weeklyReset, fiveHour,
+ * fiveHourReset } or null. Read for display (/admin/pipeline/now, climits); lanes spend it only through agyClaudeGate
+ * (scripts/lib/agy-cli.mjs, #7545).
+ */
+export function claudeQuota(stdout) {
+  let j;
+  try { j = JSON.parse(String(stdout).trim().split('\n').filter((l) => l.startsWith('{')).pop()); } catch { return null; }
+  const g = j?.status === 'SUCCESS' ? j?.command?.data?.groups?.find?.((x) => /claude/i.test(x.name || '')) : null;
+  const b = (w) => g?.buckets?.find((x) => x.window === w);
+  if (typeof b('weekly')?.remaining_fraction !== 'number') return null;
+  const f = (x) => (typeof x?.remaining_fraction === 'number' ? x.remaining_fraction : null);
+  return { weekly: f(b('weekly')), weeklyReset: b('weekly')?.reset_time ?? null, fiveHour: f(b('5h')), fiveHourReset: b('5h')?.reset_time ?? null };
 }
 
 /** The env a child runs agy in: AGY_HOME set for a second login, removed for the default one; marked as sharing. */

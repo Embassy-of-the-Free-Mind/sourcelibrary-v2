@@ -56,7 +56,7 @@ const DELAY_MS = parseInt(args['delay-ms']) || null;
 // A wave that runs for hours against one institution should say who it is (#4361's
 // rule for IA). The browser string stays the default for the sources that need it.
 const UA = 'contact-ua' in args
-  ? 'SourceLibrary/1.0 (https://sourcelibrary.org; j.d.lomas@tudelft.nl)'
+  ? 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)'
   : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const CHALLENGE_RE = /bobcmn|support id is|failureConfig/i;
 const sleep = ms => new Promise(r => setTimeout(r, ms));

@@ -1,8 +1,8 @@
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import { localePath, type Locale } from '@/lib/locale-path';
-import { getPageData, getSplitLeafId, isArchivedSplit } from '../page-data';
+import { getPageData, getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
 
 /**
  * Route group holding ONLY the public reader (`/book/[id]/page/[pageId]`).
@@ -56,6 +56,18 @@ export default async function PublicReaderLayout({ children, params, lang = 'en'
     if (leafId) {
       const bookPath = (book as unknown as { slug?: string }).slug || id;
       permanentRedirect(localePath(`/book/${bookPath}/page/${leafId}`, lang));
+    }
+  }
+
+  // A hidden repeat capture (the same leaf photographed twice, #5056) is not
+  // in the page list either; its kept capture is the same leaf. 307, not 308:
+  // the hide is reversible (unset repeat_of), and a browser caches a 308.
+  const repeatOf = (page as { repeat_of?: unknown } | null)?.repeat_of;
+  if (book && page && typeof repeatOf === 'string') {
+    const keptId = await getRepeatKeeperId(page.book_id as string, repeatOf);
+    if (keptId) {
+      const bookPath = (book as unknown as { slug?: string }).slug || id;
+      redirect(localePath(`/book/${bookPath}/page/${keptId}`, lang));
     }
   }
 

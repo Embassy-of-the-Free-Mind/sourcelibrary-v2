@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE, countReaderListedPages } from '@/lib/reader-pages';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -171,7 +172,8 @@ export const GET = withApiAuth(async (
     // every caller where this slice sits so it can fetch the next one.
     const windowed = isWindowedCaller(identity.kind);
     const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
-    const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 } };
+    // Repeat captures (#5056) are out of the list like soft-hidden pages; their ids still resolve.
+    const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 }, ...NOT_REPEAT_CAPTURE };
     if (tenantId) pageFilter.tenantId = tenantId;
     let cursor = db.collection('pages')
       .find(pageFilter)
@@ -185,7 +187,7 @@ export const GET = withApiAuth(async (
       limit: pageLimit,
       returned: pages.length,
       total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
-        () => db.collection('pages').countDocuments(pageFilter)),
+        () => countReaderListedPages(f => db.collection('pages').countDocuments(f), bookId, tenantId)),
     };
 
     // Keyed on wantsFull, not includeFull: the same URL answers differently for

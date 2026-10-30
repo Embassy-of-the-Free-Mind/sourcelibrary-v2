@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, lastPageNumber, correctMode, FALLBACK, CORRECT_MODEL, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -114,12 +114,51 @@ describe('the correction lane quota floor (#7558)', () => {
   });
 });
 
+describe('the Claude fallback of the correction lane (#7545)', () => {
+  const now = Date.parse('2026-10-27T16:00:00Z');
+  const reset = '2026-10-30T22:00:00Z';
+  const b = (weekly: number) => [{ id: 'gemini-weekly', remaining_fraction: weekly, reset_time: reset }, { id: 'gemini-5h', remaining_fraction: 0.9, reset_time: '2026-10-27T20:00:00Z' }];
+  const open = () => ({ ok: true, reason: 'open' }), closed = () => ({ ok: false, reason: 'main Claude weekly 8.0% left (< 10%)' });
+  it('runs the Gemini lane while the Gemini pool is above its line, whatever the Claude gate says', () => {
+    const m = correctMode({ buckets: b(0.63), gate: open, now });
+    expect(m).toMatchObject({ mode: 'gemini', model: CORRECT_MODEL });
+    expect(m.languages.test('Latin')).toBe(false);
+  });
+  it('switches to Opus through agy on Latin only when the Gemini weekly bucket reads 0 and the gate opens', () => {
+    const m = correctMode({ buckets: b(0), gate: open, now });
+    expect(m).toMatchObject({ mode: 'fallback', model: 'claude-opus-5-5-low', lane: FALLBACK.lane });
+    expect(m.languages.test('Latin')).toBe(true);
+    expect(m.languages.test('German')).toBe(false);
+    // A spent pool keeps a residue (0.00028 read on 2026-10-30, /quota shows 0%): still empty.
+    expect(correctMode({ buckets: b(0.00028), gate: open, now }).mode).toBe('fallback');
+  });
+  it('does not run when the Gemini pool is low but not empty, or empty with the gate closed', () => {
+    expect(correctMode({ buckets: b(0.01), gate: open, now }).mode).toBeNull();
+    expect(correctMode({ buckets: b(0), gate: closed, now })).toMatchObject({ mode: null, why: expect.stringMatching(/fallback is closed.*< 10%/) });
+    expect(correctMode({ buckets: null, gate: open, now }).mode).toBeNull();
+  });
+});
+
 describe('correction pages are drawn where the router test drew (#7558)', () => {
   it('interior: 15% to 95% of the book', () => {
     expect(isInterior(15, 100)).toBe(false);
     expect(isInterior(16, 100)).toBe(true);
     expect(isInterior(95, 100)).toBe(true);
     expect(isInterior(96, 100)).toBe(false);
+  });
+
+  it('the window is cut from the last page_number, so hidden repeats do not drop the tail (#5056)', async () => {
+    // 100 leaves, 30 of them hidden repeats: pages_count is 70, but the pages still run to 100.
+    const db = { collection: () => ({ findOne: async (q: any, o: any) => {
+      expect(q.page_number).toEqual({ $gt: 0 });
+      expect(o.sort).toEqual({ page_number: -1 });
+      return { page_number: 100 };
+    } }) };
+    const last = await lastPageNumber(db, 'b1');
+    expect(last).toBe(100);
+    expect(isInterior(90, last)).toBe(true);
+    expect(isInterior(90, 70)).toBe(false); // what pages_count would have cut
+    expect(await lastPageNumber({ collection: () => ({ findOne: async () => null }) }, 'b2')).toBe(0);
   });
 });
 

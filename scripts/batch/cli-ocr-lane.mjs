@@ -162,7 +162,17 @@
  *        stamped ocr.pipeline = ARMC_LANE, --mark-stale (a flag; nothing re-translates on it). Every page tried goes to
  *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
  *        L/armc-contain-claims.jsonl for a by-eye check. Undo: scripts/maintenance/revert-run.mjs --run-id <run>.
+ *
+ * CLAUDE FALLBACK (#7545). When the run's pool (--agy-home; `auto` never picks an empty pool, so name it) has an EMPTY Gemini weekly bucket, the lane does not
+ * stop on the floor: if agyClaudeGate opens (the Claude group's weekly and 5-hour buckets both at 10% or more, the
+ * account not held to one model by allowed-model), the run corrects the cells whose router route is Opus and where
+ * Opus through agy passed its test (rules.json `fallback_routes` with passes: true): Latin Flash-Lite pages, on
+ * claude-opus-5-5-low, stamped `ocr.pipeline = agy-opus-correct-lite-7545`. Same frame rules, template, writer and
+ * ledger. The mode is chosen once per run; before each chunk the gate is read again (cached 10 min), and the run
+ * stops when it closes: a Claude bucket under 10%, or a Gemini reset, after which the next run is the Gemini lane.
+ * German translation failed the test (4/30 marker failures) and Tibetan translation was not tested: neither is here.
  */
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -173,6 +183,7 @@ import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } f
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
+import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -190,7 +201,7 @@ export const CLI_MODEL_FOR = Object.freeze({ 'gemini-3-flash-preview': 'gemini-3
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
 export const UNREAD = Object.freeze({
-  page_number: { $gt: 0 },
+  ...VISIBLE_PAGE_MATCH,
   'ocr.recitation_blocked': { $ne: true },
   $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
   $and: [{
@@ -244,10 +255,37 @@ export const CORRECT_LANE = 'agy-correct-lite-7558';
 export const CORRECT_MODEL = 'gemini-3.8-flash-low';
 /** The cells the route passed (#7520): German and French. Latin was not measured. */
 export const CORRECT_LANGUAGES = /^(German|French)/;
+/** The Claude fallback (#7545, header): Latin lite>opus, where lite>agy-opus accepted 15/15 against claude -p's 15/15. */
+export const FALLBACK = Object.freeze({ model: 'claude-opus-5-5-low', languages: /^(Latin)/, lane: 'agy-opus-correct-lite-7545',
+  why: "lite>agy-opus passed #7545's test against lite>opus (Latin 15/15 each, 0 wrong text)" });
+/**
+ * Which correction this run makes: the Gemini lane, the Claude fallback, or none. `quota` is readQuota()'s Gemini
+ * buckets (undefined = read them); `gate` is agyClaudeGate.
+ */
+export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AGY_HOME || ''), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
+  const weekly = buckets?.find((b) => b.id === 'gemini-weekly');
+  // Empty as agyClaudeGate counts it: a spent pool keeps a residue (0.00028 on 2026-10-30) and never reads exactly 0.
+  if (weekly && typeof weekly.remaining_fraction === 'number' && weekly.remaining_fraction < AGY_GEMINI_EMPTY) {
+    const g = gate();
+    return g.ok ? { mode: 'fallback', model: FALLBACK.model, lane: FALLBACK.lane, languages: FALLBACK.languages, why: g.reason }
+      : { mode: null, why: `Gemini weekly empty and the Claude fallback is closed: ${g.reason}` };
+  }
+  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
+  return q.ok ? { mode: 'gemini', model: CORRECT_MODEL, lane: CORRECT_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
+}
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
-/** The router test drew interior pages only (scripts/eval/ground-truth-5935/lib.mjs isInterior). */
-export const isInterior = (pn, pagesCount) => pn > Math.floor(pagesCount * 0.15) && pn <= Math.ceil(pagesCount * 0.95);
+/**
+ * The router test drew interior pages only (scripts/eval/ground-truth-5935/lib.mjs isInterior). The second argument is
+ * the book's LAST page_number, not `pages_count`: a hidden repeat capture (#5056) keeps its number but leaves the count,
+ * so a window cut from `pages_count` slides toward the front and drops the tail of the book (PR #7777 review S2).
+ */
+export const isInterior = (pn, lastPage) => pn > Math.floor(lastPage * 0.15) && pn <= Math.ceil(lastPage * 0.95);
+/** The highest page_number a book lists (repeats included: they sit inside the span). Index-covered, one key. */
+export async function lastPageNumber(db, bookId) {
+  const p = await db.collection('pages').findOne({ book_id: bookId, page_number: { $gt: 0 } }, { sort: { page_number: -1 }, projection: { _id: 0, page_number: 1 } });
+  return p?.page_number ?? 0;
+}
 const WEEK_MS = 7 * 24 * 3600 * 1000;
 
 /**
@@ -344,12 +382,13 @@ function ledgerTail(file, set, state) {
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
 async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: book.id, page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: book.id, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
-  return rows.filter((p) => isInterior(p.page_number, book.pages_count));
+  const last = await lastPageNumber(db, book.id);
+  return rows.filter((p) => isInterior(p.page_number, last));
 }
 
 async function correctMain(mode, arg) {
@@ -366,23 +405,7 @@ async function correctMain(mode, arg) {
   ledgerTail(LEDGER, ledger, tailState);
   let SHARD;
   try { SHARD = parseShard(arg('shard')); } catch (e) { console.error(e.message); process.exit(2); }
-  const books = (await db.collection('books').find(
-    { visible: true, pages_count: { $gt: 0 }, language: { $regex: CORRECT_LANGUAGES }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
-    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
-    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
-  if (mode === 'correct-count') {
-    const t = {};
-    for (const b of books) {
-      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
-      const k = String(b.language).match(CORRECT_LANGUAGES)[1];
-      t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
-      t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
-    }
-    console.log(`correction queue (${CORRECT_LANE}): ${JSON.stringify(t)}`);
-    await client.close(); return;
-  }
-  const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
+  const FLOOR5H = Number(arg('floor-5h') ?? 0.25);
   const WEEKLY_END = Number(arg('weekly-end') ?? 0);
   if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
   const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
@@ -403,6 +426,27 @@ async function correctMain(mode, arg) {
   const ME = { pid: process.pid, pool: POOL };
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
+  // The run's mode (header: CLAUDE FALLBACK). correct-count counts the Gemini lane's frame unless --fallback.
+  const M = mode === 'correct-count' ? (process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
+    : correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+  if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
+  const books = (await db.collection('books').find(
+    { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
+    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
+    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+  if (mode === 'correct-count') {
+    const t = {};
+    for (const b of books) {
+      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
+      const k = String(b.language).match(M.languages)[1];
+      t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
+      t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
+    }
+    console.log(`correction queue (${M.lane}): ${JSON.stringify(t)}`);
+    await client.close(); return;
+  }
+  const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
   const CONCURRENCY = Number(arg('concurrency') || 1);
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
@@ -415,7 +459,7 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}): pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
   const nextChunk = async () => {
@@ -435,8 +479,10 @@ async function correctMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      const q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
-      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      // The mode's own gate, read again before every chunk: a reset or a spent Claude group ends the run.
+      const now = correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+      if (now.mode !== M.mode) { stop ??= now.mode ? `mode changed to ${now.mode}: the next run takes it` : now.why; break; }
+      const q = now.q;
       const c = await nextChunk();
       if (!c) { stop ??= 'queue empty'; break; }
       // Sized after the await, so two workers never both spend the same budget.
@@ -450,18 +496,19 @@ async function correctMain(mode, arg) {
       fs.mkdirSync(dir, { recursive: true });
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
-      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${CORRECT_LANE}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} ${q ? `weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%` : now.why}`);
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
+      const reason = M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
+        : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
-      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${CORRECT_LANE}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${M.lane}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
       if (!APPLY || applied !== 0) { release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
-      for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: CORRECT_LANE }) + '\n');
+      for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: M.lane }) + '\n');
       for (const p of take) {
         const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
         const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : 'other';
@@ -716,14 +763,15 @@ export function armcUndrafted(L) {
  * of this lane's: a page whose stored read calls it an illustration, a plate, a map or a blank, or names no script, is
  * not a text page (the pilot's planner drew a tarot deck whose 300+ characters were an image description).
  */
-async function armcPages(db, bookId, pagesCount, SKIP, ids = null) {
+async function armcPages(db, bookId, SKIP, ids = null) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*(handwrit|manuscript|mixed|none)|<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
-  return rows.filter((p) => isInterior(p.page_number, pagesCount));
+  const last = await lastPageNumber(db, bookId);
+  return rows.filter((p) => isInterior(p.page_number, last));
 }
 const armcBookFilter = (langs) => ({ visible: true, pages_count: { $gt: 0 }, year: { $gte: ARMC_YEARS[0], $lte: ARMC_YEARS[1] }, $or: langs.map((l) => ({ language: { $regex: ARMC_ENGINES[l].language } })), 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true }, needs_splitting: { $ne: true } });
 export const armcLang = (language) => Object.entries(ARMC_ENGINES).find(([, v]) => v.language.test(String(language || '')))?.[0] ?? null;
@@ -836,7 +884,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
     if (!lang || (perLang[lang] ?? 0) >= PER_LANG) continue;
     const prev = planned.get(b.id);
     const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
-    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, b.pages_count, SKIP)).filter((p) => !ledger.has(p.id) && !have.has(p.id));
+    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP)).filter((p) => !ledger.has(p.id) && !have.has(p.id));
     if (PER_BOOK) { if (rows.length < PER_BOOK) continue; rows = Array.from({ length: PER_BOOK }, (_, i) => rows[Math.floor((i + 0.5) * rows.length / PER_BOOK)]); }
     const whole = !PER_BOOK && rows.length <= room;
     rows = rows.slice(0, room);
@@ -967,7 +1015,7 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
       // The book and the page must still be in frame now: a page re-read, edited or withheld since the plan is not this lane's.
       const bookOk = FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
         : book.visible && !book.needs_splitting && IDLE_STATUSES.includes(book.pipeline_auto?.status) && !book.pipeline_auto?.hold && !book.pipeline_auto?.held;
-      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, book.pages_count, SKIP, take.map((p) => p.id))).map((p) => p.id) : []);
+      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id))).map((p) => p.id) : []);
       const drafts = { _engine: null };
       const unsent = new Map();
       for (const p of take) {

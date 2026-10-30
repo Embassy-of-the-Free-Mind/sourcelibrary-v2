@@ -44,7 +44,7 @@ const LIST = arg('--list', 'scripts/import/new-world-candidates.json');
 const LIMIT = parseInt(arg('--limit', '999'), 10);
 const DELAY_MS = parseInt(arg('--delay', '900'), 10);
 const ONLY = arg('--region', null);
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // IA refuses anonymous bulk fetch above ~5 req/s and answers with a TCP refusal,
 // not an HTTP status — a 100% failure rate here means the transport is blocked,

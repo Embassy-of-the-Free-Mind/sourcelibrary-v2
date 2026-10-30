@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Phase 11 — one WORK graph over USTC Latin editions AND Source Library books
- * (issue #7751). Replaces the cluster unit for the gap arithmetic.
+ * Phase 11 — one WORK graph over USTC editions, Source Library books AND
+ * external English translations, for one language (--lang, default Latin).
+ * Issue #7751. Replaces the cluster unit for the gap arithmetic.
  *
  * Why: `ustc_editions.work_cluster_id` is NOT USTC's grouping — build.mjs mints
  * it as `surname::first-6-title-words`, so every variant title page is a new
@@ -16,7 +17,8 @@
  * title-page variance, and USTC-blind); 10-sl-coverage.mjs (best-cluster links,
  * inherits the fragmentation). This phase is read-only and free.
  *
- * Method. Nodes = USTC Latin 1400-1700 editions + SL Latin books (with pages).
+ * Method. Nodes = USTC 1400-1700 editions in LANG (u) + SL books in LANG with
+ * pages (s) + external translated works whose original is LANG (x, see below).
  *   - direct: an SL book with books.ustc_id = sn (or named by
  *     ustc_editions.source_library_id) takes that edition's work.
  *   - anonymous nodes join only on an identical first-6-token key.
@@ -29,14 +31,19 @@
  *     becomes a leader. Single-linkage union-find was tried first and chained
  *     whole oeuvres through omnibus title pages (all of Cicero became one work);
  *     a two-pass density merge and a hub guard did not stop it. Leader membership
- *     cannot chain.
- * Works = the resulting components. A component's external prior and
- * SL status are carried over from its members (phase-3 cluster priors; book
- * translation status), never mixed: the external channel stays external.
+ *     cannot chain. K=6, not 10: author epithets and dedicatees sit late in
+ *     early-modern titles (Javelli "Canapicii"), and at K=10 they merged distinct
+ *     works (7/40 sampled multi-edition works wrong; 2-3/40 at K=6). An
+ *     author-frequency epithet rule (WG_EPITHETS=1) was tried and shattered
+ *     single-work authors (Consolatio 9 → 88 works) — off by default.
+ * Works = the resulting components. External prior = the work holds an x node,
+ * or (Latin) a phase-3 prior cluster; SL status = best member book status. The
+ * external channel never takes SL evidence.
  *
- * Reads:  Supabase ustc_editions (cached to scripts/output/ustc-latin-editions.jsonl),
- *         scripts/output/cluster-external-priors.jsonl, Mongo books
- * Writes: scripts/output/work-graph.jsonl, scripts/output/work-graph-report.json
+ * Reads:  Supabase ustc_editions (cached to scripts/output/ustc-<lang>-editions.jsonl),
+ *         the external-works file (below), scripts/output/cluster-external-priors.jsonl
+ *         (Latin), Mongo books (language or ISO code)
+ * Writes: scripts/output/work-graph[-<lang>].jsonl, work-graph-report[-<lang>].json
  *
  * --lang <name> (#7769): build the graph over USTC editions whose language_1 is
  * that language (latin, german, french, italian, dutch, spanish, greek,
@@ -68,13 +75,15 @@ const LANG = (argOf('--lang') || 'latin').toLowerCase();
 const LANG_NAME = LANG[0].toUpperCase() + LANG.slice(1); // ustc_editions.language_1 and books.language
 const SUFFIX = LANG === 'latin' ? '' : `-${LANG}`;
 const EDITIONS = path.join(OUT, `ustc-${LANG}-editions.jsonl`);
+const LANG_CODES = { latin: ['la'], german: ['de'], french: ['fr'], italian: ['it'], dutch: ['nl'], spanish: ['es'], greek: ['el', 'grc'], portuguese: ['pt'] };
+const EPI_MIN = process.env.WG_EPITHETS === "1" ? 10 : Infinity, EPI_SHARE = 0.3, EPI_OWN = 0.5; // epithet = in ≥30% of a ≥10-node author's titles AND ≥50% of the token's corpus occurrences
 const EXTERNAL = argOf('--external') || path.join(OUT, 'external-translation-works-staging.jsonl');
 // sources written by `01 --staging` (#7769); everything else in the file is the pre-existing external side
 const STAGED_SOURCES = new Set(['loc_marc_041', 'openlibrary_translated_from', 'wikidata_p629']);
 const readJsonl = (p) => fs.readFileSync(p, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
 const orth = (s) => (s || '').replace(/[vV]/g, 'u').replace(/[jJ]/g, 'i');
 
-const K = 10;            // leading distinctive tokens compared (title pages run on; the head names the work)
+const K = Number(process.env.WG_K ?? 6);            // leading distinctive tokens compared (title pages run on; the head names the work)
 const CONTAIN = Number(process.env.WG_CONTAIN ?? 0.6); // IDF-weighted containment needed to join a leader (shared / lighter title)
 const STRONG_IDF = 6.0, MID_IDF = 5.0, FLOOR_IDF = 3.0;
 const X_FULL_IDF = 4.0;  // x nodes only: summed idf a fully-contained external title needs (#7769)
@@ -119,8 +128,9 @@ async function main() {
 
   const c = new MongoClient(process.env.MONGODB_URI);
   await c.connect();
+  const langs = [LANG_NAME, ...(LANG_CODES[LANG] || [])];
   const books = await c.db('bookstore').collection('books').find(
-    { $or: [{ language: LANG_NAME }, { languages: LANG_NAME }], pages_count: { $gt: 0 } },
+    { $or: [{ language: { $in: langs } }, { languages: { $in: langs } }], pages_count: { $gt: 0 } },
     { projection: { id: 1, slug: 1, title: 1, author: 1, ustc_id: 1, visible: 1, pages_count: 1, pages_blank: 1, pages_translated: 1 } },
   ).toArray();
   await c.close();
@@ -147,11 +157,33 @@ async function main() {
     if (n.k === 'u') for (const t of toks) df.set(t, (df.get(t) || 0) + 1);
   }
   const idf = (t) => Math.log((U + 1) / ((df.get(t) || 0) + 1));
+  // EPITHETS: a token in most of a prolific author's titles that hardly occurs
+  // elsewhere names the AUTHOR, not a work (Javelli's "Canapicii", "Abelii
+  // Sammarthani Scaevolae filii") — it merged distinct works. Dropped from that
+  // author's comparisons. Authors with < EPI_MIN nodes are untouched, so
+  // single-work authors still merge.
+  const bucket = new Map(); // stem → { n, cnt: Map(token → nodes) }
+  for (const n of nodes) if (n.k !== 'x') for (const s of n.stems) {
+    if (!bucket.has(s)) bucket.set(s, { n: 0, cnt: new Map() });
+    const b = bucket.get(s); b.n++;
+    for (const t of n.toks.slice(0, K)) b.cnt.set(t, (b.cnt.get(t) || 0) + 1);
+  }
+  let epithets = 0;
+  const epi = new Map(); // stem → Set(token)
+  for (const [s, b] of bucket) {
+    if (b.n < EPI_MIN) continue;
+    for (const [t, c] of b.cnt) if (c / b.n >= EPI_SHARE && c / Math.max(1, df.get(t) || 0) >= EPI_OWN) {
+      if (!epi.has(s)) epi.set(s, new Set());
+      epi.get(s).add(t); epithets++;
+    }
+  }
   for (const n of nodes) {
-    n.head = n.toks.slice(0, K).filter((t) => idf(t) >= FLOOR_IDF);
+    const drop = (t) => n.stems.some((s) => epi.get(s)?.has(t));
+    n.head = n.toks.slice(0, K).filter((t) => idf(t) >= FLOOR_IDF && !drop(t));
     n.w = n.head.reduce((s, t) => s + idf(t), 0);
     n.set = new Set(n.head);
   }
+  console.log(`  epithet tokens suppressed: ${epithets}`);
 
   // --- union-find (direct links, anonymous keys, leader membership) ---
   const parent = new Int32Array(nodes.length).map((_, i) => i);
@@ -342,7 +374,7 @@ async function main() {
   const report = {
     generated: new Date().toISOString().slice(0, 10), issue: '#7751',
     params: { K, CONTAIN, STRONG_IDF, MID_IDF, FLOOR_IDF, X_FULL_IDF },
-    nodes: { ustc_editions: eds.length, sl_books: books.length },
+    nodes: { ustc_editions: eds.length, sl_books: books.length, external_works: extWorks.length },
     edges: { direct, leaders, joins, anon_nodes: anon },
     works_with_ustc: ustcWorks.length, old_clusters: new Set(eds.map((e) => e.work_cluster_id)).size,
     sl_only_works: works.length - ustcWorks.length,

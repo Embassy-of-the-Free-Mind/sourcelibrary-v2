@@ -74,7 +74,7 @@ async function embedImage(source) {
     // sends none, and Wikimedia 429s UA-less clients (13 artworks were
     // permanently unembeddable until 2026-06-05 because of this).
     const res = await fetch(source.url, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
       signal: AbortSignal.timeout(60000),
     });
     if (!res.ok) throw new Error(`fetch ${res.status} for ${source.url}`);

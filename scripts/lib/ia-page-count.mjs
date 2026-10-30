@@ -27,7 +27,7 @@
  */
 
 const IIIF_TIMEOUT_MS = 15000;
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /**
  * Count the pages of an Internet Archive item.

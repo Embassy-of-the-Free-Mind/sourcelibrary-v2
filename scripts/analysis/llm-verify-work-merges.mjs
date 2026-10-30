@@ -235,7 +235,7 @@ if (!MEGA) console.log(`Candidate authors with a possible merge: ${candidates.le
 
 const proposals = [];
 let processed = 0, mergeGroups = 0;
-const CONC = 12;
+const CONC = parseInt(process.env.WORK_MERGE_CONC || "12", 10);
 async function runAuthor(c) {
   const authorName = nameMap.get(c.aid) || c.aid;
   const res = await clusterAuthor(authorName, c.items);
@@ -261,10 +261,14 @@ async function runAuthor(c) {
   }
 }
 
-// concurrency pool
-for (let i = 0; i < pool.length; i += CONC) {
-  await Promise.all(pool.slice(i, i + CONC).map(runAuthor));
+// Rolling pool: a worker takes the next author as soon as it is free. Waiting for
+// the slowest of each slice of CONC (the old loop) ran at ~12 authors/min, since one
+// long reply held eleven idle workers (#7761).
+async function rollingPool(items, n, fn) {
+  let next = 0;
+  await Promise.all(Array.from({ length: n }, async () => { while (next < items.length) await fn(items[next++]); }));
 }
+await rollingPool(pool, CONC, runAuthor);
 
 // ── Mega-author hierarchical pass (#4246): chunk → judge → merge reps → repeat ──
 if (MEGA) {
@@ -329,9 +333,7 @@ if (MEGA) {
     mdone++;
     process.stderr.write(`  mega ${mdone}/${megaPool.length} done: ${authorName}\n`);
   }
-  for (let i = 0; i < megaPool.length; i += MCONC) {
-    await Promise.all(megaPool.slice(i, i + MCONC).map(runMega));
-  }
+  await rollingPool(megaPool, MCONC, runMega);
 }
 
 const outDir = new URL('../output/', import.meta.url).pathname;

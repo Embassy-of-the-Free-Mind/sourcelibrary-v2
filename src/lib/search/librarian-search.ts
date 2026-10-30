@@ -13,6 +13,7 @@
  * reranks the top candidates. No-op (skipped silently) when neither is set.
  */
 
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { GLOBAL_SCOPE, tenantSearchScope, type SearchScope } from '@/lib/tenant-search-scope';
@@ -166,6 +167,7 @@ async function keywordSource(query: string, _opts: HybridSearchOptions): Promise
   const rows = await db.collection('pages')
     .aggregate([
       searchStage,
+      { $match: NOT_REPEAT_CAPTURE }, // a repeat capture's leaf is already a hit (#5056)
       { $limit: 48 },
       { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
     ])
@@ -280,6 +282,7 @@ async function nameVariantSource(query: string): Promise<RawHit[]> {
         // "Paracelsus on the plague": a Paracelsi page must also be about the plague, or the
         // lane fills with pages that merely name him.
         buildPageSearchStage(query, undefined, { nameVariants: variants, requireNameVariant: true, requireWords: topicWords }),
+        { $match: NOT_REPEAT_CAPTURE },
         { $limit: 24 },
         { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
       ])
@@ -421,6 +424,7 @@ async function collectionScopedSources(
     db.collection('pages')
       .aggregate([
         buildPageSearchStage(query, bookIds, { nameVariants }),
+        { $match: NOT_REPEAT_CAPTURE },
         { $limit: 24 },
         { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
       ])

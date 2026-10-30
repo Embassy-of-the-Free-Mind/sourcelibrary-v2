@@ -172,7 +172,7 @@ await withMongo(async (db) => {
     try {
       const res = await fetch(url, {
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library; OAI-PMH harvest)',
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) oai-pmh-harvest',
         },
         signal: AbortSignal.timeout(60000),
       });

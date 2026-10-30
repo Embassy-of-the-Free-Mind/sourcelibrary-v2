@@ -50,7 +50,7 @@ const OUT_DIR = argOf('--out') ?? path.join(process.cwd(), 'scripts', 'output', 
 const SNAPSHOT = new Date().toISOString().slice(0, 10);
 
 const ENDPOINT = 'https://query.wikidata.org/sparql';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; reference-set build)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) reference-set-build';
 
 /**
  * Native-script labels are the point of including Wikidata at all: they are the

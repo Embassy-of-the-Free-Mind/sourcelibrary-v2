@@ -34,6 +34,7 @@
  *   node scripts/workers/mineru-ocr-worker.mjs --limit 200          # scale
  *   add --dry-run to OCR + report without writing to Mongo
  */
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { MongoClient } from 'mongodb';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
@@ -226,7 +227,7 @@ async function processBook(db, book) {
   // re-OCRing the same illustration plates forever.
   const pages = await pagesCol.find({
     book_id: id,
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     ocr_mineru_status: { $nin: ['empty', 'low-quality'] },
     'ocr.edited_by': { $exists: false },
     'ocr.source': { $ne: 'manual' },

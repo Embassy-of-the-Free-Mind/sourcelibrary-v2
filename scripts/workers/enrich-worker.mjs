@@ -394,7 +394,7 @@ async function researchBook(title, author) {
     const authorQuery = encodeURIComponent(author);
     const authorRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${authorQuery}`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (authorRes.ok) {
       const data = await authorRes.json();
@@ -410,7 +410,7 @@ async function researchBook(title, author) {
     const titleQuery = encodeURIComponent(title.replace(/[^\w\s]/g, ''));
     const titleRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${titleQuery}`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (titleRes.ok) {
       const data = await titleRes.json();

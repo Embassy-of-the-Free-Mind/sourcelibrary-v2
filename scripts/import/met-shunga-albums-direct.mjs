@@ -31,7 +31,7 @@ import sharp from 'sharp';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const COMMIT = process.argv.includes('--commit');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const ALBUMS = [
   {

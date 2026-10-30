@@ -69,6 +69,22 @@ export type PriorRelationship =
   | 'partial'
   | 'adaptation';
 
+/**
+ * The English a prior is written in, as a modern reader meets it (#7797).
+ *
+ *  middle_english  made before 1500
+ *  early_modern    1500–1899, unmodernised
+ *  modern          made 1900 or later, OR an older translation published with
+ *                  modernised spelling AND wording
+ *
+ * A critical edition or facsimile of an old translation keeps the old register:
+ * Seymour's 1975 Oxford text of Trevisa (c.1398) is middle_english.
+ */
+export type PriorRegister = 'middle_english' | 'early_modern' | 'modern';
+
+/** Before this year a translation is antiquated: it grades first_modern, not not_first. */
+export const MODERN_ENGLISH_FROM = 1900;
+
 // ── C. Orthogonal qualifiers ──────────────────────────────────────────────
 
 /**

@@ -92,7 +92,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
         let master;
         try {
           await sleep(700);
-          const res = await fetch(src, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(60_000) });
+          const res = await fetch(src, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' }, signal: AbortSignal.timeout(60_000) });
           if (!res.ok) { note('refused_source_http', { http: res.status }); if (res.status === 429 || res.status === 403) throw new Error(`Internet Archive answered ${res.status}: stopping`); continue; }
           master = Buffer.from(await res.arrayBuffer());
         } catch (e) { if (/stopping/.test(e.message)) throw e; note('refused_source_fetch', { why: String(e.message).slice(0, 80) }); continue; }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
@@ -2514,9 +2515,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get all pages sorted by page number
+    // Get all pages sorted by page number. A repeat capture (#5056) is the same
+    // leaf as a page already in the export, so it is left out.
     const pages = await db.collection('pages')
-      .find({ book_id: id })
+      .find({ book_id: id, ...NOT_REPEAT_CAPTURE })
       .sort({ page_number: 1 })
       .toArray();
 

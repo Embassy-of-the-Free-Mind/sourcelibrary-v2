@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { unwrapSentinels, TRANSLATION_SENTINEL_INSTRUCTION } from './cli-chatter.mjs';
 import { agyBlocked, agyLimitLane, agyResetFromText, noteLimitHit } from './model-limits.mjs';
 
@@ -176,12 +176,89 @@ export function splitPageBlocks(reply, n) {
   return texts;
 }
 
-// Gemini only. agy can also reach Claude models; Claude runs only through the Claude subscription (`claude -p`,
-// subagents), never through agy (Derek, 2026-10-14, after #6721 dated 6,452 books with claude-sonnet via agy).
-export function assertGeminiModel(args) {
+/**
+ * An agy account's pools, read from `agy -p "/quota" --output-format json` (free: no model turn). Each account has two
+ * groups, Gemini and "Claude and GPT", each with a weekly and a 5-hour bucket. Returns
+ * { gemini: {weekly, h5}, claude: {weekly, h5} } as remaining fractions (0..1), or null when unreadable.
+ * Cached ~10 min per account in AGY_QUOTA_CACHE/<account>.json (the raw reply; agy-guard.sh reads and writes the same
+ * file), so a lane does not ask before every call, and a reset is seen within one cache period.
+ */
+export const AGY_QUOTA_CACHE = process.env.AGY_QUOTA_CACHE || '/root/agy-quota/quota';
+export const AGY_QUOTA_TTL_MS = 10 * 60_000;
+export function parseAgyQuota(raw) {
+  let j;
+  try { j = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return null; }
+  const groups = j?.command?.data?.groups;
+  if (!Array.isArray(groups)) return null;
+  const pick = (re) => {
+    const g = groups.find((x) => re.test(x?.name || ''));
+    const b = (w) => { const f = g?.buckets?.find((x) => x.window === w)?.remaining_fraction; return typeof f === 'number' && f >= 0 && f <= 1 ? f : null; };
+    return { weekly: b('weekly'), h5: b('5h') };
+  };
+  const q = { gemini: pick(/^gemini/i), claude: pick(/claude/i) };
+  return q.gemini.weekly == null ? null : q;
+}
+const quotaMem = new Map();
+export function agyQuota(agyHome = process.env.AGY_HOME || '', { now = Date.now(), dir = AGY_QUOTA_CACHE, ttlMs = AGY_QUOTA_TTL_MS } = {}) {
+  const acct = agyHome ? path.basename(agyHome) : 'main';
+  const file = path.join(dir, `${acct}.json`);
+  const mem = quotaMem.get(acct);
+  if (mem && now - mem.at < ttlMs) return mem.q;
+  try {
+    const st = fs.statSync(file);
+    // A file dated in the future is not fresh: it would hold the gate open past a reset. A minute of clock skew is
+    // allowed (a file's mtime carries sub-millisecond digits that Date.now() drops).
+    const age = now - st.mtimeMs;
+    const q = age >= -60_000 && age < ttlMs ? parseAgyQuota(fs.readFileSync(file, 'utf8')) : null;
+    if (q) { quotaMem.set(acct, { at: st.mtimeMs, q }); return q; }
+  } catch { /* no cache yet */ }
+  // Through agy-guard, on the same account (AGY_HOME), with a model so the guard adds none. /quota spends nothing.
+  const r = spawnSync(CLI, ['-p', '/quota', '--output-format', 'json', '--model', 'gemini-3.8-flash-low'], { encoding: 'utf8', timeout: 90_000, env: { ...process.env, ...(agyHome ? { AGY_HOME: agyHome } : {}) } });
+  const q = r.status === 0 ? parseAgyQuota(r.stdout) : null;
+  if (!q) return null; // unreadable: not cached, so the next call asks again
+  quotaMem.set(acct, { at: now, q });
+  try { fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(`${file}.tmp${process.pid}`, r.stdout); fs.renameSync(`${file}.tmp${process.pid}`, file); } catch { /* memory only */ }
+  return q;
+}
+/** The one model an AGY_HOME account is held to (its allowed-model file, agy-guard.sh), or null. */
+export const agyAllowedModel = (agyHome = process.env.AGY_HOME || '') => { try { return agyHome ? fs.readFileSync(path.join(agyHome, 'allowed-model'), 'utf8').trim() || null : null; } catch { return null; } };
+// The Claude group is left alone below this much of either bucket (#7545): the fallback stops before the pool is dry.
+export const AGY_CLAUDE_FLOOR = 0.10;
+// "Empty" is below this, not exactly 0: a spent pool reads a residue such as 0.00028 (shown as 0% by /quota) and never
+// reaches 0 exactly, so a strict zero test kept the gate shut on 2026-10-30 with the pool spent (#7545).
+export const AGY_GEMINI_EMPTY = 0.005;
+/**
+ * May this account run Claude through agy right now? Only when its Gemini WEEKLY bucket is empty (under AGY_GEMINI_EMPTY) and both of its Claude
+ * buckets are at or above AGY_CLAUDE_FLOOR (#7545; Derek 2026-10-27/28). Fails CLOSED: an unreadable quota is "no".
+ * Returns { ok, reason, quota }.
+ */
+export function agyClaudeGate(agyHome = process.env.AGY_HOME || '', { quota, held = agyAllowedModel(agyHome) } = {}) {
+  const acct = agyHome ? path.basename(agyHome) : 'main';
+  // An account held to one model (AGY_HOME/allowed-model, agy-guard.sh) runs that model only, Claude included.
+  if (held && !/^claude-/.test(held)) return { ok: false, reason: `${acct} is held to ${held} (allowed-model)`, quota: null };
+  if (quota === undefined) quota = agyQuota(agyHome);
+  if (!quota) return { ok: false, reason: `quota for ${acct} unreadable`, quota };
+  if (quota.gemini.weekly >= AGY_GEMINI_EMPTY) return { ok: false, reason: `${acct} Gemini weekly ${(quota.gemini.weekly * 100).toFixed(1)}% left`, quota };
+  const low = ['weekly', 'h5'].find((k) => !(quota.claude[k] >= AGY_CLAUDE_FLOOR));
+  if (low) return { ok: false, reason: `${acct} Claude ${low} ${quota.claude[low] == null ? 'unreadable' : `${(quota.claude[low] * 100).toFixed(1)}% left`} (< ${AGY_CLAUDE_FLOOR * 100}%)`, quota };
+  return { ok: true, reason: `${acct} Gemini weekly empty; Claude weekly ${(quota.claude.weekly * 100).toFixed(0)}%, 5h ${(quota.claude.h5 * 100).toFixed(0)}%`, quota };
+}
+export const agyGeminiExhausted = (agyHome = process.env.AGY_HOME || '', opts = {}) => agyClaudeGate(agyHome, opts).ok;
+
+// Gemini, and Claude only once the account's Gemini pool is empty. agy can also reach Claude models. Claude runs
+// through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly
+// pool reads 0 (Derek, 2026-10-14 after #6721 dated 6,452 books with claude-sonnet via agy; amended 2026-10-27, #7545).
+// agyClaudeGate is re-read every cache period, so a reset switches the account back to Gemini.
+export function assertGeminiModel(args, { agyHome = process.env.AGY_HOME || '', gate = agyClaudeGate } = {}) {
   const i = args.indexOf('--model');
   const model = i >= 0 ? String(args[i + 1] || '') : '';
-  if (!/^gemini-/.test(model)) throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
+  if (/^gemini-/.test(model)) return;
+  if (/^claude-/.test(model)) {
+    const g = gate(agyHome);
+    if (g.ok) return;
+    throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only until the account's Gemini pool is empty (${g.reason}); use claude -p for Claude (#7545)`);
+  }
+  throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
 }
 
 /**

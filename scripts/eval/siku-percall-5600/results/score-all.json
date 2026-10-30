@@ -1,0 +1,406 @@
+{
+ "generated_at": "2026-10-29T22:56:32.568Z",
+ "judge": "claude-opus-5-5 (claude -p, --restricted, Read only), route-judge-6740 judgePrompt + the Siku lane spot-check rubric + margin/bleed flags, one output per call against the page image, blind; a verdict counts only if its transcript shows page.jpg opened",
+ "draw": {
+  "seed": 5600,
+  "frame_books": 8780,
+  "books": 30
+ },
+ "calls": 232,
+ "judge_list_usd_equiv": 15.08,
+ "unread_image_rows": 0,
+ "arms": {
+  "A": {
+   "n": 120,
+   "books": 30,
+   "no_read": [
+    {
+     "book": "6a3c6730af3c49b59c5d10f9",
+     "page": "6a3c6730af3c49b59c5d110b",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa420",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa421",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa422",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    }
+   ],
+   "unjudged": 0,
+   "accept": "79/120",
+   "accept_rate": 0.658,
+   "accept_ci": {
+    "ci95": [
+     0.55,
+     0.767
+    ],
+    "unit": "book",
+    "units": 30
+   },
+   "wrong_text_pages": "21/120",
+   "fidelity_mean": 3.87,
+   "wrong_leaf": 0,
+   "invented": 3,
+   "sense_error_pages": 40,
+   "sense_errors_total": 59,
+   "margin_furniture_in_english": 12,
+   "next_leaf_bleed": 1,
+   "prev_leaf_bleed": 0,
+   "verdicts": {
+    "fine": 23,
+    "minor": 60,
+    "sense-error": 28,
+    "omission": 3,
+    "invented": 2,
+    "wrong-leaf": 0
+   },
+   "lane_bar": {
+    "n": 116,
+    "wrong_leaf": 0,
+    "invented": 3,
+    "sense": 40,
+    "pass": false
+   },
+   "flagged_pages": [
+    {
+     "book": "6a3ce74c0a0011cb4bc09155",
+     "page": "6a3ce74c0a0011cb4bc0918e",
+     "margin": "# Supplementary Commentary on the Book of Documents",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image. 蔡仲默過于不信書序所以不用其說 means 'Cai went too far in distrusting the Preface, so he did not use its account'; the candidate turns it into 'I do not adopt his explanation'."
+    },
+    {
+     "book": "6a3cbf5af9474f825c16774d",
+     "page": "6a3cbf5af9474f825c1677a5",
+     "margin": "<term>Metal</term>",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription line for line; the running head 欽定四庫全書 became 金×4, rendered as 'Metal'; 二千石丞 is attached to Li instead of the next official."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e51",
+     "margin": null,
+     "bleed": null,
+     "invented": "whenever the order of a sacrifice is settled, it says: \"The matter is complete.\"",
+     "wrong_leaf": false,
+     "note": "The image ends at 凡祭, and the next page continues with 祀惟特牲少牢有此而巳. The transcription's final line 次定曰事全焉 is fabricated, and the translation's last sentence comes from it."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e53",
+     "margin": "The ancient and modern regulations...",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image. 古今攷 sits in the fold beside folio 二十七 and is the book title, but the translation renders it as a body sentence. 可取…一質而畧抄 describes what Li Xinchuan did and is mistranslated as a recommendation."
+    },
+    {
+     "book": "6a3c68adaf3c49b59c5db55c",
+     "page": "6a3c68adaf3c49b59c5db608",
+     "margin": "Medical Cases of Master Xue",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription line for line. Doses (2 liang liver, 1 he millet, 3 qian; 1 liang cangzhu, 1 qian; equal parts) are correct. The page ends at 及, and the translation stops there too."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70e8",
+     "margin": "Scroll Sixteen",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription from 與榛莽 to 杜鵑花落杜鵑啼 香山. The line 自以工人之 is not on the leaf; it is OCR garble of the 欽定四庫全書 head."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70ea",
+     "margin": "Refined and Polished Gold and Jade",
+     "bleed": null,
+     "invented": "Refined and Polished Gold and Jade",
+     "wrong_leaf": false,
+     "note": "The image shows 欽定四庫全書 / 卷十六 in the top margin, but the transcription reads 金玉加工 and the candidate translates that as a title; the couplets by Wang Meixi, Mei Shengyu and Zhang Yu, and the two section headings, all match the page."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70eb",
+     "margin": "Quanfang Beizu: First Collection",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image line for line (including the 香山 attributions and the 七言古詩 heading). The translation covers every clause, but the fold title 全芳備祖前集 appears as untagged English and the header adds 'Wenyuange'."
+    },
+    {
+     "book": "6a3c75b839b4508b04e5cf6f",
+     "page": "6a3c75b839b4508b04e5cffb",
+     "margin": "Metal craftsman, clever-tongued artisan.",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription from 言之所為也 to 不我. The top-left head reads 欽定四庫全書, not 金巧口匠人. The final 'refuse to tell us' only finishes the broken phrase 不我[告] at the page edge, so it is not bleed."
+    },
+    {
+     "book": "6a3cb7313dce6cfad7486c67",
+     "page": "6a3cb7313dce6cfad7486c8b",
+     "margin": "# Comprehensive Examination of the Book of Documents ... Great",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription except two misreads: the small note under 朔 reads 蘇也 (OCR gave 黐), and the translator correctly rendered it as su 'revival'. The fold shows 尚書通考 and folio 十八, which became the English heading and 'Great'."
+    },
+    {
+     "book": "6a3c9757579757916cdc3dbb",
+     "page": "6a3c9757579757916cdc3e14",
+     "margin": "Master Wengong's Explanations of the Changes",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "Transcription matches the image line for line; translation covers every clause through 仁是惻隱慈愛之處 and doesn't pull in the next page's 義是裁制."
+    },
+    {
+     "book": "6a3c746b01fe4f593c1f0eb4",
+     "page": "6a3c746b01fe4f593c1f0f8a",
+     "margin": "Mao's Commentary on the Spring and Autumn Annals",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "Image matches the transcription through 又請京 亦大; 欠句事今 is OCR noise from the spine; the translation covers every clause and gloss with no sense change."
+    },
+    {
+     "book": "6a3c746b01fe4f593c1f0eb4",
+     "page": "6a3c746b01fe4f593c1f0f8b",
+     "margin": null,
+     "bleed": null,
+     "invented": "until we reach the Yellow Springs <note>the underworld</note>!",
+     "wrong_leaf": false,
+     "note": "The image matches the transcription; the page reads 時公置姜氏城潁誓不相見, with no 不及黃泉; everything else, including the leading 邑 and the trailing 其或責公, is rendered correctly."
+    },
+    {
+     "book": "6a3c6bb539b4508b04e456dc",
+     "page": "6a3c6bb539b4508b04e45721",
+     "margin": "Treatise on Astrology of the Kaiyuan Era\nPage 6",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image ends at 不利治兵將有 and the next page continues 大喪, so the candidate's 'general will encounter defeat' is made up; the image shows 翼軫 where the transcription has 冀軫."
+    },
+    {
+     "book": "6a3cbe4aec254ff6cadfeea4",
+     "page": "6a3cbe4aec254ff6cadfeeda",
+     "margin": null,
+     "bleed": "and follow it",
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image line for line. The last column reads 汝中曰多聞擇善而, so Ruzhong is the speaker. The candidate turns 汝中 into someone being addressed and adds 'Confucius said', and it borrows 從之 from the next leaf."
+    }
+   ]
+  },
+  "C": {
+   "n": 120,
+   "books": 30,
+   "no_read": [
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa420",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa421",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3c68adaf3c49b59c5db55c",
+     "page": "6a3c68adaf3c49b59c5db607",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3c68adaf3c49b59c5db55c",
+     "page": "6a3c68adaf3c49b59c5db608",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    }
+   ],
+   "unjudged": 0,
+   "accept": "78/120",
+   "accept_rate": 0.65,
+   "accept_ci": {
+    "ci95": [
+     0.575,
+     0.725
+    ],
+    "unit": "book",
+    "units": 30
+   },
+   "wrong_text_pages": "21/120",
+   "fidelity_mean": 3.95,
+   "wrong_leaf": 0,
+   "invented": 4,
+   "sense_error_pages": 40,
+   "sense_errors_total": 62,
+   "margin_furniture_in_english": 7,
+   "next_leaf_bleed": 1,
+   "prev_leaf_bleed": 0,
+   "verdicts": {
+    "fine": 27,
+    "minor": 49,
+    "sense-error": 34,
+    "omission": 3,
+    "invented": 3,
+    "wrong-leaf": 0
+   },
+   "lane_bar": {
+    "n": 116,
+    "wrong_leaf": 0,
+    "invented": 4,
+    "sense": 40,
+    "pass": false
+   },
+   "flagged_pages": [
+    {
+     "book": "6a3cbb393dce6cfad74a1ac4",
+     "page": "6a3cbb393dce6cfad74a1ad2",
+     "margin": "# Chapter 183",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription column by column (象者七十餘家…故參差可得而見). The translation covers every clause. The ending stops at 見 without borrowing the next leaf's 若變法以從."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e51",
+     "margin": null,
+     "bleed": null,
+     "invented": "In the seventeen chapters of the Yili, whenever the order of sacrifice is settled, it is said: \"The service is complete.\"",
+     "wrong_leaf": false,
+     "note": "The image's last column ends 儀禮十七篇凡祭, and there is no ninth line 次定曰事全焉, so that line was added by the transcription and then translated. Separately, 三獻謂社稷五祀 is mistranslated."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e53",
+     "margin": "From ancient times to the present, in bringing about",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "In the image, the small 古今攷 sits in the centre fold beside 欽定四庫全書, so it is the title, not body text. The body text matches the transcription. 回 is Fang Hui (方回), who wrote the continuation of the 古今考."
+    },
+    {
+     "book": "6a3c68adaf3c49b59c5db55c",
+     "page": "6a3c68adaf3c49b59c5db609",
+     "margin": "# Chapter 57",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "Every column in the image matches the candidate: herbs, the 1 qian each, the 1½ bowls → 7/10 → ½ bowl decoction, 5–7 washes a day, and doses 7/10/2/2/7 fen; the only furniture rendered as text is the 卷五十七 fold mark."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70e8",
+     "margin": "# Volume 16",
+     "bleed": null,
+     "invented": "...considered it to be work of human craftsmanship.",
+     "wrong_leaf": false,
+     "note": "The image's first column begins 與榛莽相似而鶴林之花 under the 欽定四庫全書 head, and 自以工人之 appears nowhere on it. The previous page ends 殆, which continues straight into 與榛莽."
+    },
+    {
+     "book": "6a3c75b839b4508b04e5cf6f",
+     "page": "6a3c75b839b4508b04e5cffb",
+     "margin": "The goldsmith and the clever carpenter.",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "In the image the top-right running head is 欽定四庫全書, the transcription has 金巧口匠人, and the candidate turns it into an English sentence. The body text matches the image through 不我 at the end of the page, with no bleed from the neighbouring pages."
+    },
+    {
+     "book": "6a3c75b839b4508b04e5cf6f",
+     "page": "6a3c75b839b4508b04e5cffd",
+     "margin": "# Scroll 24",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription. The translation is complete up to 五十七篇, but it turns 魯淹中 into the Confucius-house-wall story, and the juan label appears as an English heading."
+    },
+    {
+     "book": "6a3cbfd4f9474f825c16b81f",
+     "page": "6a3cbfd4f9474f825c16b89e",
+     "margin": null,
+     "bleed": null,
+     "invented": "became disordered.",
+     "wrong_leaf": false,
+     "note": "The image matches the transcription. The first column reads 人甫與李白齊名, which continues the previous page's 天寳末詩 as 詩人. The words 'became disordered' have no source on either page, and the rest of the page is translated accurately."
+    },
+    {
+     "book": "6a3cb7313dce6cfad7486c67",
+     "page": "6a3cb7313dce6cfad7486c8b",
+     "margin": "Great",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "Image shows 朔 with the small note 蘓也 (= 蘇也, 'Shuo means to revive'), which matches 晦而復蘓 below; the fold shows folio 十八, mistranscribed as 大 and translated as 'Great'."
+    },
+    {
+     "book": "6a3cee9c4701a906f10eae4e",
+     "page": "6a3cee9c4701a906f10eaf42",
+     "margin": null,
+     "bleed": "to thicken his wild goosefoot and bean-leaf greens",
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription column by column. 五十萬/二十萬 are rendered correctly as 500,000/200,000. The page ends at 日食百粒 and the next page begins 以糝藜藿; the translation adds that clause, though the same words are in this page's heading."
+    },
+    {
+     "book": "6a3c5f71879008ba7e1558b7",
+     "page": "6a3c5f71879008ba7e1558bc",
+     "margin": null,
+     "bleed": null,
+     "invented": "The Daliang Great Bridge celestial division centers on the seven asterisms, among which the determinant star is Mao",
+     "wrong_leaf": false,
+     "note": "The image clearly reads 星虛正七宿之中 [星虛] and 星昴正七宿之中 [星昴] ('the star Xu/Mao is at the centre of the seven lodges'); the transcription is right here, so the Xuxu/Daliang names come from the translation."
+    }
+   ]
+  }
+ },
+ "controls": {},
+ "paired": {
+  "C-A": {
+   "n": 120,
+   "accept_diff": -0.008,
+   "ci95": [
+    -0.1,
+    0.083
+   ],
+   "lost": 20,
+   "gained": 19,
+   "margin_flag_diff": {
+    "diff": -0.042,
+    "ci95": [
+     -0.092,
+     0.008
+    ],
+    "worse": 8,
+    "better": 3
+   },
+   "next_leaf_bleed_diff": {
+    "diff": 0,
+    "ci95": [
+     -0.025,
+     0.025
+    ],
+    "worse": 1,
+    "better": 1
+   }
+  }
+ },
+ "pages": 120
+}

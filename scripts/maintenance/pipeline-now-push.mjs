@@ -251,7 +251,22 @@ async function agyPools() {
     busy: Boolean(p.busy),
     weekly: p.reading?.weekly ?? null, weekly_reset: p.reading?.weeklyReset ?? null,
     five_hour: p.reading?.fiveHour ?? null, five_hour_reset: p.reading?.fiveHourReset ?? null,
+    claude: p.reading?.claude ?? null,
   }));
+}
+
+/**
+ * The pools, also left on the box for the laptop's menu bar (~/tools/claude-limits reads it over ssh): one file, no
+ * second /quota call. Atomic, so a reader never sees half a file.
+ */
+export const POOLS_FILE = '/root/agy-quota/pools.json';
+function writePoolsFile(doc, file = POOLS_FILE) {
+  if (!doc.agy_pools) return;
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(`${file}.tmp`, JSON.stringify({ box: doc.box, generated_at: doc.generated_at, pools: doc.agy_pools }, null, 1));
+    fs.renameSync(`${file}.tmp`, file);
+  } catch { /* the admin page still has the reading */ }
 }
 
 export async function collectBox({ box, now = new Date() }) {
@@ -329,6 +344,7 @@ async function main() {
   try {
     const doc = corpus ? await collectCorpus(db) : await collectBox({ box });
     if (dry) { console.log(JSON.stringify(doc, null, 2)); return; }
+    if (!corpus) writePoolsFile(doc);
     await db.collection(COLLECTION).replaceOne({ _id: doc._id }, doc, { upsert: true });
     const n = corpus ? `${doc.translated_per_day?.length ?? 0} translation rows, ${doc.ocr_per_day?.length ?? 0} ocr rows` : `${doc.lines.length} lines, ${doc.agy_pools?.length ?? 0} pools`;
     console.log(`${new Date().toISOString()} wrote ${doc._id}: ${n}${doc.errors?.length ? ` · errors: ${doc.errors.join('; ')}` : ''}`);

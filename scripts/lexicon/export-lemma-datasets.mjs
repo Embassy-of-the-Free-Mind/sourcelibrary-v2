@@ -190,7 +190,7 @@ async function publishDeposit() {
   // The stored token can carry a literal trailing "\n" from env-file quoting.
   const token = (process.env.ZENODO_ACCESS_TOKEN || '').replace(/\\n/g, '').trim();
   // Zenodo 403s Node's default User-Agent as "unusual traffic" (tests/unit/zenodo-user-agent.test.ts).
-  const H = { Authorization: `Bearer ${token}`, 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)' };
+  const H = { Authorization: `Bearer ${token}`, 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' };
   const dep = await fetch(`${ZENODO_API}/deposit/depositions`, {
     method: 'POST',
     headers: { ...H, 'Content-Type': 'application/json' },
