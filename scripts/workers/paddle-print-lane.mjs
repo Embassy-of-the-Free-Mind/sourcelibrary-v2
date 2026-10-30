@@ -38,7 +38,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { recountBook } from '../lib/page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
@@ -146,7 +146,7 @@ async function census() {
     for (let i = 0; i < cand.length; i += 100) {
       const chunk = cand.slice(i, i + 100);
       const rows = await P.aggregate([
-        { $match: { book_id: { $in: chunk.map((b) => b.id) }, page_number: { $gt: 0 } } },
+        { $match: { book_id: { $in: chunk.map((b) => b.id) }, ...VISIBLE_PAGE_MATCH } },
         { $project: {
           _id: 0, book_id: 1, w: '$image_width', h: '$image_height',
           src: '$ocr.source', model: '$ocr.model', pipeline: '$ocr.pipeline', edited_by: '$ocr.edited_by', edited_at: '$ocr.edited_at',
@@ -229,7 +229,7 @@ async function plan() {
       // canary by eye 2026-10-23: on kanji-katakana print Paddle reads katakana as look-alike kanji (ヲ→之, ス→入)
       // and invented a garbled near-repeat line; #7184 measured Chinese only. Japanese stays out of this lane.
       if (laneLanguage(book.language) === 'Japanese') { tally.skipped_books.push({ bid, why: 'japanese' }); continue; }
-      const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 } }, { projection: {
+      const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH }, { projection: {
         id: 1, page_number: 1, image_width: 1, image_height: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1,
         photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
       } }).sort({ page_number: 1 }).toArray();

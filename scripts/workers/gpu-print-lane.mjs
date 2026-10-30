@@ -31,7 +31,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { recountBook } from '../lib/page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
@@ -85,7 +85,7 @@ async function frame() {
     for (const b of books) {
       if (!isEnglishBook(b.language) || isUnsplitSpread(b)) continue;
       if (isHeld(b) ? !LANE_HOLDS.has(b.pipeline_auto.hold.reason) : !flag('--free')) continue;
-      const owed = await db.collection('pages').countDocuments({ book_id: b.id, page_number: { $gt: 0 }, ...NO_TEXT, 'ocr.edited_by': { $exists: false } });
+      const owed = await db.collection('pages').countDocuments({ book_id: b.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT, 'ocr.edited_by': { $exists: false } });
       if (!owed || (maxPages && owed > maxPages)) continue;
       rows.push({ bid: b.id, title: b.title, year: b.year, pages_count: b.pages_count, owed, hold: b.pipeline_auto?.hold?.reason ?? null });
     }
@@ -114,7 +114,7 @@ async function plan() {
       if (!isEnglishBook(book.language) || !(book.year >= 1800)) { tally.skipped_books.push({ bid, why: 'not English 1800+' }); continue; }
       if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && !LANE_HOLDS.has(book.pipeline_auto.hold.reason)) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
-      const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 }, ...NO_TEXT }, { projection: {
+      const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT }, { projection: {
         id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1,
       } }).sort({ page_number: 1 }).toArray();
       const rows = [];
