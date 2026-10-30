@@ -209,7 +209,8 @@ if (args.store) {
   const rows = [];
   for (const [judge, VV] of [[PRIMARY, V], [SECOND, V2]]) {
     if (!judge || !VV) continue;
-    const scorer = `translation-corpus-audit-judge@1`;
+    // --scorer: wave 2 (#5274) judged WITH the page image (IMAGE-ADDENDUM.md) is a different instrument: translation-corpus-audit-judge@2.
+    const scorer = args.scorer || `translation-corpus-audit-judge@1`;
     for (const m of manifest) {
       const v = VV[m.id]; if (!v) continue;
       rows.push({ slug: `tca-${m.language.toLowerCase()}-${m.book_id.slice(-6)}-p${m.page_number}`, item_id: m.id, kind: m.kind, book_id: m.book_id, page_number: m.page_number,
@@ -217,10 +218,10 @@ if (args.store) {
         measure: 'judged', against: { judge: `claude-${judge}`, judge_packet_id: `${runId}/${judge}`, source_hash: m.ocr_hash, translation_hash: m.translation_hash },
         metric: { fidelity: v.fidelity, ...v.flags, n_defects_major: v.defects.filter((d) => d.severity === 'major').length, n_defects_minor: v.defects.filter((d) => d.severity === 'minor').length },
         control_expected: m.expected || null, repeat_of: m.repeat_of || null,
-        scorer, scorer_version: 1, rubric: 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: Number(args.issue || 5274) });
+        scorer, scorer_version: Number(String(scorer).split('@')[1] || 1), rubric: args.scorer ? 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md + IMAGE-ADDENDUM.md' : 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: Number(args.issue || 5274) });
     }
   }
-  const sdir = path.join('scripts/eval/store/scores', 'translation-corpus-audit-judge@1');
+  const sdir = path.join('scripts/eval/store/scores', args.scorer || 'translation-corpus-audit-judge@1');
   fs.mkdirSync(sdir, { recursive: true });
   // A month file can hold more than one run (the 2026-09-30 one-off and the first monthly run share September):
   // replace this run's rows, keep every other run's.
