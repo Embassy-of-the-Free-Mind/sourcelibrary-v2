@@ -29,6 +29,7 @@ ap.add_argument("--shard", type=int, default=10000); ap.add_argument("--workers"
 ap.add_argument("--procs", type=int, default=12); ap.add_argument("--inflight", type=int, default=3, help="batches in flight per process")
 ap.add_argument("--batch", type=int, default=64); ap.add_argument("--deadline", type=float, default=0)
 ap.add_argument("--mem-fraction", type=float, default=0.6)
+ap.add_argument("--yield-dir", default="", help="a queue pending/ dir: stop between shards when a task not named zz-* waits there")
 ap.add_argument("--cpu", action="store_true", help="smoke test only: fp32 on CPU, no card (use with --limit)")
 ap.add_argument("--limit", type=int, default=0)
 a = ap.parse_args()
@@ -73,6 +74,11 @@ for k in range(nshards):
     if os.path.exists(os.path.join(a.out, tag + ".json")): continue
     if a.deadline and time.time() > a.deadline:
         print(f"deadline reached before {tag}; resume re-runs from here", flush=True); stopped = True; break
+    # Backfill yields (Derek 2026-10-29: OCR and evals go first; the card is never idle): a hand-queued or OCR task
+    # waiting in the queue stops the chunk at this shard boundary. YIELDED tells siglip2-requeue.sh not to count the try.
+    waiting = sorted(f for f in (os.listdir(a.yield_dir) if a.yield_dir and os.path.isdir(a.yield_dir) else []) if f.endswith(".sh") and not f.startswith("zz-"))
+    if waiting:
+        print(f"YIELDED before {tag}: {waiting[0]} is waiting in the queue; resume re-runs from here", flush=True); stopped = True; break
     part = rows[k * a.shard:(k + 1) * a.shard]
     t0 = time.time(); gpu_s = 0.0; vecs, ok_rows, bad, stats = [], [], [], []
 

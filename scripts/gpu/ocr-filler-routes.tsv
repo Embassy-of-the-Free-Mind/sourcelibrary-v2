@@ -7,15 +7,24 @@
 #   kind paddle-zh: the Siku Quanshu Paddle lane (#5600). Task = scripts/gpu/paddle-zh-queue-task.sh (read, then
 #   `paddle-zh-lane.mjs apply --apply`: revisions, human-edit guard, loop guards, Kanripo WYG screen, hold kept).
 #   Pages left = planned pages with no out/<bid>/<pn>.txt|.err.
+#   kind gpu-print: the 1800+ English print lane (#6871, LightOnOCR-3-1B). Task = plan the next frame books when the
+#   manifest runs low, scripts/gpu/gpu-print-gpu.sh (read), then `gpu-print-lane.mjs apply --apply` (pages with no
+#   text only; loop, blank, other-script and commentary guards; revisions; the scans-only hold kept).
+#   Pages left = manifest pages with no out/<bid>/<pn>.json|.err + the owed pages of frame books not yet planned.
+#   kind euro-draft: the #7567 arm-c lane (la PERO-OCR, it LightOnOCR-3-1B). Task = scripts/gpu/euro-draft-task.sh (fetch,
+#   draft, one draft file a page; no Mongo, no agy). Pages left = `cli-ocr-lane.mjs armc-left`: planned pages with no
+#   drafts/<bid>/<pid>.json. The plan is topped up by the lane's correction cron (armc-plan, ~2 days of corrections ahead).
 #
 # Routes considered and NOT listed (2026-10-28, job gpu-ocr-filler-6871):
 #   chinese-print (Paddle split-leaf, #6101)   frame read and applied (73,330 pp); census 2026-10-26 found 0 books left.
 #                                              Next frame = the Berlin import (422 bk, no page records, license unknown).
 #   tibetan (Yigdzin, #4523)                   sets A/B00/B01 (50,794 pp) read by job tib-gemini-ocr-6871, done 10-28 06:47Z;
 #                                              the apply (#4523 write rule) is pending on main, not GPU work.
-#   european print arm c (#7567)               adopted 10-28, but E3 (guards) + E5 run now (job euro-gpu-e3e5-7567) and no
-#                                              production draft→agy runner exists yet. Add it here when one does.
 #   gpu-backlog-5660 Siku residue              22K pp scattered ~6 per book, no stored read: the textless pages the lane
 #                                              does not store. Re-reading them would mostly re-find blanks.
 #   Siku duplicates (no hold, 1,044 bk)        skipped on purpose by job paddle-skqs-rest-6388 (a read copy is live).
 on	zh-histories-7546	paddle-zh	7546	/root/jobs/zh-histories-7546	zh-histories-7546	3	paddle-zh-lane.mjs apply --apply (revisions, guards, WYG screen); books stay held zh-histories-7546 until translation is released (#7546 priority juan first)
+#   la-first-read-armc-7701 (#7701 cheap routes): kind euro-draft over the first-read frame (cli-ocr-lane.mjs armc --frame=first-read). Before gpu-print-en on purpose: the filler takes the FIRST route with pages left, and this one has pages only while the armc plan is ahead of its drafts.
+on	la-first-read-armc-7701	euro-draft	7701	/root/jobs/armc-first-read-7701	scans-only (FIRST_READ_HOLDS)	2	cli-ocr-lane.mjs armc --frame=first-read --apply (gex45 cron :35): Latin pages with no OCR in visible scans-only books, the PERO draft corrected by agy Flash-low with the image, #7695 put-back against the draft, first reads only, printed only, stamped pero-agy-first-read-7701; books keep their hold. Router 2026-10-29-cheap-routes-7701 (#7701). Listed before gpu-print-en: its pages left are the armc plan (~2 days of corrections ahead), so Latin drafts run between English chunks
+on	gpu-print-en	gpu-print	6871	/root/jobs/gpu-print-6871	scans-only-publish-7270	5	gpu-print-lane.mjs apply --apply (pages with no text only, guards, revisions); books keep their scans-only hold. On 2026-10-29 after review of the v2 pilot (780 pp, 10/10 by eye usable) in the #6871 record
+-	euro-armc-7567	euro-draft	7567	/root/jobs/euro-armc-7567	-	4	cli-ocr-lane.mjs armc --apply (gex45 cron): agy Flash-low correction with the image, E3 diff guard put-back, revisions, --mark-stale; off until the production pilot passes (#7567)

@@ -1,0 +1,207 @@
+{
+ "source": "lane-judge-sampler (#7611)",
+ "generated_at": "2026-10-29T22:27:34.233Z",
+ "of": "scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json",
+ "cells": {
+  "french-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 15,
+     "books": 15,
+     "accept": "14/15",
+     "wrong_text_pages": "0/15",
+     "classes_k_of_n": {
+      "O16": "4/15",
+      "O11": "3/15",
+      "E2": "3/15",
+      "O6": "2/15",
+      "T6": "1/15",
+      "O14": "1/15",
+      "O8": "1/15"
+     },
+     "script_basis": {
+      "page": 15
+     }
+    }
+   }
+  },
+  "french-lite|manuscript": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "books": 2,
+     "accept": "2/2",
+     "wrong_text_pages": "0/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "E2": "2/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 20,
+     "books": 20,
+     "accept": "16/20",
+     "wrong_text_pages": "1/20",
+     "classes_k_of_n": {
+      "O8": "11/20",
+      "O6": "7/20",
+      "E2": "5/20",
+      "O13": "2/20",
+      "O11": "2/20",
+      "O16": "2/20",
+      "O14": "1/20",
+      "O7": "1/20",
+      "I3": "1/20",
+      "O5": "1/20",
+      "O12": "1/20",
+      "D1": "1/20"
+     },
+     "script_basis": {
+      "page": 20
+     }
+    }
+   }
+  },
+  "italian-lite|print": {
+   "routes": {
+    "lighton>agy-flash-low": {
+     "n": 36,
+     "books": 9,
+     "accept": "31/36",
+     "wrong_text_pages": "3/36",
+     "classes_k_of_n": {
+      "O8": "17/36",
+      "E2": "9/36",
+      "O11": "8/36",
+      "O16": "7/36",
+      "O6": "6/36",
+      "D1": "6/36",
+      "O7": "3/36",
+      "O12": "3/36",
+      "O5": "2/36",
+      "T6": "2/36",
+      "O1": "1/36",
+      "O14": "1/36",
+      "I4": "1/36"
+     },
+     "script_basis": {
+      "page": 36
+     }
+    }
+   }
+  },
+  "latin-gpu-7263|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 63,
+     "books": 20,
+     "accept": "54/63",
+     "wrong_text_pages": "7/63",
+     "classes_k_of_n": {
+      "O8": "19/63",
+      "E2": "17/63",
+      "O6": "15/63",
+      "O16": "13/63",
+      "O7": "4/63",
+      "O11": "4/63",
+      "D1": "4/63",
+      "T6": "4/63",
+      "O14": "3/63",
+      "O12": "3/63",
+      "O5": "3/63",
+      "O17": "2/63",
+      "O13": "2/63",
+      "O1": "1/63"
+     },
+     "script_basis": {
+      "page": 63
+     }
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 40,
+     "books": 10,
+     "accept": "32/40",
+     "wrong_text_pages": "6/40",
+     "classes_k_of_n": {
+      "E2": "13/40",
+      "O8": "10/40",
+      "O6": "10/40",
+      "O12": "9/40",
+      "O11": "7/40",
+      "D1": "6/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O10": "2/40",
+      "T6": "2/40",
+      "O16": "1/40",
+      "O13": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|print": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 8,
+     "books": 8,
+     "accept": "7/8",
+     "wrong_text_pages": "0/8",
+     "classes_k_of_n": {
+      "O6": "5/8",
+      "T10": "4/8",
+      "E2": "3/8",
+      "O16": "1/8",
+      "D1": "1/8"
+     },
+     "script_basis": {
+      "page": 8
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|manuscript": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 22,
+     "books": 22,
+     "accept": "13/22",
+     "wrong_text_pages": "6/22",
+     "classes_k_of_n": {
+      "T10": "12/22",
+      "O6": "12/22",
+      "E2": "10/22",
+      "T9": "3/22",
+      "T5": "2/22",
+      "T8": "2/22",
+      "O7": "2/22",
+      "T3": "1/22",
+      "D1": "1/22",
+      "O11": "1/22",
+      "O5": "1/22",
+      "O17": "1/22",
+      "O4": "1/22",
+      "T7": "1/22",
+      "O12": "1/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    }
+   }
+  }
+ }
+}

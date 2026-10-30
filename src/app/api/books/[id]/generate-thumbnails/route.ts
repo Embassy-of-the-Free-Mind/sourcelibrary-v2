@@ -106,10 +106,11 @@ export const POST = withAuth(async (request, session, context) => {
             // Fetch the source image
             let buffer: Buffer;
             if (imageUrl.startsWith('/')) {
-              // Local path (cropped_photo) — read from filesystem
-              const fs = await import('fs/promises');
-              const path = await import('path');
-              buffer = await fs.readFile(path.join(process.cwd(), 'public', imageUrl));
+              // Local path (cropped_photo): fetch the static file from this site. A
+              // cwd-relative fs read made the tracer pack all of public/ into this
+              // function, which reached the 220 MB CI limit (#7318).
+              const result = await images.fetchBufferWithMimeType(new URL(imageUrl, request.nextUrl.origin).href);
+              buffer = result.buffer;
             } else {
               const result = await images.fetchBufferWithMimeType(imageUrl);
               buffer = result.buffer;

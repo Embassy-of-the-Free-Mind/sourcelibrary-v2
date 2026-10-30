@@ -10,7 +10,8 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { parseQuota, poolGate, choosePool, rankBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE } from '../../scripts/batch/siku-translate-lane.mjs';
+import { claudeQuota } from '../../scripts/lib/agy-pools.mjs';
+import { parseQuota, poolGate, choosePool, rankBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
 
 const fx = (f: string) => fs.readFileSync(path.join(__dirname, '../fixtures/siku-lane', f), 'utf8');
 const NOW = Date.parse('2026-10-27T15:00:00Z');
@@ -24,6 +25,13 @@ describe('siku lane: pool gate', () => {
     const spent = parseQuota(fx('quota-spent.json'));
     expect(spent.weekly).toBe(0);
     expect(spent.fiveHour).toBeNull();
+  });
+  it('reads the Claude and GPT group as its own pool, for display', () => {
+    const c = parseQuota(fx('quota-default.json')).claude;
+    expect(c.weekly).toBeGreaterThanOrEqual(0);
+    expect(c.weekly).toBeLessThanOrEqual(1);
+    expect(typeof c.weeklyReset).toBe('string');
+    expect(claudeQuota('')).toBeNull();
   });
   it('a reply that is not a quota reading is null', () => {
     expect(parseQuota('')).toBeNull();
@@ -74,6 +82,11 @@ describe('siku lane: book picker', () => {
     const got = rankBooks([book({ id: 'big', pages_count: 300 }), book({ id: 'hidden', visible: false, pages_count: 10 }), book({ id: 'small', pages_count: 50 })]).map((b: { id: string }) => b.id);
     expect(got).toEqual(['small', 'big', 'hidden']);
   });
+  it('puts the Four Histories first, Derek\'s priority volumes first of all (#7546)', () => {
+    const h = (id: string) => book({ id, visible: false, pipeline_auto: { status: 'held', hold: { reason: 'zh-histories-7546' } } });
+    const got = rankBooks([book({ id: 'siku', pages_count: 10 }), h('hist'), h('6ae0bab64adf2ffb52f71058')]).map((b: { id: string }) => b.id);
+    expect(got).toEqual(['6ae0bab64adf2ffb52f71058', 'hist', 'siku']);
+  });
   it('a translated sibling volume of the same set is not a dupe; another edition with English is', () => {
     const me = book();
     expect(isDupeSibling(me, { title: '禮書·卷五~卷十二 (vol 2)', translation_state: { translated: 140 }, pipeline_auto: { hold: { reason: 'paddle-zh-5600-ocr-only' } } })).toBe(false);
@@ -95,5 +108,17 @@ describe('siku lane: spot-check bar', () => {
     expect(tallyBar([v(1), v(2), v(), v(1), v(), v(), v(1), v(), v(), v()]).pass).toBe(false);
     expect(tallyBar([v(), v(0, { invented: true }), v()]).pass).toBe(false);
     expect(tallyBar([]).pass).toBe(false);
+  });
+});
+
+describe('siku lane: leaf instructions (#5600)', () => {
+  it('gives every page of a book the two leaf lines the eval measured', () => {
+    const m = leafInstructions(['p1', 'p2', 'p3']);
+    expect(Object.keys(m)).toEqual(['p1', 'p2', 'p3']);
+    for (const v of Object.values(m)) expect(v).toBe(LEAF_LINES);
+    // The wording is what scripts/eval/siku-percall-5600 ran (arm C); a change is a new arm, not an edit.
+    expect(LEAF_LINES.split('\n')).toHaveLength(2);
+    expect(LEAF_LINES).toContain('欽定四庫全書');
+    expect(LEAF_LINES).toContain('stop where the leaf stops; do not complete it.');
   });
 });

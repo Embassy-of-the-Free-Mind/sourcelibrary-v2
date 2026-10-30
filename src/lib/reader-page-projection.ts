@@ -50,6 +50,8 @@ export const READER_PAGE_PROJECTION = {
   id: 1, book_id: 1, page_number: 1, page_type: 1, split_from: 1, seo_indexable: 1, tenantId: 1,
   // An archived split parent's leaves — the embed/room redirect reads it (#5842).
   split_into: 1,
+  // A hidden repeat capture names its kept page; the reader redirects there (#5056).
+  repeat_of: 1,
   photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   display_photo: 1, image_thumb: 1, thumbnail_blob: 1, thumbnail: 1,
   split_from_spread: 1, crop: 1,

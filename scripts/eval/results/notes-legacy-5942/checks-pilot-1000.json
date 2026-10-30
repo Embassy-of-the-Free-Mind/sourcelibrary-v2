@@ -1,0 +1,54 @@
+{
+ "pages": 999,
+ "no_data": 1,
+ "by_version": {
+  "1": 4,
+  "2": 9,
+  "3": 1,
+  "11": 232,
+  "12": 11,
+  "13": 303,
+  "v2": 85,
+  "none": 24,
+  "v10": 248,
+  "v5.2026-02": 17,
+  "v5.1.2026-03b": 12,
+  "v1": 40,
+  "v6": 11,
+  "v12": 1,
+  "v13": 1
+ },
+ "round_trip": 995,
+ "round_trip_term_lifted": 4,
+ "store_matches_parser": 999,
+ "orphans": 0,
+ "malformed": {
+  "pages": 24,
+  "unclosed": 3,
+  "stray": 36
+ },
+ "conservation": {
+  "comparable": 995,
+  "pages_lost": 3,
+  "pages_leaked": 3,
+  "chars_off_pages": 0
+ },
+ "anchors": {
+  "anchored": 10281,
+  "slice_mismatch": 0,
+  "unresolved": 0,
+  "repeated": 2963,
+  "repeated_own": 2963,
+  "repeated_elsewhere": 0
+ },
+ "reader": {
+  "equal": 962,
+  "differ": 37
+ },
+ "annotations": 12099,
+ "interp": 882,
+ "bytes": {
+  "text": 1928242,
+  "annotations": 2563559
+ }
+}

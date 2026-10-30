@@ -1,8 +1,10 @@
+import { Fragment } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PageFigure from '@/components/articles/PageFigure';
 import { PASSAGES } from './passages';
+import WhatWeKnow from './WhatWeKnow';
 import { withArticleMeta } from '@/lib/article-metadata';
 
 
@@ -81,50 +83,53 @@ export default function BeeckmanOnDrebbelPage() {
         <hr className="border-border-light my-12" />
 
         {PASSAGES.map((p) => (
-          <section key={p.id} id={p.id} className="mb-16 scroll-mt-24">
-            <h2 className="font-serif text-2xl md:text-3xl text-primary mb-2">{p.title}</h2>
-            <p className="text-sm text-muted mb-6">
-              {p.date} &middot; {p.source}
-            </p>
+          <Fragment key={p.id}>
+            <section id={p.id} className="mb-16 scroll-mt-24">
+              <h2 className="font-serif text-2xl md:text-3xl text-primary mb-2">{p.title}</h2>
+              <p className="text-sm text-muted mb-6">
+                {p.date} &middot; {p.source}
+              </p>
 
-            <div className="bg-warm rounded-xl p-6 border border-border-light">
-              {p.head && (
-                <p lang="la" className="text-secondary italic font-body leading-relaxed mb-4">
-                  {p.head}
-                </p>
-              )}
-              <div className="grid gap-8 md:grid-cols-2">
-                <div lang={p.lang}>
-                  {p.original.map((para, i) => (
-                    <p key={i} className="text-secondary font-body leading-relaxed mb-4 last:mb-0">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-                <div>
-                  {p.translation.map((para, i) => (
-                    <p key={i} className="text-primary font-body leading-relaxed mb-4 last:mb-0">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {p.figures && (
-              <div className="flex flex-wrap justify-center gap-8 mt-8">
-                {p.figures.map((f) => (
-                  <div key={f.src} className="w-full max-w-sm">
-                    <PageFigure src={f.src} alt={f.alt}>
-                      {f.caption}
-                    </PageFigure>
+              <div className="bg-warm rounded-xl p-6 border border-border-light">
+                {p.head && (
+                  <p lang="la" className="text-secondary italic font-body leading-relaxed mb-4">
+                    {p.head}
+                  </p>
+                )}
+                <div className="grid gap-8 md:grid-cols-2">
+                  <div lang={p.lang}>
+                    {p.original.map((para, i) => (
+                      <p key={i} className="text-secondary font-body leading-relaxed mb-4 last:mb-0">
+                        {para}
+                      </p>
+                    ))}
                   </div>
-                ))}
+                  <div>
+                    {p.translation.map((para, i) => (
+                      <p key={i} className="text-primary font-body leading-relaxed mb-4 last:mb-0">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                </div>
               </div>
-            )}
 
-            {p.note && <p className="text-sm text-muted leading-relaxed mt-4">{p.note}</p>}
-          </section>
+              {p.figures && (
+                <div className="flex flex-wrap justify-center gap-8 mt-8">
+                  {p.figures.map((f) => (
+                    <div key={f.src} className="w-full max-w-sm">
+                      <PageFigure src={f.src} alt={f.alt}>
+                        {f.caption}
+                      </PageFigure>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {p.note && <p className="text-sm text-muted leading-relaxed mt-4">{p.note}</p>}
+            </section>
+            {p.id === 'submarine-1620' && <WhatWeKnow />}
+          </Fragment>
         ))}
 
         <hr className="border-border-light my-12" />

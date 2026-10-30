@@ -1,0 +1,176 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/cheap-routes-7701/run.mjs evidence (job cheap-routes-7701, #7701; no model calls in this step)",
+ "cells": {
+  "de-blank-r2|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 20,
+     "books": 20,
+     "accept": "19/20",
+     "wrong_text_pages": "0/20",
+     "classes_k_of_n": {
+      "O8": "8/20",
+      "E2": "6/20",
+      "O6": "4/20",
+      "O16": "1/20",
+      "O11": "1/20",
+      "O12": "1/20",
+      "T6": "1/20"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 20,
+     "books": 20,
+     "accept": "20/20",
+     "wrong_text_pages": "0/20",
+     "classes_k_of_n": {
+      "O8": "7/20",
+      "E2": "6/20",
+      "O6": "3/20",
+      "O16": "2/20",
+      "T6": "2/20",
+      "O12": "2/20"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 20,
+     "books": 20,
+     "accept": "20/20",
+     "wrong_text_pages": "0/20",
+     "classes_k_of_n": {
+      "O8": "10/20",
+      "O6": "5/20",
+      "E2": "5/20",
+      "O14": "1/20",
+      "O16": "1/20",
+      "O11": "1/20"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4-written|agy-flash-low@4>agy-flash-low-written": {
+     "n": 44,
+     "both": 41,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 0,
+     "books": 44,
+     "with_7701_pages": 24
+    },
+    "agy-flash-low@4>agy-flash-low@4-written|agy-flash-low@4>agy-flash-low-written": {
+     "n": 20,
+     "both": 20,
+     "a_only": 0,
+     "b_only": 0,
+     "neither": 0,
+     "books": 20
+    },
+    "agy-flash-low@4>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 20,
+     "both": 19,
+     "a_only": 1,
+     "b_only": 0,
+     "neither": 0,
+     "books": 20
+    }
+   }
+  },
+  "fr-blank-r2|print": {
+   "routes": {
+    "agy-flash-low-written": {
+     "n": 21,
+     "books": 21,
+     "accept": "20/21",
+     "wrong_text_pages": "1/21",
+     "classes_k_of_n": {
+      "O8": "7/21",
+      "E2": "3/21",
+      "O6": "2/21",
+      "O16": "2/21",
+      "O10": "1/21",
+      "O1": "1/21"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@4-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "24/24",
+     "wrong_text_pages": "0/24",
+     "classes_k_of_n": {
+      "O8": "11/24",
+      "E2": "5/24",
+      "O6": "2/24",
+      "O12": "2/24",
+      "T6": "1/24",
+      "O14": "1/24",
+      "O16": "1/24"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4-written|agy-flash-low-written": {
+     "n": 21,
+     "both": 20,
+     "a_only": 1,
+     "b_only": 0,
+     "neither": 0,
+     "books": 21
+    }
+   }
+  },
+  "la-armc|print": {
+   "routes": {
+    "pero>agy-flash-low-written": {
+     "n": 18,
+     "books": 18,
+     "accept": "18/18",
+     "wrong_text_pages": "0/18",
+     "classes_k_of_n": {
+      "O8": "6/18",
+      "O7": "3/18",
+      "O6": "3/18",
+      "E2": "3/18",
+      "O11": "3/18",
+      "D1": "2/18",
+      "T6": "1/18",
+      "O12": "1/18",
+      "O16": "1/18",
+      "O1": "1/18"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 16,
+     "books": 16,
+     "accept": "14/16",
+     "wrong_text_pages": "1/16",
+     "classes_k_of_n": {
+      "O7": "4/16",
+      "E2": "4/16",
+      "O8": "3/16",
+      "O6": "3/16",
+      "O16": "2/16",
+      "T6": "1/16",
+      "D1": "1/16"
+     },
+     "note": "the drawn pages the route writes (run.mjs written: the dry apply), judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "pero>agy-flash-low@4-written|pero>agy-flash-low-written": {
+     "n": 15,
+     "both": 14,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0,
+     "books": 15
+    }
+   }
+  }
+ }
+}

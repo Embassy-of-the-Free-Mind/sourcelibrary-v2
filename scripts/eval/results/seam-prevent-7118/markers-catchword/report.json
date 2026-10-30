@@ -1,0 +1,1361 @@
+{
+ "build": {
+  "at": "2026-10-29T22:10:25.708Z",
+  "frameBooks": 17914,
+  "scanned": 165,
+  "kept": 120,
+  "catchword": 40,
+  "plain": 80,
+  "languages": {
+   "Latin": 66,
+   "Latin-German": 3,
+   "German": 23,
+   "Spanish": 2,
+   "Greek": 6,
+   "Middle Dutch": 1,
+   "Dutch": 2,
+   "French": 10,
+   "Arabic": 1,
+   "Sanskrit": 1,
+   "Italian": 3,
+   "Maori": 1,
+   "Marathi": 1
+  }
+ },
+ "model": "gemini-3.8-flash-low",
+ "prereg": "scripts/eval/PREREGISTRATION-seam-prevent-7118.md",
+ "n": {
+  "all": 110,
+  "catchword": 36,
+  "plain": 74,
+  "judgeCallsParsed": 220
+ },
+ "all": {
+  "A": {
+   "def100": 35.5,
+   "major100": 9.1,
+   "defects": 39,
+   "majors": 10,
+   "failed": 0,
+   "labels": {
+    "omission": 8,
+    "duplication": 10,
+    "drift": 0,
+    "broken_syntax": 19,
+    "catchword": 12,
+    "other": 3
+   }
+  },
+  "A2": {
+   "def100": 27.3,
+   "major100": 3.6,
+   "defects": 30,
+   "majors": 4,
+   "failed": 0,
+   "labels": {
+    "omission": 4,
+    "duplication": 8,
+    "drift": 0,
+    "broken_syntax": 15,
+    "catchword": 9,
+    "other": 2
+   }
+  },
+  "M": {
+   "def100": 16.4,
+   "major100": 2.7,
+   "defects": 18,
+   "majors": 3,
+   "failed": 1,
+   "labels": {
+    "omission": 4,
+    "duplication": 0,
+    "drift": 5,
+    "broken_syntax": 4,
+    "catchword": 2,
+    "other": 2
+   }
+  },
+  "C": {
+   "def100": 26.4,
+   "major100": 5.5,
+   "defects": 29,
+   "majors": 6,
+   "failed": 0,
+   "labels": {
+    "omission": 7,
+    "duplication": 6,
+    "drift": 0,
+    "broken_syntax": 15,
+    "catchword": 9,
+    "other": 3
+   }
+  },
+  "MC": {
+   "def100": 10.9,
+   "major100": 3.6,
+   "defects": 12,
+   "majors": 4,
+   "failed": 2,
+   "labels": {
+    "omission": 3,
+    "duplication": 1,
+    "drift": 4,
+    "broken_syntax": 2,
+    "catchword": 1,
+    "other": 0
+   }
+  },
+  "Acopy": {
+   "def100": 35.5,
+   "major100": 9.1,
+   "defects": 39,
+   "majors": 10,
+   "failed": 0,
+   "labels": {
+    "omission": 8,
+    "duplication": 10,
+    "drift": 0,
+    "broken_syntax": 19,
+    "catchword": 12,
+    "other": 3
+   }
+  }
+ },
+ "catchword": {
+  "A": {
+   "def100": 27.8,
+   "major100": 8.3,
+   "defects": 10,
+   "majors": 3,
+   "failed": 0,
+   "labels": {
+    "omission": 3,
+    "duplication": 1,
+    "drift": 0,
+    "broken_syntax": 5,
+    "catchword": 2,
+    "other": 2
+   }
+  },
+  "A2": {
+   "def100": 19.4,
+   "major100": 0,
+   "defects": 7,
+   "majors": 0,
+   "failed": 0,
+   "labels": {
+    "omission": 1,
+    "duplication": 1,
+    "drift": 0,
+    "broken_syntax": 3,
+    "catchword": 1,
+    "other": 1
+   }
+  },
+  "M": {
+   "def100": 16.7,
+   "major100": 0,
+   "defects": 6,
+   "majors": 0,
+   "failed": 0,
+   "labels": {
+    "omission": 1,
+    "duplication": 0,
+    "drift": 2,
+    "broken_syntax": 1,
+    "catchword": 1,
+    "other": 1
+   }
+  },
+  "C": {
+   "def100": 22.2,
+   "major100": 11.1,
+   "defects": 8,
+   "majors": 4,
+   "failed": 0,
+   "labels": {
+    "omission": 3,
+    "duplication": 0,
+    "drift": 0,
+    "broken_syntax": 4,
+    "catchword": 2,
+    "other": 2
+   }
+  },
+  "MC": {
+   "def100": 8.3,
+   "major100": 0,
+   "defects": 3,
+   "majors": 0,
+   "failed": 0,
+   "labels": {
+    "omission": 1,
+    "duplication": 0,
+    "drift": 2,
+    "broken_syntax": 0,
+    "catchword": 0,
+    "other": 0
+   }
+  },
+  "Acopy": {
+   "def100": 27.8,
+   "major100": 8.3,
+   "defects": 10,
+   "majors": 3,
+   "failed": 0,
+   "labels": {
+    "omission": 3,
+    "duplication": 1,
+    "drift": 0,
+    "broken_syntax": 5,
+    "catchword": 2,
+    "other": 2
+   }
+  }
+ },
+ "plain": {
+  "A": {
+   "def100": 39.2,
+   "major100": 9.5,
+   "defects": 29,
+   "majors": 7,
+   "failed": 0,
+   "labels": {
+    "omission": 5,
+    "duplication": 9,
+    "drift": 0,
+    "broken_syntax": 14,
+    "catchword": 10,
+    "other": 1
+   }
+  },
+  "A2": {
+   "def100": 31.1,
+   "major100": 5.4,
+   "defects": 23,
+   "majors": 4,
+   "failed": 0,
+   "labels": {
+    "omission": 3,
+    "duplication": 7,
+    "drift": 0,
+    "broken_syntax": 12,
+    "catchword": 8,
+    "other": 1
+   }
+  },
+  "M": {
+   "def100": 16.2,
+   "major100": 4.1,
+   "defects": 12,
+   "majors": 3,
+   "failed": 1,
+   "labels": {
+    "omission": 3,
+    "duplication": 0,
+    "drift": 3,
+    "broken_syntax": 3,
+    "catchword": 1,
+    "other": 1
+   }
+  },
+  "C": {
+   "def100": 28.4,
+   "major100": 2.7,
+   "defects": 21,
+   "majors": 2,
+   "failed": 0,
+   "labels": {
+    "omission": 4,
+    "duplication": 6,
+    "drift": 0,
+    "broken_syntax": 11,
+    "catchword": 7,
+    "other": 1
+   }
+  },
+  "MC": {
+   "def100": 12.2,
+   "major100": 5.4,
+   "defects": 9,
+   "majors": 4,
+   "failed": 2,
+   "labels": {
+    "omission": 2,
+    "duplication": 1,
+    "drift": 2,
+    "broken_syntax": 2,
+    "catchword": 1,
+    "other": 0
+   }
+  },
+  "Acopy": {
+   "def100": 39.2,
+   "major100": 9.5,
+   "defects": 29,
+   "majors": 7,
+   "failed": 0,
+   "labels": {
+    "omission": 5,
+    "duplication": 9,
+    "drift": 0,
+    "broken_syntax": 14,
+    "catchword": 10,
+    "other": 1
+   }
+  }
+ },
+ "judgeFloor": {
+  "agree": 110,
+  "n": 110,
+  "rate": 100
+ },
+ "swing100": 8.2,
+ "vsA": {
+  "A2": {
+   "delta100": 8.2,
+   "better": 12,
+   "worse": 3,
+   "p": 0.0176,
+   "majors": 4,
+   "majorsA": 10
+  },
+  "M": {
+   "delta100": 19.1,
+   "better": 28,
+   "worse": 7,
+   "p": 0.0003,
+   "majors": 3,
+   "majorsA": 10
+  },
+  "C": {
+   "delta100": 9.1,
+   "better": 17,
+   "worse": 7,
+   "p": 0.032,
+   "majors": 6,
+   "majorsA": 10
+  },
+  "MC": {
+   "delta100": 24.6,
+   "better": 32,
+   "worse": 5,
+   "p": 0,
+   "majors": 4,
+   "majorsA": 10
+  }
+ },
+ "MCvsM": {
+  "better": 8,
+  "worse": 2,
+  "p": 0.0547
+ },
+ "MvsA2": {
+  "better": 24,
+  "worse": 12,
+  "p": 0.0326
+ },
+ "catchwordLabel": {
+  "A": {
+   "stratum": {
+    "dropped": 36
+   },
+   "keptRate": 0,
+   "spurious": 0,
+   "spuriousRate": 0
+  },
+  "C": {
+   "stratum": {
+    "kept": 36
+   },
+   "keptRate": 100,
+   "spurious": 9,
+   "spuriousRate": 18
+  },
+  "MC": {
+   "stratum": {
+    "kept": 33,
+    "dropped": 3
+   },
+   "keptRate": 91.7,
+   "spurious": 5,
+   "spuriousRate": 10
+  }
+ },
+ "rule": {
+  "M": {
+   "beatsSwing": true,
+   "p10": true,
+   "majorsNotUp": true,
+   "ships": true
+  },
+  "C": {
+   "beatsSwing": true,
+   "p10": true,
+   "majorsNotUp": true,
+   "ships": true
+  },
+  "MC": {
+   "beatsSwing": true,
+   "p10": true,
+   "majorsNotUp": true,
+   "ships": true
+  },
+  "catchwordInC": {
+   "cwDupArm": 2,
+   "cwDupRef": 2,
+   "labelSum": [
+    2,
+    3
+   ],
+   "omissionArm": 3,
+   "omissionRef": 3,
+   "keptRate": 100,
+   "spuriousRate": 18,
+   "ships": false
+  },
+  "catchwordInMC": {
+   "cwDupArm": 0,
+   "cwDupRef": 1,
+   "labelSum": [
+    0,
+    1
+   ],
+   "omissionArm": 1,
+   "omissionRef": 1,
+   "keptRate": 91.7,
+   "spuriousRate": 10,
+   "ships": false
+  }
+ },
+ "verdict": "SHIP: M",
+ "reads": {
+  "A": {
+   "failedBreaks": 8,
+   "why": {
+    "read-failed": 8
+   }
+  },
+  "A2": {
+   "failedBreaks": 5,
+   "why": {
+    "read-failed": 5
+   }
+  },
+  "M": {
+   "failedBreaks": 4,
+   "why": {
+    "reply cut before <<<END>>>": 3,
+    "parse-4 marker(s) for 2 page(s), none missing at the opening": 1
+   }
+  },
+  "C": {
+   "failedBreaks": 8,
+   "why": {
+    "read-failed": 8
+   }
+  },
+  "MC": {
+   "failedBreaks": 7,
+   "why": {
+    "reply cut before <<<END>>>": 5,
+    "parse-4 marker(s) for 2 page(s), none missing at the opening": 1,
+    "parse-3 marker(s) for 2 page(s), none missing at the opening": 1
+   }
+  }
+ },
+ "markerReading": {
+  "M": {
+   "literal": 116,
+   "failed": 4
+  },
+  "MC": {
+   "literal": 113,
+   "failed": 7
+  }
+ },
+ "claudeListUsd": 19.16,
+ "perBreak": {
+  "6a243e470f0e4f405e6338e2:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "697e23ca0293c2dd47709e4e:123": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4eb14b9251fb3056f72282:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69aead2466bcc9447837c4cc:475": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "MAJOR:omission",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69c63cbcb463eebe7caac520:69": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6acc3ec5230e9a56175ce84e:34": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbcb9d1040d1d5e20b91a2:318": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a26bcd1d6b178e5aad86382:7": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbc8d11040d1d5e209ca89:44": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69af423aeaef59aff2e0f06c:112": {
+   "A": "MAJOR:broken_syntax+omission",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "MAJOR:broken_syntax+omission",
+   "MC": "ok",
+   "Acopy": "MAJOR:broken_syntax+omission"
+  },
+  "69aec878f24f28c9708224a2:39": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a243c930f0e4f405e62ea1a:11": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b4ccdcd5b6c3815e1a280b:7": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b4185af1200e2ab53cf4bb:132": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4e45367d2e40767268ed5c:8": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:drift",
+   "C": "MAJOR:omission",
+   "MC": "minor:drift",
+   "Acopy": "ok"
+  },
+  "6ab5a6a36122fe9080c04026:38": {
+   "A": "minor:catchword",
+   "A2": "minor:catchword",
+   "M": "minor:catchword",
+   "C": "minor:catchword+other",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "6a491c5ea9e39181572e4239:7": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69c854596c6f3cc53c853821:242": {
+   "A": "minor:other+omission",
+   "A2": "minor:other",
+   "M": "minor:omission",
+   "C": "minor:other+catchword",
+   "MC": "minor:omission",
+   "Acopy": "minor:other+omission"
+  },
+  "6a4a088f4ef72f5607b5d716:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6988a5a2697c2f799c5c6c1d:278": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "699067e4249ce014347d4935:146": {
+   "A": "minor:other",
+   "A2": "minor:omission",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:other"
+  },
+  "69942f59b2f6748db4ac07d3:5": {
+   "A": "ok",
+   "A2": "MAJOR:omission",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "694fd604435f95fd0c955916:67": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4a358acfff2cca9562d2a9:10": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a267cce6c1f37c9c4f37424:32": {
+   "A": "MAJOR:broken_syntax",
+   "A2": "ok",
+   "M": "ok",
+   "C": "MAJOR:broken_syntax",
+   "MC": "ok",
+   "Acopy": "MAJOR:broken_syntax"
+  },
+  "69c85e0a6c6f3cc53c8550c9:44": {
+   "A": "minor:catchword",
+   "A2": "minor:catchword",
+   "M": "ok",
+   "C": "minor:omission+catchword",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "69aea48340c3e9df6ecf6eb0:100": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69529033b184004c526a17ba:42": {
+   "A": "MAJOR:broken_syntax+duplication",
+   "A2": "MAJOR:broken_syntax",
+   "M": "MAJOR:broken_syntax",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "MAJOR:broken_syntax+duplication"
+  },
+  "69c836106c6f3cc53c84eaa5:228": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "697c8e0f6000fdec2f13060e:163": {
+   "A": "minor:broken_syntax",
+   "A2": "ok",
+   "M": "minor:drift",
+   "C": "ok",
+   "MC": "minor:drift",
+   "Acopy": "minor:broken_syntax"
+  },
+  "6a4587cc31e306b784335c3d:14": {
+   "A": "minor:duplication",
+   "A2": "minor:duplication",
+   "M": "ok",
+   "C": "minor:duplication",
+   "MC": "ok",
+   "Acopy": "minor:duplication"
+  },
+  "69aead9166bcc9447837db22:376": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4afacfac252ba4d6bf2872:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b6617cb3f4fc044153c184:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69c748446a0f3d112faf8113:44": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69791dc5f35c6bbfbfd252e5:15": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b51df8261c58d63664d8a3:9": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:broken_syntax",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4b10b07622bb5aba128a28:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a08597a49638a50931c7ad4:15": {
+   "A": "minor:catchword+duplication",
+   "A2": "minor:duplication",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:catchword+duplication"
+  },
+  "69b51e3c768235dc6598e024:50": {
+   "A": "MAJOR:omission",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "MAJOR:omission"
+  },
+  "69529492b184004c526a1963:47": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69906543726f64800c10abfe:17": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a085d3e49638a50931cf399:146": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:other",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a51f113689f6d0dbe2e4e8b:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a09e9422111a8b71cc38697:15": {
+   "A": "MAJOR:omission+broken_syntax",
+   "A2": "ok",
+   "M": "minor:omission",
+   "C": "MAJOR:omission+broken_syntax",
+   "MC": "minor:omission",
+   "Acopy": "MAJOR:omission+broken_syntax"
+  },
+  "6a26c328aad44c98627c86b8:5": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "69b418fd2b0edf3eaa2de77f:67": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b2f45f5ef23d31023f636f:99": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b51de5cf111105c429306b:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:omission",
+   "C": "ok",
+   "MC": "MAJOR:drift",
+   "Acopy": "ok"
+  },
+  "697a3055d9a110b1c1fd5030:31": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:drift",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4d65df90e0adc9f14b3a48:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4354ddf920db620cce18e0:35": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69de98c51b234a773e439288:47": {
+   "A": "minor:duplication",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "minor:duplication",
+   "Acopy": "minor:duplication"
+  },
+  "6a42c8aee76baa13aa848d36:31": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:duplication",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "6984e84fc81b55263f750a02:250": {
+   "A": "minor:catchword+broken_syntax",
+   "A2": "minor:catchword+broken_syntax",
+   "M": "ok",
+   "C": "minor:catchword+broken_syntax",
+   "MC": "ok",
+   "Acopy": "minor:catchword+broken_syntax"
+  },
+  "69af41652a17c2103c820383:313": {
+   "A": "MAJOR:omission",
+   "A2": "ok",
+   "M": "MAJOR:failed",
+   "C": "ok",
+   "MC": "MAJOR:failed",
+   "Acopy": "MAJOR:omission"
+  },
+  "6a425e47dfbbb4d07aa63ddf:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4b3fe7413da11f4382e36b:19": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b2ffe65545150b61b4a8d9:504": {
+   "A": "MAJOR:catchword+broken_syntax",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "MAJOR:catchword+broken_syntax"
+  },
+  "69b65ad718b87551bfd05ab0:1": {
+   "A": "minor:other",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:other"
+  },
+  "69b51dc7efd8df28f2daaf92:24": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "69c74aec6a0f3d112faf8263:176": {
+   "A": "minor:omission",
+   "A2": "minor:omission",
+   "M": "minor:broken_syntax",
+   "C": "minor:omission",
+   "MC": "MAJOR:broken_syntax+omission",
+   "Acopy": "minor:omission"
+  },
+  "69e00979846d79f28d5669eb:199": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69aec0e11f4011b58bb53c7b:384": {
+   "A": "MAJOR:broken_syntax+omission",
+   "A2": "MAJOR:broken_syntax+omission",
+   "M": "minor:drift",
+   "C": "MAJOR:broken_syntax",
+   "MC": "ok",
+   "Acopy": "MAJOR:broken_syntax+omission"
+  },
+  "69c7a63a92b884e4f8173b58:64": {
+   "A": "minor:duplication+catchword",
+   "A2": "minor:duplication+catchword",
+   "M": "minor:catchword",
+   "C": "minor:catchword",
+   "MC": "minor:catchword",
+   "Acopy": "minor:duplication+catchword"
+  },
+  "69b686d470c69d645a746941:865": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b656f218b87551bfce50ff:53": {
+   "A": "minor:catchword+duplication",
+   "A2": "minor:catchword+duplication+broken_syntax",
+   "M": "ok",
+   "C": "minor:catchword+duplication",
+   "MC": "ok",
+   "Acopy": "minor:catchword+duplication"
+  },
+  "697704f4594860622102d565:479": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b51ead9a81ef7feb3d9467:3": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "697a728e367f907242581fe5:26": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "minor:drift",
+   "C": "ok",
+   "MC": "minor:drift",
+   "Acopy": "ok"
+  },
+  "69f33825876dd827cbc5381a:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6991d8ab8c1030b12444c551:215": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69e9613b2beefe2f6f72aaba:186": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a100a4bf71729295096efeb:55": {
+   "A": "minor:catchword",
+   "A2": "minor:catchword+broken_syntax",
+   "M": "ok",
+   "C": "minor:catchword",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "6a490f62a9e39181572dde56:26": {
+   "A": "minor:catchword",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "69b21d9e94025df5d2908ddc:685": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a08573149638a50931c3d87:118": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4bd850ce03c0929df138cc:23": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "minor:broken_syntax",
+   "Acopy": "ok"
+  },
+  "69b51e359a81ef7feb3d1a02:71": {
+   "A": "MAJOR:catchword+broken_syntax",
+   "A2": "MAJOR:catchword+broken_syntax",
+   "M": "ok",
+   "C": "minor:catchword+broken_syntax",
+   "MC": "ok",
+   "Acopy": "MAJOR:catchword+broken_syntax"
+  },
+  "6a468422563a27b6e4fb32f2:53": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "minor:broken_syntax",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "69aea4bc3f91570550876baf:35": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6ad0e2b62a8ae91f12bc9f0d:124": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b52594cced70d8e6d729bd:8": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "MAJOR:other",
+   "C": "ok",
+   "MC": "MAJOR:failed",
+   "Acopy": "ok"
+  },
+  "69aea413f7e8488296c56f0f:229": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "698255f2e7e5bb2407f7a97e:18": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69afe484d3545b7c9c2cfaaa:147": {
+   "A": "minor:broken_syntax+duplication",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax+duplication"
+  },
+  "6a243dee0f0e4f405e6325b4:81": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a08f8e79c1b82475e15877d:16": {
+   "A": "minor:omission",
+   "A2": "ok",
+   "M": "minor:omission",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:omission"
+  },
+  "6a4a5c2b4107674feb04d6fc:9": {
+   "A": "MAJOR:broken_syntax",
+   "A2": "minor:broken_syntax+duplication",
+   "M": "ok",
+   "C": "minor:broken_syntax+duplication",
+   "MC": "ok",
+   "Acopy": "MAJOR:broken_syntax"
+  },
+  "69a683a87ab725b59be40d99:66": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a2440550f0e4f405e63748c:27": {
+   "A": "minor:catchword",
+   "A2": "minor:catchword",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "6a09709cbf2196cdca904299:657": {
+   "A": "minor:catchword",
+   "A2": "minor:catchword",
+   "M": "ok",
+   "C": "minor:catchword",
+   "MC": "ok",
+   "Acopy": "minor:catchword"
+  },
+  "6a267ba76c1f37c9c4f33146:119": {
+   "A": "ok",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbca8c1040d1d5e20acb9c:6": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69938dced5a98fd66f42eeb3:38": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "minor:omission",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b3008ce5d6d64d8e1995a3:295": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "695580c057e3b773024f5e03:14": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69c7bffe25ec2ba5ccd7fcba:34": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "minor:duplication+broken_syntax",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a26ba6761b3857ed05afd21:11": {
+   "A": "minor:duplication+broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "minor:broken_syntax+duplication",
+   "MC": "ok",
+   "Acopy": "minor:duplication+broken_syntax"
+  },
+  "69b220cff79d8af0eab7fe91:119": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69b51e0747b06ecd58188eb2:16": {
+   "A": "ok",
+   "A2": "minor:other",
+   "M": "ok",
+   "C": "minor:other",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69c70f18da9771c7163161ca:96": {
+   "A": "minor:duplication",
+   "A2": "minor:duplication",
+   "M": "ok",
+   "C": "minor:duplication",
+   "MC": "ok",
+   "Acopy": "minor:duplication"
+  },
+  "6a4e4852dc886f1f5abb6dab:3": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a08576415c643eb1af5b7a9:12": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbcc520f8c5edf20f49ce8:303": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbcaa51040d1d5e20ad4ba:60": {
+   "A": "minor:duplication",
+   "A2": "minor:duplication",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:duplication"
+  },
+  "69b65b7d18b87551bfd0c464:7": {
+   "A": "minor:broken_syntax",
+   "A2": "ok",
+   "M": "minor:broken_syntax",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  },
+  "69f33177876dd827cbc48dd4:260": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "69dbcb671040d1d5e20b6756:51": {
+   "A": "ok",
+   "A2": "ok",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "ok"
+  },
+  "6a4a4e71b5dd4074593fc954:10": {
+   "A": "minor:broken_syntax",
+   "A2": "minor:broken_syntax",
+   "M": "ok",
+   "C": "ok",
+   "MC": "ok",
+   "Acopy": "minor:broken_syntax"
+  }
+ }
+}

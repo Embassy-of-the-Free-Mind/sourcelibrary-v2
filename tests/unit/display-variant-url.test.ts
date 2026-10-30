@@ -24,3 +24,18 @@ describe('toDisplayVariantUrl (#6092)', () => {
     expect(getBookThumbnailUrl({ image_display: `${R2}/artwork/a.jpg` }, 'thumb')).toBe(`${R2}/artwork/a-thumb.jpg`);
   });
 });
+
+describe('getBookThumbnailUrl: IA BookReader covers', () => {
+  // The BookReader URL serves IA's master whatever size it names (measured 2026-10-29),
+  // so a card must never load it; IA's 180px item thumbnail stands in.
+  it('maps an archive.org/download page URL to the item thumbnail, on both tiers', () => {
+    const t = 'https://archive.org/download/10928485bsb/page/n0/full/pct:15/0/default.jpg';
+    expect(getBookThumbnailUrl({ thumbnail: t }, 'display')).toBe('https://archive.org/services/img/10928485bsb');
+    expect(getBookThumbnailUrl({ thumbnail: t }, 'thumb')).toBe('https://archive.org/services/img/10928485bsb');
+  });
+
+  it('still prefers a stored R2 cover', () => {
+    expect(getBookThumbnailUrl({ image_display: `${R2}/pages/abc/0001.jpg`, thumbnail: 'https://archive.org/download/x/page/n0/full/full/0/default.jpg' }, 'display'))
+      .toBe(`${R2}/pages/abc/0001.jpg`);
+  });
+});

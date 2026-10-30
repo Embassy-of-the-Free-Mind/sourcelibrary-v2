@@ -31,7 +31,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const PAGES_ONLY = process.argv.includes('--pages-only');
 const THUMBS_ONLY = process.argv.includes('--thumbs-only');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const LEIDEN = /universiteitleiden\.nl/;
 
 const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 3 });

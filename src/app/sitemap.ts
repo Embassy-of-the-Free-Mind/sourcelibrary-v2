@@ -5,6 +5,7 @@ import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
+import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
 import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
 
@@ -226,6 +227,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/developers`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -389,7 +391,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const pages = await pagesColl.find(
       { seo_indexable: true, _id: { $gte: start._id } },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1, repeat_of: 1 },
         sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
         hint: 'seo_indexable_id_partial',
@@ -409,7 +411,8 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
 
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
+      // A hidden repeat capture (#5056) 307s to its kept page: not a URL to list.
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id) && !isRepeatCapture(p))
       .map((p) => {
         let lastModified: Date;
         try {

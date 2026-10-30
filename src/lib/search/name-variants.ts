@@ -12,7 +12,8 @@
  * `pages_search` index is `lucene.standard` (no stemming, no diacritic folding), so the reader's
  * spelling finds only itself.
  *
- * When a query names a person `entities` knows (by name or alias), the keyword lanes OR in:
+ * When a query names a person `entities` or the `authors` thesaurus knows (by name or alias),
+ * the keyword lanes OR in:
  *   1. that person's alias spellings OF THE SAME NAME TOKEN — never the whole alias list;
  *   2. period spellings of the surname (doubled consonants written single; umlauted forms
  *      only when `entities` knows a person under them);
@@ -47,7 +48,7 @@ const MIN_TOKEN = 4;
 const LATIN_ONLY = /^\p{Script=Latin}+$/u;
 const INNER_MARKS = /[ʻʼʾʿ‘’'`´]/g;
 
-/** The slice of an `entities` person record the expansion reads. */
+/** A person (or place/concept) record the expansion reads — from `entities`, or an `authors` doc mapped by `authorNameRecord`. */
 export interface PersonNameRecord {
   name: string;
   aliases?: string[];
@@ -446,13 +447,67 @@ export interface NameExpansion {
   /** The query's topic words outside the name; [] when the query is only the name. */
   topicWords: string[];
   /**
-   * The typed surnames that name a person `entities` knows; [] when the query names none. Not the
+   * The typed surnames that name a person `entities` or `authors` knows; [] when the query names none. Not the
    * same as `variants.length > 0`: "Agrippa" names a person and has no generated spelling.
    */
   surnames: string[];
 }
 const NONE: NameExpansion = { variants: [], topicWords: [], surnames: [] };
 const cache = new Map<string, NameExpansion & { expires: number }>();
+
+/** The slice of an `authors` thesaurus doc the expansion reads. */
+export interface AuthorNameDoc {
+  canonical_name?: string;
+  variants?: string[];
+  aliases?: string[];
+  is_person?: boolean;
+  merged_into?: string;
+  wikidata_id?: string | null;
+  viaf_id?: string | null;
+  gnd_ids?: string[];
+  book_count?: number;
+}
+
+/**
+ * An `authors` doc as a person record, or null when it cannot vouch for a person.
+ *
+ * Only a doc anchored to an external authority (Wikidata, VIAF, GND) counts: the unanchored tail
+ * still holds headings like "Zürich" with no `is_person` flag. `is_person: false` is an
+ * institution, kept as a non-person so it can outweigh a person of the same name. A
+ * `merged_into` tombstone is skipped — its primary is found under the same names.
+ *
+ * Names: the canonical name and the Wikidata labels (`aliases`) as they stand, plus only those
+ * catalogue `variants` whose every word spells one of those names. `variants` is a record of
+ * what catalogues printed, and some entries are search strings or compounds ("Kircher
+ * Magneticum", "Paracelsus; ed. A.E. Waite"); matched as a name, "Kircher Magneticum" would
+ * turn the reader's topic word into a surname to decline. See
+ * .claude/docs/invariants/author-identity.md.
+ */
+export function authorNameRecord(doc: AuthorNameDoc): PersonNameRecord | null {
+  if (doc.merged_into || typeof doc.canonical_name !== 'string' || !doc.canonical_name.trim()) return null;
+  const anchored = !!(doc.wikidata_id || doc.viaf_id || (Array.isArray(doc.gnd_ids) && doc.gnd_ids.length));
+  if (!anchored) return null;
+  const authority = [doc.canonical_name, ...(Array.isArray(doc.aliases) ? doc.aliases : [])]
+    .filter((n): n is string => typeof n === 'string' && !!n.trim());
+  const authorityTokens = authority.flatMap(nameTokens);
+  const spellsAuthority = (v: string) => {
+    if (/[\d;|&()\[\]]/.test(v)) return false;
+    const words = nameTokens(v);
+    return words.length > 0 && words.every(w =>
+      authorityTokens.some(t => t.toLowerCase() === w.toLowerCase() || isSpellingOf(t, w)));
+  };
+  const variants = (Array.isArray(doc.variants) ? doc.variants : [])
+    .filter((v): v is string => typeof v === 'string')
+    .map(v => v.trim())
+    .filter(v => v && spellsAuthority(v));
+  const names = [...new Set([...authority.slice(1), ...variants])].filter(n => n !== doc.canonical_name);
+  return {
+    name: doc.canonical_name,
+    aliases: names,
+    type: doc.is_person === false ? 'organization' : 'person',
+    book_count: doc.book_count ?? 0,
+  };
+}
 
 async function findPersons(candidates: string[]): Promise<PersonNameRecord[]> {
   if (candidates.length === 0) return [];
@@ -462,11 +517,30 @@ async function findPersons(candidates: string[]): Promise<PersonNameRecord[]> {
   // Two indexed equality finds (name_1_type_1, entities_aliases_idx), not one $or: an $or
   // leaves the planner free to pick a scan (request-path-queries.md). The name find takes every
   // type, so a place or concept of the same name can outweigh the person.
-  const [byName, byAlias] = await Promise.all([
+  //
+  // The `authors` thesaurus (#2179, #7786) is read alongside: it is where catalogue spellings and
+  // Wikidata labels for ~17K anchored people live, most of whom `entities` never knew. Its $or
+  // is three equality legs, each on its own index (canonical_name_1, aliases_1, variants_1), so
+  // every branch is bounded. It fails open on its own: a thesaurus error must not take the
+  // `entities` expansion down with it.
+  const authorOpts = {
+    projection: { _id: 0, canonical_name: 1, variants: 1, aliases: 1, is_person: 1, merged_into: 1, wikidata_id: 1, viaf_id: 1, gnd_ids: 1, book_count: 1 },
+    maxTimeMS: LOOKUP_MAX_MS,
+  };
+  const [byName, byAlias, authorDocs] = await Promise.all([
     entities.find({ name: { $in: candidates } }, opts).limit(LOOKUP_LIMIT * 3).toArray(),
     entities.find({ type: 'person', aliases: { $in: candidates } }, opts).limit(LOOKUP_LIMIT).toArray(),
+    Promise.resolve()
+      .then(() => db.collection('authors').find(
+        { $or: [{ canonical_name: { $in: candidates } }, { aliases: { $in: candidates } }, { variants: { $in: candidates } }] },
+        authorOpts,
+      ).limit(LOOKUP_LIMIT).toArray())
+      .catch(() => []),
   ]);
-  return [...byName, ...byAlias] as unknown as PersonNameRecord[];
+  const fromAuthors = (authorDocs as unknown as AuthorNameDoc[])
+    .map(authorNameRecord)
+    .filter((r): r is PersonNameRecord => r !== null);
+  return [...byName, ...byAlias, ...fromAuthors] as unknown as PersonNameRecord[];
 }
 
 /**

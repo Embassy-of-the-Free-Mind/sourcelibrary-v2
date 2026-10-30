@@ -54,8 +54,11 @@ export async function GET(request: NextRequest) {
 
   try {
     // Build query
+    // The first-translation list reads one edition per work (view books_catalog_ft_works, migration
+    // 20261029120000): 385 works showed 2+ editions. Not with a language filter — a work's lead edition
+    // may be in another language, and the view would then hide it from that language's list.
     let query = supabase
-      .from('books_catalog')
+      .from(firstTranslation && !language ? 'books_catalog_ft_works' : 'books_catalog')
       .select('id, slug, title, display_title, author, thumbnail, thumbnail_blob, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, pages_translatable, is_first_translation, last_translation_at, quality_score', { count: 'exact' })
       .eq('visible', true)
       .gt('pages_count', 0);

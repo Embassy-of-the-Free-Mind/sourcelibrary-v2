@@ -29,7 +29,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { makeBookDoc } from './lib/book-docs.mjs';
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
 const R2_PREFIX = 'artwork';
 const DELAY_MS = 100; // Polite rate limit for Commons

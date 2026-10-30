@@ -16,9 +16,7 @@
 # Disk steward, hourly (#6223): HF cache to 50 GB; idle /data/scratch/sl/jobs/* and /data/scratch/moved-from-*/* archived to R2
 # while their disk is above 75%. It never scans /root here (the box is a guest of a live service).
 25 * * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /data/scratch/sl/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && mkdir -p /var/log/sourcelibrary && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
-# #7611 lane-judge sampler (scripts/eval/lane-judge-sampler.mjs): nightly 02:50 UTC, judge a random sample of what the agy/GPU lanes WROTE
-# (Opus via claude -p on this box's subscription, hard cap 1% of the account-week, pace guard on the meter), export the store, rebuild the
-# router table with build.py on origin/main, publish ops_reports router-table:lane-judge, comment on #7263 only when a cell's decision flips.
-# Read-only on page text. Inert until the script is on main. Weekly (Mon 04:20): the repo copy as a PR (never main).
-50 2 * * * f=/data/scratch/sl/sourcelibrary/scripts/eval/lane-judge-sampler.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && PATH=/usr/local/bin:/usr/bin:/bin flock -n /tmp/sl-lane-judge.lock timeout 4h node --env-file=/root/sourcelibrary/.env.production.local $f nightly --out=/data/scratch/sl/lane-judge --cap-points=5 >> /data/scratch/sl/logs/lane-judge-sampler.log 2>&1  # #7611
-20 4 * * 1 f=/data/scratch/sl/sourcelibrary/scripts/eval/lane-judge-sampler.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && PATH=/usr/local/bin:/usr/bin:/bin flock -w 900 /tmp/sl-lane-judge.lock timeout 30m node --env-file=/root/sourcelibrary/.env.production.local $f weekly-pr --out=/data/scratch/sl/lane-judge >> /data/scratch/sl/logs/lane-judge-sampler.log 2>&1  # #7611 weekly repo copy
+# #7611 lane-judge sampler: MOVED to l7a on 2026-10-29 (this box's Claude account was at 100% of its week and judged 0 pages that night); see infrastructure/l7a-crontab.
+
+# Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
+11 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box cloudlayer >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)

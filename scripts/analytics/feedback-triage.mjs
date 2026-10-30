@@ -118,6 +118,11 @@ await withMongo(async (db) => {
         console.log(`- ${r._id}  ${new Date(r.created_at).toISOString().slice(0, 10)} ${state}${email}${tenant}  ${r.name ? '~' + r.name : ''}`);
         console.log(`    page: ${r.page || '?'}`);
         console.log(`    ${(r.message || '').replace(/\s+/g, ' ').trim().slice(0, 200)}`);
+        // Notes left on /admin/feedback are instructions for whoever works the item
+        // next — this script's reader included (#7678). Print them whole.
+        for (const n of r.notes || []) console.log(`    📝 NOTE (${n.by || '?'}, ${new Date(n.at).toISOString().slice(0, 10)}): ${n.text}`);
+        if (r.reply_draft) console.log(`    ✎ unsent reply draft: ${r.reply_draft.replace(/\s+/g, ' ').slice(0, 200)}`);
+        if (r.reply_sent_at) console.log(`    ↩ already emailed ${new Date(r.reply_sent_at).toISOString().slice(0, 10)}`);
       }
     }
   };

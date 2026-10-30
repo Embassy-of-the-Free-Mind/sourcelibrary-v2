@@ -32,6 +32,8 @@ function edgePages(): Record<string, unknown>[] {
     // soft-hidden (#3293): fully processed and archived, counted nowhere
     { page_number: -1, ocr: { data: 'h' }, translation: { data: 'H' }, archived_photo: 'https://r2/x.jpg' },
     { page_number: 0, ocr: { data: 'h' }, translation: { data: 'H' } },
+    // a hidden repeat capture (#5056): keeps its page_number, counted nowhere
+    { page_number: 15, repeat_of: 'kept-page-id', ocr: { data: 'a' }, translation: { data: 'A' }, archived_photo: 'https://r2/15.jpg' },
     // attempted but not legible (#4523): not OCR'd, still translatable (pending)
     { page_number: 2, ocr: { data: 'x', unreadable: true } },
     // blank leaf with the translator's placeholder (#3747): OCR yes, translated no, blank yes

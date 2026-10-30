@@ -11,6 +11,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, resolveDate, publishedToYear, assessIaOcrLanguage, type LanguageSignal } from '@/lib/resolve-language';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -56,7 +57,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch metadata from Internet Archive to get page count
     const metadataUrl = `https://archive.org/metadata/${ia_identifier}`;
-    const metadataRes = await fetch(metadataUrl);
+    const metadataRes = await outboundFetch(metadataUrl);
 
     if (!metadataRes.ok) {
       return NextResponse.json(
@@ -84,7 +85,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // 1. IIIF manifest — most reliable, counts actual canvases
     try {
-      const iiifRes = await fetch(
+      const iiifRes = await outboundFetch(
         `https://iiif.archive.org/iiif/${ia_identifier}/manifest.json`,
         { signal: AbortSignal.timeout(15000) }
       );
@@ -135,7 +136,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       const scandata = files.find((f: { name: string }) => /scandata\.xml$/i.test(f.name));
       if (scandata) {
         try {
-          const sdRes = await fetch(
+          const sdRes = await outboundFetch(
             `https://archive.org/download/${ia_identifier}/${encodeURIComponent(scandata.name)}`,
             { signal: AbortSignal.timeout(20000) }
           );

@@ -8,6 +8,7 @@ import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
+import { partnerEmbedTenantFromLocation } from '@/lib/partner-embed-download';
 
 type ImageAccess = 'open' | 'nc-free' | 'blocked';
 
@@ -29,9 +30,16 @@ interface DownloadButtonProps {
    * reveal a menu inside it is one gesture too many.
    */
   inline?: boolean;
+  /**
+   * The book's owning tenant (`books.tenantId`). Inside a partner's embed,
+   * where nobody can sign in, the partner's own books download without an
+   * account (#7702); without this the button cannot tell and shows the
+   * sign-in wall. The server re-checks ownership either way.
+   */
+  bookTenantId?: string | null;
 }
 
-export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false, inline = false }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false, inline = false, bookTenantId = null }: DownloadButtonProps) {
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(inline);
@@ -41,6 +49,17 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const [accessChecked, setAccessChecked] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  // Inside a partner embed that allows anonymous downloads (#7702). Read from
+  // the browser location after mount, so SSR and hydration render the same.
+  const [inPartnerEmbed, setInPartnerEmbed] = useState(false);
+  useEffect(() => {
+    setInPartnerEmbed(partnerEmbedTenantFromLocation(window.location.host, window.location.pathname) !== null);
+  }, []);
+  // Anonymous, in the partner's embed, on one of the partner's own books: the
+  // free formats download directly. Signing in is impossible in the frame
+  // (/auth/signin is DENY, the session cookie is SameSite=Lax), so the
+  // sign-in wall and the premium formats, which need an account, are hidden.
+  const anonEmbed = !session?.user && inPartnerEmbed && !!bookTenantId;
 
   useEffect(() => {
     // All downloads require sign-in. Anonymous users see a Sign-in prompt
@@ -88,7 +107,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     // read as "the download errored" (real feedback, 2026-06-19): the page just
     // jumped to a login screen with no reason given. The toast names the gate
     // at the moment of the click and lets them choose to continue.
-    if (!session?.user) {
+    if (!session?.user && !anonEmbed) {
       toast('Sign in to download', {
         description: 'Text formats are free once you sign in. Premium formats (facsimiles, parallel text, scholarly editions) need purchase or membership.',
         action: { label: chrome.signIn, onClick: goToSignIn },
@@ -110,7 +129,10 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
       if (response.status === 401) {
         setDownloading(null);
-        goToSignIn();
+        // In the embed the sign-in page cannot load in the frame; say so
+        // instead of navigating to a refusal.
+        if (anonEmbed) toast.error('Download failed. Please try again.');
+        else goToSignIn();
         return;
       }
       if (response.status === 402) {
@@ -203,7 +225,8 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     return null;
   }
 
-  const isAnonymous = accessChecked && !session?.user;
+  const isAnonymous = accessChecked && !session?.user && !anonEmbed;
+  const showPremium = !anonEmbed;
   const needsPurchase = accessChecked && !!session?.user && !hasAccess;
   const ncImagesFree = imageAccess === 'nc-free';
 
@@ -271,7 +294,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           <div className="px-3 py-2 flex items-center justify-between border-b border-stone-100">
             <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">TXT</span>
-            <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">Free with sign-in</span>
+            <span className="text-[10px] font-medium text-stone-500 uppercase tracking-wide">{anonEmbed ? 'Free' : 'Free with sign-in'}</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-1 gap-1.5 sm:gap-0 px-3 sm:px-0 py-1.5 sm:py-0">
@@ -296,7 +319,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             PDF
           </div>
 
-          {hasTranslations && hasImages && !imageRestricted && (
+          {showPremium && hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="pdf-facsimile" label="Facsimile PDF" desc="Scan facing its translation, like the reader"
               icon={<FileType className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
@@ -333,20 +356,20 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
               icon={<BookOpen className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
-          {hasTranslations && (
+          {showPremium && hasTranslations && (
             <FormatOption format={hasOcr ? 'epub-bilingual' : 'epub-scholarly'} label="Scholarly Edition"
               desc={hasOcr ? 'Original + translation with introduction & apparatus' : 'With introduction & apparatus'}
               icon={<GraduationCap className="w-4 h-4 text-[var(--text-secondary)] shrink-0" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
-          {hasTranslations && hasImages && !imageRestricted && (
+          {showPremium && hasTranslations && hasImages && !imageRestricted && (
             <FormatOption format="epub-facsimile" label="Facsimile Edition" desc="Page images + translation (fixed layout)"
               icon={<Image className="w-4 h-4 text-[var(--text-secondary)]" />}
               onDownload={handleDownload} downloading={downloading} />
           )}
           </div>
 
-          {hasImages && !imageRestricted && (
+          {showPremium && hasImages && !imageRestricted && (
             <>
               <div className="px-3 py-2 border-t border-stone-100 mt-2 flex items-center justify-between">
                 <span className="text-xs font-medium text-stone-500 uppercase tracking-wide">Page Scans</span>

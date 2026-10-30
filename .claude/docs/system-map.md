@@ -44,6 +44,8 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 
 ## Data Pipeline Flow
 
+> **Out of date (2026-10-29, #7759):** this section shows the orchestrator line only. Most OCR and translation now runs in subscription lanes (agy Flash, Opus via `claude -p`) and on the GPU box. The process today: `book-process.md`. Live lanes and counts: https://sourcelibrary.org/admin/pipeline/now.
+
 The pipeline has **13+ phases** managed by `pipeline-orchestrator.mjs` (every 2 min) and `enrich-worker.mjs` (every 5 min) on Hetzner. Books flow through `pipeline_auto.status` states:
 
 ```

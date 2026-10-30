@@ -52,6 +52,50 @@ class Pick(unittest.TestCase):
         self.assertEqual(B.decide({}, [r], r, P, STEADY, WT)[0], 'HOLD')
 
 
+class Paired(unittest.TestCase):
+    """#7701: two arms judged on the SAME pages are compared by their paired outcomes, not as independent posteriors."""
+    Q = {'switch': {'within': 0.08, 'p': 0.9, 'wrong_text_max': 0.04}, 'hold': {'acc': 0.8, 'p': 0.9}}
+
+    def beta_route(self, rid, k, n, seed):
+        import random
+        rng = random.Random(seed); d = [rng.betavariate(1 + k, 1 + n - k) for _ in range(20000)]
+        return dict(id=rid, mean=sum(d) / len(d), _d=d, wrate=0.0, wrong=0, n=n)
+
+    def test_identical_kn_on_shared_pages_passes_paired_not_independent(self):
+        import random
+        # #7701 German: read@4 (cheap) and read@4>correct (best) both 23/24 written, on the same 24 pages
+        cheap, best = self.beta_route('read@4', 23, 24, 1), self.beta_route('read@4>agy', 23.2, 24, 2)
+        best['mean'] = cheap['mean'] + 0.001
+        WTQ = lambda b: 0.04
+        self.assertNotIn('read@4', [r['id'] for r in B.gate([cheap, best], self.Q, WTQ, 0.08)[1]])   # the independent gate refuses
+        # the two arms accept and refuse the same pages: paired, the cheaper one passes
+        pd = B.paired_draws({'both': 23, 'a_only': 0, 'b_only': 0, 'neither': 1}, 20000, random.Random(7701))
+        cheap['_pd'] = {best['id']: pd}; best['_pd'] = {cheap['id']: [-x for x in pd]}
+        self.assertGreater(B.within_p(cheap, best, 0.08), 0.9)
+        self.assertIn('read@4', [r['id'] for r in B.gate([cheap, best], self.Q, WTQ, 0.08)[1]])
+        # one page each way at n = 24 is still too few pages to say (the honest flat prior): 0.88
+        pd1 = B.paired_draws({'both': 22, 'a_only': 1, 'b_only': 1, 'neither': 0}, 20000, random.Random(7701))
+        self.assertLess(B.within_p(dict(cheap, _pd={best['id']: pd1}), best, 0.08), 0.9)
+        # at n = 60 (the brief's German cell), two pages each way passes
+        pd2 = B.paired_draws({'both': 55, 'a_only': 2, 'b_only': 2, 'neither': 1}, 20000, random.Random(7701))
+        self.assertGreater(B.within_p(dict(cheap, _pd={best['id']: pd2}), best, 0.08), 0.95)
+
+    def test_paired_losses_still_fail(self):
+        import random
+        cheap, best = self.beta_route('a', 19, 24, 3), self.beta_route('b', 24, 24, 4)
+        pd = B.paired_draws({'both': 19, 'a_only': 0, 'b_only': 5, 'neither': 0}, 20000, random.Random(1))
+        cheap['_pd'] = {'b': pd}
+        self.assertLess(B.within_p(cheap, best, 0.08), 0.9)
+
+    def test_paired_draws_mean_and_book_scaling(self):
+        import random
+        pd = B.paired_draws({'both': 50, 'a_only': 6, 'b_only': 2, 'neither': 2}, 20000, random.Random(5))
+        self.assertAlmostEqual(sum(pd) / len(pd), (1 + 6 - 1 - 2) / (4 + 60), delta=0.005)
+        wide = B.paired_draws({'both': 50, 'a_only': 6, 'b_only': 2, 'neither': 2}, 20000, random.Random(5), scale=0.25)
+        sd = lambda xs: (sum((x - sum(xs) / len(xs)) ** 2 for x in xs) / len(xs)) ** 0.5
+        self.assertGreater(sd(wide), sd(pd))   # fewer books than pages: a wider difference
+
+
 class Size(unittest.TestCase):
     Z = {'output_weight': 5, 'overhead': {'in': 10000, 'out': 0}, 'min_pages_for_measured_cpt': 30, 'english_chars_per_token': 4.0,
          'chars_per_token_default': {'other': 2.0}, 'pages_per_call': {'single': 10, 'multi': 5}}

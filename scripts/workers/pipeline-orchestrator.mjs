@@ -1492,7 +1492,7 @@ async function routeBookToCliOcrLane(db, book, model) {
   const label = (book.title || '').substring(0, 40);
   const unread = await db.collection('pages').countDocuments({
     book_id: book.id,
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.recitation_blocked': { $ne: true },
     $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
   });
@@ -1521,7 +1521,7 @@ async function routeBookToCliTranslateLane(db, book, lane) {
   const label = (book.title || '').substring(0, 50);
   const untranslated = await db.collection('pages').countDocuments({
     book_id: book.id,
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $nin: [null, ''] },
     page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
     'translation.health_blocked': { $exists: false },
@@ -1597,7 +1597,7 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   let pages = await db.collection('pages')
     .find({
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [
         { 'ocr.data': { $exists: false } },
@@ -2084,7 +2084,7 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
     const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : wholeBooksOnly ? poolRoom + 1 : poolRoom;
     const pageFilter = {
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
       $and: [
@@ -3547,7 +3547,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       const stillNeedPreview = [];
       for (const book of readyForPreview) {
         const firstPages = await db.collection('pages')
-          .find({ book_id: book.id, page_number: { $gt: 0 } })
+          .find({ book_id: book.id, ...VISIBLE_PAGE_MATCH })
           .sort({ page_number: 1 })
           .limit(PREVIEW_PAGE_COUNT)
           .project({ _id: 0, 'ocr.data': 1 })
@@ -5087,7 +5087,7 @@ Rules:
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
-                page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                 'ocr.data': { $exists: true, $nin: [null, ''] },
                 page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
                 // translate-worker skips these, so a job for them does nothing (#5108).
@@ -5498,7 +5498,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
-                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                  ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
@@ -5614,7 +5614,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
-                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                  ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },

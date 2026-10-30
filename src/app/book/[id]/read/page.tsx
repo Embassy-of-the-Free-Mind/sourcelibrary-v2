@@ -38,6 +38,7 @@
  * /api/books/[id]/text (machine JSON, not a page). The EPUB/HTML exporter's
  * markdownToHtml is reused rather than a second text pipeline.
  */
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { headers } from 'next/headers';
@@ -53,7 +54,7 @@ import { freeMaxPage } from '@/lib/free-preview';
 import { markForExport } from '@/lib/provenance';
 import { markdownToHtml } from '@/lib/export-markdown-html';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
-import { isRTLLanguage } from '@/lib/types';
+import { isRTLLanguage, type PrintedPage } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
 import { galleryFilter } from '@/lib/gallery-scope';
@@ -99,6 +100,7 @@ interface PageDoc {
   ocr?: { data?: string };
   translation?: { data?: string };
   translation_withheld?: unknown;
+  printed_page?: PrintedPage | null;
 }
 
 const BOOK_PROJECTION = {
@@ -109,6 +111,7 @@ const BOOK_PROJECTION = {
 
 const PAGE_PROJECTION = {
   _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'translation.data': 1, translation_withheld: 1,
+  'printed_page.label': 1,
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -204,14 +207,14 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const clampAt = untrustedBot || meteredAnon ? freeMaxPage(pagesCount) : undefined;
 
   const pagesRaw = await db.collection('pages')
-    .find({ book_id: bookId, page_number: { $gte: 0 } }, { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
+    .find(readerPageListFilter(bookId), { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
     .sort({ page_number: 1 })
     .toArray() as unknown as PageDoc[];
   // The same page set the reader walks — no digitiser inserts, no unsplit spreads.
   // English edition, English leaf: the transcription is the text; the stored
   // English-to-English rewording is never shown as a translation (#7100).
   const pages = pagesRaw
-    .filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread')
+    .filter(isReaderListedPage)
     .map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
   if (pages.length === 0) notFound();
 
@@ -302,17 +305,19 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const flowPage = (p: (typeof open)[number]): FlowPage => {
     const n = p.page_number;
     const pageHref = `/book/${bookPath}/page/${p.id}`;
+    // The printed number, so the book's own references ("see p. 279", its index) can be followed in the flow.
+    const printed = typeof p.printed_page?.label === 'string' && p.printed_page.label.trim() ? p.printed_page.label.trim() : undefined;
     const originalHtml = pageHtml(p.ocr?.data, flowLevel);
-    if (mode === 'original') return { n, html: originalHtml, href: pageHref };
+    if (mode === 'original') return { n, html: originalHtml, href: pageHref, label: printed };
     const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
     const translationHtml = pageHtml(translationRaw, flowLevel);
-    if (translationHtml) return { n, html: translationHtml, href: pageHref };
-    if (!originalHtml) return { n, html: null, href: pageHref };
+    if (translationHtml) return { n, html: translationHtml, href: pageHref, label: printed };
+    if (!originalHtml) return { n, html: null, href: pageHref, label: printed };
     // No English for this page: show its original as a set-off block, never run into the English.
     const note = p.page_type === 'blank' ? 'Blank page' : p.translation_withheld ? 'Translation withheld' : 'Not yet translated';
     const label = `<p class="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">${note} · original (${escapeHtml(languageLabel)})</p>`;
     const attrs = `lang="${escapeHtml(originalLang || '')}"${originalDir ? ` dir="${originalDir}"` : ''}`;
-    return { n, html: `<div class="my-4 pl-4 border-l-2" style="border-color: var(--border-light)">${label}<div ${attrs}>${originalHtml}</div></div>`, href: pageHref, block: true };
+    return { n, html: `<div class="my-4 pl-4 border-l-2" style="border-color: var(--border-light)">${label}<div ${attrs}>${originalHtml}</div></div>`, href: pageHref, block: true, label: printed };
   };
 
   return (
@@ -329,7 +334,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         <p className="text-sm text-muted mt-3">
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
           {view === 'flow'
-            ? ' The text runs on across pages; the small numbers after a thin rule mark where each printed page begins, and open it beside the scan.'
+            ? ' The text runs on across pages. The small numbers after a thin rule mark where each page begins: the number printed on it where the book has one, otherwise the scan; each opens that page beside the scan.'
             : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
         </p>
       </header>

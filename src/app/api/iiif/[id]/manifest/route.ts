@@ -14,6 +14,7 @@
  * via /api/iiif/{bookId}/canvas/{pageNumber}/{ocr|translation}.
  */
 
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
@@ -218,7 +219,8 @@ export async function GET(
     const pagesLight = await db
       .collection('pages')
       .aggregate([
-        { $match: { book_id: id } },
+        // A repeat capture (#5056) is not a canvas; its leaf is already one.
+        { $match: { book_id: id, ...NOT_REPEAT_CAPTURE } },
         { $sort: { page_number: 1 } },
         {
           $project: {

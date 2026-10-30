@@ -72,6 +72,7 @@ Use at most 6 searches. Then answer with ONLY this JSON on the last line:
     ids.push(a.book_id);
   }
   writeFileSync(`${DIR}/ids.txt`, ids.join('\n') + '\n');
+  writeFileSync(`${DIR}/NO_POSTRUN`, 'held dir: run-batch.sh stops after the searches\n'); // never parse/ingest these answers as a batch
   console.log(`fresh 'found' rows since ${SINCE}: ${rows.length}; held (badged, no credit): ${ids.length}; prompts in ${DIR}`);
 }
 

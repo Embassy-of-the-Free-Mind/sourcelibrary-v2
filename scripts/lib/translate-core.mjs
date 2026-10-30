@@ -24,7 +24,7 @@
 
 import { createHash, randomBytes } from 'crypto';
 import { existsSync } from 'fs';
-import { recountBook } from './page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
@@ -486,8 +486,8 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * page (which makes the model END each page, so a sentence that runs over the turn is completed
  * on one side and dropped or repeated on the other — vol 96 p35 showed 7 of ~21 verses), the
  * block comes back as ONE continuous English text with `<pb n="N"/>` where each source page
- * begins. scripts/lib/folio-markers.mjs splits it into page spans. Measured on the Tengyur pilot
- * only (scripts/eval/folio-markers-5678.mjs); not adopted by any lane.
+ * begins. scripts/lib/folio-markers.mjs splits it into page spans. Adopted by the CLI lane
+ * (scripts/batch/cli-translate.mjs, Latin-script page pairs, #7118); the chained Batch lane's flag stays off.
  */
 export const FOLIO_MARKER_RULE = `**IMPORTANT: The pages below are consecutive pages of ONE continuous text. Translate them as one continuous English text inside a single <translation> wrapper, and mark every page turn inside it:**
 - Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order; the first page's marker opens the text, before its first word.
@@ -1261,7 +1261,7 @@ export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = 
  */
 export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
   return {
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $nin: [null, ''] },
     'ocr.unreadable': { $ne: true },
     page_type: { $nin: [...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes] },

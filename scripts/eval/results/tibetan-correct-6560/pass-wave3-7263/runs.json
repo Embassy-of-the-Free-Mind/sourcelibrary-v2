@@ -1,0 +1,451 @@
+[
+ {
+  "host": "gex45",
+  "book": "69e7aabf80b52390feb19eee",
+  "title": "rGyud 'bum Ca",
+  "run": "cli-ocr-20261028150057-1890641",
+  "read": 416,
+  "written": 31,
+  "guards": {
+   "line count": 4,
+   "rewritten by the other host / unchanged": 2
+  },
+  "derge": 4,
+  "bad_reply": 23,
+  "low": 33,
+  "risky": 85,
+  "risky_pages": 24
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aac080b52390feb1a096",
+  "title": "rGyud 'bum Cha",
+  "run": "cli-ocr-20261028150141-1892070",
+  "read": 470,
+  "written": 11,
+  "guards": {
+   "rewritten by the other host / unchanged": 28,
+   "line count": 3,
+   "25% cap": 1
+  },
+  "derge": 1,
+  "bad_reply": 11,
+  "low": 11,
+  "risky": 25,
+  "risky_pages": 7
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aac35f1a22ab19a8cf73",
+  "title": "rGyud 'bum Ja",
+  "run": "cli-ocr-20261028151529-1913308",
+  "read": 438,
+  "written": 365,
+  "guards": {
+   "line count": 1
+  },
+  "derge": 11,
+  "bad_reply": 61,
+  "low": 537,
+  "risky": 1778,
+  "risky_pages": 320
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aac45f1a22ab19a8d12c",
+  "title": "rGyud 'bum Nya",
+  "run": "cli-ocr-20261028145902-1886657",
+  "read": 397,
+  "written": 356,
+  "guards": {
+   "line count": 14,
+   "25% cap": 2
+  },
+  "derge": 12,
+  "bad_reply": 13,
+  "low": 1086,
+  "risky": 2299,
+  "risky_pages": 337
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aaca5f1a22ab19a8d60f",
+  "title": "rGyud 'bum Da",
+  "run": "cli-ocr-20261028162143-2006705",
+  "read": 452,
+  "written": 358,
+  "guards": {
+   "line count": 17,
+   "25% cap": 6
+  },
+  "derge": 22,
+  "bad_reply": 49,
+  "low": 913,
+  "risky": 2144,
+  "risky_pages": 324
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aacb5f1a22ab19a8d7d8",
+  "title": "rGyud 'bum Na",
+  "run": "cli-ocr-20261028164122-2013013",
+  "read": 514,
+  "written": 446,
+  "guards": {
+   "25% cap": 1,
+   "line count": 9,
+   "Latin": 1
+  },
+  "derge": 7,
+  "bad_reply": 50,
+  "low": 810,
+  "risky": 1960,
+  "risky_pages": 394
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aacd5f1a22ab19a8d9de",
+  "title": "rGyud 'bum Pa",
+  "run": "cli-ocr-20261028162641-2009938",
+  "read": 370,
+  "written": 319,
+  "guards": {
+   "line count": 13,
+   "25% cap": 1
+  },
+  "derge": 7,
+  "bad_reply": 30,
+  "low": 1018,
+  "risky": 1643,
+  "risky_pages": 291
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aad45f1a22ab19a8e058",
+  "title": "rGyud 'bum Tsa",
+  "run": "cli-ocr-20261029025236-3255025",
+  "read": 411,
+  "written": 348,
+  "guards": {
+   "line count": 5
+  },
+  "derge": 12,
+  "bad_reply": 46,
+  "low": 787,
+  "risky": 1689,
+  "risky_pages": 312
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aad55f1a22ab19a8e1f6",
+  "title": "rGyud 'bum Tsha",
+  "run": "cli-ocr-20261029024010-3236974",
+  "read": 380,
+  "written": 291,
+  "guards": {
+   "line count": 17,
+   "25% cap": 9,
+   "Latin": 1
+  },
+  "derge": 6,
+  "bad_reply": 56,
+  "low": 840,
+  "risky": 2047,
+  "risky_pages": 268
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aad75f1a22ab19a8e376",
+  "title": "rGyud 'bum Dza",
+  "run": "cli-ocr-20261029013832-3050701",
+  "read": 415,
+  "written": 340,
+  "guards": {
+   "line count": 4,
+   "25% cap": 1
+  },
+  "derge": 14,
+  "bad_reply": 56,
+  "low": 752,
+  "risky": 1894,
+  "risky_pages": 310
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aad95f1a22ab19a8e519",
+  "title": "rGyud 'bum Wa",
+  "run": "cli-ocr-20261029011654-2971065",
+  "read": 370,
+  "written": 328,
+  "guards": {
+   "line count": 5,
+   "25% cap": 4
+  },
+  "derge": 10,
+  "bad_reply": 23,
+  "low": 629,
+  "risky": 1657,
+  "risky_pages": 293
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aada5f1a22ab19a8e68d",
+  "title": "rNying rgyud Ka",
+  "run": "cli-ocr-20261029014744-3092564",
+  "read": 476,
+  "written": 436,
+  "guards": {
+   "line count": 8
+  },
+  "derge": 13,
+  "bad_reply": 19,
+  "low": 1149,
+  "risky": 2093,
+  "risky_pages": 398
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aadc5f1a22ab19a8e86d",
+  "title": "rNying rgyud Kha",
+  "run": "cli-ocr-20261029012454-3000303",
+  "read": 465,
+  "written": 423,
+  "guards": {
+   "line count": 10,
+   "25% cap": 2,
+   "Latin": 1
+  },
+  "derge": 22,
+  "bad_reply": 7,
+  "low": 512,
+  "risky": 1283,
+  "risky_pages": 328
+ },
+ {
+  "host": "gex45",
+  "book": "69e7aade5f1a22ab19a8ea42",
+  "title": "rNying rgyud Ga",
+  "run": "cli-ocr-20261028163053-2011200",
+  "read": 391,
+  "written": 304,
+  "guards": {
+   "25% cap": 2,
+   "line count": 10
+  },
+  "derge": 38,
+  "bad_reply": 37,
+  "low": 643,
+  "risky": 1665,
+  "risky_pages": 272
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aac35f1a22ab19a8cf73",
+  "title": "rGyud 'bum Ja",
+  "run": "cli-ocr-20261028154015-1324250",
+  "read": null,
+  "written": 36,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 61,
+  "risky": 292,
+  "risky_pages": 32
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aac45f1a22ab19a8d12c",
+  "title": "rGyud 'bum Nya",
+  "run": "cli-ocr-20261028155129-1412858",
+  "read": null,
+  "written": 14,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 46,
+  "risky": 58,
+  "risky_pages": 14
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aac65f1a22ab19a8d2bc",
+  "title": "rGyud 'bum Ta",
+  "run": "cli-ocr-20261028165459-1706626",
+  "read": null,
+  "written": 324,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 600,
+  "risky": 1428,
+  "risky_pages": 282
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aac85f1a22ab19a8d43f",
+  "title": "rGyud 'bum Tha",
+  "run": "cli-ocr-20261028171913-1788350",
+  "read": null,
+  "written": 414,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 781,
+  "risky": 1560,
+  "risky_pages": 342
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aaca5f1a22ab19a8d60f",
+  "title": "rGyud 'bum Da",
+  "run": "cli-ocr-20261029003236-3702827",
+  "read": null,
+  "written": 27,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 115,
+  "risky": 250,
+  "risky_pages": 25
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aacb5f1a22ab19a8d7d8",
+  "title": "rGyud 'bum Na",
+  "run": "cli-ocr-20261029003348-3703973",
+  "read": null,
+  "written": 22,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 61,
+  "risky": 112,
+  "risky_pages": 20
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aacd5f1a22ab19a8d9de",
+  "title": "rGyud 'bum Pa",
+  "run": "cli-ocr-20261029003459-3705367",
+  "read": null,
+  "written": 14,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 22,
+  "risky": 44,
+  "risky_pages": 13
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aace5f1a22ab19a8db52",
+  "title": "rGyud 'bum Pha",
+  "run": "cli-ocr-20261029014243-3998239",
+  "read": null,
+  "written": 337,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 1125,
+  "risky": 2230,
+  "risky_pages": 317
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aad05f1a22ab19a8dce9",
+  "title": "rGyud 'bum Ba",
+  "run": "cli-ocr-20261029015440-4027661",
+  "read": null,
+  "written": 366,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 923,
+  "risky": 2746,
+  "risky_pages": 339
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aad25f1a22ab19a8de9e",
+  "title": "rGyud 'bum Ma",
+  "run": "cli-ocr-20261029025514-40974",
+  "read": null,
+  "written": 337,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 698,
+  "risky": 1380,
+  "risky_pages": 302
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aad45f1a22ab19a8e058",
+  "title": "rGyud 'bum Tsa",
+  "run": "cli-ocr-20261029025657-43155",
+  "read": null,
+  "written": 17,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 39,
+  "risky": 111,
+  "risky_pages": 16
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aabb80b52390feb19b6e",
+  "title": "rGyud 'bum Ga",
+  "run": "cli-ocr-20261028131903-830525",
+  "read": null,
+  "written": 361,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 352,
+  "risky": 1068,
+  "risky_pages": 270
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aabd80b52390feb19d0a",
+  "title": "rGyud 'bum Nga",
+  "run": "cli-ocr-20261028133751-883374",
+  "read": null,
+  "written": 441,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 511,
+  "risky": 1603,
+  "risky_pages": 370
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aabf80b52390feb19eee",
+  "title": "rGyud 'bum Ca",
+  "run": "cli-ocr-20261028142221-1010155",
+  "read": null,
+  "written": 372,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 677,
+  "risky": 1324,
+  "risky_pages": 313
+ },
+ {
+  "host": "cloudlayer",
+  "book": "69e7aac080b52390feb1a096",
+  "title": "rGyud 'bum Cha",
+  "run": "cli-ocr-20261028145608-1179909",
+  "read": null,
+  "written": 452,
+  "guards": null,
+  "derge": null,
+  "bad_reply": null,
+  "low": 1688,
+  "risky": 1937,
+  "risky_pages": 370
+ }
+]

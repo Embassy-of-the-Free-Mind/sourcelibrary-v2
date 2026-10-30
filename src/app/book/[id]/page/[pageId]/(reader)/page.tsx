@@ -1,10 +1,9 @@
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import Reader2C from '@/components/reader-v2/Reader2C';
-import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
@@ -23,7 +22,8 @@ import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-proj
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
 import { ocrMeasure } from '@/lib/ocr-measure';
-import { getSplitLeafId, isArchivedSplit } from '../page-data';
+import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -136,7 +136,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const [bookResult, navPages, musicTranscriptions] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
+      .find(readerPageListFilter(currentPage.book_id as string))
       // Image fields are part of the nav list because the reader's filmstrip
       // draws a thumbnail per page. Without them getPageThumbUrl has nothing
       // to resolve and every slot renders empty — books with no pre-sized
@@ -151,7 +151,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(isReaderListedPage))
       .catch((err) => {
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
@@ -188,12 +188,18 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
     if (leafId) permanentRedirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${leafId}`, lang));
   }
 
+  // A hidden repeat capture goes to its kept capture (#5056), for the same
+  // embed/room reason. 307: the hide is reversible. /preview stays put.
+  if (!allowHidden && typeof currentPage.repeat_of === 'string') {
+    const keptId = await getRepeatKeeperId(scopedBookId, currentPage.repeat_of);
+    if (keptId) redirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${keptId}`, lang));
+  }
+
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
-  // page turn needs no second request. Never throws; most books have no rows. Partner rooms keep the old reader.
+  // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
+  // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
-  const [qualityWarnings, scanGaps] = ctx?.isEmbedded
-    ? [undefined, undefined]
-    : await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
+  const [qualityWarnings, scanGaps] = await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   // On an English edition the leaf's own words are the text: a stored
@@ -245,13 +251,15 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
-          BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
-          old reader until BPH have seen it and approved it. Not caution for
-          its own sake: the new reader's Cite and Share build absolute URLs
-          against sourcelibrary.org rather than the host page, so a scholar
-          citing a page inside a partner's site would be handed a URL pointing
-          away from it.
+      {/* One reader everywhere. Partner reading rooms (BPH, EFM, every
+          /embed/** iframe and tenant subdomain) stayed on the old reader
+          (PageEditorClient) until BPH had seen the redesign, because its Cite
+          and Share build URLs against sourcelibrary.org rather than the host
+          page. BPH/EFM approved the switch on 2026-10-29, via Derek: the
+          sourcelibrary.org permalink is the citation (persistent, DOI-backed,
+          the same everywhere), and the reader inside the Embassy frame should
+          be the one sourcelibrary.org shows. Reader2C hides the site menu and
+          WebMCP when embedded and routes its links through useEmbedHref.
           
           Books we hold a facsimile fount for are read in their own type
           (#4083); `display: contents` so this wrapper carries the font
@@ -261,22 +269,14 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
         style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
       >
-        {ctx?.isEmbedded ? (
-          <PageEditorClient
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-          />
-        ) : (
-          <Reader2C
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-            qualityWarnings={qualityWarnings}
-            scanGaps={scanGaps}
-            ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
-          />
-        )}
+        <Reader2C
+          initialBook={book}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+          qualityWarnings={qualityWarnings}
+          scanGaps={scanGaps}
+          ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
+        />
       </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />

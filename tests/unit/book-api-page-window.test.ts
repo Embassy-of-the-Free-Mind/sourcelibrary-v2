@@ -42,7 +42,8 @@ function pagesCollection() {
       };
       return cursor;
     },
-    countDocuments: async () => TOTAL,
+    // The global route counts all pages, then subtracts the repeat captures (#5056): none here.
+    countDocuments: async (q: Record<string, unknown> = {}) => ('repeat_of' in q && q.repeat_of !== null ? 0 : TOTAL),
     findOne: async () => null,
   };
 }

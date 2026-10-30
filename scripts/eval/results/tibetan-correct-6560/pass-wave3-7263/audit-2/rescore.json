@@ -1,0 +1,138 @@
+{
+ "pages": 8,
+ "pass": 3,
+ "fail": 5,
+ "fixed_severe": 8,
+ "fixed_minor": 16,
+ "intro_severe": 3,
+ "intro_minor": 5,
+ "pages_with_severe_introduced": 3,
+ "page_rows": [
+  {
+   "page_id": "69e7aacb5f1a22ab19a8d7da",
+   "page_number": 2,
+   "book_id": "69e7aacb5f1a22ab19a8d7d8",
+   "fixed_severe": 0,
+   "fixed_minor": 0,
+   "intro_severe": 0,
+   "intro_minor": 1,
+   "unclear": 0,
+   "severe_introduced": [],
+   "fixed": 0,
+   "introduced": 1,
+   "net": -1,
+   "pass": false
+  },
+  {
+   "page_id": "69e7aada5f1a22ab19a8e700",
+   "page_number": 115,
+   "book_id": "69e7aada5f1a22ab19a8e68d",
+   "fixed_severe": 0,
+   "fixed_minor": 4,
+   "intro_severe": 1,
+   "intro_minor": 2,
+   "unclear": 0,
+   "severe_introduced": [
+    "negation: རྨག→ཉི་མ (line 11)"
+   ],
+   "fixed": 4,
+   "introduced": 3,
+   "net": 1,
+   "pass": false
+  },
+  {
+   "page_id": "69e7aadc5f1a22ab19a8e91b",
+   "page_number": 174,
+   "book_id": "69e7aadc5f1a22ab19a8e86d",
+   "fixed_severe": 2,
+   "fixed_minor": 6,
+   "intro_severe": 1,
+   "intro_minor": 0,
+   "unclear": 1,
+   "severe_introduced": [
+    "mantra: ནྲི→ནྲྀ (line 6)"
+   ],
+   "fixed": 8,
+   "introduced": 1,
+   "net": 7,
+   "pass": false
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2bd",
+   "page_number": 199,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "fixed_severe": 0,
+   "fixed_minor": 0,
+   "intro_severe": 0,
+   "intro_minor": 2,
+   "unclear": 0,
+   "severe_introduced": [],
+   "fixed": 0,
+   "introduced": 2,
+   "net": -2,
+   "pass": false
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2d7",
+   "page_number": 225,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "fixed_severe": 3,
+   "fixed_minor": 5,
+   "intro_severe": 0,
+   "intro_minor": 0,
+   "unclear": 1,
+   "severe_introduced": [],
+   "fixed": 8,
+   "introduced": 0,
+   "net": 8,
+   "pass": true
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2da",
+   "page_number": 228,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "fixed_severe": 1,
+   "fixed_minor": 1,
+   "intro_severe": 1,
+   "intro_minor": 0,
+   "unclear": 1,
+   "severe_introduced": [
+    "mantra: ཧ→ཧཱ (line 11)"
+   ],
+   "fixed": 2,
+   "introduced": 1,
+   "net": 1,
+   "pass": false
+  },
+  {
+   "page_id": "69e7aad55f1a22ab19a8e2dd",
+   "page_number": 231,
+   "book_id": "69e7aad55f1a22ab19a8e1f6",
+   "fixed_severe": 2,
+   "fixed_minor": 0,
+   "intro_severe": 0,
+   "intro_minor": 0,
+   "unclear": 3,
+   "severe_introduced": [],
+   "fixed": 2,
+   "introduced": 0,
+   "net": 2,
+   "pass": true
+  },
+  {
+   "page_id": "69e7aada5f1a22ab19a8e7f8",
+   "page_number": 363,
+   "book_id": "69e7aada5f1a22ab19a8e68d",
+   "fixed_severe": 0,
+   "fixed_minor": 0,
+   "intro_severe": 0,
+   "intro_minor": 0,
+   "unclear": 5,
+   "severe_introduced": [],
+   "fixed": 0,
+   "introduced": 0,
+   "net": 0,
+   "pass": true
+  }
+ ]
+}

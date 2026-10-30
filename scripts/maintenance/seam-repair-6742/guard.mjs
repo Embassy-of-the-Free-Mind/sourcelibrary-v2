@@ -17,6 +17,8 @@
  *   SEAM_GUARD_CLAUDE_DAILY      joins the Sonnet fallback may check per UTC day, box-wide (default 1500)
  *   SEAM_GUARD_MAX_WEEKLY        no Claude call when the box account's weekly meter is at or over this % (default 50)
  *   SEAM_GUARD_APPLY=major       in apply mode, write only repairs labelled severity major; plan the rest as dry
+ *   SEAM_GUARD_HELD_SAMPLE       share of writes to HELD books checked anyway, seeded by page id (default 0.05):
+ *                                agy only, never Claude, always dry (HELD_SAMPLE below)
  *
  * translate-core's writePageTranslation calls runSeamGuard() after a translation is committed. For the page just written
  * it checks the join BEFORE it (the previous page) and the join AFTER it (the next page), when the neighbour holds an
@@ -64,6 +66,18 @@ import { geminiPack, agyOpen, DEFAULT_MODEL as GEMINI } from './gemini-repair.mj
 export const GUARD_TIMEOUT_MS = 8 * 60e3;
 export const DEFAULT_OUT = '/mnt/HC_Volume_105839809/seam-guard-6742';
 export const CLAUDE_DAILY = 1500, CLAUDE_MAX_WEEKLY = 50;
+/**
+ * Held books (#7118). On 10-26..29 the guard skipped 61K of 62K writes as book-held-or-missing: held books go public
+ * later, and their seams were never measured. A seeded share of held-book writes is checked: Gemini on agy only (a lock
+ * or quota reply skips the join; never the Sonnet fallback), and dry whatever the mode (proposals, no write). Rows
+ * carry `held: true`, and guardReport keeps their rates apart. The default is 0.05, not the brief's 0.10: at ~0.78
+ * checked joins per write (the 48 h dry run), 10% of ~15K held writes a day is ~8.3K Flash calls a week, which on top
+ * of main's ~30K/week (calls_24h 4,269 on 10-29) and the night's ~17.5K would take the ~104K/week pool past half.
+ */
+export const HELD_SAMPLE = 0.05;
+export const heldSampleRate = (env = process.env) => { const v = Number(env.SEAM_GUARD_HELD_SAMPLE ?? HELD_SAMPLE); return Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : HELD_SAMPLE; };
+/** Whether a held book's write of `pageId` is in the sample: a seeded hash of the page id, so the same page always is. */
+export const heldSampled = (pageId, rate) => rate > 0 && parseInt(sha(`7118:${pageId}`).slice(0, 8), 16) / 0x100000000 < rate;
 /** SEAM_GUARD_APPLY: which accepted repairs `apply` mode writes — `all` (default) or `major` (#7118: on 88 blind-judged
  *  Gemini-translated proposals, majors were 28/28 preferred with 0 worse; minors had the only 2 worse). */
 export const applyScope = (env = process.env) => (env.SEAM_GUARD_APPLY === 'major' ? 'major' : 'all');
@@ -148,13 +162,16 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
     if (!mode || !page?.id || !bookId) return { ...tally, skipped: 'off' };
     // the caller's book object may lack language or the hold (translate-worker's does): read the two fields fresh
     const b = book?.id && 'language' in book && 'pipeline_auto' in book ? book : await db.collection('books').findOne({ id: bookId }, { projection: { _id: 0, id: 1, language: 1, pipeline_auto: 1 } });
-    if (!b || b.pipeline_auto?.hold) tally.skipped = 'book-held-or-missing';   // recorded below, as a write seen
+    const held = !!b?.pipeline_auto?.hold;
+    if (!b || (held && !heldSampled(page.id, heldSampleRate(env)))) tally.skipped = 'book-held-or-missing';   // recorded below, as a write seen
     else {
+      if (held) { tally.held = true; mode = 'dry'; tally.mode = 'dry'; }   // a held book's sample: proposals only, agy only
+      const tag = held ? { held: true } : {};
       const pn = Number(page.page_number ?? (await db.collection('pages').findOne({ id: page.id }, { projection: { page_number: 1 } }))?.page_number);
       const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: pn - 2, $lte: pn + 2 } }, { projection: PROJ }).toArray();
       const all = joinsToCheck(rows, pn, asOf).map(([ra, rb, r0, r1]) => joinItem(b, ra, rb, r0, r1)).filter(Boolean);
       const fresh = all.filter(it => !CHECKED.has(checkedKey(it)));
-      for (const it of fresh.filter(outranksRepairer)) append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: 'opus-translation', models: [it.modelA, it.modelB] });
+      for (const it of fresh.filter(outranksRepairer)) append(log, { at: new Date().toISOString(), mode, ...tag, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: 'opus-translation', models: [it.modelA, it.modelB] });
       const items = fresh.filter(it => !outranksRepairer(it));
       if (items.length < fresh.length) tally.opusTranslation = fresh.length - items.length;
       tally.joins = items.length;
@@ -170,6 +187,7 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
           tally.calls += res.r.calls || 1;
           if (res.r.cls === 'quota') { agyShut = 'agy-quota'; res = null; }
         }
+        if (!res && held) { tally.skipped = `${agyShut}+held-agy-only`; append(log, { at: new Date().toISOString(), mode, ...tag, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: tally.skipped }); break; }
         if (!res) {
           const gate = claudeGate({ count: claudeCountToday(out), cap, usage: usageFn(), maxWeekly });
           if (gate) { tally.skipped = `${agyShut}+${gate}`; append(log, { at: new Date().toISOString(), mode, trigger: page.id, book: b.id, join: it.id, p: it.p, skipped: tally.skipped }); break; }
@@ -188,7 +206,7 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
         else if (why) tally.refused[why] = (tally.refused[why] || 0) + 1;
         else accepted.push({ id: it.id, it, x: { ...x, model }, arm, fixed: applyRepair(it, x.repair), verdict: { sampled: false, guard: true } });
         (tally.arms ||= {})[arm] = (tally.arms[arm] || 0) + 1;
-        const row = { at: new Date().toISOString(), mode, arm, trigger: page.id, book: b.id, join: it.id, p: it.p, label: x?.label ?? null, labels: x?.labels ?? null, severity: x?.severity ?? null,
+        const row = { at: new Date().toISOString(), mode, ...tag, arm, trigger: page.id, book: b.id, join: it.id, p: it.p, label: x?.label ?? null, labels: x?.labels ?? null, severity: x?.severity ?? null,
           refused: x?.label === 'ok' ? null : why, accepted: !why && x?.label !== 'ok', repair: x?.repair ?? null, secs: Math.round(r.secs || 0), cls: r.cls || null, ...(arm === 'sonnet' ? { usage: usageOf(r) } : {}) };
         append(log, row);
         if (x && x.label !== 'ok') append(path.join(out, 'proposals.jsonl'), { ...row, it, x: { ...x, model } });
@@ -196,8 +214,9 @@ export async function seamGuardAfterWrite(db, { page, book, mode, out = process.
       tally.accepted = accepted.length;
       // One write per arm, so each repair carries its own repairer's provenance.
       // In apply mode with SEAM_GUARD_APPLY=major, only majors are written; the rest are planned as in dry mode.
-      const applies = (a) => mode === 'apply' && (applyScope(env) === 'all' || a.x.severity === 'major');
-      for (const [arm, doApply] of [...new Set(accepted.map(a => `${a.arm}|${applies(a)}`))].map(k => k.split('|')).map(([a, d]) => [a, d === 'true'])) {
+      const applies = (a) => !held && mode === 'apply' && (applyScope(env) === 'all' || a.x.severity === 'major');
+      // A held book's sample plans nothing: writeRepairs refuses a held book anyway, and the proposals are the record.
+      for (const [arm, doApply] of [...new Set((held ? [] : accepted).map(a => `${a.arm}|${applies(a)}`))].map(k => k.split('|')).map(([a, d]) => [a, d === 'true'])) {
         const rows = accepted.filter(a => a.arm === arm && applies(a) === doApply), claude = arm !== 'gemini', model = claude ? CLAUDE_MODEL[arm] : GEMINI;
         const w = await writeRepairs(db, rows, { out, doApply, cli: claude ? 'claude' : 'agy', model, allowHidden: true, throwOnStop: true, callSite: `${TAG}:write-guard`,
           promptName: `seam-repair-6742 write-time guard: label+minimal edge repair (opus-reference PROMPT, tight windows, ${arm})`, sentHash: sha(`guard:${model}`),
@@ -263,9 +282,16 @@ export function stageSample({ out = DEFAULT_OUT, to, n = 60, since = null, arm =
 /** The guard's numbers since `since`: writes seen, joins checked, share defective, accepted, arm split, Claude calls a day. */
 export function guardReport({ out = DEFAULT_OUT, since = null }) {
   const keep = (r) => !since || new Date(r.at) >= since;
-  const writes = readJsonl(path.join(out, 'guard-writes.jsonl')).filter(keep), joins = readJsonl(path.join(out, 'guard.jsonl')).filter(keep);
+  const writes = readJsonl(path.join(out, 'guard-writes.jsonl')).filter(keep), allJoins = readJsonl(path.join(out, 'guard.jsonl')).filter(keep);
+  // the held-book sample (#7118) is reported apart: its rates are not the public books' rates
+  const joins = allJoins.filter(j => !j.held), heldJoins = allJoins.filter(j => j.held);
   const judged = joins.filter(j => !j.skipped), labelled = judged.filter(j => j.label);
   const count = (xs, f) => xs.reduce((a, x) => { const k = f(x); if (k != null) a[k] = (a[k] || 0) + 1; return a; }, {});
+  const hJudged = heldJoins.filter(j => !j.skipped), hLab = hJudged.filter(j => j.label), hDef = hLab.filter(j => j.label !== 'ok');
+  const held = { writesSampled: writes.filter(w => w.held).length, joinsChecked: hJudged.length, labelled: hLab.length, defective: hDef.length,
+    shareDefective: hLab.length ? +(hDef.length / hLab.length).toFixed(3) : null, majors: hLab.filter(j => j.severity === 'major').length,
+    shareMajor: hLab.length ? +(hLab.filter(j => j.severity === 'major').length / hLab.length).toFixed(3) : null, labels: count(hLab, j => j.label), accepted: hJudged.filter(j => j.accepted).length,
+    joinSkips: count(heldJoins.filter(j => j.skipped), j => j.skipped) };
   const byDay = count(judged.filter(j => j.arm === 'sonnet'), j => j.at.slice(0, 10));
   const usd = judged.filter(j => j.arm === 'sonnet').reduce((a, j) => a + (j.usage?.list_usd || 0), 0);
   return { since: since?.toISOString() ?? null, writesSeen: writes.length, writesByMode: count(writes, w => w.mode), writeSkips: count(writes, w => w.skipped), errors: writes.filter(w => w.error).length,
@@ -273,7 +299,7 @@ export function guardReport({ out = DEFAULT_OUT, since = null }) {
     shareDefective: labelled.length ? +(labelled.filter(j => j.label !== 'ok').length / labelled.length).toFixed(3) : null,
     majors: labelled.filter(j => j.severity === 'major').length, labels: count(labelled, j => j.label), accepted: judged.filter(j => j.accepted).length,
     refused: count(judged.filter(j => j.refused), j => j.refused), arms: count(judged, j => j.arm), joinSkips: count(joins.filter(j => j.skipped), j => j.skipped),
-    sonnetJoinsByDay: byDay, sonnetListUsd: +usd.toFixed(2), wouldWrite: writes.reduce((a, w) => a + (w.write?.written || 0), 0), wouldWritePages: writes.reduce((a, w) => a + (w.write?.pagesWritten || 0), 0) };
+    sonnetJoinsByDay: byDay, sonnetListUsd: +usd.toFixed(2), wouldWrite: writes.reduce((a, w) => a + (w.write?.written || 0), 0), wouldWritePages: writes.reduce((a, w) => a + (w.write?.pagesWritten || 0), 0), held };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

@@ -8,7 +8,10 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS, FIRST_READ_ROUTE_AT4, judgeInput, promptTemplateSha, laneTask } from '../../scripts/eval/lane-judge-sampler.mjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — plain-JS module
+import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../../scripts/batch/siku-translate-lane.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -160,6 +163,17 @@ describe('exportScore', () => {
     expect(x.by_script).toEqual({ manuscript: { accept: '0/1', wrong_text_pages: '1/1', books: 1 }, print: { accept: '8/10', wrong_text_pages: '1/10', books: 8 }, unknown: { accept: '1/1', wrong_text_pages: '0/1', books: 1 } });
   });
 
+  it('cuts the counted routes by script type in the shape build.py\'s script split reads (mixed counts as print)', () => {
+    const r = fixture();
+    r.push(rec('item', 42, 1, true, 5, false, 'lite>agy-flash-low', { script_type: 'mixed' }), rec('item', 43, 1, false, 2, true, 'lite>agy-flash-low', { script_type: 'manuscript' }));
+    const s = exportScore(r);
+    expect(s.by_script_cells['german-lite|print'].routes['lite>agy-flash-low']).toMatchObject({ accept: '9/11', wrong_text_pages: '1/11', books: 9 });
+    expect(s.by_script_cells['german-lite|manuscript'].routes['lite>agy-flash-low']).toMatchObject({ accept: '0/1', wrong_text_pages: '1/1', books: 1 });
+    expect(s.by_script_cells['german-lite|unknown']).toBeUndefined();
+    // a route whose control failed is not router evidence in any script variant
+    expect(Object.values(s.by_script_cells).some((c) => (c as { routes: Record<string, unknown> }).routes['agy-flash-low-read'])).toBe(false);
+  });
+
   it('checks the shape of what it reads', () => {
     expect(validRecord({ _id: 'a', kind: 'item', page_id: 'p', book_id: 'b', cell: 'c', route: 'r', lane: 'l', judge: {}, run_id: 'x', judged_at: 't', verdict: { accept: true, fidelity: 9 } })).toBe(false);
     expect(validRecord({ _id: 'a', kind: 'note', page_id: 'p', book_id: 'b', cell: 'c', route: 'r', lane: 'l', judge: {}, run_id: 'x', judged_at: 't' })).toBe(false);
@@ -190,6 +204,23 @@ describe('addEvidence (rules.json as text)', () => {
   });
 });
 
+describe('rebuildInputs', () => {
+  it('copies every file build.py opens, the script split\'s waiting shares too, and never our own evidence', () => {
+    const rules = { inputs: { v2: 'scripts/eval/estimator/ocr/v2.json' }, script_split: { on: true, waiting: 'scripts/eval/router-next-7263/results/waiting-split.json' },
+      cells: [{ id: 'german-lite', routes: [{ id: 'a', evidence: [{ score: EVIDENCE_PATH }, { score: 'scripts/eval/x/score.json' }] }, { id: 'b' }] }] };
+    const need = rebuildInputs(rules);
+    expect(need).toContain('scripts/eval/router-next-7263/results/waiting-split.json');
+    expect(need).toContain('scripts/eval/x/score.json');
+    expect(need).not.toContain(EVIDENCE_PATH); expect(need).not.toContain(BY_SCRIPT_PATH);
+    expect(rebuildInputs({ ...rules, script_split: { on: false, waiting: 'w.json' } })).not.toContain('w.json');
+  });
+
+  it('reads every input the router table on disk names', () => {
+    const rules = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    for (const p of rebuildInputs(rules)) expect(fs.existsSync(path.resolve(__dirname, '../..', p)), p).toBe(true);
+  });
+});
+
 describe('the judge is the router tests\' judge', () => {
   it('pins the route-judge prompt template: a verdict under another rubric does not pool with these', () => {
     // If judgePrompt changes, this hash changes: new verdicts are a new instrument (a new route or a new source),
@@ -199,5 +230,197 @@ describe('the judge is the router tests\' judge', () => {
   it('names weeks for the weekly controls', () => {
     expect(isoWeek(new Date('2026-10-28T12:00:00Z'))).toBe('2026-W44');
     expect(isoWeek(new Date('2027-01-01T12:00:00Z'))).toBe('2026-W53');
+  });
+});
+
+describe('planted controls (#7611)', () => {
+  const page = (i: number) => `<page-num>${i}</page-num>
+<header>LIBER PRIMVS</header>
+Primus versus capitis qui caput tenet et nihil aliud.
+Quod si quis in hac arte veritatem quærit, ex duabus
+partibus constare dicitur, quarum prima est ratione
+animi, altera corporis operatione perficitur. Hoc anno
+1563 scripsit Paracelsus in Basilea de compositione
+lapidis, & septem metallorum generatione tractauit.
+Quod etiam in Germania multi fecerunt. Nam qui
+substantiam rei non intelligit, nihil efficit in hac
+Ultimus versus paginae, ubi custos stat.`;
+  const src = (n: number, perBook = 1) => Array.from({ length: n }, (_, i) => ({ rec: { _id: `lj${i}`, book_id: `b${Math.floor(i / perBook)}`, page_id: `p${i}`, lang: 'Latin' }, text: page(i) }));
+
+  it('plants the owed number, one per book, rotating the kind from the store\'s count, never reusing a source', () => {
+    const a = planPlanted(src(10, 2), { owed: 3, prior: [], seed: 5 });
+    expect(a).toHaveLength(3);
+    expect(new Set(a.map((x: { rec: { book_id: string } }) => x.rec.book_id)).size).toBe(3);
+    expect(a.map((x: { plant: { kind: string } }) => x.plant.kind)).toEqual(['B', 'C', 'D']);
+    const prior = [{ planted_from: 'lj0' }, { planted_from: 'lj1' }, { planted_from: 'lj2' }, { planted_from: 'lj3' }, { planted_from: 'lj4' }];
+    const b = planPlanted(src(10), { owed: 2, prior, seed: 5 });
+    expect(b.map((x: { plant: { kind: string } }) => x.plant.kind)).toEqual(['C', 'D']);   // 5 before: the 6th is C
+    for (const x of b) expect(prior.map((p) => p.planted_from)).not.toContain(x.rec._id);
+    for (const x of b) expect(x.plantedText).not.toBe(x.text);
+  });
+
+  it('holds a kind across pages: a page with no number does not skip B', () => {
+    const noNumber = { rec: { _id: 'lj00', book_id: 'bz', page_id: 'pz', lang: 'Latin' }, text: page(0).replace('1563 ', '').replace('duabus', 'multis').replace('septem ', '').replace(/prima/, 'una') };
+    const r = planPlanted([noNumber, ...src(3)], { owed: 1, seed: 1 });
+    expect(r[0].plant.kind).toBe('B'); expect(r[0].rec._id).not.toBe('lj00');
+    expect(planPlanted([noNumber], { owed: 1, seed: 1 })[0].plant.kind).toBe('C');   // no page has a number: the next kind
+  });
+
+  it('is deterministic by seed, whatever order the sources arrive in', () => {
+    const s = src(12);
+    const ids = (r: { rec: { _id: string }; plant: unknown }[]) => r.map((x) => [x.rec._id, x.plant]);
+    expect(ids(planPlanted([...s].reverse(), { owed: 4, seed: 9 }))).toEqual(ids(planPlanted(s, { owed: 4, seed: 9 })));
+    expect(() => planPlanted(s, { owed: 1 })).toThrow();
+  });
+
+  const pl = (i: number, accept: boolean, named = false, at = '2026-10-28T00:00:00Z') => ({ kind: 'planted', judged_at: at, plant: { kind: 'C', before: 'pietatem', after: 'humiditatem' },
+    verdict: { accept, fidelity: accept ? 5 : 3, defects: named ? [{ class: 'O6', quote: 'ueram humiditatem', severity: 'misleads' }] : [] } });
+
+  it('scores a route: caught = rejected or named; fails it below the bar only from 8 plants in the window', () => {
+    const now = Date.parse('2026-10-29T00:00:00Z');
+    const seven = [...Array(4)].map((_, i) => pl(i, true)).concat([...Array(3)].map((_, i) => pl(i, false)));
+    expect(plantedBlock(seven, { now }).validated).toBeNull();                  // 3/7 but under 8 plants: no verdict yet
+    const eight = [...seven, pl(9, true, true)];
+    const b = plantedBlock(eight, { now });
+    expect(b.rolling.caught).toBe('4/8'); expect(b.failed).toBe(true); expect(b.validated).toBe(false);
+    expect(b.ci95[0]).toBeLessThan(0.5); expect(b.by_kind.C).toBe('4/8');
+    const good = [...Array(8)].map((_, i) => pl(i, i === 0));                   // 7/8 caught
+    expect(plantedBlock(good, { now }).validated).toBe(true);
+    // old plants leave the window: 8 misses two months ago do not fail a route that now catches
+    const old = [...Array(8)].map((_, i) => pl(i, true, false, '2026-08-01T00:00:00Z'));
+    expect(plantedBlock([...old, ...good], { now }).validated).toBe(true);
+    expect(PLANT_BAR).toBe(0.8);
+  });
+
+  it('moves a route whose judge misses planted errors to routes_not_counted, and carries the catch rate on every route', () => {
+    let n = 0;
+    const base = (kind: string, book: number, accept: boolean, extra = {}) => ({ _id: `x${n++}`, kind, page_id: `p${book}`, book_id: `b${book}`, page_number: 1, cell: 'french-lite', route: 'lite>agy-flash-low', lane: 'agy-correct-lite-7558',
+      lang: 'French', script_type: 'print', write: {}, judge: { model_reported: 'claude-opus-5-5' }, run_id: 'r', judged_at: '2026-10-28T00:00:00Z', week: '2026-W44', verdict: { accept, fidelity: accept ? 5 : 1, defects: [] }, ...extra });
+    const recs = [...Array(10)].map((_, i) => base('item', i, true)).concat([base('wrong_page', 0, false), base('wrong_page', 1, false)]);
+    const plants = (k: number) => [...Array(8)].map((_, i) => ({ ...base('planted', i, i >= k), plant: { kind: 'B', before: '3', after: '6' } }));
+    const ok = exportScore([...recs, ...plants(7)], { generatedAt: '2026-10-29T00:00:00Z' }).cells['french-lite'];
+    expect(ok.routes['lite>agy-flash-low'].judge_planted).toMatchObject({ caught: '7/8', validated: true });
+    expect(ok.routes['lite>agy-flash-low'].accept).toBe('10/10');                     // plants are never evidence
+    const bad = exportScore([...recs, ...plants(5)], { generatedAt: '2026-10-29T00:00:00Z' }).cells['french-lite'];
+    expect(bad.routes['lite>agy-flash-low']).toBeUndefined();
+    expect(bad.routes_not_counted['lite>agy-flash-low'].not_counted_because[0]).toMatch(/judge-unvalidated: planted catch 5\/8/);
+    expect(bad.controls['lite>agy-flash-low']).toMatchObject({ wrong_page_passed: true, passed: false });
+    expect(validRecord({ ...base('planted', 1, true) })).toBe(true);
+  });
+});
+
+describe('the first-read lane (#7701)', () => {
+  it('is drawn as an unread lane: no draft beside it, its pages mapped to the no-stored-text cells', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.stamp).toEqual({ 'ocr.pipeline': 'agy-first-read-7701' });
+    expect(L.reason.test('#7701 first-read lane: visible book held scans-only-publish-7176 (the hold stays)')).toBe(true);
+    expect([L.cell('German'), L.route('German')]).toEqual(['german-blank', 'agy-flash-low@4-written']);
+    expect([L.cell('de'), L.route('de')]).toEqual(['german-blank', 'agy-flash-low@4-written']);
+    expect([L.cell('French'), L.route('French')]).toEqual(['french-blank', 'agy-flash-low-written']);
+    expect(L.cell('English')).toBeNull();
+  });
+  it('the second pass is its own lane, judged beside the first read it corrected', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-correct-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBeFalsy();
+    expect(L.draft_models).toEqual(['gemini-3.8-flash-low']);
+    expect([L.cell('German'), L.route('German'), L.draft_route('German')]).toEqual(['german-blank', 'agy-flash-low@4>agy-flash-low-written', 'agy-flash-low@4-written']);
+    expect(L.reason.test('#7701 first-read lane correction: the first read (agy-first-read-7701) corrected')).toBe(true);
+    // the first-read lane's reason does not take the correction's revision rows
+    const A = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    expect(A.reason.test('#7701 first-read lane correction: the first read corrected')).toBe(false);
+  });
+  it('every cell and route it names is in rules.json', () => {
+    const rules = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    const has = (cell: string, route: string) => rules.cells.find((c: { id: string }) => c.id === cell)?.routes.some((r: { id: string }) => r.id === route);
+    for (const [cell, route] of [...Object.values(FIRST_READ_CELLS), ...Object.values(FIRST_READ_CORRECT_CELLS)] as [string, string][]) expect(has(cell, route)).toBe(true);
+    expect(has('french-blank', FIRST_READ_ROUTE_AT4.fra)).toBe(true);
+    expect(has('latin-blank', 'pero>agy-flash-low-written')).toBe(true);
+  });
+  it('credits a French page to the route its write records: 4 a call after the #7701 cheap-routes switch, 1 before', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'agy-first-read-7701');
+    const page = (n: number | undefined) => ({ ocr: { engine: { run: n ? { call_pages: n } : {} } } });
+    expect(L.route('French', page(4))).toBe('agy-flash-low@4-written');
+    expect(L.route('French', page(undefined))).toBe('agy-flash-low-written');
+    expect(L.route('German', page(4))).toBe('agy-flash-low@4-written');
+    expect(L.route('German', page(undefined))).toBe('agy-flash-low@4-written');
+  });
+  it('samples the Latin arm-c first reads (#7701 cheap routes) as an unread lane in the latin-blank cell', () => {
+    const L = LANES.find((l: { lane: string }) => l.lane === 'pero-agy-first-read-7701');
+    expect(L.enabled).toBe(true);
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.stamp).toEqual({ 'ocr.pipeline': 'pero-agy-first-read-7701' });
+    expect([L.cell('Latin'), L.route, L.lang('la')]).toEqual(['latin-blank', 'pero>agy-flash-low-written', 'Latin']);
+    expect(L.cell('German')).toBeNull();
+    expect(L.reason.test('#7701 first-read arm-c lane: pero-ocr draft (Latin print, ...)')).toBe(true);
+  });
+});
+
+describe('the Siku translation lane (#7611, #5600)', () => {
+  const L = LANES.find((l: { lane: string }) => l.lane === 'siku-translate-5600');
+  it('is found by the stamps its writer leaves: the engine block\'s reason and the page_revisions row with that reason', () => {
+    expect(L.enabled).toBe(true);
+    expect(L.field).toBe('translation');
+    expect(L.stamp).toEqual({ 'translation.engine.run.reason': SIKU_REASON, 'translation.model': SIKU_MODEL, 'translation.engine.cli.name': 'agy' });
+    expect(SIKU_REASON).toBe('Siku lane #5600, Derek 2026-10-27');
+    expect(L.reason.test(SIKU_REASON)).toBe(true);
+    // another lane's reason, or this one with a suffix, is not this lane's write
+    expect(L.reason.test(`${SIKU_REASON} (rerun)`)).toBe(false);
+    expect(L.reason.test('#7558 correction lane')).toBe(false);
+  });
+  it('is a first translation: no served draft beside it, one route, the zh-siku-first-tr cell, judged as a translation', () => {
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.route).toBe('agy-flash-low@1');
+    expect(L.task).toBe('translation');
+    expect(laneTask('siku-translate-5600')).toBe('translation');
+    expect(laneTask('agy-correct-lite-7558')).toBe('ocr');
+    expect([L.cell('Chinese'), L.cell('Classical Chinese'), L.cell('zh')]).toEqual(['zh-siku-first-tr', 'zh-siku-first-tr', 'zh-siku-first-tr']);
+    expect(L.cell('Latin')).toBeNull();
+    // Siku copies are manuscripts: the cell's evidence is not cut to print pages (inEvidence)
+    expect(L.hand).toBe('manuscript');
+  });
+  it('names a cell and route that rules.json has, with the sampler export as its evidence', () => {
+    const rules = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    const cell = rules.cells.find((c: { id: string }) => c.id === 'zh-siku-first-tr');
+    expect(cell.current).toBe('agy-flash-low@1');
+    const r = cell.routes.find((x: { id: string }) => x.id === 'agy-flash-low@1');
+    expect(r.evidence).toEqual([{ score: EVIDENCE_PATH, cell: 'zh-siku-first-tr', route: 'agy-flash-low@1' }]);
+    // the #6567 stale-retranslation cell is a different task and keeps its own evidence
+    expect(rules.cells.find((c: { id: string }) => c.id === 'zh-siku-tr').routes.every((x: { evidence: { score: string }[] }) => x.evidence.every((e) => e.score !== EVIDENCE_PATH))).toBe(true);
+  });
+  it('shows the judge the English as the candidate and the page\'s OCR as the source; a wrong-page control another page\'s English', () => {
+    const d = { field: 'translation', task: 'translation' };
+    const p = { ocr: { data: '天地之道' }, translation: { data: 'The Way of Heaven and Earth' } };
+    const other = { ocr: { data: '其他' }, translation: { data: 'Another leaf entirely' } };
+    expect(judgeInput({ kind: 'item', d }, p, null, null)).toEqual({ text: 'The Way of Heaven and Earth', source: '天地之道' });
+    expect(judgeInput({ kind: 'wrong_page', d }, p, other, null)).toEqual({ text: 'Another leaf entirely', source: '天地之道' });
+    // an OCR lane is unchanged: the OCR is the candidate, no source
+    expect(judgeInput({ kind: 'item', d: { field: 'ocr' } }, p, null, null)).toEqual({ text: '天地之道' });
+    expect(judgeInput({ kind: 'draft', d: { field: 'ocr' } }, p, null, 'draft text')).toEqual({ text: 'draft text' });
+  });
+  it('records the translation template as its own instrument; the OCR pin does not move', () => {
+    expect(promptTemplateSha('ocr')).toBe(PROMPT_TEMPLATE_SHA);
+    expect(promptTemplateSha('translation')).not.toBe(PROMPT_TEMPLATE_SHA);
+    expect(promptTemplateSha('translation')).toBe('6c73d24dbbc9c9df');
+  });
+  it('exports the cell as a translation cell, every page counted (a manuscript cell), split by script type', () => {
+    let n = 0;
+    const rec = (kind: string, book: number, accept: boolean, wrong = false, script = 'manuscript') => ({
+      _id: `s${n++}`, kind, page_id: `sp${book}-${n}`, book_id: `sb${book}`, page_number: 1, cell: 'zh-siku-first-tr', route: 'agy-flash-low@1', lane: 'siku-translate-5600', lang: 'Classical Chinese', task: 'translation',
+      script_type: script, write: { revision_id: `srev${book}` }, judge: { model_reported: 'claude-opus-5-5' }, run_id: 'run1', judged_at: '2026-10-29T00:00:00Z', week: '2026-W44',
+      verdict: { accept, fidelity: accept ? 5 : 2, defects: wrong ? [{ class: 'T8', severity: 'wrong_text', quote: 'x' }] : [], reader_note: '' } });
+    const r = [rec('item', 0, true), rec('item', 1, true), rec('item', 2, false, true), rec('item', 3, true, false, 'print'), rec('wrong_page', 0, false), rec('wrong_page', 1, false)];
+    const s = exportScore(r);
+    const C = s.cells['zh-siku-first-tr'];
+    expect(C.task).toBe('translation');
+    expect(C.routes['agy-flash-low@1']).toMatchObject({ accept: '3/4', wrong_text_pages: '1/4', books: 4, evidence_rule: 'all pages' });
+    expect(Object.keys(C.drafts_conditioned)).toEqual([]);
+    expect(s.by_script_cells['zh-siku-first-tr|manuscript'].routes['agy-flash-low@1']).toMatchObject({ accept: '2/3' });
+    expect(s.by_script_cells['zh-siku-first-tr|print'].routes['agy-flash-low@1']).toMatchObject({ accept: '1/1' });
   });
 });

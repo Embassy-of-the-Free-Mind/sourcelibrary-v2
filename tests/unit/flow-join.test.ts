@@ -5,7 +5,7 @@ import { markdownToHtml } from '@/lib/export-markdown-html';
 /** The continuous /read view (#7118): pages run together only where the sentence does. */
 const page = (n: number, md: string | null, block = false) =>
   ({ n, html: md === null ? null : markdownToHtml(md), href: `/book/b/page/${n}`, block });
-const plain = (html: string) => html.replace(/<a class="page-marker"[^>]*>\d+<\/a>/g, '|');
+const plain = (html: string) => html.replace(/<a class="page-marker"[^>]*>[^<]*<\/a>/g, '|');
 
 describe('continuesAcross', () => {
   it('carries on when the page ends mid-sentence', () => {
@@ -211,5 +211,28 @@ describe('joinPagesHtml — blank leaves', () => {
   it('keeps a "could not be translated" notice: that is missing text, not a blank leaf', () => {
     const html = joinPagesHtml([page(1, 'It ends.'), page(2, '[This page could not be translated due to content recitation]')]);
     expect(html).toContain('could not be translated');
+  });
+});
+
+describe('joinPagesHtml — printed page numbers', () => {
+  const printed = (n: number, md: string, label?: string) => ({ ...page(n, md), label });
+  it('shows the printed number, keeping the scan number in the id and the link', () => {
+    const html = joinPagesHtml([printed(315, 'or the Light of', '274'), printed(316, 'the lower parts, which is Din.', '275')]);
+    expect(html).toContain('id="p316" href="/book/b/page/316"');
+    expect(html).toMatch(/aria-label="Printed page 275, scan 316[^"]*">275<\/a>/);
+    expect(plain(html)).toBe('<p>|or the Light of | the lower parts, which is Din.</p>');
+  });
+  it('labels a page without a printed number "scan N" when its neighbours have one', () => {
+    const html = joinPagesHtml([printed(315, 'It ends.', '274'), printed(316, 'Next.')]);
+    expect(html).toContain('>scan 316</a>');
+  });
+  it('keeps the bare scan number in a book with no printed numbers', () => {
+    expect(joinPagesHtml([page(3, 'It ends.'), page(4, 'Next.')])).toContain('>4</a>');
+  });
+  it('seats a figure on a page whose marker is a folio label', () => {
+    const fig = '<figure class="flow-figure"><img src="x.jpg" alt="a lion"/></figure>';
+    const html = joinPagesHtml([{ ...printed(30, 'Text.\n\n[A woodcut of a lion]\n\nMore.', '12v'), figures: fig }]);
+    expect(html).toContain(fig);
+    expect(html).not.toContain('[A woodcut of a lion]');
   });
 });

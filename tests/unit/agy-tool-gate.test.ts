@@ -8,8 +8,8 @@ import path from 'node:path';
 // and the model then wrote an invented page. Both tools are allowed inside the workspace; everything else is denied.
 const GATE = path.resolve(__dirname, '../../scripts/lib/agy-tool-gate.py');
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'gate-'));
-const decide = (name: string, args: Record<string, string>) =>
-  JSON.parse(execFileSync('python3', [GATE], { input: JSON.stringify({ toolCall: { name, args } }), env: { ...process.env, AGY_GATE_ROOT: root } }).toString()).decision;
+const decide = (name: string, args: Record<string, string>, task = 'ocr') =>
+  JSON.parse(execFileSync('python3', [GATE], { input: JSON.stringify({ toolCall: { name, args } }), env: { ...process.env, AGY_GATE_ROOT: root, AGY_GATE_TASK: task } }).toString()).decision;
 
 describe('agy-tool-gate', () => {
   it('allows view_file and read_file on the image inside the workspace', () => {
@@ -23,5 +23,12 @@ describe('agy-tool-gate', () => {
   it('denies every other tool', () => {
     expect(decide('run_command', { CommandLine: 'ls' })).toBe('deny');
     expect(decide('write_to_file', { TargetFile: path.join(root, 'x') })).toBe('deny');
+  });
+  // #7751: the grounded adjudicator allows web search and page reads, and nothing on disk or in a shell.
+  it('search task: allows search_web, denies files and commands', () => {
+    expect(decide('search_web', { query: 'x' }, 'search')).toBe('allow');
+    expect(decide('read_file', { Path: path.join(root, 'p.jpg') }, 'search')).toBe('deny');
+    expect(decide('run_command', { CommandLine: 'curl x' }, 'search')).toBe('deny');
+    expect(decide('search_web', { query: 'x' })).toBe('deny');
   });
 });

@@ -1,0 +1,95 @@
+{
+ "rule": {
+  "within": 0.05,
+  "p": 0.9,
+  "wrong_text_max": 0.02,
+  "draws": 40000
+ },
+ "generated_at": "2026-10-28T11:56:49.873Z",
+ "cells": {
+  "latin": {
+   "lang": "Latin",
+   "n": 30,
+   "best": "lite>agy-flash-low",
+   "routes": {
+    "lite": {
+     "k": 17,
+     "w": 12,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.5627634721194907,
+     "ci90": [
+      0.42,
+      0.7
+     ]
+    },
+    "lite>agy-flash-low": {
+     "k": 24,
+     "w": 4,
+     "judged": 30,
+     "n": 30,
+     "source": "this run",
+     "mean": 0.7817080960891871,
+     "ci90": [
+      0.65,
+      0.89
+     ]
+    },
+    "fresh": {
+     "k": 23,
+     "w": 4,
+     "judged": 30,
+     "n": 30,
+     "delivered": 30,
+     "not_delivered": 0,
+     "why_not": [],
+     "mean": 0.750189043715206,
+     "ci90": [
+      0.62,
+      0.86
+     ]
+    },
+    "fresh|lite": {
+     "k": 23,
+     "w": 4,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.7501016338840002,
+     "ci90": [
+      0.62,
+      0.86
+     ]
+    }
+   },
+   "verdict": {
+    "lite": {
+     "p_within": 0.069,
+     "wrong_text_ok": false,
+     "passes": false
+    },
+    "lite>agy-flash-low": {
+     "p_within": 1,
+     "wrong_text_ok": true,
+     "passes": true
+    },
+    "fresh": {
+     "p_within": 0.571,
+     "wrong_text_ok": true,
+     "passes": false
+    },
+    "fresh|lite": {
+     "p_within": 0.571,
+     "wrong_text_ok": true,
+     "passes": false
+    }
+   },
+   "on_delivered": {
+    "pages": 30,
+    "fresh": 23,
+    "lite": 17,
+    "fresh_wrong_text": 4,
+    "lite_wrong_text": 12
+   }
+  }
+ }
+}

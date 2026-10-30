@@ -21,12 +21,30 @@
 
 import { isLazyPagesBook } from './pages-state.mjs';
 
-/** Match fragment selecting only visible (renderable) pages. */
-export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } };
+/**
+ * Match fragment: pages that are not a hidden repeat capture (#5056). A page
+ * with `repeat_of` (the `id` of the kept capture of the same leaf) keeps its
+ * page_number and id, so shortlinks and citations still resolve, but no reader
+ * list, counter or OCR/translation lane sees it. `null`, not `$exists`, so a
+ * restore that `$set`s null instead of `$unset`ting still restores.
+ */
+export const NOT_REPEAT_CAPTURE = { repeat_of: null };
 
-/** True iff a page renders in the reader (soft-hidden pages have page_number <= 0). */
+/** Match fragment selecting only visible (renderable) pages. */
+export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE };
+
+/** True iff a page is a hidden repeat capture of another page (#5056). */
+export function isRepeatCapture(page) {
+  return page?.repeat_of != null;
+}
+
+/**
+ * True iff a page renders in the reader (soft-hidden pages have page_number <= 0;
+ * repeat captures carry `repeat_of`). A caller's projection must include
+ * `repeat_of`, or a repeat reads as visible.
+ */
 export function isVisiblePage(page) {
-  return (page?.page_number ?? 0) > 0;
+  return (page?.page_number ?? 0) > 0 && !isRepeatCapture(page);
 }
 
 /** True iff a page carries non-empty OCR text. */

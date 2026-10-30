@@ -8,12 +8,15 @@
 // nightly rebuild runs build.py on a copy of origin/main). scripts/batch/cli-ocr-lane.mjs `correct` (#7558) — the lane
 // whose writes are sampled; its CORRECT_LANE / LITE_MODELS / CORRECT_LANGUAGES are imported. Searched: `gh pr list
 // --search "judge sampler"`, `gh issue list --search "lane judge sample"`, scripts/eval/INDEX.md: no sampler of live
-// lane output existed (#7611).
+// lane output existed (#7611). scripts/batch/siku-translate-lane.mjs (#5600): the translation lane sampled since; its
+// REASON / MODEL are imported, and its spot-check JUDGE is not (another rubric; see JUDGE below).
 /**
  * lane-judge-sampler (#7611): judge a random sample of what the live agy / GPU lanes WRITE, and feed the router.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/lane-judge-sampler.mjs run --out=DIR
  *        [--since=ISO] [--until=ISO] [--seed=N] [--dry-run] [--cap-points=1] [--max-calls=N] [--draft-share=1]
+ *        [--planted=2]                       planted-error controls per cell x route per ISO week (#7611; 0 = none)
+ *        [--lane=NAME]                     one lane only (seeding a new lane's cell, #7611); never moves the nightly window
  *        [--book=ID[,ID] [--per-book=3]]   book-depth (#7263 pilots): N random written pages of each named book, no rate
  *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
@@ -39,7 +42,14 @@
  *
  * JUDGE. Each drawn page's lane output, and its draft (--draft-share, default every page; for worse-than-draft), as
  * one blind item each, with judge.mjs's judgePrompt / opusCall / parseVerdict exactly as the router tests ran them;
- * plus two wrong-page controls per cell x route per ISO week (this page's image, another book's output). Opus through
+ * A TRANSLATION lane (`task: 'translation'`, the Siku lane #5600) is judged by judgePrompt's translation form: the image,
+ * this page's stored OCR as the source, its English as the candidate; the verdict has the same accept / fidelity /
+ * wrong_text fields, so it exports and pools like an OCR verdict, under its own prompt template hash (the Siku lane's
+ * spot-check JUDGE asks other questions and is not reused: one rubric per instrument, and this one is the router's).
+ * plus two wrong-page controls per cell x route per ISO week (this page's image, another book's output), and PLANTED
+ * controls (#7611, "test the test"): --planted=K (default 2) per cell x route per ISO week, a page the judge ACCEPTED
+ * before with one error planted in its body (lib/plant-ocr-errors.mjs: B a number, C a noun, D a line dropped, E a
+ * sentence inserted, the kind rotating), judged blind like any item. Opus through
  * `claude -p` on the box's subscription; claudeEnv strips every API key. No Opus read or correction is made.
  *
  * BUDGET. A hard weekly cap: --cap-points (default 1 = 1% of one Claude account-week) / the router table's price of
@@ -57,7 +67,9 @@
  * FEED. `export` writes every counted verdict as one score.json in the route-judge format, cells and routes named as
  * rules.json names them (german-lite / lite>agy-flash-low), so build.py pools it as one more source, scaled by its
  * books (#7606). Every k/n is also split by script type (by_script); a print cell's evidence counts its print pages
- * only (Derek, 2026-10-28: print and manuscript are separate). A route whose wrong-page control failed is listed under routes_not_counted. The DRAFT verdicts are a
+ * only (Derek, 2026-10-28: print and manuscript are separate). A route whose wrong-page control failed is listed under routes_not_counted;
+ * so is one whose judge misses planted errors: rolling catch rate (the last 56 days, >= 8 plants) below 0.80. The
+ * catch rate rides on every route block as `judge_planted`, and build.py prints it next to k/n. The DRAFT verdicts are a
  * conditioned frame (the lane writes only the pages its corrector changed) and go to drafts_conditioned and
  * made_worse, never into evidence. `rebuild` runs build.py on a copy of origin/main with and without the export,
  * publishes the table (ops_reports `router-table:lane-judge`, and DIR/published/), and comments on #7263 only when a
@@ -75,9 +87,12 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { judgePrompt, opusCall, parseVerdict, clusterCI } from './route-judge-6740/judge.mjs';
-import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON } from '../batch/cli-ocr-lane.mjs';
+import { CORRECT_LANE, LITE_MODELS, CORRECT_LANGUAGES, GPU_LANE, GPU_ROUTE, GPU_LANE_REASON, FIRST_READ_LANE, FIRST_READ_CORRECT_LANE, FIRST_READ_REASON, FIRST_READ_CORRECT_REASON, FIRST_READ_MODEL, firstReadLanguage, ARMC_LANE, ARMC_REASON, ARMC_ENGINES, armcLang, ARMC_FIRST_READ_LANE, ARMC_FIRST_READ_REASON } from '../batch/cli-ocr-lane.mjs';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { bookHand } from '../lib/ocr-trust-gate.mjs';
+import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
+import { wilson } from './lib/agreement-stats.mjs';
+import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../batch/siku-translate-lane.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -91,14 +106,33 @@ export const RATE_FULL_BOOKS = 60;
 export const RATE_AFTER = 0.05;
 export const DEFAULT_SINCE = '2026-10-27T00:00:00Z';
 export const EVIDENCE_PATH = 'scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json';
+// build.py's script split (#7621) reads each source cut by script type from evidence/by-script/<basename>; a source
+// without one enters only the /unknown cells. Written beside the export, from its `by_script_cells`.
+export const BY_SCRIPT_PATH = 'scripts/eval/estimator/router-table/evidence/by-script/lane-judge-sampler.score.json';
 const WEEKLY_MAX = Number(process.env.LANE_JUDGE_WEEKLY_MAX || 85);
 const SESSION_MAX = Number(process.env.LANE_JUDGE_SESSION_MAX || 95);
 const WRONG_TEXT_CONTAIN = /^(O1|O2|O3|I1)$/;   // text not on this leaf: containment-on-finding.md
+// Planted controls (#7611): the bar is Tibetan's (judge.mjs tib-kangyur): below 0.80 the judge does not decide the cell.
+export const PLANT_BAR = 0.8;
+export const PLANT_MIN = 8;
+export const PLANT_WINDOW_DAYS = 56;
 
 /**
  * The lanes, by the stamps they leave. Only `enabled` lanes are drawn. Each maps a written page to a router cell and
  * route by rules.json ids. A lane is off until its cell is named and the judge is valid for its script.
  */
+/** First-read lane (#7701): language code -> [rules.json cell, route]. */
+// #7701 cheap routes: French first reads moved to 4 pages a call (the router's pick, 2026-10-29); a French page is
+// credited to the route its own write records (ocr.engine.run.call_pages), so the 1-a-call pages before the switch stay
+// with agy-flash-low-written.
+export const FIRST_READ_ROUTE_AT4 = Object.freeze({ fra: 'agy-flash-low@4-written' });
+export const firstReadRoute = (lang, page) => {
+  const code = firstReadLanguage({ language: lang }), c = FIRST_READ_CELLS[code];
+  if (!c) return null;
+  return FIRST_READ_ROUTE_AT4[code] && page?.ocr?.engine?.run?.call_pages > 1 ? FIRST_READ_ROUTE_AT4[code] : c[1];
+};
+export const FIRST_READ_CELLS = Object.freeze({ lat: ['latin-blank', 'agy-flash-low@4-written'], deu: ['german-blank', 'agy-flash-low@4-written'], fra: ['french-blank', 'agy-flash-low-written'] });
+export const FIRST_READ_CORRECT_CELLS = Object.freeze({ lat: ['latin-blank', 'agy-flash-low@4>agy-flash-low-written'], deu: ['german-blank', 'agy-flash-low@4>agy-flash-low-written'], fra: ['french-blank', 'agy-flash-low>agy-flash-low-written'] });
 export const LANES = [
   { lane: CORRECT_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': CORRECT_LANE }, reason: /^#7558 correction lane/,
     route: 'lite>agy-flash-low', draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
@@ -110,9 +144,43 @@ export const LANES = [
   { lane: GPU_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': GPU_LANE }, reason: new RegExp(`^${GPU_LANE_REASON}`),
     route: GPU_ROUTE, draft_route: null, unread: true, hand: 'print',
     cell: (lang) => (/^Latin/.test(lang) ? 'latin-gpu-7263' : null), lang: (lang) => (/^Latin/.test(lang) ? 'Latin' : null), languages: /^Latin/ },
+  // #7567 arm c: the language's GPU draft (la PERO-OCR, it LightOnOCR) corrected by agy Flash-low with the image, written
+  // OVER the stored Flash-Lite draft (the revision row's data), with the E3 diff guard's put-back. The lite draft is the
+  // served text it replaced, judged beside it; route by language (`route` is a function of the book's language here).
+  { lane: ARMC_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': ARMC_LANE }, reason: new RegExp(`^${ARMC_REASON}`),
+    route: (lang) => ARMC_ENGINES[armcLang(lang)]?.route ?? null, draft_route: 'lite', draft_models: LITE_MODELS, hand: 'print',
+    cell: (lang) => ARMC_ENGINES[armcLang(lang)]?.cell ?? null, lang: (lang) => ({ la: 'Latin', it: 'Italian' }[armcLang(lang)] ?? null), languages: /^(Latin|Italian)/ },
   { lane: 'tib-correct-6560', enabled: false, why: 'Tibetan: the judge alone does not decide the cell (planted-syllable catch below 0.80 hands it to Derge, judge.mjs tib-kangyur); needs the Derge stage' },
   { lane: 'tib_gutter_vllm_6871', enabled: false, why: 'GPU Yigdzin gutter reads: no rules.json route for them yet' },
-  { lane: '(no ocr.pipeline) gemini-3.8-flash-low', enabled: false, why: 'the held-book CLI read (#7089) stamps no lane, and a page with no draft has no cell in rules.json yet' },
+  // #7701: first reads of pages with no OCR in visible books held as scans only (cli-ocr-lane.mjs run --cohort), agy
+  // Flash-low, 4 pages a call for German (Latin is not scheduled), 1 for French. No draft (`unread`): nothing is judged
+  // beside it. The route is the no-stored-text cell's `-written` row, the pages the lane writes.
+  { lane: FIRST_READ_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': FIRST_READ_LANE }, reason: new RegExp(`^${FIRST_READ_REASON}(?! correction)`),
+    route: firstReadRoute, draft_route: null, unread: true, hand: 'print',
+    cell: (lang) => (FIRST_READ_CELLS[firstReadLanguage({ language: lang })] ?? [])[0] ?? null,
+    lang: (lang) => ({ lat: 'Latin', deu: 'German', fra: 'French' })[firstReadLanguage({ language: lang })] ?? null, languages: /^(Latin|German|French|la|de|fr)$/i },
+  // #7701 arm B: the first read corrected in a second pass (cli-ocr-lane.mjs run --cohort --correct=deu). Its draft is the
+  // first read the revision row holds, so it is judged beside it (worse than the draft).
+  { lane: FIRST_READ_CORRECT_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': FIRST_READ_CORRECT_LANE }, reason: new RegExp(`^${FIRST_READ_CORRECT_REASON}`),
+    route: (lang) => FIRST_READ_CORRECT_CELLS[firstReadLanguage({ language: lang })]?.[1] ?? null,
+    draft_route: (lang) => FIRST_READ_CELLS[firstReadLanguage({ language: lang })]?.[1] ?? null, draft_models: [FIRST_READ_MODEL], hand: 'print',
+    cell: (lang) => FIRST_READ_CORRECT_CELLS[firstReadLanguage({ language: lang })]?.[0] ?? null,
+    lang: (lang) => ({ lat: 'Latin', deu: 'German', fra: 'French' })[firstReadLanguage({ language: lang })] ?? null, languages: /^(Latin|German|French|la|de|fr)$/i },
+  // #7701 cheap routes: Latin pages with no OCR, the PERO draft corrected by agy Flash-low with the image, one page a call
+  // (cli-ocr-lane.mjs armc --frame=first-read), put back against the draft. No served draft (`unread`).
+  { lane: ARMC_FIRST_READ_LANE, enabled: true, field: 'ocr', stamp: { 'ocr.pipeline': ARMC_FIRST_READ_LANE }, reason: new RegExp(`^${ARMC_FIRST_READ_REASON}`),
+    route: 'pero>agy-flash-low-written', draft_route: null, unread: true, hand: 'print',
+    cell: (lang) => (/^(Latin|la)$/i.test(String(lang)) ? 'latin-blank' : null), lang: (lang) => (/^(Latin|la)$/i.test(String(lang)) ? 'Latin' : null), languages: /^(Latin|la)$/i },
+  // The Siku translation lane (#5600, siku-translate-lane.mjs): held Siku Quanshu books translated by agy Flash-low, one page
+  // a call (cli-translate.mjs read / apply). It stamps no lane on the page; its writes carry their reason on the engine
+  // block (translation.engine.run.reason) and leave a page_revisions row with the same reason. Those pages had no English
+  // before (`unread`: the row's data is empty), so there is no served draft beside it. Judged as a TRANSLATION (task):
+  // route-judge judgePrompt's translation form, image + the stored OCR + the English. Siku copies are manuscripts.
+  { lane: 'siku-translate-5600', enabled: true, task: 'translation', field: 'translation',
+    stamp: { 'translation.engine.run.reason': SIKU_REASON, 'translation.model': SIKU_MODEL, 'translation.engine.cli.name': 'agy' }, reason: new RegExp(`^${SIKU_REASON.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`),
+    route: 'agy-flash-low@1', draft_route: null, unread: true, hand: 'manuscript', retry_next: 'retranslate (#5600 lane ledger)',
+    cell: (lang) => (/^(Chinese|Classical Chinese|zh|lzh)/i.test(String(lang)) ? 'zh-siku-first-tr' : null), lang: () => 'Classical Chinese', languages: /^(Chinese|Classical Chinese|zh|lzh)/i },
+  { lane: '(no ocr.pipeline) gemini-3.8-flash-low', enabled: false, why: 'the held-book CLI read (#7089) stamps no lane; first reads of scans-only books are agy-first-read-7701 above' },
 ];
 
 /** The draw weight of a book: 1 + ln(1 + human_read_count). */
@@ -226,12 +294,71 @@ export function isoWeek(d) {
   return `${t.getUTCFullYear()}-W${String(Math.ceil(((t - y0) / 864e5 + 1) / 7)).padStart(2, '0')}`;
 }
 
+/**
+ * The planted controls owed to one cell x route this run (#7611). sources: [{ rec, text }] — store records the judge
+ * ACCEPTED (kind item) with the text they were accepted on, still the page's text; prior: planted records of this cell x
+ * route already in the store (their count rotates the kind B -> C -> D -> E; their planted_from is never reused).
+ * Returns [{ rec, text, plant, plantedText }]: up to `owed`, one per book, a seeded draw. Each slot's kind is held
+ * across pages (a page with no number does not skip B: the next page is tried); only when no page has a site for it
+ * does the slot take the next kind. Deterministic in (sources as a set, prior, seed).
+ */
+export function planPlanted(sources, { owed, prior = [], seed, lang }) {
+  if (!Number.isFinite(seed)) throw new Error('planPlanted: a numeric seed is required');
+  const used = new Set(prior.map((r) => r.planted_from)), rnd = makeRng(seed);
+  const pool = sources.filter((s) => !used.has(s.rec._id)).sort((a, b) => (a.rec._id < b.rec._id ? -1 : 1))
+    .map((s) => ({ s, k: rnd() })).sort((a, b) => a.k - b.k).map((x) => x.s);
+  const out = [], books = new Set();
+  for (let slot = 0; slot < owed; slot++) {
+    let got = null;
+    for (let j = 0; j < ERROR_KINDS.length && !got; j++) {
+      const kind = ERROR_KINDS[(prior.length + slot + j) % ERROR_KINDS.length];
+      for (const src of pool) {
+        if (books.has(src.rec.book_id)) continue;
+        const r = plantError(src.text, { kind, lang: lang ?? src.rec.lang, seed: parseInt(h(`${src.rec._id}:${kind}:${seed}`).slice(0, 8), 16) });
+        if (r) { got = { rec: src.rec, text: src.text, plant: r.plant, plantedText: r.text }; break; }
+      }
+    }
+    if (!got) break;
+    out.push(got); books.add(got.rec.book_id);
+  }
+  return out;
+}
+
+/** A route's planted-control block: all plants, the rolling window, and whether the judge is validated on it. */
+export function plantedBlock(rows, { now = Date.now(), windowDays = PLANT_WINDOW_DAYS, min = PLANT_MIN, bar = PLANT_BAR } = {}) {
+  const kn = (g) => { const k = g.filter((r) => r.catch.caught).length; return { caught: `${k}/${g.length}`, rate: g.length ? +(k / g.length).toFixed(3) : null, ci95: g.length ? wilson(k, g.length).map((x) => +x.toFixed(3)) : null }; };
+  const got = rows.map((r) => ({ ...r, catch: scorePlant(r.verdict, r.plant) }));
+  const recent = got.filter((r) => now - Date.parse(r.judged_at) <= windowDays * 864e5);
+  const roll = kn(recent);
+  const failed = recent.length >= min && roll.rate < bar;
+  const byKind = {};
+  for (const k of ERROR_KINDS) { const g = got.filter((r) => r.plant?.kind === k); if (g.length) byKind[k] = kn(g).caught; }
+  return { n: got.length, ...kn(got), named: `${got.filter((r) => r.catch.named).length}/${got.length}`, by_kind: byKind,
+    rolling: { days: windowDays, n: recent.length, ...roll }, validated: recent.length >= min ? !failed : null, failed,
+    rule: `rolling catch rate over the last ${windowDays} days, counted from ${min} plants: below ${bar} the route is not counted` };
+}
+
 /** The prompt's template hash: judgePrompt with placeholders, so a change to the rubric shows as a new hash. */
-export const PROMPT_TEMPLATE_SHA = h(judgePrompt({ task: 'ocr', lang: '{lang}', text: '{text}' }, '{image}')).slice(0, 16);
+export const promptTemplateSha = (task = 'ocr') => h(judgePrompt({ task, lang: '{lang}', text: '{text}', source: '{source}' }, '{image}')).slice(0, 16);
+export const PROMPT_TEMPLATE_SHA = promptTemplateSha('ocr');
+
+/** A lane's judge task: 'ocr' unless the lane names one (the Siku lane: 'translation'). */
+export const laneTask = (lane) => LANES.find((l) => l.lane === lane)?.task ?? 'ocr';
+/**
+ * What one queued call shows the judge: { text, source }. The candidate is the lane's FIELD on the page (ocr, or the
+ * English for a translation lane); a translation's source is this page's stored OCR (the transcription judgePrompt
+ * shows beside the image). A wrong-page control shows ANOTHER page's candidate with this page's image and source.
+ * q: { kind, d: { field, task }, text? }; p, other: page docs; draft: the revision row's data.
+ */
+export function judgeInput(q, p, other, draft) {
+  const field = q.d.field ?? 'ocr', task = q.d.task ?? 'ocr';
+  const text = q.kind === 'draft' ? draft : q.kind === 'wrong_page' ? other?.[field]?.data : q.kind === 'planted' ? q.text : p?.[field]?.data;
+  return { text, ...(task === 'translation' && { source: p?.ocr?.data ?? '' }) };
+}
 
 const REQUIRED = ['_id', 'kind', 'page_id', 'book_id', 'cell', 'route', 'lane', 'judge', 'run_id', 'judged_at'];
 /** Read-side shape check (a store another session can write): a record missing any of these is not counted. */
-export const validRecord = (r) => r && REQUIRED.every((k) => r[k] != null) && ['item', 'draft', 'wrong_page'].includes(r.kind)
+export const validRecord = (r) => r && REQUIRED.every((k) => r[k] != null) && ['item', 'draft', 'wrong_page', 'planted'].includes(r.kind)
   && (r.verdict == null || (typeof r.verdict.accept === 'boolean' && Number(r.verdict.fidelity) >= 1 && Number(r.verdict.fidelity) <= 5));
 
 const cls = (d) => String(d.class || '').toUpperCase().match(/^[IOTDE]\d+/)?.[0] ?? 'E2';
@@ -256,6 +383,13 @@ function routeBlock(got) {
 }
 
 const scriptOf = (r) => r.script_type ?? 'unknown';
+const routerScript = (r) => (scriptOf(r) === 'mixed' ? 'print' : ['print', 'manuscript'].includes(scriptOf(r)) ? scriptOf(r) : 'unknown');
+/** Write the export and its by-script cut under a repo root (a rebuild copy, a PR worktree). */
+export function writeEvidence(root, score) {
+  for (const [f, body] of [[EVIDENCE_PATH, score], [BY_SCRIPT_PATH, { source: score.source, generated_at: score.generated_at, of: EVIDENCE_PATH, cells: score.by_script_cells ?? {} }]]) {
+    fs.mkdirSync(path.dirname(path.join(root, f)), { recursive: true }); fs.writeFileSync(path.join(root, f), JSON.stringify(body, null, 1) + '\n');
+  }
+}
 const handOf = (r) => r.cell_hand ?? LANES.find((l) => l.lane === r.lane)?.hand ?? null;
 // The check-flag stratum (#7263) is drawn because it is flagged, not at random: reported apart, never evidence.
 const inEvidence = (r) => r.draw?.stratum !== 'flagged' && (handOf(r) !== 'print' || scriptOf(r) === 'print');
@@ -277,23 +411,35 @@ export function exportScore(records, { generatedAt = new Date().toISOString() } 
     frame: "pages a live lane WROTE, by its own stamps; one page per book per run, at most two per book; books weighted by 1 + ln(1 + human_read_count); every book until a route has 60 books judged in its cell, then 5%. The lane writes only pages its corrector CHANGED (an UNCHANGED answer leaves no stamp), so a route's rate is over changed pages: the router tests' unchanged share was 0/30 German, 3/29 French.",
     calls: { records: records.length, malformed_not_counted: bad, judged: judged.length, unparsed: ok.filter((r) => !r.verdict).length,
       list_usd_equiv: +ok.reduce((a, r) => a + (r.list_usd || 0), 0).toFixed(2) },
-    cells: {}, contain_candidates: [] };
+    cells: {}, contain_candidates: [], by_script_cells: {} };
   const cells = [...new Set(judged.map((r) => r.cell))].sort();
   for (const cell of cells) {
     const rs = judged.filter((r) => r.cell === cell);
-    const C = report.cells[cell] = { task: 'ocr', lang: rs[0].lang ?? null, controls: {}, routes: {}, routes_not_counted: {}, drafts_conditioned: {}, made_worse: {} };
+    const C = report.cells[cell] = { task: rs[0].task ?? laneTask(rs[0].lane), lang: rs[0].lang ?? null, controls: {}, routes: {}, routes_not_counted: {}, drafts_conditioned: {}, made_worse: {} };
     for (const route of [...new Set(rs.filter((r) => r.kind === 'item').map((r) => r.route))].sort()) {
       const wp = rs.filter((r) => r.kind === 'wrong_page' && r.route === route);
-      const passed = wp.length > 0 && wp.every((r) => !r.verdict.accept && Number(r.verdict.fidelity) <= 2);
-      C.controls[route] = { n: wp.length, passed, verdicts: wp.map((r) => ({ accept: r.verdict.accept, fidelity: r.verdict.fidelity, week: r.week })) };
+      const wpPassed = wp.length > 0 && wp.every((r) => !r.verdict.accept && Number(r.verdict.fidelity) <= 2);
+      const pl = rs.filter((r) => r.kind === 'planted' && r.route === route && r.plant);
+      const judgePlanted = pl.length ? plantedBlock(pl, { now: Date.parse(generatedAt) || Date.now() }) : null;
+      const passed = wpPassed && !judgePlanted?.failed;
+      C.controls[route] = { n: wp.length, passed, wrong_page_passed: wpPassed, verdicts: wp.map((r) => ({ accept: r.verdict.accept, fidelity: r.verdict.fidelity, week: r.week })),
+        ...(judgePlanted && { planted: judgePlanted }) };
       const all = rs.filter((r) => r.kind === 'item' && r.route === route);
       // A print cell's evidence is its print pages; manuscript, mixed and unknown pages are reported apart (by_script).
       const got = all.filter(inEvidence);
       const flagged = all.filter((r) => r.draw?.stratum === 'flagged');
       const block = { ...routeBlock(got), lane: [...new Set(all.map((r) => r.lane))], counts: passed, served: 'the live lane\'s applied output (served)',
+        judge_planted: judgePlanted && { caught: judgePlanted.rolling.caught, rate: judgePlanted.rolling.rate, ci95: judgePlanted.rolling.ci95, validated: judgePlanted.validated, all: judgePlanted.caught },
+        ...(!passed && { not_counted_because: [!wpPassed && 'wrong-page control not passed', judgePlanted?.failed && `judge-unvalidated: planted catch ${judgePlanted.rolling.caught} < ${PLANT_BAR}`].filter(Boolean) }),
         evidence_rule: [...new Set(all.map(handOf))].includes('print') ? 'print cell: print pages only' : 'all pages', by_script: byScript(all),
         ...(flagged.length && { flagged_stratum: { ...routeBlock(flagged), note: 'pages the lane check-flagged (>= 27% of the draft changed), judged always; not evidence' } }) };
       (passed ? C.routes : C.routes_not_counted)[route] = block;
+      // The by-script cut build.py reads (split_evidence.py's shape, `<cell>|<script>`; mixed counts as print, as there).
+      if (passed) for (const t of ['print', 'manuscript', 'unknown']) {
+        const g = all.filter((r) => routerScript(r) === t); if (!g.length) continue;
+        const { n, books, accept, wrong_text_pages, classes_k_of_n } = routeBlock(g);
+        ((report.by_script_cells[`${cell}|${t}`] ??= { routes: {} }).routes[route] = { n, books, accept, wrong_text_pages, classes_k_of_n, script_basis: { page: g.length } });
+      }
       for (const r of all) {
         const wtd = (r.verdict.defects || []).filter((d) => d.severity === 'wrong_text');
         if (wtd.some((d) => WRONG_TEXT_CONTAIN.test(cls(d))))
@@ -378,13 +524,14 @@ export async function claudeMeter(limits) {
   const u = limits.claudeUsage();
   if (u && u.weekly != null) return { source: 'climits', email: u.email, weekly: u.weekly, session: u.session, weekly_reset: u.weeklyReset, session_reset: u.sessionReset, at: new Date().toISOString() };
   try {   // the route-judge pilot's reading (meter.json: api.anthropic.com/api/oauth/usage); never refreshes the token
-    const c = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude/.credentials.json'), 'utf8')).claudeAiOauth;
+    const login = limits.claudeLoginFiles();   // CLAUDE_CONFIG_DIR's login when set: the one `claude -p` spends
+    const c = JSON.parse(fs.readFileSync(login.credentials, 'utf8')).claudeAiOauth;
     if (!c?.accessToken || !(c.expiresAt > Date.now() + 60e3)) return null;
     const r = await fetch('https://api.anthropic.com/api/oauth/usage', { headers: { Authorization: `Bearer ${c.accessToken}`, 'anthropic-beta': 'oauth-2025-04-20' }, signal: AbortSignal.timeout(20e3) });
     if (!r.ok) return null;
     const j = await r.json();
     if (typeof j.seven_day?.utilization !== 'number') return null;
-    let email = null; try { email = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
+    let email = null; try { email = JSON.parse(fs.readFileSync(login.account, 'utf8')).oauthAccount?.emailAddress ?? null; } catch { /* none */ }
     return { source: 'oauth-usage', email, weekly: j.seven_day.utilization, session: j.five_hour?.utilization ?? null, weekly_reset: j.seven_day.resets_at, session_reset: j.five_hour?.resets_at ?? null, at: new Date().toISOString() };
   } catch { return null; }
 }
@@ -405,13 +552,13 @@ async function mongo() {
 }
 
 /** Pages each enabled lane wrote in [since, until), with the revision row that proves the write and its draft. */
-async function findWrites(db, since, until) {
+async function findWrites(db, since, until, only = null) {
   const { textHash } = await import('../lib/page-text-writer.mjs');
   const out = [], frame = {};
-  for (const L of LANES.filter((l) => l.enabled)) {
+  for (const L of LANES.filter((l) => l.enabled && (!only || l.lane === only))) {
     const F = frame[L.lane] = { pages_stamped: 0, no_cell: 0, rewritten_since: 0, no_revision: 0, draft_not_route_engine: 0, held_or_hidden: 0, eligible: 0 };
     const pages = await db.collection('pages').find({ ...L.stamp, [`${L.field}.updated_at`]: { $gte: since, $lt: until } },
-      { projection: { id: 1, book_id: 1, page_number: 1, script_type: 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1, [`${L.field}.engine.input.draft.check_flag`]: 1, [`${L.field}.engine.input.draft.change_share`]: 1 } }).toArray();
+      { projection: { id: 1, book_id: 1, page_number: 1, script_type: 1, 'ocr.data': 1, [`${L.field}.data`]: 1, [`${L.field}.model`]: 1, [`${L.field}.updated_at`]: 1, [`${L.field}.engine.input.draft.check_flag`]: 1, [`${L.field}.engine.input.draft.change_share`]: 1 } }).toArray();
     F.pages_stamped = pages.length;
     const prof = await bookProfiles(db, [...new Set(pages.map((p) => p.book_id))]);
     F.script = {};
@@ -435,10 +582,11 @@ async function findWrites(db, since, until) {
       // An unread lane's revision row holds the page's prior text, which must be none; any other lane's, a draft of its engine.
       if (L.unread ? (typeof r.data === 'string' && r.data.trim()) : !L.draft_models.includes(r.model)) { F.draft_not_route_engine++; continue; }
       F.eligible++;
-      const sc = scriptClass(p[L.field].data, p.script_type, bookHand(prof.get(p.book_id)));
+      // The script tag lives in the OCR (a translation lane's page too).
+      const sc = scriptClass(p.ocr?.data, p.script_type, bookHand(prof.get(p.book_id)));
       F.script[sc.script_type] = (F.script[sc.script_type] ?? 0) + 1;
-      out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: L.route, draft_route: L.draft_route, lane: L.lane, lang: L.lang(b.language),
-        weight: bookWeight(b), human_read_count: b.human_read_count ?? 0, ...sc, cell_hand: L.hand,
+      out.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cell, route: typeof L.route === 'function' ? L.route(b.language, p) : L.route, draft_route: typeof L.draft_route === 'function' ? L.draft_route(b.language) : L.draft_route, lane: L.lane, lang: L.lang(b.language),
+        task: L.task ?? 'ocr', field: L.field, weight: bookWeight(b), human_read_count: b.human_read_count ?? 0, ...sc, cell_hand: L.hand,
         write: { revision_id: r.id, run_id: r.run_id ?? null, written_at: r.created_at, text_hash: r.next_hash, model: p[L.field].model },
         draft_model: r.model, ...(L.unread && { check_flag: !!p[L.field].engine?.input?.draft?.check_flag, change_share: p[L.field].engine?.input?.draft?.change_share ?? null }) });
     }
@@ -449,7 +597,7 @@ async function findWrites(db, since, until) {
 async function history(db) {
   const rows = await db.collection(VERDICTS).find({}, { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
   const pagesJudged = new Set(), bookPagesSet = new Map(), routeBooks = new Map();
-  for (const r of rows.filter((x) => x.kind !== 'wrong_page' && validRecordLoose(x))) {
+  for (const r of rows.filter((x) => x.kind !== 'wrong_page' && x.kind !== 'planted' && validRecordLoose(x))) {
     pagesJudged.add(r.page_id);
     if (!bookPagesSet.has(r.book_id)) bookPagesSet.set(r.book_id, new Set());
     bookPagesSet.get(r.book_id).add(r.page_id);
@@ -478,12 +626,16 @@ async function run() {
     // --book=ID[,ID] (#7263): the book-depth mode, a pilot's books judged N pages each; it never moves the nightly window.
     const BOOKS = arg('book') ? new Set(arg('book').split(',').filter(Boolean)) : null;
     const PER_BOOK = Number(arg('per-book') ?? 3);
-    const last = await db.collection(RUNS).find({ dry_run: false, mode: { $ne: 'book-depth' } }).sort({ at: -1 }).limit(1).next();
-    const since = new Date(arg('since') || (BOOKS ? DEFAULT_SINCE : last?.next_since) || DEFAULT_SINCE), until = new Date(arg('until') || Date.now());
+    // --lane=NAME (#7611): one lane only (seeding a new lane's cell); like book depth, it never moves the nightly window.
+    const LANE = arg('lane') || null;
+    if (LANE && !LANES.some((l) => l.enabled && l.lane === LANE)) throw new Error(`--lane=${LANE}: no enabled lane of that name`);
+    const MODE = BOOKS ? 'book-depth' : LANE ? 'lane' : 'nightly';
+    const last = await db.collection(RUNS).find({ dry_run: false, mode: { $nin: ['book-depth', 'lane'] } }).sort({ at: -1 }).limit(1).next();
+    const since = new Date(arg('since') || (BOOKS || LANE ? DEFAULT_SINCE : last?.next_since) || DEFAULT_SINCE), until = new Date(arg('until') || Date.now());
     const today = until.toISOString().slice(0, 10);
     const seed = Number(arg('seed') ?? today.replace(/-/g, ''));
-    const runId = `lane-judge-${until.toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}${BOOKS ? '-books' : ''}${DRY ? '-dry' : ''}`;
-    const found = await findWrites(db, since, until);
+    const runId = `lane-judge-${until.toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}${BOOKS ? '-books' : ''}${LANE ? '-lane' : ''}${DRY ? '-dry' : ''}`;
+    const found = await findWrites(db, since, until, LANE);
     const { frame } = found;
     const cands = BOOKS ? found.cands.filter((c) => BOOKS.has(c.book_id)) : found.cands;
     const hist = await history(db);
@@ -515,16 +667,42 @@ async function run() {
         if (other) controls.push({ kind: 'wrong_page', d, other, route });
       }
     }
-    const queue = [...controls, ...items];
+    // Planted controls (#7611): K per cell x route per ISO week, on pages the judge ACCEPTED before, still holding that
+    // text; one error each in the body, the kind rotating B -> E. Judged blind beside the items; scored in the export.
+    const planted = [];
+    const PER_WEEK = Number(arg('planted') ?? 2);
+    if (PER_WEEK > 0) {
+      for (const g of [...new Set(drawn.map((d) => `${d.cell}|${d.route}`))]) {   // every cell x route judged this run, flagged-only ones too
+        const [cell, route] = g.split('|');
+        // A language the planter has no bank for (it plants la / de / fr) gets no planted control, and says so.
+        const lang = drawn.find((d) => `${d.cell}|${d.route}` === g)?.lang;
+        if (drawn.find((d) => `${d.cell}|${d.route}` === g)?.task === 'translation') { console.log(`  planted: the planter plants OCR errors, not translation errors (${g}); none owed`); continue; }
+        if (!langCode(lang)) { console.log(`  planted: no planter for ${lang} (${g}); none owed`); continue; }
+        const prior = await db.collection(VERDICTS).find({ kind: 'planted', cell, route }, { projection: { planted_from: 1, week: 1 } }).toArray();
+        const owed = PER_WEEK - prior.filter((r) => r.week === week).length;
+        if (owed <= 0) continue;
+        const accepted = await db.collection(VERDICTS).find({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } }).toArray();
+        const ok = accepted.filter((r) => validRecord(r) && inEvidence(r));
+        const texts = new Map((await db.collection('pages').find({ id: { $in: ok.map((r) => r.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
+        const sources = ok.map((rec) => ({ rec, text: texts.get(rec.page_id) })).filter((x) => typeof x.text === 'string' && h(x.text.trim()).slice(0, 16) === x.rec.text_hash);
+        for (const x of planPlanted(sources, { owed, prior, lang, seed: seed ^ 0x7611 ^ parseInt(h(g).slice(0, 6), 16) })) {
+          const r = x.rec;
+          planted.push({ kind: 'planted', route, text: x.plantedText, plant: x.plant, from: r._id,
+            d: { page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, cell, route, lane: r.lane, lang: r.lang, task: 'ocr', field: 'ocr', script_type: r.script_type, script_source: r.script_source,
+              cell_hand: r.cell_hand, write: r.write, draft_model: r.draft_model, key: null, rate: null, u: null, human_read_count: r.draw?.human_read_count ?? null, stratum: 'planted' } });
+        }
+      }
+    }
+    const queue = [...controls, ...planted, ...items];
     const drawFile = path.join(OUT, `draw-${runId}.json`);
     fs.writeFileSync(drawFile, JSON.stringify({ run_id: runId, since, until, seed, frame, log, budget, max_calls: maxCalls, draft_share: draftShare, prompt_template_sha: PROMPT_TEMPLATE_SHA,
-      mode: BOOKS ? 'book-depth' : 'nightly', books: BOOKS ? [...BOOKS] : null, per_book: BOOKS ? PER_BOOK : null,
+      mode: MODE, lane: LANE, books: BOOKS ? [...BOOKS] : null, per_book: BOOKS ? PER_BOOK : null,
       drawn: drawn.map(({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, write, stratum, check_flag, change_share }) => ({ page_id, book_id, page_number, cell, route, key, rate, u, human_read_count, revision_id: write.revision_id, stratum, check_flag, change_share })),
-      queue: queue.map((q) => ({ kind: q.kind, page_id: q.d.page_id, route: q.route, other: q.other?.page_id })) }, null, 1));
+      queue: queue.map((q) => ({ kind: q.kind, page_id: q.d.page_id, route: q.route, other: q.other?.page_id, ...(q.plant && { plant: q.plant, planted_from: q.from }) })) }, null, 1));
     const tally = {}; for (const d of drawn) tally[`${d.cell}/${d.route}`] = (tally[`${d.cell}/${d.route}`] ?? 0) + 1;
     console.log(`window ${since.toISOString()} .. ${until.toISOString()}  seed ${seed}  run ${runId}`);
     console.log(`frame ${JSON.stringify(frame)}`);
-    console.log(`draw ${JSON.stringify(log)} -> ${drawn.length} pages ${JSON.stringify(tally)}; queue ${queue.length} calls (${controls.length} controls)`);
+    console.log(`draw ${JSON.stringify(log)} -> ${drawn.length} pages ${JSON.stringify(tally)}; queue ${queue.length} calls (${controls.length} wrong-page controls, ${planted.length} planted)`);
     console.log(`budget: ${budget.maxCalls} calls / 7 days (${capPoints} pt / ${ppc} pt a call); ${hist.callsLast7d} made; ${maxCalls} this run`);
     const meter0 = await claudeMeter(limits);
     console.log(`meter: ${meter0 ? `${meter0.source} ${meter0.email ?? ''} weekly ${meter0.weekly}% 5h ${meter0.session}%` : 'unreadable'}`);
@@ -532,7 +710,7 @@ async function run() {
 
     const { getPageSource } = await import('../lib/page-image-url.mjs');
     const pageDocs = new Map((await db.collection('pages').find({ id: { $in: [...new Set(queue.flatMap((q) => [q.d.page_id, q.other?.page_id].filter(Boolean)))] } },
-      { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, crop: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+      { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, crop: 1, 'ocr.data': 1, 'translation.data': 1 } }).toArray()).map((p) => [p.id, p]));
     const drafts = new Map((await db.collection('page_revisions').find({ id: { $in: drawn.map((d) => d.write.revision_id) } }, { projection: { id: 1, data: 1 } }).toArray()).map((r) => [r.id, typeof r.data === 'string' ? r.data : null]));
     let calls = 0, stop = null, meterAt = 0, meter = meter0;
     const retry = [];
@@ -543,13 +721,14 @@ async function run() {
       const why = local ? `${local.reason} (until ${local.until})` : paceBlock(meter);
       if (why) { stop = why; break; }
       const p = pageDocs.get(q.d.page_id);
-      const text = q.kind === 'draft' ? drafts.get(q.d.write.revision_id) : q.kind === 'wrong_page' ? pageDocs.get(q.other.page_id)?.ocr?.data : p?.ocr?.data;
+      const task = q.d.task ?? 'ocr', field = q.d.field ?? 'ocr';
+      const { text, source } = judgeInput(q, p, q.other && pageDocs.get(q.other.page_id), q.kind === 'draft' ? drafts.get(q.d.write.revision_id) : null);
       const imageUrl = p && getPageSource(p);
-      if (!text?.trim() || !imageUrl) { console.log(`  skip ${q.kind} ${q.d.page_id}: ${!imageUrl ? 'no image' : 'no text'}`); continue; }
-      if (q.kind === 'item' && (await import('../lib/page-text-writer.mjs')).textHash(p.ocr) !== q.d.write.text_hash) { console.log(`  skip ${q.d.page_id}: rewritten since the draw`); continue; }
+      if (!text?.trim() || !imageUrl || (task === 'translation' && !source?.trim())) { console.log(`  skip ${q.kind} ${q.d.page_id}: ${!imageUrl ? 'no image' : !text?.trim() ? 'no text' : 'no source OCR'}`); continue; }
+      if (q.kind === 'item' && (await import('../lib/page-text-writer.mjs')).textHash(p[field]) !== q.d.write.text_hash) { console.log(`  skip ${q.d.page_id}: rewritten since the draw`); continue; }
       const _id = `lj${h(`${q.kind}:${q.d.cell}:${q.route}:${q.d.page_id}:${q.other?.page_id ?? ''}:${h(text.trim())}`).slice(0, 16)}`;
       if (await db.collection(VERDICTS).findOne({ _id }, { projection: { _id: 1 } })) continue;
-      const it = { id: _id, task: 'ocr', lang: q.d.lang, image_url: imageUrl, text };
+      const it = { id: _id, task, lang: q.d.lang, image_url: imageUrl, text, ...(source != null && { source }) };
       const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'lj-opus-'));
       let res;
       try {
@@ -561,20 +740,22 @@ async function run() {
         res = await opusCall(prompt, ws);
         if (res.cls === 'quota') { limits.noteLimitHit('claude', { reason: res.text.slice(0, 200) }); stop = 'quota reply from claude -p'; break; }
         const v = parseVerdict(res.text);
-        const doc = { _id, kind: q.kind, page_id: q.d.page_id, book_id: q.d.book_id, page_number: q.d.page_number, cell: q.d.cell, route: q.route, lane: q.d.lane, lang: q.d.lang,
+        const doc = { _id, kind: q.kind, page_id: q.d.page_id, book_id: q.d.book_id, page_number: q.d.page_number, cell: q.d.cell, route: q.route, lane: q.d.lane, lang: q.d.lang, task,
           other_page_id: q.other?.page_id, script_type: q.d.script_type, script_source: q.d.script_source, cell_hand: q.d.cell_hand, write: q.d.write, draft_model: q.d.draft_model, image_url: imageUrl, text_hash: h(text.trim()).slice(0, 16),
-          judge: { by: 'claude -p --model opus', model_reported: res.model, prompt_template_sha: PROMPT_TEMPLATE_SHA, prompt_sha: h(prompt).slice(0, 16), instrument: 'route-judge-6740 judgePrompt' },
+          ...(source != null && { source_hash: h(source.trim()).slice(0, 16) }),
+          judge: { by: 'claude -p --model opus', model_reported: res.model, prompt_template_sha: promptTemplateSha(task), prompt_sha: h(prompt).slice(0, 16), instrument: 'route-judge-6740 judgePrompt' },
           verdict: v, raw: v ? undefined : String(res.text).slice(0, 500), cls: res.cls, usage: res.usage, list_usd: res.cost, secs: Math.round((Date.now() - t0) / 1000),
+          ...(q.kind === 'planted' && { plant: q.plant, planted_from: q.from, catch: v ? scorePlant(v, q.plant) : null }),
           seed, run_id: runId, week, draw: { key: q.d.key, rate: q.d.rate, u: q.d.u, human_read_count: q.d.human_read_count, stratum: q.d.stratum ?? 'random', ...(BOOKS && { mode: 'book-depth' }), ...(q.d.check_flag != null && { check_flag: q.d.check_flag, change_share: q.d.change_share }) }, called: true, judged_at: new Date().toISOString() };
         await db.collection(VERDICTS).insertOne(doc);
         console.log(`  ${q.kind} ${q.d.cell}/${q.route} ${q.d.book_id}:${q.d.page_number}: ${v ? `accept=${v.accept} ${v.fidelity} (${(v.defects || []).length} defects)` : `unparsed ${res.cls ?? ''}`}`);
         if (q.kind === 'item' && v && (!v.accept || wrongText(v))) retry.push({ page_id: q.d.page_id, book_id: q.d.book_id, page_number: q.d.page_number, cell: q.d.cell, route: q.route, accept: v.accept, fidelity: v.fidelity,
-          defects: (v.defects || []).map((d) => ({ class: cls(d), severity: d.severity, quote: String(d.quote || '').slice(0, 120) })), next: 'GPU draft > agy (#7611 retry queue)' });
+          defects: (v.defects || []).map((d) => ({ class: cls(d), severity: d.severity, quote: String(d.quote || '').slice(0, 120) })), next: LANES.find((l) => l.lane === q.d.lane)?.retry_next ?? 'GPU draft > agy (#7611 retry queue)' });
       } finally { fs.rmSync(ws, { recursive: true, force: true }); }
     }
     const meter1 = await claudeMeter(limits);
     if (retry.length) fs.writeFileSync(path.join(OUT, `retry-queue-${runId}.jsonl`), retry.map((r) => JSON.stringify(r)).join('\n') + '\n');
-    const runDoc = { _id: runId, dry_run: false, mode: BOOKS ? 'book-depth' : 'nightly', ...(BOOKS && { books: [...BOOKS], per_book: PER_BOOK }), since, until, seed, frame, draw_log: log, drawn: drawn.length, queue: queue.length, calls, stop, budget, cap_points: capPoints,
+    const runDoc = { _id: runId, dry_run: false, mode: MODE, ...(LANE && { lane: LANE }), ...(BOOKS && { books: [...BOOKS], per_book: PER_BOOK }), since, until, seed, frame, draw_log: log, drawn: drawn.length, queue: queue.length, calls, stop, budget, cap_points: capPoints,
       draft_share: draftShare, meter_before: meter0, meter_after: meter1, prompt_template_sha: PROMPT_TEMPLATE_SHA, retry_queue: retry, host: os.hostname(), at: new Date().toISOString() };
     runDoc.next_since = stop ? since : until;
     await db.collection(RUNS).insertOne(runDoc);
@@ -605,7 +786,7 @@ async function readStore() {
   try { return { records: await db.collection(VERDICTS).find({}).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
 }
 
-async function doExport(file) {
+async function doExport(file, root) {
   const { records, runs } = await readStore();
   const score = exportScore(records);
   // The measured price: the meter's movement over the runs that judged (integer percents, the account is shared).
@@ -614,6 +795,7 @@ async function doExport(file) {
   score.meter = { runs: judgedRuns.length, calls: n, weekly_points_delta: pts, points_per_call: n ? +(pts / n).toPrecision(3) : null,
     note: 'upper bound: integer meter, and the account is shared with the box\'s other sessions' };
   if (file) { fs.mkdirSync(path.dirname(path.resolve(file)), { recursive: true }); fs.writeFileSync(file, JSON.stringify(score, null, 1) + '\n'); }
+  if (root) writeEvidence(root, score);
   for (const [cell, C] of Object.entries(score.cells)) for (const [route, x] of Object.entries({ ...C.routes, ...C.routes_not_counted }))
     console.log(`${cell}/${route}: ${x.counts ? 'counts' : 'control not passed'} accept ${x.accept} [${x.accept_ci.ci95?.join(', ')}] by ${x.accept_ci.unit} wrong_text ${x.wrong_text_pages} books ${x.books}`);
   return score;
@@ -621,6 +803,14 @@ async function doExport(file) {
 
 const sh = (cmd, args, opts = {}) => { const r = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1 << 28, ...opts }); if (r.status !== 0) throw new Error(`${cmd} ${args.slice(0, 3).join(' ')}: ${r.stderr || r.stdout}`); return r.stdout; };
 const REPO = () => process.env.SL_REPO || '/data/scratch/sl/sourcelibrary';
+
+/** The repo paths build.py opens: the table's own folder, its inputs, the script split's, and every evidence source but ours. */
+export function rebuildInputs(rules, RT = 'scripts/eval/estimator/router-table') {
+  const ss = rules.script_split?.on ? [rules.script_split.waiting].filter(Boolean) : [];
+  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...ss,
+    ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
+    .filter((p) => p !== EVIDENCE_PATH && p !== BY_SCRIPT_PATH);
+}
 
 /** build.py on a copy of origin/main, before and after the export; publish; comment on #7263 when a decision flips. */
 async function rebuild() {
@@ -631,14 +821,13 @@ async function rebuild() {
   sh('git', ['-C', REPO(), 'fetch', '-q', 'origin', 'main']);
   const rulesText = sh('git', ['-C', REPO(), 'show', `${ref}:${RT}/rules.json`]);
   const rules = JSON.parse(rulesText);
-  const need = [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
-    .filter((p) => p !== EVIDENCE_PATH);
+  const need = rebuildInputs(rules, RT);
   const tar = spawnSync('git', ['-C', REPO(), 'archive', '--format=tar', ref, ...need], { maxBuffer: 1 << 30 });
   if (tar.status !== 0) throw new Error(`git archive: ${tar.stderr}`);
   sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
   // --export=FILE: a given score.json instead of the store (a replay, or a test of the feed)
-  const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(path.join(dir, EVIDENCE_PATH));
-  if (arg('export')) fs.writeFileSync(path.join(dir, EVIDENCE_PATH), JSON.stringify(score));
+  const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(null, dir);
+  if (arg('export')) writeEvidence(dir, score);
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
   let text = rulesText; const added = [];
@@ -692,14 +881,14 @@ async function weeklyPr() {
   sh('git', ['-C', REPO(), 'worktree', 'add', '-q', '-B', branch, wt, 'origin/main']);
   try {
     for (const f of ['src/lib/vendor/lamejs-bundle.js']) if (fs.existsSync(path.join(REPO(), f))) { fs.mkdirSync(path.dirname(path.join(wt, f)), { recursive: true }); fs.copyFileSync(path.join(REPO(), f), path.join(wt, f)); }
-    const score = await doExport(path.join(wt, EVIDENCE_PATH));
+    const score = await doExport(null, wt);
     const rf = path.join(wt, RT, 'rules.json');
     let text = fs.readFileSync(rf, 'utf8'); const rules = JSON.parse(text), added = [];
     for (const { cell, route, entry } of evidenceEntries(score, rules)) { const t2 = addEvidence(text, cell, route, entry); if (t2 !== text) added.push(`${cell}/${route}`); text = t2; }
     fs.writeFileSync(rf, text);
-    const changed = sh('git', ['-C', wt, 'status', '--porcelain', '--', EVIDENCE_PATH, `${RT}/rules.json`]).trim();
+    const changed = sh('git', ['-C', wt, 'status', '--porcelain', '--', EVIDENCE_PATH, BY_SCRIPT_PATH, `${RT}/rules.json`]).trim();
     if (!changed) { console.log('weekly-pr: no change against main'); return null; }
-    sh('git', ['-C', wt, 'add', EVIDENCE_PATH, `${RT}/rules.json`]);
+    sh('git', ['-C', wt, 'add', EVIDENCE_PATH, BY_SCRIPT_PATH, `${RT}/rules.json`]);
     sh('git', ['-C', wt, 'commit', '-s', '-q', '-m', `eval(#7611): lane-judge sampler weekly snapshot ${stamp}\n\nThe store's verdicts as router evidence (${EVIDENCE_PATH})${added.length ? `; rules.json entries added: ${added.join(', ')}` : ''}.`]);
     sh('git', ['-C', wt, 'push', '-q', '-f', '-u', 'origin', branch]);
     const lines = Object.entries(score.cells).flatMap(([c, C]) => Object.entries(C.routes).map(([r, x]) => `| ${c} | ${r} | ${x.accept} | ${x.accept_ci.ci95?.join('–') ?? ''} | ${x.wrong_text_pages} | ${x.books} |`));

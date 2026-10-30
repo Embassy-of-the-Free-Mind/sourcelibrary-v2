@@ -22,6 +22,15 @@
 # OCR-FILLER-SKIP in its log: a recorded skip, not a failure. Every chunk appends a row to $ST/runs.jsonl.
 # Chunks are named zy-ocr-<route>-cNNN: after every digit-prefixed (hand-queued) task, before the zz-siglip2 chunks.
 # Nothing here writes to Mongo; each route's own task applies its reads (see the routes file's downstream column).
+#
+# BACKFILL (Derek 2026-10-29: "I don't want it unused, there should be a continual queue"). When no enabled route has
+# pages left, the filler hands the card to the SigLIP2 page-embedding run (#6871 row 8, approved 10-21/10-26) by running
+# its own chunk queuer, $BACKFILL. OCR still goes first: zz-siglip2 chunks are ignored in the pending/running test
+# above, so an OCR chunk is queued as soon as a route has pages, and zy- sorts before zz- (it runs when the current
+# embedding chunk ends, ≤ 12 h). Turn the backfill off with `touch $ST/BACKFILL-OFF`; the SigLIP run's own
+# switch, /root/jobs/siglip2-6871/full/PAUSE, still stops it (its queuer writes PAUSE itself after 5 failed tries).
+# IDLE CHECK: if the card has had nothing queued or running for 2 h, page ntfy (at most once every 12 h), so an empty
+# queue is never silent again (10-28 15:09Z → 10-29: 8 h idle, no page).
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROUTES=${OCR_FILLER_ROUTES:-$HERE/ocr-filler-routes.tsv}
@@ -45,6 +54,23 @@ for f in glob.glob(f"{J}/plan/*.json"):
 print(pages, books)
 PY
     ;;
+    gpu-print) python3 - "$2" <<'PY'
+import json, os, sys
+J = sys.argv[1]; pages = 0; books = set(); planned = set()
+if os.path.exists(f"{J}/manifest.tsv"):
+    for l in open(f"{J}/manifest.tsv"):
+        r = l.rstrip("\n").split("\t")
+        if len(r) != 4: continue
+        planned.add(r[0])
+        if not os.path.exists(f"{J}/out/{r[0]}/{r[1]}.json") and not os.path.exists(f"{J}/out/{r[0]}/{r[1]}.err"): pages += 1; books.add(r[0])
+fr = json.load(open(f"{J}/frame-books.json"))["books"] if os.path.exists(f"{J}/frame-books.json") else []
+for b in fr:
+    if b["bid"] not in planned: pages += b["owed"]; books.add(b["bid"])
+print(pages, len(books))
+PY
+    ;;
+    # #7567 arm c: planned pages (cli-ocr-lane.mjs armc-plan) with no draft file and not ledgered
+    euro-draft) node --no-warnings "$CODE/scripts/batch/cli-ocr-lane.mjs" armc-left --lane-dir="$2" 2>/dev/null | tail -1 | grep -E '^[0-9]+ [0-9]+$' || echo "0 0" ;;
     *) echo "0 0" ;;
   esac
 }
@@ -62,13 +88,19 @@ case "${1:-run}" in
   run)
     exec 9>/tmp/ocr-filler.lock; flock -n 9 || exit 0
     [ -e "$ST/PAUSE" ] && exit 0
-    [ "$(ls -1 "$Q"/pending | grep -c '\.sh$')" -gt 0 ] && exit 0
-    [ "$(ls -1 "$Q"/running | grep -c '\.sh$')" -gt 0 ] && exit 0
+    [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -gt 0 ] && rm -f "$ST/IDLE-SINCE"
+    # backfill chunks (zz-siglip2-*) do not block OCR: an OCR chunk sorts ahead of them
+    [ "$(ls -1 "$Q"/pending | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
+    [ "$(ls -1 "$Q"/running | grep '\.sh$' | grep -vc '^zz-siglip2-')" -gt 0 ] && exit 0
+    backfill_running=$(ls -1 "$Q"/running | grep -c '^zz-siglip2-')
     # a job outside the queue that takes the lock (e.g. an eval's drafting arms) owns the card until it lets go
-    flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+    # (a running backfill chunk holds the lock through gpu-queue.sh; it yields to whatever is queued, so it does not count)
+    if [ "$backfill_running" -eq 0 ]; then
+      flock -n /root/gpu.lock true || { echo "$(now) /root/gpu.lock is held outside the queue: queueing nothing"; exit 0; }
+    fi
     vram=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1)
     case "$vram" in ''|*[!0-9]*) echo "$(now) nvidia-smi unreadable: queueing nothing"; exit 0 ;; esac
-    if [ "$vram" -gt 1000 ]; then
+    if [ "$vram" -gt 1000 ] && [ "$backfill_running" -eq 0 ]; then
       echo "$(now) card holds ${vram} MiB with nothing running in the queue (an out-of-queue job): queueing nothing"; exit 0
     fi
     free_g=$(df -BG --output=avail / | tail -1 | tr -dc 0-9)
@@ -130,12 +162,75 @@ echo "\$(date -u +%FT%TZ) end rc=\$rc: \$(( $p - \${after:-$p} )) pages read thi
 exit \$rc
 EOF
         ;;
+        gpu-print) cat > "$tmp" <<EOF
+#!/usr/bin/env bash
+# timeout: $((dl + 2))h
+# issue: $issue
+# $name: queued by ocr-filler.sh (#6871) at $(now). Route $route ($kind), $p pages left in $b books.
+# Plans the next frame books when fewer than 3,000 planned pages wait, reads up to ${dl} h with LightOnOCR, then applies.
+# Downstream: $down
+set -uo pipefail
+ST=$ST; LANE=$lane; CODE=$CODE; ENV_FILE=$ENV_FILE
+row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" >> "\$ST/runs.jsonl"; }
+# vLLM at util 0.85 (gpu-print-gpu.sh, FP8) asks for ~20.4 GB: wait up to an hour for it, else a recorded skip
+for i in \$(seq 1 60); do
+  f=\$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  [ "\${f:-0}" -ge 21000 ] && break
+  [ "\$i" -eq 60 ] && { echo "OCR-FILLER-SKIP card busy (\${f} MiB free) for an hour"; row skip 75; exit 75; }
+  sleep 60
+done
+waiting=\$(awk -F'\t' -v J="\$LANE" 'NF==4 { f=J"/out/"\$1"/"\$2; if ((getline x < (f".json")) <= 0 && (getline y < (f".err")) <= 0) n++; close(f".json"); close(f".err") } END { print n+0 }' "\$LANE/manifest.tsv" 2>/dev/null)
+[ "\${waiting:-0}" -lt 3000 ] && node --env-file="\$ENV_FILE" "\$CODE/scripts/workers/gpu-print-lane.mjs" plan --apply --dir "\$LANE" --limit 40
+LANE_DIR=\$LANE CODE_DIR=\$CODE HOURS=$dl bash "\$CODE/scripts/gpu/gpu-print-gpu.sh"; rc=\$?
+node --env-file="\$ENV_FILE" "\$CODE/scripts/workers/gpu-print-lane.mjs" apply --apply --dir "\$LANE"; arc=\$?
+row done \$(( rc > arc ? rc : arc ))
+exit \$(( rc > arc ? rc : arc ))
+EOF
+        ;;
+        euro-draft) cat > "$tmp" <<EOF
+#!/usr/bin/env bash
+# timeout: $((dl + 1))h
+# issue: $issue
+# $name: queued by ocr-filler.sh (#6871) at $(now). Route $route ($kind), $p pages left in $b books.
+# Drafts up to MAX_PAGES planned pages (la PERO, it LightOnOCR); the agy correction is the lane's cron run. Downstream: $down
+set -uo pipefail
+ST=$ST
+row() { printf '{"at":"%s","task":"$name","route":"$route","event":"%s","rc":%s,"pages_left":%s}\n' "\$(date -u +%FT%TZ)" "\$1" "\$2" "\$3" >> "\$ST/runs.jsonl"; }
+# LightOnOCR asks for 0.6 of the card (14.7 GB): wait up to an hour for it, else a recorded skip
+for i in \$(seq 1 60); do
+  f=\$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  [ "\${f:-0}" -ge 15000 ] && break
+  [ "\$i" -eq 60 ] && { echo "OCR-FILLER-SKIP card busy (\${f} MiB free) for an hour"; row skip 75 $p; exit 75; }
+  sleep 60
+done
+LANE_DIR=$lane CODE_DIR=$CODE ENV_FILE=$ENV_FILE MAX_PAGES=\${MAX_PAGES:-1500} bash "$CODE/scripts/gpu/euro-draft-task.sh"; rc=\$?
+read -r after _ < <(node --no-warnings "$CODE/scripts/batch/cli-ocr-lane.mjs" armc-left --lane-dir="$lane" 2>/dev/null | tail -1)
+row done \$rc \${after:-null}
+exit \$rc
+EOF
+        ;;
         *) echo "$(now) $route: unknown kind $kind, skipped"; rm -f "$tmp"; continue ;;
       esac
       /root/bin/gpu-queue.sh add "$tmp" "$name"; rm -f "$tmp"
       echo "$(now) queued $name: route $route, $p pages left in $b books (VRAM ${vram} MiB, disk ${free_g}G)"
       exit 0
     done < <(routes)
-    echo "$(now) nothing to queue: no enabled route has pages left" ;;
+    echo "$(now) nothing to queue: no enabled route has pages left"
+    BACKFILL=${BACKFILL:-/root/jobs/siglip2-6871/code-full/siglip2-requeue.sh}
+    if [ ! -e "$ST/BACKFILL-OFF" ] && [ -x "$BACKFILL" ]; then
+      "$BACKFILL" 2>&1 | sed "s/^/$(now) backfill: /"
+    fi
+    # idle check: nothing queued or running → note when it started; page after 2 h, then at most every 12 h
+    if [ "$(ls -1 "$Q"/pending "$Q"/running 2>/dev/null | grep -c '\.sh$')" -eq 0 ]; then
+      [ -e "$ST/IDLE-SINCE" ] || date +%s > "$ST/IDLE-SINCE"
+      idle_m=$(( ( $(date +%s) - $(cat "$ST/IDLE-SINCE") ) / 60 ))
+      last=$(cat "$ST/IDLE-PAGED" 2>/dev/null || echo 0)
+      if [ "$idle_m" -ge 120 ] && [ $(( $(date +%s) - last )) -ge 43200 ]; then
+        page "gex45 GPU idle ${idle_m} min (#6871)" "No OCR route has pages and the backfill queued nothing (off, paused, or done). Add a route to ocr-filler-routes.tsv or queue a task; ocr-filler.sh status shows the routes."
+        date +%s > "$ST/IDLE-PAGED"
+      fi
+    else
+      rm -f "$ST/IDLE-SINCE"
+    fi ;;
   *) sed -n '2,25p' "$0"; exit 2 ;;
 esac

@@ -18,9 +18,10 @@
  * once the text is back: lanes select pages without text). Check the book's status after.
  *
  * Usage (dry run by default):
- *   node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id <id> [--apply]
+ *   node --env-file=.env.production.local scripts/maintenance/revert-run.mjs --run-id <id> [--page-ids-file=F] [--apply]
  */
 import { MongoClient } from 'mongodb';
+import fs from 'node:fs';
 import { revertRun } from '../lib/page-text-writer.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 
@@ -28,8 +29,11 @@ const args = process.argv.slice(2);
 const APPLY = args.includes('--apply');
 const i = args.indexOf('--run-id');
 const RUN_ID = i !== -1 ? args[i + 1] : null;
+// --page-ids-file=F (a JSON array): undo only these pages of the run
+const PF = args.find((a) => a.startsWith('--page-ids-file='))?.slice('--page-ids-file='.length);
+const PAGE_IDS = PF ? new Set(JSON.parse(fs.readFileSync(PF, 'utf8'))) : null;
 if (!RUN_ID || RUN_ID.startsWith('--')) {
-  console.error('Usage: node scripts/maintenance/revert-run.mjs --run-id <id> [--apply]');
+  console.error('Usage: node scripts/maintenance/revert-run.mjs --run-id <id> [--page-ids-file=F] [--apply]');
   process.exit(1);
 }
 
@@ -38,7 +42,7 @@ await client.connect();
 const db = client.db('bookstore');
 try {
   console.log(`=== revert run ${RUN_ID} ${APPLY ? '(APPLY)' : '(dry run — nothing written)'} ===`);
-  const res = await revertRun(db, RUN_ID, { apply: APPLY });
+  const res = await revertRun(db, RUN_ID, { apply: APPLY, pageIds: PAGE_IDS });
   console.log(`revision rows: ${res.rows} | page×field targets: ${res.targets}`);
   console.log(`restorable (page still holds the run's text): ${res.restorable}`);
   console.log(`changed since the run (left alone): ${res.changed.length}`);

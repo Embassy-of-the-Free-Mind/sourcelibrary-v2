@@ -11,6 +11,7 @@ import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup'
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -142,9 +143,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch LOC item JSON
     const locUrl = `https://www.loc.gov/item/${lccn}/?fo=json`;
-    const locRes = await fetch(locUrl, {
+    const locRes = await outboundFetch(locUrl, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
         'Accept': 'application/json',
       },
     });

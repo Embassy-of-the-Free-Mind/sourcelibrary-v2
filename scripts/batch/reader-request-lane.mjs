@@ -55,7 +55,7 @@ import { translateLaneForBook, isTranslatablePage, SKIP_TRANSLATION_PAGE_TYPES }
 import { CLI_TRANSLATE_LANES, CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
-import { isReadableInEnglish } from '../lib/page-counts.mjs';
+import { isReadableInEnglish, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { UNTRANSLATED, readerArgs } from './cli-translate-lane.mjs';
 import { UNREAD, spreadReason } from './cli-ocr-lane.mjs';
 
@@ -146,7 +146,7 @@ async function judgeRequests(db, { ceiling, since = null }) {
     r.book = books.get(r.bookRef);
     r.page = r.book ? await db.collection('pages').findOne({ book_id: r.book.id, ...byIdOr_id(r.pageId) }, { projection: { id: 1, page_number: 1, page_type: 1, ocr: 1, 'translation.data': 1 } }) : null;
     if (r.book && !tails.has(r.book.id)) {
-      tails.set(r.book.id, await db.collection('pages').countDocuments({ book_id: r.book.id, page_number: { $gt: 0 }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }] }));
+      tails.set(r.book.id, await db.collection('pages').countDocuments({ book_id: r.book.id, ...VISIBLE_PAGE_MATCH, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }] }));
     }
     const holdAllowed = LANE_HOLDS.includes(r.book?.pipeline_auto?.hold?.reason);
     r.verdict = requestVerdict({ book: r.book, page: r.page, tail: r.book ? tails.get(r.book.id) : 0, repeat: r.repeat, ceiling, holdAllowed, ocrPending: true });
