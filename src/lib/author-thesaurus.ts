@@ -63,10 +63,16 @@ export interface AuthorThesaurusDoc {
    */
   is_person?: boolean;
   quarantine_reason?: string;
+  /** Wikidata, filled by backfill-author-aliases.mjs (#7786); never overwritten there. */
+  aliases?: string[];
+  wikidata_description?: string;
+  wikidata_birth_year?: number;
+  wikidata_death_year?: number;
 }
 
 export interface AuthorEntityEnrichment {
-  _id: ObjectId;
+  /** Absent when the enrichment comes from the thesaurus doc alone (no entities row). */
+  _id?: ObjectId;
   name?: string;
   canonical_name?: string;
   description?: string;
@@ -271,7 +277,48 @@ export async function resolveCanonicalAuthor(
     doc,
     canonicalSlug,
     canonicalName: entity?.canonical_name || entity?.name || doc.canonical_name,
-    entity,
+    entity: withThesaurusEnrichment(entity, doc),
     books,
   };
+}
+
+/** A life year as an ISO 8601 date string the page and schema.org read, or undefined. */
+function yearAsDate(y: unknown): string | undefined {
+  // BCE years are left out: the page reads the year as `date.split('-')[0]`, which a
+  // leading minus would empty.
+  return typeof y === 'number' && Number.isInteger(y) && y > 0 ? String(y).padStart(4, '0') : undefined;
+}
+
+/**
+ * The legacy `entities` row supplies description, life dates and authority ids, but only
+ * ~a third of thesaurus docs have one (#7786). Fill what it lacks from the thesaurus doc's
+ * Wikidata fields; never override what the entity row says.
+ */
+export function withThesaurusEnrichment(
+  entity: AuthorEntityEnrichment | null,
+  doc: AuthorThesaurusDoc,
+): AuthorEntityEnrichment | null {
+  const fill: AuthorEntityEnrichment = {
+    canonical_name: doc.canonical_name,
+    description: doc.wikidata_description || undefined,
+    aliases: doc.aliases?.length ? doc.aliases : undefined,
+    wikidata_id: doc.wikidata_id || undefined,
+    viaf_id: doc.viaf_id || undefined,
+    wikidata_birth_date: yearAsDate(doc.wikidata_birth_year),
+    wikidata_death_date: yearAsDate(doc.wikidata_death_year),
+  };
+  if (!entity) {
+    const hasAny = fill.description || fill.wikidata_birth_date || fill.wikidata_id || fill.viaf_id;
+    return hasAny ? fill : null;
+  }
+  const merged: AuthorEntityEnrichment = { ...entity };
+  // A life range is taken whole from one source: if the entity row has either date, it keeps both.
+  const entityHasDates = !!(entity.wikidata_birth_date || entity.wikidata_death_date);
+  const keys = ['description', 'aliases', 'wikidata_id', 'viaf_id'] as const;
+  for (const k of entityHasDates ? keys : [...keys, 'wikidata_birth_date', 'wikidata_death_date'] as const) {
+    const v = merged[k];
+    const empty = v == null || v === '' || (Array.isArray(v) && v.length === 0);
+    if (empty && fill[k] !== undefined) (merged as Record<string, unknown>)[k] = fill[k];
+  }
+  return merged;
 }
