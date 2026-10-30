@@ -36,6 +36,7 @@ import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { decodeShortlinkCode } from '../lib/shortlink-code.mjs';
 import { revalidatePaths } from '../lib/revalidate.mjs';
+import { writePageText } from '../lib/page-text-writer.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find((a) => !a.startsWith('--'));
@@ -89,6 +90,12 @@ try {
     else {
       const now = new Date();
       const before = { readable: book.pages_ocr ?? null, translated: book.pages_translated ?? null, pages: book.pages_count ?? null };
+      // The carried English goes on through the page-text writer (#7058: prior text kept as a revision, revertible),
+      // while the leaf is still hidden, so the transaction below only renumbers.
+      for (const [l, t] of carries) {
+        const w = await writePageText(db, l.id, 'translation', t, { by: 'split-swap', reason: 'whole frame, same text: the spread\'s English carried to its single leaf (#7605)', run_id: `split-swap-${l.staged_split.run}` });
+        if (w.status !== 'written') throw new Error(`carrying English to leaf ${leafNumberOf(l)}: ${w.status}; nothing swapped`);
+      }
       const session = client.startSession();
       try {
         await session.withTransaction(async () => {
@@ -99,14 +106,13 @@ try {
           );
           if (r1.modifiedCount !== frames.length) throw new Error(`archived ${r1.modifiedCount}/${frames.length} spreads: aborting the swap`);
           await pages.bulkWrite([...into].map(([id, ids]) => ({ updateOne: { filter: { id, book_id: bookId, page_type: 'archived-spread' }, update: { $set: { split_into: ids } } } })), { session });
-          const carried = new Map(carries.map(([l, t]) => [l.id, t]));
           const r2 = await pages.bulkWrite(leaves.map((l) => ({ updateOne: {
             filter: { id: l.id, book_id: bookId, page_number: l.page_number },
             // translation.updated_at = the moment this English reached a live page. Three readers key on it: the stale
             // sweep (OCR newer than English = stale; a carried translation is older than the cut OCR under it), and the
             // keyword and embedding deltas, which skipped the leaf while it sat below zero.
             update: { $set: { page_number: leafNumberOf(l), 'staged_split.swapped_at': now, updated_at: now,
-              ...(carried.has(l.id) ? { translation: { ...carried.get(l.id), updated_at: now } } : l.translation?.data ? { 'translation.updated_at': now } : {}) }, $unset: { hidden: '' } },
+              ...(l.translation?.data ? { 'translation.updated_at': now } : {}) }, $unset: { hidden: '' } },
           } })), { session });
           if (r2.modifiedCount !== leaves.length) throw new Error(`promoted ${r2.modifiedCount}/${leaves.length} leaves: aborting the swap`);
         });
