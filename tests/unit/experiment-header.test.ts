@@ -120,6 +120,27 @@ describe('experiments-lint', () => {
     expect(lint('none')).toEqual([expect.stringContaining('router_evidence must be')]);
   });
 
+  // #6740: from 2026-10-30 an OCR/translation result carries its defect rates per 1,000 words, or says why not.
+  const dr = { ...judged, router_evidence: 'none — a test' };
+  const dated = (h: object, d: string) => ({ [`${d}-route.md`]: entry(serializeHeader(h), d) });
+  it('refuses a NEW ocr result dated 2026-10-30 without defect_rates; older or not-new entries pass (negative control)', () => {
+    const d = tmp(dated(dr, '2026-10-30'));
+    expect(lintExperiments(d, { canons, routerCells, added: ['2026-10-30-route.md'] }).errors).toEqual([expect.stringContaining('needs defect_rates')]);
+    expect(lintExperiments(d, { canons, routerCells }).errors).toEqual([]);
+    expect(lintExperiments(tmp(dated(dr, '2026-10-29')), { canons, routerCells, added: ['2026-10-29-route.md'] }).errors).toEqual([]);
+  });
+  it('accepts defect_rates as "none — why" or a file of the right shape; refuses a bare none, a missing file and a wrong shape', () => {
+    const root = mkdtempSync(join(tmpdir(), 'dr-'));
+    writeFileSync(join(root, 'good.json'), JSON.stringify({ cells: { 'latin-lite': { lite: { misleads_per_1k: 6.3, wrong_text_per_1k: 5.6, fidelity_mean: 3.4 } } } }));
+    writeFileSync(join(root, 'bad.json'), JSON.stringify({ cells: { 'latin-lite': { lite: { accept: '24/60' } } } }));
+    const lint = (v: unknown) => readExperiment(entry(serializeHeader({ ...dr, defect_rates: v }), '2026-10-30'), { name: '2026-10-30-route.md', repoRoot: root }).problems;
+    expect(lint('good.json')).toEqual([]);
+    expect(lint('none — a prompt test, nothing judged for defects')).toEqual([]);
+    expect(lint('none')).toEqual([expect.stringContaining('not a readable JSON')]);
+    expect(lint('missing.json')).toEqual([expect.stringContaining('not a readable JSON')]);
+    expect(lint('bad.json')).toEqual([expect.stringContaining('carries no route')]);
+  });
+
   it('does not ask an unjudged or non-routing entry for router_evidence', () => {
     for (const h of [{ ...judged, measure: 'accuracy' }, { ...judged, stage: 'metadata' }]) {
       expect(lintExperiments(tmp(one(h)), { canons, routerCells, added: ['2026-10-28-route.md'] }).errors).toEqual([]);

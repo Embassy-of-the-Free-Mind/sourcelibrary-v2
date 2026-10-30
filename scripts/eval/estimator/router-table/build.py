@@ -231,6 +231,8 @@ def decide(cell, M, cur, P, cost, wt_max, within=None):
 
 def main():
     P = json.load(open(D + 'rules.json'))
+    # defects per 1,000 words beside k/n (#6740 defect-rate.py): shown, never in the decision
+    DR = json.load(open(P['inputs']['defect_rates']))['cells'] if os.path.exists(P['inputs'].get('defect_rates', '')) else {}
     if P.get('script_split', {}).get('on') and '--no-script-split' not in sys.argv: P['cells'] = expand_by_script(P)
     L = lambda k: json.load(open(arg('--' + k) or P['inputs'][k]))  # --pilot <path> until #7376 is on main
     pilot, v1, v2, cap = L('pilot')['cells'], L('v1')['cells'], {c['id']: c for c in L('v2')['cells']}, L('capacity')['channels']
@@ -330,7 +332,9 @@ def main():
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
                            _usd_acc=u / q(dr, .5), _usd_ci=[u / q(dr, p) for p in (.95, .05)], _usd_acc_flat=u0 / q(dr, .5),
-                           _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, _usd_acc=u / q(do, .5))))
+                           _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, _usd_acc=u / q(do, .5)),
+                           defects=DR.get(cell.get('base') or cell['id'], {}).get(r['id']),
+                           **({} if DR.get(cell.get('base') or cell['id'], {}).get(r['id']) or not x else {'defects_missing': 'tested, but no stored verdict with severity (or < 10 pages): k/n only'})))
         # Derek 11:54Z: in a manuscript or unknown-script cell a route with too few judged pages of that type is not
         # measured (it would decide on print's prior); the cell says UNTESTED / HOLD below
         few = lambda r: cell.get('script') in ('manuscript', 'unknown') and r['n'] < P['script_split']['min_manuscript_pages']
@@ -493,6 +497,19 @@ def main():
             '| cell | pages waiting | Opus bar | best agy / GPU route | gap | P | wrong text (route / bar) | decision |', '|' + '---|' * 8]
     out += [f"| {r['title']} | {r['pages_waiting']:,} | {r['vs_bar']['bar']} {r['vs_bar']['bar_mean']:.2f} | {r['vs_bar']['alt']} {r['vs_bar']['alt_mean']:.2f} | {r['vs_bar']['gap']:+.2f} | "
             f"{r['vs_bar']['p_within']:.2f} | {r['vs_bar']['alt_wrate']:.1%} / {r['vs_bar']['bar_wrate']:.1%} | {fmt(r['decision'], r['route'])} |" for r in vb]
+    if DR:
+        out += ['', f"**Defects per 1,000 words** (#6740, `{P['inputs']['defect_rates']}`; shown beside k/n, NOT in the decision). Every defect the Opus judge tagged on a route's judged pages, by severity, per 1,000 words of the text it read (a Han character, a Tibetan syllable = one word: compare within a script only); posterior mean [90%] of the gamma-Poisson model, n in books:", '',
+                '| cell | route | books | words | misleads per 1,000 words | wrong text per 1,000 words | fidelity (1-5) |', '|' + '---|' * 7]
+        for row in rows:
+            if row.get('script') == 'manuscript':
+                continue
+            for r in row['routes']:
+                d = r.get('defects')
+                if d:
+                    f = lambda k: f"{d[k][1]:.2f} [{d[k][0]:.2f}, {d[k][2]:.2f}]"
+                    out.append(f"| {row['id']} | {r['id']} | {d['books']} | {d['words']:,} | {f('misleads_per_1k_posterior')} | {f('wrong_text_per_1k_posterior')} | {d['fidelity_mean']} |")
+        miss = sorted({row['base'] or row['id'] for row in rows for r in row['routes'] if r['tested'] and not r.get('defects')})
+        out += ['', f"Tested routes with **no defect verdicts** (k/n only: their judges stored no severity, or fewer than 10 pages were judged), {len(miss)} cells: {', '.join(miss)}."]
     out += ['', '**Test next** (proposals; score = pages waiting x share of the channel\'s free week per page x Var(acceptance)):', '']
     out += [f"{t['rank']}. {t['cell']}: {', '.join(t['routes'])}, {t['pages']} pages each, judged by Opus against the image: {t['claude_points']:.2f} Claude points ({t['account_week_share']:.2%} of the free Claude week)" + (f" + {t['agy_calls']:.0f} agy calls ({t['agy_week_share']:.2%} of agy's)" if t['agy_calls'] else '') for t in tests]
     out += ['', '**Prior against the pilot** (prior mean, worth a + b pages → what the judge accepted):', '']

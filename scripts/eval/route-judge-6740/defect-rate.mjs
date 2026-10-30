@@ -11,6 +11,12 @@
  * Defect rates from stored judge verdicts (#6740, job defect-rate-6740). Stage 1 of 2 (stage 2: defect-rate.py).
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/defect-rate.mjs inventory --out=DIR
+ *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/route-judge-6740/defect-rate.mjs recheck --out=DIR [--per=40] [--concurrency=4]
+ *
+ * RECHECK (Derek's steer, 2026-10-30: "calibrate before weighting"): 40 OCR defects tagged misleads and 40 tagged
+ * wrong_text, drawn round-robin across defect classes (seeded, one defect a page), each re-read by a FRESH Opus call that
+ * sees only the quoted span and the leaf, never the judge's verdict or reason. Writes DIR/recheck.jsonl; the relabel
+ * rate is computed in defect-rate.py. Paced like judge.mjs (model-limits claudeBlocked, ROUTE_JUDGE_WEEKLY_MAX).
  *
  * Reads every stored verdict that carries the route judge's schema (accept, fidelity 1-5, defects[{class, quote,
  * severity cosmetic|misleads|wrong_text}]):
@@ -258,8 +264,86 @@ async function inventory() {
   console.log(JSON.stringify(cov.sources), '\n', JSON.stringify(stat, null, 1));
 }
 
+export function recheckPrompt(lang, quote) {
+  return `You are checking one short excerpt of a transcription of a page of a historical ${lang} book against the page image, for a library that publishes the transcription beside the image. The page image is attached: the file ./page.jpg in your working directory (open it with Read before you answer). The image is the only authority.
+
+EXCERPT:
+"""
+${quote}
+"""
+
+Find where on the leaf this excerpt belongs and read that place closely. Compare the excerpt with what the leaf prints there; spelling conventions, abbreviations expanded or kept, long s, line breaks and markup tags do not matter.
+
+Answer with one JSON object only: {"located": bool, "leaf_reads": "what the leaf prints there, verbatim", "verdict": "same" | "cosmetic" | "misleads" | "wrong_text", "why": "a few words"}
+- same: the excerpt is what the leaf says.
+- cosmetic: it differs, but no reader is misled.
+- misleads: a reader would understand something not quite on the page.
+- wrong_text: the excerpt says something the leaf does not (text not on this leaf, a word or numeral that changes the sense, a duplicated or misplaced passage), or the leaf has words inside this span that the excerpt leaves out.`;
+}
+
+async function recheck() {
+  const { opusCall, QUOTA } = await import('./judge.mjs');
+  const limits = await import('../../lib/model-limits.mjs');
+  const { getPageSource } = await import('../../lib/page-image-url.mjs');
+  const { parseJson } = await import('../translate-cli-lane-7075/sample.mjs');
+  const PER = Number(arg('per') || 40), WEEKLY = Number(process.env.ROUTE_JUDGE_WEEKLY_MAX || 85);
+  const rows = jl(path.join(OUT, 'rows-with-text.jsonl.gz')).filter((r) => (r.kind === 'item' || r.kind === 'draft') && r.task === 'ocr' && r.page_id && /^[0-9a-f]{24}$/.test(r.page_id) && r.lang);
+  const file = path.join(OUT, 'recheck.jsonl');
+  const done = new Set(ex(file) ? jl(file).filter((r) => r.verdict).map((r) => r.key) : []);
+  const rank = (s) => h(`recheck-6740:${s}`);
+  const pick = [];
+  for (const sev of ['misleads', 'wrong_text']) {
+    const pool = new Map();   // class -> defects, in seeded order
+    for (const r of rows) r.defects.forEach((d, i) => { if (d.s === sev && d.q && d.q.trim().length >= 3) { const k = `${r.verdict_id}:${r.page_id}:${i}`; (pool.get(d.c) ?? pool.set(d.c, []).get(d.c)).push({ key: k, r, d }); } });
+    for (const l of pool.values()) l.sort((a, b) => rank(a.key).localeCompare(rank(b.key)));
+    const classes = [...pool.keys()].sort((a, b) => rank(a).localeCompare(rank(b)));
+    const pages = new Set(); let got = 0;
+    for (let round = 0; got < PER && classes.some((c) => pool.get(c).length); round++)
+      for (const c of classes) {
+        if (got >= PER) break;
+        const l = pool.get(c); let x;
+        while ((x = l.shift()) && pages.has(x.r.page_id));
+        if (!x) continue;
+        pages.add(x.r.page_id); got++;
+        pick.push({ key: x.key, severity: sev, cls: c, class_pool: pool.get(c).length + 1, page_id: x.r.page_id, book_id: x.r.book_id, lang: x.r.lang, cell: x.r.cell, route: x.r.route, run: x.r.run, quote: x.d.q, judge_what: x.d.w });
+      }
+  }
+  // class sizes, to weight the stratified draw back to the population
+  const sizes = {}; for (const r of rows) for (const d of r.defects) if (d.s === 'misleads' || d.s === 'wrong_text') sizes[`${d.s}:${d.c}`] = (sizes[`${d.s}:${d.c}`] ?? 0) + 1;
+  fs.writeFileSync(path.join(OUT, 'recheck-draw.json'), JSON.stringify({ drawn_at: new Date().toISOString(), per: PER, class_sizes: sizes, items: pick }, null, 1));
+  const { MongoClient } = await import('mongodb');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const pages = new Map((await c.db('bookstore').collection('pages').find({ id: { $in: pick.map((p) => p.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 } }).toArray()).map((p) => [p.id, p]));
+  await c.close();
+  let stop = null, i = 0;
+  const todo = pick.filter((p) => !done.has(p.key));
+  console.log(`recheck: ${todo.length} of ${pick.length} to call`);
+  const one = async (it) => {
+    const b = limits.claudeBlocked({ weeklyMax: WEEKLY, sessionMax: Number(process.env.ROUTE_JUDGE_SESSION_MAX || 95) });
+    if (b) { stop = b; return; }
+    const url = pages.get(it.page_id) && getPageSource(pages.get(it.page_id));
+    if (!url) { fs.appendFileSync(file, JSON.stringify({ key: it.key, verdict: null, raw: 'no image' }) + '\n'); return; }
+    const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'dr-recheck-'));
+    try {
+      const res = await fetch(url);
+      if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ key: it.key, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      const t0 = Date.now();
+      const r = await opusCall(recheckPrompt(it.lang, it.quote), ws);
+      if (r.cls === 'quota' || QUOTA.test(r.text || '')) { stop = { reason: 'quota reply' }; return; }
+      const v = parseJson(r.text, (x) => ['same', 'cosmetic', 'misleads', 'wrong_text'].includes(x.verdict));
+      fs.appendFileSync(file, JSON.stringify({ ...it, verdict: v, model: r.model, raw: v ? undefined : String(r.text).slice(0, 400), secs: Math.round((Date.now() - t0) / 1000), at: new Date().toISOString() }) + '\n');
+      console.log(`  ${it.severity} ${it.cls} -> ${v?.verdict ?? 'unparsed'}`);
+    } finally { fs.rmSync(ws, { recursive: true, force: true }); }
+  };
+  const conc = Math.max(1, Math.min(4, Number(arg('concurrency') || 4)));
+  await Promise.all(Array.from({ length: conc }, async () => { while (!stop && i < todo.length) await one(todo[i++]); }));
+  if (stop) { console.log(`BLOCKED (${stop.reason})`); process.exit(3); }
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const st = process.argv[2];
   if (st === 'inventory') await inventory();
-  else { console.error('stages: inventory'); process.exit(2); }
+  else if (st === 'recheck') await recheck();
+  else { console.error('stages: inventory | recheck'); process.exit(2); }
 }

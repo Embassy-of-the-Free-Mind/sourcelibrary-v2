@@ -1,0 +1,143 @@
+{
+ "generated_at": "2026-10-30T21:17:48.440Z",
+ "sources": [
+  {
+   "source": "route-judge",
+   "run": "agy-opus-7545-2026-10-28",
+   "verdicts": 112,
+   "keyed_rows": 111
+  },
+  {
+   "source": "route-judge",
+   "run": "cheap-routes-7701-2026-10-29",
+   "verdicts": 140,
+   "keyed_rows": 159
+  },
+  {
+   "source": "route-judge",
+   "run": "en-pre1800-gpu-6871-2026-10-30",
+   "verdicts": 33,
+   "keyed_rows": 33
+  },
+  {
+   "source": "route-judge",
+   "run": "first-read-7701-2026-10-29",
+   "verdicts": 138,
+   "keyed_rows": 170
+  },
+  {
+   "source": "route-judge",
+   "run": "fresh-7517-2026-10-27",
+   "verdicts": 111,
+   "keyed_rows": 111
+  },
+  {
+   "source": "route-judge",
+   "run": "german-cheaper-7701-2026-10-30",
+   "verdicts": 193,
+   "keyed_rows": 193
+  },
+  {
+   "source": "route-judge",
+   "run": "lane-accept-7263-2026-10-28",
+   "verdicts": 170,
+   "keyed_rows": 167
+  },
+  {
+   "source": "route-judge",
+   "run": "pilot-2026-10-26",
+   "verdicts": 322,
+   "keyed_rows": 330
+  },
+  {
+   "source": "route-judge",
+   "run": "router-next-2026-10-28",
+   "verdicts": 64,
+   "keyed_rows": 64
+  },
+  {
+   "source": "route-judge",
+   "run": "router-tests-2026-10-26",
+   "verdicts": 567,
+   "keyed_rows": 606
+  },
+  {
+   "source": "route-judge",
+   "run": "router-tests-2026-10-28",
+   "verdicts": 283,
+   "keyed_rows": 289
+  },
+  {
+   "source": "route-judge",
+   "run": "router-tests-diffqa-2026-10-28/confirm-frame",
+   "verdicts": 97,
+   "keyed_rows": 118
+  },
+  {
+   "source": "route-judge",
+   "run": "router-tests-diffqa-2026-10-28/router-frame",
+   "verdicts": 152,
+   "keyed_rows": 192
+  },
+  {
+   "source": "route-judge",
+   "run": "tibetan-30-2026-10-27",
+   "verdicts": 99,
+   "keyed_rows": 106
+  },
+  {
+   "source": "agy-ocr-per-call-6740",
+   "run": "agy-ocr-per-call-6740",
+   "verdicts": 182,
+   "keyed_rows": 184
+  },
+  {
+   "source": "siku-percall-5600",
+   "run": "siku-percall-5600",
+   "verdicts": 268,
+   "keyed_rows": 232
+  },
+  {
+   "source": "judge-planted-7611",
+   "run": "judge-planted-7611",
+   "verdicts": 180,
+   "keyed_rows": 180
+  },
+  {
+   "source": "lane-judge-sampler",
+   "run": "mongo lane_judge_verdicts",
+   "verdicts": 400,
+   "keyed_rows": 400
+  }
+ ],
+ "unreachable": [
+  {
+   "where": "hetzner (main) and l7a job scratch",
+   "why": "ssh: hostnames do not resolve from gex45 (2026-10-30); packets and corrector reads made there are not read. Rows from those runs take the page size from Mongo (words_src: page)."
+  }
+ ],
+ "not_this_schema": [
+  {
+   "where": "scripts/eval/gpu-flash-vs-opus-7263 (score-e2-7567, score-test-7263) and /root/jobs/gpu-flash-vs-opus-7263/judge-*",
+   "why": "versions A-E with omissions / additions / misreads lists and usable: no severity"
+  },
+  {
+   "where": "router-table/evidence derived from #5924, #6553, #7568, #7341, #6567, #6361, tibetan profiles-diffqa",
+   "why": "k of n only (derive_backfill*.py): their source verdicts carry no defects with severity"
+  },
+  {
+   "where": "/root/jobs/siku-kanripo-check-7503/verdicts-pilot.jsonl (35)",
+   "why": "no key file: cell and route cannot be named"
+  }
+ ],
+ "text": {
+  "route-judge:candidate": 2155,
+  "route-judge:page": 494,
+  "agy-ocr-per-call-6740:candidate": 174,
+  "agy-ocr-per-call-6740:page": 10,
+  "siku-percall-5600:page": 232,
+  "judge-planted-7611:candidate": 180,
+  "lane-judge-sampler:page": 26,
+  "lane-judge-sampler:candidate": 374
+ }
+}

@@ -101,3 +101,24 @@ decision has been computed. Nothing here switches a live route: the output is a 
   - A draft defect is **removed** when its quote does not occur in the corrected text.
 - Reported per corrector × cell: introduced and removed per 1,000 words, with by-book intervals, and the class mix of
   what was introduced. The word swap ("seventh" → "nine") is O6/O7/T8.
+
+## Amendments, written AFTER the first results (labelled; the rule above is unchanged)
+
+- **S1. Derek's steer 1**, in the job inbox at 2026-10-30 21:10Z.
+  - It arrived before commit 950d1cb75, but the job read it only after computing the first comparison, so it is
+    applied as written, not tuned.
+  - **Calibrate before weighting.** 80 defects (40 misleads, 40 wrong_text) were re-read by a fresh Opus call on the
+    quote and the leaf only (`defect-rate.mjs recheck`). Counts are then deflated by the confirmed-as-error share:
+    misleads × 0.625, wrong text × 0.80.
+  - **The bar is the LIVE route.** That is the route the live table runs: its route on switch, else its current
+    route. Otherwise it is the stored draft readers see (stage none, not a fresh GPU read). For a scans-only cell, it
+    is the A1 ceiling.
+  - **Gate:** deflated wrong text ≤ the bar's + 0.15 per 1,000 words.
+  - **Cost:** misleads count as a cost and never as a gate. The cost is price + (W/1000) × w_m × (deflated misleads +
+    3 × deflated wrong text).
+  - **Not comparable:** a row whose live route is unmeasured, unless that route is the stored draft.
+- **A1 (post hoc, chosen after seeing English pre-1800).** The preregistered gate is plus an absolute ceiling: wrong
+  text ≤ 1.0 per 1,000 words with P ≥ 0.9. It was needed because the relative gate lets a lone route pass trivially.
+- **A2 (post hoc).** A1, plus P(λ_wt route ≤ λ_wt bar + 0.15) ≥ 0.8.
+
+All three are reported beside the preregistered result in score.json (`comparison[].S1`, `new_runs`).
