@@ -252,7 +252,7 @@ async function fetchRijksmuseumObjects(objectIds) {
       const pageUrl = `https://www.rijksmuseum.nl/en/collection/${objId}`;
       const res = await fetch(pageUrl, {
         signal: AbortSignal.timeout(30000),
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly research)' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
       });
       if (!res.ok) { console.warn(`  Rijksmuseum ${objId}: HTTP ${res.status}`); continue; }
       const html = await res.text();

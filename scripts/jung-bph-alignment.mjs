@@ -121,7 +121,7 @@ async function harvestCgj() {
   const all = [];
   while (url) {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (Jung-BPH alignment)' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) jung-bph-alignment' },
       signal: AbortSignal.timeout(60000),
     });
     if (!res.ok) {

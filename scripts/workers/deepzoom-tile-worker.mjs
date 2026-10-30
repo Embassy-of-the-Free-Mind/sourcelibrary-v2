@@ -56,7 +56,7 @@ const FORCE = has('--force');
 const TILE_SIZE = 256;
 const OVERLAP = 1;
 const JPEG_QUALITY = 85;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 if (!BOOK_ID && !PRE_WARM) {
   console.error('Pass --book <id> or --pre-warm. See header for usage.');

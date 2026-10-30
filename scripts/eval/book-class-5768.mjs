@@ -295,7 +295,7 @@ async function embed() {
   // One file per shard so concurrent shards never interleave writes; readers glob page-clip*.jsonl.
   const out = fs.createWriteStream(sn > 1 ? EMB_FILE.replace(/\.jsonl$/, `.${si}.jsonl`) : EMB_FILE, { flags: 'a' });
   const fetchImg = async (url) => {
-    const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) book-class-5768' }, signal: AbortSignal.timeout(30000) });
+    const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) book-class-5768' }, signal: AbortSignal.timeout(30000) });
     if (!res.ok) throw new Error(`fetch ${res.status}`);
     return RawImage.fromBlob(new Blob([Buffer.from(await res.arrayBuffer())], { type: res.headers.get('content-type') || 'image/jpeg' }));
   };

@@ -65,7 +65,7 @@ async function discoverViaIIIFCollection(db) {
   console.log('Fetching IIIF Collection metadata...');
   const topRes = await fetch(COLLECTION_URL, {
     headers: {
-      'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
+      'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
       'Accept': 'application/json, application/ld+json',
     },
     signal: AbortSignal.timeout(30000),
@@ -93,7 +93,7 @@ async function discoverViaIIIFCollection(db) {
     try {
       const res = await fetch(cursorUrl, {
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
           'Accept': 'application/json, application/ld+json',
         },
         signal: AbortSignal.timeout(30000),
@@ -197,7 +197,7 @@ async function discoverViaOAIPMH(db) {
 
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; OAI-PMH harvest)' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) oai-pmh-harvest' },
         signal: AbortSignal.timeout(60000),
       });
 
@@ -382,7 +382,7 @@ async function probeManifest(bsbId) {
   try {
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
         'Accept': 'application/json, application/ld+json',
       },
       signal: AbortSignal.timeout(15000),

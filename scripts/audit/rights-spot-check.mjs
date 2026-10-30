@@ -32,7 +32,7 @@ const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[
 const PROVIDERS = opt('provider', '') ? opt('provider').split(',') : null;
 const OUT = opt('out', null);
 const PREFER_STORED = args.includes('--prefer-stored');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; rights spot-check; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) rights-spot-check';
 
 const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 4 });
 await client.connect();

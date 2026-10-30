@@ -65,7 +65,7 @@ const HOST_INTERVAL = parseInt(opt('host-interval', '400'), 10);
 const ALL_BOOKS = flag('all-books');
 const PER_HOST = parseInt(opt('per-host', '0'), 10) || 0; // sampling: at most N books per host (spot-checks, smoke runs)
 const SWEEP = 'rights-provenance-2026-09';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; rights-provenance backfill; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) rights-provenance-backfill';
 
 if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 console.log(`${WRITE ? 'WRITE' : 'PLAN (no writes; add --write)'} · lane=${LANE} · providers=${PROVIDERS?.join(',') || 'all'}${EXCLUDE.length ? ' minus ' + EXCLUDE.join(',') : ''} · limit=${LIMIT || 'none'} · out=${OUT || '-'}`);

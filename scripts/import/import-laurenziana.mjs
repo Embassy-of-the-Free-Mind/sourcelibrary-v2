@@ -165,7 +165,7 @@ async function testManifest(url) {
   try {
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)',
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
         Accept: 'application/json, application/ld+json',
       },
       signal: AbortSignal.timeout(15000),
