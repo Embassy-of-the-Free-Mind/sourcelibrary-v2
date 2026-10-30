@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
@@ -2522,7 +2523,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
     // Get all pages sorted by page number
     const pages = await db.collection('pages')
-      .find({ book_id: id, tenantId })
+      .find({ book_id: id, tenantId, ...NOT_REPEAT_CAPTURE })
       .sort({ page_number: 1 })
       .toArray();
 

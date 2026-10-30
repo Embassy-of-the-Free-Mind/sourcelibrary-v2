@@ -32,6 +32,7 @@
  * (claude-translate's OCR-first gate: the book's OCR is mostly flash-lite and the row has no adoption.ocr_checked) skips
  * that book and says so. Without --apply it reads and dry-runs the writer, and releases and ledgers nothing.
  */
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -47,7 +48,7 @@ const ROOT = path.resolve(HERE, '..', '..');
 
 /** The pages this lane translates: the orchestrator's Phase 4 filter without the stale-translation branch. */
 export const UNTRANSLATED = Object.freeze({
-  page_number: { $gt: 0 },
+  ...VISIBLE_PAGE_MATCH,
   'ocr.data': { $exists: true, $nin: [null, ''] },
   page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
   'translation.health_blocked': { $exists: false },

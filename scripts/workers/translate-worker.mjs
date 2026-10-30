@@ -21,6 +21,7 @@
  * This worker picks them up and does the actual translation.
  */
 
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash, randomBytes } from 'crypto';
@@ -724,7 +725,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
       'ocr.data': { $exists: true, $nin: [null, ''] },
       'ocr.unreadable': { $ne: true }, // no trusted transcription (#4523) — same rule as translate-core
       page_type: { $nin: SKIP_PAGE_TYPES },
@@ -1238,7 +1239,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
     // page_number > 0 excludes hidden/deduped trailing pages so this rollup
     // doesn't re-inflate pages_count after Phase 1.97 decremented it.
     const [countAgg] = await db.collection('pages').aggregate([
-      { $match: { book_id: book.id, page_number: { $gt: 0 } } },
+      { $match: { book_id: book.id, ...VISIBLE_PAGE_MATCH } },
       { $group: {
         _id: null,
         total: { $sum: 1 },

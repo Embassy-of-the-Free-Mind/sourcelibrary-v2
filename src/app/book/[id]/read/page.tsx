@@ -38,6 +38,7 @@
  * /api/books/[id]/text (machine JSON, not a page). The EPUB/HTML exporter's
  * markdownToHtml is reused rather than a second text pipeline.
  */
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { headers } from 'next/headers';
@@ -206,14 +207,14 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const clampAt = untrustedBot || meteredAnon ? freeMaxPage(pagesCount) : undefined;
 
   const pagesRaw = await db.collection('pages')
-    .find({ book_id: bookId, page_number: { $gte: 0 } }, { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
+    .find(readerPageListFilter(bookId), { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
     .sort({ page_number: 1 })
     .toArray() as unknown as PageDoc[];
   // The same page set the reader walks — no digitiser inserts, no unsplit spreads.
   // English edition, English leaf: the transcription is the text; the stored
   // English-to-English rewording is never shown as a translation (#7100).
   const pages = pagesRaw
-    .filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread')
+    .filter(isReaderListedPage)
     .map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
   if (pages.length === 0) notFound();
 

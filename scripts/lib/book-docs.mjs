@@ -209,6 +209,12 @@ export const PAGE_FIELDS = Object.freeze([
   // received (CONTENTdm item record, IIIF canvas metadata). Same field as on
   // books; a fact about the page, not a job's action (#4896, #3471).
   'catalog_metadata',
+  // #5056: a later capture of a leaf the book already holds (the same spread uploaded or
+  // photographed twice). `repeat_of` is the `id` of the kept capture; the page keeps its
+  // page_number and id (shortlinks, citations), and no reader list, counter or lane sees it.
+  // `repeat_of_meta` is its provenance: { by, at, issue, method, r, dice }. Written by
+  // scripts/maintenance/hide-repeat-captures.mjs; unsetting both restores the page.
+  'repeat_of', 'repeat_of_meta',
   // timestamps
   'created_at', 'updated_at',
 ]);

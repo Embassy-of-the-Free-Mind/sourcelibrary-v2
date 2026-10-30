@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, correctMode, FALLBACK, CORRECT_MODEL, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isInterior, lastPageNumber, correctMode, FALLBACK, CORRECT_MODEL, parseAgyHome, claimLive, claimBook, releaseBookClaim, liveReaderBooks, bookShard, parseShard, firstReadSkip, manuscriptReason, byFirstReadOrder, firstReadLanguage, FIRST_READ_BOOKS, FIRST_READ_HOLDS, FIRST_READ_LANE, FIRST_READ_MODEL, FIRST_READ_CORRECT_LANE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
@@ -145,6 +145,20 @@ describe('correction pages are drawn where the router test drew (#7558)', () => 
     expect(isInterior(16, 100)).toBe(true);
     expect(isInterior(95, 100)).toBe(true);
     expect(isInterior(96, 100)).toBe(false);
+  });
+
+  it('the window is cut from the last page_number, so hidden repeats do not drop the tail (#5056)', async () => {
+    // 100 leaves, 30 of them hidden repeats: pages_count is 70, but the pages still run to 100.
+    const db = { collection: () => ({ findOne: async (q: any, o: any) => {
+      expect(q.page_number).toEqual({ $gt: 0 });
+      expect(o.sort).toEqual({ page_number: -1 });
+      return { page_number: 100 };
+    } }) };
+    const last = await lastPageNumber(db, 'b1');
+    expect(last).toBe(100);
+    expect(isInterior(90, last)).toBe(true);
+    expect(isInterior(90, 70)).toBe(false); // what pages_count would have cut
+    expect(await lastPageNumber({ collection: () => ({ findOne: async () => null }) }, 'b2')).toBe(0);
   });
 });
 

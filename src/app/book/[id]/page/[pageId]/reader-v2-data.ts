@@ -6,6 +6,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
 import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 
 // Shared server loader for the v2 reader design previews (/v2a, /v2c).
 // Mirrors the (reader)/page.tsx fetch: current page + book + nav page list.
@@ -39,12 +40,12 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
   const [bookResult, navPages] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
+      .find(readerPageListFilter(currentPage.book_id as string))
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1, display_photo: 1, archived_photo: 1, photo: 1 })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(isReaderListedPage))
       .catch(() => [{ id: pageId, page_number: currentPage.page_number }]),
   ]);
 

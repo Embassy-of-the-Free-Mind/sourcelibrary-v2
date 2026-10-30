@@ -21,6 +21,13 @@ export interface Page {
   tenantId?: string;
   book_id: string;
   page_number: number;
+  /**
+   * A later capture of a leaf this book already holds (#5056): the `id` of the
+   * kept capture. The page keeps its number and id; reader lists, counters,
+   * search, exports and lanes leave it out, and its URL redirects to the kept
+   * page. See src/lib/reader-pages.ts.
+   */
+  repeat_of?: string;
   photo: string;
   thumbnail?: string;
   compressed_photo?: string;

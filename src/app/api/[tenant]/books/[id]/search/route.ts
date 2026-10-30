@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { getDb } from '@/lib/mongodb';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -119,6 +120,7 @@ export async function GET(
       .find({
         book_id: bookId,
         tenantId,
+        ...NOT_REPEAT_CAPTURE, // a repeat capture's leaf is already a hit (#5056)
         $or: [
           { 'ocr.data': { $regex: regex } },
           { 'translation.data': { $regex: regex } }

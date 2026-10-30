@@ -14,6 +14,7 @@ import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 import { auth } from '@/lib/auth';
 import { resolvePageWindow, countPagesForWindow, type PagesWindow } from '@/lib/page-window';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 
 export const preferredRegion = 'fra1';
 
@@ -113,7 +114,9 @@ export async function GET(
     const session = await auth().catch(() => null);
     const windowed = !session?.user?.id;
     const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
-    const pageFilter = { book_id: bookId, tenantId };
+    // Repeat captures (#5056) stay out, as in /api/books/[id]: these are the EFM/BPH books
+    // the hide was written for (PR #7777 review S4).
+    const pageFilter = { book_id: bookId, tenantId, ...NOT_REPEAT_CAPTURE };
     let cursor = db.collection('pages')
       .find(pageFilter)
       .project(projection)

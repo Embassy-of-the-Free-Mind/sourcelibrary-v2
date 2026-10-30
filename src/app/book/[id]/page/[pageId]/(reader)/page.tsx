@@ -1,4 +1,4 @@
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -22,7 +22,8 @@ import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-proj
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
 import { ocrMeasure } from '@/lib/ocr-measure';
-import { getSplitLeafId, isArchivedSplit } from '../page-data';
+import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -135,7 +136,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const [bookResult, navPages, musicTranscriptions] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
+      .find(readerPageListFilter(currentPage.book_id as string))
       // Image fields are part of the nav list because the reader's filmstrip
       // draws a thumbnail per page. Without them getPageThumbUrl has nothing
       // to resolve and every slot renders empty — books with no pre-sized
@@ -150,7 +151,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(isReaderListedPage))
       .catch((err) => {
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
@@ -185,6 +186,13 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   if (!allowHidden && isArchivedSplit(currentPage)) {
     const leafId = await getSplitLeafId(scopedBookId, currentPage.split_into[0]);
     if (leafId) permanentRedirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${leafId}`, lang));
+  }
+
+  // A hidden repeat capture goes to its kept capture (#5056), for the same
+  // embed/room reason. 307: the hide is reversible. /preview stays put.
+  if (!allowHidden && typeof currentPage.repeat_of === 'string') {
+    const keptId = await getRepeatKeeperId(scopedBookId, currentPage.repeat_of);
+    if (keptId) redirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${keptId}`, lang));
   }
 
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client

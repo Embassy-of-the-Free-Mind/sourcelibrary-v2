@@ -172,6 +172,7 @@
  * stops when it closes: a Claude bucket under 10%, or a Gemini reset, after which the next run is the Gemini lane.
  * German translation failed the test (4/30 marker failures) and Tibetan translation was not tested: neither is here.
  */
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -200,7 +201,7 @@ export const CLI_MODEL_FOR = Object.freeze({ 'gemini-3-flash-preview': 'gemini-3
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
 export const UNREAD = Object.freeze({
-  page_number: { $gt: 0 },
+  ...VISIBLE_PAGE_MATCH,
   'ocr.recitation_blocked': { $ne: true },
   $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
   $and: [{
@@ -274,8 +275,17 @@ export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AG
 }
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
-/** The router test drew interior pages only (scripts/eval/ground-truth-5935/lib.mjs isInterior). */
-export const isInterior = (pn, pagesCount) => pn > Math.floor(pagesCount * 0.15) && pn <= Math.ceil(pagesCount * 0.95);
+/**
+ * The router test drew interior pages only (scripts/eval/ground-truth-5935/lib.mjs isInterior). The second argument is
+ * the book's LAST page_number, not `pages_count`: a hidden repeat capture (#5056) keeps its number but leaves the count,
+ * so a window cut from `pages_count` slides toward the front and drops the tail of the book (PR #7777 review S2).
+ */
+export const isInterior = (pn, lastPage) => pn > Math.floor(lastPage * 0.15) && pn <= Math.ceil(lastPage * 0.95);
+/** The highest page_number a book lists (repeats included: they sit inside the span). Index-covered, one key. */
+export async function lastPageNumber(db, bookId) {
+  const p = await db.collection('pages').findOne({ book_id: bookId, page_number: { $gt: 0 } }, { sort: { page_number: -1 }, projection: { _id: 0, page_number: 1 } });
+  return p?.page_number ?? 0;
+}
 const WEEK_MS = 7 * 24 * 3600 * 1000;
 
 /**
@@ -372,12 +382,13 @@ function ledgerTail(file, set, state) {
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
 async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: book.id, page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: book.id, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
-  return rows.filter((p) => isInterior(p.page_number, book.pages_count));
+  const last = await lastPageNumber(db, book.id);
+  return rows.filter((p) => isInterior(p.page_number, last));
 }
 
 async function correctMain(mode, arg) {
@@ -752,14 +763,15 @@ export function armcUndrafted(L) {
  * of this lane's: a page whose stored read calls it an illustration, a plate, a map or a blank, or names no script, is
  * not a text page (the pilot's planner drew a tarot deck whose 300+ characters were an image description).
  */
-async function armcPages(db, bookId, pagesCount, SKIP, ids = null) {
+async function armcPages(db, bookId, SKIP, ids = null) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), page_number: { $gt: 0 }, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
+    { $match: { book_id: bookId, ...(ids && { id: { $in: ids } }), ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, withheld: { $ne: true }, page_type: { $nin: SKIP }, 'ocr.data': { $type: 'string' } } },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*(handwrit|manuscript|mixed|none)|<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
-  return rows.filter((p) => isInterior(p.page_number, pagesCount));
+  const last = await lastPageNumber(db, bookId);
+  return rows.filter((p) => isInterior(p.page_number, last));
 }
 const armcBookFilter = (langs) => ({ visible: true, pages_count: { $gt: 0 }, year: { $gte: ARMC_YEARS[0], $lte: ARMC_YEARS[1] }, $or: langs.map((l) => ({ language: { $regex: ARMC_ENGINES[l].language } })), 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true }, needs_splitting: { $ne: true } });
 export const armcLang = (language) => Object.entries(ARMC_ENGINES).find(([, v]) => v.language.test(String(language || '')))?.[0] ?? null;
@@ -872,7 +884,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
     if (!lang || (perLang[lang] ?? 0) >= PER_LANG) continue;
     const prev = planned.get(b.id);
     const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
-    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, b.pages_count, SKIP)).filter((p) => !ledger.has(p.id) && !have.has(p.id));
+    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP)).filter((p) => !ledger.has(p.id) && !have.has(p.id));
     if (PER_BOOK) { if (rows.length < PER_BOOK) continue; rows = Array.from({ length: PER_BOOK }, (_, i) => rows[Math.floor((i + 0.5) * rows.length / PER_BOOK)]); }
     const whole = !PER_BOOK && rows.length <= room;
     rows = rows.slice(0, room);
@@ -1003,7 +1015,7 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
       // The book and the page must still be in frame now: a page re-read, edited or withheld since the plan is not this lane's.
       const bookOk = FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
         : book.visible && !book.needs_splitting && IDLE_STATUSES.includes(book.pipeline_auto?.status) && !book.pipeline_auto?.hold && !book.pipeline_auto?.held;
-      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, book.pages_count, SKIP, take.map((p) => p.id))).map((p) => p.id) : []);
+      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id))).map((p) => p.id) : []);
       const drafts = { _engine: null };
       const unsent = new Map();
       for (const p of take) {
