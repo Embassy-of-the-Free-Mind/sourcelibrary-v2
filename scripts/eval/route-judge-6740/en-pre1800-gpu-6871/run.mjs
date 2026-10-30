@@ -133,15 +133,17 @@ const verdicts = () => new Map(jsonl(path.join(OUT, 'verdicts-opus.jsonl')).filt
 function plant() {
   const key = J('key.json'), pk = J('packet.json'), V = verdicts();
   if (key.some((k) => k.kind === 'planted')) { console.log('planted items already in the packet'); return; }
-  const kinds = ['B', 'C', 'D', 'E'];
+  // plant-ocr-errors.mjs has no English planter: kinds D (one printed line dropped) and B (one numeral changed) do not
+  // depend on the language's word lists, so they run under the Latin planter's code; C and E (nouns, sentences) do.
+  const kinds = ['D', 'B'];
   const acc = shuffled([...new Map(key.filter((k) => k.kind === 'item' && V.get(k.judged_as)?.accept).map((k) => [k.judged_as, k])).values()], `plant-${CELL}`);
   let got = 0;
   for (const k of acc) {
     if (got >= 2) break;
     const it = pk.items.find((x) => x.id === k.judged_as);
-    for (let tries = 0; tries < 4; tries++) {
-      const kind = kinds[(got + tries) % 4];
-      const p = plantError(it.text, { kind, lang: LANG, seed: parseInt(h(`${k.judged_as}${kind}`).slice(0, 8), 16) });
+    for (let tries = 0; tries < 2; tries++) {
+      const kind = kinds[(got + tries) % 2];
+      const p = plantError(it.text, { kind, lang: 'Latin', seed: parseInt(h(`${k.judged_as}${kind}`).slice(0, 8), 16) });
       if (!p) continue;
       const id = `j${h(`planted:${k.judged_as}:${kind}`).slice(0, 10)}`;
       pk.items.push({ id, task: 'ocr', lang: LANG, image_url: it.image_url, text: p.text });

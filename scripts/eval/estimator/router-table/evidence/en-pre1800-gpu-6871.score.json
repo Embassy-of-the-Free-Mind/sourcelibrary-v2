@@ -1,0 +1,95 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/en-pre1800-gpu-6871/run.mjs score (job gpu-next-frame-6871, #6871; no model calls in this step)",
+ "provenance": "#6871 English pre-1800 cell test: run.mjs draw (30 books, one interior page with no text each), LightOnOCR-3-1B read by scripts/gpu/gpu-print-gpu.sh (the 1800+ lane reader, unchanged) on gex45 2026-10-30; written = scripts/lib/gpu-print-lane.mjs pageVerdict; Opus judge blind against the image, wrong-page and planted controls (RULE.md)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "cells": {
+  "en-pre1800": {
+   "task": "ocr",
+   "lang": "English",
+   "frame": {
+    "books": 707,
+    "manuscript": 28,
+    "unsplit_spread": 2,
+    "other_hold": 22,
+    "in_1800_frame": 0,
+    "nothing_owed": 336,
+    "possible_spread_books": 72,
+    "books_in_frame": 319,
+    "pages_in_frame": 41224,
+    "rule": "visible English, year 1400-1799, held under a GPU-lane hold or not held (pipeline_auto.held excluded), not a manuscript (cli-ocr-lane manuscriptReason), not an unsplit spread, not in the 1800+ frame, pages with no text"
+   },
+   "controls": {
+    "wrong_page": [
+     {
+      "page_id": "69924f4c5976b55115ffdc8a",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "page_id": "6ac382e8966464312757c5e7",
+      "accept": false,
+      "fidelity": 1
+     }
+    ],
+    "wrong_page_passed": true,
+    "planted": [
+     {
+      "kind": "D",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "D",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ],
+    "plants_void": false
+   },
+   "routes": {
+    "lighton": {
+     "n": 30,
+     "books": 30,
+     "accept": "18/30",
+     "wrong_text_pages": "10/30",
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "O8": "16/30",
+      "E2": "13/30",
+      "O11": "5/30",
+      "T6": "4/30",
+      "O12": "4/30",
+      "O7": "3/30",
+      "O5": "2/30",
+      "O10": "2/30",
+      "O1": "1/30",
+      "T4": "1/30"
+     },
+     "note": "every drawn page (a page the guards refuse is not accepted)"
+    },
+    "lighton-written": {
+     "n": 29,
+     "books": 29,
+     "accept": "18/29",
+     "wrong_text_pages": "10/29",
+     "classes_k_of_n": {
+      "O6": "18/29",
+      "O8": "16/29",
+      "E2": "13/29",
+      "O11": "5/29",
+      "T6": "4/29",
+      "O12": "4/29",
+      "O7": "3/29",
+      "O5": "2/29",
+      "O10": "2/29",
+      "O1": "1/29",
+      "T4": "1/29"
+     },
+     "note": "the drawn pages the lane writes (pageVerdict), judged; a page not written stays scans-only"
+    }
+   }
+  }
+ }
+}
