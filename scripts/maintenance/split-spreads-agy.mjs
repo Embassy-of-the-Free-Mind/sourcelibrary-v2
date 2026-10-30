@@ -31,6 +31,10 @@
  *            the result (one live page per expected leaf, every leaf from this run, every spread archived) and only
  *            then sets pipeline_auto.split_checked and leaves a book_events row. split-book.mjs itself clears
  *            needs_splitting; a book whose check fails is reported, and its frames are still archived, not deleted.
+ *            `--stage` (#7605, build then swap): runs split-book.mjs --positions-file --stage instead (no --gutter-only):
+ *            the leaves are built HIDDEN with the spread OCR cut at its <page-break/> onto the leaf DIR/<id>/text-sides.json
+ *            (split-text-sides.mjs) says it was read from, the spreads stay live, and the
+ *            check is one staged leaf per expected leaf with every frame still live. split-swap.mjs makes them live.
  *
  * THE RULE FOR THE CUT (decided on the #7454 census: a "confident" pixel cut on Hidayah Vol-II frame 2 sat at 398
  * with the fold at ~500): agy says one leaf → the frame stays whole. agy says two → the pixel cut when the pixel
@@ -46,6 +50,7 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { detectGutterPixel } from '../lib/gutter-detect.mjs';
 import { CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead, gatedImageCall } from '../lib/agy-cli.mjs';
+import { stagedLeavesQuery } from '../lib/split-stage.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const MODEL = 'gemini-3.8-flash-low';
@@ -571,6 +576,7 @@ export function applyRefusal(proposal, verdicts, pages, bookId) {
 async function apply(db) {
   const OUT = path.resolve(arg('out'));
   const APPLY = process.argv.includes('--apply');
+  const STAGE = process.argv.includes('--stage');
   const verdicts = readVerdicts(arg('verdicts'));
   const only = arg('book')?.split(',');
   const ids = fs.readdirSync(OUT).filter((d) => /^[0-9a-f]{24}$/.test(d) && (!only || only.includes(d)));
@@ -585,11 +591,24 @@ async function apply(db) {
     const why = applyRefusal(proposal, bookVerdicts, pages, id);
     if (why) { report.push({ id, result: 'refused', why }); console.log(`${id}: REFUSED — ${why}`); continue; }
     const by = [...new Set(proposal.frames.map((f) => bookVerdicts.get(`${id}:${f.page_number}`).checked_by))].join('+');
-    const argv = [path.join(HERE, '..', 'split-book.mjs'), id, '--gutter-only', `--positions-file=${path.join(OUT, id, 'positions.json')}`, `--page-order=${proposal.page_order}`, `--by=${by}`, ...(APPLY ? [] : ['--dry-run'])];
+    const argv = [path.join(HERE, '..', 'split-book.mjs'), id, ...(STAGE ? ['--stage', ...(fs.existsSync(path.join(OUT, id, 'text-sides.json')) ? [`--text-sides=${path.join(OUT, id, 'text-sides.json')}`] : [])] : ['--gutter-only']), `--positions-file=${path.join(OUT, id, 'positions.json')}`, `--page-order=${proposal.page_order}`, `--by=${by}`, ...(APPLY ? [] : ['--dry-run'])];
     const r = spawnSync(process.execPath, argv, { encoding: 'utf8', env: process.env, timeout: 600_000 });
     fs.writeFileSync(path.join(OUT, id, APPLY ? 'split-apply.log' : 'split-dry.log'), `${r.stdout}\n${r.stderr}`);
     if (r.status !== 0) { report.push({ id, result: 'split-book failed', why: `exit ${r.status}: ${(r.stderr || r.stdout).trim().split('\n').pop()}` }); console.log(`${id}: split-book exit ${r.status}`); continue; }
     if (!APPLY) { const n = (r.stdout.match(/^ {2}p\.\d+ /gm) || []).length; report.push({ id, result: n === proposal.leaves_expected ? 'dry-ok' : 'dry-mismatch', leaves: n, expected: proposal.leaves_expected }); continue; }
+    if (STAGE) {
+      // Staged, not swapped (#7605): every frame still live and unchanged, one hidden leaf per expected leaf.
+      const staged = await db.collection('pages').find(stagedLeavesQuery(id), { projection: { id: 1, 'ocr.data': 1 } }).toArray();
+      const stillLive = await db.collection('pages').countDocuments({ id: { $in: proposal.frames.map((f) => f.page_id) }, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } });
+      const problems = [];
+      if (staged.length !== proposal.leaves_expected) problems.push(`${staged.length} staged leaves, expected ${proposal.leaves_expected}`);
+      if (stillLive !== proposal.frames.length) problems.push(`${stillLive}/${proposal.frames.length} frames still live`);
+      if (problems.length) { report.push({ id, result: 'CHECK FAILED', why: problems.join('; ') }); console.log(`${id}: CHECK FAILED — ${problems.join('; ')}`); continue; }
+      const withText = staged.filter((l) => l.ocr?.data).length;
+      report.push({ id, result: 'staged', leaves: staged.length, with_text: withText, frames: proposal.frames.length });
+      console.log(`${id}: staged ${proposal.frames.length} frames → ${staged.length} hidden leaves (${withText} with cut text), checked`);
+      continue;
+    }
     // The write is checked, not assumed (#3562): one live page per expected leaf, all from this run, every frame archived.
     const live = await db.collection('pages').find({ book_id: id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, split_from_spread: 1, split_method: 1, image_width: 1 } }).toArray();
     const archived = await db.collection('pages').countDocuments({ id: { $in: proposal.frames.map((f) => f.page_id) }, page_type: 'archived-spread', page_number: { $lt: 0 } });
@@ -606,7 +625,7 @@ async function apply(db) {
     report.push({ id, result: 'split', leaves: live.length, frames: proposal.frames.length });
     console.log(`${id}: split ${proposal.frames.length} frames → ${live.length} pages, checked`);
   }
-  fs.writeFileSync(path.join(OUT, APPLY ? 'apply-report.json' : 'dry-report.json'), JSON.stringify(report, null, 1));
+  fs.writeFileSync(path.join(OUT, APPLY ? (STAGE ? 'stage-report.json' : 'apply-report.json') : 'dry-report.json'), JSON.stringify(report, null, 1));
   const t = {}; for (const r of report) t[r.result] = (t[r.result] || 0) + 1;
   console.log(t);
 }
@@ -614,7 +633,7 @@ async function apply(db) {
 async function main() {
   const stage = process.argv[2];
   if (!['propose', 'screen', 'apply', 'refold'].includes(stage) || !arg('out') || (stage === 'apply' && !arg('verdicts'))) {
-    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--sheets] [--hold=H] [--book=ID,.. | --books-file=FILE] [--limit=N] | screen --out=DIR [--book=ID,..] [--concurrency=4] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--apply]');
+    console.error('usage: split-spreads-agy.mjs propose --out=DIR [--sheets] [--hold=H] [--book=ID,.. | --books-file=FILE] [--limit=N] | screen --out=DIR [--book=ID,..] [--concurrency=4] | refold --out=DIR --book=ID --page=N --fold=F|whole --by=NAME | apply --out=DIR --verdicts=FILE [--book=ID,..] [--stage] [--apply]');
     process.exit(2);
   }
   if (stage === 'refold') return refold(null);

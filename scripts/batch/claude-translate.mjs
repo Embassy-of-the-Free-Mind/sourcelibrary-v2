@@ -61,6 +61,7 @@ import { createHash } from 'node:crypto';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash } from '../lib/translate-core.mjs';
+import { leafNumberOf } from '../lib/split-stage.mjs';
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
@@ -193,7 +194,7 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const db = client.db('bookstore');
-  const PROJ = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
+  const PROJ = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, staged_split: 1 };
   const ids = readPageIdsFile(arg('page-ids-file'));
   const prompts = await loadTranslationPrompts(db);
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PROJ }).toArray()).map((p) => [p.id, p]));
@@ -268,7 +269,8 @@ async function main() {
     const prev = byNum.get(`${first.book_id}:${first.page_number - 1}`), next = byNum.get(`${lastP.book_id}:${lastP.page_number + 1}`);
     const prevRead = prev ? readOf(prev.id) : '';
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
-    const built = buildBlockTranslationPrompt({ prompts, book, pages: group, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
+    // A staged split leaf (#7605) is shown, and split back, by the number it will have once swapped in, not "-999983".
+    const built = buildBlockTranslationPrompt({ prompts, book, pages: group.map((p) => ({ ...p, page_number: leafNumberOf(p) })), previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const instruction = [...new Set(group.map((p) => INSTRUCTIONS[p.id]).filter(Boolean))].join('\n\n') || null;
     const imgFiles = IMAGES ? group.map((p) => [p, imagesOf(p)]) : null;
     const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + (imgFiles ? imageCallSuffix(imgFiles.map(([p, fs_]) => [p.page_number, fs_.map((f) => `p${p.page_number}-${f}`)])) : CALL_SUFFIX);
@@ -286,7 +288,8 @@ async function main() {
     const t0 = new Date();
     const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir, { readImages: !!imgFiles });
     fs.rmSync(dir, { recursive: true, force: true });
-    const texts = r.cls ? null : splitBlockReply(r.text, group.map((p) => p.page_number));
+    const shown = r.cls ? null : splitBlockReply(r.text, group.map((p) => leafNumberOf(p)));
+    const texts = shown && new Map(group.map((p) => [p.page_number, shown.get(leafNumberOf(p))]));
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
     fs.writeFileSync(path.join(OUT, 'raw', `${callId}.txt`), r.text);   // the whole reply, so a refused call can be read
     fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (texts ? null : 'page_tags_mismatch'), usage: r.usage }) + '\n');
