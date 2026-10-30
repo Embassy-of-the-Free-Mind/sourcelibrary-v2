@@ -233,6 +233,41 @@ This answers #5647's warning: planted catch (143/144) is not real recall.
 
 **A9. Docs.** `scripts/eval/correction-pass-7818/METHODS-REVIEW.md` and `RELATED-WORK-SOURCES.md` are Derek's review, committed with each kept citation checked against the paper itself. A citation that could not be opened is dropped.
 
+## Amendment 2 (2026-10-30, 23:50Z; Derek's note of 23:30Z: align, do not duplicate)
+
+**What existed when this was written:**
+- every preregistered verdict: absolute, pairwise and controls;
+- the W-G absolute verdicts, about 130 of 137;
+- the agy verdicts.
+
+`analyze.mjs score` had run once, at about 23:20Z, for the preregistered outcomes. Its `amendment_1` block was written to disk but not read. No severity outcome had been looked at.
+
+**B1. The severity unit is #7824's.** Defects per 1,000 words, by class (misleads, wrong_text), counted as PR #7824 counts them (`scripts/eval/route-judge-6740/defect-rate.mjs` `words()`, job defect-rate-6740). That way the router and this paper use one unit.
+- Per arm and row: the pooled rate (Σ defects / Σ words × 1,000), with a page-bootstrap 95% CI (4,000 resamples; one page per book or work).
+- Paired: the per-page rate difference (corrected − draft), with its CI and the Wilcoxon test.
+- `words()` is restated in `lib.mjs` (`words7824`) because #7824 is not on main yet. It is to be replaced by the import when #7824 lands.
+- #7824's gamma-Poisson model is not re-fitted here.
+- **A1(a)'s MQM-weighted score is now the sensitivity analysis**, not an outcome.
+- The MQM mapping is the one in `.claude/docs/quality-rubric-and-sampling.md` §3.1: cosmetic → minor (1), misleads → major (5), wrong_text → critical (25). These are the 0-1-5-25 defaults of Lommel et al. 2024. A1(b), any wrong_text paired, and A1(c), made worse by severity, stand.
+
+**B2. Rubric and level names come from `quality-rubric-and-sampling.md` (#5984).** In its §4.2 terms, A4's scoring fold is **"Level 1 + case/punctuation + diacritics"** (the #5939 fold, `normalizeForScript` v4). It is not called Level 1:
+- diacritics are folded, which the rubric never folds;
+- ſ read as f stays an error (f ≠ s).
+
+The Wikisource references carry no ſ. So no Level 2 CER is possible on this set, and the table says so.
+
+**B3. Cross-family judging.** PR #7807 (judge-compare-7611; Gemini vs Opus as the lane judge, preregistered, results pending) is the measure of cross-family agreement. This study's Opus-vs-agy κ/α is reported only as a figure on these items, to be read beside #7807's when it lands.
+
+**B4. H5 check (Derek's hint).** Read-only, `lane_judge_verdicts`, 2026-10-30. All 74 latin-blank item records (72 with a verdict) are:
+- in the **flagged** stratum (drawn because the corrector changed ≥ 27% of the PERO draft);
+- from 4 books;
+- on route `pero>agy-flash-low-written` (lane `pero-agy-first-read-7701`);
+- written 2026-10-29 23:43Z – 2026-10-30 00:37Z, **after** #7567 / #7695 (the put-back fix) merged at 2026-10-29 20:46Z.
+
+So 35/72 is a check-flagged, post-fix, 4-book sample. It is not a random-draw rate and is not comparable to arm c's 18/18.
+
+**B5. Prior paired result, cited.** #7269 / #5924: Flash-low correction of Latin lite drafts, misleading 100 → 30 pages, 11 pages worse.
+
 ## Results
 
 Not yet: they are added below this line after judging. Preregistered and amended outcomes are reported apart.
