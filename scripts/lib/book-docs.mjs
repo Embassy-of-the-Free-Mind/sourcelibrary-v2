@@ -55,6 +55,11 @@ export const BOOK_FIELDS = Object.freeze([
   // core bibliographic
   'title', 'display_title', 'display_author', 'original_title',
   'author', 'language', 'original_language',
+  // contributors[]: everyone who made the book, each { author_id, name, role,
+  // source, method }, role a MARC relator code (#7787). `author`/`author_id`
+  // stay the primary-author projection; the one writer is
+  // scripts/lib/contributors.mjs writeContributors().
+  'contributors',
   // languages[] + language_multi: the ONE multilingual-edition array
   // (invariants/language-fields.md). Written by normalize-language-tags.mjs on
   // 45K books; an importer that already knows an edition is facing-page
