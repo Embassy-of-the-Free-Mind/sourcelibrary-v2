@@ -60,7 +60,7 @@ async function fetchByLccn(lccn) {
   const url = `${SRU}?version=1.1&operation=searchRetrieve`
     + `&query=${encodeURIComponent(query)}&maximumRecords=1&recordSchema=marcxml`;
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; demote sign-off)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) demote-sign-off' },
     signal: AbortSignal.timeout(45_000),
   });
   if (!res.ok) throw new Error(`SRU ${res.status}`);

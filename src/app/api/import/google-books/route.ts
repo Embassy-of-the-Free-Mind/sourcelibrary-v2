@@ -11,6 +11,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, resolveDate, publishedToYear, assessIaOcrLanguage, type LanguageSignal } from '@/lib/resolve-language';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -57,7 +58,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     const ia_identifier = `bub_gb_${google_books_id}`;
 
     // Check if the item exists on Internet Archive
-    const metadataRes = await fetch(`https://archive.org/metadata/${ia_identifier}`);
+    const metadataRes = await outboundFetch(`https://archive.org/metadata/${ia_identifier}`);
 
     if (!metadataRes.ok) {
       return NextResponse.json({
@@ -132,7 +133,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       const scandataFile = files.find((f: { name: string }) => f.name.endsWith('_scandata.xml'));
       if (scandataFile) {
         try {
-          const scandataRes = await fetch(`https://archive.org/download/${ia_identifier}/${scandataFile.name}`);
+          const scandataRes = await outboundFetch(`https://archive.org/download/${ia_identifier}/${scandataFile.name}`);
           if (scandataRes.ok) {
             const xml = await scandataRes.text();
             const matches = xml.match(/<page /g);

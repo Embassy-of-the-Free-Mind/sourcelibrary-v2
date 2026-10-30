@@ -30,7 +30,7 @@ async function archiveArtwork(db, art) {
   const resp = await axios.get(art.thumbnail, {
     responseType: 'arraybuffer',
     timeout: 30000,
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly archive; contact@sourcelibrary.org)' }
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' }
   });
   const buf = Buffer.from(resp.data);
   if (buf.length < 500) throw new Error('too small: ' + buf.length);

@@ -163,7 +163,7 @@ function buildProvenance(fields, source) {
 async function fetchManifestMetadata(pid) {
   const url = `https://www.dl.ndl.go.jp/api/iiif/${pid}/manifest.json`;
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
     signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`Manifest ${pid}: HTTP ${res.status}`);

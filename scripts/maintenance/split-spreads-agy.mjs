@@ -516,7 +516,11 @@ async function screen() {
   if (quota) process.exit(3);
 }
 
-/** A fold placed by eye on a frame the check marked bad: `--page=N --fold=0–1000|whole --by=NAME`. Re-renders its review. */
+/**
+ * A new fold for a frame the check marked bad: `--page=N --fold=0–1000|whole --by=NAME`. Re-renders its review.
+ * The method records `refold(<fold>, <by>)`, never "by-eye": a script also calls this (#7605 placed 85 folds with
+ * agy and a book median), so whether an eye placed the fold is for `--by` to say.
+ */
 async function refold(db) {
   const OUT = path.resolve(arg('out'));
   const id = arg('book'), n = Number(arg('page')), by = arg('by'), foldArg = arg('fold');
@@ -527,7 +531,7 @@ async function refold(db) {
   if (!f) { console.error(`no frame p.${n}`); process.exit(2); }
   const fold = foldArg === 'whole' ? null : Number(foldArg);
   if (fold !== null && !(fold > FOLD_MIN && fold < FOLD_MAX)) { console.error(`fold must be inside ${FOLD_MIN}–${FOLD_MAX}`); process.exit(2); }
-  Object.assign(f, { fold, method: `by-eye(${fold ?? 'whole'}, ${by})`, flags: [...(f.flags || []), `was ${f.method}`] });
+  Object.assign(f, { fold, method: `refold(${fold ?? 'whole'}, ${by})`, flags: [...(f.flags || []), `was ${f.method}`] });
   const buf = await fetchBuf(f.url);
   const meta = await sharp(buf).metadata();
   await renderReview(buf, meta.width, meta.height, f, proposal.page_order, path.join(OUT, id, `review-p${String(n).padStart(3, '0')}.jpg`));

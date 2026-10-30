@@ -1,0 +1,382 @@
+{
+ "generated_at": "2026-10-29T22:45:49.305Z",
+ "judge": "claude-opus-5-5 (claude -p, --restricted, Read only), route-judge-6740 judgePrompt + the Siku lane spot-check rubric + margin/bleed flags, one output per call against the page image, blind; a verdict counts only if its transcript shows page.jpg opened",
+ "draw": {
+  "seed": 5600,
+  "frame_books": 8780,
+  "books": 30
+ },
+ "calls": 93,
+ "judge_list_usd_equiv": 5.99,
+ "unread_image_rows": 0,
+ "arms": {
+  "A": {
+   "n": 30,
+   "books": 30,
+   "no_read": [
+    {
+     "book": "6a3c6730af3c49b59c5d10f9",
+     "page": "6a3c6730af3c49b59c5d110b",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    },
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa421",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    }
+   ],
+   "unjudged": 0,
+   "accept": "19/30",
+   "accept_rate": 0.633,
+   "accept_ci": {
+    "ci95": [
+     0.467,
+     0.8
+    ],
+    "unit": "book",
+    "units": 30
+   },
+   "wrong_text_pages": "5/30",
+   "fidelity_mean": 4,
+   "wrong_leaf": 0,
+   "invented": 0,
+   "sense_error_pages": 10,
+   "sense_errors_total": 13,
+   "margin_furniture_in_english": 5,
+   "next_leaf_bleed": 0,
+   "prev_leaf_bleed": 0,
+   "verdicts": {
+    "fine": 7,
+    "minor": 13,
+    "sense-error": 7,
+    "omission": 1,
+    "invented": 0,
+    "wrong-leaf": 0
+   },
+   "lane_bar": {
+    "n": 28,
+    "wrong_leaf": 0,
+    "invented": 0,
+    "sense": 10,
+    "pass": false
+   },
+   "flagged_pages": [
+    {
+     "book": "6a3cbf5af9474f825c16774d",
+     "page": "6a3cbf5af9474f825c1677a5",
+     "margin": "<term>Metal</term>",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription line for line; the running head 欽定四庫全書 became 金×4, rendered as 'Metal'; 二千石丞 is attached to Li instead of the next official."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e53",
+     "margin": "The ancient and modern regulations...",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image. 古今攷 sits in the fold beside folio 二十七 and is the book title, but the translation renders it as a body sentence. 可取…一質而畧抄 describes what Li Xinchuan did and is mistranslated as a recommendation."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70e8",
+     "margin": "Scroll Sixteen",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription from 與榛莽 to 杜鵑花落杜鵑啼 香山. The line 自以工人之 is not on the leaf; it is OCR garble of the 欽定四庫全書 head."
+    },
+    {
+     "book": "6a3c9757579757916cdc3dbb",
+     "page": "6a3c9757579757916cdc3e14",
+     "margin": "Master Wengong's Explanations of the Changes",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "Transcription matches the image line for line; translation covers every clause through 仁是惻隱慈愛之處 and doesn't pull in the next page's 義是裁制."
+    },
+    {
+     "book": "6a3c6bb539b4508b04e456dc",
+     "page": "6a3c6bb539b4508b04e45721",
+     "margin": "Treatise on Astrology of the Kaiyuan Era\nPage 6",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image ends at 不利治兵將有 and the next page continues 大喪, so the candidate's 'general will encounter defeat' is made up; the image shows 翼軫 where the transcription has 冀軫."
+    }
+   ]
+  },
+  "B": {
+   "n": 30,
+   "books": 30,
+   "no_read": [
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa421",
+     "error_class": "page_tags_mismatch"
+    }
+   ],
+   "unjudged": 0,
+   "accept": "21/30",
+   "accept_rate": 0.7,
+   "accept_ci": {
+    "ci95": [
+     0.533,
+     0.867
+    ],
+    "unit": "book",
+    "units": 30
+   },
+   "wrong_text_pages": "6/30",
+   "fidelity_mean": 4,
+   "wrong_leaf": 0,
+   "invented": 1,
+   "sense_error_pages": 8,
+   "sense_errors_total": 10,
+   "margin_furniture_in_english": 6,
+   "next_leaf_bleed": 0,
+   "prev_leaf_bleed": 0,
+   "verdicts": {
+    "fine": 8,
+    "minor": 14,
+    "sense-error": 5,
+    "omission": 1,
+    "invented": 1,
+    "wrong-leaf": 0
+   },
+   "lane_bar": {
+    "n": 29,
+    "wrong_leaf": 0,
+    "invented": 1,
+    "sense": 8,
+    "pass": false
+   },
+   "flagged_pages": [
+    {
+     "book": "6a3ce74c0a0011cb4bc09155",
+     "page": "6a3ce74c0a0011cb4bc0918f",
+     "margin": "# Imperially Commissioned Complete Library in Four Sections",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription; the header 鈞 should be 欽, which is not rendered. Both lemmas (造攻自鳴條 and 檢身若不及) and their Kong subcommentaries are translated in full, through 長以凌物."
+    },
+    {
+     "book": "6a3cbf5af9474f825c16774d",
+     "page": "6a3cbf5af9474f825c1677a5",
+     "margin": "Metal\nMetal\nMetal\nMetal ... ### Volume 51",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image's 9 columns match the transcription and the translation covers every one, ending at 二千石丞. The 欽定四庫全書 head and 卷五十一 are rendered as English body text."
+    },
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e53",
+     "margin": "Ancient and modern understandings have arrived",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "In the image, 古今攷 sits in the fold beside folio number 二十七 as the book title. The body ends at 無他異. The rest of the body matches the image."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70e8",
+     "margin": "# Volume 16",
+     "bleed": null,
+     "invented": "...from the craftsmanship of human artisans.",
+     "wrong_leaf": false,
+     "note": "The image's first column is 與榛莽相似而鶴林之花; the transcription's 自以工人之 does not appear on this leaf. The rest of the text matches the image."
+    },
+    {
+     "book": "6a3c75b839b4508b04e5cf6f",
+     "page": "6a3c75b839b4508b04e5cffd",
+     "margin": "# Chapter 24",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image reads 於魯淹中得古禮五十七篇, with no mention of a wall or of Confucius. The 欽定四庫全書 head was mis-transcribed as 金穴口尾人三毛 and then translated as a person's name."
+    },
+    {
+     "book": "6a3c9757579757916cdc3dbb",
+     "page": "6a3c9757579757916cdc3e14",
+     "margin": "Master Wengong's Explanations of the Changes",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The transcription matches the image column for column; the translation covers every clause through 仁是惻隱慈愛之處, and only the fold title is untagged."
+    }
+   ]
+  },
+  "C": {
+   "n": 30,
+   "books": 30,
+   "no_read": [
+    {
+     "book": "6a3cbdc8ec254ff6cadfa3e8",
+     "page": "6a3cbdc8ec254ff6cadfa421",
+     "error_class": "gemini-filter-notice (apply refuses: reply cut before <<<END>>>)"
+    }
+   ],
+   "unjudged": 0,
+   "accept": "20/30",
+   "accept_rate": 0.667,
+   "accept_ci": {
+    "ci95": [
+     0.5,
+     0.833
+    ],
+    "unit": "book",
+    "units": 30
+   },
+   "wrong_text_pages": "5/30",
+   "fidelity_mean": 3.97,
+   "wrong_leaf": 0,
+   "invented": 1,
+   "sense_error_pages": 10,
+   "sense_errors_total": 16,
+   "margin_furniture_in_english": 3,
+   "next_leaf_bleed": 0,
+   "prev_leaf_bleed": 0,
+   "verdicts": {
+    "fine": 9,
+    "minor": 10,
+    "sense-error": 8,
+    "omission": 1,
+    "invented": 1,
+    "wrong-leaf": 0
+   },
+   "lane_bar": {
+    "n": 29,
+    "wrong_leaf": 0,
+    "invented": 1,
+    "sense": 10,
+    "pass": false
+   },
+   "flagged_pages": [
+    {
+     "book": "6a3c6b6b39b4508b04e43dd5",
+     "page": "6a3c6b6b39b4508b04e43e53",
+     "margin": "From ancient times to the present, in bringing about",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "In the image, the small 古今攷 sits in the centre fold beside 欽定四庫全書, so it is the title, not body text. The body text matches the transcription. 回 is Fang Hui (方回), who wrote the continuation of the 古今考."
+    },
+    {
+     "book": "6a3c6d0301fe4f593c1b70d9",
+     "page": "6a3c6d0301fe4f593c1b70e8",
+     "margin": "# Volume 16",
+     "bleed": null,
+     "invented": "...considered it to be work of human craftsmanship.",
+     "wrong_leaf": false,
+     "note": "The image's first column begins 與榛莽相似而鶴林之花 under the 欽定四庫全書 head, and 自以工人之 appears nowhere on it. The previous page ends 殆, which continues straight into 與榛莽."
+    },
+    {
+     "book": "6a3c75b839b4508b04e5cf6f",
+     "page": "6a3c75b839b4508b04e5cffd",
+     "margin": "# Scroll 24",
+     "bleed": null,
+     "invented": null,
+     "wrong_leaf": false,
+     "note": "The image matches the transcription. The translation is complete up to 五十七篇, but it turns 魯淹中 into the Confucius-house-wall story, and the juan label appears as an English heading."
+    }
+   ]
+  }
+ },
+ "controls": {
+  "CTL-bleed": [
+   {
+    "page_id": "6a3cb5ff3dce6cfad74847af",
+    "judged": true,
+    "caught": true,
+    "flag": true,
+    "accept": false
+   },
+   {
+    "page_id": "6a3c74f139b4508b04e59850",
+    "judged": true,
+    "caught": true,
+    "flag": true,
+    "accept": false
+   }
+  ],
+  "CTL-wrongleaf": [
+   {
+    "page_id": "6a3ced294701a906f10ddf77",
+    "judged": true,
+    "caught": true,
+    "flag": true,
+    "accept": false
+   },
+   {
+    "page_id": "6a3c6a84af3c49b59c5e7945",
+    "judged": true,
+    "caught": true,
+    "flag": true,
+    "accept": false
+   }
+  ]
+ },
+ "paired": {
+  "B-A": {
+   "n": 30,
+   "accept_diff": 0.067,
+   "ci95": [
+    -0.1,
+    0.233
+   ],
+   "lost": 2,
+   "gained": 4,
+   "margin_flag_diff": {
+    "diff": 0.033,
+    "ci95": [
+     -0.067,
+     0.167
+    ],
+    "worse": 1,
+    "better": 2
+   },
+   "next_leaf_bleed_diff": {
+    "diff": 0,
+    "ci95": [
+     0,
+     0
+    ],
+    "worse": 0,
+    "better": 0
+   }
+  },
+  "C-A": {
+   "n": 30,
+   "accept_diff": 0.033,
+   "ci95": [
+    -0.167,
+    0.233
+   ],
+   "lost": 4,
+   "gained": 5,
+   "margin_flag_diff": {
+    "diff": -0.067,
+    "ci95": [
+     -0.2,
+     0.067
+    ],
+    "worse": 3,
+    "better": 1
+   },
+   "next_leaf_bleed_diff": {
+    "diff": 0,
+    "ci95": [
+     0,
+     0
+    ],
+    "worse": 0,
+    "better": 0
+   }
+  }
+ },
+ "pages": 30
+}

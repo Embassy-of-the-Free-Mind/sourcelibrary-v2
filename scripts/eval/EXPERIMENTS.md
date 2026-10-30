@@ -137,6 +137,50 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-30 · Siku translations: which errors, at what risk? (#5600)
+<!-- PRIOR ART: scripts/eval/agy-per-call-7503/ (the judge setup, claude -p Opus with the page image; it counts "sense errors" as one bucket); .claude/docs/page-error-taxonomy.md (T7/T8/T10/O1/O6/T6 classes, used for the kinds). -->
+
+**Question.** The #7503 route judge counts "sense errors" as one bucket (17/30 served pages). That bucket mixes wording slips with invented names. Which kinds of error do readers of the Siku English meet, and how many of them mislead?
+
+**Design.** Frame: books held under the Siku lane's `HOLD_REASONS` (`scripts/batch/siku-translate-lane.mjs`). Arm A = the served lane (`translation.engine.call_site` `scripts/batch/cli-translate.mjs`, model `gemini-3.8-flash-low`, 349 books); arm B = the older block Batch lane (`scripts/lib/translate-batch-chained.mjs`, Gemini 3 Flash preview, 292 books). One page per book, seeded draw (mulberry32, seed 5600), AI translation, OCR ≥ 150 characters, translatable page (not furniture-only). Arm B books are disjoint from arm A. Judge: Opus via `claude -p` (l7a subscription, $0), one page per call, blind to arm (packets P01…P52 in seeded order). Each call saw the page image, the OCR, the served English (summary and keywords cut), and the last 2 lines of the previous page's source and English and the first 2 of the next page's source. Every error was returned as a span {source, English, kind, risk, evidence}. Kinds: INVENTED, WRONG-SENSE, OCR-CARRIED, OMITTED, SEAM, JUNK, STYLE. Risk: HIGH (a reader is misled and cannot tell), MEDIUM (misleading but noticeable, or a lost clause), LOW (cosmetic). A second, independent Opus pass read 10 pages (5 per arm, seeded). Intervals: by-book bootstrap (one page per book, so page = book), Wilson for shares.
+
+**Errors per page, by kind** (pages with at least one in brackets):
+
+| kind | A served (n=30) | B Batch (n=20) |
+|---|---|---|
+| WRONG-SENSE | 0.97 [0.60–1.33] (17) | 2.55 [1.35–4.10] (15) |
+| STYLE | 0.37 (11) | 0.40 (7) |
+| JUNK (furniture carried) | 0.23 (6) | 0.20 (4) |
+| OCR-CARRIED | 0.20 [0.03–0.47] (4) | 1.40 [0.35–2.80] (9) |
+| INVENTED | 0.13 [0–0.30] (3) | 0.55 [0.25–0.90] (8) |
+| SEAM | 0.13 (4) | 0.25 (5) |
+| OMITTED | 0.07 (2) | 0.30 (5) |
+| **all** | **2.10 [1.57–2.67]** | **5.65 [3.70–7.95]** |
+
+**By risk**
+
+| risk | A | B |
+|---|---|---|
+| HIGH per page | 0.23 [0.07–0.43] (7 errors) | 1.75 [0.85–2.80] (35) |
+| MEDIUM per page | 0.77 [0.40–1.20] | 2.20 [1.25–3.25] |
+| LOW per page | 1.10 [0.83–1.40] | 1.70 [1.20–2.25] |
+| pages with ≥ 1 HIGH | 6/30, 20% [10–37] | 10/20, 50% [30–70] |
+| page verdict show / caveat / don't | 16 / 13 / 1 | 3 / 9 / 8 |
+
+**Where the HIGH errors come from**
+- **Arm A (7):** 6 made by the translator (4 WRONG-SENSE: a gloss reversed, 'Crown Prince' for the Son of Heaven, an edict's meaning reversed, a numbered list shifted by one; 1 OMITTED entry in that list; 1 INVENTED gloss giving 召南 a wrong surname and dates). 1 OCR-carried (希 for 帣). None at the seam. The served lane's risk is in translation: polarity, attribution, and glosses that add names or dates.
+- **Arm B (35):** 20 translator-made (15 WRONG-SENSE, 5 INVENTED), 12 OCR-carried, 2 seam, 1 margin furniture read as a quotation. 25 of the 35 are on the 10 pages from the repeat-mark encyclopaedias (佩文韻府, 子史精華, 駢字類編), and 19 of the 35 involve the 丨 marks that repeat a headword: the translator invents a term for them or files a quotation under the wrong headword. The 12 OCR-carried errors are rare characters in dictionary and lexicon entries (康熙字典 headwords, rhyme-group words). Arm B drew no histories or classics and arm A drew 27 of 30, so **the A–B gap (1.52 more HIGH per page, [0.58–2.62]) measures lane and genre together, not the lane alone.**
+
+**The two named seam pages, read by eye with the previous page and both images open.** 圖書編 vol 22 p33: 為正 completes p32's sentence (the year begins in the Yin month, taken as the first month), and the English instead makes the Zi and Chou months 'correct'. That is a HIGH seam error, and the page also carries the margin title as '<unclear>Shu Shu Bian</unclear>'. 圖書編 vol 77 p30: 王之 completes p29's 欲以火德王之 ('wished to rule by the Virtue of Fire'), and the English reads it as 'King Wen of Han'. The 宣室受釐 allusion does refer to Emperor Wen, so the name is an inference with the wrong title, not text from nowhere. The judge rated it MEDIUM. Neither page meets the containment bar: in both, the rest of the English is this leaf's text.
+
+**Judge agreement (10 pages, two independent Opus passes).** Page verdict 9/10 (κ 0.84). Whether a page has a HIGH error: 10/10 (κ 1.0), and the HIGH count was identical on all 10 pages. Presence of each kind on a page: 64/70 page×kind cells (κ 0.79). STYLE was the least stable (7/10, κ 0.44), and INVENTED and WRONG-SENSE agreed 10/10. Risk presence: 28/30 cells (κ 0.86). Error totals per page differ by 0–4 (mostly STYLE and LOW).
+
+**Contained (by eye, image open, `withhold-stale-translations.mjs --by-eye-pages`, #5600).** 御定佩文韻府 vol 719 p47: the 丨丨 marks for 拂拭 are rendered 11 times as an invented term 'shanghui' ('producing brilliance'). 御定子史精華 vol 71 p70: 因丨丨丨丨而丨丨丨丨 (斟酌前史 / 譏正得失) is rendered as invented terms 'Zheng Qi Ci Ju' and 'Shen Qi Tan Lun'. Both books were already held. The other INVENTED findings are notes or glosses on pages whose body is the leaf's text (前漢書 vol 33 p47; 子史精華 vol 129 p4 and vol 70 p39). They are recorded as findings, not contained.
+
+**Not checked.** No human reader of classical Chinese. One AI judge family (Opus) for both passes. 50 pages, so a kind seen on 2–4 pages has a wide interval. Arm B's books are a different genre mix from arm A's. The served lane was not measured on the encyclopaedias, so this does not show that it fixes the 丨 problem.
+
+Artifacts: `scripts/eval/siku-error-types-5600/` (`draw.mjs`, `draw.json`, `prep.mjs`, `judge.mjs`, `score.mjs`, `results.json` with every HIGH finding and its page URL, `eye.mjs`). Packets, images and raw replies are in the job's scratch directory.
+
 ## 2026-10-29 · Does the USTC translation-gap estimate survive a different adjudicator? (#7691)
 <!-- PRIOR ART: .claude/docs/translation-gap-paper.md (design, seed 2684, Gemini on 1,000 + Claude on 419, κ 0.82); scripts/analysis/gap-validation-estimate.mjs (the estimator, reused here with --verdicts); scripts/analysis/gap-validation-score.mjs (toBinary rule, copied unchanged). -->
 
@@ -218,6 +262,288 @@ reads the real sheets, where those cases occur. Its results land on #7605.
 
 **Cost of the production run.** 543 sheets × one Opus call, about $55 at API prices. It runs on the Max
 subscription (team@), so no money is spent.
+
+## 2026-10-29 · Siku lane: 4 pages per agy call, and two leaf lines in the prompt (#5600)
+
+**Question.** Two questions about the Siku lane:
+1. Does reading 4 pages per agy call (B) keep quality while drawing well under half the quota per page?
+2. Do two prompt lines (C) stop margin furniture appearing as English, and stop the last sentence being completed
+   from the next leaf? Both faults were seen in the 2026-10-29 spot check.
+
+**Draw** (`siku-percall-5600/draw.mjs`, seed 5600, committed before any read).
+- **Frame:** 8,780 books, the lane's cohort as `rankBooks` picks it: three hold reasons; rung transcribed or
+  translating; OCR on 80% or more of pages; residue, seal and #7090 books excluded.
+- **Sample:** 30 books. From each, one untranslated, translatable Paddle page, uniform among the pages that sit
+  inside a run of 4 such pages. That run of 4 is the page's block, and the drawn page's position in it is seeded.
+- **Which pages each arm read:** every arm read all 120 block pages in page order, so the drawn page has its real
+  neighbour context. For B, the block is one 4-page call.
+- Read-only: nothing was applied.
+
+**Arms.** All arms used gemini-3.8-flash-low on the james pool (`AGY_HOME=/root/.agy-james`), with `--fresh`, and
+kept their reads.
+- **A:** `cli-translate.mjs read`, 1 page per call (the lane's route).
+- **B:** `claude-translate.mjs read --cli=agy --per-call=4`.
+- **C:** A plus the two lines (`--instructions-file`).
+- **D** (B plus the lines) was not run, because B failed its bar.
+
+**Judge** (`siku-percall-5600/judge.mjs`).
+- Opus via `claude -p` on l7a's subscription, `--restricted` with Read only, one output per call, blind (hashed ids;
+  the key is never in a prompt).
+- The prompt is route-judge-6740's `judgePrompt` (accept, fidelity, taxonomy defects). Added to it: the lane's
+  spot-check rubric (wrong_leaf, invented, sense_errors, verdict), `margin_furniture_in_english`,
+  `next_leaf_bleed` / `prev_leaf_bleed`, and the neighbouring pages' OCR.
+- A verdict counts only if its stream-json transcript shows `page.jpg` opened. All 268 calls did (57 supplement verdicts were reused from the drawn-page run: same page, arm and text).
+- **Controls:** 2 planted next-leaf bleeds and 2 wrong-leaf controls. **4/4 caught**, each flagged and rejected.
+- **Which pages were judged:**
+  - Primary test: the 30 drawn pages, in every arm.
+  - Supplement, added after the primary test because n = 30 was too small for C's flag: all 120 block pages, A and C
+    only.
+
+**Gemini's filter.** On 證治準繩 (a medical book), Flash replied "This request was blocked by Gemini's filters…".
+- B refused those calls (page tags mismatch), so the page has no read.
+- In A and C the notice came back with exit 0, but `cli-translate.mjs apply` refuses it ("reply cut before
+  <<<END>>>"; dry runs: 4 of 120 in each arm).
+- None of the 711 cohort books that already have English holds the notice.
+- Scoring: such a page counts as **no read**, which means not accepted. It is never counted as invented.
+
+### Decision rule, fixed in the brief, decided by it
+
+- **B passes** if all of: wrong-leaf 0; invented 0; acceptance within 0.08 of A; quota per page below 0.5 of A.
+- **C passes** if the margin/bleed flags drop and acceptance is not lower than A.
+
+### Results: the 30 drawn pages (`results/score-drawn.json`)
+
+| arm | accept | accept 95% CI (by book) | wrong text | fidelity | wrong-leaf | invented (judge) | sense-error pages | margin furniture in English | next-leaf bleed | no read |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A 1/call | **19/30** | 0.47–0.80 | 5 | 4.00 | 0 | 0 | 10 | 5 | 0 | 2 (filter) |
+| B 4/call | **21/30** | 0.53–0.87 | 6 | 4.00 | 0 | 1 | 8 | 6 | 0 | 1 (filter) |
+| C 1/call + lines | **20/30** | 0.50–0.83 | 5 | 3.97 | 0 | 1 | 10 | 3 | 0 | 1 (filter) |
+
+Paired by book:
+
+| comparison | accept difference | 95% CI | lost | gained |
+|---|---|---|---|---|
+| B − A | +0.067 | −0.10 to +0.23 | 2 | 4 |
+| C − A | +0.033 | −0.17 to +0.23 | 4 | 5 |
+
+**The one "invented" in B and C is the same page**, read by eye: 全芳備祖集 vol 6, p.15.
+- The leaf's 欽定四庫全書 head is cut at the edge, and Paddle read it as 自以工人之.
+- All three arms translated that OCR line: "considered by workers…" (A), "from the craftsmanship of human artisans" (B),
+  "work of human craftsmanship" (C). The judge flagged only B and C.
+- It is OCR-borne margin furniture, so **translator-invented = 0 in every arm.**
+
+### Supplement: all 120 block pages, A and C (`results/score-all.json`)
+
+| arm | accept | accept 95% CI (by book) | wrong text | fidelity | sense-error pages | margin furniture in English | next-leaf bleed | invented (judge) |
+|---|---|---|---|---|---|---|---|---|
+| A | **79/120** | 0.55–0.77 | 21 | 3.87 | 40 | **12** | 1 | 3 |
+| C | **78/120** | 0.58–0.73 | 21 | 3.95 | 40 | **7** | 1 | 4 |
+
+C − A, paired, by-book bootstrap:
+
+| measure | difference | 95% CI | pages |
+|---|---|---|---|
+| accept | −0.008 | −0.10 to +0.08 | 19 better, 20 worse |
+| margin flag | −0.042 | −0.092 to +0.008 | 8 fixed, 3 new |
+| bleed | 0 | | 1 page in each arm |
+
+The judge's "invented" flags, read by their notes:
+- 3 of A's and 2 of C's are OCR-borne: a garbled running head, or a fabricated OCR line.
+- The translator's own: A 1 ("until we reach the Yellow Springs", finishing the Zuozhuan story from memory); C 2
+  ("became disordered", and one name that reads as a sense error).
+
+### Quota
+
+| arm | agy calls | calls / page | refused calls | pages re-read alone | input / page | cached | output + thinking / page | token index / page | vs A | vs A, uncached |
+|---|---|---|---|---|---|---|---|---|---|---|
+| A | 120 | 1.00 | 0 | 0 | 8,023 | 1,961 | 814 | 12,906 | 1.00 | 1.00 |
+| B | 64 (17×4, 6×3, 5×2, 36×1) | **0.53** | 5 (all Gemini's filter) | 5 | 4,237 | 1,219 | 697 | 8,417 | **0.65** | 0.66 |
+| C | 120 | 1.00 | 0 | 0 | 7,055 | 2,977 | 674 | 11,096 | 0.86 | 0.74 |
+
+How to read it:
+- **The token index is input + 6 × (output + thinking).** As in #7518, the 6 is assumed, not measured.
+- **Token counts are noisy.** C sends a longer prompt than A, yet agy reported about 1,000 fewer input tokens per
+  page. Run-to-run noise in agy's counts is about ±10–15%, as #7518 found between its two 1/call runs.
+- **Calls per page are exact.**
+- **Why B makes so many single calls: the block floor.** 23% of Siku pages (991 of 4,357 untranslated pages in the 30
+  books) are under translate-batch-seam's `MIN_OCR_CHARS_FOR_BLOCK` (200), and each is read alone. On those books'
+  whole untranslated page lists, 4/call **plans 0.48 calls a page** (`lane-calls.mjs`), before retries and re-reads.
+  With B's in-sample overhead (7 extra calls in 120 pages) that is about 0.54. **That floor is the lever.** Siku
+  pages are short (median OCR about 225 characters). This test did not try a lower floor.
+- **The meter did not resolve the arms** (`results/meter-readings.jsonl`, one reading a minute, 22:11–22:43Z).
+  - The lane on main drew from the same james account the whole time, at 0.00012–0.00025 of the week per minute (its
+    rate doubled between the baselines before and after).
+  - Readings from different processes disagree by up to 0.001.
+  - Over the measured window (22:14:53–22:28:31) the week fell 0.0036. The lane accounts for 0.0016–0.0034 of that,
+    which leaves 0.0003–0.0020 for this test's 304 calls.
+  - Per arm, the meter is unreadable, so the ratio rests on calls and tokens.
+  - The mesh cannot touch main's STOP file, and its verbs cannot read main's `pool-readings.jsonl`. So the arms were
+    run in tight blocks (177, 126 and 178 s) and the lane's rate was read from this job's own readings of the same
+    pool between arms.
+- A stale local lock (`/root/.model-limits/agy_.agy-james-gemini-3.8-flash-low.json`, written 2026-10-27 09:44Z while
+  the account was still on Starter quota) blocked every james-pool agy call on l7a until 2026-11-03. It was moved
+  aside (`.stale-2026-10-27`); the pool read 54% left and calls succeeded.
+
+### The Han page-break guard (#7503 condition) (`results/drift.json`)
+
+The floor: `detectCaselessDrift` flags **4.58%** of this lane's breaks at 1/call (13,937 breaks, 138 books; measured
+2026-10-29 21:25Z).
+
+| arm | breaks tested | flagged | rate | P(≥ k flags at the 4.58% floor) | guard fired in production | pages re-read alone | index after re-reads | flags on final texts (90 breaks) |
+|---|---|---|---|---|---|---|---|---|
+| A (each break read as if in a block) | 90 | 4 | 4.4% | 0.60 | n/a | 0 | 1.00 | 4 |
+| B (in-block breaks the guard saw) | 61 | 1 | **1.6%** | 0.94 | **yes, once** (涇野子內篇 54→55, shift 0.44) | 2 for drift (+3 for Gemini's filter) | **0.65** | 3 |
+| C (each break read as if in a block) | 90 | 4 | 4.4% | 0.60 | n/a | 0 | 0.86 | 4 |
+
+The guard ran on the agy 4/call reader as the lane would run it, and fired once. B's in-block flag rate (1/61) is not
+above the 1/call floor; no flag in B exceeds it. 61 breaks cannot show a false-flag rate on this lane: that needs the
+guard on the reader in production, as #7503 asks.
+
+### Decisions (by the rule)
+
+**B does not pass.**
+- Quality passes: wrong-leaf 0; translator-invented 0 by eye; acceptance +0.07 against A.
+- Quota fails: 0.53 calls and 0.65 of the token index per page are not below 0.5 of A, and the whole-book projection
+  is 0.48 calls before re-reads.
+- So D was not run, and no router-table cell was added.
+- **Conditional recommendation for #7503:** per Derek's 2026-10-29 condition, nothing changes until the caseless guard
+  runs on the agy 4/call reader in production with its false-flag rate confirmed on this lane. If 4/call is
+  reconsidered, test it together with a lower `MIN_OCR_CHARS_FOR_BLOCK` for Siku. At no floor at all, 4,357 pages
+  would take 1,126 calls (0.26 a page) instead of 2,089.
+
+**C passes, narrowly.**
+- Margin furniture in English: 5 → 3 on the drawn pages, and 12 → 7 of 120 in the supplement. The interval just
+  touches 0.
+- Next-leaf bleed: 0 → 0 drawn, 1 → 1 of 120. It is rare at 1/call, so the second line shows no measured effect and
+  no measured harm (omission 3 vs 3).
+- Acceptance: 20 vs 19 drawn, 78 vs 79 of 120 (a difference of −0.008).
+- The two lines go to the lane's 1/call reader (`siku-translate-lane.mjs` `LEAF_LINES`, `--instructions-file`, written
+  per book). They do not go into cli-translate's shared prompt, nor into the block reader, where they were not tested.
+
+**Caveats.**
+- One judge, with a stricter prompt than the lane's spot check. On it, all three arms miss the lane's own bar
+  (sense-error pages are about 1 in 3), which the 2026-10-29 spot check passed with 20 pages on a lighter prompt.
+- n = 30 drawn pages: an acceptance difference under about 15 points cannot be detected there.
+- The supplement's pages are 4 per book, so its intervals are by book.
+
+**Cost.**
+- 304 agy calls, about 0.2–0.4% of the james week.
+- 268 Opus judge calls on l7a's subscription, $17.3 list-equivalent.
+- Nothing written to pages or books. The readers' `lane_job_books` label uses the job name
+  `siku-lane-5600-percall-test`, so the lane does not skip these 30 books.
+
+Files: `scripts/eval/siku-percall-5600/`
+- `draw.json`
+- `results/`: `score-drawn.json`, `score-all.json`, `drift.json`, `lane-calls.json`, `arm-runs.json`, `calls-B.jsonl`,
+  `meter-readings.jsonl`, `reads.jsonl.gz` (all 360 reads), `verdicts-opus.jsonl.gz`, `judge-key-*.json`
+
+The reads are also kept in R2 `candidate-reads/`.
+
+## 2026-10-29 · How good is the live Siku translation lane, as the router's sampler judges it? (#7611)
+<!-- PRIOR ART: the Siku lane's own spot check (siku-translate-lane.mjs JUDGE, every 5,000 pages, posted on #5600: a different rubric, wrong-leaf / invented / sense errors, against a draft bar); the #6567 stale-retranslation pilot (cell zh-siku-tr, a different task: English that existed before); siku-error-types-5600 (queued on #5600, error kinds and risk levels). This is the router's instrument: route-judge judgePrompt, translation form. -->
+
+**Design.** `lane-judge-sampler.mjs run --lane=siku-translate-5600` (new: one lane only; it does not move the nightly window). The frame is the pages the lane wrote from 2026-10-27 to 2026-10-29 22:19Z. A page qualifies by its own stamps: `translation.engine.run.reason` = `Siku lane #5600, Derek 2026-10-27`, model gemini-3.8-flash-low through agy, and the page_revisions row the writer left, with that reason, an empty prior, and a `next_hash` that still matches the page. That gave 47,177 pages. The 22,072 in hidden books (the Four Histories, zh-histories-7546) were left out, leaving 25,105 pages in 334 visible books. Books were drawn weighted by 1 + ln(1 + human_read_count), one page per book, seed 20261029. The first 30 in draw order were judged, together with 2 wrong-page controls (this page's image and OCR, another book's English). Judge: Opus 5.5 through `claude -p` on the subscription; prompt template 6c73d24dbbc9c9df. No planted controls: the planter plants OCR errors only.
+
+**Result.** 20/30 accepted. Wrong text on 6/30: 3 O6 (a variant character or a term misread into the sense), 2 O7 (numbers: a 丈/尺 slip; an astronomical table garbled), 1 T3 (a broken note tag hiding the main text), plus O4 / O5 / O17 / T9 on the table page. The judge also flagged T10 (unsupported glosses in notes) on 16/30 pages, mostly as "misleads" or "cosmetic". It rejected both wrong-page controls at fidelity 1.
+
+**Replicated?** No. n = 30, one draw. The nightly sampler now draws this lane: every book until 60 are judged, then 5%.
+
+**Artifact.** Verdicts: Mongo `lane_judge_verdicts` (run `lane-judge-20261029221909-lane`). The export: `scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json`, cell `zh-siku-first-tr`.
+
+## 2026-10-29 · Do folio markers and a catchword label stop broken page joins on 3.8 Flash? (#7118)
+
+PRIOR ART:
+- `2026-10-04-seam-markers-confirm-5678.md`: markers on Lite 26 → 19 and on the old Flash 16 → 11 per 100 breaks (p 0.105 and 0.18), on the paid Batch lane.
+- `2026-10-16-seam-prompt-candidate-6742.md`: one edge instruction on 3.8 Flash had no effect, and the A-vs-A swing was 6.7 per 100. Its harness (`seam-prompt-6742/ab.mjs`) is followed call for call here.
+
+**Answer for Derek.** Yes for markers, which are now on in the CLI lane; not yet for the catchword label. On 3.8 Flash, markers more than halve broken joins (35.5 → 16.4 per 100) and cut majors from 10 to 3. The catchword label is kept on every catchword page, but it also labels words that are not catchwords too often.
+
+**Design.**
+- Preregistered in `PREREGISTRATION-seam-prevent-7118.md` (commit a5b280a7a) before any arm ran.
+  - Amendment 1 came after the draw, before any arm ran: the spurious-label denominator.
+  - Amendment 2 came during translation, before any judging or scoring. N+1's own foot catchword no longer counts as "doubled".
+- Sample:
+  - 120 true mid-sentence page breaks, one per book, on served Latin-script prose, with no book from the #6742 set.
+  - The source runs on by both tests: N's body is unpunctuated or ends on a hyphen, and N+1 opens on a lowercase clause.
+  - 40 have a catchword the production device detects. 165 books were scanned to find them.
+  - Languages: Latin 66, German 23, French 10, 6 catalogued as Greek but with Latin-script source pages, and 15 others.
+- Arms, all `gemini-3.8-flash-low` via agy (the second account, `AGY_HOME=/root/.agy-james`):
+  - **A**: production (v13 + `PAGE_BREAK_SCOPED`, one page per call, N seeded with the stored N−1, N+1 with the arm's N).
+  - **A2**: A again.
+  - **M**: one marked call for (N, N+1) with the stored N−1 as continuity.
+  - **C**: A + a catchword rule (`<catchword>word</catchword>` once at N's foot, the word translated on N+1).
+  - **MC**: M + C.
+- Judge: one blind Opus call per break. It sees the source edges and six versions (A, A2, M, C, MC, plus an identical copy of A), with labels, `<summary>`, `<meta>` and `<catchword>` removed, as the continuous view reads them. Each version gets an `opus-reference` label and severity. A second call shows the versions in reverse order. A version is defective or major only when both calls say so.
+- 110 breaks are compared. 10 were dropped because Gemini's filter or a cut reply left one arm unread ("This request was blocked by Gemini's filters", on alchemical and chemical pages, in every arm alike). A marked reply that did not parse counts as a defect.
+
+**Result (110 breaks; per 100 joins, defective in both orders).**
+
+| | A | A2 | M | C | MC |
+|---|---:|---:|---:|---:|---:|
+| defective | **35.5** | 27.3 | **16.4** | 26.4 | **10.9** |
+| major | 9.1 (10) | 3.6 (4) | 2.7 (3) | 5.5 (6) | 3.6 (4) |
+| broken syntax / forced closure | 19 | 15 | 4 | 15 | 2 |
+| duplication | 10 | 8 | 0 | 6 | 1 |
+| catchword label (mishandled) | 12 | 9 | 2 | 9 | 1 |
+| omission | 8 | 4 | 4 | 7 | 3 |
+| drift (≥ 6 words on the wrong side) | 0 | 0 | 5 | 0 | 4 |
+| marked reply unparsed (counted defective) | — | — | 1 | — | 2 |
+| catchword stratum (n = 36), defective | 27.8 | 19.4 | 16.7 | 22.2 | 8.3 |
+
+- **Paired against A (discordant breaks, one-sided sign test):**
+  - M: 28 better, 7 worse, p 0.0003.
+  - MC: 32 vs 5, p < 0.0001.
+  - C: 17 vs 7, p 0.032.
+  - A2: 12 vs 3, p 0.018.
+- **The A/A swing is 8.2 per 100**, and A2 itself beats A at p 0.018. Two draws of the same request differ a lot: A was an unlucky draw. M also beats A2: 24 vs 12, p 0.033.
+- **Judge floor:** the copy of A got A's verdict on 110 of 110 breaks.
+- **Catchword label** (36 catchword breaks):
+  - C kept the label on 36 of 36; MC kept it on 33 of 36 and dropped 3. Neither ever doubled one.
+  - Spurious labels on the 53 breaks whose OCR records no catchword: C 9 (18%), MC 5 (10%). The guard was ≤ 5%.
+  - Read by eye, about half of these spurious labels are real printed catchwords the OCR never tagged: `in sua`, `Be-|sol`, `Sed ni|hil`, `reli-`. The rest are invented: `Per tanto`, `aux`, `licet`, an Arabic `من`.
+- **Rule output:**
+  - M: Δ 19.1 > swing 8.2, p < 0.10, majors 3 ≤ 10. **Ships.**
+  - MC passes the arm rule as well. C passes it on noise of the same size as A2's.
+  - The catchword rule fails for C and for MC, on spurious labels only: catchword and duplication labels fall, and omissions do not rise.
+  - Registered tie-break: M and MC both pass but the catchword rule does not, so **M ships**.
+
+**What markers change.**
+- They remove forced closures and duplications at the turn (broken syntax 19 → 4, duplication 10 → 0), as on the old models in #5678.
+- What is left is drift: a marker set a clause or more early or late (0 → 5). That costs nothing in the continuous view, but the page view shows words on the wrong page.
+- Example, `69b51e35…:71` ("Sed ni|hil ad hunc locum"): A renders `ni` as "unless" and the join does not parse (major in both draws). M gives "But this is noth|ing to the present discussion".
+- Example, `69af423a…:112`: A drops `consociaret`, leaving a verbless clause; M reads "namely to connect Propertius with ancient | myths".
+
+**Post hoc, not registered: a balance guard in the shipped code.**
+- One of M's majors, `69b52594…:8`, is a marker set half a page early: page N+1's span opens with page N's second half. MC's one drift major (`69b51de5…:14`) is the same shape.
+- For every one-page read in this run, a page's English-per-source length divided by its neighbour's fell between 0.6 and 1.48. These two fell at 0.33 and 0.5.
+- The shipped split refuses a pair outside [0.6, 1.67] and reads the two pages one by one, which is production's behaviour before this change.
+- Replayed on M's 116 reads, it refuses 4: the major, one ok join, and 2 breaks dropped from the comparison.
+- Unparsed replies take the same fallback. So in the lane, 2 of M's 3 majors would have been one-page reads.
+
+**What shipped** (same PR):
+- `cli-translate.mjs read` translates two consecutive Latin-script pages that both need a read in one marked call (`buildBlockTranslationPrompt` with `folioMarkers`).
+- Each page gets its own span, with the block's summary and keywords. The meta records `prompt_variant: sentinels-6523+folio-markers-7118` and `folio_block`.
+- The fallback, or any instruction-file line, gives the old one-page read.
+- Default ON; `TRANSLATE_FOLIO_MARKERS_CLI=0` turns it off.
+- Not touched:
+  - the chained Batch lane's `TRANSLATE_FOLIO_MARKERS` (flash-lite, still off);
+  - non-Latin scripts, never measured here;
+  - `stale-retranslate-6567.mjs` (Chinese).
+- Only every other join sits inside a pair. The joins between pairs stay page-bounded, as A, so the expected lane-wide drop is about half the measured one.
+
+**What this cannot say.**
+- The judge reads a window at the turn, not whole-page accuracy.
+- The run used two-page blocks only.
+- Latin script only.
+- The A/A difference is large, so a single run's ranking of C against A means little.
+
+**Next.** Re-test MC (best measured, 10.9) with the spurious guard scored against catchwords read off the page image, not the OCR tag. Also test longer marked blocks (3–4 pages), so that more joins fall inside a call.
+
+**Spend.** $0.
+- agy (subscription, second account): 963 translation calls, including the failures. The box's default agy login had no token (8 calls failed on an auth prompt), so the run used the second account.
+- Claude CLI (subscription): 220 Opus judge calls, $19.16 list-equivalent, not billed. Weekly meter at 0% at the start.
+
+**Artifact.** `scripts/eval/results/seam-prevent-7118/markers-catchword/` holds `report.json` (the rule output and every break's verdict per arm), `reads.jsonl.gz`, `judge.jsonl.gz`, `key.jsonl` and `build.json`. Harness: `scripts/eval/seam-prevent-7118/ab.mjs build|translate|judge|score`. The OCR context (`ctx.jsonl`) is rebuilt from Mongo by `build` and not committed.
 
 ## 2026-10-29 · Rescued eval artifacts: where they are (#6740)
 <!-- PRIOR ART: none — this is a finding aid, not a result; searched scripts/eval/experiments/ and scripts/eval/INDEX.md for "rescue" (no index of the rescue branches existed). -->

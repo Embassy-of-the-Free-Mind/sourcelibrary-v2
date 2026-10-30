@@ -63,6 +63,9 @@
  *
  * --per-call=N (N > 1) reads N pages per call through claude-translate.mjs --cli=agy. OFF by default: on only once
  * block-drift covers caseless (Han) scripts for that reader in production (#7503).
+ *
+ * LEAF LINES (#5600): the 1/call reader gets LEAF_LINES on every page (--instructions-file, written per book): leave the
+ * margin furniture out of the English; stop where the leaf stops. Measured in scripts/eval/siku-percall-5600 (arm C).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -96,6 +99,14 @@ export const MODEL = 'gemini-3.8-flash-low';
 export const REASON = 'Siku lane #5600, Derek 2026-10-27';
 /** #7090: reader requests, translated by their own job. */
 export const ISSUE_7090_BOOKS = Object.freeze(['6a3cbe33ec254ff6cadfe195', '6a3cbd2eec254ff6cadf6bf3']);
+/** #5600 (scripts/eval/siku-percall-5600): appended to every page's prompt by the 1/call reader (cli-translate
+ *  --instructions-file, lane-local, never the shared prompt). Margin furniture rendered as English fell from 12 to 7
+ *  of 120 pages, acceptance unchanged (79 vs 78 of 120). */
+export const LEAF_LINES = [
+  'The leaf\'s margin text (欽定四庫全書, the juan number, the folio number) is not part of the text: leave it out of the English.',
+  'Translate only what is on this leaf. If the last sentence breaks off, stop where the leaf stops; do not complete it.',
+].join('\n');
+export const leafInstructions = (pageIds) => Object.fromEntries(pageIds.map((id) => [id, LEAF_LINES]));
 /** A chat model's reply inside stored OCR (not leaf text). */
 export const CHAT_REPLY_RE = /作为一个人工智能|人工智能语言模型|我还没学习如何回答|作為一個人工智能|As an AI(?: language)? model|I(?:'m| am) (?:sorry|unable)[^.\n]{0,40}(?:assist|help|transcribe)/i;
 
@@ -310,9 +321,12 @@ async function runWave(db) {
       fs.writeFileSync(ids, JSON.stringify(pages.map((p) => p.id)));
       log(`  ${label}: reading ${pages.length} pages (${PER_CALL > 1 ? `${PER_CALL}/call, claude-translate --cli=agy` : '1/call'})`);
       // #7503: the 4/call reader stays OFF until block-drift covers caseless scripts in production.
+      // #5600: the two leaf lines go to the 1/call reader only (tested there); the block reader was not tested with them.
+      const instr = path.join(dir, 'instructions.json');
+      if (!(PER_CALL > 1)) fs.writeFileSync(instr, JSON.stringify(leafInstructions(pages.map((p) => p.id))));
       const readArgs = PER_CALL > 1
         ? [path.join(HERE, 'claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, '--cli=agy', `--model=${MODEL}`, `--per-call=${PER_CALL}`, `--job=${JOB}`]
-        : [path.join(HERE, 'cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${MODEL}`];
+        : [path.join(HERE, 'cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${MODEL}`, `--instructions-file=${instr}`];
       const t0 = Date.now();
       const rc = await runNode(readArgs, env, path.join(dir, 'read.log'));
       const metas = fs.readdirSync(dir).filter((f) => f.endsWith('.meta.json')).length;

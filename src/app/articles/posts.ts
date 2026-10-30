@@ -1112,6 +1112,18 @@ export const posts: BlogPost[] = [
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
   },
   {
+    slug: 'how-much-in-english',
+    title: 'How Much of the Written Past Can You Read in English?',
+    subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
+    summary:
+      'How many old books and manuscripts survive in Latin, Arabic, Sanskrit, Tibetan, Chinese and more, how many are scanned, and how few are in English.',
+    date: '30 October 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: 'Engraved frontispiece of Athanasius Kircher, Turris Babel (Amsterdam, 1679): robed figures in the foreground, the tower rising in the background under a sky of angels.',
+  },
+  {
     slug: 'counting-the-gap',
     title: 'We Spent a Day Counting What Hasn\'t Been Translated',
     subtitle: 'We matched 1.6 million early modern editions against translation catalogs. It started as a quick check and turned into an all-day rabbit hole.',

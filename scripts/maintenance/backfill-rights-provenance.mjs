@@ -24,8 +24,9 @@
  *             labelled as such, never silently promoted).
  *
  * Bulk runs go on Hetzner (import-cost-and-egress.md), one host at a time with
- * a per-host interval, hosts in parallel. Gallica blocks datacenter IPs → run
- * `--provider gallica` from the laptop. Harvard 429s every path today.
+ * a per-host interval, hosts in parallel. Gallica's own host challenges every script
+ * (403 from the laptop too, 2026-10-30), so Gallica manifests are read from BnF's open
+ * API, openapi.bnf.fr (#7771). e-rara 403s main's IP; run it from gex45. Harvard 429s every path.
  *
  *   node --env-file=.env.production.local scripts/maintenance/backfill-rights-provenance.mjs --lane stored --plan
  *   node --env-file=.env.production.local scripts/maintenance/backfill-rights-provenance.mjs --lane manifest --provider mdz --limit 5 --plan
@@ -65,7 +66,7 @@ const HOST_INTERVAL = parseInt(opt('host-interval', '400'), 10);
 const ALL_BOOKS = flag('all-books');
 const PER_HOST = parseInt(opt('per-host', '0'), 10) || 0; // sampling: at most N books per host (spot-checks, smoke runs)
 const SWEEP = 'rights-provenance-2026-09';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; rights-provenance backfill; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) rights-provenance-backfill';
 
 if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 console.log(`${WRITE ? 'WRITE' : 'PLAN (no writes; add --write)'} · lane=${LANE} · providers=${PROVIDERS?.join(',') || 'all'}${EXCLUDE.length ? ' minus ' + EXCLUDE.join(',') : ''} · limit=${LIMIT || 'none'} · out=${OUT || '-'}`);
@@ -122,6 +123,11 @@ function fetchPlan(s, iaIdentifier) {
     const m = (man || src || '').match(/digital\.slub-dresden\.de\/(?:id)?(\d+)/);
     if (m) return { kind: 'mets', url: `https://digital.slub-dresden.de/oai?verb=GetRecord&metadataPrefix=mets&identifier=oai:de:slub-dresden:db:id-${m[1]}` };
     return null;
+  }
+  // Gallica: the same manifest from BnF's open API (IIIF v3; `rights` states e.g. NoC-NC per item)
+  if (s.provider === 'gallica') {
+    const m = (man || src || '').match(/ark:\/12148\/([a-z0-9]+)/i);
+    if (m) return { kind: 'iiif', url: `https://openapi.bnf.fr/iiif/presentation/v3/ark:/12148/${m[1]}/manifest.json` };
   }
   // e-rara's IIIF manifests state no rights; its OAI METS record does (mods:accessCondition, PDM 1.0)
   if (s.provider === 'e-rara' || s.provider === 'erara') {

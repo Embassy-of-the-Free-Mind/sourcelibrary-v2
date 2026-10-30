@@ -162,6 +162,15 @@
  *        stamped ocr.pipeline = ARMC_LANE, --mark-stale (a flag; nothing re-translates on it). Every page tried goes to
  *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
  *        L/armc-contain-claims.jsonl for a by-eye check. Undo: scripts/maintenance/revert-run.mjs --run-id <run>.
+ *
+ * CLAUDE FALLBACK (#7545). When the run's pool (--agy-home; `auto` never picks an empty pool, so name it) has an EMPTY Gemini weekly bucket, the lane does not
+ * stop on the floor: if agyClaudeGate opens (the Claude group's weekly and 5-hour buckets both at 10% or more, the
+ * account not held to one model by allowed-model), the run corrects the cells whose router route is Opus and where
+ * Opus through agy passed its test (rules.json `fallback_routes` with passes: true): Latin Flash-Lite pages, on
+ * claude-opus-5-5-low, stamped `ocr.pipeline = agy-opus-correct-lite-7545`. Same frame rules, template, writer and
+ * ledger. The mode is chosen once per run; before each chunk the gate is read again (cached 10 min), and the run
+ * stops when it closes: a Claude bucket under 10%, or a Gemini reset, after which the next run is the Gemini lane.
+ * German translation failed the test (4/30 marker failures) and Tibetan translation was not tested: neither is here.
  */
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
@@ -174,6 +183,7 @@ import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } f
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
+import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -245,6 +255,24 @@ export const CORRECT_LANE = 'agy-correct-lite-7558';
 export const CORRECT_MODEL = 'gemini-3.8-flash-low';
 /** The cells the route passed (#7520): German and French. Latin was not measured. */
 export const CORRECT_LANGUAGES = /^(German|French)/;
+/** The Claude fallback (#7545, header): Latin lite>opus, where lite>agy-opus accepted 15/15 against claude -p's 15/15. */
+export const FALLBACK = Object.freeze({ model: 'claude-opus-5-5-low', languages: /^(Latin)/, lane: 'agy-opus-correct-lite-7545',
+  why: "lite>agy-opus passed #7545's test against lite>opus (Latin 15/15 each, 0 wrong text)" });
+/**
+ * Which correction this run makes: the Gemini lane, the Claude fallback, or none. `quota` is readQuota()'s Gemini
+ * buckets (undefined = read them); `gate` is agyClaudeGate.
+ */
+export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AGY_HOME || ''), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
+  const weekly = buckets?.find((b) => b.id === 'gemini-weekly');
+  // Empty as agyClaudeGate counts it: a spent pool keeps a residue (0.00028 on 2026-10-30) and never reads exactly 0.
+  if (weekly && typeof weekly.remaining_fraction === 'number' && weekly.remaining_fraction < AGY_GEMINI_EMPTY) {
+    const g = gate();
+    return g.ok ? { mode: 'fallback', model: FALLBACK.model, lane: FALLBACK.lane, languages: FALLBACK.languages, why: g.reason }
+      : { mode: null, why: `Gemini weekly empty and the Claude fallback is closed: ${g.reason}` };
+  }
+  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
+  return q.ok ? { mode: 'gemini', model: CORRECT_MODEL, lane: CORRECT_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
+}
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
 /**
@@ -377,23 +405,7 @@ async function correctMain(mode, arg) {
   ledgerTail(LEDGER, ledger, tailState);
   let SHARD;
   try { SHARD = parseShard(arg('shard')); } catch (e) { console.error(e.message); process.exit(2); }
-  const books = (await db.collection('books').find(
-    { visible: true, pages_count: { $gt: 0 }, language: { $regex: CORRECT_LANGUAGES }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
-    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
-    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
-  if (mode === 'correct-count') {
-    const t = {};
-    for (const b of books) {
-      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
-      const k = String(b.language).match(CORRECT_LANGUAGES)[1];
-      t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
-      t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
-    }
-    console.log(`correction queue (${CORRECT_LANE}): ${JSON.stringify(t)}`);
-    await client.close(); return;
-  }
-  const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40), FLOOR5H = Number(arg('floor-5h') ?? 0.25);
+  const FLOOR5H = Number(arg('floor-5h') ?? 0.25);
   const WEEKLY_END = Number(arg('weekly-end') ?? 0);
   if (!(WEEKLY_END >= 0 && WEEKLY_END < 1)) { console.error('--weekly-end must be in [0, 1)'); process.exit(2); }
   const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
@@ -414,6 +426,27 @@ async function correctMain(mode, arg) {
   const ME = { pid: process.pid, pool: POOL };
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
+  // The run's mode (header: CLAUDE FALLBACK). correct-count counts the Gemini lane's frame unless --fallback.
+  const M = mode === 'correct-count' ? (process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
+    : correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+  if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
+  const books = (await db.collection('books').find(
+    { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
+    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
+    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+  if (mode === 'correct-count') {
+    const t = {};
+    for (const b of books) {
+      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
+      const k = String(b.language).match(M.languages)[1];
+      t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
+      t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
+    }
+    console.log(`correction queue (${M.lane}): ${JSON.stringify(t)}`);
+    await client.close(); return;
+  }
+  const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
   const CONCURRENCY = Number(arg('concurrency') || 1);
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
@@ -426,7 +459,7 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}): pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
   const nextChunk = async () => {
@@ -446,8 +479,10 @@ async function correctMain(mode, arg) {
     while (!stop) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
-      const q = quotaFloor(readQuota(HOME), { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
-      if (!q.ok) { stop ??= `quota floor: ${q.why}`; break; }
+      // The mode's own gate, read again before every chunk: a reset or a spent Claude group ends the run.
+      const now = correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+      if (now.mode !== M.mode) { stop ??= now.mode ? `mode changed to ${now.mode}: the next run takes it` : now.why; break; }
+      const q = now.q;
       const c = await nextChunk();
       if (!c) { stop ??= 'queue empty'; break; }
       // Sized after the await, so two workers never both spend the same budget.
@@ -461,18 +496,19 @@ async function correctMain(mode, arg) {
       fs.mkdirSync(dir, { recursive: true });
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
-      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
-      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${CORRECT_LANE}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} ${q ? `weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%` : now.why}`);
+      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
+      const reason = M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
+        : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
-      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${CORRECT_LANE}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${M.lane}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
       if (!APPLY || applied !== 0) { release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
       const written = new Set(sum.written_page_ids || []);
-      for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: CORRECT_LANE }) + '\n');
+      for (const cl of sum.contain_claims || []) if (take.some((p) => p.id === cl.page_id)) fs.appendFileSync(CLAIMS, JSON.stringify({ ...cl, at: new Date().toISOString(), lane: M.lane }) + '\n');
       for (const p of take) {
         const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
         const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : 'other';

@@ -11,6 +11,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, publishedToYear } from '@/lib/resolve-language';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -67,9 +68,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch IIIF manifest from Gallica
     const manifestUrl = `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/manifest.json`;
-    const manifestRes = await fetch(manifestUrl, {
+    const manifestRes = await outboundFetch(manifestUrl, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
         'Accept': 'application/json, application/ld+json',
         'Referer': 'https://gallica.bnf.fr/',
       }

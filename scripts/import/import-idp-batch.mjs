@@ -59,7 +59,7 @@ async function fetchWithRetry(url, retries = 3) {
     try {
       const res = await fetch(url, {
         signal: AbortSignal.timeout(60000),
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
       });
       if (res.ok) return res;
       if (res.status === 429) { await new Promise(r => setTimeout(r, 10000)); continue; }

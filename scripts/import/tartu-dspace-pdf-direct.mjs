@@ -67,7 +67,7 @@ function slugify(t, n = 70) {
 async function uniqueSlug(db, base) { let s = base, i = 2; while (await db.collection('books').findOne({ slug: s }, { projection: { _id: 1 } })) s = `${base}-${i++}`; return s; }
 
 async function downloadTo(url, path) {
-  const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' } });
+  const res = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
   if (!res.ok) throw new Error(`download ${res.status}`);
   await pipeline(Readable.fromWeb(res.body), createWriteStream(path));
 }

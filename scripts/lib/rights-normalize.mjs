@@ -116,6 +116,12 @@ const GRANT_RULES = [
   [/publicdomain/i, 'public-domain'],
   [/free of known (copyright )?restrictions/i, 'public-domain'],
   [/no known copyright/i, 'public-domain'],
+  // Library of Congress / NIH "No Known Copyright" prose, carried on IA items: "The Library of Congress is
+  // unaware of any copyright restrictions for this item." It names copyright, so without this rule the
+  // copyright-only fallback read 282 of these as in-copyright (2026-10-30, #7771).
+  [/\b(?:unaware|not aware) of any (?:possible )?copyright(?: or other)? restrictions?\b/i, 'public-domain'],
+  [/\bknows? of no copyright restrictions?\b/i, 'public-domain'],
+  [/\b(?:out of|not in) copyright\b/i, 'public-domain'],
   [/\bNKC\b/, 'public-domain'],
   [/\bNoC-US\b/i, 'public-domain'],
 ];
@@ -134,6 +140,8 @@ const NOT_A_CREDIT = /^(goobi viewer|bnp master|pubblico|public domain|master)\.
 // A statement that qualifies its own grant — do not fold it to a class; keep it as terms_text.
 // BL: "Public Domain in most countries other than the UK."
 const QUALIFIED = /\b(other than|except|outside|in most countries|in some countries|may be|unless|depending)\b/i;
+// A notice that permits what the reader's own copyright law permits (BL's manifest boilerplate).
+const REUSE_NOTICE = /\bexcept as (?:otherwise )?permitted (?:under|by) (?:your|the|applicable) (?:national )?copyright law\b/i;
 
 function earliest(rules, text) {
   let best = null;
@@ -294,6 +302,17 @@ export function readManifestRights(manifest) {
       if (!text) continue;
       const t = stripHtml(text);
       if (isQualified(t) && classifyToken(t, { allowCopyrightOnly: false })) { cls = 'terms-of-use'; uri = null; from = `${f} (qualified statement)`; qualifiedText = t; break; }
+    }
+  }
+  // 5c. a reuse notice that defers to the reader's copyright law is the library's terms, not a claim that
+  //     the item is in copyright. BL puts this on every manifest, 1,442 public books (pre-1930 Tibetan
+  //     volumes among them) read as in-copyright before this (2026-10-30, #7771):
+  //     "Except as otherwise permitted under your national copyright law this material may not be copied or distributed further"
+  if (!cls) {
+    for (const [text, f] of prose) {
+      if (!text) continue;
+      const t = stripHtml(text);
+      if (REUSE_NOTICE.test(t)) { cls = 'terms-of-use'; uri = null; from = `${f} (reuse notice)`; qualifiedText = t; break; }
     }
   }
   // 6. copyright asserted, no licence anywhere

@@ -8,7 +8,10 @@ import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS, FIRST_READ_ROUTE_AT4 } from '../../scripts/eval/lane-judge-sampler.mjs';
+import { drawPages, weeklyBudget, exportScore, planPlanted, plantedBlock, PLANT_BAR, addEvidence, evidenceEntries, bookWeight, isoWeek, paceBlock, validRecord, scriptClass, rebuildInputs, PROMPT_TEMPLATE_SHA, EVIDENCE_PATH, BY_SCRIPT_PATH, LANES, FIRST_READ_CELLS, FIRST_READ_CORRECT_CELLS, FIRST_READ_ROUTE_AT4, judgeInput, promptTemplateSha, laneTask } from '../../scripts/eval/lane-judge-sampler.mjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — plain-JS module
+import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../../scripts/batch/siku-translate-lane.mjs';
 
 type Cand = { page_id: string; book_id: string; cell: string; route: string; weight: number };
 const cands = (books: number, pagesPerBook: number, cell = 'german-lite', route = 'lite>agy-flash-low'): Cand[] =>
@@ -354,5 +357,70 @@ describe('the first-read lane (#7701)', () => {
     expect([L.cell('Latin'), L.route, L.lang('la')]).toEqual(['latin-blank', 'pero>agy-flash-low-written', 'Latin']);
     expect(L.cell('German')).toBeNull();
     expect(L.reason.test('#7701 first-read arm-c lane: pero-ocr draft (Latin print, ...)')).toBe(true);
+  });
+});
+
+describe('the Siku translation lane (#7611, #5600)', () => {
+  const L = LANES.find((l: { lane: string }) => l.lane === 'siku-translate-5600');
+  it('is found by the stamps its writer leaves: the engine block\'s reason and the page_revisions row with that reason', () => {
+    expect(L.enabled).toBe(true);
+    expect(L.field).toBe('translation');
+    expect(L.stamp).toEqual({ 'translation.engine.run.reason': SIKU_REASON, 'translation.model': SIKU_MODEL, 'translation.engine.cli.name': 'agy' });
+    expect(SIKU_REASON).toBe('Siku lane #5600, Derek 2026-10-27');
+    expect(L.reason.test(SIKU_REASON)).toBe(true);
+    // another lane's reason, or this one with a suffix, is not this lane's write
+    expect(L.reason.test(`${SIKU_REASON} (rerun)`)).toBe(false);
+    expect(L.reason.test('#7558 correction lane')).toBe(false);
+  });
+  it('is a first translation: no served draft beside it, one route, the zh-siku-first-tr cell, judged as a translation', () => {
+    expect(L.unread).toBe(true);
+    expect(L.draft_route).toBeNull();
+    expect(L.route).toBe('agy-flash-low@1');
+    expect(L.task).toBe('translation');
+    expect(laneTask('siku-translate-5600')).toBe('translation');
+    expect(laneTask('agy-correct-lite-7558')).toBe('ocr');
+    expect([L.cell('Chinese'), L.cell('Classical Chinese'), L.cell('zh')]).toEqual(['zh-siku-first-tr', 'zh-siku-first-tr', 'zh-siku-first-tr']);
+    expect(L.cell('Latin')).toBeNull();
+    // Siku copies are manuscripts: the cell's evidence is not cut to print pages (inEvidence)
+    expect(L.hand).toBe('manuscript');
+  });
+  it('names a cell and route that rules.json has, with the sampler export as its evidence', () => {
+    const rules = JSON.parse(fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8'));
+    const cell = rules.cells.find((c: { id: string }) => c.id === 'zh-siku-first-tr');
+    expect(cell.current).toBe('agy-flash-low@1');
+    const r = cell.routes.find((x: { id: string }) => x.id === 'agy-flash-low@1');
+    expect(r.evidence).toEqual([{ score: EVIDENCE_PATH, cell: 'zh-siku-first-tr', route: 'agy-flash-low@1' }]);
+    // the #6567 stale-retranslation cell is a different task and keeps its own evidence
+    expect(rules.cells.find((c: { id: string }) => c.id === 'zh-siku-tr').routes.every((x: { evidence: { score: string }[] }) => x.evidence.every((e) => e.score !== EVIDENCE_PATH))).toBe(true);
+  });
+  it('shows the judge the English as the candidate and the page\'s OCR as the source; a wrong-page control another page\'s English', () => {
+    const d = { field: 'translation', task: 'translation' };
+    const p = { ocr: { data: '天地之道' }, translation: { data: 'The Way of Heaven and Earth' } };
+    const other = { ocr: { data: '其他' }, translation: { data: 'Another leaf entirely' } };
+    expect(judgeInput({ kind: 'item', d }, p, null, null)).toEqual({ text: 'The Way of Heaven and Earth', source: '天地之道' });
+    expect(judgeInput({ kind: 'wrong_page', d }, p, other, null)).toEqual({ text: 'Another leaf entirely', source: '天地之道' });
+    // an OCR lane is unchanged: the OCR is the candidate, no source
+    expect(judgeInput({ kind: 'item', d: { field: 'ocr' } }, p, null, null)).toEqual({ text: '天地之道' });
+    expect(judgeInput({ kind: 'draft', d: { field: 'ocr' } }, p, null, 'draft text')).toEqual({ text: 'draft text' });
+  });
+  it('records the translation template as its own instrument; the OCR pin does not move', () => {
+    expect(promptTemplateSha('ocr')).toBe(PROMPT_TEMPLATE_SHA);
+    expect(promptTemplateSha('translation')).not.toBe(PROMPT_TEMPLATE_SHA);
+    expect(promptTemplateSha('translation')).toBe('6c73d24dbbc9c9df');
+  });
+  it('exports the cell as a translation cell, every page counted (a manuscript cell), split by script type', () => {
+    let n = 0;
+    const rec = (kind: string, book: number, accept: boolean, wrong = false, script = 'manuscript') => ({
+      _id: `s${n++}`, kind, page_id: `sp${book}-${n}`, book_id: `sb${book}`, page_number: 1, cell: 'zh-siku-first-tr', route: 'agy-flash-low@1', lane: 'siku-translate-5600', lang: 'Classical Chinese', task: 'translation',
+      script_type: script, write: { revision_id: `srev${book}` }, judge: { model_reported: 'claude-opus-5-5' }, run_id: 'run1', judged_at: '2026-10-29T00:00:00Z', week: '2026-W44',
+      verdict: { accept, fidelity: accept ? 5 : 2, defects: wrong ? [{ class: 'T8', severity: 'wrong_text', quote: 'x' }] : [], reader_note: '' } });
+    const r = [rec('item', 0, true), rec('item', 1, true), rec('item', 2, false, true), rec('item', 3, true, false, 'print'), rec('wrong_page', 0, false), rec('wrong_page', 1, false)];
+    const s = exportScore(r);
+    const C = s.cells['zh-siku-first-tr'];
+    expect(C.task).toBe('translation');
+    expect(C.routes['agy-flash-low@1']).toMatchObject({ accept: '3/4', wrong_text_pages: '1/4', books: 4, evidence_rule: 'all pages' });
+    expect(Object.keys(C.drafts_conditioned)).toEqual([]);
+    expect(s.by_script_cells['zh-siku-first-tr|manuscript'].routes['agy-flash-low@1']).toMatchObject({ accept: '2/3' });
+    expect(s.by_script_cells['zh-siku-first-tr|print'].routes['agy-flash-low@1']).toMatchObject({ accept: '1/1' });
   });
 });
