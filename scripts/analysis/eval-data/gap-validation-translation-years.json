@@ -1,0 +1,18 @@
+{
+  "about": "Year of the FIRST English translation cited by the adjudicators, for every Renaissance-composed work the n=1000 validation (#2684) found translated (47 in the pipeline-translated stratum, 32 in the pipeline-gap stratum). Assigned by hand from the Gemini / Claude / tie-break prior citations (#7778): the earliest English rendering cited, the complete one where an abridgment came first. Read by gap-validation-counts.mjs for the pace estimate. Rows outside this file fall back to the earliest year in the cited prior.",
+  "assigned": "2026-10-30",
+  "years": {
+    "T0": 1933, "T20": 1656, "T22": 1534, "T23": 1576, "T35": 1936, "T43": 1648, "T44": 1648,
+    "T49": 1685, "T51": 1549, "T57": 1961, "T59": 1559, "T72": 1578, "T81": 1638, "T89": 1985,
+    "T91": 1560, "T96": 1976, "T100": 2020, "T103": 1535, "T107": 1548, "T109": 1993, "T111": 1976,
+    "T116": 1581, "T119": 1540, "T120": 1533, "T126": 1958, "T147": 2006, "T149": 1571, "T150": 2003,
+    "T156": 1871, "T172": 2020, "T175": 1658, "T176": 1614, "T178": 1584, "T183": 1933, "T190": 2004,
+    "T192": 1997, "T205": 1754, "T211": 1594, "T218": 2007, "T219": 1754, "T243": 1504, "T245": 1579,
+    "T259": 1548, "T268": 2002, "T278": 1592, "T291": 1741, "T294": 2017,
+    "G2": 1964, "G26": 1968, "G118": 1988, "G186": 1579, "G195": 1560, "G231": 2002, "G234": 1616,
+    "G249": 1567, "G256": 1623, "G281": 1990, "G338": 1713, "G362": 1613, "G368": 1615, "G369": 1565,
+    "G370": 1549, "G384": 1870, "G385": 1874, "G396": 1931, "G435": 1540, "G477": 1848, "G488": 1588,
+    "G501": 2021, "G522": 1555, "G562": 1686, "G564": 1658, "G614": 1532, "G637": 2009, "G640": 2007,
+    "G643": 2023, "G671": 1562, "G683": 1957, "G692": 1888
+  }
+}
