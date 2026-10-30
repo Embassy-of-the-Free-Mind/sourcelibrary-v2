@@ -5,6 +5,8 @@
 //
 //   node scripts/eval/translation-corpus-audit/build-packets.mjs --dir scripts/eval/results/translation-corpus-audit-2026-09-30 [--size 15] [--seed 7]
 // Writes <dir>/packets/packet-NN.jsonl and <dir>/packets/index.json (packet → item ids).
+// --images (wave 2, #5274): add "image" (the local JPEG path from <dir>/images.json, fetch-images.mjs) to every line, for
+// a judge prompt that carries IMAGE-ADDENDUM.md. Items without an image keep "image": null.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,6 +17,10 @@ const DIR = args.dir, SIZE = Number(args.size || 15), SEED = Number(args.seed ||
 if (!DIR) { console.error('--dir required'); process.exit(1); }
 
 const items = fs.readFileSync(path.join(DIR, 'items.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+if (args.images) {
+  const images = JSON.parse(fs.readFileSync(path.join(DIR, 'images.json'), 'utf8'));
+  for (const it of items) it.image = images[it.id]?.file || null;
+}
 const manifest = Object.fromEntries(fs.readFileSync(path.join(DIR, 'manifest.jsonl'), 'utf8').trim().split('\n').map((l) => { const m = JSON.parse(l); return [m.id, m]; }));
 
 resetSeed(SEED);

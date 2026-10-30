@@ -80,6 +80,8 @@ You are the routine. You start with a fresh checkout of the repo and no other co
 - The draw excludes page ends and non-text pages, so truncation reads zero by construction (#5055 measures it).
 - A text-only judge cannot see a wrong leaf (#4790): every rate is conditional on the served image being the
   transcribed leaf. When track tq1 lands a cheap leaf check, add it here as a stage-2 step.
+- From 2026-11 the draw samples every served model arm (`arm.mjs`, #5274 wave 2): before it, agy Flash, Opus-direct
+  and Argon pages read `other` and were excluded, so months up to 2026-10 cover lite and flash pages only.
 - If a month's controls fail, the judge changed (model, harness) or the packets did. Look at `report.json →
   controls.*.missed` before re-running anything.
 
