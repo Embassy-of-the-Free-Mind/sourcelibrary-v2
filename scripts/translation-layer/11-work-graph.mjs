@@ -140,6 +140,9 @@ async function main() {
     n.stems = surnameStems(orth(n.k === 'u' ? (extractSurname(n.author) || n.author) : n.author));
     const toks = [...new Set(distinctiveTokens(orth(n.title)))]
       .filter((t) => !n.stems.some((s) => s.length >= 3 && t.startsWith(s)));
+    // an external title that is the author's own name ("Albrecht Dürer" — a
+    // catalogue of his woodcuts) must not land through the given name
+    if (n.k === 'x') { const own = new Set(normTitle(orth(n.author)).split(' ')); n.toks = toks.filter((t) => !own.has(t)); continue; }
     n.toks = toks;
     if (n.k === 'u') for (const t of toks) df.set(t, (df.get(t) || 0) + 1);
   }
