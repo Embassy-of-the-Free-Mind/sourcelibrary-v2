@@ -3,7 +3,8 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import PageFigure from '@/components/articles/PageFigure';
-import { DesignCube, RunsChart, type RunPoint } from './Diagrams';
+import { DesignCube } from './Diagrams';
+import a6 from '@/data/ocr-read-surface-6740-a6.json';
 
 // Source of every figure here: scripts/eval/experiments/2026-10-30-read-surface-box-behnken-6740.md (the design, its
 // preregistration and four amendments, the runs and the confirmation), and for the German staged test the three #7701
@@ -16,7 +17,7 @@ const HERO_ALT =
   'Page 25 of Glauber’s Furni Novi Philosophici (1649), printed in Fraktur under the running head “Philosophischer Oefen”: a passage on Mercurius, gold and silver in the fire.';
 const TITLE = 'How we choose the cheapest way to read a page';
 const DESCRIPTION =
-  'Reading a page costs a model call. We tested pages per call, image size and thinking together, on German and Latin pages with typed editions, to find the cheapest setting that reads as well.';
+  'Reading a page uses part of a weekly allowance charged in tokens. We tested pages per call, image size and thinking together on German and Latin books with typed editions.';
 
 export const metadata: Metadata = withArticleMeta(SLUG, {
   title: `${TITLE} - Articles - Source Library`,
@@ -38,30 +39,26 @@ const GOTIBERIS = '/book/gotiberis-hoc-est-de-goticis-per-hispaniam-regibus-e-ca
 const IMG = '/articles/how-we-choose-the-cheapest-way-to-read-a-page';
 const RECORD = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/2026-10-30-read-surface-box-behnken-6740.md';
 
-// One dot per run: production-equivalent agy calls a page and the mean character error rate of the target pages
-// (unread targets take their one-a-call reading), from the experiment record's run table.
-const RUNS: RunPoint[] = [
-  { lang: 'German', label: 'live, run 1 (4 a call, image as served, low)', calls: 0.461, cer: 0.0096, live: true },
-  { lang: 'German', label: 'live, run 2', calls: 0.375, cer: 0.0092, live: true },
-  { lang: 'German', label: '1 a call, 1,600 px, low', calls: 1.0, cer: 0.0092 },
-  { lang: 'German', label: '4 a call, 1,024 px, low', calls: 0.521, cer: 0.009 },
-  { lang: 'German', label: '4 a call, 2,400 px, low', calls: 0.65, cer: 0.0089 },
-  { lang: 'German', label: '8 a call, 1,024 px, low', calls: 0.486, cer: 0.0088 },
-  { lang: 'German', label: '8 a call, 1,600 px, low', calls: 0.486, cer: 0.0094 },
-  { lang: 'German', label: '8 a call, 2,400 px, low', calls: 0.604, cer: 0.0088 },
-  { lang: 'German', label: '4 a call, 1,600 px, medium thinking', calls: 0.343, cer: 0.0086 },
-  { lang: 'German', label: '8 a call, 1,600 px, high thinking', calls: 0.446, cer: 0.005 },
-  { lang: 'Latin', label: 'live, run 1 (4 a call, image as served, low)', calls: 0.362, cer: 0.0215, live: true },
-  { lang: 'Latin', label: 'live, run 2', calls: 0.25, cer: 0.0177, live: true },
-  { lang: 'Latin', label: '1 a call, 1,600 px, low', calls: 1.059, cer: 0.0235 },
-  { lang: 'Latin', label: '4 a call, 1,024 px, low', calls: 0.388, cer: 0.0191 },
-  { lang: 'Latin', label: '4 a call, 2,400 px, low', calls: 0.422, cer: 0.0233 },
-  { lang: 'Latin', label: '8 a call, 1,024 px, low', calls: 0.241, cer: 0.0373 },
-  { lang: 'Latin', label: '8 a call, 1,600 px, low', calls: 0.174, cer: 0.0217, pick: true },
-  { lang: 'Latin', label: '8 a call, 2,400 px, low', calls: 0.275, cer: 0.0242 },
-  { lang: 'Latin', label: '4 a call, 1,600 px, medium thinking', calls: 0.306, cer: 0.0172 },
-  { lang: 'Latin', label: '8 a call, 1,600 px, high thinking', calls: 0.166, cer: 0.0158 },
-];
+// Every number in the results comes from src/data/ocr-read-surface-6740-a6.json, written by
+// scripts/eval/read-surface-6740/export-a6.mjs from the analysis of every run (Amendment 6 of the experiment file).
+type Cell = { name: string; live: boolean; delta_cer_pp: number; delta_lo: number; delta_hi: number; cer_pp: number; usd_per_1k_pages: number;
+  usd_per_1k_accepted: number; cpa_lo: number; cpa_hi: number; saving_vs_live: number; saving_lo: number; saving_hi: number; non_inferior: boolean };
+type Study = { books: number; cells: Cell[]; optimum: string | null };
+type Lang = { books: number; weighted: Study | null; unweighted: Study };
+type Conf = { n_drawn: number; planted: string; passes: boolean; routes: Record<string, { written: string; wrong_text: string; usd_1k_accepted: number }>; paired: { n: number; a_only: number; b_only: number; both: number } };
+type Backlog = { week_of_quota_at_least_usd: number; rows: { lang: string; pages: number; books: number; best: string; usd_live: number; usd_best: number; weeks_live: number; weeks_best: number }[] };
+const LANGS = a6.langs as unknown as Record<string, Lang>;
+const study = (l: string) => LANGS[l]?.weighted ?? LANGS[l]?.unweighted;
+const cell = (l: string, name: string) => study(l)?.cells.find((c) => c.name === name) as Cell;
+const live = (l: string) => study(l)?.cells.find((c) => c.live) as Cell;
+const CONF = (a6 as unknown as { confirmation_de: Conf }).confirmation_de;
+const BACKLOG = (a6 as unknown as { backlog: Backlog | null }).backlog;
+const CONF2 = (a6 as unknown as { confirmation_de2: { n_drawn: number; n: number; o_only: number; a_only: number; wt: number } }).confirmation_de2;
+const usd = (v: number) => `$${v < 20 ? v.toFixed(2) : Math.round(v).toLocaleString('en-GB')}`;
+const pp = (v: number) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(2)}`;
+const pct = (v: number) => `${Math.round(100 * Math.abs(v))} percent`;
+const times = (a: number, b: number) => `${(a / b).toFixed(1)} times`;
+const n = (v: number) => v.toLocaleString('en-GB');
 
 export default function CheapestReadPage() {
   return (
@@ -69,11 +66,11 @@ export default function CheapestReadPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="Every page we read costs a call to a model, and the calls are rationed. Three settings decide how many a page takes. We tested them together, against human-typed editions of the same pages."
+          subtitle="Every page we read uses part of a weekly allowance, charged by the tokens a model reads and writes. Two settings decide most of that cost. We tested them together, against human-typed editions of the same pages."
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">31 October 2026 &middot; 10 min read</p>
+          <p className="text-stone-400 text-sm mt-4">31 October 2026 &middot; 12 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -83,13 +80,43 @@ export default function CheapestReadPage() {
           Page 25 of Johann Rudolph Glauber&apos;s <Link href={`${GLAUBER}?page=25`}><em>Furni Novi Philosophici</em></Link>,
           printed in 1649, explains why Mercurius will not stay with gold and silver in the fire. Until a model reads
           it, the page is a picture: you can look at it, but you cannot search it, quote it or have it translated.
-          About 24,000 books on the site are pictures only, almost seven million pages. We read them through a
-          subscription that allows a fixed number of model calls a week, so the number of calls a page takes decides
-          how fast those books become readable. This note is about how we decide that number, and what we found when we
-          stopped testing one setting at a time.
+          About 24,000 books on the site are pictures only, several million pages. We read them through a
+          subscription whose weekly allowance is used up by the tokens each call consumes: the images and instructions the
+          model reads, and everything it writes back, including the reasoning it does before it answers. So the question
+          is not how many calls a page takes but how much of the allowance it uses, and how to spend less of it without
+          reading any worse. This note is about how we found out, and what we found when we stopped testing one setting at
+          a time.
         </p>
 
         <hr className="border-border-light my-12" />
+
+        <section className="mb-16">
+          <h2 className={H2}>What a page costs</h2>
+          <p className={P}>
+            We price each page by the model&apos;s own count of the tokens its calls used, at Google&apos;s list price for Gemini
+            Flash: a dollar figure that stands for a share of the allowance, not money we pay per page. Today we read 4
+            consecutive pages in one call with the model thinking as little as it can. That costs {usd(live('de').usd_per_1k_accepted)} for
+            every 1,000 German pages it reads acceptably. The chart below shows all nine combinations of pages per call and
+            thinking that we tested, by cost and by error rate. The error rate barely moves; the cost moves 25-fold.
+          </p>
+          <PageFigure src={`${IMG}/f7-efficiency-frontier.png`} alt="Two charts, German and Latin, of error rate against cost for nine reading settings. The error rate is nearly flat; cost ranges over a factor of about 25. Reading 8 pages a call with low thinking is the cheapest German setting." >
+            Error rate (character error rate against a typed edition) against cost a 1,000 accepted pages, for the nine
+            settings, German ({study('de')?.books} books) and Latin ({study('la')?.books} books), 31 October 2026. Orange: today&apos;s setting. Blue line:
+            settings no other beats on both.
+          </PageFigure>
+          <p className={P}>
+            For German, reading 8 pages a call at low thinking costs {usd(cell('de', '8 a call, low').usd_per_1k_accepted)} a 1,000 accepted pages,{' '}
+            {pct(cell('de', '8 a call, low').saving_vs_live)} less than today (95 percent interval {pct(cell('de', '8 a call, low').saving_lo)} to {pct(cell('de', '8 a call, low').saving_hi)}), with an
+            error rate {pp(cell('de', '8 a call, low').delta_cer_pp)} points from today&apos;s. Letting the model think more costs{' '}
+            {times(cell('de', '4 a call, high').usd_per_1k_accepted, live('de').usd_per_1k_accepted)} as much at high and changes the German error rate by less than a tenth of a point.
+            {BACKLOG && BACKLOG.rows.find((r) => r.lang === 'de') && (() => { const r = BACKLOG.rows.find((x) => x.lang === 'de')!; return <> The {n(r.books)} German books waiting to be read hold {n(r.pages)} pages. At today&apos;s
+            setting that is about {usd(r.usd_live)} of allowance; at 8 pages a call about {usd(r.usd_best)}.</>; })()}
+          </p>
+          {BACKLOG && <PageFigure src={`${IMG}/f8-backlog.png`} alt="Bar chart: the allowance needed to read the waiting German and Latin pages at today's setting and at the cheapest setting that reads as well." >
+            The allowance needed to give the waiting German and Latin pages a first reading, at today&apos;s setting and at the cheapest
+            setting that reads as well. Page counts measured 31 October 2026.
+          </PageFigure>}
+        </section>
 
         <section className="mb-16">
           <h2 className={H2}>Three settings</h2>
@@ -126,7 +153,7 @@ export default function CheapestReadPage() {
           <DesignCube />
           <p className={P}>
             We wrote the design down and committed it before the first call: the levels, the pages, what we would
-            measure, and the rule for choosing. The rule was to take the setting with the fewest calls a page whose
+            measure, and the rule for choosing. The rule was to take the setting with the fewest calls a page (later corrected to the least allowance a page) whose
             predicted error rate is no more than one percentage point above today&apos;s setting, at the edge of its 95
             percent interval, and only if it saves at least a tenth of the calls. Writing the rule first matters
             because there are many ways to read a surface after the fact, and some of them will always flatter a
@@ -196,36 +223,93 @@ export default function CheapestReadPage() {
         </section>
 
         <section className="mb-16">
+          <h2 className={H2}>Fewer settings, more books</h2>
+          <p className={P}>
+            After the first fifteen runs we changed the design, and wrote down why before reading another page. First, the
+            cost: we had been counting calls, and the allowance counts tokens. A model that thinks hard makes the same number
+            of calls but writes several thousand tokens of reasoning for every page, so the setting that looked cheapest by
+            calls was among the dearest by tokens. Second, the books: forty books a language are few to speak for thousands.
+            Third, we asked which settings were worth testing at all. From the runs already made we simulated how large an
+            effect the next test could detect, and dropped what fell below it: image size, whose effect on accuracy was a
+            few hundredths of a point, and a one-line hint in the instructions about the long s, which no earlier test of our
+            prompts had found to matter.
+          </p>
+          <p className={P}>
+            That left two settings, pages per call and thinking, at three levels each: nine combinations. Instead of reading
+            the same 40 books nine times, we read every book that has a typed edition we can match to our scan, {LANGS.de?.books} German
+            and {LANGS.la?.books} Latin, each at today&apos;s setting and at three of the other eight, so that every pair of settings
+            shares about the same number of books. Each comparison is still made within a book. The results were weighted so
+            that each era and typeface counts as much as it does among the books waiting to be read.
+          </p>
+        </section>
+
+        <section className="mb-16">
           <h2 className={H2}>What we found</h2>
-          <RunsChart runs={RUNS} />
+          <PageFigure src={`${IMG}/f4-feasible-cost.png`} alt="Contour maps of cost a 1,000 accepted pages over pages a call and thinking, German and Latin, with the settings whose error rate is not shown to be within one point of today's hatched." >
+            Cost a 1,000 accepted pages over pages per call and thinking. Hatched: settings whose error rate could be more than
+            1 point above today&apos;s (upper end of the 95 percent interval). Orange diamond: today. Blue star: the cheapest setting that reads as well.
+          </PageFigure>
           <p className={P}>
-            <strong>For German, nothing is cheaper than what we do now.</strong> Reading 8 pages a call should halve
-            the calls, but Gemini cuts off more of the longer replies with its content filter, and every page of a cut
-            call has to be read again one at a time. On our DTA pages, many of them from famous books such as{' '}
-            <Link href={`${FAUST}?page=130`}><em>Faust</em></Link>, those cuts are frequent. At 8 pages a call German
-            took 0.49 calls a page, against 0.46 for the live setting on the same account. (We read through two
-            subscription accounts, and the filter cut more replies on one than on the other, so each comparison here is
-            made on one account.) Image size made no difference to
-            accuracy that we could measure: at 1,024 pixels the error rate was within a tenth of a point of the
-            full-size image.
+            <strong>Thinking is the expensive setting.</strong> At 4 pages a call, medium thinking costs{' '}
+            {times(cell('de', '4 a call, medium').usd_per_1k_accepted, live('de').usd_per_1k_accepted)} as much as low for German and{' '}
+            {times(cell('la', '4 a call, medium').usd_per_1k_accepted, live('la').usd_per_1k_accepted)} for Latin. It buys nothing measurable in German. In Latin it
+            lowers the error rate by {Math.abs(cell('la', '4 a call, medium').delta_cer_pp).toFixed(1)} points ({pp(cell('la', '4 a call, medium').delta_lo)} to {pp(cell('la', '4 a call, medium').delta_hi)}), a real gain at
+            a price we do not pay for a first reading that a correction pass follows.
           </p>
           <p className={P}>
-            <strong>For Latin, 8 pages a call at 1,600 pixels reads as well and takes fewer calls.</strong> Latin is
-            cut far less often, so the larger calls keep their saving: 0.17 calls a page against 0.31 for the live
-            setting, with an error rate 0.2 points higher, inside the margin we set (95 percent interval from −0.35 to
-            +0.85 points). But not every 8-page setting is safe. At 1,024 pixels the Latin error rate rose by 1.8
-            points and one page carried wrong text: eight small images in one call is too much shrinking for a Latin
-            page set in small roman type, like the 1587 <Link href={`${GOTIBERIS}?page=20`}><em>Gotiberis</em></Link>.
-            The fitted surface had smoothed that run away, which is why a setting that was actually read must also pass
-            on its own measured difference.
+            <strong>For German, 8 pages a call is the cheapest setting that reads as well.</strong> Its error rate is{' '}
+            {pp(cell('de', '8 a call, low').delta_cer_pp)} points from today&apos;s (95 percent interval {pp(cell('de', '8 a call, low').delta_lo)} to {pp(cell('de', '8 a call, low').delta_hi)}), and it holds in every
+            century with enough books to tell. Our first run, which counted calls, had said the opposite: Gemini cuts off
+            more of the longer replies, and each cut call is paid for. Counted in tokens, the larger calls still win.
           </p>
           <p className={P}>
-            <strong>More thinking reads a little better and takes much longer.</strong> A 4-page call at medium
-            thinking took two to four minutes, against under a minute at low, close to the five-minute limit the
-            command line allows a call. Thinking cannot lower the number of calls directly, since the pages go in the
-            same calls. But at high thinking, 8 Latin pages a call came out 0.4 points more accurate than today&apos;s
-            setting and needed a third fewer calls than it on the same account: eight pages went into each call and
-            few of those replies were cut off. Each page took about twice as long. That is the next setting to try on real pages.
+            <strong>For Latin, today&apos;s setting stays.</strong> 8 pages a call would cost{' '}
+            {pct(cell('la', '8 a call, low').saving_vs_live)} less, but its error rate rises by {pp(cell('la', '8 a call, low').delta_cer_pp)} points ({pp(cell('la', '8 a call, low').delta_lo)} to{' '}
+            {pp(cell('la', '8 a call, low').delta_hi)}), over the one point we allowed. The cause is visible on the page: with eight images in one
+            call, the model reads the long s of a 17th-century Latin page as an f.
+          </p>
+          <PageFigure src={`${IMG}/f6-corners.jpg`} alt="Two scanned pages, one German in Fraktur and one Latin in roman type, each beside three readings of its first lines with the words that differ from the typed edition highlighted." wide>
+            The first lines of a German page (Rohr, <em>Einleitung zur Ceremoniel-Wissenschaft</em>, 1729, p. 697; Internet Archive,
+            public domain) and a Latin page (Rossi, <em>Pinacotheca imaginum</em>, p. 18; Internet Archive, CC0), read at three settings.
+            Highlighted: words that differ from the typed edition. The German readings differ in two or three spellings; at 8 pages a call the Latin reading turns long s into f.
+          </PageFigure>
+        </section>
+
+        <section className="mb-16">
+          <h2 className={H2}>Checking on real pages</h2>
+          <p className={P}>
+            The books with typed editions are not the books waiting to be read, and their texts are on the open web, where a
+            model may have seen them. So before anything changes, the German result was tried on {CONF?.n_drawn} pages from {CONF?.n_drawn} books
+            in the queue, drawn so that each era counts as it does there, read both ways as the reading lane would, and judged
+            against the page image by a second model that did not know which reading was which.
+          </p>
+          {CONF && <p className={P}>
+            Of the pages each setting would have written, today&apos;s setting was accepted on {CONF.routes['agy-flash-low@4']?.written} and 8 pages
+            a call on {CONF.routes['agy-flash-low@8']?.written}. Page for page, 8 pages a call was the better reading {CONF.paired.a_only} times and never the worse. It
+            cost {usd(CONF.routes['agy-flash-low@8']?.usd_1k_accepted)} a 1,000 accepted pages against {usd(CONF.routes['agy-flash-low@4']?.usd_1k_accepted)}. But
+            {' '}{CONF.routes['agy-flash-low@8']?.wrong_text.split('/')[0]} of its {CONF.routes['agy-flash-low@8']?.wrong_text.split('/')[1]} pages carried a word that changes the sense, such as <em>Menge</em>, a crowd,
+            where the page prints <em>Metzge</em>, a slaughter. Today&apos;s setting made the same misreadings on those pages, and
+            three more. The rule we wrote before the test set a fixed ceiling on such pages, and both settings are over it,
+            so {CONF.passes ? 'the change passes' : 'nothing changes yet'}. Whether the bar should be today&apos;s own error rate, as our newer rule
+            for comparing readings says, is a decision for a person, not for the test.
+          </p>}
+          <p className={P}>
+            Because that rule was written before we saw it fail both settings, we wrote a second one that compares 8 pages a
+            call with today&apos;s reading directly, and tried it on {CONF2.n_drawn} new books, drawn so that each era and typeface counts as it
+            does in the queue. Page for page, 8 pages a call was the better reading on {CONF2.o_only} books and the worse on {CONF2.a_only}. Both
+            settings misread a word that changes the sense on {CONF2.wt} of {CONF2.n} pages, and 8 pages a call cost half as much for each page it read
+            acceptably. It still did not pass: on one page the judge called a misread phrase &ldquo;invented&rdquo; for 8 pages a call and
+            &ldquo;added&rdquo; for today&apos;s setting, which made exactly the same misreading, and our rule allows no invented text at all.
+            Whether to read that word as written is, again, for a person to decide.
+          </p>
+          <p className={P}>
+            One finding stands on its own. On these hundred waiting pages, today&apos;s German reading put at least one
+            sense-changing misreading on 8 of the 70 pages it wrote (about 11 percent, between 6 and 21 at 95 percent confidence).
+            That is what readers of a first German reading should expect until a correction pass has been over it.
+          </p>
+          <p className={P}>
+            The accepted readings of those queue pages were not thrown away: the better one of each, where a page had one,
+            is now its text in the library.
           </p>
         </section>
 
@@ -240,29 +324,29 @@ export default function CheapestReadPage() {
             were at first scored as wrong text; they are now counted as pages not delivered, which is what they are.
             And on the second evening the first batch of runs at medium thinking timed out wholesale, because we had
             started too many calls at once on a machine that other jobs were also using. Those eight runs were thrown
-            away, their calls counted against the budget, and the runs made again with fewer calls at a time.
+            away, their calls counted against the budget, and the runs made again with fewer calls at a time. On the
+            last day two more. Our own image server had begun sending a recompressed copy of half the scans, so a run
+            would no longer have read the same bytes as the runs before it; the originals now come straight from storage
+            and are checked against the earlier runs byte for byte. And a daily limit on calls to the most expensive
+            thinking level, set after one job had once locked the allowance for days, stopped two runs halfway; they were
+            finished under a raised limit, written into the record.
           </p>
         </section>
 
         <section className="mb-16">
           <h2 className={H2}>What changes</h2>
           <p className={P}>
-            German keeps 4 pages a call. For Latin, the setting the design chose was then read on 30 new pages waiting
-            in the queue, against today&apos;s setting on the same pages, and judged against the page images by a second
-            model that did not know which reading was which. It did not hold. On the pages each reading would have
-            written, today&apos;s setting was accepted on 12 of 12 and the new one on 13 of 14, but one of those 14
-            carried wrong text: the page prints <em>indiga</em>, lacking, and the reading gave the commoner{' '}
-            <em>indigna</em>, unworthy, which changes the sense of the line. One wrong word in fourteen pages is over
-            the bar we set before the test, so nothing changes. It also showed how different the queue is from the
-            test pages: more than half the drawn Latin pages could not be written by either setting: many quote Greek
-            or Hebrew, which our checks hold back from this reader, and on others Gemini cut its reply short. The saving from 8 pages a call was
-            smaller there too, 16 percent fewer calls rather than half.
+            For now, nothing: both languages keep 4 pages a call at low thinking. The German change waits on a person&apos;s
+            decision about the bar, which two tests on real pages now put plainly. What has changed is how we count: a reading setting is now judged by the tokens it uses for each
+            page it reads acceptably, not by its calls, and every test reads as many books as have a typed edition rather
+            than a fixed forty.
           </p>
           <p className={P}>
-            The full record, with the preregistration, the four amendments, every run and the code, is in{' '}
-            <a href={RECORD}>the experiment file</a>. The method itself is the point of this note: decide the rule
-            before the data, read the same pages in every run, measure against a text people typed, start small and
-            grow only where the answer is still open, and write down every change of plan before it is used.
+            The full record, with the preregistration, the six amendments, every run, the code and the dataset, is in{' '}
+            <a href={RECORD}>the experiment file</a>. The method is the point of this note: decide the rule before the data,
+            read the same books under every setting you compare, measure against a text people typed, count the cost the way
+            it is charged, start small and grow only where the answer is still open, and write down every change of plan
+            before it is used.
           </p>
         </section>
       </article>
