@@ -140,6 +140,36 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-31 · Can the title page name the author of a live book with a placeholder author? (#7761, #7660 stage 4)
+<!-- PRIOR ART: scripts/audit/titlepage-vision-pilot.mjs (#7660 / PR #7682, the reader and its 9/12 pilot); #3982 / PR #4015 (the earlier title-page lane: reader → screens → refuter, 24 of 161 shipped). -->
+
+**Why.** 11,168 live books had no `author_id`; 3,780 of them carry a placeholder (Unknown, empty, [s.n.], Various), and the GND harvest names a usable author for almost none.
+
+**Target.** 4,188 live books, no `author_id`, author matching the pilot's placeholder pattern. Manuscript and non-codex sets left out (heidelberg 1,056, etcsl 381, bdrc 232, museumsofindia 99) and books with no manifest. 2,216 to read.
+
+**Reader.** `titlepage-vision-pilot.mjs --ids`, agy `gemini-3.8-flash-low` on the subscription, prompt `titlepage-vision-v2`, four front leaves from the manifest. Main box 8 shards; e-rara (1,011) on gex45 because e-rara refuses the main box. Every read is kept (candidate-reads). 1,759 read. 457 refused at source (Harvard 277, SLUB 99, Gallica 33, IA 35 …) are being re-read from our own archived copies (`images.sourcelibrary.org/archived/<book>/<n>.jpg`); all 457 have them.
+
+| read outcome | books |
+|---|---:|
+| title page, no author printed (or no title page) | 1,638 |
+| names an author or praeses | 89 |
+| names an editor only | 5 |
+| unparsed | 27 |
+
+**By eye, before screens.** 20 of the author proposals drawn at random, 6 title pages opened, the rest judged from the quoted words: 10 right, 5 initials or placeholder, 3 wrong (a respondent, a pseudonymous satire, Solomon for *Proverbs*), 2 corporate bodies.
+
+**Screens** (`screen.mjs`, deterministic): 89 → 53. Out: initials 12, corporate bodies 8 (deferred — the link backfill is persons only), biblical 7, pseudonym or pseudo-ancient 4, praeses forename only 3, N. N. 1, several names 1.
+
+**Refuter.** `claude -p --model sonnet`, Read tool only, sealed folder with the same four leaves, told to refute unless the name is printed as the writer. 27 keep, 26 refute. The refutes read right: *Problemata Aristotelis* compilations (6), respondents and candidates, a donor, a memorial, collections from various authors, a prayer anthology.
+
+**Review of every kept reason.** Dropped 3: Estienne (the printer), Albertus Magnus for *Compendium theologicae veritatis* (Hugh Ripelin), Vyāsa for a Purana. Overrode 1 refute: the second copy of Brandmüller's 1658 Basel rector's programme, whose twin the refuter kept after reading the first-person dedication.
+
+**Written 2026-10-31.** 25 books, run `titlepage-authors-7761`: 25 `sweep_log` rows, 38 `field_provenance` rows, `books_catalog` mirrored, 25 revalidated. 13 linked to an existing author doc; 12 names have none yet. Backup and every verdict in ops `backups/authors-7761-live/`.
+
+**Spot check, by eye, 2026-10-31.** 10 of the 25 written title pages opened, chosen for the risky roles (praeses, candidate, compiler, editor, traditional attribution): 10/10 right. Oecumenius is the catalogue attribution; the Pauline commentary is pseudo-Oecumenius in modern scholarship.
+
+**Not established.** The other 15 are judged by refuter + review, not by eye; no held-out set. The 457 re-reads from archived copies are not yet screened.
+
 ## 2026-10-31 · Fraktur: correct the first read or not, correct or re-read the stored text, and diplomatic accuracy against DTA (#7835)
 
 PRIOR ART:
@@ -1113,6 +1143,8 @@ The 40-author pilot (the largest normal blocks) was worse, 6/20, with the Suyuti
 **Titles, 2026-10-30.** For the 906 merged works whose books did not already all carry the proposer's title, `title-judge.mjs` (Sonnet CLI) chose between CURRENT and PROPOSED or corrected both: proposed 652, current 32, corrected 222. Of the 222, 166 are found in our own records and 56 are not. I read all 56: they are spelling normalisations or the original-language title (Dürer *Vier Bücher von menschlicher Proportion*, Bodin *De la démonomanie des sorciers*), and one I pinned by hand (Vesalius → *Epitome*). `retitle-verified-work-merges.mjs` wrote 2,383 books (216 hidden) in two runs, 1,814 + 569, after the first died partway. Ids and slugs are unchanged. Live check: https://sourcelibrary.org/work/l-architettura-di-leonbatista-alberti now titles *De re aedificatoria: 11 editions*. Backups are in ops `backups/work-merges-7761/`.
 
 **Not established.** The 17,795 live books with no `author_id` are outside this lane.
+
+**Re-run on changed blocks, 2026-10-31.** The author-link work after the first pass gave 6,006 authors new links; 609 of their blocks hold two or more work items (6,191 books, 8 mega). `llm-verify-work-merges.mjs --authors=<file>` (new flag) proposed 274 + 65 HIGH groups; Sonnet accepted **167/339 (49.3% [44.0–54.6])**: volume or part 34, container 72, different work 38, unsure 28. The lower rate fits blocks newly built from looser author links. 20 accepted groups read by hand: 20/20 right (Xuanzang *Da Tang Xiyu ji* in Chinese, French and English; Arrian's *Anabasis*; Olivetan's French Bible 1535–1563; Ammonius on *De interpretatione*, Greek and Latin; Hartlieb's *Alexander*, the 1514 print and Cod. Pal. germ. 88). Applied: 218 books moved (9 hidden), 194 retired ids kept as aliases, `books_catalog` synced. The 10-29 frame now misses **42/291 = 14.4% [10.9–18.9]** (was 46/291 = 15.8%). Backups in ops `backups/work-merges-7761/`.
 
 ## 2026-10-30 · What share of 1400–1700 works in each vernacular has ever been published in English, and how many are scanned? (#7751)
 <!-- PRIOR ART: scripts/analysis/gap-validation-sample.mjs, gap-validation-cli-adjudicate.mjs, gap-validation-estimate.mjs (the June Latin study, n=1000, #2684: its prompt, verdict schema and binary rule are reused); scripts/translation-layer/09-scan-coverage.mjs (the Latin cluster scan matcher, generalised here); the #7751 over-merge sample (40 Latin works, by hand). -->
