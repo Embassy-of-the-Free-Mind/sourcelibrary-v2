@@ -46,7 +46,7 @@ try {
     { $group: { _id: { book: '$book_id', v: '$translation.prompt_version' }, n: { $sum: 1 } } },
   ], { maxTimeMS: 1_800_000, allowDiskUse: true }).toArray();
   // Candidates: the prefilter is a superset of the rule, so text leaves Atlas only for pages that may match.
-  const cand = await pages.find({ ...window, 'translation.data': LIFE_PHRASE_PREFILTER },
+  const cand = await pages.find({ ...window, 'translation.data': { $regex: LIFE_PHRASE_PREFILTER } },
     { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'translation.prompt_version': 1, 'ocr.data': 1 }, maxTimeMS: 1_800_000 }).toArray();
 
   const bookIds = [...new Set([...written.map((w) => w._id.book), ...cand.map((p) => p.book_id)])];
