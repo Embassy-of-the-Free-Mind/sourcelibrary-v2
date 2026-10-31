@@ -61,7 +61,9 @@ function main() {
       const ids = JSON.parse(fs.readFileSync(path.join(dir, 'page-ids.json'), 'utf8'));
       const exits = jsonl(path.join(dir, 'exits.jsonl'));
       const unread = new Map(jsonl(path.join(dir, 'not-read.jsonl')).map((r) => [r.page_id, r.from]));
-      const blockCalls = jsonl(path.join(dir, 'calls.jsonl'));
+      // Calls this job killed by mistake (killed-calls.jsonl) are not a cost of the setting: dropped.
+    const killed = new Set(jsonl(path.join(WORK, 'killed-calls.jsonl')).map((k) => `${k.call_id}|${k.ts}`));
+    const blockCalls = jsonl(path.join(dir, 'calls.jsonl')).filter((c) => !killed.has(`${c.call_id}|${c.ts}`));
       let calls = 0, secs = 0, read = 0, missing = 0;
       const tok = { input: 0, output: 0, thinking: 0 };
       const addUsage = (u) => { for (const x of u || []) if (x) { tok.input += x.input || 0; tok.output += x.output || 0; tok.thinking += x.thinking || 0; } };
