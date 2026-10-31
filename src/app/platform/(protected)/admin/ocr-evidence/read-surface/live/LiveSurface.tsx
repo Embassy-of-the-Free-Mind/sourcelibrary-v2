@@ -11,6 +11,7 @@ import {
   optimum, predictAll, qnorm, quantile, regionOf, termsFor, toObs,
   type Base, type FitSet, type ModelKind, type Point, type Response,
 } from './rsm';
+import SurfaceLead from './SurfaceLead';
 import { Contour, DesignView, EDGE_RANGE, RampLegend, Scatter, Tip, fmtPct, type DesignPoint, type ScatterPt } from './LiveCharts';
 
 const POLL_MS = 30_000;
@@ -69,7 +70,22 @@ export default function LiveSurface({ initial }: { initial: unknown }) {
       </div>
     );
   }
-  return <Instrument doc={shape.doc} polledAt={polledAt} pollErr={pollErr} />;
+  return (
+    <>
+      <SurfaceLead doc={shape.doc} />
+      <section className="mt-10 border-t border-[#30363d] pt-6">
+        <h2 className="text-xl font-semibold text-[#f0f6fc]">Fit it yourself</h2>
+        <p className="mt-2 max-w-3xl">
+          Four knobs set how the agy first read works: how many pages go into one call, how large the page image is (its long
+          edge in pixels), how much the model thinks (low, medium, high), and an optional line added to the prompt. A response
+          surface fits a smooth curved model through a few well-placed runs and reads the best point off it, instead of trying
+          every combination. This page refits that surface in your browser each time a run lands and each time you change a
+          control. The surface only points; the confirmation run on fresh queue pages decides whether anything switches.
+        </p>
+      </section>
+      <Instrument doc={shape.doc} polledAt={polledAt} pollErr={pollErr} />
+    </>
+  );
 }
 
 function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string | null; pollErr: string | null }) {
