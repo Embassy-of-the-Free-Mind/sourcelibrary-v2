@@ -93,6 +93,15 @@ export const GROUPS = [
 /** The roster row for one engine id ("<engine>|kraken" is the same engine on another input), or null: no rule. */
 export function availabilityOf(engine) {
   const id = engine.split('|')[0];
+  // A chained route (#6740), "<draft>><corrector>": runnable when we can run the corrector and the draft is either
+  // runnable for new work or what production already runs on its lanes (the drafts it corrects already exist).
+  if (id.includes('>')) {
+    const [d, c] = id.split('>').map(availabilityOf);
+    if (!d || !c) return null;
+    const ok = (d.available || !!d.in_use_route) && c.available;
+    return row('chain', 'subscription', `the draft as ${d.in_use_route ? 'production stores it' : d.how}, corrected by ${c.how}`, ok,
+      ok ? null : `its ${c.available ? 'draft engine' : 'corrector'} is not runnable today: ${(c.available ? d : c).why_not}`, c.available ? d : c);
+  }
   if (/^tesseract/.test(id)) return row('banned', 'own', 'Tesseract on our own server', false, 'banned: Tesseract is not used, as an engine or as a reference', SRC.tesseract);
   if (/^claude-/.test(id)) {
     // the translation rounds ran Claude as subagents ("claude-sonnet-5.5", "claude-opus"); "+claude-cli" is the CLI;
