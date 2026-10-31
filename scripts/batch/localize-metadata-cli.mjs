@@ -5,26 +5,27 @@
 // sweep_log rows). scripts/lib/agy-cli.mjs + scripts/batch/cli-translate.mjs — the subscription CLI call, the tool
 // gate, the sentinels and the stop-on-quota rule. None of them writes summaries and chapters for every live book at $0.
 /**
- * Spanish summaries and chapter titles for live books, through the Gemini subscription CLI (`agy -p`), many books per
- * call (#7496). Read side: the Spanish book page (/es/book/<slug>) shows `books.localized.es.summary` and
+ * Spanish (--lang=es, the default) or Simplified Chinese (--lang=zh) summaries and chapter titles for live books, through
+ * the Gemini subscription CLI (`agy -p`), many books per call (#7496). Read side: the book page (/es/book/<slug>,
+ * /zh/book/<slug>) shows `books.localized.<lang>.summary` and
  * `.chapters` (aligned by index with `books.chapters[]`, '' = fall back to the English title), else the English text
  * labelled as English.
  *
- *   count
- *   run   --field=summary|chapters [--limit=N] [--apply] [--concurrency=4] [--out=DIR] [--book-ids=a,b]
- *         Dry run unless --apply: the calls are made either way, and every result (English beside Spanish, verdict) is
- *         appended to DIR/<field>-results.jsonl so a dry run can be read and then written without calling again.
- *   apply --field=summary|chapters --from=DIR/<field>-results.jsonl
+ *   count [--lang=es|zh]
+ *   run   --field=summary|chapters [--lang=es|zh] [--pack-chars=N] [--limit=N] [--apply] [--concurrency=4] [--out=DIR] [--book-ids=a,b]
+ *         Dry run unless --apply: the calls are made either way, and every result (English beside the translation, verdict) is
+ *         appended to DIR/<lang>-<field>-results.jsonl so a dry run can be read and then written without calling again.
+ *   apply --field=summary|chapters --from=DIR/<lang>-<field>-results.jsonl
  *         Writes the accepted results of an earlier run (a dry run read by eye). Re-checks that the English source is
  *         unchanged and the field still missing.
  *
  * Selection: visible, pages_count > 0, an English source (summary: index.bookSummary.brief, else `summary` or
- * `summary.data`; chapters: `titleEn || title` per entry), the Spanish field missing, the book not written in Spanish;
+ * `summary.data`; chapters: `titleEn || title` per entry), the field missing in <lang>, the book not written in <lang>;
  * most-read first. A write filters on the field still being missing, so an existing gloss is never overwritten and the
- * missing-field filter is the resume point. A book rejected twice (DIR/<field>-rejected.jsonl) is not asked again.
+ * missing-field filter is the resume point. A book rejected twice (DIR/<lang>-<field>-rejected.jsonl) is not asked again.
  *
- * Calls: one per pack of books (about 12K characters of English for summaries, 24K for chapter lists, at most 40 books). Each call is counted in
- * DIR/calls.jsonl; the run stops at --max-calls-day (UTC day, default 1200) or --max-calls-total (default 2500), and on
+ * Calls: one per pack of books (about 12K characters of English for summaries, 16K for chapter lists, at most 30 books). Each call is counted in
+ * DIR/calls.jsonl; the run stops at --max-calls-day (UTC day, default 1200) or --max-calls-total (default 4500, every language together: one ledger per DIR), and on
  * the first quota reply (exit 3), never retrying into it. Model: agy-guard's default, gemini-3.8-flash-low.
  *
  *   node --env-file=.env.production.local scripts/batch/localize-metadata-cli.mjs run --field=summary --limit=30 --out=$JOB_SCRATCH
@@ -44,28 +45,53 @@ const FIELD = arg('field');
 const APPLY = has('apply');
 const OUT = path.resolve(arg('out', process.env.JOB_SCRATCH || path.join(os.tmpdir(), 'localize-metadata-cli')));
 const MODEL = 'gemini-3.8-flash-low';
-const LANG = 'es';
-const LANGUAGE = 'Spanish';
-const NATIVE = /^\s*(spanish|espa(?:ñ|n)ol|castilian|castellano)\s*$/i; // localize-titles-batch.mjs NATIVE
+const LANG = arg('lang', 'es');
+// Per language: its name, the `books.language` values whose readers read the original (skipped), and the examples the
+// prompts give. es: localize-titles-batch.mjs NATIVE. zh: src/lib/localized.ts NATIVE_EDITION_LANGUAGE.zh, plus
+// Classical/Literary Chinese, whose readers on /zh read the original too (#7496).
+const LANGS = {
+  es: {
+    name: 'Spanish',
+    native: /^\s*(spanish|espa(?:ñ|n)ol|castilian|castellano)\s*$/i,
+    names: 'Iamblichus → Jámblico, Paracelsus → Paracelso, Hermes Trismegistus → Hermes Trismegisto, Albertus Magnus → Alberto Magno',
+    style: 'Standard, neutral Spanish with correct accents and Spanish quotation marks or the source\'s.',
+    contents: '"Chapter IV" → "Capítulo IV", "Book II" → "Libro II", "Part 1" → "Parte 1", "Preface" → "Prefacio", "Index" → "Índice"',
+  },
+  zh: {
+    name: 'Simplified Chinese',
+    native: /^\s*((classical|literary|traditional|simplified)\s+)?(chinese|zho|chi|mandarin|cmn)\s*$/i,
+    names: 'Iamblichus → 杨布里科斯, Paracelsus → 帕拉塞尔苏斯, Hermes Trismegistus → 赫尔墨斯·特里斯墨吉斯忒斯, Albertus Magnus → 大阿尔伯特, Robert Fludd → 罗伯特·弗拉德',
+    style: 'Standard written Simplified Chinese (简体中文), full-width punctuation; a translated book title in 《》.',
+    contents: '"Chapter IV" → "第四章", "Book II" → "第二卷", "Part 1" → "第一部分", "Preface" → "序言", "Index" → "索引"',
+  },
+};
+if (!LANGS[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGS).join(', ')}`); process.exit(2); }
+const L = LANGS[LANG];
+const LANGUAGE = L.name;
+const NATIVE = L.native;
 const SWEEP = `localize-metadata-cli-${LANG}`;
-const PROMPT_VERSION = { summary: 'es-summary-cli-v1', chapters: 'es-chapters-cli-v1' };
+const PROMPT_VERSION = { summary: `${LANG}-summary-cli-v1`, chapters: `${LANG}-chapters-cli-v1` };
 const MAX_CALLS_DAY = Number(arg('max-calls-day', 1200));
-const MAX_CALLS_TOTAL = Number(arg('max-calls-total', 2500));
+// One ledger for every language run from the same --out: Derek's cap is 4,500 calls for es + zh together (#7496).
+const MAX_CALLS_TOTAL = Number(arg('max-calls-total', 4500));
 const CONCURRENCY = Number(arg('concurrency', 4));
-const PACK_CHARS = { summary: 12000, chapters: 24000 };
-const PACK_BOOKS = 40;
+// 24K-character chapter packs came back cut before <<<END>>> on 36 of 302 calls (2026-10-27): 16K is the size the gate passed.
+const PACK_CHARS = { summary: 12000, chapters: 16000 };
+// Even at 16K, 93 of 689 es chapter calls came back cut (2026-10-28); a retry pass over what is left uses --pack-chars=8000.
+if (arg('pack-chars')) PACK_CHARS[FIELD] = Number(arg('pack-chars'));
+const PACK_BOOKS = 30;
 const CHAPTER_PART = 250; // a book with more entries is sent in parts of this many, and written only when every part passes
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const JOB = process.env.CLI_JOB_NAME || 'localize-metadata-cli-7496';
 
 if (!['run', 'apply', 'count'].includes(CMD) || (CMD !== 'count' && !['summary', 'chapters'].includes(FIELD))) {
-  console.error('usage: localize-metadata-cli.mjs count | run --field=summary|chapters [--limit=N] [--apply] | apply --field=… --from=FILE');
+  console.error('usage: localize-metadata-cli.mjs count | run --field=summary|chapters [--lang=es|zh] [--limit=N] [--apply] | apply --field=… --from=FILE');
   process.exit(2);
 }
 fs.mkdirSync(OUT, { recursive: true });
 const LEDGER = path.join(OUT, 'calls.jsonl');
-const RESULTS = path.join(OUT, `${FIELD}-results.jsonl`);
-const REJECTED = path.join(OUT, `${FIELD}-rejected.jsonl`);
+const RESULTS = path.join(OUT, `${LANG}-${FIELD}-results.jsonl`);
+const REJECTED = path.join(OUT, `${LANG}-${FIELD}-rejected.jsonl`);
 
 const readJsonl = (f) => { try { return fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)); } catch { return []; } };
 function callsUsed() {
@@ -88,16 +114,16 @@ export function chapterSource(b) {
 const SUMMARY_HEAD = `You translate short catalogue summaries of historical books into ${LANGUAGE}, for a digital library of primary sources.
 Rules:
 - Translate each summary faithfully, sentence by sentence: same length and same register (editorial, concise). Do not add, drop, soften or embellish anything; no marketing.
-- Proper names in their customary ${LANGUAGE} form where one exists (Iamblichus → Jámblico, Paracelsus → Paracelso, Hermes Trismegistus → Hermes Trismegisto, Albertus Magnus → Alberto Magno); otherwise keep the name as written.
+- Proper names in their customary ${LANGUAGE} form where one exists (${L.names}); otherwise keep the name as written.
 - A book title in its original language stays as written; an English rendering of a title (often in parentheses) is translated into ${LANGUAGE}.
-- Standard, neutral ${LANGUAGE} with correct accents and ${LANGUAGE} quotation marks or the source's.
+- ${L.style}
 The input is a JSON object mapping a book id to its English summary. Return ONE JSON object with exactly the same keys, each mapped to its ${LANGUAGE} translation (a plain string).`;
 
 const CHAPTERS_HEAD = `You translate table-of-contents entries of historical books into ${LANGUAGE}, for a digital library of primary sources.
 Rules:
 - Each list is one book's contents, in order. Return the same number of entries in the same order: never merge, split, drop or reorder entries. An empty string stays an empty string.
-- Translate the meaning, concisely, as a ${LANGUAGE} edition would print its contents: "Chapter IV" → "Capítulo IV", "Book II" → "Libro II", "Part 1" → "Parte 1", "Preface" → "Prefacio", "Index" → "Índice". Keep numerals, folio and page numbers exactly as written.
-- Proper names in their customary ${LANGUAGE} form where one exists (Iamblichus → Jámblico, Paracelsus → Paracelso); a Latin or other foreign term used as a name or title stays as written.
+- Translate the meaning, concisely, as a ${LANGUAGE} edition would print its contents: ${L.contents}. Keep numerals, folio and page numbers exactly as written.
+- Proper names in their customary ${LANGUAGE} form where one exists (${L.names}); a Latin or other foreign term used as a name or title stays as written.
 - Do not add explanations, quotation marks or numbering that is not there.
 The input is a JSON object mapping a key to a list of English entries. Return ONE JSON object with exactly the same keys, each mapped to a JSON array of ${LANGUAGE} strings of the same length.`;
 
@@ -114,15 +140,25 @@ function englishShare(text) {
   return { en: w.filter((x) => EN_WORDS.has(x)).length / w.length, es: w.filter((x) => ES_WORDS.has(x)).length / w.length };
 }
 
-/** null when the Spanish summary may be written, else why not. */
-export function summaryProblem(en, es, title = '') {
+const CJK = /[\u3400-\u9fff]/g;
+/** Share of a text's letters that are CJK ideographs (Latin letters count against it). */
+function cjkShare(text) {
+  const c = (String(text).match(CJK) || []).length;
+  const l = (String(text).match(/[A-Za-z]/g) || []).length;
+  return c + l ? c / (c + l / 4) : 0; // ~4 Latin letters to a word, one ideograph to a syllable
+}
+
+/** null when the summary in LANG may be written, else why not. */
+export function summaryProblem(en, es, title = '', lang = 'es') {
   if (typeof es !== 'string' || !es.trim()) return 'empty';
   const t = es.trim();
   // "[Arabic] Alphabetum arabicum …" opens many summaries; JSON opens with {" or [".
   if (/<<<|```|^\s*(\{\s*"|\[\s*")/.test(t)) return 'wrapper or JSON left in the text';
   if (t === en.trim()) return 'identical to the English';
   const r = t.length / en.length;
-  if (r < 0.75 || r > 1.8) return `length ${t.length} vs English ${en.length}`;
+  // Chinese runs about a third of the English in characters.
+  const [lo, hi] = lang === 'zh' ? [0.15, 0.9] : [0.75, 1.8];
+  if (r < lo || r > hi) return `length ${t.length} vs English ${en.length}`;
   // A title in English is kept as written ("The pictorial key to the tarot … es un manual"): not English prose. It is
   // the book's title, or whatever opening the Spanish copies verbatim from the English.
   const tt = String(title || '').trim();
@@ -130,13 +166,14 @@ export function summaryProblem(en, es, title = '') {
   let k = 0;
   while (k < en.length && k < body.length && en[k] === body[k]) k++;
   if (k >= 15) body = body.slice(k);
+  if (lang === 'zh') { const z = cjkShare(body); return z < 0.6 ? `does not read as Chinese (cjk ${z.toFixed(2)})` : null; }
   const s = englishShare(body);
-  if (s.en > 0.06 || s.es < 0.12) return `does not read as Spanish (en ${s.en.toFixed(2)}, es ${s.es.toFixed(2)})`;
+  if (s.en > 0.06 || s.es < 0.12) return `does not read as ${LANGUAGE} (en ${s.en.toFixed(2)}, es ${s.es.toFixed(2)})`;
   return null;
 }
 
-/** null when the Spanish entries may be written, else why not. */
-export function chaptersProblem(en, es) {
+/** null when the entries in LANG may be written, else why not. */
+export function chaptersProblem(en, es, lang = 'es') {
   if (!Array.isArray(es)) return 'not an array';
   if (es.length !== en.length) return `${es.length} entries for ${en.length}`;
   if (!es.every((x) => typeof x === 'string')) return 'non-string entry';
@@ -150,6 +187,11 @@ export function chaptersProblem(en, es) {
     if (a.split(/\s+/).length >= 4) { wordy++; if (a.toLowerCase() === b.toLowerCase()) same++; }
   }
   if (wordy >= 3 && same / wordy > 0.3) return `${same} of ${wordy} entries left in English`;
+  if (lang === 'zh') {
+    // A wordy English entry must come back with ideographs in it.
+    const bare = en.filter((a, i) => a && a.split(/\s+/).length >= 4 && !/[\u3400-\u9fff]/.test(es[i])).length;
+    return wordy >= 3 && bare / wordy > 0.3 ? `${bare} of ${wordy} entries have no Chinese` : null;
+  }
   const s = englishShare(es.join(' . '));
   if (s.en > 0.08) return `reads as English (en ${s.en.toFixed(2)})`;
   return null;
@@ -192,10 +234,10 @@ if (CMD === 'count') {
   for (const field of ['summary', 'chapters']) {
     const q = { ...LIVE, ...SOURCE_FILTER[field], language: { $not: NATIVE } };
     const [eligible, done] = await Promise.all([books.countDocuments(q), books.countDocuments({ ...q, [`localized.${LANG}.${field}`]: { $exists: true } })]);
-    const rej = new Set(readJsonl(path.join(OUT, `${field}-rejected.jsonl`)).map((r) => r.id));
-    console.log(`${field}: ${eligible} eligible (not Spanish), ${done} have localized.${LANG}.${field}, ${eligible - done} to go; ${rej.size} rejected at least once`);
+    const rej = new Set(readJsonl(path.join(OUT, `${LANG}-${field}-rejected.jsonl`)).map((r) => r.id));
+    console.log(`${field}: ${eligible} eligible (not ${LANGUAGE}), ${done} have localized.${LANG}.${field}, ${eligible - done} to go; ${rej.size} rejected at least once`);
   }
-  const u = callsUsed();
+  const u = callsUsed(); // every language together
   console.log(`calls: ${u.today} today (cap ${MAX_CALLS_DAY}), ${u.total} total (cap ${MAX_CALLS_TOTAL}) in ${LEDGER}`);
   await client.close();
   process.exit(0);
@@ -274,7 +316,7 @@ async function doPack(pack) {
     model: MODEL, task: 'translate', attempts: 2,
     onCall: (c) => {
       tally.calls++;
-      const rec = { ts: new Date().toISOString(), job: JOB, kind: `localize-${FIELD}`, model: MODEL, seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, books: pack.length, usage: c.usage };
+      const rec = { ts: new Date().toISOString(), job: JOB, kind: `localize-${LANG}-${FIELD}`, model: MODEL, seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, books: pack.length, usage: c.usage };
       fs.appendFileSync(LEDGER, JSON.stringify(rec) + '\n');
       try { fs.appendFileSync(CALL_LOG, JSON.stringify(rec) + '\n'); } catch { /* the box has the log dir; a laptop need not */ }
     },
@@ -284,8 +326,8 @@ async function doPack(pack) {
   if (!obj) { tally.failed_calls++; console.log(`  call failed (${r.cls || r.problem || 'reply is not a JSON object'}): ${pack.length} units left for the next run`); return; }
   for (const u of pack) {
     const es = obj[u.key];
-    if (FIELD === 'summary') { await handleBook(u.book, typeof es === 'string' ? es.trim() : es, es === undefined ? 'missing from the reply' : summaryProblem(u.book.src, es, u.book.title)); continue; }
-    const problem = es === undefined ? 'missing from the reply' : chaptersProblem(u.input, es);
+    if (FIELD === 'summary') { await handleBook(u.book, typeof es === 'string' ? es.trim() : es, es === undefined ? 'missing from the reply' : summaryProblem(u.book.src, es, u.book.title, LANG)); continue; }
+    const problem = es === undefined ? 'missing from the reply' : chaptersProblem(u.input, es, LANG);
     const clean = Array.isArray(es) ? es.map((x) => (typeof x === 'string' ? x.trim() : x)) : es;
     if (u.parts === 1) { await handleBook(u.book, clean, problem); continue; }
     const st = pendingParts.get(u.book.id) || { got: [], problems: [], seen: 0 };
