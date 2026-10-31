@@ -273,6 +273,10 @@ for lang, d in D.groupby('lang'):
             cs = cell_stats(g, False)
             R['by_century'][c] = {'books': int(g.book.nunique()), 'non_inferior': [x['name'] for x in cs['cells'] if x['non_inferior']], 'optimum': cs['optimum']}
         else: R['by_century'][c] = {'books': int(g.book.nunique()), 'too_few': True}
+    # Books a cell in the incomplete-block screen (for F1), and the Box-Behnken runs made.
+    R['ib_books'] = {cellname(int(x1), int(x3)): int(g.book.nunique()) for (x1, x3), g in d[(d.src == 'ib') & ~d.live].groupby(['x1', 'x3'])}
+    R['ib_books'][cellname(0, -1)] = int(d[(d.src == 'ib') & d.live].book.nunique())
+    R['bbd_runs'] = sorted(d[d.src == 'bbd'].run.unique().tolist())
     result['langs'][lang] = R
 # robust optimum: cheapest cell (pooled cost) non-inferior in every language and every century stratum with >= 10 books
 names = [cellname(x1, x3) for x1, x3 in GRID]
@@ -280,4 +284,5 @@ ok = [n for n in names if all(n in [c['name'] for c in R['unweighted']['cells'] 
       and all(n in v['non_inferior'] for R in result['langs'].values() for v in R['by_century'].values() if not v.get('too_few'))]
 pooled_cost = {n: np.mean([next(c['usd_per_1k_accepted'] for c in R['unweighted']['cells'] if c['name'] == n) for R in result['langs'].values()]) for n in names}
 result['robust'] = {'non_inferior_everywhere': ok, 'optimum': min(ok, key=lambda n: pooled_cost[n]) if ok else None, 'rule': 'non-inferior in every language and every century with >= 10 books; cheapest by the mean over languages of cost per accepted page'}
+result['bbd_made'] = {l: R['bbd_runs'] for l, R in result['langs'].items()}
 json.dump(result, sys.stdout, indent=1, default=float)

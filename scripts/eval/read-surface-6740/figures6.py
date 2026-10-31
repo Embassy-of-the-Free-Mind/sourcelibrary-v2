@@ -28,6 +28,11 @@ plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 9, 'axes.edgecol
 LANG = {'de': 'German', 'la': 'Latin', 'en': 'English'}
 langs = [l for l in ('de', 'la', 'en') if l in A['langs']]
 PPC_T = ([-1, 0, 1], ['1', '4', '8']); TH_T = ([-1, 0, 1], ['low', 'medium', 'high'])
+# The decision is the post-stratified (weighted) fit where a language has weights (Amendment 6.8(b)); --unweighted draws the other.
+UNW = False
+def pick(l, unweighted=None):
+    R = A['langs'][l]; u = UNW if unweighted is None else unweighted
+    return R['unweighted'] if u or not R.get('weighted') else R['weighted']
 
 def save(fig, name):
     fig.savefig(os.path.join(a.out, f'{name}.svg'), bbox_inches='tight'); fig.savefig(os.path.join(a.out, f'{name}.png'), dpi=220, bbox_inches='tight'); plt.close(fig); print(name)
@@ -42,11 +47,8 @@ def mark(ax, S):
 
 # ── F1: the design: the Box-Behnken cube as run, and the screen's 3 x 3 grid with books a cell ──
 def f1():
-    fig = plt.figure(figsize=(10, 4.2))
+    fig = plt.figure(figsize=(11, 4.4)); fig.subplots_adjust(wspace=0.35)
     ax = fig.add_subplot(1, 2, 1, projection='3d')
-    pts = {'B': [], 'X': [], 'C': []}
-    for r in ['B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'B09', 'B10', 'B11', 'B12']:
-        pass
     bbd = [(-1, -1, 0), (1, -1, 0), (-1, 1, 0), (1, 1, 0), (-1, 0, -1), (1, 0, -1), (-1, 0, 1), (1, 0, 1), (0, -1, -1), (0, 1, -1), (0, -1, 1), (0, 1, 1)]
     made = set(A.get('bbd_made', {}).get('de', []))
     for (x, y, z), rid in zip(bbd, ['B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'B09', 'B10', 'B11', 'B12']):
@@ -60,7 +62,7 @@ def f1():
         for s2 in (-1, 1):
             ax.plot([-1, 1], [s1, s1], [s2, s2], color=GRID, lw=0.8); ax.plot([s1, s1], [-1, 1], [s2, s2], color=GRID, lw=0.8); ax.plot([s1, s1], [s2, s2], [-1, 1], color=GRID, lw=0.8)
     ax.set_xticks([-1, 0, 1], ['1', '4', '8']); ax.set_yticks([-1, 0, 1], ['1,024', '1,600', '2,400']); ax.set_zticks([-1, 0, 1], ['low', 'med', 'high'])
-    ax.set_xlabel('pages a call'); ax.set_ylabel('long edge (px)'); ax.set_zlabel('thinking'); ax.view_init(18, -58)
+    ax.set_xlabel('pages a call'); ax.set_ylabel('long edge (px)'); ax.set_zlabel(''); ax.view_init(18, -58)
     ax.text2D(0.0, 1.0, 'a', transform=ax.transAxes, fontsize=11, weight='bold')
     ax2 = fig.add_subplot(1, 2, 2)
     for x1 in (-1, 0, 1):
@@ -71,16 +73,16 @@ def f1():
             for l in langs:
                 c = next(c for c in A['langs'][l]['unweighted']['cells'] if c['x1'] == x1 and c['x3'] == x3)
                 n = A['langs'][l].get('ib_books', {}).get(c['name'])
-                if n is not None: lines.append(f"{LANG[l][:2]} {n}")
+                if n is not None: lines.append(f"{l} {n} books")
             ax2.text(x1, x3, ('live\n' if live else '') + '\n'.join(lines), ha='center', va='center', fontsize=8, color=INK)
     ax2.set_xlim(-1.6, 1.6); ax2.set_ylim(-1.6, 1.6); axes_grid(ax2); ax2.set_aspect('equal')
     ax2.text(-0.08, 1.02, 'b', transform=ax2.transAxes, fontsize=11, weight='bold')
     save(fig, 'f1-design')
 
-def contour_panels(name, key, label, cmap, norm=None, ni=False, levels=None, fmt='%.1f', weighted=False):
+def contour_panels(name, key, label, cmap, norm=None, ni=False, levels=None, fmt='%.1f', weighted=True):
     n = len(langs); fig, axs = plt.subplots(1, n, figsize=(3.6 * n, 3.4), squeeze=False)
     for ax, l in zip(axs[0], langs):
-        S = A['langs'][l]['weighted' if weighted and A['langs'][l].get('weighted') else 'unweighted']; s = S['surface']; x = np.array(s['axis'])
+        S = pick(l, unweighted=not weighted); s = S['surface']; x = np.array(s['axis'])
         Z = np.array(s[key])
         cs = ax.contourf(x, x, Z, levels=levels if levels is not None else 12, cmap=cmap, norm=norm)
         ax.contour(x, x, Z, levels=cs.levels, colors='white', linewidths=0.4)
@@ -96,15 +98,15 @@ def contour_panels(name, key, label, cmap, norm=None, ni=False, levels=None, fmt
 
 def f2(): contour_panels('f2-cer-contours', 'delta', 'δ CER against live (pp)', DIV, norm=TwoSlopeNorm(0, -1.5, 1.5), ni=True, levels=np.linspace(-1.5, 1.5, 13), fmt='%+.1f')
 def f3():
-    vals = [v for l in langs for row in A['langs'][l]['unweighted']['surface']['usd_acc'] for v in row]
+    vals = [v for l in langs for row in pick(l)['surface']['usd_acc'] for v in row]
     lv = np.geomspace(max(1, min(vals)), max(vals), 12)
     contour_panels('f3-cost-contours', 'usd_acc', 'quota cost, $ a 1,000 accepted pages', BLUES, norm=LogNorm(lv[0], lv[-1]), levels=lv, fmt='%.0f')
 def f4():
-    vals = [v for l in langs for row in A['langs'][l]['unweighted']['surface']['usd_acc'] for v in row]
+    vals = [v for l in langs for row in pick(l)['surface']['usd_acc'] for v in row]
     lv = np.geomspace(max(1, min(vals)), max(vals), 12)
     contour_panels('f4-feasible-cost', 'usd_acc', 'quota cost, $ a 1,000 accepted pages', BLUES, norm=LogNorm(lv[0], lv[-1]), levels=lv, fmt='%.0f', ni=True)
     if any(A['langs'][l].get('weighted') for l in langs):
-        contour_panels('f4w-feasible-cost-weighted', 'usd_acc', 'quota cost, $ a 1,000 accepted pages', BLUES, norm=LogNorm(lv[0], lv[-1]), levels=lv, fmt='%.0f', ni=True, weighted=True)
+        contour_panels('f4u-feasible-cost-unweighted', 'usd_acc', 'quota cost, $ a 1,000 accepted pages', BLUES, norm=LogNorm(lv[0], lv[-1]), levels=lv, fmt='%.0f', ni=True, weighted=False)
 
 def f4c():
     """Small multiples: which cells are non-inferior, by language (rows) and century (columns), cost per accepted page."""
@@ -117,7 +119,7 @@ def f4c():
     fig, axs = plt.subplots(r, cols, figsize=(2.6 * cols, 2.6 * r), squeeze=False)
     for ax in axs.flat: ax.axis('off')
     for ax, (l, cent, v) in zip(axs.flat, rows):
-        ax.axis('on'); S = A['langs'][l]['unweighted']
+        ax.axis('on'); S = pick(l)
         for c in S['cells']:
             ok = c['name'] in v['non_inferior']
             ax.add_patch(plt.Rectangle((c['x1'] - 0.46, c['x3'] - 0.46), 0.92, 0.92, fc='#dbe9fb' if ok else 'white', ec=MUTED, lw=0.8, hatch=None if ok else '////'))
@@ -133,7 +135,7 @@ def f4c():
 def f5():
     n = len(langs); fig, axs = plt.subplots(1, n, figsize=(3.8 * n, 3.4), squeeze=False)
     for ax, l in zip(axs[0], langs):
-        R = A['langs'][l]; S = R['unweighted']
+        R = A['langs'][l]; S = pick(l)
         band = max([v['mde_cer_pp'] for k, v in R['a_vs_a'].items()] or [0])
         ax.axhspan(-band, band, color=MUTED, alpha=0.15, lw=0); ax.axhline(A['margin_pp'], color=INK, ls='--', lw=1)
         fr = sorted([c for c in S['cells'] if c['name'] in S['frontier']], key=lambda c: c['usd_per_1k_accepted'])
@@ -152,18 +154,21 @@ def f7():
     """The efficiency frontier: absolute CER against cost per accepted page; live's distance to the frontier."""
     n = len(langs); fig, axs = plt.subplots(1, n, figsize=(3.8 * n, 3.5), squeeze=False)
     for ax, l in zip(axs[0], langs):
-        S = A['langs'][l]['unweighted']; cells = S['cells']; live = next(c for c in cells if c['live'])
+        S = pick(l); cells = S['cells']; live = next(c for c in cells if c['live'])
         fr = sorted([c for c in cells if c['name'] in S['frontier']], key=lambda c: c['usd_per_1k_accepted'])
         ax.step([c['usd_per_1k_accepted'] for c in fr], [c['cer_pp'] for c in fr], where='post', color=OPT, lw=2)
         for c in cells:
             on = c['name'] in S['frontier']
             ax.plot(c['usd_per_1k_accepted'], c['cer_pp'], 'D' if c['live'] else 'o', ms=8 if c['live'] else 6, color=LIVE if c['live'] else (OPT if on else 'white'), mec=INK if not c['live'] else 'white', mew=1.2)
-            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (c['usd_per_1k_accepted'], c['cer_pp']), xytext=(4, 3), textcoords='offset points', fontsize=6.5, color=SEC)
+            k = [x['name'] for x in cells].index(c['name'])
+            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (c['usd_per_1k_accepted'], c['cer_pp']), xytext=(5, 5 if k % 2 else -9), textcoords='offset points', fontsize=6.5, color=SEC)
         opt = next((c for c in cells if c['name'] == S['optimum']), None)
         if opt and not opt['live']:
             ax.annotate('', xy=(opt['usd_per_1k_accepted'], live['cer_pp']), xytext=(live['usd_per_1k_accepted'], live['cer_pp']), arrowprops=dict(arrowstyle='->', color=LIVE, lw=1.2))
-            ax.text(math.sqrt(opt['usd_per_1k_accepted'] * live['usd_per_1k_accepted']), live['cer_pp'], f" −{100 * opt['saving_vs_live']:.0f} %", color=LIVE, fontsize=8, va='bottom')
+            ax.text(math.sqrt(opt['usd_per_1k_accepted'] * live['usd_per_1k_accepted']), live['cer_pp'], f"−{100 * opt['saving_vs_live']:.0f} % per accepted page", color=LIVE, fontsize=8, va='bottom', ha='left', transform=ax.transData) if False else ax.annotate(f"−{100 * opt['saving_vs_live']:.0f} % per accepted page", (opt['usd_per_1k_accepted'], live['cer_pp']), xytext=(0, 18), textcoords='offset points', color=LIVE, fontsize=8)
         ax.set_xscale('log'); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('CER (%)')
+        # From zero: the CER differences between cells are a few hundredths of a point, inside the A-vs-A floor.
+        ax.set_ylim(0, max(c['cer_pp'] for c in cells) * 1.6)
         ax.text(0.0, 1.03, f"{LANG[l]} ({S['books']} books)", transform=ax.transAxes, fontsize=9, color=INK, weight='bold')
     fig.tight_layout(); save(fig, 'f7-efficiency-frontier')
 

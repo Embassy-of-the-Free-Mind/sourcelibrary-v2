@@ -9,6 +9,8 @@
 import Link from 'next/link';
 import data from '@/data/ocr-read-surface-6740.json';
 import { SurfacePanels, DesignPareto, RoutePareto, type LangSurface, type Route } from './SurfaceCharts';
+import a6 from '@/data/ocr-read-surface-6740-a6.json';
+import { CellMap, CellTable, type Study } from './StudyCells';
 
 export const metadata = { title: 'Read settings by response surface (#6740)' };
 
@@ -27,8 +29,11 @@ export default function ReadSurfacePage() {
   return (
     <main className="max-w-5xl mx-auto px-4 py-8 text-[#e6edf3]">
       <p className="text-sm text-[#8b949e]"><Link href="/platform/admin/ocr-evidence" className="underline decoration-[#30363d] hover:text-[#58a6ff]">OCR evidence</Link> / read settings</p>
-      <h1 className="text-2xl font-semibold text-[#f0f6fc] mt-1">Which read settings give the fewest agy calls a page without losing accuracy?</h1>
+      <h1 className="text-2xl font-semibold text-[#f0f6fc] mt-1">Which read settings cost the least quota a page without losing accuracy?</h1>
       <p className="mt-2 text-sm"><Link href="/platform/admin/ocr-evidence/read-surface/live" className="underline decoration-[#30363d] text-[#58a6ff]">The experiment as it runs: a live surface you can refit and play with →</Link></p>
+      <A6 />
+      <h2 className="text-xl font-semibold text-[#f0f6fc] mt-12">The first run (2026-10-30): fewest agy calls a page</h2>
+      <p className="mt-2 text-sm text-[#8b949e] max-w-3xl">Kept as it ran. It optimised calls a page; the pool is charged by token cost, so its Latin pick (high thinking) was cheaper in calls and dearer in quota. Amendment 6, above, re-prices every run.</p>
       <p className="mt-3 max-w-3xl">
         The agy Flash first read has three settings: how many pages go in one call, how large the image is, and how much the
         model thinks. Each run below read the same target page of every book, against a human-typed edition of that page
@@ -131,5 +136,69 @@ export default function ReadSurfacePage() {
         <RoutePareto routes={routes} lang="fr" />
       </section>
     </main>
+  );
+}
+
+type A6Lang = { rows: number; books: number; ib_books: Record<string, number>; weighted: Study | null; unweighted: Study;
+  lack_of_fit: Record<string, { F?: number; df?: number[]; p?: number } | null>; a_vs_a: Record<string, { books: number; mean_cer_pp: number; mde_cer_pp: number; mde_lcost: number }>;
+  by_century: Record<string, { books: number; too_few?: boolean; optimum?: string | null; non_inferior?: string[] }> };
+type A6Conf = { n_drawn: number; passes: boolean; planted: string; routes: Record<string, { written: string; wrong_text: string; p_acc_ge_080: number; eligible: boolean; calls: number; usd_1k_pages: number; usd_1k_accepted: number }>;
+  paired: { n: number; a_only: number; b_only: number; both: number; p_a_within_008: number } };
+const A6_LANG: Record<string, string> = { de: 'German (DTA)', la: 'Latin (CAMENA)', en: 'English (EEBO-TCP)' };
+
+/** Amendment 6 (2026-10-31): every run re-priced in quota, the 3 x 3 screen of pages a call x thinking in incomplete blocks. */
+function A6() {
+  const langs = a6.langs as unknown as Record<string, A6Lang>;
+  const conf = (a6 as unknown as { confirmation_de: A6Conf | null }).confirmation_de;
+  return (
+    <section className="mt-6">
+      <p className="max-w-3xl">
+        Amendment 6 prices every read in <strong>quota</strong>: agy&apos;s own token counts for every call a page needed (refused blocks,
+        retries and fallbacks included) at gemini-3.8-flash list rates, in US $ a 1,000 pages (a list-price equivalent, not a bill).
+        A power gate dropped image size and a script line in the prompt (effects too small to detect); the screen is pages a call
+        × thinking at the served image, read on the whole typed-reference frame of each language in incomplete blocks (every book at live
+        and at 3 of the other 8 cells), weighted to the queue by era and typeface. <code>measure</code>: accuracy (CER against
+        the typed page) and cost. n is books. Fitted {String(a6.built_at ?? '').slice(0, 16).replace('T', ' ')} UTC, {a6.boot} book-level bootstrap resamples.
+      </p>
+      {Object.entries(langs).map(([l, L]) => {
+        const S = L.weighted ?? L.unweighted;
+        const live = S.cells.find((c) => c.live);
+        const best = S.cells.find((c) => c.name === S.optimum);
+        return (
+          <div key={l} className="mt-6 rounded-lg border border-[#30363d] bg-[#161b22] p-5">
+            <h3 className="text-lg font-semibold text-[#f0f6fc]">{A6_LANG[l] ?? l}: {S.books} books{L.weighted ? ', weighted to the queue' : ''}</h3>
+            <p className="mt-1 max-w-3xl"><strong>{S.verdict}.</strong>{' '}
+              {best && live && !best.live && <>Live costs ${live.usd_per_1k_accepted.toFixed(2)} a 1,000 accepted pages; {best.name} ${best.usd_per_1k_accepted.toFixed(2)} [{best.cpa_lo.toFixed(2)}, {best.cpa_hi.toFixed(2)}], CER {best.delta_cer_pp >= 0 ? '+' : ''}{best.delta_cer_pp.toFixed(2)} pp [{best.delta_lo.toFixed(2)}, {best.delta_hi.toFixed(2)}] against live.</>}
+            </p>
+            <div className="mt-3 grid md:grid-cols-2 gap-4 items-start">
+              <CellMap S={S} label={l} />
+              <div className="text-sm text-[#8b949e]">
+                <p>A-vs-A (identical settings, paired by book): {Object.entries(L.a_vs_a).map(([k, v]) => `${k} ${v.mean_cer_pp >= 0 ? '+' : ''}${v.mean_cer_pp.toFixed(2)} pp (detectable ${v.mde_cer_pp.toFixed(2)} pp, ${v.books} books)`).join('; ') || 'none'}.</p>
+                <p className="mt-2">Lack of fit of the quadratic against the 9 cell means: {Object.entries(L.lack_of_fit).map(([k, v]) => (v?.F != null ? `${k} F(${v.df?.join(', ')}) = ${v.F.toFixed(2)}, p ${v.p?.toFixed(3)}` : `${k} —`)).join('; ')}. Every cell was read, so the decision uses the cells, not the curve.</p>
+                <p className="mt-2">By century (≥ 10 books): {Object.entries(L.by_century).map(([c, v]) => (v.too_few ? `${c} ${v.books} book(s), too few` : `${c} ${v.books} books → ${v.optimum ?? 'none'}`)).join('; ')}.</p>
+              </div>
+            </div>
+            <details className="mt-2"><summary className="cursor-pointer text-[#c9d1d9] hover:text-[#58a6ff]">The nine cells (table view)</summary><CellTable S={S} /></details>
+          </div>
+        );
+      })}
+      {conf && (
+        <div className="mt-6 rounded-lg border border-[#30363d] bg-[#161b22] p-5">
+          <h3 className="text-lg font-semibold text-[#f0f6fc]">Confirmation on German queue pages: 8 a call against live</h3>
+          <p className="mt-1 max-w-3xl">
+            {conf.n_drawn} new pages from the German first-read queue, one per book, era-stratified to the queue; each route as the lane runs it; judged blind by Opus against the
+            page image (<code>measure</code>: judged). Planted errors caught {conf.planted}. <strong>{conf.passes ? 'Passes the preregistered rule.' : 'Does not pass the preregistered rule'}</strong>
+            {!conf.passes && <>: its wrong-text pages ({conf.routes['agy-flash-low@8']?.wrong_text}) are over the absolute bar of 0.04 and P(accept ≥ 0.8) is {conf.routes['agy-flash-low@8']?.p_acc_ge_080}, under 0.9. The live route fails the same bar by more ({conf.routes['agy-flash-low@4']?.wrong_text}, P {conf.routes['agy-flash-low@4']?.p_acc_ge_080}), and both of 8 a call&apos;s wrong-text pages are misread the same way by live.</>}
+          </p>
+          <table className="mt-2 text-sm">
+            <thead><tr className="text-left text-[#8b949e] border-b border-[#30363d]"><th className="py-1 pr-4 font-normal">route</th><th className="pr-4 font-normal">written accepted (judged)</th><th className="pr-4 font-normal">wrong text</th><th className="pr-4 font-normal">P(acc ≥ 0.8)</th><th className="pr-4 font-normal">calls a page</th><th className="pr-4 font-normal">$ a 1,000 pages</th><th className="font-normal">$ a 1,000 accepted</th></tr></thead>
+            <tbody>{Object.entries(conf.routes).map(([r, x]) => (
+              <tr key={r} className="border-b border-[#21262d]"><td className="py-1 pr-4">{r}</td><td className="pr-4">{x.written}</td><td className="pr-4">{x.wrong_text}</td><td className="pr-4">{x.p_acc_ge_080}</td><td className="pr-4">{x.calls}</td><td className="pr-4">{x.usd_1k_pages?.toFixed(2)}</td><td>{x.usd_1k_accepted?.toFixed(2)}</td></tr>
+            ))}</tbody>
+          </table>
+          <p className="mt-2 text-sm text-[#8b949e]">Paired on the {conf.paired.n} pages both wrote: 8 a call only {conf.paired.a_only}, live only {conf.paired.b_only}, both {conf.paired.both}; P(acc₈ ≥ acc₄ − 0.08) = {conf.paired.p_a_within_008}.</p>
+        </div>
+      )}
+    </section>
   );
 }
