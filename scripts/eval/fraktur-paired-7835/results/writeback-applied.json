@@ -1,0 +1,1832 @@
+{
+ "at": "2026-10-31T12:45:53.230Z",
+ "pages": [
+  {
+   "set": "t1",
+   "page_id": "6a26d8476be3d771538c107d",
+   "book_id": "6a26d8476be3d771538c102b",
+   "page_number": 82,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124437-1073218",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.82 (no OCR -> gemini-3.8-flash-low, 1574 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124437-1073218"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a4300c04e06bc233ecf6ce2",
+   "book_id": "6a4300c04e06bc233ecf6af5",
+   "page_number": 493,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124438-1073259",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.493 (no OCR -> gemini-3.8-flash-low, 2389 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124438-1073259"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac4fe4e4ba7223afef83ba9",
+   "book_id": "6ac4fe4c4ba7223afef83b94",
+   "page_number": 19,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26cb0c5ac5aecc53ce93ab",
+   "book_id": "6a26cb0c5ac5aecc53ce9391",
+   "page_number": 26,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124438-1073328",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.26 (no OCR -> gemini-3.8-flash-low, 1567 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124438-1073328"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "69aea304803d5b811fc12630",
+   "book_id": "69aea304803d5b811fc125ac",
+   "page_number": 132,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124439-1073375",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.132 (no OCR -> gemini-3.8-flash-low, 2233 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124439-1073375"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac501e04ba7223afef9f58e",
+   "book_id": "6ac501dc4ba7223afef9f2eb",
+   "page_number": 673,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26cba85ac5aecc53cec523",
+   "book_id": "6a26cba85ac5aecc53cec45d",
+   "page_number": 198,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124440-1073424",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.198 (no OCR -> gemini-3.8-flash-low, 1692 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124440-1073424"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d0c7f5273a8d9079aba1",
+   "book_id": "6a26d0c7f5273a8d9079ab61",
+   "page_number": 64,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124441-1073498",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.64 (no OCR -> gemini-3.8-flash-low, 1429 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124441-1073498"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac501994ba7223afef9cc97",
+   "book_id": "6ac501974ba7223afef9cc7a",
+   "page_number": 27,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26cdca5ac5aecc53cf6813",
+   "book_id": "6a26cdca5ac5aecc53cf67b8",
+   "page_number": 91,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124441-1073555",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.91 (no OCR -> gemini-3.8-flash-low, 2784 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124441-1073555"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a5089d678825bd7fde9811a",
+   "book_id": "6a5089d678825bd7fde97e84",
+   "page_number": 162,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a4a5ba09050f0b434312a6d",
+   "book_id": "6a4a5ba09050f0b434312a50",
+   "page_number": 29,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124442-1073600",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.29 (no OCR -> gemini-3.8-flash-low, 1128 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124442-1073600"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26db8005d7c1d9b108d6a3",
+   "book_id": "6a26db8005d7c1d9b108d5d2",
+   "page_number": 209,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124443-1073634",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.209 (no OCR -> gemini-3.8-flash-low, 1528 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124443-1073634"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac50cb54ba7223afe01a4bb",
+   "book_id": "6ac50cb44ba7223afe01a4a4",
+   "page_number": 21,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124444-1073690",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.21 (no OCR -> gemini-3.8-flash-low, 1401 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124444-1073690"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d352f5273a8d907a9561",
+   "book_id": "6a26d352f5273a8d907a944b",
+   "page_number": 278,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124445-1073753",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.278 (no OCR -> gemini-3.8-flash-low, 2189 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124445-1073753"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6a26d352f5273a8d907a944b/6a26d352f5273a8d907a9561/ocr/7cb750c8df021209.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:14:46.778Z",
+     "at": "2026-10-31T12:44:47.003Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124447-1073919",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.278: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124447-1073919"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a905180ee2696c623562608",
+   "book_id": "6a90517fee2696c623562577",
+   "page_number": 143,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124448-1073957",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.143 (no OCR -> gemini-3.8-flash-low, 1289 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124448-1073957"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6a90517fee2696c623562577/6a905180ee2696c623562608/ocr/aadfcc8bedde410b.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:15:28.117Z",
+     "at": "2026-10-31T12:44:50.020Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124450-1074092",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.143: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124450-1074092"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d7a46be3d771538bd18c",
+   "book_id": "6a26d7a46be3d771538bd034",
+   "page_number": 344,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124451-1074191",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.344 (no OCR -> gemini-3.8-flash-low, 1694 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124451-1074191"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6a26d7a46be3d771538bd034/6a26d7a46be3d771538bd18c/ocr/2156ff11b4af68dc.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:15:52.269Z",
+     "at": "2026-10-31T12:44:53.500Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124454-1074332",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.344: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124454-1074332"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a49394e1bbf4176e1e974f5",
+   "book_id": "6a49394e1bbf4176e1e9740e",
+   "page_number": 230,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124454-1074369",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.230 (no OCR -> gemini-3.8-flash-low, 1559 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124454-1074369"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac5135c4ba7223afe064b39",
+   "book_id": "6ac5135a4ba7223afe064b2a",
+   "page_number": 13,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac4f9f84ba7223afef6b8f5",
+   "book_id": "6ac4f9f64ba7223afef6b8c0",
+   "page_number": 51,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124455-1074406",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.51 (no OCR -> gemini-3.8-flash-low, 1123 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124455-1074406"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6ac4f9f64ba7223afef6b8c0/6ac4f9f84ba7223afef6b8f5/ocr/fce37fc012862b34.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:17:11.541Z",
+     "at": "2026-10-31T12:44:58.140Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124458-1074503",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.51: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124458-1074503"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a493e22f36483abc5bbbef9",
+   "book_id": "6a493e21f36483abc5bbbebd",
+   "page_number": 60,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d410f5273a8d907ac209",
+   "book_id": "6a26d410f5273a8d907abe61",
+   "page_number": 936,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac502044ba7223afefa02ed",
+   "book_id": "6ac502034ba7223afefa02dc",
+   "page_number": 15,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124459-1074538",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.15 (no OCR -> gemini-3.8-flash-low, 2252 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124459-1074538"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6ac502034ba7223afefa02dc/6ac502044ba7223afefa02ed/ocr/317da4393c656f56.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:18:55.191Z",
+     "at": "2026-10-31T12:45:01.730Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124502-1074718",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.15: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124502-1074718"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26da9205d7c1d9b1087cb2",
+   "book_id": "6a26da9205d7c1d9b1087c51",
+   "page_number": 97,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6a267d0e6c1f37c9c4f384f2",
+   "book_id": "6a267d0e6c1f37c9c4f38364",
+   "page_number": 398,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124503-1074996",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.398 (no OCR -> gemini-3.8-flash-low, 1953 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124503-1074996"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6a267d0e6c1f37c9c4f38364/6a267d0e6c1f37c9c4f384f2/ocr/8b76134c7c52dc91.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:19:43.463Z",
+     "at": "2026-10-31T12:45:06.183Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124507-1075163",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.398: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124507-1075163"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac507424ba7223afefd8ed1",
+   "book_id": "6ac507404ba7223afefd8ead",
+   "page_number": 34,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124507-1075211",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.34 (no OCR -> gemini-3.8-flash-low, 1577 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124507-1075211"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6ac507404ba7223afefd8ead/6ac507424ba7223afefd8ed1/ocr/509ee33ffbb021e0.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:20:06.423Z",
+     "at": "2026-10-31T12:45:10.955Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124511-1075348",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.34: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124511-1075348"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "69b51e5e9a81ef7feb3d3e96",
+   "book_id": "69b51e5e9a81ef7feb3d3e1e",
+   "page_number": 120,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124512-1075384",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.120 (no OCR -> gemini-3.8-flash-low, 1594 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124512-1075384"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d13cf5273a8d9079ce4f",
+   "book_id": "6a26d13cf5273a8d9079cb61",
+   "page_number": 750,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124513-1075426",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.750 (no OCR -> gemini-3.8-flash-low, 2344 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124513-1075426"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6a26d13cf5273a8d9079cb61/6a26d13cf5273a8d9079ce4f/ocr/3bc3e5a3723e55d4.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:21:18.736Z",
+     "at": "2026-10-31T12:45:15.411Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124516-1075544",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.750: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124516-1075544"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac507dd4ba7223afefdf4ab",
+   "book_id": "6ac507db4ba7223afefdf435",
+   "page_number": 116,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124516-1075633",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.116 (no OCR -> gemini-3.8-flash-low, 1222 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124516-1075633"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6ac507db4ba7223afefdf435/6ac507dd4ba7223afefdf4ab/ocr/c812b07a3257ea35.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:21:40.634Z",
+     "at": "2026-10-31T12:45:19.123Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124519-1075751",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.116: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124519-1075751"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a905b04785d9b40577f6ee6",
+   "book_id": "6a905b04785d9b40577f6e6b",
+   "page_number": 123,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124520-1075813",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.123 (no OCR -> gemini-3.8-flash-low, 2168 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124520-1075813"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26cbbe5ac5aecc53cece66",
+   "book_id": "6a26cbbe5ac5aecc53cecdfd",
+   "page_number": 105,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac50c014ba7223afe012e34",
+   "book_id": "6ac50c004ba7223afe012de7",
+   "page_number": 75,
+   "face": "fraktur",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "a"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124521-1075881",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.75 (no OCR -> gemini-3.8-flash-low, 1880 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124521-1075881"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ac4fb9b4ba7223afef71239",
+   "book_id": "6ac4fb994ba7223afef71232",
+   "page_number": 5,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6aa1d1ca77169abff161a1aa",
+   "book_id": "6aa1d1c577169abff161a0fd",
+   "page_number": 173,
+   "face": "antiqua",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124521-1075923",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.173 (no OCR -> gemini-3.8-flash-low, 1946 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124521-1075923"
+    ]
+   },
+   "c_read": {
+    "exit": 0,
+    "reused_from": {
+     "key": "candidate-reads/6aa1d1c577169abff161a0fd/6aa1d1ca77169abff161a1aa/ocr/305bb46bbfeed126.json",
+     "job": "fraktur-7835",
+     "read_at": "2026-10-31T12:24:35.818Z",
+     "at": "2026-10-31T12:45:23.474Z"
+    },
+    "same_as_judged_read": true
+   },
+   "c": {
+    "exit": 0,
+    "written": false,
+    "run": "cli-ocr-20261031124524-1075998",
+    "skipped": "the draft came from --draft-file (an eval read), not the stored OCR",
+    "tail": [
+     "  skip p.173: the draft came from --draft-file (an eval read), not the stored OCR",
+     "written: 0   skipped: {\"the draft came from --draft-file (an eval read), not the stored OCR\":1}   run cli-ocr-20261031124524-1075998"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ad92bdab48e2f8490802e91",
+   "book_id": "6ad92bdab48e2f8490802ceb",
+   "page_number": 422,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124524-1076037",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.422 (no OCR -> gemini-3.8-flash-low, 4540 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124524-1076037"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6a26d999863cf28d8f649742",
+   "book_id": "6a26d999863cf28d8f6496d2",
+   "page_number": 112,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124525-1076077",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.112 (no OCR -> gemini-3.8-flash-low, 967 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124525-1076077"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6aa3369e77a4d7cfc5130ddd",
+   "book_id": "6aa3369e77a4d7cfc5130c0c",
+   "page_number": 465,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124526-1076124",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.465 (no OCR -> gemini-3.8-flash-low, 4153 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124526-1076124"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "69aebc967888322b3dac6b46",
+   "book_id": "69aebc967888322b3dac6a5c",
+   "page_number": 234,
+   "face": "antiqua",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "6aa1d36677169abff161e173",
+   "book_id": "6aa1d36177169abff161e004",
+   "page_number": 367,
+   "face": "antiqua",
+   "arm": "b",
+   "writable": false,
+   "note": "a 4-page block correction over drafts on disk: the lane apply cannot take it; not written",
+   "result": "not writable: listed only"
+  },
+  {
+   "set": "t1",
+   "page_id": "69aebd727dbbe2b7d6aa1dd2",
+   "book_id": "69aebd727dbbe2b7d6aa1c52",
+   "page_number": 384,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124527-1076240",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.384 (no OCR -> gemini-3.8-flash-low, 2916 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124527-1076240"
+    ]
+   }
+  },
+  {
+   "set": "t1",
+   "page_id": "6ad1638d9ec7b8bcd02def80",
+   "book_id": "6ad1638c9ec7b8bcd02dee9c",
+   "page_number": 228,
+   "face": "antiqua",
+   "arm": "a",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "a",
+    "b",
+    "c"
+   ],
+   "apply": true,
+   "a": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124528-1076282",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.228 (no OCR -> gemini-3.8-flash-low, 2009 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124528-1076282"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a243dfb0f0e4f405e632769",
+   "book_id": "6a243dfb0f0e4f405e63274c",
+   "page_number": 29,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124529-1076322",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.29 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 2867 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124529-1076322"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69dbcce30f8c5edf20f4f6db",
+   "book_id": "69dbcce30f8c5edf20f4f6ca",
+   "page_number": 17,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124530-1076368",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.17 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2716 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124530-1076368"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a267b2f6c1f37c9c4f30c88",
+   "book_id": "6a267b2f6c1f37c9c4f30be9",
+   "page_number": 159,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124531-1076407",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.159 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1898 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124531-1076407"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a491c6ca9e39181572e459c",
+   "book_id": "6a491c6ca9e39181572e4379",
+   "page_number": 26,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124532-1076499",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.26 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1780 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124532-1076499"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f668118b8e4d6b41815b33",
+   "book_id": "69c8787d6c6f3cc53c85825a",
+   "page_number": 29,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124532-1076542",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.29 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1005 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124532-1076542"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69bda11bf6d63c919748e2b8",
+   "book_id": "69bda11bf6d63c919748e22f",
+   "page_number": 137,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124533-1076578",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.137 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2267 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124533-1076578"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a00d3a9da2a5c6a1ca77ee3",
+   "book_id": "69c8681f6c6f3cc53c856667",
+   "page_number": 24,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124534-1076616",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.24 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2018 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124534-1076616"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69c7fab1b05038301822d2d3",
+   "book_id": "69c7f9d96c6f3cc53c842856",
+   "page_number": 148,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124535-1076650",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.148 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1956 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124535-1076650"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a243db50f0e4f405e63168f",
+   "book_id": "6a243db50f0e4f405e631659",
+   "page_number": 54,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124535-1076687",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.54 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1995 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124535-1076687"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f6adec29fb368c7a69dd1b",
+   "book_id": "690c2476e0787282ad5930dd",
+   "page_number": 188,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124536-1076748",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.188 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2328 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124536-1076748"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f5023dcf0b2623d7c3214e",
+   "book_id": "69c822f86c6f3cc53c84aea4",
+   "page_number": 111,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124537-1076796",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.111 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1256 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124537-1076796"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a26c34caad44c98627c9735",
+   "book_id": "6a26c34caad44c98627c96c0",
+   "page_number": 117,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124538-1076838",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.117 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1242 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124538-1076838"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69b51e979a81ef7feb3d7d73",
+   "book_id": "69b51e979a81ef7feb3d7d45",
+   "page_number": 46,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124539-1076876",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.46 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2746 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124539-1076876"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a267e946c1f37c9c4f3c872",
+   "book_id": "6a267e946c1f37c9c4f3c86f",
+   "page_number": 3,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124539-1076937",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.3 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1521 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124539-1076937"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69dbcc141040d1d5e20bcbc8",
+   "book_id": "69dbcc141040d1d5e20bca96",
+   "page_number": 306,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124540-1076998",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.306 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2757 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124540-1076998"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a267bc06c1f37c9c4f33b42",
+   "book_id": "6a267bc06c1f37c9c4f33b1d",
+   "page_number": 37,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124541-1077107",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.37 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1698 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124541-1077107"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69e961962beefe2f6f72c13d",
+   "book_id": "69e961962beefe2f6f72c109",
+   "page_number": 52,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124542-1077144",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.52 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1134 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124542-1077144"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f734c033881e31c2c0ef9a",
+   "book_id": "69c78d3a6a0f3d112faf99bc",
+   "page_number": 432,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124543-1077184",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.432 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1748 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124543-1077184"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "6a267f4288f11913ee9c8c0f",
+   "book_id": "6a267f4288f11913ee9c8bef",
+   "page_number": 32,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124544-1077221",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.32 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1359 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124544-1077221"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69e75a02095c302d3fddeab6",
+   "book_id": "69e75a02095c302d3fddea0b",
+   "page_number": 171,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124545-1077257",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.171 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 868 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124545-1077257"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f50eb477423d42db37b50e",
+   "book_id": "69c6e994da9771c7163146db",
+   "page_number": 199,
+   "face": "fraktur",
+   "arm": "b",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "b"
+   ],
+   "apply": true,
+   "b": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124545-1077296",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.199 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1798 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124545-1077296"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69b51e86ff09e4fe943b0c8d",
+   "book_id": "69b51e86ff09e4fe943b0a5d",
+   "page_number": 560,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124546-1077334",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.560 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 6868 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124546-1077334"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f7052c28877807ac521890",
+   "book_id": "69c581e4ef9444b5fe7c4794",
+   "page_number": 436,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124547-1077373",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.436 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1521 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124547-1077373"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f694822df99ed5124e236f",
+   "book_id": "69c581e3551fbd40b95eaa36",
+   "page_number": 109,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124548-1077411",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.109 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2301 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124548-1077411"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69b51e08cf111105c4295671",
+   "book_id": "69b51e08cf111105c4295655",
+   "page_number": 28,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124549-1077461",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.28 (gemini-3.1-flash-lite -> gemini-3.8-flash-low, 1242 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124549-1077461"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f53a71cd95ea2189656344",
+   "book_id": "69c7b03b25ec2ba5ccd7f355",
+   "page_number": 58,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124549-1077497",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.58 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1402 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124549-1077497"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f65b04bf6f02199077f78c",
+   "book_id": "69c88dd06c6f3cc53c85af61",
+   "page_number": 110,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124550-1077535",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.110 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 797 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124550-1077535"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f6bbcc9afa1539c6ede46b",
+   "book_id": "69c863316c6f3cc53c855ca6",
+   "page_number": 138,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124551-1077572",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.138 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1783 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124551-1077572"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69d389aaf897231f325c66f7",
+   "book_id": "69c70692da9771c716315bcd",
+   "page_number": 32,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 4,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124552-1077688",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.32 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 2231 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124552-1077688"
+    ]
+   }
+  },
+  {
+   "set": "t2",
+   "page_id": "69f69060aadb4c5ba0ee15bf",
+   "book_id": "69c85eca6c6f3cc53c8552ec",
+   "page_number": 210,
+   "face": "fraktur",
+   "arm": "c",
+   "writable": true,
+   "note": null,
+   "fidelity": 5,
+   "same_text_arms": [
+    "c"
+   ],
+   "apply": true,
+   "c": {
+    "exit": 0,
+    "written": true,
+    "run": "cli-ocr-20261031124552-1077773",
+    "skipped": null,
+    "tail": [
+     "  WRITE p.210 (gemini-3.1-flash-lite-preview -> gemini-3.8-flash-low, 1318 chars)",
+     "written: 1   skipped: {}   run cli-ocr-20261031124552-1077773"
+    ]
+   }
+  }
+ ]
+}
