@@ -57,7 +57,12 @@ export default function SurfaceLead({ doc }: { doc: LiveDoc }) {
       <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 items-center text-sm">
         <span className="inline-flex flex-wrap gap-1">{langs.map((l) => <button key={l} type="button" className={btn(l === L.lang)} onClick={() => { setLang(l); setPick(null); }}>{LANG_NAME[l] ?? l}</button>)}</span>
         {glOn && <>
-          <button type="button" className={btn(swap)} onClick={() => setSwap((s) => !s)} aria-pressed={swap}>{swap ? 'height: CER difference · colour: cost' : 'height: cost · colour: CER difference'}</button>
+          <span className="inline-flex items-center gap-1" role="group" aria-label="Surface height">
+            <span className="text-[#8b949e]">height:</span>
+            <button type="button" className={btn(!swap)} onClick={() => setSwap(false)} aria-pressed={!swap}>cost</button>
+            <button type="button" className={btn(swap)} onClick={() => setSwap(true)} aria-pressed={swap}>quality (CER vs live)</button>
+            <span className="text-[#8b949e]">· colour: {swap ? 'cost' : 'quality'}</span>
+          </span>
           <button type="button" className={btn(false)} onClick={() => setReset((r) => r + 1)}>reset view</button>
         </>}
       </div>
