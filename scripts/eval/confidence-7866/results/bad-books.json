@@ -1,0 +1,1930 @@
+{
+ "bad": [
+  {
+   "id": "69f3273552a77bb28fdb6f93",
+   "title": "Yŏsa chʻoryak",
+   "language": "Korean",
+   "stratum": "low",
+   "score": 0.2201,
+   "top_route": "korean-lite/manuscript lite",
+   "defect_rate": 1921.569,
+   "bad_pages": [
+    5,
+    24,
+    27,
+    51,
+    52
+   ],
+   "top_defects": [
+    "O6:misleads×12",
+    "O6:wrong_text×12",
+    "O1:wrong_text×2",
+    "O5:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3cbfadf9474f825c16a32a",
+   "title": "六藝之一錄·卷二百三十七~卷二百三十八 (vol 103)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4076,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 1562.112,
+   "bad_pages": [
+    35,
+    66,
+    107,
+    111
+   ],
+   "top_defects": [
+    "O6:wrong_text×13",
+    "O6:misleads×10",
+    "O12:misleads×3",
+    "O4:wrong_text×2"
+   ]
+  },
+  {
+   "id": "69dea5f84d19ec2e9ba77e07",
+   "title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+   "language": "Sanskrit",
+   "stratum": "low",
+   "score": 0.2241,
+   "top_route": "sanskrit-lite/print lite",
+   "defect_rate": 1141.427,
+   "bad_pages": [
+    11,
+    16,
+    33,
+    46,
+    58
+   ],
+   "top_defects": [
+    "O6:misleads×28",
+    "O6:wrong_text×27",
+    "O7:misleads×2",
+    "O5:wrong_text×2"
+   ]
+  },
+  {
+   "id": "69b222ed56715b0e32475a8c",
+   "title": "Greek Anthology: Florilegium Epigrammatum (Aldine Press, 2nd ed.)",
+   "language": "Greek",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "greek-flash3/unknown 3flash",
+   "defect_rate": 819.712,
+   "bad_pages": [
+    73,
+    209,
+    285,
+    356,
+    486
+   ],
+   "top_defects": [
+    "O6:wrong_text×11",
+    "O6:misleads×11"
+   ]
+  },
+  {
+   "id": "69a5e3d7006a4098422165d4",
+   "title": "Comoediae (with scholia)",
+   "language": "Greek",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "greek-flash3/unknown 3flash",
+   "defect_rate": 815.183,
+   "bad_pages": [
+    22,
+    69,
+    105,
+    126,
+    193
+   ],
+   "top_defects": [
+    "O6:wrong_text×46",
+    "O1:wrong_text×19",
+    "O6:misleads×13",
+    "O12:misleads×7"
+   ]
+  },
+  {
+   "id": "6a4b6cf066f4462393d6f8a6",
+   "title": "Catholicum carmen, ad Philippum Melanchthonem",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.7189,
+   "top_route": "latin-flash3/unknown 3flash",
+   "defect_rate": 806.763,
+   "bad_pages": [
+    3,
+    18
+   ],
+   "top_defects": [
+    "O1:wrong_text×14",
+    "O6:wrong_text×4",
+    "O6:misleads×2",
+    "O7:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c61bf879008ba7e1600b0",
+   "title": "益古演段(三) (vol 3)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4603,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 761.047,
+   "bad_pages": [
+    3,
+    38,
+    60,
+    75,
+    90
+   ],
+   "top_defects": [
+    "O7:wrong_text×6",
+    "O6:wrong_text×5",
+    "O10:wrong_text×5",
+    "O5:misleads×3"
+   ]
+  },
+  {
+   "id": "6a0c53ef99c52ea845a06388",
+   "title": "Richard of St. Victor: Benjamin minor (De praeparatione animi ad contemplationem)",
+   "language": "Latin",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null model:none",
+   "defect_rate": 674.797,
+   "bad_pages": [
+    11,
+    28,
+    50,
+    79
+   ],
+   "top_defects": [
+    "O18:wrong_text×3",
+    "O12:wrong_text×2",
+    "O6:misleads×2",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "69f325c852a77bb28fdb5cd7",
+   "title": "Kitāb al-Tabṣirah fī ʻilm al-hayʼah",
+   "language": "Arabic",
+   "stratum": "low",
+   "score": 0.4325,
+   "top_route": "arabic-lite/manuscript lite",
+   "defect_rate": 611.842,
+   "bad_pages": [
+    26,
+    67,
+    96,
+    142,
+    150
+   ],
+   "top_defects": [
+    "O6:misleads×10",
+    "O6:wrong_text×10",
+    "O5:misleads×3",
+    "I4:wrong_text×3"
+   ]
+  },
+  {
+   "id": "6a3cf0368642f0445b1635b5",
+   "title": "御製律呂正義後編·卷三十二~卷三十三 (vol 17)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4219,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 560.472,
+   "bad_pages": [
+    41,
+    47,
+    79,
+    102
+   ],
+   "top_defects": [
+    "O6:wrong_text×3",
+    "O5:misleads×2",
+    "O12:misleads×2",
+    "O5:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3c622a879008ba7e1611b9",
+   "title": "西清古鑑·卷九 (vol 37)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.2706,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 476.027,
+   "bad_pages": [
+    14,
+    34,
+    60
+   ],
+   "top_defects": [
+    "O6:misleads×3",
+    "O6:wrong_text×2",
+    "O1:wrong_text×2",
+    "O10:misleads×1"
+   ]
+  },
+  {
+   "id": "69f3263852a77bb28fdb6738",
+   "title": "Ŭpchʻong",
+   "language": "Korean",
+   "stratum": "low",
+   "score": 0.2153,
+   "top_route": "korean-lite/manuscript lite",
+   "defect_rate": 469.933,
+   "bad_pages": [
+    3,
+    10,
+    18,
+    24,
+    30
+   ],
+   "top_defects": [
+    "O7:wrong_text×7",
+    "O6:misleads×5",
+    "O5:misleads×1",
+    "T10:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c60d540c88a541d8eb14f",
+   "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4623,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 441.026,
+   "bad_pages": [
+    21,
+    59,
+    72,
+    125,
+    167
+   ],
+   "top_defects": [
+    "O6:wrong_text×9",
+    "O5:wrong_text×8",
+    "O6:misleads×5",
+    "O7:misleads×2"
+   ]
+  },
+  {
+   "id": "69dbca3a1040d1d5e20aa385",
+   "title": "Herbarius latinus (with German synonyms) (ISTC ih00063000)",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.6285,
+   "top_route": "latin-lite/print lite",
+   "defect_rate": 426.009,
+   "bad_pages": [
+    21,
+    94,
+    271,
+    302
+   ],
+   "top_defects": [
+    "O6:misleads×17",
+    "O6:wrong_text×3",
+    "O7:wrong_text×2",
+    "O5:wrong_text×2"
+   ]
+  },
+  {
+   "id": "699383b350654cbbe29181eb",
+   "title": "Aeschylus and Aristotle, Posterior Analytics (MS, 14th c.)",
+   "language": "Greek",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "greek-flash3/unknown 3flash",
+   "defect_rate": 355.556,
+   "bad_pages": [
+    60,
+    146,
+    255,
+    334,
+    392
+   ],
+   "top_defects": [
+    "O6:misleads×24",
+    "O6:wrong_text×9",
+    "O12:misleads×5",
+    "O1:wrong_text×4"
+   ]
+  },
+  {
+   "id": "6a3c6964af3c49b59c5df098",
+   "title": "普濟方·卷二百十六 (vol 149)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4678,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 318.417,
+   "bad_pages": [
+    4,
+    50,
+    111,
+    130
+   ],
+   "top_defects": [
+    "O6:misleads×4",
+    "O11:wrong_text×2",
+    "O11:misleads×2",
+    "O6:wrong_text×2"
+   ]
+  },
+  {
+   "id": "695924fa1cac2ce31a4a8a33",
+   "title": "道藏 (Daozang - Taoist Canon)",
+   "language": "Chinese",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "chinese-flash3/unknown 3flash",
+   "defect_rate": 307.029,
+   "bad_pages": [
+    1,
+    96,
+    186,
+    222,
+    287
+   ],
+   "top_defects": [
+    "O6:misleads×37",
+    "O6:wrong_text×22",
+    "O5:misleads×4",
+    "O5:wrong_text×3"
+   ]
+  },
+  {
+   "id": "699389a6ce15387065947dc0",
+   "title": "Hierocles on Pythagorean Golden Verses; Hermes Trismegistus",
+   "language": "Latin",
+   "stratum": "high",
+   "score": 0.7647,
+   "top_route": "latin-flash3/unknown 3flash",
+   "defect_rate": 306.024,
+   "bad_pages": [
+    17,
+    61,
+    153,
+    200,
+    237
+   ],
+   "top_defects": [
+    "O6:wrong_text×8",
+    "O6:misleads×7",
+    "O8:misleads×1",
+    "O12:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c6a5eaf3c49b59c5e6355",
+   "title": "七政推步·卷一~卷二 (vol 1)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4409,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 280.12,
+   "bad_pages": [
+    11,
+    115
+   ],
+   "top_defects": [
+    "O7:wrong_text×5",
+    "O6:wrong_text×4",
+    "O4:wrong_text×2",
+    "O5:wrong_text×2"
+   ]
+  },
+  {
+   "id": "69af48642a821385be062737",
+   "title": "Arati Phaenomena, Geographia, Ora Maritima",
+   "language": "Latin",
+   "stratum": "high",
+   "score": 0.7585,
+   "top_route": "latin-flash3/unknown 3flash",
+   "defect_rate": 268.643,
+   "bad_pages": [
+    19,
+    77,
+    127,
+    188,
+    206
+   ],
+   "top_defects": [
+    "I1:wrong_text×6",
+    "O5:wrong_text×3",
+    "O6:wrong_text×1",
+    "O8:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3c7b0701fe4f593c21b92f",
+   "title": "江南經畧·卷五上 (vol 8)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.381,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 260.163,
+   "bad_pages": [
+    13,
+    78
+   ],
+   "top_defects": [
+    "O6:misleads×2",
+    "O1:wrong_text×1",
+    "O6:wrong_text×1",
+    "O5:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a26bda553acc54a8c4d5117",
+   "title": "Apologia vnd Refutation Sebastiani Greiffen, Wider das Famos Libell vnd Schmehe gesprech, von den Alchimistischen Artzte",
+   "language": "German",
+   "stratum": "high",
+   "score": 0.8205,
+   "top_route": "german-lite/print lite",
+   "defect_rate": 243.319,
+   "bad_pages": [
+    16,
+    35,
+    48
+   ],
+   "top_defects": [
+    "O6:wrong_text×5",
+    "O6:misleads×3",
+    "O12:misleads×2",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6953aeae77f38f6761bd8524",
+   "title": "Demotic Magical Papyrus of London and Leiden Vol. 3",
+   "language": "Demotic",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null 3flash",
+   "defect_rate": 235.608,
+   "bad_pages": [
+    35,
+    117,
+    159
+   ],
+   "top_defects": [
+    "O6:wrong_text×7",
+    "O6:misleads×3",
+    "O10:misleads×3",
+    "O8:misleads×1"
+   ]
+  },
+  {
+   "id": "69b631a81c1c21a373809577",
+   "title": "Horae beatae Mariae virginis",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.6533,
+   "top_route": "latin-lite/print lite",
+   "defect_rate": 211.838,
+   "bad_pages": [
+    44,
+    205
+   ],
+   "top_defects": [
+    "O17:wrong_text×1",
+    "O5:wrong_text×1",
+    "E2:misleads×1",
+    "O6:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c64ab39b4508b04e28ee7",
+   "title": "御定佩文韻府·卷八十二之二 (vol 602)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4627,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 201.168,
+   "bad_pages": [
+    34,
+    75,
+    101,
+    118
+   ],
+   "top_defects": [
+    "O5:wrong_text×11",
+    "O6:misleads×7",
+    "T4:misleads×1",
+    "O11:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a4ae0a29a3f4fa983d99ff6",
+   "title": "Synopsis septem ss. Conciliorum oecumenicorum Graece. Ex codice manuscripto bibliothecae Augustanae.",
+   "language": "Latin",
+   "stratum": "high",
+   "score": 0.7388,
+   "top_route": "latin-flash3/print 3flash",
+   "defect_rate": 193.464,
+   "bad_pages": [
+    5,
+    8,
+    14,
+    15
+   ],
+   "top_defects": [
+    "O7:wrong_text×4",
+    "O6:misleads×2",
+    "O8:misleads×1",
+    "O6:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3c6ae2af3c49b59c5eb179",
+   "title": "欽定協紀辨方書·卷二 (vol 2)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.3762,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 188.917,
+   "bad_pages": [
+    62,
+    71,
+    103
+   ],
+   "top_defects": [
+    "O6:misleads×2",
+    "O5:wrong_text×2",
+    "O14:misleads×1",
+    "O12:misleads×1"
+   ]
+  },
+  {
+   "id": "69f33085876dd827cbc47601",
+   "title": "Breviary",
+   "language": "Latin",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "latin-lite/manuscript lite",
+   "defect_rate": 188.305,
+   "bad_pages": [
+    3,
+    6,
+    10,
+    16
+   ],
+   "top_defects": [
+    "O6:wrong_text×4",
+    "O6:misleads×2",
+    "O5:wrong_text×2",
+    "E2:misleads×2"
+   ]
+  },
+  {
+   "id": "6a060d36e16c60cb2a8946c7",
+   "title": "सुश्रुतसंहिता Suśruta Saṃhitā (Sanskrit, Acharya critical edition)",
+   "language": "Sanskrit",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "sanskrit-flash3/print 3flash",
+   "defect_rate": 182.292,
+   "bad_pages": [
+    268,
+    442,
+    592,
+    671
+   ],
+   "top_defects": [
+    "O6:misleads×16",
+    "O6:wrong_text×7",
+    "O8:misleads×5"
+   ]
+  },
+  {
+   "id": "6a3c628e40c88a541d8f46a5",
+   "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4678,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 181.94,
+   "bad_pages": [
+    17,
+    75,
+    167,
+    220
+   ],
+   "top_defects": [
+    "O5:misleads×10",
+    "O6:wrong_text×7",
+    "O6:misleads×7",
+    "O11:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c5e7840c88a541d8e2644",
+   "title": "御定康熙字典·卷十三 (vol 12)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4524,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 177.41,
+   "bad_pages": [
+    13,
+    30,
+    45,
+    73,
+    79
+   ],
+   "top_defects": [
+    "O6:misleads×22",
+    "O6:wrong_text×6",
+    "O1:wrong_text×1",
+    "O11:misleads×1"
+   ]
+  },
+  {
+   "id": "69f3296eaeeee0fa38c658ea",
+   "title": "Sinjong Hwangjye kuchʻyŏp mundap",
+   "language": "Korean",
+   "stratum": "low",
+   "score": 0.2119,
+   "top_route": "korean-lite/manuscript lite",
+   "defect_rate": 173.228,
+   "bad_pages": [
+    13,
+    27,
+    36,
+    47,
+    67
+   ],
+   "top_defects": [
+    "O6:wrong_text×9",
+    "O1:wrong_text×8",
+    "O5:wrong_text×4",
+    "O6:misleads×3"
+   ]
+  },
+  {
+   "id": "6a14e12d2f45ee330c273e25",
+   "title": "Tshamdrak rNying rgyud Na",
+   "language": "Tibetan",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "tibetan-yigdzin/unknown yigdzin",
+   "defect_rate": 170.157,
+   "bad_pages": [
+    36,
+    153,
+    189,
+    270
+   ],
+   "top_defects": [
+    "O12:misleads×8",
+    "O4:wrong_text×5",
+    "O6:misleads×5",
+    "O6:wrong_text×3"
+   ]
+  },
+  {
+   "id": "6a3cbc42ec254ff6cadef090",
+   "title": "周禮訂義·卷六十九~卷七十 (vol 29)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4651,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 169.643,
+   "bad_pages": [
+    43,
+    71,
+    147
+   ],
+   "top_defects": [
+    "O6:wrong_text×4",
+    "O6:misleads×1",
+    "O1:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a2032e218654bf8e1903a74",
+   "title": "[A collection of Fatāwī, with citations from works on Fiqh] Or. 7189",
+   "language": "Arabic",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "arabic-flash3/manuscript 3flash",
+   "defect_rate": 150,
+   "bad_pages": [
+    6,
+    95,
+    126,
+    183,
+    233
+   ],
+   "top_defects": [
+    "O6:misleads×20",
+    "O6:wrong_text×3",
+    "I3:wrong_text×1",
+    "O12:misleads×1"
+   ]
+  },
+  {
+   "id": "69942a43045dfc482ad76202",
+   "title": "Opera Graece et Latine (Heinsius Edition)",
+   "language": "Greek",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "greek-flash3/unknown 3flash",
+   "defect_rate": 135.148,
+   "bad_pages": [
+    133,
+    279,
+    353,
+    517,
+    659
+   ],
+   "top_defects": [
+    "O6:misleads×24",
+    "O6:wrong_text×12",
+    "O5:misleads×2",
+    "O5:wrong_text×2"
+   ]
+  },
+  {
+   "id": "69b5258b2379d2fed6c28c3c",
+   "title": "Een liedtboecxken, tracterende van den offer des Heeren.",
+   "language": "Dutch",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null 3flash",
+   "defect_rate": 131.217,
+   "bad_pages": [
+    12,
+    26,
+    34,
+    51,
+    68
+   ],
+   "top_defects": [
+    "O6:misleads×16",
+    "I3:misleads×3",
+    "O5:misleads×2",
+    "O11:misleads×2"
+   ]
+  },
+  {
+   "id": "6990795bb621b177c1af684d",
+   "title": "Jataka Alankara with Tika",
+   "language": "Sanskrit",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "sanskrit-flash3/unknown 3flash",
+   "defect_rate": 130.031,
+   "bad_pages": [
+    -136,
+    -109
+   ],
+   "top_defects": [
+    "O6:misleads×7",
+    "O7:misleads×1",
+    "O7:wrong_text×1",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3cc06aec254ff6cae06603",
+   "title": "周易辯錄·卷二 (vol 2)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4531,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 118.602,
+   "bad_pages": [
+    57,
+    108,
+    133
+   ],
+   "top_defects": [
+    "O6:misleads×3",
+    "O6:wrong_text×3"
+   ]
+  },
+  {
+   "id": "69e787a74a6785cfd60ccb4b",
+   "title": "yid bzhin mdzod dang btags grol",
+   "language": "Tibetan",
+   "stratum": "low",
+   "score": 0.267,
+   "top_route": "tibetan-yigdzin/manuscript yigdzin",
+   "defect_rate": 109.19,
+   "bad_pages": [
+    8,
+    23,
+    48
+   ],
+   "top_defects": [
+    "O6:misleads×14",
+    "O6:wrong_text×4",
+    "O4:wrong_text×1",
+    "O7:misleads×1"
+   ]
+  },
+  {
+   "id": "6a26beb30e247ebad6de873c",
+   "title": "Gründliche Beschreibung Des Newerbauten Minerischen Bads Der Churf. Stadt Newenmarckt in der Obern Pfaltz : Wie man dass",
+   "language": "German",
+   "stratum": "high",
+   "score": 0.7396,
+   "top_route": "german-lite/print lite",
+   "defect_rate": 105.333,
+   "bad_pages": [
+    4,
+    7,
+    13,
+    20
+   ],
+   "top_defects": [
+    "O6:misleads×5",
+    "O6:wrong_text×3",
+    "O5:misleads×1",
+    "O7:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.7155,
+   "top_route": "latin-flash3/print 3flash",
+   "defect_rate": 104.95,
+   "bad_pages": [
+    222,
+    383,
+    476,
+    811,
+    1060
+   ],
+   "top_defects": [
+    "O6:misleads×18",
+    "O6:wrong_text×10",
+    "O7:misleads×3",
+    "O5:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6992cf0e284cdd19fef46f38",
+   "title": "植物名實圖考(六)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.2369,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 104.408,
+   "bad_pages": [
+    53,
+    69
+   ],
+   "top_defects": [
+    "O6:misleads×1",
+    "O6:wrong_text×1",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c690e39b4508b04e3b94b",
+   "title": "普濟方·卷九十六 (vol 62)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4642,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 103.208,
+   "bad_pages": [
+    43,
+    83,
+    111
+   ],
+   "top_defects": [
+    "O7:misleads×1",
+    "O5:wrong_text×1",
+    "O6:wrong_text×1",
+    "O17:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3cc269ec254ff6cae10e55",
+   "title": "書集傳纂疏·卷二 (vol 9)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4189,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 101.807,
+   "bad_pages": [
+    13,
+    37,
+    73
+   ],
+   "top_defects": [
+    "O6:misleads×6",
+    "O6:wrong_text×4",
+    "O3:wrong_text×1",
+    "O16:misleads×1"
+   ]
+  },
+  {
+   "id": "69c73f1a6a0f3d112faf7a97",
+   "title": "Recherches sur l'origine des découvertes attribuées aux modernes",
+   "language": "French",
+   "stratum": "middle",
+   "score": 0.7189,
+   "top_route": "french-lite/print lite",
+   "defect_rate": 94.34,
+   "bad_pages": [
+    -149,
+    259
+   ],
+   "top_defects": [
+    "O6:misleads×6",
+    "O12:wrong_text×1",
+    "I3:misleads×1",
+    "E2:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c6a3faf3c49b59c5e5140",
+   "title": "三易洞璣·卷十~卷十一 (vol 5)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4678,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 93.348,
+   "bad_pages": [
+    45,
+    66,
+    98
+   ],
+   "top_defects": [
+    "O6:misleads×3",
+    "O7:misleads×2",
+    "O5:wrong_text×1",
+    "O4:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3cb8223dce6cfad748b627",
+   "title": "詩傳大全·卷二~卷三 (vol 4)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4644,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 93.254,
+   "bad_pages": [
+    96,
+    131
+   ],
+   "top_defects": [
+    "O6:wrong_text×3",
+    "O6:misleads×2",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3cee494701a906f10e7df5",
+   "title": "御定淵鑑類函·卷二百五十二~卷二百五十三 (vol 140)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.3934,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 92.822,
+   "bad_pages": [
+    9,
+    42
+   ],
+   "top_defects": [
+    "O8:misleads×2",
+    "O6:misleads×2",
+    "O4:wrong_text×1",
+    "O5:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a49137aac0c339f55337966",
+   "title": "Ain nutzliche trostliche und kurtze undterrichtung, wie man sich in dem schwären leuffen der pestilentz halten solle, de",
+   "language": "German",
+   "stratum": "middle",
+   "score": 0.7184,
+   "top_route": "german-flash3/print 3flash",
+   "defect_rate": 89.983,
+   "bad_pages": [
+    2,
+    10,
+    18
+   ],
+   "top_defects": [
+    "O6:misleads×4",
+    "O1:wrong_text×1",
+    "O1:misleads×1",
+    "O16:misleads×1"
+   ]
+  },
+  {
+   "id": "69dbc7d71040d1d5e2094b24",
+   "title": "Flores astrologiae (Tr: Johannes Hispalensis)",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.5801,
+   "top_route": "latin-lite/print lite",
+   "defect_rate": 89.084,
+   "bad_pages": [
+    9,
+    11,
+    28
+   ],
+   "top_defects": [
+    "O6:misleads×7",
+    "O5:wrong_text×2",
+    "O14:misleads×1",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3cead3c895e71c6023cccb",
+   "title": "十三經注疏正字·卷四十一~卷四十三 (vol 14)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4586,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 83.548,
+   "bad_pages": [
+    8,
+    45,
+    111
+   ],
+   "top_defects": [
+    "O6:misleads×2",
+    "O5:wrong_text×1",
+    "O6:wrong_text×1"
+   ]
+  },
+  {
+   "id": "69dbc99f1040d1d5e20a4e4f",
+   "title": "Rhetorica ad C. Herennium. Add: Partitiones oratoriae",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.6232,
+   "top_route": "latin-lite/print lite",
+   "defect_rate": 82.621,
+   "bad_pages": [
+    5,
+    29,
+    39
+   ],
+   "top_defects": [
+    "O6:misleads×14",
+    "O6:wrong_text×1"
+   ]
+  },
+  {
+   "id": "69a5f088b29703bc86eb5b9f",
+   "title": "Tughtk (Letters)",
+   "language": "Armenian",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null lite",
+   "defect_rate": 73.574,
+   "bad_pages": [
+    89,
+    315
+   ],
+   "top_defects": [
+    "O6:misleads×4",
+    "O6:wrong_text×1"
+   ]
+  },
+  {
+   "id": "69bd9fb2f6d63c9197481c0b",
+   "title": "Bedencken über Esaiae Stiefels Büchlein: von dreyerley Zustand des Menschen und dessen newen Gebuhrt ...",
+   "language": "German",
+   "stratum": "high",
+   "score": 0.7749,
+   "top_route": "german-lite/print lite",
+   "defect_rate": 67.168,
+   "bad_pages": [
+    81,
+    198,
+    364
+   ],
+   "top_defects": [
+    "O6:misleads×6",
+    "O5:wrong_text×2",
+    "O5:misleads×2",
+    "I4:misleads×1"
+   ]
+  },
+  {
+   "id": "6a0856c249638a50931c2bd0",
+   "title": "Le ricchezze della lingua volgare ...",
+   "language": "Italian",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "italian-flash3/print 3flash",
+   "defect_rate": 65.986,
+   "bad_pages": [
+    270,
+    286,
+    407
+   ],
+   "top_defects": [
+    "O6:misleads×15",
+    "O6:wrong_text×9",
+    "O5:wrong_text×1",
+    "O7:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a3cf0f14701a906f10f42be",
+   "title": "四書集編·中庸集編·卷上~卷下 (vol 19)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4423,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 65.01,
+   "bad_pages": [
+    87,
+    125
+   ],
+   "top_defects": [
+    "O6:misleads×4",
+    "O6:wrong_text×3"
+   ]
+  },
+  {
+   "id": "6a3cbbbb87ee3d48c89d0bbc",
+   "title": "禮記注疏·卷三~卷四 (vol 3)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4648,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 64.71,
+   "bad_pages": [
+    2,
+    63,
+    83,
+    97
+   ],
+   "top_defects": [
+    "O6:misleads×5",
+    "I4:wrong_text×1",
+    "O1:wrong_text×1",
+    "O11:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c783401fe4f593c2078f6",
+   "title": "佛祖歷代通載·卷二十一 (vol 14)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.464,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 59.448,
+   "bad_pages": [
+    43,
+    70,
+    83,
+    102
+   ],
+   "top_defects": [
+    "O6:misleads×3",
+    "O11:misleads×2",
+    "O11:wrong_text×1",
+    "O16:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c800701fe4f593c21f0ba",
+   "title": "童溪易傳·卷四~卷六 (vol 2)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4571,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 58.737,
+   "bad_pages": [
+    3,
+    86
+   ],
+   "top_defects": [
+    "O11:misleads×1",
+    "O6:misleads×1",
+    "O11:wrong_text×1"
+   ]
+  },
+  {
+   "id": "69ac5f7cebeb54840de0f0a4",
+   "title": "Oeuvres complètes, Tome 13: Dioptrique (Pt. 1)",
+   "language": "French",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "french-flash3/unknown 3flash",
+   "defect_rate": 54.11,
+   "bad_pages": [
+    44,
+    144,
+    586
+   ],
+   "top_defects": [
+    "O17:misleads×3",
+    "O7:wrong_text×2",
+    "O8:misleads×1"
+   ]
+  },
+  {
+   "id": "6ab6de98b393fe0e2d475120",
+   "title": "Fraud Of Modern Theosophy",
+   "language": "English",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null import:ia_djvu",
+   "defect_rate": 48.78,
+   "bad_pages": [
+    52,
+    93
+   ],
+   "top_defects": [
+    "O6:wrong_text×1",
+    "O6:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c648f39b4508b04e2814a",
+   "title": "御定佩文韻府·卷七十四之一 (vol 575)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4612,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 47.741,
+   "bad_pages": [
+    47,
+    62,
+    114,
+    131
+   ],
+   "top_defects": [
+    "O6:misleads×11",
+    "O11:wrong_text×1",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3c66baaf3c49b59c5cce74",
+   "title": "欽定書經傳說彙纂·卷二十一 (vol 16)",
+   "language": "Chinese",
+   "stratum": "middle",
+   "score": 0.4639,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 47.316,
+   "bad_pages": [
+    19,
+    45
+   ],
+   "top_defects": [
+    "O8:wrong_text×2",
+    "O6:misleads×2"
+   ]
+  },
+  {
+   "id": "6990540938e1fdee57b366e9",
+   "title": "Elementary Principles in Statistical Mechanics",
+   "language": "English",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "english-lite/print lite",
+   "defect_rate": 45.949,
+   "bad_pages": [
+    116,
+    158,
+    231
+   ],
+   "top_defects": [
+    "O6:wrong_text×1",
+    "O6:misleads×1",
+    "O5:misleads×1"
+   ]
+  },
+  {
+   "id": "6a4cb63519ae103166961ce4",
+   "title": "De Rebus Fatisque Huius Seculi Illustrioribus Disserit Atque Ad Actum Eucharisticum Pro Pace Caesareo-Ottomannica Noviss",
+   "language": "Latin",
+   "stratum": "high",
+   "score": 0.7455,
+   "top_route": "latin-flash3/print 3flash",
+   "defect_rate": 35.669,
+   "bad_pages": [
+    2,
+    10
+   ],
+   "top_defects": [
+    "I1:wrong_text×2",
+    "O16:misleads×2",
+    "O6:misleads×2",
+    "O14:wrong_text×1"
+   ]
+  },
+  {
+   "id": "69e7ac4a5f1a22ab19aa63f4",
+   "title": "Neyphug Thor bu dGongs 'dus chos skor",
+   "language": "Tibetan",
+   "stratum": "low",
+   "score": 0,
+   "top_route": "tibetan-yigdzin/manuscript yigdzin",
+   "defect_rate": 29.964,
+   "bad_pages": [
+    32,
+    166,
+    196
+   ],
+   "top_defects": [
+    "O12:misleads×5",
+    "O4:wrong_text×2",
+    "O6:misleads×2",
+    "O10:misleads×1"
+   ]
+  },
+  {
+   "id": "6a3cbc19ec254ff6caded88e",
+   "title": "禮記注疏·卷四十八~卷四十九 (vol 90)",
+   "language": "Chinese",
+   "stratum": "low",
+   "score": 0.4492,
+   "top_route": "zh-paddle-dice-lt090/manuscript paddle",
+   "defect_rate": 27.231,
+   "bad_pages": [
+    20,
+    67
+   ],
+   "top_defects": [
+    "O8:misleads×1",
+    "O1:wrong_text×1"
+   ]
+  },
+  {
+   "id": "6a43999ec3ccb765a984106b",
+   "title": "Ius Tertii Orthodoxi Circa Caussam Jesuitico-Jansenianam, Dissertatione Historico-Theologica Deductum, In Celeberrima Le",
+   "language": "Latin",
+   "stratum": "middle",
+   "score": 0.658,
+   "top_route": "latin-flash3/print 3flash",
+   "defect_rate": 26.858,
+   "bad_pages": [
+    5,
+    30
+   ],
+   "top_defects": [
+    "O6:misleads×4",
+    "O8:misleads×1",
+    "O10:misleads×1"
+   ]
+  },
+  {
+   "id": "69e009b7846d79f28d566e5a",
+   "title": "An Account of the Polynesian Race: Its Origins and Migrations, Vol. 2",
+   "language": "English",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "english-flash3/print 3flash",
+   "defect_rate": 25.041,
+   "bad_pages": [
+    73,
+    92,
+    397
+   ],
+   "top_defects": [
+    "O6:misleads×2",
+    "O6:wrong_text×1",
+    "T6:misleads×1"
+   ]
+  },
+  {
+   "id": "69aebc460d3d5e01e132c454",
+   "title": "The Philocalia of Origen",
+   "language": "English",
+   "stratum": "unmeasured",
+   "score": null,
+   "top_route": "null import:ia_djvu",
+   "defect_rate": 14.455,
+   "bad_pages": [
+    103,
+    187
+   ],
+   "top_defects": [
+    "O6:misleads×4"
+   ]
+  }
+ ],
+ "containment_candidates": [
+  {
+   "book": "6970e3759b09d309d780a2a8",
+   "page": 11,
+   "page_id": "6974f764c22e98c6568c0546",
+   "fidelity": 3,
+   "defects": [
+    "O3: ἐν κρυπτῷ (The page has a different Greek phrase that looks like ἐν σκοτεινῷ (\"in darkness\"). The candidate put in the wording of the Greek New Testament at John 18:20 instead.)",
+    "O10: ἀπροκαλύπτως (The page prints ἀκροαματικὰ (\"esoteric teachings\", the opposite of ἐξωτερικὰ). The candidate's word means \"openly\", so the contrast the author is drawing is lost.)"
+   ],
+   "note": "The Latin is accurate throughout, but two of the three small Greek glosses are wrong: one has been replaced with the Gospel's own wording and the other with a word that means something different."
+  },
+  {
+   "book": "6a4b13117622bb5aba1291de",
+   "page": 2,
+   "page_id": "6a4b13117622bb5aba1291e0",
+   "fidelity": 3,
+   "defects": [
+    "O1: The left shield displays the Chigi family arms (six mountain (The arms are show-through from the other side of the leaf, not printed on this page. The Chigi and Pamphili identifications are invented: the left shield is crowned with fleurs-de-lis (French royal arms).)",
+    "O1: representing Pope Innocent X, surmounted by the papal tiara (The right shield is identified as Pamphili / Innocent X with no basis in the image. The faint text behind it names Clement VIII.)"
+   ],
+   "note": "The two imprimaturs are right, but abbreviations are silently expanded, and the coats of arms (really show-through) are wrongly said to be Alexander VII and Innocent X when the reverse text names Clement VIII."
+  },
+  {
+   "book": "6a4cb63519ae103166961ce4",
+   "page": 2,
+   "page_id": "6a4cb63519ae103166961cea",
+   "fidelity": 1,
+   "defects": [
+    "I1: Tanta hujus, quod suam proxime metam constitutum videmus, se (The image is a blank white leaf with no text, initial or catchword. The whole transcription belongs to another leaf, or is not on this page at all.)",
+    "O14: A large decorative woodcut initial 'T' that begins the first (Describes a decorated initial with a grapevine and a sun face, but no image appears on this blank leaf.)"
+   ],
+   "note": "The scan shows a completely blank page, but a full page of Latin preface text is printed beside it, so the transcription does not match this image."
+  },
+  {
+   "book": "6a4cb63519ae103166961ce4",
+   "page": 10,
+   "page_id": "6a4cb63519ae103166961cf2",
+   "fidelity": 1,
+   "defects": [
+    "I1: [...scriptam], operae fore pretium, existimamus: Deum castig (The candidate is the closing page of the same Gera program (Peace of Ryswick, the two student orators, the 'Proposuit publice Gerae' colophon and notes a–e). The image is the opening page, which begins with the woodcut initial and 'Tanta hujus, quod suam proxime metam constitutum videmus, seculi rerum…', covers church history, Jaeger of Tübingen and the century's inventions, and ends with the catchword 'nem'. None of the page's text appears.)"
+   ],
+   "note": "The transcription doesn't match the image. The page shows the program's opening ('Tanta hujus… seculi'), with church history and inventions like the camera obscura and microscopes, but the text beside it is the closing page about the Peace of Ryswick and the two student orators."
+  },
+  {
+   "book": "69af48642a821385be062737",
+   "page": 77,
+   "page_id": "69af48642a821385be062784",
+   "fidelity": 1,
+   "defects": [
+    "I1: Iugera producunt spatiis precincta duobus ... Axenotridas su (Entire text is from another page of the same poem (Greece and the Peloponnese). The leaf reads 'Quinq; uomunt amnem quam se procul insula teuce ... Oceani uicina salo qua glauca recumbit' (Scythia, Danube, Thrace).)",
+    "O5: Iugera producunt spatiis precincta duobus (None of the page's 39 lines are transcribed.)"
+   ],
+   "note": "The transcription has nothing to do with the image. The page describes the Black Sea, the Danube peoples and Thrace, but the text beside it describes the Peloponnese and Attica."
+  },
+  {
+   "book": "69af48642a821385be062737",
+   "page": 127,
+   "page_id": "69af48642a821385be0627b6",
+   "fidelity": 1,
+   "defects": [
+    "I1: Serpentis decliue caput: quæ proxima signa / Occasus ortusq; (The whole transcription comes from a different leaf. The page actually has 24 lines of prose ending 'connexio uero piscium communem habet stellam', then the heading 'Germanici cæsaris arati phænomina' and 14 verse lines ('Ab ioue principium magno deduxit aratus ... Syderaq; & uarios cognoscere motus'). None of this text appears in the candidate.)",
+    "I1: A woodcut illustration depicting the constellations Draco (t (There is no woodcut on this page. It is text only.)",
+    "I1: <margin>Poli</margin> (The margin notes 'Poli' and 'Arcturi duo' are not on this page. What it does have is printed guide letters ('f', 'a') and later handwritten notes in red ink ('aries & libra', 'cæli').)"
+   ],
+   "note": "The transcription doesn't match the page at all: it describes a Draco and bears woodcut and gives 'Poli/Arcturi' prose, but the page is text only (end of a constellation description, then the opening of Germanicus's Aratea, 'Ab ioue principium magno deduxit aratus')."
+  },
+  {
+   "book": "69af48642a821385be062737",
+   "page": 188,
+   "page_id": "69af48642a821385be0627f3",
+   "fidelity": 1,
+   "defects": [
+    "I1: Matutina ferens solitos per sydere cursus … Flatus at gemini (The candidate is 38 lines of weather-sign verse that this page does not contain. The page has a woodcut of Hydra, the Crater and the raven, then 13 lines of prose beginning 'Ydra sup cui caudā coruū sedere dicūt'. The verse probably comes from a neighbouring leaf, since faint verse shows through from the other side.)",
+    "O5: Matutina ferens solitos per sydere cursus (None of the page's own text is transcribed: the Hydra prose about the raven sent by Apollo for water, the signature 'h' in the margin and the catchword 'm' are all missing.)"
+   ],
+   "note": "The text beside the image is a long verse passage on weather signs, while the page shows the Hydra/raven woodcut and a short prose passage about Hydra and Apollo's raven. The transcription belongs to a different page."
+  },
+  {
+   "book": "69af48642a821385be062737",
+   "page": 206,
+   "page_id": "69af48642a821385be062805",
+   "fidelity": 1,
+   "defects": [
+    "I1: Nam quæ per bis sex signorum labier orbe (The whole candidate is a different passage of the poem: planets, the Milky Way and Perseus. The page has 38 lines on Orion, the hare, the dog, Argo, the sea-monster and Eridanus, starting 'Hic ubi se pariter cum solem lumina coeli'. Probably another leaf's text, but it could also be invented.)",
+    "O5: Hunc orionis sub læua cernere planta (None of the page's real lines are transcribed. They run from 'Hic ubi se pariter' to 'Hunc orionis sub læua cernere planta', and the quoted line is the page's last, which the candidate doesn't contain.)"
+   ]
+  },
+  {
+   "book": "6a4cdd6959e2a5b6929d856a",
+   "page": 10,
+   "page_id": "6a4cdd6959e2a5b6929d8575",
+   "fidelity": 3,
+   "defects": [
+    "O2: Syriacè ܩܢܝ, Arabicè قنى (page prints both forms in Hebrew type (קְנָא); candidate made up Syriac and Arabic script)",
+    "O2: voce رزق (page prints רזק in Hebrew type; candidate swapped in Arabic script)"
+   ],
+   "note": "The Latin follows the page, but it says 'solidoque' where the page has 'solidove', it expands the abbreviations without marking them, and it puts the Chaldaic, Syriac and Arabic words in made-up native scripts when the page prints them all in Hebrew type."
+  },
+  {
+   "book": "6a4b6cf066f4462393d6f8a6",
+   "page": 18,
+   "page_id": "6a4b6cf066f4462393d6f8b8",
+   "fidelity": 2,
+   "defects": [
+    "O1: Sexta canit vitia <unclear>cupit</unclear> (the page reads 'Sed iam certa tibi cogatur synodus…'; this line is invented)",
+    "O1: Syncera <unclear>fuit</unclear> (the page has 'Synodus … tempore'; this text is invented)",
+    "O1: Quo patria <unclear>virtutis</unclear> vacat (the page reads 'Quo proferre suum valeat pietas sincera')",
+    "O6: Dogmata de <unclear>Christi</unclear> (only the first words are right; the rest of the line is dropped)",
+    "O1: Denuo <unclear>pater</unclear> vacat (the page has 'Denuo …areo nunc revocata …')",
+    "O1: Hunc tamen <unclear>hic</unclear> sacrum <unclear>scriptum</ (the page has 'Hunc tamen esse locum (Regna … pellere) …')",
+    "O1: Abstrusa <unclear>legat</unclear> (the page has 'Arbiter, et magnos iudicare …')",
+    "O1: Cum decora <unclear>suae</unclear> facit (the page has 'Quam dextera prius flammis … aquis')",
+    "O1: Pernitiosum <unclear>datur</unclear> (the page has 'Pontificumque sacrum …')",
+    "O1: At vestra tollit <unclear>miseras</unclear> (the page has 'A vestra salus possit ut esse nova')",
+    "O1: Lis propria <unclear>tanta</unclear> iacet (the page has 'Ex propriosque … Minerva …')",
+    "O1: In vestris <unclear>aliis</unclear> <unclear>partem</unclear (the page has 'Nam restat nisi …')",
+    "O1: Sed quae <unclear>ibi</unclear> <unclear>terra</unclear> <un (the page has 'Sed quia opem tibi iam ferre o Germania Regina')",
+    "O1: Temperet ut <unclear>perituris</unclear> <unclear>tempora</u (the page has 'Tantaque libertas pertingat pectora numquam')",
+    "O1: Vade Charite <unclear>prospera</unclear> <unclear>bene</uncl (the page has 'Unde Caesareo poteris procedere …')",
+    "O6: Hoc dare sic <unclear>pacem</unclear> <unclear>dicere</uncle (the page has 'Hec dare sic placuit tibi nunc responsa Philippe')",
+    "O6: Nil Germanos te magis amat. (the page has 'Illi, Germanos te mage quisquis amat')",
+    "O6: Hunc etenim melius barbara cura <unclear>cave</unclear> (the page has 'Inde eventum melius perpendere cura.')",
+    "O3: Vive, vale, sospes atque vale. (a stock farewell put in place of 'Utque alios optas ipse valere, Vale.')"
+   ],
+   "note": "The page has 26 mirrored lines of Latin verse addressed to Germania and Philip, followed by 'Soli deo Gloria. M.D.XXXI.' Only a few opening words and the colophon match the page; the rest of the transcription is invented or cut short."
+  },
+  {
+   "book": "6ab2477c87d2180b7f5ea56f",
+   "page": 192,
+   "page_id": "6ab2477d87d2180b7f5ea62f",
+   "fidelity": 3,
+   "defects": [
+    "O1: ACen Wad TA Ga ey Se (the heading 'CHAPTER III' is replaced by OCR garbage, so the chapter number is lost)",
+    "O6: ()* the seventy-three verses (the drop-cap opening word 'Of' is garbled into symbols)"
+   ],
+   "note": "The chapter heading 'CHAPTER III' is replaced by garbage and the opening word 'Of' is mangled. The body text is otherwise sound, apart from a few OCR slips ('1s', 'eranted', a stray quote mark) and a footnote mark that reads as an apostrophe."
+  },
+  {
+   "book": "6a3cbbbb87ee3d48c89d0bbc",
+   "page": 97,
+   "page_id": "6a3cbbbc87ee3d48c89d0c1d",
+   "fidelity": 3,
+   "defects": [
+    "O1: 次宅曰事全焉 (invented line: the last column ends at 無恩興 and nothing follows it on the leaf)"
+   ],
+   "note": "The text follows the leaf closely until the last line, but it adds a phrase that is not on the page (次宅曰事全焉) and changes 奔邾 to 奔邪 in the 正義."
+  },
+  {
+   "book": "6a49137aac0c339f55337966",
+   "page": 2,
+   "page_id": "6a49137aac0c339f5533796a",
+   "fidelity": 3,
+   "defects": [
+    "O1: The main body of the page contains approximately 40 lines of (the leaf is blank fibrous endpaper with no text; the faded script is invented)"
+   ],
+   "note": "The page is a blank endpaper with only 'Path. 182', '4°' and 'Jung' in pencil. The candidate claims about 40 lines of faded historical script that aren't there."
+  },
+  {
+   "book": "6a3cbc42ec254ff6cadef090",
+   "page": 71,
+   "page_id": "6a3cbc42ec254ff6cadef0d7",
+   "fidelity": 3,
+   "defects": [
+    "O6: 凡賔客之治令訶訶治之 (The page has 訝 (訝士, the Zhouli office) here, not 訶. The same misread repeats in 以告訶, 訶為如朝, 訶士也 and 掌訶, so the official's title is wrong throughout.)",
+    "O1: 関係 (These two characters are not on the page. The leaf ends at 所給旨得以自辦.)"
+   ],
+   "note": "The title 訝士 is printed as 訶 every time it appears, so the office being described is misnamed, and the page ends with two characters (関係) that the leaf doesn't have."
+  },
+  {
+   "book": "6a3c6964af3c49b59c5df098",
+   "page": 4,
+   "page_id": "6a3c6964af3c49b59c5df09c",
+   "fidelity": 3,
+   "defects": [
+    "O11: 金星以九全 (The marginal title 欽定四庫全書 is garbled into nonsense and left untagged, so it reads as body text.)",
+    "O1: 两半 (The words 两半 after 食前溫服 do not appear on the page.)"
+   ],
+   "note": "The main recipe text is mostly correct, but the marginal title is garbled into nonsense, 两半 is added where the page has nothing, and the 'chopped' note in the last column is misread as 荆."
+  },
+  {
+   "book": "6a3cbfadf9474f825c16a32a",
+   "page": 35,
+   "page_id": "6a3cbfadf9474f825c16a34d",
+   "fidelity": 2,
+   "defects": [
+    "O6: 膠 (first headword is a 縢/滕-type form, not 膠)",
+    "O6: 靛 (second headword is 競, not 靛)",
+    "O6: 與 (page has 興, not 與)",
+    "O1: 土 (inserted character; the note runs 九丨之華益 with nothing between 之 and 華)",
+    "O4: 劉\n劉\n劉\n劉 (four 劉; the page shows three (one ends column 5, two open column 6))"
+   ]
+  },
+  {
+   "book": "6a3c7b0701fe4f593c21b92f",
+   "page": 13,
+   "page_id": "6a3c7b0701fe4f593c21b93c",
+   "fidelity": 4,
+   "defects": [
+    "O1: 全国人口会 (The running title in the margin is 欽定四庫全書. The candidate replaces it with an invented modern simplified-Chinese phrase and leaves it untagged, so it reads as part of the main text.)"
+   ],
+   "note": "All eight lines of the main text about the city gates, water gates, watchtowers and guard posts match the page. But the top line '全国人口会' is not on the leaf; the margin there reads 欽定四庫全書."
+  },
+  {
+   "book": "6a3c60d540c88a541d8eb14f",
+   "page": 125,
+   "page_id": "6a3c60d540c88a541d8eb1cc",
+   "fidelity": 3,
+   "defects": [
+    "O6: 卞關漢書地理志常山郡高 (the headword on the page is 井關 (Jingguan), not 卞關; the new entry is mislabelled)",
+    "O1: 孝悌帝置莽曰丨丨屬冀州 ('孝悌' is not on the page; the page continues straight from 高 to 帝置 (Gaodi set it up))"
+   ],
+   "note": "The poem quotations match the page, but the last entry has the wrong headword (卞關 instead of 井關) and adds '孝悌', which is not on the page, so 'Gaodi set it up' now reads as nonsense."
+  },
+  {
+   "book": "6a3c622a879008ba7e1611b9",
+   "page": 34,
+   "page_id": "6a3c622a879008ba7e1611dc",
+   "fidelity": 2,
+   "defects": [
+    "O1: 禁止閣幫\n覆倒箋本\n是足形閣 (The first seal-script inscription rubbing has been made into invented regular-script text that is not on the page.)",
+    "O1: 草止獨斷我\n莫不畏君相 (The second seal-script rubbing has also been made into invented text.)",
+    "O6: 龍 (The vessel label above the second rubbing reads 鼎 (or a variant), not 龍.)"
+   ],
+   "note": "Most of the text is invented: the two seal-script rubbings are given as made-up regular-script lines and a vessel label is wrong. Only the transcription column (with 寶/彝 misreadings) and 音釋同前 match the page."
+  },
+  {
+   "book": "6a3c64ab39b4508b04e28ee7",
+   "page": 118,
+   "page_id": "6a3c64ab39b4508b04e28f5e",
+   "fidelity": 3,
+   "defects": [
+    "O11: 金\n灾\n四\n属\n金 (the margin title 欽定四庫全書 is garbled into five stray lines of body text)",
+    "O1: 2023年1月1日 (a modern date that is not on the page was added)"
+   ],
+   "note": "Most of the entries are right, but the margin title 欽定四庫全書 shows up as junk lines, a 2023 date has been added that is not on the page, and some characters are misread (儵蟰, 玃如)."
+  },
+  {
+   "book": "6a3cbc19ec254ff6caded88e",
+   "page": 67,
+   "page_id": "6a3cbc19ec254ff6caded8d1",
+   "fidelity": 3,
+   "defects": [
+    "O1: 次之曰事公焉 (an extra line appended at the end; the page stops at 言君尸 and this text is not on the leaf)"
+   ],
+   "note": "Every column on the page is transcribed correctly up to 言君尸, but the candidate then adds a line, 次之曰事公焉, that does not appear on the page."
+  },
+  {
+   "book": "69f3273552a77bb28fdb6f93",
+   "page": 51,
+   "page_id": "69f3273552a77bb28fdb6fc6",
+   "fidelity": 2,
+   "defects": [
+    "O1: 글 잡아 죽이며 희생의 의식을 왕청 ('희생의 의식' (sacrificial ritual) is not on the page, which reads roughly 를 잡아 죽이니 …희가 그 어비의 … 상왕 청)",
+    "O6: 나려 일어날 그 사의의 편성을 의지 (page reads roughly 나려 일너 왈 그ᄃᆡ가 우리 천ᄒᆞᆼ을 도의지; the speech formula and its content are lost)",
+    "O4: 의의 부학 흉서 시의 종의 의의 의의 (filler 의의 is repeated; page reads roughly 의뢰 부탁ᄒᆞ노니 시의 종ᄉᆞᆼ은 즈의 그 잇)",
+    "O6: 보시다 시어 서 섬을 보 천 쳐 허 조병 (page reads roughly 보시라 ᄒᆞ고 이어 쳡을 보젼ᄒᆞ여 ᄒᆞᄂᆞᆫ 도성; the line is garbled)"
+   ],
+   "note": "All 7 columns are there in the right order, but most words are misread into near-gibberish, and the opening invents a 'sacrificial ritual' that the handwritten narrative never mentions."
+  },
+  {
+   "book": "69f3273552a77bb28fdb6f93",
+   "page": 52,
+   "page_id": "69f3273552a77bb28fdb6fc7",
+   "fidelity": 2,
+   "defects": [
+    "O6: 상사가 잇의 멸하여 비로소 향을 (column 4 opens with something like 남시가, not 상사가; the 첩이 before 비로소 is dropped)",
+    "O1: 상접하여 억울하게 (the end of column 2 doesn't match the leaf; 억울하게 looks invented)",
+    "O6: 짓하여 복을 지는 억울 (the leaf reads roughly 즈장ᄒᆞ여 … 몸을; 억울 is not on the page)",
+    "O6: 일어할 으의 집 (the end of the last column reads roughly 일 너월 우리 집; garbled here)"
+   ],
+   "note": "All seven columns are there in the right order, but the old spelling has been quietly modernised, and several phrases (억울하게, 억울, 일어할 으의) are misread or invented, so the text doesn't reliably match the leaf."
+  },
+  {
+   "book": "6a3c5e7840c88a541d8e2644",
+   "page": 13,
+   "page_id": "6a3c5e7840c88a541d8e2651",
+   "fidelity": 3,
+   "defects": [
+    "O6: 集韻本作第 (the variant character cited on the page is not 第; it is a rare form misread as a common character)",
+    "O1: 書法 (trailing 書法 is not on the page; the leaf ends 古只用升)"
+   ],
+   "note": "All columns are present and in order, but a reader would hit several wrong characters (談 for 謨, 運 for 連, 褒 for 衮, 第 for the cited variant form) and a stray '書法' added at the end that is not on the page."
+  },
+  {
+   "book": "69f3296eaeeee0fa38c658ea",
+   "page": 13,
+   "page_id": "69f3296eaeeee0fa38c658f7",
+   "fidelity": 2,
+   "defects": [
+    "O6: 부귀와 신선의 일을 하시고 만인의 (Column 1 reads roughly '…텬지 신ᄌᆞ의 일을…ᄒᆞ시ᄆᆡ 텬ᄒᆞ 만인의'. It says nothing about 부귀 or 신선; the meaning was guessed.)",
+    "O1: 적의 의처 조선과 좌를 보시고 악한 (There is no 조선 in this column. The words were made up to fill a column the reader couldn't make out.)",
+    "O1: 불도와 침강에 즈음하여서도 불신을 되사 (A paraphrase that doesn't follow the strokes in column 4.)",
+    "O6: 정의를 호리라 령 뒤 뜻을 우리라 되살으 (A garbled reading of column 8. The output itself makes no sense.)",
+    "O6: 리 그릇된 안게 조이셔서 비로소 일신을 (A garbled reading of column 9.)"
+   ],
+   "note": "The page has ten columns of old-style cursive Hangul. The candidate gives ten lines of modernised Korean, but only a few words actually match the page (만인의, 백성, 친히, 만승 천자께서, 원통, 계책). Much of the rest is guessed or garbled."
+  },
+  {
+   "book": "69f3296eaeeee0fa38c658ea",
+   "page": 27,
+   "page_id": "69f3296eaeeee0fa38c65905",
+   "fidelity": 1,
+   "defects": [
+    "O4: 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 (Lines 6-9 are the same filler syllable repeated in place of the page's text.)",
+    "O1: 하나 헌휘 도로 븨기 긇어 긇고 왈 됴 흠 (Lines 2-5 are invented. Only small pieces (헌, 왈, 앗거든, 샹일) loosely match the page.)",
+    "O1: 엇지 잇는 겻을 몯 듇고 비록 엇지 (Line 1 goes wrong after 건니와. The page reads roughly 엇지 낫…오리 …을 듯고 비로소 …)",
+    "O5: 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 (The page has 10 columns but the candidate has 9 lines. The last column (…흔 뒤에 …) is dropped.)"
+   ],
+   "note": "Apart from the first word, nothing matches the 10 columns of clear cursive Hangul on the page. The lower half is the filler syllable '긇' repeated over and over."
+  },
+  {
+   "book": "69f3296eaeeee0fa38c658ea",
+   "page": 36,
+   "page_id": "69f3296eaeeee0fa38c6590e",
+   "fidelity": 1,
+   "defects": [
+    "O1: 안귀브가 뎡가 됴히 아라 졈귀 (Even the opening lines are mostly made up. Only a few syllables match the page's first two columns.)",
+    "O1: 에 됴히 받외 됴히 졈귀 슿히 됴히 븨 (Lines 3–9 are made-up syllable strings that don't match the page's columns.)",
+    "O4: 순 됴히 됴히 됴히 됴히 됴히 됴히 (The tail turns into thousands of repeats of '됴히' and then cuts off mid-token.)",
+    "O5: 븨가 몯 됴히 싀 됴히 됴히 됴히 됴히 됴히 됴히 (The real text of the later columns is lost, including '비가 못다 이ᄉᆞᆸ시ᄂᆞ니 밧게 나와 ᄭᆡ어 ᄂᆞ니 오늘은' and the last column ending '이ᄅᆞᆯ이 업ᄉᆞᄂᆡ 내 홍'.)"
+   ],
+   "note": "The page has 10 columns of cursive vernacular Hangul. The candidate matches only a few syllables at the start, then makes up text and collapses into thousands of repeats of '됴히'."
+  },
+  {
+   "book": "69f3296eaeeee0fa38c658ea",
+   "page": 47,
+   "page_id": "69f3296eaeeee0fa38c65919",
+   "fidelity": 2,
+   "defects": [
+    "O1: 츳 츳 츳 츳 츳 츳 츳 츳 츳 츳 츳 (The last line (옷시라 ᄒᆞᆫᄃᆡ 쉬 상을…) is replaced by a repeated placeholder syllable. That syllable is not on the page.)",
+    "O4: 씅 츅 왈 비 츳 츳 츳 츳 츳 츳 츳 츳 츳 (From line 4 on, the same syllable 츳 repeats in place of the actual words. Lines 7–9 are mostly filler.)",
+    "O5: 츳 왈 이 츳 츳 츳 츳 의 츳 진 생 츳 (Line 9 (뎨왈 이옷슨 …의 ᄌᆡ진 생ᄒᆞᆫ) is mostly lost. Its opening word 뎨 is missing.)",
+    "O6: 입어 숭 츳 츳 벗 벗 노라 츳 츳 츳 (Line 4 is garbled. Words such as 까ᄆᆞᆺ, ᄒᆞ노라 and ᄒᆞ시니 are replaced by filler.)",
+    "O6: 입 츳 츳 가 쳔 츳 의 입 츳 츳 츳 비 츳 츳 (Line 8 (입어 벗논가 ᄎᆡᆫᄌᆞ의 입으시니 버티ᄒᆞ니) is reduced to fragments.)"
+   ],
+   "note": "Only the first five or six of the ten vertical lines are roughly transcribed, with misreadings. The rest of the page turns into the repeated syllable '츳', which is not on the page, so the closing lines are effectively missing."
+  },
+  {
+   "book": "69f3296eaeeee0fa38c658ea",
+   "page": 67,
+   "page_id": "69f3296eaeeee0fa38c6592d",
+   "fidelity": 2,
+   "defects": [
+    "O6: 주어 중기 조선을 다스리니 나랏 (end of line 1 misread; the page has roughly 나시 츙의/츙이, not 나랏)",
+    "O6: 날을 평정하고 죽전 주원 (the page reads roughly 평졍ᄒᆞᆫ 죠션ᄌᆞ 원슈를; 죽전 주원 is a garbled reading)",
+    "O6: 히 하므로 안치 칭이 층이 신종에게 적이 (line 3 is a garbled guess; the page has roughly ᄒᆞ울 안ᄌᆡ 칭ᄎᆞᆼ 츙이 신죵에 ᄌᆡ셕이)",
+    "O1: 와 죽은 진 십조 팔이 어두운 것은  (어두운 것은 is not on the page; the leaf has roughly 팔ᄂᆡ에 츙은 ᄃᆞ고 도)",
+    "O5: 러와 전후 가희권 즐기듯 장기  (the end of column 9 (roughly 장과 루ᄒᆞ…) is dropped or misread)",
+    "O6: 를 들이 (the last column reads roughly 불ᄉᆞ리, not 를 들이)"
+   ],
+   "note": "All ten columns are there in the right order and the general sense (loyal subject, the Japanese enemy, the people) comes through, but many words are garbled or guessed, the archaic spelling is modernised, and the ends of the last two columns are wrong."
+  },
+  {
+   "book": "6a3cc269ec254ff6cae10e55",
+   "page": 13,
+   "page_id": "6a3cc269ec254ff6cae10f65",
+   "fidelity": 2,
+   "defects": [
+    "O3: 海島之夷，還服其皮。 (The page's main text reads 海島之夷以皮服來貢也. The candidate puts a phrase taken from the commentary in its place.)",
+    "O6: 還服其皮。不明夷以皮服來貢也。水害除。 (The page reads 還服其皮明水害除. The words 不明夷以皮服來貢也 are added and are not on the page.)",
+    "O6: 衣皮，夷性不明，必水平乃得其皮 (The page reads 衣皮夷性不必水平乃得其皮. The candidate adds 明 and reverses the sense.)",
+    "O6: 南地暖，故服皮 (The page reads 故服卉, not 故服皮. This misread destroys the north/south contrast.)",
+    "O6: 聖人亦因而不由耳 (The page reads 不革耳, not 不由耳.)"
+   ],
+   "note": "The first half of the page is unreliable. The main text is replaced with a phrase from the commentary, a sentence is invented, and several words are misread in ways that change the meaning (不必→不明, 服卉→服皮, 不革→不由, 篚→筐). The heading's 夾 is also split off."
+  },
+  {
+   "book": "6a3cc00af9474f825c16d659",
+   "page": 11,
+   "page_id": "6a3cc00af9474f825c16d664",
+   "fidelity": 3,
+   "defects": [
+    "O6: 始得。如何？\n如今小有利害、便生計較、便說道恁地死、非正命。 (Small-character column 如何得 at the end of the passage was moved up to sit after 始得, which re-punctuates the sentence; on the page 得 begins the second column and the passage ends 非正命如何得)",
+    "O5: 非正命。 (Final 得 of 如何得 (last small column) dropped)",
+    "O1: 為正。以此。比干 (以此 is not on the page, which reads 為正比干雖殺身)"
+   ],
+   "note": "The closing small-character 如何得 is moved earlier and loses its 得, and the 潛室陳氏 commentary picks up words that aren't on the page (以此, 以)."
+  },
+  {
+   "book": "699383b350654cbbe29181eb",
+   "page": 60,
+   "page_id": "699383b350654cbbe2918227",
+   "fidelity": 2,
+   "defects": [
+    "O1: μνησθησόμεθα δὲ τῶν ἑξῆς καὶ τὸν λόγον\nδιεξέλθωμεν (The second line is made-up smooth prose. The page reads roughly 'μνήσθητι προσοῖς γ' … τὸν λόγον', and 'διεξέλθωμεν' does not appear.)",
+    "O6: ἀναδοχὰς οὐ μὴ δὲ τῶν στερεωμάτων (The page has 'φροιμίοις' (preludes) here, not 'στερεωμάτων' (firmaments).)",
+    "O1: ἡ δὴ τί μοι ζῆν καὶ τὸ ζῆν οὐκ ἐν τύχη. (The second half of the line does not match the page, which reads roughly 'ἢ … ἀλλοῦ …'.)",
+    "O6: ὅπως πεσὼν κἀγὼ <gloss>ἀπὸ</gloss> <gloss>τῆς</gloss> <gloss (The page has 'τῶν πάντων πόνων'. The candidate gives 'πάνυ' and mixes in glosses that are not at that spot.)"
+   ],
+   "note": "Several main-text lines (2, 4, the 'ζῆν' line and the 'πεσὼν' line) contain words that are not on the page, and the red glosses are scattered and incomplete, so this cannot be published as the transcription."
+  },
+  {
+   "book": "699383b350654cbbe29181eb",
+   "page": 255,
+   "page_id": "699383b350654cbbe29182ea",
+   "fidelity": 3,
+   "defects": [
+    "O6: μετάθεντο αὐτὰς ἀπὸ τῆς θείας ἐνεργείας καὶ δυνάμεως, ὃν οἱ  (The page has roughly 'ἐντεῦθεν καὶ τὰ ὀνόματα τῆς θείας ἐνεργείας καὶ δυνάμεως, ἰδιωτικῶς ἀν-'; the start and end of the line are invented.)",
+    "O1: τες ἀπὸ τῆς αἰσθητικῆς ἐννοίας ὠνομάσαμεν. αὐτὴ δὲ ἐπὶ κατάλ (This line does not match the page, which reads roughly '…ἡ θεατικὴ τῆς θείας δυνάμεως· αὕτη δὲ ἐστὶ κατὰ τὸ γνῶμα'.)",
+    "O6: τῶ ὁρατῶ ἐμφέ-\nρει τὴν σημασίαν ἔχει (The page reads 'τῆς ὁρατικῆς ἐνερ-γείας τὴν σημασίαν ἔχει'.)"
+   ]
+  },
+  {
+   "book": "699383b350654cbbe29181eb",
+   "page": 334,
+   "page_id": "699383b350654cbbe2918339",
+   "fidelity": 3,
+   "defects": [
+    "O1: ἡμῖν γὰρ οὐχὶ μεθ’ ἡμῶν. (The final line is not what the page says. The leaf reads roughly ἥκιστα δ’ ἄρα … χαρίσασθαι.)",
+    "O6: οἰκτρὰ. καὶ πρὸς τὰς συμφορὰς, οὐδενὸς ἐν ἀρχῇ (The page has οἱ ἱερεῖς, not οἰκτρά, and the end of the line is misread too.)",
+    "O6: ἐπτοημένον πᾶσι ὡς ἔ- (The page reads ἐπιθυμοῦντα (or similar), not ἐπτοημένον πᾶσι.)"
+   ],
+   "note": "The text follows the page line by line, but it has several real misreads, including οἰκτρά for οἱ ἱερεῖς, and the last line is made up rather than read from the leaf."
+  },
+  {
+   "book": "69942a43045dfc482ad76202",
+   "page": 279,
+   "page_id": "69942a43045dfc482ad76319",
+   "fidelity": 3,
+   "defects": [
+    "O1: ἐπὶ τῇ πέτρᾳ τῇ λυπήρᾳ δείκνυσθαι (The page reads παρὰ τὸ βουλευτήριον (by the council-house, matching 'in curia' in the Latin). The candidate's phrase is not on the page.)",
+    "O6: ἐμφανίζειν τὰ σπλάγχνα τοῖς ἀνθρώποις σαφαίνειν τὰ μέλλοντα  (Garbled. The page has ἀκριβῆ τὴν διὰ τῶν σπλάγχνων τοῖς ἀνθρώποις προφαίνειν τῶν μελλόντων δήλωσιν γράφει. Phrases are dropped and replaced.)"
+   ],
+   "note": "The Latin column is faithful, but the Greek about the Sibyl's rock and the entrails prophecy has invented and garbled phrasing that does not match the page."
+  },
+  {
+   "book": "69a5e3d7006a4098422165d4",
+   "page": 22,
+   "page_id": "69a5e3d7006a4098422165ea",
+   "fidelity": 2,
+   "defects": [
+    "O1: τοιαῦτ’ ἀκούειν σε δεσπόσειν εὖ φρονῶ. (page reads τοιαῦτ' ἀκούειν. πε. ὅς ποτ' ἐστὶν εὖ φρονῶν; the speaker change is lost and the words are invented)",
+    "O1: ἢ τί δῆτα σοὶ τίν’ ἂν πράξαιμι τῇ δίκῃ; (page reads χρ. τί δῆτα σοι τίμημ' ἐπιγράψω τῇ δίκῃ; the χρ. speaker mark is also dropped)",
+    "O1: ἐπεὶ ἔλαθες· πρ. ὅτι σοι δοκῶ καλῶς λέγειν. (page reads ἐὰν ἁλῷς; πε. ὅ τι σοι δοκεῖ … λέγεις)",
+    "O1: τὸ γὰρ ἀπολομένην ἀπιέναι, καὶ σφῷ διὰ παντὸς (garbled line not matching the page)",
+    "O1: ἴκ’ ἐμοῦ δέ· νοεῖς ὡς οὗτος θατέρου γ’ ἥκιστ. (page reads βλ. ἱκανοὺς νομίζεις δῆτα θανάτους εἴκοσιν; the speaker is tagged πλ.)",
+    "O1: δικὰ γὰρ φθέγγεσθε τοῦτο πράττοντ’ ἠπίαν (page reads οὐκ ἂν φθάνοιτον τοῦτο πράττοντ'· ἤ τι γὰρ)",
+    "O1: ὦ μισοτέκνω δί’ (page reads ᾧ νικήσετε τηνδὶ)",
+    "O1: λήμ’ ἐλέγχοντες· ἀλλ’ ἐκφεύξεται πλ’ μηδὲν (page reads ἀντιλέγοντες, μαλακὸν δ' ἐνδώσετε μηδέν)",
+    "O1: ὥστ’ οὐ δ’ ἐλθὼν τ’ ὢν αὑτοῦ κακῶν ῥᾷστ’ ἔσται· κ’ οὐκ ἀπολε (page reads ὡς τοὺς ἀγαθοὺς τῶν ἀνθρώπων βαδιεῖται κοὐκ ἀπολείψει)",
+    "O6: τὰ πρὸς τὸ θεῖον σέβεσθαι (page reads δήπου τά τε θεῖα σέβοντας)",
+    "O1: οὔτις· ἐγώ σοι τούτου μάρτυς, καὶ πάνυ πάνυ γ’ ἀμετρίατα. (page reads οὐδείς· … μηδὲν ταύτην γ' ἀνερώτα)",
+    "O1: δοκοῦμ’ οὖν φημὶ παῦσαι ταῦτ’ (page reads οὔκουν φημὶ … παύσει)",
+    "O1: ὁ δ’ οὖν, ἤν τ’ ἰὼν τοῖς ἀνθρώποις ἀγαθὸν μεῖζον (page reads ὁδὸν ἥντιν' ἰὼν … ἀγάθ' ἂν μείζω)",
+    "O6: ἢ σκυτελεύειν (page reads ἢ σκυτοδεψεῖν)",
+    "O6: θρίξας δάπεδον (page reads ῥήξας)",
+    "O1: τοῦτ’ αὐτὸ ποιεῖν; <margin>χρ.</margin> <gloss>εὖ οἶδ' ὅτι</ (page reads τῆς αὑτοῦ τοῦτο ποιῆσαι; there is no gloss or speaker change here)",
+    "O6: ἐπάναγκας ἀναγκασθήσῃ, καὶ σπείρειν καὶ τἄλλ’ (page reads ἐπαναγκασθείς, καὶ σκάπτειν τἄλλα τε μοχθεῖν)",
+    "O6: ὧν δεόμενον αὐτὸν (page reads ὧν δεῖσθον· ἐγὼ γὰρ)",
+    "O6: ἐγὼ μετ’ ἀνάγκης καθίσας (page reads ἐπαναγκάζουσα κάθημαι)"
+   ],
+   "note": "The right-hand page is mostly sound, but much of the left-hand page is garbled or invented, with wrong words and speaker marks (πε. becomes πρ., χο. becomes χρ.). Several right-hand lines are also misread."
+  },
+  {
+   "book": "69a5e3d7006a4098422165d4",
+   "page": 105,
+   "page_id": "69a5e3d7006a40984221663d",
+   "fidelity": 2,
+   "defects": [
+    "O6: ὅτι ἡ πατρὶς εὖ χ᾽ ᾧ Κυνὶ ταχύ. (page reads ὅτι ἡ τριήρης ἐστὶ χὠ κύων ταχύ)",
+    "O1: ταῦτ᾽ οὐκ Ἀπόλλων ἦ; προσέτεθη (page reads πῶς οὖν ἀλώπηξ προσετέθη)",
+    "O6: τοῦτο δ᾽ ἐμὸς ὁ θεὸς τοὺς Ἀλωπεκιδας ποῦ (page reads τουτοισὶ μισθὸς τοῖς ἀλωπεκίοισι ποῦ)",
+    "O6: ἐγὼ ποριῶ Κλεωνύμῳ ἡμέρᾳ τριῶν (page reads ποριῶ καὶ τοῦτον ἡμερῶν τριῶν)",
+    "O1: ἀλλ᾽ ἔτι τὸν λαβόντ᾽ οὐκ ἔφασκεν οὐδὲ βουλεύσασθαι (page reads τόνδ᾽ ἐπάκουσον ὅν σοι φράζει ἐξαλέασθαι)",
+    "O6: χρησμὸν Λικυμνίης (page reads Λητοΐδης)",
+    "O6: ἀλλὰ τὴν τούτου χάριν ἐποίησεν (page reads τὴν τούτου χεῖρ᾽ ἐποίησεν)",
+    "O6: ὀρθῶς ἡμῖν λέγει τὴν Διοπείθους (page reads ᾐνίξατο)",
+    "O6: χ᾽ ὑπ᾽ ἐν ἐκ Ματάνοις δικάσῃς, λάχων σιπύην γα (page reads χὤτι γ᾽ ἐν Ἐκβατάνοις δικάσεις, λείχων ἐπίπαστα)",
+    "O6: ἀλλ᾽ ἀλλ᾽ ἐγὼ δώσεις ποριῶ σ᾽ ἐσκευασμένα (page reads ἀλλ᾽ ἀλφιτήδη σοι ποριῶ)",
+    "O1: ἐπὶ δέ αἴ γε δὴ σ᾽ ἔλαστ᾽ εὖ μεδεῖν μέ γέ μοι (page reads ἐγὼ δὲ μαζίσκας γε διαμεμαγμένας)",
+    "O6: Καὶ τοῦ ψωμ᾽ ὁπότ᾽ ἐσθίεις ἀλλ᾽ ἐμοῦ θές (page reads καὶ τοὖψον ὀπτὸν μηδὲν ἀλλ᾽ ἐμοῦ θέτε)",
+    "O6: ὀμόσατέ μοι ὅτι περ ποιήσετ᾽ εὖ σέθεν (page reads ἀνύσατέ νυν ὅ τι περ ποιήσετ᾽ ὡς ἐγώ)",
+    "O4: <margin>Χο.</margin> ἀρχὴν ὅτε πάντες ἄν- (lyric line duplicated)",
+    "O1: <margin>περ ὅπως οἷον στρόβιλος</margin> (page reads περ δημοσίους τρέφεις; αὐτοὺς ἐπίτηδες ὥσ- dropped)",
+    "O6: αὐτοῦ σ᾽ ἐνῆν πυκί. (page reads ἐν τῇ πνυκί)",
+    "O6: θύσας ἐπιβλητής (page reads θύσας ἐπιδειπνεῖς)",
+    "O6: τούς· ὃν δ᾽ ἂν δοκῶ βεβαρ- (page reads τοὺς οὐδὲ δοκῶν ὁρᾶν)",
+    "O6: κάζω πάλιν ἐξ εδρῶν (page reads ἐξεμεῖν)",
+    "O6: καὶ δ᾽ πᾶσ᾽ ἔσ᾽ μακαρίαν <margin>ἀλλ᾽ οὐκ ἂν ὁ φθόρε</margin (page reads Κλε. ἄπαγ᾽ ἐς μακαρίαν ἐκποδών. Ἀλ. σύ γ᾽ ὦ φθόρε)"
+   ],
+   "note": "Much of the Greek is garbled or made up: many lines don't match the manuscript, speakers are mislabelled, and the lyric section is scrambled and has a repeated line."
+  },
+  {
+   "book": "69a5e3d7006a4098422165d4",
+   "page": 193,
+   "page_id": "69a5e3d7006a409842216695",
+   "fidelity": 2,
+   "defects": [
+    "O1: αὐτοὶ Λακωνικοί; σαφ᾽ ἴσως· ὦ λιπαρώτατε (the line does not match the hand on the page)",
+    "O6: μὴ ληφθῇ βοώτων, μηδέν᾽ αἰσθανοίατο; (garbled: the leaf reads μὴ δὲ λαμπ... λούντων μηδὲν)",
+    "O1: ὅτι πολεμῆσαι ῥᾴδιόν ἐστιν <unclear>ἀντιλέγειν</unclear> πολ (invented wording; the leaf has ὅτι πολεμ... ῥᾷστ᾽ ἐκείνων πολλάκις)",
+    "O6: ναὶ τὼ σιὼ μὰ λἀττικίον δώσει δίκην (the leaf reads νῦν ὡττικίων)",
+    "O6: εἰ δ᾽ αὖ τι πρᾶγμα <unclear>ὑμῖν</unclear> ἀγαθὸν λἀττικωνικ (the leaf reads πράξαιντ᾽ ἀγαθὸν ἀττικωνικοὶ; πρᾶγμα ὑμῖν is not there)",
+    "O6: οἱ λάκωνες εἶρηκας πέρι (the leaf reads εἰρήνης πέρι)",
+    "O6: ὧν οὐκ οὐκ οἱ Δί᾽ ἡπατ᾽ ἂν ῥώμην ἔτι (the leaf reads οἱ δὴ ποτ᾽ ἄρ᾽ ἤμην ἔτι)",
+    "O6: κλώνου θυείας φθέγμα (the leaf reads καὐτὸς θυείας)",
+    "O6: τουτὶ μὲν ὑμῖν τὸ κακόν· οὐδέν πω πρᾶγμα πω. (the leaf reads οὐδὲν ἡμῖν πρᾶγμα πω)",
+    "O6: <margin>κυ</margin> ἀλλ᾽ οὐκ ἔστι (the leaf reads ἀλλ᾽ ὦ μέλε; οὐκ ἔστι is pulled forward from the next line)"
+   ],
+   "note": "This photo is a two-page spread foliated 188, not page 148. Many lines on the left page and several on the right are garbled or invented, and the speaker labels in the margins are often wrong."
+  }
+ ]
+}

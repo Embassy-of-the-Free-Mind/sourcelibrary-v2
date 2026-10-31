@@ -207,6 +207,15 @@ function score() {
   out.bad_books_n = bad.length; out.containment_candidates_n = contain.length;
   fs.mkdirSync(RESULTS, { recursive: true });
   fs.writeFileSync(path.join(RESULTS, 'score.json'), JSON.stringify(out, null, 1));
+  // Defect rates per stratum and per served route (the experiment header's defect_rates file; #7824's rates).
+  const rate = (ps) => { const w2 = ps.reduce((a, p) => a + p.words, 0), per = (k) => r3((1000 * ps.reduce((a, p) => a + p.sev[k], 0)) / Math.max(1, w2));
+    return { pages: ps.length, books: new Set(ps.map((p) => p.book)).size, words: w2, cosmetic_per_1k: per('cosmetic'), misleads_per_1k: per('misleads'), wrong_text_per_1k: per('wrong_text'),
+      fidelity_mean: r3(mean(ps.map((p) => p.v.fidelity))), accept: `${ps.filter((p) => p.v.accept).length}/${ps.length}` }; };
+  const jp = books.flatMap((b) => b.pages.filter((p) => p.judged).map((p) => ({ ...p, cellroute: `${b.top_cell} ${b.top_route}` })));
+  const byRoute = {}; for (const cr of [...new Set(jp.map((p) => p.cellroute))]) byRoute[cr] = rate(jp.filter((p) => p.cellroute === cr));
+  fs.writeFileSync(path.join(RESULTS, 'defect-rates.json'), JSON.stringify({ generated_at: out.generated_at, words: '#7824 words() (route-judge-6740/defect-rate.mjs)', weights: W8,
+    note: 'the STORED text of drawn books, judged blind by Opus; a stratified draw (weights in draw.json), not a random sample of any cell',
+    by_stratum: Object.fromEntries(STRATA.map((st) => [st, rate(jp.filter((p) => p.stratum === st))])), study_cells: byRoute }, null, 1));
   fs.writeFileSync(path.join(RESULTS, 'bad-books.json'), JSON.stringify({ bad, containment_candidates: contain }, null, 1));
   console.log(JSON.stringify({ instrument: out.instrument, books: out.books, primary: out.primary, by_stratum: out.by_stratum, corpus: out.corpus, icc: out.icc, decision: out.decision }, null, 1));
 }
@@ -237,7 +246,13 @@ async function writeback() {
   const recs = records();
   const ev = await import('../lane-judge-sampler.mjs');
   // Router evidence: the same records under their REAL cell names, exported as a file; rules.json does not name it.
-  const real = recs.filter((r) => r.cell_real && !r.cell_real.startsWith('null')).map((r) => ({ ...r, cell: r.cell_real.split('/')[0], script_type: r.cell_real.split('/')[1] === 'unknown' ? 'unknown' : r.cell_real.split('/')[1], cell_hand: 'print', judge: { ...r.judge, model_reported: r.judge.model_reported } }));
+  const toReal = (r) => { const [cell, script] = r.cell_real.split('/'); return { ...r, cell, script_type: script, cell_hand: script }; };
+  const items = recs.filter((r) => r.kind === 'item' && r.cell_real && !r.cell_real.startsWith('null')).map(toReal);
+  // A control tests the judge, not a route: every control is attached to every (cell, route) the items reached, as
+  // #7835 did (one judge, one prompt, judged them all).
+  const pairs = [...new Map(items.map((r) => [`${r.cell}|${r.route}|${r.cell_hand}`, r])).values()];
+  const ctl = recs.filter((r) => r.kind !== 'item');
+  const real = [...items, ...pairs.flatMap((p) => ctl.map((c) => ({ ...c, _id: `cv${sha(`${c._id}:${p.cell}:${p.route}:${p.cell_hand}`).slice(0, 14)}`, cell: p.cell, route: p.route, script_type: p.cell_hand, cell_hand: p.cell_hand })))];
   const s = ev.exportScore(real);
   const file = path.join(path.resolve(path.dirname(new URL(import.meta.url).pathname), '../estimator/router-table/evidence'), 'confidence-validation-7866.score.json');
   fs.writeFileSync(file, JSON.stringify({ ...s, source: 'confidence-validation-7866 (#7866)', file: 'scripts/eval/estimator/router-table/evidence/confidence-validation-7866.score.json',

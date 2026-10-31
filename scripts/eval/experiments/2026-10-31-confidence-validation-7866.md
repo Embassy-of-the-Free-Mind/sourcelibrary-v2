@@ -6,13 +6,13 @@ scripts: []
 canons: []
 n_books: 160
 n_pages: 800
-verdict: "PREREGISTERED (2026-10-31): no result yet. Does a book-level confidence score built from stored signals (router posterior of the served route × the share of unflagged pages) rank live OCR'd books by what a blind Opus judge finds on 5 pages spread through each book?"
-status: undecided
-decision: "none yet: the preregistered rule (AUC >= 0.75 and calibrated → triage sweep of low-confidence books; else more testing) is applied in the results section"
+verdict: "Our cheap signals do not predict which books are bad. On 110 measured books (5 pages each, blind Opus, judge valid: 8/8 wrong-page, 12/12 plants), the confidence score's AUC for a bad book is 0.66 (95% CI 0.55 to 0.76) and Spearman against the defect rate is -0.26 (-0.44 to -0.06), under the 0.75 bar. Bad books: high-confidence 7/30, middle 18/30, low 26/50, unmeasured 20/50. Reweighted, 43% of live OCR'd books are bad (36 to 51%), about 20,600 of 47,435 (2026-10-31). The low stratum is miscalibrated (predicted 0.45, observed 0.58). Within one cell the flags add nothing (AUC 0.57). Book quality is clustered (ICC 0.38), so 5 pages a book give reliability 0.75. Gemini 3.8 Flash as a second judge: kappa 0.34 with Opus, and it misses 28% of Opus-bad pages when the text is Gemini-written against 5% otherwise; as a screen it clears 11% of books."
+status: informational
+decision: "By the preregistered rule: MORE TESTING, not a triage sweep by confidence (AUC 0.66 < 0.75; low stratum not calibrated). A sweep of low and unmeasured books only would miss ~9,500 of the ~20,600 estimated bad books (the high and middle strata). Not applied: the sweep, any re-read, and any rules.json entry are Derek's (#7809). 6 wrong-leaf pages in 2 books were contained."
 superseded_by: null
 issue: [7866, 6740, 7611, 7824, 7809]
-router_evidence: "none — the export goes to router-table/evidence/confidence-validation-7866.score.json and rules.json does not name it; the store copies carry the cell namespaced study-7866/<cell> so the nightly sampler export does not pool them"
-defect_rates: "none — preregistration, no verdict yet; the results PR names scripts/eval/confidence-7866/results/defect-rates.json (per stratum and per served route)"
+router_evidence: "none — the export is router-table/evidence/confidence-validation-7866.score.json and rules.json does not name it (a stratified draw of stored text; adding it moves cells such as zh-paddle-dice-lt090, which is Derek's call, #7809). The store copies carry the cell namespaced study-7866/<cell>, so the nightly sampler export does not pool them."
+defect_rates: "scripts/eval/confidence-7866/results/defect-rates.json"
 ---
 ## 2026-10-31 · Do our cheap quality signals predict a book's real quality? 160 books, 5 judged pages each, stratified by confidence (#7866)
 
@@ -220,3 +220,155 @@ Frame sizes: high 11,967, middle 11,181, low 11,545, unmeasured 12,742. Score qu
 - CER only where a drawn book is in an existing reference set (see §4).
 - The Gemini secondary judge was added by Derek's inbox note before any judge call.
 - Limits: Claude only via `claude -p` on this box's subscription; Gemini only through agy; no paid API call; no cron or routing change; read-only on page text (containment excepted, as the issue says).
+
+## Results (run 2026-10-31 19:58Z – 21:45Z)
+
+**Run.**
+- Preregistration merged in #7868 at 19:58:37Z. Every judge call came after it.
+- **Opus** (`claude-opus-5-5`, `claude -p` on this box's subscription): 821 calls (800 pages + 1 re-ask of an unparsed reply + 20 controls), against the cap of 900.
+  - Meter: weekly 31% → 33%, 5-hour not reported. The account is shared, so this is an upper bound.
+  - List-price equivalent $52.73, not billed.
+- **Gemini** (`gemini-3.8-flash-low`, agy, `AGY_HOME=/root/.agy-james`): 820 texts, 1 unparsed.
+- **Paid API: $0.**
+- **Code fixed after the preregistration, method unchanged:**
+  - the judge queue could index past its last job when several workers waited on the meter (crash on the one re-ask);
+  - the Gemini stage skipped 4 pages whose stored text is empty; Opus had judged those, so Gemini now does too;
+  - the router-evidence export attaches the controls to every (cell, route) and takes the hand from the cell's script, as #7835 did.
+- Artifacts:
+  - `scripts/eval/confidence-7866/results/`: `score.json`, `defect-rates.json`, `bad-books.json`, `draw.json`, `frame-summary.json`.
+  - Texts, images and both verdict files: `$JOB_SCRATCH/confidence-7866/` (archived to R2).
+
+### Instrument: valid
+
+- Wrong-page controls: 8/8 rejected at fidelity ≤ 2 (2 per stratum).
+- Planted errors: 12/12 caught (3 per stratum).
+- Noise floor: #7818's κ 0.87, reused.
+
+### Primary: does the confidence score rank books by what the judge finds?
+
+On the 110 measured books (each classified on 5 judged pages):
+
+| outcome | value (95% CI, book bootstrap) |
+|---|---|
+| Spearman ρ, score vs defect rate | **−0.26** (−0.44 to −0.06) |
+| AUC for a bad book, design-weighted (primary) | **0.66** (0.55 to 0.76) |
+| AUC, unweighted | 0.65 (0.54 to 0.75) |
+| bad books | 51/110 |
+
+The score carries some signal but **fails the 0.75 bar**. Even the upper end of its interval only touches it.
+
+### By stratum
+
+| stratum | frame books | bad books | bad share (Wilson 95%) | page accept observed (95%) | predicted (p_route) | wrong-text pages | MQM pts / 1k words (pooled; median book) |
+|---|---|---|---|---|---|---|---|
+| high | 11,967 | 7/30 | 23% (12–41) | 0.73 (0.63–0.83) | 0.79 | 30/150 | 53; 37 |
+| middle | 11,181 | 18/30 | 60% (42–75) | 0.59 (0.48–0.69) | 0.56 | 37/150 | 89; 78 |
+| low | 11,545 | 26/50 | 52% (39–65) | 0.58 (0.49–0.68) | 0.45 | 79/250 | 153; 81 |
+| unmeasured | 12,742 | 20/50 | 40% (28–54) | 0.67 (0.56–0.76) | — | 60/250 | 90; 17 |
+
+- **Calibration.** High and middle are calibrated. **Low is not**: the router predicts 0.45 and the judge accepts 0.58. Most low books are Paddle Chinese manuscripts, whose cell posterior (14/30) is too pessimistic: here 181/278 pages were accepted.
+- **Middle and low do not separate** (60% and 52% bad).
+- **Unmeasured books are not worse than measured ones.** "No measurement" is not a risk signal: their median book is the cleanest of the four strata. The other English, IA OCR and e-text imports are mostly sound, while Greek and Sanskrit Flash text is poor.
+- **Within one cell** (zh-paddle-dice-lt090 / paddle, 58 books, where only the flag share varies): ρ −0.20 (−0.45 to +0.08), AUC 0.57. The page flags add nothing there.
+
+### Each signal on its own (all classified books that carry it)
+
+| signal | books | ρ vs defect rate | AUC for a bad book (95%) |
+|---|---|---|---|
+| confidence score | 110 | −0.26 | 0.65 (0.55–0.75) |
+| p_route (router posterior) | 110 | −0.27 | 0.62 (0.52–0.72) |
+| re-read disagreement (`page_revisions`, re-read sources) | 75 | −0.26 | 0.62 (0.49–0.74) |
+| route wrong-text per 1k words | 105 | −0.21 | 0.61 (0.51–0.71) |
+| 1 − flag share | 160 | −0.10 | 0.59 (0.51–0.68) |
+| no fair / poor `<scan-quality>` tag | 160 | −0.17 | 0.57 (0.51–0.63) |
+| served route = decided route | 110 | −0.19 | 0.56 (0.51–0.62) |
+| `<language>` tag agrees | 148 | 0.01 | 0.55 (0.46–0.65) |
+| no near-empty pages | 160 | −0.15 | 0.53 (0.46–0.61) |
+| `human_read_count` | 160 | −0.06 | 0.53 (0.47–0.58) |
+| no withheld translation | 160 | 0.02 | 0.52 (0.47–0.57) |
+| no `ocr.has_warning` | 160 | 0.12 | 0.50 (0.45–0.55) |
+| cell decided (keep / switch) | 126 | 0.00 | 0.49 (0.43–0.55) |
+| route measured at all | 160 | 0.22 | 0.47 (0.40–0.54) |
+| book scan score | 93 | 0.16 | 0.39 (0.29–0.50) |
+| page scan score | 87 | 0.15 | 0.38 (0.27–0.50) |
+
+AUC here is P(a bad book scores lower). Below 0.5 means the signal points the wrong way.
+
+What carries the prediction:
+- **The router posterior.** It is the backbone, and it is about as good as the whole score.
+- **Re-read disagreement**, on the 75 drawn books that have a re-read row.
+
+What is noise or worse:
+- `has_warning`, withheld translations, near-empty pages, the language tag and reader counts.
+- The scan-quality scores, which point the **wrong way**: better-scanned books were worse here. Language confounds this, since the manuscripts with good photographs are the hardest to read.
+
+### How many pages a book needs (ICC)
+
+| | ICC(1) (95%) | reliability of the book mean: 3 / 5 / 8 pages |
+|---|---|---|
+| bad page (0/1) | **0.38** (0.29–0.46) | 0.65 / **0.75** / 0.83 |
+| log MQM points per 1k words | 0.50 (0.41–0.58) | 0.75 / 0.83 / 0.89 |
+
+- Quality is largely a property of the book. By the preregistered rule, **5 pages a book** (reliability 0.75 ≥ 0.70) is enough to call a book from a sample.
+- 3 pages is not (0.65), and 8 buys little more.
+
+### The re-read queue, reweighted to the corpus
+
+- Bad share of live OCR'd books: **43.4% (95% CI 36.1–50.8%)**, about **20,600 of 47,435 books** (2026-10-31).
+- By stratum: high ~2,800, middle ~6,700, low ~6,000, unmeasured ~5,100.
+- A sweep of the low and unmeasured strata only would reach ~11,100 of them and **miss ~9,500 (46%)**.
+
+### Secondary judge: Gemini 3.8 Flash against Opus
+
+| | pages | accept κ | accept, Opus / Gemini | wrong-text κ | Gemini misses of Opus-bad pages | ρ of points per word |
+|---|---|---|---|---|---|---|
+| all | 800 | **0.34** | 0.64 / 0.43 | 0.31 | 54/289 (19%) | 0.50 |
+| stored text by a Gemini model | 434 | 0.46 | 0.61 / 0.57 | 0.43 | **48/170 (28%)** | 0.57 |
+| stored text by another engine | 366 | 0.25 | 0.68 / 0.27 | 0.23 | **6/119 (5%)** | 0.50 |
+
+- **Controls:** Gemini passed 8/8 wrong-page and caught 12/12 plants.
+- **Self-preference, as #7611 found.**
+  - On Gemini-written text it lets through 28% of the pages Opus calls bad; on other engines' text, 5%.
+  - On other engines' text it is far harsher than Opus (it accepts 27% where Opus accepts 68%).
+  - Its overall κ is 0.34 (#7807: 0.44).
+- **As a cheap first screen** (a book flagged when Gemini calls ≥ 1 of 5 pages bad):
+  - it catches 70/71 Opus-bad books (Wilson 0.92–1.00);
+  - but it flags 143/160, clearing only **11%** of books against the 30% bar. **Not good enough.**
+- **Does Gemini add to the score?** On measured books the AUC rises from 0.65 (score alone) to 0.68 (Gemini's bad-page share) and 0.69 (score × (1 − Gemini bad share)). Over all books, Gemini's bad share alone reaches 0.73. Neither reaches 0.75, and Gemini changes no primary outcome here.
+
+### CER
+
+No drawn page has a same-text reference (§4), so no CER is reported.
+
+### Decision (preregistered rule)
+
+**MORE TESTING.** The AUC is 0.66 (< 0.75), and the low stratum is not calibrated. What failed, and the test each needs:
+
+- **The router posterior is the only strong signal, but it is a cell average.** It cannot see a bad book inside a good cell: 7 of 30 high-confidence books are bad, two of them whole-book wrong-leaf.
+  - Test: a book-level detector that does not need a judge. Leaf alignment, i.e. whether a page's text belongs to the leaf, as #3368 / #4790's leaf-drift check does for IA books, run over every book. The two contained books are both of that kind.
+- **The page flags and scan scores carry no signal.** They should not be used to rank books until a detector is validated against judged pages.
+- **The zh-paddle cell posterior is too low** (14/30 in the table; 181/278 here).
+  - Test: none needed. The evidence is exported; whether rules.json takes it is Derek's call.
+- **Neither judge can screen cheaply.** Gemini Flash clears 11% of books.
+  - Test: Argon (#7611: Argon ≈ Opus, 143/144 plants) as the screen on these same 820 texts. That measures the clear rate at ≥ 0.90 sensitivity before any sweep.
+
+### Containment (by eye, this session)
+
+The judge gave 38 pages a wrong-text defect of a containment class. I opened the images of every whole-page case (fidelity 1, I1). Confirmed as another leaf's text:
+- **`69af48642a821385be062737`** (*Arati Phaenomena, Geographia, Ora Maritima*, high stratum), pp. **77, 127, 188, 206**.
+  - p77's leaf is the Danube/Thrace verse, and that text is stored on p74: the text is shifted three or more leaves off its images through the book.
+  - The book was already held (an IA wrong-leaf hold). The 4 pages' English is withheld.
+- **`6a4cb63519ae103166961ce4`** (*De Rebus Fatisque Huius Seculi…*, high stratum), pp. **2, 10**.
+  - p2 is a blank leaf carrying a full page of text; p10's leaf is the opening, but it carries the closing page.
+  - The same opening text is stored on pp. 2, 8, 12 and 14.
+  - Held now (`wrong-leaf-confidence-7866`). The 2 pages' English is withheld.
+
+The other 32 are invented spans inside otherwise-right pages (Paddle Chinese, Korean and Greek manuscripts): quality findings, listed as bad books, not containments. That includes the two Korean pages whose lower halves are filler syllables (`69f3296eaeeee0fa38c658ea` pp. 27, 36). Cursive Hangul could not be confirmed by eye in this session.
+
+### Write-back
+
+- `lane_judge_verdicts`: 820 Opus records (lane `confidence-7866`, run `confidence-validation-7866`, cells namespaced `study-7866/<cell>`, the real cell in `cell_real`).
+  - The nightly sampler export pools none of them into a router cell.
+  - Its rebuild will post the 38 containment candidates on #7611 once. Noted there, with the triage above.
+- `scripts/eval/estimator/router-table/evidence/confidence-validation-7866.score.json`: 1,552 records under real cell names (751 items + the 20 controls attached per route). **Not named in rules.json.**
+- Bad books (71): `results/bad-books.json` and the #7866 comment.
