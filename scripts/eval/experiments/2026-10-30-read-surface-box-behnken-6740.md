@@ -1,17 +1,17 @@
 ---
 stage: ocr
-measure: [accuracy]
+measure: [accuracy, judged]
 languages: [de, la]
 scripts: [Latn]
 canons: []
 n_books: 80
-n_pages: 80
-verdict: "PREREGISTERED 2026-10-30 (job read-surface-6740): no result yet. Box-Behnken tuning of the agy Flash first read (pages a call × image long edge × thinking) on 40 DTA German and 40 CAMENA Latin books."
-status: undecided
-decision: null
+n_pages: 110
+verdict: "No knob of the agy Flash first read switches. German (35 DTA books): no setting is non-inferior AND at least 10 % cheaper than live (4 a call, image as served, low); 8 a call loses its saving to filter cuts (0.49 vs 0.46 calls a page on one account). Latin (34 CAMENA books): the rule picked 8 a call, 1,600 px, low (0.17 vs 0.36 calls a page on the same account, CER +0.21 pp [-0.36, +0.84]); on 30 queue pages it FAILED confirmation (13/14 written accepted, one wrong-text page, paired 0 vs 1 of 10; live knobs 12/12). Next candidate: Latin 8 a call, 1,600 px, high thinking (CER -0.38 pp [-0.65, -0.15], 0.17 vs 0.25 calls a page on its account, 2x the wall time), not yet confirmed."
+status: rejected
+decision: "Keep the live first-read knobs (4 a call, image as served, thinking low) for German and Latin; Latin first reads stay arm c. Test next: Latin 8 a call at 1,600 px with HIGH thinking, confirmed on queue pages against read@4 and arm c."
 superseded_by: null
 issue: [6740, 7701]
-router_evidence: []
+router_evidence: [latin-blank]
 ---
 PRIOR ART: `2026-10-30-german-cheaper-first-reads-7701.md` and `2026-10-29-cheap-routes-7701.md` (one knob at a time:
 read@1 vs @4 vs @8, judged blind by Opus against the image; they own the ENGINE choice, this owns the knobs of the agy
@@ -194,6 +194,114 @@ James account's blocks. Phase A (all low-thinking runs) ran on James and phase B
 the pooled live mean flatters every default-pool run and penalises every James run. A run setting's saving is now
 1 − its calls a page ÷ the same-pool live run's. This can only move a setting toward "nothing switches" relative to the
 pooled comparison when it ran on the cheaper pool (German C1: 18 % against the pooled live mean, 9 % against L2).
+
+### Result (2026-10-31 02:15Z)
+
+**Runs made.** 10 a language (17 planned): L1, L2; B05, B06, B09, B10 (phase A, James pool); C1 (clean re-run), B08;
+X01, X02 (Amendment 3's corner picks). Not made: B01–B04, B07, B11, B12, C2, C3. **Deviation:** Amendment 3 made C2/C3 conditional on C1
+finishing with under 10 % of its calls timed out. C2/C3 were started early and then stopped at 00:20Z, when C1 stood
+at 8 timeouts in 64 calls (12 %); C1 finished at 8 of 83 (9.6 %), just under the bar, and C2/C3 were not resumed (time
+and budget). So the noise floor is the live pair L1/L2, not the centre runs. **agy calls: 1,635** of 2,000 (design 1,373, of them
+339 in the discarded overload batch and 76 in the discarded load re-run of C1; confirmation 262). The preregistered
+least-squares fit needs 10 design runs and was not computed (8 a language): every interval below is the paired by-book
+bootstrap of a run against live, or the posterior of the Bayesian surface where marked.
+
+**Panel after exclusions.** German 35 of 40 books (5 unreadable by the route: no usable one-a-call read, Gemini filter
+cuts and one restarted reply; faces by eye 34 Fraktur, 6 Antiqua of the 40). Latin 34 of 40 (2 leaves not the typed
+page, by eye; 4 unreadable by the route; all 40 roman type).
+
+**Runs** (CER = mean windowed CER of the target pages, `measure: accuracy`; unread targets take the one-a-call read;
+calls = production-equivalent agy calls a page; δ = paired difference from the mean of L1 and L2 with its 95 % by-book
+bootstrap interval; pool = agy account; wall s = seconds of agy call time a page, at the box load of the time):
+
+| lang | run | pages a call | long edge | thinking | pool | CER | δ CER (pp) | calls a page | same-pool live | wall s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| de | L1 | 4 | served | low | James | 0.96 % | — | 0.461 | — | 12.4 |
+| de | L2 | 4 | served | low | default | 0.92 % | — | 0.375 | — | 19.1 |
+| de | B05 | 1 | 1,600 | low | James | 0.92 % | −0.02 [−0.11, +0.09] | 1.000 | 0.461 | 18.7 |
+| de | B09 | 4 | 1,024 | low | James | 0.90 % | −0.04 [−0.13, +0.05] | 0.521 | 0.461 | 12.2 |
+| de | B10 | 4 | 2,400 | low | James | 0.89 % | −0.05 [−0.13, +0.02] | 0.650 | 0.461 | 15.6 |
+| de | X01 | 8 | 1,024 | low | James | 0.88 % | −0.06 [−0.15, +0.03] | 0.486 | 0.461 | 18.2 |
+| de | B06 | 8 | 1,600 | low | James | 0.94 % | 0.00 [−0.07, +0.08] | 0.486 | 0.461 | 14.7 |
+| de | X02 | 8 | 2,400 | low | James | 0.88 % | −0.06 [−0.14, 0.00] | 0.604 | 0.461 | 21.7 |
+| de | C1 | 4 | 1,600 | medium | default | 0.86 % | −0.08 [−0.15, −0.01] | 0.343 | 0.375 | 42.3 |
+| de | B08 | 8 | 1,600 | high | default | 0.50 % | −0.44 [−1.28, +0.01] | 0.446 | 0.375 | 37.4 |
+| la | L1 | 4 | served | low | James | 2.15 % | — | 0.362 | — | 11.6 |
+| la | L2 | 4 | served | low | default | 1.77 % | — | 0.250 | — | 16.7 |
+| la | B05 | 1 | 1,600 | low | James | 2.35 % | +0.39 [−0.08, +0.92] | 1.059 | 0.362 | 18.8 |
+| la | B09 | 4 | 1,024 | low | James | 1.91 % | −0.05 [−0.40, +0.31] | 0.388 | 0.362 | 10.0 |
+| la | B10 | 4 | 2,400 | low | James | 2.33 % | +0.37 [−0.09, +0.88] | 0.422 | 0.362 | 12.5 |
+| la | X01 | 8 | 1,024 | low | James | 3.73 % | +1.77 [−0.17, +5.16], 1 wrong text | 0.241 | 0.362 | 11.5 |
+| la | **B06** | **8** | **1,600** | **low** | James | 2.17 % | **+0.21 [−0.36, +0.84]** | **0.174** | 0.362 | 7.7 |
+| la | X02 | 8 | 2,400 | low | James | 2.42 % | +0.46 [−0.18, +1.12] | 0.275 | 0.362 | 12.1 |
+| la | C1 | 4 | 1,600 | medium | default | 1.72 % | −0.24 [−0.63, +0.18] | 0.306 | 0.250 | 46.5 |
+| la | B08 | 8 | 1,600 | high | default | 1.58 % | −0.38 [−0.65, −0.15] | 0.166 | 0.250 | 29.6 |
+
+**Noise floor** (A-vs-A, L1 vs L2, same settings on two accounts, paired by book): German 0.12 pp, Latin 0.90 pp.
+The two accounts also differ in calls a page (filter cuts): German 0.46 vs 0.38, Latin 0.36 vs 0.25.
+
+**Prior (STEER 1).** 49 earlier plain agy first reads on typed pages (21 books), all at 1 a call, image as served, low;
+by prompt version (job): German 5 books, Latin 18 books. a0 for CER = 1.0 in both languages (against B05; the earlier
+reads agree with it); a0 for calls = 0.009 (German) and 0.017 (Latin): #7701's queue read@4 (0.55–1.03 calls a page)
+disagrees with this panel's L1/L2, so it is all but ignored. **The prior saved no run**: it sits at one corner, away
+from the cheap end. The runs not made were saved by the sequential rule and the C1 rule (9 Box-Behnken runs a
+language, about 850 calls at this design's ~47 a run), less the 4 corner runs it added (about 200).
+
+**Optimum by the rule** (Amendments 4–5; posterior and measured paired interval both ≤ 1 pp, saving against the same-pool
+live run ≥ 10 %):
+- German: **none**. The cheapest non-inferior setting is C1 (4 a call, 1,600 px, medium), 9 % under L2 on its pool,
+  under the 10 % bar, at 3.4x the wall time. 8 a call is non-inferior on CER at every size but costs 0.49–0.60 calls a
+  page against 0.46 on the same account: the content filter cuts more of the longer replies (DTA: Faust, Zarathustra,
+  Grimm), and each cut block is read again page by page. **Nothing switches.**
+- Latin: **8 a call, 1,600 px, low (B06)**: 52 % fewer calls than L1 on its account, CER +0.21 pp [−0.36, +0.84].
+  At 1,024 px the same block size breaks (X01: +1.77 pp, one wrong-text page): eight small images in one call are too
+  much shrinking for small roman type. The quadratic smoothed X01 to −0.06 pp, which is why Amendment 4 checks run
+  settings on their own differences.
+- Sequential state at the stop: 4 (German) and 8 (Latin) cheap-end settings, all at medium or high thinking, remain
+  undecided by the surface (wide posteriors where no run was made). The job stopped there: the rule's pick had been
+  read and its confirmation run; more high-thinking runs (80–95 min each at the box's load) could not change what has
+  to happen next, a confirmation on queue pages.
+
+**Confirmation on queue pages** (confirm/RULE.md, committed before any confirmation read; 30 new Latin books in the
+first-read lane's frame, e-rara; both #7701 draws left out; each route run and written as the lane would; Opus blind
+against the served image; 4/4 wrong-page controls refused, 2/2 planted errors caught):
+
+| route | written accepted | wrong text | P(acc ≥ 0.8) | agy calls a page | not written (of 30) |
+|---|---|---|---|---|---|
+| read@4 (live knobs) | 12/12 | 0 | 0.947 | 0.832 | 18: 6 Greek/Hebrew letters, 6 reply cut, 5 call timed out, 1 tagged mixed |
+| 8 a call, 1,600 px, low | 13/14 | **1** | 0.834 | 0.700 | 16: 9 Greek/Hebrew letters, 6 reply cut, 1 timed out |
+
+Paired on the 10 pages both wrote: optimum only 0, live only 1; P(acc_O ≥ acc_A − 0.08) = 0.556. **Fails clauses 1
+and 2** (wrong text 1/14 > 0.04; P 0.83 < 0.9; paired 0.56 < 0.9). The wrong text: the page prints *indiga* (lacking),
+the read gave *indigna* (unworthy), changing the sense. Nothing switches. The queue's Latin pages are harder than the
+panel's: over half of the drawn pages are not written by either route, and half of the live route's blocks were cut
+by the filter (19 of 40, on the James account), so 8 a call saved 16 % here, not 52 %.
+
+**Not decided, and next.**
+- Latin 8 a call at 1,600 px with **high** thinking (B08): CER −0.38 pp [−0.65, −0.15] against live, 0.17 calls a
+  page against 0.25 on its account (−34 %), 3 of 43 calls timed out, 2x the wall time. It is the candidate for the next
+  confirmation (queue pages, against read@4 and arm c). Not run here: a second confirmation was not preregistered, and
+  the budget left (365 calls) would not have covered it at the queue's cut rate.
+- The account matters: identical live runs on the two agy accounts differ by 0.09–0.11 calls a page in filter cuts.
+  Lanes that pick an account by quota (`--agy-home=auto`) see that difference as noise; it is worth its own A-vs-A.
+- Medium and high thinking add 2–3.5x the wall time a page (and, at 8 pages a call, calls near the CLI's 300 s limit):
+  a throughput cost the calls budget does not show.
+
+**Router.** `latin-blank` gains `agy-flash-low@8-1600px-written` (13/14) and read@4-written gains this test's 12/12
+(evidence `estimator/router-table/evidence/read-surface-6740.score.json`). Table `2026-10-31-read-surface-6740`: every
+cell's decision is unchanged (latin-blank: arm c), and `current.json` points to it.
+
+**Admin page.** `/platform/admin/ocr-evidence/read-surface` (data `src/data/ocr-read-surface-6740.json`, from
+`fit.mjs --data`): prior-only and posterior surfaces, the runs, the cost-against-accuracy chart, #7701's judged routes,
+the confirmation.
+
+**Files.** `scripts/eval/read-surface-6740/` (panel, runs plan, driver, scorer, prior inventory and scoring, Bayesian
+fit, confirmation scorer and RULE.md); `results/` (surface.json, per-page scores without text, the prior's points, the eye verdicts) and `confirm/` (sample,
+key, verdicts, score); the reads, the typed references and the discarded runs are in R2
+`sl-corpus-snapshots/eval-artifacts/read-surface-6740/read-surface-6740-artifacts-2026-10-31.tar.gz` (sha256 checked on
+read-back; typed text is CC BY-SA but stays out of the repo, as #6012).
+Code changed for this design: `cli-ocr.mjs read --long-edge / --image-cache / --no-alone` (eval only; production passes
+none), `scripts/lib/image-long-edge.mjs`, `judge.mjs` `la-surface` cell and `longEdge`.
 
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a

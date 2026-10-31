@@ -1,0 +1,4 @@
+{"call_id": "read-surface-6740-de-X01-69c8349f6c6f3cc53c84e5da-33-8-0", "ts": "2026-10-30T23:25:52.805Z", "cls": "exit_1", "why": "killed by this job by mistake at 23:25:50Z (orphan clean-up matched its parent by a truncated command line)"}
+{"call_id": "read-surface-6740-la-X01-6a4b18817622bb5aba12ac2e-9-8-0", "ts": "2026-10-30T23:25:52.318Z", "cls": "exit_1", "why": "killed by this job by mistake at 23:25:50Z (orphan clean-up matched its parent by a truncated command line)"}
+{"call_id": "read-surface-6740-la-X01-6a9078467f9d520dd42e41e2-16-8-0", "ts": "2026-10-30T23:25:54.769Z", "cls": "exit_1", "why": "killed by this job by mistake at 23:25:50Z (orphan clean-up matched its parent by a truncated command line)"}
+{"call_id": "read-surface-6740-la-X01-6a429a398e351c27eb859980-19-8-0", "ts": "2026-10-30T23:25:55.693Z", "cls": "exit_1", "why": "killed by this job by mistake at 23:25:50Z (orphan clean-up matched its parent by a truncated command line)"}

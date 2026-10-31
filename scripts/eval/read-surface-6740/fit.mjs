@@ -221,7 +221,13 @@ for (const [lang, R] of Object.entries(result.langs)) {
 if (arg('data')) {
   // The admin page's data: everything but per-book rows (no reference text is in any of it).
   const routes = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'routes-7701.json'), 'utf8')).routes;
-  const lean = { ...result, prereg_commit: 'fdadfab', experiment: 'scripts/eval/experiments/2026-10-30-read-surface-box-behnken-6740.md', routes,
+  // The confirmation on queue pages (confirm.mjs score), summarised: k/n, wrong text, calls a page, paired, the verdict.
+  const cf = path.join(WORK, '..', 'confirm', 'score.json');
+  const confirmation = fs.existsSync(cf) ? (() => { const c = JSON.parse(fs.readFileSync(cf, 'utf8')); const st = c.strata.all;
+    return { lang: 'la', n_drawn: st.n_drawn, passes: c.decision.passes, planted: `${st.planted.caught}/${st.planted.n}`,
+      routes: Object.fromEntries(Object.entries(st.routes).map(([r, x]) => [r, { written: x.written.accept, wrong_text: x.written.wrong_text, p_acc_ge_080: x.written.p_acc_ge_080, calls: x.agy_calls_per_page, eligible: x.eligible, not_written: x.not_written }])),
+      paired: Object.values(st.paired)[0] ? { a_only: Object.values(st.paired)[0].a_only, b_only: Object.values(st.paired)[0].b_only, n: Object.values(st.paired)[0].n, p: Object.values(st.paired)[0].p_a_within_008 } : null }; })() : null;
+  const lean = { ...result, prereg_commit: 'fdadfab', confirmation, experiment: 'scripts/eval/experiments/2026-10-30-read-surface-box-behnken-6740.md', routes,
     langs: Object.fromEntries(Object.entries(result.langs).map(([k, v]) => [k, { ...v, faces: undefined, face_counts: Object.values(v.faces || {}).reduce((m, f) => ({ ...m, [f]: (m[f] || 0) + 1 }), {}), coef_ci: undefined }])) };
   // Four significant figures are more than any chart or table here prints; it keeps the page's data small.
   fs.writeFileSync(path.resolve(arg('data')), JSON.stringify(lean, (k, v) => (typeof v === 'number' && !Number.isInteger(v) ? Number(v.toPrecision(4)) : k === 'cer_sd' && Array.isArray(v) ? undefined : v)));
