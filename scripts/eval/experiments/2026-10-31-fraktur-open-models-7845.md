@@ -125,3 +125,19 @@ None. Read-only throughout: no page, revision or route is written, no cron or ro
 | wrong-page controls | 78452 |
 | planted controls | 78453 |
 | bootstrap | 78454 |
+
+### Amendment 1 (2026-10-31, before any judge call or CER score)
+
+- **Arm b would not run.** On every one of its 5 checkpoints, Calamari 2.3.1 with `fraktur_historical` (calamari_models 2.2) returns blanks and stray marks: one checkpoint on 3 lines gave `'    '`, `'ũ'`, `'DT¶¶ n'`.
+  - It does the same on crops cut from the nlbin image (same S1 polygons). So it is not the input form the model card names ("normalized grayscale").
+  - Its whole-page drafts are 45–296 bytes, against 574–2,869 for LSH-4 on the same lines.
+  - Its codec has 131 symbols, of which the only digits are 3 and 4. That suggests a checkpoint for a narrower subcorpus than the OCR-D description says.
+  - b is **not judged**. Its phase-2 CER is computed and reported as "did not run", not as a reading.
+- **Arm b2 replaces it as the period control.** `deep3_fraktur19` is from the same release as LSH-4 (calamari_models_experimental v0.0.3, MIT), with the same deep3 network and 5 voting checkpoints. It is trained on 19th-century Fraktur. sha256 of `deep3_fraktur19.tar.gz`: eb933c4ee5ea85435edf1e18abfb2c5ef97cab8abcbcd6f193a775e6a603d7aa. It reads the same S1 crops.
+  - The question the control asks stays the same: does in-period training (a, a2) beat a model of the 19th-century bulk?
+  - b2 enters the judging rounds like every other arm.
+- **CPU, not the GPU queue.** Derek's note (11:27Z) asks for GPU work to go through `/root/gpu-queue` ahead of the OCR filler, with CPU only where that is not possible. All arms stay on CPU:
+  - The Calamari venv is TensorFlow 2.15 CPU (no build here has kernels for this Blackwell card).
+  - The Kraken arms read a page in about 4 s on 6 threads and the Calamari arms in about 7 s on 8, so both phases together take under an hour of CPU.
+  - Pausing production OCR on the card for that would cost more card time than it saves.
+  - Speed is therefore reported as CPU pages an hour, with the thread count.
