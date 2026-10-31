@@ -12,7 +12,7 @@
  * Guards (in the worker's apply): the page still has no text, is not human-edited, its book is still held for this
  * lane, scripts/lib/gpu-ocr-loop-guard.mjs passes, the read has at least MIN_WORD_CHARS word characters (a blank
  * leaf stays unread), at most MAX_OTHER_SCRIPT letters of a non-Latin script, no engine commentary line, and at most
- * MAX_TRANSLIT_PERMILLE transliteration letters (the last three added after the judge and the pilot's by-eye check). Every write goes through writePageText (revision row, CAS on the prior field, run id), with
+ * MAX_TRANSLIT_PERMILLE transliteration letters (the last three added after the judge and the pilot's by-eye check). A trailing or leading block of "Note:" lines about the read is cut first and the rest judged (stripEdgeNotes, 2026-10-31). Every write goes through writePageText (revision row, CAS on the prior field, run id), with
  * `ocr.source: 'lightonocr'` and an engine block (model, weights revision, serving, run, image).
  */
 import { contentHash } from './write-provenance.mjs';
@@ -77,6 +77,22 @@ export const wordChars = (s) => (String(s || '').match(/[\p{L}\p{N}]/gu) || []).
 const OTHER_SCRIPT = /[\p{Script=Greek}\p{Script=Cyrillic}\p{Script=Hebrew}\p{Script=Arabic}\p{Script=Syriac}\p{Script=Devanagari}\p{Script=Bengali}\p{Script=Tamil}\p{Script=Telugu}\p{Script=Kannada}\p{Script=Malayalam}\p{Script=Gujarati}\p{Script=Gurmukhi}\p{Script=Tibetan}\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Armenian}\p{Script=Georgian}\p{Script=Ethiopic}\p{Script=Thai}]/gu;
 export const MAX_OTHER_SCRIPT = 3;
 export const otherScriptCount = (s) => (String(s || '').match(OTHER_SCRIPT) || []).length;
+const SCRIPT_NAMES = ['Greek', 'Cyrillic', 'Hebrew', 'Arabic', 'Syriac', 'Devanagari', 'Bengali', 'Tamil', 'Telugu', 'Kannada', 'Malayalam', 'Gujarati', 'Gurmukhi', 'Tibetan', 'Han', 'Hiragana', 'Katakana', 'Hangul', 'Armenian', 'Georgian', 'Ethiopic', 'Thai'];
+const SCRIPT_RE = SCRIPT_NAMES.map((n) => [n, new RegExp(`\\p{Script=${n}}`, 'gu')]);
+/**
+ * Which non-Latin script a read holds (#6871): { script, letters: { Greek: n, … }, latin }. `script` is the script with
+ * the most letters (Hiragana and Katakana count as Japanese), null when there are none. An other_script page is not
+ * English print and stays unread here; the script tells the language route that should read it.
+ */
+export function detectScript(s) {
+  const t = String(s || '');
+  const letters = {};
+  for (const [n, re] of SCRIPT_RE) { const k = (t.match(re) || []).length; if (k) letters[n] = k; }
+  const by = {};
+  for (const [n, k] of Object.entries(letters)) { const g = n === 'Hiragana' || n === 'Katakana' ? 'Japanese' : n; by[g] = (by[g] || 0) + k; }
+  const top = Object.entries(by).sort((a, b) => b[1] - a[1])[0];
+  return { script: top ? top[0] : null, letters, latin: (t.match(/\p{Script=Latin}/gu) || []).length };
+}
 /**
  * A line in which the engine talks about the page instead of transcribing it. The #6871 pilot (by eye, 2026-10-29)
  * found LightOnOCR appending such a note to 56 of 852 written pages, 50 of them the ornamented pages of one book
@@ -87,6 +103,26 @@ export const COMMENTARY = new RegExp([
   String.raw`^\s*(?:\*{0,2}note\*{0,2}\s*:\s*)?(?:the|this) (?:original )?(?:image|page|scan|photograph)\s+(?:contains|shows|depicts|is)\b`,
   String.raw`^\s*\*{0,2}note\*{0,2}\s*:.*\b(?:markdown|placeholders?|images?|urls?|formatting|preserved|transcri\w*|ocr|excerpt|output|as it appears|page number|original document|scenario|the text (?:ends|is|appears))\b`,
 ].join('|'), 'im');
+const COMMENTARY_LINE = new RegExp(COMMENTARY.source, 'i');
+const NOTE_LINE = /^\s*\*{0,2}note\*{0,2}\s*:/i;
+
+/**
+ * A note the engine put AFTER (or before) its read, cut off (#6871, 2026-10-31): of the 1,385 pages rejected for
+ * engine_commentary, 1,346 carried one commentary line and it was the page's last line ("Note: The page number "121"
+ * is preserved …"); the read above it was the page. Only a run of "Note:" lines that COMMENTARY matches, at the very
+ * end or the very start, is cut. A description of the image ("The image shows …", "This image depicts …") is not a
+ * note on a read but a replacement for one, and is never cut: such a page still rejects. Returns { body, notes }.
+ */
+export function stripEdgeNotes(body) {
+  const lines = String(body || '').split('\n');
+  const isNote = (l) => NOTE_LINE.test(l) && COMMENTARY_LINE.test(l);
+  const notes = [];
+  let end = lines.length;
+  while (end > 0 && (!lines[end - 1].trim() || isNote(lines[end - 1]))) { if (lines[end - 1].trim()) notes.unshift(lines[end - 1]); end--; }
+  let start = 0;
+  while (start < end && (!lines[start].trim() || isNote(lines[start]))) { if (lines[start].trim()) notes.push(lines[start]); start++; }
+  return { body: lines.slice(start, end).join('\n').trim(), notes };
+}
 
 /**
  * Indic transliteration letters (ṛ ṣ ç ā …) per 1,000 letters. On the pilot's Sanskrit phonetics pages (16–111 ‰)
@@ -104,19 +140,25 @@ export function translitPermille(s) {
 export function pageVerdict(raw, { finish = null } = {}) {
   // gpu-print-read.py cut this read once it held more than ABORT_OTHER_SCRIPT (40) non-Latin letters: the full read
   // would have failed the other_script test below (more than MAX_OTHER_SCRIPT), so it gets that verdict now.
-  if (finish === 'abort_other_script') return { verdict: 'reject', reason: 'other_script', detail: { letters: otherScriptCount(convertRead(raw)), early_stop: true } };
+  if (finish === 'abort_other_script') {
+    const ds = detectScript(convertRead(raw));
+    return { verdict: 'reject', reason: 'other_script', detail: { letters: otherScriptCount(convertRead(raw)), early_stop: true, script: ds.script, by_script: ds.letters, latin: ds.latin } };
+  }
   // gpu-print-read.py cut a looping read (its last 1,500 characters one unit repeated): it would have run to the token cap.
   if (finish === 'abort_loop') return { verdict: 'reject', reason: 'loop_guard:early_loop', detail: { early_stop: true } };
   const g = gpuLoopVerdict(raw, { finish });
   if (g.refuse) return { verdict: 'reject', reason: `loop_guard:${g.reason}`, detail: g.detail ?? null };
-  const body = convertRead(raw);
+  // A trailing (or leading) block of engine notes is cut and the rest judged on its own; a note left anywhere else
+  // (interleaved with the read) still rejects the page below.
+  const { body, notes } = stripEdgeNotes(convertRead(raw));
+  const stripped = notes.length ? { stripped_notes: notes.length, note: notes[0].slice(0, 120) } : null;
   if (wordChars(body) < MIN_WORD_CHARS) return { verdict: 'textless', reason: 'under_min_word_chars', body };
   const other = otherScriptCount(body);
-  if (other > MAX_OTHER_SCRIPT) return { verdict: 'reject', reason: 'other_script', detail: { letters: other } };
+  if (other > MAX_OTHER_SCRIPT) { const ds = detectScript(body); return { verdict: 'reject', reason: 'other_script', detail: { letters: other, script: ds.script, by_script: ds.letters, latin: ds.latin } }; }
   if (COMMENTARY.test(body)) return { verdict: 'reject', reason: 'engine_commentary', detail: { line: body.match(COMMENTARY)[0].slice(0, 80) } };
   const tl = translitPermille(body);
-  if (tl > MAX_TRANSLIT_PERMILLE) return { verdict: 'reject', reason: 'transliteration_dense', detail: { permille: +tl.toFixed(1) } };
-  return { verdict: 'write', reason: 'ok', body };
+  if (tl > MAX_TRANSLIT_PERMILLE) return { verdict: 'reject', reason: 'transliteration_dense', detail: { permille: +tl.toFixed(1), ...stripped } };
+  return { verdict: 'write', reason: stripped ? 'ok_notes_stripped' : 'ok', body, ...(stripped ? { detail: stripped } : {}) };
 }
 
 export function envelope(body, language = 'English') {
@@ -172,4 +214,33 @@ export function laneReleaseVerdict(plan, liveHold, isDone, { abandon = false } =
   const outstanding = (plan.pages || []).filter((p) => !isDone(p.pn)).length;
   if (outstanding && !abandon) return { release: false, why: 'pages_outstanding', outstanding };
   return { release: true, why: outstanding ? 'abandoned' : 'finished', outstanding };
+}
+
+/**
+ * Is a read_error (the .err gpu-print-read.py wrote) worth one more read (#6871, 2026-10-31)? Of the first 1,057, 985
+ * were Wellcome IIIF 403s and 51 Wellcome 502/504s on four books, every one of which served 200 when fetched again
+ * the same day; the 19 iiif.archive.org 400s and 2 archive.org 404s are a broken image path, not a bad moment.
+ */
+export function isTransientReadError(detail) {
+  const t = String(detail || '');
+  if (/HTTP Error (400|401|404|410)\b/.test(t)) return false;
+  return /HTTP Error (403|408|429|5\d\d)\b|timed? ?out|URLError|ConnectionReset|RemoteDisconnected|IncompleteRead/i.test(t);
+}
+
+/**
+ * The pages the lane is finished with, as `${bid}/${pn}` keys: every applied, skipped or rejected page, except a page
+ * whose read_error was requeued — it is done again only when a later outcome lands (more read_error rows than
+ * requeue rows, or any applied / skipped / other rejected row after it). The ledgers stay append-only.
+ */
+export function doneKeys({ applied = [], skipped = [], rejected = [], requeued = [] }) {
+  const k = (r) => `${r.bid}/${r.pn}`;
+  const done = new Set([...applied, ...skipped].map(k));
+  const errs = new Map(), req = new Map();
+  for (const r of rejected) {
+    if (r.reason === 'read_error') errs.set(k(r), (errs.get(k(r)) || 0) + 1);
+    else done.add(k(r));
+  }
+  for (const r of requeued) req.set(k(r), (req.get(k(r)) || 0) + 1);
+  for (const [key, n] of errs) if (n > (req.get(key) || 0)) done.add(key);
+  return done;
 }
