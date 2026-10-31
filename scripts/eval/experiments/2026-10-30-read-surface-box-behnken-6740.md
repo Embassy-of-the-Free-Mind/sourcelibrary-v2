@@ -289,7 +289,7 @@ by the filter (19 of 40, on the James account), so 8 a call saved 16 % here, not
 
 **Router.** `latin-blank` gains `agy-flash-low@8-1600px-written` (13/14) and read@4-written gains this test's 12/12
 (evidence `estimator/router-table/evidence/read-surface-6740.score.json`). Table `2026-10-31-read-surface-6740`: every
-cell's decision is unchanged (latin-blank: arm c), and `current.json` points to it.
+cell's decision is unchanged (latin-blank: arm c). It is not the live table: `current.json` stays on `2026-10-31-correction-pass-7818`, built in parallel with the #7818 German waiver; the next full build should include this evidence file (rebase, 2026-10-31).
 
 **Admin page.** `/platform/admin/ocr-evidence/read-surface` (data `src/data/ocr-read-surface-6740.json`, from
 `fit.mjs --data`): prior-only and posterior surfaces, the runs, the cost-against-accuracy chart, #7701's judged routes,
