@@ -11,6 +11,7 @@ status: informational
 decision: "Recommendation, by the preregistered rule: Gemini-written OCR (GEM) and GPU drafts corrected by agy (GPU>GEM): Argon screen + Opus. Raw GPU drafts: Opus only (the screen saves 26 per 100, under the bar of 30). Gemini translations (TR): Opus only (the screen misses 0.15). Flash: Opus only, everywhere. Gemini alone: nowhere (Flash fails it; Argon is held by the preregistered self-preference flag). No cron or production setting was changed."
 superseded_by: null
 issue: [7611]
+router_evidence: "none — a judge comparison: it re-judges items whose Opus verdicts are already router evidence, and adds no route k/n"
 ---
 ## 2026-10-30 · Can a Gemini judge do the end-of-lane QA that Opus does? Same items, blind, compared (#7611)
 
