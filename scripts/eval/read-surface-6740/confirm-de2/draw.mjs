@@ -126,7 +126,9 @@ function sample() {
     pages.push({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, draft_model: null, draft_sha: null, block: r.block, book_language: 'deu', provider: r.provider, library: r.library, era: r.era, script_face: r.face, visible: r.visible, published: r.published });
   }
   pages.sort((a, b) => h(SALT + a.page_id).localeCompare(h(SALT + b.page_id)));
-  const s = { drawn_at: new Date().toISOString(), seed: SALT, n: pages.length, cells: { 'de-surface2': { task: 'ocr', lang: 'German', paired: true, kind: 'router-test', blank: true, pages, frame: { rule: 'confirm-de2/RULE.md: era × face strata, proportional with a floor of 4, at most 2 books a holding library within a cell, uniform body page', quota, filled: Object.fromEntries(Object.entries(filled).map(([k, v]) => [k, v.n])), libraries: filled } } } };
+  const s = { drawn_at: new Date().toISOString(), seed: SALT, n: pages.length, cells: { 'de-surface2': { task: 'ocr', lang: 'German', paired: true, kind: 'router-test', blank: true, routes: ['agy-flash-low@4', 'agy-flash-low@8'],
+    // judge.mjs correct reads the routes from here (drawBlank writes them the same way)
+    correctors: { 'agy-flash-low@4': { by: 'agy', model: 'gemini-3.8-flash-low', fresh: true, perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { by: 'agy', model: 'gemini-3.8-flash-low', fresh: true, perCall: 8 } }, pages, frame: { rule: 'confirm-de2/RULE.md: era × face strata, proportional with a floor of 4, at most 2 books a holding library within a cell, uniform body page', quota, filled: Object.fromEntries(Object.entries(filled).map(([k, v]) => [k, v.n])), libraries: filled } } } };
   fs.writeFileSync(path.join(OUT, 'sample.json'), JSON.stringify(s, null, 1));
   console.log(`sample: ${pages.length} pages; filled ${JSON.stringify(s.cells['de-surface2'].frame.filled)}; quota ${JSON.stringify(quota)}`);
 }

@@ -37,7 +37,7 @@ const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').
 const slug = (route) => route.replace(/[^a-z0-9]+/gi, '_');
 // --cell=de-surface (Amendment 6, confirm-de/RULE.md): German, O = 8 a call at the served image, judged by quota cost.
 const CELL = arg('cell') || 'la-surface';
-const DE = CELL === 'de-surface';
+const DE = CELL.startsWith('de-surface');
 const LANG = DE ? 'German' : 'Latin';
 const OPT = DE ? 'agy-flash-low@8' : 'agy-flash-low@8-1600px';
 const dirOf = (route) => path.join(OUT, 'corr', CELL, slug(route));
@@ -306,7 +306,7 @@ function evidence() {
     if (stratum === 'all') bys.cells[`${CELL}|print`] = { routes, paired };
     else bys.cells[`${name}|print`] = { routes, paired };
   }
-  const fn = DE ? 'read-surface-6740-de.score.json' : 'read-surface-6740.score.json';
+  const fn = CELL === 'de-surface2' ? 'read-surface-6740-de2.score.json' : DE ? 'read-surface-6740-de.score.json' : 'read-surface-6740.score.json';
   fs.writeFileSync(path.join(EV, fn), JSON.stringify(un, null, 1) + '\n');
   fs.writeFileSync(path.join(EV, 'by-script', fn), JSON.stringify(bys, null, 1) + '\n');
   console.log('wrote evidence/read-surface-6740.score.json and by-script/');
