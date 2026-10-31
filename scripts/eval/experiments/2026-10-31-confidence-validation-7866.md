@@ -123,6 +123,7 @@ Frame sizes: high 11,967, middle 11,181, low 11,545, unmeasured 12,742. Score qu
 
 ### 4. Judge
 
+- **Image.** The page image is fetched once (`judge.mjs images`) and the same bytes go to both judges. A file over 4 MB is resized with `sharp` to a long edge of 3,000 px, JPEG q90. 4 of the 800 are (5–11 MB), and the original is kept beside it.
 - **Primary: Opus.** One call per page, the stored text and the page image, `judgePrompt` (task ocr, `lang` = the book's `language`) unchanged.
   - The judge is blind to stratum, score and route.
   - Queue order `makeRng(78663)`, 3 at a time.

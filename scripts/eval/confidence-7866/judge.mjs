@@ -30,13 +30,23 @@ export const CALL_BUDGET = 900;
 const text = (pageId) => fs.readFileSync(path.join(OUT, 'texts', `${pageId}.txt`), 'utf8');
 
 /** Fetch an image once into OUT/img/<page>.jpg (the same bytes for every call on a page). */
+/** Files over this are resized (long edge RESIZE_PX, JPEG q90) once, before either judge sees them (prereg §4). */
+export const MAX_IMAGE_BYTES = 4e6, RESIZE_PX = 3000;
 async function imageFor(pageId, url) {
   const f = path.join(OUT, 'img', `${pageId}.jpg`);
-  if (fs.existsSync(f)) return fs.readFileSync(f);
-  const r = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary-eval/7866 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(60e3) });
-  if (!r.ok) throw new Error(`image HTTP ${r.status} ${url.slice(0, 100)}`);
-  const buf = Buffer.from(await r.arrayBuffer());
-  fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, buf);
+  let buf = fs.existsSync(f) ? fs.readFileSync(f) : null;
+  if (!buf) {
+    const r = await fetch(url, { headers: { 'User-Agent': 'SourceLibrary-eval/7866 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(60e3) });
+    if (!r.ok) throw new Error(`image HTTP ${r.status} ${url.slice(0, 100)}`);
+    buf = Buffer.from(await r.arrayBuffer());
+    fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, buf);
+  }
+  if (buf.length > MAX_IMAGE_BYTES) {
+    const { default: sharp } = await import('sharp');
+    fs.renameSync(f, `${f}.orig`);
+    buf = await sharp(buf).resize(RESIZE_PX, RESIZE_PX, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 90 }).toBuffer();
+    fs.writeFileSync(f, buf);
+  }
   return buf;
 }
 
@@ -166,6 +176,9 @@ async function gemini() {
   console.log(`${calls} agy judge texts; ${stop ? `STOPPED: ${stop}` : 'queue done'}`);
 }
 
-const stages = { items, main, controls, gemini };
+/** Fetch (and resize) every item's image once, before any judge call. */
+async function images() { let n = 0; for (const it of J('items.json')) { await imageFor(it.page, it.image); n++; } console.log(`images: ${n} ready; resized ${fs.readdirSync(path.join(OUT, 'img')).filter((x) => x.endsWith('.orig')).length}`); }
+
+const stages = { items, images, main, controls, gemini };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();
