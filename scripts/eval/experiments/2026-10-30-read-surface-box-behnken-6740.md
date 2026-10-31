@@ -1,14 +1,14 @@
 ---
 stage: ocr
 measure: [accuracy, judged]
-languages: [de, la]
+languages: [de, la, en]
 scripts: [Latn]
 canons: []
-n_books: 225
-n_pages: 2210
-verdict: "Amendment 6 (quota cost, incomplete-block screen of pages a call x thinking over the typed-reference census): German 8 a call / low is 45 % cheaper a 1,000 accepted pages than live [25, 58] at no CER cost (-0.00 pp [-0.09, +0.07], 61 DTA books, weighted to the queue); thinking costs 4-7x and moves German CER by under 0.1 pp. Latin: live stays (8 a call reads long s as f, +2.25 pp). German confirmation on 30 queue books: 8 a call beats live paired 5-0 at a third of the quota per accepted page, but fails the preregistered absolute wrong-text bar (2/25; live 5/25). Nothing switches pending the bar decision."
+n_books: 463
+n_pages: 2620
+verdict: "Priced in quota (tokens), not calls: thinking costs 4-23x and barely moves CER. German 8 a call / low is 45 % cheaper a 1,000 accepted pages than live [25, 58] at no CER cost (61 DTA books, weighted to the queue); Latin live stays (8 a call reads long s as f); English 8 a call -27 % but not robust. On German queue pages 8 a call beat live paired 5-0 and 3-1 at half the quota a accepted page, but failed both preregistered rules (an absolute wrong-text bar live also fails; then one judge-worded invented flag on a misreading live shares). Nothing switches; live is the robust setting across all three languages."
 status: rejected
-decision: "Keep the live first-read knobs (4 a call, served image, thinking low) for German and Latin. German 8 a call is proposed only if Derek sets the wrong-text bar at the live route (eval-design 10.3) rather than the absolute 0.04 the confirmation RULE used."
+decision: "Keep the live first-read knobs (4 a call, served image, thinking low). German 8 a call goes to Derek: whether the judge-worded invented flag in confirmation 2 (a misreading live shares) counts; if not, it passes and a separate PR proposes it."
 superseded_by: null
 issue: [6740, 7701]
 router_evidence: [latin-blank, german-blank]
