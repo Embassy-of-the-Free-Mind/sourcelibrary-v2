@@ -17,6 +17,8 @@
  *            (gpu-print-6871) first; a book under a GPU-lane hold keeps it. Then its pages with no text and an image
  *            → plan/<bid>.json and manifest.tsv rows (<bid>\t<pn>\t<pid>\t<url>). Dry unless --apply. A book held
  *            for any other reason is skipped. The plan file records `placed_hold` (true only when this run held it).
+ *            --limit counts books planned. A book with nothing the lane can ever plan (not found, not English 1800+, every
+ *            page has text) goes to plan-skipped.jsonl and leaves frame-books.json.
  *   apply    per book whose every planned page is back from the box: re-check each page (still no text, not
  *            human-edited, the book still held for this lane), run the loop guard and the blank floor, write through
  *            writePageText (revision row, CAS), recount, sweep_log before and after, one book_events row. Then the
@@ -58,7 +60,7 @@ const F = {
   frame: path.join(DIR, 'frame-books.json'), planDir: path.join(DIR, 'plan'), outDir: path.join(DIR, 'out'),
   manifest: path.join(DIR, 'manifest.tsv'), log: path.join(DIR, 'lane.log'), runs: path.join(DIR, 'runs'),
   applied: path.join(DIR, 'applied.jsonl'), skipped: path.join(DIR, 'skipped.jsonl'), rejected: path.join(DIR, 'rejected.jsonl'),
-  bookLog: path.join(DIR, 'applied-books.jsonl'), released: path.join(DIR, 'released.jsonl'),
+  bookLog: path.join(DIR, 'applied-books.jsonl'), released: path.join(DIR, 'released.jsonl'), planSkipped: path.join(DIR, 'plan-skipped.jsonl'),
 };
 const planFile = (bid) => path.join(F.planDir, `${bid}.json`);
 const outFile = (bid, pn, ext) => path.join(F.outDir, bid, `${pn}.${ext}`);
@@ -107,28 +109,36 @@ async function plan() {
   if (arg('--books', null)) ids = fs.readFileSync(arg('--books'), 'utf8').split('\n').map((s) => s.trim()).filter(Boolean);
   else if (BOOK) ids = [BOOK];
   else ids = readJson(F.frame, { books: [] }).books.map((b) => b.bid);
-  ids = ids.filter((id) => !fs.existsSync(planFile(id)));
-  if (LIMIT) ids = ids.slice(0, LIMIT);
-  log(`${ids.length} book(s) to plan${APPLY ? '' : '  [DRY RUN: no holds, no plan files]'}`);
+  const gone = new Set(readJsonl(F.planSkipped).map((r) => r.bid));
+  ids = ids.filter((id) => !fs.existsSync(planFile(id)) && !gone.has(id));
+  // --limit counts books PLANNED, not books looked at: sliced before the skips, a head of books with nothing to read
+  // (38 of 40 on 2026-10-31) left each chunk planning two books and the frame's tail unreachable.
+  log(`${ids.length} book(s) not yet planned${LIMIT ? `, planning up to ${LIMIT}` : ''}${APPLY ? '' : '  [DRY RUN: no holds, no plan files]'}`);
   const tally = { books: 0, pages: 0, no_image: 0, skipped_books: [] };
+  // A book with nothing this lane can ever plan leaves the frame (and the filler's pages-left count) for good.
+  const final = [];
+  const finalSkip = (bid, why) => { tally.skipped_books.push({ bid, why }); if (APPLY) final.push({ bid, why }); };
   await withMongo(async (db) => {
     for (const bid of ids) {
+      if (LIMIT && tally.books >= LIMIT) break;
       const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, year: 1, pipeline_auto: 1, pages_count: 1, needs_splitting: 1, split_completed: 1 } });
-      if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
-      if (!isEnglishBook(book.language) || !(book.year >= 1800)) { tally.skipped_books.push({ bid, why: 'not English 1800+' }); continue; }
+      if (!book) { finalSkip(bid, 'not_found'); continue; }
+      if (!isEnglishBook(book.language) || !(book.year >= 1800)) { finalSkip(bid, 'not English 1800+'); continue; }
       if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && !LANE_HOLDS.has(book.pipeline_auto.hold.reason)) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH, ...NO_TEXT }, { projection: {
         id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1,
       } }).sort({ page_number: 1 }).toArray();
       const rows = [];
+      let noImage = 0;
       for (const p of pages) {
         if (isHumanEdited(p.ocr) || !hasNoText(p.ocr)) continue;
         const src = getPageSource(p)?.replace(/\s+/g, '') || null;
-        if (!src) { tally.no_image++; continue; }
+        if (!src) { tally.no_image++; noImage++; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, why: p.ocr?.model || (p.ocr?.recitation_count ? 'refused' : 'never_read') });
       }
-      if (!rows.length) { tally.skipped_books.push({ bid, why: 'nothing_to_read' }); continue; }
+      // every page has text or a human edit: final. Pages still waiting for an image may be archived later: retried.
+      if (!rows.length) { if (noImage) tally.skipped_books.push({ bid, why: 'no_image' }); else finalSkip(bid, 'nothing_to_read'); continue; }
       if (!APPLY) { log(`${bid} would ${isHeld(book) ? "plan" : "hold and plan"} ${rows.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
       // the hold BEFORE anything else: no other lane reads these pages while the GPU does. A book already under a
       // GPU-lane hold keeps that hold (nothing else reads it); a free book (--free frame) is held for this lane.
@@ -140,6 +150,15 @@ async function plan() {
       tally.books++; tally.pages += rows.length;
     }
   });
+  if (final.length) {
+    for (const r of final) append(F.planSkipped, r);
+    const fr = readJson(F.frame, null);
+    if (fr) {
+      const out = new Set(final.map((r) => r.bid));
+      fs.writeFileSync(`${F.frame}.tmp`, JSON.stringify({ ...fr, books: fr.books.filter((b) => !out.has(b.bid)) }, null, 1));
+      fs.renameSync(`${F.frame}.tmp`, F.frame);
+    }
+  }
   log(`PLAN ${JSON.stringify({ ...tally, skipped_books: tally.skipped_books.length })}${tally.skipped_books.length ? ' skipped: ' + JSON.stringify(tally.skipped_books.slice(0, 30)) : ''}`);
 }
 
