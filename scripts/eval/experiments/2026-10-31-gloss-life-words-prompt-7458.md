@@ -11,6 +11,8 @@ status: adopted
 decision: "Translation prompt v21 (v13 + the life-words block) is the default from 2026-10-31; v13 is the rollback"
 superseded_by: null
 issue: [7458]
+router_evidence: "none — a prompt test on one live route (agy gemini-3.8-flash-low, every arm), no route compared; the prompt version is global, not a router cell"
+defect_rates: "none — not judged as misleads/wrong_text per 1,000 words; serious-error pages per arm are in results/gloss-life-words-7458/report.json (judge.serious_pages)"
 ---
 <!-- PRIOR ART: 2026-10-26-translation-prompt-v19-cognates-4741.md (the same one-block design against v13a/v13b; it measured cognate terms in Latin, not apparatus vocabulary). -->
 
