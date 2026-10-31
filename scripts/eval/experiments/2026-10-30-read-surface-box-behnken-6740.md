@@ -289,7 +289,7 @@ clean test, with its own RULE file committed before its first read.
 A staged, sequential response-surface study and a robust parameter design.** It supersedes 6.1 ("complete the nine
 Box-Behnken runs") and the budget of the first form; 6.2–6.9 stand. Everything here is post hoc to the first 20 runs.
 - *Disclosure.* I read these notes at 10:19Z. Three Box-Behnken runs of 6.1 (de B02, de C2, la B12) had started at
-  09:49Z; at 10:24Z the queue was stopped and those three were left to finish. They are kept as stage-2 points (below).
+  09:49Z; at about 10:21Z the queue was stopped and those three were left to finish. They are kept as stage-2 points (below).
 - *Scope decisions by Derek:* no gemini-4-argon (09:58Z): every read is gemini-3.8-flash-{low, medium, high}. "Effie"
   meant efficiency, not the EFM collection (10:04Z): no EFM stratum.
 - **Stage 1, screening.** A Definitive Screening Design (Jones & Nachtsheim 2011; two-level categorical factors, Jones &
@@ -356,6 +356,46 @@ Box-Behnken runs") and the budget of the first form; 6.2–6.9 stand. Everything
   on). Gemini through the CLI only. Before each run, `/root/agy-quota/pools.json`: stop if the default pool's weekly
   remaining is under 30 %; that stop decides how far down the language order the screen gets. `/quota` read before and
   after (6.3) where the default pool can be had alone. Before the Opus judge, `climits status`, stop above 85 %.
+
+**Amendment 6, third form (Derek, inbox 10:33Z; written 10:36Z, committed before the first read of the screen it
+describes).** It supersedes the second form's screen where they conflict; everything else of the second form stands.
+- *Disclosure.* The second form's German screen started at about 10:30Z (S09, S12, S04, 3 runs at once) and was stopped
+  at 10:34Z when this note was read: 2 one-page reads were made (moved to `aborted/runs-s1-second-form-1033/`, their
+  calls counted). The Box-Behnken runs started under 6.1 are finished and kept: de C2 done, de B02 and la B12 finishing;
+  they are stage 2 if the screen confirms the original three factors.
+- **1. Factors (rationale: image prep's prior effect on Gemini is null or harmful, #5250, #5277, so a run on it spends
+  quota to re-learn a null).** Screen = pages a call, image long edge, thinking (three-level, coded −1/0/+1) and the
+  **prompt line** (two-level). DSD for 3 continuous + 1 categorical: a conference matrix of order 4, rows C and −C, the
+  categorical column's zero set to +1 in C and −1 in −C, plus two runs at the continuous centre with the prompt line
+  off and on: **10 settings, plus live** (`dsd.mjs --form=3` → `design-dsd3.json`).
+- **2. Incomplete blocks (rationale: 35 books cannot speak for a queue of 3,131; more books at fewer settings each buys
+  population coverage at the same calls).** New books from the typed-reference frame, each book's window read under
+  **3 screen settings plus live**, in a balanced incomplete block allocation (every pair of screen settings shares
+  about the same number of books; the allocation is published in `ib-allocation-<lang>.json` before any read). Book is a
+  random effect, so comparisons stay within book; century is a covariate, not a per-stratum optimum. **The frame is
+  smaller than ~140 books:** under the panel's rules (same-edition, a congruent single typed page, a full 8-page window
+  with images, ≥ 400 letters, the interior rule) German has **61** eligible books, Latin **84**, English **204**. So
+  German and Latin are a census of their frames (the 40 panel books included, read again under their 3 settings and
+  live, which adds an A-vs-A pair with L2 on the same pool); English draws 140 of 204, stratified by era to the English
+  queue frame (`frame.mjs`), the face (blackletter / roman) by eye and reported. Era × face stratification is therefore
+  only possible for English; German and Latin are weighted to their queue frames as in 6.8(b). The existing
+  35 / 34-book runs stay in the analysis.
+- **3. One pool (rationale: Amendment 5's pool difference is the size of the effects sought).** Every new read on the
+  default pool, including a **live repeat on every book**; the `.agy-james` low-thinking runs are reported as a pool
+  contrast, not as part of the thinking effect.
+- **4. Power gate, before the screen.** Simulated from the existing runs (the per-book variance of paired differences
+  of L1/L2, C1/C2 and the run-to-run differences of the Box-Behnken; the per-book variance of log quota cost): the
+  smallest CER and log-cost main effects the incomplete-block screen detects with 80 % power at two-sided α 0.05, per
+  language, by the mixed model it will be analysed with (`power6.py`, 500 simulated screens). A factor whose plausible
+  effect (from the existing runs or prior entries) is below that on both CER and cost is dropped before any read, and
+  this file says so. Result written here before the first screen read.
+- **5. Order.** German, then Latin, then English only if the pool allows. Latin and English are paper evidence; German
+  decides.
+- **6. Useful pages (rationale: confirmation pages are real queue pages that otherwise stay scans-only).** In the
+  confirmation, each page's best judged accepted read is written through the normal first-read apply path
+  (`cli-ocr.mjs apply --first-read-only`, guards on, provenance naming #6740 and this job). Rejected reads are not
+  written. This is the job's only production write.
+- **7. Budget.** Unchanged: 4,000 agy calls, the 30 % default-pool stop.
 
 ### Result (2026-10-31 02:15Z)
 
