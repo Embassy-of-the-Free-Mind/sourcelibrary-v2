@@ -1,6 +1,6 @@
 {
   "_comment": "Files that read pages.translation.data directly (#5942). A list to SHRINK: new readers use getTranslationText() (src/lib/translation-text.ts, scripts/lib/translation-text.mjs). Regenerate with node scripts/audit/translation-data-readers.mjs --write-baseline.",
-  "count": 349,
+  "count": 348,
   "files": [
     "scripts/analysis/build-marcianus-overlay.mjs",
     "scripts/analysis/collect-postmortem-stats.mjs",
@@ -181,7 +181,6 @@
     "scripts/maintenance/seam-repair-6742/lean.mjs",
     "scripts/maintenance/seam-repair-6742/score-rules.mjs",
     "scripts/maintenance/seam-repair-6742/seam-repair.mjs",
-    "scripts/maintenance/split-swap.mjs",
     "scripts/maintenance/strip-proquest-stamp.mjs",
     "scripts/maintenance/tengyur-cli-6361/apply.mjs",
     "scripts/maintenance/tengyur-cli-6361/convergent/draw.mjs",
