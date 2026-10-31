@@ -16,6 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
+import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { OUT, ROOT, J, jsonl, arg, ENV_FILE, AGY_MODEL, imageFor, correctionRead, servedCorrection, servedArmc, sha } from './lib.mjs';
 import { FIRST_READ_LANE, FIRST_READ_CORRECT_LANE, CORRECT_LANE, GPU_TEMPLATE } from '../../batch/cli-ocr-lane.mjs';
@@ -64,7 +65,8 @@ async function pool(items, fn) {
   if (stop) console.log('STOPPED: agy quota; rerun resumes');
 }
 const logRow = (set, row) => fs.appendFileSync(path.join(OUT, set, 'arms.jsonl'), JSON.stringify({ ...row, at: new Date().toISOString() }) + '\n');
-const done = (set, arm) => new Set(jsonl(path.join(OUT, set, 'arms.jsonl')).filter((r) => r.arm === arm && !r.quota).map((r) => r.key));
+// The last row a key got for an arm decides: a `superseded` row (Amendment 1: a read the box killed) re-opens the key.
+const done = (set, arm) => { const last = new Map(); for (const r of jsonl(path.join(OUT, set, 'arms.jsonl')).filter((x) => x.arm === arm && !x.quota)) last.set(r.key, r); return new Set([...last].filter(([, r]) => !r.superseded).map(([k]) => k)); };
 let booksDb = null;
 async function books(ids) {
   if (!booksDb) { const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); booksDb = { c, m: new Map() }; }
@@ -159,21 +161,24 @@ async function t3Pero() {
   fs.mkdirSync(img, { recursive: true });
   for (const s of S) fs.writeFileSync(path.join(img, `${s.page_id}.jpg`), await imageFor(s.key, s.image));
   const R = '/root/jobs/fraktur-7835/t3';
+  let device = fs.existsSync(path.join(dir, 'collect.json')) ? J('t3/pero/collect.json').device : null;
+  if (!fs.existsSync(path.join(dir, 'pero-drafts.json'))) {
   const sh = (cmd) => spawnSync('ssh', ['-o', 'ConnectTimeout=20', 'root@65.108.136.89', cmd], { encoding: 'utf8', maxBuffer: 1 << 26 });
   sh(`mkdir -p ${R}/img`);
   spawnSync('scp', ['-q', '-r', `${img}/.`, `root@65.108.136.89:${R}/img/`]);
   const util = sh("nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader,nounits").stdout.trim();
   const [u, mem] = util.split(',').map(Number);
-  const device = u < 10 && mem < 2000 ? 'gpu' : 'cpu';
+  device = u < 10 && mem < 2000 ? 'gpu' : 'cpu';
   console.log(`gex45 card: ${util} -> --device=${device}`);
   const r = sh(`cd /root/sourcelibrary && python3 scripts/batch/pero-draft.py ${R}/img ${R}/pero-drafts.json --device=${device} > ${R}/pero.log 2>&1; echo exit $?; tail -3 ${R}/pero.log`);
   console.log(r.stdout, r.stderr);
   spawnSync('scp', ['-q', `root@65.108.136.89:${R}/pero-drafts.json`, path.join(dir, 'pero-drafts.json')]);
+  }
   const d = JSON.parse(fs.readFileSync(path.join(dir, 'pero-drafts.json'), 'utf8'));
   let n = 0, short = 0, mism = 0;
   for (const s of S) {
     const x = d[s.page_id]; if (!x) continue;
-    if (x.image_sha256 !== sha(fs.readFileSync(path.join(img, `${s.page_id}.jpg`)))) { mism++; continue; }
+    if (x.image_sha256 !== crypto.createHash('sha256').update(fs.readFileSync(path.join(img, `${s.page_id}.jpg`))).digest('hex')) { mism++; continue; }
     if (String(x.text || '').replace(/\W/g, '').length < 30) { short++; continue; }
     writeT(s.key, 'pero', x.text); n++;
   }
@@ -202,7 +207,29 @@ async function t3c() {
   });
 }
 
-const stages = {
+/**
+ * Amendment 1: reads the box killed (meta exit -9: the kernel's OOM killer took agy, 2026-10-31 ~10:00Z) are not a route
+ * outcome. Their read files are moved aside (kept under killed/) and the key re-opened, once; the arm's own stage then
+ * reads the missing pages again. The first outcome stays in arms.jsonl.
+ */
+function retryKilled() {
+  const set = arg('set'), arm = arg('arm');
+  const S = J(`${set}/selected.json`).selected, rows = jsonl(path.join(OUT, set, 'arms.jsonl'));
+  if (rows.some((r) => r.arm === arm && r.superseded && r.retry === 1 && r.done_retry)) throw new Error('already retried once');
+  let n = 0;
+  for (const s of S) {
+    const dir = path.join(OUT, set, arm, s.book_id); if (!fs.existsSync(dir)) continue;
+    const killed = fs.readdirSync(dir).filter((f) => f.endsWith('.meta.json')).filter((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).exit === -9).map((f) => f.replace(/\.meta\.json$/, ''));
+    if (!killed.length) continue;
+    const aside = path.join(dir, 'killed'); fs.mkdirSync(aside, { recursive: true });
+    for (const id of killed) for (const ext of ['meta.json', 'txt', 'raw.txt', 'prompt.txt']) { const f = path.join(dir, `${id}.${ext}`); if (fs.existsSync(f)) fs.renameSync(f, path.join(aside, `${id}.${ext}`)); }
+    logRow(set, { key: s.key, arm, superseded: true, retry: 1, killed_pages: killed, judged_page_killed: killed.includes(s.page_id) });
+    n++;
+  }
+  console.log(`retry-killed ${set}/${arm}: ${n} blocks re-opened`);
+}
+
+const stages = { 'retry-killed': retryKilled,
   't1-a': () => plainRead('t1', 'a', [`--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only']),   // FIRST_READ_LANE: the stamp the write-back uses
   't1-b': () => correctDrafts('t1', 'b', 'a', 4),
   't1-c': () => correctDrafts('t1', 'c', 'a', 1),
