@@ -206,7 +206,7 @@ const IMG_OPUS = 'the file ./page.jpg in your working directory (open it with Re
 /** A pool's Gemini quota, read for free (`agy -p /quota`): { weekly, fiveHour } remaining fractions, or null. */
 async function poolQuota() {
   const { parseQuota } = await import('../../lib/agy-pools.mjs');
-  for (let i = 0; i < 3; i++) {   // a reading can come back empty (timeout): try again before giving up
+  for (let i = 0; i < 6; i++) {   // a reading can come back empty (timeout): try again before giving up
     const q = parseQuota(spawnSync('agy', ['-p', '/quota', '--output-format', 'json'], { encoding: 'utf8', timeout: 90e3, env: process.env }).stdout || '');
     if (q) return q;
   }
@@ -291,7 +291,7 @@ async function judge() {
   await Promise.all(Array.from({ length: conc }, worker));
   const q1 = J0.by === 'agy' ? await poolQuota() : null;
   const runs = fs.existsSync(path.join(OUT, 'runs.json')) ? J('runs.json') : [];
-  runs.push({ at: new Date().toISOString(), judge: who, repeat, calls, stop, agy_home: process.env.AGY_HOME || 'default', quota_before: q0 && { weekly: q0.weekly, fiveHour: q0.fiveHour }, quota_after: q1 && { weekly: q1.weekly, fiveHour: q1.fiveHour }, claude: limits.claudeUsage?.() ?? null });
+  runs.push({ at: new Date().toISOString(), judge: who, repeat, calls, stop, agy_home: process.env.AGY_HOME || 'default', quota_before: q0 && { weekly: q0.weekly, fiveHour: q0.fiveHour }, quota_after: q1 && { weekly: q1.weekly, fiveHour: q1.fiveHour }, claude: (({ weekly, session } = limits.claudeUsage?.() ?? {}) => ({ weekly, session }))() });   // never the login
   W('runs.json', runs);
   console.log(`${who}: ${calls} calls; ${stop ? `STOPPED: ${stop}` : 'done'}; quota ${JSON.stringify(q0?.weekly)} -> ${JSON.stringify(q1?.weekly)}`);
   if (stop) process.exit(3);
