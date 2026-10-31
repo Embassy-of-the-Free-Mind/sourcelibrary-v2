@@ -145,7 +145,8 @@ def f5():
             ax.plot([c['cpa_lo'], c['cpa_hi']], [y, y], color=MUTED, lw=0.8); ax.plot([x, x], [c['delta_lo'], c['delta_hi']], color=MUTED, lw=0.8)
             if c['live']: ax.plot(x, y, 'D', ms=8, color=LIVE, mec='white')
             else: ax.plot(x, y, 'o', ms=6 if c['name'] != S['optimum'] else 9, color=OPT if c['name'] == S['optimum'] else INK, mec='white')
-            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (x, y), xytext=(4, 4), textcoords='offset points', fontsize=6.5, color=SEC)
+            k = sorted(S['cells'], key=lambda q: q['usd_per_1k_accepted']).index(c)
+            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (x, y), xytext=(4, [6, -12, 16, -22][k % 4]), textcoords='offset points', fontsize=6.5, color=SEC)
         ax.set_xscale('log'); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('δ CER against live (pp)')
         ax.text(0.0, 1.03, f"{LANG[l]} ({S['books']} books)", transform=ax.transAxes, fontsize=9, color=INK, weight='bold')
     fig.tight_layout(); save(fig, 'f5-cost-vs-accuracy')
@@ -160,8 +161,8 @@ def f7():
         for c in cells:
             on = c['name'] in S['frontier']
             ax.plot(c['usd_per_1k_accepted'], c['cer_pp'], 'D' if c['live'] else 'o', ms=8 if c['live'] else 6, color=LIVE if c['live'] else (OPT if on else 'white'), mec=INK if not c['live'] else 'white', mew=1.2)
-            k = [x['name'] for x in cells].index(c['name'])
-            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (c['usd_per_1k_accepted'], c['cer_pp']), xytext=(5, 5 if k % 2 else -9), textcoords='offset points', fontsize=6.5, color=SEC)
+            k = sorted(cells, key=lambda x: x['usd_per_1k_accepted']).index(c)
+            ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (c['usd_per_1k_accepted'], c['cer_pp']), xytext=(0, [10, -14, 22, -26][k % 4]), textcoords='offset points', fontsize=6.5, color=SEC, ha='center')
         opt = next((c for c in cells if c['name'] == S['optimum']), None)
         if opt and not opt['live']:
             ax.annotate('', xy=(opt['usd_per_1k_accepted'], live['cer_pp']), xytext=(live['usd_per_1k_accepted'], live['cer_pp']), arrowprops=dict(arrowstyle='->', color=LIVE, lw=1.2))
@@ -183,7 +184,7 @@ def f8():
     for i, r in enumerate(rows):
         ax.text(lv[i], y[i] + 0.18, f"  {lv[i]:,.0f}", va='center', fontsize=7.5, color=SEC); ax.text(bs[i], y[i] - 0.18, f"  {bs[i]:,.0f}  ({r['best']})", va='center', fontsize=7.5, color=SEC)
     ax.set_yticks(y, [f"{LANG[r['lang']]}\n{r['pages']:,} pages, {r['books']:,} books" for r in rows])
-    ax.set_xlabel('account-weeks of quota (lower bound)' if key == 'weeks' else 'list-price equivalent, US $'); ax.legend(frameon=False, fontsize=8, loc='lower right')
+    ax.set_xlabel('weeks of the whole agy pool, at most (one lane)' if key == 'weeks' else 'list-price equivalent, US $'); ax.legend(frameon=False, fontsize=8, loc='upper left', bbox_to_anchor=(1.0, 1.0))
     ax.invert_yaxis(); fig.tight_layout(); save(fig, 'f8-backlog')
 
 def f9():
