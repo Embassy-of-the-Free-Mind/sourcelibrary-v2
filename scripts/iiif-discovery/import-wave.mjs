@@ -20,6 +20,7 @@
  *     --campaign=acquisition-wave-2026-10-lazy \
  *     --hold-reason=manifest-only-lazy-pages --hold-issue=7343 \
  *     --hold-release="Derek or the #6553 planner releases them for OCR" \
+ *     --hold-release-when="decision:manifest-only lazy pages" \
  *     --checkpoint=$JOB_SCRATCH/import.jsonl [--sample=200] [--limit=N] [--dry-run]
  *
  * Options:
@@ -49,6 +50,7 @@ import { createInterface } from 'node:readline';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { rateLimitedFetch, capDomainLimit } from '../lib/iiif-utils.mjs';
 import { importCandidate, HostParker, hostOf, spreadSample } from './lib/wave-import.mjs';
+import { makeHoldMarker, parseReleaseWhen } from '../lib/pipeline-hold.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const i = a.indexOf('='); return i < 0 ? [a.slice(2), true] : [a.slice(2, i), a.slice(i + 1)]; })
@@ -73,11 +75,12 @@ const DRY_RUN = !!args['dry-run'];
 const RETRY_FAILED = !!args['retry-failed'];
 const MANIFEST_ONLY = !!args['manifest-only'];
 const CAMPAIGN = args.campaign;
-const HOLD = { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue'], 10) || null };
+const HOLD = { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue'], 10) || null, release_when: parseReleaseWhen(args['hold-release-when']) };
 
 if (!SURVIVORS) { console.error('--survivors=<file> is required'); process.exit(2); }
 if (TIERS.has('A')) { console.error('tier A is not imported from here (job acq-wave-a-7343 owns it)'); process.exit(2); }
 if (!CAMPAIGN || !HOLD.reason || !HOLD.release) { console.error('--campaign, --hold-reason and --hold-release are required: a wave book is born held'); process.exit(2); }
+try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --hold-release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); }
 
 // ── Rows ─────────────────────────────────────────────────────────────────────
 async function readSurvivors(file) {

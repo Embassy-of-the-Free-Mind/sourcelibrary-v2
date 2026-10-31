@@ -59,6 +59,7 @@ const HOLD = {
   reason: 'cbeta-chan-5566',
   issue: ISSUE,
   release: 'two pages of the book are read by eye against the image and match the fitted CBETA text ("read from image", #5566)',
+  release_when: { kind: 'test', ref: 'two pages read by eye match the fitted CBETA text (#5566)' },
   source: 'cbeta-chan-import',
 };
 const TEXT_SOURCE = 'cbeta-xml-p5';

@@ -58,6 +58,7 @@ export const CLI_TRANSLATE_HOLD = Object.freeze({
   reason: 'translate-cli-7075',
   issue: 7075,
   release: 'scripts/batch/cli-translate-lane.mjs has translated every untranslated page through the reader the routing table names; it releases the book itself (or by hand: scripts/maintenance/hold-pipeline-books.mjs --release-held --reason translate-cli-7075 --book <id> --apply)',
+  release_when: { kind: 'test', ref: 'scripts/batch/cli-translate-lane.mjs releases the book when every untranslated page is translated' },
 });
 
 const channelOf = (row) => row.channel ?? 'batch';

@@ -17,7 +17,7 @@ import { syncPageCounts } from '../../scripts/workers/sync-worker.mjs';
 
 const N = 9;
 const MANIFEST_URL = 'https://iiif.example.org/bsb0001/manifest';
-const HOLD = { reason: 'manifest-only-lazy-pages', release: 'Derek releases them for OCR', issue: 7343 };
+const HOLD = { reason: 'manifest-only-lazy-pages', release: 'Derek releases them for OCR', issue: 7343, release_when: { kind: 'issue', ref: 7343 } };
 const CAMPAIGN = 'acquisition-wave-test';
 
 function manifest(n = N) {

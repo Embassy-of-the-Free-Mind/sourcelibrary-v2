@@ -199,7 +199,7 @@ async function decide(db: Db, dir: string, apply: boolean) {
   const outcomes: Record<string, number> = {};
   for (const h of holds) {
     const r = await holdBook(db, h.hold.id, {
-      reason: HOLD_REASON, issue: 4285, release: RELEASE, source: 'pre-ocr-duplicate-screen',
+      reason: HOLD_REASON, issue: 4285, release: RELEASE, release_when: { kind: 'test', ref: 'title pages of this copy and hold.detail.kept read by eye: not the same printing' }, source: 'pre-ocr-duplicate-screen',
       detail: { kept: h.kept.id, why: h.why, median_inliers: h.median_inliers },
     }, { dryRun: !apply });
     outcomes[r.outcome] = (outcomes[r.outcome] || 0) + 1;

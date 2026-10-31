@@ -50,7 +50,7 @@ describe('lazy-pages triggers (#7343)', () => {
   it('releasing the hold materializes first, then re-enters at queued (not ocr_complete)', async () => {
     const db = getTestDb();
     await seed(db);
-    await holdBook(db, BOOK, { reason: 'manifest-only-lazy-pages', release: 'released when someone dispatches it' });
+    await holdBook(db, BOOK, { reason: 'manifest-only-lazy-pages', release: 'released when someone dispatches it', release_when: { kind: 'issue', ref: 7343 } });
     expect(await pages(db)).toBe(0);
     const res = await releaseBook(db, BOOK, { note: 'dispatch' });
     expect(res).toMatchObject({ outcome: 'released', to: 'queued' });
@@ -61,7 +61,7 @@ describe('lazy-pages triggers (#7343)', () => {
   it('a release whose pages cannot be created leaves the book held, with its count', async () => {
     const db = getTestDb();
     await seed(db);
-    await holdBook(db, BOOK, { reason: 'manifest-only-lazy-pages', release: 'released when someone dispatches it' });
+    await holdBook(db, BOOK, { reason: 'manifest-only-lazy-pages', release: 'released when someone dispatches it', release_when: { kind: 'issue', ref: 7343 } });
     fail = true;
     const res = await releaseBook(db, BOOK, { note: 'dispatch' });
     expect(res.outcome).toBe('pages_not_ready');

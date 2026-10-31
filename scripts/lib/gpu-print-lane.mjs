@@ -25,6 +25,7 @@ export const LANE = 'gpu-print-en-2026-10';
 export const LANE_ISSUE = 6871;
 export const HOLD_REASON = 'gpu-print-6871';
 export const HOLD_RELEASE = 'every page the GPU lane planned for this English print book is applied, skipped or rejected (#6871); `gpu-print-lane.mjs release` then restores the status the book was held from, so the pipeline reads what the GPU left and translates the rest';
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'test', ref: 'scripts/workers/gpu-print-lane.mjs release (every planned page applied, skipped or rejected)' });
 export const REVISION_REASON = 'ocr_gpu_print_6871';
 export const BOOK_EVENT = 'gpu_print_ocr';
 export const SOURCE = 'lightonocr';

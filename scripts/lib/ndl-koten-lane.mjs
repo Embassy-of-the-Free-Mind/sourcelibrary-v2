@@ -52,6 +52,7 @@ export const BOOK_EVENT = 'ndl_koten_reocr';
 /** `pipeline_auto.hold.reason` for every book the lane touches. */
 export const HOLD_REASON = 'ndl-koten-lane-4925';
 export const HOLD_RELEASE = 'the NDL re-transcription of this book is read by eye (#4745 pilot or the full-run check) and a re-translation of its rewritten pages is approved as a separate, priced go';
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: 'ndl koten re-translation' });
 
 export const CURSIVE_CLASSES = new Set(['woodblock-cursive', 'manuscript-cursive']);
 

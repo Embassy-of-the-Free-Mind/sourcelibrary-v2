@@ -18,7 +18,7 @@ const allDone = () => true;
 async function heldFor(id: string, reason: string, from = 'archive_complete') {
   const db = getTestDb();
   await db.collection('books').insertOne({ id, title: id, pipeline_auto: { status: from } });
-  const r = await holdBook(db, id, { reason, issue: 1, release: reason === HOLD_REASON ? HOLD_RELEASE : 'test' });
+  const r = await holdBook(db, id, { reason, issue: 1, release: reason === HOLD_REASON ? HOLD_RELEASE : 'test', release_when: { kind: 'issue', ref: 1 } });
   expect(r.outcome).toBe('held');
 }
 

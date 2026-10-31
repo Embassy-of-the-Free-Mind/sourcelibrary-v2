@@ -42,7 +42,8 @@
  *   --oai-id-re=<regex>     only candidates whose oai_id matches (Vatican fonds by shelfmark)
  *   --open-only             only manifests whose rights parse as open (public-domain / cc-by / full-access)
  *   --campaign=<tag>        stamp acquisition_campaign on every book (what archive-acquired --campaign selects)
- *   --hold-reason=<kebab> --hold-release="<sentence>" [--hold-issue=N]
+ *   --hold-reason=<kebab> --hold-release="<sentence>" --hold-release-when=<kind:ref> [--hold-issue=N]
+ *     (kind:ref is issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD, #7860)
  *                           put every new book on a pipeline hold (scripts/lib/pipeline-hold.mjs), so no
  *                           OCR / translation / enrichment lane selects it until the hold is released
  *   --max-pages=N           page budget for THIS run: stop before the import that would cross it
@@ -53,7 +54,7 @@ import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
-import { holdBook } from '../lib/pipeline-hold.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen } from '../lib/pipeline-hold.mjs';
 import { appendFileSync } from 'node:fs';
 import { yearFromPublished } from '../lib/catalogue-year.mjs';
 import { workFirstTitle, decodeEntities } from '../lib/shelfmark-title.mjs';
@@ -78,8 +79,9 @@ const OPEN_ONLY = 'open-only' in args;
 const CAMPAIGN = args.campaign || null;
 const MAX_PAGES = parseInt(args['max-pages']) || Infinity;
 const CHECKPOINT = args.checkpoint || null;
-const HOLD = args['hold-reason'] ? { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue']) || null, source: 'import-from-cache' } : null;
+const HOLD = args['hold-reason'] ? { reason: args['hold-reason'], release: args['hold-release'], issue: parseInt(args['hold-issue']) || null, release_when: parseReleaseWhen(args['hold-release-when']), source: 'import-from-cache' } : null;
 if (HOLD && !HOLD.release) { console.error('--hold-reason needs --hold-release="<what must be true before the hold is lifted>"'); process.exit(2); }
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --hold-release-when=issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 const OPEN_RIGHTS = ['public-domain', 'cc-by', 'full-access'];
 
 const slugify = (t, max = 70) => (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, max).replace(/-$/, '');
