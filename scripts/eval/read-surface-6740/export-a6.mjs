@@ -20,6 +20,9 @@ const out = {
   confirmation_de: C && (() => { const st = C.strata.all; return { n_drawn: st.n_drawn, passes: C.decision.passes, planted: `${st.planted.caught}/${st.planted.n}`,
     routes: Object.fromEntries(Object.entries(st.routes).map(([r, x]) => [r, { written: x.written.accept, wrong_text: x.written.wrong_text, p_acc_ge_080: x.written.p_acc_ge_080, eligible: x.eligible, calls: x.agy_calls_per_page, usd_1k_pages: x.quota_usd_per_1k_pages, usd_1k_accepted: x.quota_usd_per_1k_accepted, not_written: x.not_written }])),
     paired: Object.values(st.paired)[0] }; })(),
+  confirmation_de2: (() => { const f = arg('confirm2'); if (!f || !fs.existsSync(f)) return null; const c = JSON.parse(fs.readFileSync(f, 'utf8')); const p = c.unweighted.paired;
+    return { n_drawn: c.n_drawn, n: p.n, o_only: p.o_only, a_only: p.a_only, both: p.both, wt: p.wt_o, wt_live: p.wt_a, p: c.weighted.p_o_within_008, saving: c.weighted.saving, clauses: c.weighted.clauses, passes: c.decision.passes,
+      usd_1k_accepted: c.weighted.usd_per_1k_accepted, absolute: c.absolute_reported, by_era: c.by_era, by_face: c.by_face }; })(),
   backlog: B && { week_of_quota_at_least_usd: B.week_of_quota_at_least_usd, queue_measured: B.queue_measured, rows: B.rows, note: B.note },
 };
 fs.writeFileSync(arg('out'), JSON.stringify(out, (k, v) => (typeof v === 'number' && !Number.isInteger(v) ? Number(v.toPrecision(4)) : v)));

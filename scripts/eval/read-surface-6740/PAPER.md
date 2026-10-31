@@ -95,6 +95,12 @@ pool at no less than $1,869 of list-price tokens. At that bound the German queue
 (Figure F8). Wall time a page does not fall with 8 a call (39 against 24 s a page at the box's load), because refused
 8-page blocks are re-read one page at a time.
 
+**English** (EEBO-TCP early print, 140 books, unweighted because the panel has no 19th-century book while three
+quarters of the English queue is 19th-century): 8 a call at low thinking is 27 % cheaper a accepted page than live
+(95 % interval 5–44 %) with δ CER +0.26 pp [−0.24, +0.82], but is not non-inferior in the 1600s stratum; thinking
+lowers English CER by about 0.6 pp at 12–23× the cost. Across all three languages and every century with ≥ 10 books,
+the only settings non-inferior everywhere are live and 1 a call at high thinking; live is the robust choice.
+
 ## 6. Confirmation
 
 Thirty German queue pages (one per book, era-stratified to the queue), read as the lane reads them by live and by
@@ -103,7 +109,11 @@ each wrote, live was accepted on 17/25 and 8 a call on 22/25; paired, 8 a call w
 the worse on none (P(acc₈ ≥ acc₄ − 0.08) = 0.998). Quota a 1,000 accepted pages: $8.78 against $25.93. But 8 a call
 had 2 wrong-text pages of 25, over the preregistered absolute bar of 0.04, and P(acc ≥ 0.8) = 0.79 < 0.9, so by the
 rule it fails. Live fails the same bar by more (5/25), and both of 8 a call's wrong-text pages are misread identically
-by live. Under the newer rule that sets the bar at the live route (defects no worse than live's), it would pass. The
+by live. Under the newer rule that sets the bar at the live route (defects no worse than live's), it would pass. A second confirmation with a relative rule, written after the first and run on 48 fresh books stratified by era
+and typeface (no pre-1800 Antiqua body page was found in 144 walked books): paired, 8 a call better on 3 books and
+worse on 1, P = 0.993; wrong text 3 vs 3; quota a accepted page 49 % lower. It fails one clause: the judge described
+one shared misreading as "invented" for 8 a call and "added" for live, and the rule admits no invented text. By the
+rule as written nothing switches; read as a judge's wording, 8 a call passes both tests. The
 confirmation therefore supports 8 a call against live and leaves a single question of policy open: whether a first
 read must clear an absolute wrong-text bar that the live read itself does not clear.
 

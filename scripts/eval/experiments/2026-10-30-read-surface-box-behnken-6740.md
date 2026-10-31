@@ -668,3 +668,25 @@ live (pre-1600 16/19 vs 17/19; 1600s 5/7 each; 1700s 10/11 vs 11/11; 1800+ 8/8 e
 and 3 of 45 in confirmation 2, i.e. 8 of 70 (11 %, Wilson 95 % 6–21 %) of the pages the live German first read writes
 carry at least one sense-changing misreading (judged against the image; e.g. *Metzge* read as *Menge*, *Herꝛlich* as
 *Hertzlich*). None of the 100 drawn pages went through the #7818 German correction pass.
+
+**English (EEBO-TCP, 140 books, 1500s 22 / 1600s 116 / 1700s 2; added 16:45Z).** Read in the same incomplete blocks
+(52–53 books a cell; live on all 140). **Not weighted:** 74 % of the English queue's unread pages are 1800-on print
+and the panel has none, so post-stratification would put a weight of 56 on two books; English stands for early print
+(pre-1700, 19 % of that queue) only. Faces by eye: 126 roman, 14 blackletter. Yield is low at every setting (61–93 %):
+EEBO holds famous texts (Shakespeare, Jonson, Milton) that Gemini's filter cuts as recitation. Results (unweighted,
+δ CER pp [95 %]; $ a 1,000 accepted pages): live $18.63; **8 a call / low $13.59 (−27 % [−44, −5]), δ +0.26
+[−0.24, +0.82]**, the pooled optimum, but NOT non-inferior in the 1600s stratum (116 books), so not robust; thinking
+lowers English CER (1 a call medium −0.61 [−1.04, −0.25], high −0.63 [−0.93, −0.34]) at 12–23× live's cost a accepted
+page. Logit-CER model: pages a call +0.25 (SE 0.10), thinking −0.23 (0.09); log cost: thinking +1.17 (0.05), pages
+−0.41 (0.05). Lack of fit: CER F(3, 191) = 1.57, p 0.20; cost F(3, 373) = 0.92, p 0.43. **Failures recorded, not
+re-run** (TAKEN, the call length at high thinking runs into the CLI's 300 s limit, not box load; German G08 timed out
+3 of 8 at concurrency 1): en G05 (4 a call, high) 9 of 85 calls timed out (10.6 %); en G08 (8 a call, high) 3 of 24
+(12.5 %), stopped at 16:34Z after 14 of its 52 books; its cell rests on those 14.
+
+**Robust optimum across German, Latin and English** (every language and every century with ≥ 10 books): **live (4 a
+call, low)**; the only other setting non-inferior everywhere is 1 a call / high, at 7–23× the cost.
+
+**Budget.** 2,509 agy calls by the live-page meter (both work dirs, including the first job's 20 runs); this job's own
+calls 1,809 at 15:50Z plus the English tail and confirmation 2: under the 4,000 ceiling. The default pool's weekly
+remaining went from 0.88 (10:29Z) to 0.78 (16:35Z) with other jobs on it; never near the 30 % stop. The heavy-model
+daily cap (#7118) was raised for this job to 450 and then 600 calls (TAKEN; logged here).

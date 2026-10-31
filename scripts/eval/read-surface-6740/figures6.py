@@ -34,6 +34,13 @@ def pick(l, unweighted=None):
     R = A['langs'][l]; u = UNW if unweighted is None else unweighted
     return R['unweighted'] if u or not R.get('weighted') else R['weighted']
 
+from matplotlib.ticker import FixedLocator, FuncFormatter, NullFormatter
+def dollar_log(ax):
+    """Log x axis with plain dollar ticks (no minor labels)."""
+    ax.set_xscale('log'); lo, hi = ax.get_xlim()
+    ticks = [t for t in (2, 5, 10, 20, 50, 100, 200, 500, 1000) if lo <= t <= hi]
+    ax.xaxis.set_major_locator(FixedLocator(ticks)); ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f'${v:g}')); ax.xaxis.set_minor_formatter(NullFormatter())
+
 def save(fig, name):
     fig.savefig(os.path.join(a.out, f'{name}.svg'), bbox_inches='tight'); fig.savefig(os.path.join(a.out, f'{name}.png'), dpi=220, bbox_inches='tight'); plt.close(fig); print(name)
 
@@ -147,7 +154,7 @@ def f5():
             else: ax.plot(x, y, 'o', ms=6 if c['name'] != S['optimum'] else 9, color=OPT if c['name'] == S['optimum'] else INK, mec='white')
             k = sorted(S['cells'], key=lambda q: q['usd_per_1k_accepted']).index(c)
             ax.annotate(c['name'].replace(' a call', '').replace(', ', '/'), (x, y), xytext=(4, [6, -12, 16, -22][k % 4]), textcoords='offset points', fontsize=6.5, color=SEC)
-        ax.set_xscale('log'); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('δ CER against live (pp)')
+        dollar_log(ax); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('δ CER against live (pp)')
         ax.text(0.0, 1.03, f"{LANG[l]} ({S['books']} books)", transform=ax.transAxes, fontsize=9, color=INK, weight='bold')
     fig.tight_layout(); save(fig, 'f5-cost-vs-accuracy')
 
@@ -167,7 +174,7 @@ def f7():
         if opt and not opt['live']:
             ax.annotate('', xy=(opt['usd_per_1k_accepted'], live['cer_pp']), xytext=(live['usd_per_1k_accepted'], live['cer_pp']), arrowprops=dict(arrowstyle='->', color=LIVE, lw=1.2))
             ax.text(math.sqrt(opt['usd_per_1k_accepted'] * live['usd_per_1k_accepted']), live['cer_pp'], f"−{100 * opt['saving_vs_live']:.0f} % per accepted page", color=LIVE, fontsize=8, va='bottom', ha='left', transform=ax.transData) if False else ax.annotate(f"−{100 * opt['saving_vs_live']:.0f} % per accepted page", (opt['usd_per_1k_accepted'], live['cer_pp']), xytext=(0, 18), textcoords='offset points', color=LIVE, fontsize=8)
-        ax.set_xscale('log'); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('CER (%)')
+        dollar_log(ax); ax.set_xlabel('quota cost, $ a 1,000 accepted pages'); ax.set_ylabel('CER (%)')
         # From zero: the CER differences between cells are a few hundredths of a point, inside the A-vs-A floor.
         ax.set_ylim(0, max(c['cer_pp'] for c in cells) * 1.6)
         ax.text(0.0, 1.03, f"{LANG[l]} ({S['books']} books)", transform=ax.transAxes, fontsize=9, color=INK, weight='bold')
