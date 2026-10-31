@@ -49,9 +49,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
 type Box = { x: number; y: number; w: number; h: number };
 
 /** A region of the leaf, cut from the same image by CSS (the Crop of /quality, on this page's leaf). */
-function Crop({ box, alt }: { box: Box; alt: string }) {
+function Crop({ box, alt, className = '' }: { box: Box; alt: string; className?: string }) {
   return (
-    <div className="relative overflow-hidden bg-[#e9dcc4] border border-stone-200" style={{ aspectRatio: `${box.w} / ${box.h}` }}>
+    <div className={`relative overflow-hidden bg-[#e9dcc4] border border-stone-200 ${className}`} style={{ aspectRatio: `${box.w} / ${box.h}` }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={LEAF.image}
@@ -103,7 +103,7 @@ const WRONG_ROWS: BarRow[] = [
   { label: 'After the correction pass (served)', v: (100 * P.wrongText.served) / P.pages, note: `${P.wrongText.served} of ${P.pages} pages`, strong: true },
 ];
 
-const CROPS: { box: Box; alt: string; caption: ReactNode }[] = [
+const CROPS: { box: Box; alt: string; caption: ReactNode; className?: string }[] = [
   {
     box: LEAF.crops.head,
     alt: 'The running head: Chymische in roman type, Hochzeit in blackletter.',
@@ -121,6 +121,7 @@ const CROPS: { box: Box; alt: string; caption: ReactNode }[] = [
   },
   {
     box: LEAF.crops.margin,
+    className: 'max-w-[12rem]',
     alt: 'A marginal note in italic: Custos senex.',
     caption: <>Latin is set in italic Antiqua, here a marginal note, <em>Cuſtos ſenex</em> (&ldquo;the old guardian&rdquo;).</>,
   },
@@ -180,7 +181,7 @@ export default function FrakturPage() {
               <ul className="space-y-4">
                 {CROPS.map((c) => (
                   <li key={c.alt}>
-                    <Crop box={c.box} alt={c.alt} />
+                    <Crop box={c.box} alt={c.alt} className={c.className} />
                     <p className="text-sm text-stone-600 mt-1.5 leading-snug">{c.caption}</p>
                   </li>
                 ))}
@@ -214,7 +215,7 @@ export default function FrakturPage() {
             unit="%"
             decimals={0}
             title="Pages accepted, Fraktur against Antiqua, same pages for every engine"
-            hint="Gold bars are Fraktur pages, grey bars Antiqua. Whiskers are 95% intervals; with 9 to 18 pages a bar, they are wide. Hover, tap or tab to a row for the figure."
+            hint="Each engine alone, with no correction pass. Gold bars are Fraktur pages, grey bars Antiqua. Whiskers are 95% intervals; with 9 to 18 pages a bar, they are wide. Hover, tap or tab to a row for the figure."
             measure="of pages accepted by the AI reviewer"
             source={
               <>
@@ -289,7 +290,7 @@ export default function FrakturPage() {
             }
           />
           <p>
-            Gemini Flash-Lite, the engine that read most of the German already in the library, had a median of 0.5% of
+            Gemini Flash-Lite, the engine that read much of the German already in the library, had a median of 0.5% of
             characters wrong on the first set, the lowest of the eight engines. On the second set its average was 1.5%, and
             the correction pass described below brought it to 1.1% (a difference of 0.4 points, 95% interval 0.2 to 0.6).
             The same pass, run over PERO&rsquo;s reading, brought PERO from 8.8% to 1.4%.
@@ -312,7 +313,7 @@ export default function FrakturPage() {
             from each of {P.pages} books at random and had the same AI reviewer judge the draft and the served text, blind
             and shuffled (<Issue n={P.issue} />, 31 October 2026).
           </p>
-          <div className="grid gap-4 md:grid-cols-2 max-w-none">
+          <div className="space-y-4">
             <BarChart
               rows={PASS_ROWS}
               max={100}

@@ -45,10 +45,10 @@ export const DRAW_7701 = {
   issue: 7701,
   frame: { books: 170, fraktur: 141, antiqua: 12, other: 17 },
   engines: [
-    { engine: 'Gemini 3.8 Flash, 4 pages a call (in use)', fraktur: [13, 15], antiqua: [8, 9], strong: true },
-    { engine: 'PERO-OCR (newspaper print model), alone', fraktur: [3, 18], antiqua: [8, 11] },
-    { engine: 'LightOnOCR-3 1B, alone', fraktur: [2, 18], antiqua: [11, 12] },
-    { engine: 'Kraken, UB Mannheim Fraktur model', fraktur: [0, 18], antiqua: null },
+    { engine: 'Gemini 3.8 Flash (in use)', fraktur: [13, 15], antiqua: [8, 9], strong: true },
+    { engine: 'PERO-OCR', fraktur: [3, 18], antiqua: [8, 11] },
+    { engine: 'LightOnOCR-3 1B', fraktur: [2, 18], antiqua: [11, 12] },
+    { engine: 'Kraken Fraktur model', fraktur: [0, 18], antiqua: null },
   ],
   /** Pages with words the page does not print, Fraktur only. */
   wrongTextFraktur: { gemini: [0, 15], lighton: 10, pero: 7, kraken: [17, 18] },
