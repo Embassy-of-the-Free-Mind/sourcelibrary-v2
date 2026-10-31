@@ -249,6 +249,32 @@ clean test, with its own RULE file committed before its first read.
   a page measured on the same pages; its RULE file (`confirm-de/RULE.md`) is committed before its first read. Latin only
   if the quota allows after German; its lane is arm c (#7752), so a Latin pass is paper evidence and a router row.
 - *6.7* A pass is PROPOSED as a German knob change in a separate PR; this job applies nothing.
+- *6.8 Sampling (Derek, inbox 09:53Z; written 10:05Z, after the first three runs of 6.1 started at 09:49Z and before
+  any of their reads was scored or looked at; analysis rules only, no run changes).*
+  (a) **Target population**: the pages the German first-read lane will read (visible German print books held as scans
+  only, the `cli-ocr-lane.mjs` first-read frame). The panel is NOT a sample of it: it is the DTA books of #6012 with a
+  same-edition typed reference, chosen because a reference exists. The gap is measured: panel vs queue frame tabulated
+  on century, face (Fraktur / Antiqua, by eye on a seeded 60-page queue sample, seed 6740, one page per book), image
+  long edge as served, and print density (letters a page: the panel from the typed references, the queue from the
+  live-route reads of the confirmation pages). Latin is tabulated the same way on century and long edge.
+  (b) **Post-stratification**: the surfaces are refit with each panel book weighted so the panel's century × face mix
+  matches the queue sample's (cells with no panel book are merged into the nearest century; weights reported), and the
+  optimum is reported both ways. If the two differ, the weighted one decides.
+  (c) The German confirmation (6.6) is drawn from the queue frame **stratified to the same century × face mix**, one
+  page per book, seeded (seed named in `confirm-de/RULE.md`).
+  (d) **Power**: from the per-book differences between the centre replicates (C1–C3) and between L1 and L2, the smallest
+  paired CER and quota-cost differences 35 / 34 books detect with 80 % power at two-sided α 0.05
+  (MDE = (1.96 + 0.84) · SD of the per-book difference / √n), so a null reads as a bound.
+  (e) **Limitations stated with the result**: DTA and CAMENA texts are on the open web, so the model may partly recall
+  them (the memorisation subsidy, `.claude/docs/ocr-memorization-paper.md`), which flatters CER and can mask thinking
+  and image-size effects; CAMENA targets start from page 4, not the interior; Latin is roman type only.
+- *6.9 Dataset* `read-surface-6740 v1`, with a datasheet (Gebru et al.): one row per run × target page (settings, pool,
+  the image's source URL and sha256, never a copy; the read text; CER; wrong-text / loop / cut flags; tokens by type;
+  calls; wall seconds; refusal or cut reason), the panel draw, the confirmation draws and judge verdicts. Typed reference
+  text is included only where its licence allows redistribution (DTA: CC BY-SA 4.0, checked on deutschestextarchiv.de;
+  CAMENA: its terms checked, else offsets and hashes plus a fetch script). Schema, datasheet and export script in
+  `scripts/eval/read-surface-6740/dataset/`; the files, licence-split, in R2
+  `eval-artifacts/read-surface-6740/dataset-v1/`. No DOI is minted by this job.
 - *Budget and stops.* ≤ 1,500 agy calls for 6.1 and the sensitivity, ≤ 300 for the confirmation; Gemini through the
   CLI only. Before each run `/root/agy-quota/pools.json`: stop if the default pool's weekly remaining is under 30 %.
   Before the Opus judge, `climits status`: stop above 85 % weekly on this box's account.
