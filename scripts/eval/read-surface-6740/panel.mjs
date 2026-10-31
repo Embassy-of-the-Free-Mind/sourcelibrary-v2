@@ -18,6 +18,7 @@ import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
 import { r2, BUCKET, keyOf } from '../typed-refs-6012/lib.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const WORK = path.resolve(arg('work'));
@@ -56,13 +57,13 @@ for (const [lang, q] of Object.entries(QUOTA)) {
   for (const [bookId, rs] of byBook) {
     const b = books.get(bookId);
     if (!b || b.needs_splitting === true && !b.split_completed) continue;
-    const pages = await db.collection('pages').find({ book_id: bookId }, { projection: { id: 1, page_number: 1, archived_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1, crop: 1 } }).toArray();
+    const pages = await db.collection('pages').find({ book_id: bookId }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, enhanced_photo: 1, photo_original: 1 } }).toArray();
     const byNum = new Map(pages.map((p) => [p.page_number, p]));
     const n = Math.max(b.pages_count || 0, pages.length);
     // Interior targets (skip the front 15 % and the back 5 %; eval-design §3.2; CAMENA: from page 4, because #6012 aligned
     // most CAMENA books only on their first 25 OCR'd pages, so the front rule leaves 12 books) whose whole 8-page window exists with an image.
     const ok = rs.filter((r) => r.page_number >= (q.source === 'camena' ? 4 : Math.max(4, Math.floor(n * 0.15))) && r.page_number <= Math.floor(n * 0.95) - 4
-      && WIN8.every((d) => { const p = byNum.get(r.page_number + d); return p && (p.archived_photo || p.photo || p.cropped_photo); })
+      && WIN8.every((d) => { const p = byNum.get(r.page_number + d); return p && getPageSource(p); })
       && r.our_letters >= 400);
     if (!ok.length) continue;
     // Several candidates per book; the typed text decides (no notes on the typed page) after the shard read.
