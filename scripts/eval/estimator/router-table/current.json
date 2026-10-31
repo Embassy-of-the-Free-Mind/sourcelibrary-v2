@@ -1,8 +1,16 @@
 {
  "_prior_art": "PRIOR ART: none — looked in scripts/eval/estimator/router-table/ (dated builds and rules.json only; nothing names the live table) and scripts/lib/ocr-routing-table.json (hand-edited production routes, not the k/n decisions).",
  "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
- "table": "2026-10-30-german-cheaper-7701",
- "set": "2026-10-30",
- "why": "The newest full build (#7701 german-cheaper: German cells german-blank, german-blank-fraktur, german-blank-antiqua; no cheaper German first-read route passes, so every live cron route keeps its decision — German and French read 4 a call, Latin arm c). It includes the 2026-10-30 en-pre1800 HOLD (#7808). The 2026-10-29-cheap-routes-7701 build is superseded.",
- "waivers": []
+ "table": "2026-10-31-correction-pass-7818",
+ "set": "2026-10-31",
+ "why": "2026-10-30-german-cheaper-7701 plus the #7818 paired test as evidence for german-lite and french-lite lite>agy-flash-low (Derek, 2026-10-31: correction cron on, evidence in, waiver for German). With it german-lite/print moves to keep lite>opus (waived below) and french-lite/print to HOLD; every first-read decision is unchanged from german-cheaper.",
+ "waivers": [
+  {
+   "cell": "german-lite/print",
+   "lane": "correct",
+   "set": "2026-10-31",
+   "until": "2026-11-14",
+   "reason": "#7818: the agy correction beats no correction by +13 points (95% CI +5 to +22; 8 gained, 0 lost of 60 books) but not the Opus bar the table keeps (lite>opus). Opus has no capacity for ~410K pages. Re-decide by 11-14 with the defect-rate rule (#7824) or an Opus share."
+  }
+ ]
 }
