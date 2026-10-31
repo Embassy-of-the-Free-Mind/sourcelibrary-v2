@@ -1,0 +1,141 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Latin
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: On Gentile Theology and Christian Physiology | Author: Gerardus Johannes Vossius | Date: 1641
+
+**Note:** This is a public domain work published in 1641. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>40</page-num>
+<header>DE ORIGINE ET PROGRESSV</header>
+<meta>catchword: Philo-</meta>
+
+quod in hanc miseriam sumus conjecti. Ardentiùs quoque Deum oramus, ut prudentia nos instruere, & per angelos suos custodire dignetur.
+
+### C A P V T. V I.
+
+*Acceditur ad spiritus ministros, bonos malosque: quorum utrosque negarunt Saducæi; item Democritus; ex parte etiam Aristoteles: at contrà eos agnoverunt Pythagorici, & Platonici: atque ut doctrina hæc ad gentiles etiam à majoribus, multorum seculorum traditione, sit derivata: quadruplici item ratione comprobata, spectris, oraculis, magicis artibus, & prodigiis. Angelis sui generis corpus tribui, non modo à philosophis, sed etiam multis Sanctorum Patrum. In quo gentiles, & alii, de natura eorum aberrarint.*
+
+Dictum de duplici spiritu, uno boni, altero mali principio; quorum utrumque pari, vel suppari honore coluerint. Eâque occasione etiam vidimus de variis opinionibus, quæ inde promanarint; sed dissimili ratione; dum alii non duo statuunt principia, sed multa; sic tamen divisa, ut quædam essent benefica, quædam malefica; ac utrisque cultus præstaretur divinus: alii autem, ut Manichæi, duo duntaxat principia, boni unum, alterum mali, constituerent; soli tamen principio boni cultum, ut Deo, exhiberent. Deinceps accedo ad spiritus, non principes, sed ministros: qui à philosophis communi nomine fere dæmones vel dæmonia, à Peripateticis intelligentiæ, à Christianis boni malive angeli appellantur.
+
+In his considerabimus, naturam, officium, & cultum. In natura spectabimus hæc tria: primum, qui spiritus hosce negarint, qui agnorint: deinde unde eos gentes cognoverint: & quatenus in eorum natura convenerint Christiani, ac gentiles: denique de naturæ hujus præstantia; quæ ex cultus caussis una fuit.
+
+Spiritus non agnovere Saducæi: ut est Actorum xxiii, 8. Objectant nobis Iudæi, quòd libros Mosaicos agnoscerent pro divinis; ubi sæpius commemoratur, ut angeli apparuerint. Verùm verisimile mihi fit, Saducæos eludere hæc solitos: cujus ratio nunc gemina occurrit. Vna est, ut per eas non aliud intellexerint, quàm qualitates à Deo productas in imaginatione ejus, quem de re aliqua velit edocere. Altera est, ut putarint, Deum producere spiritus, quando eorum operâ uti velit, postea eos destruere: ac producere quidem separando quiddam ab anima mundana, quod postea redeat in naturam generalem.
+
+Ex gentium philosophis Democritus non agnovit spiritus ullos: nec Aristoteles alios, quam orbium cælestium motores. Licet non ignorem, aliud de Aristotele visum fuisse Augustino Steucho lib. viii de Perenni
+
+<vocab>Saducæi, Democritus, Aristoteles, Pythagorici, Platonici, Manichæi, dæmones, angeli, Augustinus Steuchus, anima mundana</vocab>
+
+**At the page break:** The catchword «Philo-» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.
+
+**Previous page translation for continuity:**
+# BOOK I ON IDOLATRY
+
+...those who have considered these things more studiously. For if the poet from Sulmo <note>Ovid, who was born in Sulmo, Italy.</note> said in the second book of his *Tristia*:
+> Nothing is useful that cannot also cause harm. <note>Original Latin: *Nil prodest, quod non lædere possit idem.*</note>
+
+I might say with no less justice:
+> Nothing harms that does not also bring certain benefits. <note>Original Latin: *Nil lædit, quod non commoda certa ferat.*</note>
+
+Therefore, if something causes harm, it should not immediately be considered a thing that inconveniences the nat
+[…]
+ men nor mute animals derive any utility. This would easily appear to anyone who turns his mind through those things one can read about them. This is true whether looking at the Greeks, such as Nicander, Dioscorides, Aetius, or Aegineta; or the Arabs, such as Avicenna, Serapion, Hali Abbas, and Rhazes; or more recent Latin authors, such as Peter of Abano, Santes de Ardoynis, and Cardinal Ponzetti; not to mention Cardano, Grevin, Mercuriale, and others. <note>Vossius lists a massive directory of medical and toxicological authorities from antiquity through the Renaissance to show the depth of human study on the subject.</note> But indeed, we know that a remarkable utility for many of those substances is put forward by those who have placed their study and labor into searching the secrets of nature. Even if we cannot show this for all of them, nature or its author <note>God.</note> is not to be blamed for malice. Instead, it must be attributed to our own laziness, because we have not applied as much care and diligence as we could in investigating their use. What of the fact that utility returns to us from those poisons in this way too? They excite our industry in discerning healthy things from poisonous ones. We also have material for patience from this. When we see how many dangers this life is subject to, we recognize more clearly the wrath of God toward sin, because of which...
+<summary>Vossius argues that poisons and natural harms are not inherently evil but serve hidden purposes in nature, medicine, or as divine reminders of human mortality and sin.</summary>
+<keywords>toxicology, Lucretius, Ovid, natural philosophy, medicine, hemlock, providence, theodicy, sin</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

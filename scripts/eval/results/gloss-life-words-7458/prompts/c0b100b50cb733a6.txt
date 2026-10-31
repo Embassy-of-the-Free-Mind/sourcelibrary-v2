@@ -1,0 +1,134 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Chinese
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Guide to the Book of Changes | Author: 蔡清 | Date: 1782
+
+**Note:** This is a public domain work published in 1782. It is not under copyright.
+
+**Text to translate:**
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>卷十二下</page-num>
+<meta>The text is a commentary on the I Ching (Book of Changes), specifically the "Meng Yin" (蒙引) by Cai Qing (蔡清). The layout follows traditional Chinese vertical printing with a fish-tail fold (口) indicating the volume and page section.</meta>
+
+師易文中子所謂九師興而易道微者也<margin>見山堂考索</margin>
+荀爽後漢人也荀淑有子八人時人謂之八龍其第
+六曰爽字慈明時人言荀氏八龍慈明無雙荀九家
+其集之名也○為龍者乾卦本義云龍陽物也本乾
+象也○為直者其動也直也○為衣者衣被一身猶
+乾之覆物也○為言者言者心之聲聲出於氣陽也
+韻府序曰聲出於氣致堂胡氏論雷電有曰凡聲陽
+也
+
+<vocab>師易, 文中子, 九師, 荀爽, 荀淑, 八龍, 乾卦, 本義, 韻府, 胡氏</vocab>
+
+**Previous page translation for continuity:**
+takes the supporting solid to be the lower two yang lines, the image of the tree, set against the two soft lines at the bottom of Gen; and the supported solid to be the single yang line above, the image of the fruit. This seems to split "tree fruit" into two parts, which is fragmented for a trigram of pure yang. Still, it must be distinguished from "fruits and gourds." Qian is pure yang, so its image is tree fruit. Gen is young yang resting above two yin lines, so it includes both the fruit of trees and the gourds of plants. Mr. Yang says that being tree fruit means not being stripped away by yin; this again seeks the meaning in the hexagrams. <note>An allusion to the Bo hexagram, "Stripping Away," where the single yang line left at the top is compared to an uneaten fruit.</note>
+
+The Xun Nine Schools text adds: it is the dragon, it is straightness, it is clothing, it is speech.
+
+Master Zhu says: "Xun Shuang had a *Collected Explanations of the Changes by Nine Schools* in ten chapters." <gloss>I note that the "nine schools" probably refers to the nine men versed in the Changes whom Liu An, Prince of Huainan of the Han, engaged to compose the *Daoxun* in twenty chapters, called the Nine</gloss>
+<summary>Cai Qing judges Shasui's reading of "tree fruit" too fragmented and contrasts Qian's tree fruit with Gen's fruits and gourds. He then introduces the extra images preserved in Xun Shuang's Nine Schools text.</summary>
+<keywords>Cai Qing, Qian, Gen, tree fruit, fruits and gourds, Mr. Yang, Bo hexagram, Xun Shuang, Nine Schools, Zhu Xi, Liu An, Prince of Huainan, Daoxun</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

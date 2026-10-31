@@ -1,0 +1,172 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Light on the Yoga of Force with Commentaries | Author: Svatmarama | Date: 1450
+
+**Note:** This is a public domain work published in 1450. It is not under copyright.
+
+**Text to translate:**
+<language>Sanskrit, Hindi</language>
+<page-type>text</page-type>
+<page-num>११०</page-num>
+<header>हठयोगप्रदीपिकायां</header>
+
+# मू० नारीभगे पतद्विंदुमभ्यासेनोर्ध्वमाहरेत् ॥
+# चलितं च निजं बिंदुमूर्ध्वमाकृष्य रक्षयेत् ॥ ८७ ॥
+
+->॥ टीका ॥<-
+
+क्रिया । सीसकनिर्मितां स्निग्धां मेढ्रप्रवेशयोग्यां चतुर्दशांगुलमात्रां शलाकां कारयि-
+त्वा तस्या मेढ्रे प्रवेशनमभ्यसेत् । प्रथमदिने एकांगुलमात्रां प्रवेशयेत् । द्वितीयदिने
+द्व्यंगुलमात्रां तृतीयदिने त्र्यंगुलमात्राम् । एवं क्रमेण वृद्धौ द्वादशांगुलमात्रप्रवेशे
+मेढ्रमार्गः शुद्धो भवति । पुनस्तादृशीं चतुर्दशांगुलमात्रां अंगुलमात्रवक्रामूर्ध्वमुखां
+कारयित्वा तां द्वादशांगुलमात्रां प्रवेशयेत् । वक्रमूर्ध्वमुखं द्व्यंगुलमात्रं बहिः स्थाप-
+येत् । ततः सुवर्णकारस्य अग्निधमनसाधनीभूतनालसदृशं नालं गृहीत्वा तदग्रं मेढ्रप्र-
+वेशितद्वादशांगुलस्य नालस्य वक्रोर्ध्वमुखद्व्यंगुलमध्ये प्रवेश्य फूत्कारं कुर्यात् । तेन
+सम्यक् मार्गशुद्धिर्भवति । ततो जलस्य मेढ्रेणाकर्षणमभ्यसेत् । जलाकर्षणे सिद्धे पू-
+र्वोक्तश्लोकरीत्या बिंदोरूर्ध्वाकर्षणमभ्यसे । बिंद्वाकर्षणे सिद्धे वज्रोलीमुद्रासिद्धिः ।
+इयं जितप्राणस्यैव सिध्यति नान्यस्य । खेचरीमुद्राप्राणजयोभयसिद्धौ तु सम्यक्
+भवति ॥ ८६ ॥
+
+एवं वज्रोल्यभ्यासे सिद्धे तदुत्तरं साधनमाह ॥ नारीभग इति ॥ नारीभगे स्त्रीयो-
+
+->॥ भाषा ॥<-
+
+करकें ताकूं इंद्रीमें प्रवेश करवेको अभ्यास करे पहिले दिन एक अंगुल प्रवेश करे
+दूसरे दिन दो अंगुल प्रवेश करे तीसरे दिन तीन अंगुल प्रवेश करे या रीतकर क्रमसूं
+बारे अंगुल मात्रा प्रवेश होय तब इंद्रियमार्ग शुद्ध होय वो चौधे अंगुलकी शलाका
+तामें दोय अंगुल टेढी ओर ऊंचो मुख जाको एसी करायले फिर वो द्वादश अंगुल भीतर
+प्रवेश करे और टेढी ऊंचो मुख जाको वो दो अंगुल बहार स्थापन करे ता पीछे सुना-
+रकी अग्नी सिलगावेकी नाल ताकी सदृश नाल ग्रहणकरकें ता नालको अग्रभाग
+इंद्रीमें प्रतेश कियो जो द्वादशांगुलकी नाल ताको टेढी ऊंचे मुखकी बहार स्थित दो
+अंगुलकी नाल ताके मध्यमें प्रवेश करकें फिर फूत्कार करे ताकरकें भलि प्रकार इंदि-
+यमार्ग शुद्ध होय. तापीछे इंद्रीसूं जलको ऊपर चढायेवेको अभ्यास करे जब जलको
+आकर्षण होयवे लगजाय अच्छी तरहसूं तब पहले श्लोकमें कही जो रीती ताकरकें वीर्यके
+आकर्षणको अभ्यास करे जब वीर्यको आकर्षण खेंच लेनो सिद्ध होय जाय तब वज्रोली
+मुद्रा सिद्ध होय है. जाके खेचरी मुद्रा ओर प्राणजय ये दोनो सिद्धी जाकूं होंय ताकूं
+वज्रोली मुद्रा सिद्ध होय औरकूं नही होय ॥ ८६ ॥
+
+एसें वज्रोली मुद्राको अभ्यास सिद्ध होय जाय ताके अगाडीको साधन कहें हैं ॥ नारी-
+
+<vocab>Hathayogapradipika, Vajroli Mudra, Bindu, Pranajaya, Khechari Mudra, Shalaka, yoga practice</vocab>
+
+**Previous page translation for continuity:**
+( 109 )
+### Third Instruction
+
+**Root Verse: One should gradually practice the proper upward contraction of the genitals. Whether a man or even a woman, one may attain success in Vajrolī. || 85 ||**
+
+**Root Verse: With effort, using a proper tube, one should perform a blowing action into the "Vajra-cave" <note>original: "Vajrakandare" — referring to the urethral opening</note>. This should be done slowly and gradually to facilitate the circulation of air. || 86 ||**
+
+---
+
+->॥ COMMENTARY ॥<-
+
+**I shall speak** or describe. What are the two things which are difficult to obtain for just anyone, o
+[…]
+ a blowing action <note>original: *phutkāra*</note> slowly and gradually, much like one blows through a pipe to kindle a fire. This blowing into the **Vajra-cave** (<note>original: <term>Vajrakandara</term></note>), the opening of the urethra, is done to ensure the circulation of air moves properly through the channel. Therefore, one should perform this repeatedly and with great care. Now, regarding the means of practicing Vajrolī...
+
+---
+
+->॥ VERNACULAR EXPOSITION ॥<-
+
+First, one should drink milk because after union with a woman, the senses become weak; therefore, drinking milk is necessary. The second thing is an obedient and submissive woman. || 84 ||
+
+Now the method of Vajrolī Mudrā is stated. **By the organ...** After union with a woman, when the "drop" falls, the man or even the woman should practice contracting the organ upward with effort. By pulling the vital seed back up, success in Vajrolī Mudrā is obtained. || 85 ||
+
+Now the preliminary action of Vajrolī is stated. **With effort...** Using a tube made of silver <note>original: *chāndi*</note>, one should blow into the opening of the organ slowly, just as one blows to light a fire, so that air circulates. This should be done repeatedly. Now the process of practice is stated: a probe <note>original: *śalākā*</note> should be made of lead, four finger-widths long, which is smooth and suitable for entering the organ...
+<summary>This page details the physical requirements for Vajrolī Mudrā, including the use of milk for physical recovery and the technical method of using a tube (made of lead or silver) to blow air into the urethra to prepare the channel for the upward suction of vital fluids.</summary>
+<keywords>Vajroli Mudra, Bindu, sexual sublimation, Hatha Yoga, Yoga anatomy, Shastranala, Phutkara, Brahmacharya</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

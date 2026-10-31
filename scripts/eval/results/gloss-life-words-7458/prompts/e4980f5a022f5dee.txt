@@ -1,0 +1,201 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Ranvir Vijaya (Astrology) | Author: Unknown | Date: 1870
+
+**Note:** This is a public domain work published in 1870. It is not under copyright.
+
+**Text to translate:**
+<lang>sa</lang>
+<vocab>Varnasvaracakram, Grahasvaracakram, Jivasvaracakram, Rashicakram, Navamsha, Devadatta, Devadattanamatah, Nakshatracarana</vocab>
+
+### ॥ वर्णस्वरचक्रम् ॥
+| अ | इ | उ | ए |
+| :--- | :--- | :--- | :--- |
+| क | ख | ग | घ |
+| च | छ | ज | झ |
+| ट | ठ | ड | ढ |
+| त | थ | द | ध |
+| प | फ | ब | भ |
+| म | य | र | ल |
+| व | श | ष | स |
+| ह | | | |
+
+### ॥ ग्रहस्वरचक्रम् ॥
+| ज | अ | इ | उ | ए | ओ |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| च | मे | क | ध | नु | म |
+| ठ | सिं | मि | मी | वृ | कुं |
+| द | वृ | क | ० | ० | ० |
+| ब | र | चं | गु | शु | श |
+| र | मं | बु | ः | ः | ः |
+
+### ॥ जीवस्वरचक्रम् ॥
+| अ | इ | उ | ए | ओ |
+| :--- | :--- | :--- | :--- | :--- |
+| अ | व | क | च | ट |
+| १ | ६ | ५ | ५ | ५ |
+| त | प | य | श | क्ष |
+| ५ | ५ | ४ | ४ | ४ |
+
+षोडशाक्षरमिति ॥ १ ॥ अवर्गदिश्ववर्गान्न्नमिति देवदत्तनामतः उदाह-
+रणं दकारस्यत्रिसंख्या दकारोपरि इकारस्यैकादश वकारोत्तरोरु- का-
+रस्यैकसंख्या वकारस्य चतुष्षसंख्या दकारोत्तरे ताडकारस्यैकसंख्या
+दकारस्यत्रिसंख्या सं योगी लकारस्य द्वस्य दिसंख्या आकारस्य विर
+कसंख्या एवं षडविंशतिः २६ पंचभिस्त्रैशेषमेकं १ तेन देवदत्तस्य
+जीवस्वरो अकारः ॥ २ ॥ इति जीवस्वरचक्रम् ॥ अथ राशिचक्रम् ॥ मेष
+
+षोडशाक्षरवर्गः स्यात्कादि वर्लपंचकाः ॥ चतुव्व्वणणययोगे
+वर्ग संख्या वर्गबुकीर्तितः ॥ अ वर्गा यश्च वर्गो लो वण संख्या
+सुनामलः ॥ १ ॥ नाम्नि वर्ण स्वराग्ना द्या वणी भौ वर्ण संख्या ॥
+विदिताः पंचभिर्भक्ताः शेषे जीवस्वरं विदुः ॥ २ ॥ इति जीवस्वरच० ॥
+मेषवृषव कारे च मिथुनायाः षडंशकाः ॥ मिथुनांश त्रयैचैव
+मिकारे सिंह कर्क टो ॥ १ ॥ कन्यातुला उकारे च तल्लिकायास्तु
+योंशकाः ॥ एकारे वृश्चिको तौ शो वृश्चिकः मगा दिमाः ॥ २ ॥ अो
+शास्त्र यो मृगस्यात्याः कुंभमीनौ तथो स्वरे ॥ एवं राशिस्वरः प्रोक्तो
+नवांशक क्रमोदयः ॥ ३ ॥ इति राशिस्वरचक्रम् ॥
+
+त्रयौ इति मेष नवाशाः ९ वृष नवांशः ९ मिथुन ६ एवं २४ मिथुनांश
+त्रयमिति मिथुनांश त्रयं ३ कर्क ९ सिंह ९ एवं २१ कन्या तु लेति क-
+न्याया ९ तुलाया ९ वृश्चिकस्य अंशाः ३ एवं २१ एकारे इति शकारे वृ-
+श्चिक स्यांशः षट् धनु ९ मकर ९ मकराबि मा षट् ६ एवं २१ ओशास्त्राय
+इति मृगस्य त्रयोंशाः ३ कुंभमीनयो रष्टादश १८ एवं २१ अथ नक्षत्र-
+चरणे नादा हरणं अश्वन्यादीन मूल नक्षत्र पादानाम स्वरः स्वामी
+पुनर्वस्वादिपंचनक्षत्रोत्तरकाला नी क चरण सहित चरण नामि
+स्वरः स्वामी उत्तराफाल गु नी चर लवय सहित हस्ता दिनक्षत्रचतुष्ट
+य अनुराधा चरण द्वय सहित पादानाम स्वरः स्वामी ॥ अनुराधा चरण
+द्वय ज्येष्ठा दिनक्षत्रचतुष्टय श्रवणत्रय सहितैक विंशति चरणानां
+शकारस्वरः स्वामी ॥ श्रवण चरणै के धनिष्ठादि रन्त्य ते चरणावधि
+२९ ते चरणानामी स्वरः स्वामी ॥ को बोक्षरं देवदत्त स्वरे वती च
+२९ न अकारो राशिस्वरः ॥ ३ ॥ ॥ इति राशिचक्रम् ॥
+
+<detected-images>
+[
+  {"description": "A set of three grids outlined in red-pink ink containing Devanagari characters and numerals, representing astrological or numerological 'chakras' (Varnasvara, Grahasvara, and Jivasvara).", "type": "diagram", "bbox": {"x": 0.119, "y": 0.11, "width": 0.709, "height": 0.187}, "gallery_quality": 0.8, "museum_rationale": "Clear and well-preserved examples of traditional Indian astrological/mantric calculation diagrams (chakras) within a manuscript."}
+]
+</detected-images>
+
+**Previous page translation for continuity:**
+<margin>
+A 1. Ti. <note>likely abbreviations for astrological categories</note>
+A 2. Ki. 
+5 
+5
+</margin>
+
+Regarding the "dead vowels" <note>original: "mṛtasvarā"; sounds that have lost their potency in a specific divinatory context</note>... **|| 15 ||** Now, the time-measurements for the twelve-year cycle of the <term>Narodaya; literally 'the arising of man,' a calculation used to determine the timing of events based on the sounds of a name</term> are explained. In the period of *Shaka Pushya* <note>a historical or astrological timeframe</note>... **|| 16 ||** Regarding the essence of the nec
+[…]
+f the **U** vowel. For Taurus and Libra, the lord is Venus, the ruler of the **E** vowel. For Capricorn and Aquarius, the lord is Saturn; Saturn is the lord of the **O** vowel. 
+
+Now, an example is given: <gloss>The fourth quarter of the star Revati.</gloss> For the syllable **Re** in the star Revati: The star Revati corresponds to the sign of Pisces. The vowel in Revati is **E** <note>the text here explores the phonetic components</note>. Pisces is represented by the **U** vowel. The lord of Pisces is Jupiter, who is the lord of the **U** vowel. Therefore, for a person named Devadatta, the vowel is **U**. Likewise, for the word beginning with **Ya**: The phonetic power is found in the star Jyeshtha. In the word "Yajña," the letter **Ya** corresponds to the star Jyeshtha and the sign of Scorpio. Scorpio's lord is Mars. Therefore, for the word "Yajña," the planetary vowel is **A**.
+
+->**|| Thus ends the Wheel of Planetary Vowels ||**<-
+
+---
+
+<margin>
+|| The Vowel-Measure Wheel ||
+</margin>
+
+| | | | | | | ->**|| Now, the Zodiac Wheel ||**<- |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **A** | | | | | | **A** \| **I** \| **U** \| **Ṛ** \| **Ḷ** |
+| **E** | | | | | | Ari \| Gem \| Scorp \| Can \| Leo 3 <note>abbreviations for signs</note> |
+| **U** | | | | | | Tau \| Can \| Lib \| Sag \| Aqu |
+| **I** | | | | | | Leo \| Leo \| Leo 3 \| Vir 6 \| Pis |
+| **A** | | | | | | |
+<summary>This page details the "Narodaya" system of time-measurements and explains how vowels in a person's name correlate to zodiac signs and planetary rulers for the purpose of divination. It provides a specific mapping: A (Aries/Leo/Scorpio), I (Virgo/Gemini/Cancer), U (Sagittarius/Pisces), E (Libra/Taurus), and O (Capricorn/Aquarius).</summary>
+<keywords>Narodaya, Planetary Vowels, Zodiac Wheel, Bhauma, Surya, Budha, Guru, Shani, Nakshatra, Revati, Astrological Timing</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

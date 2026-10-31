@@ -1,0 +1,50 @@
+[
+{ "id": "G25",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "No life words on the page (virtus informativa, animalium are not life words); all three close and complete." },
+{ "id": "G03",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "page header 欽定四庫全書 rendered 'Complete Book of Military Affairs'" }] },
+    "Z": { "fidelity": 4, "life_words_correct": 2, "life_words_wrong": 1, "life_wrong_examples": ["'qi <note>vital energy</note>' for 氣 in 禽之制在氣"], "serious_errors": [] } },
+  "note": "Life words: 輕命 (life), 生者死之根 (life/living), 氣 (bird control lies in qi/breath)." },
+{ "id": "G21",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 22, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 24, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 23, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "prāṇa consistently 'Chief Breath'/'breath', jīva 'living self'/'individual soul' in all three; counts approximate." },
+{ "id": "G22",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "spiritus (spirit beings) and anima mundana (world soul) rendered correctly throughout." },
+{ "id": "G30",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "omission", "what": "opening 'ihm selbst nichts zugemessen' (nothing attributed to the body itself) dropped, leaving the clause garbled" }] },
+    "Y": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "omission", "what": "opening 'nichts zugemessen' dropped ('itself, but rather to the powers')" }] },
+    "Z": { "fidelity": 5, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "krefft/krafft = powers, not a named vital force; no life words. Y and Z call the woodcut initial 'A' (it is U/V)." },
+{ "id": "G28",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Life words: vaporem, spiritus (X 'vital spirits', Fernel's medical spirits, accepted), anima x2, semen animatum x2." },
+{ "id": "G06",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "margin 見山堂考索 rendered 'Found in the Kaosuo by Shantung' (title Shantang Kaosuo made into author)" }] },
+    "Y": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "聲出於氣 twice: X/Z 'qi', Y gloss 'breath, vapour' — all fine." },
+{ "id": "G11",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 9, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "魂/魄 souls, 氣 breath (X 'vital breath', accepted), 方其生 life. X adds 'physical' to 精 twice." }
+]

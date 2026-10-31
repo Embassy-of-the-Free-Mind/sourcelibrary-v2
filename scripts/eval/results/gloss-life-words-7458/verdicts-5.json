@@ -1,0 +1,49 @@
+[
+{ "id": "G07",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 5, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>atmospheric omen/vital force</gloss> for 氣 (帝王氣)"], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 5, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>vital energy/atmospheric vapors</gloss> for 氣 (帝王氣)"], "serious_errors": [] },
+    "Z": { "fidelity": 4, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Page ends mid-sentence at 將軍勇士; X ('are valiant') and Z ('will be brave') complete it, Y leaves it open." },
+{ "id": "G32",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Life words: Dampff (vapour) and Spiritus; all three render both correctly." },
+{ "id": "G01",
+  "translations": {
+    "X": { "fidelity": 3, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "Han Yu line 酒壺綴羊腔 rendered 'requests the wine pitcher to be filled', with the ditto 羊腔 dropped" }, { "type": "mistranslation", "what": "trailing 韭餅之類 of the previous entry made into a heading 'Leek-type Pastry'" }] },
+    "Y": { "fidelity": 2, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["'vital energy <term>qi</term> <gloss>vital force</gloss>' for 氣 in 氣化"], "serious_errors": [{ "type": "omission", "what": "ditto marks 一一 (= 羊肝) left as <unclear>, so the liver anecdote and the Soushen ji sentence become garbled ('a thousand-year-old [unclear] transforms ... a toad gains a melon')" }, { "type": "mistranslation", "what": "'asking for a wine pot to mend' for 酒壺綴羊腔" }, { "type": "mistranslation", "what": "the opening line rendered as loose words 'of / leek / category / cake'" }] },
+    "Z": { "fidelity": 3, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "invention", "what": "Han Yu line made to 'decorate the wine flagon with leek pastry and sheep carcass'; the leek pastry belongs to the previous entry" }] } },
+  "note": "The only life word is 氣化 at the end; X's 'breath' is counted as correct." },
+{ "id": "G36",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Lebenskraft (twice) is a named vital force; 'vital force' is correct in all three." },
+{ "id": "G10",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["補氣: <term>qi</term> <gloss>vital energy</gloss>"], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["補氣: <term>qi</term> <gloss>vital energy</gloss>"], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } } },
+{ "id": "G33",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Life word: geistliche Krafft, rendered 'spiritual power' by all three." },
+{ "id": "G34",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Life word: Universal-Geist, rendered 'Universal Spirit' by all three." },
+{ "id": "G08",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 6, "life_words_wrong": 1, "life_wrong_examples": ["meta reconstructs the prior page as 'obtains vital force that is both upright and unobstructed' (氣)"], "serious_errors": [{ "type": "invention", "what": "meta adds a quotation of the previous page and 'yielding eleven characters in all', none of which is on this page" }] },
+    "Y": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 6, "life_wrong_examples": ["<term>qi</term> <gloss>vital force</gloss> for 氣 (得氣之偏)", "'combining the void with vital force' for 合虛與氣", "'the transformation of vital force' for 氣化"], "serious_errors": [] },
+    "Z": { "fidelity": 4, "life_words_correct": 5, "life_words_wrong": 1, "life_wrong_examples": ["<term>qi</term> <gloss>vital force</gloss> for 氣 (得氣之偏)"], "serious_errors": [] } },
+  "note": "氣 occurs six times, in Neo-Confucian cosmology. X's gloss 'breath' is counted as correct." }
+]

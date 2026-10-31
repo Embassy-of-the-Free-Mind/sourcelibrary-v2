@@ -1,0 +1,156 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** German
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Theosophical Hall of Wonders | Author: [Richtenfels] | Date: 1709
+
+**Note:** This is a public domain work published in 1709. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>German</language>
+<page-type>text</page-type>
+<page-num>(58)</page-num>
+<meta>catchword: lage</meta>
+
+Magen die *Residentz* und Sitz ist der geistlichen Krafft den Menschen zuernehern/ und so wohl dem Herzen neues Geblüth/ als dem Gehirn neue Einbildungs macht/ und den Saamen Gefässen neuen Zeugungs Safft mitzutheylen / also kan man leicht die Veränderungen so dem Menschen fast täglich in Ansehung so wohl seines Gesunden als krancken Zustandes vorfallen/ daher urtheylen. *Sapiens omni acie ingenii suas hanc partem Cogitationes suscipiat.*
+
+Nun soll des Getraides *destillation* selbst folgen/ welche wird solche Dinge an Tag bringen / so die Vernunfft und Sinne niemals in den körneren des Getraides gesucht hätten. Demnach nehme man obberührt *fermentirte* oder gejohrene Masse / thue solche in eine inwendig mit Speck beschmierte Blase/ um allen Brenzlichten Geruch zuverhütten / setze die in ein bequemen Ofen / mache Feuer unter die Blase / und rühre die Masse darinn so lang mit einem Mischholz umb / biß sie warm wird / alsdann setze man einen Helm oder Huth auf / dessen Röhren durch ein Faß voll kalt Wassers / und ferner in eine Vorlage
+
+<vocab>Residentz, Geblüth, Einbildungs macht, Saamen Gefässen, Zeugungs Safft, Getraides destillation, fermentirte, gejohrene Masse, Speck beschmierte Blase, Brenzlichten Geruch, Mischholz, Helm, Huth, Vorlage</vocab>
+
+**At the page break:** This page ends with the word «Vorlage», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.
+
+**Previous page translation for continuity:**
+(57)
+D 5
+
+...or life-juice <note>original: *Lebenssafft*; the vital fluids believed to be extracted from food to nourish the body</note> be changed / whose
+quality one can likewise perceive
+and recognize by the smell / taste and effect <note>original: *affect*; the specific sensory impression or physical impact a substance leaves</note> /
+and specifically / when the
+stomach belches <note>original: *auffstösset*; literally "pushes up," referring to repeating or burping</note> shortly or several hours after the
+meal / where one can sense /
+what one has consumed / as
+can most easily happen / when one has enjoyed sharp
+foods / such as for example / radish /
+horseradish / onions / garlic /
+celery <note>original: *Sölrich*; an archaic term for celery or celeriac</note> / rue <note>original: *Rauthen*; a bitter herb common in historical cooking and medicine</note> / mustard / and the like.
+In particular, the consumed
+must <note>original: *Most*; unfermented or young, fermenting fruit juice</note> / also fresh and young
+beer give off such a biting and somewhat tick-
+ling vapor / as that
+mentioned above. And that can, in my
+opinion, be very aptly understood through
+the bubbles / which / as likewise
+mentioned above / can be seen in the pure *chyle* <note>original: *Chylo*; the milky fluid formed in the stomach during digestion</note> or
+white cream of the grain /
+and also give off a tickling, sharp vapor.
+Since in the stomach also
+similar bubbles are formed /
+and when they burst, the person must bel-
+ch <note>original: *rölpfen*</note> / whereby one then perceives /
+the taste / smell and effect of that which
+prevails in the *chyle* <note>original: *Chylo*</note>. Just as the
+<summary>The author explains how digestion produces vapors and bubbles similar to those in fermenting beer, which allow a person to recognize the qualities of the food they have eaten through belching. He compares the "white cream" of grain to the chyle produced in the human stomach.</summary>
+<keywords>digestion, chyle, stomach, fermentation, life-juice, belching, vapors, volatile spirit, medicinal herbs, dietary health</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

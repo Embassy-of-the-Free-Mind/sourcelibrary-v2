@@ -1,0 +1,147 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** French
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: History of Religious Beliefs and Philosophical Opinions in China | Author: Léon Wieger | Date: 1917
+
+**Note:** This is a public domain work published in 1917. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>French</language>
+<page-type>text</page-type>
+<page-num>694</page-num>
+<header>Leçon 73.</header>
+
+Or <term>Mencius</term> a dit: l'étude doit délivrer le cœur, le conserver, l'alimenter, afin qu'il puisse servir le ciel. Que les étudiants notent cela !... Il en est de la méditation, comme d'une graine qui contient une force vitale, un germe de développement. Cultivée, elle déploiera sa vertu, se développera et produira. Ainsi en sera-t-il de l'homme qui médite. Si on ne soigne pas la graine, elle ne donnera rien. Celui qui ne progresse pas, doit s'en prendre à lui-même. Il n'a pas fumé, biné, arrosé... Des trois choses, méditation, résolution, exécution, la méditation est la première, car elle produit la résolution, laquelle produit l'exécution.
+
+<term>Mencius</term> a dit que, pour garder son cœur en bon état, il fallait diminuer ses désirs le plus possible. Cela revient à dire, qu'il faut le bien garder. Le délivrer autant que possible de toute affection déréglée... <term>Confucius</term> a parfaitement défini ce en quoi doit consister la maîtrise de soi. Ne rien regarder, écouter, dire; ne faire aucun mouvement, qui ne convienne. Cette réserve dans les communications avec l'extérieur, préserve l'intérieur. Sage est celui qui l'observe !
+
+Pour ce qui est des mauvaises pensées qui s'élèvent dans le cœur, les plus considérables sont faciles à reconnaître et à réprimer. Mais que faire contre ces mouvements innombrables qui sont presque imperceptibles?.. Il n'y a qu'à ne pas les suivre, quand on les a remarqués. Tel un homme assis. Il veut rester assis. Ses jambes voudraient marcher. Quoique les jambes lui démangent ainsi, il reste assis, et ne marchera que quand il voudra marcher.
+
+Jadis 趙叔平 <term>Tchao chou-p'ing</term> usa du moyen que voici. Il mit des fèves blanches dans un vase, des fèves noires dans un autre vase; entre les deux, il mit un vase vide. Chaque fois que dans son cœur une bonne pensée bougeait, il prenait une fève blanche et la jetait dans le vase du milieu. Chaque fois qu'une mauvaise pensée bougeait, il prenait une fève noire et la jetait dans le vase du milieu. La nuit venue, il vidait ce vase, comptait les fèves noires ou blanches, et notait ainsi le nombre de ses pensées bonnes ou mauvaises. Au début, les fèves noires étaient nombreuses, et les blanches rares. Avec le temps, peu à peu, les deux sortes vinrent à se balancer. A la longue, les blanches l'emportèrent sur les noires. Enfin il n'y eut plus que des fèves blanches, et cela dura. Son cœur était purifié, réduit à la simplicité, à l'unité, au bien pur sans mélange de mal.
+
+Il en est qui prient les <term>koei</term> et les <term>chenn</term>, pour leur demander du bonheur. Cela est-il raisonnable? Cela peut-il avoir quelque résultat?.. Au bien et au mal de l'homme, répondent le bonheur et le malheur du ciel. La voie du ciel, c'est de rendre heureux les bons, et de rendre malheureux les méchants. Les <term>koei</term> et les <term>chenn</term> ne sauraient rien faire contre cette voie du ciel. Chacun est coupable du mal qu'il a fait. On obtient par les bonnes œuvres d'être exempté des fléaux célestes..... Mais n'est-ce pas un fait que certains, qui n'ont fait que du bien, ont péri misérablement; et que certains, qui ont fait beaucoup de mal, ont été comblés de biens?.. Le fait est vrai. C'est là l'effet du hasard, ce qu'on appelle la chance. La chance est destin pur. Cela ne devrait pas être, mais c'est le lot. Personne n'échappe à son destin, personne ne peut changer son lot.
+
+Depuis que le <term>Taoïsme</term> et le <term>Buddhisme</term> se sont répandus en Chine, l'agriculture et le commerce ont dépéri, les braves ont diminué, les mœurs sont tombées en décadence. Ces deux sectes ont fait plus de mal que toutes les autres réunies. Elles ont recruté des adeptes dans toutes les classes de la société. — On peut diviser
+
+<vocab>Mencius, Confucius, méditation, Tchao chou-p'ing, fèves, koei, chenn, Taoïsme, Buddhisme, Chine, morale, destin</vocab>
+
+**At the page break:** This page ends with the word «diviser», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.
+
+**Previous page translation for continuity:**
+# Lesson 73. 693
+
+The passions of the heart are like overflowing waters. <term>Yu</term> <gloss>Yu the Great, the legendary ruler who mastered the floods</gloss> channeled the waters and directed them. One must likewise ensure the free functioning of reason. It always exists, but is sometimes obstructed. It must be helped to expand. One must reflect. Each inch that reason gains over passion is a step forward.
+
+Vigilance does not consist of closing one's eyes to see nothing, or sitting to meditate in silence. It must be exercised in the midst of affairs. It must preside over the examination of 
+[…]
+e is selfishness and altruism. Altruism is communicated like the celestial norm; selfishness is occupied only with itself, as passion dictates. These two tendencies are opposed like ice and fire. They touch, nonetheless. Where altruism ends, selfishness begins; where selfishness ends, altruism begins. Everything in this world is altruism or selfishness. Selfishness leads one to desire for oneself what men love. It is a baneful passion. The more it develops, the more the feelings of charity are stifled in the heart. It is the source of rivalries and enmities. It is not limited to wealth, but extends to all sorts of goods.
+
+The public good, the object of devotion, is one; private goods, the objects of selfishness, are multiple, as numerous as men, as diverse as their faces. Naturally, no one likes to devote themselves to the common good; everyone, greedy for their private good, thinks and rethinks the means to procure it.
+
+One calls modesty the movement of the heart that is ashamed of evil. Man must have this quality. If he has it, there are things he will never do. Without modesty, there is no correction of faults. When one feels in the wrong, one must correct oneself quickly. I say *quickly* by design, for that is what is important.
+
+The sages all teach that one must dwell in one's heart and from there govern one's person. Now, men spread themselves outward as much as possible.
+<summary>This passage discusses the management of internal passions through reason and vigilance, arguing that maintaining control over one's heart is the primary duty of the sage.</summary>
+<keywords>passion, heart, reason, vigilance, norm, selfishness, altruism, modesty, public good, Yu the Great, libertinism, laziness</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

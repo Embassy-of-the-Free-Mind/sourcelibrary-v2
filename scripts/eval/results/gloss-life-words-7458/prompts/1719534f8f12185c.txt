@@ -1,0 +1,150 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Latin
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Three Books on Life | Author: Ficino, Marsilio (1433-1499) | Date: 1489
+
+**Note:** This is a public domain work published in 1489. It is not under copyright.
+
+**Text to translate:**
+<lang>la</lang>
+<page-type>text</page-type>
+<sig>c iii</sig>
+
+factione contingit: præfertim pituita uel excreſcente uel quolibet
+putrefacta: ut non imerito pituita petes uitam fuerit noĩata. Prę
+cepta igit̃ ad pducẽdã uitã maxime neceſſaria. Hic qđẽ reſolutio
+nẽ: inde uero ſuffocationẽ putrefactionẽq; eque deuìtant. Aeque
+inq̃ ratione cõmuni. Nã ſi calidiorẽ ſicciorẽ ue hoĩem forte curat̃i
+& cui meatus qđẽ apti ſunt: humores autẽ ſpũſq; ſubtiles reſolu
+tioni magis occurtũr. Sin aut̃ cõtraria rõne corpus affectũ tractãt
+potius ſuffocationi ſubuenıũt. Maxime uero i alterutro ſtudẽt:
+ſi ad alterutrũ locus tẽpus ue declinet. At ubi igenioſis ſtudio
+ſiſq; cõſulıẽ: utrũq; præceptũ ferme eſt pariter neceſſariũ: in utrõq;
+ſimiliter laborat̃. His.n. acutũ qđẽ calidũq; igeniũ/ & imaginatio
+nis motus aſſiduus/ reſolutionẽ: otium uero corporis atq; crudi
+tas ſuffocationẽ minitari uidet̃. Nuſq̃ igit̃ medici uehemẽtius q̃
+in eiuſmodi hominũ curatione laborant. Et ſi tota libri ſupioris
+diſputatio ad p̄rogandã uitã maxime cõfert: ppriã tamẽ quandã
+res tãta curã: qualẽ deinceps quoad potero paucis cõprehẽdam
+poſtulare uidetur.
+
+### Quomodo temperãdus calor ad humorem atq; uiciſſim quodã Mineruæ conſilio. Cap. iii.
+
+CEterũ dũ oleũ iſtud pinguẽ/ igneo huic uigori noſtro neceſ
+ſarium pıgui Minerua tractamuſ/ Minerua ıterim oliuifera
+olei uitalis origo/ almi uidelicet Iouiſ capite nata ridet: qp ſui mu
+neris q̃titatẽ plane cernẽtes/ interea nõ ſatis uidimus qualitatẽ.
+Ridẽs ergo/ uobis inqt oleũ nõ modo q̃tũ ſat flãmæ nutriẽdę ſo
+ret/ abũde dedi: ſed ẽt ſine amurca ſincerũ infũdı lucernę. Hęc illa.
+Nos aut̃ ıter loquẽdũ errãtes offẽdimuſ: quonıã lucerna pedibus
+noſtris uerbũ ſuũ/ nõ dũ nobis auditum. Ex hac ergo lucerna di
+ſcamus/ oleũ iugiter flãmę ſubminiſtrãdũ/ ea. s. diligẽtia: ut nec
+repẽtina quadã lumẽ obruamus illiuſione. Nec rurſũ differamus
+ſitibũdo potũ. Sed hæc qđẽ duo ſatis i ſupıoribus tractata puta
+mus. Reliqua nobis duo ſũt: quorũ alterũ leuiter tetigiſſe: alterũ
+
+<vocab>pituita, reſolutio, ſuffocatio, Minerua, Iouis, calor, humor, medicina, lucerna, oleum</vocab>
+
+**Previous page translation for continuity:**
+...to achieve through habit. Indeed, the Fates do not only permit a long life once and for all from the beginning: but our own diligence also provides it. This is something both astrologers admit—when they discuss "elections" <note>original: "electionibus" — the astrological practice of choosing the most auspicious time to begin an undertaking</note> and the use of images—and which the diligent care and experience of physicians confirms. Through such prudence, not only are naturally strong men very often preserved, but even the sickly <note>original: "valitudinarii" — those with delicate or ch
+[…]
+? They do not truly live at all; it would be as if we were nourishing drones rather than bees. Nor should they be spread among men lost to the lust for pleasures, who foolishly prefer a brief daily pleasure to a long life. Nor should they be revealed to the wicked and the unjust, whose life is the death of the good. Rather, these are for prudent and temperate men alone, whose skillful mental powers will benefit the human race either privately or publicly.
+
+### Vital heat is nourished by moisture: When it is lacking, dissolution occurs; when it exceeds, suffocation occurs. Chapter 2.
+
+Life, indeed, consists in natural heat, just like a light <note>Ficino uses the metaphor of a lamp flame to represent the "vital heat" of the body.</note>. The fuel for this heat is an airy and fatty moisture, much like oil. If, therefore, such moisture happens to fail, or if it entirely exceeds or becomes tainted, the heat is immediately weakened, and at last, having been weakened, it is extinguished. If the heat is weakened and perishes through a deficiency of moisture, death occurs by **resolution** <note>original: "resolutione" — a process of drying out or "thinning" where the body's substance dissolves away.</note>. If it is instead overwhelmed by an excess or vice of the moisture, life perishes by **suffocation**. This suffocation of any moisture [comes from] its oozing out or putrefaction...
+<summary>Ficino argues that diligence and medical prudence can extend life even for the infirm, citing historical figures like Herodicus. He introduces the physiological theory that life is a "vital heat" fueled by bodily moisture, which must be carefully balanced to avoid death by drying out or being overwhelmed by fluids.</summary>
+<keywords>vital heat, radical moisture, Herodicus, longevity, medical prudence, Plato, Aristotle, resolution and suffocation, humoral theory</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.
