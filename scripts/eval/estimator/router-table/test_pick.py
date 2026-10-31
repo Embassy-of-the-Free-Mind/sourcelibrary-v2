@@ -96,6 +96,70 @@ class Paired(unittest.TestCase):
         self.assertGreater(sd(wide), sd(pd))   # fewer books than pages: a wider difference
 
 
+class DefectRule(unittest.TestCase):
+    """#6740: defects per 1,000 words decide (rules.json decision_rule), k/n acceptance is the floor and the fallback."""
+    Q = {'switch': {'bar': 'opus', 'within': 0.08, 'p': 0.9, 'wrong_text_max': 0.04}, 'hold': {'acc': 0.8, 'p': 0.9},
+         'decision_rule': {'in_force': 'defects', 'misleads_usd': 0.01, 'misleads_usd_sensitivity': [0.001, 0.1], 'wrong_text_weight': 3,
+                           'wrong_text_delta_per_1k': 0.15, 'ceiling_per_1k': 1.0, 'ceiling_p': 0.9, 'accept_floor': {'within': 0.05, 'p': 0.5}, 'min_books': 10}}
+    CAL = {'misleads': 0.625, 'wrong_text': 0.8}
+
+    def r(self, rid, acc, usd_raw, wt, ml, books=30, words=250, channel='agy'):
+        d = route(rid, acc, usd_raw)
+        d.update(channel=channel, defects=None if wt is None else dict(books=books, median_words_per_page=words,
+                 wrong_text_per_1k_posterior=[wt / 2, wt, wt * 2], misleads_per_1k_posterior=[ml / 2, ml, ml * 2],
+                 wrong_text_per_1k_gamma=[max(wt, 0.01) * 50, 50]))
+        return d
+
+    def decide(self, rs, live, cur=None, cell=None):
+        return B.decide_defects(cell or {'id': 'c'}, rs, rs, cur or live, live['id'], self.Q, self.CAL)
+
+    def test_fewer_defects_switch_where_kn_keeps(self):
+        # k/n: both accepted ~0.92, the cheaper live route keeps; per word the dearer one has a fifth of the misleads
+        live = self.r('live', 0.92, 0.0004, wt=0.6, ml=4.0)
+        alt = self.r('alt', 0.92, 0.0008, wt=0.2, ml=0.8)
+        dec, pk, info = self.decide([live, alt], live)
+        self.assertEqual((dec, pk['id']), ('switch', 'alt'))
+        self.assertEqual(info['picks'], {'0.001': 'alt', '0.01': 'alt', '0.1': 'alt'})
+
+    def test_wrong_text_gate_refuses(self):
+        live = self.r('live', 0.92, 0.0008, wt=0.2, ml=1.0)
+        cheap = self.r('cheap', 0.95, 0.0, wt=0.6, ml=0.1)        # 0.8 x 0.6 > 0.8 x 0.2 + 0.15: fails, though free
+        dec, pk, info = self.decide([live, cheap], live)
+        self.assertEqual((dec, pk['id']), ('keep', 'live'))
+        self.assertFalse(info['gates']['cheap']['wrong_text'])
+
+    def test_acceptance_floor_kept(self):
+        live = self.r('live', 0.95, 0.0008, wt=0.3, ml=3.0)
+        worse = self.r('worse', 0.85, 0.0004, wt=0.1, ml=0.5)      # fewer defects but 10 points below on accept
+        dec, pk, info = self.decide([live, worse], live)
+        self.assertEqual(pk['id'], 'live')
+        self.assertFalse(info['gates']['worse']['accept'])
+
+    def test_a_pick_that_moves_with_the_weight_is_hold(self):
+        live = self.r('live', 0.92, 0.0004, wt=0.3, ml=3.0, words=250)
+        alt = self.r('alt', 0.92, 0.0012, wt=0.1, ml=1.0, words=250)   # weighted defects a page 0.65 vs 0.22: break-even ~$0.0019
+        dec, pk, info = self.decide([live, alt], live)
+        self.assertEqual(info['picks'], {'0.001': 'live', '0.01': 'alt', '0.1': 'alt'})
+        self.assertTrue(dec.startswith('HOLD (defects'))
+
+    def test_falls_back_to_kn(self):
+        live = self.r('live', 0.92, 0.0004, wt=None, ml=None)
+        alt = self.r('alt', 0.92, 0.0008, wt=0.2, ml=0.8)
+        self.assertEqual(self.decide([live, alt], live)[0], None)
+        self.assertIn('no defect verdicts', self.decide([live, alt], live)[2]['why'])
+        few = self.r('live', 0.92, 0.0004, wt=0.6, ml=4.0, books=9)
+        self.assertIn('no defect verdicts', self.decide([few, alt], few)[2]['why'])           # < min_books
+        self.assertIn('no other route', self.decide([self.r('live', 0.9, 0, 0.2, 1.0)], self.r('live', 0.9, 0, 0.2, 1.0))[2]['why'])
+        self.assertIn('manuscript', self.decide([live, alt], live, cell={'id': 'c', 'script': 'manuscript'})[2]['why'])
+
+    def test_opus_is_a_bar_not_a_candidate_unless_live(self):
+        live = self.r('lite>agy', 0.90, 0.0008, wt=0.6, ml=2.0)
+        opus = self.r('lite>opus', 0.96, 0.0010, wt=0.1, ml=0.5, channel='claude')
+        self.assertIn('no other route', self.decide([live, opus], live)[2]['why'])   # in print Opus is the bar, never a candidate
+        dec, pk, _ = self.decide([live, opus], opus)
+        self.assertEqual(pk['id'], 'lite>opus')     # the live Opus route is kept against a worse agy route
+
+
 class Size(unittest.TestCase):
     Z = {'output_weight': 5, 'overhead': {'in': 10000, 'out': 0}, 'min_pages_for_measured_cpt': 30, 'english_chars_per_token': 4.0,
          'chars_per_token_default': {'other': 2.0}, 'pages_per_call': {'single': 10, 'multi': 5}}

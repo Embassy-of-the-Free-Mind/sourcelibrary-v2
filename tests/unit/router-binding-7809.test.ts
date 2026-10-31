@@ -2,6 +2,9 @@
  * #7809: lanes check the routes they run against the current router table's decisions.
  */
 import { describe, it, expect } from 'vitest';
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { checkBinding, servedByFirstRead, servedByCorrect, servedByArmcFirstRead, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
@@ -83,5 +86,30 @@ describe('the committed pointer', () => {
   it('the live first-read and arm-c routes match the current table (2026-10-30 gex45 crontab)', () => {
     const served = [...servedByFirstRead({ languages: ['deu', 'fra'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }), ...servedByArmcFirstRead({ langs: ['la'] })];
     expect(checkBinding(loadCurrentTable(), served).map((f: { status: string }) => f.status)).toEqual(['ok', 'ok', 'ok']);
+  });
+});
+
+describe('the defect rule decides, k/n is the fallback (#6740)', () => {
+  const RT = path.join(__dirname, '../../scripts/eval/estimator/router-table');
+  const served = [{ lane: 'first-read', cell: 'german-blank/print', route: 'agy-flash-low@4-written' }];
+  it('a k/n fallback is still a decision the lanes are held to; a defect HOLD is not', () => {
+    expect(checkBinding(table([row('german-blank/print', 'keep (k/n: the live route x has no defect verdicts)', 'agy-flash-low@4-written')]), served)[0].status).toBe('ok');
+    expect(checkBinding(table([row('german-blank/print', 'switch (k/n: no other route has defect verdicts)', 'other')]), served)[0].status).toBe('mismatch');
+    expect(checkBinding(table([row('german-blank/print', 'HOLD (defects: the pick moves with the misleads weight, $0.001 → a, $0.01 → b, $0.1 → b)', 'b')]), served)[0].status).toBe('undecided');
+  });
+  it('the scenario build pins one defect-rule decision and one k/n fallback, each row keeping its k/n decision', () => {
+    const t = JSON.parse(fs.readFileSync(path.join(RT, '2026-10-31-defect-rule-6740.json'), 'utf8'));
+    const by = Object.fromEntries(t.rows.map((r: { id: string }) => [r.id, r]));
+    for (const r of t.rows) expect(r).toHaveProperty('decision_kn');
+    // German Flash-Lite correction: the live Opus route has a fifth of agy's wrong text per word; agy fails the gate
+    expect([by['german-lite/print'].rule, by['german-lite/print'].decision, by['german-lite/print'].route]).toEqual(['defects', 'keep', 'lite>opus']);
+    expect(by['german-lite/print'].defects_rule.gates['lite>agy-flash-low'].wrong_text).toBe(false);
+    // Latin Flash-Lite: the live Opus route has 9 books of defect verdicts (< 10): k/n decides, labelled
+    expect([by['latin-lite/print'].rule, by['latin-lite/print'].decision]).toEqual(['k/n', 'keep (k/n: the live route lite>opus has no defect verdicts (9 books))']);
+  });
+  const py = spawnSync('python3', ['--version']);
+  it.skipIf(py.status !== 0)('build.py decide_defects: switch, gates, the weight HOLD and every fallback (test_pick.py DefectRule)', () => {
+    const r = spawnSync('python3', ['-m', 'unittest', 'test_pick.DefectRule'], { cwd: RT, encoding: 'utf8' });
+    expect(r.status, r.stderr).toBe(0);
   });
 });

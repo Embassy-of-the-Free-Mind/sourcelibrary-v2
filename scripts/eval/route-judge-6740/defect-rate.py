@@ -8,6 +8,8 @@
   python3 scripts/eval/route-judge-6740/defect-rate.py --rows $JOB_SCRATCH/dr/rows-with-text.jsonl.gz \
       [--recheck $JOB_SCRATCH/dr/recheck.jsonl] --out scripts/eval/route-judge-6740/results/defect-rate-2026-10-30
       (repo root; stdlib only, no model calls; --recheck: defect-rate.mjs recheck's output, for amendment S1)
+  python3 scripts/eval/route-judge-6740/defect-rate.py --add-pooled scripts/eval/route-judge-6740/results/defect-rate-2026-10-30
+      (pools the later studies in ADD into that score.json's router cells and rewrites defect-rates.json; no --rows)
 
 The rule is RULE.md in --out, committed before this ran (950d1cb75). Writes score.json (everything; prices as Claude points / agy calls,
 never dollars, build.py's convention; a break-even weight is in dollars per defect at rules.json's default plan fee) and scripts/eval/estimator/router-table/defect-rates.json (the per-route fields
@@ -542,5 +544,93 @@ def introduced(rows):
     return out
 
 
+# ---- later evidence, pooled counts only ---------------------------------------------------------------------------
+# Studies judged after the 2026-10-30 inventory whose verdicts live in another box's scratch (gex45), but whose score
+# files keep each arm's pooled defects and words (#7824 words()). Each entry mirrors a rules.json evidence entry for the
+# same route, so a route's defect rate pools the same sources as its k/n. One page a book in every one of them.
+ADD = [
+    # (router cell, route, score file, path to the arm's {misleads, wrong_text: {defects, words}}, pages-key, source)
+    ('german-lite', 'lite>agy-flash-low', 'scripts/eval/correction-pass-7818/results/score.json', ('amendment_2', 'P', 'de', 'served'), ('amendment_2', 'P', 'de', 'pages'), '#7818 P de served'),
+    ('french-lite', 'lite>agy-flash-low', 'scripts/eval/correction-pass-7818/results/score.json', ('amendment_2', 'P', 'fr', 'served'), ('amendment_2', 'P', 'fr', 'pages'), '#7818 P fr served'),
+    ('german-lite', 'lite', 'scripts/eval/fraktur-paired-7835/results/score.json', ('T2', 'fraktur', 'arms', 'a', 'defects_per_1000'), 't2-fraktur/a', '#7835 T2 a (stored lite)'),
+    ('german-lite', 'lite>agy-flash-low', 'scripts/eval/fraktur-paired-7835/results/score.json', ('T2', 'fraktur', 'arms', 'b', 'defects_per_1000'), 't2-fraktur/b', '#7835 T2 b (the #7558 correction)'),
+    ('german-blank-fraktur', 'agy-flash-low@4-written', 'scripts/eval/fraktur-paired-7835/results/score.json', ('T1', 'fraktur', 'arms', 'a', 'defects_per_1000'), 't1-fraktur/a', '#7835 T1 a (read@4)'),
+    ('german-blank-antiqua', 'agy-flash-low@4-written', 'scripts/eval/fraktur-paired-7835/results/score.json', ('T1', 'antiqua', 'arms', 'a', 'defects_per_1000'), 't1-antiqua/a', '#7835 T1 a (read@4)'),
+]
+# Not added: #7845 (open Fraktur models): 6 judged pages an arm (< MIN_PAGES), and no arm is a route in rules.json.
+
+
+def add_pooled(out_dir):
+    """Re-read score.json's router cells (the 2026-10-30 inventory) and pool ADD into them: k/phi and E/phi added to the
+    group's gamma posterior, phi = the group's own (the task's median phi for a new group: one page a book gives no
+    within-source dispersion to fit). The priors are score.json's. Rewrites defect-rates.json; idempotent."""
+    S = json.load(open(os.path.join(out_dir, 'score.json')))
+    cells = S['router_cells']
+    rng = random.Random(SEED + 7835)
+    fields = {}
+    for key, d in cells.items():
+        c, r = key.split('|', 1)
+        fields.setdefault(c, {})[r] = d
+    added = collections.defaultdict(list)
+    for c, r, f, p, pk, src in ADD:
+        x = json.load(open(f))
+        for k in p: x = x[k]
+        if isinstance(pk, tuple):
+            n = json.load(open(f))
+            for k in pk: n = n[k]
+            fid = None
+        else:
+            sc = json.load(open(os.path.join(os.path.dirname(f), 'defect-rates.json')))['study_cells'][pk]
+            n, fid = sc['n'], sc['fidelity_mean']
+        added[(c, r)].append(dict(source=src, file=f, pages=n, words=x['wrong_text']['words'], misleads=x['misleads']['defects'], wrong_text=x['wrong_text']['defects'], fidelity_mean=fid))
+    out = {}
+    for c, rs in fields.items():
+        for r, d in rs.items():
+            out.setdefault(c, {})[r] = d
+    for (c, r), xs in added.items():
+        d0 = out.get(c, {}).get(r)
+        task = d0['task'] if d0 else 'ocr'
+        d = json.loads(json.dumps(d0)) if d0 else dict(task=task, pages=0, books=0, words=0, words_own_text=0, median_words_per_page=None, fidelity_mean=None, class_mix={},
+                                                        **{s: dict(count=0, per_1k_words=None, ci95_by_book=None, phi=None) for s in SEV})
+        pages0 = d['pages']
+        for x in xs:
+            d['pages'] += x['pages']; d['books'] += x['pages']; d['words'] += x['words']; d['words_own_text'] += x['words']
+        fids = [(d0['fidelity_mean'], pages0)] if d0 and d0.get('fidelity_mean') is not None else []
+        fids += [(x['fidelity_mean'], x['pages']) for x in xs if x['fidelity_mean'] is not None]
+        if fids: d['fidelity_mean'] = round(sum(f * w for f, w in fids) / sum(w for _, w in fids), 2)
+        if d['median_words_per_page'] is None: d['median_words_per_page'] = round(d['words'] / d['pages'])
+        for sev in ('misleads', 'wrong_text'):
+            pr = S['priors'][f'{task}/{sev}']
+            phi = (d0[sev]['posterior']['phi'] if d0 else pr['phi_median'])
+            k_new, E_new = sum(x[sev] for x in xs), sum(x['words'] for x in xs) / 1000
+            a, b = (d0[sev]['posterior']['a'], d0[sev]['posterior']['b']) if d0 else (pr['prior_alpha'], pr['prior_beta'])
+            a, b = a + k_new / phi, b + E_new / phi
+            d[sev]['count'] += k_new
+            d[sev]['per_1k_words'] = round(1000 * d[sev]['count'] / d['words'], 3)
+            d[sev]['ci95_by_book'] = None   # the added sources keep no per-book rows here: no bootstrap
+            d[sev]['posterior'] = dict(mean=round(a / b, 4), q05=round(gq(a, b, .05, rng), 4), q95=round(gq(a, b, .95, rng), 4), a=round(a, 3), b=round(b, 3), phi=round(phi, 3))
+        d['added'] = xs
+        out.setdefault(c, {})[r] = d
+    fl = {}
+    for c, rs in out.items():
+        for r, d in rs.items():
+            fl.setdefault(c, {})[r] = dict(pages=d['pages'], books=d['books'], words=d['words'], words_own_text_share=round(d['words_own_text'] / d['words'], 2) if d['words'] else None,
+                                           fidelity_mean=d['fidelity_mean'], median_words_per_page=d['median_words_per_page'],
+                                           **{f'{s}_per_1k': d[s]['per_1k_words'] for s in SEV if s in d}, **{f'{s}_per_1k_ci95_by_book': d[s]['ci95_by_book'] for s in SEV if s in d},
+                                           **{f'{s}_per_1k_posterior': [d[s]['posterior']['q05'], d[s]['posterior']['mean'], d[s]['posterior']['q95']] for s in SEV if 'posterior' in d.get(s, {})},
+                                           **{f'{s}_per_1k_gamma': [d[s]['posterior']['a'], d[s]['posterior']['b']] for s in SEV if 'posterior' in d.get(s, {})},
+                                           class_mix=d.get('class_mix', {}), **({'added': [dict(source=x['source'], pages=x['pages'], words=x['words']) for x in d['added']]} if d.get('added') else {}))
+    json.dump(dict(_about='Defect rates per 1,000 words of the candidate text, per router base cell x route, from the stored Opus verdicts (#6740, defect-rate.py; rule RULE.md in scripts/eval/route-judge-6740/results/defect-rate-2026-10-30). '
+                          'build.py decides on them (rules.json decision_rule, #6740 job defect-router-6740); `added` names the later sources pooled in by --add-pooled (#7818, #7835) from their score files\' pooled counts.',
+                   generated_from=os.path.join(out_dir, 'score.json'), recheck=dict(misleads=S['recheck']['misleads']['confirmed_rate'], wrong_text=S['recheck']['wrong_text']['confirmed_rate']) if S.get('recheck') else None,
+                   cells=fl), open(RT + 'defect-rates.json', 'w'), indent=1, ensure_ascii=False)
+    for (c, r), xs in added.items():
+        p = out[c][r]
+        print(c, r, '+', ', '.join(x['source'] for x in xs), f"-> {p['books']} books, {p['words']:,} words; misleads {p['misleads']['posterior']['mean']}, wrong text {p['wrong_text']['posterior']['mean']}")
+
+
 if __name__ == '__main__':
-    main()
+    if '--add-pooled' in sys.argv:
+        add_pooled(arg('--add-pooled'))
+    else:
+        main()
