@@ -137,6 +137,7 @@ Frame sizes: high 11,967, middle 11,181, low 11,545, unmeasured 12,742. Score qu
 - **Secondary: agy Gemini 3.8 Flash** (Derek, inbox note 2026-10-31 18:16Z; model id `gemini-3.8-flash-low`, agy's default and the Flash judge #7611 compared).
   - The same `judgePrompt` with the image (`correction-pass-7818/lib.mjs judgeAgy`: the image as `@./page.jpg`, the marker-line output instruction, one retry on an unparsed reply). Blind.
   - Every text Opus judged, controls included. agy concurrency 2. Stops when the agy Gemini pool reads empty on `/quota`. No Argon, no Pro, no paid API.
+  - Account: the second agy login (`AGY_HOME=/root/.agy-james`, held to `gemini-3.8-flash-low` by its `allowed-model`), because this box's default agy login is not signed in. At 19:25Z its Gemini pool read weekly 30% and 5-hour 99% remaining; ~830 calls is about 1% of a week (#6740's ~100K Flash-low calls a week).
   - **Gemini never changes a primary outcome, a bad-book call or containment.**
 - **Budget.** At most **900** Opus calls (800 pages, 20 controls, re-asks), counted from the verdict file.
   - Pace: model-limits' local stop, then the meter. Stop at weekly ≥ 85% or 5-hour ≥ 95%; never probe after a limit.
