@@ -26,12 +26,9 @@ export default async function ReadSurfaceLivePage() {
         <Link href="/platform/admin/ocr-evidence/read-surface" className="underline decoration-[#30363d] hover:text-[#58a6ff]">read settings</Link> / live
       </p>
       <h1 className="text-2xl font-semibold text-[#f0f6fc] mt-1">The read-settings experiment, live</h1>
-      <p className="mt-3 max-w-3xl">
-        Four knobs set how the agy first read works: how many pages go into one call, how large the page image is (its long
-        edge in pixels), how much the model thinks (low, medium, high), and an optional line added to the prompt. A response
-        surface fits a smooth curved model through a few well-placed runs and reads the best point off it, instead of trying
-        every combination. This page refits that surface in your browser each time a run lands and each time you change a
-        control. The surface only points; the confirmation run on fresh queue pages decides whether anything switches.
+      <p className="mt-2 max-w-3xl text-[#8b949e]">
+        The finding first, as one picture and nine cells; the instrument that refits the response surface after every run is
+        below, under “Fit it yourself”.
       </p>
       <LiveSurface initial={JSON.parse(JSON.stringify(doc))} />
     </main>
