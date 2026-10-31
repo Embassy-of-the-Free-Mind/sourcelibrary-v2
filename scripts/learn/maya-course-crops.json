@@ -1,0 +1,18 @@
+{
+  "_doc": "Crops for the /learn/maya course (#6921, v2). Boxes are [x, y, w, h] normalised on the page image, measured by eye. Rendered by build-maya-course-crops.mjs; every crop was looked at before it went in.",
+  "books": {
+    "dresden": "69dfd990220eedf04e13b0cf",
+    "landa": "69f8c0f74c6a515115aedadd"
+  },
+  "crops": [
+    {"id": "dresden-53-leaf", "book": "dresden", "page": 32, "box": [0, 0, 1, 1], "max": 1600, "label": "Dresden Codex, page 53"},
+    {"id": "dresden-53-days", "book": "dresden", "page": 32, "box": [0.05, 0.245, 0.35, 0.125], "max": 900, "label": "Dresden Codex, page 53"},
+    {"id": "dresden-53-column", "book": "dresden", "page": 32, "box": [0.29, 0.125, 0.08, 0.09], "max": 900, "label": "Dresden Codex, page 53"},
+    {"id": "landa-abc", "book": "landa", "page": 443, "box": [0.1, 0.175, 0.79, 0.55], "max": 1200, "label": "Landa, Relación de las cosas de Yucatán, Brasseur ed. 1864, p. 320"},
+    {"id": "landa-le", "book": "landa", "page": 441, "box": [0.12, 0.355, 0.215, 0.055], "max": 900, "label": "Landa, Relación, Brasseur ed. 1864, p. 318"},
+    {"id": "landa-makati", "book": "landa", "page": 441, "box": [0.6, 0.535, 0.29, 0.06], "max": 900, "label": "Landa, Relación, Brasseur ed. 1864, p. 318"},
+    {"id": "landa-makati-signs", "book": "landa", "page": 441, "box": [0.605, 0.551, 0.285, 0.044], "max": 900, "label": "Landa, Relación, Brasseur ed. 1864, p. 318"},
+    {"id": "landa-ca", "book": "landa", "page": 443, "box": [0.44, 0.245, 0.08, 0.055], "max": 400, "label": "Landa, Relación, Brasseur ed. 1864, p. 320, sign 11"},
+    {"id": "landa-e", "book": "landa", "page": 443, "box": [0.19, 0.6, 0.095, 0.058], "max": 400, "label": "Landa, Relación, Brasseur ed. 1864, p. 320, sign 8"}
+  ]
+}
