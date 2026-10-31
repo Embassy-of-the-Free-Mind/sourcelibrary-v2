@@ -176,6 +176,17 @@ sequential surface.**
   those are the two corners at 8 a call, X01 (8, 1,024 px, low) and X02 (8, 2,400 px, low), run on the James pool.
 - *Wall seconds* now carry the box's load: they are reported per run with the time it ran, and do not break a tie.
 
+**Amendment 4 (2026-10-31 00:05Z): two analysis changes made AFTER seeing the low-thinking runs. They are post hoc,
+and are marked so wherever they decide anything.**
+- *The Bayesian CER response is the paired difference from live*, not the run mean. Every run reads the same books;
+  as independent means, the posterior intervals at settings that were run were ±1.1 pp, wider than the margin, while
+  the paired by-book bootstrap of the same difference is ±0.3–0.6 pp (eval-design §7: paired by default). The
+  preregistered least-squares fit with its paired bootstrap already had this; the change brings the posterior in line.
+- *A setting that was run must also pass on its own paired difference* (conjunctive with the surface). The quadratic
+  smoothed over Latin X01 (8 a call, 1,024 px: measured +1.77 pp [−0.18, +5.20], one wrong-text page; the surface said
+  −0.06 pp). This change can only remove a setting from the candidates, never add one.
+- The decision quoted is the one under both changes; the preregistered least-squares bootstrap is printed beside it.
+
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book
