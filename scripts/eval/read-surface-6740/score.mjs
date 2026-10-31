@@ -19,6 +19,10 @@ const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('
 const WORK = path.resolve(arg('work', '.'));
 const OUTF = arg('out', path.join(WORK, 'score.json'));
 const FROZEN = arg('frozen') && JSON.parse(fs.readFileSync(path.resolve(arg('frozen')), 'utf8'));
+// Third form (incomplete blocks): a run reads only its allocated books; exclusions are the frozen list plus the leaves
+// the eye check found wrong; the "no usable one-a-call read" rule needs every book in a one-a-call run, so it is skipped
+// (an unusable read counts as a page not accepted).
+const IB = process.argv.includes('--ib');
 // Amendment 6.2: gemini-3.8-flash list rates (scripts/lib/model-pricing.mjs), US $ a token; cached input at 10 % of input
 // (an assumption). agy's `output` already includes thinking, so thinking is not priced again.
 export const RATE = { input: 0.75e-6, cached: 0.075e-6, output: 3.75e-6 };
@@ -94,8 +98,9 @@ function main() {
         // A page read alone (1 a call, or a remainder) carries its own calls; a block's pages carry the block's.
         if (!m.call_id) { const sec = (Date.parse(m.finished_at) - Date.parse(m.started_at)) / 1000; calls += m.calls || 0; secs += sec; addUsage(m.usage, m.calls || 0); const b = bk(m.book_id); b.calls += m.calls || 0; b.secs += sec; b.thinking += thinkOf(m.usage); addTo(b.tokens, m.usage, m.calls || 0); if (m.error_class || m.chatter) { cuts++; b.cuts++; } }
       }
-      for (const t of targets) bk(t.book_id).pages += run.ppc;
-      const pages = targets.map((t) => {
+      const idSet = new Set(ids);
+      for (const t of targets) if (!IB || idSet.has(t.page_id)) bk(t.book_id).pages += run.ppc;
+      const pages = targets.filter((t) => !IB || idSet.has(t.page_id)).map((t) => {
         const m = metas.get(t.page_id);
         const base = { slug: t.slug, book_id: t.book_id };
         if (!m) return { ...base, status: unread.has(t.page_id) ? `unread:${unread.get(t.page_id)}` : 'missing' };
@@ -128,7 +133,8 @@ function main() {
     // scans-only); it leaves the CER analysis and is counted as unreadable.
     const oneRuns = runs.filter((r) => r.ppc === 1 && r.finished);
     const unreadable = oneRuns.length ? targets.filter((t) => oneRuns.every((r) => r.targets.find((p) => p.slug === t.slug)?.status !== 'read')).map((t) => t.slug) : [];
-    const excluded = FROZEN?.[lang] ? FROZEN[lang] : [
+    const excluded = IB ? [...(FROZEN?.[lang] || []), ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no' && !(FROZEN?.[lang] || []).some((e) => e.slug === t.slug)).map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` }))]
+      : FROZEN?.[lang] ? FROZEN[lang] : [
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no').map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` })),
       ...unreadable.filter((sl) => eye.get(sl)?.leaf_match !== 'no').map((sl) => ({ slug: sl, why: 'unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)' })),
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match !== 'no' && !unreadable.includes(t.slug) && runs.length >= 3 && t._pass_share <= 0.5).map((t) => ({ slug: t.slug, pass_share: t._pass_share, why: 'most runs fail the identity guard: a reference or leaf problem, not a read' })),

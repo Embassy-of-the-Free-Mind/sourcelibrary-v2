@@ -22,7 +22,7 @@ const FR = path.join(WORK, 'frame');
 const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const SEED = 'rs6740-frame';
-const LANGS = { de: 'deu', la: 'lat' };
+const LANGS = { de: 'deu', la: 'lat', ...(process.argv.includes('--en') ? { en: 'eng' } : {}) };
 export const centuryOf = (pub) => { const m = String(pub ?? '').match(/1[4-9]\d\d/); return m ? `${m[0].slice(0, 2)}00s` : 'undated'; };
 const interior = (n, count) => !count || (n > Math.ceil(count * 0.15) && n <= Math.floor(count * 0.95));
 
@@ -34,7 +34,8 @@ async function sample() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
   fs.mkdirSync(FR, { recursive: true });
-  for (const [lang, code] of Object.entries(LANGS)) {
+  const ONLY = arg('only') ? arg('only').split(',') : null;
+  for (const [lang, code] of Object.entries(LANGS).filter(([l]) => !ONLY || ONLY.includes(l))) {
     const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
       .filter((b) => !lane.firstReadSkip(b, { languages: [code] }));
     // The frame's century mix is the whole frame's (books, and pages unread, from pages_count − pages_ocr).
@@ -103,7 +104,7 @@ export function weights(panelBooks, frameShares) {
 function table() {
   const panel = JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8'));
   const out = { built_at: new Date().toISOString(), langs: {} };
-  for (const lang of Object.keys(LANGS)) {
+  for (const lang of Object.keys(LANGS).filter((l) => fs.existsSync(path.join(FR, `sample-${l}.json`)))) {
     const S = JSON.parse(fs.readFileSync(path.join(FR, `sample-${lang}.json`), 'utf8'));
     const faces = new Map(jsonl(path.join(FR, `faces-${lang}.jsonl`)).map((r) => [r.item, r.face]));
     const eye = new Map(jsonl(path.join(WORK, 'eye', `verdicts-${lang}.jsonl`)).map((r) => [r.slug, r.face]));
