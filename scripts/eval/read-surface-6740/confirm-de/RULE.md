@@ -43,7 +43,7 @@ gemini-3.8-flash list rates as in Amendment 6.2, ÷ pages read) and quota cost p
 2. O PASSES when it is eligible and, PAIRED on the pages both wrote and the judge read, P(acc_O ≥ acc_A − 0.08) ≥ 0.9
    under Dirichlet(1 + both, 1 + O_only, 1 + A_only, 1 + neither), **and its quota cost per accepted page here is at
    least 10 % below A's**.
-3. If O passes: the router cell `de-blank` gains `agy-flash-low@8-written` with this evidence, and the knob change
+3. If O passes: the router cell `german-blank` gains `agy-flash-low@8-written` with this evidence, and the knob change
    (German first reads at 8 pages a call) is PROPOSED in a separate small PR; the tier and Derek decide. This job
    applies nothing to the lane.
 4. If O fails, nothing changes; the record says which clause failed.

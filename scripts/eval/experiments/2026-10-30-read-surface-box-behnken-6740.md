@@ -4,15 +4,15 @@ measure: [accuracy, judged]
 languages: [de, la]
 scripts: [Latn]
 canons: []
-n_books: 80
-n_pages: 110
-verdict: "No knob of the agy Flash first read switches. German (35 DTA books): no setting is non-inferior AND at least 10 % cheaper than live (4 a call, image as served, low); 8 a call loses its saving to filter cuts (0.49 vs 0.46 calls a page on one account). Latin (34 CAMENA books): the rule picked 8 a call, 1,600 px, low (0.17 vs 0.36 calls a page on the same account, CER +0.21 pp [-0.36, +0.84]); on 30 queue pages it FAILED confirmation (13/14 written accepted, one wrong-text page, paired 0 vs 1 of 10; live knobs 12/12). Next candidate: Latin 8 a call, 1,600 px, high thinking (CER -0.38 pp [-0.65, -0.15], 0.17 vs 0.25 calls a page on its account, 2x the wall time), not yet confirmed."
+n_books: 225
+n_pages: 2210
+verdict: "Amendment 6 (quota cost, incomplete-block screen of pages a call x thinking over the typed-reference census): German 8 a call / low is 45 % cheaper a 1,000 accepted pages than live [25, 58] at no CER cost (-0.00 pp [-0.09, +0.07], 61 DTA books, weighted to the queue); thinking costs 4-7x and moves German CER by under 0.1 pp. Latin: live stays (8 a call reads long s as f, +2.25 pp). German confirmation on 30 queue books: 8 a call beats live paired 5-0 at a third of the quota per accepted page, but fails the preregistered absolute wrong-text bar (2/25; live 5/25). Nothing switches pending the bar decision."
 status: rejected
-decision: "Keep the live first-read knobs (4 a call, image as served, thinking low) for German and Latin; Latin first reads stay arm c. Test next: Latin 8 a call at 1,600 px with HIGH thinking, confirmed on queue pages against read@4 and arm c."
+decision: "Keep the live first-read knobs (4 a call, served image, thinking low) for German and Latin. German 8 a call is proposed only if Derek sets the wrong-text bar at the live route (eval-design 10.3) rather than the absolute 0.04 the confirmation RULE used."
 superseded_by: null
 issue: [6740, 7701]
-router_evidence: [latin-blank]
-defect_rates: "none — the design is scored by CER against typed references (DTA, CAMENA), not by judge defect tags; the confirmation is decided by k/n and the paired gate of confirm/RULE.md, committed before its reads"
+router_evidence: [latin-blank, german-blank]
+defect_rates: "none — the design is scored by CER against typed references (DTA, CAMENA), not by judge defect tags; the confirmations are decided by k/n, the paired gate and (confirm-de2) relative wrong-text counts, each RULE committed before its reads"
 ---
 PRIOR ART: `2026-10-30-german-cheaper-first-reads-7701.md` and `2026-10-29-cheap-routes-7701.md` (one knob at a time:
 read@1 vs @4 vs @8, judged blind by Opus against the image; they own the ENGINE choice, this owns the knobs of the agy
