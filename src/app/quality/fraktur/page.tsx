@@ -112,7 +112,7 @@ const CROPS: { box: Box; alt: string; caption: ReactNode; className?: string }[]
   {
     box: LEAF.crops.umlaut,
     alt: 'A line of blackletter: sten wir die Jungen Königlichen Personen den, with a small e printed above the o of Königlichen.',
-    caption: <>The umlaut is a small <em>e</em> printed above the vowel (<em>Koͤniglichen</em>). The long s stands in <em>Perſonen</em>, and <em>ch</em> is one piece of type.</>,
+    caption: <>The umlaut is a small <em>e</em> printed above the vowel: the <em>ö</em> of <em>Königlichen</em> is an <em>o</em> with an <em>e</em> over it. The long s stands in <em>Perſonen</em>, and <em>ch</em> is one piece of type.</>,
   },
   {
     box: LEAF.crops.longS,
