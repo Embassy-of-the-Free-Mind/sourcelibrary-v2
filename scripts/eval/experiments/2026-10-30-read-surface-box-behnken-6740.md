@@ -260,6 +260,12 @@ clean test, with its own RULE file committed before its first read.
   (b) **Post-stratification**: the surfaces are refit with each panel book weighted so the panel's century × face mix
   matches the queue sample's (cells with no panel book are merged into the nearest century; weights reported), and the
   optimum is reported both ways. If the two differ, the weighted one decides.
+  *Cells, fixed 10:40Z after the frame was tabulated and before any read of 6.1 was scored:* the century × face cells
+  above give the panel's one 1500s German book a weight of 16 (the frame is 37 % sixteenth-century pages by unread
+  pages; the panel drew 1 of 40). So the cells are **era × face**: before 1700, the 1700s, 1800 and later; Fraktur
+  (mixed counts as Fraktur) or Antiqua. Era shares are the whole frame's unread pages (`frame.mjs`, 3,131 German and
+  15,356 Latin books); the face mix within an era is the by-eye sample's. Latin has one face (roman). Weights are
+  computed over the books left after the frozen exclusions (35 / 34). Undated books take the panel's mean weight.
   (c) The German confirmation (6.6) is drawn from the queue frame **stratified to the same century × face mix**, one
   page per book, seeded (seed named in `confirm-de/RULE.md`).
   (d) **Power**: from the per-book differences between the centre replicates (C1–C3) and between L1 and L2, the smallest
