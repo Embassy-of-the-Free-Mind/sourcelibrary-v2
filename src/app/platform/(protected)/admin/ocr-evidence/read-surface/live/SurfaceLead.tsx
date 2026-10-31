@@ -29,22 +29,22 @@ export default function SurfaceLead({ doc }: { doc: LiveDoc }) {
   const [pick, setPick] = useState<Cell | null>(null);
   // No WebGL: three's renderer throws in Surface3D, which calls onFail, and the grid carries the page.
   const [gl, setGl] = useState(true);
-  const L = leads[lang];
+  const L = leads[lang] ?? leads[langs[0]];   // a poll can drop the language on show
   if (!langs.length || !L) return <section className={card}><h2 className={h2}>The screen</h2><p className="mt-2 text-sm text-[#8b949e]">No screen run (stage “screen”) has scored rows in the live doc yet.</p></section>;
-  const conf = readConfirmation(doc, lang);
+  const conf = readConfirmation(doc, L.lang);
   const costs = L.cells.map((c) => c.usd_1k_accepted).filter((v): v is number => v !== null && v > 0);
   const [cLo, cHi] = [Math.log10(Math.min(...costs)), Math.log10(Math.max(...costs))];
   const shade = (v: number | null) => (v === null ? '#0d1117' : RAMP[Math.round(((Math.log10(v) - cLo) / Math.max(1e-9, cHi - cLo)) * 5)]);
-  const glOn = gl;
+  const glOn = gl && costs.length > 0;   // nothing costed yet (a screen just started): the grid says so cell by cell
 
   return (
     <section className={card} aria-labelledby="lead-h">
       <h2 id="lead-h" className={h2}>What the screen found</h2>
       <ul className="mt-2 space-y-1 text-[#e6edf3]">
-        {langs.map((l) => <li key={l} className={l === lang ? '' : 'text-[#8b949e]'}>{sentence(leads[l])}</li>)}
+        {langs.map((l) => <li key={l} className={l === L.lang ? '' : 'text-[#8b949e]'}>{sentence(leads[l])}</li>)}
       </ul>
       <p className="mt-2 text-sm">
-        <span className="text-[#8b949e]">Confirmation on fresh queue pages, {LANG_NAME[lang] ?? lang}: </span>
+        <span className="text-[#8b949e]">Confirmation on fresh queue pages, {LANG_NAME[L.lang] ?? L.lang}: </span>
         {conf.state === 'ok' ? (
           <span>{conf.c.route}: {conf.c.queue_pages.toLocaleString('en')} queue pages, n {conf.c.n}, {conf.c.accepted} accepted, {conf.c.wrong_text} wrong text, {fmtUsd(conf.c.usd_1k_accepted)} per 1,000 accepted · <b className={conf.c.passes ? 'text-[#3fb950]' : 'text-[#d29922]'}>{conf.c.passes ? 'passes' : 'fails'}</b>: {conf.c.why}</span>
         ) : conf.state === 'bad' ? (
@@ -55,7 +55,7 @@ export default function SurfaceLead({ doc }: { doc: LiveDoc }) {
       </p>
 
       <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 items-center text-sm">
-        <span className="inline-flex flex-wrap gap-1">{langs.map((l) => <button key={l} type="button" className={btn(l === lang)} onClick={() => { setLang(l); setPick(null); }}>{LANG_NAME[l] ?? l}</button>)}</span>
+        <span className="inline-flex flex-wrap gap-1">{langs.map((l) => <button key={l} type="button" className={btn(l === L.lang)} onClick={() => { setLang(l); setPick(null); }}>{LANG_NAME[l] ?? l}</button>)}</span>
         {glOn && <>
           <button type="button" className={btn(swap)} onClick={() => setSwap((s) => !s)} aria-pressed={swap}>{swap ? 'height: CER difference · colour: cost' : 'height: cost · colour: CER difference'}</button>
           <button type="button" className={btn(false)} onClick={() => setReset((r) => r + 1)}>reset view</button>
@@ -68,7 +68,8 @@ export default function SurfaceLead({ doc }: { doc: LiveDoc }) {
             <div className="rounded border border-[#21262d] bg-[#0d1117]">
               <Surface3D cells={L.cells} swap={swap} resetKey={reset} onPick={setPick} onFail={() => setGl(false)} />
             </div>
-          ) : <p className="text-sm text-[#d29922]">This browser has no WebGL, so the 3D view is off; the grid has the same nine cells.</p>}
+          ) : !gl ? <p className="text-sm text-[#d29922]">This browser has no WebGL, so the 3D view is off; the grid has the same nine cells.</p>
+            : <p className="text-sm text-[#8b949e]">No cell has a cost yet, so there is nothing to draw in 3D.</p>}
           {glOn && <>
             <Legend swap={swap} lo={Math.min(...costs)} hi={Math.max(...costs)} />
             <div className="min-h-[2.75rem] text-sm mt-1" aria-live="polite">
