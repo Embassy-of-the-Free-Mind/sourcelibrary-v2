@@ -74,6 +74,7 @@ async function runQueue(jobs) {
       if (calls >= max) { stop = `call budget (${CALL_BUDGET} for the study; ${max} this run)`; break; }
       const why = await paceCheck(limits, state);
       if (why) { stop = why; break; }
+      if (i >= jobs.length) break;   // another worker took the last job while this one waited on the meter
       const job = jobs[i++]; calls++;
       let rec;
       try { rec = await job(); } catch (e) { rec = { id: job.id, err: String(e.message || e).slice(0, 200) }; calls--; }
@@ -163,7 +164,7 @@ async function gemini() {
       const r = todo[i++]; calls++;
       const it = its.get(r.set === 'abs' ? r.id : r.planted_from) ?? [...its.values()].find((x) => x.page === r.page);
       const t = r.set === 'abs' ? text(r.page) : fs.existsSync(ctlFile(r.id)) ? fs.readFileSync(ctlFile(r.id), 'utf8') : null;
-      if (!t || !it) { console.log(`  ${r.id}: no text for the control, skipped`); continue; }
+      if (t == null || !it) { console.log(`  ${r.id}: no text for the control, skipped`); continue; }
       let g;
       try { g = await judgeAgy({ lang: it.lang, text: t }, await imageFor(r.page, it.image), { model: GEMINI_MODEL }); } catch (e) { g = { verdict: null, err: String(e.message || e).slice(0, 200) }; }
       if (g.quota) { stop = `agy quota (${g.err})`; break; }
