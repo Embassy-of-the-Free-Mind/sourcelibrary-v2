@@ -276,7 +276,7 @@ So 35/72 is a check-flagged, post-fix, 4-book sample. It is not a random-draw ra
 - Meter: weekly 13% → 19%. The account is shared, so this is an upper bound. The list-price equivalent was $35.85, not billed.
 - agy: 161 correction calls and 432 second-judge calls on the `/root/.agy-james` pool.
 - Paid API: Flash-Lite drafts of 80 Wikisource pages, **$0.149**.
-- Artifacts: `scripts/eval/correction-pass-7818/results/` (`score.json`, `tables.md`, `data/`). The texts are in `$JOB_SCRATCH/correction-pass-7818/correction-pass-7818-texts.tar.gz`.
+- Artifacts: `scripts/eval/correction-pass-7818/results/` (`score.json`, `tables.md`, `release/`). The texts are in `$JOB_SCRATCH/correction-pass-7818/correction-pass-7818-texts.tar.gz`.
 
 ### Preregistered outcomes
 

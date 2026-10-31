@@ -48,7 +48,7 @@ It added no wrong text. In German it cut wrong-text defects from 2.0 to 0.6 per 
 ## Figures and tables (each with the file that makes it)
 | # | What | Made by |
 |---|---|---|
-| T1 | Arm P frame: processed pages by outcome, changed share by language | `frame.mjs draw` → `results/data/frame.json` |
+| T1 | Arm P frame: processed pages by outcome, changed share by language | `frame.mjs draw` → `results/release/frame.json` |
 | T2 | H1: accepted draft/served, gained/lost, McNemar, effect with CI, fidelity, wrong text | `analyze.mjs score` → `results/tables.md` (first table), `results/score.json` `.H1` |
 | T3 | H2: CER/WER draft vs served on Wikisource, better/worse pages, unexplained words | `analyze.mjs score` → `results/tables.md` (second table), `.H2` |
 | T4 | Four rows per Wikisource page: CER / FCA / span severity / accept (lite, lite+corr, gpu, gpu+corr) | `analyze.mjs score` → `.amendment_1.A2_W`, `results/arm-w-four-rows.json` |
@@ -95,7 +95,7 @@ Each figure is to be drawn by a small script reading only `results/` (not writte
 - **The judge calls ran outside the box's pace-guard slots** (`CLAUDE_PACE_OFF`, one call at a time), under the study's own meter stop.
 
 ## Data release plan
-- **Page ids and verdicts.** `results/data/` holds:
+- **Page ids and verdicts.** `results/release/` holds:
   - `frame.json` (Arm P page ids, books, outcomes, text hashes);
   - `items.json` (text hashes per role);
   - every Opus verdict (`verdicts-opus.jsonl.gz`), pairwise answer with its key (`pairs-opus.jsonl.gz`, `pairs-key.json`), and agy verdict (`verdicts-agy.jsonl.gz`);

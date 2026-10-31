@@ -1,0 +1,13 @@
+{
+ "n": 320,
+ "agree": 320,
+ "rate": 1,
+ "no_file": 79,
+ "confusion": {
+  "written->written": 229,
+  "unchanged->unchanged": 28,
+  "other->other": 63
+ },
+ "mismatches": [],
+ "bar": 0.98
+}
