@@ -80,6 +80,7 @@ export const HOLD = Object.freeze({
   reason: 'stranded-text-5309',
   issue: 5309,
   release: 'released by scripts/batch/stranded-text-repair-5309.mjs once the page is re-OCR\'d against the repaired image and re-translated (#5309)',
+  release_when: { kind: 'test', ref: 'scripts/batch/stranded-text-repair-5309.mjs (page re-OCR\'d and re-translated)' },
   source: 'stranded-text-repair-5309',
 });
 const ENVELOPE_TAG = 'stranded-text-5309';

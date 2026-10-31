@@ -36,7 +36,7 @@
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
 import { initialPublication } from '../lib/publication.mjs';
-import { HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
+import { HOLD_STATUS, HOLD_EVENT, makeHoldMarker } from '../lib/pipeline-hold.mjs';
 import { isBookScopedUrl } from '../lib/r2-key.mjs';
 import { computeIdentityFields, buildEditionKey } from '../lib/identity-fields.mjs';
 import { sourceFingerprints, sourceFingerprint } from '../lib/source-fingerprints.mjs';
@@ -55,6 +55,7 @@ const BY = 'script:promote-warehouse-only-5470';
 const ISSUE = 5470;
 const HOLD_REASON = 'warehouse-promotion-5470';
 const HOLD_RELEASE = 'A human decides to process this promoted warehouse book: rights screen and QA done (#5470). Promotion was not a decision to OCR it.';
+const HOLD_RELEASE_WHEN = { kind: 'decision', ref: 'release warehouse-promotion-5470' };
 const PUB_NOTE = 'promoted from books_warehouse (#5470); stays hidden until a rights screen + QA decision';
 const IMAGE_FIELDS = ['archived_photo', 'display_photo', 'thumbnail', 'cropped_photo', 'photo', 'photo_original'];
 const PAGE_BATCH = 1000;
@@ -128,7 +129,7 @@ function buildBook(wh, now, slug) {
   book.pipeline_auto = {
     ...(wh.pipeline_auto || {}),
     status: HOLD_STATUS,
-    hold: { reason: HOLD_REASON, issue: ISSUE, held_at: now, held_from_status: from, release: HOLD_RELEASE, detail: null },
+    hold: makeHoldMarker({ reason: HOLD_REASON, issue: ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN }, { from, now }),
     last_updated: now,
   };
   const identity = computeIdentityFields(book);

@@ -50,6 +50,7 @@ const IMPORTER = 'syriac-canon-2026-09-16';
 const HOLD = {
   reason: 'syriac-ocr-lane-trial',
   release: 'The Kraken Syriac trial (Qoruyo / Sophro Mhiro, 2026-09-16) has chosen a Syriac OCR route; release with --to queued so OCR runs from scratch on that route.',
+  release_when: { kind: 'decision', ref: 'release syriac-ocr-lane-trial' },
   source: IMPORTER,
 };
 const UA = 'SourceLibrary acquisition (contact: derek@sourcelibrary.org)';

@@ -68,6 +68,7 @@ const HOLD = {
   reason: CAMPAIGN,
   issue: ISSUE,
   release: 'Opus OCR of the book is done (claude-ocr.mjs, maya-ref-opus-6559 recipe, #6559) and Derek has chosen its translation lane; release with --to ocr_complete only then',
+  release_when: { kind: 'issue', ref: ISSUE },
 };
 const COLLECTIONS = ['maya', 'mesoamerican', 'americas'];
 const BERENDT_PROVENANCE = 'Part of the Berendt-Brinton Linguistic Collection: the papers of C. Hermann Berendt (1817–1878), later acquired by Daniel Garrison Brinton (1837–1899), and from him the University of Pennsylvania.';
@@ -604,7 +605,7 @@ async function repair(tei, plan, itemUrl) {
   }
   const left = await db.collection('pages').countDocuments({ book_id: book.id, 'archive_metadata.truncated_download': { $exists: true } });
   if (!left && book.pipeline_auto?.hold?.detail?.truncated_pages) {
-    await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.hold.release': HOLD.release, 'pipeline_auto.hold.detail': null, updated_at: new Date() } });
+    await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.hold.release': HOLD.release, 'pipeline_auto.hold.release_when': HOLD.release_when, 'pipeline_auto.hold.detail': null, updated_at: new Date() } });
   }
   console.log(`  repaired ${fixed}, ${left} still truncated`);
   return { outcome: 'repaired', id: book.id, fixed, left };
@@ -653,7 +654,7 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
     const existing = await db.collection('pages').countDocuments({ book_id: RESUME_BOOK });
     if (existing) throw new Error(`--resume-book ${RESUME_BOOK} already has ${existing} pages`);
     bookIdStr = RESUME_BOOK;
-    await db.collection('books').updateOne({ id: bookIdStr }, { $set: { 'pipeline_auto.hold.release': hold.release, 'pipeline_auto.hold.detail': hold.detail ?? null, updated_at: now } });
+    await db.collection('books').updateOne({ id: bookIdStr }, { $set: { 'pipeline_auto.hold.release': hold.release, 'pipeline_auto.hold.release_when': hold.release_when, 'pipeline_auto.hold.detail': hold.detail ?? null, updated_at: now } });
     console.log(`  resuming ${bookIdStr} (held, no pages)`);
   } else {
     const bookId = new ObjectId();

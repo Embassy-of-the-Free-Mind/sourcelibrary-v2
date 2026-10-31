@@ -43,7 +43,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, releaseBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { GPU_LANE_HOLDS } from '../batch/cli-ocr-lane.mjs';
 import {
-  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, LIGHTON,
+  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, LIGHTON,
   laneReleaseVerdict, isEnglishBook, hasNoText, pageVerdict, envelope, ocrField, writeLanePage, isHumanEdited,
 } from '../lib/gpu-print-lane.mjs';
 
@@ -143,7 +143,7 @@ async function plan() {
       // the hold BEFORE anything else: no other lane reads these pages while the GPU does. A book already under a
       // GPU-lane hold keeps that hold (nothing else reads it); a free book (--free frame) is held for this lane.
       const h = isHeld(book) ? { outcome: 'already_held', from: book.pipeline_auto.hold.held_from_status ?? null }
-        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
+        : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, language: book.language, year: book.year, hold: book.pipeline_auto?.hold?.reason ?? HOLD_REASON, placed_hold: h.outcome === 'held', held_from: h.from ?? null, planned_at: new Date().toISOString(), pages: rows }));
       fs.appendFileSync(F.manifest, rows.map((r) => `${book.id}\t${r.pn}\t${r.pid}\t${r.src}`).join('\n') + '\n');

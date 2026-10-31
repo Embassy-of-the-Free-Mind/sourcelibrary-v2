@@ -22,7 +22,7 @@
 import { ObjectId } from 'mongodb';
 import { insertBookIfNew } from '../../lib/acquire-book.mjs';
 import { initialPagesState, materializePages } from '../../lib/lazy-pages.mjs';
-import { HOLD_STATUS, HOLD_EVENT } from '../../lib/pipeline-hold.mjs';
+import { HOLD_STATUS, HOLD_EVENT, makeHoldMarker } from '../../lib/pipeline-hold.mjs';
 import { yearFromPublished } from '../../lib/catalogue-year.mjs';
 import { getCanvases, extractCanvasImage } from './manifest-store.mjs';
 import { languageCode, languageName } from '../../lib/language-normalize.mjs';
@@ -80,13 +80,14 @@ export function licenseOf(manifest) {
 }
 
 /**
- * The insert-time pipeline hold: the same marker holdBook() writes, put in the
- * insert document so the book never exists unheld.
+ * The insert-time pipeline hold: the same marker holdBook() writes (makeHoldMarker, so it
+ * refuses a hold without release_when, #7860), put in the insert document so the book never
+ * exists unheld.
  */
 export function holdAtInsert(hold, now) {
   return {
     status: HOLD_STATUS,
-    hold: { reason: hold.reason, issue: hold.issue ?? null, held_at: now, held_from_status: null, release: hold.release, detail: null },
+    hold: makeHoldMarker({ ...hold, detail: null }, { from: null, now }),
     last_updated: now,
   };
 }
@@ -152,7 +153,7 @@ async function uniqueSlug(db, base) {
  * @param {(url: string) => Promise<object>} o.fetchManifest
  * @param {string} o.language      canonical language name (the tier survey's)
  * @param {string} o.campaign      acquisition_campaign
- * @param {{reason: string, release: string, issue?: number}} o.hold
+ * @param {{reason: string, release: string, release_when: {kind: string, ref: string|number, note?: string}, issue?: number}} o.hold
  * @param {boolean} o.manifestOnly
  * @param {number} [o.minCanvases=5]
  * @param {boolean} [o.dryRun]
@@ -162,6 +163,7 @@ async function uniqueSlug(db, base) {
 export async function importCandidate(db, c, o) {
   const { fetchManifest, language, campaign, hold, manifestOnly, minCanvases = 5, dryRun = false } = o;
   if (!hold?.reason || !hold?.release) throw new TypeError('importCandidate: a hold { reason, release } is required');
+  makeHoldMarker(hold); // and a release_when (#7860), refused before any fetch
   if (!campaign) throw new TypeError('importCandidate: campaign is required');
   if (!['discovered', 'failed'].includes(c.status)) return { outcome: 'not_candidate', reason: `status ${c.status}` };
   if (!c.manifest_url) return { outcome: 'not_candidate', reason: 'no manifest_url' };
@@ -188,7 +190,7 @@ export async function importCandidate(db, c, o) {
   const bookId = acquired.bookId;
 
   // The hold's paper trail, as holdBook() writes it.
-  await db.collection('book_events').insertOne({ book_id: bookId, type: HOLD_EVENT, at: now, source: IMPORTER, details: { reason: hold.reason, issue: hold.issue ?? null, from_status: null, release: hold.release } });
+  await db.collection('book_events').insertOne({ book_id: bookId, type: HOLD_EVENT, at: now, source: IMPORTER, details: { reason: hold.reason, issue: hold.issue ?? null, from_status: null, release: hold.release, release_when: fields.pipeline_auto.hold.release_when } });
   await db.collection('audit_log').insertOne({ action: 'pipeline_status_changed', book_id: bookId, book_title: fields.title, metadata: { from: 'none', to: HOLD_STATUS, source: IMPORTER, reason: hold.reason }, timestamp: now }).catch(() => {});
   await db.collection('import_candidates').updateOne({ _id: c._id }, { $set: { status: 'imported', book_id: bookId, imported_at: now } });
 

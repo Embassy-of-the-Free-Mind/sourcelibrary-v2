@@ -76,7 +76,7 @@ try {
       const results = [];
       for (const b of open) {
         if (DRY) { results.push([b.id, 'dry_run']); continue; }
-        const r = await holdBook(db, b.id, { reason: 'quality-round-1-cap', issue: ISSUE, release: `quality round 1 envelope reached $${CAP_USD} of $${BUDGET_USD}; release only with a new approval on #${ISSUE}`, source: 'quality-round-1-watch' });
+        const r = await holdBook(db, b.id, { reason: 'quality-round-1-cap', issue: ISSUE, release: `quality round 1 envelope reached $${CAP_USD} of $${BUDGET_USD}; release only with a new approval on #${ISSUE}`, release_when: { kind: 'issue', ref: ISSUE }, source: 'quality-round-1-watch' });
         results.push([b.id, r.outcome]);
       }
       if (!DRY) {

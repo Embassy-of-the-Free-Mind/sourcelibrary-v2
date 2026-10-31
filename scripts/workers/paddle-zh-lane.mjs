@@ -47,7 +47,7 @@ import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { juanRange } from '../eval/zh-cohort-5547-duplicates.mjs';
 import {
-  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, MIN_HAN, PADDLE,
+  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, MIN_HAN, PADDLE,
   convertPaddle, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/paddle-zh-lane.mjs';
@@ -186,7 +186,7 @@ async function plan() {
       } }).sort({ page_number: 1 }).toArray();
       if (!APPLY) { log(`${bid} would plan ${pages.length} pages | ${String(book.title).slice(0, 50)}`); continue; }
       // the hold BEFORE anything else: an OCR write on a `complete` book otherwise queues paid gap-fill translation
-      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: PADDLE.model } });
+      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); log(`${bid} hold: ${h.outcome} — not planned`); continue; }
       const rows = [];
       for (const p of pages) {

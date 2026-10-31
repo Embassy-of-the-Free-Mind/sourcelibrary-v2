@@ -263,6 +263,7 @@ export const CLI_FLASH_OCR_HOLD = Object.freeze({
   reason: 'ocr-flash-cli-7075',
   issue: 7075,
   release: 'the agy CLI lane (scripts/batch/cli-ocr.mjs read + apply, Gemini 3 Flash on the subscription) has read the unread pages; release with scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ocr-flash-cli-7075 --book <id> --apply',
+  release_when: { kind: 'test', ref: 'scripts/batch/cli-ocr.mjs has read every unread page' },
 });
 
 /**

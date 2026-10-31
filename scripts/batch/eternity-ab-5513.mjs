@@ -65,6 +65,7 @@ export const HOLD = Object.freeze({
   reason: TAG,
   issue: ISSUE,
   release: `released by scripts/batch/eternity-ab-5513.mjs${IS_ETERNITY ? '' : ` --tag ${TAG}`} when the book is enrolled in the chained translation lane, or at the end of the OCR→translate pass (#${ISSUE})`,
+  release_when: { kind: 'test', ref: 'scripts/batch/eternity-ab-5513.mjs release (the book is enrolled in the chained lane, or the pass ends)' },
   source: val('source', `${STEM}-${ISSUE}`),
 });
 const ENVELOPE_TAG = TAG;

@@ -44,7 +44,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import {
-  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
+  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
   storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
   fallbackRoute,
 } from '../lib/paddle-print-lane.mjs';
@@ -245,7 +245,7 @@ async function plan() {
       if (!rows.length) { tally.skipped_books.push({ bid, why: 'nothing_to_read' }); continue; }
       if (!APPLY) { log(`${bid} would hold and plan ${rows.length}/${pages.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
       // the hold BEFORE anything else: an OCR write on a released book otherwise queues paid gap-fill translation
-      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
+      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); log(`${bid} hold: ${h.outcome} — not planned`); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({
         bid: book.id, title: book.title, language: book.language, provider: book.image_source?.provider || null,

@@ -53,6 +53,7 @@
  * Without --commit nothing is written and Google is not contacted.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/import/delpher-direct.mjs --manifest <x>.json [--commit] [--hold <reason>]
+ *     --hold needs --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD (#7860)
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -63,7 +64,7 @@ import path from 'path';
 import sharp from 'sharp';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
-import { holdBook } from '../lib/pipeline-hold.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen } from '../lib/pipeline-hold.mjs';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 
@@ -71,6 +72,10 @@ const COMMIT = process.argv.includes('--commit');
 const argAfter = (f) => { const i = process.argv.indexOf(f); return i > 0 ? process.argv[i + 1] : null; };
 const MANIFEST = argAfter('--manifest');
 const HOLD_REASON = argAfter('--hold');
+const HOLD_RELEASE = 'Held at import by delpher-direct.mjs; pages are already on R2 — release with --to archive_complete.';
+const HOLD_RELEASE_WHEN = parseReleaseWhen(argAfter('--release-when'));
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD_REASON) { try { makeHoldMarker({ reason: HOLD_REASON, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN }); } catch (e) { console.error(`${e.message}\n  pass --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 if (!MANIFEST) { console.error('Required: --manifest <json>'); process.exit(1); }
 const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
 const IMPORTER = manifest.campaign || path.basename(MANIFEST, '.json');
@@ -199,7 +204,7 @@ try {
       if (!res.inserted) { console.log(`  GATE ${res.reason}: ${res.message}`); continue; }
       const id = insertedId = res.bookId;
       if (HOLD_REASON) console.log('  hold:', (await holdBook(db, id, { reason: HOLD_REASON, source: IMPORTER,
-        release: `Held at import by delpher-direct.mjs; pages are already on R2 — release with --to archive_complete.` })).outcome);
+        release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN })).outcome);
       if (src.sourcePdf) await put(`masters/${id}/source.pdf`, id, src.sourcePdf(), 'application/pdf');
       const docs = [];
       for (let k = 0; k < pages; k++) {
