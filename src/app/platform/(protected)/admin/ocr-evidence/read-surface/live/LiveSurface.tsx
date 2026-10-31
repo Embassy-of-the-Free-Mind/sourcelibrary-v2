@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { assertLiveDoc, type LiveDoc, type LiveRow } from './shape';
 import {
   BASES, FACTORS, MAXIMISE, autoKind, SERVED_PX, THINK_X, adjustedRunMeans, bootstrap, candidates, code, fitAll, frontierGap, objectiveOf,
-  optimum, predictAll, predictBase, qnorm, quantile, regionOf, termsFor, toObs,
+  optimum, predictAll, qnorm, quantile, regionOf, termsFor, toObs,
   type Base, type FitSet, type ModelKind, type Point, type Response,
 } from './rsm';
 import { Contour, DesignView, EDGE_RANGE, RampLegend, Scatter, Tip, fmtPct, type DesignPoint, type ScatterPt } from './LiveCharts';
@@ -51,7 +51,9 @@ export default function LiveSurface({ initial }: { initial: unknown }) {
       try {
         const r = await fetch('/api/admin/read-surface-live', { cache: 'no-store' });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const j = await r.json(); setRaw(j.doc); setPolledAt(new Date().toISOString()); setPollErr(null);
+        const j = await r.json();
+        // An unchanged doc is not re-rendered: every memo and the bootstrap would restart for nothing.
+        setRaw((prev: unknown) => ((prev as { updated_at?: string } | null)?.updated_at === j.doc?.updated_at ? prev : j.doc)); setPolledAt(new Date().toISOString()); setPollErr(null);
       } catch (e) { setPollErr(String(e)); }
     }, POLL_MS);
     return () => clearInterval(t);
@@ -108,9 +110,10 @@ function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string
   }, [doc, lang, weighted]);
   const unweighted = useMemo(() => (weighted ? new Set(doc.rows.filter((r) => r.lang === lang && doc.weights?.[lang]?.[r.book_id] === undefined).map((r) => r.book_id)).size : 0), [doc, lang, weighted]);
 
-  const rowsFor = (keys: Set<string>): LiveRow[] => doc.rows.filter((r) => r.lang === lang && keys.has(`${r.lang}:${r.run_id}`));
+  const rowsL = useMemo(() => doc.rows.filter((r) => r.lang === lang), [doc, lang]);
+  const rowsFor = (keys: Set<string>): LiveRow[] => rowsL.filter((r) => keys.has(`${r.lang}:${r.run_id}`));
   const settingsL = useMemo(() => doc.design.settings.map((s) => ({ ...s, lang: s.lang ?? lang })), [doc, lang]);
-  const obs = useMemo(() => toObs(rowsFor(active), settingsL, weightOf), [active, settingsL, weightOf]); // eslint-disable-line react-hooks/exhaustive-deps
+  const obs = useMemo(() => toObs(rowsL.filter((r) => active.has(`${r.lang}:${r.run_id}`)), settingsL, weightOf), [rowsL, active, settingsL, weightOf]);
   const kind: ModelKind = useMemo(() => (kindSel === 'auto' ? autoKind(obs) : kindSel), [kindSel, obs]);
   const terms = useMemo(() => termsFor(obs, kind), [obs, kind]);
   const nRuns = useMemo(() => new Set(obs.map((o) => o.run)).size, [obs]);
@@ -128,7 +131,7 @@ function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string
   // ── the bootstrap, in a worker; a new request replaces the old worker outright ──
   const [boot, setBoot] = useState<{ sig: string; fits: FitSet[] | null; progress: number }>({ sig: '', fits: null, progress: 0 });
   const workerRef = useRef<Worker | null>(null);
-  const sig = useMemo(() => `${kind}|${[...active].sort().join(',')}|${weighted}|${lang}`, [kind, active, weighted, lang]);
+  const sig = useMemo(() => `${doc.updated_at}|${kind}|${[...active].sort().join(',')}|${weighted}|${lang}`, [doc.updated_at, kind, active, weighted, lang]);
   useEffect(() => {
     if (!obs.length) return;
     const t = setTimeout(() => {
@@ -164,9 +167,12 @@ function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string
 
   // ── contour grid ──
   const N = 33;
-  const ppcRange: [number, number] = [1, Math.max(8, region.ppc[1])];
-  const edgeRange: [number, number] = [Math.min(EDGE_RANGE[0], region.edge[0] * 0.9), Math.max(EDGE_RANGE[1], region.edge[1] * 1.1)];
+  const ppcHi = Math.max(8, region.ppc[1]);
+  const edgeLo = Math.min(EDGE_RANGE[0], region.edge[0] * 0.9), edgeHi = Math.max(EDGE_RANGE[1], region.edge[1] * 1.1);
+  const ppcRange: [number, number] = [1, ppcHi];
+  const edgeRange: [number, number] = [edgeLo, edgeHi];
   const grid = useMemo(() => {
+    const ppcRange = [1, ppcHi], edgeRange = [edgeLo, edgeHi];
     const z: number[][] = [], feas: boolean[][] = [], inR: boolean[][] = [];
     const bound = predictAll(fitSet, terms, livePt).cer + margin;
     for (let r = 0; r < N; r++) {
@@ -183,7 +189,7 @@ function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string
     const all = (inside.length ? inside : z.flat()).filter(Number.isFinite);
     const range: [number, number] = [quantile(all, 0.02), quantile(all, 0.98)];
     return { z, feas, inR, range };
-  }, [fitSet, terms, livePt, margin, think, line, resp, region, ppcRange[1], edgeRange[0], edgeRange[1]]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [fitSet, terms, livePt, margin, think, line, resp, region, ppcHi, edgeLo, edgeHi]);
 
   // ── book-adjusted run means, for the scatter and the design points ──
   const obj = objectiveOf(resp);
