@@ -28,6 +28,7 @@ export default function ReadSurfacePage() {
     <main className="max-w-5xl mx-auto px-4 py-8 text-[#e6edf3]">
       <p className="text-sm text-[#8b949e]"><Link href="/platform/admin/ocr-evidence" className="underline decoration-[#30363d] hover:text-[#58a6ff]">OCR evidence</Link> / read settings</p>
       <h1 className="text-2xl font-semibold text-[#f0f6fc] mt-1">Which read settings give the fewest agy calls a page without losing accuracy?</h1>
+      <p className="mt-2 text-sm"><Link href="/platform/admin/ocr-evidence/read-surface/live" className="underline decoration-[#30363d] text-[#58a6ff]">The experiment as it runs: a live surface you can refit and play with →</Link></p>
       <p className="mt-3 max-w-3xl">
         The agy Flash first read has three settings: how many pages go in one call, how large the image is, and how much the
         model thinks. Each run below read the same target page of every book, against a human-typed edition of that page

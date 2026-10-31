@@ -9,14 +9,14 @@
  */
 import { useId, useState } from 'react';
 
-const TEAL = '#58a6ff';     // admin blue: the optimum
-const LIVE = '#d29922';     // admin amber: the live setting
-const INK = '#e6edf3';      // admin text
-const MUTED = '#8b949e';    // admin dim text
-const FAINT = '#6e7681';    // admin faint
-const GRID = '#21262d';     // admin row border
+export const TEAL = '#58a6ff';     // admin blue: the optimum
+export const LIVE = '#d29922';     // admin amber: the live setting
+export const INK = '#e6edf3';      // admin text
+export const MUTED = '#8b949e';    // admin dim text
+export const FAINT = '#6e7681';    // admin faint
+export const GRID = '#21262d';     // admin row border
 // Sequential teal ramp for a dark surface (teal-950 … teal-300), dark = low.
-const RAMP = ['#042f2e', '#0b3b38', '#134e4a', '#115e59', '#0f766e', '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4'];
+export const RAMP = ['#042f2e', '#0b3b38', '#134e4a', '#115e59', '#0f766e', '#0d9488', '#14b8a6', '#2dd4bf', '#5eead4'];
 
 export interface Setting { measured?: { delta: number; delta_lo: number; delta_hi: number; calls: number }; pool?: string | null; x: number[]; ppc: number; edge: number; think: string; cer: number; cer_sd?: number; prior_cer?: number; prior_cer_sd?: number; prior_calls?: number; prior_calls_sd?: number; delta: number; delta_lo: number; delta_hi: number; calls: number; calls_lo: number; calls_hi: number; secs: number; run: string | null; wrong: number | null; non_inferior: boolean }
 export interface Run { id: string; x: (number | null)[]; ppc: number; edge: number | null; think: string; live: boolean; cer: number; calls: number; secs: number; wrong: number; imputed: number }
@@ -35,7 +35,7 @@ const EDGE = ['1,024', '1,600', '2,400'];
 const PPC = ['1', '4', '8'];
 
 // ── marching squares: segments of the isoline `level` over a grid z[row][col] on coded [-1, 1]² ──
-function isoSegments(z: number[][], axis: number[], level: number) {
+export function isoSegments(z: number[][], axis: number[], level: number) {
   const segs: [number, number, number, number][] = [];
   const n = axis.length;
   const lerp = (a: number, b: number, za: number, zb: number) => a + ((level - za) / (zb - za)) * (b - a);
@@ -50,7 +50,7 @@ function isoSegments(z: number[][], axis: number[], level: number) {
   }
   return segs;
 }
-function niceSteps(lo: number, hi: number, k = 6) {
+export function niceSteps(lo: number, hi: number, k = 6) {
   const raw = (hi - lo) / k, mag = 10 ** Math.floor(Math.log10(raw || 1e-9));
   const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= raw) ?? raw;
   const out: number[] = [];
