@@ -505,6 +505,21 @@ export const posts: BlogPost[] = [
     imageAlt: 'Page 300 of Sachau\u2019s 1879 translation of al-B\u012br\u016bn\u012b\u2019s Chronology of Ancient Nations, which prints 5180 years twice; the Archive\u2019s text has 6180 both times.',
   },
   {
+    slug: 'how-we-choose-the-cheapest-way-to-read-a-page',
+    title: 'How we choose the cheapest way to read a page',
+    subtitle:
+      'Every page we read costs a call to a model. We tested pages per call, image size and thinking together, on German and Latin pages with typed editions.',
+    summary:
+      'Reading a page costs a model call. We tested three settings together on 80 German and Latin books with typed editions to find the cheapest reading.',
+    date: '31 October 2026',
+    readTime: '10 min read',
+    kind: 'research',
+    // Glauber, Furni Novi Philosophici (1649), reader page 25, opened by eye: a full Fraktur text page.
+    image: 'https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg',
+    imageAlt:
+      'Page 25 of Glauber’s Furni Novi Philosophici (1649), printed in Fraktur under the running head “Philosophischer Oefen”.',
+  },
+  {
     slug: 'how-we-measure-ocr-quality',
     title: 'How We Measure OCR Quality',
     subtitle:
