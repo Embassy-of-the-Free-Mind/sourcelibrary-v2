@@ -84,7 +84,8 @@ export const ARCHIVE_NOT_BLOCKED = Object.freeze({
  * month on `*-awaits-derek` holds whose decisions had been made. So every hold also carries a
  * condition a detector can test (scripts/audit/hold-release-check.mjs, weekly):
  *   decision  ref = words the decision will carry in ops DECIDED.md / DECISIONS-PENDING.md Done
- *             (matched with punctuation and case folded), e.g. 'syriac re-translation'
+ *             (matched with punctuation and case folded); `release <reason>` until a decision exists,
+ *             because a topic phrase also matches rows that only mention the topic
  *   issue     ref = an issue number; the hold is due when that issue closes
  *   test      ref = the script or check whose pass releases it, e.g. 'scripts/workers/gpu-print-lane.mjs release'
  *   date      ref = YYYY-MM-DD; the hold is due on that day

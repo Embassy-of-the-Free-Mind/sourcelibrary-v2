@@ -23,6 +23,7 @@
  *              comment on its issue after the hold. Decided, never released.
  *   DUE        release_when is a date in the past, or an issue that is now closed.
  *   NO_CONDITION  a hold with no release_when: a writer that bypassed holdBook(). Must be 0.
+ *   BAD_CONDITION a release_when this check cannot read (not { kind: decision|issue|test|date, ref }).
  *
  * NOT ACQUIRED (NOT_ACQUIRED_HOLD_REASONS: manifest-only-lazy-pages, acquisition-wave-2026-10b) is
  * reported on its own line and never flagged: catalogue records without pages are a storage state, not a
@@ -43,7 +44,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { isNotAcquiredReason } from '../lib/pipeline-hold.mjs';
+import { isNotAcquiredReason, releaseWhenProblem } from '../lib/pipeline-hold.mjs';
 
 const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const OPS_REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-ops';
@@ -85,6 +86,7 @@ export function classify(g, { now, issues, decided, decidedReadable }) {
   const flags = [];
   const rw = g.release_when;
   if (!rw) flags.push({ flag: 'NO_CONDITION' });
+  else { const p = releaseWhenProblem(rw); if (p) flags.push({ flag: 'BAD_CONDITION', why: p }); }
   const owner = rw?.kind === 'issue' ? rw.ref : g.issue;
   const ist = owner ? issues.get(owner) : null;
   if (rw?.kind === 'date' && Date.parse(rw.ref) < now) flags.push({ flag: 'DUE', why: `release_when date ${rw.ref} has passed` });
@@ -181,7 +183,9 @@ async function main() {
   };
 
   log(`hold-release check ${new Date(now).toISOString().slice(0, 10)}: ${totals.held} held books under ${totals.reasons} reasons`);
-  log(`  not acquired (reported apart, never flagged): ${totals.not_acquired} — ${notAcquired.map((g) => `${g.reason} ${g.n}`).join(', ') || 'none'}`);
+  const naBy = notAcquired.reduce((o, g) => { o[g.reason] = (o[g.reason] || 0) + g.n; return o; }, {});
+  totals.not_acquired_by_reason = naBy;
+  log(`  not acquired (reported apart, never flagged): ${totals.not_acquired} — ${Object.entries(naBy).map(([r, n]) => `${r} ${n}`).join(', ') || 'none'}`);
   log(`  in scope: ${totals.in_scope} books, ${totals.in_scope_reasons} reasons; release_when kinds ${Object.entries(totals.by_kind).map(([k, v]) => `${k} ${v}`).join(', ')}; ops decision log ${totals.ops_log}`);
   log(`  flagged: ${totals.flagged_books} books under ${totals.flagged_reasons} reasons — ${Object.entries(byFlag).map(([k, v]) => `${k} ${v.books} books/${v.groups} groups`).join(', ') || 'none'}`);
   for (const r of flagged) log(`  ${String(r.n).padStart(7)} ${r.reason}${r.issue ? ` #${r.issue}` : ''} [${r.release_when ? `${r.release_when.kind}:${r.release_when.ref}` : 'no release_when'}] ${r.flags.map((f) => `${f.flag}${f.why ? ` (${f.why})` : ''}`).join('; ')}`);
@@ -204,7 +208,7 @@ function alert({ at, totals, flagged }) {
     + flagged.slice(0, 120).map((r) => `| ${r.n} | \`${r.reason}\`${r.issue ? ` #${r.issue}` : ''} | ${r.release_when ? esc(`${r.release_when.kind}:${r.release_when.ref}`) : '**none**'} | ${esc(r.flags.map((f) => `${f.flag}${f.why ? `: ${f.why}` : ''}`).join('; ')).slice(0, 400)} |`).join('\n')
     + (flagged.length > 120 ? `\n\n… and ${flagged.length - 120} more groups (run the check for the full list).` : '')
     + '\n\n**QUIET**: held over 14 days, its issue silent 14 days. **DECIDED**: the decision it waits on is in ops DECIDED.md / DECISIONS-PENDING Done, or a "decided"/"default taken" comment. '
-    + '**DUE**: its release date passed or its issue closed. **NO_CONDITION**: no `release_when` (a writer bypassed `holdBook()`). '
+    + '**DUE**: its release date passed or its issue closed. **NO_CONDITION**: no `release_when` (a writer bypassed `holdBook()`). **BAD_CONDITION**: a `release_when` not in the `{ kind, ref, note }` shape. '
     + 'Release with `scripts/maintenance/hold-pipeline-books.mjs --release-held --reason <reason> --apply`, or say on the hold\'s issue why it stays. '
     + `Filed by \`scripts/audit/hold-release-check.mjs --alert\` (weekly, #7860). Rewritten each run; closes itself on the first clean run.`;
   try {

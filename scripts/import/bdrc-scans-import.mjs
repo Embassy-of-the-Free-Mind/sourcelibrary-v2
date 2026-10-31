@@ -54,7 +54,7 @@ const PRESETS = {
     hold: {
       reason: 'mongol-kanjur-import-5664',
       release: 'OCR accuracy on Mongol-script woodblock is measured against a reference (an e-text or a Mongolist) and the OCR/translation run is approved as a separate, priced decision (#5664)',
-      release_when: { kind: 'decision', ref: 'mongol kanjur' },
+      release_when: { kind: 'decision', ref: 'release mongol-kanjur-import-5664' },
     },
     language: 'Mongolian',
     year: 1720,

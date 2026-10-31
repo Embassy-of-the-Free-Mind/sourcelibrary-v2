@@ -34,7 +34,7 @@ import { holdBook } from '../lib/pipeline-hold.mjs';
 const HOLD = {
   reason: 'plethon-folios-only',
   release: 'a human decides whether the rest of the codex (non-Plethon texts) should be processed; until then only the Plethon canvases named in books.notes are OCR\'d, by hand',
-  release_when: { kind: 'decision', ref: 'plethon codex' },
+  release_when: { kind: 'decision', ref: 'release plethon-folios-only' },
   source: 'script:gallica-plethon-direct',
 };
 

@@ -12,7 +12,9 @@
  * which the weekly scripts/audit/hold-release-check.mjs cannot test. This writes one condition per
  * reason from the MAP below, read from each reason's own release sentence on 2026-10-31. A reason the
  * map does not name gets kind 'issue' with the hold's own issue (or the number its reason ends in);
- * one with neither becomes a 'decision' keyed on the reason itself.
+ * one with neither becomes a 'decision' with ref `release <reason>`. A decision ref is the words the
+ * decision row must carry; `release <reason>` is used wherever no decision has been written yet, because a
+ * topic phrase ('kangyur translation') also matches job rows that only mention the topic.
  *
  * WHAT IT WRITES. Only `pipeline_auto.hold.release_when` (a subfield of the existing marker, not a new
  * books field), and only where it is absent, so a second run writes 0 and a hold placed after the
@@ -24,13 +26,14 @@
  *   node --env-file=.env.production.local scripts/maintenance/backfill-hold-release-when.mjs           # the reason → release_when table
  *   … --apply                                                                                          # write it
  *   … --undo --apply                                                                                    # $unset every release_when this sweep wrote
+ *   … --refresh [--apply]                                                                               # re-point kind/ref of this sweep's rows to the current MAP (note kept)
  */
 import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { normalizeReleaseWhen } from '../lib/pipeline-hold.mjs';
 
 export const SWEEP = 'hold-release-when-7860';
-const APPLY = process.argv.includes('--apply'), UNDO = process.argv.includes('--undo');
+const APPLY = process.argv.includes('--apply'), UNDO = process.argv.includes('--undo'), REFRESH = process.argv.includes('--refresh');
 const BATCH = 5000;
 
 const issue = (ref, note) => ({ kind: 'issue', ref, note });
@@ -43,33 +46,33 @@ const UNFUNDED = 'unfunded (#7860 group 2): released in priced waves from the on
 /** reason → release_when, from each reason's release sentence (census 2026-10-31). `note: undefined` keeps the hold's own sentence. */
 export const MAP = {
   // Group 1 — not acquired
-  'manifest-only-lazy-pages': decision('manifest-only-lazy-pages release', NOT_ACQUIRED),
-  'acquisition-wave-2026-10b': decision('acquisition-wave-2026-10b release', NOT_ACQUIRED),
+  'manifest-only-lazy-pages': decision('release manifest-only-lazy-pages', NOT_ACQUIRED),
+  'acquisition-wave-2026-10b': decision('release acquisition-wave-2026-10b', NOT_ACQUIRED),
   // Group 2 — unfunded: a priced decision releases them
-  'acquisition-wave-2026-10-images-only': decision('acquisition-wave-2026-10-images-only', UNFUNDED),
-  'scans-only-publish-7176': decision('scans-only-publish-7176', UNFUNDED),
-  'scans-only-publish-7270': decision('scans-only-publish-7270', UNFUNDED),
-  'paddle-zh-5600-ocr-only': decision('siku translation', UNFUNDED),
-  'paddle-zh-6388-ocr-only': decision('siku translation', UNFUNDED),
-  'paddle-zh-6388-excluded': decision('siku translation', undefined),
-  'zh-histories-7546': decision('siku translation', undefined),
-  'gpu-backlog-5660': decision('gpu-backlog-5660 translation', UNFUNDED),
-  'warehouse-promotion-5470': decision('warehouse promotion', UNFUNDED),
-  'paddle-print-6101': decision('paddle-print-6101 translation', undefined),
-  'ndl-koten-lane-4925': decision('ndl koten re-translation', undefined),
-  'mongol-kanjur-import-5664': decision('mongol kanjur ocr', undefined),
-  'kangyur-import': decision('kangyur translation', undefined),
-  'tengyur-import-5497': decision('tengyur translation', undefined),
-  'glm-english-5660-ocr-only': decision('glm-english-5660-ocr-only', undefined),
-  'nalanda-sanskrit-ocr-only': decision('nalanda-sanskrit-ocr-only', undefined),
+  'acquisition-wave-2026-10-images-only': decision('release acquisition-wave-2026-10-images-only', UNFUNDED),
+  'scans-only-publish-7176': decision('release scans-only-publish-7176', UNFUNDED),
+  'scans-only-publish-7270': decision('release scans-only-publish-7270', UNFUNDED),
+  'paddle-zh-5600-ocr-only': decision('release paddle-zh-5600-ocr-only', UNFUNDED),
+  'paddle-zh-6388-ocr-only': decision('release paddle-zh-6388-ocr-only', UNFUNDED),
+  'paddle-zh-6388-excluded': decision('release paddle-zh-6388-excluded', undefined),
+  'zh-histories-7546': decision('release zh-histories-7546', undefined),
+  'gpu-backlog-5660': decision('release gpu-backlog-5660', UNFUNDED),
+  'warehouse-promotion-5470': decision('release warehouse-promotion-5470', UNFUNDED),
+  'paddle-print-6101': decision('release paddle-print-6101', undefined),
+  'ndl-koten-lane-4925': decision('release ndl-koten-lane-4925', undefined),
+  'mongol-kanjur-import-5664': decision('release mongol-kanjur-import-5664', undefined),
+  'kangyur-import': decision('release kangyur-import', undefined),
+  'tengyur-import-5497': decision('release tengyur-import-5497', undefined),
+  'glm-english-5660-ocr-only': decision('release glm-english-5660-ocr-only', undefined),
+  'nalanda-sanskrit-ocr-only': decision('release nalanda-sanskrit-ocr-only', undefined),
   // Group 3 — awaits a decision
   'tibetan-retranslation-awaits-derek': decision('opus-tib-sa-6948', 'Tibetan + Sanskrit translation goes to Opus via claude -p (Derek 2026-10-24, job opus-tib-sa-6948); #7860 part B routes and releases'),
   'syriac-retranslation-awaits-derek': decision('syriac re-translation', 'Syriac re-translation approved ($45 cap, #4883); #7860 part B routes and releases'),
-  'peiresc-awaits-derek-5811': decision('peiresc letters ocr', undefined),
-  'plethon-folios-only': decision('plethon codex', undefined),
-  'loagaeth-letter-grids-no-ocr': decision('loagaeth tables', undefined),
-  'malayalam-palm-leaf-lane': decision('malayalam palm-leaf lane', undefined),
-  'syriac-ocr-lane-trial': decision('syriac ocr route', undefined),
+  'peiresc-awaits-derek-5811': decision('release peiresc-awaits-derek-5811', undefined),
+  'plethon-folios-only': decision('release plethon-folios-only', undefined),
+  'loagaeth-letter-grids-no-ocr': decision('release loagaeth-letter-grids-no-ocr', undefined),
+  'malayalam-palm-leaf-lane': decision('release malayalam-palm-leaf-lane', undefined),
+  'syriac-ocr-lane-trial': decision('release syriac-ocr-lane-trial', undefined),
   // A named check releases them
   'ia-wrong-leaf-4790': test('scripts/audit/pipeline-hold-drift.mjs RELEASABLE (an ia_ocr_leaf_repair book_event newer than the hold)', undefined),
   'ocr-flash-cli-7075': test('scripts/batch/cli-ocr.mjs has read every unread page', undefined),
@@ -92,7 +95,7 @@ export const MAP = {
 export function releaseWhenFor(reason, holdIssue) {
   if (MAP[reason]) return MAP[reason];
   const n = Number.isInteger(holdIssue) && holdIssue > 0 ? holdIssue : Number(reason.match(/-(\d{3,5})$/)?.[1]) || null;
-  return n ? issue(n, undefined) : decision(reason, undefined);
+  return n ? issue(n, undefined) : decision(`release ${reason}`, undefined);
 }
 
 await withMongo(async (db) => {
@@ -104,6 +107,23 @@ await withMongo(async (db) => {
     if (APPLY && n) { const r = await B.updateMany(f, { $unset: { 'pipeline_auto.hold.release_when': '' } }); console.log(`unset ${r.modifiedCount}`); }
     return;
   }
+  if (REFRESH) {
+    // Only rows this sweep wrote; a release_when another writer set is never touched.
+    const rows = await B.aggregate([{ $match: { 'pipeline_auto.hold.release_when.backfilled_by': SWEEP } },
+      { $group: { _id: { reason: '$pipeline_auto.hold.reason', issue: '$pipeline_auto.hold.issue', kind: '$pipeline_auto.hold.release_when.kind', ref: '$pipeline_auto.hold.release_when.ref' }, n: { $sum: 1 } } }], { allowDiskUse: true }).toArray();
+    for (const g of rows) {
+      const { reason, issue: holdIssue, kind, ref } = g._id;
+      const rw = releaseWhenFor(reason, holdIssue);
+      if (rw.kind === kind && rw.ref === ref) continue;
+      normalizeReleaseWhen(rw, 'x');
+      console.log(`  ${String(g.n).padStart(7)}  ${reason}: ${kind}:${ref} → ${rw.kind}:${rw.ref}`);
+      if (!APPLY) continue;
+      const r = await B.updateMany({ 'pipeline_auto.hold.reason': reason, 'pipeline_auto.hold.issue': holdIssue ?? null, 'pipeline_auto.hold.release_when.backfilled_by': SWEEP, 'pipeline_auto.hold.release_when.ref': ref },
+        { $set: { 'pipeline_auto.hold.release_when.kind': rw.kind, 'pipeline_auto.hold.release_when.ref': rw.ref } });
+      await recordSweepActions(db, [{ sweep: SWEEP, book_id: `reason:${reason}`, action: 'hold-release-when-refreshed', detail: { reason, from: `${kind}:${ref}`, to: `${rw.kind}:${rw.ref}`, books: r.modifiedCount } }]);
+    }
+    return;
+  }
   const groups = await B.aggregate([
     { $match: { 'pipeline_auto.hold': { $exists: true }, 'pipeline_auto.hold.release_when': { $exists: false } } },
     { $group: { _id: { reason: '$pipeline_auto.hold.reason', issue: '$pipeline_auto.hold.issue' }, n: { $sum: 1 } } },
@@ -111,28 +131,37 @@ await withMongo(async (db) => {
   ], { allowDiskUse: true }).toArray();
   const total = groups.reduce((s, g) => s + g.n, 0);
   console.log(`${total} hold(s) without release_when in ${groups.length} (reason, issue) group(s)${APPLY ? '' : ' — DRY RUN'}`);
-  let written = 0, logged = 0;
   for (const g of groups) {
     const { reason, issue: holdIssue } = g._id;
     const rw = releaseWhenFor(reason, holdIssue);
     normalizeReleaseWhen(rw, 'x'); // a bad map entry throws here, before anything is written
-    const src = MAP[reason] ? 'map' : 'default';
-    console.log(`  ${String(g.n).padStart(7)}  ${reason}${holdIssue != null ? ` #${holdIssue}` : ''} → ${rw.kind}:${rw.ref} (${src})${rw.note ? ` — ${rw.note.slice(0, 80)}` : ''}`);
-    if (!APPLY) continue;
-    const match = { 'pipeline_auto.hold.reason': reason, 'pipeline_auto.hold.issue': holdIssue ?? null, 'pipeline_auto.hold.release_when': { $exists: false } };
-    const cur = B.find(match, { projection: { _id: 0, id: 1 } }).batchSize(BATCH);
-    let ids = [];
-    const flush = async () => {
-      if (!ids.length) return;
-      const value = { kind: { $literal: rw.kind }, ref: { $literal: rw.ref }, note: rw.note != null ? { $literal: rw.note } : { $ifNull: ['$pipeline_auto.hold.release', null] }, backfilled_by: { $literal: SWEEP } };
-      const r = await B.updateMany({ ...match, id: { $in: ids } }, [{ $set: { 'pipeline_auto.hold.release_when': value } }]);
-      written += r.modifiedCount;
-      const done = await B.find({ id: { $in: ids }, 'pipeline_auto.hold.release_when.backfilled_by': SWEEP }, { projection: { _id: 0, id: 1 } }).toArray();
-      logged += await recordSweepActions(db, done.map((b) => ({ sweep: SWEEP, book_id: b.id, action: 'hold-release-when-set', detail: { reason, kind: rw.kind, ref: String(rw.ref) } })));
-      ids = [];
-    };
-    for await (const b of cur) { ids.push(b.id); if (ids.length >= BATCH) await flush(); }
-    await flush();
+    console.log(`  ${String(g.n).padStart(7)}  ${reason}${holdIssue != null ? ` #${holdIssue}` : ''} → ${rw.kind}:${rw.ref} (${MAP[reason] ? 'map' : 'default'})${rw.note ? ` — ${rw.note.slice(0, 80)}` : ''}`);
   }
+  if (!APPLY) return;
+  // One pass over the held books (the hold reason is not indexed, so a query per group would scan
+  // `books` 111 times), bucketed by (reason, issue) and written BATCH ids at a time.
+  let written = 0, logged = 0;
+  const buckets = new Map();
+  const flush = async (key) => {
+    const bk = buckets.get(key);
+    if (!bk?.ids.length) return;
+    const { reason, issue: holdIssue, rw } = bk;
+    const value = { kind: { $literal: rw.kind }, ref: { $literal: rw.ref }, note: rw.note != null ? { $literal: rw.note } : { $ifNull: ['$pipeline_auto.hold.release', null] }, backfilled_by: { $literal: SWEEP } };
+    const r = await B.updateMany({ id: { $in: bk.ids }, 'pipeline_auto.hold.reason': reason, 'pipeline_auto.hold.issue': holdIssue, 'pipeline_auto.hold.release_when': { $exists: false } }, [{ $set: { 'pipeline_auto.hold.release_when': value } }]);
+    written += r.modifiedCount;
+    const done = await B.find({ id: { $in: bk.ids }, 'pipeline_auto.hold.release_when.backfilled_by': SWEEP }, { projection: { _id: 0, id: 1 } }).toArray();
+    logged += await recordSweepActions(db, done.map((b) => ({ sweep: SWEEP, book_id: b.id, action: 'hold-release-when-set', detail: { reason, kind: rw.kind, ref: String(rw.ref) } })));
+    bk.ids = [];
+  };
+  const cur = B.find({ 'pipeline_auto.hold': { $exists: true }, 'pipeline_auto.hold.release_when': { $exists: false } }, { projection: { _id: 0, id: 1, 'pipeline_auto.hold.reason': 1, 'pipeline_auto.hold.issue': 1 } }).batchSize(BATCH);
+  for await (const b of cur) {
+    const reason = b.pipeline_auto.hold.reason, holdIssue = b.pipeline_auto.hold.issue ?? null;
+    const key = `${reason}\u0000${holdIssue}`;
+    if (!buckets.has(key)) buckets.set(key, { reason, issue: holdIssue, rw: releaseWhenFor(reason, holdIssue), ids: [] });
+    const bk = buckets.get(key);
+    bk.ids.push(b.id);
+    if (bk.ids.length >= BATCH) await flush(key);
+  }
+  for (const key of buckets.keys()) await flush(key);
   if (APPLY) console.log(`wrote release_when on ${written} hold(s); ${logged} sweep_log row(s) (sweep ${SWEEP}; undo: --undo --apply)`);
 }, { noTimeout: true, socketTimeoutMs: 600_000 }); // the group-by reads all 464K holds; the apply runs ~100 batches

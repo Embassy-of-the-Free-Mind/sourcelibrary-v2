@@ -20,7 +20,7 @@
  *     --campaign=acquisition-wave-2026-10-lazy \
  *     --hold-reason=manifest-only-lazy-pages --hold-issue=7343 \
  *     --hold-release="Derek or the #6553 planner releases them for OCR" \
- *     --hold-release-when="decision:manifest-only lazy pages" \
+ *     --hold-release-when="decision:release manifest-only-lazy-pages" \
  *     --checkpoint=$JOB_SCRATCH/import.jsonl [--sample=200] [--limit=N] [--dry-run]
  *
  * Options:

@@ -43,7 +43,7 @@ export const LANE = 'paddle-print-2026-10';
 export const LANE_ISSUE = 6101;
 export const HOLD_REASON = 'paddle-print-6101';
 export const HOLD_RELEASE = 'the Paddle split-leaf read of this print book is written (#6101, OCR only); translation is its own decision (job qwen-translate-eval-6101 decides the engine); release with --to ocr_complete';
-export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: 'paddle-print-6101 translation' });
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: 'release paddle-print-6101' });
 export const REVISION_REASON = 'reocr_paddle_print_6101';
 export const BOOK_EVENT = 'paddle_print_ocr';
 

@@ -60,6 +60,9 @@ describe('hold-release-check: flags', () => {
     expect(flags({ reason: 'bw-reread-7274', issue: 7274, release_when: { kind: 'date', ref: '2026-11-02' } }, ctx({ 7274: open(true) }))).toEqual([]);
     expect(flags({ reason: 'x-5595', issue: 5566, oldest: OLD, release_when: { kind: 'issue', ref: 5595 } }, ctx({ 5595: { state: 'closed', closed_at: '2026-10-01' } }))).toEqual(['DUE']);
   });
+  it('BAD_CONDITION: a release_when in another shape is not read as a condition', () => {
+    expect(flags({ reason: 'tibetan-translation-lane-6948', issue: 6948, release_when: { kind: 'issue_state' } }, ctx({ 6948: open(true) }))).toEqual(['BAD_CONDITION']);
+  });
   it('NO_CONDITION: a hold without release_when', () => {
     expect(flags({ reason: 'some-hold-7000', issue: 7000, release_when: null }, ctx({ 7000: open(true) }))).toEqual(['NO_CONDITION']);
   });
