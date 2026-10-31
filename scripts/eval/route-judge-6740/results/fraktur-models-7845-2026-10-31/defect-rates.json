@@ -1,0 +1,116 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/fraktur-models-7845/run.mjs score, re-read here (no model call); words = defect-rate.mjs words() (#7824)",
+ "unit": "defects per 1,000 words of the judged text; round 1 only (6 gate pages an arm)",
+ "study_cells": {
+  "a": {
+   "model": "deep3_lsh4 (calamari_models_experimental v0.0.3), 5 checkpoints voting",
+   "pages_judged": 6,
+   "words": 1478,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": "black-filled crops: harness bug (Amendment 2)",
+   "misleads_per_1k": 37.212,
+   "wrong_text_per_1k": 38.566,
+   "fidelity_mean": 2.0
+  },
+  "a2": {
+   "model": "deep3_fraktur-hist (calamari_models_experimental v0.0.3), 5 voting",
+   "pages_judged": 6,
+   "words": 1261,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": "black-filled crops: harness bug (Amendment 2)",
+   "misleads_per_1k": 18.239,
+   "wrong_text_per_1k": 62.649,
+   "fidelity_mean": 2.0
+  },
+  "b2": {
+   "model": "deep3_fraktur19 (calamari_models_experimental v0.0.3), 5 voting",
+   "pages_judged": 6,
+   "words": 1324,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": "black-filled crops: harness bug (Amendment 2)",
+   "misleads_per_1k": 35.498,
+   "wrong_text_per_1k": 39.275,
+   "fidelity_mean": 2.17
+  },
+  "c1": {
+   "model": "austriannewspapers.mlmodel (zenodo 7933402)",
+   "pages_judged": 6,
+   "words": 1330,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": null,
+   "misleads_per_1k": 39.85,
+   "wrong_text_per_1k": 20.301,
+   "fidelity_mean": 2.5
+  },
+  "c2": {
+   "model": "austriannewspapers.mlmodel (zenodo 7933402)",
+   "pages_judged": 6,
+   "words": 893,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": null,
+   "misleads_per_1k": 6.719,
+   "wrong_text_per_1k": 57.111,
+   "fidelity_mean": 1.33
+  },
+  "d": {
+   "model": "McCATMuS_nfd_nofix_V1.mlmodel (zenodo 13788177)",
+   "pages_judged": 6,
+   "words": 1473,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": null,
+   "misleads_per_1k": 38.018,
+   "wrong_text_per_1k": 30.55,
+   "fidelity_mean": 2.0
+  },
+  "e": {
+   "model": "CATMuS-Gothic-Print-1.0.0.mlmodel (zenodo 10599911)",
+   "pages_judged": 6,
+   "words": 1515,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": null,
+   "misleads_per_1k": 52.145,
+   "wrong_text_per_1k": 26.403,
+   "fidelity_mean": 2.0
+  },
+  "aw": {
+   "model": "deep3_lsh4, 5 voting, paper-filled S1 crops",
+   "pages_judged": 6,
+   "words": 1508,
+   "accepted": "0/6",
+   "wrong_text_pages": "4/6",
+   "note": null,
+   "misleads_per_1k": 24.536,
+   "wrong_text_per_1k": 4.642,
+   "fidelity_mean": 3.0
+  },
+  "a2w": {
+   "model": "deep3_fraktur-hist, 5 voting, paper-filled S1 crops",
+   "pages_judged": 6,
+   "words": 1499,
+   "accepted": "1/6",
+   "wrong_text_pages": "4/6",
+   "note": null,
+   "misleads_per_1k": 22.015,
+   "wrong_text_per_1k": 8.005,
+   "fidelity_mean": 3.17
+  },
+  "b2w": {
+   "model": "deep3_fraktur19, 5 voting, paper-filled S1 crops",
+   "pages_judged": 6,
+   "words": 1451,
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "note": null,
+   "misleads_per_1k": 25.5,
+   "wrong_text_per_1k": 20.675,
+   "fidelity_mean": 2.67
+  }
+ }
+}
