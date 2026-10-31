@@ -245,8 +245,10 @@ async function releaseSweep(db, { abandon = false } = {}) {
   let books = fs.existsSync(F.planDir) ? fs.readdirSync(F.planDir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)) : [];
   if (BOOK) books = books.filter((b) => b === BOOK);
   if (arg('--books', null)) { const want = new Set(fs.readFileSync(arg('--books'), 'utf8').split('\n').map((s) => s.trim())); books = books.filter((b) => want.has(b)); }
+  const gone = new Set(readJsonl(F.released).map((r) => r.bid));
   const tally = { released: 0, candidates: 0, why: {} };
   for (const bid of books.sort()) {
+    if (gone.has(bid)) continue;
     const pl = readJson(planFile(bid));
     if (pl.placed_hold !== true) continue; // the common case: the book came in under a scans-only hold, which stays
     tally.candidates++;
@@ -256,6 +258,8 @@ async function releaseSweep(db, { abandon = false } = {}) {
     if (!APPLY) { log(`${bid} would release ${HOLD_REASON} (${v.why}) → ${book.pipeline_auto.hold.held_from_status ?? 'default'} | ${String(book.title || '').slice(0, 50)}`); tally.released++; continue; }
     const r = await releaseBook(db, bid, { reason: HOLD_REASON, source: LANE, note: `gpu-print-lane.mjs release: ${v.why}${v.outstanding ? `, ${v.outstanding} planned pages outstanding` : ''} (#${LANE_ISSUE})` });
     if (r.outcome !== 'released') { tally.why[`release_${r.outcome}`] = (tally.why[`release_${r.outcome}`] || 0) + 1; log(`${bid} release ${r.outcome}`); continue; }
+    // an abandoned book's outstanding pages are ledgered, so a read that comes back later is not applied to a free book
+    for (const p of pl.pages) if (!done.has(`${bid}/${p.pn}`)) append(F.skipped, { bid, pn: p.pn, why: 'abandoned_released' });
     await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'hold-released', detail: { issue: LANE_ISSUE, reason: HOLD_REASON, why: v.why, outstanding: v.outstanding ?? 0, planned: pl.pages.length, to_status: r.to } });
     append(F.released, { bid, why: v.why, to: r.to, outstanding: v.outstanding ?? 0 });
     tally.released++;
