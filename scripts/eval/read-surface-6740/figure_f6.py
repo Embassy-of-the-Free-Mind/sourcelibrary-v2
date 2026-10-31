@@ -51,15 +51,15 @@ def window(ref, read, n):
     return rw, full[start:end + 2]
 
 P = S['pages']
-fig = plt.figure(figsize=(12, 4.2 * len(P)))
+fig = plt.figure(figsize=(12, 5.0 * len(P)))
 for pi, pg in enumerate(P):
     im = Image.open(pg['image']); W, H = im.size
     t, b = pg['crop']; crop = im.crop((0, int(t * H), W, int(b * H)))
-    ax = fig.add_axes([0.0, 1 - (pi + 1) / len(P) + 0.03 / len(P), 0.3, 0.94 / len(P)]); ax.imshow(crop); ax.axis('off')
+    ax = fig.add_axes([0.0, 1 - (pi + 1) / len(P) + 0.03 / len(P), 0.3, 0.86 / len(P)]); ax.imshow(crop); ax.axis('off')
     ax.set_title(pg['label'], loc='left', fontsize=9, color=SEC, family='DejaVu Sans')
     k = len(pg['reads'])
     for ri, rd in enumerate(pg['reads']):
-        tx = fig.add_axes([0.32 + ri * (0.68 / k), 1 - (pi + 1) / len(P) + 0.03 / len(P), 0.68 / k - 0.01, 0.94 / len(P)]); tx.axis('off')
+        tx = fig.add_axes([0.32 + ri * (0.68 / k), 1 - (pi + 1) / len(P) + 0.03 / len(P), 0.68 / k - 0.01, 0.86 / len(P)]); tx.axis('off')
         tx.set_xlim(0, 1); tx.set_ylim(0, 1)
         rw, win = window(pg['ref'], rd['text'], pg['words'])
         toks = aligned(rw, win)

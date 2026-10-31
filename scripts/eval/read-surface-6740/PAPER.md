@@ -67,11 +67,45 @@ floor is the spread of identical runs (A-vs-A).
 
 ## 5. Results
 
-*(filled from analysis6.json at the end of the run)*
+**Cost is driven by thinking, accuracy by almost nothing.** On the log scale a coded step of thinking adds 0.95
+(German) and 0.93 (Latin) to quota cost a page (REML SE 0.03–0.05), and a step of pages a call removes 0.52 and 0.81.
+A medium- or high-thinking page carries 5,500–7,500 tokens of reasoning against 700–1,000 of text. At 4 pages a call,
+medium thinking costs 3.8× (German) and 4.8× (Latin) the live setting; high 6.4× and 6.6× (Table 1, Figure F3).
+Counted in calls the order reverses: high thinking needs slightly fewer calls a page, which is why the stage-0 pick by
+calls (Latin 8 a call, high) costs 2.7× live in tokens.
+
+German CER does not respond to either setting: every term of the logit-scale model has |t| < 1, and every cell lies
+within 0.1 pp of live (Figure F2). The A-vs-A pairs (identical settings, 40 books) differ by −0.04 to +0.07 pp and the
+smallest paired CER difference 40 books detect at 80 % power is 0.09–0.12 pp, so this null is a bound: no setting
+changes German CER by more than about a tenth of a point. In Latin, thinking at 4 a call lowers CER by 0.7–0.9 pp
+(intervals exclude zero, beyond the 0.6–0.7 pp floor), and 8 a call at low thinking raises it by 2.25 pp [+0.05,
++5.20] (weighted; unweighted +0.80 [−0.05, +1.94]): with eight images in one call the model reads the long s as f
+(Figure F6). The interaction is environmental: Latin pages are smaller roman type, often with heavy long-s use.
+
+**Optimum.** German: 8 pages a call, image as served, thinking low, 45 % cheaper a 1,000 accepted pages than live
+(95 % interval 25–58 %; unweighted 40 %, 21–53 %), CER −0.00 pp [−0.09, +0.07], non-inferior in every century with
+≥ 10 books (Figures F4, F7). Latin: live (no cheaper cell is non-inferior). Across both languages and every century
+with ≥ 10 books the robust setting is live. Weighted and unweighted fits agree on every decision. The quadratic does
+not fit the German cell means (lack of fit F(3, 161) = 4.29, p 0.006) or either language's cost; since all nine cells
+were read, the decision rests on cell means and the surface is descriptive.
+
+**Efficiency.** Five readings of the account's own meter, taken while other jobs also used it, bound a week of the
+pool at no less than $1,869 of list-price tokens. At that bound the German queue (797,772 pages, 3,131 books, measured
+2026-10-31) needs at most 4.9 pool-weeks at live and 2.7 at 8 a call; the Latin queue (4,741,905 pages) 25.5 at live
+(Figure F8). Wall time a page does not fall with 8 a call (39 against 24 s a page at the box's load), because refused
+8-page blocks are re-read one page at a time.
 
 ## 6. Confirmation
 
-*(filled from confirm-de/score.json)*
+Thirty German queue pages (one per book, era-stratified to the queue), read as the lane reads them by live and by
+8 a call, judged blind by Opus against the image with wrong-page and planted controls (4/4 and 2/2 passed). Of the pages
+each wrote, live was accepted on 17/25 and 8 a call on 22/25; paired, 8 a call was the better reading on 5 pages and
+the worse on none (P(acc₈ ≥ acc₄ − 0.08) = 0.998). Quota a 1,000 accepted pages: $8.78 against $25.93. But 8 a call
+had 2 wrong-text pages of 25, over the preregistered absolute bar of 0.04, and P(acc ≥ 0.8) = 0.79 < 0.9, so by the
+rule it fails. Live fails the same bar by more (5/25), and both of 8 a call's wrong-text pages are misread identically
+by live. Under the newer rule that sets the bar at the live route (defects no worse than live's), it would pass. The
+confirmation therefore supports 8 a call against live and leaves a single question of policy open: whether a first
+read must clear an absolute wrong-text bar that the live read itself does not clear.
 
 ## 7. Limitations
 

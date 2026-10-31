@@ -9,6 +9,8 @@
 | `references/cc-by-sa-3.0-de/` | **CC BY-SA 3.0 DE**, Deutsches Textarchiv | as recorded in the DTA metadata of those texts |
 | `references/cc-by-sa-2.0-de/` | **CC BY-SA 2.0 DE**, Deutsches Textarchiv | as above |
 | `references/cc0-1.0/` | **CC0 1.0** | as above |
+| `references/cc0-1.0-eebo-tcp/` | **CC0 1.0**, Text Creation Partnership | EEBO-TCP phase I and phase II texts are released to the public domain (CC0) by the TCP; `licence_reference` names the phase |
+| `references/pointer_only/` | none included | a text whose licence is non-commercial or unclear: source id, page, letters and sha256 only; fetch it from the DTA under its terms |
 | `references/cc-by-sa-camena/` | **CC BY-SA**, CAMENA (Universität Mannheim) | the CAMENA site states "Creative Commons Attribution / Share Alike" (linking 3.0); the GitHub republication used here, `nevenjovanovic/camena-neolatinlit` @ 771bb7f, carries 4.0 |
 
 Checked 2026-10-31: the DTA's terms (https://www.deutschestextarchiv.de/doku/nutzungsbedingungen) say all full texts
