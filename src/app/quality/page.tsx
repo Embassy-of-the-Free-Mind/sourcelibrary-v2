@@ -713,7 +713,8 @@ export default function QualityCenterPage() {
             </p>
             <p className="text-sm text-stone-600 leading-relaxed mb-4 max-w-3xl">
               <Link href="/quality/pareto#roster" className={LINK}>What we can run today</Link>: <RosterLine />. Engines
-              we cannot run are drawn hollow and never named as the one to run.
+              we cannot run are drawn hollow and never named as the one to run. German blackletter, engine by engine:{' '}
+              <Link href="/quality/fraktur" className={LINK}>Reading Fraktur: where it stands</Link>.
             </p>
             <ParetoCharts />
             <Source>
