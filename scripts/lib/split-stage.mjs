@@ -99,6 +99,20 @@ export function carriedTranslation(leaf, frame) {
 }
 
 /**
+ * The `translatable` test the swap passes to leafNeeds/swapRefusal, built from translate-core's own two rules (passed
+ * in, as above): a leaf is judged as the page it will be (its swapped-in number), and a leaf the lanes never translate
+ * (#5154: an English book, whose reading text is its transcription, or an English page) needs no English. Without
+ * the second rule an English book's swap waited for English the lanes will never write (#7605, 6a1b91a0…).
+ */
+export function swapTranslatable({ book, isTranslatablePage, sameLanguageReason }) {
+  return (leaf) => {
+    const page = { ...leaf, page_number: leafNumberOf(leaf) };
+    const same = sameLanguageReason({ book, page });
+    return same ? { ok: false, reason: same } : isTranslatablePage(page);
+  };
+}
+
+/**
  * What a staged leaf still needs before the swap: 'ocr', 'translation', or null (ready).
  * `translatable(page)` is translate-core's isTranslatablePage, passed in so this module stays free of it.
  * A leaf whose OCR says there is nothing to translate (blank, a plate) is ready with its OCR alone.

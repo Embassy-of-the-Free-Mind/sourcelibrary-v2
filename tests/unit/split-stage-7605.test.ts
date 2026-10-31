@@ -24,7 +24,7 @@ vi.mock('@/lib/free-preview', () => ({ meteredReaderEnabled: () => false }));
 
 
 const stage = await import('../../scripts/lib/split-stage.mjs');
-const { isTranslatablePage } = await import('../../scripts/lib/translate-core.mjs');
+const { isTranslatablePage, sameLanguageReason } = await import('../../scripts/lib/translate-core.mjs');
 const { decodeShortlinkCode } = await import('../../scripts/lib/shortlink-code.mjs');
 const { encodeShortlink } = await import('@/lib/shortlinks');
 const { contentHash } = await import('../../scripts/lib/write-provenance.mjs');
@@ -125,6 +125,14 @@ describe('when a swap may happen (swapRefusal)', () => {
 
   it('passes when every leaf has OCR and English', () => {
     expect(stage.swapRefusal({ frames, leaves: ready(), translatable })).toBeNull();
+  });
+
+  it('does not wait for English on an English book (#5154: the lanes never write it)', () => {
+    const noEn = ready().map((l) => ({ ...l, translation: undefined }));
+    const english = stage.swapTranslatable({ book: { language: 'English' }, isTranslatablePage, sameLanguageReason });
+    expect(stage.swapRefusal({ frames, leaves: noEn, translatable: english })).toBeNull();
+    const latin = stage.swapTranslatable({ book: { language: 'Latin' }, isTranslatablePage, sameLanguageReason });
+    expect(stage.swapRefusal({ frames, leaves: noEn, translatable: latin })).toMatch(/no English: 1, 2, 3, 4/);
   });
 
   it('refuses a leaf with no OCR, or with OCR and no English', () => {

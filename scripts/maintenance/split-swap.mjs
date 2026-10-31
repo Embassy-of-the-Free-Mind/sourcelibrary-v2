@@ -29,8 +29,8 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
-import { swapRefusal, stagedLeavesQuery, splitIntoByFrame, firstLeafByOldNumber, leafNumberOf, carriedTranslation } from '../lib/split-stage.mjs';
-import { isTranslatablePage } from '../lib/translate-core.mjs';
+import { swapRefusal, swapTranslatable, stagedLeavesQuery, splitIntoByFrame, firstLeafByOldNumber, leafNumberOf, carriedTranslation } from '../lib/split-stage.mjs';
+import { isTranslatablePage, sameLanguageReason } from '../lib/translate-core.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
@@ -49,12 +49,12 @@ await client.connect();
 const db = client.db('bookstore');
 const pages = db.collection('pages');
 try {
-  const book = await db.collection('books').findOne({ id: bookId }, { projection: { id: 1, slug: 1, title: 1, cover_page: 1, needs_splitting: 1, split_completed: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, 'pipeline_auto.hold': 1 } });
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { id: 1, slug: 1, title: 1, language: 1, cover_page: 1, needs_splitting: 1, split_completed: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, 'pipeline_auto.hold': 1 } });
   if (!book) throw new Error(`book ${bookId} not found`);
   const frames = await pages.find({ book_id: bookId, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, translation: 1 } }).sort({ page_number: 1 }).toArray();
   const leaves = await pages.find(stagedLeavesQuery(bookId), { projection: { id: 1, page_number: 1, page_type: 1, staged_split: 1, split_side: 1, ocr: 1, translation: 1 } }).toArray();
-  // A staged leaf is judged as the page it will be (its swapped-in number), with translate-core's own rule.
-  const translatable = (l) => isTranslatablePage({ ...l, page_number: leafNumberOf(l) });
+  // A staged leaf is judged as the page it will be, with translate-core's own rules (an English book needs no English).
+  const translatable = swapTranslatable({ book, isTranslatablePage, sameLanguageReason });
   // A leaf that is its whole frame, with the frame's text, keeps the frame's English (carriedTranslation).
   const frameById = new Map(frames.map((f) => [f.id, f]));
   const carries = leaves.map((l) => [l, carriedTranslation(l, frameById.get(l.staged_split.frame_id))]).filter(([, t]) => t);
