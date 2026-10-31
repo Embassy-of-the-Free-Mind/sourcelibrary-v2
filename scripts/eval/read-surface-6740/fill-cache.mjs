@@ -41,7 +41,7 @@ for (const p of pages) {
 console.log(`${ids.length} window pages: ${had} cached already, ${got} fetched, ${failed} failed`);
 // The earlier reads' bytes: every meta of a read sent unresized (no image_fit, or not resized) names the sha256 it sent.
 const want = new Map();
-for (const lang of fs.readdirSync(path.join(WORK, 'runs'))) for (const run of fs.readdirSync(path.join(WORK, 'runs', lang))) {
+for (const lang of fs.existsSync(path.join(WORK, 'runs')) ? fs.readdirSync(path.join(WORK, 'runs')) : []) for (const run of fs.readdirSync(path.join(WORK, 'runs', lang))) {
   const d = path.join(WORK, 'runs', lang, run);
   for (const m of fs.readdirSync(d).filter((x) => x.endsWith('.meta.json')).map((x) => JSON.parse(fs.readFileSync(path.join(d, x), 'utf8')))) if (m.image_sha256 && !m.image_fit?.resized) want.set(m.page_id, m.image_sha256);
 }

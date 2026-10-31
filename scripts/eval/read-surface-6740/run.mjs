@@ -39,7 +39,11 @@ export const DESIGN = [
 ].map(([id, x1, x2, x3]) => ({ id, x1, x2, x3, ppc: LEVELS.ppc[x1 + 1], edge: x2 === null ? null : LEVELS.edge[x2 + 1], think: LEVELS.think[x3 + 1], live: id.startsWith('L'), x4: -1, x5: -1, prompt: 'live', prep: 'as served' }))
   // Amendment 6 (second form), stage 1: the Definitive Screening Design (dsd.mjs -> design-dsd.json), x4 prompt, x5 prep.
   .concat(JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'design-dsd.json'), 'utf8')).runs.map((r) => ({
-    id: r.id, x1: r.x[0], x2: r.x[1], x3: r.x[2], x4: r.x[3], x5: r.x[4], ppc: r.ppc, edge: r.edge, think: r.think, live: false, prompt: r.prompt === 'live' ? 'live' : 'line', prep: r.prep === 'as served' ? 'as served' : 'gnu' })));
+    id: r.id, x1: r.x[0], x2: r.x[1], x3: r.x[2], x4: r.x[3], x5: r.x[4], ppc: r.ppc, edge: r.edge, think: r.think, live: false, prompt: r.prompt === 'live' ? 'live' : 'line', prep: r.prep === 'as served' ? 'as served' : 'gnu' })))
+  // Third form: the incomplete-block screen (design-ib.json): G01–G08 and the live repeat LI, image as served, live prompt.
+  .concat(JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'design-ib.json'), 'utf8')).runs.map((r) => ({
+    id: r.id, x1: r.x[0], x2: null, x3: r.x[1], ppc: r.ppc, edge: null, think: r.think, live: false, prompt: 'live', prep: 'as served' })))
+  .concat([{ id: 'LI', x1: 0, x2: null, x3: -1, ppc: 4, edge: null, think: 'low', live: true, prompt: 'live', prep: 'as served' }]);
 // Phase A: the James pool (held to flash-low): the low-thinking runs and L1. Phase B: the default pool, the rest.
 export const phaseOf = (r) => (r.think === 'low' && r.id !== 'L2' ? 'A' : 'B');
 
@@ -56,7 +60,10 @@ function plan() {
 
 function pageIds(lang, run) {
   const panel = JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8'));
-  const targets = panel.langs[lang].targets;
+  // Third form: with an incomplete-block allocation in WORK, a cell reads only its books (LI reads every book).
+  const allocF = path.join(WORK, `ib-allocation-${lang}.json`);
+  const alloc = fs.existsSync(allocF) ? JSON.parse(fs.readFileSync(allocF, 'utf8')) : null;
+  const targets = panel.langs[lang].targets.filter((t) => !alloc || run.id === alloc.live || alloc.blocks[t.book_id]?.includes(run.id));
   return targets.flatMap((t) => (run.ppc === 1 ? [t.page_id] : run.ppc === 4 ? t.window4 : t.window8));
 }
 

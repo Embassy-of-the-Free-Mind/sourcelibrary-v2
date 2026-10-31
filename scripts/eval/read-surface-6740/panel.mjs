@@ -35,6 +35,9 @@ const QUOTA = {
 };
 const LANGS = arg('langs') ? arg('langs').split(',') : ['de', 'la'];
 const MERGE = process.argv.includes('--merge');
+// Amendment 6 third form: --all keeps EVERY eligible book (a census of the typed-reference frame) as a target, in the same
+// seeded draw, for the incomplete-block screen; it is written to --work (a separate dir from the 40-book panel).
+const ALL = process.argv.includes('--all');
 const SPARES = 8;
 // The window the 8-a-call runs read: target at position 4 of 8 (t-3 … t+4); 4-a-call: position 2 of 4 (t-1 … t+2).
 const WIN8 = [-3, -2, -1, 0, 1, 2, 3, 4];
@@ -105,6 +108,7 @@ for (const [lang, q] of Object.entries(QUOTA).filter(([l]) => LANGS.includes(l))
   spares.sort(() => rand() - 0.5);
   while (chosen.length < q.n && spares.length) chosen.push(spares.shift());
   while (chosen.length > q.n) spares.unshift(chosen.pop());
+  if (ALL) { chosen.push(...spares.splice(0)); }
   const out = (e, spare) => {
     const t = e.pick.page_number;
     const tp = typed.get(e.pick.source_id).pages[e.pick.ref_page_idx[0]];
