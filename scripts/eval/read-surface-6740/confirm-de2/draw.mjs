@@ -116,14 +116,17 @@ function sample() {
   const faces = jsonl(path.join(OUT, 'faces.jsonl'));
   const pages = [], filled = {};
   const ordered = faces.map((f) => ({ ...cand.get(f.book_id), face: f.face, face_note: f.note ?? null })).filter((r) => r.page_id && ['fraktur', 'antiqua'].includes(r.face)).sort((a, b) => a.era.localeCompare(b.era) || a.rank - b.rank);
-  for (const r of ordered) {
+  // RULE (amended 15:20Z): the 2-a-library cap first; a cell the walk cannot fill under it takes capped books in walk order.
+  const taken = new Set();
+  for (const pass of [1, 2]) for (const r of ordered) {
     const cell = `${r.era}|${r.face}`, q = quota[cell] ?? 0;
-    filled[cell] ||= { n: 0, libs: {} };
-    if (filled[cell].n >= q || (filled[cell].libs[r.library] || 0) >= 2) continue;
-    filled[cell].n++; filled[cell].libs[r.library] = (filled[cell].libs[r.library] || 0) + 1;
+    filled[cell] ||= { n: 0, libs: {}, over_cap: 0 };
+    if (taken.has(r.book_id) || filled[cell].n >= q || (pass === 1 && (filled[cell].libs[r.library] || 0) >= 2)) continue;
+    taken.add(r.book_id); filled[cell].n++; filled[cell].libs[r.library] = (filled[cell].libs[r.library] || 0) + 1; if (pass === 2) filled[cell].over_cap++;
     pages.push({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, draft_model: null, draft_sha: null, block: r.block, book_language: 'deu', provider: r.provider, library: r.library, era: r.era, script_face: r.face, visible: r.visible, published: r.published });
   }
-  const s = { drawn_at: new Date().toISOString(), seed: SALT, n: pages.length, cells: { 'de-surface2': { task: 'ocr', lang: 'German', paired: true, kind: 'router-test', blank: true, pages, frame: { rule: 'confirm-de2/RULE.md: era × face strata, proportional with a floor of 4, at most 2 books a holding library within a cell, uniform body page', quota, filled: Object.fromEntries(Object.entries(filled).map(([k, v]) => [k, v.n])) } } } };
+  pages.sort((a, b) => h(SALT + a.page_id).localeCompare(h(SALT + b.page_id)));
+  const s = { drawn_at: new Date().toISOString(), seed: SALT, n: pages.length, cells: { 'de-surface2': { task: 'ocr', lang: 'German', paired: true, kind: 'router-test', blank: true, pages, frame: { rule: 'confirm-de2/RULE.md: era × face strata, proportional with a floor of 4, at most 2 books a holding library within a cell, uniform body page', quota, filled: Object.fromEntries(Object.entries(filled).map(([k, v]) => [k, v.n])), libraries: filled } } } };
   fs.writeFileSync(path.join(OUT, 'sample.json'), JSON.stringify(s, null, 1));
   console.log(`sample: ${pages.length} pages; filled ${JSON.stringify(s.cells['de-surface2'].frame.filled)}; quota ${JSON.stringify(quota)}`);
 }
