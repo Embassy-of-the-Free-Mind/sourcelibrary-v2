@@ -1,6 +1,6 @@
 ---
 stage: metadata
-measure: [judged, by-eye]
+measure: [judged]
 languages: []
 scripts: []
 canons: []
@@ -39,4 +39,6 @@ router_evidence: "none — a catalogue-attribution measurement, no OCR or transl
 
 **Written 2026-10-31.** 25 books, run `titlepage-authors-7761`: 25 `sweep_log` rows, 38 `field_provenance` rows, `books_catalog` mirrored, 25 revalidated. 13 linked to an existing author doc; 12 names have none yet. Backup and every verdict in ops `backups/authors-7761-live/`.
 
-**Not established.** Accuracy of the 25 is judged by refuter + review against the leaves, not measured on a held-out set. The 457 re-reads from archived copies are not yet screened.
+**Spot check, by eye, 2026-10-31.** 10 of the 25 written title pages opened, chosen for the risky roles (praeses, candidate, compiler, editor, traditional attribution): 10/10 right. Oecumenius is the catalogue attribution; the Pauline commentary is pseudo-Oecumenius in modern scholarship.
+
+**Not established.** The other 15 are judged by refuter + review, not by eye; no held-out set. The 457 re-reads from archived copies are not yet screened.
