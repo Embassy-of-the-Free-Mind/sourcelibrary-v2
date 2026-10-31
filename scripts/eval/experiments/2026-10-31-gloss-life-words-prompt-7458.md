@@ -42,7 +42,8 @@ before any arm ran. Runner: `scripts/eval/gloss-life-words-7458/run.mjs`.
   - 5 controls: the OCR itself says Lebenskraft (3) or force vitale (2).
 - **Mechanical measure:** `lifeWordFindings` (`scripts/lib/life-word-gloss.mjs`).
 - **Judges:** 5 blind Opus subagents, 8 pages each, with the page image opened, the OCR, and the three translations
-  under shuffled letters (`JUDGE.md`). Per translation they gave fidelity 1–5, life-word renderings right and wrong,
+  under shuffled letters (`JUDGE.md`). The images come from `getPageSource()`; the first run's own pick matched it
+  on all 40 pages. Per translation they gave fidelity 1–5, life-word renderings right and wrong,
   and serious errors.
 
 ### Results

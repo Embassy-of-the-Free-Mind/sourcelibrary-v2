@@ -29,6 +29,7 @@ import { pool } from '../seams-6742/lib.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { buildV21 } from '../../maintenance/translation-prompt-v21-life-words.mjs';
 import { lifeWordFindings, lifePhraseCount } from '../../lib/life-word-gloss.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const STAGE = process.argv[2];
 const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
@@ -69,8 +70,8 @@ async function draw() {
   const liveBooks = async (ids) => new Map((await db.collection('books').find({ id: { $in: ids }, visible: true, pages_count: { $gt: 0 }, 'pipeline_auto.hold': { $exists: false } },
     { projection: { _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, original_language: 1 } }).toArray()).map((b) => [b.id, b]));
   const shuffle = (a) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  const fetchPage = (id) => db.collection('pages').findOne({ id }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, archived_photo: 1, cropped_photo: 1, 'ocr.data': 1, 'translation.data': 1, translation_stale: 1, translation_withheld: 1 } });
-  const usable = (p) => p && typeof p.ocr?.data === 'string' && p.ocr.data.length >= MIN_OCR && p.ocr.data.length <= MAX_OCR && typeof p.translation?.data === 'string' && !p.translation_stale && !p.translation_withheld && (p.photo || p.archived_photo || p.cropped_photo);
+  const fetchPage = (id) => db.collection('pages').findOne({ id }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, split_from_spread: 1, 'ocr.data': 1, 'translation.data': 1, translation_stale: 1, translation_withheld: 1 } });
+  const usable = (p) => p && typeof p.ocr?.data === 'string' && p.ocr.data.length >= MIN_OCR && p.ocr.data.length <= MAX_OCR && typeof p.translation?.data === 'string' && !p.translation_stale && !p.translation_withheld && !!getPageSource(p);
 
   const units = [];
   const used = new Set(), usedWork = new Set();
@@ -155,9 +156,9 @@ async function images() {
   for (const u of units) {
     const f = path.join(IMG, `${u.unit}.jpg`);
     if (fs.existsSync(f)) continue;
-    const p = await c.db('bookstore').collection('pages').findOne({ id: u.page_id }, { projection: { photo: 1, archived_photo: 1, cropped_photo: 1 } });
+    const p = await c.db('bookstore').collection('pages').findOne({ id: u.page_id }, { projection: { photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, split_from_spread: 1 } });
     let done = false;
-    for (const url of [p.cropped_photo, p.archived_photo, p.photo].filter((x) => typeof x === 'string' && /^https?:/.test(x))) {
+    for (const url of [getPageSource(p)].filter(Boolean)) {
       try {
         const r = await fetch(url, { signal: AbortSignal.timeout(60000) });
         if (!r.ok) continue;
