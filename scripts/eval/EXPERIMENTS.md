@@ -406,6 +406,18 @@ None. Read-only throughout: no page, revision or route is written, no cron or ro
   - Pausing production OCR on the card for that would cost more card time than it saves.
   - Speed is therefore reported as CPU pages an hour, with the thread count.
 
+### Amendment 2 (2026-10-31, after round 1 was judged; Calamari arms only)
+
+- **What went wrong.** Round 1 was judged at 12:10–12:25Z on 42 items. After that I found that the line crops fed to the Calamari arms (a, a2, b2) were wrong for Calamari. `kraken.lib.segmentation.extract_polygons` fills everything outside a line's polygon with black.
+  - Kraken models are trained on exactly those crops (ketos cuts training lines the same way), so the Kraken arms read what they expect.
+  - Calamari inverts and normalises its input, so the black corners read as heavy ink. On one page LSH-4 gave "gach dea nu dent Liebhaber"; on the same polygons with the outside filled, it gave "nach dem nun der Liebhaber".
+  - Round 1's Calamari verdicts (a, a2, b2: 0/6 each) therefore measure the harness, not the models. They are kept in the results and reported as such.
+- **The fix.** The same S1 polygons, one extraction, with the outside of each polygon filled with the line's own paper tone (the 90th percentile of the grey values inside it), as OCR-D's `image_from_segment` fills a segment's background (`kraken_arms.py paperlines`). The Calamari arms on these crops are **aw, a2w, b2w**.
+- **Judged afresh.** aw, a2w and b2w are judged from round 1 under the unchanged rules, rounds, gate, seeds and controls, in their own packet (4 wrong-page controls, 2 planted on round-1 read@4 texts). Nothing else changes.
+- **Kraken arms stay as judged.** Round 1 judged them on their own crops: c1, c2, d and e were each 0/6 with wrong text on all 6. All four stop, as the round rule says.
+- **Arm b still does not run** on the filled crops (whole-page drafts 225–1,291 bytes of stray letters), so it stays unjudged (Amendment 1).
+- The judge's validity in round 1 (4/4 wrong-page refused, 2/2 plants caught) carries over to this amendment's packet, which has its own controls.
+
 ## 2026-10-31 · Does the cheap correction pass help? A paired blind test on production pages and Wikisource ground truth (#7818)
 
 PRIOR ART:
