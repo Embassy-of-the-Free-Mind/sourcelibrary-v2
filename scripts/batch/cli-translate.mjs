@@ -76,6 +76,7 @@ import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { buildTextRevision } from '../lib/page-text-writer.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
+import { leafNumberOf } from '../lib/split-stage.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -96,7 +97,7 @@ const PROMPT_VARIANT = 'sentinels-6523';
 const PROMPT_VARIANT_MARKED = 'sentinels-6523+folio-markers-7118';
 const MARKERS = cliFolioMarkersEnabled();
 const CLI_SUFFIX = TRANSLATE_SUFFIX;
-const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, split_from_spread: 1, split_from_pecha: 1, cropped_photo: 1, crop: 1 };
+const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, split_from_spread: 1, split_from_pecha: 1, cropped_photo: 1, crop: 1, staged_split: 1 };
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
@@ -138,7 +139,10 @@ if (STAGE === 'read') {
     if (!latinScript(p.ocr.data, q.ocr.data)) return null;
     if (!(await prepare(nextId, { quiet: true }))) return null;
     const after = await db.collection('pages').findOne({ book_id: p.book_id, page_number: q.page_number + 1 }, { projection: { 'ocr.data': 1 } });
-    const built = buildBlockTranslationPrompt({ prompts, book, pages: [{ page_number: p.page_number, ocr: p.ocr.data }, { page_number: q.page_number, ocr: q.ocr.data }],
+    // A staged split leaf (#7605) sits at a hidden negative number; the prompt's "--- Page N ---" and the <pb n/> markers
+    // use the number it will have once swapped in (leafNumberOf), never "-999998".
+    const [pn, qn] = [leafNumberOf(p), leafNumberOf(q)];
+    const built = buildBlockTranslationPrompt({ prompts, book, pages: [{ page_number: pn, ocr: p.ocr.data }, { page_number: qn, ocr: q.ocr.data }],
       previousTranslation: previousTranslation || undefined, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: after?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED, folioMarkers: true });
     // A kept one-page read of the second page is used as before (it is picked up on its own turn): no pair then.
     if (!FRESH) {
@@ -150,7 +154,7 @@ if (STAGE === 'read') {
     const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate-pair', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, usage: c.usage }) });
     if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
     const fail = r.cls || r.problem || cliChatterReason(r.answer || '');
-    const split = fail ? null : splitMarkedReply(r.answer, [p.page_number, q.page_number], { sources: [p.ocr.data, q.ocr.data] });
+    const split = fail ? null : splitMarkedReply(r.answer, [pn, qn], { sources: [p.ocr.data, q.ocr.data] });
     const cut = split?.ok && split.texts.some((t, k) => checkWrittenText(t, { kind: 'translation', source: [p, q][k].ocr.data, lang: book?.language, type: [p, q][k].page_type }).verdict === 'truncated');
     if (fail || !split.ok || cut) {
       console.log(`  ${p.page_number}+${q.page_number} marked pair not usable (${fail || (!split.ok ? split.why : 'a span looks cut')}): one page per call`);

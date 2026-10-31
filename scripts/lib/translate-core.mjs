@@ -22,6 +22,7 @@
  * routing here or in ai-models.ts, change both or the suite fails.
  */
 
+import { isStagedLeaf } from './split-stage.mjs';
 import { createHash, randomBytes } from 'crypto';
 import { existsSync } from 'fs';
 import { recountBook, VISIBLE_PAGE_MATCH } from './page-counts.mjs';
@@ -1212,7 +1213,7 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * THE translatability check. Returns { ok, reason } so callers can count and
  * log why pages were excluded rather than silently dropping them.
  *
- * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
+ * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293; a staged split leaf is not, #7605),
  * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
  * 'illegible-source' (only with the #5305 gate on), 'recitation-blocked', 'safety-blocked'.
  *
@@ -1224,7 +1225,8 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * the contract's `<warning>Illegible: …</warning>`.
  */
 export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = illegibleGateEnabled() } = {}) {
-  if ((page?.page_number ?? 0) <= 0) return { ok: false, reason: 'soft-hidden' };
+  // A staged split leaf (#7605) is hidden only until its book's swap, which waits for this English: it is read.
+  if ((page?.page_number ?? 0) <= 0 && !isStagedLeaf(page)) return { ok: false, reason: 'soft-hidden' };
   const skip = new Set([...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes]);
   if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
   const ocr = page?.ocr?.data;

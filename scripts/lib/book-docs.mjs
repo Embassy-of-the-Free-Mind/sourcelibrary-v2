@@ -220,6 +220,10 @@ export const PAGE_FIELDS = Object.freeze([
   // `repeat_of_meta` is its provenance: { by, at, issue, method, r, dice }. Written by
   // scripts/maintenance/hide-repeat-captures.mjs; unsetting both restores the page.
   'repeat_of', 'repeat_of_meta',
+  // #7605: a leaf built hidden by split-book.mjs --stage while its spread stays live —
+  // { run, leaf, frame_id, frame_ocr_hash, side, at, by, mode, issue, swapped_at? }. Its page_number is
+  // leaf - 1,000,000 until scripts/maintenance/split-swap.mjs swaps it in (scripts/lib/split-stage.mjs).
+  'staged_split',
   // timestamps
   'created_at', 'updated_at',
 ]);
