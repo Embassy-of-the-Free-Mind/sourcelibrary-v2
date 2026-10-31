@@ -23,6 +23,9 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/analysis/enumerate-unmatched-author-strings.mjs
  *   node --env-file=.env.production.local scripts/analysis/enumerate-unmatched-author-strings.mjs --min-books 3
+ *   … --min-books=2 --out=<file>    each row also carries `providers` (every provider its books come from), which
+ *                                   #7660 uses to tell strings a library record can key (BSB, e-rara, SBB,
+ *                                   Göttingen) from strings only a reader can classify
  */
 import { MongoClient } from 'mongodb';
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -67,7 +70,8 @@ const rows = await db.collection('books').aggregate([
   { $group: {
       _id: '$author',
       books: { $sum: 1 },
-      sample: { $first: { title: '$title', year: '$year', language: '$language', provider: '$image_source.provider', visible: '$visible' } },
+      providers: { $addToSet: '$image_source.provider' },
+      sample: { $first: { id: '$id', title: '$title', year: '$year', language: '$language', provider: '$image_source.provider', visible: '$visible' } },
   } },
   { $match: { books: { $gte: MIN_BOOKS } } },
   { $sort: { books: -1 } },
@@ -89,7 +93,7 @@ for (const r of rows) {
     : 'person?';
   bucketCounts[bucket] = (bucketCounts[bucket] || 0) + 1;
   coveredBooks += r.books;
-  out.push({ string: r._id, books: r.books, bucket, sample: r.sample });
+  out.push({ string: r._id, books: r.books, bucket, providers: r.providers, sample: r.sample });
 }
 
 console.log(`\n${out.length} unmatched strings with >=${MIN_BOOKS} books, covering ${coveredBooks} books`);
@@ -106,7 +110,7 @@ for (const b of Object.keys(bucketCounts)) {
 }
 
 mkdirSync('scripts/output', { recursive: true });
-const path = 'scripts/output/unmatched-author-strings-3780.json';
+const path = (process.argv.find(a => a.startsWith('--out=')) || '').split('=').slice(1).join('=') || 'scripts/output/unmatched-author-strings-3780.json';
 writeFileSync(path, JSON.stringify({ generated_at: new Date().toISOString(), min_books: MIN_BOOKS, strings: out.length, covered_books: coveredBooks, buckets: bucketCounts, rows: out }, null, 2));
 console.log(`\nfull -> ${path}`);
 await mc.close();
