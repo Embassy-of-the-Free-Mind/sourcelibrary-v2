@@ -38,6 +38,7 @@ async function signals() {
         book_id: 1, model: '$ocr.model', pipeline: '$ocr.pipeline', source: '$ocr.source', st: '$script_type',
         at4: { $gt: [{ $ifNull: ['$ocr.engine.run.call_pages', 1] }, 1] },
         head: { $substrCP: ['$ocr.data', 0, 400] },
+        // strlen-safe: the $match above keeps only pages whose ocr.data is a string
         len: { $strLenCP: '$ocr.data' },
         skip: { $in: [{ $ifNull: ['$page_type', ''] }, ['blank', 'illustration', 'frontispiece', 'map', 'diagram', 'plate', 'title-page', 'toc', 'dedication', 'preface', 'digitizer-insert', 'archived-spread', 'colophon', 'cover']] },
         warn: { $eq: ['$ocr.has_warning', true] }, withheld: { $gt: ['$translation_withheld', null] }, needs_reocr: { $eq: ['$needs_reocr', true] },
