@@ -1,0 +1,140 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Commentary on the Brahma Sutras (Brahma Sutra Bhashya) | Author: Adi Shankaracharya | Date: 1890
+
+**Note:** This is a public domain work published in 1890. It is not under copyright.
+
+**Text to translate:**
+<language>Sanskrit</language>
+<page-type>text</page-type>
+
+वाचं प्राणं तान्यात्मनेऽकुरुत ' इत्येवमाद्या अपि भेदश्रुतय उदाहर्तव्याः । तस्मादपि तत्त्वान्तरभूता मुख्यादितरे ।।
+
+कुत च तत्त्वान्तरभूताः ?---
+
+# वैलक्षण्याच्च ।। 2.4.19 ।।
+
+## ।। 2.4.19 ।।
+
+वैलक्षण्यं च भवति, मुख्यस्य इतरेषां च--- सुप्तेषु वागादिषु मुख्य एको जागर्ति; स एव च एको मृत्युना अनाप्तः, आप्तास्त्वितरे, तस्यैव च स्थित्युत्क्रान्तिभ्यां देहधारणपतनहेतुत्वम्, न इन्द्रियाणाम्; विषयालोचनहेतुत्वं च इन्द्रियाणाम्, न प्राणस्य--- इत्येवंजातीयको भूयाँल्लक्षणभेदः प्राणेन्द्रियाणाम्; तस्मादप्येषां तत्त्वान्तरभावसिद्धिः । यदुक्तम्--- ' त एतस्यैव सर्वे रूपमभवन् ' इति श्रुतेः प्राण एवेन्द्रियाणीति, तद्युक्तम्, तत्रापि पौर्वापर्यालोचनाद्भेदप्रतीतेः; तथा हि--- ' वदिष्याम्येवाहमिति वाग्दध्रे ' इति वागादीनीन्द्रियाण्यनुक्रम्य, ' तानि मृत्युः श्रमो भूत्वोपयेमे तस्माच्छ्राम्यत्येव वाक् ' इति च श्रमरूपेण मृत्युना ग्रस्तत्वं वागादीनामभिधाय, ' अथैममेव नाप्नोद्योऽयं मध्यमः प्राणः ' इति पृथक् प्राणं मृत्युना अनभिभूतं तमनुक्रामति; ' अयं वै नः श्रेष्ठः ' इति च श्रेष्ठतामस्यावधारयति, तस्मात् तदविरोधेन, वागादिषु परिस्पन्दलाभस्य प्राणायतत्तवम्--तद्रूपभवनं वागादीनाम्--इति मन्तव्यम्, न तु तादात्म्यम् । अत एव च प्राणशब्दस्येन्द्रियेषु लाक्षणिकत्वसिद्धिः; तथा च श्रुतिः--- ' त एतस्यैव सर्वे रूपमभवन् । तस्मादेत एतेनाख्यायन्ते प्राणाः ' इति मुख्यप्राणविषयस्यैव प्राणशब्दस्येन्द्रियेषु लाक्षणिकों वृत्तिं दर्शयति । तस्मात्तत्त्वान्तराणि प्राणात् वागादीनि इन्द्रियाणीति ।।
+
+# संज्ञामूर्तिक्लृप्तिस्तु त्रिवृत्कुर्वत उपदेशात् ।। 2.4.20 ।।
+
+## संज्ञामूर्तिक्लृप्त्यधिकरणम् ।। 2.4.20 ।।
+
+सत्प्रक्रियायां तेजोबन्नानां सृष्टिमिधायोपदिश्यते--- ' सेयं देवतैक्षत हन्ताहमिमास्तिस्रो देवता अनेन जीवेनात्मनानुप्रविश्य नामरूपे व्याकरवाणीति । तासां त्रिवृतं त्रिवृतमेकैकां करवाणीति ' तत्र संशयः---किं जीवकर्तृकमिदं नामरूपव्याकरणम्, आहोस्वित्परमेश्वरकर्तृकमिति । तत्र प्राप्तं तावत्---जीवकर्तृकमेवेदं नामरूपव्याकरणमिति; कुतः ? ' अनेन जीवेनात्मना ' इति विशेषणात्-- यथा लोके ' चारेणाहं परसैन्यमनुप्रविश्य संकलयानि ' इत्येवंजातीयके प्रयोगे, चारकर्तृकमेव सत् सैन्यसंकलनं हेतुकर्तृत्वात् राजा आत्मन्यध्यारोपयति संकलयानीत्युत्तमपुरुषप्रयोगेण; एवं जीवकर्तृकमेव सत् नामरूपव्याकरणं हेतुकर्तृत्वात् देवता आत्मन्यध्यारोपयति व्याकरवाणीत्युत्तमपुरुषप्रयोगेण । अपि च डित्थडवित्थादिषु नामसु घटशरावादिषु च रूपेषु जीवस्यैव व्याकर्तृत्वं दृष्टम् । तस्माज्जीवकतुकमेवेदं नामरूपव्याकरणमित्येवं प्राप्ते---
+
+अभिधत्ते--- संज्ञामूर्तिक्लृप्तिस्त्विति । तु-शब्देन पक्षं व्यावर्तयति । संज्ञामूर्तिक्लृप्तिरिति-- नामरूपव्याक्रियेत्येतत्; त्रिवृत्कुर्वत इति परमेश्वरं लक्षयति, त्रिवृत्करणे तस्य निरपवादकर्तृत्वनिर्देशात्--येयं संञ्ञाक्लृप्तिः मूर्तिक्लृप्ति च, अग्निः आदित्यः चन्द्रमाः विद्युदिति, तथा कुशकाशपलाशादिषु पशुमृगमनुष्यादिषु च, प्रत्याकृति प्रतिव्यक्ति च अनेकप्रकारा, सा खलु परमेश्वरस्यैव तेजोबन्नानां निर्मातुः कृतिर्भवितुमर्हति; कुतः ? उपदेशात्; तथा हि--- ' सेयं देवता ' इत्युपक्रम्य ' व्याकरवाणि ' इत्युत्तमपुरुषप्रयोगेण परस्यैव ब्रह्मणो व्याकर्तृत्वमिहोपदिश्यते । ननु ' जीवेन ' इति विशेषणात् जीवकर्तृत्वं व्याकरणस्याध्यवसितम्---नैतदेवम्; ' जीवेन ' इत्येतत् ' अनुप्रविश्य ' इत्यनेन संबध्यते, आनन्तर्यात्; न ' व्याकरवाणि ' इत्यनेन-- तेन हि संबन्धे ' व्याकरवाणि ' इत्ययं देवताविषय उत्तमपुरुष औपचारिकः कल्प्येत; न च गिरिनदीसमुद्रादिषु नानाविधेषु नामरूपेषु अनीश्वरस्य जीवस्य व्याकरणसामर्थ्यमस्ति; येष्वपि च अस्ति सामर्थ्यम्, तेष्वपि परमेश्वरायत्तमेव तत्; न च जीवो नाम परमेश्वरादत्यन्तभिन्नः-- चार इव राज्ञः, ' आत्मना ' इति विशेषणात्, उपाधिमात्रनिबन्धनत्वाच्च जीवभावस्य; तेन तत्कृतमपि नामरूपव्याकरणं परमेश्वरकृतमेव
+
+<vocab>वैलक्षण्य, संज्ञामूर्तिक्लृप्ति, त्रिवृत्करण, व्याकरवाणि, प्राण, इन्द्रिय, नामरूप</vocab>
+
+**Previous page translation for continuity:**
+# The Connection is with the Possessor of Breath, according to Scripture (2.4.15)
+<note>2.4.15</note>
+
+Even though there are presiding deities <term>devatā; celestial beings who govern natural and bodily functions</term> over the vital breaths, it is understood from the scriptures that these breaths are connected to the embodied soul <term>śārīra; the individual self dwelling in the body</term>, who is the master of the aggregate of the body and its causes and effects. For the scripture declares: "Now, where the eye is directed toward space, that is the person in the eye for the sake of seeing
+[…]
+ust like the Breath, because it is mentioned separately in the phrase 'the mind and all the senses'." This is true; however, in the Smriti <term>traditional texts like the Bhagavad Gita or Manu Smriti</term>, the mind is included as a sense-organ along with the ear and others in the count of eleven. But the Chief Breath is never famously known as a "sense" <note>original: "indriya"</note> in either the primary scriptures (Shruti) or traditional law (Smriti). This difference in designation makes sense only if there is a difference in reality. If they were the same reality, it would be contradictory for the same Breath to be called a "sense" and not be called a "sense" at the same time. Therefore, the others are distinct realities from the Chief.
+
+And why else are they distinct realities?
+
+# Because of the scriptural mention of difference (2.4.18)
+<note>2.4.18</note>
+
+Everywhere in the scriptures, the Breath is mentioned as different from speech and the others. Starting with "They spoke to Speech," the text describes how speech and the others were struck by the evil of the demons; then, having concluded the section on speech and the rest, it begins a separate section for the Chief Breath, which destroyed the demons: "Then they spoke to this Breath in the mouth" <note>original: "atha hemam-āsanyaṃ prāṇam-ūcuḥ" from the Bṛhadāraṇyaka Upaniṣad 1.3.2-7</note>. Similarly, "The Mind...
+<summary>This page discusses the relationship between the individual soul (śārīra), the vital breaths, and the presiding deities, establishing that the soul is the true master and experiencer. It further argues that the sensory organs (indriyas) are distinct realities from the Chief Vital Breath, rather than just variations of it.</summary>
+<keywords>Adi Shankara, Brahma Sutra, Prāṇa, Life-Breath, Indriya, Senses, Śārīra, Embodied Soul, Presiding Deities, Experiencer, Bṛhadāraṇyaka Upaniṣad, Chāndogya Upaniṣad</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

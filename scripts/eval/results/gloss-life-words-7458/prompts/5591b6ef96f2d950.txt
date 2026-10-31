@@ -1,0 +1,168 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: The Path of Inquiry | Author: Nilakantha | Date: 1649
+
+**Note:** This is a public domain work published in 1649. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<lang>sa</lang>
+<page-num>९५</page-num>
+<header>पष्ठाध्यायः</header>
+
+### पष्ठाध्यायः
+
+> निर्णयस्त्विह गुरूपदेशतो
+> जायते बहुपरीक्षणैरपि ॥ ४२ ॥
+
+> लग्नाहिमान्दीन्दुरविस्फुटानां
+> योगे भवेयुर्यदि जन्मभानि ।
+> वधर्क्षवैनाशिकपौष्णभानि
+> मृत्युर्विपत्प्रत्यययोश्च सद्यः ॥ ४३ ॥
+
+> लग्नस्यांशममुं वपुश्शशभृतो
+> मान्देश्च मृत्युं विदुः
+> स्तयोगेक्षणवर्जितो वपुरस्
+> युक्तक्षितौ चेन्मिथः ।
+> दीर्घायुर्दृढमादिशेद्यदि तनो-
+> र्मृत्योर्युतीक्षादिकं
+> पीडा स्याद्वपुषो रुजाथ तदसो-
+> र्मोहप्रदं पृच्छताम् ॥ ४४ ॥
+
+> द्वन्द्वांशे यदि लग्नचन्द्रगुलिका
+> मृत्युप्रदा रोगदाः
+> प्रष्टुस्ते स्थिरभागगा यदि चरा-
+> ंशेष्वायुरारोग्यदाः ।
+
+**लग्नेति ॥** लग्नादीनां योगे पञ्चस्फुट इत्यर्थः । <term>वैनाशिकोष्टाशीतितमांशः</term> । <term>पौष्ण-</term>
+<term>भं</term> रेवतीनक्षत्रम् ॥ ४३ ॥
+
+**लग्नस्येति ॥** शशभृतः मान्देश्च अंशमिति संबध्यते । तयोयोगेति तच्छब्देन मृत्यु-
+र्विवाश्वितः । तदसोरिति असोः प्राणस्य । तन्मृत्युयोगेक्षादिकम् । आदिना केन्द्रादिसंब-
+न्धोपि निरूपणीयः । लग्नचन्द्रमान्दीनां स्फुटानि नवाभिः संगुण्य क्रमेण <term>प्राणदेहमृत्युस्फु-</term>
+<term>टान्यानेयानि</term> ॥ ४४ ॥
+
+**द्वन्द्वांश इति ।** <term>द्वन्द्वांशे</term> संहारराशिनवांशके पूर्वानीतप्राणदेहमृत्यूनां संहारराशि-
+स्थत्व इति यावत् । ते अन्योन्यं त्रिकोणभगता यदि तेषां त्रिकोणसंबन्ध इति यावत् । <unclear>तच्छअन्योन्यं</unclear>
+
+<vocab>पष्ठाध्यायः, निर्णयः, गुरूपदेशः, लग्नाहिमान्दीन्दुरविस्फुट, जन्मभानि, वधर्क्ष, वैनाशिक, पौष्णभानि, लग्नस्यांशम्, वपुश्शशभृतः, दीर्घायुः, द्वन्द्वांश, पञ्चस्फुट, रेवतीनक्षत्रम्, प्राणदेहमृत्युस्फुट, त्रिकोण</vocab>
+
+**At the page break:** This page ends with the word «तच्छअन्योन्यं», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.
+
+**Previous page translation for continuity:**
+<page-num>24</page-num>
+<header>The Path of Inquiry</header>
+
+->Those planets associated with the Triple Sensitive Point and the stars of danger<-
+->bring harm to the querent;<-
+->while benefics located in the angles and other houses bring good results.<-
+->This is the supreme secret. || 40 ||<-
+
+->Multiply the elapsed minutes of the degree occupied by the Triple Sensitive Point<-
+->by nine, and divide by the fixed number (twenty-seven).<-
+->Count the remainder from the star of the Triple Sensitive Point;<-
+->the resulting star is the Star of Death.<-
+->The star occupied by the Quadruple Sensi
+[…]
+Triple Sensitive Point. The star arrived at is the <term>Star of Death</term><note>original: "Mrityubham"</note>. Death of the querent may occur when a planet transits that star. Furthermore, the <term>Quadruple Sensitive Point</term><note>the Trishphuta plus the position of the Sun</note> and the star it occupies is also a Star of Death. Some say the Star of Death should be known from the ninth-division (Navamsha) of the Quadruple Sensitive Point, just as with the Triple Point. That should also be considered for the sake of consistency. If there is "subsidence of illness," meaning the querent recovers, then the Quadruple Sensitive Point "enters a relative," meaning the misfortune transfers to a kinsman of the querent born under that star. 
+
+The procedure is as follows: Set down the Triple Sensitive Point, multiply by nine, discard the signs, double the degrees, multiply those and the minutes by nine, and divide by twenty-seven. The remaining number of degrees should be used for counting from the Triple Point's star. Note this detail: if there are remaining minutes, the next whole number after the degree count should be taken. This determination of the time of death is necessary only when the Triple Sensitive Point indicates the presence of a fatal defect. || 41 ||
+
+**Regarding the verse "In the Triple..."**: Another method for determining the timing is stated by this. || 42 ||
+<summary>This page details the mathematical calculation of the 'Star of Death' using the Triple and Quadruple Sensitive Points to predict a patient's fate. It explains how astrological afflictions may either result in the querent's death or transfer to a relative if the querent recovers.</summary>
+<keywords>Trishphuta, Star of Death, Quadruple Sensitive Point, Prashnamarga, Vedic astrology, medical astrology, Nakshatra, calculation of death</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

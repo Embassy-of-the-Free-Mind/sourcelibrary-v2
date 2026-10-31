@@ -1,0 +1,50 @@
+[
+ { "id": "G29",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Life words: 'magnetische Leben' and 'wache Leben', both rendered 'life' by all three. All three are complete; Y's 'section' for Abschnitt is literal but acceptable." },
+ { "id": "G04",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 22, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "glosses yin as 'receptive breath' and yang as 'active breath', which equates the principles themselves with breath" }] },
+     "Y": { "fidelity": 5, "life_words_correct": 22, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 22, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "氣 is rendered 'breath' in X and Z and kept as 'qi' in Y, consistently and with no 'energy' in the body text. The count also includes 養生, 生/死 and 長年." },
+ { "id": "G37",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'Apparat der Halbleitung' rendered 'apparatus of semiconductor transmission', an anachronistic electronics term" }] },
+     "Y": { "fidelity": 5, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "The source names a vital force (Lebenskraft), and all three keep it as 'vital force', which is correct. Y's note on semi-conduction mentions vital force in a context where the text uses it." },
+ { "id": "G23",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'fugando vegetabilem' read as 'putting to flight the vegetable', when vegetabilem begins the next attribute (animal/vegetable/mineral)" }] },
+     "Y": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'driving away the vegetable stone': the same misparse of vegetabilem" }] },
+     "Z": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "The only life word is 'animam in se habentem' (soul), correct in all three. Z parses animal/vegetable/mineral correctly but lists '<unclear>sed</unclear>' as an item after dung, which is awkward." },
+ { "id": "G39",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "The source names 'force vitale', and all three render it 'vital force', which is correct. 'les forces' is rendered as strength/forces throughout." },
+ { "id": "G14",
+   "translations": {
+     "X": { "fidelity": 2, "life_words_correct": 3, "life_words_wrong": 2, "life_wrong_examples": ["<gloss>vital life force</gloss> for prāṇa (प्राणग स्मृति)", "'separated from long life' for चिरजीविता (long-lived)"], "serious_errors": [{ "type": "mistranslation", "what": "चिरजीविता rendered 'separated from long life'" }, { "type": "invention", "what": "note that the jewel refers to 'vital essence'" }] },
+     "Y": { "fidelity": 3, "life_words_correct": 5, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 3, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "invention", "what": "the insert verse 'protected by mercy and peaceful posture, guards against faults' has little basis in the corrupt line" }] } },
+   "note": "Corrupt manuscript transcription, so all three translations are partly conjectural. The nāḍī glosses say 'energy' in X and Y, but nāḍī (channel) is not itself a breath word." },
+ { "id": "G20",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["<term>Prana</term> <gloss>vital force</gloss> for प्राणस्य"], "serious_errors": [] } },
+   "note": "The image reads उद्भावकस्य (manifester) where the transcription has उद्धारकस्य, so all three say 'redeems/rescues/deliverer', which is a minor shared slip. Z's 'mental tendencies' for वृत्तिभेदेन is off." },
+ { "id": "G27",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 5, "life_words_wrong": 1, "life_wrong_examples": ["'humors and breaths' for spiritus (Ficino's medical spirits, vapours of the blood)"], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Life words counted: 'pituita petens vitam', 'producendam vitam', 'spiritus', 'prorogandam vitam', 'vigori' and 'olei vitalis'." }
+]

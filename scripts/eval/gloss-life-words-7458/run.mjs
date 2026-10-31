@@ -217,9 +217,10 @@ function score() {
       controls: C.map((r) => ({ unit: r.u.unit, any_phrase: r.any })),
     },
   };
-  const kf = path.join(SCRATCH, 'judge-key.json');
+  // the key moves next to the verdicts only after every judge has finished
+  const kf = [path.join(DIR, 'judge-key.json'), path.join(SCRATCH, 'judge-key.json')].find((f) => fs.existsSync(f)) || '';
   const vfiles = fs.readdirSync(DIR).filter((f) => /^verdicts-\d+\.json$/.test(f));
-  if (vfiles.length && fs.existsSync(kf)) {
+  if (vfiles.length && kf) {
     const key = new Map(JSON.parse(fs.readFileSync(kf, 'utf8')).map((k) => [k.id, k]));
     const verdicts = vfiles.flatMap((f) => JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')));
     const per = []; // one row per page: per-arm scores

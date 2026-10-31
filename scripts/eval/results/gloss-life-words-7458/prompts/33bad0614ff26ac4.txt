@@ -1,0 +1,133 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** German
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: The Seeress of Prevorst | Author: Justinus Kerner | Date: 1829
+
+**Note:** This is a public domain work published in 1829. It is not under copyright.
+
+**Text to translate:**
+<language>German</language>
+<page-type>text</page-type>
+<page-num>283</page-num>
+
+> „Ich stehe auf einem Berge, rechts möchte ich hinunter, wo das schöne mit Blumen erfüllte Thal ist, über das goldene Wölkchen ziehen ... Links sehe ich nichts als Grab und Verwesung ... Vor mir sehe ich nichts als die Welt in ihrer Eitelkeit ... Hinter mir sehe ich Menschen, wie die Löwen und Drachen, sie streiten und kämpfen mit einander ... Ich stehe auf der Spitze dieses Berges, da ist kein Gras, kein Moos ... Um diesen sind noch sieben Berge ... Du, meine Führerin, mit dir will ich gehen, du Heilige! ... Es ist ein Fels, auf dem ich stehe, er hängt ja ... Ha! das ist der Abschnitt, die vier Monate ... Warum sagst du zu mir: ich soll links hinunterschauen? Da ist ja Grab und Tod! .. Rechts lächeln mir die Blumen freundlich zu — aber lieber will ich hin, wo Grab und Tod ist ... Soll ich denn hinunterstürzen unter den Strich? ... Du, führe mich, wohin Du willst ... o banger Traum! ... Führe mich! ... Soll ich denn in den Abgrund stürzen? ... Mächtig bist du, stark genug ... Verstehe ich dich recht oder nicht? ... Muß ich stehen bleiben auf diesem Berge? ... Ja! ich muß stehen bleiben, bis die Stunde da ist, doch bist du bei mir Tag und Nacht ... Bist du nicht bei mir, so falle ich ... O laß mich erwachen aus diesem bangen Traum! ... Laß mich riechen, daß ich erwache — laß mich an diesem riechen, daß ich keine Ahnung habe und es vergesse.“
+
+Es war nun, als würde ihr etwas zum Riechen dargeboten, sie roch, erwachte, und hatte von diesem Traume, gegen die sonstige Weise eines magnetischen Traumes, durchaus keine Erinnerung mehr.
+
+Am 2. Mai, Abends 7 Uhr, verfiel sie in magnetischen Schlaf. Um diese Stunde fielen in ihr jene vier Monate ab und machten einem neuen Cyklus von sieben Sonnenkreisen Raum, von denen sie besonders den ersten fühlte.
+
+„In diesem neuen Kreise,“ sprach sie, „stoße ich ganz unten an der zweiten Linie an und fiel also in den magnetischen Raum dieses Kreises. Aber dieses neue magnetische Leben ist nur ein inneres tiefes Schauen für mich. Ich kann in diesem Kreise wieder hin, wo ich will, bin ich aber tief schlafend (wie kann man es aber doch schlafen nennen!), spreche ich mich nicht aus, wie früher; aber was ich da sah und empfand, geht als wie eine Ahnung mit mir in das wache Leben über, doch wird es
+
+<meta>The text ends abruptly at the bottom of the page. A "Digitized by Google" watermark is visible in the bottom right corner.</meta>
+
+<vocab>magnetischer Schlaf, Sonnenkreise, Thal, Cyklus, magnetisches Leben, Traum, Führerin, Schauen</vocab>
+
+**Previous page translation for continuity:**
+At birth, a human being receives a sum of force which—provided no disruptions occur—determines their natural age, but also simultaneously the unit of the number that contains the cycles of their <term>graduated years<note>original: "Stufenjahre." These are significant years in a person's life, often occurring in seven-year intervals, believed in various esoteric traditions to mark major physical and spiritual transitions.</note></term>. This constitutes a <term>life-capital<note>original: "Lebenskapital." A metaphor for the total store of vital energy a person possesses.</note></term> that inc
+[…]
+mber.
+
+The Seeress calculates a loss of four months, and these are now missing (aside from earlier losses!!) from the unit of her cycle. Therefore, her sun-circle (see Table 4 A and B) appears as if broken, which she seems to express with the words: "These four months are just hanging." These four months hover between the completed cycle and the beginning of the new cycle, and they are meant to be inserted and completed by the new sun-circle.
+
+The Seeress calls this state a "being locked in," where she must run alone. Only when these moments have been traversed—that is, by the 2nd of May—can the new cycle, or the new unit of her number, begin. She still feels herself beneath the line that goes straight into the center and, remarkably, depending on the state of her <term>nerve-force<note>original: "Nervenkraft." The vital energy that sustains both physical health and clairvoyant abilities.</note></term>, she indicates the possible outcomes that could occur for her organic and spiritual life.
+
+Which one will actually occur? — a question that only the 2nd of May will answer.
+
+---
+
+The 2nd of May was preceded by a <term>magnetic dream<note>original: "magnetischer Traum." A dream occurring while in a state of "animal magnetism" or trance, believed to be prophetic or deeply meaningful.</note></term> of the Seeress; she spoke it aloud as usual, but it was only imperfectly transcribed:
+<summary>The Seeress explains her theory of "life-capital" and how her illness has caused a four-month deficit in her spiritual seven-year cycle. She describes a state of transition and uncertainty leading up to May 2nd, which she anticipates as a turning point for her health.</summary>
+<keywords>life-capital, sun-circles, graduated years, seven-year cycle, nerve-force, magnetic dream, vital energy, spiritual chronometry</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

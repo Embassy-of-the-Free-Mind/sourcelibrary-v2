@@ -1,0 +1,50 @@
+[
+{ "id": "G16",
+  "translations": {
+    "X": { "fidelity": 3, "life_words_correct": 5, "life_words_wrong": 1, "life_wrong_examples": ["\"of the Moon to be the lifespan\" for असुं (asu, breath), which belongs to the ascendant"], "serious_errors": [{ "type": "mistranslation", "what": "v.44: ascendant's division made 'the body' and Moon's 'the lifespan'; the verse and commentary give ascendant = asu/prāṇa, Moon = body" }] },
+    "Y": { "fidelity": 3, "life_words_correct": 7, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "v.44: 'Ascendant represents the physical body; that of the Moon represents life-breath' swaps the two (commentary: prāṇa-deha-mṛtyu = ascendant, Moon, Mandi)" }] },
+    "Z": { "fidelity": 4, "life_words_correct": 6, "life_words_wrong": 1, "life_wrong_examples": ["note: '\"vital breath\" means life energy' for असोः प्राणस्य (asu = prāṇa, breath)"], "serious_errors": [] } },
+  "note": "Image confirms लग्नस्यांशमसुं वपुश्शशभृतो: ascendant = asu (breath), Moon = body. Only Z gets the mapping right. The fixed/movable-division line is rendered differently by all three." },
+{ "id": "G17",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Life words are jitaprāṇa and prāṇajaya (twice); all three render them as breath. X says the second probe is curved by two finger-widths, where the source has one (अंगुलमात्रवक्रा)." },
+{ "id": "G40",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "The source names 'force vitale', and all three correctly keep 'vital force'." },
+{ "id": "G13",
+  "translations": {
+    "X": { "fidelity": 3, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'For destroying afflictions in the bodily organs' for a garbled दहन्ते...गोदे विकार्याणी line" }] },
+    "Y": { "fidelity": 2, "life_words_correct": 6, "life_words_wrong": 2, "life_wrong_examples": ["'promotes growth and severance of boundaries' for आयुर्वृद्धि (increase of lifespan)", "<gloss>respiratory measure of time</gloss> for प्राणाः, which here is the breath in the left/right/middle channel"], "serious_errors": [{ "type": "invention", "what": "'deeds to be done in cattle'" }, { "type": "mistranslation", "what": "'severance of boundaries' for āyurvṛddhi" }, { "type": "mistranslation", "what": "'wind conjunction with the Moon' for इन्द्रानिलः" }] },
+    "Z": { "fidelity": 3, "life_words_correct": 8, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'when the breath enters the foot, the result does not succeed' inverts सिद्धो प्राणगते पादे / न सिद्ध्येत" }] } },
+  "note": "The manuscript is corrupt and all three guess at it. jīvadṛk = Jupiter's aspect, correct in all three." },
+{ "id": "G15",
+  "translations": {
+    "X": { "fidelity": 3, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "end: 'Twenty-nine, and not the vowel A, is the sign-vowel' (source: A is Devadatta's rāśi-svara)" }] },
+    "Y": { "fidelity": 3, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "va = 'twenty-four' (the sum of 26 requires four)" }, { "type": "mistranslation", "what": "the last group of nakṣatra quarters is assigned to vowel I, where the source has O; the U group's vowel is left out" }] },
+    "Z": { "fidelity": 4, "life_words_correct": 6, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "va = 'twenty-four' (the sum of 26 requires four)" }] } },
+  "note": "Life words are jīvasvara and jīvasvaracakra, rendered 'life-vowel' in all three, which is correct." },
+{ "id": "G19",
+  "translations": {
+    "X": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'not possible without separation from that Light' for तत्प्रकाशाभेदात् अनुपपन्नं (impossible because of non-difference from that light)" }] },
+    "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "Footnote 404: prāṇa = vital breath and jīva = individual soul, correct in all three." },
+{ "id": "G24",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 4, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 4, "life_words_correct": 5, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 4, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "omission", "what": "cropped margin note left untranslated in Latin" }] } },
+  "note": "The margin is cropped in the image; X and Y reconstruct it speculatively. vita = life, correct in all three." },
+{ "id": "G26",
+  "translations": {
+    "X": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Y": { "fidelity": 5, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+    "Z": { "fidelity": 5, "life_words_correct": 0, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+  "note": "No life words. X renders 'Vtrum prospera' as 'Whether future'." }
+]

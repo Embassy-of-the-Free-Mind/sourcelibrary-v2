@@ -16,14 +16,19 @@
  *
  *   node --env-file=.env.production.local scripts/maintenance/translation-prompt-v21-life-words.mjs           # dry run
  *   node --env-file=.env.production.local scripts/maintenance/translation-prompt-v21-life-words.mjs --apply   # insert v21, is_default:false
+ *   node --env-file=.env.production.local scripts/maintenance/translation-prompt-v21-life-words.mjs --promote # v21 default, v13 not
  *
- * The row lands is_default:false. This script never edits another row.
+ * --apply lands the row is_default:false and touches no other row. --promote (2026-10-31, after the pre-registered rule
+ * passed) refuses unless v13 is the one default with its registered hash and v21's text is buildV21(v13); then it sets
+ * is_default on v21 and clears it on v13, and stamps both rows. Rollback: set is_default:true on v13, false on v21.
  */
 import { MongoClient } from 'mongodb';
 import { createHash } from 'crypto';
 import { once } from './translation-prompt-v18-bare-continuity.mjs';
 
 const APPLY = process.argv.includes('--apply');
+const PROMOTE = process.argv.includes('--promote');
+const V13_HASH = '516510147237b6a79d9d3f6e797bba7f';
 const FROM = 13;
 const VERSION = 21;
 const hash = (s) => createHash('md5').update(s).digest('hex');
@@ -54,6 +59,25 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`=== translation: v${FROM} (${base.content.length} chars, ${hash(base.content).slice(0, 8)}) -> v${VERSION} (${content.length} chars, ${hash(content).slice(0, 8)}) ===`);
     console.log(`--- the only change: inserted before "**Instructions:**" ---\n${LIFE_WORDS}--- end ---`);
     const existing = await col.findOne({ type: 'translation', version: VERSION });
+    if (PROMOTE) {
+      const defs = await col.find({ type: 'translation', is_default: true }).toArray();
+      if (defs.length !== 1 || defs[0].version !== FROM || hash(defs[0].content) !== V13_HASH) throw new Error(`refusing: the default is not exactly v${FROM} ${V13_HASH.slice(0, 8)} (${defs.map((d) => `v${d.version} ${hash(d.content).slice(0, 8)}`).join(', ')})`);
+      if (!existing || existing.content !== buildV21(defs[0].content)) throw new Error(`refusing: v${VERSION} is missing or is not buildV21(v${FROM}); run --apply first`);
+      const at = new Date().toISOString();
+      const why = 'scripts/eval/experiments/2026-10-31-gloss-life-words-prompt-7458.md (pre-registered rule passed)';
+      // uniq_default_per_type (partial unique on is_default) refuses a second default, so v13 is cleared first; one
+      // transaction, so no loader ever sees zero defaults (loadTranslationPrompts throws on none).
+      const session = c.startSession();
+      try {
+        await session.withTransaction(async () => {
+          await col.updateOne({ _id: defs[0]._id }, { $set: { is_default: false, demoted_at: at, demoted_note: `superseded by v${VERSION} (#7458). Rollback: is_default:true here, false on v${VERSION}.` } }, { session });
+          await col.updateOne({ _id: existing._id }, { $set: { is_default: true, promoted_at: at, promoted_note: `default from v${FROM} (#7458): ${why}. Rollback: is_default:true on v${FROM}, false here.` } }, { session });
+        });
+      } finally { await session.endSession(); }
+      const now = await col.find({ type: 'translation', is_default: true }, { projection: { version: 1 } }).toArray();
+      console.log(`default translation prompt is now ${now.map((d) => `v${d.version}`).join(', ')}`);
+      process.exit(0);
+    }
     if (existing) { console.log(`translation v${VERSION} already exists (${existing._id}, default=${!!existing.is_default}, ${hash(existing.content).slice(0, 8)}) — not touching it`); process.exit(0); }
     if (!APPLY) { console.log('(dry run — pass --apply to insert the row, is_default:false)'); process.exit(0); }
     const { insertedId } = await col.insertOne({

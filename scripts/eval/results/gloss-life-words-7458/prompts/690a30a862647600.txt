@@ -1,0 +1,233 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Latin
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: On the Hidden Causes of Things | Author: Jean Fernel | Date: 1548
+
+**Note:** This is a public domain work published in 1548. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>Latin</language>
+<page-type>index</page-type>
+<columns>3</columns>
+<header>I N D E X .</header>
+<sig>††</sig>
+
+176,25
+Putredo totius substantiæ morbus 175,12
+Putridæ constitutionis causæ quæ 188,19. & quo differat à pestilenti constitutione ibidem.
+Putridæ constitutionis effectus 189,10
+Pustulæ cur nunc nullæ in venerea lue 210,23
+Pustulæ & vlcera vbi fere primum existant in lue venerea 208,25
+Pustulæ & vlcera vaporem exhalant, qui admissus in venam cauam & arteriam, sanguinem & spiritus labefactat 208,27.
+Pustulæ liuidę, & rubentes in venerea lue 208,37
+
+->Q<-
+
+Quale oporteat esse corpus in quo anima recte ratiocinari & intelligere possit 138,21
+Qualitas in substantiam mutari non potest 50,14
+Qualitas non agit primo & per se 51,8
+Qualitates duæ agētes 119, 24
+Qualitates duæ patiētes 129 25.
+Qualitates contrariæ nō trāseunt in se mutuò 119,4
+Qualitates instrumenta naturę 121,5
+Qualitates primę elementorum miscentur καθ' ὅλον pag. 14. vers. 18.
+Qualitates secundæ 229,18 & quare sic dictę ibidem.
+Qualitates secundarię 120,7 & 12.
+Qualitates secundarię vnde 120,20
+Qualitates sunt organa 128 25.
+Qualitates superiores in permistione, omnem temperamēti efficientiam sibi vendicant 118,25
+Qualitates tertię à tota sub-
+
+<column-break/>
+
+stantia 229,22
+Quartana cur raro bis eundē prehendat 204,5
+Quartana interdum annos 4 durās 204,4. & causa ibidē.
+Quartana simplex, duplex & triplex ex impuro corpore propriis antidotis depulsa 203,30.
+Quartana, & lue venerea simul laborans 202,36
+Quartana soluta corpus interdum impurū manet 203 22.
+Quartanæ in populum grassantes 201,37. & earum causæ occultæ pagina sequente, vers. 3.
+Quæ absurditas consequatur eorum sententiam qui rerum genera ex officiis distinguūt 67,8.
+Quæ absurditas consequatur eorum sententiam qui affirmant semini inesse formę essentiam sed gradus imperfectioris 65,1.
+Quæ aquas inficiant 186,19
+Quæ portētosa consequātur eorum sententiam qui non intelligunt quo sensu dictum illud à Platone sit, animā pregnantem esse 72,5
+Quinta essentia quomodo fiat 247,9
+Quod accidit rei suæ specie perfectæ accidens est 34,30
+
+->R<-
+
+Rabidi hominis descriptio 205, vers. vlt.
+Rabie correpti permulti ex esu lupi sæuioris 206,34
+Ranunculi esus ranis, buffonibus, lacertis, & serpentibus, 237,30.
+Rarum, densum, laxum & adstrictum quomodo hic intelligantur 171,26
+Ratio extrahendi feminis ab auro 248,13
+Rhabarbarum bilem trahit cuius rei causa occulta est 124 25 & 29.
+
+<column-break/>
+
+Res quomodo corrumpātur, 177,8.
+Rerum conuersio fit in aliquo perpetuo ac superstite pag. 9 vers. 5.
+Rebus aliquid diuinum inesse demonstratio 123,32
+Recidiua luis venereæ qualis 212,1.
+Relaxantia fugienda in his partibus quę vsum cōmunem toti corpori habent 169,5
+Remedia anicularum aduersus febres 203,34
+Remediorum trans naturam differentiæ 223,32
+Restinguentia venenum dote communi 254,28
+
+->S<-
+
+Sagæ quid efficiant 221,35
+Salutaria multa homini à cælo 220,24
+Sanatio quę à dæmone efficitur ficta est 225,27
+Sanatio perfecta occultorum morborum quibus cōpleatur 254,25.
+Scarificatio altius impressa in ictibus venenatorum animalium valet 253,2
+Semen animatum dici non posse ostensio 69,12.
+Semen animatum secundum Platonem 69,15
+Semen apparat tantū materiam rebus gignendis 98,15
+Semen est opifex 46,22
+Semen est velut excellenti sapientia præditum 46,25
+Semen nihil generat sine cælo 98,14
+Semen simpliciter natura ali quando à Galeno dicitur 147,31.
+Seminis crassior substantia corpus geniturę ab Aristotele appellatur 62,27
+in Semine principium est perpetientis non minus quàm agentis motionis, & Simplicii verba de hac re 56,15.
+Semina rationum & vis gignendarum rerum sparsa in cęlum
+
+<vocab>Putredo, Quartana, Qualitates, Quinta essentia, Rabies, Rhabarbarum, Semen, Aristoteles, Plato, Galenus, καθ' ὅλον</vocab>
+
+**At the page break:** The word «μιων» at the head of this page repeats the previous page's catchword and has been removed; it is not translated twice.
+
+**Previous page translation for continuity:**
+-># INDEX.<-
+
+<note>The following entries continue from the previous page's discussion on timing.</note>
+...in time — 191, 26
+**Plague** <note>original: "Pestilentia"</note> sometimes begins in winter and ends in summer — 188, 10.
+**Plague** killing only oxen, only pigs, and only sheep: and at what time it raged — 189, 25
+**Plague** possesses a great heat — 188, 9
+The **constitution** that renders men liable to **plague** is hidden from us — 192, 6. and verse 18.
+The reason for the particular assignment of each individual **plague** — 190, 38
+The cause of every **plague** is hidden — 199, 17
+C
+[…]
+n history</note> looked only at effects — 115, 15
+The **principle** of all things is divine — 146, 37
+The **principle** that is in the seed is nothing other than a certain power in the seed for receiving form — 74, 25
+The proper substances of the **heavens and stars**, why they are called **intelligences** — 92, 7
+From where the **hidden property** <note>original: "Proprietas occulta"; a quality that cannot be explained by the four humors or elements</note> arises — 245, 14
+The **hidden property** is sometimes admitted by **Galen** — 125, 36
+How the **property of a thing** is named by **Themistius** — 142, — 38.
+The **property of substance** is weaker in water drawn by a steam-bath, but more effective in oil — 246 — 32.
+An investigation into what is understood by the name **"property"** — 141, 37.
+Mention of **hidden property** is made timidly by **Galen** — 125, 23
+That a **property** is an accident <note>in logic, a quality that is not part of the essential definition</note> — 241, 7
+**Properties** reside in the substance and its spirit — 244, 3. and 245, 20.
+**Properties** to be investigated — 255, 10.
+**Hidden properties** — 124, 33
+The origin of **properties and forms** — 239, 32
+The knowledge of **properties** is most excellent — 255, 3
+What **putrefaction** is — 174, 33
+Putrefaction is not the only cause of **pestilences** <note>original Greek: "λοιμίων" (loimiōn)</note>
+<summary>This index page covers medical and philosophical terms beginning with P, notably focusing on the occult causes of plagues and the Aristotelian concepts of potentiality and form. It highlights Fernel's interest in "hidden properties" that exist beyond the basic elemental qualities of heat, cold, moisture, and dryness.</summary>
+<keywords>Plague, pestilential fever, potentiality, occult properties, Plato, Aristotle, seed, putrefaction, Galen, hidden causes</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.
