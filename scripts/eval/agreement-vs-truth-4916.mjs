@@ -23,6 +23,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { levenshtein } from './lib/metrics.mjs';
 import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
+import { makeRng } from './lib/paired-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -77,7 +78,7 @@ const pearson = (x, y) => { const n = x.length, mx = x.reduce((a, b) => a + b, 0
 const spearman = (x, y) => pearson(rank(x), rank(y));
 const auc = (s, l) => { let n = 0, v = 0; for (let i = 0; i < s.length; i++) if (l[i]) for (let j = 0; j < s.length; j++) if (!l[j]) { n++; v += s[i] > s[j] ? 1 : s[i] === s[j] ? 0.5 : 0; } return n ? v / n : null; };
 const wilson = (k, n) => { if (!n) return null; const z = 1.96, p = k / n, d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [+((c - m) / d).toFixed(3), +((c + m) / d).toFixed(3)]; };
-let seed = 4916; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+const rnd = makeRng(4916);
 const bootAuc = (s, l, B = 2000) => { const v = []; for (let b = 0; b < B; b++) { const idx = s.map(() => Math.floor(rnd() * s.length)); const ls = idx.map(i => l[i]);
   if (ls.some(Boolean) && !ls.every(Boolean)) v.push(auc(idx.map(i => s[i]), ls)); } v.sort((a, b) => a - b); return [+v[Math.floor(0.025 * v.length)].toFixed(3), +v[Math.floor(0.975 * v.length)].toFixed(3)]; };
 
