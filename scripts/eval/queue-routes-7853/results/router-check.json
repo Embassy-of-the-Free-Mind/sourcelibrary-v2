@@ -1,0 +1,436 @@
+{
+ "main_sha": "756152582",
+ "evidence_added": [
+  "french-lite/agy-flash-low-read",
+  "french-lite/lite",
+  "french-lite/lite>agy-flash-low",
+  "german-lite/agy-flash-low-read",
+  "german-lite/lite",
+  "german-lite/lite>agy-flash-low"
+ ],
+ "baseline": [
+  {
+   "id": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 257,
+     "n": 347,
+     "wrong": 84,
+     "mean": 0.7200546383895465
+    },
+    {
+     "id": "lite>opus",
+     "k": 299,
+     "n": 307,
+     "wrong": 7,
+     "mean": 0.958957126175816
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 127,
+     "n": 157,
+     "wrong": 17,
+     "mean": 0.8119663257830434
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 243,
+     "n": 280,
+     "wrong": 24,
+     "mean": 0.620636387172291
+    }
+   ]
+  },
+  {
+   "id": "german-lite/manuscript",
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.4996679245295512
+    },
+    {
+     "id": "lite>opus",
+     "k": 2,
+     "n": 2,
+     "wrong": 0,
+     "mean": 0.7471827690586023
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.5001757825409897
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5019700889143879
+    }
+   ]
+  },
+  {
+   "id": "german-lite/unknown",
+   "decision": "switch (k/n: no other route has defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49990163762607864
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.886368936838459
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 91,
+     "n": 104,
+     "wrong": 9,
+     "mean": 0.8754293159848489
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.499706982356931
+    }
+   ]
+  },
+  {
+   "id": "french-lite/print",
+   "decision": "HOLD (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "mean": 0.7187917147622696
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8831641918192429
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 61,
+     "n": 72,
+     "wrong": 6,
+     "mean": 0.8483871294541626
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 23,
+     "n": 30,
+     "wrong": 2,
+     "mean": 0.7499714458433656
+    }
+   ]
+  },
+  {
+   "id": "french-lite/manuscript",
+   "decision": "UNTESTED (manuscript)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49823769379197247
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4992618390472288
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.501036449119134
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5003737039257015
+    }
+   ]
+  },
+  {
+   "id": "french-lite/unknown",
+   "decision": "HOLD (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4979493525610493
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8832210733722738
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 37,
+     "n": 45,
+     "wrong": 4,
+     "mean": 0.8311993809600606
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5006827763538209
+    }
+   ]
+  }
+ ],
+ "with_7853": [
+  {
+   "id": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 340,
+     "n": 497,
+     "wrong": 126,
+     "mean": 0.6233961067452762
+    },
+    {
+     "id": "lite>opus",
+     "k": 299,
+     "n": 307,
+     "wrong": 7,
+     "mean": 0.9589559299232222
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 235,
+     "n": 307,
+     "wrong": 39,
+     "mean": 0.7679695204301586
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 366,
+     "n": 430,
+     "wrong": 37,
+     "mean": 0.7763368320936492
+    }
+   ]
+  },
+  {
+   "id": "german-lite/manuscript",
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.4997414868858425
+    },
+    {
+     "id": "lite>opus",
+     "k": 2,
+     "n": 2,
+     "wrong": 0,
+     "mean": 0.747437737808812
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.49988186088521913
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5014270368201462
+    }
+   ]
+  },
+  {
+   "id": "german-lite/unknown",
+   "decision": "switch (k/n: no other route has defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49999599428021857
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.886431572531654
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 91,
+     "n": 104,
+     "wrong": 9,
+     "mean": 0.8754758462850174
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4999850144581606
+    }
+   ]
+  },
+  {
+   "id": "french-lite/print",
+   "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "agy-flash-low-read",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 64,
+     "n": 90,
+     "wrong": 19,
+     "mean": 0.7062538420716158
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8832188581125824
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 108,
+     "n": 132,
+     "wrong": 14,
+     "mean": 0.8203197589837397
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 79,
+     "n": 90,
+     "wrong": 4,
+     "mean": 0.8694274355716636
+    }
+   ]
+  },
+  {
+   "id": "french-lite/manuscript",
+   "decision": "UNTESTED (manuscript)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4991171413280762
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4986552237355693
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5010026068170806
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5003642734732685
+    }
+   ]
+  },
+  {
+   "id": "french-lite/unknown",
+   "decision": "HOLD (k/n: the live route lite>opus has no defect verdicts)",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49816850775865007
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8831907929922272
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 37,
+     "n": 45,
+     "wrong": 4,
+     "mean": 0.8310661591690425
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5011054535353253
+    }
+   ]
+  }
+ ],
+ "note": "what build.py decides if rules.json named this export; rules.json is NOT changed by this PR"
+}

@@ -1,0 +1,2586 @@
+{
+ "generated_at": "2026-10-31T18:23:13.330Z",
+ "seeds": {
+  "draw": 78531,
+  "queue": 78532,
+  "wrongPage": 78533,
+  "planted": 78534,
+  "bootstrap": 7853
+ },
+ "calls": {
+  "opus_abs": 880,
+  "opus_controls": 14,
+  "unparsed": 0,
+  "list_usd_equiv": 59.2
+ },
+ "items": {
+  "total": 880,
+  "judged": 880,
+  "tier1_unjudged": 0
+ },
+ "instrument": {
+  "by": {
+   "de/wrong_page": {
+    "n": 4,
+    "pass": 4
+   },
+   "fr/wrong_page": {
+    "n": 2,
+    "pass": 2
+   },
+   "de/planted": {
+    "n": 4,
+    "pass": 4
+   },
+   "fr/planted": {
+    "n": 4,
+    "pass": 4
+   }
+  },
+  "wrong_page": "6/6",
+  "planted": "8/8",
+  "valid": true,
+  "noise_floor": "reused from #7818: accept kappa 0.87 (alpha 0.87), 29/30, same judge and prompt (no rerun)"
+ },
+ "de": {
+  "pages": 150,
+  "arms_ran": [
+   "lite",
+   "corr",
+   "gpu",
+   "read4",
+   "read1"
+  ],
+  "arms": {
+   "lite": {
+    "pages": 150,
+    "served_own_text": 150,
+    "judged": 150,
+    "accept": {
+     "k": 83,
+     "n": 150,
+     "rate": 0.553,
+     "wilson95": [
+      0.473,
+      0.631
+     ]
+    },
+    "accept_weighted": 0.555,
+    "accept_weighted_ci95": [
+     0.479,
+     0.633
+    ],
+    "wrong_text_pages": 42,
+    "wrong_text_pages_weighted": 0.28,
+    "defects_per_1000_weighted": {
+     "wrong_text": 1.72,
+     "wrong_text_ci95": [
+      1.237,
+      2.228
+     ],
+     "misleads": 3.929,
+     "misleads_ci95": [
+      3.252,
+      4.603
+     ]
+    },
+    "agy_calls_per_page": 0,
+    "accepted_per_agy_call": null,
+    "accepted_per_agy_call_ci95": null,
+    "agy_calls_per_accepted_page": 0,
+    "usd_per_accepted_page": null,
+    "severity_per_1000": 81.881,
+    "severity_per_1000_ci95": [
+     62.032,
+     105.761
+    ],
+    "fidelity_mean_weighted": 3.767
+   },
+   "corr": {
+    "pages": 150,
+    "served_own_text": 118,
+    "judged": 150,
+    "accept": {
+     "k": 108,
+     "n": 150,
+     "rate": 0.72,
+     "wilson95": [
+      0.643,
+      0.786
+     ]
+    },
+    "accept_weighted": 0.72,
+    "accept_weighted_ci95": [
+     0.649,
+     0.788
+    ],
+    "wrong_text_pages": 22,
+    "wrong_text_pages_weighted": 0.148,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.976,
+     "wrong_text_ci95": [
+      0.563,
+      1.44
+     ],
+     "misleads": 2.408,
+     "misleads_ci95": [
+      1.75,
+      3.2
+     ]
+    },
+    "agy_calls_per_page": 1,
+    "accepted_per_agy_call": 0.72,
+    "accepted_per_agy_call_ci95": [
+     0.649,
+     0.789
+    ],
+    "agy_calls_per_accepted_page": 1.388,
+    "usd_per_accepted_page": 0.00121,
+    "severity_per_1000": 50.455,
+    "severity_per_1000_ci95": [
+     36.688,
+     65.597
+    ],
+    "fidelity_mean_weighted": 4.082
+   },
+   "gpu": {
+    "pages": 150,
+    "served_own_text": 94,
+    "judged": 150,
+    "accept": {
+     "k": 113,
+     "n": 150,
+     "rate": 0.753,
+     "wilson95": [
+      0.679,
+      0.815
+     ]
+    },
+    "accept_weighted": 0.754,
+    "accept_weighted_ci95": [
+     0.685,
+     0.821
+    ],
+    "wrong_text_pages": 20,
+    "wrong_text_pages_weighted": 0.134,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.846,
+     "wrong_text_ci95": [
+      0.469,
+      1.266
+     ],
+     "misleads": 2.363,
+     "misleads_ci95": [
+      1.678,
+      3.074
+     ]
+    },
+    "agy_calls_per_page": 0.98,
+    "accepted_per_agy_call": 0.769,
+    "accepted_per_agy_call_ci95": [
+     0.7,
+     0.831
+    ],
+    "agy_calls_per_accepted_page": 1.3,
+    "usd_per_accepted_page": 0.00113,
+    "severity_per_1000": 50.081,
+    "severity_per_1000_ci95": [
+     32.114,
+     74.53
+    ],
+    "fidelity_mean_weighted": 4.146
+   },
+   "read4": {
+    "pages": 150,
+    "served_own_text": 137,
+    "judged": 150,
+    "accept": {
+     "k": 123,
+     "n": 150,
+     "rate": 0.82,
+     "wilson95": [
+      0.751,
+      0.873
+     ]
+    },
+    "accept_weighted": 0.82,
+    "accept_weighted_ci95": [
+     0.758,
+     0.88
+    ],
+    "wrong_text_pages": 14,
+    "wrong_text_pages_weighted": 0.094,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.441,
+     "wrong_text_ci95": [
+      0.207,
+      0.725
+     ],
+     "misleads": 1.821,
+     "misleads_ci95": [
+      1.34,
+      2.345
+     ]
+    },
+    "agy_calls_per_page": 0.336,
+    "accepted_per_agy_call": 2.439,
+    "accepted_per_agy_call_ci95": [
+     2.006,
+     2.941
+    ],
+    "agy_calls_per_accepted_page": 0.41,
+    "usd_per_accepted_page": 0.00036,
+    "severity_per_1000": 31.282,
+    "severity_per_1000_ci95": [
+     22.144,
+     42.468
+    ],
+    "fidelity_mean_weighted": 4.238
+   },
+   "read1": {
+    "pages": 150,
+    "served_own_text": 135,
+    "judged": 150,
+    "accept": {
+     "k": 123,
+     "n": 150,
+     "rate": 0.82,
+     "wilson95": [
+      0.751,
+      0.873
+     ]
+    },
+    "accept_weighted": 0.819,
+    "accept_weighted_ci95": [
+     0.757,
+     0.878
+    ],
+    "wrong_text_pages": 13,
+    "wrong_text_pages_weighted": 0.087,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.684,
+     "wrong_text_ci95": [
+      0.261,
+      1.227
+     ],
+     "misleads": 1.626,
+     "misleads_ci95": [
+      1.184,
+      2.122
+     ]
+    },
+    "agy_calls_per_page": 0.986,
+    "accepted_per_agy_call": 0.831,
+    "accepted_per_agy_call_ci95": [
+     0.758,
+     0.902
+    ],
+    "agy_calls_per_accepted_page": 1.204,
+    "usd_per_accepted_page": 0.00105,
+    "severity_per_1000": 31.584,
+    "severity_per_1000_ci95": [
+     21.754,
+     43.966
+    ],
+    "fidelity_mean_weighted": 4.216
+   }
+  },
+  "primary": [
+   {
+    "contrast": "gpu_vs_read4",
+    "n": 150,
+    "gained": 11,
+    "lost": 21,
+    "mcnemar_exact_p": 0.11,
+    "effect_points_weighted": -6.634,
+    "effect_ci95_points": [
+     -13.9,
+     0.1
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "gpu": 20,
+     "added": 11,
+     "removed": 5
+    },
+    "made_worse": {
+     "wrong_text": 13,
+     "misleads": 31,
+     "cosmetic": 58
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69ae9bddf3bd47924caccfd0",
+      "defects": [
+       "O6 \"Nun hielte zwar Augustinus selbigerley meinung vor ärger\"",
+       "O6 \"desto strenger und eifriger wie die vermeinten käzer\""
+      ]
+     },
+     {
+      "page_id": "69bd9dee6120d54bd037a26d",
+      "defects": [
+       "I4 \"da all\nkeit a\nGott\nDar\ndigli\"",
+       "O6 \"das Erdreich eingefallen\""
+      ]
+     },
+     {
+      "page_id": "69f7586393b82a84a28d897d",
+      "defects": [
+       "O12 \"das dem Schädlichen des Teufels entgehe\""
+      ]
+     },
+     {
+      "page_id": "69b51db6efd8df28f2da9b71",
+      "defects": [
+       "O6 \"si cum cera marina vel cum terra sigillata\"",
+       "O6 \"juvat stomachum erigere\"",
+       "O6 \"Eruca calidi diffusa est\""
+      ]
+     },
+     {
+      "page_id": "6984c26e1ae2339dcf4ba56c",
+      "defects": [
+       "O5 \"daß das, wort an und von Christo auch äusserlich\"",
+       "O6 \"das zünfftig war\""
+      ]
+     },
+     {
+      "page_id": "69b51df1cf111105c4293c7f",
+      "defects": [
+       "O6 \"de fervando in Controversiis Theologicis monelenci. Statera articulorum fidei, e\""
+      ]
+     },
+     {
+      "page_id": "69f6d2ffee687af501c0ac06",
+      "defects": [
+       "I4 \"<column-break/>\n\n53, 6.\nden\nist.\n5, 15\nstre\nDe\nTro\""
+      ]
+     },
+     {
+      "page_id": "69f7272d747ba9e9bc124acb",
+      "defects": [
+       "I4 \"denen\nmacht\nsene\nsen\nten\ngest\""
+      ]
+     },
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O7 \"| 1664 | Ernesti | Backii Commentarius in Psalmos | f. | Frf. Wust. | 429 | 3 | \"",
+       "O5 \"| 1638 | | idem liber | f. | Londini. | — | — | 6 |\""
+      ]
+     },
+     {
+      "page_id": "69f772bf888bbcb074e9a393",
+      "defects": [
+       "O12 \"darein Matt. 16, 18. gegen aber allem GOttes Wort\"",
+       "I4 \"<margin>1. Cor. 5, 17.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O6 \"vornehmlich auf den Pennalismüssen\"",
+       "O6 \"rauffen, frolsieren, leute ums ringen, aus\"",
+       "O6 \"7. B schaun sein buch\"",
+       "O6 \"Epister wider die Scholasticos\"",
+       "O6 \"der Jansenisten flogen dawider\"",
+       "O6 \"gebafli decla-\"",
+       "O6 \"derer göttliche\nkeit und verwerfung\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     },
+     {
+      "page_id": "69bd9d236120d54bd0373bca",
+      "defects": [
+       "I4 \"ander\nSo\nabgest\ntenzug\ngefähr\""
+      ]
+     }
+    ],
+    "holm_p": 0.11,
+    "supported": false,
+    "direction": "a better"
+   },
+   {
+    "contrast": "corr_vs_read4",
+    "n": 150,
+    "gained": 9,
+    "lost": 24,
+    "mcnemar_exact_p": 0.0135,
+    "effect_points_weighted": -9.948,
+    "effect_ci95_points": [
+     -17.1,
+     -3.2
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "corr": 22,
+     "added": 13,
+     "removed": 5
+    },
+    "made_worse": {
+     "wrong_text": 14,
+     "misleads": 32,
+     "cosmetic": 70
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69c763626a0f3d112faf8d85",
+      "defects": [
+       "O1 \"<margin>Schlaff.</margin>\"",
+       "O1 \"<margin>Ubung.</margin>\"",
+       "O1 \"<margin>Stuelgang.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69f6b1be4159bfe285b68d08",
+      "defects": [
+       "O6 \"ist dat men die wozt in siedende verf-ketels\""
+      ]
+     },
+     {
+      "page_id": "69b51db6efd8df28f2da9b71",
+      "defects": [
+       "O6 \"Eruca calidi diffusa est\""
+      ]
+     },
+     {
+      "page_id": "69c879332ada5eb2c0eb0fbe",
+      "defects": [
+       "O6 \"wol ergehen\""
+      ]
+     },
+     {
+      "page_id": "69b51df1cf111105c4293c7f",
+      "defects": [
+       "O8 \"Statera articulorum fidei, errorum &c.\""
+      ]
+     },
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O5 \"| 1696. 1644. | | idem VII. Vol. | 12 | Amst. Wettst. | — | 4 | — |\""
+      ]
+     },
+     {
+      "page_id": "69f6d9899aa852b491ba9550",
+      "defects": [
+       "I4 \"<column-break/>\n\nSäure, welche das Acidum ist, in dem man das Volatile mit dem f\"",
+       "O1 \"und so hält es sich in einer steten Circulation, ti, und so weiter.\n\n2. Die Art \""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O6 \"vornehmlich auf den Pennalismüssen\"",
+       "O8 \"rauffen, stolzieren, leute umbringen, aus\"",
+       "O6 \"7. Beschauung sein buch Augustinus genannt\"",
+       "O6 \"Epister wider die Scholasticos\"",
+       "O6 \"boshafte actiones der Jesuiten\"",
+       "O6 \"Petri de Marca buch und geheime decla-\""
+      ]
+     },
+     {
+      "page_id": "69b51e06cf111105c42953b8",
+      "defects": [
+       "O5 \"Zwey kleine, von allen Seiten geschlossene hohle Schiffchen\""
+      ]
+     },
+     {
+      "page_id": "69f711fa806689416483fd21",
+      "defects": [
+       "O5 \"Vernünff-\ntigkeit ist/das des engels we-\""
+      ]
+     },
+     {
+      "page_id": "69f6b5b79169821cc3b24ba1",
+      "defects": [
+       "O6 \"spricht psido\"",
+       "O6 \"von der safftunge der nouiten\"",
+       "O6 \"was er sol reden und weis von versüchet\"",
+       "O6 \"ire wort von auch vnbetracht. die rede selte wol von nützlich\"",
+       "O6 \"oder dei lere von straffung wol enphahe von solt du toze von vnuerstandende von \"",
+       "O6 \"daz die höre nit beffet dovliext oder red sei arbeit\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d11040d1d5e20a7283",
+      "defects": [
+       "O5 \"rache zu in diser ist euer sun vn\"",
+       "O5 \"von dem der die auge hat\"",
+       "O6 \"in gemacht habe wisse\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     },
+     {
+      "page_id": "69bd9d236120d54bd0373bca",
+      "defects": [
+       "I4 \"ander\nSo\nabgest\ntenzug\ngefähr\""
+      ]
+     }
+    ],
+    "holm_p": 0.027,
+    "supported": true,
+    "direction": "a better"
+   }
+  ],
+  "primary_severity": [
+   {
+    "contrast": "gpu_vs_read4",
+    "n": 150,
+    "mean_diff_weighted": 18.799,
+    "ci95": [
+     0.161,
+     42.663
+    ],
+    "wilcoxon": {
+     "n": 131,
+     "w_plus": 4880,
+     "z": 1.278,
+     "p": 0.201
+    },
+    "better": 64,
+    "worse": 67,
+    "same": 19,
+    "holm_p": 0.201,
+    "supported": false,
+    "direction": "b more"
+   },
+   {
+    "contrast": "corr_vs_read4",
+    "n": 150,
+    "mean_diff_weighted": 19.173,
+    "ci95": [
+     4.686,
+     34.903
+    ],
+    "wilcoxon": {
+     "n": 136,
+     "w_plus": 5972.5,
+     "z": 2.854,
+     "p": 0.00431
+    },
+    "better": 53,
+    "worse": 83,
+    "same": 14,
+    "holm_p": 0.00862,
+    "supported": true,
+    "direction": "b more"
+   }
+  ],
+  "holm_over_all_four": {
+   "accept": [
+    0.22,
+    0.0405
+   ],
+   "severity": [
+    0.22,
+    0.0172
+   ]
+  },
+  "secondary": {
+   "read1_vs_read4": {
+    "n": 150,
+    "gained": 10,
+    "lost": 10,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": -0.048,
+    "effect_ci95_points": [
+     -6,
+     5.9
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "read1": 13,
+     "added": 3,
+     "removed": 4
+    },
+    "made_worse": {
+     "wrong_text": 5,
+     "misleads": 20,
+     "cosmetic": 45
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O17 \"| 1608 | ——— | — — | Bekenntniß aus Calvinischen Scribenten, wegen der Lutherisc\"",
+       "O17 \"| 1663 | Lucae. | — — | Fasciculus quaestionum theologicar. 12 | Rost. Fuhrm. | \""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O7 \"Jahr MDC. biß MDC. LXXVII.\"",
+       "O7 \"Jahr MDC. biß MDC. XCIX.\"",
+       "O6 \"auf den Pennalischmässigen\"",
+       "O6 \"§. 7. Pabsttum sein buch Augustinus genannt\"",
+       "O6 \"Der Päbsten vorschläge zur vereinigung\""
+      ]
+     },
+     {
+      "page_id": "69f6a799fe946fc8915b8f6b",
+      "defects": [
+       "I4 \"<margin>\n<unclear>Oxy</unclear>\nma<unclear>r</unclear>\nkom<unclear>m</unclear>\""
+      ]
+     },
+     {
+      "page_id": "69f773f86028036f8e239727",
+      "defects": [
+       "O1 \"exequiert der Keyser mit <unclear>dem</unclear>\"",
+       "O1 \"denselbigen tag <unclear>heraußhalff</unclear>\"",
+       "O1 \"must der arm <unclear>Jud</unclear>\"",
+       "O1 \"gebott er <unclear>daß er</unclear>\"",
+       "O1 \"gleich wie sie <unclear>den Sambstag</unclear>\"",
+       "O1 \"Rossz vñ <unclear>Fuß in Meißner</unclear>\"",
+       "O1 \"Augspurg ge<unclear>halten/ da die</unclear>\"",
+       "O1 \"vñ <unclear>durch deß</unclear>\"",
+       "O1 \"Für<unclear>stenthumen auff</unclear>\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     }
+    ]
+   },
+   "gpu_vs_corr": {
+    "n": 150,
+    "gained": 18,
+    "lost": 13,
+    "mcnemar_exact_p": 0.473,
+    "effect_points_weighted": 3.314,
+    "effect_ci95_points": [
+     -3.4,
+     10.1
+    ],
+    "wrong_text_pages": {
+     "corr": 22,
+     "gpu": 20,
+     "added": 7,
+     "removed": 9
+    },
+    "made_worse": {
+     "wrong_text": 11,
+     "misleads": 26,
+     "cosmetic": 44
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69ae9bddf3bd47924caccfd0",
+      "defects": [
+       "O6 \"Nun hielte zwar Augustinus selbigerley meinung vor ärger\"",
+       "O6 \"desto strenger und eifriger wie die vermeinten käzer\""
+      ]
+     },
+     {
+      "page_id": "69bd9dee6120d54bd037a26d",
+      "defects": [
+       "I4 \"da all\nkeit a\nGott\nDar\ndigli\"",
+       "O6 \"das Erdreich eingefallen\""
+      ]
+     },
+     {
+      "page_id": "69f7586393b82a84a28d897d",
+      "defects": [
+       "O12 \"das dem Schädlichen des Teufels entgehe\""
+      ]
+     },
+     {
+      "page_id": "69b51db6efd8df28f2da9b71",
+      "defects": [
+       "O6 \"si cum cera marina vel cum terra sigillata\"",
+       "O6 \"juvat stomachum erigere\"",
+       "O6 \"Eruca calidi diffusa est\""
+      ]
+     },
+     {
+      "page_id": "6984c26e1ae2339dcf4ba56c",
+      "defects": [
+       "O5 \"daß das, wort an und von Christo auch äusserlich\"",
+       "O6 \"das zünfftig war\""
+      ]
+     },
+     {
+      "page_id": "69f6d2ffee687af501c0ac06",
+      "defects": [
+       "I4 \"<column-break/>\n\n53, 6.\nden\nist.\n5, 15\nstre\nDe\nTro\""
+      ]
+     },
+     {
+      "page_id": "69f7272d747ba9e9bc124acb",
+      "defects": [
+       "I4 \"denen\nmacht\nsene\nsen\nten\ngest\""
+      ]
+     },
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O7 \"| 1664 | Ernesti | Backii Commentarius in Psalmos | f. | Frf. Wust. | 429 | 3 | \"",
+       "O5 \"| 1638 | | idem liber | f. | Londini. | — | — | 6 |\""
+      ]
+     },
+     {
+      "page_id": "69f772bf888bbcb074e9a393",
+      "defects": [
+       "O12 \"darein Matt. 16, 18. gegen aber allem GOttes Wort\"",
+       "I4 \"<margin>1. Cor. 5, 17.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O6 \"vornehmlich auf den Pennalismüssen\"",
+       "O6 \"rauffen, frolsieren, leute ums ringen, aus\"",
+       "O6 \"7. B schaun sein buch\"",
+       "O6 \"Epister wider die Scholasticos\"",
+       "O6 \"der Jansenisten flogen dawider\"",
+       "O6 \"gebafli decla-\"",
+       "O6 \"derer göttliche\nkeit und verwerfung\""
+      ]
+     },
+     {
+      "page_id": "69ef2b1a85daccce30f2dcbb",
+      "defects": [
+       "O5 \"if placed in its proper horizontal position, the left side consequently correspo\""
+      ]
+     }
+    ]
+   },
+   "corr_vs_lite": {
+    "n": 150,
+    "gained": 27,
+    "lost": 2,
+    "mcnemar_exact_p": 0.00000162,
+    "effect_points_weighted": 16.559,
+    "effect_ci95_points": [
+     10.1,
+     23.2
+    ],
+    "wrong_text_pages": {
+     "lite": 42,
+     "corr": 22,
+     "added": 2,
+     "removed": 22
+    },
+    "made_worse": {
+     "wrong_text": 2,
+     "misleads": 9,
+     "cosmetic": 11
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69c763626a0f3d112faf8d85",
+      "defects": [
+       "O1 \"<margin>Schlaff.</margin>\"",
+       "O1 \"<margin>Ubung.</margin>\"",
+       "O1 \"<margin>Stuelgang.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69c879332ada5eb2c0eb0fbe",
+      "defects": [
+       "O6 \"wol ergehen\""
+      ]
+     }
+    ]
+   },
+   "gpu_vs_lite": {
+    "n": 150,
+    "gained": 30,
+    "lost": 0,
+    "mcnemar_exact_p": 1.86e-9,
+    "effect_points_weighted": 19.874,
+    "effect_ci95_points": [
+     13.8,
+     26
+    ],
+    "wrong_text_pages": {
+     "lite": 42,
+     "gpu": 20,
+     "added": 0,
+     "removed": 22
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 4,
+     "cosmetic": 10
+    },
+    "wrong_text_added_list": []
+   },
+   "read4_vs_lite": {
+    "n": 150,
+    "gained": 45,
+    "lost": 5,
+    "mcnemar_exact_p": 4.21e-9,
+    "effect_points_weighted": 26.507,
+    "effect_ci95_points": [
+     18.6,
+     34.4
+    ],
+    "wrong_text_pages": {
+     "lite": 42,
+     "read4": 14,
+     "added": 3,
+     "removed": 31
+    },
+    "made_worse": {
+     "wrong_text": 3,
+     "misleads": 13,
+     "cosmetic": 17
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "6a267b216c1f37c9c4f30606",
+      "defects": [
+       "O6 \"# Jonas Sipffel.\""
+      ]
+     },
+     {
+      "page_id": "69b51e5d9a81ef7feb3d3cf8",
+      "defects": [
+       "O7 \"MCCCCLXXVIII.\""
+      ]
+     },
+     {
+      "page_id": "69b51e8e9a81ef7feb3d75cc",
+      "defects": [
+       "T6 \"ist der Titel dieses Buchs falsch und ganz\""
+      ]
+     }
+    ]
+   },
+   "read1_vs_lite": {
+    "n": 150,
+    "gained": 44,
+    "lost": 4,
+    "mcnemar_exact_p": 1.51e-9,
+    "effect_points_weighted": 26.459,
+    "effect_ci95_points": [
+     18.5,
+     34.3
+    ],
+    "wrong_text_pages": {
+     "lite": 42,
+     "read1": 13,
+     "added": 0,
+     "removed": 29
+    },
+    "made_worse": {
+     "wrong_text": 1,
+     "misleads": 10,
+     "cosmetic": 17
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69f773f86028036f8e239727",
+      "defects": [
+       "O1 \"exequiert der Keyser mit <unclear>dem</unclear>\"",
+       "O1 \"denselbigen tag <unclear>heraußhalff</unclear>\"",
+       "O1 \"must der arm <unclear>Jud</unclear>\"",
+       "O1 \"gebott er <unclear>daß er</unclear>\"",
+       "O1 \"gleich wie sie <unclear>den Sambstag</unclear>\"",
+       "O1 \"Rossz vñ <unclear>Fuß in Meißner</unclear>\"",
+       "O1 \"Augspurg ge<unclear>halten/ da die</unclear>\"",
+       "O1 \"vñ <unclear>durch deß</unclear>\"",
+       "O1 \"Für<unclear>stenthumen auff</unclear>\""
+      ]
+     }
+    ]
+   }
+  },
+  "secondary_severity": {
+   "read1_vs_read4": {
+    "n": 150,
+    "mean_diff_weighted": 0.302,
+    "ci95": [
+     -9.209,
+     9.273
+    ],
+    "wilcoxon": {
+     "n": 128,
+     "w_plus": 4177,
+     "z": 0.115,
+     "p": 0.908
+    },
+    "better": 65,
+    "worse": 63,
+    "same": 22
+   },
+   "gpu_vs_corr": {
+    "n": 150,
+    "mean_diff_weighted": -0.374,
+    "ci95": [
+     -15.371,
+     16.733
+    ],
+    "wilcoxon": {
+     "n": 130,
+     "w_plus": 3953.5,
+     "z": -0.705,
+     "p": 0.481
+    },
+    "better": 73,
+    "worse": 57,
+    "same": 20
+   },
+   "corr_vs_lite": {
+    "n": 150,
+    "mean_diff_weighted": -31.426,
+    "ci95": [
+     -47.638,
+     -18.576
+    ],
+    "wilcoxon": {
+     "n": 115,
+     "w_plus": 669,
+     "z": -7.439,
+     "p": 1.03e-13
+    },
+    "better": 101,
+    "worse": 14,
+    "same": 35
+   },
+   "gpu_vs_lite": {
+    "n": 150,
+    "mean_diff_weighted": -31.8,
+    "ci95": [
+     -42.446,
+     -22.674
+    ],
+    "wilcoxon": {
+     "n": 92,
+     "w_plus": 200,
+     "z": -7.548,
+     "p": 4.44e-14
+    },
+    "better": 84,
+    "worse": 8,
+    "same": 58
+   },
+   "read4_vs_lite": {
+    "n": 150,
+    "mean_diff_weighted": -50.599,
+    "ci95": [
+     -76.425,
+     -30.937
+    ],
+    "wilcoxon": {
+     "n": 135,
+     "w_plus": 762,
+     "z": -8.406,
+     "p": 0
+    },
+    "better": 120,
+    "worse": 15,
+    "same": 15
+   },
+   "read1_vs_lite": {
+    "n": 150,
+    "mean_diff_weighted": -50.297,
+    "ci95": [
+     -74.222,
+     -31.365
+    ],
+    "wilcoxon": {
+     "n": 134,
+     "w_plus": 723.5,
+     "z": -8.436,
+     "p": 0
+    },
+    "better": 121,
+    "worse": 13,
+    "same": 16
+   }
+  },
+  "paired_vs_best": {
+   "best": "read4",
+   "corr": {
+    "n": 150,
+    "gained": 9,
+    "lost": 24,
+    "mcnemar_exact_p": 0.0135,
+    "effect_points_weighted": -9.948,
+    "effect_ci95_points": [
+     -17.2,
+     -2.7
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "corr": 22,
+     "added": 13,
+     "removed": 5
+    },
+    "made_worse": {
+     "wrong_text": 14,
+     "misleads": 32,
+     "cosmetic": 70
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69c763626a0f3d112faf8d85",
+      "defects": [
+       "O1 \"<margin>Schlaff.</margin>\"",
+       "O1 \"<margin>Ubung.</margin>\"",
+       "O1 \"<margin>Stuelgang.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69f6b1be4159bfe285b68d08",
+      "defects": [
+       "O6 \"ist dat men die wozt in siedende verf-ketels\""
+      ]
+     },
+     {
+      "page_id": "69b51db6efd8df28f2da9b71",
+      "defects": [
+       "O6 \"Eruca calidi diffusa est\""
+      ]
+     },
+     {
+      "page_id": "69c879332ada5eb2c0eb0fbe",
+      "defects": [
+       "O6 \"wol ergehen\""
+      ]
+     },
+     {
+      "page_id": "69b51df1cf111105c4293c7f",
+      "defects": [
+       "O8 \"Statera articulorum fidei, errorum &c.\""
+      ]
+     },
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O5 \"| 1696. 1644. | | idem VII. Vol. | 12 | Amst. Wettst. | — | 4 | — |\""
+      ]
+     },
+     {
+      "page_id": "69f6d9899aa852b491ba9550",
+      "defects": [
+       "I4 \"<column-break/>\n\nSäure, welche das Acidum ist, in dem man das Volatile mit dem f\"",
+       "O1 \"und so hält es sich in einer steten Circulation, ti, und so weiter.\n\n2. Die Art \""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O6 \"vornehmlich auf den Pennalismüssen\"",
+       "O8 \"rauffen, stolzieren, leute umbringen, aus\"",
+       "O6 \"7. Beschauung sein buch Augustinus genannt\"",
+       "O6 \"Epister wider die Scholasticos\"",
+       "O6 \"boshafte actiones der Jesuiten\"",
+       "O6 \"Petri de Marca buch und geheime decla-\""
+      ]
+     },
+     {
+      "page_id": "69b51e06cf111105c42953b8",
+      "defects": [
+       "O5 \"Zwey kleine, von allen Seiten geschlossene hohle Schiffchen\""
+      ]
+     },
+     {
+      "page_id": "69f711fa806689416483fd21",
+      "defects": [
+       "O5 \"Vernünff-\ntigkeit ist/das des engels we-\""
+      ]
+     },
+     {
+      "page_id": "69f6b5b79169821cc3b24ba1",
+      "defects": [
+       "O6 \"spricht psido\"",
+       "O6 \"von der safftunge der nouiten\"",
+       "O6 \"was er sol reden und weis von versüchet\"",
+       "O6 \"ire wort von auch vnbetracht. die rede selte wol von nützlich\"",
+       "O6 \"oder dei lere von straffung wol enphahe von solt du toze von vnuerstandende von \"",
+       "O6 \"daz die höre nit beffet dovliext oder red sei arbeit\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d11040d1d5e20a7283",
+      "defects": [
+       "O5 \"rache zu in diser ist euer sun vn\"",
+       "O5 \"von dem der die auge hat\"",
+       "O6 \"in gemacht habe wisse\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     },
+     {
+      "page_id": "69bd9d236120d54bd0373bca",
+      "defects": [
+       "I4 \"ander\nSo\nabgest\ntenzug\ngefähr\""
+      ]
+     }
+    ]
+   },
+   "gpu": {
+    "n": 150,
+    "gained": 11,
+    "lost": 21,
+    "mcnemar_exact_p": 0.11,
+    "effect_points_weighted": -6.634,
+    "effect_ci95_points": [
+     -13.9,
+     0.6
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "gpu": 20,
+     "added": 11,
+     "removed": 5
+    },
+    "made_worse": {
+     "wrong_text": 13,
+     "misleads": 31,
+     "cosmetic": 58
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69ae9bddf3bd47924caccfd0",
+      "defects": [
+       "O6 \"Nun hielte zwar Augustinus selbigerley meinung vor ärger\"",
+       "O6 \"desto strenger und eifriger wie die vermeinten käzer\""
+      ]
+     },
+     {
+      "page_id": "69bd9dee6120d54bd037a26d",
+      "defects": [
+       "I4 \"da all\nkeit a\nGott\nDar\ndigli\"",
+       "O6 \"das Erdreich eingefallen\""
+      ]
+     },
+     {
+      "page_id": "69f7586393b82a84a28d897d",
+      "defects": [
+       "O12 \"das dem Schädlichen des Teufels entgehe\""
+      ]
+     },
+     {
+      "page_id": "69b51db6efd8df28f2da9b71",
+      "defects": [
+       "O6 \"si cum cera marina vel cum terra sigillata\"",
+       "O6 \"juvat stomachum erigere\"",
+       "O6 \"Eruca calidi diffusa est\""
+      ]
+     },
+     {
+      "page_id": "6984c26e1ae2339dcf4ba56c",
+      "defects": [
+       "O5 \"daß das, wort an und von Christo auch äusserlich\"",
+       "O6 \"das zünfftig war\""
+      ]
+     },
+     {
+      "page_id": "69b51df1cf111105c4293c7f",
+      "defects": [
+       "O6 \"de fervando in Controversiis Theologicis monelenci. Statera articulorum fidei, e\""
+      ]
+     },
+     {
+      "page_id": "69f6d2ffee687af501c0ac06",
+      "defects": [
+       "I4 \"<column-break/>\n\n53, 6.\nden\nist.\n5, 15\nstre\nDe\nTro\""
+      ]
+     },
+     {
+      "page_id": "69f7272d747ba9e9bc124acb",
+      "defects": [
+       "I4 \"denen\nmacht\nsene\nsen\nten\ngest\""
+      ]
+     },
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O7 \"| 1664 | Ernesti | Backii Commentarius in Psalmos | f. | Frf. Wust. | 429 | 3 | \"",
+       "O5 \"| 1638 | | idem liber | f. | Londini. | — | — | 6 |\""
+      ]
+     },
+     {
+      "page_id": "69f772bf888bbcb074e9a393",
+      "defects": [
+       "O12 \"darein Matt. 16, 18. gegen aber allem GOttes Wort\"",
+       "I4 \"<margin>1. Cor. 5, 17.</margin>\""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O6 \"vornehmlich auf den Pennalismüssen\"",
+       "O6 \"rauffen, frolsieren, leute ums ringen, aus\"",
+       "O6 \"7. B schaun sein buch\"",
+       "O6 \"Epister wider die Scholasticos\"",
+       "O6 \"der Jansenisten flogen dawider\"",
+       "O6 \"gebafli decla-\"",
+       "O6 \"derer göttliche\nkeit und verwerfung\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     },
+     {
+      "page_id": "69bd9d236120d54bd0373bca",
+      "defects": [
+       "I4 \"ander\nSo\nabgest\ntenzug\ngefähr\""
+      ]
+     }
+    ]
+   },
+   "read4": {
+    "n": 150,
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": 0,
+    "effect_ci95_points": [
+     0,
+     0
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "added": 0,
+     "removed": 0
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 0,
+     "cosmetic": 0
+    },
+    "wrong_text_added_list": []
+   },
+   "read1": {
+    "n": 150,
+    "gained": 10,
+    "lost": 10,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": -0.048,
+    "effect_ci95_points": [
+     -5.9,
+     5.8
+    ],
+    "wrong_text_pages": {
+     "read4": 14,
+     "read1": 13,
+     "added": 3,
+     "removed": 4
+    },
+    "made_worse": {
+     "wrong_text": 5,
+     "misleads": 20,
+     "cosmetic": 45
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69b51df047b06ecd58187731",
+      "defects": [
+       "O17 \"| 1608 | ——— | — — | Bekenntniß aus Calvinischen Scribenten, wegen der Lutherisc\"",
+       "O17 \"| 1663 | Lucae. | — — | Fasciculus quaestionum theologicar. 12 | Rost. Fuhrm. | \""
+      ]
+     },
+     {
+      "page_id": "69f760f0c1b0cbc7881bc5a7",
+      "defects": [
+       "O7 \"Jahr MDC. biß MDC. LXXVII.\"",
+       "O7 \"Jahr MDC. biß MDC. XCIX.\"",
+       "O6 \"auf den Pennalischmässigen\"",
+       "O6 \"§. 7. Pabsttum sein buch Augustinus genannt\"",
+       "O6 \"Der Päbsten vorschläge zur vereinigung\""
+      ]
+     },
+     {
+      "page_id": "69f6a799fe946fc8915b8f6b",
+      "defects": [
+       "I4 \"<margin>\n<unclear>Oxy</unclear>\nma<unclear>r</unclear>\nkom<unclear>m</unclear>\""
+      ]
+     },
+     {
+      "page_id": "69f773f86028036f8e239727",
+      "defects": [
+       "O1 \"exequiert der Keyser mit <unclear>dem</unclear>\"",
+       "O1 \"denselbigen tag <unclear>heraußhalff</unclear>\"",
+       "O1 \"must der arm <unclear>Jud</unclear>\"",
+       "O1 \"gebott er <unclear>daß er</unclear>\"",
+       "O1 \"gleich wie sie <unclear>den Sambstag</unclear>\"",
+       "O1 \"Rossz vñ <unclear>Fuß in Meißner</unclear>\"",
+       "O1 \"Augspurg ge<unclear>halten/ da die</unclear>\"",
+       "O1 \"vñ <unclear>durch deß</unclear>\"",
+       "O1 \"Für<unclear>stenthumen auff</unclear>\""
+      ]
+     },
+     {
+      "page_id": "69dbc9d31040d1d5e20a7449",
+      "defects": [
+       "O5 \"wär jm wol dein gewerb befolhen.jm nicht bewolhen\""
+      ]
+     }
+    ]
+   }
+  },
+  "decision": {
+   "route": "read4",
+   "gate_best_accept": 0.82,
+   "gated": [
+    "read4",
+    "read1"
+   ],
+   "not_gated": [
+    "corr",
+    "gpu"
+   ],
+   "stored_severity_per_1000": 81.881,
+   "severity_removed_per_agy_call": {
+    "read4": 150.592,
+    "read1": 51.011
+   },
+   "measure": "severity removed per agy call",
+   "tied": [
+    "read4"
+   ],
+   "lowest_severity_arm": "read4",
+   "why": "gate: accept >= 0.77 -> read4, read1; severity removed per agy call {\"read4\":150.592,\"read1\":51.011}; tied read4; tie order read4 < corr < read1 < gpu; lowest severity rate among the gated: read4"
+  },
+  "decision_as_first_preregistered": {
+   "route": "read4",
+   "best_accept": "read4",
+   "eligible": [
+    "read4",
+    "read1"
+   ],
+   "tied": [
+    "read4"
+   ],
+   "why": "best accept read4 (0.82); eligible read4, read1; most accepted per agy call among them read4 (top 2.439); tie order read4 < corr < read1 < gpu",
+   "excluded": [
+    {
+     "arm": "corr",
+     "accept_weighted": 0.72,
+     "wrong_text_net_vs_best": 8
+    },
+    {
+     "arm": "gpu",
+     "accept_weighted": 0.754,
+     "wrong_text_net_vs_best": 6
+    }
+   ]
+  },
+  "by_stratum": {
+   "de|17th|fair-poor": {
+    "pages": 4,
+    "weight": 0.028,
+    "accept": {
+     "lite": "3/4",
+     "corr": "3/4",
+     "gpu": "3/4",
+     "read4": "4/4",
+     "read1": "4/4"
+    }
+   },
+   "de|17th|good": {
+    "pages": 25,
+    "weight": 0.165,
+    "accept": {
+     "lite": "12/25",
+     "corr": "17/25",
+     "gpu": "16/25",
+     "read4": "21/25",
+     "read1": "22/25"
+    }
+   },
+   "de|18th|fair-poor": {
+    "pages": 10,
+    "weight": 0.063,
+    "accept": {
+     "lite": "5/10",
+     "corr": "5/10",
+     "gpu": "8/10",
+     "read4": "8/10",
+     "read1": "8/10"
+    }
+   },
+   "de|18th|good": {
+    "pages": 77,
+    "weight": 0.514,
+    "accept": {
+     "lite": "45/77",
+     "corr": "61/77",
+     "gpu": "59/77",
+     "read4": "63/77",
+     "read1": "64/77"
+    }
+   },
+   "de|19th+|fair-poor": {
+    "pages": 7,
+    "weight": 0.048,
+    "accept": {
+     "lite": "4/7",
+     "corr": "5/7",
+     "gpu": "5/7",
+     "read4": "5/7",
+     "read1": "4/7"
+    }
+   },
+   "de|19th+|good": {
+    "pages": 14,
+    "weight": 0.094,
+    "accept": {
+     "lite": "9/14",
+     "corr": "11/14",
+     "gpu": "12/14",
+     "read4": "12/14",
+     "read1": "12/14"
+    }
+   },
+   "de|<=1600|good": {
+    "pages": 13,
+    "weight": 0.089,
+    "accept": {
+     "lite": "5/13",
+     "corr": "6/13",
+     "gpu": "10/13",
+     "read4": "10/13",
+     "read1": "9/13"
+    }
+   }
+  },
+  "by_face": {
+   "antiqua": {
+    "pages": 13,
+    "queue_share": 0.088,
+    "accept_weighted": {
+     "lite": 0.692,
+     "corr": 0.844,
+     "gpu": 0.692,
+     "read4": 0.767,
+     "read1": 0.767
+    },
+    "accept": {
+     "lite": "9/13",
+     "corr": "11/13",
+     "gpu": "9/13",
+     "read4": "10/13",
+     "read1": "10/13"
+    }
+   },
+   "fraktur": {
+    "pages": 126,
+    "queue_share": 0.84,
+    "accept_weighted": {
+     "lite": 0.541,
+     "corr": 0.715,
+     "gpu": 0.77,
+     "read4": 0.841,
+     "read1": 0.825
+    },
+    "accept": {
+     "lite": "68/126",
+     "corr": "90/126",
+     "gpu": "97/126",
+     "read4": "106/126",
+     "read1": "104/126"
+    }
+   },
+   "mixed": {
+    "pages": 11,
+    "queue_share": 0.072,
+    "accept_weighted": {
+     "lite": 0.548,
+     "corr": 0.639,
+     "gpu": 0.639,
+     "read4": 0.635,
+     "read1": 0.818
+    },
+    "accept": {
+     "lite": "6/11",
+     "corr": "7/11",
+     "gpu": "7/11",
+     "read4": "7/11",
+     "read1": "9/11"
+    }
+   }
+  },
+  "arm_outcomes": {
+   "corr": {
+    "written": 118,
+    "corrector: UNCHANGED (the draft stands)": 8,
+    "correction changes N% of the draft's words: check by eye": 19,
+    "letters outside the book's scripts": 5
+   },
+   "gpu": {
+    "written": 94,
+    "a diff-guard flag is not a like-for-like substitution: the put-back ca": 22,
+    "a diff-guard flag spans a tag: the put-back cannot be spliced, the sto": 24,
+    "only N% of its words are in the stored read: check by eye": 2,
+    "no draft: pero wrote no draft": 3,
+    "letters outside the book's scripts": 4,
+    "cli exit -9": 1
+   },
+   "read4": {
+    "written": 137,
+    "reply wrapper: reply cut before <<<END>>>": 3,
+    "only N% of its words are in the stored read: check by eye": 3,
+    "letters outside the book's scripts": 7
+   },
+   "read1": {
+    "written": 135,
+    "reply wrapper: reply cut before <<<END>>>": 1,
+    "only N% of its words are in the stored read: check by eye": 8,
+    "letters outside the book's scripts": 5,
+    "more than one transcription header: restarted or refused read": 1
+   }
+  },
+  "gpu_engines": {
+   "pero": 137,
+   "lightonocr": 13
+  }
+ },
+ "fr": {
+  "pages": 60,
+  "arms_ran": [
+   "lite",
+   "corr",
+   "gpu",
+   "read4",
+   "read1"
+  ],
+  "arms": {
+   "lite": {
+    "pages": 60,
+    "served_own_text": 60,
+    "judged": 60,
+    "accept": {
+     "k": 42,
+     "n": 60,
+     "rate": 0.7,
+     "wilson95": [
+      0.575,
+      0.801
+     ]
+    },
+    "accept_weighted": 0.7,
+    "accept_weighted_ci95": [
+     0.6,
+     0.801
+    ],
+    "wrong_text_pages": 13,
+    "wrong_text_pages_weighted": 0.216,
+    "defects_per_1000_weighted": {
+     "wrong_text": 1.15,
+     "wrong_text_ci95": [
+      0.617,
+      1.747
+     ],
+     "misleads": 3.193,
+     "misleads_ci95": [
+      2.119,
+      4.442
+     ]
+    },
+    "agy_calls_per_page": 0,
+    "accepted_per_agy_call": null,
+    "accepted_per_agy_call_ci95": null,
+    "agy_calls_per_accepted_page": 0,
+    "usd_per_accepted_page": null,
+    "severity_per_1000": 43.869,
+    "severity_per_1000_ci95": [
+     32.14,
+     55.901
+    ],
+    "fidelity_mean_weighted": 4.244
+   },
+   "corr": {
+    "pages": 60,
+    "served_own_text": 39,
+    "judged": 60,
+    "accept": {
+     "k": 47,
+     "n": 60,
+     "rate": 0.783,
+     "wilson95": [
+      0.664,
+      0.869
+     ]
+    },
+    "accept_weighted": 0.783,
+    "accept_weighted_ci95": [
+     0.683,
+     0.881
+    ],
+    "wrong_text_pages": 8,
+    "wrong_text_pages_weighted": 0.134,
+    "defects_per_1000_weighted": {
+     "wrong_text": 1.025,
+     "wrong_text_ci95": [
+      0.356,
+      1.752
+     ],
+     "misleads": 2.061,
+     "misleads_ci95": [
+      1.107,
+      3.184
+     ]
+    },
+    "agy_calls_per_page": 1,
+    "accepted_per_agy_call": 0.783,
+    "accepted_per_agy_call_ci95": [
+     0.682,
+     0.882
+    ],
+    "agy_calls_per_accepted_page": 1.278,
+    "usd_per_accepted_page": 0.00111,
+    "severity_per_1000": 32.259,
+    "severity_per_1000_ci95": [
+     19.57,
+     47.924
+    ],
+    "fidelity_mean_weighted": 4.445
+   },
+   "gpu": {
+    "pages": 60,
+    "served_own_text": 39,
+    "judged": 60,
+    "accept": {
+     "k": 54,
+     "n": 60,
+     "rate": 0.9,
+     "wilson95": [
+      0.799,
+      0.953
+     ]
+    },
+    "accept_weighted": 0.898,
+    "accept_weighted_ci95": [
+     0.828,
+     0.966
+    ],
+    "wrong_text_pages": 2,
+    "wrong_text_pages_weighted": 0.035,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.428,
+     "wrong_text_ci95": [
+      0,
+      1.058
+     ],
+     "misleads": 1.265,
+     "misleads_ci95": [
+      0.527,
+      2.063
+     ]
+    },
+    "agy_calls_per_page": 1,
+    "accepted_per_agy_call": 0.898,
+    "accepted_per_agy_call_ci95": [
+     0.828,
+     0.966
+    ],
+    "agy_calls_per_accepted_page": 1.114,
+    "usd_per_accepted_page": 0.00097,
+    "severity_per_1000": 14.703,
+    "severity_per_1000_ci95": [
+     9.994,
+     20.057
+    ],
+    "fidelity_mean_weighted": 4.542
+   },
+   "read4": {
+    "pages": 60,
+    "served_own_text": 56,
+    "judged": 60,
+    "accept": {
+     "k": 55,
+     "n": 60,
+     "rate": 0.917,
+     "wilson95": [
+      0.819,
+      0.964
+     ]
+    },
+    "accept_weighted": 0.911,
+    "accept_weighted_ci95": [
+     0.84,
+     0.967
+    ],
+    "wrong_text_pages": 2,
+    "wrong_text_pages_weighted": 0.035,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.401,
+     "wrong_text_ci95": [
+      0,
+      0.986
+     ],
+     "misleads": 1.22,
+     "misleads_ci95": [
+      0.562,
+      1.973
+     ]
+    },
+    "agy_calls_per_page": 0.302,
+    "accepted_per_agy_call": 3.018,
+    "accepted_per_agy_call_ci95": [
+     2.512,
+     3.666
+    ],
+    "agy_calls_per_accepted_page": 0.331,
+    "usd_per_accepted_page": 0.00029,
+    "severity_per_1000": 13.115,
+    "severity_per_1000_ci95": [
+     8.374,
+     18.332
+    ],
+    "fidelity_mean_weighted": 4.593
+   },
+   "read1": {
+    "pages": 60,
+    "served_own_text": 57,
+    "judged": 60,
+    "accept": {
+     "k": 56,
+     "n": 60,
+     "rate": 0.933,
+     "wilson95": [
+      0.841,
+      0.974
+     ]
+    },
+    "accept_weighted": 0.932,
+    "accept_weighted_ci95": [
+     0.863,
+     0.984
+    ],
+    "wrong_text_pages": 2,
+    "wrong_text_pages_weighted": 0.035,
+    "defects_per_1000_weighted": {
+     "wrong_text": 0.207,
+     "wrong_text_ci95": [
+      0,
+      0.502
+     ],
+     "misleads": 0.532,
+     "misleads_ci95": [
+      0.232,
+      0.853
+     ]
+    },
+    "agy_calls_per_page": 1.001,
+    "accepted_per_agy_call": 0.932,
+    "accepted_per_agy_call_ci95": [
+     0.859,
+     0.999
+    ],
+    "agy_calls_per_accepted_page": 1.073,
+    "usd_per_accepted_page": 0.00093,
+    "severity_per_1000": 11.977,
+    "severity_per_1000_ci95": [
+     8.086,
+     16.439
+    ],
+    "fidelity_mean_weighted": 4.581
+   }
+  },
+  "primary": [
+   {
+    "contrast": "gpu_vs_read4",
+    "n": 60,
+    "gained": 2,
+    "lost": 3,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": -1.323,
+    "effect_ci95_points": [
+     -8.4,
+     5.6
+    ],
+    "wrong_text_pages": {
+     "read4": 2,
+     "gpu": 2,
+     "added": 0,
+     "removed": 0
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 3,
+     "cosmetic": 20
+    },
+    "wrong_text_added_list": [],
+    "holm_p": 1,
+    "supported": false,
+    "direction": "a better"
+   },
+   {
+    "contrast": "corr_vs_read4",
+    "n": 60,
+    "gained": 1,
+    "lost": 9,
+    "mcnemar_exact_p": 0.0215,
+    "effect_points_weighted": -12.82,
+    "effect_ci95_points": [
+     -22.4,
+     -4.2
+    ],
+    "wrong_text_pages": {
+     "read4": 2,
+     "corr": 8,
+     "added": 6,
+     "removed": 0
+    },
+    "made_worse": {
+     "wrong_text": 6,
+     "misleads": 8,
+     "cosmetic": 18
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69bd9e8bf6d63c919747bb77",
+      "defects": [
+       "O5 \"Craterus 565.547\nCrateuas de Halimus 257\"",
+       "O7 \"Crateuas de Halimus 257\"",
+       "O7 \"craye a blanchir la fourmentee 557\n18\""
+      ]
+     },
+     {
+      "page_id": "69f6c2b0cebc78a20d7c99fd",
+      "defects": [
+       "I4 \"<column-break/>\n\nme\nno\npri\ndro\nde\nbis\""
+      ]
+     },
+     {
+      "page_id": "69f66c9975c8d01b1451a2af",
+      "defects": [
+       "O8 \"ou un degagement de tous les liens\"",
+       "O8 \"pour me faire passer à la troisième\""
+      ]
+     },
+     {
+      "page_id": "69f6b48ddacbe9861fbeecba",
+      "defects": [
+       "I4 \"<column-break/>\n\nfo\nM\nG\nro\nho\nte\""
+      ]
+     },
+     {
+      "page_id": "69bda103f6d63c919748c86d",
+      "defects": [
+       "O6 \"EPOSILINGI. Mâcher.\""
+      ]
+     },
+     {
+      "page_id": "69e8054cfdad300064d9cecd",
+      "defects": [
+       "O8 \"des oublies dorées\""
+      ]
+     }
+    ],
+    "holm_p": 0.043,
+    "supported": true,
+    "direction": "a better"
+   }
+  ],
+  "primary_severity": [
+   {
+    "contrast": "gpu_vs_read4",
+    "n": 60,
+    "mean_diff_weighted": 1.588,
+    "ci95": [
+     -2.145,
+     5.758
+    ],
+    "wilcoxon": {
+     "n": 46,
+     "w_plus": 569.5,
+     "z": 0.311,
+     "p": 0.756
+    },
+    "better": 25,
+    "worse": 21,
+    "same": 14,
+    "holm_p": 0.756,
+    "supported": false,
+    "direction": "b more"
+   },
+   {
+    "contrast": "corr_vs_read4",
+    "n": 60,
+    "mean_diff_weighted": 19.144,
+    "ci95": [
+     7.58,
+     33.014
+    ],
+    "wilcoxon": {
+     "n": 47,
+     "w_plus": 820,
+     "z": 2.704,
+     "p": 0.00686
+    },
+    "better": 18,
+    "worse": 29,
+    "same": 13,
+    "holm_p": 0.0137,
+    "supported": true,
+    "direction": "b more"
+   }
+  ],
+  "holm_over_all_four": {
+   "accept": [
+    1,
+    0.0645
+   ],
+   "severity": [
+    1,
+    0.0274
+   ]
+  },
+  "secondary": {
+   "read1_vs_read4": {
+    "n": 60,
+    "gained": 4,
+    "lost": 3,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": 2.139,
+    "effect_ci95_points": [
+     -6.1,
+     10.5
+    ],
+    "wrong_text_pages": {
+     "read4": 2,
+     "read1": 2,
+     "added": 1,
+     "removed": 1
+    },
+    "made_worse": {
+     "wrong_text": 1,
+     "misleads": 4,
+     "cosmetic": 18
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69bd9e8bf6d63c919747bb77",
+      "defects": [
+       "O7 \"couuerts a eſcailles 505\"",
+       "O7 \"pour faire cracher ſuperfluitez du corps 321\""
+      ]
+     }
+    ]
+   },
+   "gpu_vs_corr": {
+    "n": 60,
+    "gained": 8,
+    "lost": 1,
+    "mcnemar_exact_p": 0.0391,
+    "effect_points_weighted": 11.497,
+    "effect_ci95_points": [
+     3.2,
+     21.2
+    ],
+    "wrong_text_pages": {
+     "corr": 8,
+     "gpu": 2,
+     "added": 0,
+     "removed": 6
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 2,
+     "cosmetic": 15
+    },
+    "wrong_text_added_list": []
+   },
+   "corr_vs_lite": {
+    "n": 60,
+    "gained": 8,
+    "lost": 3,
+    "mcnemar_exact_p": 0.227,
+    "effect_points_weighted": 8.225,
+    "effect_ci95_points": [
+     -0.1,
+     16.6
+    ],
+    "wrong_text_pages": {
+     "lite": 13,
+     "corr": 8,
+     "added": 3,
+     "removed": 8
+    },
+    "made_worse": {
+     "wrong_text": 3,
+     "misleads": 2,
+     "cosmetic": 3
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69bd9e8bf6d63c919747bb77",
+      "defects": [
+       "O5 \"Craterus 565.547\nCrateuas de Halimus 257\"",
+       "O7 \"Crateuas de Halimus 257\"",
+       "O7 \"craye a blanchir la fourmentee 557\n18\""
+      ]
+     },
+     {
+      "page_id": "69f66c9975c8d01b1451a2af",
+      "defects": [
+       "O8 \"ou un degagement de tous les liens\"",
+       "O8 \"pour me faire passer à la troisième\""
+      ]
+     },
+     {
+      "page_id": "69e8054cfdad300064d9cecd",
+      "defects": [
+       "O8 \"des oublies dorées\""
+      ]
+     }
+    ]
+   },
+   "gpu_vs_lite": {
+    "n": 60,
+    "gained": 12,
+    "lost": 0,
+    "mcnemar_exact_p": 0.000488,
+    "effect_points_weighted": 19.722,
+    "effect_ci95_points": [
+     11.5,
+     28.1
+    ],
+    "wrong_text_pages": {
+     "lite": 13,
+     "gpu": 2,
+     "added": 0,
+     "removed": 11
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 0,
+     "cosmetic": 6
+    },
+    "wrong_text_added_list": []
+   },
+   "read4_vs_lite": {
+    "n": 60,
+    "gained": 14,
+    "lost": 1,
+    "mcnemar_exact_p": 0.000977,
+    "effect_points_weighted": 21.045,
+    "effect_ci95_points": [
+     12.2,
+     30
+    ],
+    "wrong_text_pages": {
+     "lite": 13,
+     "read4": 2,
+     "added": 0,
+     "removed": 11
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 3,
+     "cosmetic": 11
+    },
+    "wrong_text_added_list": []
+   },
+   "read1_vs_lite": {
+    "n": 60,
+    "gained": 15,
+    "lost": 1,
+    "mcnemar_exact_p": 0.000519,
+    "effect_points_weighted": 23.184,
+    "effect_ci95_points": [
+     13.3,
+     33.3
+    ],
+    "wrong_text_pages": {
+     "lite": 13,
+     "read1": 2,
+     "added": 1,
+     "removed": 12
+    },
+    "made_worse": {
+     "wrong_text": 1,
+     "misleads": 3,
+     "cosmetic": 10
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69bd9e8bf6d63c919747bb77",
+      "defects": [
+       "O7 \"couuerts a eſcailles 505\"",
+       "O7 \"pour faire cracher ſuperfluitez du corps 321\""
+      ]
+     }
+    ]
+   }
+  },
+  "secondary_severity": {
+   "read1_vs_read4": {
+    "n": 60,
+    "mean_diff_weighted": -1.138,
+    "ci95": [
+     -7.097,
+     4.846
+    ],
+    "wilcoxon": {
+     "n": 44,
+     "w_plus": 592,
+     "z": 1.126,
+     "p": 0.26
+    },
+    "better": 20,
+    "worse": 24,
+    "same": 16
+   },
+   "gpu_vs_corr": {
+    "n": 60,
+    "mean_diff_weighted": -17.556,
+    "ci95": [
+     -32.486,
+     -5.328
+    ],
+    "wilcoxon": {
+     "n": 40,
+     "w_plus": 276,
+     "z": -1.794,
+     "p": 0.0727
+    },
+    "better": 23,
+    "worse": 17,
+    "same": 20
+   },
+   "corr_vs_lite": {
+    "n": 60,
+    "mean_diff_weighted": -11.609,
+    "ci95": [
+     -25.378,
+     4.39
+    ],
+    "wilcoxon": {
+     "n": 36,
+     "w_plus": 150,
+     "z": -2.867,
+     "p": 0.00414
+    },
+    "better": 28,
+    "worse": 8,
+    "same": 24
+   },
+   "gpu_vs_lite": {
+    "n": 60,
+    "mean_diff_weighted": -29.166,
+    "ci95": [
+     -40.804,
+     -18.745
+    ],
+    "wilcoxon": {
+     "n": 37,
+     "w_plus": 50,
+     "z": -4.541,
+     "p": 0.0000056
+    },
+    "better": 33,
+    "worse": 4,
+    "same": 23
+   },
+   "read4_vs_lite": {
+    "n": 60,
+    "mean_diff_weighted": -30.753,
+    "ci95": [
+     -42.11,
+     -20.193
+    ],
+    "wilcoxon": {
+     "n": 52,
+     "w_plus": 193.5,
+     "z": -4.508,
+     "p": 0.00000655
+    },
+    "better": 40,
+    "worse": 12,
+    "same": 8
+   },
+   "read1_vs_lite": {
+    "n": 60,
+    "mean_diff_weighted": -31.892,
+    "ci95": [
+     -44.038,
+     -20.425
+    ],
+    "wilcoxon": {
+     "n": 53,
+     "w_plus": 244,
+     "z": -4.17,
+     "p": 0.0000305
+    },
+    "better": 38,
+    "worse": 15,
+    "same": 7
+   }
+  },
+  "paired_vs_best": {
+   "best": "read1",
+   "corr": {
+    "n": 60,
+    "gained": 2,
+    "lost": 11,
+    "mcnemar_exact_p": 0.0225,
+    "effect_points_weighted": -14.959,
+    "effect_ci95_points": [
+     -26.3,
+     -5
+    ],
+    "wrong_text_pages": {
+     "read1": 2,
+     "corr": 8,
+     "added": 6,
+     "removed": 0
+    },
+    "made_worse": {
+     "wrong_text": 7,
+     "misleads": 12,
+     "cosmetic": 16
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69f6ca068a992e70c92650ee",
+      "defects": [
+       "O5 \"quoy qu'elles soient d'airain ou de plaine, ou de l'or: ains est condamné\"",
+       "O6 \"d'airain ou de plaine\"",
+       "O10 \"que iura & ira signifient\"",
+       "O6 \"Leuons doctoyennement ce Signe\"",
+       "I4 \"c Inter mal. & fin.\""
+      ]
+     },
+     {
+      "page_id": "69bd9e8bf6d63c919747bb77",
+      "defects": [
+       "O5 \"Craterus 565.547\nCrateuas de Halimus 257\"",
+       "O7 \"Crateuas de Halimus 257\"",
+       "O7 \"craye a blanchir la fourmentee 557\n18\""
+      ]
+     },
+     {
+      "page_id": "69f6c2b0cebc78a20d7c99fd",
+      "defects": [
+       "I4 \"<column-break/>\n\nme\nno\npri\ndro\nde\nbis\""
+      ]
+     },
+     {
+      "page_id": "69f66c9975c8d01b1451a2af",
+      "defects": [
+       "O8 \"ou un degagement de tous les liens\"",
+       "O8 \"pour me faire passer à la troisième\""
+      ]
+     },
+     {
+      "page_id": "69f6b48ddacbe9861fbeecba",
+      "defects": [
+       "I4 \"<column-break/>\n\nfo\nM\nG\nro\nho\nte\""
+      ]
+     },
+     {
+      "page_id": "69bda103f6d63c919748c86d",
+      "defects": [
+       "O6 \"EPOSILINGI. Mâcher.\""
+      ]
+     },
+     {
+      "page_id": "69e8054cfdad300064d9cecd",
+      "defects": [
+       "O8 \"des oublies dorées\""
+      ]
+     }
+    ]
+   },
+   "gpu": {
+    "n": 60,
+    "gained": 3,
+    "lost": 5,
+    "mcnemar_exact_p": 0.727,
+    "effect_points_weighted": -3.462,
+    "effect_ci95_points": [
+     -11.9,
+     4.9
+    ],
+    "wrong_text_pages": {
+     "read1": 2,
+     "gpu": 2,
+     "added": 1,
+     "removed": 1
+    },
+    "made_worse": {
+     "wrong_text": 1,
+     "misleads": 7,
+     "cosmetic": 13
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69f6ca068a992e70c92650ee",
+      "defects": [
+       "O5 \"quoy qu'elles soient d'airain ou de plaine, ou de l'or: ains est condamné\"",
+       "O6 \"d'airain ou de plaine\"",
+       "O10 \"que iura & ira signifient\"",
+       "O6 \"Leuons doctoyennement ce Signe\"",
+       "I4 \"c Inter mal. & fin.\""
+      ]
+     }
+    ]
+   },
+   "read4": {
+    "n": 60,
+    "gained": 3,
+    "lost": 4,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": -2.139,
+    "effect_ci95_points": [
+     -10.8,
+     6.4
+    ],
+    "wrong_text_pages": {
+     "read1": 2,
+     "read4": 2,
+     "added": 1,
+     "removed": 1
+    },
+    "made_worse": {
+     "wrong_text": 1,
+     "misleads": 8,
+     "cosmetic": 12
+    },
+    "wrong_text_added_list": [
+     {
+      "page_id": "69f6ca068a992e70c92650ee",
+      "defects": [
+       "O5 \"quoy qu'elles soient d'airain ou de plaine, ou de l'or: ains est condamné\"",
+       "O6 \"d'airain ou de plaine\"",
+       "O10 \"que iura & ira signifient\"",
+       "O6 \"Leuons doctoyennement ce Signe\"",
+       "I4 \"c Inter mal. & fin.\""
+      ]
+     }
+    ]
+   },
+   "read1": {
+    "n": 60,
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_exact_p": 1,
+    "effect_points_weighted": 0,
+    "effect_ci95_points": [
+     0,
+     0
+    ],
+    "wrong_text_pages": {
+     "read1": 2,
+     "added": 0,
+     "removed": 0
+    },
+    "made_worse": {
+     "wrong_text": 0,
+     "misleads": 0,
+     "cosmetic": 0
+    },
+    "wrong_text_added_list": []
+   }
+  },
+  "decision": {
+   "route": "read4",
+   "gate_best_accept": 0.932,
+   "gated": [
+    "gpu",
+    "read4",
+    "read1"
+   ],
+   "not_gated": [
+    "corr"
+   ],
+   "stored_severity_per_1000": 43.869,
+   "severity_removed_per_agy_call": {
+    "gpu": 29.166,
+    "read4": 101.834,
+    "read1": 31.86
+   },
+   "measure": "severity removed per agy call",
+   "tied": [
+    "read4"
+   ],
+   "lowest_severity_arm": "read1",
+   "why": "gate: accept >= 0.882 -> gpu, read4, read1; severity removed per agy call {\"gpu\":29.166,\"read4\":101.834,\"read1\":31.86}; tied read4; tie order read4 < corr < read1 < gpu; lowest severity rate among the gated: read1"
+  },
+  "decision_as_first_preregistered": {
+   "route": "read4",
+   "best_accept": "read1",
+   "eligible": [
+    "gpu",
+    "read4",
+    "read1"
+   ],
+   "tied": [
+    "read4"
+   ],
+   "why": "best accept read1 (0.932); eligible gpu, read4, read1; most accepted per agy call among them read4 (top 3.018); tie order read4 < corr < read1 < gpu",
+   "excluded": [
+    {
+     "arm": "corr",
+     "accept_weighted": 0.783,
+     "wrong_text_net_vs_best": 6
+    }
+   ]
+  },
+  "by_stratum": {
+   "fr|17th|fair-poor": {
+    "pages": 2,
+    "weight": 0.031,
+    "accept": {
+     "lite": "2/2",
+     "corr": "2/2",
+     "gpu": "2/2",
+     "read4": "2/2",
+     "read1": "2/2"
+    }
+   },
+   "fr|17th|good": {
+    "pages": 14,
+    "weight": 0.238,
+    "accept": {
+     "lite": "8/14",
+     "corr": "8/14",
+     "gpu": "9/14",
+     "read4": "11/14",
+     "read1": "12/14"
+    }
+   },
+   "fr|18th|fair-poor": {
+    "pages": 2,
+    "weight": 0.041,
+    "accept": {
+     "lite": "2/2",
+     "corr": "2/2",
+     "gpu": "2/2",
+     "read4": "1/2",
+     "read1": "2/2"
+    }
+   },
+   "fr|18th|good": {
+    "pages": 20,
+    "weight": 0.337,
+    "accept": {
+     "lite": "12/20",
+     "corr": "14/20",
+     "gpu": "19/20",
+     "read4": "19/20",
+     "read1": "19/20"
+    }
+   },
+   "fr|19th+|fair-poor": {
+    "pages": 3,
+    "weight": 0.049,
+    "accept": {
+     "lite": "3/3",
+     "corr": "3/3",
+     "gpu": "3/3",
+     "read4": "3/3",
+     "read1": "3/3"
+    }
+   },
+   "fr|19th+|good": {
+    "pages": 14,
+    "weight": 0.223,
+    "accept": {
+     "lite": "14/14",
+     "corr": "13/14",
+     "gpu": "14/14",
+     "read4": "14/14",
+     "read1": "13/14"
+    }
+   },
+   "fr|<=1600|good": {
+    "pages": 5,
+    "weight": 0.082,
+    "accept": {
+     "lite": "1/5",
+     "corr": "5/5",
+     "gpu": "5/5",
+     "read4": "5/5",
+     "read1": "5/5"
+    }
+   }
+  },
+  "by_face": {
+   "antiqua": {
+    "pages": 60,
+    "queue_share": 1,
+    "accept_weighted": {
+     "lite": 0.7,
+     "corr": 0.783,
+     "gpu": 0.898,
+     "read4": 0.911,
+     "read1": 0.932
+    },
+    "accept": {
+     "lite": "42/60",
+     "corr": "47/60",
+     "gpu": "54/60",
+     "read4": "55/60",
+     "read1": "56/60"
+    }
+   }
+  },
+  "arm_outcomes": {
+   "corr": {
+    "written": 39,
+    "letters outside the book's scripts": 2,
+    "corrector: UNCHANGED (the draft stands)": 12,
+    "correction changes N% of the draft's words: check by eye": 7
+   },
+   "gpu": {
+    "written": 39,
+    "a diff-guard flag spans a tag: the put-back cannot be spliced, the sto": 7,
+    "a diff-guard flag is not a like-for-like substitution: the put-back ca": 11,
+    "letters outside the book's scripts": 2,
+    "corrector: UNCHANGED (a headerless GPU draft is not written; the page ": 1
+   },
+   "read4": {
+    "written": 56,
+    "letters outside the book's scripts": 3,
+    "reply wrapper: reply cut before <<<END>>>": 1
+   },
+   "read1": {
+    "written": 57,
+    "letters outside the book's scripts": 2,
+    "more than one transcription header: restarted or refused read": 1
+   }
+  },
+  "gpu_engines": {
+   "pero": 0,
+   "lightonocr": 60
+  }
+ },
+ "dta": {
+  "file": "typed-refs-6012-2026-10-06.dta.aligned-pages.jsonl.gz",
+  "pages": []
+ },
+ "agy_calls_total": 1130,
+ "writeback": {
+  "pages": 178,
+  "by_arm": {
+   "de/read4": 53,
+   "de/read1": 31,
+   "de/gpu": 26,
+   "de/corr": 21,
+   "fr/read4": 26,
+   "fr/gpu": 6,
+   "fr/read1": 10,
+   "fr/corr": 5
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "unit": "defects per 1,000 words (#7824 words()), weighted to the queue",
+ "study_cells": {
+  "de-lite-print/lite": {
+   "n": 150,
+   "wrong_text_per_1k": 1.72,
+   "misleads_per_1k": 3.929,
+   "severity_per_1k": 81.881,
+   "fidelity_mean": 3.767,
+   "accept_weighted": 0.555
+  },
+  "de-lite-print/corr": {
+   "n": 150,
+   "wrong_text_per_1k": 0.976,
+   "misleads_per_1k": 2.408,
+   "severity_per_1k": 50.455,
+   "fidelity_mean": 4.082,
+   "accept_weighted": 0.72
+  },
+  "de-lite-print/gpu": {
+   "n": 150,
+   "wrong_text_per_1k": 0.846,
+   "misleads_per_1k": 2.363,
+   "severity_per_1k": 50.081,
+   "fidelity_mean": 4.146,
+   "accept_weighted": 0.754
+  },
+  "de-lite-print/read4": {
+   "n": 150,
+   "wrong_text_per_1k": 0.441,
+   "misleads_per_1k": 1.821,
+   "severity_per_1k": 31.282,
+   "fidelity_mean": 4.238,
+   "accept_weighted": 0.82
+  },
+  "de-lite-print/read1": {
+   "n": 150,
+   "wrong_text_per_1k": 0.684,
+   "misleads_per_1k": 1.626,
+   "severity_per_1k": 31.584,
+   "fidelity_mean": 4.216,
+   "accept_weighted": 0.819
+  },
+  "fr-lite-print/lite": {
+   "n": 60,
+   "wrong_text_per_1k": 1.15,
+   "misleads_per_1k": 3.193,
+   "severity_per_1k": 43.869,
+   "fidelity_mean": 4.244,
+   "accept_weighted": 0.7
+  },
+  "fr-lite-print/corr": {
+   "n": 60,
+   "wrong_text_per_1k": 1.025,
+   "misleads_per_1k": 2.061,
+   "severity_per_1k": 32.259,
+   "fidelity_mean": 4.445,
+   "accept_weighted": 0.783
+  },
+  "fr-lite-print/gpu": {
+   "n": 60,
+   "wrong_text_per_1k": 0.428,
+   "misleads_per_1k": 1.265,
+   "severity_per_1k": 14.703,
+   "fidelity_mean": 4.542,
+   "accept_weighted": 0.898
+  },
+  "fr-lite-print/read4": {
+   "n": 60,
+   "wrong_text_per_1k": 0.401,
+   "misleads_per_1k": 1.22,
+   "severity_per_1k": 13.115,
+   "fidelity_mean": 4.593,
+   "accept_weighted": 0.911
+  },
+  "fr-lite-print/read1": {
+   "n": 60,
+   "wrong_text_per_1k": 0.207,
+   "misleads_per_1k": 0.532,
+   "severity_per_1k": 11.977,
+   "fidelity_mean": 4.581,
+   "accept_weighted": 0.932
+  }
+ }
+}
