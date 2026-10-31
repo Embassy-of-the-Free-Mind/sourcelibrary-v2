@@ -6,13 +6,13 @@ scripts: [Latn]
 canons: []
 n_books: 58
 n_pages: 58
-verdict: "Preregistered 2026-10-31, before any open-model read was scored, judged or looked at. Results are not in yet."
-status: undecided
-decision: "None yet. Whether to add an open-model draft arm to the german-blank-fraktur cell, and whether to fine-tune (phase 3), are Derek's (#7845); this test gives the measured defaults."
+verdict: "No open model trained on 15th–19th-century print reads our Fraktur well enough to be a first read, or a better draft than the one we already have. Every arm failed the gate in round 1 (Opus, 6 gate pages each, 2026-10-31): Calamari LSH-4 0/6 accepted, wrong text on 4/6 (4.6 wrong-text defects per 1,000 words); the LSH-4 Fraktur model 1/6; the 19th-century control 0/6; three Kraken models 0/6 with wrong text on 6/6 (20–31 per 1,000 words). Against DTA references on 35 Fraktur pages, LSH-4 is at 9.6% Level-1 CER (median 3.9%), worse than PERO's draft (5.8%; paired +3.8 points, 95% CI 1.5–6.3) and stored Flash-Lite (2.9%). Kraken's 0/18 in #7701 was the model, not segmentation: the pages are single pages, blla's lines match the printed lines, LSH-4 reads the same lines with half the errors, and a second segmenter made Kraken far worse (+44.5 points CER)."
+status: rejected
+decision: "No open-model draft arm for the german-blank-fraktur cell: none passes the gate, and as a draft for the agy correction LSH-4 is worse than PERO and LightOnOCR, both already tested (#7701). Phase 3 (fine-tuning LSH-4 on DTA lines) is not started; its plan and cost are a DECISION for Derek (recommended: no, for now)."
 superseded_by: null
 issue: [7845, 7701, 7835, 7824, 5730]
-router_evidence: "none — preregistration only"
-defect_rates: "none — preregistration only: nothing judged yet"
+router_evidence: "none — no arm passed the gate; every arm was stopped in round 1 (6 of 15 gate pages judged), so no unbiased accept rate exists to export"
+defect_rates: "scripts/eval/route-judge-6740/results/fraktur-models-7845-2026-10-31/defect-rates.json"
 ---
 ## 2026-10-31 · Fraktur: can an open OCR model trained on 1500–1750 print read our Fraktur, and was Kraken's 0/18 a segmentation failure? (#7845)
 
@@ -153,3 +153,120 @@ None. Read-only throughout: no page, revision or route is written, no cron or ro
 - **Kraken arms stay as judged.** Round 1 judged them on their own crops: c1, c2, d and e were each 0/6 with wrong text on all 6. All four stop, as the round rule says.
 - **Arm b still does not run** on the filled crops (whole-page drafts 225–1,291 bytes of stray letters), so it stays unjudged (Amendment 1).
 - The judge's validity in round 1 (4/4 wrong-page refused, 2/2 plants caught) carries over to this amendment's packet, which has its own controls.
+
+## Results (2026-10-31)
+
+Code: `scripts/eval/route-judge-6740/fraktur-models-7845/` (`kraken_arms.py`, `calamari_arms.py`, `run.mjs`). Results: `route-judge-6740/results/fraktur-models-7845-2026-10-31/` (scores, keys, verdicts; the DTA reference texts are not copied).
+
+**The judge was valid** in both packets.
+- Wrong-page controls: 4/4 and 4/4 refused at fidelity ≤ 2.
+- Planted errors on read@4 texts: 2/2 and 2/2 caught (kinds B and C, both named).
+- Opus calls: 71 (48 in round 1, 23 for Amendment 2), under the 160 budget. No agy call was made for reading. The 40 phase-2 face tags were #7835's tagger, one agy flash-low call a page.
+
+### Phase 1: the 18 #7701 Fraktur pages, round 1 (6 gate pages each)
+
+**No arm passes the gate. Every arm failed at least 5 of its 6 round-1 gate pages and stopped** (round rule). So step 4, the draft > agy correction, was not run.
+
+| arm | crops | accepted | wrong-text pages | wrong text / 1,000 words | misleads / 1,000 words | agreement with accepted read@4, L1 CER mean (median), 13 pages | CPU s a page: segment + read (threads) | pages / hour, one process |
+|---|---|---|---|---|---|---|---|---|
+| **aw** LSH-4 | paper-filled S1 | 0/6 | 4/6 | **4.6** | 24.5 | 11.5% (5.6%) | 14.7 + 9.1 (8) | 151 |
+| a2w LSH-4 Fraktur | paper-filled S1 | **1/6** | 4/6 | 8.0 | 22.0 | 11.9% (7.0%) | 14.7 + 6.8 (8) | 167 |
+| b2w 19th-c. Fraktur | paper-filled S1 | 0/6 | 6/6 | 20.7 | 25.5 | 14.4% (8.2%) | 14.7 + 6.8 (8) | 167 |
+| c1 austriannewspapers | S1 | 0/6 | 6/6 | 20.3 | 39.9 | 15.7% (10.2%) | 14.7 + 6.4 (6) | 171 |
+| c2 austriannewspapers | **S2** | 0/6 | 6/6 | 57.1 | 6.7 | 69.2% (66.9%) | 4.4 + 3.4 (6) | 459 |
+| d McCATMuS | S1 | 0/6 | 6/6 | 30.6 | 38.0 | 30.4% (26.5%) | 14.7 + 4.8 (6) | 184 |
+| e CATMuS Gothic Print | S1 | 0/6 | 6/6 | 26.4 | 52.1 | 19.5% (13.8%) | 14.7 + 4.2 (6) | 191 |
+| *a, a2, b2 (harness bug, Amendment 2)* | black-filled S1 | 0/6 each | 6/6 each | 38.6, 62.6, 39.3 | | 24.5%, 43.3%, 24.9% | | |
+| *b fraktur_historical* | either | not judged (did not run, Amendments 1–2) | | | | 97% | | |
+| context: c0 (#7701 Kraken, its own verdicts) | blla via CLI | 0/18 | 17/18 | | | 15.7% (10.2%), identical to c1 | 2.8 (#7701 basis) | |
+| context: LightOnOCR / PERO (#7701) | | 2/18 / 3/18 | 10/18 / 7/18 | | | 5.7% (3.4%) / 12.1% (4.6%) | | |
+
+- **Agreement is not accuracy.** It is measured against Flash's accepted read, which expands and normalises some forms, so its floor is above zero. It decides nothing.
+- **n is 6 pages an arm.** At 0/6 the one-sided 95% upper bound on the accept rate is 39%; at 1/6 it is 58%. Both are below the gate's 73% (11/15).
+- **How the open models fail, in the judge's words.** Single misread letters that make non-words or other words: "genug" read as "gelig", "Fluxionibus … Flüssen foviert" as "Axionihus … Küſſen foriert". Numbers: the section mark "§. 9." as "17", a page number 54 as 34. A word fragment at the top of a page left garbled ("(or)dinari Zeit" as "den ri Ʒeit"). Running-head ornaments ")o(" read as stray lines ("6", "V7").
+  - A line recogniser has no page model and no language model, so each of these is a wrong word the judge must count.
+  - LSH-4's errors are the fewest of the open arms: 4.6 wrong-text defects per 1,000 words against 20–31 for Kraken. But 4 of its 6 pages still carry wrong text.
+
+### Phase 2: CER against DTA on #7835 T3's 40 pages
+
+The draw was run by me (`frame.mjs t3-draw`, #7835's code and seed, read-only) because #7835's files were not on gex45. It gave the same 40 page ids as #7835's images. Faces from #7835's tagger: 35 Fraktur, 5 Antiqua. Excluded for leaf or edition: 0.
+
+Fraktur, n = 35 pages (one a book). Level-1 (normalised) and Level-2 (diplomatic) CER, mean; page-bootstrap 95% CI on the Level-1 mean:
+
+| arm | L1 mean | L1 95% CI | L1 median | L2 mean |
+|---|---|---|---|---|
+| stored Flash-Lite | **2.9%** | 1.0–6.1 | 0.8% | 6.9% |
+| PERO draft (#7835 arm c's) | 5.8% | 2.6–10.8 | 2.3% | 7.7% |
+| **aw** LSH-4 | 9.6% | 5.3–15.4 | 3.9% | 10.9% |
+| b2w 19th-c. Fraktur | 10.1% | 5.9–15.6 | 4.9% | 11.4% |
+| a2w LSH-4 Fraktur | 10.9% | 6.2–16.9 | 3.9% | 12.2% |
+| c1 austriannewspapers (S1) | 11.5% | 7.0–17.2 | 6.7% | 12.7% |
+| e CATMuS Gothic Print | 17.3% | 13.5–22.1 | 13.4% | 21.1% |
+| d McCATMuS | 27.1% | 23.6–31.4 | 23.7% | 29.3% |
+| c2 austriannewspapers (S2) | 56.0% | 48.8–62.9 | 62.3% | 56.5% |
+
+Level 2 sits above Level 1 for the Flash-Lite read (6.9% against 2.9%) because Flash modernises ſ and the e-umlaut. The line recognisers keep ſ, so their two levels are close.
+
+**Paired, Fraktur, Level 1** (difference = first minus second; negative = first better):
+- LSH-4 against PERO: +3.8 points (95% CI +1.5 to +6.3); PERO better on 25 of 34 pages.
+- LSH-4 against stored Flash-Lite: +6.7 points (+2.3 to +11.9).
+- LSH-4 against Kraken c1: −1.9 points (−3.0 to −0.9); LSH-4 better on 25.
+- LSH-4 against the 19th-century control b2w: −0.5 points (−1.4 to +0.5).
+
+**By period (Fraktur, L1 mean):**
+
+| pages | n | Flash-Lite | PERO | LSH-4 | 19th-c. control | Kraken c1 |
+|---|---|---|---|---|---|---|
+| before 1700 | 8 | 4.1% | 8.6% | 10.8% | 14.4% | 16.3% |
+| 1700s | 10 | 5.7% | 10.6% | 14.6% | 13.9% | 15.7% |
+| 1800s | 17 | 0.7% | 1.7% | 6.1% | 5.8% | 6.8% |
+| before 1750 | 10 | 3.3% | 7.4% | 9.3% | 12.7% | 13.9% |
+
+On the 10 pre-1750 Fraktur pages, in-period training helps as the survey predicted: LSH-4 beats the 19th-century model by 3.4 points (95% CI 2.5–4.2). But it is still not better than PERO (+1.9, CI −1.0 to +6.5), and it is 6 points worse than Flash-Lite.
+
+Antiqua (n = 5, too few to rank): LSH-4 6.6%, Kraken c1 7.3%, PERO 2.4%, Flash-Lite 5.6%.
+
+### The segmentation finding
+
+**The Kraken 0/18 in #7701 was the model, not the segmentation.** By the preregistered rule the result is formally "mixed": the coverage clause is 9/13 against the 11/13 it asks for. The 3 pages that miss it are a defect of the proxy, explained below.
+
+1. **No spreads.** The 18 pages are single pages (width/height 0.57–0.80).
+2. **bench-2 never showed the model reading early Fraktur well.** The 98.5–99.8% belonged to Surya and CHURRO. Kraken `austriannewspapers` was at 94.8–95.9% on 1618/1645 there.
+3. **Same model, other lines.** The legacy segmenter (S2) makes it much worse, not better: 0/6 with 57.1 wrong-text defects per 1,000 words, and +44.5 points Level-1 CER on DTA (95% CI 37.8–51.1, worse on 35/35).
+   - Through this pipeline, blla gives exactly #7701's text. Agreement and judge are identical to c0.
+   - No segmentation lifted it to ≥ 6 accepted.
+4. **Same lines, other models.** On blla's lines, LSH-4 makes a quarter of Kraken's wrong text (4.6 against 20.3 per 1,000 words) and less CER (−1.9 points on DTA). The lines carry the text; this model misreads it.
+5. **Line coverage.** blla's line count is within 0.9–1.2 of the accepted read's on 9 of 13 pages.
+   - On 3 of the other 4, the read itself wrote 6–8 reflowed lines for 23–35 printed ones. The proxy cannot measure those pages.
+   - The fourth is a bloodletting calendar table at 1.23.
+   - Where the read keeps line breaks, 9 of 10 are in the window.
+
+### Speed and cost
+
+All on CPU on gex45 (the card was held by production OCR; Amendment 1).
+- blla segmentation is the slow step: 14.7 s a page on 8 threads.
+- Reading takes 4–9 s.
+- One process reads 150–190 pages an hour. Three in parallel on the box's 20 threads would read about 500 an hour, with no API cost.
+- That cost advantage does not matter while no arm writes an accepted page.
+
+### What it means
+
+- **No open model trained on early print is a usable first read of our Fraktur today.** The best one (LSH-4) writes wrong words on most pages.
+- **As a draft in front of the agy correction it is not the best open draft either.** On DTA it is worse than PERO's draft (+3.8 points), and on agreement worse than LightOnOCR's. Both PERO and LightOnOCR already have measured draft > agy routes in #7701 (9/13 and 11/14 on Fraktur).
+- **Kraken's failure is the model's period**, as the survey suspected, not blla.
+- **Fine-tuning (phase 3) is not started.** Its plan and cost are below and go to Derek as a DECISION.
+
+### Phase 3, the plan if Derek wants it (not run)
+
+- **Data.**
+  - #6012's DTA same-edition books with congruent pages: 87 books, of which ~60 for training and ~25 held out whole.
+  - blla lines on each congruent page. DTA's page text is aligned to the lines with the windowed aligner (`metrics.mjs`), keeping lines whose own CER is under 10%.
+  - About 500 pages, or 10–20k lines.
+- **Training.** LSH-4 fine-tuned with Calamari, as in Reul et al.
+  - On this box's CPU (the TF build here has no Blackwell kernels): about 1–2 days of 8 threads.
+  - Or 4–8 GPU-hours, after installing a TF build that supports the card.
+  - Segmenting the pages: about 2 CPU-hours.
+- **Engineering.** 1–2 job-days for the aligner and the training scripts.
+- **Evaluation.** About 100 Opus calls on held-out books, the same gate. $0 in API spend.
+- **Expected effect.** The literature's 30–50% CER reduction would take LSH-4 from 9.6% to about 5–7% Level 1 on our Fraktur. That is about PERO's draft today, and far above the ~1% at which the judge accepts a page.
+- **Recommendation: not now.** Revisit if a self-hosted Fraktur reader is needed for a reason other than first-read cost (e.g. a Gemini outage plan, or #5730's own-model track).

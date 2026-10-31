@@ -1,0 +1,504 @@
+[
+ {
+  "id": "k244a672ea3",
+  "judged_as": "ja4158777c2",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "ke698532cce",
+  "judged_as": "j4112bc6ce2",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k6ee176caf9",
+  "judged_as": "j9797bbae05",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "ka0087bedf2",
+  "judged_as": "ja2a7de3958",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "ke19acff7fc",
+  "judged_as": "jfe69194cbe",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k8c9ba44fd5",
+  "judged_as": "jf3b841bcca",
+  "cell": "de-fraktur-open",
+  "route": "a",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "k9fae9840ce",
+  "judged_as": "j949643be70",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "kffc0118201",
+  "judged_as": "j64a4878cce",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k834b3ebb6e",
+  "judged_as": "j23fb217a5b",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k493b9b2f6d",
+  "judged_as": "j2979dea848",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k658d9386f0",
+  "judged_as": "jb66b6bd166",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "ke0748f8900",
+  "judged_as": "j850cd503ed",
+  "cell": "de-fraktur-open",
+  "route": "a2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kcbdc384843",
+  "judged_as": "j059c8a8356",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "kd9ee404434",
+  "judged_as": "ja98fa223e3",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "kb1d89a6e41",
+  "judged_as": "j7f8474211a",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k85363410a4",
+  "judged_as": "j1be5ec23b3",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k4013ab6cb0",
+  "judged_as": "j6ba2c54cb0",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k6f52a96b76",
+  "judged_as": "jc8d60ba194",
+  "cell": "de-fraktur-open",
+  "route": "b2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kc37c190405",
+  "judged_as": "jf808424e29",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "k91115e0eaf",
+  "judged_as": "j4648a7a67b",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k89def01ec2",
+  "judged_as": "j746be10c1d",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k7423ef1327",
+  "judged_as": "je45ebfc237",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "kaf595493f2",
+  "judged_as": "jf92b61f084",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k1698560e6a",
+  "judged_as": "j2dac000070",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "k5aa651a0ca",
+  "judged_as": "j7933aa9369",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "k4bcf248af6",
+  "judged_as": "j2752e11e36",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "kc3f6ea15c9",
+  "judged_as": "j2b78aeba0e",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k4e6fe11281",
+  "judged_as": "jb32558e443",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k6809093b67",
+  "judged_as": "j91bdef7926",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k62c4529943",
+  "judged_as": "j7783892941",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "kc3255b6acd",
+  "judged_as": "ja22081a9b6",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "kaec17203c6",
+  "judged_as": "j7e828b3cac",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "kf09cd849d2",
+  "judged_as": "jf88a1594b5",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "kd29652968d",
+  "judged_as": "j9cc24ff463",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "k35b5d42990",
+  "judged_as": "j345f6a8e7c",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "k8dd1d9e09c",
+  "judged_as": "jeefb336bad",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "k8c37d95bd2",
+  "judged_as": "j6bcb85eb10",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a"
+ },
+ {
+  "id": "k82a27cbab8",
+  "judged_as": "ja264fddf65",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487"
+ },
+ {
+  "id": "k8bdce505b1",
+  "judged_as": "j05108abb1d",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5"
+ },
+ {
+  "id": "k7cab609e1d",
+  "judged_as": "j0103dbe4fa",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f"
+ },
+ {
+  "id": "kde2d2b1689",
+  "judged_as": "j1472915157",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "6a26d1b1f5273a8d907a00b3",
+  "book_id": "6a26d1b1f5273a8d907a0077"
+ },
+ {
+  "id": "kf3a3cf1a6c",
+  "judged_as": "ja319b4221a",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "item",
+  "round": 1,
+  "page_id": "69b6ba938566c8381463223d",
+  "book_id": "69b6ba938566c838146321b8"
+ },
+ {
+  "id": "k1a344d9a98",
+  "judged_as": "je30b008bcf",
+  "cell": "de-fraktur-open",
+  "route": "e",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "other": "6a26d1b1f5273a8d907a00b3"
+ },
+ {
+  "id": "k594328d48b",
+  "judged_as": "je8f505f4c3",
+  "cell": "de-fraktur-open",
+  "route": "d",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a495080b9cd91959af3b84f",
+  "book_id": "6a495080b9cd91959af3b7f5",
+  "other": "6a4940bbf36483abc5bbc93d"
+ },
+ {
+  "id": "k3918eb97d6",
+  "judged_as": "j991d4cca0e",
+  "cell": "de-fraktur-open",
+  "route": "c2",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "other": "6a26d1b1f5273a8d907a00b3"
+ },
+ {
+  "id": "k1296543af8",
+  "judged_as": "jdcca7016f8",
+  "cell": "de-fraktur-open",
+  "route": "c1",
+  "kind": "wrong_page",
+  "round": 1,
+  "page_id": "6a26d8fd774aa3596e88c658",
+  "book_id": "6a26d8fd774aa3596e88c39f",
+  "other": "6a26cbab5ac5aecc53cec6f0"
+ },
+ {
+  "id": "kbb000578e0",
+  "judged_as": "j90ceea3e8b",
+  "cell": "de-fraktur-open",
+  "route": "agy-flash-low@4",
+  "kind": "planted",
+  "round": 1,
+  "page_id": "6a2679fa6c1f37c9c4f2cc01",
+  "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+  "plant": {
+   "kind": "B",
+   "mode": "line",
+   "line": 21,
+   "offset": 39,
+   "before": "vier",
+   "after": "sechs",
+   "context": "nd aus der Truckene. Dann die vier Haubt-Winde nebenst"
+  }
+ },
+ {
+  "id": "k36e79cc860",
+  "judged_as": "j7918838085",
+  "cell": "de-fraktur-open",
+  "route": "agy-flash-low@4",
+  "kind": "planted",
+  "round": 1,
+  "page_id": "6a26b88661b3857ed05a64d8",
+  "book_id": "6a26b88661b3857ed05a6487",
+  "plant": {
+   "kind": "C",
+   "mode": "line",
+   "line": 27,
+   "offset": 0,
+   "before": "Fürsichtigkeit",
+   "after": "Gerechtigkeit",
+   "context": "Fürsichtigkeit gebrauchen / gut auffmer-"
+  }
+ }
+]
