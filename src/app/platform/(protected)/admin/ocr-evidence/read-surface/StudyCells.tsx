@@ -64,10 +64,10 @@ export function CellTable({ S }: { S: Study }) {
         <tbody>{S.cells.map((c) => (
           <tr key={c.name} className="border-b border-[#21262d]" style={{ color: c.name === S.optimum ? BLUE : c.live ? AMBER : INK }}>
             <td className="py-1 pr-3">{c.name}{c.live ? ' (live)' : ''}</td>
-            <td className="pr-3">{c.live ? '—' : `${c.delta_cer_pp >= 0 ? '+' : ''}${c.delta_cer_pp.toFixed(2)} [${c.delta_lo.toFixed(2)}, ${c.delta_hi.toFixed(2)}]`}</td>
+            <td className="pr-3">{c.live ? '–' : `${c.delta_cer_pp >= 0 ? '+' : ''}${c.delta_cer_pp.toFixed(2)} [${c.delta_lo.toFixed(2)}, ${c.delta_hi.toFixed(2)}]`}</td>
             <td className="pr-3">{c.usd_per_1k_pages.toFixed(2)}</td><td className="pr-3">{(100 * c.yield).toFixed(0)}%</td>
             <td className="pr-3">{c.usd_per_1k_accepted.toFixed(2)} [{c.cpa_lo.toFixed(2)}, {c.cpa_hi.toFixed(2)}]</td>
-            <td className="pr-3">{c.live ? '—' : `${c.saving_vs_live >= 0 ? '−' : '+'}${Math.abs(100 * c.saving_vs_live).toFixed(0)}%`}</td>
+            <td className="pr-3">{c.live ? '–' : `${c.saving_vs_live >= 0 ? '−' : '+'}${Math.abs(100 * c.saving_vs_live).toFixed(0)}%`}</td>
             <td>{c.non_inferior ? 'yes' : 'no'}</td>
           </tr>
         ))}</tbody>

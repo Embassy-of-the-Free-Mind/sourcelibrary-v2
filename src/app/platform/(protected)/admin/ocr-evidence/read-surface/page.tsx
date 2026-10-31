@@ -174,7 +174,7 @@ function A6() {
               <CellMap S={S} label={l} />
               <div className="text-sm text-[#8b949e]">
                 <p>A-vs-A (identical settings, paired by book): {Object.entries(L.a_vs_a).map(([k, v]) => `${k} ${v.mean_cer_pp >= 0 ? '+' : ''}${v.mean_cer_pp.toFixed(2)} pp (detectable ${v.mde_cer_pp.toFixed(2)} pp, ${v.books} books)`).join('; ') || 'none'}.</p>
-                <p className="mt-2">Lack of fit of the quadratic against the 9 cell means: {Object.entries(L.lack_of_fit).map(([k, v]) => (v?.F != null ? `${k} F(${v.df?.join(', ')}) = ${v.F.toFixed(2)}, p ${v.p?.toFixed(3)}` : `${k} —`)).join('; ')}. Every cell was read, so the decision uses the cells, not the curve.</p>
+                <p className="mt-2">Lack of fit of the quadratic against the 9 cell means: {Object.entries(L.lack_of_fit).map(([k, v]) => (v?.F != null ? `${k} F(${v.df?.join(', ')}) = ${v.F.toFixed(2)}, p ${v.p?.toFixed(3)}` : `${k} –`)).join('; ')}. Every cell was read, so the decision uses the cells, not the curve.</p>
                 <p className="mt-2">By century (≥ 10 books): {Object.entries(L.by_century).map(([c, v]) => (v.too_few ? `${c} ${v.books} book(s), too few` : `${c} ${v.books} books → ${v.optimum ?? 'none'}`)).join('; ')}.</p>
               </div>
             </div>
