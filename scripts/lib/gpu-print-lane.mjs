@@ -24,7 +24,7 @@ export { isHumanEdited } from './paddle-zh-lane.mjs';
 export const LANE = 'gpu-print-en-2026-10';
 export const LANE_ISSUE = 6871;
 export const HOLD_REASON = 'gpu-print-6871';
-export const HOLD_RELEASE = 'the GPU (LightOnOCR) read of this English print book is written to its pages that had no text (#6871, OCR only); release with --to ocr_complete once the book is checked';
+export const HOLD_RELEASE = 'every page the GPU lane planned for this English print book is applied, skipped or rejected (#6871); `gpu-print-lane.mjs release` then restores the status the book was held from, so the pipeline reads what the GPU left and translates the rest';
 export const REVISION_REASON = 'ocr_gpu_print_6871';
 export const BOOK_EVENT = 'gpu_print_ocr';
 export const SOURCE = 'lightonocr';
@@ -149,4 +149,26 @@ export function ocrField(text, { run, now = new Date(), imageUrl = null, imageSh
 /** One page through the one writer (#7058): revision with the whole prior field, CAS on the prior text. */
 export async function writeLanePage(db, pageId, field, { run }) {
   return writePageText(db, pageId, 'ocr', field, { by: `${LANE} (scripts/workers/gpu-print-lane.mjs)`, reason: REVISION_REASON, run_id: run });
+}
+
+/**
+ * May the lane release this book's hold now (#6871, Derek 2026-10-31)? A free book (--free frame) is held
+ * `gpu-print-6871` by `plan` so no other lane reads its pages while the GPU does; left held, a book that was
+ * `archive_complete` or `complete` would wait out of OCR and translation for ever. The lane releases ONLY a hold it
+ * placed: the plan file says so (`placed_hold`, written when holdBook returned `held`) AND the live hold is still this
+ * lane's reason. A book that came in under a scans-only or any other hold keeps it, finished or not.
+ *
+ * @param {{ placed_hold?: boolean, pages: { pn: number }[] }} plan   plan/<bid>.json
+ * @param {{ reason?: string } | null | undefined} liveHold          books.pipeline_auto.hold, read now
+ * @param {(pn: number) => boolean} isDone                            the page is applied, skipped or rejected
+ * @param {{ abandon?: boolean }} [opts]                             release with pages outstanding (book dropped from the lane)
+ * @returns {{ release: boolean, why: string, outstanding?: number }}
+ */
+export function laneReleaseVerdict(plan, liveHold, isDone, { abandon = false } = {}) {
+  if (plan?.placed_hold !== true) return { release: false, why: 'hold_not_placed_by_lane' };
+  if (!liveHold) return { release: false, why: 'not_held' };
+  if (liveHold.reason !== HOLD_REASON) return { release: false, why: `held_other_reason:${liveHold.reason}` };
+  const outstanding = (plan.pages || []).filter((p) => !isDone(p.pn)).length;
+  if (outstanding && !abandon) return { release: false, why: 'pages_outstanding', outstanding };
+  return { release: true, why: outstanding ? 'abandoned' : 'finished', outstanding };
 }

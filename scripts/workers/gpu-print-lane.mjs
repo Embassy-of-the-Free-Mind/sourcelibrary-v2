@@ -16,11 +16,15 @@
  *   plan     per book (--books <file> | --book <id> | the first --limit frame books): a free book is HELD
  *            (gpu-print-6871) first; a book under a GPU-lane hold keeps it. Then its pages with no text and an image
  *            → plan/<bid>.json and manifest.tsv rows (<bid>\t<pn>\t<pid>\t<url>). Dry unless --apply. A book held
- *            for any other reason is skipped.
+ *            for any other reason is skipped. The plan file records `placed_hold` (true only when this run held it).
  *   apply    per book whose every planned page is back from the box: re-check each page (still no text, not
  *            human-edited, the book still held for this lane), run the loop guard and the blank floor, write through
- *            writePageText (revision row, CAS), recount, sweep_log before and after, one book_events row. The hold
- *            STAYS (#6871 brief: no release of holds). Dry unless --apply.
+ *            writePageText (revision row, CAS), recount, sweep_log before and after, one book_events row. Then the
+ *            release sweep below. A scans-only (or any other) hold STAYS. Dry unless --apply.
+ *   release  every planned book whose `gpu-print-6871` hold the lane placed and whose planned pages are all applied,
+ *            skipped or rejected: releaseBook with reason gpu-print-6871 (restores the status it was held from), one
+ *            sweep_log row a release (#6871, Derek 2026-10-31). --abandon with --book/--books releases a book with pages
+ *            outstanding (dropped from the lane). Never lifts a hold the lane did not place. Dry unless --apply.
  *   status   counts from the files.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
@@ -34,11 +38,11 @@ import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
+import { holdBook, releaseBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { GPU_LANE_HOLDS } from '../batch/cli-ocr-lane.mjs';
 import {
   LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, LIGHTON,
-  isEnglishBook, hasNoText, pageVerdict, envelope, ocrField, writeLanePage, isHumanEdited,
+  laneReleaseVerdict, isEnglishBook, hasNoText, pageVerdict, envelope, ocrField, writeLanePage, isHumanEdited,
 } from '../lib/gpu-print-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -54,7 +58,7 @@ const F = {
   frame: path.join(DIR, 'frame-books.json'), planDir: path.join(DIR, 'plan'), outDir: path.join(DIR, 'out'),
   manifest: path.join(DIR, 'manifest.tsv'), log: path.join(DIR, 'lane.log'), runs: path.join(DIR, 'runs'),
   applied: path.join(DIR, 'applied.jsonl'), skipped: path.join(DIR, 'skipped.jsonl'), rejected: path.join(DIR, 'rejected.jsonl'),
-  bookLog: path.join(DIR, 'applied-books.jsonl'),
+  bookLog: path.join(DIR, 'applied-books.jsonl'), released: path.join(DIR, 'released.jsonl'),
 };
 const planFile = (bid) => path.join(F.planDir, `${bid}.json`);
 const outFile = (bid, pn, ext) => path.join(F.outDir, bid, `${pn}.${ext}`);
@@ -67,7 +71,7 @@ const append = (file, row) => fs.appendFileSync(file, JSON.stringify({ ...row, a
 const readJsonl = (file) => fs.existsSync(file) ? fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
 const readJson = (file, d) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : d;
 const rank = (id) => crypto.createHash('sha256').update(`6871gpuprint:${id}`).digest('hex');
-/** Holds this lane may write under: its own, and the scans-only holds that wait for a GPU read. No hold is released. */
+/** Holds this lane may write under: its own, and the scans-only holds that wait for a GPU read. Only its own is ever released. */
 const LANE_HOLDS = new Set([HOLD_REASON, ...GPU_LANE_HOLDS]);
 const NO_TEXT = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': { $regex: /^\s*$/ } }] };
 
@@ -131,7 +135,7 @@ async function plan() {
       const h = isHeld(book) ? { outcome: 'already_held', from: book.pipeline_auto.hold.held_from_status ?? null }
         : await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: LIGHTON.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); continue; }
-      fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, language: book.language, year: book.year, hold: book.pipeline_auto?.hold?.reason ?? HOLD_REASON, held_from: h.from ?? null, planned_at: new Date().toISOString(), pages: rows }));
+      fs.writeFileSync(planFile(book.id), JSON.stringify({ bid: book.id, title: book.title, language: book.language, year: book.year, hold: book.pipeline_auto?.hold?.reason ?? HOLD_REASON, placed_hold: h.outcome === 'held', held_from: h.from ?? null, planned_at: new Date().toISOString(), pages: rows }));
       fs.appendFileSync(F.manifest, rows.map((r) => `${book.id}\t${r.pn}\t${r.pid}\t${r.src}`).join('\n') + '\n');
       tally.books++; tally.pages += rows.length;
     }
@@ -165,7 +169,10 @@ async function apply() {
   }
   log(`${ready.length} books ready (${ready.reduce((s, b) => s + b.pages.length, 0)} pages)${APPLY ? '' : '  [DRY RUN]'}`);
   const totals = { books: 0, written: 0, conflicts: 0, textless: 0, rejected: 0, has_text_now: 0, human_edited: 0, not_held: 0, errors: 0, why: {} };
-  if (!ready.length) { log(`APPLY ${JSON.stringify(totals)}`); return totals; }
+  if (!ready.length) {
+    if (APPLY) await withMongo(async (db) => { totals.released = (await releaseSweep(db)).released; }, { timeoutMs: 3600 * 1000 });
+    log(`APPLY ${JSON.stringify(totals)}`); return totals;
+  }
   const { name: runName, box } = latestRun();
   const runId = `${LANE}/${runName}${arg('--apply-tag', null) ? `/${arg('--apply-tag')}` : ''}`;
   await withMongo(async (db) => {
@@ -220,9 +227,49 @@ async function apply() {
       append(F.bookLog, { bid, written, conflicts, run: runId });
       log(`${bid} wrote ${written}/${writes.length} | ${String(book.title || '').slice(0, 50)}`);
     }
+    if (APPLY) totals.released = (await releaseSweep(db)).released;
   }, { timeoutMs: 6 * 3600 * 1000 });
   log(`APPLY ${JSON.stringify(totals)}`);
   return totals;
+}
+
+// ── release (only the holds this lane placed) ───────────────────────────────────────────
+
+/**
+ * Release the `gpu-print-6871` hold of every planned book the lane held itself and has finished (laneReleaseVerdict).
+ * The reason goes to releaseBook as well, so the write itself cannot lift another hold. Called by `release` and at the
+ * end of `apply --apply`.
+ */
+async function releaseSweep(db, { abandon = false } = {}) {
+  const done = new Set([...readJsonl(F.applied), ...readJsonl(F.skipped), ...readJsonl(F.rejected)].map((r) => `${r.bid}/${r.pn}`));
+  let books = fs.existsSync(F.planDir) ? fs.readdirSync(F.planDir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)) : [];
+  if (BOOK) books = books.filter((b) => b === BOOK);
+  if (arg('--books', null)) { const want = new Set(fs.readFileSync(arg('--books'), 'utf8').split('\n').map((s) => s.trim())); books = books.filter((b) => want.has(b)); }
+  const tally = { released: 0, candidates: 0, why: {} };
+  for (const bid of books.sort()) {
+    const pl = readJson(planFile(bid));
+    if (pl.placed_hold !== true) continue; // the common case: the book came in under a scans-only hold, which stays
+    tally.candidates++;
+    const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, pipeline_auto: 1 } });
+    const v = laneReleaseVerdict(pl, book?.pipeline_auto?.hold, (pn) => done.has(`${bid}/${pn}`), { abandon });
+    if (!v.release) { tally.why[v.why] = (tally.why[v.why] || 0) + 1; continue; }
+    if (!APPLY) { log(`${bid} would release ${HOLD_REASON} (${v.why}) → ${book.pipeline_auto.hold.held_from_status ?? 'default'} | ${String(book.title || '').slice(0, 50)}`); tally.released++; continue; }
+    const r = await releaseBook(db, bid, { reason: HOLD_REASON, source: LANE, note: `gpu-print-lane.mjs release: ${v.why}${v.outstanding ? `, ${v.outstanding} planned pages outstanding` : ''} (#${LANE_ISSUE})` });
+    if (r.outcome !== 'released') { tally.why[`release_${r.outcome}`] = (tally.why[`release_${r.outcome}`] || 0) + 1; log(`${bid} release ${r.outcome}`); continue; }
+    await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'hold-released', detail: { issue: LANE_ISSUE, reason: HOLD_REASON, why: v.why, outstanding: v.outstanding ?? 0, planned: pl.pages.length, to_status: r.to } });
+    append(F.released, { bid, why: v.why, to: r.to, outstanding: v.outstanding ?? 0 });
+    tally.released++;
+    log(`${bid} released ${HOLD_REASON} → ${r.to} (${v.why}) | ${String(book.title || '').slice(0, 50)}`);
+  }
+  log(`RELEASE ${JSON.stringify(tally)}${APPLY ? '' : '  [DRY RUN]'}`);
+  return tally;
+}
+
+async function release() {
+  if (flag('--abandon') && !BOOK && !arg('--books', null)) { console.error('--abandon needs --book or --books'); process.exit(2); }
+  let t;
+  await withMongo(async (db) => { t = await releaseSweep(db, { abandon: flag('--abandon') }); }, { timeoutMs: 3600 * 1000 });
+  return t;
 }
 
 function status() {
@@ -238,6 +285,6 @@ function status() {
   return s;
 }
 
-const CMDS = { frame, plan, apply, status };
+const CMDS = { frame, plan, apply, release, status };
 if (!CMDS[CMD]) { console.error(`usage: gpu-print-lane.mjs ${Object.keys(CMDS).join('|')} [--dir D] [--apply]`); process.exit(2); }
 await CMDS[CMD]();
