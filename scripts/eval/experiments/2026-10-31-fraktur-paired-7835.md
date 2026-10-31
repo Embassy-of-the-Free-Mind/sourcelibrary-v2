@@ -130,3 +130,24 @@ On T1 and T2 pages, only the best judged arm, only where it was accepted and no 
 - T1's block is the drawn page and the next 3 unread pages, not the live lane's 40-page chunk position.
 - T3 is restricted to pages whose stored OCR is Flash-Lite, so every arm runs on every page; that leaves 42 books, 21 of the 40 drawn pages from the 19th century.
 - Limits: Claude only via `claude -p` on this box's subscription; Gemini only through agy (flash-low); no paid API call; no cron or routing change.
+
+## Amendment 1 (2026-10-31, 10:30Z): reads the box killed, the Antiqua shortfall, e-rara
+
+Made before any T1 arm, any T3 verdict, any CER score and any judge call on the texts it changes.
+
+**What existed when this was written:**
+- face tags: T2, T3 and T4 complete; T1 about 300 of 450;
+- arms: T2 (a), (b), (c) and T3 lite, (a), (c) complete; T3 (b) stopped after it started (no row written); no T1 arm;
+- Opus verdicts: about 45 of T2's 104 items; nothing else judged; no CER, FCA or error kind computed.
+
+**A1. A read the box killed is retried once.** Between 09:50Z and 10:20Z the box ran out of memory and the kernel's OOM killer took agy processes (`dmesg`: "Out of memory: Killed process … (agy)"). Their reads end with `exit -9` and no model reply: an infrastructure kill, not an answer of the route.
+- Affected: T2 (c) 6 of 40 judged pages (whole blocks), T3 (a) 1 judged page and killed neighbours in 4 other blocks.
+- Rule: `arms.mjs retry-killed --set=… --arm=…` moves each `exit -9` read aside (kept under `killed/`), re-opens the key once, and the arm's own stage reads the missing pages again. A second kill stands as the outcome. The first outcome stays in `arms.jsonl` and is reported.
+- This study's agy concurrency is cut to 2 calls at a time in all from here.
+- T2 (c)'s 6 pages had served the stored text and were judged as (a)'s item; their retried (c) texts are judged as new items.
+
+**A2. T1's Antiqua stratum will be short.** About 3% of the tagged T1 candidates are Antiqua (10 of about 300), against #7701's 7% (12/170, by eye). As preregistered, all Antiqua among the 450 candidates are taken and the stratum's n is reported. Below 20 it is exploratory: only Fraktur carries the primary outcome.
+
+**A3. T4: 17 of 300 pages could not be fetched.** They are all e-rara (`www.e-rara.ch/i3f/…`) images, which answer HTTP 403 to this box for any user agent. They are reported untagged, and the Fraktur share is over the 283 tagged pages. e-rara's books are therefore missing from T4's share.
+
+**Code fix (no change of method).** `arms.mjs t3-pero` compared PERO's image hash with a hash of the image as a string (always a mismatch). It now hashes the bytes. The PERO drafts were not re-run.
