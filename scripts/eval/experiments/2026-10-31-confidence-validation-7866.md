@@ -12,7 +12,7 @@ decision: "none yet: the preregistered rule (AUC >= 0.75 and calibrated → tria
 superseded_by: null
 issue: [7866, 6740, 7611, 7824, 7809]
 router_evidence: "none — the export goes to router-table/evidence/confidence-validation-7866.score.json and rules.json does not name it; the store copies carry the cell namespaced study-7866/<cell> so the nightly sampler export does not pool them"
-defect_rates: null
+defect_rates: "none — preregistration, no verdict yet; the results PR names scripts/eval/confidence-7866/results/defect-rates.json (per stratum and per served route)"
 ---
 ## 2026-10-31 · Do our cheap quality signals predict a book's real quality? 160 books, 5 judged pages each, stratified by confidence (#7866)
 
