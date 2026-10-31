@@ -106,6 +106,15 @@
  * (mode, lane, draft) pointing at the whole prompt sent, so `apply` runs every correct-mode guard page by page,
  * unchanged. A page with no draft is not sent and breaks the run.
  *
+ * EVAL KNOBS (#6740 read-surface, Box-Behnken tuning of the first read; production passes none of them):
+ * `read --long-edge=N` sends each image with its long edge fitted to N px (scripts/lib/image-long-edge.mjs; never
+ * enlarged, so an image already ≤ N goes as served); the meta records `image_fit` {long_edge, resized, native, sent}.
+ * `read --image-cache=DIR` takes DIR/<page_id>.jpg when present and saves a fetched image there otherwise, so every run
+ * of a design sends the same served bytes (the host can serve one URL as two JPEGs, #7567) and a rate-limited host
+ * (BSB) is fetched once. `read --no-alone` (with --per-call) does not read a refused block's pages one per call: each
+ * page that would have gone alone is listed in DIR/not-read.jsonl {page_id, from, call_id} and left unread, so a design
+ * run costs one block (and its one retry) per call; the analysis prices those pages at the one-per-call rate.
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -136,6 +145,7 @@ import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
+import { fitLongEdge } from '../lib/image-long-edge.mjs';
 import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
@@ -166,6 +176,13 @@ const OVER_STORED = process.argv.includes('--over-stored');
 if (STAGE === 'read' && OVER_STORED && !GPU_DRAFT) { console.error('--over-stored is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
+// Eval knobs (#6740, see EVAL KNOBS in the header): image long edge, a per-page image cache, no one-per-call fallback.
+const LONG_EDGE = arg('long-edge') ? Number(arg('long-edge')) : null;
+if (STAGE === 'read' && LONG_EDGE !== null && !(Number.isInteger(LONG_EDGE) && LONG_EDGE >= 256 && LONG_EDGE <= 8000)) { console.error('--long-edge must be 256 to 8000 px'); process.exit(2); }
+const IMAGE_CACHE = arg('image-cache') && path.resolve(arg('image-cache'));
+const NO_ALONE = process.argv.includes('--no-alone');
+if (STAGE === 'read' && NO_ALONE && PER_CALL < 2) { console.error('--no-alone is for --per-call >= 2'); process.exit(2); }
+if (STAGE === 'read' && (LONG_EDGE || IMAGE_CACHE) && (CORRECT_PROMPT || GPU_DRAFT)) { console.error('--long-edge / --image-cache are for a plain read'); process.exit(2); }
 // up to 8 (#7701 german-cheaper: the read@8 arm); the lanes still cap themselves at 4 (cli-ocr-lane.mjs --per-call 1-4)
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 8)) { console.error('--per-call must be 1 to 8'); process.exit(2); }
 // --per-call with --correct-prompt (#7701 arm C): N drafts and their images in one call (agy-cli.mjs correctBlockPrompt);
@@ -276,6 +293,22 @@ if (STAGE === 'read') {
   let quotaUntil = 0, reused = 0;
   // What a correction read records of the draft it was sent (apply checks it against the stored OCR / the GPU draft file).
   const draftMeta = (p) => ({ ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${p.id}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at });
+  // The served image (or the --image-cache copy of it), fitted to --long-edge. Returns { buf, fit } or { error }.
+  const servedImage = async (p, src) => {
+    const cached = IMAGE_CACHE && path.join(IMAGE_CACHE, `${p.id}.jpg`);
+    let buf;
+    if (cached && fs.existsSync(cached)) buf = fs.readFileSync(cached);
+    else {
+      const res = await fetch(src);
+      if (!res.ok) return { error: `image HTTP ${res.status}` };
+      buf = Buffer.from(await res.arrayBuffer());
+      if (cached) { fs.mkdirSync(IMAGE_CACHE, { recursive: true }); fs.writeFileSync(cached, buf); }
+    }
+    if (!LONG_EDGE) return { buf, fit: null };
+    const f = await fitLongEdge(buf, LONG_EDGE);
+    return { buf: f.buf, fit: { long_edge: LONG_EDGE, resized: f.resized, native: f.native, sent: f.sent } };
+  };
+  const notRead = (p, from, callId = null) => fs.appendFileSync(path.join(OUT, 'not-read.jsonl'), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, from, call_id: callId }) + '\n');
   // `from`: the block call (#7522) whose refusal or guard sent this page to be read alone, recorded in its meta.
   const readOne = async (p, from = null) => {
     const key = p.id;
@@ -287,9 +320,13 @@ if (STAGE === 'read') {
     if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
     const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
     if (local && !fs.existsSync(local)) { console.log(`  ${p.page_number} not in --image-dir; skipped`); return; }
-    const res = local ? null : await fetch(src);
-    if (res && !res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
-    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    let buf, fit = null;
+    if (local) buf = fs.readFileSync(local);
+    else {
+      const im = await servedImage(p, src);
+      if (im.error) { console.log(`  ${p.page_number} ${im.error}; skipped`); return; }
+      ({ buf, fit } = im);
+    }
     if (p.ocr?.source === 'gpu') {
       // The corrector must see the image the draft was made from, or its "the image is the authority" is about another scan.
       if (createHash('sha256').update(buf).digest('hex') !== p.ocr.gpu.image_sha256) { console.log(`  ${p.page_number} the GPU draft was made from other image bytes; skipped`); return; }
@@ -348,7 +385,7 @@ if (STAGE === 'read') {
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
-      image_url: src, image_bytes: buf.length, image_sha256: imageSha,
+      image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: draftMeta(p) }),
@@ -365,12 +402,16 @@ if (STAGE === 'read') {
     // A GPU draft is corrected against the image it was made from (--image-dir), as readOne does.
     const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
     if (local && !fs.existsSync(local)) return { error: 'not in --image-dir' };
-    const res = local ? null : await fetch(src);
-    if (res && !res.ok) return { error: `image HTTP ${res.status}` };
-    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    let buf, fit = null;
+    if (local) buf = fs.readFileSync(local);
+    else {
+      const im = await servedImage(p, src);
+      if (im.error) return { error: im.error };
+      ({ buf, fit } = im);
+    }
     const sha = createHash('sha256').update(buf).digest('hex');
     if (p.ocr?.source === 'gpu' && sha !== p.ocr.gpu.image_sha256) return { error: 'the GPU draft was made from other image bytes' };
-    return { src, buf, sha };
+    return { src, buf, sha, fit };
   };
   // Correct mode (#7701 arm C): the block carries each page's draft, so the prompt is the group's, not the count's.
   const blockPrompt = (n, group) => (CORRECT_PROMPT ? correctBlockPrompt(base, group.map((q) => q.ocr.data)) : base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT }));
@@ -432,7 +473,7 @@ if (STAGE === 'read') {
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null,
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
         prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
-        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)),
+        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
       };
@@ -467,13 +508,16 @@ if (STAGE === 'read') {
     if (redo === null) redo = await readBlock(group, imgs, 1);
     // Still refused: each page alone, so one hard page does not cost its neighbours.
     const from = redo === null ? 'refused' : 'guard';
+    if (NO_ALONE) { for (const p of redo ?? group) notRead(p, from, `${JOB}-${group[0].book_id}-${group[0].page_number}-${group.length}`); return; }
     for (const p of redo ?? group) await readOne(p, from);
   };
   let groups = pages.map((p) => [p]);
   if (PER_CALL > 1) {
     // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
     const order = new Map(ids.map((id, i) => [id, i]));
-    const isRead = (p) => { try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
+    // --no-alone: a page its block left unread (not-read.jsonl) is done too, so a resumed design run does not call it again.
+    const leftUnread = new Set(NO_ALONE && fs.existsSync(path.join(OUT, 'not-read.jsonl')) ? fs.readFileSync(path.join(OUT, 'not-read.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
+    const isRead = (p) => { if (leftUnread.has(p.id)) return true; try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
     const runs = [];
     for (const p of [...pages].sort((a, b) => order.get(a.id) - order.get(b.id))) {
       if (isRead(p)) { console.log(`  ${p.page_number} already read`); continue; }

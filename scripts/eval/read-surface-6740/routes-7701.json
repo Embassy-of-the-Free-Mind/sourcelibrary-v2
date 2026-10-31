@@ -1,0 +1,21 @@
+{
+ "about": "#7701 first-read routes, as their experiment files report them: written pages accepted by a blind Opus judge against the image (measure: judged), wrong text on written pages, agy calls a page. One row per route and draw; copied from the tables, not recomputed.",
+ "routes": [
+  { "lang": "de", "route": "read@4 (live), draw 3", "k": 21, "n": 24, "wrong": 0, "calls": 0.97, "live": true, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "read@8", "k": 18, "n": 22, "wrong": 1, "calls": 0.81, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "LightOnOCR > agy@4", "k": 20, "n": 25, "wrong": 2, "calls": 0.33, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "PERO > agy@4", "k": 17, "n": 22, "wrong": 2, "calls": 0.41, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "LightOnOCR alone", "k": 13, "n": 30, "wrong": 10, "calls": 0, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "PERO alone", "k": 11, "n": 29, "wrong": 8, "calls": 0, "source": "2026-10-30-german-cheaper-first-reads-7701.md" },
+  { "lang": "de", "route": "read@4, draw 2", "k": 19, "n": 20, "wrong": 0, "calls": 1.03, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "de", "route": "read@4 > correct", "k": 20, "n": 20, "wrong": 0, "calls": 2.03, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "de", "route": "read@4 > correct@4", "k": 20, "n": 20, "wrong": 0, "calls": 1.39, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "de", "route": "read@4 > correct, draw 1", "k": 23, "n": 24, "wrong": 0, "calls": 1.55, "source": "2026-10-29-first-read-no-stored-text-7701.md" },
+  { "lang": "fr", "route": "read@1 (was live)", "k": 20, "n": 21, "wrong": 1, "calls": 1.27, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "fr", "route": "read@4 (live)", "k": 24, "n": 24, "wrong": 0, "calls": 0.71, "live": true, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "fr", "route": "read@1, draw 1", "k": 24, "n": 24, "wrong": 0, "calls": 1.23, "source": "2026-10-29-first-read-no-stored-text-7701.md" },
+  { "lang": "la", "route": "PERO > agy@1 (arm c, live)", "k": 18, "n": 18, "wrong": 0, "calls": 1.03, "live": true, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "la", "route": "PERO > agy@4", "k": 14, "n": 16, "wrong": 1, "calls": 0.27, "source": "2026-10-29-cheap-routes-7701.md" },
+  { "lang": "la", "route": "read@4", "k": 17, "n": 19, "wrong": 1, "calls": 0.60, "source": "2026-10-29-first-read-no-stored-text-7701.md" }
+ ]
+}

@@ -1,0 +1,346 @@
+[
+ {
+  "id": "k363c2817b6",
+  "judged_as": "jcc78affbd8",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b696b04a5f9daef79e934a",
+  "book_id": "69b696b04a5f9daef79e9343",
+  "page_number": 7
+ },
+ {
+  "id": "k8cdbc1dd2b",
+  "judged_as": "j41c9334341",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b637531c1c21a373832481",
+  "book_id": "69b637531c1c21a37383241f",
+  "page_number": 98
+ },
+ {
+  "id": "kba67f4f88f",
+  "judged_as": "jeca58aef2f",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6ecd43c7947b468d315d2",
+  "book_id": "69b6ecd43c7947b468d31454",
+  "page_number": 382
+ },
+ {
+  "id": "ka4e2885a40",
+  "judged_as": "j93dca4d04e",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6ef28b1a3146c0526496b",
+  "book_id": "69b6ef28b1a3146c05264958",
+  "page_number": 19
+ },
+ {
+  "id": "kfe74a67c8d",
+  "judged_as": "je53fe81be5",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b670b1b3f4fc044159f3ae",
+  "book_id": "69b670b1b3f4fc044159f39f",
+  "page_number": 15
+ },
+ {
+  "id": "kf43887b3bf",
+  "judged_as": "j0bac113b19",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b66b11b3f4fc044157adcc",
+  "book_id": "69b66b11b3f4fc044157adb4",
+  "page_number": 24
+ },
+ {
+  "id": "kfe5b1a239e",
+  "judged_as": "j6bd61528ea",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b690bb080b19f98fce08d4",
+  "book_id": "69b690bb080b19f98fce08c2",
+  "page_number": 18
+ },
+ {
+  "id": "ka416b529ad",
+  "judged_as": "j60b715ca50",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6765db3f4fc04415c2a73",
+  "book_id": "69b6765db3f4fc04415c2a2a",
+  "page_number": 73
+ },
+ {
+  "id": "k26622dc688",
+  "judged_as": "j737b091aeb",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6c08b8566c8381464d940",
+  "book_id": "69b6c08b8566c8381464d93a",
+  "page_number": 6
+ },
+ {
+  "id": "kc38a41e1ce",
+  "judged_as": "j13de9fa201",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b68c672368e1fad3222a35",
+  "book_id": "69b68c672368e1fad3222a16",
+  "page_number": 31
+ },
+ {
+  "id": "kc1de964e4e",
+  "judged_as": "jde2b11c8f9",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6bad78566c8381463276b",
+  "book_id": "69b6bad78566c83814632755",
+  "page_number": 22
+ },
+ {
+  "id": "k9f6a5f2310",
+  "judged_as": "jead546b883",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "item",
+  "page_id": "69b6b16496dc15d4a16d051a",
+  "book_id": "69b6b16496dc15d4a16d04fb",
+  "page_number": 31
+ },
+ {
+  "id": "kfa185a8784",
+  "judged_as": "jfa185a8784",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "wrong_page",
+  "page_id": "69b6765db3f4fc04415c2a73",
+  "book_id": "69b6765db3f4fc04415c2a2a",
+  "page_number": 73,
+  "other": "69b6ecd43c7947b468d315d2"
+ },
+ {
+  "id": "k2521cec0ae",
+  "judged_as": "j2521cec0ae",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "wrong_page",
+  "page_id": "69b670b1b3f4fc044159f3ae",
+  "book_id": "69b670b1b3f4fc044159f39f",
+  "page_number": 15,
+  "other": "69b6c08b8566c8381464d940"
+ },
+ {
+  "id": "k88b415a89a",
+  "judged_as": "je8f3461fd7",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b642fc1c1c21a373893137",
+  "book_id": "69b642fc1c1c21a3738930d8",
+  "page_number": 95
+ },
+ {
+  "id": "ka2463dac43",
+  "judged_as": "jc99182394f",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b64c9d18b87551bfc77272",
+  "book_id": "69b64c9d18b87551bfc77242",
+  "page_number": 48
+ },
+ {
+  "id": "k2685133ece",
+  "judged_as": "j6f7a268962",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b699e7080b19f98fcfc062",
+  "book_id": "69b699e7080b19f98fcfc04a",
+  "page_number": 24
+ },
+ {
+  "id": "ke33768b18b",
+  "judged_as": "j03936ee6fb",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b696b04a5f9daef79e934a",
+  "book_id": "69b696b04a5f9daef79e9343",
+  "page_number": 7
+ },
+ {
+  "id": "kdd78bcd536",
+  "judged_as": "j2e44fa52f7",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b637531c1c21a373832481",
+  "book_id": "69b637531c1c21a37383241f",
+  "page_number": 98
+ },
+ {
+  "id": "k3a93f9447f",
+  "judged_as": "j3a07edffe3",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6ef28b1a3146c0526496b",
+  "book_id": "69b6ef28b1a3146c05264958",
+  "page_number": 19
+ },
+ {
+  "id": "kdad4190e51",
+  "judged_as": "j793416a744",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b670b1b3f4fc044159f3ae",
+  "book_id": "69b670b1b3f4fc044159f39f",
+  "page_number": 15
+ },
+ {
+  "id": "k50d4d50bad",
+  "judged_as": "jdbc2ba553c",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b66b11b3f4fc044157adcc",
+  "book_id": "69b66b11b3f4fc044157adb4",
+  "page_number": 24
+ },
+ {
+  "id": "kd964eb9869",
+  "judged_as": "j4b7fd3020d",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b690bb080b19f98fce08d4",
+  "book_id": "69b690bb080b19f98fce08c2",
+  "page_number": 18
+ },
+ {
+  "id": "kc2df337b27",
+  "judged_as": "j2ede89a18b",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6c1848566c8381465384b",
+  "book_id": "69b6c1848566c838146537e6",
+  "page_number": 101
+ },
+ {
+  "id": "kbd2b0f1136",
+  "judged_as": "j5141aa5d89",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6765db3f4fc04415c2a73",
+  "book_id": "69b6765db3f4fc04415c2a2a",
+  "page_number": 73
+ },
+ {
+  "id": "k432818e24d",
+  "judged_as": "j455168bb29",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6c08b8566c8381464d940",
+  "book_id": "69b6c08b8566c8381464d93a",
+  "page_number": 6
+ },
+ {
+  "id": "kee248cbd69",
+  "judged_as": "j8dc29b6be3",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6bad78566c8381463276b",
+  "book_id": "69b6bad78566c83814632755",
+  "page_number": 22
+ },
+ {
+  "id": "k32ce8798cf",
+  "judged_as": "jf32191fe0b",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "item",
+  "page_id": "69b6b16496dc15d4a16d051a",
+  "book_id": "69b6b16496dc15d4a16d04fb",
+  "page_number": 31
+ },
+ {
+  "id": "ka1f7d31304",
+  "judged_as": "ja1f7d31304",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "wrong_page",
+  "page_id": "69b670b1b3f4fc044159f3ae",
+  "book_id": "69b670b1b3f4fc044159f39f",
+  "page_number": 15,
+  "other": "69b6b16496dc15d4a16d051a"
+ },
+ {
+  "id": "k85ef7e7a79",
+  "judged_as": "j85ef7e7a79",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "wrong_page",
+  "page_id": "69b670b1b3f4fc044159f3ae",
+  "book_id": "69b670b1b3f4fc044159f39f",
+  "page_number": 15,
+  "other": "69b699e7080b19f98fcfc062"
+ },
+ {
+  "id": "k9d83573403",
+  "judged_as": "jb282e0de8c",
+  "cell": "la-surface",
+  "route": "agy-flash-low@4",
+  "kind": "planted",
+  "page_id": "69b637531c1c21a373832481",
+  "book_id": "69b637531c1c21a37383241f",
+  "script_face": "all",
+  "source_item": "j41c9334341",
+  "plant": {
+   "kind": "C",
+   "mode": "line",
+   "line": 26,
+   "offset": 0,
+   "before": "Adiumenta",
+   "after": "Argumenta",
+   "context": "Adiumenta Tryphon:ne tu fuge tradere ru"
+  }
+ },
+ {
+  "id": "k683bb18e5a",
+  "judged_as": "j1b0a67d026",
+  "cell": "la-surface",
+  "route": "agy-flash-low@8-1600px",
+  "kind": "planted",
+  "page_id": "69b690bb080b19f98fce08d4",
+  "book_id": "69b690bb080b19f98fce08c2",
+  "script_face": "all",
+  "source_item": "j4b7fd3020d",
+  "plant": {
+   "kind": "C",
+   "mode": "line",
+   "line": 39,
+   "offset": 17,
+   "before": "exsiccatione",
+   "after": "operatione",
+   "context": "sulphur, quo pro exsiccatione, & quòd simul ex totâ fe-"
+  }
+ }
+]

@@ -1,0 +1,147 @@
+{
+ "scored_at": "2026-10-31T01:01:08.561Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "strata": {
+  "all": {
+   "n_drawn": 30,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "12/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "12/12",
+      "wrong_text": "0/12",
+      "invented_or_wrong_leaf": "0/12",
+      "p_acc_ge_080": 0.947,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "cli exit -9": 5,
+      "letters outside the book's scripts": 6,
+      "reader tags the page <script>mixed</script>": 1,
+      "reply wrapper": 6
+     },
+     "agy_calls_per_page": 0.832,
+     "calls": {
+      "calls": 99,
+      "pages": 119,
+      "per_page": 0.832
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00181,
+     "wrong_text_pages": [],
+     "eligible": true
+    },
+    "agy-flash-low@8-1600px": {
+     "all_drawn": {
+      "accept": "13/30",
+      "wrong_text": "1/30"
+     },
+     "written": {
+      "accept": "13/14",
+      "wrong_text": "1/14",
+      "invented_or_wrong_leaf": "0/14",
+      "p_acc_ge_080": 0.834,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "letters outside the book's scripts": 9,
+      "reply wrapper": 6,
+      "cli exit -9": 1
+     },
+     "agy_calls_per_page": 0.7,
+     "calls": {
+      "calls": 163,
+      "pages": 233,
+      "per_page": 0.7
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00141,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b637531c1c21a373832481",
+       "written": true,
+       "defects": [
+        "O6: prorfumque bonis non indigna noftris — the page reads 'indiga' (lacking), not 'indigna' (unworthy), so the sense of the line changes"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-1600px|agy-flash-low@4": {
+     "n": 10,
+     "books": 10,
+     "both": 9,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0,
+     "p_a_within_008": 0.556,
+     "rule": "P(acc_agy-flash-low@8-1600px >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "face": "all",
+      "kind": "C",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "all",
+      "kind": "C",
+      "route": "agy-flash-low@8-1600px",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  }
+ },
+ "decision": {
+  "passes": false,
+  "pick": "agy-flash-low@4"
+ }
+}

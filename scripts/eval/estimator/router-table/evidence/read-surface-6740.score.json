@@ -1,0 +1,65 @@
+{
+ "generated_by": "scripts/eval/read-surface-6740/confirm.mjs evidence (job read-surface-6740, #6740; no model calls in this step)",
+ "provenance": "#6740 read-surface confirmation: judge.mjs draw --cells=la-surface (30 new Latin books in the first-read lane frame, both #7701 draws left out), correct (agy gemini-3.8-flash-low, AGY_HOME .agy-james; read@4 on the 4-page piece, the optimum 8 a call at a 1,600 px long edge); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm/RULE.md)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "cells": {
+  "la-surface": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books_in_frame": 15296,
+    "books_left_out": 180,
+    "books_walked": 42,
+    "spread_wait": 12,
+    "no_interior_unread": 0,
+    "no_ocr_books": 15258,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 8"
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 12,
+     "books": 12,
+     "accept": "12/12",
+     "wrong_text_pages": "0/12",
+     "classes_k_of_n": {
+      "O6": "7/12",
+      "E2": "4/12",
+      "O11": "3/12",
+      "O8": "2/12",
+      "O16": "1/12",
+      "T6": "1/12",
+      "O15": "1/12"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-1600px-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "13/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "O6": "7/14",
+      "O8": "6/14",
+      "E2": "3/14",
+      "O11": "3/14",
+      "O12": "2/14",
+      "O9": "1/14",
+      "O16": "1/14",
+      "D1": "1/14"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-1600px-written|agy-flash-low@4-written": {
+     "n": 10,
+     "books": 10,
+     "both": 9,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0
+    }
+   }
+  }
+ }
+}
