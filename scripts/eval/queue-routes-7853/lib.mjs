@@ -64,3 +64,19 @@ export async function imageFor(key, url) {
   }
   throw last;
 }
+
+/** Amendment 1 (Derek 2026-10-31): severity weights, MQM-style, of the judge's defect classes (#7824 measure). */
+export const SEV = Object.freeze({ cosmetic: 1, misleads: 5, wrong_text: 25 });
+function phi(z) { const t = 1 / (1 + 0.3275911 * Math.abs(z) / Math.SQRT2); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-z * z / 2); return z >= 0 ? (1 + y) / 2 : (1 - y) / 2; }
+/** Wilcoxon signed-rank, two-sided, zeros dropped, normal approximation (#7818 / #7835 analyze.mjs, unchanged). */
+export function wilcoxon(d) {
+  const nz = d.filter((x) => x !== 0), n = nz.length;
+  if (n === 0) return { n: 0, w_plus: 0, z: 0, p: 1 };
+  const abs = nz.map((x) => ({ a: Math.abs(x), s: Math.sign(x) })).sort((x, y) => x.a - y.a);
+  let tie = 0;
+  for (let i = 0; i < n;) { let j = i; while (j + 1 < n && abs[j + 1].a === abs[i].a) j++; const rk = (i + j + 2) / 2, t = j - i + 1; for (let k = i; k <= j; k++) abs[k].r = rk; tie += t ** 3 - t; i = j + 1; }
+  const wp = abs.filter((x) => x.s > 0).reduce((a, x) => a + x.r, 0);
+  const mu = n * (n + 1) / 4, v = n * (n + 1) * (2 * n + 1) / 24 - tie / 48;
+  const z = v > 0 ? (wp - mu - 0.5 * Math.sign(wp - mu)) / Math.sqrt(v) : 0;
+  return { n, w_plus: wp, z: +z.toFixed(3), p: +(2 * (1 - phi(Math.abs(z)))).toPrecision(3) };
+}

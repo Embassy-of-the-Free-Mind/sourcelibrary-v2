@@ -16,7 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
-import { ROOT, OUT, RESULTS, J, jsonl, sha, SEED, AGY_CALL_USD, wrongText, words7824, ARMS, ROUTES, COST_ORDER, gpuEngine } from './lib.mjs';
+import { ROOT, OUT, RESULTS, J, jsonl, sha, SEED, AGY_CALL_USD, wrongText, words7824, ARMS, ROUTES, COST_ORDER, gpuEngine, SEV, wilcoxon } from './lib.mjs';
 import { binomTwoSided, makeRng } from '../lib/paired-stats.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
 import { exportScore, PLANT_BAR } from '../lane-judge-sampler.mjs';
@@ -35,6 +35,8 @@ export const SECONDARY = Object.freeze([['read4', 'read1'], ['corr', 'gpu'], ['l
 /** Decision rule constants (experiment file §Decision rule). */
 export const ACCEPT_MARGIN = 0.05, WRONG_TEXT_LINE = 2, TIE_SHARE = 0.10;
 const BOOT = 4000;
+/** Severity-weighted defects per 1,000 words of the served text (#7824 words()); weights SEV (Amendment 1). */
+export const sevRate = (v, words) => (v ? 1000 * Object.entries(SEV).reduce((a, [k, w]) => a + w * cnt(v, k), 0) / Math.max(1, words) : null);
 
 function load() {
   const items = J('items.json'), vo = jsonl(path.join(OUT, 'verdicts-opus.jsonl'));
@@ -60,7 +62,8 @@ function pagesOf(items, abs) {
   });
 }
 const acc = (x) => !!(x && !x.none && x.v?.accept);
-const judged = (x) => x && (x.none || x.v);
+// an arm that ran and served no text counts as judged (not accepted); an arm that did not run is not compared
+const judged = (x) => x && ((x.none && x.row) || x.v);
 const wt = (x) => !!x?.v && wrongText(x.v);
 /** agy calls this arm spent on the page: the read's (or correction's) calls over the pages its calls covered. */
 const callsOf = (x) => (x.row && x.row.pages ? x.row.calls / x.row.pages : 0);
@@ -86,7 +89,21 @@ function armBlock(ps, arm, seed) {
     wrong_text_pages: ps.filter((p) => wt(p.arms[arm])).length, wrong_text_pages_weighted: r3(wmean(ps.filter((p) => p.arms[arm].v), (p) => (wt(p.arms[arm]) ? 1 : 0))),
     defects_per_1000_weighted: { wrong_text: r3(wrate(ps, arm, 'wrong_text')), wrong_text_ci95: sboot(ps, (g) => wrate(g, arm, 'wrong_text'), seed + 1), misleads: r3(wrate(ps, arm, 'misleads')), misleads_ci95: sboot(ps, (g) => wrate(g, arm, 'misleads'), seed + 2) },
     agy_calls_per_page: r3(wCalls), accepted_per_agy_call: wCalls ? r3(wAcc / wCalls) : null, accepted_per_agy_call_ci95: wCalls ? sboot(ps, perCall, seed + 3) : null,
-    agy_calls_per_accepted_page: wAcc ? r3(wCalls / wAcc) : null, usd_per_accepted_page: wAcc && wCalls ? +((wCalls * AGY_CALL_USD) / wAcc).toFixed(5) : null };
+    agy_calls_per_accepted_page: wAcc ? r3(wCalls / wAcc) : null, usd_per_accepted_page: wAcc && wCalls ? +((wCalls * AGY_CALL_USD) / wAcc).toFixed(5) : null,
+    // Amendment 1: severity-weighted defects per 1,000 words (per-page rate, HT-weighted mean), fidelity, and the
+    // severity removed from the stored text per agy call (the decision rule's measure)
+    severity_per_1000: r3(sevMean(ps, arm)), severity_per_1000_ci95: sboot(ps.filter((p) => p.arms[arm].v), (g) => sevMean(g, arm), seed + 4),
+    fidelity_mean_weighted: r3(wmean(ps.filter((p) => p.arms[arm].v), (p) => Number(p.arms[arm].v.fidelity))) };
+}
+/** HT-weighted mean of the per-page severity rate over pages where the arm's text was judged. */
+const sevMean = (ps, arm) => wmean(ps.filter((p) => p.arms[arm].v), (p) => sevRate(p.arms[arm].v, p.arms[arm].words));
+/** Amendment 1 co-primary: b against a on severity per 1,000 words, paired per page; weighted mean difference, book-cluster (= page) stratified bootstrap CI, Wilcoxon. */
+function pairedSev(ps, a, b, seed) {
+  const g = ps.filter((p) => p.arms[a].v && p.arms[b].v);
+  const d = (p) => sevRate(p.arms[b].v, p.arms[b].words) - sevRate(p.arms[a].v, p.arms[a].words);
+  const dm = (s) => wmean(s, d);
+  const ds = g.map(d);
+  return { n: g.length, mean_diff_weighted: r3(dm(g)), ci95: sboot(g, dm, seed), wilcoxon: wilcoxon(ds), better: ds.filter((x) => x < 0).length, worse: ds.filter((x) => x > 0).length, same: ds.filter((x) => x === 0).length };
 }
 /** b against a: exact McNemar (unweighted, paired), weighted effect with stratified-bootstrap CI, wrong text, made worse. */
 function paired(ps, a, b, seed) {
@@ -128,19 +145,53 @@ export function decide(blocks, pairedVsBest, armsRan) {
     excluded: arms.filter((a) => !elig.includes(a)).map((a) => ({ arm: a, accept_weighted: blocks[a].accept_weighted, wrong_text_net_vs_best: pairedVsBest[a].wrong_text_pages.added - pairedVsBest[a].wrong_text_pages.removed })) };
 }
 
+/**
+ * Amendment 1's decision rule (Derek 2026-10-31), per language, over the route arms that ran:
+ *  1. gate: weighted accept no more than ACCEPT_MARGIN (5 points) below the best arm's;
+ *  2. among arms through the gate, the most severity removed per agy call: (stored text's weighted severity per 1,000
+ *     words - the arm's) / the arm's agy calls a page. Read as "the lowest weighted defect rate per agy call": with agy
+ *     quota binding, it is the route that takes the most weighted defects out of the queue for a fixed number of calls;
+ *     a literal rate / calls would reward spending more calls. If no gated arm removes any severity, the lowest rate;
+ *  3. an arm within TIE_SHARE (10%) of the top is a tie; a tie goes to the cheaper arm in COST_ORDER.
+ */
+export function decideV2(blocks, armsRan) {
+  const arms = ROUTE_ARMS.filter((a) => armsRan.includes(a) && blocks[a]?.accept_weighted != null && blocks[a]?.severity_per_1000 != null);
+  if (!arms.length) return { route: null, why: 'no arm ran' };
+  const best = Math.max(...arms.map((a) => blocks[a].accept_weighted));
+  const gated = arms.filter((a) => blocks[a].accept_weighted >= best - ACCEPT_MARGIN);
+  const lite = blocks.lite?.severity_per_1000;
+  const removedPerCall = Object.fromEntries(gated.map((a) => [a, lite != null && blocks[a].agy_calls_per_page ? r3((lite - blocks[a].severity_per_1000) / blocks[a].agy_calls_per_page) : null]));
+  const anyRemoves = gated.some((a) => (removedPerCall[a] ?? 0) > 0);
+  const score = (a) => (anyRemoves ? removedPerCall[a] ?? -Infinity : -blocks[a].severity_per_1000);
+  const top = Math.max(...gated.map(score));
+  const tied = gated.filter((a) => (top >= 0 ? score(a) >= top * (1 - TIE_SHARE) : score(a) >= top * (1 + TIE_SHARE)));
+  const route = COST_ORDER.find((a) => tied.includes(a));
+  const lowestRate = gated.reduce((m, a) => (blocks[a].severity_per_1000 < blocks[m].severity_per_1000 ? a : m), gated[0]);
+  return { route, gate_best_accept: best, gated, not_gated: arms.filter((a) => !gated.includes(a)), stored_severity_per_1000: lite, severity_removed_per_agy_call: removedPerCall, measure: anyRemoves ? 'severity removed per agy call' : 'lowest severity (no gated arm removed any)', tied, lowest_severity_arm: lowestRate,
+    why: `gate: accept >= ${r3(best - ACCEPT_MARGIN)} -> ${gated.join(', ')}; severity removed per agy call ${JSON.stringify(removedPerCall)}; tied ${tied.join(', ')}; tie order ${COST_ORDER.join(' < ')}; lowest severity rate among the gated: ${lowestRate}` };
+}
+
 function langBlock(ps, lang) {
   const g = ps.filter((p) => p.lang === lang); if (!g.length) return null;
   const armsRan = ARMS.filter((a) => g.some((p) => p.arms[a].row || a === 'lite'));
   const blocks = Object.fromEntries(ARMS.map((a, i) => [a, armBlock(g, a, SEED.bootstrap + 10 * i)]));
   const primary = holm(PRIMARY.map(([a, b], i) => ({ contrast: `${b}_vs_${a}`, ...paired(g, a, b, SEED.bootstrap + 100 + i) })));
   const secondary = Object.fromEntries(SECONDARY.map(([a, b], i) => [`${b}_vs_${a}`, paired(g, a, b, SEED.bootstrap + 200 + i)]));
+  // Amendment 1: severity co-primary (Holm over its two contrasts; Holm over all four primary tests reported too)
+  const sevPrim = PRIMARY.map(([a, b], i) => ({ contrast: `${b}_vs_${a}`, ...pairedSev(g, a, b, SEED.bootstrap + 400 + i) }));
+  const holmP = (ps0) => { const o = ps0.map((p, i) => ({ i, p })).sort((x, y) => x.p - y.p); let run = 0; const adj = []; o.forEach((x, r) => { run = Math.max(run, Math.min(1, (ps0.length - r) * x.p)); adj[x.i] = +run.toPrecision(3); }); return adj; };
+  const hs = holmP(sevPrim.map((c) => c.wilcoxon.p));
+  const primarySeverity = sevPrim.map((c, i) => ({ ...c, holm_p: hs[i], supported: hs[i] < 0.05, direction: c.mean_diff_weighted < 0 ? 'b fewer' : c.mean_diff_weighted > 0 ? 'b more' : 'none' }));
+  const all4 = holmP([...primary.map((c) => c.mcnemar_exact_p), ...sevPrim.map((c) => c.wilcoxon.p)]);
+  const secondarySeverity = Object.fromEntries(SECONDARY.map(([a, b], i) => [`${b}_vs_${a}`, pairedSev(g, a, b, SEED.bootstrap + 500 + i)]));
   const best = ROUTE_ARMS.filter((a) => armsRan.includes(a)).reduce((m, a) => (blocks[a].accept_weighted > (blocks[m]?.accept_weighted ?? -1) ? a : m), null);
   const vsBest = Object.fromEntries(ROUTE_ARMS.map((a, i) => [a, paired(g, best, a, SEED.bootstrap + 300 + i)]));
   // by stratum (unweighted inside a stratum: the PPS draw is self-weighting there) and by face (weighted)
   const strata = {}; for (const s of [...new Set(g.map((p) => p.stratum))].sort()) { const h = g.filter((p) => p.stratum === s); strata[s] = { pages: h.length, weight: r3(h.reduce((a, p) => a + p.w, 0) / g.reduce((a, p) => a + p.w, 0)), accept: Object.fromEntries(ARMS.map((a) => [a, `${h.filter((p) => acc(p.arms[a])).length}/${h.length}`])) }; }
   const faces = {}; for (const f of [...new Set(g.map((p) => p.face))].sort()) { const h = g.filter((p) => p.face === f); faces[f] = { pages: h.length, queue_share: r3(h.reduce((a, p) => a + p.w, 0) / g.reduce((a, p) => a + p.w, 0)), accept_weighted: Object.fromEntries(ARMS.map((a) => [a, r3(wmean(h, (p) => (acc(p.arms[a]) ? 1 : 0)))])), accept: Object.fromEntries(ARMS.map((a) => [a, `${h.filter((p) => acc(p.arms[a])).length}/${h.length}`])) }; }
   const outcomes = Object.fromEntries(ARMS.filter((a) => a !== 'lite').map((a) => { const t = {}; for (const p of g) { const r = p.arms[a].row; const k = r ? (r.written ? 'written' : String(r.why || 'unknown').replace(/\d+%/g, 'N%').slice(0, 70)) : 'not run'; t[k] = (t[k] ?? 0) + 1; } return [a, t]; }));
-  return { pages: g.length, arms_ran: armsRan, arms: blocks, primary, secondary, paired_vs_best: { best, ...vsBest }, decision: decide(blocks, vsBest, armsRan), by_stratum: strata, by_face: faces, arm_outcomes: outcomes,
+  return { pages: g.length, arms_ran: armsRan, arms: blocks, primary, primary_severity: primarySeverity, holm_over_all_four: { accept: all4.slice(0, 2), severity: all4.slice(2) }, secondary, secondary_severity: secondarySeverity, paired_vs_best: { best, ...vsBest },
+    decision: decideV2(blocks, armsRan), decision_as_first_preregistered: decide(blocks, vsBest, armsRan), by_stratum: strata, by_face: faces, arm_outcomes: outcomes,
     gpu_engines: Object.fromEntries(['pero', 'lightonocr'].map((e) => [e, g.filter((p) => gpuEngine(p.face) === e).length])) };
 }
 
@@ -211,15 +262,17 @@ function score() {
   R('writeback.json', { rule: 'per page: the best judged arm (accepted; then fidelity; then fewer wrong_text, misleads, cosmetic; ties to the cheaper arm, the stored text first), only where it was accepted, no other arm (the stored text included) was judged better, its text is not the stored text, and it is the text its own dry apply would write.', pages: wb });
   out.writeback = { pages: wb.length, by_arm: wb.reduce((t, x) => ({ ...t, [`${x.lang}/${x.arm}`]: (t[`${x.lang}/${x.arm}`] ?? 0) + 1 }), {}) };
   const dr = { unit: 'defects per 1,000 words (#7824 words()), weighted to the queue', study_cells: {} };
-  for (const lang of ['de', 'fr']) for (const arm of ARMS) { const b = out[lang]?.arms[arm]; if (b) dr.study_cells[`${lang}-lite-print/${arm}`] = { n: b.judged, wrong_text_per_1k: b.defects_per_1000_weighted.wrong_text, misleads_per_1k: b.defects_per_1000_weighted.misleads, accept_weighted: b.accept_weighted }; }
+  for (const lang of ['de', 'fr']) for (const arm of ARMS) { const b = out[lang]?.arms[arm]; if (b) dr.study_cells[`${lang}-lite-print/${arm}`] = { n: b.judged, wrong_text_per_1k: b.defects_per_1000_weighted.wrong_text, misleads_per_1k: b.defects_per_1000_weighted.misleads, severity_per_1k: b.severity_per_1000, fidelity_mean: b.fidelity_mean_weighted, accept_weighted: b.accept_weighted }; }
   R('defect-rates.json', dr);
   R('score.json', out);
   R('router-evidence.score.json', evidence(ps, vo));
   for (const lang of ['de', 'fr']) { const L = out[lang]; if (!L) continue;
     console.log(`\n${lang}: ${L.pages} pages`);
-    for (const a of ARMS) { const b = L.arms[a]; console.log(`  ${a.padEnd(6)} accept ${b.accept.k}/${b.accept.n} w ${b.accept_weighted} ${JSON.stringify(b.accept_weighted_ci95)} | calls/page ${b.agy_calls_per_page} | acc/call ${b.accepted_per_agy_call} | wt pages ${b.wrong_text_pages}`); }
+    for (const a of ARMS) { const b = L.arms[a]; console.log(`  ${a.padEnd(6)} accept ${b.accept.k}/${b.accept.n} w ${b.accept_weighted} ${JSON.stringify(b.accept_weighted_ci95)} | sev ${b.severity_per_1000} ${JSON.stringify(b.severity_per_1000_ci95)} | fid ${b.fidelity_mean_weighted} | calls/page ${b.agy_calls_per_page} | acc/call ${b.accepted_per_agy_call} | wt pages ${b.wrong_text_pages}`); }
     for (const c of L.primary) console.log(`  primary ${c.contrast}: ${c.gained}/${c.lost} p ${c.mcnemar_exact_p} holm ${c.holm_p} eff ${c.effect_points_weighted} ${JSON.stringify(c.effect_ci95_points)}`);
-    console.log(`  decision: ${L.decision.route} — ${L.decision.why}`); }
+    for (const c of L.primary_severity) console.log(`  severity ${c.contrast}: diff ${c.mean_diff_weighted} ${JSON.stringify(c.ci95)} wilcoxon p ${c.wilcoxon.p} holm ${c.holm_p}`);
+    console.log(`  decision (A1): ${L.decision.route} — ${L.decision.why}`);
+    console.log(`  decision (as first preregistered): ${L.decision_as_first_preregistered.route}`); }
   console.log(JSON.stringify({ instrument: out.instrument, writeback: out.writeback, dta: out.dta.pages.length }));
 }
 
