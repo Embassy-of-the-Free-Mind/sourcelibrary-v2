@@ -189,9 +189,8 @@ const RT = {
   // the draft corrected by agy Flash-low with the image, 4 a call. The GPU drafts ALONE are routes too, judged from the
   // draft files by german-cheaper-7701/run.mjs (no agy call).
   // #6740 read-surface confirmation (job read-surface-6740): the live read@4 (the 4-page piece of the drawn page's block)
-  // against the response surface's optimum on the SAME new queue pages; longEdge = the optimum's image long edge.
-  'la-surface': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
-  'de-surface': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  // against the response surface's Latin optimum, 8 a call with the image fitted to 1,600 px, on the SAME new queue pages.
+  'la-surface': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8-1600px': { ...FRESH('gemini-3.8-flash-low'), perCall: 8, longEdge: 1600 } } },
   'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'kraken>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'kraken.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
