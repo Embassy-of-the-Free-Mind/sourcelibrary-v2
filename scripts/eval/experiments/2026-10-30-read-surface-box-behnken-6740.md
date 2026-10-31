@@ -281,9 +281,81 @@ clean test, with its own RULE file committed before its first read.
   CAMENA: its terms checked, else offsets and hashes plus a fetch script). Schema, datasheet and export script in
   `scripts/eval/read-surface-6740/dataset/`; the files, licence-split, in R2
   `eval-artifacts/read-surface-6740/dataset-v1/`. No DOI is minted by this job.
-- *Budget and stops.* ≤ 1,500 agy calls for 6.1 and the sensitivity, ≤ 300 for the confirmation; Gemini through the
+- *Budget and stops (first form; superseded below).* ≤ 1,500 agy calls for 6.1 and the sensitivity, ≤ 300 for the confirmation; Gemini through the
   CLI only. Before each run `/root/agy-quota/pools.json`: stop if the default pool's weekly remaining is under 30 %.
   Before the Opus judge, `climits status`: stop above 85 % weekly on this box's account.
+
+**Amendment 6, second form (Derek, inbox 09:57Z–10:04Z; written 10:27Z, committed before any agy call it names).
+A staged, sequential response-surface study and a robust parameter design.** It supersedes 6.1 ("complete the nine
+Box-Behnken runs") and the budget of the first form; 6.2–6.9 stand. Everything here is post hoc to the first 20 runs.
+- *Disclosure.* I read these notes at 10:19Z. Three Box-Behnken runs of 6.1 (de B02, de C2, la B12) had started at
+  09:49Z; at 10:24Z the queue was stopped and those three were left to finish. They are kept as stage-2 points (below).
+- *Scope decisions by Derek:* no gemini-4-argon (09:58Z): every read is gemini-3.8-flash-{low, medium, high}. "Effie"
+  meant efficiency, not the EFM collection (10:04Z): no EFM stratum.
+- **Stage 1, screening.** A Definitive Screening Design (Jones & Nachtsheim 2011; two-level categorical factors, Jones &
+  Nachtsheim 2013) over five factors: pages a call {1, 4, 8}, image long edge {1,024, 1,600, 2,400 px} and thinking
+  {low, medium, high} (three-level, coded −1/0/+1), and two two-level factors: **prompt** {live sentinels-6523; live +
+  one script line, `read-surface-6740/prompt-lines/<lang>.txt`, sent through `cli-ocr.mjs --instruction-file`} and
+  **image prep** {as served; grayscale + normalise + unsharp σ 2 (#5250's photometric arms), `cli-ocr.mjs
+  --image-prep=gnu`, eval only, default off}. Construction: a conference matrix of order 6 (Paley, GF(5)), rows C and
+  −C, columns 1–5, a categorical column's zero set to +1 in C and −1 in −C, plus two runs with the three continuous
+  factors at their centre and the categorical pair at (+1, −1) and (−1, +1): **14 runs a language**
+  (`read-surface-6740/dsd.mjs` → `design-dsd.json`, CᵀC = 5I checked; main-effect correlations 0 among the continuous
+  factors, |r| = 0.17 continuous × categorical, 0.14 between the two categorical). Run order shuffled per language
+  (seed 6740, in `design-dsd.json`). The scorer folds ſ → s and combining marks (checked), so the script line can move
+  CER only through reading, not through a transcription convention.
+- *Re-use:* a stage-1 point already made **on the default pool** with identical settings is not re-run: S02 (8 a call,
+  1,600 px, high, live prompt, as served) = B08 in German and Latin. The 20 existing runs (and the 3 of 6.1) stay in the
+  analysis as the slice at live prompt / as served.
+- **Environment factors (robust parameter design).** The knobs are control factors; **language** and **date range**
+  are environment factors the setting must hold across. Language: German (DTA, 35 books), Latin (CAMENA, 34), and
+  **English** early print, a third panel drawn the same way from the EEBO-TCP same-edition typed pages of #6012
+  (`panel.mjs --langs=en --merge`, a fresh seed-6740 stream; 204 eligible books, 40 targets, 1500s 12 / 1600s 26 /
+  1700s 2; references CC0, EEBO-TCP phases I and II), its targets checked by eye (leaf and face) before any read is
+  scored, exclusions by the same rules. Century (edition date) is a stratum of every panel and confirmation draw and a
+  covariate in the models. Order of languages if the budget is short: German, Latin, English. All new runs on the
+  default pool, at most 4 runs at once, 3 calls at once a run.
+- **Stage 2, optimisation.** Active factors = those whose main effect (or second-order term, under effect heredity)
+  on CER or on log quota cost has a 95 % book-bootstrap interval excluding 0 and, for CER, larger than the noise floor;
+  at most four. If the active set is pages / edge / thinking with prompt and prep inactive, stage 2 is the Box-Behnken
+  at live prompt / as served: the nine missing runs a language (three of them made), and English gets its own
+  Box-Behnken only if budget remains after German and Latin. If prompt or prep is active, stage 2 is a face-centred
+  central composite over the active continuous factors at the better categorical level, re-using every run that falls
+  on its points. The stage-2 design is written into this file before its runs.
+- **Stage 3, confirmation:** as 6.6 and 6.8(c) (German queue, era × face stratified, preregistered RULE).
+- **Efficiency as a first-class response.** (a) quota cost a page and quota cost **per accepted page** = cost ÷ yield,
+  where a target is accepted when its read is usable (not unread, not a filter stub or a cut / loop / empty reply)
+  and not wrong text; (b) throughput: accepted pages a wall-clock hour for one lane reader (the lane's default
+  concurrency is one book at a time: 3,600 ÷ wall seconds a page × yield), and accepted pages per account-week of
+  quota (needs 6.3's measured quota fraction per priced dollar; if not measured, reported in list-price dollars only);
+  (c) the **efficiency frontier**: per language and century, the settings no other beats on both CER and cost per
+  accepted page, with live marked and its distance to the frontier in calls, quota and hours; (d) a **backlog
+  projection**: weeks of quota to first-read each scans-only queue (German, Latin, English) at live and at the best
+  confirmed setting, from queue page counts measured fresh and dated (German: 797,772 unread pages in 3,131 books,
+  2026-10-31, `frame.mjs`).
+- **Statistics plan** (Python 3.12, numpy 2.4.6, scipy 1.17.1, pandas 3.1.0, statsmodels 0.15.0; `analysis6.py`).
+  The unit is the **page within run**. Linear mixed models with a random intercept for book (every run reads the same
+  pages: book is a block), REML; fixed effects = second-order terms in the continuous factors, categorical main effects,
+  two-factor interactions allowed by heredity, environment main effects (language, century) and knob × environment
+  interactions. Responses: CER on the logit scale, logit((CER·n + 0.5)/(n + 1)) with n the reference's letters
+  (residuals checked; if they fail, a beta regression with book-clustered bootstrap, and the record says which); log
+  quota cost a page per book × run (a block's cost is its book's); filter cut and wrong text as binomial GLMMs
+  (statsmodels BinomialBayesMixedGLM). DSD analysis by the two-stage method (Jones & Nachtsheim 2017): main effects from
+  the fold-over pairs, then second-order on what remains; a half-normal plot of effects. Intervals: 2,000 book-level
+  bootstrap resamples and REML standard errors. Lack of fit against the centre replicates (C1–C3 for the
+  Box-Behnken; S13/S14 are centre runs in the continuous factors only). Noise floor from the A-vs-A pairs. Multi-response:
+  Derringer desirability, CER as a constraint (δ upper 95 % ≤ 1 pp against live), cost a page minimised; and the Pareto
+  front. **Multiplicity:** no p-value hunting on the screen; the screen only nominates, the held-out queue confirmation
+  decides. **Power** by simulation from the observed book variance, for the 5-factor screen at 34–40 books, and 6.8(d).
+  **Optima:** (a) pooled; (b) per stratum where a knob × environment interaction is real (interval excludes 0 and
+  exceeds the noise floor); (c) **robust**: the cheapest setting whose predicted CER stays within the margin of live in
+  every stratum with at least 10 books (strata with fewer are named).
+- **Visuals added:** F4 as small multiples by language and by century; F7 the efficiency frontier; F8 the backlog
+  projection (the public page leads with F7 and F8); a half-normal plot of the screen's effects.
+- **Budget and stops (replacing the first form's).** At most **4,000 agy calls** for this job (stages 1–3, from 09:49Z
+  on). Gemini through the CLI only. Before each run, `/root/agy-quota/pools.json`: stop if the default pool's weekly
+  remaining is under 30 %; that stop decides how far down the language order the screen gets. `/quota` read before and
+  after (6.3) where the default pool can be had alone. Before the Opus judge, `climits status`, stop above 85 %.
 
 ### Result (2026-10-31 02:15Z)
 
