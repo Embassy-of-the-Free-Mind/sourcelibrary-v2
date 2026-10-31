@@ -274,6 +274,42 @@ Code: `scripts/eval/queue-routes-7853/` (`lib.mjs`, `frame.mjs`, `arms.mjs`, `gp
 - Limits: Claude only via `claude -p` on this box's subscription; Gemini only through agy (flash-low); no paid API call; no Tesseract; no cron or routing change.
 - **Done before this file merged**, deterministic and with no judge call: the census, the exclusion list, the draw (seed fixed above), and the face tags in progress. No arm had run.
 
+## Amendment 1 (2026-10-31, 16:40Z): severity-weighted defects co-primary; the decision rule (Derek, inbox note 16:05Z)
+
+Made before any judge call. What existed when this was written:
+- the frame, the sample and the face tags (complete);
+- arms lite, 1 and 3 complete, arm 4 running, and arm 2's GPU drafts made;
+- no Opus call.
+
+`analyze.mjs` changes as follows. The first-preregistered rule is still computed and reported, as `decision_as_first_preregistered`, beside the amended one.
+
+**A1.1 Co-primary outcome: severity-weighted defects per 1,000 words.**
+- The measure is #7824's, with MQM weights: cosmetic 1, misleads 5, wrong_text 25.
+- It is counted on the judge's own defect tags, per 1,000 words of the served text (`words()`).
+- **Comparisons** (the same as for accept): arm 2 against arm 3, and arm 1 against arm 3, German primary, French exploratory.
+- **Test.** Paired per page. The difference is the HT-weighted mean of per-page differences, with a book-cluster bootstrap 95% CI (one page per book, so books are resampled, within their strata, 4,000 resamples) and a Wilcoxon signed-rank p.
+- **Holm** over the two contrasts. Holm over all four primary tests (2 outcomes × 2 contrasts) is also reported.
+- Supported = Holm-adjusted p < 0.05.
+
+**A1.2 Accept is the gate, not the objective.** An arm passes when its weighted accept is no more than 5 points below the best arm's.
+
+**A1.3 Fidelity (1–5).** A secondary outcome: the HT-weighted mean per arm.
+
+**A1.4 Decision rule (replaces §Decision rule's steps 2–3).** Among the arms that pass the gate, the lowest weighted defect rate per agy call wins; a tie goes to the cheaper arm.
+- **How "per agy call" is read** (`decideV2`): the arm that removes the most severity per agy call, that is (the stored text's weighted severity per 1,000 words − the arm's) / the arm's agy calls a page.
+- **Why that reading.** agy quota is the binding constraint, so this is the route that takes the most weighted defects out of the queue for a fixed number of calls. A literal "rate ÷ calls" would reward the arm that spends more calls.
+- If no gated arm removes any severity, the arm with the lowest rate wins.
+- **Ties**: an arm within 10% of the top is a tie, and goes to the cheaper arm in the order read4 < corr < read1 < gpu.
+- The gated arm with the lowest severity rate (cost aside) is reported beside the pick.
+- The first rule's wrong-text condition is dropped: wrong_text now carries weight 25 in the measure itself.
+
+**A1.5 Re-score of earlier studies** (`rescore-severity.mjs`, no new judge call).
+- **#7818:** from its committed verdicts (`correction-pass-7818/results/release`, rep 1). Arm P's texts are not committed, so each page's points are put on one common length: the page's current stored text for Arm P, and the Wikisource draft's characters / 6.5 for Arm W. The paired difference in points is exact.
+- **#7835 T1/T2:** its per-page verdicts are in its scratch on main (`$JOB_SCRATCH/fraktur-7835`), which this box cannot read (the box mesh has no file verb). The same script runs there with `--study=7835 --dir=<that folder>`; if no session runs it, it is listed as not done.
+- **Reported for each contrast:** whether severity differs at p < 0.05 where accept does not ("a difference the binary missed").
+
+**Code fix (no change of method).** In the analysis, an arm that did not run is not compared. Before, an arm with no text and no run row counted as "not accepted".
+
 ## 2026-10-31 · Does a life-words block stop the translator from glossing breath as "life force"? (#7458)
 
 **Question.** The model's own `<gloss>`, `<note>` and `<term>` apparatus says "life force" or "vital energy" on 17,696
