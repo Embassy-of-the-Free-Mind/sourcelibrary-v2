@@ -12,6 +12,7 @@ decision: "Keep the live first-read knobs (4 a call, image as served, thinking l
 superseded_by: null
 issue: [6740, 7701]
 router_evidence: [latin-blank]
+defect_rates: "none — the design is scored by CER against typed references (DTA, CAMENA), not by judge defect tags; the confirmation is decided by k/n and the paired gate of confirm/RULE.md, committed before its reads"
 ---
 PRIOR ART: `2026-10-30-german-cheaper-first-reads-7701.md` and `2026-10-29-cheap-routes-7701.md` (one knob at a time:
 read@1 vs @4 vs @8, judged blind by Opus against the image; they own the ENGINE choice, this owns the knobs of the agy
