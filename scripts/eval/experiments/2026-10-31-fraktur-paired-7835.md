@@ -12,6 +12,7 @@ decision: "None yet. The German first-read correction and the stored-lite queue 
 superseded_by: null
 issue: [7835, 7818, 7701, 6012, 7824, 7809]
 router_evidence: "none — preregistration only; the T1/T2 export lands with the results, with no rules.json entry (#7835)"
+defect_rates: "none — preregistration only: nothing judged yet; the results add results/defect-rates.json (#7824 unit)"
 ---
 ## 2026-10-31 · Fraktur: correct the first read or not, correct or re-read the stored text, and diplomatic accuracy against DTA (#7835)
 
