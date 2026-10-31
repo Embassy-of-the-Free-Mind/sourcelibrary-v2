@@ -187,6 +187,14 @@ and are marked so wherever they decide anything.**
   −0.06 pp). This change can only remove a setting from the candidates, never add one.
 - The decision quoted is the one under both changes; the preregistered least-squares bootstrap is printed beside it.
 
+**Amendment 5 (2026-10-31 00:40Z, post hoc, after C1): savings are judged against the live run on the same pool.**
+The preregistered pool check fired: the two live runs, identical settings on two accounts, differ in calls a page
+(German 0.46 on `.agy-james` vs 0.38 on the default pool; Latin 0.36 vs 0.25), because Gemini's filter cut more of the
+James account's blocks. Phase A (all low-thinking runs) ran on James and phase B (C1, L2, B08) on the default pool, so
+the pooled live mean flatters every default-pool run and penalises every James run. A run setting's saving is now
+1 − its calls a page ÷ the same-pool live run's. This can only move a setting toward "nothing switches" relative to the
+pooled comparison when it ran on the cheaper pool (German C1: 18 % against the pooled live mean, 9 % against L2).
+
 **Not in scope.** The engine choice (#7701's german-cheaper owns it); the prompt; French; any write to a page. No page
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book

@@ -148,8 +148,17 @@ for (const [lang, L] of Object.entries(score.langs)) {
     s.non_inferior = liveCer !== null && s.delta_hi <= MARGIN && (!s.measured || s.measured.delta_hi <= MARGIN) && (s.wrong === null || s.wrong <= liveWrong + 1);
   }
   const nonInf = settings.filter((s) => s.non_inferior).sort((a, b) => (Math.abs(a.calls - b.calls) > 0.02 ? a.calls - b.calls : (a.secs ?? 1e9) - (b.secs ?? 1e9)) || (Math.abs(a.x[0]) + Math.abs(a.x[1] - 1) + Math.abs(a.x[2] + 1)) - (Math.abs(b.x[0]) + Math.abs(b.x[1] - 1) + Math.abs(b.x[2] + 1)));
+  // The pool check (preregistered: "L1 vs L2 is also the pool-vs-pool check"): live calls a page differ by agy account
+  // (filter cuts), so a run setting's saving is judged against the live run made on the SAME pool.
+  const poolOf = (rid) => { try { return JSON.parse(fs.readFileSync(path.join(WORK, 'runs', lang, rid, 'run.json'), 'utf8')).agy_home; } catch { return null; } };
+  for (const s of settings) if (s.run) {
+    const pl = poolOf(s.run), same = liveAgg.filter((l) => poolOf(l.id) === pl);
+    s.pool = pl; s.live_same_pool = same.length ? { runs: same.map((l) => l.id), calls: mean(same.map((l) => l.calls)) } : null;
+  }
+  const savingOf = (st) => (st.measured && st.live_same_pool ? 1 - st.measured.calls / st.live_same_pool.calls : liveCalls ? 1 - st.calls / liveCalls : null);
+  nonInf.sort((a, b) => (savingOf(b) ?? -9) - (savingOf(a) ?? -9));
   const best = nonInf[0] || null;
-  const saving = best && liveCalls ? 1 - best.calls / liveCalls : null;
+  const saving = best ? savingOf(best) : null;
   const optimum = !best ? { verdict: 'no setting is shown non-inferior to live: nothing switches' }
     : saving < MIN_SAVING ? { verdict: `no setting that is non-inferior to live is at least ${100 * MIN_SAVING} % cheaper (the cheapest saves ${(100 * saving).toFixed(0)} %): nothing switches`, setting: saving > 0 ? best : undefined, saving }
     : { verdict: 'optimum found: confirm on queue pages', setting: best, saving };
@@ -171,7 +180,10 @@ for (const [lang, L] of Object.entries(score.langs)) {
     centre_pairs: [['C1', 'C2'], ['C1', 'C3'], ['C2', 'C3']].map(([a, b]) => pair(a, b)).filter(Boolean),
     live_pair: pair('L1', 'L2'),
   };
-  noise.band = Math.max(noise.centre_range ?? 0, ...noise.centre_pairs.map((p) => Math.max(Math.abs(p.lo), Math.abs(p.hi))));
+  // Amendment 3: with fewer than two clean centre runs, the A-vs-A pair is the two live runs (L1 James, L2 default pool).
+  noise.from = noise.centre_pairs.length ? 'centre runs' : 'live runs L1 vs L2';
+  noise.band = noise.centre_pairs.length ? Math.max(noise.centre_range ?? 0, ...noise.centre_pairs.map((p) => Math.max(Math.abs(p.lo), Math.abs(p.hi))))
+    : noise.live_pair ? Math.max(Math.abs(noise.live_pair.lo), Math.abs(noise.live_pair.hi)) : null;
   // The preregistered least-squares fit with its bootstrap, beside the posterior, where 10 or more runs exist.
   let ls = null;
   if (design.length >= 10) {
@@ -201,7 +213,7 @@ const OUT = arg('out', path.join(WORK, 'surface.json'));
 fs.writeFileSync(OUT, JSON.stringify(result, null, 1));
 for (const [lang, R] of Object.entries(result.langs)) {
   console.log(`\n${lang}: ${R.books} books; c1 ${R.c1.toFixed(2)}; live CER ${R.live.cer === null ? '-' : (100 * R.live.cer).toFixed(2) + '%'} calls ${R.live.calls?.toFixed(3) ?? '-'}; noise band ${(100 * R.noise.band).toFixed(2)} pp; a0 cer ${R.prior.a0.cer.a0} calls ${R.prior.a0.calls.a0}`);
-  for (const r of R.runs) console.log(`  ${r.id.padEnd(4)} ${String(r.ppc).padStart(1)} ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} CER ${(100 * r.cer).toFixed(2)}% ±${(100 * r.cer_sd).toFixed(2)}  calls/page ${r.calls.toFixed(3)}  s/page ${r.secs.toFixed(1)}  wrong ${r.wrong}  imputed ${r.imputed}`);
+  for (const r of R.runs) console.log(`  ${r.id.padEnd(4)} [${R.settings.find((x) => x.run === r.id)?.pool ?? (r.live ? 'live' : '')}] ${String(r.ppc).padStart(1)} ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} CER ${(100 * r.cer).toFixed(2)}% ±${(100 * r.cer_sd).toFixed(2)}  calls/page ${r.calls.toFixed(3)}  s/page ${r.secs.toFixed(1)}  wrong ${r.wrong}  imputed ${r.imputed}`);
   for (const s of R.settings.filter((x) => x.x[0] >= 0)) console.log(`   ${s.ppc}/${s.edge}/${s.think.padEnd(6)} ${s.run ?? '  - '} CER ${(100 * s.cer).toFixed(2)}% δ ${(100 * s.delta).toFixed(2)} [${(100 * s.delta_lo).toFixed(2)}, ${(100 * s.delta_hi).toFixed(2)}]${s.measured ? ` measured ${(100 * s.measured.delta).toFixed(2)} [${(100 * s.measured.delta_lo).toFixed(2)}, ${(100 * s.measured.delta_hi).toFixed(2)}]` : ''} calls ${s.calls.toFixed(3)}${s.non_inferior ? ' NI' : ''}`);
   console.log('  optimum:', R.optimum.verdict, R.optimum.setting ? `${R.optimum.setting.ppc}/${R.optimum.setting.edge}/${R.optimum.setting.think}` : '');
   console.log(`  sequential: ${R.sequential.decided ? 'DECIDED' : `${R.sequential.open.length} cheap settings open`}; next: ${R.sequential.next.slice(0, 4).map((n) => `${n.id} (${n.gain_pp2.toFixed(3)})`).join(', ')}`);
