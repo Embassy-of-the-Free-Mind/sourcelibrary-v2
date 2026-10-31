@@ -525,3 +525,109 @@ none), `scripts/lib/image-long-edge.mjs`, `judge.mjs` `la-surface` cell and `lon
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book
 list (`lane_job_books`).
+
+### Result, Amendment 6 (2026-10-31 14:15Z; English below when its runs finish)
+
+**What was run.** The Box-Behnken completion of 6.1 was stopped by the second form after three runs (de C2, de B02,
+la B12, kept). Under the third form: a power gate (below), then the **incomplete-block screen** of pages a call {1, 4,
+8} × thinking {low, medium, high} at the served image and the live prompt, on the whole typed-reference frame (German
+61 books, Latin 84; English 140 of 204, running): every book read at live (`LI`, on the default pool) and at 3 of the 8
+other cells, about 23 (de) and 32 (la) books a cell, 6–10 books shared by every pair of cells
+(`results/ib-allocation-<lang>.json`). Analysis: `analysis6.py` (Python 3.11, numpy 2.4.6, pandas 3.1.0, statsmodels
+0.15.0, scipy 1.17.1), every page of every run (Box-Behnken and screen) in one within-book fit, 2,000 book-level
+bootstrap resamples; post-stratified to the queue frame by era × face (6.8(b)); both reported, the weighted one decides.
+
+**Power gate** (written above, 10:44Z): image long edge and the prompt line dropped before any screen read.
+
+**The cost response.** Quota cost a page = agy's own token usage on every call a page needed, priced at
+gemini-3.8-flash list rates. Thinking dominates it: on the log scale +0.95 (German) and +0.93 (Latin) a coded step of
+thinking (REML SE 0.03–0.05); at 4 a call medium costs 3.8× (German) and 4.8× (Latin) live, high 6.4× and 6.6×;
+pages a call −0.52 / −0.81 a step. A medium- or high-thinking page carries 5,500–7,500 tokens of thinking against
+700–1,000 of text (Box-Behnken runs C1, B08). Calls a page (the first
+run's cost) moves the other way: high thinking needs slightly fewer calls a page, which is why the first run's Latin
+pick (8 a call, high) looked cheap and is not: it costs 2.7× live a page in quota.
+
+**Accuracy.** No knob moves German CER: on the logit scale every main and quadratic term has |t| < 1 (residuals:
+skew 0.44, kurtosis 3.0; on the raw scale kurtosis 360, so inference is on the logit scale and the decision on raw
+percentage points with book-bootstrap intervals). In Latin, 4 a call at medium or high thinking reads 0.7–0.9 pp
+better than live (intervals exclude 0, beyond the A-vs-A floor), and 8 a call at low thinking reads 2.25 pp worse
+[+0.05, +5.20] (weighted; unweighted +0.80 [−0.05, +1.94]): the long s read as f (F6). Noise floor (A-vs-A, paired by
+book, 40 books): German L1–L2 +0.07 pp, C1–C2 −0.04, L2–LI −0.03; detectable difference at 80 % power 0.09–0.12 pp
+CER and 0.14–0.32 log cost. Latin L1–L2 +0.12, L2–LI −0.28; detectable 0.60–0.70 pp, 0.27–0.33 log cost.
+
+**The nine cells, weighted to the queue** (δ CER against live in pp, 95 % book-bootstrap interval; cost in US $ a
+1,000 pages, list-price equivalent; yield = accepted share; `measure: accuracy` and cost; n in books):
+
+German (61 books; 60 weighted):
+
+| cell | δ CER (weighted) | δ CER (unweighted) | $ / 1k pages | yield | $ / 1k accepted | vs live | calls a page | s a page |
+|---|---|---|---|---|---|---|---|---|
+| 1 a call, low | −0.02 [−0.13, +0.11] | +0.01 [−0.05, +0.07] | 18.85 | 93 % | 20.18 [17.56, 23.18] | +76 % | 1.00 | 47 |
+| 1 a call, medium | −0.04 [−0.14, +0.06] | +0.12 [−0.06, +0.42] | 80.65 | 96 % | 83.85 [69.24, 96.31] | +631 % | 0.97 | 113 |
+| 1 a call, high | −0.08 [−0.21, +0.03] | −0.00 [−0.10, +0.11] | 156.20 | 97 % | 161.08 [114.05, 209.84] | +1,303 % | 0.97 | 169 |
+| **4 a call, low (live)** | — | — | 11.35 | 99 % | 11.48 | — | 0.38 | 24 |
+| 4 a call, medium | −0.01 [−0.07, +0.06] | +0.05 [−0.04, +0.21] | 42.79 | 100 % | 42.79 [36.14, 49.86] | +273 % | 0.34 | 59 |
+| 4 a call, high | −0.04 [−0.11, +0.01] | −0.13 [−0.41, +0.04] | 73.00 | 100 % | 73.00 [63.10, 84.99] | +536 % | 0.34 | 85 |
+| **8 a call, low** | **−0.00 [−0.09, +0.07]** | +0.01 [−0.05, +0.06] | 6.24 | 98 % | **6.35 [4.86, 8.60]** | **−45 % [−58, −25]** | 0.32 | 39 |
+| 8 a call, medium | +0.00 [−0.11, +0.11] | −0.00 [−0.08, +0.10] | 20.73 | 100 % | 20.73 [17.67, 25.37] | +81 % | 0.29 | 44 |
+| 8 a call, high | −0.01 [−0.12, +0.08] | −0.24 [−0.78, +0.05] | 31.16 | 100 % | 31.23 [25.72, 41.38] | +172 % | 0.28 | 39 |
+
+Latin (84 books):
+
+| cell | δ CER (weighted) | δ CER (unweighted) | $ / 1k pages | yield | $ / 1k accepted | vs live | calls a page | s a page |
+|---|---|---|---|---|---|---|---|---|
+| 1 a call, low | −0.01 [−0.30, +0.44] | +0.13 [−0.17, +0.46] | 19.88 | 97 % | 20.48 [17.11, 25.77] | +104 % | 1.03 | 33 |
+| 1 a call, medium | +0.04 [−0.87, +1.37] | −0.31 [−0.73, +0.15] | 98.10 | 98 % | 100.28 [87.10, 116.36] | +899 % | 1.00 | 84 |
+| 1 a call, high | +1.16 [−0.59, +4.22] | −0.13 [−0.68, +0.61] | 137.20 | 97 % | 141.36 [125.54, 160.86] | +1,309 % | 0.95 | 132 |
+| **4 a call, low (live)** | — | — | 10.03 | 100 % | 10.03 | — | 0.26 | 12 |
+| 4 a call, medium | −0.89 [−1.36, −0.37] | −0.70 [−1.21, −0.28] | 48.27 | 100 % | 48.27 [43.00, 52.47] | +381 % | 0.26 | 41 |
+| 4 a call, high | −0.71 [−1.29, −0.24] | −0.78 [−1.43, −0.29] | 65.82 | 100 % | 65.82 [58.20, 72.95] | +556 % | 0.24 | 67 |
+| 8 a call, low | +2.25 [+0.05, +5.20] | +0.80 [−0.05, +1.94] | 4.38 | 98 % | 4.46 [3.80, 5.52] | −56 % | 0.10 | 17 |
+| 8 a call, medium | +0.42 [−0.63, +1.91] | −0.15 [−0.63, +0.36] | 20.54 | 100 % | 20.56 [17.56, 24.25] | +105 % | 0.13 | 24 |
+| 8 a call, high | −0.35 [−1.05, +0.44] | −0.50 [−1.04, −0.04] | 27.31 | 100 % | 27.31 [22.97, 32.54] | +172 % | 0.14 | 27 |
+
+Seconds a page are at the shared box's load and include pages a refused block left unread, priced at the one-a-call
+time; the German 8-a-call cells are slower a page than live for that reason.
+
+**Lack of fit.** Every cell was read, so the decision uses cell means and the quadratic is descriptive. Against the
+nine cell means within book: German CER F(3, 161) = 4.29, p 0.006; log cost F(3, 215) = 3.29, p 0.02 (the quadratic
+misses the shape); Latin CER F(3, 252) = 1.00, p 0.39; log cost F(3, 284) = 9.34, p < 0.001.
+
+**Optimum (6.6).** German: **8 a call, image as served, thinking low**, 45 % cheaper a 1,000 accepted pages than live
+[25, 58] (unweighted 40 % [21, 53]), CER −0.00 pp [−0.09, +0.07]; non-inferior in each century with ≥ 10 books (1600s
+12, 1700s 20, 1800s 28; the 1500s has 1 book). Latin: **live stays** (the cheapest non-inferior cell is live; 8 a call
+low fails the margin, its optimum in the 1600s stratum (53 books) but not the 1500s (25)). **Robust** across German and
+Latin and every century with ≥ 10 books: live. So the per-language result is German 8 a call, and a single setting for
+both languages is live. Weighted and unweighted agree on every decision.
+
+**6.3, the proxy check, was not made as designed:** the default pool was never free of other jobs (fraktur-7835,
+tib-good-ocr-translate-6948). Instead, five `/quota` readings bound it: between 11:49Z and 13:05Z the pool fell 2.09
+weekly points while this job's calls priced $39.0, so one week of the pool is worth **at least $1,869** list-price
+(other jobs' use only raises it). Backlog at that bound (`results/backlog.json`; queue measured 2026-10-31, unread
+pages of visible scans-only books in the first-read frame), whole pool, one lane: German 797,772 pages in 3,131 books,
+at most 4.9 weeks at live and 2.7 at 8 a call; Latin 4,741,905 pages in 15,356 books, at most 25.5 weeks (live).
+
+**Confirmation, German** (`confirm-de/RULE.md`, committed before its reads; 30 books from the German queue, era quota
+17 / 11 / 2 met, seed `rt-de-surface`; 13 of 30 drawn pages are e-rara scans whose server refuses this box; 301 agy
+calls; Opus judge 56 items, 4/4 wrong-page controls refused, 2/2 planted errors caught):
+
+| route | written accepted | wrong text | P(acc ≥ 0.8) | calls a page | $ / 1k pages | $ / 1k accepted |
+|---|---|---|---|---|---|---|
+| live, 4 a call | 17/25 | 5/25 | 0.059 | 0.424 | 14.70 | 25.93 |
+| 8 a call | 22/25 | 2/25 | 0.794 | 0.247 | 6.44 | 8.78 |
+
+Paired on the 25 pages both wrote: 8 a call only 5, live only 0, both 17; P(acc₈ ≥ acc₄ − 0.08) = 0.998. **By the
+preregistered rule 8 a call FAILS** clause 1: its wrong-text share 2/25 (0.08) is over the absolute bar 0.04 and
+P(acc ≥ 0.8) is 0.794 < 0.9. Clause 2 (paired, and ≥ 10 % cheaper a accepted page: −66 %) passes. Live fails clause 1
+by more (5/25, P 0.06), and both of 8 a call's wrong-text pages are misread by live the same way (*Metzge* read as
+*Menge*; *mittern tisch sassend* garbled). eval-design §10.3 (2026-10-30) sets the bar at the live route, not an
+absolute 0.04; under it 8 a call would pass. The RULE was written with the older absolute bar, so **nothing switches**
+on this test, and the choice of bar is raised as a decision. **Useful pages:** the 22 pages with a judged accepted
+read and no wrong-text tag were written through `cli-ocr.mjs apply --lane=agy-first-read-7701 --first-read-only
+--print-only` (15 from live, 7 from 8 a call; runs `cli-ocr-20261031130344-1111783`, `cli-ocr-20261031130347-1111912`);
+the 8 others stay scans-only. Router evidence: `estimator/router-table/evidence/read-surface-6740-de.score.json`.
+
+**Failures recorded.** de G08 (8 a call, high) timed out on 4 of 31 calls, and on 3 of 8 at concurrency 1: an 8-page
+high-thinking call runs into the CLI's 300 s limit. Recorded, not retried; its first attempt is the data, timed-out
+calls as cost. The 300-call daily cap on heavy models (`AGY_HEAVY_DAILY_CAP`, #7118) stopped la G03 and la G08; both
+were resumed with the cap set to 450 for this job's high-thinking runs.
