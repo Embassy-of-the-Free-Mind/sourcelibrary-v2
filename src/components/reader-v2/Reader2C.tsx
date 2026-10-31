@@ -46,7 +46,7 @@ import ReaderSettingsControls, { SettingsSwitch } from './ReaderSettingsControls
 import RevisionHistoryPanel from './RevisionHistoryPanel';
 import SavePanel from './SavePanel';
 import PinnedVersionBanner from './PinnedVersion';
-import { spanishEligible, SpanishProse, TranslationLanguageHeader, CopySpanishButton } from './ReaderSpanishToggle';
+import { spanishEligible, editionLangsFor, editionName, SpanishProse, TranslationLanguageHeader, CopySpanishButton, type EditionLang } from './ReaderSpanishToggle';
 import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTranslationProse } from './PairedEdition';
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
@@ -3462,8 +3462,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // is not a missing feature, it is the reader asserting something false.
   const paired = usePairedEdition(r.book.id, r.currentPage.id, r.currentPage.page_number);
 
-  const spanishAvailable = pinnedTranslation == null && !paired && spanishEligible(r.currentPage);
-  const showingSpanish = r.settings.translationLang === 'es' && spanishAvailable;
+  // Spanish, and Chinese since #7537: the editions this page has besides English.
+  const editionLangs: EditionLang[] = pinnedTranslation == null && !paired ? editionLangsFor(r.currentPage) : [];
+  const showingEdition: EditionLang | null = r.settings.translationLang !== 'en' && editionLangs.includes(r.settings.translationLang)
+    ? r.settings.translationLang : null;
+  // Named for history: true while the pane shows any non-English edition.
+  const showingSpanish = showingEdition != null;
 
   // Trace aligns the transcription against the ENGLISH translation, so it has
   // nothing to align while the pane is showing Spanish.
@@ -4043,7 +4047,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
                   {showingSpanish
-                    ? <CopySpanishButton page={r.currentPage} />
+                    ? <CopySpanishButton page={r.currentPage} lang={showingEdition ?? 'es'} />
                     : <CopyTextButton page={r.currentPage} kind="translation" />}
                 </div>
               ) : undefined}>
@@ -4053,7 +4057,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <TranslationLanguageHeader
                     lang={r.settings.translationLang}
                     onChange={(l) => r.updateSettings({ translationLang: l })}
-                    spanishAvailable={spanishAvailable}
+                    available={editionLangs}
                     editing={editing}
                   />
                 )}
@@ -4082,7 +4086,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
-                      ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
+                      ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
                     <PageProblemReport page={r.currentPage} book={r.book} measure={ocrMeasure} />
                   </div>
@@ -4265,7 +4269,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             language={readsOriginal(siteLocale) ? t.panes.viewOcr : (r.book.language || t.panes.originalFallback)}
             hasScan={!!(scan.display || witness)}
             showTranslit={translitEligible}
-            translationLabel={showingSpanish ? 'Español' : t.panes.viewEnglish}
+            translationLabel={showingEdition ? editionName(showingEdition) : t.panes.viewEnglish}
             hidden={barHidden}
             transition={`opacity ${BAR_MS}ms ${BAR_EASE}`}
           />
@@ -4429,7 +4433,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <TranslationLanguageHeader
                     lang={r.settings.translationLang}
                     onChange={(l) => r.updateSettings({ translationLang: l })}
-                    spanishAvailable={spanishAvailable}
+                    available={editionLangs}
                     editing={editing}
                   />
                   {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
@@ -4441,7 +4445,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <NotesToggle on={r.settings.glosses} onToggle={() => r.updateSettings({ glosses: !r.settings.glosses })} />
                   {r.settings.glosses && <MarksKey />}
                   {showingSpanish
-                    ? <CopySpanishButton page={r.currentPage} />
+                    ? <CopySpanishButton page={r.currentPage} lang={showingEdition ?? 'es'} />
                     : <CopyTextButton page={r.currentPage} kind="translation" />}
                 </div>
               </div>
@@ -4477,7 +4481,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
-                  ? <SpanishProse page={r.currentPage} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
+                  ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
                 <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} measure={ocrMeasure} />
               </div>
