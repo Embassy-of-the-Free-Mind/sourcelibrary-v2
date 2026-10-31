@@ -128,7 +128,7 @@ function main() {
     // scans-only); it leaves the CER analysis and is counted as unreadable.
     const oneRuns = runs.filter((r) => r.ppc === 1 && r.finished);
     const unreadable = oneRuns.length ? targets.filter((t) => oneRuns.every((r) => r.targets.find((p) => p.slug === t.slug)?.status !== 'read')).map((t) => t.slug) : [];
-    const excluded = FROZEN ? FROZEN[lang] : [
+    const excluded = FROZEN?.[lang] ? FROZEN[lang] : [
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no').map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` })),
       ...unreadable.filter((sl) => eye.get(sl)?.leaf_match !== 'no').map((sl) => ({ slug: sl, why: 'unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)' })),
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match !== 'no' && !unreadable.includes(t.slug) && runs.length >= 3 && t._pass_share <= 0.5).map((t) => ({ slug: t.slug, pass_share: t._pass_share, why: 'most runs fail the identity guard: a reference or leaf problem, not a read' })),

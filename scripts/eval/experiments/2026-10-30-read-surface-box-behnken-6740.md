@@ -396,6 +396,22 @@ describes).** It supersedes the second form's screen where they conflict; everyt
   (`cli-ocr.mjs apply --first-read-only`, guards on, provenance naming #6740 and this job). Rejected reads are not
   written. This is the job's only production write.
 - **7. Budget.** Unchanged: 4,000 agy calls, the 30 % default-pool stop.
+- **Power gate result (11:05Z, before any screen read; `power6.py`, 300 simulated screens a cell, `results/power.json`).**
+  Variances from the existing runs (additive book + run fit, page level): German residual SD 0.77 pp CER, 0.59 log
+  cost; Latin 3.07 pp, 0.49. Smallest high − low main effect the 10-setting incomplete-block screen detects (80 %,
+  α 0.05): German 0.48–0.50 pp CER and 0.36–0.39 log cost for the knobs, 0.41 pp / 0.29 for the prompt line; Latin
+  1.62–1.75 pp and 0.26–0.27; English (German variances, 140 books) 0.31–0.33 pp and 0.24–0.25. Plausible effects
+  (least-squares main effects on the existing run means, high − low): pages a call CER −0.04 pp (de) / +0.47 (la), log
+  cost −0.90 / −1.51; **image long edge CER −0.05 / −0.44 pp, log cost +0.13 / +0.05**; thinking CER −0.38 / −0.81, log
+  cost +1.70 / +1.85; **prompt line**: none measured, prior prompt levers measured as noise (eval-design §10.2), cost
+  +0.003 (≈ 40 input tokens on ≈ 15,000 a page). **Dropped: the image long edge** (below the detectable effect on both
+  responses in both languages; held at the image as served, the live bytes, which also avoids the 8-a-call × 1,024-px
+  break seen in Latin X01) **and the prompt line** (no plausible effect on either response). **The screen is the 3 × 3
+  full factorial of pages a call {1, 4, 8} × thinking {low, medium, high}** at the served image and the live prompt
+  (`design-ib.json`): the live cell (4, low) read on every book (`LI`), the other eight cells `G01`–`G08` three a book.
+  Its detectable effects: German 0.42 / 0.48 pp CER and 0.32 / 0.35 log cost (pages a call / thinking), Latin 1.41 /
+  1.59 pp and 0.23 / 0.25, English 0.28 / 0.31 pp and 0.21 / 0.24. CER effects of the size seen so far (≤ 0.4 pp in
+  German) will mostly read as bounds; the cost effects are several times their detectable size.
 
 ### Result (2026-10-31 02:15Z)
 

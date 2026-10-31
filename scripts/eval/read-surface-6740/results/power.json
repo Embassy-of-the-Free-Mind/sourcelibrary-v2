@@ -1,0 +1,234 @@
+{
+ "method": "From the existing runs (score.json, frozen exclusions): the book variance and the residual variance of per-page CER\nand of log quota cost a page (a book's block cost), by an additive book + run fit. Then 500 simulated incomplete-block\nscreens a language (each book: live + 3 of the DSD settings, cyclic allocation) analysed by the model the screen will\nuse (book as a block, coded main effects + a live indicator; book fixed effects stand in for the random intercept,\nwhich gives the same within-book contrasts), and the smallest high-minus-low main effect each factor's test detects\nwith 80 % power at two-sided alpha 0.05. Plausible effects: the same contrasts measured in the existing runs.",
+ "alpha": 0.05,
+ "power": 0.8,
+ "sims": 300,
+ "langs": {
+  "de": {
+   "variance_from_runs": 12,
+   "cer_pp": {
+    "residual_sd": 0.7724527347024344,
+    "book_sd": 3.2793758131567654
+   },
+   "log_cost": {
+    "residual_sd": 0.5899106145774675,
+    "book_sd": 0.41134663054090226
+   },
+   "plausible_high_minus_low": {
+    "ppc": {
+     "cer_pp": [
+      -0.11322638685458453,
+      5,
+      1
+     ],
+     "log_cost": [
+      -0.1509632536646217,
+      5,
+      1
+     ]
+    },
+    "edge": {
+     "cer_pp": [
+      0.006590197992180191,
+      2,
+      3
+     ],
+     "log_cost": [
+      -0.054535863461398826,
+      2,
+      3
+     ]
+    },
+    "think": {
+     "cer_pp": [
+      -0.5380573618494804,
+      1,
+      6
+     ],
+     "log_cost": [
+      1.1023740148534076,
+      1,
+      6
+     ]
+    },
+    "prompt": {
+     "cer_pp": [
+      null,
+      0,
+      0
+     ],
+     "log_cost": [
+      null,
+      0,
+      0
+     ],
+     "note": "not run; prior prompt levers measured as noise (eval-design \u00a710.2: v14, v16, seam lines, v20, glossary); the line adds ~40 input tokens to ~15,000 a page (log cost ~ +0.003)"
+    }
+   },
+   "plausible_main_effects_ls": {
+    "cer_pp": {
+     "ppc": -0.041399362204033285,
+     "edge": -0.0545115514923065,
+     "think": -0.37702391325864304,
+     "runs": 10
+    },
+    "log_cost": {
+     "ppc": -0.8983483845496438,
+     "edge": 0.1298537050555438,
+     "think": 1.7003052880411085,
+     "runs": 10
+    }
+   },
+   "screen": {
+    "books": 61,
+    "settings": 10,
+    "reads_per_book": 4,
+    "rows": 244,
+    "dof": 178,
+    "variances_from": "de",
+    "mde_high_minus_low": {
+     "cer_pp": {
+      "ppc": 0.5042818878404077,
+      "edge": 0.4812742624415558,
+      "think": 0.48957209455261713,
+      "prompt": 0.413760082992466
+     },
+     "log_cost": {
+      "ppc": 0.39260164436967204,
+      "edge": 0.38280820643235075,
+      "think": 0.3617811190963375,
+      "prompt": 0.29380313811963715
+     }
+    }
+   }
+  },
+  "la": {
+   "variance_from_runs": 11,
+   "cer_pp": {
+    "residual_sd": 3.0742427334290467,
+    "book_sd": 2.278337728336287
+   },
+   "log_cost": {
+    "residual_sd": 0.48738027647355,
+    "book_sd": 0.29307503626811404
+   },
+   "plausible_high_minus_low": {
+    "ppc": {
+     "cer_pp": [
+      0.06413963196318884,
+      4,
+      1
+     ],
+     "log_cost": [
+      -0.7680471518009062,
+      4,
+      1
+     ]
+    },
+    "edge": {
+     "cer_pp": [
+      -0.7948685065974914,
+      3,
+      2
+     ],
+     "log_cost": [
+      0.7619778494765912,
+      3,
+      2
+     ]
+    },
+    "think": {
+     "cer_pp": [
+      -0.8465232434459864,
+      2,
+      6
+     ],
+     "log_cost": [
+      1.651001253998222,
+      2,
+      6
+     ]
+    },
+    "prompt": {
+     "cer_pp": [
+      null,
+      0,
+      0
+     ],
+     "log_cost": [
+      null,
+      0,
+      0
+     ],
+     "note": "not run; prior prompt levers measured as noise (eval-design \u00a710.2: v14, v16, seam lines, v20, glossary); the line adds ~40 input tokens to ~15,000 a page (log cost ~ +0.003)"
+    }
+   },
+   "plausible_main_effects_ls": {
+    "cer_pp": {
+     "ppc": 0.4741071090632155,
+     "edge": -0.44314845244240025,
+     "think": -0.805651310811316,
+     "runs": 9
+    },
+    "log_cost": {
+     "ppc": -1.505186115728879,
+     "edge": 0.045710019364774195,
+     "think": 1.8526110801900302,
+     "runs": 9
+    }
+   },
+   "screen": {
+    "books": 84,
+    "settings": 10,
+    "reads_per_book": 4,
+    "rows": 336,
+    "dof": 247,
+    "variances_from": "la",
+    "mde_high_minus_low": {
+     "cer_pp": {
+      "ppc": 1.7547801539934356,
+      "edge": 1.6647144489125068,
+      "think": 1.6241848816260882,
+      "prompt": 1.355488861467983
+     },
+     "log_cost": {
+      "ppc": 0.27105768305828776,
+      "edge": 0.2570169426715986,
+      "think": 0.2610625797321701,
+      "prompt": 0.21441876421028738
+     }
+    }
+   }
+  },
+  "en": {
+   "screen": {
+    "books": 140,
+    "settings": 10,
+    "reads_per_book": 4,
+    "rows": 560,
+    "dof": 415,
+    "variances_from": "en",
+    "mde_high_minus_low": {
+     "cer_pp": {
+      "ppc": 0.33115893606871943,
+      "edge": 0.31720349115466173,
+      "think": 0.3126774009122647,
+      "prompt": 0.25987301475096547
+     },
+     "log_cost": {
+      "ppc": 0.2529011326167072,
+      "edge": 0.24166748321801523,
+      "think": 0.24685224447895,
+      "prompt": 0.20306981605327862
+     }
+    }
+   }
+  }
+ },
+ "factors_tested": [
+  "ppc",
+  "edge",
+  "think",
+  "prompt"
+ ]
+}
