@@ -96,12 +96,23 @@ async function phase(ph, langs, opts, parallel) {
   }));
 }
 
+// Amendment 6: before each run, the pool's weekly remaining (/root/agy-quota/pools.json); under 30 % stops the batch.
+const POOLS = '/root/agy-quota/pools.json';
+function poolLow(agyHome) {
+  try {
+    const p = JSON.parse(fs.readFileSync(POOLS, 'utf8')).pools.find((x) => x.pool === (agyHome ? path.basename(agyHome) : 'default'));
+    return p && p.weekly < 0.30 ? `weekly remaining ${p.weekly.toFixed(3)} < 0.30` : null;
+  } catch { return null; }
+}
+
 // batch (Amendment 2, sequential): named runs, e.g. --runs=de:C1,la:C1,de:L2, `parallel` at a time.
 async function batch(list, opts, parallel) {
   const todo = list.split(',').map((x) => { const [lang, id] = x.split(':'); return { lang, id }; });
   let quota = false;
   await Promise.all(Array.from({ length: parallel }, async () => {
     while (todo.length && !quota) {
+      const low = poolLow(opts.agyHome);
+      if (low) { quota = true; console.log(`pool: ${low}; stopping the batch`); break; }
       const q = todo.shift(), t0 = Date.now();
       const code = await readRun(q.lang, q.id, opts);
       console.log(`${new Date().toISOString()} ${q.lang} ${q.id} exit ${code} (${Math.round((Date.now() - t0) / 1000)}s)`);

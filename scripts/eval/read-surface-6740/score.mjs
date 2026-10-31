@@ -7,7 +7,9 @@
 //   metrics.mjs scoreAgainstReference (the windowed CER and the identity guard, used unchanged). score.py reads one
 //   jsonl per arm and knows nothing of calls, blocks or pages left unread.
 //
-//   node scripts/eval/read-surface-6740/score.mjs --work=DIR [--out=FILE]
+//   node scripts/eval/read-surface-6740/score.mjs --work=DIR [--out=FILE] [--frozen=results/exclusions-frozen.json]
+// Amendment 6: --frozen keeps the panel's exclusions as they stood after the first 10 runs a language (new one-a-call
+// runs do not re-open the "unreadable by the route" list), and every run carries its tokens by type, priced (usdOf).
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -16,6 +18,11 @@ import { scoreAgainstReference } from '../lib/metrics.mjs';
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const WORK = path.resolve(arg('work', '.'));
 const OUTF = arg('out', path.join(WORK, 'score.json'));
+const FROZEN = arg('frozen') && JSON.parse(fs.readFileSync(path.resolve(arg('frozen')), 'utf8'));
+// Amendment 6.2: gemini-3.8-flash list rates (scripts/lib/model-pricing.mjs), US $ a token; cached input at 10 % of input
+// (an assumption). agy's `output` already includes thinking, so thinking is not priced again.
+export const RATE = { input: 0.75e-6, cached: 0.075e-6, output: 3.75e-6 };
+export const usdOf = (t, { cachedAtFull = false } = {}) => (t.input - t.cache_read) * RATE.input + t.cache_read * (cachedAtFull ? RATE.input : RATE.cached) + t.output * RATE.output;
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 
 // The read's header and apparatus, dropped with their content: the typed body has no running head, page number,
@@ -65,13 +72,17 @@ function main() {
     const killed = new Set(jsonl(path.join(WORK, 'killed-calls.jsonl')).map((k) => `${k.call_id}|${k.ts}`));
     const blockCalls = jsonl(path.join(dir, 'calls.jsonl')).filter((c) => !killed.has(`${c.call_id}|${c.ts}`));
       let calls = 0, secs = 0, read = 0, missing = 0;
-      const tok = { input: 0, output: 0, thinking: 0 };
-      const addUsage = (u) => { for (const x of u || []) if (x) { tok.input += x.input || 0; tok.output += x.output || 0; tok.thinking += x.thinking || 0; } };
+      const tok = { input: 0, output: 0, thinking: 0, cache_read: 0, no_usage: 0 };
+      const T0 = () => ({ input: 0, output: 0, thinking: 0, cache_read: 0, no_usage: 0 });
+      // A call with no recorded usage is counted (no_usage); fit.mjs prices it at the run's mean for a call of its size.
+      const addTo = (t, u, n = 1) => { const xs = (u || []).filter(Boolean); if (xs.length < n) t.no_usage += n - xs.length; for (const x of xs) { t.input += x.input || 0; t.output += x.output || 0; t.thinking += x.thinking || 0; t.cache_read += x.cache_read || 0; } };
+      const addUsage = (u, n) => addTo(tok, u, n);
+      let cuts = 0;
       // Per book (each book's window is its own block, so calls, seconds and pages split cleanly by book).
       const byBook = {};
-      const bk = (b) => (byBook[b] ||= { calls: 0, secs: 0, pages: 0, unread: 0, thinking: 0 });
+      const bk = (b) => (byBook[b] ||= { calls: 0, secs: 0, pages: 0, unread: 0, thinking: 0, tokens: T0(), cuts: 0 });
       const thinkOf = (u) => (u || []).reduce((a, x) => a + (x?.thinking || 0), 0);
-      for (const c of blockCalls) { calls += c.calls; secs += c.secs; addUsage(c.usage); const b = bk(c.book_id); b.calls += c.calls; b.secs += c.secs; b.thinking += thinkOf(c.usage); }
+      for (const c of blockCalls) { calls += c.calls; secs += c.secs; addUsage(c.usage, c.calls); const b = bk(c.book_id); b.calls += c.calls; b.secs += c.secs; b.thinking += thinkOf(c.usage); addTo(b.tokens, c.usage, c.calls); if (c.cls) { cuts++; b.cuts++; } }
       for (const r of jsonl(path.join(dir, 'not-read.jsonl'))) bk(r.book_id).unread++;
       const metas = new Map();
       for (const id of ids) {
@@ -81,7 +92,7 @@ function main() {
         metas.set(id, m);
         read++;
         // A page read alone (1 a call, or a remainder) carries its own calls; a block's pages carry the block's.
-        if (!m.call_id) { const sec = (Date.parse(m.finished_at) - Date.parse(m.started_at)) / 1000; calls += m.calls || 0; secs += sec; addUsage(m.usage); const b = bk(m.book_id); b.calls += m.calls || 0; b.secs += sec; b.thinking += thinkOf(m.usage); }
+        if (!m.call_id) { const sec = (Date.parse(m.finished_at) - Date.parse(m.started_at)) / 1000; calls += m.calls || 0; secs += sec; addUsage(m.usage, m.calls || 0); const b = bk(m.book_id); b.calls += m.calls || 0; b.secs += sec; b.thinking += thinkOf(m.usage); addTo(b.tokens, m.usage, m.calls || 0); if (m.error_class || m.chatter) { cuts++; b.cuts++; } }
       }
       for (const t of targets) bk(t.book_id).pages += run.ppc;
       const pages = targets.map((t) => {
@@ -100,7 +111,7 @@ function main() {
       });
       runs.push({ id: run.id, phase: run.phase, x1: run.x1, x2: run.x2, x3: run.x3, ppc: run.ppc, edge: run.edge, think: run.think, live: run.live,
         finished: exits.some((e) => e.code === 0), pages_in_run: ids.length, pages_read: read, pages_unread: unread.size, pages_missing: missing,
-        calls, secs: Math.round(secs), tokens: tok, by_book: byBook, targets: pages });
+        calls, secs: Math.round(secs), tokens: tok, usd: usdOf(tok), cuts, agy_home: (() => { try { return JSON.parse(fs.readFileSync(path.join(dir, 'run.json'), 'utf8')).agy_home; } catch { return null; } })(), by_book: byBook, targets: pages });
     }
     // Loop / cut against the page's median over runs (score.py's rule); wrong text = guard failed where most runs pass.
     for (const t of targets) {
@@ -117,11 +128,12 @@ function main() {
     // scans-only); it leaves the CER analysis and is counted as unreadable.
     const oneRuns = runs.filter((r) => r.ppc === 1 && r.finished);
     const unreadable = oneRuns.length ? targets.filter((t) => oneRuns.every((r) => r.targets.find((p) => p.slug === t.slug)?.status !== 'read')).map((t) => t.slug) : [];
-    const excluded = [
+    const excluded = FROZEN ? FROZEN[lang] : [
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match === 'no').map((t) => ({ slug: t.slug, why: `by eye: the image is not the typed page (${eye.get(t.slug).note})` })),
       ...unreadable.filter((sl) => eye.get(sl)?.leaf_match !== 'no').map((sl) => ({ slug: sl, why: 'unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)' })),
       ...targets.filter((t) => eye.get(t.slug)?.leaf_match !== 'no' && !unreadable.includes(t.slug) && runs.length >= 3 && t._pass_share <= 0.5).map((t) => ({ slug: t.slug, pass_share: t._pass_share, why: 'most runs fail the identity guard: a reference or leaf problem, not a read' })),
     ];
+    if (FROZEN) for (const sl of unreadable) if (!excluded.some((e) => e.slug === sl)) console.log(`${lang}: ${sl} would now be unreadable by the route; frozen list kept (Amendment 6)`);
     const faces = Object.fromEntries(targets.map((t) => [t.slug, eye.get(t.slug)?.face ?? null]));
     out.langs[lang] = { n_targets: targets.length, excluded, faces, runs };
   }
@@ -133,7 +145,7 @@ function main() {
       const rs = r.targets.filter((p) => p.status === 'read' && !ex.has(p.slug));
       const mean = rs.length ? rs.reduce((a, p) => a + p.cer, 0) / rs.length : NaN;
       const med = rs.map((p) => p.cer).sort((a, b) => a - b)[rs.length >> 1];
-      console.log(`  ${r.id.padEnd(4)} ppc ${r.ppc} edge ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} ${r.finished ? 'done' : 'part'}  read ${r.pages_read}/${r.pages_in_run} unread ${r.pages_unread} miss ${r.pages_missing}  calls ${r.calls}  targets ${rs.length}  CER mean ${(100 * mean).toFixed(2)}% med ${(100 * (med ?? NaN)).toFixed(2)}%  wrong ${rs.filter((p) => p.wrong_text).length}`);
+      console.log(`  ${r.id.padEnd(4)} ppc ${r.ppc} edge ${String(r.edge ?? 'srv').padEnd(4)} ${r.think.padEnd(6)} ${r.finished ? 'done' : 'part'}  read ${r.pages_read}/${r.pages_in_run} unread ${r.pages_unread} miss ${r.pages_missing}  calls ${r.calls}  $/1k ${(1000 * r.usd / r.pages_in_run).toFixed(2)}${r.tokens.no_usage ? ` (${r.tokens.no_usage} no usage)` : ''}  targets ${rs.length}  CER mean ${(100 * mean).toFixed(2)}% med ${(100 * (med ?? NaN)).toFixed(2)}%  wrong ${rs.filter((p) => p.wrong_text).length}`);
     }
   }
 }
