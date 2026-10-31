@@ -196,6 +196,63 @@ the pooled live mean flatters every default-pool run and penalises every James r
 1 − its calls a page ÷ the same-pool live run's. This can only move a setting toward "nothing switches" relative to the
 pooled comparison when it ran on the cheaper pool (German C1: 18 % against the pooled live mean, 9 % against L2).
 
+**Amendment 6 (2026-10-31 09:40Z, job read-surface-2-6740; written AFTER seeing 10 runs a language and the Latin
+confirmation, committed before any agy call it names).** Everything it decides is post hoc in the sense of
+eval-design §10.2: the completed surface is **exploratory-completed**, and the confirmation it names (6.6) is the
+clean test, with its own RULE file committed before its first read.
+- *6.1 Complete the design.* Per language the nine runs not made: B01, B02, B03, B04, B07, B11, B12, C2, C3, on the
+  SAME panel pages, the same image bytes (`--image-cache`, refilled and checked against each earlier read's
+  `image_sha256`), the same scorer, and the **same exclusions, frozen**: German 35 books (5 out:
+  `de-69e96196…-p55, de-698420e1…-p62, de-698fb792…-p22, de-69aebc3b…-p31, de-69ae8ee9…-p198`), Latin 34 (6 out:
+  `la-6a4b1881…-p12, la-69bda005…-p521, la-6a906bf4…-p12, la-6a907846…-p19, la-6a437791…-p14, la-6a944280…-p25`). New
+  one-a-call runs do not re-open the "unreadable by the route" list. Every earlier run is re-used unchanged. The nine run
+  on the default pool (medium and high thinking; `.agy-james` is held to flash-low), in the preregistered phase-B
+  shuffle (seed 6740) with those runs kept, the languages interleaved: de B02 C2 B07 B03 B12 C3 B01 B11 B04; la B12 B04
+  B11 B03 B02 B07 C2 B01 C3. At most 3 runs at once, 3 calls at once a run (Amendment 3: the CLI's 300 s limit). A run
+  with over 10 % of its calls timed out is re-run once at concurrency 2; a second failure is recorded, not retried.
+- *6.2 The primary cost is quota, not calls.* The agy pool is charged by token cost (2026-10-27, #6740; #7503), so
+  calls a page was the wrong cost: high thinking makes fewer calls of many more tokens. **Quota cost a page** = agy's own
+  recorded usage on every call the page needed (block calls, refused and cut blocks, nudges, one-a-call fallbacks),
+  priced at gemini-3.8-flash list rates (`scripts/lib/model-pricing.mjs`: $0.75 / M input, $3.75 / M output; cached
+  input read at $0.075 / M, 10 % of input, Gemini's cache rate, an assumption), divided by the pages of the run. agy's
+  `output` count INCLUDES thinking (checked on these runs: output − thinking ≈ 700–900 tokens a page at every thinking
+  level, the text), so thinking is priced once, inside output. Pages left unread by `--no-alone` are priced at the
+  measured cost a page of the one-a-call runs at the SAME thinking level (low B05; medium B01, B03; high B07), as calls a
+  page used c1. A call with no recorded usage takes the run's mean cost for a call of its size, counted and disclosed.
+  Reported in US $ a 1,000 pages read (list-price equivalent, not a bill: agy is a subscription). Recomputed for the
+  existing 20 runs from their stored usage. Sensitivity: cached input at the full input rate.
+- *6.3 Check the proxy once.* `agy -p "/quota" --output-format json` (no tokens) on the default pool before, between
+  and after two runs made one at a time (de B02, then la B12: one medium, one high), only if no other process is using
+  the default pool then (checked from `/proc/*/environ` of every agy process); repeated reads 60 s apart, until two
+  agree. Reported: weekly quota fraction per $1 priced, for each run. If the two runs' measured quota ratio and their
+  priced ratio differ by more than 2×, both are reported and the measured one prices the design (quota fraction a page
+  = the run's quota fraction ÷ pages, fitted per thinking level). If the default pool cannot be had alone, the check is
+  reported as not made and the priced proxy stands.
+- *6.4 Responses kept.* CER (accuracy), calls a page, wall seconds a page (box load disclosed), filter cuts (refused or
+  cut blocks), wrong-text and invented flags.
+- *6.5 Fit.* Per language and response, the full quadratic (10 terms) by least squares on the 15 Box-Behnken run means,
+  2,000 by-book bootstrap resamples (paired: the same books for every run). **Lack of fit**: F = (SS_LOF / 3) / (SS_PE /
+  2), pure error from the three centre replicates. The Bayesian surface (Amendment 2, the same code) is refit on the 15
+  as the cross-check; every setting where the two disagree on non-inferiority, or on cost by more than the bootstrap
+  interval, is listed. **Pool confound, stated now**: the low-thinking plane (B05, B06, B09, B10) ran on `.agy-james`,
+  the rest on the default pool, so the thinking effect on cost is partly the account's filter-cut rate. Sensitivity
+  (only if the 18 runs leave ≥ 400 calls of the 1,500 and the pool is above 50 %): B05, B06, B09, B10 re-made on the
+  default pool (`D05`, `D06`, `D09`, `D10`), and the surface refit with them in place of the James runs. The primary fit
+  stays the one above.
+- *6.6 Optimum and confirmation.* Optimum = the grid setting (27, plus live) with the lowest predicted quota cost a page
+  whose least-squares bootstrap upper bound of δ CER against live is ≤ 1.0 pp (the preregistered margin), which also
+  passes on its own measured paired difference if it was run (Amendment 4), with wrong text ≤ live + 1. Savings against
+  the same-pool live run (Amendment 5: L2 for the default pool). Under 10 % cheaper than live: nothing switches, and
+  live is the result. Otherwise a **German** confirmation first (the live lane): 30 fresh queue pages, one per book
+  (de-blank frame, none in this panel, the #7701 draws or the Latin confirmation), live (4 a call, served, low) against
+  the optimum, paired, blind Opus against the image, the rule of `confirm/RULE.md` adapted to German, plus the quota cost
+  a page measured on the same pages; its RULE file (`confirm-de/RULE.md`) is committed before its first read. Latin only
+  if the quota allows after German; its lane is arm c (#7752), so a Latin pass is paper evidence and a router row.
+- *6.7* A pass is PROPOSED as a German knob change in a separate PR; this job applies nothing.
+- *Budget and stops.* ≤ 1,500 agy calls for 6.1 and the sensitivity, ≤ 300 for the confirmation; Gemini through the
+  CLI only. Before each run `/root/agy-quota/pools.json`: stop if the default pool's weekly remaining is under 30 %.
+  Before the Opus judge, `climits status`: stop above 85 % weekly on this box's account.
+
 ### Result (2026-10-31 02:15Z)
 
 **Runs made.** 10 a language (17 planned): L1, L2; B05, B06, B09, B10 (phase A, James pool); C1 (clean re-run), B08;
