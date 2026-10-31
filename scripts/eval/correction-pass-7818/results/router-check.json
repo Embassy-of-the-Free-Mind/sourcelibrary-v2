@@ -1,0 +1,492 @@
+{
+ "main_sha": "d59241212",
+ "evidence_added": [
+  "french-lite/lite>agy-flash-low",
+  "german-lite/lite>agy-flash-low"
+ ],
+ "baseline": [
+  {
+   "id": "german-lite/print",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 232,
+     "n": 307,
+     "wrong": 71,
+     "mean": 0.7748597960549538,
+     "ci90": [
+      0.688218816129926,
+      0.8524812719836217
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": 299,
+     "n": 307,
+     "wrong": 7,
+     "mean": 0.958958213326522,
+     "ci90": [
+      0.9158525210374122,
+      0.9883126002826429
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 55,
+     "n": 57,
+     "wrong": 2,
+     "mean": 0.9555984294439517,
+     "ci90": [
+      0.9068112159711371,
+      0.9882782662682579
+     ]
+    }
+   ]
+  },
+  {
+   "id": "german-lite/manuscript",
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.49996082959406585,
+     "ci90": [
+      0.13764960362440656,
+      0.8641804327712724
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": 2,
+     "n": 2,
+     "wrong": 0,
+     "mean": 0.7470179947700354,
+     "ci90": [
+      0.3592820583693887,
+      0.9821840838914206
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.49999151891352256,
+     "ci90": [
+      0.13705540474317374,
+      0.8625021219917592
+     ]
+    }
+   ]
+  },
+  {
+   "id": "german-lite/unknown",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5001044878670102,
+     "ci90": [
+      0.050242536589328396,
+      0.9511155608179472
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.886655099872157,
+     "ci90": [
+      0.6542894423248254,
+      0.996750563428356
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 91,
+     "n": 104,
+     "wrong": 9,
+     "mean": 0.8754127223142887,
+     "ci90": [
+      0.7984207530615103,
+      0.9375635023840113
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/print",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "mean": 0.7189637249120163,
+     "ci90": [
+      0.5835776103965082,
+      0.8384636232825821
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8833075937969131,
+     "ci90": [
+      0.6471522276258196,
+      0.9962631895417821
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 27,
+     "n": 29,
+     "wrong": 2,
+     "mean": 0.9175339163078503,
+     "ci90": [
+      0.8319199508187035,
+      0.976315617356264
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/manuscript",
+   "decision": "UNTESTED (manuscript)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.498442857806598,
+     "ci90": [
+      0.05006678508284253,
+      0.9500687413585616
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49828911059329095,
+     "ci90": [
+      0.049783347138497115,
+      0.9494785722739296
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5015892266249279,
+     "ci90": [
+      0.04947111017274621,
+      0.9514718795082717
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/unknown",
+   "decision": "HOLD",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.49888288944005227,
+     "ci90": [
+      0.04888532839743317,
+      0.9505769670444978
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8833707471716707,
+     "ci90": [
+      0.6449762793603722,
+      0.9962656148940359
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 37,
+     "n": 45,
+     "wrong": 4,
+     "mean": 0.8312879402398102,
+     "ci90": [
+      0.7090175974520644,
+      0.928202161044351
+     ]
+    }
+   ]
+  }
+ ],
+ "with_7818": [
+  {
+   "id": "german-lite/print",
+   "decision": "keep",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 232,
+     "n": 307,
+     "wrong": 71,
+     "mean": 0.7748597960549538,
+     "ci90": [
+      0.688218816129926,
+      0.8524812719836217
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": 299,
+     "n": 307,
+     "wrong": 7,
+     "mean": 0.958958213326522,
+     "ci90": [
+      0.9158525210374122,
+      0.9883126002826429
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 100,
+     "n": 117,
+     "wrong": 10,
+     "mean": 0.8560908328868387,
+     "ci90": [
+      0.8007802986037664,
+      0.9044106040990609
+     ]
+    }
+   ]
+  },
+  {
+   "id": "german-lite/manuscript",
+   "decision": "HOLD (manuscript: < 10 pages a route)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.5001477054099933,
+     "ci90": [
+      0.13508092327509388,
+      0.8636994449580588
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": 2,
+     "n": 2,
+     "wrong": 0,
+     "mean": 0.7471077938707961,
+     "ci90": [
+      0.3606212443795055,
+      0.9820558124395529
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 1,
+     "n": 2,
+     "wrong": 1,
+     "mean": 0.5001740941020757,
+     "ci90": [
+      0.13672879562601298,
+      0.8628177162275606
+     ]
+    }
+   ]
+  },
+  {
+   "id": "german-lite/unknown",
+   "decision": "switch",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5000964863924903,
+     "ci90": [
+      0.04994686238419802,
+      0.9508027091593015
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8864071112746084,
+     "ci90": [
+      0.6540520093323522,
+      0.9967259244273792
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 91,
+     "n": 104,
+     "wrong": 9,
+     "mean": 0.8754275724500845,
+     "ci90": [
+      0.7985246740649623,
+      0.9375017606833417
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/print",
+   "decision": "HOLD",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": 22,
+     "n": 30,
+     "wrong": 6,
+     "mean": 0.718885958280373,
+     "ci90": [
+      0.5835776103965082,
+      0.8385900305700382
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8832543839992619,
+     "ci90": [
+      0.6468805353384737,
+      0.9962355498477529
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 61,
+     "n": 72,
+     "wrong": 6,
+     "mean": 0.8483996461686313,
+     "ci90": [
+      0.7774755624120883,
+      0.9089852289657486
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/manuscript",
+   "decision": "UNTESTED (manuscript)",
+   "route": "lite>opus",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.497929588019454,
+     "ci90": [
+      0.05006678508284253,
+      0.9499645571816263
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4991521766219703,
+     "ci90": [
+      0.050322969785969444,
+      0.949216434332454
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.501099775463493,
+     "ci90": [
+      0.05018379532012959,
+      0.9511442670268436
+     ]
+    }
+   ]
+  },
+  {
+   "id": "french-lite/unknown",
+   "decision": "HOLD",
+   "route": "lite>agy-flash-low",
+   "routes": [
+    {
+     "id": "lite",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4978010729881107,
+     "ci90": [
+      0.04836418806805052,
+      0.9503940034296876
+     ]
+    },
+    {
+     "id": "lite>opus",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.8831596239200766,
+     "ci90": [
+      0.6446782710290269,
+      0.9962344292645218
+     ]
+    },
+    {
+     "id": "lite>agy-flash-low",
+     "k": 37,
+     "n": 45,
+     "wrong": 4,
+     "mean": 0.8311658656659924,
+     "ci90": [
+      0.7090175974520644,
+      0.9280856048984447
+     ]
+    }
+   ]
+  }
+ ],
+ "note": "what build.py decides if rules.json named this export; rules.json is NOT changed by this PR"
+}

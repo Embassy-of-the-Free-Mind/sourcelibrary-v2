@@ -4,14 +4,14 @@ measure: [judged, judged_vs_reference, preference]
 languages: [de, fr]
 scripts: [Latn]
 canons: []
-n_books: 183
-n_pages: 183
-verdict: "Preregistered 2026-10-30, before any judge call. Results are not in yet."
-status: undecided
-decision: "None yet. The correction-cron decision is Derek's (#7809); this test gives the measured default."
+n_books: 181
+n_pages: 181
+verdict: "On pages the #7558 lane processed (one per book, changed or not), the agy Flash-low correction raised Opus-judge acceptance from 37/60 to 45/60 in German (+13 points, 95% CI +5 to +22; 8 gained, 0 lost; McNemar p 0.008) and from 27/43 to 34/43 in French (+16, +7 to +28; 7 gained, 0 lost; p 0.016), with no wrong text added. On 40 German Wikisource pages it cut CER from 1.5% to 1.1% (p 4e-5); on 38 French pages CER stayed 1.5%. The judge repeats itself (kappa 0.87) and passed 8/8 wrong-page and 8/8 planted controls, but flags only 51/132 Wikisource texts the model-free span rule finds wrong text in."
+status: informational
+decision: "Recommended default (preregistered rule): correction cron ON for German and French print. Not applied: the cron and routing decision is Derek's (#7809). Export written to router-table/evidence/correction-pass-7818.score.json; no rules.json entry added (with it, build.py would move german-lite/print to keep lite>opus and french-lite/print to HOLD)."
 superseded_by: null
 issue: [7818, 7611, 7558, 7263, 7809]
-router_evidence: "none — preregistration only; the Arm P export lands with the results (#7818)"
+router_evidence: "none — the export is written to evidence/ but not named in rules.json: adding it changes two cell decisions, which is Derek's call (#7809)"
 ---
 ## 2026-10-31 · Does the cheap correction pass help? A paired blind test on production pages and Wikisource ground truth (#7818)
 
@@ -268,6 +268,137 @@ So 35/72 is a check-flagged, post-fix, 4-book sample. It is not a random-draw ra
 
 **B5. Prior paired result, cited.** #7269 / #5924: Flash-low correction of Latin lite drafts, misleading 100 → 30 pages, 11 pages worse.
 
-## Results
+## Results (judged 2026-10-30 20:20Z – 2026-10-31 00:02Z; analysed 00:48Z)
 
-Not yet: they are added below this line after judging. Preregistered and amended outcomes are reported apart.
+**Run.** Opus `claude-opus-5-5`, `claude -p` on the clawdbot subscription (milolomas), image attached.
+- Calls: 595 made against the 650 cap (468 absolute, 116 pairwise, 16 controls); 6 replies did not parse and were re-judged.
+- Pace: the box's pace guard gave this account 2–3 slots, all held by long-running job sessions. From 22:20Z the calls ran one at a time with `CLAUDE_PACE_OFF=1`, under this study's own stop at 85% weekly / 95% 5-hour.
+- Meter: weekly 13% → 19%. The account is shared, so this is an upper bound. The list-price equivalent was $35.85, not billed.
+- agy: 161 correction calls and 432 second-judge calls on the `/root/.agy-james` pool.
+- Paid API: Flash-Lite drafts of 80 Wikisource pages, **$0.149**.
+- Artifacts: `scripts/eval/correction-pass-7818/results/` (`score.json`, `tables.md`, `data/`). The texts are in `$JOB_SCRATCH/correction-pass-7818/correction-pass-7818-texts.tar.gz`.
+
+### Preregistered outcomes
+
+**H3 first: the instrument is valid for this study.**
+- Test-retest on accept (30 items): κ 0.87 (α 0.87), 29/30 agree. Fidelity: 27/30 identical, weighted κ 0.88.
+- Wrong-page controls: 8/8 rejected at fidelity 1.
+- Planted errors: 8/8 caught and named.
+- Arm W, acceptance against CER: AUC 0.74 (119 texts on 78 pages). Accepted texts have lower CER, but nearly every text sits under 2% CER (accepted 83/103 there). So the CER at which acceptance falls to 50% cannot be estimated: logistic point 0.28, 95% CI −2.1 to 2.4. It is reported as not estimable.
+- Second judge (Gemini 3.8 Flash-low via agy, the corrector's own model): accept κ 0.44 on 432 items (observed agreement 0.76). It is reported only; PR #7807 is the cross-family measure.
+
+**H1, production: supported in both languages.** Arm P: one page per book from the pages the lane PROCESSED.
+
+| language | pages | changed by the lane | accepted, draft | accepted, served | gained | lost | exact McNemar p | effect, points (95% CI) | fidelity diff (95% CI) | wrong-text pages, draft → served |
+|---|---|---|---|---|---|---|---|---|---|---|
+| German | 60 | 47 | 37/60 (0.62, Wilson 0.49–0.73) | 45/60 (0.75, 0.63–0.84) | 8 | **0** | 0.0078 | **+13.3 (+5.0 to +21.7)** | +0.25 (+0.12 to +0.38) | 16 → 8 |
+| French | 43 | 28 | 27/43 (0.63, 0.48–0.76) | 34/43 (0.79, 0.65–0.89) | 7 | **0** | 0.016 | **+16.3 (+7.0 to +27.9)** | +0.16 (+0.07 to +0.28) | 7 → 4 |
+
+- **The +10-point effect of interest lies inside both intervals.**
+- **Page-weighted population effect** (frame changed share × effect on changed pages): German +13.0 (+4.9 to +21.2), French +16.8 (+7.2 to +28.8).
+- On the pages the lane changed: German accepted 29/47 → 37/47, French 20/28 → 27/28.
+- Where the lane's guard refused a correction (`other`, mostly the 25% word-change cap: German 12, French 10), the draft is served unchanged: German 7/12, French 4/10 accepted.
+- No correction lost an acceptance, and none added a wrong-text page.
+- Pairwise, blind X/Y:
+  - German: served preferred 39, draft 3, ties 4 (sign test p 6e-9). Misleading 14/46 drafts against 4/46 corrections. Worse 1, better 12.
+  - French: served preferred 23, draft 0, ties 4. Misleading 2/27 against 0/27.
+
+**H2, Wikisource ground truth: supported in German, not in French.** 40 German and 38 French pages; level 4 throughout. Two French pages had no draft: Flash-Lite stopped with RECITATION, as production would. All 78 had a clean reference.
+
+| language | CER draft | CER served | diff (95% CI) | Wilcoxon p | WER draft → served | pages better / worse | lane outcome (written / unchanged / refused) |
+|---|---|---|---|---|---|---|---|
+| German | 1.5% | 1.1% | −0.4 pts (−0.6 to −0.2) | 4e-5 | 5.2% → 4.0% | 18 / 0 | 28 / 6 / 6 |
+| French | 1.5% | 1.5% | 0.0 (0.0 to 0.0) | 0.85 | 1.8% → 1.8% | 1 / 1 | 13 / 14 / 11 |
+
+- **Added words not in the reference or the draft:** German 35 words on 11 pages, with one 3-word run; French 3 words on 2 pages.
+- Judge acceptance on Arm W: German 23/40 → 31/40; French 36/38 → 36/38.
+- The French Wikisource drafts were already clean (95% accepted), so there was little for the pass to fix there.
+
+**H4 (exploratory): why the router test read higher.** The lane's reads and the router test (#7263, 2026-10-26) match on everything checked:
+- model gemini-3.8-flash-low, correct mode, one page a call, template 0601ef30e816f7a7;
+- 399 lane reads checked, CLI 1.4.9 and 1.4.10;
+- the frame rule (visible idle books, Flash-Lite drafts, interior, ≥ 300 characters, not handwritten);
+- draft acceptance: German 21/30 in the test against 37/60 here; French 22/30 against 27/43;
+- centuries, mostly 17th–18th.
+
+Two differences remain:
+1. **The test judged the raw correction; the lane serves the draft whenever its apply guards refuse the correction.** That was 12/60 German and 10/43 French pages, of which only 7 and 4 were accepted.
+2. **Sampling.** The German test's 28/30 (Wilson 0.79–0.98) overlaps the lane's changed-page 37/47 (0.65–0.88).
+
+Fraktur against Antiqua is not recorded on books, so it was not measured.
+
+**H5 (exploratory).** latin-blank's 35/72 judged items (74 records) are all in the **flagged** stratum (≥ 27% of the PERO draft changed), from 4 books. All were written after the #7695 fix. It is not a random-draw rate and is not comparable to arm c's 18/18 (Amendment 2 B4).
+
+**Write-back: none.** No Arm P page met the rule (draft accepted, correction rejected, wrong text in the correction). `results/writeback.json` lists 0 pages, so nothing was written.
+
+**Router evidence.** `exportScore` gives:
+- German print `lite>agy-flash-low` 45/58 (by-book 95% CI 0.67–0.88), wrong text 6/58, drafts 37/58;
+- French print 33/38 (0.76–0.97), wrong text 1/38, drafts 26/38;
+- controls 2/2 and plants 4/4 per cell.
+
+The file is written to `scripts/eval/estimator/router-table/evidence/correction-pass-7818.score.json` (and its by-script cut). **No rules.json entry was added** (no routing change; #7809 is Derek's). With the entry, build.py on main (`results/router-check.json`) would move:
+- german-lite/print from *switch lite>agy-flash-low* (55/57) to *keep lite>opus* (100/117 against Opus 299/307);
+- french-lite/print from *switch* to *HOLD* (61/72).
+
+The router compares the pass with Opus correction. This test compares it with no pass, which is the decision the correction cron makes.
+
+### Amended outcomes (Amendments 1 and 2; reported apart)
+
+**Severity in #7824's unit: defects per 1,000 words, pooled, page-bootstrap 95% CI.**
+
+| arm | row | misleads | wrong_text |
+|---|---|---|---|
+| P German (60 pp) | draft → served | 3.81 (2.64–5.18) → 2.19 (1.28–3.36) | **2.01 (1.05–3.09) → 0.60 (0.23–1.04)** |
+| P French (43 pp) | draft → served | 4.40 (2.62–6.72) → 2.75 (1.23–4.92) | 1.53 (0.32–3.53) → 1.22 (0.09–3.22) |
+| W German (40 pp) | lite → lite+corr | 3.52 → 2.50 | 1.41 (0.60–2.62) → 0.35 (0–0.74) |
+| W German | gpu → gpu+corr | 18.2 → 1.13 | 5.99 → 0.81 |
+| W French (38 / 37 pp) | lite → lite+corr | 0.99 → 0.39 | 0.20 → 0.20 |
+| W French | gpu → gpu+corr | 6.66 → 0.17 | 2.78 → 0.17 |
+
+- **Paired per-page differences, Arm P.**
+  - German: misleads −0.97 per 1,000 words (Wilcoxon p 0.0008); wrong_text −0.99 (−1.71 to −0.40; p 0.004).
+  - French: misleads −1.61 (−2.87 to −0.52; p 0.012); wrong_text −0.25 (p 0.18).
+- **Sensitivity (MQM 1/5/25 per 100 words):** German 9.8 → 6.7 (−3.1; −5.0 to −1.5); French 9.3 → 7.9 (−1.5; −2.7 to −0.6). The 1/5/10 and 1/10/100 sets point the same way (`score.json`).
+- **Any wrong text, paired:** German 16 → 8 pages (removed 8, added 0; p 0.008), French 7 → 4 (p 0.25).
+- **Made worse by severity, Arm P:**
+  - a wrong-text defect added: 0 pages;
+  - more misleads defects: German 1 page, French 2;
+  - more cosmetic defects: German 8, French 3.
+
+**Arm W, four rows: CER / FCA / model-free span severity per 100 reference words / judge accept.**
+
+| language | lite | lite+correct | gpu (PERO) | gpu+correct |
+|---|---|---|---|---|
+| German (40) | 1.5% / 0.960 / 28.0 / 23 of 40 | 1.1% / 0.965 / 23.4 / 31 | 8.8% / 0.894 / 73.3 / 6 | 1.4% / 0.965 / 32.2 / 33 |
+| French (38; gpu 37) | 1.5% / 0.966 / 29.5 / 36 of 38 | 1.5% / 0.968 / 26.9 / 36 | 2.4% / 0.948 / 44.7 / 20 | 0.5% / 0.985 / 25.8 / 35 |
+
+- lite → lite+correct, German:
+  - FCA +0.005 (+0.002 to +0.009);
+  - span severity −4.6 (−7.1 to −2.4; p 0.0001).
+- **The engine reads German Wikisource Fraktur.** PERO's median CER: German 1.9% (mean 8.8%, from a few failed pages), French 0.8%.
+
+**H6, does gpu+correct REACH lite+correct?**
+- **French: yes.** CER −1.0 pts (−2.8 to 0.0); accept 0 (−8 to +8).
+- **German: not by the preregistered margin.** CER +0.3 pts (0.0 to +0.7): the upper bound misses +0.5. Accept +5 (−10 to +20). Span severity is worse by +8.8 per 100 words (+1.0 to +18.8).
+- The arm-c put-back refused 8 of 40 German and 9 of 37 French pages. Those pages serve the lite draft.
+
+**H3 on real errors** (310 judged Arm W texts):
+- The judge's wrong_text or rejection covers **51/132 (0.39, 0.31–0.47)** of the texts where the span rule finds a wrong-text span.
+- 33/52 (0.63) of the judge's wrong-text texts have one.
+- Accept against span severity: AUC 0.77; against CER: 0.86.
+- Named spans by kind:
+  - numbers 58/191;
+  - invented 14/35;
+  - dropped lines 13/19;
+  - French names 15/43.
+- **Caveat.** The span rule's "number" spans include Wikisource-specific digits (footnote markers, line counts) that a page does not print as text. So 0.39 is a lower bound on recall, not a measured miss rate. Against 143/144 planted (#7611), this is the gap #5647 warned of, now measured on real errors with a model-free rule.
+
+**Agreement, κ and α.** Opus test-retest: accept κ 0.87, α 0.87; fidelity α 0.88 (ordinal). Opus against agy Gemini: accept κ 0.44, α 0.44; wrong_text κ 0.45 (432 items).
+
+### Recommendation (#7809, the preregistered rule)
+
+H1 is supported in both languages, so the rule gives **ON** for German and for French print.
+
+**Default: run the #7558 correction cron on German and French print** (lite>agy-flash-low, agy spare quota, current guards). It raised acceptance by 13 points (5–22) in German and 16 (7–28) in French, lost no page, added no wrong text, and in German cut wrong-text defects from 2.0 to 0.6 per 1,000 words.
+
+Whether Opus correction should replace it for German is a separate, cost question; the router answers it, and this evidence moves the router that way.
