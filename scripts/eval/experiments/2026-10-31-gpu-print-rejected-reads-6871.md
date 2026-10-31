@@ -12,6 +12,7 @@ decision: "Applied 2026-10-31 through the lane's writer (revision rows reason oc
 superseded_by: null
 issue: [6871]
 router_evidence: "none — no router cell changes. This only changes what the English 1800+ GPU lane does with reads it rejected."
+defect_rates: "none — a 10-page by-eye usable/not check of one lane's guard change; no defect classes were counted per 1,000 words, and no route was compared"
 ---
 ## 2026-10-31 · What should the GPU English print lane do with the reads it rejected? (#6871)
 <!-- PRIOR ART: 2026-10-29-print1800-gpu-engine-lanes-6871.md (the lane, its guards and the pilot by-eye check that added the commentary and transliteration guards). This entry measures the rejected reads those guards produced; it does not re-open the guards. -->
