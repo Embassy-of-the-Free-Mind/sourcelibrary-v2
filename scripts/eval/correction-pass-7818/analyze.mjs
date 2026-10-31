@@ -13,7 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { OUT, RESULTS, ROOT, J, jsonl, sha, scoreText, unexplainedInsertions, wrongText, NORMALISATION, SEED, severityScore, SEVERITY_WEIGHTS, spanSeverity, fca } from './lib.mjs';
+import { OUT, RESULTS, ROOT, J, jsonl, sha, scoreText, unexplainedInsertions, wrongText, NORMALISATION, SEED, severityScore, SEVERITY_WEIGHTS, spanSeverity, fca, words7824, defectCounts } from './lib.mjs';
 import { binomTwoSided, makeRng } from '../lib/paired-stats.mjs';
 import { wilson, binaryAgreement, aucLowerIsPositive, krippendorffAlpha } from '../lib/agreement-stats.mjs';
 import { clusterCI } from '../route-judge-6740/judge.mjs';
@@ -187,6 +187,7 @@ function score() {
       accept_by_cer_band: Object.fromEntries([[0, 0.02], [0.02, 0.05], [0.05, 0.1], [0.1, 0.2], [0.2, 1.01]].map(([lo, hi]) => { const g = aucRows.filter((r) => r.cer >= lo && r.cer < hi); return [`${lo}-${hi}`, `${g.filter((r) => r.accept).length}/${g.length}`]; })) };
   }
   out.amendment_1 = amended({ items, vo, abs, agy, F, frameOf });
+  out.amendment_2 = defectRates({ items, abs });
   R('score.json', out);
   R('tables.md', tables(out));
   // Router evidence (Arm P) in the route-judge format the router pools, built by the sampler's own exportScore.
@@ -279,6 +280,43 @@ function amended({ items, vo, abs, agy, F, frameOf }) {
   return A;
 }
 
+/**
+ * AMENDMENT 2: the severity outcome in #7824's unit — defects per 1,000 words by class (misleads, wrong_text). Per arm and
+ * row: the pooled rate (sum of defects / sum of words x 1000) with a page-bootstrap 95% CI (one page per book or work);
+ * paired: the per-page rate difference (corrected - draft) with its CI and the Wilcoxon test. MQM 1/5/25 (A1(a)) is the
+ * sensitivity analysis.
+ */
+function defectRates({ items, abs }) {
+  const textOf = (it) => fs.readFileSync(path.join(OUT, 'texts', it.text_file), 'utf8');
+  const pooled = (rows, k, seed) => {
+    const D = rows.reduce((a, r) => a + r[k], 0), Wd = rows.reduce((a, r) => a + r.w, 0);
+    const rnd = makeRng(seed), boots = [];
+    for (let b = 0; b < 4000; b++) { let d = 0, w = 0; for (let i = 0; i < rows.length; i++) { const r = rows[Math.floor(rnd() * rows.length)]; d += r[k]; w += r.w; } boots.push(w ? 1000 * d / w : 0); }
+    boots.sort((a, b) => a - b);
+    return { per_1000: Wd ? r3(1000 * D / Wd) : null, defects: D, words: Wd, ci95: rows.length ? [r3(boots[100]), r3(boots[3899])] : null };
+  };
+  const rowOf = (v, it) => { const c = defectCounts(v), w = Math.max(1, words7824(textOf(it))); return { misleads: c.misleads, wrong_text: c.wrong_text, w }; };
+  const out = { unit: 'defects per 1,000 words (PR #7824 defect-rate.mjs words())', P: {}, W: {} };
+  for (const lang of ['de', 'fr']) {
+    const ps = pagesOf(items, abs, 'P').filter((p) => p.lang === lang && p.vb && p.va);
+    const B = ps.map((p) => rowOf(p.vb, p.draft)), A = ps.map((p) => rowOf(p.va, p.served));
+    const diff = (k) => { const d = ps.map((_, i) => 1000 * (A[i][k] / A[i].w - B[i][k] / B[i].w)); return { mean: r3(mean(d)), ci95: d.length ? ci(d, 7840).map(r3) : null, wilcoxon: wilcoxon(d) }; };
+    out.P[lang] = { pages: ps.length, draft: { misleads: pooled(B, 'misleads', 7841), wrong_text: pooled(B, 'wrong_text', 7842) }, served: { misleads: pooled(A, 'misleads', 7843), wrong_text: pooled(A, 'wrong_text', 7844) }, paired_diff: { misleads: diff('misleads'), wrong_text: diff('wrong_text') } };
+  }
+  // Arm W rows by (page, text hash), as amended() reads them.
+  const roles = fs.existsSync(path.join(OUT, 'wg-roles.json')) ? J('wg-roles.json') : {};
+  const byPageSha = new Map(items.filter((i) => i.arm !== 'P').map((i) => [`${i.page}|${i.text_sha}`, i]));
+  for (const lang of ['de', 'fr']) {
+    const rowsBy = { lite: [], litecorr: [], gpu: [], gpucorr: [] };
+    for (const [slug, r] of Object.entries(roles)) for (const k of Object.keys(rowsBy)) {
+      const it = r[k] && byPageSha.get(`${slug}|${r[k]}`), v = it && abs.get(it.id)?.verdict;
+      if (v && it.lang === lang) rowsBy[k].push({ slug, ...rowOf(v, it) });
+    }
+    out.W[lang] = Object.fromEntries(Object.entries(rowsBy).map(([k, rs]) => [k, { pages: rs.length, misleads: pooled(rs, 'misleads', 7845), wrong_text: pooled(rs, 'wrong_text', 7846) }]));
+  }
+  return out;
+}
+
 /** Store-shaped records for exportScore: the served verdict as `item` (route lite>agy-flash-low), the draft's as `draft`. */
 function evidence(items, vo, frameOf) {
   const recs = [];
@@ -313,7 +351,7 @@ function tables(o) {
 async function h4() {
   const { MongoClient } = await import('mongodb');
   const RT = path.join(ROOT, 'scripts/eval/route-judge-6740/results/router-tests-2026-10-26');
-  const key = JSON.parse(fs.readFileSync(path.join(RT, 'key.json'), 'utf8')).filter((k) => ['de-lite', 'fr-lite'].includes(k.cell));
+  const key = JSON.parse(fs.readFileSync(path.join(RT, 'key.json'), 'utf8')).filter((k) => ['de-lite', 'fr-lite'].includes(k.cell) && k.kind === 'item');
   const zlib = await import('node:zlib');
   const verd = new Map(zlib.gunzipSync(fs.readFileSync(path.join(RT, 'verdicts-opus.jsonl.gz'))).toString('utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
   const F = J('frame/frame.json'), { items, abs } = load();
@@ -356,6 +394,37 @@ async function h5() {
   console.log(JSON.stringify(out, null, 1));
 }
 
-const stages = { score, h4, h5 };
+/**
+ * What the router table would decide with the Arm P evidence pooled in: build.py on a copy of origin/main, with and
+ * without evidence entries for this export (lane-judge-sampler.mjs rebuild's method). Nothing is published and rules.json
+ * in the repo is not changed: the routing decision is Derek's (#7809).
+ */
+async function router() {
+  const { spawnSync } = await import('node:child_process');
+  const os = await import('node:os');
+  const { rebuildInputs, addEvidence, evidenceEntries } = await import('../lane-judge-sampler.mjs');
+  const RT = 'scripts/eval/estimator/router-table', EV = `${RT}/evidence/correction-pass-7818.score.json`, BY = `${RT}/evidence/by-script/correction-pass-7818.score.json`;
+  const sh = (cmd, args, o = {}) => { const r = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1 << 28, ...o }); if (r.status) throw new Error(`${cmd} ${args.slice(0, 3).join(' ')}: ${r.stderr}`); return r.stdout; };
+  sh('git', ['-C', ROOT, 'fetch', '-q', 'origin', 'main']);
+  const rulesText = sh('git', ['-C', ROOT, 'show', `origin/main:${RT}/rules.json`]), rules = JSON.parse(rulesText);
+  const dir = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'cp7818-router-'));
+  const tar = spawnSync('git', ['-C', ROOT, 'archive', '--format=tar', 'origin/main', ...rebuildInputs(rules, RT)], { maxBuffer: 1 << 30 });
+  sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
+  const score = JSON.parse(fs.readFileSync(path.join(RESULTS, 'router-evidence.score.json'), 'utf8'));
+  for (const [f, body] of [[EV, score], [BY, { source: score.source, generated_at: score.generated_at, of: EV, cells: score.by_script_cells ?? {} }]]) { fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true }); fs.writeFileSync(path.join(dir, f), JSON.stringify(body, null, 1)); }
+  const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
+  py('baseline');
+  let text = rulesText; const added = [];
+  for (const { cell, route } of evidenceEntries(score, rules)) { text = addEvidence(text, cell, route, { score: EV, cell, route }); added.push(`${cell}/${route}`); }
+  fs.writeFileSync(path.join(dir, RT, 'rules.json'), text);
+  py('with-7818', ['--before', `${RT}/baseline.json`]);
+  const rows = (n) => JSON.parse(fs.readFileSync(path.join(dir, RT, `${n}.json`), 'utf8')).rows;
+  const pick = (rs) => rs.filter((r) => /^(german|french)-lite/.test(r.id)).map((r) => ({ id: r.id, decision: r.decision, route: r.route, routes: r.routes.filter((x) => /lite/.test(x.id)).map((x) => ({ id: x.id, k: x.k, n: x.n, wrong: x.wrong, mean: x.mean, ci90: x.ci90 })) }));
+  const out = { main_sha: sh('git', ['-C', ROOT, 'rev-parse', '--short', 'origin/main']).trim(), evidence_added: added, baseline: pick(rows('baseline')), with_7818: pick(rows('with-7818')), note: 'what build.py decides if rules.json named this export; rules.json is NOT changed by this PR' };
+  R('router-check.json', out);
+  for (const k of ['baseline', 'with_7818']) for (const r of out[k]) console.log(`${k} ${r.id}: ${r.decision} ${r.route} | ${r.routes.map((x) => `${x.id} ${x.k}/${x.n}`).join('; ')}`);
+}
+
+const stages = { score, h4, h5, router };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();
