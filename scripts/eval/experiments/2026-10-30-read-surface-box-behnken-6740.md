@@ -631,3 +631,40 @@ the 8 others stay scans-only. Router evidence: `estimator/router-table/evidence/
 high-thinking call runs into the CLI's 300 s limit. Recorded, not retried; its first attempt is the data, timed-out
 calls as cost. The 300-call daily cap on heavy models (`AGY_HEAVY_DAILY_CAP`, #7118) stopped la G03 and la G08; both
 were resumed with the cap set to 450 for this job's high-thinking runs.
+
+**Confirmation 2, German, relative rule** (Derek, inbox 14:12Z and 14:15Z; `confirm-de2/RULE.md`, committed 15:07Z and
+amended 15:20Z, both before any read; written after confirmation 1 and therefore tested on fresh books).
+*Frame:* 3,410 German books in the first-read lane's frame (3,131 visible, 279 hidden), 51 % e-rara (`frame.json`).
+*Draw:* era × face strata, floor 4, 60 planned; per era 48 books were walked in seeded order (seed `rs6740-c2-6741`)
+and each drawn body page labelled by eye (`candidates.jsonl`, `faces.jsonl`). **No German-language Antiqua body page
+was found before 1800 in 144 walked books**, so those three cells (12 books) stay empty and **48 books** were read
+(pre-1600 Fraktur 19, 1600s 8, 1700s 11, 1800+ Fraktur 5 and Antiqua 5; 97.8 % of the frame's share is in a sampled
+cell). The 2-a-library cap could not hold before 1700 (e-rara and BSB hold most of those eras); 19 books were added
+over the cap in walk order, as amended. 72 + 111 agy calls, 96 Opus calls (on the derek@sourcelibrary.org login: this
+box's account was over its weekly pace and its three slots were held by long-running jobs, this one included).
+Controls: 4/4 wrong-page items refused, 2/2 planted errors caught.
+
+| route | written accepted | wrong text | invented flag | calls a page | $ / 1k pages | $ / 1k accepted (weighted) |
+|---|---|---|---|---|---|---|
+| live, 4 a call | 39/45 | 3/45 | 0 | 0.38 | 14.38 | 17.44 |
+| 8 a call | 41/45 | 3/45 | 1 | 0.30 | 7.76 | 8.84 |
+
+Paired on 45 books both wrote: 8 a call only 3, live only 1, both 38, neither 3 (weighted 3.9 / 1.4 / 38.2 / 3.0).
+**(a)** P(acc₈ ≥ acc₄ − 0.08) = 0.993 weighted, 0.992 unweighted: **passes**. **(c)** quota a accepted page 49 %
+below live (weighted; unweighted 49 %): **passes**. **(b)** wrong-text pages 3 vs 3 on the same pages (equal, passes)
+**but one invented-or-wrong-leaf flag: fails.** The flag is the shared detector of confirmation 1 (`confirm.mjs`
+`invented`: an I-class defect, or the words *invent* / *wrong leaf* in the judge's note). On that page (1600s Fraktur,
+`6a4a3fc8…`) the judge wrote "'gemacht' dropped and 'leg auff' **invented**" (class O6, a word misreading) for 8 a call,
+and "'gemacht' dropped and an extra 'leg auff' **added**" for live's identical misreading of the same line. **By the
+rule as committed, 8 a call fails clause (b), and nothing switches.** Without that wording match it would pass every
+clause; that reading is post hoc and is raised as a decision, not taken. The absolute bar (reported): neither passes
+(live 3/45 wrong text, P(acc ≥ 0.8) 0.84; 8 a call 3/45, 0.97). No era or face stratum has 8 a call doing worse than
+live (pre-1600 16/19 vs 17/19; 1600s 5/7 each; 1700s 10/11 vs 11/11; 1800+ 8/8 each; Fraktur 34/40 vs 36/40; Antiqua
+5/5 each). Pooled with confirmation 1 (secondary only): 8 a call only 8, live only 1 on 70 paired books; wrong text
+5 vs 8. **Useful pages:** 42 accepted readings written through the first-read path (35 live, 7 from 8 a call; runs
+`cli-ocr-20261031161628-1476004`, `cli-ocr-20261031161632-1476157`); 6 pages stay scans-only.
+
+**Live's own error rate on queue pages** (a finding in itself): wrong text on 5 of 25 written pages in confirmation 1
+and 3 of 45 in confirmation 2, i.e. 8 of 70 (11 %, Wilson 95 % 6–21 %) of the pages the live German first read writes
+carry at least one sense-changing misreading (judged against the image; e.g. *Metzge* read as *Menge*, *Herꝛlich* as
+*Hertzlich*). None of the 100 drawn pages went through the #7818 German correction pass.
