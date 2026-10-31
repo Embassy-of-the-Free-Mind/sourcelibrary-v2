@@ -396,7 +396,7 @@ describes).** It supersedes the second form's screen where they conflict; everyt
   (`cli-ocr.mjs apply --first-read-only`, guards on, provenance naming #6740 and this job). Rejected reads are not
   written. This is the job's only production write.
 - **7. Budget.** Unchanged: 4,000 agy calls, the 30 % default-pool stop.
-- **Power gate result (11:05Z, before any screen read; `power6.py`, 300 simulated screens a cell, `results/power.json`).**
+- **Power gate result (10:44Z, before any screen read; `power6.py`, 300 simulated screens a cell, `results/power.json`).**
   Variances from the existing runs (additive book + run fit, page level): German residual SD 0.77 pp CER, 0.59 log
   cost; Latin 3.07 pp, 0.49. Smallest high − low main effect the 10-setting incomplete-block screen detects (80 %,
   α 0.05): German 0.48–0.50 pp CER and 0.36–0.39 log cost for the knobs, 0.41 pp / 0.29 for the prompt line; Latin
