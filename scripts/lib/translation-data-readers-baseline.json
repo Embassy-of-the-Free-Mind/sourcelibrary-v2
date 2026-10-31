@@ -1,6 +1,6 @@
 {
   "_comment": "Files that read pages.translation.data directly (#5942). A list to SHRINK: new readers use getTranslationText() (src/lib/translation-text.ts, scripts/lib/translation-text.mjs). Regenerate with node scripts/audit/translation-data-readers.mjs --write-baseline.",
-  "count": 346,
+  "count": 347,
   "files": [
     "scripts/analysis/build-marcianus-overlay.mjs",
     "scripts/analysis/collect-postmortem-stats.mjs",
@@ -82,6 +82,7 @@
     "scripts/catalog-coverage/canon-gap-folio.mjs",
     "scripts/catalog-coverage/canon-gap-map.mjs",
     "scripts/catalog-coverage/canon-gap-status.mjs",
+    "scripts/dataset/build-sellable-manifest.mjs",
     "scripts/etcsl/import-etcsl-text.mjs",
     "scripts/export/build-corpus-snapshot.mjs",
     "scripts/export/training-pairs.mjs",
