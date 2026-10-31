@@ -1,0 +1,212 @@
+{
+ "source": "fraktur-paired-7835 (#7835 T1, T2)",
+ "generated_at": "2026-10-31T12:58:35.169Z",
+ "of": "scripts/eval/estimator/router-table/evidence/fraktur-paired-7835.score.json",
+ "cells": {
+  "german-blank-antiqua|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "O8": "3/14",
+      "O13": "1/14",
+      "E2": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O16": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    }
+   }
+  },
+  "german-blank-fraktur|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "29/40",
+     "wrong_text_pages": "4/40",
+     "classes_k_of_n": {
+      "O8": "23/40",
+      "O6": "15/40",
+      "E2": "13/40",
+      "O12": "6/40",
+      "O16": "4/40",
+      "O11": "4/40",
+      "O7": "3/40",
+      "T6": "1/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "wrong_text_pages": "3/40",
+     "classes_k_of_n": {
+      "O8": "21/40",
+      "O6": "12/40",
+      "E2": "12/40",
+      "O11": "5/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O16": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "wrong_text_pages": "5/40",
+     "classes_k_of_n": {
+      "O8": "24/40",
+      "O6": "16/40",
+      "E2": "11/40",
+      "O16": "4/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O11": "2/40",
+      "O15": "1/40",
+      "O5": "1/40",
+      "D1": "1/40",
+      "T5": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "agy-flash-low@4-read": {
+     "n": 40,
+     "books": 40,
+     "accept": "33/40",
+     "wrong_text_pages": "4/40",
+     "classes_k_of_n": {
+      "O8": "25/40",
+      "O6": "15/40",
+      "E2": "11/40",
+      "O11": "5/40",
+      "O16": "5/40",
+      "O7": "2/40",
+      "O12": "2/40",
+      "T6": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "lite": {
+     "n": 40,
+     "books": 40,
+     "accept": "25/40",
+     "wrong_text_pages": "13/40",
+     "classes_k_of_n": {
+      "O8": "29/40",
+      "O6": "23/40",
+      "E2": "13/40",
+      "O16": "10/40",
+      "O11": "7/40",
+      "O5": "6/40",
+      "O12": "5/40",
+      "T6": "5/40",
+      "O7": "4/40",
+      "O14": "3/40",
+      "I4": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 40,
+     "books": 40,
+     "accept": "27/40",
+     "wrong_text_pages": "7/40",
+     "classes_k_of_n": {
+      "O8": "28/40",
+      "O6": "14/40",
+      "E2": "9/40",
+      "O7": "4/40",
+      "O12": "4/40",
+      "O16": "4/40",
+      "T6": "3/40",
+      "O11": "3/40",
+      "O10": "2/40",
+      "O13": "1/40",
+      "T16": "1/40",
+      "O5": "1/40",
+      "O14": "1/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  }
+ }
+}

@@ -40,6 +40,10 @@ for (const p of wb.pages) {
   const dirOf = (arm) => path.join(OUT, p.set, arm, s.book_id);
   let res;
   if (p.set === 't1' && p.arm === 'a') res = { a: apply(dirOf('a'), p.page_id, [`--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only'], REASON.t1a) };
+  // T1 (c) is NOT writable after all (found 2026-10-31 12:45Z): cli-ocr's kept-read reuse copies the kept meta, so the
+  // reused correction still says draft.source 'file' and apply refuses it. The first run wrote arm (a) on the 10 pages and
+  // they were reverted with revert-run.mjs (results/writeback-t1c-reverted.json). Listed, not written.
+  else if (p.set === 't1' && p.arm === 'c' && !flag('t1c-via-reuse')) { log.push({ ...p, writable: false, result: 'not writable: the reused kept read carries draft.source file, which apply refuses' }); continue; }
   else if (p.set === 't1' && p.arm === 'c') {
     const a = apply(dirOf('a'), p.page_id, [`--lane=${FIRST_READ_LANE}`, '--first-read-only', '--print-only'], REASON.t1a);
     res = { a };
@@ -54,7 +58,7 @@ for (const p of wb.pages) {
       res.c = same ? apply(dir, p.page_id, [], REASON.t1c) : { written: false, skipped: 'the re-requested correction is not the judged read (no kept read reused): not written' };
     }
   } else if (p.set === 't2' && p.arm === 'b') res = { b: apply(dirOf('b'), p.page_id, [`--mark-stale=${CORRECT_LANE}`], REASON.t2b) };
-  else if (p.set === 't2' && p.arm === 'c') res = { c: apply(dirOf('c'), p.page_id, [], REASON.t2c) };
+  else if (p.set === 't2' && p.arm === 'c') res = { c: apply(dirOf('c'), p.page_id, ['--mark-stale=fraktur-7835-reread'], REASON.t2c) };   // the page's English is queued for re-translation, as --mark-stale does for (b)
   log.push({ ...p, apply: APPLY, ...res });
   console.log(`${p.set}/${p.arm} ${p.page_id}: ${JSON.stringify(res)}`);
 }

@@ -1,0 +1,3488 @@
+{
+ "generated_at": "2026-10-31T12:58:05.594Z",
+ "seeds": {
+  "t1": 78351,
+  "t2": 78352,
+  "t3": 78353,
+  "t4": 78354,
+  "queue": 78355,
+  "wrongPage": 78356,
+  "planted": 78357,
+  "t4check": 78358
+ },
+ "calls": {
+  "opus_abs": 332,
+  "opus_controls": 20,
+  "unparsed": 5,
+  "opus_t4_check": 30,
+  "list_usd_equiv": 22.31
+ },
+ "instrument": {
+  "by": {
+   "t1/wrong_page": {
+    "n": 4,
+    "pass": 4
+   },
+   "t2/wrong_page": {
+    "n": 2,
+    "pass": 2
+   },
+   "t3/wrong_page": {
+    "n": 2,
+    "pass": 2
+   },
+   "t1/planted": {
+    "n": 4,
+    "pass": 4
+   },
+   "t2/planted": {
+    "n": 4,
+    "pass": 4
+   },
+   "t3/planted": {
+    "n": 4,
+    "pass": 4
+   }
+  },
+  "wrong_page": "8/8",
+  "planted": "12/12",
+  "valid": true,
+  "noise_floor": "reused from #7818: accept kappa 0.87 (alpha 0.87), 29/30, same judge and prompt (no rerun)"
+ },
+ "T4": {
+  "drawn": 300,
+  "tagged": 283,
+  "untagged": 17,
+  "no_text": 62,
+  "all": {
+   "n_with_text": 221,
+   "fraktur": {
+    "k": 198,
+    "n": 221,
+    "rate": 0.896,
+    "wilson95": [
+     0.849,
+     0.93
+    ]
+   },
+   "fraktur_or_mixed": {
+    "k": 210,
+    "n": 221,
+    "rate": 0.95,
+    "wilson95": [
+     0.913,
+     0.972
+    ]
+   },
+   "antiqua": {
+    "k": 11,
+    "n": 221,
+    "rate": 0.05,
+    "wilson95": [
+     0.028,
+     0.087
+    ]
+   },
+   "mixed": 12
+  },
+  "by_century": {
+   "16th": {
+    "n_with_text": 65,
+    "fraktur": {
+     "k": 62,
+     "n": 65,
+     "rate": 0.954,
+     "wilson95": [
+      0.873,
+      0.984
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 64,
+     "n": 65,
+     "rate": 0.985,
+     "wilson95": [
+      0.918,
+      0.997
+     ]
+    },
+    "antiqua": {
+     "k": 1,
+     "n": 65,
+     "rate": 0.015,
+     "wilson95": [
+      0.003,
+      0.082
+     ]
+    },
+    "mixed": 2
+   },
+   "17th": {
+    "n_with_text": 61,
+    "fraktur": {
+     "k": 55,
+     "n": 61,
+     "rate": 0.902,
+     "wilson95": [
+      0.802,
+      0.954
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 60,
+     "n": 61,
+     "rate": 0.984,
+     "wilson95": [
+      0.913,
+      0.997
+     ]
+    },
+    "antiqua": {
+     "k": 1,
+     "n": 61,
+     "rate": 0.016,
+     "wilson95": [
+      0.003,
+      0.087
+     ]
+    },
+    "mixed": 5
+   },
+   "18th": {
+    "n_with_text": 73,
+    "fraktur": {
+     "k": 65,
+     "n": 73,
+     "rate": 0.89,
+     "wilson95": [
+      0.798,
+      0.943
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 70,
+     "n": 73,
+     "rate": 0.959,
+     "wilson95": [
+      0.886,
+      0.986
+     ]
+    },
+    "antiqua": {
+     "k": 3,
+     "n": 73,
+     "rate": 0.041,
+     "wilson95": [
+      0.014,
+      0.114
+     ]
+    },
+    "mixed": 5
+   },
+   "19th": {
+    "n_with_text": 14,
+    "fraktur": {
+     "k": 9,
+     "n": 14,
+     "rate": 0.643,
+     "wilson95": [
+      0.388,
+      0.837
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 9,
+     "n": 14,
+     "rate": 0.643,
+     "wilson95": [
+      0.388,
+      0.837
+     ]
+    },
+    "antiqua": {
+     "k": 5,
+     "n": 14,
+     "rate": 0.357,
+     "wilson95": [
+      0.163,
+      0.612
+     ]
+    },
+    "mixed": 0
+   },
+   "20th": {
+    "n_with_text": 2,
+    "fraktur": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "wilson95": [
+      0.095,
+      0.905
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "wilson95": [
+      0.095,
+      0.905
+     ]
+    },
+    "antiqua": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "wilson95": [
+      0.095,
+      0.905
+     ]
+    },
+    "mixed": 0
+   },
+   "unknown": {
+    "n_with_text": 6,
+    "fraktur": {
+     "k": 6,
+     "n": 6,
+     "rate": 1,
+     "wilson95": [
+      0.61,
+      1
+     ]
+    },
+    "fraktur_or_mixed": {
+     "k": 6,
+     "n": 6,
+     "rate": 1,
+     "wilson95": [
+      0.61,
+      1
+     ]
+    },
+    "antiqua": {
+     "k": 0,
+     "n": 6,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.39
+     ]
+    },
+    "mixed": 0
+   }
+  },
+  "opus_check": {
+   "n": 29,
+   "agree": 29,
+   "fraktur_kappa": 1,
+   "confusion_agy_to_opus": {
+    "fraktur->fraktur": 23,
+    "none->none": 6
+   }
+  },
+  "weight_fraktur": 0.947
+ },
+ "T1": {
+  "antiqua": {
+   "pages": 14,
+   "arms": {
+    "a": {
+     "pages": 14,
+     "served_text": 11,
+     "judged": 11,
+     "accept": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "wrong_text_pages": 1,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.266,
+       "defects": 1,
+       "words": 3754,
+       "ci95": [
+        0,
+        1.126
+       ]
+      },
+      "misleads": {
+       "per_1000": 0.533,
+       "defects": 2,
+       "words": 3754,
+       "ci95": [
+        0,
+        2.279
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.875,
+     "usd_per_accepted_page": 0.00107
+    },
+    "b": {
+     "pages": 14,
+     "served_text": 11,
+     "judged": 11,
+     "accept": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "wrong_text_pages": 1,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.266,
+       "defects": 1,
+       "words": 3756,
+       "ci95": [
+        0,
+        1.141
+       ]
+      },
+      "misleads": {
+       "per_1000": 0.532,
+       "defects": 2,
+       "words": 3756,
+       "ci95": [
+        0,
+        2.301
+       ]
+      }
+     },
+     "agy_calls_per_page": 1.254,
+     "usd_per_accepted_page": 0.00153
+    },
+    "c": {
+     "pages": 14,
+     "served_text": 11,
+     "judged": 11,
+     "accept": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "wrong_text_pages": 1,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.266,
+       "defects": 1,
+       "words": 3755,
+       "ci95": [
+        0,
+        1.171
+       ]
+      },
+      "misleads": {
+       "per_1000": 0.533,
+       "defects": 2,
+       "words": 3755,
+       "ci95": [
+        0,
+        2.279
+       ]
+      }
+     },
+     "agy_calls_per_page": 1.784,
+     "usd_per_accepted_page": 0.00217
+    }
+   },
+   "contrasts": {
+    "b_vs_a": {
+     "n": 14,
+     "accept_a": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "accept_b": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "gained": 0,
+     "lost": 0,
+     "mcnemar_exact_p": 1,
+     "effect_points": 0,
+     "effect_ci95_points": [
+      0,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 1,
+      "b": 1,
+      "added": 0,
+      "removed": 0
+     },
+     "defects_per_1000_paired": {
+      "pages": 11,
+      "wrong_text": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 0,
+      "cosmetic": 0,
+      "wrong_text_added_list": []
+     }
+    },
+    "c_vs_a": {
+     "n": 14,
+     "accept_a": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "accept_c": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "gained": 0,
+     "lost": 0,
+     "mcnemar_exact_p": 1,
+     "effect_points": 0,
+     "effect_ci95_points": [
+      0,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 1,
+      "c": 1,
+      "added": 0,
+      "removed": 0
+     },
+     "defects_per_1000_paired": {
+      "pages": 11,
+      "wrong_text": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 0,
+      "cosmetic": 1,
+      "wrong_text_added_list": []
+     }
+    },
+    "b_vs_c": {
+     "n": 14,
+     "accept_c": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "accept_b": {
+      "k": 10,
+      "n": 14,
+      "rate": 0.714,
+      "wilson95": [
+       0.454,
+       0.883
+      ]
+     },
+     "gained": 0,
+     "lost": 0,
+     "mcnemar_exact_p": 1,
+     "effect_points": 0,
+     "effect_ci95_points": [
+      0,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "c": 1,
+      "b": 1,
+      "added": 0,
+      "removed": 0
+     },
+     "defects_per_1000_paired": {
+      "pages": 11,
+      "wrong_text": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": 0,
+       "ci95": [
+        0,
+        0
+       ],
+       "wilcoxon": {
+        "n": 0,
+        "w_plus": 0,
+        "z": 0,
+        "p": 1
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 0,
+      "cosmetic": 2,
+      "wrong_text_added_list": []
+     }
+    }
+   },
+   "arm_outcomes": {
+    "a": {
+     "written": 11,
+     "reply wrapper: reply cut before <<<END>>>": 2,
+     "more than one transcription header: restarted or refused rea": 1
+    },
+    "b": {
+     "unchanged": 6,
+     "written": 4,
+     "other": 1,
+     "no a text to correct": 3
+    },
+    "c": {
+     "unchanged": 5,
+     "written": 4,
+     "other": 2,
+     "no a text to correct": 3
+    }
+   }
+  },
+  "fraktur": {
+   "pages": 40,
+   "arms": {
+    "a": {
+     "pages": 40,
+     "served_text": 37,
+     "judged": 37,
+     "accept": {
+      "k": 29,
+      "n": 40,
+      "rate": 0.725,
+      "wilson95": [
+       0.572,
+       0.839
+      ]
+     },
+     "wrong_text_pages": 4,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.439,
+       "defects": 4,
+       "words": 9104,
+       "ci95": [
+        0.104,
+        0.864
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.538,
+       "defects": 14,
+       "words": 9104,
+       "ci95": [
+        0.662,
+        2.542
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.4,
+     "usd_per_accepted_page": 0.00048
+    },
+    "b": {
+     "pages": 40,
+     "served_text": 37,
+     "judged": 37,
+     "accept": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "wrong_text_pages": 5,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.546,
+       "defects": 5,
+       "words": 9151,
+       "ci95": [
+        0.117,
+        0.994
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.53,
+       "defects": 14,
+       "words": 9151,
+       "ci95": [
+        0.77,
+        2.349
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.677,
+     "usd_per_accepted_page": 0.00076
+    },
+    "c": {
+     "pages": 40,
+     "served_text": 37,
+     "judged": 37,
+     "accept": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "wrong_text_pages": 3,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.548,
+       "defects": 5,
+       "words": 9120,
+       "ci95": [
+        0,
+        1.378
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.096,
+       "defects": 10,
+       "words": 9120,
+       "ci95": [
+        0.484,
+        1.793
+       ]
+      }
+     },
+     "agy_calls_per_page": 1.4,
+     "usd_per_accepted_page": 0.00157
+    }
+   },
+   "contrasts": {
+    "b_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 29,
+      "n": 40,
+      "rate": 0.725,
+      "wilson95": [
+       0.572,
+       0.839
+      ]
+     },
+     "accept_b": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "gained": 2,
+     "lost": 0,
+     "mcnemar_exact_p": 0.5,
+     "effect_points": 5,
+     "effect_ci95_points": [
+      0,
+      12.5
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 4,
+      "b": 5,
+      "added": 1,
+      "removed": 0
+     },
+     "defects_per_1000_paired": {
+      "pages": 37,
+      "wrong_text": {
+       "mean": 0.046,
+       "ci95": [
+        -0.003,
+        0.14
+       ],
+       "wilcoxon": {
+        "n": 2,
+        "w_plus": 2,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": 0.103,
+       "ci95": [
+        -0.811,
+        1.113
+       ],
+       "wilcoxon": {
+        "n": 8,
+        "w_plus": 17,
+        "z": -0.07,
+        "p": 0.944
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 1,
+      "misleads": 3,
+      "cosmetic": 3,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6a425846860bea81c9455979",
+        "defects": [
+         "T5 \"<meta>catchword: chen</meta>\""
+        ]
+       }
+      ]
+     }
+    },
+    "c_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 29,
+      "n": 40,
+      "rate": 0.725,
+      "wilson95": [
+       0.572,
+       0.839
+      ]
+     },
+     "accept_c": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "gained": 2,
+     "lost": 0,
+     "mcnemar_exact_p": 0.5,
+     "effect_points": 5,
+     "effect_ci95_points": [
+      0,
+      12.5
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 4,
+      "c": 3,
+      "added": 1,
+      "removed": 2
+     },
+     "defects_per_1000_paired": {
+      "pages": 37,
+      "wrong_text": {
+       "mean": 0.507,
+       "ci95": [
+        -0.411,
+        2.115
+       ],
+       "wilcoxon": {
+        "n": 3,
+        "w_plus": 3,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": -0.418,
+       "ci95": [
+        -1.44,
+        0.521
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 25,
+        "z": -0.667,
+        "p": 0.505
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 1,
+      "misleads": 4,
+      "cosmetic": 8,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6ac5086c4ba7223afefe6faf",
+        "defects": [
+         "O6 \"Vom Absterben deß Herzen\"",
+         "O6 \"deß Herzen\nCardinalen seligen\"",
+         "O6 \"befelchs Herzen vnd Edelleut\""
+        ]
+       }
+      ]
+     }
+    },
+    "b_vs_c": {
+     "n": 40,
+     "accept_c": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "accept_b": {
+      "k": 31,
+      "n": 40,
+      "rate": 0.775,
+      "wilson95": [
+       0.625,
+       0.877
+      ]
+     },
+     "gained": 0,
+     "lost": 0,
+     "mcnemar_exact_p": 1,
+     "effect_points": 0,
+     "effect_ci95_points": [
+      0,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "c": 3,
+      "b": 5,
+      "added": 3,
+      "removed": 1
+     },
+     "defects_per_1000_paired": {
+      "pages": 37,
+      "wrong_text": {
+       "mean": -0.462,
+       "ci95": [
+        -2.008,
+        0.474
+       ],
+       "wilcoxon": {
+        "n": 4,
+        "w_plus": 6,
+        "z": 0.183,
+        "p": 0.855
+       }
+      },
+      "misleads": {
+       "mean": 0.521,
+       "ci95": [
+        -0.44,
+        1.574
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 43,
+        "z": 0.845,
+        "p": 0.398
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 3,
+      "misleads": 6,
+      "cosmetic": 9,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6a26dbd005d7c1d9b108f78f",
+        "defects": [
+         "O15 \"(**Czakowic广泛zek** [sic: **Czakomiczek**]\""
+        ]
+       },
+       {
+        "page_id": "6a4941013c715f5afcd529d2",
+        "defects": [
+         "O7 \"Anno 323.\""
+        ]
+       },
+       {
+        "page_id": "6a425846860bea81c9455979",
+        "defects": [
+         "T5 \"<meta>catchword: chen</meta>\""
+        ]
+       }
+      ]
+     }
+    }
+   },
+   "arm_outcomes": {
+    "a": {
+     "written": 37,
+     "letters outside the book's scripts": 2,
+     "more than one transcription header: restarted or refused rea": 1
+    },
+    "b": {
+     "unchanged": 6,
+     "written": 31,
+     "no a text to correct": 3
+    },
+    "c": {
+     "written": 32,
+     "unchanged": 5,
+     "no a text to correct": 3
+    }
+   }
+  },
+  "all": {
+   "pages": 54,
+   "arms": {
+    "a": {
+     "pages": 54,
+     "served_text": 48,
+     "judged": 48,
+     "accept": {
+      "k": 39,
+      "n": 54,
+      "rate": 0.722,
+      "wilson95": [
+       0.591,
+       0.824
+      ]
+     },
+     "wrong_text_pages": 5,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.389,
+       "defects": 5,
+       "words": 12858,
+       "ci95": [
+        0.079,
+        0.766
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.244,
+       "defects": 16,
+       "words": 12858,
+       "ci95": [
+        0.532,
+        2.107
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.523,
+     "usd_per_accepted_page": 0.00063
+    },
+    "b": {
+     "pages": 54,
+     "served_text": 48,
+     "judged": 48,
+     "accept": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "wrong_text_pages": 6,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.465,
+       "defects": 6,
+       "words": 12907,
+       "ci95": [
+        0.148,
+        0.848
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.24,
+       "defects": 16,
+       "words": 12907,
+       "ci95": [
+        0.613,
+        2.021
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.823,
+     "usd_per_accepted_page": 0.00094
+    },
+    "c": {
+     "pages": 54,
+     "served_text": 48,
+     "judged": 48,
+     "accept": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "wrong_text_pages": 4,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.466,
+       "defects": 6,
+       "words": 12875,
+       "ci95": [
+        0.072,
+        1.125
+       ]
+      },
+      "misleads": {
+       "per_1000": 0.932,
+       "defects": 12,
+       "words": 12875,
+       "ci95": [
+        0.416,
+        1.573
+       ]
+      }
+     },
+     "agy_calls_per_page": 1.502,
+     "usd_per_accepted_page": 0.00172
+    }
+   },
+   "contrasts": {
+    "b_vs_a": {
+     "n": 54,
+     "accept_a": {
+      "k": 39,
+      "n": 54,
+      "rate": 0.722,
+      "wilson95": [
+       0.591,
+       0.824
+      ]
+     },
+     "accept_b": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "gained": 2,
+     "lost": 0,
+     "mcnemar_exact_p": 0.5,
+     "effect_points": 3.704,
+     "effect_ci95_points": [
+      0,
+      9.3
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 5,
+      "b": 6,
+      "added": 1,
+      "removed": 0
+     },
+     "defects_per_1000_paired": {
+      "pages": 48,
+      "wrong_text": {
+       "mean": 0.035,
+       "ci95": [
+        -0.002,
+        0.108
+       ],
+       "wilcoxon": {
+        "n": 2,
+        "w_plus": 2,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": 0.079,
+       "ci95": [
+        -0.621,
+        0.87
+       ],
+       "wilcoxon": {
+        "n": 8,
+        "w_plus": 17,
+        "z": -0.07,
+        "p": 0.944
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 1,
+      "misleads": 3,
+      "cosmetic": 3,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6a425846860bea81c9455979",
+        "defects": [
+         "T5 \"<meta>catchword: chen</meta>\""
+        ]
+       }
+      ]
+     }
+    },
+    "c_vs_a": {
+     "n": 54,
+     "accept_a": {
+      "k": 39,
+      "n": 54,
+      "rate": 0.722,
+      "wilson95": [
+       0.591,
+       0.824
+      ]
+     },
+     "accept_c": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "gained": 2,
+     "lost": 0,
+     "mcnemar_exact_p": 0.5,
+     "effect_points": 3.704,
+     "effect_ci95_points": [
+      0,
+      9.3
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 5,
+      "c": 4,
+      "added": 1,
+      "removed": 2
+     },
+     "defects_per_1000_paired": {
+      "pages": 48,
+      "wrong_text": {
+       "mean": 0.391,
+       "ci95": [
+        -0.317,
+        1.56
+       ],
+       "wilcoxon": {
+        "n": 3,
+        "w_plus": 3,
+        "z": 0,
+        "p": 1
+       }
+      },
+      "misleads": {
+       "mean": -0.322,
+       "ci95": [
+        -1.082,
+        0.39
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 25,
+        "z": -0.667,
+        "p": 0.505
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 1,
+      "misleads": 4,
+      "cosmetic": 9,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6ac5086c4ba7223afefe6faf",
+        "defects": [
+         "O6 \"Vom Absterben deß Herzen\"",
+         "O6 \"deß Herzen\nCardinalen seligen\"",
+         "O6 \"befelchs Herzen vnd Edelleut\""
+        ]
+       }
+      ]
+     }
+    },
+    "b_vs_c": {
+     "n": 54,
+     "accept_c": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "accept_b": {
+      "k": 41,
+      "n": 54,
+      "rate": 0.759,
+      "wilson95": [
+       0.631,
+       0.854
+      ]
+     },
+     "gained": 0,
+     "lost": 0,
+     "mcnemar_exact_p": 1,
+     "effect_points": 0,
+     "effect_ci95_points": [
+      0,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "c": 4,
+      "b": 6,
+      "added": 3,
+      "removed": 1
+     },
+     "defects_per_1000_paired": {
+      "pages": 48,
+      "wrong_text": {
+       "mean": -0.356,
+       "ci95": [
+        -1.561,
+        0.388
+       ],
+       "wilcoxon": {
+        "n": 4,
+        "w_plus": 6,
+        "z": 0.183,
+        "p": 0.855
+       }
+      },
+      "misleads": {
+       "mean": 0.402,
+       "ci95": [
+        -0.342,
+        1.236
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 43,
+        "z": 0.845,
+        "p": 0.398
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 3,
+      "misleads": 6,
+      "cosmetic": 11,
+      "wrong_text_added_list": [
+       {
+        "page_id": "6a26dbd005d7c1d9b108f78f",
+        "defects": [
+         "O15 \"(**Czakowic广泛zek** [sic: **Czakomiczek**]\""
+        ]
+       },
+       {
+        "page_id": "6a4941013c715f5afcd529d2",
+        "defects": [
+         "O7 \"Anno 323.\""
+        ]
+       },
+       {
+        "page_id": "6a425846860bea81c9455979",
+        "defects": [
+         "T5 \"<meta>catchword: chen</meta>\""
+        ]
+       }
+      ]
+     }
+    }
+   },
+   "arm_outcomes": {
+    "a": {
+     "written": 48,
+     "letters outside the book's scripts": 2,
+     "more than one transcription header: restarted or refused rea": 2,
+     "reply wrapper: reply cut before <<<END>>>": 2
+    },
+    "b": {
+     "unchanged": 12,
+     "written": 35,
+     "no a text to correct": 6,
+     "other": 1
+    },
+    "c": {
+     "written": 36,
+     "unchanged": 10,
+     "no a text to correct": 6,
+     "other": 2
+    }
+   }
+  },
+  "primary": "b_vs_a, Fraktur: exact McNemar",
+  "weighted_by_T4": {
+   "fraktur_weight": 0.947,
+   "accept": {
+    "a": 0.724,
+    "b": 0.772,
+    "c": 0.772
+   }
+  }
+ },
+ "T2": {
+  "fraktur": {
+   "pages": 40,
+   "arms": {
+    "a": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "wrong_text_pages": 13,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 2.638,
+       "defects": 27,
+       "words": 10235,
+       "ci95": [
+        1.333,
+        4.224
+       ]
+      },
+      "misleads": {
+       "per_1000": 4.592,
+       "defects": 47,
+       "words": 10235,
+       "ci95": [
+        3.19,
+        6.314
+       ]
+      }
+     },
+     "agy_calls_per_page": 0,
+     "usd_per_accepted_page": 0
+    },
+    "b": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "wrong_text_pages": 7,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.875,
+       "defects": 9,
+       "words": 10280,
+       "ci95": [
+        0.302,
+        1.612
+       ]
+      },
+      "misleads": {
+       "per_1000": 3.113,
+       "defects": 32,
+       "words": 10280,
+       "ci95": [
+        1.747,
+        4.856
+       ]
+      }
+     },
+     "agy_calls_per_page": 1,
+     "usd_per_accepted_page": 0.00129
+    },
+    "c": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "wrong_text_pages": 4,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.382,
+       "defects": 4,
+       "words": 10472,
+       "ci95": [
+        0.096,
+        0.721
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.814,
+       "defects": 19,
+       "words": 10472,
+       "ci95": [
+        1.011,
+        2.815
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.394,
+     "usd_per_accepted_page": 0.00042
+    }
+   },
+   "contrasts": {
+    "b_vs_c": {
+     "n": 40,
+     "accept_c": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "accept_b": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "gained": 2,
+     "lost": 8,
+     "mcnemar_exact_p": 0.109,
+     "effect_points": -15,
+     "effect_ci95_points": [
+      -30,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "c": 4,
+      "b": 7,
+      "added": 5,
+      "removed": 2
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": 0.489,
+       "ci95": [
+        -0.08,
+        1.179
+       ],
+       "wilcoxon": {
+        "n": 9,
+        "w_plus": 34,
+        "z": 1.303,
+        "p": 0.193
+       }
+      },
+      "misleads": {
+       "mean": 3.401,
+       "ci95": [
+        -0.956,
+        10.613
+       ],
+       "wilcoxon": {
+        "n": 24,
+        "w_plus": 173,
+        "z": 0.643,
+        "p": 0.52
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 5,
+      "misleads": 10,
+      "cosmetic": 17,
+      "wrong_text_added_list": [
+       {
+        "page_id": "69dbcce30f8c5edf20f4f6db",
+        "defects": [
+         "O7 \"st. xxvi. mi.\"",
+         "O7 \"i. stūd. iiij. mi.\"",
+         "O7 \"v. stund. vij. mi.\""
+        ]
+       },
+       {
+        "page_id": "6a26bda553acc54a8c4d5148",
+        "defects": [
+         "O6 \"Denn wie man schreit ins Volck hinein/\""
+        ]
+       },
+       {
+        "page_id": "69dbcc141040d1d5e20bcbc8",
+        "defects": [
+         "O5 \"in herodes huf do er wart verspottet vn verrüget\""
+        ]
+       },
+       {
+        "page_id": "6a267bc06c1f37c9c4f33b42",
+        "defects": [
+         "O10 \"das Kupffer samt den daraus nicht ohne Abgang\""
+        ]
+       },
+       {
+        "page_id": "69d389aaf897231f325c66f7",
+        "defects": [
+         "O8 \"wie er sie von seinen Feinden errettet\""
+        ]
+       }
+      ]
+     }
+    },
+    "b_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "accept_b": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "gained": 5,
+     "lost": 3,
+     "mcnemar_exact_p": 0.727,
+     "effect_points": 5,
+     "effect_ci95_points": [
+      -7.5,
+      17.5
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 13,
+      "b": 7,
+      "added": 0,
+      "removed": 6
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": -4.743,
+       "ci95": [
+        -11.54,
+        -0.669
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 2,
+        "z": -2.712,
+        "p": 0.00669
+       }
+      },
+      "misleads": {
+       "mean": -1.711,
+       "ci95": [
+        -2.974,
+        -0.522
+       ],
+       "wilcoxon": {
+        "n": 22,
+        "w_plus": 42,
+        "z": -2.727,
+        "p": 0.00639
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 6,
+      "cosmetic": 3,
+      "wrong_text_added_list": []
+     }
+    },
+    "c_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "accept_c": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "gained": 10,
+     "lost": 2,
+     "mcnemar_exact_p": 0.0386,
+     "effect_points": 20,
+     "effect_ci95_points": [
+      5,
+      35
+     ],
+     "supported": true,
+     "wrong_text_pages": {
+      "a": 13,
+      "c": 4,
+      "added": 0,
+      "removed": 9
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": -5.232,
+       "ci95": [
+        -12.015,
+        -1.191
+       ],
+       "wilcoxon": {
+        "n": 13,
+        "w_plus": 0,
+        "z": -3.145,
+        "p": 0.00166
+       }
+      },
+      "misleads": {
+       "mean": -5.113,
+       "ci95": [
+        -12.083,
+        -0.756
+       ],
+       "wilcoxon": {
+        "n": 27,
+        "w_plus": 92,
+        "z": -2.318,
+        "p": 0.0204
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 7,
+      "cosmetic": 2,
+      "wrong_text_added_list": []
+     }
+    }
+   },
+   "arm_outcomes": {
+    "a": {
+     "not run": 40
+    },
+    "b": {
+     "written": 31,
+     "correction changes 35% of the draft's words: check by eye": 1,
+     "corrector: UNCHANGED (the draft stands)": 3,
+     "correction changes 750% of the draft's words: check by eye": 1,
+     "correction changes 67% of the draft's words: check by eye": 1,
+     "correction changes 26% of the draft's words: check by eye": 1,
+     "correction changes 43% of the draft's words: check by eye": 1,
+     "correction changes 817% of the draft's words: check by eye": 1
+    },
+    "c": {
+     "written": 40
+    }
+   }
+  },
+  "all": {
+   "pages": 40,
+   "arms": {
+    "a": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "wrong_text_pages": 13,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 2.638,
+       "defects": 27,
+       "words": 10235,
+       "ci95": [
+        1.333,
+        4.224
+       ]
+      },
+      "misleads": {
+       "per_1000": 4.592,
+       "defects": 47,
+       "words": 10235,
+       "ci95": [
+        3.19,
+        6.314
+       ]
+      }
+     },
+     "agy_calls_per_page": 0,
+     "usd_per_accepted_page": 0
+    },
+    "b": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "wrong_text_pages": 7,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.875,
+       "defects": 9,
+       "words": 10280,
+       "ci95": [
+        0.302,
+        1.612
+       ]
+      },
+      "misleads": {
+       "per_1000": 3.113,
+       "defects": 32,
+       "words": 10280,
+       "ci95": [
+        1.747,
+        4.856
+       ]
+      }
+     },
+     "agy_calls_per_page": 1,
+     "usd_per_accepted_page": 0.00129
+    },
+    "c": {
+     "pages": 40,
+     "served_text": 40,
+     "judged": 40,
+     "accept": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "wrong_text_pages": 4,
+     "defects_per_1000": {
+      "wrong_text": {
+       "per_1000": 0.382,
+       "defects": 4,
+       "words": 10472,
+       "ci95": [
+        0.096,
+        0.721
+       ]
+      },
+      "misleads": {
+       "per_1000": 1.814,
+       "defects": 19,
+       "words": 10472,
+       "ci95": [
+        1.011,
+        2.815
+       ]
+      }
+     },
+     "agy_calls_per_page": 0.394,
+     "usd_per_accepted_page": 0.00042
+    }
+   },
+   "contrasts": {
+    "b_vs_c": {
+     "n": 40,
+     "accept_c": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "accept_b": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "gained": 2,
+     "lost": 8,
+     "mcnemar_exact_p": 0.109,
+     "effect_points": -15,
+     "effect_ci95_points": [
+      -30,
+      0
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "c": 4,
+      "b": 7,
+      "added": 5,
+      "removed": 2
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": 0.489,
+       "ci95": [
+        -0.08,
+        1.179
+       ],
+       "wilcoxon": {
+        "n": 9,
+        "w_plus": 34,
+        "z": 1.303,
+        "p": 0.193
+       }
+      },
+      "misleads": {
+       "mean": 3.401,
+       "ci95": [
+        -0.956,
+        10.613
+       ],
+       "wilcoxon": {
+        "n": 24,
+        "w_plus": 173,
+        "z": 0.643,
+        "p": 0.52
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 5,
+      "misleads": 10,
+      "cosmetic": 17,
+      "wrong_text_added_list": [
+       {
+        "page_id": "69dbcce30f8c5edf20f4f6db",
+        "defects": [
+         "O7 \"st. xxvi. mi.\"",
+         "O7 \"i. stūd. iiij. mi.\"",
+         "O7 \"v. stund. vij. mi.\""
+        ]
+       },
+       {
+        "page_id": "6a26bda553acc54a8c4d5148",
+        "defects": [
+         "O6 \"Denn wie man schreit ins Volck hinein/\""
+        ]
+       },
+       {
+        "page_id": "69dbcc141040d1d5e20bcbc8",
+        "defects": [
+         "O5 \"in herodes huf do er wart verspottet vn verrüget\""
+        ]
+       },
+       {
+        "page_id": "6a267bc06c1f37c9c4f33b42",
+        "defects": [
+         "O10 \"das Kupffer samt den daraus nicht ohne Abgang\""
+        ]
+       },
+       {
+        "page_id": "69d389aaf897231f325c66f7",
+        "defects": [
+         "O8 \"wie er sie von seinen Feinden errettet\""
+        ]
+       }
+      ]
+     }
+    },
+    "b_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "accept_b": {
+      "k": 27,
+      "n": 40,
+      "rate": 0.675,
+      "wilson95": [
+       0.52,
+       0.799
+      ]
+     },
+     "gained": 5,
+     "lost": 3,
+     "mcnemar_exact_p": 0.727,
+     "effect_points": 5,
+     "effect_ci95_points": [
+      -7.5,
+      17.5
+     ],
+     "supported": false,
+     "wrong_text_pages": {
+      "a": 13,
+      "b": 7,
+      "added": 0,
+      "removed": 6
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": -4.743,
+       "ci95": [
+        -11.54,
+        -0.669
+       ],
+       "wilcoxon": {
+        "n": 11,
+        "w_plus": 2,
+        "z": -2.712,
+        "p": 0.00669
+       }
+      },
+      "misleads": {
+       "mean": -1.711,
+       "ci95": [
+        -2.974,
+        -0.522
+       ],
+       "wilcoxon": {
+        "n": 22,
+        "w_plus": 42,
+        "z": -2.727,
+        "p": 0.00639
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 6,
+      "cosmetic": 3,
+      "wrong_text_added_list": []
+     }
+    },
+    "c_vs_a": {
+     "n": 40,
+     "accept_a": {
+      "k": 25,
+      "n": 40,
+      "rate": 0.625,
+      "wilson95": [
+       0.47,
+       0.758
+      ]
+     },
+     "accept_c": {
+      "k": 33,
+      "n": 40,
+      "rate": 0.825,
+      "wilson95": [
+       0.681,
+       0.913
+      ]
+     },
+     "gained": 10,
+     "lost": 2,
+     "mcnemar_exact_p": 0.0386,
+     "effect_points": 20,
+     "effect_ci95_points": [
+      5,
+      35
+     ],
+     "supported": true,
+     "wrong_text_pages": {
+      "a": 13,
+      "c": 4,
+      "added": 0,
+      "removed": 9
+     },
+     "defects_per_1000_paired": {
+      "pages": 40,
+      "wrong_text": {
+       "mean": -5.232,
+       "ci95": [
+        -12.015,
+        -1.191
+       ],
+       "wilcoxon": {
+        "n": 13,
+        "w_plus": 0,
+        "z": -3.145,
+        "p": 0.00166
+       }
+      },
+      "misleads": {
+       "mean": -5.113,
+       "ci95": [
+        -12.083,
+        -0.756
+       ],
+       "wilcoxon": {
+        "n": 27,
+        "w_plus": 92,
+        "z": -2.318,
+        "p": 0.0204
+       }
+      }
+     },
+     "made_worse": {
+      "wrong_text": 0,
+      "misleads": 7,
+      "cosmetic": 2,
+      "wrong_text_added_list": []
+     }
+    }
+   },
+   "arm_outcomes": {
+    "a": {
+     "not run": 40
+    },
+    "b": {
+     "written": 31,
+     "correction changes 35% of the draft's words: check by eye": 1,
+     "corrector: UNCHANGED (the draft stands)": 3,
+     "correction changes 750% of the draft's words: check by eye": 1,
+     "correction changes 67% of the draft's words: check by eye": 1,
+     "correction changes 26% of the draft's words: check by eye": 1,
+     "correction changes 43% of the draft's words: check by eye": 1,
+     "correction changes 817% of the draft's words: check by eye": 1
+    },
+    "c": {
+     "written": 40
+    }
+   }
+  },
+  "primary": "b_vs_c, Fraktur: exact McNemar"
+ },
+ "T3": {
+  "pages_drawn": 40,
+  "excluded": [],
+  "pages": 40,
+  "faces": {
+   "fraktur": 35,
+   "antiqua": 5
+  },
+  "arms": {
+   "lite": {
+    "n": 40,
+    "cer_l2": 0.068,
+    "cer_l1": 0.033,
+    "cer_fold": 0.01,
+    "fca_fold": 0.975,
+    "cer_l1_median": 0.008,
+    "judge_accept": "27/40",
+    "span_wrong_text_pages": 14,
+    "kinds": {
+     "long_s": {
+      "ref": 1384,
+      "kept": 0,
+      "to_s": 1341,
+      "to_f": 16,
+      "dropped": 21,
+      "other": 6,
+      "s_to_long_s": 0,
+      "f_to_long_s": 0
+     },
+     "umlaut_e": {
+      "ref": 296,
+      "kept": 0,
+      "to_diaeresis": 280,
+      "to_bare": 7,
+      "other": 9,
+      "diaeresis_ref": 250,
+      "diaeresis_to_e": 0
+     },
+     "ligature": {
+      "ref": 0,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "r_rotunda": {
+      "ref": 18,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "numbers": {
+      "ref_digits": 205,
+      "errors": 37
+     },
+     "capital_ij": {
+      "ref_J": 48,
+      "J_to_I": 17
+     },
+     "all": {
+      "ref": 48654,
+      "errors": 2919
+     },
+     "names": {
+      "names": 316,
+      "errors": 38,
+      "rate": 0.12
+     },
+     "rates": {
+      "long_s_kept": 0,
+      "long_s_to_s": 0.969,
+      "long_s_to_f": 0.012,
+      "umlaut_e_kept": 0,
+      "umlaut_e_to_diaeresis": 0.946,
+      "digit_errors_per_ref_digit": 0.18,
+      "ligatures_emitted_per_1000_chars": 0,
+      "r_rotunda_emitted": 0,
+      "J_to_I": 0.354
+     }
+    }
+   },
+   "a": {
+    "n": 35,
+    "cer_l2": 0.084,
+    "cer_l1": 0.05,
+    "cer_fold": 0.011,
+    "fca_fold": 0.978,
+    "cer_l1_median": 0.005,
+    "judge_accept": "34/35",
+    "span_wrong_text_pages": 8,
+    "kinds": {
+     "long_s": {
+      "ref": 1143,
+      "kept": 1,
+      "to_s": 1095,
+      "to_f": 14,
+      "dropped": 32,
+      "other": 1,
+      "s_to_long_s": 0,
+      "f_to_long_s": 0
+     },
+     "umlaut_e": {
+      "ref": 264,
+      "kept": 0,
+      "to_diaeresis": 242,
+      "to_bare": 3,
+      "other": 19,
+      "diaeresis_ref": 234,
+      "diaeresis_to_e": 0
+     },
+     "ligature": {
+      "ref": 0,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "r_rotunda": {
+      "ref": 18,
+      "ref_kept": 1,
+      "emitted": 1
+     },
+     "numbers": {
+      "ref_digits": 162,
+      "errors": 33
+     },
+     "capital_ij": {
+      "ref_J": 40,
+      "J_to_I": 11
+     },
+     "all": {
+      "ref": 42145,
+      "errors": 2927
+     },
+     "names": {
+      "names": 276,
+      "errors": 29,
+      "rate": 0.105
+     },
+     "rates": {
+      "long_s_kept": 0.001,
+      "long_s_to_s": 0.958,
+      "long_s_to_f": 0.012,
+      "umlaut_e_kept": 0,
+      "umlaut_e_to_diaeresis": 0.917,
+      "digit_errors_per_ref_digit": 0.204,
+      "ligatures_emitted_per_1000_chars": 0,
+      "r_rotunda_emitted": 1,
+      "J_to_I": 0.275
+     }
+    }
+   },
+   "b": {
+    "n": 35,
+    "cer_l2": 0.084,
+    "cer_l1": 0.05,
+    "cer_fold": 0.011,
+    "fca_fold": 0.978,
+    "cer_l1_median": 0.005,
+    "judge_accept": "35/35",
+    "span_wrong_text_pages": 5,
+    "kinds": {
+     "long_s": {
+      "ref": 1143,
+      "kept": 1,
+      "to_s": 1095,
+      "to_f": 14,
+      "dropped": 32,
+      "other": 1,
+      "s_to_long_s": 0,
+      "f_to_long_s": 0
+     },
+     "umlaut_e": {
+      "ref": 264,
+      "kept": 0,
+      "to_diaeresis": 242,
+      "to_bare": 3,
+      "other": 19,
+      "diaeresis_ref": 234,
+      "diaeresis_to_e": 0
+     },
+     "ligature": {
+      "ref": 0,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "r_rotunda": {
+      "ref": 18,
+      "ref_kept": 1,
+      "emitted": 1
+     },
+     "numbers": {
+      "ref_digits": 162,
+      "errors": 31
+     },
+     "capital_ij": {
+      "ref_J": 40,
+      "J_to_I": 11
+     },
+     "all": {
+      "ref": 42145,
+      "errors": 2918
+     },
+     "names": {
+      "names": 276,
+      "errors": 29,
+      "rate": 0.105
+     },
+     "rates": {
+      "long_s_kept": 0.001,
+      "long_s_to_s": 0.958,
+      "long_s_to_f": 0.012,
+      "umlaut_e_kept": 0,
+      "umlaut_e_to_diaeresis": 0.917,
+      "digit_errors_per_ref_digit": 0.191,
+      "ligatures_emitted_per_1000_chars": 0,
+      "r_rotunda_emitted": 1,
+      "J_to_I": 0.275
+     }
+    }
+   },
+   "c": {
+    "n": 40,
+    "cer_l2": 0.059,
+    "cer_l1": 0.023,
+    "cer_fold": 0.009,
+    "fca_fold": 0.98,
+    "cer_l1_median": 0.007,
+    "judge_accept": "32/40",
+    "span_wrong_text_pages": 11,
+    "kinds": {
+     "long_s": {
+      "ref": 1384,
+      "kept": 0,
+      "to_s": 1367,
+      "to_f": 14,
+      "dropped": 2,
+      "other": 1,
+      "s_to_long_s": 0,
+      "f_to_long_s": 0
+     },
+     "umlaut_e": {
+      "ref": 296,
+      "kept": 0,
+      "to_diaeresis": 282,
+      "to_bare": 6,
+      "other": 8,
+      "diaeresis_ref": 250,
+      "diaeresis_to_e": 0
+     },
+     "ligature": {
+      "ref": 0,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "r_rotunda": {
+      "ref": 18,
+      "ref_kept": 0,
+      "emitted": 0
+     },
+     "numbers": {
+      "ref_digits": 205,
+      "errors": 37
+     },
+     "capital_ij": {
+      "ref_J": 48,
+      "J_to_I": 15
+     },
+     "all": {
+      "ref": 48654,
+      "errors": 2691
+     },
+     "names": {
+      "names": 316,
+      "errors": 37,
+      "rate": 0.117
+     },
+     "rates": {
+      "long_s_kept": 0,
+      "long_s_to_s": 0.988,
+      "long_s_to_f": 0.01,
+      "umlaut_e_kept": 0,
+      "umlaut_e_to_diaeresis": 0.953,
+      "digit_errors_per_ref_digit": 0.18,
+      "ligatures_emitted_per_1000_chars": 0,
+      "r_rotunda_emitted": 0,
+      "J_to_I": 0.313
+     }
+    }
+   }
+  },
+  "by_face": {
+   "fraktur": {
+    "lite": {
+     "n": 35,
+     "cer_l2": 0.069,
+     "cer_l1": 0.029,
+     "cer_fold": 0.007,
+     "fca_fold": 0.984,
+     "cer_l1_median": 0.008,
+     "judge_accept": "24/35",
+     "span_wrong_text_pages": 11,
+     "kinds": {
+      "long_s": {
+       "ref": 1337,
+       "kept": 0,
+       "to_s": 1298,
+       "to_f": 14,
+       "dropped": 19,
+       "other": 6,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 296,
+       "kept": 0,
+       "to_diaeresis": 280,
+       "to_bare": 7,
+       "other": 9,
+       "diaeresis_ref": 173,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 18,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 148,
+       "errors": 21
+      },
+      "capital_ij": {
+       "ref_J": 48,
+       "J_to_I": 17
+      },
+      "all": {
+       "ref": 41354,
+       "errors": 2515
+      },
+      "names": {
+       "names": 246,
+       "errors": 37,
+       "rate": 0.15
+      },
+      "rates": {
+       "long_s_kept": 0,
+       "long_s_to_s": 0.971,
+       "long_s_to_f": 0.01,
+       "umlaut_e_kept": 0,
+       "umlaut_e_to_diaeresis": 0.946,
+       "digit_errors_per_ref_digit": 0.142,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": 0.354
+      }
+     }
+    },
+    "a": {
+     "n": 31,
+     "cer_l2": 0.082,
+     "cer_l1": 0.044,
+     "cer_fold": 0.005,
+     "fca_fold": 0.99,
+     "cer_l1_median": 0.005,
+     "judge_accept": "30/31",
+     "span_wrong_text_pages": 6,
+     "kinds": {
+      "long_s": {
+       "ref": 1143,
+       "kept": 1,
+       "to_s": 1095,
+       "to_f": 14,
+       "dropped": 32,
+       "other": 1,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 264,
+       "kept": 0,
+       "to_diaeresis": 242,
+       "to_bare": 3,
+       "other": 19,
+       "diaeresis_ref": 157,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 18,
+       "ref_kept": 1,
+       "emitted": 1
+      },
+      "numbers": {
+       "ref_digits": 105,
+       "errors": 8
+      },
+      "capital_ij": {
+       "ref_J": 40,
+       "J_to_I": 11
+      },
+      "all": {
+       "ref": 35912,
+       "errors": 2427
+      },
+      "names": {
+       "names": 217,
+       "errors": 29,
+       "rate": 0.134
+      },
+      "rates": {
+       "long_s_kept": 0.001,
+       "long_s_to_s": 0.958,
+       "long_s_to_f": 0.012,
+       "umlaut_e_kept": 0,
+       "umlaut_e_to_diaeresis": 0.917,
+       "digit_errors_per_ref_digit": 0.076,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 1,
+       "J_to_I": 0.275
+      }
+     }
+    },
+    "b": {
+     "n": 31,
+     "cer_l2": 0.082,
+     "cer_l1": 0.044,
+     "cer_fold": 0.005,
+     "fca_fold": 0.99,
+     "cer_l1_median": 0.005,
+     "judge_accept": "31/31",
+     "span_wrong_text_pages": 3,
+     "kinds": {
+      "long_s": {
+       "ref": 1143,
+       "kept": 1,
+       "to_s": 1095,
+       "to_f": 14,
+       "dropped": 32,
+       "other": 1,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 264,
+       "kept": 0,
+       "to_diaeresis": 242,
+       "to_bare": 3,
+       "other": 19,
+       "diaeresis_ref": 157,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 18,
+       "ref_kept": 1,
+       "emitted": 1
+      },
+      "numbers": {
+       "ref_digits": 105,
+       "errors": 6
+      },
+      "capital_ij": {
+       "ref_J": 40,
+       "J_to_I": 11
+      },
+      "all": {
+       "ref": 35912,
+       "errors": 2420
+      },
+      "names": {
+       "names": 217,
+       "errors": 29,
+       "rate": 0.134
+      },
+      "rates": {
+       "long_s_kept": 0.001,
+       "long_s_to_s": 0.958,
+       "long_s_to_f": 0.012,
+       "umlaut_e_kept": 0,
+       "umlaut_e_to_diaeresis": 0.917,
+       "digit_errors_per_ref_digit": 0.057,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 1,
+       "J_to_I": 0.275
+      }
+     }
+    },
+    "c": {
+     "n": 35,
+     "cer_l2": 0.058,
+     "cer_l1": 0.018,
+     "cer_fold": 0.006,
+     "fca_fold": 0.989,
+     "cer_l1_median": 0.007,
+     "judge_accept": "29/35",
+     "span_wrong_text_pages": 9,
+     "kinds": {
+      "long_s": {
+       "ref": 1337,
+       "kept": 0,
+       "to_s": 1324,
+       "to_f": 12,
+       "dropped": 0,
+       "other": 1,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 296,
+       "kept": 0,
+       "to_diaeresis": 282,
+       "to_bare": 6,
+       "other": 8,
+       "diaeresis_ref": 173,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 18,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 148,
+       "errors": 21
+      },
+      "capital_ij": {
+       "ref_J": 48,
+       "J_to_I": 15
+      },
+      "all": {
+       "ref": 41354,
+       "errors": 2292
+      },
+      "names": {
+       "names": 246,
+       "errors": 36,
+       "rate": 0.146
+      },
+      "rates": {
+       "long_s_kept": 0,
+       "long_s_to_s": 0.99,
+       "long_s_to_f": 0.009,
+       "umlaut_e_kept": 0,
+       "umlaut_e_to_diaeresis": 0.953,
+       "digit_errors_per_ref_digit": 0.142,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": 0.313
+      }
+     }
+    }
+   },
+   "antiqua": {
+    "lite": {
+     "n": 5,
+     "cer_l2": 0.065,
+     "cer_l1": 0.056,
+     "cer_fold": 0.029,
+     "fca_fold": 0.915,
+     "cer_l1_median": 0.007,
+     "judge_accept": "3/5",
+     "span_wrong_text_pages": 3,
+     "kinds": {
+      "long_s": {
+       "ref": 47,
+       "kept": 0,
+       "to_s": 43,
+       "to_f": 2,
+       "dropped": 2,
+       "other": 0,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 0,
+       "kept": 0,
+       "to_diaeresis": 0,
+       "to_bare": 0,
+       "other": 0,
+       "diaeresis_ref": 77,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 57,
+       "errors": 16
+      },
+      "capital_ij": {
+       "ref_J": 0,
+       "J_to_I": 0
+      },
+      "all": {
+       "ref": 7300,
+       "errors": 404
+      },
+      "names": {
+       "names": 70,
+       "errors": 1,
+       "rate": 0.014
+      },
+      "rates": {
+       "long_s_kept": 0,
+       "long_s_to_s": 0.915,
+       "long_s_to_f": 0.043,
+       "umlaut_e_kept": null,
+       "umlaut_e_to_diaeresis": null,
+       "digit_errors_per_ref_digit": 0.281,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": null
+      }
+     }
+    },
+    "a": {
+     "n": 4,
+     "cer_l2": 0.094,
+     "cer_l1": 0.094,
+     "cer_fold": 0.054,
+     "fca_fold": 0.885,
+     "cer_l1_median": 0.007,
+     "judge_accept": "4/4",
+     "span_wrong_text_pages": 2,
+     "kinds": {
+      "long_s": {
+       "ref": 0,
+       "kept": 0,
+       "to_s": 0,
+       "to_f": 0,
+       "dropped": 0,
+       "other": 0,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 0,
+       "kept": 0,
+       "to_diaeresis": 0,
+       "to_bare": 0,
+       "other": 0,
+       "diaeresis_ref": 77,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 57,
+       "errors": 25
+      },
+      "capital_ij": {
+       "ref_J": 0,
+       "J_to_I": 0
+      },
+      "all": {
+       "ref": 6233,
+       "errors": 500
+      },
+      "names": {
+       "names": 59,
+       "errors": 0,
+       "rate": 0
+      },
+      "rates": {
+       "long_s_kept": null,
+       "long_s_to_s": null,
+       "long_s_to_f": null,
+       "umlaut_e_kept": null,
+       "umlaut_e_to_diaeresis": null,
+       "digit_errors_per_ref_digit": 0.439,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": null
+      }
+     }
+    },
+    "b": {
+     "n": 4,
+     "cer_l2": 0.094,
+     "cer_l1": 0.094,
+     "cer_fold": 0.054,
+     "fca_fold": 0.885,
+     "cer_l1_median": 0.006,
+     "judge_accept": "4/4",
+     "span_wrong_text_pages": 2,
+     "kinds": {
+      "long_s": {
+       "ref": 0,
+       "kept": 0,
+       "to_s": 0,
+       "to_f": 0,
+       "dropped": 0,
+       "other": 0,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 0,
+       "kept": 0,
+       "to_diaeresis": 0,
+       "to_bare": 0,
+       "other": 0,
+       "diaeresis_ref": 77,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 57,
+       "errors": 25
+      },
+      "capital_ij": {
+       "ref_J": 0,
+       "J_to_I": 0
+      },
+      "all": {
+       "ref": 6233,
+       "errors": 498
+      },
+      "names": {
+       "names": 59,
+       "errors": 0,
+       "rate": 0
+      },
+      "rates": {
+       "long_s_kept": null,
+       "long_s_to_s": null,
+       "long_s_to_f": null,
+       "umlaut_e_kept": null,
+       "umlaut_e_to_diaeresis": null,
+       "digit_errors_per_ref_digit": 0.439,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": null
+      }
+     }
+    },
+    "c": {
+     "n": 5,
+     "cer_l2": 0.064,
+     "cer_l1": 0.056,
+     "cer_fold": 0.029,
+     "fca_fold": 0.915,
+     "cer_l1_median": 0.005,
+     "judge_accept": "3/5",
+     "span_wrong_text_pages": 2,
+     "kinds": {
+      "long_s": {
+       "ref": 47,
+       "kept": 0,
+       "to_s": 43,
+       "to_f": 2,
+       "dropped": 2,
+       "other": 0,
+       "s_to_long_s": 0,
+       "f_to_long_s": 0
+      },
+      "umlaut_e": {
+       "ref": 0,
+       "kept": 0,
+       "to_diaeresis": 0,
+       "to_bare": 0,
+       "other": 0,
+       "diaeresis_ref": 77,
+       "diaeresis_to_e": 0
+      },
+      "ligature": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "r_rotunda": {
+       "ref": 0,
+       "ref_kept": 0,
+       "emitted": 0
+      },
+      "numbers": {
+       "ref_digits": 57,
+       "errors": 16
+      },
+      "capital_ij": {
+       "ref_J": 0,
+       "J_to_I": 0
+      },
+      "all": {
+       "ref": 7300,
+       "errors": 399
+      },
+      "names": {
+       "names": 70,
+       "errors": 1,
+       "rate": 0.014
+      },
+      "rates": {
+       "long_s_kept": 0,
+       "long_s_to_s": 0.915,
+       "long_s_to_f": 0.043,
+       "umlaut_e_kept": null,
+       "umlaut_e_to_diaeresis": null,
+       "digit_errors_per_ref_digit": 0.281,
+       "ligatures_emitted_per_1000_chars": 0,
+       "r_rotunda_emitted": 0,
+       "J_to_I": null
+      }
+     }
+    }
+   }
+  },
+  "contrasts": {
+   "a_vs_lite": {
+    "cer_l2": {
+     "n": 35,
+     "mean_diff": 0.015,
+     "ci95": [
+      -0.002,
+      0.039
+     ],
+     "wilcoxon": {
+      "n": 26,
+      "w_plus": 137,
+      "z": -0.966,
+      "p": 0.334
+     },
+     "better": 16,
+     "worse": 8
+    },
+    "cer_l1": {
+     "n": 35,
+     "mean_diff": 0.015,
+     "ci95": [
+      -0.002,
+      0.042
+     ],
+     "wilcoxon": {
+      "n": 25,
+      "w_plus": 136,
+      "z": -0.7,
+      "p": 0.484
+     },
+     "better": 12,
+     "worse": 8
+    },
+    "cer_fold": {
+     "n": 35,
+     "mean_diff": 0.001,
+     "ci95": [
+      -0.003,
+      0.008
+     ],
+     "wilcoxon": {
+      "n": 24,
+      "w_plus": 42,
+      "z": -3.083,
+      "p": 0.00205
+     },
+     "better": 15,
+     "worse": 2
+    }
+   },
+   "b_vs_a": {
+    "cer_l2": {
+     "n": 35,
+     "mean_diff": 0,
+     "ci95": [
+      -0.001,
+      0
+     ],
+     "wilcoxon": {
+      "n": 7,
+      "w_plus": 7,
+      "z": -1.101,
+      "p": 0.271
+     },
+     "better": 5,
+     "worse": 1
+    },
+    "cer_l1": {
+     "n": 35,
+     "mean_diff": 0,
+     "ci95": [
+      0,
+      0
+     ],
+     "wilcoxon": {
+      "n": 5,
+      "w_plus": 5,
+      "z": -0.544,
+      "p": 0.586
+     },
+     "better": 2,
+     "worse": 1
+    },
+    "cer_fold": {
+     "n": 35,
+     "mean_diff": 0,
+     "ci95": [
+      0,
+      0
+     ],
+     "wilcoxon": {
+      "n": 4,
+      "w_plus": 4,
+      "z": -0.183,
+      "p": 0.855
+     },
+     "better": 2,
+     "worse": 1
+    }
+   },
+   "c_vs_lite": {
+    "cer_l2": {
+     "n": 40,
+     "mean_diff": -0.009,
+     "ci95": [
+      -0.036,
+      0.007
+     ],
+     "wilcoxon": {
+      "n": 20,
+      "w_plus": 79,
+      "z": -0.953,
+      "p": 0.341
+     },
+     "better": 13,
+     "worse": 6
+    },
+    "cer_l1": {
+     "n": 40,
+     "mean_diff": -0.01,
+     "ci95": [
+      -0.038,
+      0.007
+     ],
+     "wilcoxon": {
+      "n": 21,
+      "w_plus": 86,
+      "z": -1.009,
+      "p": 0.313
+     },
+     "better": 12,
+     "worse": 7
+    },
+    "cer_fold": {
+     "n": 40,
+     "mean_diff": -0.001,
+     "ci95": [
+      -0.002,
+      0
+     ],
+     "wilcoxon": {
+      "n": 14,
+      "w_plus": 17.5,
+      "z": -2.174,
+      "p": 0.0297
+     },
+     "better": 9,
+     "worse": 2
+    }
+   },
+   "c_vs_b": {
+    "cer_l2": {
+     "n": 35,
+     "mean_diff": -0.025,
+     "ci95": [
+      -0.066,
+      0.005
+     ],
+     "wilcoxon": {
+      "n": 28,
+      "w_plus": 227.5,
+      "z": 0.547,
+      "p": 0.585
+     },
+     "better": 11,
+     "worse": 15
+    },
+    "cer_l1": {
+     "n": 35,
+     "mean_diff": -0.027,
+     "ci95": [
+      -0.072,
+      0.005
+     ],
+     "wilcoxon": {
+      "n": 28,
+      "w_plus": 218.5,
+      "z": 0.342,
+      "p": 0.732
+     },
+     "better": 10,
+     "worse": 12
+    },
+    "cer_fold": {
+     "n": 35,
+     "mean_diff": -0.002,
+     "ci95": [
+      -0.009,
+      0.002
+     ],
+     "wilcoxon": {
+      "n": 25,
+      "w_plus": 224,
+      "z": 1.659,
+      "p": 0.0971
+     },
+     "better": 4,
+     "worse": 10
+    }
+   }
+  },
+  "contrasts_fraktur": {
+   "a_vs_lite": {
+    "cer_l2": {
+     "n": 31,
+     "mean_diff": 0.011,
+     "ci95": [
+      -0.003,
+      0.036
+     ],
+     "wilcoxon": {
+      "n": 24,
+      "w_plus": 98,
+      "z": -1.472,
+      "p": 0.141
+     },
+     "better": 16,
+     "worse": 6
+    },
+    "cer_l1": {
+     "n": 31,
+     "mean_diff": 0.012,
+     "ci95": [
+      -0.003,
+      0.038
+     ],
+     "wilcoxon": {
+      "n": 23,
+      "w_plus": 98.5,
+      "z": -1.187,
+      "p": 0.235
+     },
+     "better": 12,
+     "worse": 6
+    },
+    "cer_fold": {
+     "n": 31,
+     "mean_diff": -0.002,
+     "ci95": [
+      -0.004,
+      -0.001
+     ],
+     "wilcoxon": {
+      "n": 22,
+      "w_plus": 17,
+      "z": -3.554,
+      "p": 0.000379
+     },
+     "better": 14,
+     "worse": 1
+    }
+   },
+   "b_vs_a": {
+    "cer_l2": {
+     "n": 31,
+     "mean_diff": 0,
+     "ci95": [
+      -0.001,
+      0
+     ],
+     "wilcoxon": {
+      "n": 6,
+      "w_plus": 6,
+      "z": -0.841,
+      "p": 0.4
+     },
+     "better": 5,
+     "worse": 1
+    },
+    "cer_l1": {
+     "n": 31,
+     "mean_diff": 0,
+     "ci95": [
+      0,
+      0.001
+     ],
+     "wilcoxon": {
+      "n": 4,
+      "w_plus": 4,
+      "z": -0.184,
+      "p": 0.854
+     },
+     "better": 2,
+     "worse": 1
+    },
+    "cer_fold": {
+     "n": 31,
+     "mean_diff": 0,
+     "ci95": [
+      0,
+      0.001
+     ],
+     "wilcoxon": {
+      "n": 4,
+      "w_plus": 4,
+      "z": -0.183,
+      "p": 0.855
+     },
+     "better": 2,
+     "worse": 1
+    }
+   },
+   "c_vs_lite": {
+    "cer_l2": {
+     "n": 35,
+     "mean_diff": -0.011,
+     "ci95": [
+      -0.041,
+      0.008
+     ],
+     "wilcoxon": {
+      "n": 19,
+      "w_plus": 73,
+      "z": -0.866,
+      "p": 0.386
+     },
+     "better": 12,
+     "worse": 6
+    },
+    "cer_l1": {
+     "n": 35,
+     "mean_diff": -0.011,
+     "ci95": [
+      -0.043,
+      0.008
+     ],
+     "wilcoxon": {
+      "n": 20,
+      "w_plus": 80.5,
+      "z": -0.897,
+      "p": 0.37
+     },
+     "better": 11,
+     "worse": 7
+    },
+    "cer_fold": {
+     "n": 35,
+     "mean_diff": -0.001,
+     "ci95": [
+      -0.002,
+      0
+     ],
+     "wilcoxon": {
+      "n": 13,
+      "w_plus": 16,
+      "z": -2.033,
+      "p": 0.0421
+     },
+     "better": 8,
+     "worse": 2
+    }
+   },
+   "c_vs_b": {
+    "cer_l2": {
+     "n": 31,
+     "mean_diff": -0.023,
+     "ci95": [
+      -0.07,
+      0.008
+     ],
+     "wilcoxon": {
+      "n": 25,
+      "w_plus": 201.5,
+      "z": 1.036,
+      "p": 0.3
+     },
+     "better": 9,
+     "worse": 15
+    },
+    "cer_l1": {
+     "n": 31,
+     "mean_diff": -0.025,
+     "ci95": [
+      -0.072,
+      0.008
+     ],
+     "wilcoxon": {
+      "n": 25,
+      "w_plus": 194,
+      "z": 0.836,
+      "p": 0.403
+     },
+     "better": 8,
+     "worse": 12
+    },
+    "cer_fold": {
+     "n": 31,
+     "mean_diff": 0.001,
+     "ci95": [
+      0,
+      0.002
+     ],
+     "wilcoxon": {
+      "n": 23,
+      "w_plus": 210.5,
+      "z": 2.213,
+      "p": 0.0269
+     },
+     "better": 3,
+     "worse": 10
+    }
+   }
+  },
+  "judge_vs_diff": {
+   "texts": 150,
+   "confusion": {
+    "both": 8,
+    "span_only": 30,
+    "judge_only": 9,
+    "neither": 103
+   },
+   "judge_recall_of_span_wrong_text": {
+    "k": 8,
+    "n": 38,
+    "rate": 0.211,
+    "wilson95": [
+     0.111,
+     0.363
+    ]
+   },
+   "auc_accept_lower_cer_l1": 0.745,
+   "auc_accept_lower_span": 0.692,
+   "spearman_judge_defects_vs_span": {
+    "n": 150,
+    "rho": 0.387
+   }
+  },
+  "pero": {
+   "device": "gpu",
+   "engine": {
+    "name": "pero-ocr",
+    "version": "git 4301bdffe9205dff11579dae27b3f80458c27e89",
+    "model": "pero_eu_cz_print_newspapers_2022-09-26",
+    "config": "config.ini",
+    "config_sha256": "093800d612b85891f6ca7d2a438151ba475cc2b12c6d041f17c1ca09370bbf1b",
+    "ocr_weights_sha256": "aee50ecc0b392bf8f76d82aaa2d00a9ee862096b956f2811ae21614f21771d5f",
+    "device": "gpu",
+    "exit": 0,
+    "pages": 40,
+    "wall_secs": 23.1,
+    "secs_per_page": 0.58,
+    "collect": "pero-collect.py (#7567): regions in document order"
+   },
+   "drafts": 40,
+   "under_30_word_chars": 0,
+   "image_mismatch": 0
+  }
+ },
+ "writeback": {
+  "pages": 71,
+  "writable": 59,
+  "by_arm": {
+   "t1/a": 19,
+   "t1/b (not writable)": 12,
+   "t1/c": 10,
+   "t2/c": 23,
+   "t2/b": 7
+  }
+ }
+}

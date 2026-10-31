@@ -61,7 +61,7 @@ function pagesOf(set, items, abs) {
       const t = textOf(s.key, arm)?.trim();
       const it = t ? items.find((i) => i.key === s.key && i.text_sha === sha(t).slice(0, 16)) : null;
       const row = arms.filter((r) => r.key === s.key && r.arm === arm).pop() ?? null;
-      p.arms[arm] = t ? { v: it ? abs.get(it.id)?.verdict ?? null : null, item: it?.id ?? null, text: t, words: Math.max(1, words7824(t)), row } : { v: null, item: null, text: null, words: 0, row, none: true };
+      p.arms[arm] = t ? { v: it ? abs.get(it.id)?.verdict ?? null : null, at: it ? abs.get(it.id)?.at ?? null : null, item: it?.id ?? null, text: t, words: Math.max(1, words7824(t)), row } : { v: null, item: null, text: null, words: 0, row, none: true };
     }
     return p;
   });
@@ -200,7 +200,7 @@ function t3(items, abs) {
     auc_accept_lower_cer_l1: texts.some((t) => t.accept) && texts.some((t) => !t.accept) ? r3(aucLowerIsPositive(texts, (t) => t.cer_l1, (t) => t.accept)) : null,
     auc_accept_lower_span: texts.some((t) => t.accept) && texts.some((t) => !t.accept) ? r3(aucLowerIsPositive(texts, (t) => t.span.score, (t) => t.accept)) : null,
     spearman_judge_defects_vs_span: spearman(texts.map((t) => t.judge_defects_per_1000), texts.map((t) => t.span.score)) };
-  R('t3-pages.json', rows.map(({ key, face, year, dta, ...r }) => ({ key, face, year, dta, ...Object.fromEntries(T3_ARMS.filter((a) => r[a]).map((a) => [a, { cer_l2: r[a].cer_l2, cer_l1: r[a].cer_l1, cer_fold: r[a].cer_fold, fca_fold: r[a].fca_fold, accept: r[a].accept, span: r[a].span, names: r[a].names }])) })));
+  R('t3-pages.json', rows.map(({ key, face, year, dta, ...r }) => ({ key, face, year, dta, ...Object.fromEntries(T3_ARMS.filter((a) => r[a]).map((a) => [a, { cer_l2: r[a].cer_l2, cer_l1: r[a].cer_l1, cer_fold: r[a].cer_fold, fca_fold: r[a].fca_fold, accept: r[a].accept, span: r[a].span, names: { names: r[a].names.names, errors: r[a].names.errors } }])) })));
   const byFace = {}; for (const f of [...new Set(rows.map((r) => r.face))]) byFace[f] = summary(rows.filter((r) => r.face === f));
   return { pages_drawn: ps.length, excluded, pages: rows.length, faces: Object.fromEntries([...new Set(rows.map((r) => r.face))].map((f) => [f, rows.filter((r) => r.face === f).length])),
     arms: summary(rows), by_face: byFace, contrasts: C(rows), contrasts_fraktur: C(rows.filter((r) => r.face === 'fraktur')), judge_vs_diff: judgeVsDiff,
@@ -235,14 +235,15 @@ function evidence(sets, vo) {
     const cell = set === 't2' ? 'german-lite' : `german-blank-${p.face}`;
     for (const [arm, x] of Object.entries(p.arms)) {
       const v = x.v ?? (x.none ? { accept: false, fidelity: 1, defects: [], reader_note: 'no text served (the read was refused or not made)' } : null); if (!v) continue;
-      recs.push({ _id: `fr${sha(`${set}:${p.key}:${arm}`).slice(0, 14)}`, kind: 'item', route: ROUTES[set][arm], page_id: p.page_id, book_id: p.book_id, page_number: p.page_number, cell, lane: set === 't2' ? 'fraktur-7835-t2' : 'fraktur-7835-t1', lang: 'German', task: 'ocr', script_type: 'printed', script_source: 'reader', cell_hand: 'print',
-        judge: { by: 'claude -p --model opus', model_reported: 'claude-opus-5-5', prompt_template_sha: null, instrument: 'route-judge-6740 judgePrompt' }, run_id: 'fraktur-paired-7835', judged_at: null, verdict: v, write: { revision_id: `eval:${p.page_id}:${arm}` }, draw: { stratum: 'random', frame: `#7835 ${set}` } });
+      recs.push({ _id: `fr${sha(`${set}:${p.key}:${arm}`).slice(0, 14)}`, kind: 'item', route: ROUTES[set][arm], page_id: p.page_id, book_id: p.book_id, page_number: p.page_number, cell, lane: set === 't2' ? 'fraktur-7835-t2' : 'fraktur-7835-t1', lang: 'German', task: 'ocr', script_type: 'print', script_source: 'reader <script> tag (print-only apply)', cell_hand: 'print',
+        judge: { by: 'claude -p --model opus', model_reported: 'claude-opus-5-5', prompt_template_sha: null, instrument: 'route-judge-6740 judgePrompt' }, run_id: 'fraktur-paired-7835', judged_at: x.at ?? new Date().toISOString(), verdict: v, write: { revision_id: `eval:${p.page_id}:${arm}` }, draw: { stratum: 'random', frame: `#7835 ${set}` } });
     }
   }
   for (const r of vo.filter((x) => (x.set === 'wrong_page' || x.set === 'planted') && x.verdict && x.test !== 't3')) {
     const ps = sets[r.test]; const p = ps?.find((q) => q.page_id === r.page); if (!p) continue;
-    const arm = (r.arms || ['a'])[0], cell = r.test === 't2' ? 'german-lite' : `german-blank-${p.face}`;
-    recs.push({ _id: `fr${sha(`${r.set}:${r.id}`).slice(0, 14)}`, kind: r.set, route: ROUTES[r.test][arm], page_id: p.page_id, book_id: p.book_id, page_number: p.page_number, cell, lane: `fraktur-7835-${r.test}`, lang: 'German', task: 'ocr', script_type: 'printed', script_source: 'reader', cell_hand: 'print',
+    // A control tests the judge, not an arm: it is attached to every route of its cell (the same judge judged them all).
+    const cell = r.test === 't2' ? 'german-lite' : `german-blank-${p.face}`;
+    for (const arm of ARMS[r.test]) recs.push({ _id: `fr${sha(`${r.set}:${r.id}:${arm}`).slice(0, 14)}`, kind: r.set, route: ROUTES[r.test][arm], page_id: p.page_id, book_id: p.book_id, page_number: p.page_number, cell, lane: `fraktur-7835-${r.test}`, lang: 'German', task: 'ocr', script_type: 'print', script_source: 'reader <script> tag (print-only apply)', cell_hand: 'print',
       judge: { by: 'claude -p --model opus', model_reported: r.model ?? 'claude-opus-5-5', prompt_template_sha: null, instrument: 'route-judge-6740 judgePrompt' }, run_id: 'fraktur-paired-7835', judged_at: r.at, verdict: r.verdict, write: { revision_id: `eval:${p.page_id}:${arm}` },
       ...(r.set === 'planted' && { plant: r.plant, planted_from: r.planted_from, catch: r.catch }), ...(r.set === 'wrong_page' && { other_page_id: r.other_page }), draw: { stratum: 'random', frame: `#7835 ${r.test}` } });
   }
@@ -265,11 +266,55 @@ function score() {
   const wb = [...writebackRows('t1', T1.ps), ...writebackRows('t2', T2.ps)];
   R('writeback.json', { rule: 'T1/T2 page: the best judged arm (accepted; then fidelity; then fewer wrong_text, misleads, cosmetic defects; ties to the cheaper arm), only where it was accepted and no other arm was judged better; T2 pages where the stored text is the best are left alone. T3 and T4 are read-only.', pages: wb });
   out.writeback = { pages: wb.length, writable: wb.filter((x) => x.writable).length, by_arm: wb.reduce((t, x) => ({ ...t, [`${x.set}/${x.arm}${x.writable ? '' : ' (not writable)'}`]: (t[`${x.set}/${x.arm}${x.writable ? '' : ' (not writable)'}`] ?? 0) + 1 }), {}) };
+  // The header's defect_rates file (experiments README): per study cell and arm, #7824's rates and the mean fidelity.
+  const dr = { unit: 'defects per 1,000 words (#7824 words())', study_cells: {} };
+  for (const [set, T] of [['t1', T1], ['t2', T2], ['t3', { ps: pagesOf('t3', items, abs) }]]) for (const face of ['fraktur', 'antiqua']) {
+    const g = T.ps.filter((p) => p.face === face); if (!g.length) continue;
+    for (const arm of ARMS[set]) {
+      const rs = g.filter((p) => p.arms[arm]?.v); if (!rs.length) continue;
+      const W = rs.reduce((a, p) => a + p.arms[arm].words, 0);
+      dr.study_cells[`${set}-${face}/${arm}`] = { n: rs.length, misleads_per_1k: r3(1000 * rs.reduce((a, p) => a + cnt(p.arms[arm].v, 'misleads'), 0) / W), wrong_text_per_1k: r3(1000 * rs.reduce((a, p) => a + cnt(p.arms[arm].v, 'wrong_text'), 0) / W), fidelity_mean: r3(mean(rs.map((p) => Number(p.arms[arm].v.fidelity)))), accept: `${rs.filter((p) => p.arms[arm].v.accept).length}/${rs.length}` };
+    }
+  }
+  R('defect-rates.json', dr);
   R('score.json', out);
   R('router-evidence.score.json', evidence({ t1: T1.ps, t2: T2.ps }, vo));
   console.log(JSON.stringify({ instrument: out.instrument, T4: out.T4 && { all: out.T4.all, check: out.T4.opus_check }, T1: Object.fromEntries(Object.entries(out.T1).filter(([k]) => k !== 'primary' && k !== 'weighted_by_T4').map(([f, x]) => [f, Object.fromEntries(Object.entries(x.contrasts).map(([c, y]) => [c, `${y.gained}/${y.lost} p ${y.mcnemar_exact_p} eff ${y.effect_points} ${JSON.stringify(y.effect_ci95_points)}`]))])), T2: Object.fromEntries(Object.entries(out.T2).filter(([k]) => k !== 'primary').map(([f, x]) => [f, Object.fromEntries(Object.entries(x.contrasts).map(([c, y]) => [c, `${y.gained}/${y.lost} p ${y.mcnemar_exact_p} eff ${y.effect_points}`]))])), writeback: out.writeback }, null, 1));
 }
 
-const stages = { score };
+/**
+ * What the router table would decide with this export pooled in (#7818 analyze.mjs router, the same method): build.py
+ * on a copy of origin/main with and without evidence entries for it. rules.json in the repo is not changed (#7809).
+ */
+async function router() {
+  const { spawnSync } = await import('node:child_process');
+  const os = await import('node:os');
+  const { ROOT } = await import('./lib.mjs');
+  const { rebuildInputs, addEvidence, evidenceEntries } = await import('../lane-judge-sampler.mjs');
+  const RT = 'scripts/eval/estimator/router-table', EV = `${RT}/evidence/fraktur-paired-7835.score.json`, BY = `${RT}/evidence/by-script/fraktur-paired-7835.score.json`;
+  const sh = (cmd, args, o = {}) => { const r = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1 << 28, ...o }); if (r.status) throw new Error(`${cmd} ${args.slice(0, 3).join(' ')}: ${r.stderr}`); return r.stdout; };
+  sh('git', ['-C', ROOT, 'fetch', '-q', 'origin', 'main']);
+  const rulesText = sh('git', ['-C', ROOT, 'show', `origin/main:${RT}/rules.json`]), rules = JSON.parse(rulesText);
+  const dir = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'fr7835-router-'));
+  const tar = spawnSync('git', ['-C', ROOT, 'archive', '--format=tar', 'origin/main', ...rebuildInputs(rules, RT)], { maxBuffer: 1 << 30 });
+  sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
+  const score = JSON.parse(fs.readFileSync(path.join(RESULTS, 'router-evidence.score.json'), 'utf8'));
+  for (const [f, body] of [[EV, score], [BY, { source: score.source, generated_at: score.generated_at, of: EV, cells: score.by_script_cells ?? {} }]]) {
+    for (const base of [dir, ROOT]) { fs.mkdirSync(path.dirname(path.join(base, f)), { recursive: true }); fs.writeFileSync(path.join(base, f), JSON.stringify(body, null, 1) + '\n'); }
+  }
+  const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
+  py('baseline');
+  let text = rulesText; const added = [];
+  for (const { cell, route } of evidenceEntries(score, rules)) { text = addEvidence(text, cell, route, { score: EV, cell, route }); added.push(`${cell}/${route}`); }
+  fs.writeFileSync(path.join(dir, RT, 'rules.json'), text);
+  py('with-7835', ['--before', `${RT}/baseline.json`]);
+  const rows = (n) => JSON.parse(fs.readFileSync(path.join(dir, RT, `${n}.json`), 'utf8')).rows;
+  const pick = (rs) => rs.filter((r) => /^german-(lite|blank)/.test(r.id)).map((r) => ({ id: r.id, decision: r.decision, route: r.route, routes: r.routes.map((x) => ({ id: x.id, k: x.k, n: x.n, wrong: x.wrong, mean: x.mean })) }));
+  const out = { main_sha: sh('git', ['-C', ROOT, 'rev-parse', '--short', 'origin/main']).trim(), evidence_added: added, baseline: pick(rows('baseline')), with_7835: pick(rows('with-7835')), note: 'what build.py decides if rules.json named this export; rules.json is NOT changed by this PR' };
+  R('router-check.json', out);
+  for (const k of ['baseline', 'with_7835']) for (const r of out[k]) console.log(`${k} ${r.id}: ${r.decision} ${r.route} | ${r.routes.map((x) => `${x.id} ${x.k}/${x.n}`).join('; ')}`);
+}
+
+const stages = { score, router };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();
