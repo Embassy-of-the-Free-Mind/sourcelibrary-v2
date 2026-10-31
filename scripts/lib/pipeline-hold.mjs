@@ -138,13 +138,19 @@ export async function holdBook(db, bookId, hold, { dryRun = false } = {}) {
  * are created first, through the one materializer; if they cannot be, the book stays held
  * (`pages_not_ready`). Such a book was held before it ever enrolled, so with no prior status it
  * re-enters at `queued` (archive first), never at the `ocr_complete` default.
+ *
+ * `reason` releases ONLY a hold placed for that reason (#6871): a lane that releases the holds it placed must never
+ * lift another decision's hold (`scans-only-publish-7270`, a containment hold …) that happens to sit on the same book.
+ * A book held for another reason returns `held_other_reason`, and the update filter carries the reason too, so a hold
+ * swapped in between the read and the write is not lifted either.
  */
-export async function releaseBook(db, bookId, { note, to, source } = {}, { dryRun = false } = {}) {
+export async function releaseBook(db, bookId, { note, to, source, reason } = {}, { dryRun = false } = {}) {
   const B = db.collection('books');
   const book = await B.findOne({ id: bookId }, { projection: { id: 1, title: 1, pipeline_auto: 1, pages_state: 1 } });
   if (!book) return { outcome: 'not_found' };
   if (!isHeld(book)) return { outcome: 'not_held', status: book.pipeline_auto?.status ?? null };
   const h = book.pipeline_auto.hold;
+  if (reason != null && h.reason !== reason) return { outcome: 'held_other_reason', reason: h.reason };
   const lazy = isLazyPagesBook(book);
   const restore = to || h.held_from_status || (lazy || book.pages_state ? 'queued' : 'ocr_complete');
   if (dryRun) return { outcome: 'dry_run', to: restore, reason: h.reason, ...(lazy ? { materialize: true } : {}) };
@@ -157,7 +163,7 @@ export async function releaseBook(db, bookId, { note, to, source } = {}, { dryRu
   }
   const now = new Date();
   const r = await B.updateOne(
-    { id: bookId, 'pipeline_auto.hold': { $exists: true } },
+    { id: bookId, ...(reason != null ? { 'pipeline_auto.hold.reason': reason } : { 'pipeline_auto.hold': { $exists: true } }) },
     { $set: { 'pipeline_auto.status': restore, 'pipeline_auto.last_updated': now, updated_at: now }, $unset: { 'pipeline_auto.hold': '' } },
   );
   if (r.modifiedCount !== 1) return { outcome: 'not_held' };

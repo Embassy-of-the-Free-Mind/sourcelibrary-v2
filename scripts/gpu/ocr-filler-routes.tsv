@@ -9,7 +9,8 @@
 #   Pages left = planned pages with no out/<bid>/<pn>.txt|.err.
 #   kind gpu-print: the 1800+ English print lane (#6871, LightOnOCR-3-1B). Task = plan the next frame books when the
 #   manifest runs low, scripts/gpu/gpu-print-gpu.sh (read), then `gpu-print-lane.mjs apply --apply` (pages with no
-#   text only; loop, blank, other-script and commentary guards; revisions; the scans-only hold kept).
+#   text only; loop, blank, other-script and commentary guards; revisions; the scans-only hold kept, the lane's own
+#   gpu-print-6871 hold on a --free book released once its planned pages are done).
 #   Pages left = manifest pages with no out/<bid>/<pn>.json|.err + the owed pages of frame books not yet planned.
 #   kind euro-draft: the #7567 arm-c lane (la PERO-OCR, it LightOnOCR-3-1B). Task = scripts/gpu/euro-draft-task.sh (fetch,
 #   draft, one draft file a page; no Mongo, no agy). Pages left = `cli-ocr-lane.mjs armc-left`: planned pages with no
