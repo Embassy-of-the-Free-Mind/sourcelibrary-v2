@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads, dropEdgeFragments, separateModelText, isUngroundedTranslation } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -146,7 +146,8 @@ describe('generateTypstSource', () => {
 
   it('cross-links a page to its source text only when the source side has that page, and reflows the transcription', () => {
     const src = generateTypstSource({ ...book, acquisition_funder: 'Stefan Pernar' }, pages, { credits: ['Books funded by X'] });
-    expect(src).toContain('#src("1", printed: none, side: "t", other: "Latin");');
+    // page 1 carries a note, so its anchor also says how many (`notes: 1`)
+    expect(src).toContain('#src("1", printed: none, side: "t", other: "Latin"');
     expect(src).toContain('#src("1", printed: none, side: "o", other: "English");');
     expect(src).toContain('#src("2", printed: none, side: "t");');
     expect(src).toContain('latet verbo');
@@ -159,6 +160,133 @@ describe('generateTypstSource', () => {
   const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
   it.skipIf(!hasTypst)('compiles', async () => {
     const pdf = await generateScholarlyPdf(book, pages, { introduction: '## Context\n\nAn *intro* with https://example.org/x.' });
+    expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
+  }, 60000);
+});
+
+describe('imprint', () => {
+  it('names the editor, and sets the DOI on its own unbroken line', () => {
+    const src = generateTypstSource({ id: 'b9', slug: 's', title: 'T', author: 'A', language: 'Latin', publisher: 'de Bry | Galleri' }, [page(1, 'One.')], { doi: '10.5281/zenodo.1', version: '1.0.0' });
+    expect(src).toContain('edited by Derek Lomas.');
+    expect(src).toContain('Editor and creative director: Derek Lomas');
+    // A line break, then the link boxed so it never splits ("//" is escaped: it opens a Typst comment)
+    expect(src).toMatch(/ \\\n {2}#box\(link\("https:\/\/doi\.org\/10\.5281\/zenodo\.1"\)\[https:\\\/\\\/doi\.org\/10\.5281\/zenodo\.1\]\)/);
+    expect(src).toContain('de Bry and Galleri');
+  });
+});
+
+describe('source terms inline', () => {
+  it('takes the quoted term and keeps the explanation as the note', () => {
+    expect(splitOriginalTerm('original: "ardorem," meaning heat or burning light.')).toEqual({ term: 'ardorem', rest: 'Meaning heat or burning light.' });
+    expect(splitOriginalTerm('original: "grossus" — dense or unrefined')).toEqual({ term: 'grossus', rest: 'Dense or unrefined' });
+    expect(splitOriginalTerm('original: chorda ænea')).toEqual({ term: 'chorda ænea', rest: '' });
+    expect(splitOriginalTerm('original: lux essentifica. The light that gives things their being.')).toEqual({ term: 'lux essentifica', rest: 'The light that gives things their being.' });
+  });
+  it('leaves a whole quotation, and any other note, as a footnote', () => {
+    expect(splitOriginalTerm('original Latin: "In mysterio magno increato creavit DEUS caelum & terram."')).toBeNull();
+    expect(splitOriginalTerm('The famous 16th-century Swiss physician.')).toBeNull();
+  });
+  it('sets the term after its word and the explanation as a note', () => {
+    const { body } = translationToTypst('his own radiance<note>original: "ardorem," meaning heat.</note> back into himself.');
+    expect(body).toContain('radiance #orig[ardorem]#footnote[Meaning heat.]; back');
+  });
+  it('hangs a notes-only paragraph on the paragraph before it, not on a line of its own', () => {
+    expect(attachOrphanNotes('The jar.\n\n#footnote[This diagram shows a thermoscope.];\n\nNext.')).toBe('The jar.#footnote[This diagram shows a thermoscope.];\n\nNext.');
+    // A labelled gloss is the plate's (takeInscriptions), and a first paragraph has nothing before it
+    expect(attachOrphanNotes('A.\n\n#footnote[Gloss: Motto.];')).toBe('A.\n\n#footnote[Gloss: Motto.];');
+    expect(attachOrphanNotes('#footnote[Note.];\n\nText.')).toBe('#footnote[Note.];\n\nText.');
+  });
+  it('names the work, not its volume, in the running head', () => {
+    expect(runningTitle('Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)')).toBe('Utriusque Cosmi Historia');
+    expect(runningTitle('De occulta philosophia')).toBe('De occulta philosophia');
+  });
+});
+
+describe('plates', () => {
+  const book = { id: 'b3', slug: 'plates', title: 'T', author: 'A', language: 'Latin' };
+  const plate = (n: number) => ({ page_number: n, type: 'engraving', width: 800, height: 1200, file: `plate-${n}.jpg` });
+
+  it('sets a plate at its source page, sized to fit the page, and lists it', () => {
+    const src = generateTypstSource(book, [page(1, 'One.'), page(2, 'Two.')], { illustrations: [plate(2)] });
+    // 1200/800 × 125mm would overrun the page; the height cap sets the width
+    expect(src).toMatch(/#plate\("plate-2\.jpg", 93\.3mm, "2", kind: \[Engraving\]\)\n#pagegap\n#src\("2"/);
+    expect(src).toContain('outline(title: none, target: figure.where(kind: "plate"))');
+  });
+
+  it('never sets a plate inside a sentence that runs across the page break', () => {
+    const src = generateTypstSource(book, [page(1, 'It is graver...'), page(2, '...in mourning. Next.'), page(3, 'Third.')], { illustrations: [plate(2)] });
+    expect(src).toMatch(/It is graver\.\.\.\n#src\("2"/);
+    expect(src).toMatch(/#plate\("plate-2\.jpg"[^\n]*\n#pagegap\n#src\("3"/);
+  });
+
+  it('gives a title page a page of its own and does not repeat text the body translates', () => {
+    const caption = { title: 'Title page', inscriptions: [{ original: 'Macrocosmus', english: 'Macrocosm' }, { original: 'Utriusque cosmi maioris scilicet et minoris historia', english: 'History of both worlds, the greater and the lesser' }] };
+    const src = generateTypstSource(book, [page(1, 'History of both worlds.'), page(2, 'Two.')], { illustrations: [{ ...plate(1), type: 'frontispiece', full: true, caption }] });
+    expect(src).toMatch(/#plate\("plate-1\.jpg", [\d.]+mm, "1", kind: \[Frontispiece\], full: true, title: \[Title page\], labels: \(\(\[Macrocosmus\], \[Macrocosm\]\),\), follows: true\)/);
+    expect(src).not.toContain('History of both worlds, the greater');
+  });
+
+  it('opens a book under its headpiece, title before plates, and closes a section with its tailpiece', () => {
+    const src = generateTypstSource(book, [page(1, 'Last words of the epistle.'), page(2, '## BOOK THE SECOND.\n\nContents of the second book.'), page(3, 'Next.')], {
+      illustrations: [plate(2)],
+      ornaments: [{ page_number: 2, kind: 'headpiece', file: 'ornament-1.jpg', width: 1600, height: 400 }, { page_number: 1, kind: 'tailpiece', file: 'ornament-2.jpg', width: 600, height: 600 }],
+    });
+    expect(src).toMatch(/Last words of the epistle\.\n\n#tailpiece\("ornament-2\.jpg", 30mm, "tp-1-0", height: [\d.]+mm\)/);
+    // headpiece, then the book's title set large (level 0), then its plate
+    expect(src).toMatch(/#headpiece\("ornament-1\.jpg"\)[\s\S]*#dline\(0\)\[[^\]]*BOOK THE SECOND\.\][\s\S]*#plate\("plate-2\.jpg"/);
+  });
+
+  it('prints every diagram and title page whatever its gallery score', () => {
+    expect(illustrationQuery({ id: 'b' })).toEqual({ book_id: 'b', type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ['diagram', 'frontispiece', 'title-page', 'map', 'chart', 'table'] } }] });
+  });
+
+  it('leaves out a plate whose page is not in the body, and the list with it', () => {
+    const src = generateTypstSource(book, [page(1, 'One.')], { illustrations: [plate(9)] });
+    expect(src).not.toContain('#plate("');
+    expect(src).not.toContain('target: figure.where(kind: "plate")');
+  });
+
+  it('moves labelled text-on-the-image notes under the plate, and nothing else', () => {
+    const body = 'The demonstration is clear.\n\n#footnote[Gloss: That most divine object #footnote[The Trinity]; seen in the mirror.];\n\n#footnote[This diagram illustrates a fire engine.];';
+    const { body: rest, inscriptions } = takeInscriptions(body);
+    expect(inscriptions).toEqual(['That most divine object (The Trinity) seen in the mirror.']);
+    expect(rest).toContain('The demonstration is clear.');
+    // The model describing the picture is a note, not an inscription
+    expect(rest).toContain('#footnote[This diagram illustrates a fire engine.];');
+  });
+
+  it('captions a plate with every word on it in English, marks and repeats dropped', () => {
+    const c = plateCaption({
+      title: 'Diagram of the elements in a sealed vessel.',
+      inscriptions: [
+        { original: '5', english: '5' }, { original: 'Æther', english: 'Ether' }, { original: 'Æther', english: 'Ether' },
+        { original: 'Trianguli incomprehensibilis umbra in speculo mundano visa', english: 'The shadow of the incomprehensible Triangle seen in the worldly mirror' },
+      ],
+      key: [{ mark: 'A', english: 'The altar.' }],
+    });
+    expect(c.title).toBe('Diagram of the elements in a sealed vessel');
+    expect(c.labels).toEqual([['Æther', 'Ether']]);
+    expect(c.lines).toHaveLength(1);
+    expect(c.key).toEqual([['A', 'The altar']]);
+  });
+
+  const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
+  it.skipIf(!hasTypst)('compiles with a captioned plate', async () => {
+    const sharp = (await import('sharp')).default;
+    const buffer = await sharp({ create: { width: 40, height: 60, channels: 3, background: '#888888' } }).jpeg().toBuffer();
+    const caption = { title: 'The elements', inscriptions: [{ original: 'Ignis', english: 'Fire' }, { original: 'Divinum illud obiectum in speculo', english: 'That divine object in the mirror' }], key: [{ mark: 'A', english: 'The altar' }] };
+    const pdf = await generateScholarlyPdf(book, [page(1, 'Text.'), page(2, 'More.')], {
+      illustrations: [{ page_number: 1, type: 'diagram', width: 40, height: 60, buffer, caption }],
+    });
+    expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
+  }, 60000);
+
+  it.skipIf(!hasTypst)('compiles with a plate', async () => {
+    const sharp = (await import('sharp')).default;
+    const buffer = await sharp({ create: { width: 40, height: 60, channels: 3, background: '#888888' } }).jpeg().toBuffer();
+    const pdf = await generateScholarlyPdf(book, [page(1, 'Text.'), page(2, 'More.')], {
+      illustrations: [{ page_number: 1, type: 'diagram', width: 40, height: 60, buffer }],
+    });
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
   }, 60000);
 });
@@ -315,5 +443,125 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('the translation\'s own voice (Fludd UCH I)', () => {
+  it('turns a bracketed figure description into a note and drops page and glossary talk', () => {
+    const out = separateModelText('the object.\n\n[A diagram illustrating height measurement of a tower using lines of sight.]\n\n[Diagram of a 3x3 square with a 10th unit excluded]\n\nVocabulary used in this section: * Tower — The object. * Height — vertical.\n\nNext. [?The following lines are centered but the ink has faded. They likely contained a dedication.] [This page is blank.] [?mun] real [A] text.');
+    expect(out).toContain('<note>A diagram illustrating height measurement of a tower using lines of sight.</note>');
+    expect(out).toContain('<note>Diagram of a 3x3 square with a 10th unit excluded</note>');
+    expect(out).not.toMatch(/Vocabulary used|page is blank/);
+    expect(out).toContain('Next. [illegible]');
+    expect(out).toContain('[?mun] real [A] text.');
+  });
+
+  it('keeps a note inside a note inside it, instead of leaking the rest into the text (p. 280)', () => {
+    const { body } = translationToTypst('as in the mirror.\n\n<note>A circular diagram or mirror <note>original: "speculum"</note> represents progressions in rings.</note>\n\nRule II.');
+    expect(body).toContain('#footnote[A circular diagram or mirror ("speculum") represents progressions in rings.];');
+    expect(body).not.toMatch(/\n\s*represents progressions/);
+  });
+
+  it('flags a translation with no source text under it (a full-page engraving), not a page with text', () => {
+    expect(isUngroundedTranslation({ ocr: { data: '<page-num>414</page-num>\n<header>TRACT. II.</header>\n<vocab>ladder</vocab>' }, translation: { data: 'inserted into the hole of the next rod, so that they are joined together. '.repeat(5) } })).toBe(true);
+    expect(isUngroundedTranslation({ ocr: { data: '->EPIGRAMMA II.<-\n\nRomulus hirta lupae pressisse, sed ubera caprae' }, translation: { data: 'Romulus is said to have pressed the shaggy teats of a she-wolf. '.repeat(5) } })).toBe(false);
+  });
+});
+
+describe('dropEdgeFragments (Bovelles, Geometrie practique)', () => {
+  const vocab = new Map(['and', 'one', 'said', 'for', 'the', 'earth', 'that', 'this', 'parallelogram', 'man'].map(w => [w, 10] as [string, number]));
+  it('drops a sliver of the facing page, clipped one syllable to a line', () => {
+    expect(dropEdgeFragments('Text before.\nsph\nla l\nte\ndir\ngal\ncer\nText after.', vocab)).toBe('Text before.\nText after.');
+  });
+  it('joins real words set narrow beside a figure, closing their hyphens', () => {
+    expect(dropEdgeFragments('say\nthat\nthis\npar-\nal-\nlel-\no-\ngram', vocab)).toBe('say that this parallelogram');
+    expect(dropEdgeFragments('and\none\nsaid\nfor\nthe\nearth', vocab)).toBe('and one said for the earth');
+  });
+  it('keeps a table or a letter key, one entry to a line (Fludd UCH I)', () => {
+    expect(dropEdgeFragments('24\n12\n6\n3\n24\n12', vocab)).toBe('24\n12\n6\n3\n24\n12');
+    expect(dropEdgeFragments('gg\nff\nee\ndd\ncc', vocab)).toBe('gg\nff\nee\ndd\ncc');
+  });
+  it('never drops without the book\'s vocabulary', () => {
+    expect(dropEdgeFragments('sph\nla l\nte\ndir\ngal')).toBe('sph la l te dir gal');
+  });
+});
+
+describe('dropArchivedSpreads', () => {
+  const spread = (n: number) => ({ ...page(n, 'spread text'), page_type: 'archived-spread' });
+  it('leaves out a split book\'s spreads, which repeat its single pages (Indagine, Chiromantzey)', () => {
+    expect(dropArchivedSpreads([spread(-2), spread(-1), page(1, 'a'), page(2, 'b')]).map((p: { page_number: number }) => p.page_number)).toEqual([1, 2]);
+  });
+  it('keeps the spreads when they are the only text', () => {
+    expect(dropArchivedSpreads([spread(-2), spread(-1)])).toHaveLength(2);
+  });
+});
+
+describe('glosses', () => {
+  it('sets a short gloss in the line, keeps a long one as a note, drops one that repeats its word', () => {
+    const { body } = translationToTypst('The Horology<gloss>clock-making</gloss> and the Macrocosm<gloss>the greater world or universe considered as an ordered whole</gloss> of Fludd<gloss>Fludd</gloss>.');
+    expect(body).toContain('Horology #gl[clock-making];');
+    expect(body).toContain('#footnote[Gloss: the greater world or universe considered as an ordered whole];');
+    expect(body).toMatch(/of Fludd\.$/);
+  });
+});
+
+describe('copy matter and descriptive notes (Fludd UCH I)', () => {
+  it('drops a dealer\'s slip before the title page, keeps a real page that mentions a flyleaf', () => {
+    const pages = [
+      page(2, 'Vault (6-6) Book # 71 Collated G. M.<note>The page is a flyleaf with a pasted catalogue description.</note>'),
+      page(5, 'THE HISTORY OF BOTH WORLDS'),
+      page(191, 'lesser density of the material it inhabits.<note>A flyleaf was bound in here.</note>'),
+      page(900, 'FINIS.'),
+    ];
+    expect(dropCopyMatter(pages, 5).map((p: { page_number: number }) => p.page_number)).toEqual([5, 191, 900]);
+  });
+
+  it('drops page-condition notes always and figure descriptions only beside a printed plate', () => {
+    const body = 'a#footnote[This page is blank, with foxing.]; b#footnote[Gloss: x]; c#footnote[An engraving shows Saturn.];';
+    expect(dropDescriptiveNotes(body, { figures: true })).toBe('a b#footnote[Gloss: x]; c');
+    expect(dropDescriptiveNotes(body, { figures: false })).toBe('a b#footnote[Gloss: x]; c#footnote[An engraving shows Saturn.];');
+  });
+
+  it('keeps the state of the page out of the index', () => {
+    const terms = indexEntries([{ term: 'blank page', pages: [6] }, { term: 'Bleed-through', pages: [8] }, { term: 'Monochord', pages: [90] }], 100).map((e: { term: string }) => e.term);
+    expect(terms).toEqual(['Monochord']);
+  });
+});
+
+describe('captionHeightMm', () => {
+  it('grows with the words on the plate, so a long caption shrinks or moves its plate', () => {
+    const short = captionHeightMm({ lines: [['Ignis', 'Fire']] }, 125);
+    const long = captionHeightMm({ lines: Array.from({ length: 40 }, () => ['Prima creatio, in qua notantur', 'First creation, in which are noted']) }, 125);
+    expect(short).toBeLessThan(15);
+    expect(long).toBeGreaterThan(222 - 100); // past the room a 100mm plate leaves
+  });
+});
+
+describe('captionCell', () => {
+  it('keeps a leading number or dash from opening a list (Fludd UCH I, p. 266)', () => {
+    expect(captionCell('13. 22. 8. 22. 13.')).toBe('13\\. 22. 8. 22. 13.');
+    expect(captionCell('- Earth')).toBe('\\- Earth');
+    expect(captionCell('P e t e r.')).toBe('P e t e r.');
+  });
+});
+
+describe('closeSplitWord', () => {
+  it('drops the fragment when the next page renders the whole word (Fludd UCH I, p. 175)', () => {
+    expect(closeSplitWord('The midpoint of each py-', 'The midpoint of each py-', 'of the pyramids is the true location of the Sun'))
+      .toBe('The midpoint of each');
+  });
+
+  it('finds the word behind an editorial bracket ("mat-" | "…[prime] matter")', () => {
+    expect(closeSplitWord('into the first mat-#footnote[A note.];', 'into the first mat-', '…[prime] matter of things'))
+      .toBe('into the first#footnote[A note.];');
+  });
+
+  it('keeps the fragment when the next page lost the word — guessing it would be inventing it', () => {
+    expect(closeSplitWord('where mon-', 'where mon-', 'rocks or cliffs are not found at all')).toBe('where mon-');
+  });
+
+  it('leaves a page that ends on a dash or a whole word alone', () => {
+    expect(closeSplitWord('the body —', 'the body —', 'bodies of the heavens')).toBe('the body —');
+    expect(closeSplitWord('the body', 'the body', 'bodies of the heavens')).toBe('the body');
   });
 });

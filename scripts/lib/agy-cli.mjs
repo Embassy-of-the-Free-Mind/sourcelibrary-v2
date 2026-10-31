@@ -403,3 +403,24 @@ export function firstJson(text, open = '{') {
   if (!m) return null;
   try { return JSON.parse(m[0]); } catch { return null; }
 }
+
+/**
+ * gatedTextCall with one image: the image is written into the call's own workspace and ATTACHED with `@./file`
+ * (cli-ocr.mjs's arrangement), and the gate allows view_file on it. The prompt should ask for the answer between the
+ * markers. Same result shape as gatedTextCall. Used by the illustrated-edition passes (#5849).
+ */
+export async function gatedImageCall(prompt, image, { model, task = 'ocr', attempts = 2, tmp = os.tmpdir(), onCall } = {}) {
+  let r, calls = 0, tools = [];
+  while (calls < attempts) {
+    const ws = fs.mkdtempSync(path.join(tmp, `agy-${task}-`));
+    fs.writeFileSync(path.join(ws, 'page.jpg'), image);
+    const log = installToolGate(ws, { task });
+    r = await agyCall(['-p', `${prompt}\n\nThe page image is attached: @./page.jpg`, '--model', model, ...CLI_SAFE_ARGS], ws); calls++;
+    tools = tools.concat(gateCalls(log));
+    fs.rmSync(ws, { recursive: true, force: true });
+    if (onCall) onCall(r);
+    if (!r.cls || r.cls === 'quota') break;
+  }
+  const { text: answer, problem } = unwrapRead(r.text);
+  return { ...r, calls, tool_calls: tools, answer, problem };
+}
