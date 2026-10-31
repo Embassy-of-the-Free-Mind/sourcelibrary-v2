@@ -1,0 +1,523 @@
+{
+ "generated_at": "2026-10-31T00:48:40.731Z",
+ "source": "correction-pass-7818 (#7818 Arm P)",
+ "file": "scripts/eval/estimator/router-table/evidence/correction-pass-7818.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  null
+ ],
+ "frame": "one page per book from every page the #7558 lane PROCESSED (its gex45 ledger, changed or not), German and French print; the served verdict is the route lite>agy-flash-low as readers get it (an unchanged page serves its draft), the draft verdict is route lite. Seeded, PREREGISTRATION 2026-10-31-correction-pass-paired-7818.md.",
+ "calls": {
+  "records": 218,
+  "malformed_not_counted": 0,
+  "judged": 218,
+  "unparsed": 0,
+  "list_usd_equiv": 0
+ },
+ "cells": {
+  "french-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "controls": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 38,
+     "books": 38,
+     "accept": "33/38",
+     "accept_rate": 0.868,
+     "accept_ci": {
+      "ci95": [
+       0.763,
+       0.974
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_pages": "1/38",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.079
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_classes": {
+      "O5": "1/38",
+      "O6": "1/38"
+     },
+     "classes_k_of_n": {
+      "O8": "10/38",
+      "O16": "8/38",
+      "E2": "7/38",
+      "O6": "7/38",
+      "O5": "4/38",
+      "O12": "3/38",
+      "O11": "3/38",
+      "O1": "2/38",
+      "O14": "1/38",
+      "D1": "1/38"
+     },
+     "fidelity_mean": 4.45,
+     "lane": [
+      "agy-correct-lite-7558"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "mixed": {
+       "accept": "1/5",
+       "wrong_text_pages": "3/5",
+       "books": 5
+      },
+      "print": {
+       "accept": "33/38",
+       "wrong_text_pages": "1/38",
+       "books": 38
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {
+    "lite": {
+     "n": 38,
+     "books": 38,
+     "accept": "26/38",
+     "accept_rate": 0.684,
+     "accept_ci": {
+      "ci95": [
+       0.526,
+       0.816
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_pages": "4/38",
+     "wrong_text_ci": {
+      "ci95": [
+       0.026,
+       0.211
+      ],
+      "unit": "book",
+      "units": 38
+     },
+     "wrong_text_classes": {
+      "O6": "3/38",
+      "O5": "2/38"
+     },
+     "classes_k_of_n": {
+      "O6": "16/38",
+      "O8": "12/38",
+      "O16": "9/38",
+      "E2": "9/38",
+      "O12": "7/38",
+      "O5": "5/38",
+      "O7": "3/38",
+      "O1": "2/38",
+      "O11": "2/38",
+      "D1": "1/38",
+      "O14": "1/38",
+      "T6": "1/38"
+     },
+     "fidelity_mean": 4.26,
+     "by_script": {
+      "mixed": {
+       "accept": "1/5",
+       "wrong_text_pages": "3/5",
+       "books": 5
+      },
+      "print": {
+       "accept": "26/38",
+       "wrong_text_pages": "4/38",
+       "books": 38
+      }
+     }
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 38,
+     "fidelity_diff": 0.18,
+     "fidelity_diff_ci": [
+      0.079,
+      0.316
+     ],
+     "worse": "0/38",
+     "better": "7/38",
+     "accept_lost": "0/38",
+     "accept_gained": "7/38",
+     "wrong_text_added": "0/38",
+     "worse_pages": []
+    }
+   }
+  },
+  "german-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 58,
+     "books": 58,
+     "accept": "45/58",
+     "accept_rate": 0.776,
+     "accept_ci": {
+      "ci95": [
+       0.672,
+       0.879
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_pages": "6/58",
+     "wrong_text_ci": {
+      "ci95": [
+       0.034,
+       0.19
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_classes": {
+      "O6": "2/58",
+      "O5": "1/58",
+      "O7": "1/58",
+      "O17": "1/58",
+      "O1": "1/58"
+     },
+     "classes_k_of_n": {
+      "O8": "41/58",
+      "O6": "25/58",
+      "T6": "14/58",
+      "E2": "9/58",
+      "O16": "7/58",
+      "O11": "6/58",
+      "O5": "5/58",
+      "O12": "5/58",
+      "O7": "3/58",
+      "D1": "2/58",
+      "I3": "1/58",
+      "I4": "1/58",
+      "O10": "1/58",
+      "O17": "1/58",
+      "O1": "1/58",
+      "O14": "1/58"
+     },
+     "fidelity_mean": 4.16,
+     "lane": [
+      "agy-correct-lite-7558"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "mixed": {
+       "accept": "0/2",
+       "wrong_text_pages": "2/2",
+       "books": 2
+      },
+      "print": {
+       "accept": "45/58",
+       "wrong_text_pages": "6/58",
+       "books": 58
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {
+    "lite": {
+     "n": 58,
+     "books": 58,
+     "accept": "37/58",
+     "accept_rate": 0.638,
+     "accept_ci": {
+      "ci95": [
+       0.517,
+       0.759
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_pages": "14/58",
+     "wrong_text_ci": {
+      "ci95": [
+       0.138,
+       0.362
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_classes": {
+      "O6": "10/58",
+      "O5": "4/58",
+      "O7": "2/58",
+      "O17": "1/58",
+      "O12": "1/58",
+      "O1": "1/58"
+     },
+     "classes_k_of_n": {
+      "O8": "38/58",
+      "O6": "36/58",
+      "E2": "17/58",
+      "T6": "13/58",
+      "O5": "13/58",
+      "O11": "12/58",
+      "O16": "10/58",
+      "O12": "5/58",
+      "O7": "3/58",
+      "I4": "2/58",
+      "O4": "2/58",
+      "I3": "1/58",
+      "O17": "1/58",
+      "O10": "1/58",
+      "D1": "1/58",
+      "O1": "1/58",
+      "O14": "1/58"
+     },
+     "fidelity_mean": 3.9,
+     "by_script": {
+      "mixed": {
+       "accept": "0/2",
+       "wrong_text_pages": "2/2",
+       "books": 2
+      },
+      "print": {
+       "accept": "37/58",
+       "wrong_text_pages": "14/58",
+       "books": 58
+      }
+     }
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 58,
+     "fidelity_diff": 0.26,
+     "fidelity_diff_ci": [
+      0.121,
+      0.397
+     ],
+     "worse": "2/58",
+     "better": "17/58",
+     "accept_lost": "0/58",
+     "accept_gained": "8/58",
+     "wrong_text_added": "0/58",
+     "worse_pages": [
+      {
+       "page_id": "69b51e26261c58d636650359",
+       "book_id": "69b51e26261c58d636650278",
+       "page_number": 225,
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The text matches the page line by line, ending at the split word 'Demo-' with the catchword 'stè-'. The only slips are a dropped accent in 'celèbres' and loose vocab tags."
+      },
+      {
+       "page_id": "69b51de0261c58d63664c562",
+       "book_id": "69b51de0261c58d63664c4fa",
+       "page_number": 104,
+       "draft": 4,
+       "after": 3,
+       "accept": "false->false",
+       "note": "A reader would notice that 'sey' is missing from the Platonis sentence ('der Nutzen' where the page has 'der Nutz sey'), that the page's 'Cresius' has been silently changed to 'Ctesius', and that 'Vitruvius schreibet' is garbled into 'Vitruviusreibet'."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "page_id": "69f650e6dc67775b8c2b0e93",
+   "book_id": "69b418ca2b0edf3eaa2dde61",
+   "page_number": 81,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "depicting the Macrocosm and Microcosm, featuring celestial symbols, planetary or elemental spheres, and geometric figures (triangles and circles)",
+     "severity": "wrong_text",
+     "what": "Identification and details are not supported by the page. No triangles or Macrocosm/Microcosm labels are legible. What can be seen is a crown, a roundel with a figure, a sun disc and a large globe with figures."
+    }
+   ],
+   "note": "This page is blank and only shows a faint, mirrored plate (XII) from the other side, but the candidate presents it as a Latin Macrocosm/Microcosm diagram linked to Böhme, which the image does not support."
+  }
+ ],
+ "by_script_cells": {
+  "french-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 43,
+     "books": 43,
+     "accept": "34/43",
+     "wrong_text_pages": "4/43",
+     "classes_k_of_n": {
+      "O8": "11/43",
+      "O16": "11/43",
+      "O6": "10/43",
+      "E2": "8/43",
+      "O5": "6/43",
+      "O12": "5/43",
+      "O14": "4/43",
+      "O11": "4/43",
+      "O1": "3/43",
+      "I4": "2/43",
+      "O10": "2/43",
+      "D1": "1/43",
+      "T8": "1/43",
+      "O7": "1/43",
+      "T10": "1/43"
+     },
+     "script_basis": {
+      "page": 43
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "45/60",
+     "wrong_text_pages": "8/60",
+     "classes_k_of_n": {
+      "O8": "42/60",
+      "O6": "27/60",
+      "T6": "14/60",
+      "E2": "9/60",
+      "O16": "7/60",
+      "O11": "6/60",
+      "O12": "6/60",
+      "O5": "5/60",
+      "O7": "4/60",
+      "D1": "2/60",
+      "O10": "2/60",
+      "I3": "1/60",
+      "I4": "1/60",
+      "O17": "1/60",
+      "O1": "1/60",
+      "O14": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    }
+   }
+  }
+ }
+}
