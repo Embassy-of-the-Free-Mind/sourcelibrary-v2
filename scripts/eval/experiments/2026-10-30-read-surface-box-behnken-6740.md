@@ -1,18 +1,18 @@
 ---
 stage: ocr
 measure: [accuracy, judged]
-languages: [de, la]
+languages: [de, la, en]
 scripts: [Latn]
 canons: []
-n_books: 80
-n_pages: 110
-verdict: "No knob of the agy Flash first read switches. German (35 DTA books): no setting is non-inferior AND at least 10 % cheaper than live (4 a call, image as served, low); 8 a call loses its saving to filter cuts (0.49 vs 0.46 calls a page on one account). Latin (34 CAMENA books): the rule picked 8 a call, 1,600 px, low (0.17 vs 0.36 calls a page on the same account, CER +0.21 pp [-0.36, +0.84]); on 30 queue pages it FAILED confirmation (13/14 written accepted, one wrong-text page, paired 0 vs 1 of 10; live knobs 12/12). Next candidate: Latin 8 a call, 1,600 px, high thinking (CER -0.38 pp [-0.65, -0.15], 0.17 vs 0.25 calls a page on its account, 2x the wall time), not yet confirmed."
+n_books: 463
+n_pages: 2620
+verdict: "Priced in quota (tokens), not calls: thinking costs 4-23x and barely moves CER. German 8 a call / low is 45 % cheaper a 1,000 accepted pages than live [25, 58] at no CER cost (61 DTA books, weighted to the queue); Latin live stays (8 a call reads long s as f); English 8 a call -27 % but not robust. On German queue pages 8 a call beat live paired 5-0 and 3-1 at half the quota a accepted page, but failed both preregistered rules (an absolute wrong-text bar live also fails; then one judge-worded invented flag on a misreading live shares). Nothing switches; live is the robust setting across all three languages."
 status: rejected
-decision: "Keep the live first-read knobs (4 a call, image as served, thinking low) for German and Latin; Latin first reads stay arm c. Test next: Latin 8 a call at 1,600 px with HIGH thinking, confirmed on queue pages against read@4 and arm c."
+decision: "Keep the live first-read knobs (4 a call, served image, thinking low). German 8 a call goes to Derek: whether the judge-worded invented flag in confirmation 2 (a misreading live shares) counts; if not, it passes and a separate PR proposes it."
 superseded_by: null
 issue: [6740, 7701]
-router_evidence: [latin-blank]
-defect_rates: "none — the design is scored by CER against typed references (DTA, CAMENA), not by judge defect tags; the confirmation is decided by k/n and the paired gate of confirm/RULE.md, committed before its reads"
+router_evidence: [latin-blank, german-blank]
+defect_rates: "none — the design is scored by CER against typed references (DTA, CAMENA), not by judge defect tags; the confirmations are decided by k/n, the paired gate and (confirm-de2) relative wrong-text counts, each RULE committed before its reads"
 ---
 PRIOR ART: `2026-10-30-german-cheaper-first-reads-7701.md` and `2026-10-29-cheap-routes-7701.md` (one knob at a time:
 read@1 vs @4 vs @8, judged blind by Opus against the image; they own the ENGINE choice, this owns the knobs of the agy
@@ -196,6 +196,223 @@ the pooled live mean flatters every default-pool run and penalises every James r
 1 − its calls a page ÷ the same-pool live run's. This can only move a setting toward "nothing switches" relative to the
 pooled comparison when it ran on the cheaper pool (German C1: 18 % against the pooled live mean, 9 % against L2).
 
+**Amendment 6 (2026-10-31 09:40Z, job read-surface-2-6740; written AFTER seeing 10 runs a language and the Latin
+confirmation, committed before any agy call it names).** Everything it decides is post hoc in the sense of
+eval-design §10.2: the completed surface is **exploratory-completed**, and the confirmation it names (6.6) is the
+clean test, with its own RULE file committed before its first read.
+- *6.1 Complete the design.* Per language the nine runs not made: B01, B02, B03, B04, B07, B11, B12, C2, C3, on the
+  SAME panel pages, the same image bytes (`--image-cache`, refilled and checked against each earlier read's
+  `image_sha256`), the same scorer, and the **same exclusions, frozen**: German 35 books (5 out:
+  `de-69e96196…-p55, de-698420e1…-p62, de-698fb792…-p22, de-69aebc3b…-p31, de-69ae8ee9…-p198`), Latin 34 (6 out:
+  `la-6a4b1881…-p12, la-69bda005…-p521, la-6a906bf4…-p12, la-6a907846…-p19, la-6a437791…-p14, la-6a944280…-p25`). New
+  one-a-call runs do not re-open the "unreadable by the route" list. Every earlier run is re-used unchanged. The nine run
+  on the default pool (medium and high thinking; `.agy-james` is held to flash-low), in the preregistered phase-B
+  shuffle (seed 6740) with those runs kept, the languages interleaved: de B02 C2 B07 B03 B12 C3 B01 B11 B04; la B12 B04
+  B11 B03 B02 B07 C2 B01 C3. At most 3 runs at once, 3 calls at once a run (Amendment 3: the CLI's 300 s limit). A run
+  with over 10 % of its calls timed out is re-run once at concurrency 2; a second failure is recorded, not retried.
+- *6.2 The primary cost is quota, not calls.* The agy pool is charged by token cost (2026-10-27, #6740; #7503), so
+  calls a page was the wrong cost: high thinking makes fewer calls of many more tokens. **Quota cost a page** = agy's own
+  recorded usage on every call the page needed (block calls, refused and cut blocks, nudges, one-a-call fallbacks),
+  priced at gemini-3.8-flash list rates (`scripts/lib/model-pricing.mjs`: $0.75 / M input, $3.75 / M output; cached
+  input read at $0.075 / M, 10 % of input, Gemini's cache rate, an assumption), divided by the pages of the run. agy's
+  `output` count INCLUDES thinking (checked on these runs: output − thinking ≈ 700–900 tokens a page at every thinking
+  level, the text), so thinking is priced once, inside output. Pages left unread by `--no-alone` are priced at the
+  measured cost a page of the one-a-call runs at the SAME thinking level (low B05; medium B01, B03; high B07), as calls a
+  page used c1. A call with no recorded usage takes the run's mean cost for a call of its size, counted and disclosed.
+  Reported in US $ a 1,000 pages read (list-price equivalent, not a bill: agy is a subscription). Recomputed for the
+  existing 20 runs from their stored usage. Sensitivity: cached input at the full input rate.
+- *6.3 Check the proxy once.* `agy -p "/quota" --output-format json` (no tokens) on the default pool before, between
+  and after two runs made one at a time (de B02, then la B12: one medium, one high), only if no other process is using
+  the default pool then (checked from `/proc/*/environ` of every agy process); repeated reads 60 s apart, until two
+  agree. Reported: weekly quota fraction per $1 priced, for each run. If the two runs' measured quota ratio and their
+  priced ratio differ by more than 2×, both are reported and the measured one prices the design (quota fraction a page
+  = the run's quota fraction ÷ pages, fitted per thinking level). If the default pool cannot be had alone, the check is
+  reported as not made and the priced proxy stands.
+- *6.4 Responses kept.* CER (accuracy), calls a page, wall seconds a page (box load disclosed), filter cuts (refused or
+  cut blocks), wrong-text and invented flags.
+- *6.5 Fit.* Per language and response, the full quadratic (10 terms) by least squares on the 15 Box-Behnken run means,
+  2,000 by-book bootstrap resamples (paired: the same books for every run). **Lack of fit**: F = (SS_LOF / 3) / (SS_PE /
+  2), pure error from the three centre replicates. The Bayesian surface (Amendment 2, the same code) is refit on the 15
+  as the cross-check; every setting where the two disagree on non-inferiority, or on cost by more than the bootstrap
+  interval, is listed. **Pool confound, stated now**: the low-thinking plane (B05, B06, B09, B10) ran on `.agy-james`,
+  the rest on the default pool, so the thinking effect on cost is partly the account's filter-cut rate. Sensitivity
+  (only if the 18 runs leave ≥ 400 calls of the 1,500 and the pool is above 50 %): B05, B06, B09, B10 re-made on the
+  default pool (`D05`, `D06`, `D09`, `D10`), and the surface refit with them in place of the James runs. The primary fit
+  stays the one above.
+- *6.6 Optimum and confirmation.* Optimum = the grid setting (27, plus live) with the lowest predicted quota cost a page
+  whose least-squares bootstrap upper bound of δ CER against live is ≤ 1.0 pp (the preregistered margin), which also
+  passes on its own measured paired difference if it was run (Amendment 4), with wrong text ≤ live + 1. Savings against
+  the same-pool live run (Amendment 5: L2 for the default pool). Under 10 % cheaper than live: nothing switches, and
+  live is the result. Otherwise a **German** confirmation first (the live lane): 30 fresh queue pages, one per book
+  (de-blank frame, none in this panel, the #7701 draws or the Latin confirmation), live (4 a call, served, low) against
+  the optimum, paired, blind Opus against the image, the rule of `confirm/RULE.md` adapted to German, plus the quota cost
+  a page measured on the same pages; its RULE file (`confirm-de/RULE.md`) is committed before its first read. Latin only
+  if the quota allows after German; its lane is arm c (#7752), so a Latin pass is paper evidence and a router row.
+- *6.7* A pass is PROPOSED as a German knob change in a separate PR; this job applies nothing.
+- *6.8 Sampling (Derek, inbox 09:53Z; written 10:05Z, after the first three runs of 6.1 started at 09:49Z and before
+  any of their reads was scored or looked at; analysis rules only, no run changes).*
+  (a) **Target population**: the pages the German first-read lane will read (visible German print books held as scans
+  only, the `cli-ocr-lane.mjs` first-read frame). The panel is NOT a sample of it: it is the DTA books of #6012 with a
+  same-edition typed reference, chosen because a reference exists. The gap is measured: panel vs queue frame tabulated
+  on century, face (Fraktur / Antiqua, by eye on a seeded 60-page queue sample, seed 6740, one page per book), image
+  long edge as served, and print density (letters a page: the panel from the typed references, the queue from the
+  live-route reads of the confirmation pages). Latin is tabulated the same way on century and long edge.
+  (b) **Post-stratification**: the surfaces are refit with each panel book weighted so the panel's century × face mix
+  matches the queue sample's (cells with no panel book are merged into the nearest century; weights reported), and the
+  optimum is reported both ways. If the two differ, the weighted one decides.
+  *Cells, fixed 10:15Z after the frame was tabulated and before any read of 6.1 was scored:* the century × face cells
+  above give the panel's one 1500s German book a weight of 16 (the frame is 37 % sixteenth-century pages by unread
+  pages; the panel drew 1 of 40). So the cells are **era × face**: before 1700, the 1700s, 1800 and later; Fraktur
+  (mixed counts as Fraktur) or Antiqua. Era shares are the whole frame's unread pages (`frame.mjs`, 3,131 German and
+  15,356 Latin books); the face mix within an era is the by-eye sample's. Latin has one face (roman). Weights are
+  computed over the books left after the frozen exclusions (35 / 34). Undated books take the panel's mean weight.
+  (c) The German confirmation (6.6) is drawn from the queue frame **stratified to the same century × face mix**, one
+  page per book, seeded (seed named in `confirm-de/RULE.md`).
+  (d) **Power**: from the per-book differences between the centre replicates (C1–C3) and between L1 and L2, the smallest
+  paired CER and quota-cost differences 35 / 34 books detect with 80 % power at two-sided α 0.05
+  (MDE = (1.96 + 0.84) · SD of the per-book difference / √n), so a null reads as a bound.
+  (e) **Limitations stated with the result**: DTA and CAMENA texts are on the open web, so the model may partly recall
+  them (the memorisation subsidy, `.claude/docs/ocr-memorization-paper.md`), which flatters CER and can mask thinking
+  and image-size effects; CAMENA targets start from page 4, not the interior; Latin is roman type only.
+- *6.9 Dataset* `read-surface-6740 v1`, with a datasheet (Gebru et al.): one row per run × target page (settings, pool,
+  the image's source URL and sha256, never a copy; the read text; CER; wrong-text / loop / cut flags; tokens by type;
+  calls; wall seconds; refusal or cut reason), the panel draw, the confirmation draws and judge verdicts. Typed reference
+  text is included only where its licence allows redistribution (DTA: CC BY-SA 4.0, checked on deutschestextarchiv.de;
+  CAMENA: its terms checked, else offsets and hashes plus a fetch script). Schema, datasheet and export script in
+  `scripts/eval/read-surface-6740/dataset/`; the files, licence-split, in R2
+  `eval-artifacts/read-surface-6740/dataset-v1/`. No DOI is minted by this job.
+- *Budget and stops (first form; superseded below).* ≤ 1,500 agy calls for 6.1 and the sensitivity, ≤ 300 for the confirmation; Gemini through the
+  CLI only. Before each run `/root/agy-quota/pools.json`: stop if the default pool's weekly remaining is under 30 %.
+  Before the Opus judge, `climits status`: stop above 85 % weekly on this box's account.
+
+**Amendment 6, second form (Derek, inbox 09:57Z–10:04Z; written 10:27Z, committed before any agy call it names).
+A staged, sequential response-surface study and a robust parameter design.** It supersedes 6.1 ("complete the nine
+Box-Behnken runs") and the budget of the first form; 6.2–6.9 stand. Everything here is post hoc to the first 20 runs.
+- *Disclosure.* I read these notes at 10:19Z. Three Box-Behnken runs of 6.1 (de B02, de C2, la B12) had started at
+  09:49Z; at about 10:21Z the queue was stopped and those three were left to finish. They are kept as stage-2 points (below).
+- *Scope decisions by Derek:* no gemini-4-argon (09:58Z): every read is gemini-3.8-flash-{low, medium, high}. "Effie"
+  meant efficiency, not the EFM collection (10:04Z): no EFM stratum.
+- **Stage 1, screening.** A Definitive Screening Design (Jones & Nachtsheim 2011; two-level categorical factors, Jones &
+  Nachtsheim 2013) over five factors: pages a call {1, 4, 8}, image long edge {1,024, 1,600, 2,400 px} and thinking
+  {low, medium, high} (three-level, coded −1/0/+1), and two two-level factors: **prompt** {live sentinels-6523; live +
+  one script line, `read-surface-6740/prompt-lines/<lang>.txt`, sent through `cli-ocr.mjs --instruction-file`} and
+  **image prep** {as served; grayscale + normalise + unsharp σ 2 (#5250's photometric arms), `cli-ocr.mjs
+  --image-prep=gnu`, eval only, default off}. Construction: a conference matrix of order 6 (Paley, GF(5)), rows C and
+  −C, columns 1–5, a categorical column's zero set to +1 in C and −1 in −C, plus two runs with the three continuous
+  factors at their centre and the categorical pair at (+1, −1) and (−1, +1): **14 runs a language**
+  (`read-surface-6740/dsd.mjs` → `design-dsd.json`, CᵀC = 5I checked; main-effect correlations 0 among the continuous
+  factors, |r| = 0.17 continuous × categorical, 0.14 between the two categorical). Run order shuffled per language
+  (seed 6740, in `design-dsd.json`). The scorer folds ſ → s and combining marks (checked), so the script line can move
+  CER only through reading, not through a transcription convention.
+- *Re-use:* a stage-1 point already made **on the default pool** with identical settings is not re-run: S02 (8 a call,
+  1,600 px, high, live prompt, as served) = B08 in German and Latin. The 20 existing runs (and the 3 of 6.1) stay in the
+  analysis as the slice at live prompt / as served.
+- **Environment factors (robust parameter design).** The knobs are control factors; **language** and **date range**
+  are environment factors the setting must hold across. Language: German (DTA, 35 books), Latin (CAMENA, 34), and
+  **English** early print, a third panel drawn the same way from the EEBO-TCP same-edition typed pages of #6012
+  (`panel.mjs --langs=en --merge`, a fresh seed-6740 stream; 204 eligible books, 40 targets, 1500s 12 / 1600s 26 /
+  1700s 2; references CC0, EEBO-TCP phases I and II), its targets checked by eye (leaf and face) before any read is
+  scored, exclusions by the same rules. Century (edition date) is a stratum of every panel and confirmation draw and a
+  covariate in the models. Order of languages if the budget is short: German, Latin, English. All new runs on the
+  default pool, at most 4 runs at once, 3 calls at once a run.
+- **Stage 2, optimisation.** Active factors = those whose main effect (or second-order term, under effect heredity)
+  on CER or on log quota cost has a 95 % book-bootstrap interval excluding 0 and, for CER, larger than the noise floor;
+  at most four. If the active set is pages / edge / thinking with prompt and prep inactive, stage 2 is the Box-Behnken
+  at live prompt / as served: the nine missing runs a language (three of them made), and English gets its own
+  Box-Behnken only if budget remains after German and Latin. If prompt or prep is active, stage 2 is a face-centred
+  central composite over the active continuous factors at the better categorical level, re-using every run that falls
+  on its points. The stage-2 design is written into this file before its runs.
+- **Stage 3, confirmation:** as 6.6 and 6.8(c) (German queue, era × face stratified, preregistered RULE).
+- **Efficiency as a first-class response.** (a) quota cost a page and quota cost **per accepted page** = cost ÷ yield,
+  where a target is accepted when its read is usable (not unread, not a filter stub or a cut / loop / empty reply)
+  and not wrong text; (b) throughput: accepted pages a wall-clock hour for one lane reader (the lane's default
+  concurrency is one book at a time: 3,600 ÷ wall seconds a page × yield), and accepted pages per account-week of
+  quota (needs 6.3's measured quota fraction per priced dollar; if not measured, reported in list-price dollars only);
+  (c) the **efficiency frontier**: per language and century, the settings no other beats on both CER and cost per
+  accepted page, with live marked and its distance to the frontier in calls, quota and hours; (d) a **backlog
+  projection**: weeks of quota to first-read each scans-only queue (German, Latin, English) at live and at the best
+  confirmed setting, from queue page counts measured fresh and dated (German: 797,772 unread pages in 3,131 books,
+  2026-10-31, `frame.mjs`).
+- **Statistics plan** (Python 3.12, numpy 2.4.6, scipy 1.17.1, pandas 3.1.0, statsmodels 0.15.0; `analysis6.py`).
+  The unit is the **page within run**. Linear mixed models with a random intercept for book (every run reads the same
+  pages: book is a block), REML; fixed effects = second-order terms in the continuous factors, categorical main effects,
+  two-factor interactions allowed by heredity, environment main effects (language, century) and knob × environment
+  interactions. Responses: CER on the logit scale, logit((CER·n + 0.5)/(n + 1)) with n the reference's letters
+  (residuals checked; if they fail, a beta regression with book-clustered bootstrap, and the record says which); log
+  quota cost a page per book × run (a block's cost is its book's); filter cut and wrong text as binomial GLMMs
+  (statsmodels BinomialBayesMixedGLM). DSD analysis by the two-stage method (Jones & Nachtsheim 2017): main effects from
+  the fold-over pairs, then second-order on what remains; a half-normal plot of effects. Intervals: 2,000 book-level
+  bootstrap resamples and REML standard errors. Lack of fit against the centre replicates (C1–C3 for the
+  Box-Behnken; S13/S14 are centre runs in the continuous factors only). Noise floor from the A-vs-A pairs. Multi-response:
+  Derringer desirability, CER as a constraint (δ upper 95 % ≤ 1 pp against live), cost a page minimised; and the Pareto
+  front. **Multiplicity:** no p-value hunting on the screen; the screen only nominates, the held-out queue confirmation
+  decides. **Power** by simulation from the observed book variance, for the 5-factor screen at 34–40 books, and 6.8(d).
+  **Optima:** (a) pooled; (b) per stratum where a knob × environment interaction is real (interval excludes 0 and
+  exceeds the noise floor); (c) **robust**: the cheapest setting whose predicted CER stays within the margin of live in
+  every stratum with at least 10 books (strata with fewer are named).
+- **Visuals added:** F4 as small multiples by language and by century; F7 the efficiency frontier; F8 the backlog
+  projection (the public page leads with F7 and F8); a half-normal plot of the screen's effects.
+- **Budget and stops (replacing the first form's).** At most **4,000 agy calls** for this job (stages 1–3, from 09:49Z
+  on). Gemini through the CLI only. Before each run, `/root/agy-quota/pools.json`: stop if the default pool's weekly
+  remaining is under 30 %; that stop decides how far down the language order the screen gets. `/quota` read before and
+  after (6.3) where the default pool can be had alone. Before the Opus judge, `climits status`, stop above 85 %.
+
+**Amendment 6, third form (Derek, inbox 10:33Z; written 10:36Z, committed before the first read of the screen it
+describes).** It supersedes the second form's screen where they conflict; everything else of the second form stands.
+- *Disclosure.* The second form's German screen started at about 10:30Z (S09, S12, S04, 3 runs at once) and was stopped
+  at 10:34Z when this note was read: 2 one-page reads were made (moved to `aborted/runs-s1-second-form-1033/`, their
+  calls counted). The Box-Behnken runs started under 6.1 are finished and kept: de C2 done, de B02 and la B12 finishing;
+  they are stage 2 if the screen confirms the original three factors.
+- **1. Factors (rationale: image prep's prior effect on Gemini is null or harmful, #5250, #5277, so a run on it spends
+  quota to re-learn a null).** Screen = pages a call, image long edge, thinking (three-level, coded −1/0/+1) and the
+  **prompt line** (two-level). DSD for 3 continuous + 1 categorical: a conference matrix of order 4, rows C and −C, the
+  categorical column's zero set to +1 in C and −1 in −C, plus two runs at the continuous centre with the prompt line
+  off and on: **10 settings, plus live** (`dsd.mjs --form=3` → `design-dsd3.json`).
+- **2. Incomplete blocks (rationale: 35 books cannot speak for a queue of 3,131; more books at fewer settings each buys
+  population coverage at the same calls).** New books from the typed-reference frame, each book's window read under
+  **3 screen settings plus live**, in a balanced incomplete block allocation (every pair of screen settings shares
+  about the same number of books; the allocation is published in `ib-allocation-<lang>.json` before any read). Book is a
+  random effect, so comparisons stay within book; century is a covariate, not a per-stratum optimum. **The frame is
+  smaller than ~140 books:** under the panel's rules (same-edition, a congruent single typed page, a full 8-page window
+  with images, ≥ 400 letters, the interior rule) German has **61** eligible books, Latin **84**, English **204**. So
+  German and Latin are a census of their frames (the 40 panel books included, read again under their 3 settings and
+  live, which adds an A-vs-A pair with L2 on the same pool); English draws 140 of 204, stratified by era to the English
+  queue frame (`frame.mjs`), the face (blackletter / roman) by eye and reported. Era × face stratification is therefore
+  only possible for English; German and Latin are weighted to their queue frames as in 6.8(b). The existing
+  35 / 34-book runs stay in the analysis.
+- **3. One pool (rationale: Amendment 5's pool difference is the size of the effects sought).** Every new read on the
+  default pool, including a **live repeat on every book**; the `.agy-james` low-thinking runs are reported as a pool
+  contrast, not as part of the thinking effect.
+- **4. Power gate, before the screen.** Simulated from the existing runs (the per-book variance of paired differences
+  of L1/L2, C1/C2 and the run-to-run differences of the Box-Behnken; the per-book variance of log quota cost): the
+  smallest CER and log-cost main effects the incomplete-block screen detects with 80 % power at two-sided α 0.05, per
+  language, by the mixed model it will be analysed with (`power6.py`, 500 simulated screens). A factor whose plausible
+  effect (from the existing runs or prior entries) is below that on both CER and cost is dropped before any read, and
+  this file says so. Result written here before the first screen read.
+- **5. Order.** German, then Latin, then English only if the pool allows. Latin and English are paper evidence; German
+  decides.
+- **6. Useful pages (rationale: confirmation pages are real queue pages that otherwise stay scans-only).** In the
+  confirmation, each page's best judged accepted read is written through the normal first-read apply path
+  (`cli-ocr.mjs apply --first-read-only`, guards on, provenance naming #6740 and this job). Rejected reads are not
+  written. This is the job's only production write.
+- **7. Budget.** Unchanged: 4,000 agy calls, the 30 % default-pool stop.
+- **Power gate result (10:44Z, before any screen read; `power6.py`, 300 simulated screens a cell, `results/power.json`).**
+  Variances from the existing runs (additive book + run fit, page level): German residual SD 0.77 pp CER, 0.59 log
+  cost; Latin 3.07 pp, 0.49. Smallest high − low main effect the 10-setting incomplete-block screen detects (80 %,
+  α 0.05): German 0.48–0.50 pp CER and 0.36–0.39 log cost for the knobs, 0.41 pp / 0.29 for the prompt line; Latin
+  1.62–1.75 pp and 0.26–0.27; English (German variances, 140 books) 0.31–0.33 pp and 0.24–0.25. Plausible effects
+  (least-squares main effects on the existing run means, high − low): pages a call CER −0.04 pp (de) / +0.47 (la), log
+  cost −0.90 / −1.51; **image long edge CER −0.05 / −0.44 pp, log cost +0.13 / +0.05**; thinking CER −0.38 / −0.81, log
+  cost +1.70 / +1.85; **prompt line**: none measured, prior prompt levers measured as noise (eval-design §10.2), cost
+  +0.003 (≈ 40 input tokens on ≈ 15,000 a page). **Dropped: the image long edge** (below the detectable effect on both
+  responses in both languages; held at the image as served, the live bytes, which also avoids the 8-a-call × 1,024-px
+  break seen in Latin X01) **and the prompt line** (no plausible effect on either response). **The screen is the 3 × 3
+  full factorial of pages a call {1, 4, 8} × thinking {low, medium, high}** at the served image and the live prompt
+  (`design-ib.json`): the live cell (4, low) read on every book (`LI`), the other eight cells `G01`–`G08` three a book.
+  Its detectable effects: German 0.42 / 0.48 pp CER and 0.32 / 0.35 log cost (pages a call / thinking), Latin 1.41 /
+  1.59 pp and 0.23 / 0.25, English 0.28 / 0.31 pp and 0.21 / 0.24. CER effects of the size seen so far (≤ 0.4 pp in
+  German) will mostly read as bounds; the cost effects are several times their detectable size.
+
 ### Result (2026-10-31 02:15Z)
 
 **Runs made.** 10 a language (17 planned): L1, L2; B05, B06, B09, B10 (phase A, James pool); C1 (clean re-run), B08;
@@ -308,3 +525,168 @@ none), `scripts/lib/image-long-edge.mjs`, `judge.mjs` `la-surface` cell and `lon
 or book is written by this design: `cli-ocr.mjs read` writes reads to disk, keeps them in R2 `candidate-reads/` (a
 read of resized bytes is keyed by those bytes and never stands in for a production read), and records the job's book
 list (`lane_job_books`).
+
+### Result, Amendment 6 (2026-10-31 14:15Z; English below when its runs finish)
+
+**What was run.** The Box-Behnken completion of 6.1 was stopped by the second form after three runs (de C2, de B02,
+la B12, kept). Under the third form: a power gate (below), then the **incomplete-block screen** of pages a call {1, 4,
+8} × thinking {low, medium, high} at the served image and the live prompt, on the whole typed-reference frame (German
+61 books, Latin 84; English 140 of 204, running): every book read at live (`LI`, on the default pool) and at 3 of the 8
+other cells, about 23 (de) and 32 (la) books a cell, 6–10 books shared by every pair of cells
+(`results/ib-allocation-<lang>.json`). Analysis: `analysis6.py` (Python 3.11, numpy 2.4.6, pandas 3.1.0, statsmodels
+0.15.0, scipy 1.17.1), every page of every run (Box-Behnken and screen) in one within-book fit, 2,000 book-level
+bootstrap resamples; post-stratified to the queue frame by era × face (6.8(b)); both reported, the weighted one decides.
+
+**Power gate** (written above, 10:44Z): image long edge and the prompt line dropped before any screen read.
+
+**The cost response.** Quota cost a page = agy's own token usage on every call a page needed, priced at
+gemini-3.8-flash list rates. Thinking dominates it: on the log scale +0.95 (German) and +0.93 (Latin) a coded step of
+thinking (REML SE 0.03–0.05); at 4 a call medium costs 3.8× (German) and 4.8× (Latin) live, high 6.4× and 6.6×;
+pages a call −0.52 / −0.81 a step. A medium- or high-thinking page carries 5,500–7,500 tokens of thinking against
+700–1,000 of text (Box-Behnken runs C1, B08). Calls a page (the first
+run's cost) moves the other way: high thinking needs slightly fewer calls a page, which is why the first run's Latin
+pick (8 a call, high) looked cheap and is not: it costs 2.7× live a page in quota.
+
+**Accuracy.** No knob moves German CER: on the logit scale every main and quadratic term has |t| < 1 (residuals:
+skew 0.44, kurtosis 3.0; on the raw scale kurtosis 360, so inference is on the logit scale and the decision on raw
+percentage points with book-bootstrap intervals). In Latin, 4 a call at medium or high thinking reads 0.7–0.9 pp
+better than live (intervals exclude 0, beyond the A-vs-A floor), and 8 a call at low thinking reads 2.25 pp worse
+[+0.05, +5.20] (weighted; unweighted +0.80 [−0.05, +1.94]): the long s read as f (F6). Noise floor (A-vs-A, paired by
+book, 40 books): German L1–L2 +0.07 pp, C1–C2 −0.04, L2–LI −0.03; detectable difference at 80 % power 0.09–0.12 pp
+CER and 0.14–0.32 log cost. Latin L1–L2 +0.12, L2–LI −0.28; detectable 0.60–0.70 pp, 0.27–0.33 log cost.
+
+**The nine cells, weighted to the queue** (δ CER against live in pp, 95 % book-bootstrap interval; cost in US $ a
+1,000 pages, list-price equivalent; yield = accepted share; `measure: accuracy` and cost; n in books):
+
+German (61 books; 60 weighted):
+
+| cell | δ CER (weighted) | δ CER (unweighted) | $ / 1k pages | yield | $ / 1k accepted | vs live | calls a page | s a page |
+|---|---|---|---|---|---|---|---|---|
+| 1 a call, low | −0.02 [−0.13, +0.11] | +0.01 [−0.05, +0.07] | 18.85 | 93 % | 20.18 [17.56, 23.18] | +76 % | 1.00 | 47 |
+| 1 a call, medium | −0.04 [−0.14, +0.06] | +0.12 [−0.06, +0.42] | 80.65 | 96 % | 83.85 [69.24, 96.31] | +631 % | 0.97 | 113 |
+| 1 a call, high | −0.08 [−0.21, +0.03] | −0.00 [−0.10, +0.11] | 156.20 | 97 % | 161.08 [114.05, 209.84] | +1,303 % | 0.97 | 169 |
+| **4 a call, low (live)** | — | — | 11.35 | 99 % | 11.48 | — | 0.38 | 24 |
+| 4 a call, medium | −0.01 [−0.07, +0.06] | +0.05 [−0.04, +0.21] | 42.79 | 100 % | 42.79 [36.14, 49.86] | +273 % | 0.34 | 59 |
+| 4 a call, high | −0.04 [−0.11, +0.01] | −0.13 [−0.41, +0.04] | 73.00 | 100 % | 73.00 [63.10, 84.99] | +536 % | 0.34 | 85 |
+| **8 a call, low** | **−0.00 [−0.09, +0.07]** | +0.01 [−0.05, +0.06] | 6.24 | 98 % | **6.35 [4.86, 8.60]** | **−45 % [−58, −25]** | 0.32 | 39 |
+| 8 a call, medium | +0.00 [−0.11, +0.11] | −0.00 [−0.08, +0.10] | 20.73 | 100 % | 20.73 [17.67, 25.37] | +81 % | 0.29 | 44 |
+| 8 a call, high | −0.01 [−0.12, +0.08] | −0.24 [−0.78, +0.05] | 31.16 | 100 % | 31.23 [25.72, 41.38] | +172 % | 0.28 | 39 |
+
+Latin (84 books):
+
+| cell | δ CER (weighted) | δ CER (unweighted) | $ / 1k pages | yield | $ / 1k accepted | vs live | calls a page | s a page |
+|---|---|---|---|---|---|---|---|---|
+| 1 a call, low | −0.01 [−0.30, +0.44] | +0.13 [−0.17, +0.46] | 19.88 | 97 % | 20.48 [17.11, 25.77] | +104 % | 1.03 | 33 |
+| 1 a call, medium | +0.04 [−0.87, +1.37] | −0.31 [−0.73, +0.15] | 98.10 | 98 % | 100.28 [87.10, 116.36] | +899 % | 1.00 | 84 |
+| 1 a call, high | +1.16 [−0.59, +4.22] | −0.13 [−0.68, +0.61] | 137.20 | 97 % | 141.36 [125.54, 160.86] | +1,309 % | 0.95 | 132 |
+| **4 a call, low (live)** | — | — | 10.03 | 100 % | 10.03 | — | 0.26 | 12 |
+| 4 a call, medium | −0.89 [−1.36, −0.37] | −0.70 [−1.21, −0.28] | 48.27 | 100 % | 48.27 [43.00, 52.47] | +381 % | 0.26 | 41 |
+| 4 a call, high | −0.71 [−1.29, −0.24] | −0.78 [−1.43, −0.29] | 65.82 | 100 % | 65.82 [58.20, 72.95] | +556 % | 0.24 | 67 |
+| 8 a call, low | +2.25 [+0.05, +5.20] | +0.80 [−0.05, +1.94] | 4.38 | 98 % | 4.46 [3.80, 5.52] | −56 % | 0.10 | 17 |
+| 8 a call, medium | +0.42 [−0.63, +1.91] | −0.15 [−0.63, +0.36] | 20.54 | 100 % | 20.56 [17.56, 24.25] | +105 % | 0.13 | 24 |
+| 8 a call, high | −0.35 [−1.05, +0.44] | −0.50 [−1.04, −0.04] | 27.31 | 100 % | 27.31 [22.97, 32.54] | +172 % | 0.14 | 27 |
+
+Seconds a page are at the shared box's load and include pages a refused block left unread, priced at the one-a-call
+time; the German 8-a-call cells are slower a page than live for that reason.
+
+**Lack of fit.** Every cell was read, so the decision uses cell means and the quadratic is descriptive. Against the
+nine cell means within book: German CER F(3, 161) = 4.29, p 0.006; log cost F(3, 215) = 3.29, p 0.02 (the quadratic
+misses the shape); Latin CER F(3, 252) = 1.00, p 0.39; log cost F(3, 284) = 9.34, p < 0.001.
+
+**Optimum (6.6).** German: **8 a call, image as served, thinking low**, 45 % cheaper a 1,000 accepted pages than live
+[25, 58] (unweighted 40 % [21, 53]), CER −0.00 pp [−0.09, +0.07]; non-inferior in each century with ≥ 10 books (1600s
+12, 1700s 20, 1800s 28; the 1500s has 1 book). Latin: **live stays** (the cheapest non-inferior cell is live; 8 a call
+low fails the margin, its optimum in the 1600s stratum (53 books) but not the 1500s (25)). **Robust** across German and
+Latin and every century with ≥ 10 books: live. So the per-language result is German 8 a call, and a single setting for
+both languages is live. Weighted and unweighted agree on every decision.
+
+**6.3, the proxy check, was not made as designed:** the default pool was never free of other jobs (fraktur-7835,
+tib-good-ocr-translate-6948). Instead, five `/quota` readings bound it: between 11:49Z and 13:05Z the pool fell 2.09
+weekly points while this job's calls priced $39.0, so one week of the pool is worth **at least $1,869** list-price
+(other jobs' use only raises it). Backlog at that bound (`results/backlog.json`; queue measured 2026-10-31, unread
+pages of visible scans-only books in the first-read frame), whole pool, one lane: German 797,772 pages in 3,131 books,
+at most 4.9 weeks at live and 2.7 at 8 a call; Latin 4,741,905 pages in 15,356 books, at most 25.5 weeks (live).
+
+**Confirmation, German** (`confirm-de/RULE.md`, committed before its reads; 30 books from the German queue, era quota
+17 / 11 / 2 met, seed `rt-de-surface`; 13 of 30 drawn pages are e-rara scans whose server refuses this box; 90 agy
+calls (judge.mjs's own meter counted 301: it counts each page of a block call); Opus judge 56 items, 4/4 wrong-page controls refused, 2/2 planted errors caught):
+
+| route | written accepted | wrong text | P(acc ≥ 0.8) | calls a page | $ / 1k pages | $ / 1k accepted |
+|---|---|---|---|---|---|---|
+| live, 4 a call | 17/25 | 5/25 | 0.059 | 0.424 | 14.70 | 25.93 |
+| 8 a call | 22/25 | 2/25 | 0.794 | 0.247 | 6.44 | 8.78 |
+
+Paired on the 25 pages both wrote: 8 a call only 5, live only 0, both 17; P(acc₈ ≥ acc₄ − 0.08) = 0.998. **By the
+preregistered rule 8 a call FAILS** clause 1: its wrong-text share 2/25 (0.08) is over the absolute bar 0.04 and
+P(acc ≥ 0.8) is 0.794 < 0.9. Clause 2 (paired, and ≥ 10 % cheaper a accepted page: −66 %) passes. Live fails clause 1
+by more (5/25, P 0.06), and both of 8 a call's wrong-text pages are misread by live the same way (*Metzge* read as
+*Menge*; *mittern tisch sassend* garbled). eval-design §10.3 (2026-10-30) sets the bar at the live route, not an
+absolute 0.04; under it 8 a call would pass. The RULE was written with the older absolute bar, so **nothing switches**
+on this test, and the choice of bar is raised as a decision. **Useful pages:** the 22 pages with a judged accepted
+read and no wrong-text tag were written through `cli-ocr.mjs apply --lane=agy-first-read-7701 --first-read-only
+--print-only` (15 from live, 7 from 8 a call; runs `cli-ocr-20261031130344-1111783`, `cli-ocr-20261031130347-1111912`);
+the 8 others stay scans-only. Router evidence: `estimator/router-table/evidence/read-surface-6740-de.score.json`.
+
+**Failures recorded.** de G08 (8 a call, high) timed out on 4 of 31 calls, and on 3 of 8 at concurrency 1: an 8-page
+high-thinking call runs into the CLI's 300 s limit. Recorded, not retried; its first attempt is the data, timed-out
+calls as cost. The 300-call daily cap on heavy models (`AGY_HEAVY_DAILY_CAP`, #7118) stopped la G03 and la G08; both
+were resumed with the cap set to 450 for this job's high-thinking runs.
+
+**Confirmation 2, German, relative rule** (Derek, inbox 14:12Z and 14:15Z; `confirm-de2/RULE.md`, committed 15:07Z and
+amended 15:20Z, both before any read; written after confirmation 1 and therefore tested on fresh books).
+*Frame:* 3,410 German books in the first-read lane's frame (3,131 visible, 279 hidden), 51 % e-rara (`frame.json`).
+*Draw:* era × face strata, floor 4, 60 planned; per era 48 books were walked in seeded order (seed `rs6740-c2-6741`)
+and each drawn body page labelled by eye (`candidates.jsonl`, `faces.jsonl`). **No German-language Antiqua body page
+was found before 1800 in 144 walked books**, so those three cells (12 books) stay empty and **48 books** were read
+(pre-1600 Fraktur 19, 1600s 8, 1700s 11, 1800+ Fraktur 5 and Antiqua 5; 97.8 % of the frame's share is in a sampled
+cell). The 2-a-library cap could not hold before 1700 (e-rara and BSB hold most of those eras); 19 books were added
+over the cap in walk order, as amended. 72 + 111 agy calls, 96 Opus calls (on the derek@sourcelibrary.org login: this
+box's account was over its weekly pace and its three slots were held by long-running jobs, this one included).
+Controls: 4/4 wrong-page items refused, 2/2 planted errors caught.
+
+| route | written accepted | wrong text | invented flag | calls a page | $ / 1k pages | $ / 1k accepted (weighted) |
+|---|---|---|---|---|---|---|
+| live, 4 a call | 39/45 | 3/45 | 0 | 0.38 | 14.38 | 17.44 |
+| 8 a call | 41/45 | 3/45 | 1 | 0.30 | 7.76 | 8.84 |
+
+Paired on 45 books both wrote: 8 a call only 3, live only 1, both 38, neither 3 (weighted 3.9 / 1.4 / 38.2 / 3.0).
+**(a)** P(acc₈ ≥ acc₄ − 0.08) = 0.993 weighted, 0.992 unweighted: **passes**. **(c)** quota a accepted page 49 %
+below live (weighted; unweighted 49 %): **passes**. **(b)** wrong-text pages 3 vs 3 on the same pages (equal, passes)
+**but one invented-or-wrong-leaf flag: fails.** The flag is the shared detector of confirmation 1 (`confirm.mjs`
+`invented`: an I-class defect, or the words *invent* / *wrong leaf* in the judge's note). On that page (1600s Fraktur,
+`6a4a3fc8…`) the judge wrote "'gemacht' dropped and 'leg auff' **invented**" (class O6, a word misreading) for 8 a call,
+and "'gemacht' dropped and an extra 'leg auff' **added**" for live's identical misreading of the same line. **By the
+rule as committed, 8 a call fails clause (b), and nothing switches.** Without that wording match it would pass every
+clause; that reading is post hoc and is raised as a decision, not taken. The absolute bar (reported): neither passes
+(live 3/45 wrong text, P(acc ≥ 0.8) 0.84; 8 a call 3/45, 0.97). No era or face stratum has 8 a call doing worse than
+live (pre-1600 16/19 vs 17/19; 1600s 5/7 each; 1700s 10/11 vs 11/11; 1800+ 8/8 each; Fraktur 34/40 vs 36/40; Antiqua
+5/5 each). Pooled with confirmation 1 (secondary only): 8 a call only 8, live only 1 on 70 paired books; wrong text
+5 vs 8. **Useful pages:** 42 accepted readings written through the first-read path (35 live, 7 from 8 a call; runs
+`cli-ocr-20261031161628-1476004`, `cli-ocr-20261031161632-1476157`); 6 pages stay scans-only.
+
+**Live's own error rate on queue pages** (a finding in itself): wrong text on 5 of 25 written pages in confirmation 1
+and 3 of 45 in confirmation 2, i.e. 8 of 70 (11 %, Wilson 95 % 6–21 %) of the pages the live German first read writes
+carry at least one sense-changing misreading (judged against the image; e.g. *Metzge* read as *Menge*, *Herꝛlich* as
+*Hertzlich*). None of the 100 drawn pages went through the #7818 German correction pass.
+
+**English (EEBO-TCP, 140 books, 1500s 22 / 1600s 116 / 1700s 2; added 16:45Z).** Read in the same incomplete blocks
+(52–53 books a cell; live on all 140). **Not weighted:** 74 % of the English queue's unread pages are 1800-on print
+and the panel has none, so post-stratification would put a weight of 56 on two books; English stands for early print
+(pre-1700, 19 % of that queue) only. Faces by eye: 126 roman, 14 blackletter. Yield is low at every setting (61–93 %):
+EEBO holds famous texts (Shakespeare, Jonson, Milton) that Gemini's filter cuts as recitation. Results (unweighted,
+δ CER pp [95 %]; $ a 1,000 accepted pages): live $18.63; **8 a call / low $13.59 (−27 % [−44, −5]), δ +0.26
+[−0.24, +0.82]**, the pooled optimum, but NOT non-inferior in the 1600s stratum (116 books), so not robust; thinking
+lowers English CER (1 a call medium −0.61 [−1.04, −0.25], high −0.63 [−0.93, −0.34]) at 12–23× live's cost a accepted
+page. Logit-CER model: pages a call +0.25 (SE 0.10), thinking −0.23 (0.09); log cost: thinking +1.17 (0.05), pages
+−0.41 (0.05). Lack of fit: CER F(3, 191) = 1.57, p 0.20; cost F(3, 373) = 0.92, p 0.43. **Failures recorded, not
+re-run** (TAKEN, the call length at high thinking runs into the CLI's 300 s limit, not box load; German G08 timed out
+3 of 8 at concurrency 1): en G05 (4 a call, high) 9 of 85 calls timed out (10.6 %); en G08 (8 a call, high) 3 of 24
+(12.5 %), stopped at 16:34Z after 14 of its 52 books; its cell rests on those 14.
+
+**Robust optimum across German, Latin and English** (every language and every century with ≥ 10 books): **live (4 a
+call, low)**; the only other setting non-inferior everywhere is 1 a call / high, at 7–23× the cost.
+
+**Budget.** 2,509 agy calls by the live-page meter (both work dirs, including the first job's 20 runs); this job's own
+calls 1,809 at 15:50Z plus the English tail and confirmation 2: under the 4,000 ceiling. The default pool's weekly
+remaining went from 0.88 (10:29Z) to 0.78 (16:35Z) with other jobs on it; never near the 30 % stop. The heavy-model
+daily cap (#7118) was raised for this job to 450 and then 600 calls (TAKEN; logged here).

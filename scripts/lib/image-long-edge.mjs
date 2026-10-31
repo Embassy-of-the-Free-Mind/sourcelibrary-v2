@@ -17,3 +17,14 @@ export async function fitLongEdge(buf, longEdge) {
   const s = await sharp(out).metadata();
   return { buf: out, resized: true, native, sent: { w: s.width, h: s.height } };
 }
+
+/**
+ * Amendment 6 (#6740), the image-prep factor, from #5250's photometric arms (scripts/eval/ocr-preprocessing/preprocess.py
+ * `gray`, `unsharp` sigma 2 amount 1) plus a contrast stretch: luma grayscale, sharp's normalise (1st–99th percentile to
+ * full range), unsharp mask sigma 2, JPEG quality 90. `gnu` is the only prep; anything else is refused.
+ * @returns {Promise<Buffer>}
+ */
+export async function prepImage(buf, prep) {
+  if (prep !== 'gnu') throw new Error(`image prep ${prep}: only gnu (grayscale + normalise + unsharp)`);
+  return sharp(buf).grayscale().normalise().sharpen({ sigma: 2, m1: 1, m2: 1 }).jpeg({ quality: 90 }).toBuffer();
+}
