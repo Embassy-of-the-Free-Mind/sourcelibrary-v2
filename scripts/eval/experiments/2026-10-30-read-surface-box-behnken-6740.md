@@ -608,8 +608,8 @@ pages of visible scans-only books in the first-read frame), whole pool, one lane
 at most 4.9 weeks at live and 2.7 at 8 a call; Latin 4,741,905 pages in 15,356 books, at most 25.5 weeks (live).
 
 **Confirmation, German** (`confirm-de/RULE.md`, committed before its reads; 30 books from the German queue, era quota
-17 / 11 / 2 met, seed `rt-de-surface`; 13 of 30 drawn pages are e-rara scans whose server refuses this box; 301 agy
-calls; Opus judge 56 items, 4/4 wrong-page controls refused, 2/2 planted errors caught):
+17 / 11 / 2 met, seed `rt-de-surface`; 13 of 30 drawn pages are e-rara scans whose server refuses this box; 90 agy
+calls (judge.mjs's own meter counted 301: it counts each page of a block call); Opus judge 56 items, 4/4 wrong-page controls refused, 2/2 planted errors caught):
 
 | route | written accepted | wrong text | P(acc ≥ 0.8) | calls a page | $ / 1k pages | $ / 1k accepted |
 |---|---|---|---|---|---|---|
