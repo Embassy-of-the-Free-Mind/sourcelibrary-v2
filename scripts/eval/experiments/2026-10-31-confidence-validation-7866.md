@@ -108,7 +108,7 @@ Frame sizes: high 11,967, middle 11,181, low 11,545, unmeasured 12,742. Score qu
 - A book is skipped (and logged) when any fifth of its page sequence holds no eligible page.
 - **Eligible page:**
   - stored OCR text (a string);
-  - an image (`archived_photo`, else `display_photo`, else `photo`);
+  - an image, by `scripts/lib/page-image-url.mjs` `getPageSource` (split-aware: a page split from a spread keeps the whole spread in `archived_photo`);
   - not hidden and not a split parent;
   - neither its `page_type` nor its own `<page-type>` tag is one of blank, illustration, frontispiece, map, diagram, plate, title-page, toc, dedication, preface, digitizer-insert, archived-spread, colophon, cover.
 - **Pages:** one eligible page drawn uniformly (`makeRng(78662)`) from each fifth of the book's page sequence (by position among all its pages), so 5 pages a book.

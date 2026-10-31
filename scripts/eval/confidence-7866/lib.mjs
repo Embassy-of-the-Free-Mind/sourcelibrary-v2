@@ -15,6 +15,7 @@ import os from 'node:os';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { loadCurrentTable } from '../../lib/router-binding.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 export { mulberry32, shuffle, makeRng, sha, judgeAbsolute, paceCheck, imageFor, wrongText } from '../correction-pass-7818/lib.mjs';
 export { words } from '../route-judge-6740/defect-rate.mjs';
@@ -131,6 +132,7 @@ export function eligiblePage(p) {
   const tag = p.ocr.data.match(TAG_TYPE)?.[1]?.toLowerCase();
   if (tag && SKIP_TYPES.includes(tag)) return false;
   if (p.hidden || p.split_into) return false;
-  return Boolean(p.archived_photo || p.display_photo || p.photo);
+  return Boolean(getPageSource(p));
 }
-export const imageUrl = (p) => p.archived_photo || p.display_photo || p.photo;
+/** The page's own image, split-aware (a page split from a spread keeps the whole spread in archived_photo). */
+export const imageUrl = (p) => getPageSource(p);

@@ -183,7 +183,7 @@ async function draw() {
     let got = 0;
     for (const b of pool) {
       if (got >= ALLOC[s]) break;
-      const pages = await db().collection('pages').find({ book_id: b.id }, { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.source': 1, script_type: 1, archived_photo: 1, display_photo: 1, photo: 1, hidden: 1, split_into: 1 } }).sort({ page_number: 1 }).toArray();
+      const pages = await db().collection('pages').find({ book_id: b.id }, { projection: { id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.source': 1, script_type: 1, archived_photo: 1, display_photo: 1, photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, hidden: 1, split_into: 1 } }).sort({ page_number: 1 }).toArray();
       const el = pages.filter(eligiblePage);
       if (el.length < 5) { log.push({ id: b.id, stratum: s, skipped: `eligible pages ${el.length} < 5` }); continue; }
       // One page from each fifth of the book's page sequence (by position among ALL its pages), among eligible pages.
