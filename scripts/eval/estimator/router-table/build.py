@@ -11,6 +11,10 @@
       [--weekly <climits json>] [--idle claude=<share>,agy=<share>] [--name <out name>] [--before <an earlier table's .json>]
       [--page-sizes <page-size.mjs output>]   (repo root)
 
+THE DECISION (#6740, rules.json decision_rule): with in_force = defects (--rule kn: the rule before), a cell the k/n rule
+decides (keep / switch) is decided by defects per 1,000 words (decide_defects: #7824's S1 rule, the live route as the
+bar, k/n acceptance as a floor gate), else by k/n, labelled '(k/n: why)'. Each row keeps decision_kn / route_kn.
+
 Writes <as_of>.json and .md beside this file (--name: <name>.json/.md). A route's evidence is the pilot cell's route
 (`pilot`) plus every entry of its `evidence` list ({score, cell, route[, use: name_check]}), pooled as k of n (the posterior and the wrong-text gate scale each source by its books / pages); `--before`
 shows each cell's earlier decision beside the new one. Every parameter is in rules.json.
@@ -229,10 +233,68 @@ def decide(cell, M, cur, P, cost, wt_max, within=None):
     return ('keep' if p is cur else 'switch'), p
 
 
+def p_rate_le(g, x, seed, n=4000):
+    """P(lambda <= x) under the gamma posterior g = [a, b] (rate per 1,000 words)."""
+    rng = random.Random(seed)
+    return sum(rng.gammavariate(g[0], 1 / g[1]) <= x for _ in range(n)) / n
+
+
+def decide_defects(cell, rs, M, cur, live_id, P, cal):
+    """The defect rule (rules.json decision_rule; #7824 RULE.md amendment S1). rs: the cell's routes, each with
+    `defects` (defect-rates.json fields or None) and `_usd_raw` (dollars per raw page); M: its measured routes.
+    Returns (decision, route, info); decision None = fall back to k/n, info['why'] says why."""
+    R, rated = P['decision_rule'], lambda r: bool(r.get('defects')) and r['defects']['books'] >= P['decision_rule']['min_books']
+    if cell.get('script') == 'manuscript':
+        return None, None, dict(why='manuscript: the defect rates are not split by script type')
+    live = next((r for r in rs if r['id'] == live_id), None)
+    if live is None:
+        return None, None, dict(why=f'the live route {live_id} is not a route of this cell')
+    no_text = live_id == 'scans-only'
+    if not no_text and not (live in M and rated(live)):
+        return None, None, dict(why=f'the live route {live_id} has no defect verdicts' + (f" ({live['defects']['books']} books)" if live.get('defects') else ''))
+    cand = [r for r in M if rated(r) and (not is_bar(r, P) or r is live)]
+    if not [r for r in cand if r is not live]:
+        return None, None, dict(why='no other route has defect verdicts')
+    cm, cw = cal.get('misleads', 1.0), cal.get('wrong_text', 1.0)
+    mean = lambda r, s: r['defects'][f'{s}_per_1k_posterior'][1]
+    W = sorted(r['defects']['median_words_per_page'] for r in cand)[len(cand) // 2]
+    gates = {}
+    for r in cand:
+        if r is live:
+            gates[r['id']] = dict(wrong_text=True, accept=True); continue
+        if no_text:   # nothing served now: an absolute ceiling, and the hold bar for acceptance
+            pw = p_rate_le(r['defects']['wrong_text_per_1k_gamma'], R['ceiling_per_1k'] / cw, f"{cell['id']}:{r['id']}")
+            g = dict(wrong_text=pw >= R['ceiling_p'], p_wrong_text_below_ceiling=round(pw, 3), accept=r['p80'] >= P['hold']['p'])
+        else:
+            pa = within_p(r, live, R['accept_floor']['within'])
+            g = dict(wrong_text=cw * mean(r, 'wrong_text') <= cw * mean(live, 'wrong_text') + R['wrong_text_delta_per_1k'],
+                     accept=pa >= R['accept_floor']['p'], p_accept_floor=round(pa, 3))
+        gates[r['id']] = g
+    ok = [r for r in cand if gates[r['id']]['wrong_text'] and gates[r['id']]['accept']]
+    err = {r['id']: W / 1000 * (cm * mean(r, 'misleads') + R['wrong_text_weight'] * cw * mean(r, 'wrong_text')) for r in cand}
+    cost = lambda r, wm: r['_usd_raw'] + wm * err[r['id']]
+    wms = sorted({R['misleads_usd'], *R['misleads_usd_sensitivity']})
+    picks = {wm: (min(ok, key=lambda r: (cost(r, wm), -r['mean'])) if ok else live) for wm in wms}
+    pk = picks[R['misleads_usd']]
+    info = dict(bar=live_id + (' (no text served: ceiling)' if no_text else ''), words_per_page=W, gates=gates,
+                defects_per_page={k: round(v, 4) for k, v in err.items()}, picks={str(wm): r['id'] for wm, r in picks.items()},
+                passing=[r['id'] for r in ok])
+    if pk is not live and len({r['id'] for r in picks.values()}) > 1:   # a switch only when every weight agrees
+        dec = 'HOLD (defects: the pick moves with the misleads weight, ' + ', '.join(f"${wm:g} → {r['id']}" for wm, r in picks.items()) + ')'
+    else:   # the k/n convention: keep = the pick is the cell's current route
+        dec = 'keep' if pk is cur else 'switch'
+    return dec, pk, info
+
+
 def main():
     P = json.load(open(D + 'rules.json'))
-    # defects per 1,000 words beside k/n (#6740 defect-rate.py): shown, never in the decision
-    DR = json.load(open(P['inputs']['defect_rates']))['cells'] if os.path.exists(P['inputs'].get('defect_rates', '')) else {}
+    # defects per 1,000 words (#6740 defect-rate.py): the decision under rules.json decision_rule.in_force = defects
+    DRF = json.load(open(P['inputs']['defect_rates'])) if os.path.exists(P['inputs'].get('defect_rates', '')) else {}
+    DR, CAL = DRF.get('cells', {}), DRF.get('recheck') or {}
+    RULE = P.get('decision_rule', {}).get('in_force', 'kn') if '--rule' not in sys.argv else arg('--rule')
+    # the bar of the defect rule is the LIVE route: what the table current.json names runs now in each cell
+    LIVE_T = json.load(open(D + json.load(open(D + 'current.json'))['table'] + '.json'))
+    LIVE = {r['id']: (r['route'] if r['decision'].startswith('switch') else r['current']) for r in LIVE_T['rows']}
     if P.get('script_split', {}).get('on') and '--no-script-split' not in sys.argv: P['cells'] = expand_by_script(P)
     L = lambda k: json.load(open(arg('--' + k) or P['inputs'][k]))  # --pilot <path> until #7376 is on main
     pilot, v1, v2, cap = L('pilot')['cells'], L('v1')['cells'], {c['id']: c for c in L('v2')['cells']}, L('capacity')['channels']
@@ -331,7 +393,7 @@ def main():
                            p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
-                           _usd_acc=u / q(dr, .5), _usd_ci=[u / q(dr, p) for p in (.95, .05)], _usd_acc_flat=u0 / q(dr, .5),
+                           _usd_raw=u, _usd_acc=u / q(dr, .5), _usd_ci=[u / q(dr, p) for p in (.95, .05)], _usd_acc_flat=u0 / q(dr, .5),
                            _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, _usd_acc=u / q(do, .5)),
                            defects=DR.get(cell.get('base') or cell['id'], {}).get(r['id']),
                            **({} if DR.get(cell.get('base') or cell['id'], {}).get(r['id']) or not x else {'defects_missing': 'tested, but no stored verdict with severity (or < 10 pages): k/n only'})))
@@ -382,7 +444,20 @@ def main():
             bb, aa = max(bars, key=lambda r: r['mean']), max(alts, key=lambda r: r['mean']); w = P['switch']['within']
             vs_bar = dict(bar=bb['id'], bar_mean=bb['mean'], alt=aa['id'], alt_mean=aa['mean'], gap=aa['mean'] - bb['mean'],
                           p_within=within_p(aa, bb, w), alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
-        rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=dec, route=pk['id'], vs_bar=vs_bar,
+        # THE DEFECT RULE (rules.json decision_rule): it decides where the k/n rule reaches keep / switch; k/n stays the
+        # floor gate inside it and the fallback, labelled, where the defect verdicts cannot decide
+        live_id = LIVE.get(cell['id'], cur['id'])
+        # A k/n HOLD (no route reaches P(acc >= hold.acc) >= hold.p) is decided by defects only to SWITCH off the live
+        # route: keeping it would bind a route the absolute acceptance bar refuses, so the HOLD stands
+        ddec, dpk, dinfo = decide_defects(cell, rs, M, cur, live_id, P, CAL) if dec in ('keep', 'switch', 'HOLD') and P.get('decision_rule') and DR else (None, None, None)
+        if dec == 'HOLD' and ddec and not (ddec == 'switch' and dpk['id'] != live_id):
+            dinfo = dict(dinfo, why=f"the HOLD stands; the defect rule would {ddec.split(' (')[0]} {dpk['id']}"); ddec = dpk = None
+        rule = 'defects' if ddec else 'k/n'
+        dinfo_label = f"{dec} (k/n: {dinfo['why']})" if not ddec and dinfo else dec
+        fdec, fpk = (ddec, dpk) if RULE == 'defects' and ddec else ((dinfo_label, pk) if RULE == 'defects' else (dec, pk))
+        rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'],
+                         decision_kn=dec, route_kn=pk['id'], rule=rule if RULE == 'defects' else 'k/n', live=live_id,
+                         decision_defects=None if not ddec else ddec, route_defects=None if not ddec else dpk['id'], defects_rule=dinfo, vs_bar=vs_bar,
                          decision_flat_price=f"{dflat} {pflat['id']}", decision_other_prior=other_prior,
                          other_wrong_text_bar=None if alt[0] == dec and alt[1] is pk else f"{alt[0]} {alt[1]['id']}",
                          margin_010=sens, weeks_to_clear=pages * pk['share'], v2_weeks=v2.get(cell.get('v2'), {}).get('weeks_to_drain'),
@@ -412,19 +487,24 @@ def main():
         return max([(r['mean'] - d0) / r['units'] for r in ok if r['units']] or [0.0])
     for row in rows:
         row['decision_week'], row['route_week'] = row['decision'], row['route']
-    for row in sorted([r for r in rows if r['decision'] in ('keep', 'switch')], key=lambda r: -value(r)):
+    for row in sorted([r for r in rows if r['decision_kn'] in ('keep', 'switch')], key=lambda r: -value(r)):
         cell, M, cur, pages = ctx[row['id']]
+        if row['rule'] == 'defects':   # the defect rule prices raw pages in full; idle quota does not enter it
+            pk = next(r for r in row['routes'] if r['id'] == row['route'])
+            ch = S[pk['stage']]['channel']
+            if ch: left[ch] = max(0.0, left[ch] - pages * pk['units'])
+            continue
         for r in row['routes']:
             ch, need = S[r['stage']]['channel'], pages * r['units']
             r['idle_fit'] = 1.0 if not ch or need <= 0 else min(1.0, left[ch] / need)
         dec, pk = decide(cell, M, cur, P, lambda r: r['_usd_acc'] * (1 - r['idle_fit']), wt_abs)
-        row['decision_week'], row['route_week'] = dec, pk['id']
+        row['decision_week'], row['route_week'] = (dec + row['decision'][len(row['decision_kn']):] if RULE == 'defects' else dec), pk['id']
         ch = S[pk['stage']]['channel']
         if ch: left[ch] = max(0.0, left[ch] - pages * pk['units'])
 
     NAME = arg('--name') or P['as_of']
     before = {r['id']: r for r in json.load(open(arg('--before')))['rows']} if arg('--before') else {}
-    fmt = lambda d, rt: d + (f" → {rt}" if d in ('switch', 'HOLD', 'planned') or d.startswith('HOLD') else '')
+    fmt = lambda d, rt: d + (f" → {rt}" if d.startswith(('switch', 'HOLD', 'planned')) else '')
     for row in rows:
         b = before.get(row['id']) or before.get(row.get('base')); row['before'] = fmt(b['decision'], b['route']) if b else None
     calib = [(row['id'], r['id'], r['prior'], f"{r['k']}/{r['n']}") for row in rows for r in row['routes'] if r['tested']]
@@ -457,7 +537,7 @@ def main():
     if UNSPLIT: print('WARNING: evidence not split by script type, in /unknown only:', ', '.join(sorted(UNSPLIT)))
     cal_txt = (f"**Prior calibration** (#7263 router-next): the {'calibrated' if C['in_force'] else 'uncalibrated'} prior is in force; the {OP} one is a sensitivity "
                f"(calibrated mean = logistic({C['alpha']:+.2f} + {C['beta']:.2f} x logit(v1/v2 mean)), worth {C['pages']:g} pages). {C['why']} "
-               f"Cells whose decision differs under the {OP} prior: " + (', '.join(f"{r['id']} ({r['decision_other_prior']})" for r in rows if r['decision_other_prior'] != f"{r['decision']} {r['route']}") or 'none') + '.') if C else ''
+               f"Cells whose decision differs under the {OP} prior: " + (', '.join(f"{r['id']} ({r['decision_other_prior']})" for r in rows if r['decision_other_prior'] != f"{r['decision_kn']} {r['route_kn']}") or 'none') + '.') if C else ''
     out = [f"# Router table {NAME} (#6740)", '', "Generated by `build.py` from `rules.json`. Acceptance = the Opus judge reading each output against the page image "
            "(route-judge pilot, #7376); Opus is the judge, not the reference. Posterior Beta(a + k, b + n - k), each evidence source's k and n scaled by its books / pages; "
            f"the v1/v2 prior is worth {P['prior']['pages_measured']:g} pages ({P['prior']['pages_pooled']:g} when an input is pooled; learned by fit_prior.py), "
@@ -483,8 +563,9 @@ def main():
             dw = '' if (row['decision_week'], row['route_week']) == (row['decision'], row['route']) else f"; this week: {row['decision_week']} → {row['route_week']}"
             dec = (fmt(row['decision'], row['route']) + dw
                    + (f"; margin {sw['sensitivity_within']}: {row['margin_010']}" if row['margin_010'] else '')
-                   + ('' if row['decision_flat_price'] == f"{row['decision']} {row['route']}" else f"; with the flat price: {row['decision_flat_price']}")
-                   + ('' if row['decision_other_prior'] == f"{row['decision']} {row['route']}" else f"; **with the {OP} prior: {row['decision_other_prior']}**")
+                   + ('' if row['decision'] == row['decision_kn'] and row['route'] == row['route_kn'] else f"; **k/n: {fmt(row['decision_kn'], row['route_kn'])}**")
+                   + ('' if row['decision_flat_price'] == f"{row['decision_kn']} {row['route_kn']}" else f"; k/n with the flat price: {row['decision_flat_price']}")
+                   + ('' if row['decision_other_prior'] == f"{row['decision_kn']} {row['route_kn']}" else f"; **k/n with the {OP} prior: {row['decision_other_prior']}**")
                    + (f"; **test next #{row['test_next']}**" if row.get('test_next') else '')
                    + (f" ({'absolute' if rel else 'relative'} wrong-text bar: {row['other_wrong_text_bar']})" if row['other_wrong_text_bar'] else '')
                    + (f"; before: {row['before']}" if row['before'] and row['before'] != fmt(row['decision'], row['route']) else '')) if j == 0 else ''
@@ -497,8 +578,28 @@ def main():
             '| cell | pages waiting | Opus bar | best agy / GPU route | gap | P | wrong text (route / bar) | decision |', '|' + '---|' * 8]
     out += [f"| {r['title']} | {r['pages_waiting']:,} | {r['vs_bar']['bar']} {r['vs_bar']['bar_mean']:.2f} | {r['vs_bar']['alt']} {r['vs_bar']['alt_mean']:.2f} | {r['vs_bar']['gap']:+.2f} | "
             f"{r['vs_bar']['p_within']:.2f} | {r['vs_bar']['alt_wrate']:.1%} / {r['vs_bar']['bar_wrate']:.1%} | {fmt(r['decision'], r['route'])} |" for r in vb]
+    if DR and P.get('decision_rule'):
+        R = P['decision_rule']
+        out += ['', f"**The defect rule** (rules.json `decision_rule`, in force: **{RULE}**; #6740). Where the k/n rule reaches keep / switch, the decision is #7824's S1 rule on defects per 1,000 words "
+                f"(gamma-Poisson posterior means, book-clustered; labels deflated by the re-check: misleads x {CAL.get('misleads', 1)}, wrong text x {CAL.get('wrong_text', 1)}). Bar = the LIVE route (`current.json` → `{json.load(open(D + 'current.json'))['table']}`). "
+                f"Gate: wrong text <= the bar's + {R['wrong_text_delta_per_1k']} per 1,000 words (no text served: P(wrong text <= {R['ceiling_per_1k']}) >= {R['ceiling_p']}); "
+                f"acceptance floor P(acc >= acc_live - {R['accept_floor']['within']}) >= {R['accept_floor']['p']} (paired where judged on the same pages). "
+                f"Pick: lowest price per raw page + ${R['misleads_usd']:g} x defects per page, defects = words/1000 x (misleads + {R['wrong_text_weight']} x wrong text); "
+                f"a pick that moves across ${R['misleads_usd_sensitivity'][0]:g}-${R['misleads_usd_sensitivity'][1]:g} is HOLD. A route is rated with >= {R['min_books']} books. "
+                "Fallback to k/n, labelled `(k/n: why)`: manuscript cells, a live route with no defect verdicts, no other rated route. Compare within a script only.", '',
+                '| cell | live (bar) | words / page | passing (wrong text and acceptance) | weighted defects a page | pick at $0.001 / $0.01 / $0.1 | decision | k/n |', '|' + '---|' * 8]
+        for row in rows:
+            di = row['defects_rule']
+            if di is None: continue
+            if 'why' in di:
+                out.append(f"| {row['id']} | {row['live']} | — | — | — | — | {fmt(row['decision'], row['route'])} | {fmt(row['decision_kn'], row['route_kn'])} |"); continue
+            pk = ' / '.join(di['picks'][str(w)] for w in sorted({R['misleads_usd'], *R['misleads_usd_sensitivity']}))
+            out.append(f"| {row['id']} | {di['bar']} | {di['words_per_page']:g} | {', '.join(di['passing']) or 'none'} | {', '.join(f'{k} {v:.2f}' for k, v in di['defects_per_page'].items())} | {pk} | "
+                       f"{fmt(row['decision'], row['route'])} | {fmt(row['decision_kn'], row['route_kn'])} |")
+        dif = [r for r in rows if r['rule'] == 'defects' and (r['decision'], r['route']) != (r['decision_kn'], r['route_kn'])]
+        out += ['', f"**Cells where the defect rule decides otherwise than k/n:** {len(dif)}" + (': ' + '; '.join(f"{r['id']}: {fmt(r['decision'], r['route'])} (k/n {fmt(r['decision_kn'], r['route_kn'])})" for r in dif) if dif else '') + '.']
     if DR:
-        out += ['', f"**Defects per 1,000 words** (#6740, `{P['inputs']['defect_rates']}`; shown beside k/n, NOT in the decision). Every defect the Opus judge tagged on a route's judged pages, by severity, per 1,000 words of the text it read (a Han character, a Tibetan syllable = one word: compare within a script only); posterior mean [90%] of the gamma-Poisson model, n in books:", '',
+        out += ['', f"**Defects per 1,000 words** (#6740, `{P['inputs']['defect_rates']}`; {'the decision above' if RULE == 'defects' else 'shown beside k/n, not in the decision'}). Every defect the Opus judge tagged on a route's judged pages, by severity, per 1,000 words of the text it read (a Han character, a Tibetan syllable = one word: compare within a script only); posterior mean [90%] of the gamma-Poisson model, n in books:", '',
                 '| cell | route | books | words | misleads per 1,000 words | wrong text per 1,000 words | fidelity (1-5) |', '|' + '---|' * 7]
         for row in rows:
             if row.get('script') == 'manuscript':
@@ -516,6 +617,12 @@ def main():
     out += [f"- {c} / {r}: {a / (a + b):.2f} ({a + b:.0f} pages) → {kn}" for c, r, (a, b), kn in calib]
     open(D + NAME + '.md', 'w').write('\n'.join(out) + '\n')
     # PRIVATE: dollars, stdout only (paste into the issue comment, never into the repo)
+    if P.get('decision_rule') and DR:   # the defect rule's misleads-weight sensitivity (dollars: stdout only)
+        print(f"# defect rule (in force: {RULE}): pick at misleads weight $" + ' / $'.join(f'{w:g}' for w in sorted({P['decision_rule']['misleads_usd'], *P['decision_rule']['misleads_usd_sensitivity']})))
+        for row in rows:
+            di = row['defects_rule']
+            if di and 'picks' in di:
+                print(row['id'], 'live', row['live'], '|', ' / '.join(di['picks'].values()), '|', fmt(row['decision'], row['route']), '| k/n', fmt(row['decision_kn'], row['route_kn']))
     print(f"# dollars per 1K accepted pages, steady [90%] / this week — fees: {fee_src}")
     for row in rows:
         for r in row['routes']:
