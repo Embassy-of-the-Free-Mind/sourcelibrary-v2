@@ -1,0 +1,3016 @@
+{
+ "seed": {
+  "draw": 78661,
+  "pages": 78662,
+  "queue": 78663,
+  "wrongPage": 78664,
+  "planted": 78665,
+  "bootstrap": 78666,
+  "revSample": 78667,
+  "geminiQueue": 78668
+ },
+ "books": [
+  {
+   "id": "699062feef12272ffdc8ef20",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    27,
+    103,
+    203,
+    248,
+    366
+   ]
+  },
+  {
+   "id": "6a4bdb49913003fb726acfd2",
+   "stratum": "high",
+   "score": 0.736,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    5,
+    11,
+    16,
+    18
+   ]
+  },
+  {
+   "id": "69af49c4d6be7ec9cc3246fd",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    83,
+    103,
+    182,
+    287,
+    367
+   ]
+  },
+  {
+   "id": "6a26d4dcf5273a8d907ae5b3",
+   "stratum": "high",
+   "score": 0.9162,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    4,
+    9,
+    12,
+    13
+   ]
+  },
+  {
+   "id": "6a26beb30e247ebad6de873c",
+   "stratum": "high",
+   "score": 0.7396,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    4,
+    7,
+    13,
+    14,
+    20
+   ]
+  },
+  {
+   "id": "69b51e05768235dc6598b5c1",
+   "stratum": "high",
+   "score": 0.7749,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    8,
+    16,
+    32,
+    43,
+    52
+   ]
+  },
+  {
+   "id": "6a243d6f0f0e4f405e630221",
+   "stratum": "high",
+   "score": 0.8704,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    8,
+    12,
+    13,
+    17
+   ]
+  },
+  {
+   "id": "6a8b76ef313cdd0126cb79af",
+   "stratum": "high",
+   "score": 0.8926,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    38,
+    77,
+    114,
+    134,
+    177
+   ]
+  },
+  {
+   "id": "698192096df0137d367e6754",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    28,
+    66,
+    126,
+    215,
+    286
+   ]
+  },
+  {
+   "id": "6970e3759b09d309d780a2a8",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    11,
+    17,
+    39,
+    45,
+    62
+   ]
+  },
+  {
+   "id": "6a4b13117622bb5aba1291de",
+   "stratum": "high",
+   "score": 0.7364,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    2,
+    6,
+    8,
+    12,
+    14
+   ]
+  },
+  {
+   "id": "6a4ae0a29a3f4fa983d99ff6",
+   "stratum": "high",
+   "score": 0.7388,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    5,
+    8,
+    14,
+    15
+   ]
+  },
+  {
+   "id": "69b51dd6cf111105c42917c0",
+   "stratum": "high",
+   "score": 0.7749,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    6,
+    41,
+    65,
+    82,
+    118
+   ]
+  },
+  {
+   "id": "6a26bda553acc54a8c4d5117",
+   "stratum": "high",
+   "score": 0.8205,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    11,
+    16,
+    34,
+    35,
+    48
+   ]
+  },
+  {
+   "id": "69b6315b1c1c21a373806c60",
+   "stratum": "high",
+   "score": 0.7433,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    4,
+    12,
+    16,
+    21,
+    29
+   ]
+  },
+  {
+   "id": "699389a6ce15387065947dc0",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    17,
+    61,
+    153,
+    200,
+    237
+   ]
+  },
+  {
+   "id": "69c63cd593cbf3c0fd742522",
+   "stratum": "high",
+   "score": 0.7749,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    11,
+    19,
+    31,
+    36,
+    48
+   ]
+  },
+  {
+   "id": "69b2ff09a1a4246ddb45ab68",
+   "stratum": "high",
+   "score": 0.7529,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    15,
+    193,
+    348,
+    372,
+    552
+   ]
+  },
+  {
+   "id": "6a267ed26c1f37c9c4f3cc35",
+   "stratum": "high",
+   "score": 0.7749,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    3,
+    4,
+    8,
+    12,
+    16
+   ]
+  },
+  {
+   "id": "69b51ecbff09e4fe943b4ee9",
+   "stratum": "high",
+   "score": 0.7647,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    7,
+    12,
+    20,
+    24,
+    29
+   ]
+  },
+  {
+   "id": "6991fb158ffe22e92ae4e615",
+   "stratum": "high",
+   "score": 0.7644,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    68,
+    101,
+    183,
+    295,
+    352
+   ]
+  },
+  {
+   "id": "69bd9fb2f6d63c9197481c0b",
+   "stratum": "high",
+   "score": 0.7749,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-lite/print",
+   "top_route": "lite",
+   "pages": [
+    51,
+    81,
+    198,
+    279,
+    364
+   ]
+  },
+  {
+   "id": "6a905a9c785d9b40577f5c91",
+   "stratum": "high",
+   "score": 0.9162,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    1,
+    6,
+    10,
+    16,
+    21
+   ]
+  },
+  {
+   "id": "6a4cb63519ae103166961ce4",
+   "stratum": "high",
+   "score": 0.7455,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    2,
+    8,
+    10,
+    16,
+    18
+   ]
+  },
+  {
+   "id": "6a4aaa6914a573f467717452",
+   "stratum": "high",
+   "score": 0.739,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    6,
+    12,
+    16,
+    20
+   ]
+  },
+  {
+   "id": "6953e47477f38f6761bee59e",
+   "stratum": "high",
+   "score": 0.7545,
+   "weight": 398.9,
+   "language": "Latin-English",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    24,
+    34,
+    71,
+    94,
+    123
+   ]
+  },
+  {
+   "id": "69af48642a821385be062737",
+   "stratum": "high",
+   "score": 0.7585,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    19,
+    77,
+    127,
+    188,
+    206
+   ]
+  },
+  {
+   "id": "6a4eb04e9251fb3056f71cc0",
+   "stratum": "high",
+   "score": 0.7365,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    4,
+    7,
+    10,
+    13
+   ]
+  },
+  {
+   "id": "69c795636a0f3d112fafa029",
+   "stratum": "high",
+   "score": 0.9162,
+   "weight": 398.9,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    18,
+    89,
+    112,
+    205,
+    260
+   ]
+  },
+  {
+   "id": "6a4cdd6959e2a5b6929d856a",
+   "stratum": "high",
+   "score": 0.7369,
+   "weight": 398.9,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    5,
+    10,
+    12,
+    17,
+    25
+   ]
+  },
+  {
+   "id": "6a3c740601fe4f593c1ed8cd",
+   "stratum": "middle",
+   "score": 0.4654,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    11,
+    55,
+    94,
+    134,
+    170
+   ]
+  },
+  {
+   "id": "69b631a81c1c21a373809577",
+   "stratum": "middle",
+   "score": 0.6533,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-lite/print",
+   "top_route": "lite",
+   "pages": [
+    44,
+    98,
+    205,
+    235,
+    353
+   ]
+  },
+  {
+   "id": "69dbc7d71040d1d5e2094b24",
+   "stratum": "middle",
+   "score": 0.5801,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-lite/print",
+   "top_route": "lite",
+   "pages": [
+    9,
+    11,
+    28,
+    31,
+    39
+   ]
+  },
+  {
+   "id": "6a50a00bad1859a71f41bf9e",
+   "stratum": "middle",
+   "score": 0.7195,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    140,
+    153,
+    331,
+    553,
+    662
+   ]
+  },
+  {
+   "id": "6a4b6cf066f4462393d6f8a6",
+   "stratum": "middle",
+   "score": 0.7189,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    3,
+    6,
+    13,
+    14,
+    18
+   ]
+  },
+  {
+   "id": "6a3c782401fe4f593c20707d",
+   "stratum": "middle",
+   "score": 0.4669,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    10,
+    56,
+    101,
+    184,
+    198
+   ]
+  },
+  {
+   "id": "6ab2477c87d2180b7f5ea56f",
+   "stratum": "middle",
+   "score": 0.609,
+   "weight": 372.7,
+   "language": "English",
+   "top_cell": "english-blank-pre1800/unknown",
+   "top_route": "lighton-written",
+   "pages": [
+    68,
+    146,
+    192,
+    271,
+    356
+   ]
+  },
+  {
+   "id": "69dbc99f1040d1d5e20a4e4f",
+   "stratum": "middle",
+   "score": 0.6232,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-lite/print",
+   "top_route": "lite",
+   "pages": [
+    5,
+    17,
+    22,
+    29,
+    39
+   ]
+  },
+  {
+   "id": "69dbca3a1040d1d5e20aa385",
+   "stratum": "middle",
+   "score": 0.6285,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-lite/print",
+   "top_route": "lite",
+   "pages": [
+    21,
+    94,
+    153,
+    271,
+    302
+   ]
+  },
+  {
+   "id": "6a3c66baaf3c49b59c5cce74",
+   "stratum": "middle",
+   "score": 0.4639,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    19,
+    45,
+    72,
+    85,
+    100
+   ]
+  },
+  {
+   "id": "6aa94ead98dd95a320803eed",
+   "stratum": "middle",
+   "score": 0.7155,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    222,
+    383,
+    476,
+    811,
+    1060
+   ]
+  },
+  {
+   "id": "6a3c6c4039b4508b04e47d57",
+   "stratum": "middle",
+   "score": 0.4651,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    21,
+    54,
+    76,
+    125,
+    170
+   ]
+  },
+  {
+   "id": "6a3cbbbb87ee3d48c89d0bbc",
+   "stratum": "middle",
+   "score": 0.4648,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    2,
+    63,
+    83,
+    97,
+    140
+   ]
+  },
+  {
+   "id": "6a49137aac0c339f55337966",
+   "stratum": "middle",
+   "score": 0.7184,
+   "weight": 372.7,
+   "language": "German",
+   "top_cell": "german-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    2,
+    10,
+    18,
+    26,
+    31
+   ]
+  },
+  {
+   "id": "6a3c69f0af3c49b59c5e3dff",
+   "stratum": "middle",
+   "score": 0.4678,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    30,
+    44,
+    96,
+    118,
+    135
+   ]
+  },
+  {
+   "id": "6a3c783401fe4f593c2078f6",
+   "stratum": "middle",
+   "score": 0.464,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    15,
+    43,
+    70,
+    83,
+    102
+   ]
+  },
+  {
+   "id": "6a3c6b3539b4508b04e41c43",
+   "stratum": "middle",
+   "score": 0.4646,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    18,
+    56,
+    68,
+    96,
+    130
+   ]
+  },
+  {
+   "id": "6a3c789501fe4f593c2095b3",
+   "stratum": "middle",
+   "score": 0.4641,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    16,
+    46,
+    63,
+    78,
+    114
+   ]
+  },
+  {
+   "id": "6a3cbc42ec254ff6cadef090",
+   "stratum": "middle",
+   "score": 0.4651,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    6,
+    43,
+    71,
+    110,
+    147
+   ]
+  },
+  {
+   "id": "6a3c6964af3c49b59c5df098",
+   "stratum": "middle",
+   "score": 0.4678,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    4,
+    50,
+    85,
+    111,
+    130
+   ]
+  },
+  {
+   "id": "69c4ec33a3a4a7c546ee6113",
+   "stratum": "middle",
+   "score": 0.7323,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    22,
+    36,
+    62,
+    100,
+    108
+   ]
+  },
+  {
+   "id": "6a3c690e39b4508b04e3b94b",
+   "stratum": "middle",
+   "score": 0.4642,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    12,
+    43,
+    74,
+    83,
+    111
+   ]
+  },
+  {
+   "id": "6a3c5e5340c88a541d8e0f82",
+   "stratum": "middle",
+   "score": 0.4647,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    18,
+    43,
+    78,
+    98,
+    142
+   ]
+  },
+  {
+   "id": "6a43999ec3ccb765a984106b",
+   "stratum": "middle",
+   "score": 0.658,
+   "weight": 372.7,
+   "language": "Latin",
+   "top_cell": "latin-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    5,
+    14,
+    20,
+    30,
+    40
+   ]
+  },
+  {
+   "id": "6a3cb8223dce6cfad748b627",
+   "stratum": "middle",
+   "score": 0.4644,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    39,
+    48,
+    96,
+    131,
+    172
+   ]
+  },
+  {
+   "id": "6a3c6a3faf3c49b59c5e5140",
+   "stratum": "middle",
+   "score": 0.4678,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    10,
+    45,
+    66,
+    79,
+    98
+   ]
+  },
+  {
+   "id": "6ad16ee93ba103d8eb309cfd",
+   "stratum": "middle",
+   "score": 0.5914,
+   "weight": 372.7,
+   "language": "English",
+   "top_cell": "english-blank-pre1800/unknown",
+   "top_route": "lighton-written",
+   "pages": [
+    5,
+    28,
+    50,
+    67,
+    103
+   ]
+  },
+  {
+   "id": "6a3c634a4daf85677d170c3e",
+   "stratum": "middle",
+   "score": 0.4661,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    22,
+    41,
+    54,
+    85,
+    123
+   ]
+  },
+  {
+   "id": "69c73f1a6a0f3d112faf7a97",
+   "stratum": "middle",
+   "score": 0.7189,
+   "weight": 372.7,
+   "language": "French",
+   "top_cell": "french-lite/print",
+   "top_route": "lite",
+   "pages": [
+    -149,
+    31,
+    66,
+    259,
+    538
+   ]
+  },
+  {
+   "id": "6a3c628e40c88a541d8f46a5",
+   "stratum": "middle",
+   "score": 0.4678,
+   "weight": 372.7,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    17,
+    75,
+    94,
+    167,
+    220
+   ]
+  },
+  {
+   "id": "6a3c67ebaf3c49b59c5d4a5b",
+   "stratum": "low",
+   "score": 0.4621,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    17,
+    55,
+    73,
+    107,
+    141
+   ]
+  },
+  {
+   "id": "69f3263852a77bb28fdb6738",
+   "stratum": "low",
+   "score": 0.2153,
+   "weight": 230.9,
+   "language": "Korean",
+   "top_cell": "korean-lite/manuscript",
+   "top_route": "lite",
+   "pages": [
+    3,
+    10,
+    18,
+    24,
+    30
+   ]
+  },
+  {
+   "id": "6a3c6ae2af3c49b59c5eb179",
+   "stratum": "low",
+   "score": 0.3762,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    7,
+    44,
+    62,
+    71,
+    103
+   ]
+  },
+  {
+   "id": "6a3cbfadf9474f825c16a32a",
+   "stratum": "low",
+   "score": 0.4076,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    20,
+    35,
+    66,
+    107,
+    111
+   ]
+  },
+  {
+   "id": "6a3c61bf879008ba7e1600b0",
+   "stratum": "low",
+   "score": 0.4603,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    3,
+    38,
+    60,
+    75,
+    90
+   ]
+  },
+  {
+   "id": "6a3cead3c895e71c6023cccb",
+   "stratum": "low",
+   "score": 0.4586,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    8,
+    45,
+    63,
+    111,
+    123
+   ]
+  },
+  {
+   "id": "6a3cc06aec254ff6cae06603",
+   "stratum": "low",
+   "score": 0.4531,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    30,
+    57,
+    96,
+    108,
+    133
+   ]
+  },
+  {
+   "id": "6a3cbf6af9474f825c167fd4",
+   "stratum": "low",
+   "score": 0.4421,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    30,
+    42,
+    91,
+    103,
+    153
+   ]
+  },
+  {
+   "id": "6a3cc0fcec254ff6cae0836e",
+   "stratum": "low",
+   "score": 0.463,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    14,
+    34,
+    61,
+    106,
+    111
+   ]
+  },
+  {
+   "id": "6a3ce86e552d34d98411ba7e",
+   "stratum": "low",
+   "score": 0.4616,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    40,
+    48,
+    124,
+    150,
+    210
+   ]
+  },
+  {
+   "id": "6a3c717039b4508b04e54364",
+   "stratum": "low",
+   "score": 0.4573,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    12,
+    56,
+    79,
+    138,
+    149
+   ]
+  },
+  {
+   "id": "6a3c7b0701fe4f593c21b92f",
+   "stratum": "low",
+   "score": 0.381,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    13,
+    40,
+    78,
+    135,
+    173
+   ]
+  },
+  {
+   "id": "6a3c800701fe4f593c21f0ba",
+   "stratum": "low",
+   "score": 0.4571,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    3,
+    34,
+    60,
+    86,
+    111
+   ]
+  },
+  {
+   "id": "6a3c742a01fe4f593c1eed13",
+   "stratum": "low",
+   "score": 0.4546,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    3,
+    37,
+    82,
+    106,
+    127
+   ]
+  },
+  {
+   "id": "6992cf0e284cdd19fef46f38",
+   "stratum": "low",
+   "score": 0.2369,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    6,
+    25,
+    34,
+    53,
+    69
+   ]
+  },
+  {
+   "id": "6a3cb6b857c1f37219c4be66",
+   "stratum": "low",
+   "score": 0.4527,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    23,
+    64,
+    65,
+    113,
+    145
+   ]
+  },
+  {
+   "id": "6a3c60d540c88a541d8eb14f",
+   "stratum": "low",
+   "score": 0.4623,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    21,
+    59,
+    72,
+    125,
+    167
+   ]
+  },
+  {
+   "id": "6a3c622a879008ba7e1611b9",
+   "stratum": "low",
+   "score": 0.2706,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    14,
+    34,
+    60,
+    103,
+    140
+   ]
+  },
+  {
+   "id": "6a3c64ab39b4508b04e28ee7",
+   "stratum": "low",
+   "score": 0.4627,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    15,
+    34,
+    75,
+    101,
+    118
+   ]
+  },
+  {
+   "id": "6a3cbc19ec254ff6caded88e",
+   "stratum": "low",
+   "score": 0.4492,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    20,
+    26,
+    67,
+    99,
+    108
+   ]
+  },
+  {
+   "id": "6a3cf0d98642f0445b168124",
+   "stratum": "low",
+   "score": 0.4372,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    10,
+    33,
+    64,
+    79,
+    89
+   ]
+  },
+  {
+   "id": "69f325c852a77bb28fdb5cd7",
+   "stratum": "low",
+   "score": 0.4325,
+   "weight": 230.9,
+   "language": "Arabic",
+   "top_cell": "arabic-lite/manuscript",
+   "top_route": "lite",
+   "pages": [
+    26,
+    67,
+    96,
+    142,
+    150
+   ]
+  },
+  {
+   "id": "69e961652beefe2f6f72b4a8",
+   "stratum": "low",
+   "score": 0.0252,
+   "weight": 230.9,
+   "language": "French",
+   "top_cell": "french-lite/print",
+   "top_route": "lite",
+   "pages": [
+    110,
+    164,
+    315,
+    380,
+    507
+   ]
+  },
+  {
+   "id": "6a3cf0368642f0445b1635b5",
+   "stratum": "low",
+   "score": 0.4219,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    3,
+    41,
+    47,
+    79,
+    102
+   ]
+  },
+  {
+   "id": "69f3273552a77bb28fdb6f93",
+   "stratum": "low",
+   "score": 0.2201,
+   "weight": 230.9,
+   "language": "Korean",
+   "top_cell": "korean-lite/manuscript",
+   "top_route": "lite",
+   "pages": [
+    5,
+    24,
+    27,
+    51,
+    52
+   ]
+  },
+  {
+   "id": "6a3cbdffec254ff6cadfc2ed",
+   "stratum": "low",
+   "score": 0.4625,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    31,
+    58,
+    100,
+    114,
+    170
+   ]
+  },
+  {
+   "id": "6a3c5e7840c88a541d8e2644",
+   "stratum": "low",
+   "score": 0.4524,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    13,
+    30,
+    45,
+    73,
+    79
+   ]
+  },
+  {
+   "id": "6a3c648f39b4508b04e2814a",
+   "stratum": "low",
+   "score": 0.4612,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    6,
+    47,
+    62,
+    114,
+    131
+   ]
+  },
+  {
+   "id": "6a3c77eb01fe4f593c2059aa",
+   "stratum": "low",
+   "score": 0.4604,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    24,
+    44,
+    58,
+    73,
+    99
+   ]
+  },
+  {
+   "id": "6a3c681caf3c49b59c5d6839",
+   "stratum": "low",
+   "score": 0.4595,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    7,
+    37,
+    97,
+    115,
+    138
+   ]
+  },
+  {
+   "id": "6a3c6c3739b4508b04e4771c",
+   "stratum": "low",
+   "score": 0.4602,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    7,
+    30,
+    56,
+    88,
+    112
+   ]
+  },
+  {
+   "id": "6a3cef198642f0445b160a98",
+   "stratum": "low",
+   "score": 0.4252,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    21,
+    51,
+    68,
+    102,
+    133
+   ]
+  },
+  {
+   "id": "69e7ac4a5f1a22ab19aa63f4",
+   "stratum": "low",
+   "score": 0,
+   "weight": 230.9,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/manuscript",
+   "top_route": "yigdzin",
+   "pages": [
+    32,
+    83,
+    166,
+    196,
+    313
+   ]
+  },
+  {
+   "id": "69e7965d80b52390feb195d8",
+   "stratum": "low",
+   "score": 0,
+   "weight": 230.9,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/manuscript",
+   "top_route": "yigdzin",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    6
+   ]
+  },
+  {
+   "id": "6a3c742501fe4f593c1ee9a5",
+   "stratum": "low",
+   "score": 0.4635,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    35,
+    82,
+    118,
+    160,
+    193
+   ]
+  },
+  {
+   "id": "69e787a74a6785cfd60ccb4b",
+   "stratum": "low",
+   "score": 0.267,
+   "weight": 230.9,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/manuscript",
+   "top_route": "yigdzin",
+   "pages": [
+    8,
+    17,
+    23,
+    32,
+    48
+   ]
+  },
+  {
+   "id": "6a3cf0f14701a906f10f42be",
+   "stratum": "low",
+   "score": 0.4423,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    37,
+    87,
+    125,
+    176,
+    202
+   ]
+  },
+  {
+   "id": "69f3296eaeeee0fa38c658ea",
+   "stratum": "low",
+   "score": 0.2119,
+   "weight": 230.9,
+   "language": "Korean",
+   "top_cell": "korean-lite/manuscript",
+   "top_route": "lite",
+   "pages": [
+    13,
+    27,
+    36,
+    47,
+    67
+   ]
+  },
+  {
+   "id": "6a3cc269ec254ff6cae10e55",
+   "stratum": "low",
+   "score": 0.4189,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    13,
+    37,
+    73,
+    83,
+    117
+   ]
+  },
+  {
+   "id": "69dea5f84d19ec2e9ba77e07",
+   "stratum": "low",
+   "score": 0.2241,
+   "weight": 230.9,
+   "language": "Sanskrit",
+   "top_cell": "sanskrit-lite/print",
+   "top_route": "lite",
+   "pages": [
+    11,
+    16,
+    33,
+    46,
+    58
+   ]
+  },
+  {
+   "id": "6a3cb6e357c1f37219c4d49d",
+   "stratum": "low",
+   "score": 0.4609,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    9,
+    37,
+    46,
+    62,
+    82
+   ]
+  },
+  {
+   "id": "6a3cc00af9474f825c16d659",
+   "stratum": "low",
+   "score": 0.4437,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    11,
+    42,
+    80,
+    113,
+    147
+   ]
+  },
+  {
+   "id": "6a3cb61c57c1f37219c48b6c",
+   "stratum": "low",
+   "score": 0.4552,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    7,
+    63,
+    92,
+    118,
+    150
+   ]
+  },
+  {
+   "id": "6a3cc04eec254ff6cae055ca",
+   "stratum": "low",
+   "score": 0.4517,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    15,
+    54,
+    62,
+    87,
+    131
+   ]
+  },
+  {
+   "id": "6a3cee494701a906f10e7df5",
+   "stratum": "low",
+   "score": 0.3934,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    9,
+    42,
+    69,
+    86,
+    120
+   ]
+  },
+  {
+   "id": "6a3c6a5eaf3c49b59c5e6355",
+   "stratum": "low",
+   "score": 0.4409,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    11,
+    35,
+    77,
+    115,
+    148
+   ]
+  },
+  {
+   "id": "6a3cbcb1ec254ff6cadf2564",
+   "stratum": "low",
+   "score": 0.3969,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    9,
+    26,
+    44,
+    77,
+    84
+   ]
+  },
+  {
+   "id": "6a3c709939b4508b04e4fd36",
+   "stratum": "low",
+   "score": 0.4604,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    17,
+    61,
+    86,
+    132,
+    162
+   ]
+  },
+  {
+   "id": "6a3ceede8642f0445b15fae8",
+   "stratum": "low",
+   "score": 0.3901,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    3,
+    30,
+    47,
+    73,
+    83
+   ]
+  },
+  {
+   "id": "6a3c6f0b01fe4f593c1c88df",
+   "stratum": "low",
+   "score": 0.4575,
+   "weight": 230.9,
+   "language": "Chinese",
+   "top_cell": "zh-paddle-dice-lt090/manuscript",
+   "top_route": "paddle",
+   "pages": [
+    22,
+    38,
+    75,
+    102,
+    128
+   ]
+  },
+  {
+   "id": "69b222ed56715b0e32475a8c",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    73,
+    209,
+    285,
+    356,
+    486
+   ]
+  },
+  {
+   "id": "6a14e12d2f45ee330c273e25",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/unknown",
+   "top_route": "yigdzin",
+   "pages": [
+    36,
+    153,
+    189,
+    270,
+    385
+   ]
+  },
+  {
+   "id": "69dc241f39623978967d80db",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    53,
+    132,
+    215,
+    259,
+    378
+   ]
+  },
+  {
+   "id": "6abe9f2c6a920ffd924da190",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": null,
+   "top_route": "pipeline:derge-tengyur-import-5497",
+   "pages": [
+    113,
+    166,
+    319,
+    441,
+    506
+   ]
+  },
+  {
+   "id": "69e7aac45f1a22ab19a8d12c",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/unknown",
+   "top_route": "yigdzin>agy-flash-low",
+   "pages": [
+    1,
+    116,
+    170,
+    263,
+    388
+   ]
+  },
+  {
+   "id": "69b52bf1a2d71b015aa974b2",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Italian",
+   "top_cell": "italian-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    35,
+    77,
+    126,
+    178,
+    200
+   ]
+  },
+  {
+   "id": "6a0c53ef99c52ea845a06388",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Latin",
+   "top_cell": null,
+   "top_route": "model:none",
+   "pages": [
+    11,
+    28,
+    50,
+    79,
+    119
+   ]
+  },
+  {
+   "id": "6ab246d287d2180b7f5e908c",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": null,
+   "top_route": "import:ia_djvu",
+   "pages": [
+    13,
+    31,
+    66,
+    88,
+    110
+   ]
+  },
+  {
+   "id": "69b99d166ed9e04909908b37",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    6,
+    28,
+    54,
+    83,
+    107
+   ]
+  },
+  {
+   "id": "69af202426ba85fcaeca5f8d",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Russian",
+   "top_cell": "russian-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    9,
+    67,
+    86,
+    139,
+    160
+   ]
+  },
+  {
+   "id": "69906148322e01b1349a46f8",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    45,
+    99,
+    123,
+    185,
+    244
+   ]
+  },
+  {
+   "id": "6a4ad79ad6371d99e7666afa",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    51,
+    104,
+    266,
+    373,
+    427
+   ]
+  },
+  {
+   "id": "6953aeae77f38f6761bd8524",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Demotic",
+   "top_cell": null,
+   "top_route": "3flash",
+   "pages": [
+    26,
+    35,
+    70,
+    117,
+    159
+   ]
+  },
+  {
+   "id": "69b30030a1a4246ddb45ba45",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    80,
+    229,
+    306,
+    481,
+    615
+   ]
+  },
+  {
+   "id": "6a2032e218654bf8e1903a74",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Arabic",
+   "top_cell": "arabic-flash3/manuscript",
+   "top_route": "3flash",
+   "pages": [
+    6,
+    95,
+    126,
+    183,
+    233
+   ]
+  },
+  {
+   "id": "69af11dba03f6f3663ba9133",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Russian",
+   "top_cell": "russian-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    58,
+    104,
+    209,
+    265,
+    405
+   ]
+  },
+  {
+   "id": "6ab6de98b393fe0e2d475120",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": null,
+   "top_route": "import:ia_djvu",
+   "pages": [
+    1,
+    25,
+    52,
+    78,
+    93
+   ]
+  },
+  {
+   "id": "6abe8dbb6a920ffd924d59c0",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": null,
+   "top_route": "pipeline:derge-tengyur-import-5497",
+   "pages": [
+    98,
+    154,
+    316,
+    479,
+    701
+   ]
+  },
+  {
+   "id": "6970e3729b09d309d780a29e",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "German",
+   "top_cell": "german-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    46,
+    92,
+    239,
+    327,
+    352
+   ]
+  },
+  {
+   "id": "69e78b784a6785cfd60d5767",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/unknown",
+   "top_route": "yigdzin",
+   "pages": [
+    11,
+    23,
+    38,
+    40,
+    62
+   ]
+  },
+  {
+   "id": "6a060d36e16c60cb2a8946c7",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Sanskrit",
+   "top_cell": "sanskrit-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    136,
+    268,
+    442,
+    592,
+    671
+   ]
+  },
+  {
+   "id": "6ab234fa4ac37d55a213b70f",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    54,
+    83,
+    145,
+    246,
+    318
+   ]
+  },
+  {
+   "id": "6a0856c249638a50931c2bd0",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Italian",
+   "top_cell": "italian-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    72,
+    137,
+    270,
+    286,
+    407
+   ]
+  },
+  {
+   "id": "69e72b65a409200ea79f24ac",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Armenian",
+   "top_cell": null,
+   "top_route": "lite",
+   "pages": [
+    7,
+    214,
+    274,
+    340,
+    503
+   ]
+  },
+  {
+   "id": "69ac5f7cebeb54840de0f0a4",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "French",
+   "top_cell": "french-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    44,
+    144,
+    280,
+    456,
+    586
+   ]
+  },
+  {
+   "id": "699383b350654cbbe29181eb",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    60,
+    146,
+    255,
+    334,
+    392
+   ]
+  },
+  {
+   "id": "69e413312d8eeae8614a0296",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    8,
+    42,
+    46,
+    88,
+    103
+   ]
+  },
+  {
+   "id": "69a5f088b29703bc86eb5b9f",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Armenian",
+   "top_cell": null,
+   "top_route": "lite",
+   "pages": [
+    64,
+    89,
+    174,
+    213,
+    315
+   ]
+  },
+  {
+   "id": "69aebc460d3d5e01e132c454",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": null,
+   "top_route": "import:ia_djvu",
+   "pages": [
+    23,
+    103,
+    132,
+    187,
+    241
+   ]
+  },
+  {
+   "id": "69942a43045dfc482ad76202",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    133,
+    279,
+    353,
+    517,
+    659
+   ]
+  },
+  {
+   "id": "69aea449f7e8488296c57afc",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Danish",
+   "top_cell": "danish-lite/print",
+   "top_route": "lite",
+   "pages": [
+    87,
+    175,
+    277,
+    310,
+    403
+   ]
+  },
+  {
+   "id": "699069f81cf6ed5fbc8f4967",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    86,
+    122,
+    220,
+    293,
+    399
+   ]
+  },
+  {
+   "id": "6ab22f314ac37d55a2130b91",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": null,
+   "top_route": "import:ia_djvu",
+   "pages": [
+    21,
+    32,
+    44,
+    81,
+    87
+   ]
+  },
+  {
+   "id": "6ab6dbb4b393fe0e2d473db8",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": null,
+   "top_route": "import:ia_djvu",
+   "pages": [
+    16,
+    44,
+    66,
+    92,
+    114
+   ]
+  },
+  {
+   "id": "6975158ca88d83c830d99e32",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "German",
+   "top_cell": "german-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    36,
+    171,
+    271,
+    336,
+    436
+   ]
+  },
+  {
+   "id": "695942607d14807348773a98",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    -80,
+    -69,
+    -54,
+    18,
+    35
+   ]
+  },
+  {
+   "id": "6a14e1232f45ee330c27337d",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": "tibetan-yigdzin/unknown",
+   "top_route": "yigdzin",
+   "pages": [
+    35,
+    115,
+    178,
+    296,
+    356
+   ]
+  },
+  {
+   "id": "69af11743bf2d972adad82be",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Russian",
+   "top_cell": "russian-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    15,
+    150,
+    251,
+    271,
+    356
+   ]
+  },
+  {
+   "id": "69a5e3d7006a4098422165d4",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    22,
+    69,
+    105,
+    126,
+    193
+   ]
+  },
+  {
+   "id": "6ad191c342debc962692561e",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Yucatec Maya",
+   "top_cell": null,
+   "top_route": "model:claude-opus-5-5",
+   "pages": [
+    1,
+    4,
+    5,
+    7,
+    10
+   ]
+  },
+  {
+   "id": "697d9c999788c62e1238c87e",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    -93,
+    120,
+    153,
+    247,
+    356
+   ]
+  },
+  {
+   "id": "69af13c4f837644f29a496d3",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Greek",
+   "top_cell": "greek-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    20,
+    179,
+    321,
+    354,
+    499
+   ]
+  },
+  {
+   "id": "6abedf77a43718d234bf11b2",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Tibetan",
+   "top_cell": null,
+   "top_route": "pipeline:derge-tengyur-import-5497",
+   "pages": [
+    74,
+    239,
+    317,
+    465,
+    600
+   ]
+  },
+  {
+   "id": "695924fa1cac2ce31a4a8a33",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Chinese",
+   "top_cell": "chinese-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    1,
+    96,
+    186,
+    222,
+    287
+   ]
+  },
+  {
+   "id": "6953c90c77f38f6761bde04b",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    8,
+    36,
+    91,
+    113,
+    154
+   ]
+  },
+  {
+   "id": "69b5258b2379d2fed6c28c3c",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Dutch",
+   "top_cell": null,
+   "top_route": "3flash",
+   "pages": [
+    12,
+    26,
+    34,
+    51,
+    68
+   ]
+  },
+  {
+   "id": "6990795bb621b177c1af684d",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Sanskrit",
+   "top_cell": "sanskrit-flash3/unknown",
+   "top_route": "3flash",
+   "pages": [
+    -136,
+    -109,
+    3,
+    32,
+    65
+   ]
+  },
+  {
+   "id": "6990540938e1fdee57b366e9",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-lite/print",
+   "top_route": "lite",
+   "pages": [
+    33,
+    52,
+    116,
+    158,
+    231
+   ]
+  },
+  {
+   "id": "69f33085876dd827cbc47601",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "Latin",
+   "top_cell": "latin-lite/manuscript",
+   "top_route": "lite",
+   "pages": [
+    3,
+    6,
+    10,
+    13,
+    16
+   ]
+  },
+  {
+   "id": "69e009b7846d79f28d566e5a",
+   "stratum": "unmeasured",
+   "score": null,
+   "weight": 254.84,
+   "language": "English",
+   "top_cell": "english-flash3/print",
+   "top_route": "3flash",
+   "pages": [
+    73,
+    92,
+    243,
+    288,
+    397
+   ]
+  }
+ ],
+ "skipped": [
+  {
+   "id": "6a26dbc705d7c1d9b108f094",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4bce89241e69221d271061",
+   "stratum": "high",
+   "skipped": "eligible pages 4 < 5"
+  },
+  {
+   "id": "6a26dbe805d7c1d9b108ffd6",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "69b630741c1c21a37380287b",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "69dbc9e31040d1d5e20a7c7f",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a26dba605d7c1d9b108e582",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a45f7ccf1f48eff2e794cf7",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a492a681bbf4176e1e8a591",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "69c880be6c6f3cc53c85913d",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "69b51eb3ff09e4fe943b373b",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a4b7bf8c0fa233644e2f436",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4eb16001a7e9dce92b415f",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a4f75ce2a450f51978ced56",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26bb884045b346e6ad225c",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4b8327998fdd30218fc446",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a49f6fe521e227d522802cd",
+   "stratum": "high",
+   "skipped": "eligible pages 3 < 5"
+  },
+  {
+   "id": "6a26c29baad44c98627c51d2",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26c934aad44c98627f060e",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a429dfd831988adcb764f19",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a4936f9cc2a757713a3d758",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4eef76451d36458a837ff9",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4d571f4e92e8691bc19fba",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a4ef1a11a64e53b6a0a17ce",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a42b48b5207af7c42f5df4c",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "69c819c16c6f3cc53c8494f1",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4eb7bfccea9baa4f4962a9",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4a79537b720133514b4e69",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4b8492c0fa233644e30bcf",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4a60fd3f0b4659d1bc3692",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4bb5cb3828881918f950ac",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a425e60744db9e3105a4255",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26d410f5273a8d907abe61",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26c28eaad44c98627c4d34",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a429a378e351c27eb8598c9",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a426cca28e9db2e39c046a0",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a4f0ce8ce720e255f3be7c9",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a5087ad34726579ac748087",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4b00d819bd0084b1bf30a3",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a4b0d20e3f5ea0395c7517a",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a06f4334dcc6d5d8f0368c3",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26bdf30e247ebad6de627e",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a50edc2c39423579e0cdda7",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a492bc317814bcc1598d8bd",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a42766e28e9db2e39c1cbf0",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a426daf175f31ca3ec54f46",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a491cc9a9e39181572e6409",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4cd1c86c70b0ad576c6fb6",
+   "stratum": "high",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a509b90ad1859a71f41bcd5",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a26bf850e247ebad6deceec",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69c864146c6f3cc53c855e89",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a513f628c6b50b23c231c3d",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a427ace28e9db2e39c21eb1",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a4ba9f0debad28d8e8df941",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a493eb9c643e4e3d30724a6",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a26c20caad44c98627c1864",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a4a51d6b5dd4074593fe2d2",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a5053f2d37616d3d1c0ec63",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a4cc7af6a4444bb55bcb681",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a439aaec3ccb765a98414f5",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 2 < 5"
+  },
+  {
+   "id": "6a49efd0521e227d5227f257",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a08f8cd9c1b82475e158200",
+   "stratum": "middle",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a3cea68db5eb2b676735b25",
+   "stratum": "low",
+   "skipped": "eligible pages 2 < 5"
+  },
+  {
+   "id": "6a3cebec8642f0445b15835f",
+   "stratum": "low",
+   "skipped": "eligible pages 1 < 5"
+  },
+  {
+   "id": "6a3c752039b4508b04e5b53a",
+   "stratum": "low",
+   "skipped": "eligible pages 0 < 5"
+  },
+  {
+   "id": "6a3c764101fe4f593c1f9df0",
+   "stratum": "low",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69e78b3b4a6785cfd60d51ce",
+   "stratum": "low",
+   "skipped": "eligible pages 2 < 5"
+  },
+  {
+   "id": "6a3c6c8901fe4f593c1b22f1",
+   "stratum": "low",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a3c613040c88a541d8ee8de",
+   "stratum": "low",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69e78a674a6785cfd60d33f4",
+   "stratum": "low",
+   "skipped": "eligible pages 4 < 5"
+  },
+  {
+   "id": "69c1bf7e8522835be846c2a6",
+   "stratum": "low",
+   "skipped": "eligible pages 2 < 5"
+  },
+  {
+   "id": "6a3cbd8ef9474f825c162597",
+   "stratum": "low",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69b4c139779e2e78e20e7545",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 3 < 5"
+  },
+  {
+   "id": "6a8f619bddd2f57fe0f7e59b",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69aff08757adc49dbfc423fa",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 0 < 5"
+  },
+  {
+   "id": "69b5259d9658af9164709eb3",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 1 < 5"
+  },
+  {
+   "id": "6a06d1b49a48d5139996012a",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69c89bde6c6f3cc53c85d473",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 3 < 5"
+  },
+  {
+   "id": "6992cc35018b80967354cdee",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 0 < 5"
+  },
+  {
+   "id": "69b525a26be6046083030580",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 1 < 5"
+  },
+  {
+   "id": "6a06d2cd9a48d51399962622",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a0a248760700bc49f8182fa",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 0 < 5"
+  },
+  {
+   "id": "6ab2427c87d2180b7f5e149f",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "69c1ba208522835be84569ef",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a09ff1dfa20006dbaba89aa",
+   "stratum": "unmeasured",
+   "skipped": "eligible pages 0 < 5"
+  },
+  {
+   "id": "69b51ed447b06ecd58196f8b",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 4 < 5"
+  },
+  {
+   "id": "6a44d0e9823724ce1613ecd5",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "6a8f619fddd2f57fe0f7eb2f",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  },
+  {
+   "id": "69aebf9fc337b1e6a4d57b99",
+   "stratum": "unmeasured",
+   "skipped": "fifths with an eligible page 1 < 5"
+  }
+ ]
+}
