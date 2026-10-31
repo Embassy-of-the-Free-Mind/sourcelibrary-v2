@@ -650,14 +650,17 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const guard = checkWrittenText(text, { kind: 'ocr' });
   if (guard.verdict === 'truncated') { skip(m, writeGuardReason(guard)); tally.write_guard_refused.push({ page_id: m.page_id ?? m.key, page_number: m.page_number, reasons: guard.reasons }); continue; }
   if (guard.verdict === 'repaired_mid') { text = guard.repaired; tally.write_guard_repaired++; }
-  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
+  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1, 'staged_split.frame_id': 1 } });
   if (!page) { skip(m, 'page not found'); continue; }
   const unsplit = unsplitReadRefusal(await bookOf(page.book_id), page);
   if (unsplit) { skip(m, 'unsplit spread book (#7605)'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
   const fitted = fittedTextReason(page.ocr);
   if (fitted) { skip(m, fitted); continue; }
-  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served: page.ocr?.data });
+  // A staged split leaf (#7605) has no text of its own yet: the scripts its frame's text carries are the ones it may.
+  const served = page.ocr?.data || (page.staged_split?.frame_id
+    ? (await db.collection('pages').findOne({ id: page.staged_split.frame_id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data : '');
+  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served });
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
