@@ -310,6 +310,151 @@ Made before any judge call. What existed when this was written:
 
 **Code fix (no change of method).** In the analysis, an arm that did not run is not compared. Before, an arm with no text and no run row counted as "not accepted".
 
+## Results (run 2026-10-31 14:45Z – 18:25Z)
+
+**Run.**
+- **Opus.** `claude-opus-5-5`, `claude -p` on this box's subscription, the image attached: 894 calls against the 1,100 cap (880 items, 14 controls, 0 unparsed). Meter: weekly 36% → 43%, 5-hour 17% → 4% after its reset (shared account, so these are upper bounds). List-price equivalent $59.20, not billed. Every item was judged; no tier-1 cut.
+- **agy.** `gemini-3.8-flash-low`, default pool, 2 at a time: 1,130 calls (230 face tags, 900 read and correction calls). No quota stop.
+- **GPU.** One hand-queued gpu-queue task (`00-qr-7853-gpu`), 15:05–15:08Z, with the filler paused from 14:58Z to 15:08Z. PERO 134/137 drafts in 64 s on the card; LightOnOCR-3-1B 73/73 in 72 s (vLLM 0.6, peak 15.3 GB). The filler chunk then running (`zy-ocr-gpu-print-en-c060`, ~1,220 pages, ~15 min) was left to finish, under the 20-minute line, so no chunk was stopped.
+- **Paid API: $0.**
+- **Killed reads.** One arm-2 correction ended `exit -9`. It was retried once and was killed again, so the second outcome stands (that page serves the stored text). No other read was killed.
+- **Inbox.** Derek's 16:05Z note became Amendment 1, merged at 16:38Z (#7861) before the first judge call at 17:18Z.
+- **Artifacts.** `scripts/eval/queue-routes-7853/results/` (`frame.json`, `score.json`, `defect-rates.json`, `router-evidence.score.json`, `router-check.json`, `writeback*.json`, `rescore-severity-7818.json`). Texts, verdicts and reads are in `$JOB_SCRATCH/qr-7853/` (archived to R2 after 7 idle days).
+
+### Frame against the queue (`results/frame.json`)
+
+| | German queue | German head (first 20,000 owed pages, 92 books) | French queue | French head (20,135 pages, 118 books) |
+|---|---|---|---|---|
+| owed pages | 234,953 (1,233 books) | | 76,165 (337 books) | |
+| ≤ 1600 / 17th / 18th / 19th+ | 9 / 19 / 56 / 15% | 10 / 13 / 59 / 17% | 9 / 27 / 37 / 27% | 14 / 29 / 38 / 19% |
+| scan band good / fair-poor | 84 / 16% | 77 / 23% | 88 / 12% | 80 / 20% |
+
+- **The scan band is mostly a tag-presence band.** Of the German owed pages, 197,114 carry `<scan-quality>good`, 266 fair, 269 poor, and 37,304 no tag at all. So `fair-poor` mostly means "the stored read gave no scan tag". Declared here; not a change of method.
+- **Typeface, estimated for the queue from the PPS sample** (self-weighting inside strata): German Fraktur 0.84, mixed 0.07, Antiqua 0.09; French Antiqua 1.00 (60/60).
+- **Replacements.** 6 drawn pages were tagged `none` (no printed body text) and replaced by their stratum's reserves. No image failed to fetch.
+
+### Instrument: valid for this study
+
+- Wrong-page controls: 6/6 rejected at fidelity ≤ 2 (German Fraktur 2, German Antiqua 2, French Antiqua 2; no French Fraktur page exists).
+- Planted errors: 8/8 caught (4 per language).
+- Noise floor: #7818's κ 0.87 (not rerun).
+
+### German (150 pages, 150 books; weighted to 219,969 owed pages)
+
+"Weighted" = Horvitz–Thompson over pages owed. CIs are stratified page (= book) bootstrap 95%. "Severity" = cosmetic 1 / misleads 5 / wrong_text 25 per 1,000 words.
+
+| arm | accepted | weighted accept (95% CI) | severity / 1,000 words (95% CI) | fidelity | wrong_text / 1,000 words | wrong-text pages | agy calls a page | accepted pages per agy call | $ per accepted page |
+|---|---|---|---|---|---|---|---|---|---|
+| stored lite | 83/150 | 0.55 (0.48–0.63) | 81.9 (62.0–105.8) | 3.77 | 1.72 | 42 | 0 | — | — |
+| 1 correction (#7558) | 108/150 | 0.72 (0.65–0.79) | 50.5 (36.7–65.6) | 4.08 | 0.98 | 22 | 1.00 | 0.72 | 0.00121 |
+| 2 GPU draft > agy | 113/150 | 0.75 (0.69–0.82) | 50.1 (32.1–74.5) | 4.15 | 0.85 | 20 | 0.98 | 0.77 | 0.00113 |
+| **3 read@4** | **123/150** | **0.82 (0.76–0.88)** | **31.3 (22.1–42.5)** | **4.24** | **0.44** | **14** | **0.34** | **2.44** | **0.00036** |
+| 4 read@1 | 123/150 | 0.82 (0.76–0.88) | 31.6 (21.8–44.0) | 4.22 | 0.68 | 13 | 0.99 | 0.83 | 0.00105 |
+
+- **Primary, accept** (exact McNemar, Holm over two):
+  - Arm 2 against arm 3: 11 gained, 21 lost, p 0.11 (Holm 0.11). Effect −6.6 points (−13.9 to +0.1). **Not supported.**
+  - Arm 1 against arm 3: 9 gained, 24 lost, p 0.014 (Holm **0.027**). Effect −9.9 points (−17.1 to −3.2). **Supported, in read@4's favour.**
+- **Co-primary, severity** (paired, Wilcoxon, Holm over two):
+  - Arm 2 against arm 3: +18.8 per 1,000 words (+0.2 to +42.7), p 0.20 (Holm 0.20). Not supported.
+  - Arm 1 against arm 3: +19.2 (+4.7 to +34.9), p 0.004 (Holm **0.009**). **Supported: the correction leaves more severity than read@4.**
+  - Holm over all four primary tests: accept 0.22 / 0.041, severity 0.22 / 0.017.
+- **Against the stored text**, every arm is better (all p < 10⁻⁵):
+  - accept +16.6 (corr), +19.9 (gpu), +26.5 (read4), +26.5 (read1) points;
+  - severity −31.4, −31.8, −50.6, −50.3 per 1,000 words.
+  - Made worse than lite on wrong text: corr 2 pages, gpu 0, read4 3, read1 1.
+- **Arm 4 against arm 3**: 10 / 10, p 1.00; severity +0.3 (−9.2 to +9.3). **Reading one page a call bought nothing measurable for 2.9 times the calls.**
+- **By face** (weighted accept, lite / corr / gpu / read4 / read1):
+  - Fraktur (126 pages, 0.84 of the queue): 0.54 / 0.72 / 0.77 / 0.84 / 0.83.
+  - Antiqua (13): 0.69 / 0.84 / 0.69 / 0.77 / 0.77.
+  - Mixed (11): 0.55 / 0.64 / 0.64 / 0.64 / 0.82.
+  - Antiqua and mixed are too small to decide anything.
+- **Arm outcomes.**
+  - Arm 1 wrote 118 of 150. The rest: 19 refused by the 25% word-change cap, 8 UNCHANGED, 5 foreign letters.
+  - Arm 2 wrote 94: 46 refused by the E3 put-back (a flag spanning a tag, or not like-for-like), 3 with no PERO draft, 4 foreign letters, 2 under the 40% floor, 1 killed.
+  - Arm 3 wrote 137: 7 foreign letters, 3 cut replies, 3 under the 40% floor.
+  - Arm 4 wrote 135.
+  - A refused arm serves the stored text, which is part of why arms 1 and 2 trail.
+
+### French (60 pages, 60 books; weighted to 75,443 owed pages; exploratory at this n)
+
+| arm | accepted | weighted accept (95% CI) | severity / 1,000 words (95% CI) | fidelity | wrong-text pages | agy calls a page | accepted per agy call | $ per accepted page |
+|---|---|---|---|---|---|---|---|---|
+| stored lite | 42/60 | 0.70 (0.60–0.80) | 43.9 (32.1–55.9) | 4.24 | 13 | 0 | — | — |
+| 1 correction | 47/60 | 0.78 (0.68–0.88) | 32.3 (19.6–47.9) | 4.45 | 8 | 1.00 | 0.78 | 0.00111 |
+| 2 LightOnOCR > agy | 54/60 | 0.90 (0.83–0.97) | 14.7 (10.0–20.1) | 4.54 | 2 | 1.00 | 0.90 | 0.00097 |
+| **3 read@4** | **55/60** | **0.91 (0.84–0.97)** | **13.1 (8.4–18.3)** | **4.59** | **2** | **0.30** | **3.02** | **0.00029** |
+| 4 read@1 | 56/60 | 0.93 (0.86–0.98) | 12.0 (8.1–16.4) | 4.58 | 2 | 1.00 | 0.93 | 0.00093 |
+
+- **Arm 2 against arm 3**: accept 2 gained / 3 lost, p 1.00; severity +1.6 (−2.1 to +5.8), p 0.76.
+- **Arm 1 against arm 3**: accept 1 / 9, p 0.022 (Holm 0.043), effect −12.8 points (−22.4 to −4.2); severity +19.1 (+7.6 to +33.0), p 0.007 (Holm 0.014). Arm 1 added wrong text on 6 pages and removed it on none.
+- **Arm 2 against arm 1**: accept +11.5 points (+3.2 to +21.2), p 0.039.
+- The correction is the weakest arm on French. Against the stored text: accept +8.2 points (−0.1 to +16.6), p 0.23; severity −11.6 (−25.4 to +4.4).
+
+### CER against DTA
+
+None of the 210 sampled pages is in #6012's same-edition congruent DTA pages (#7835 T3's DTA books were excluded). As preregistered, no CER is computed at this n.
+
+### Decisions (the rules)
+
+- **German, Amendment 1's rule.**
+  - Gate: weighted accept ≥ 0.77, which passes read4 and read1.
+  - Severity removed per agy call: read4 150.6, read1 51.0.
+  - **Route: read@4.** It also has the lowest severity among the gated arms.
+- **French, Amendment 1's rule.**
+  - Gate ≥ 0.88: gpu, read4, read1 pass.
+  - Severity removed per agy call: read4 101.8, read1 31.9, gpu 29.2.
+  - **Route: read@4.** The lowest severity among the gated arms is read1's (12.0 against 13.1, a difference of −1.1 with CI −7.1 to +4.8). It costs 3.3 times the calls.
+- **The rule as first preregistered** (most accepted pages per agy call, 5-point margin, the 2-page wrong-text line) also gives read@4 in both cells.
+
+### Re-score of #7818 and #7835 (Amendment 1 A1.5; no judge call)
+
+#7818 (`results/rescore-severity-7818.json`): correction ON (served) against OFF (draft), paired per page.
+
+| cell | n | severity / 1,000 words, OFF → ON | difference (95% CI), Wilcoxon p | accept OFF → ON, McNemar p |
+|---|---|---|---|---|
+| Arm P German (production) | 60 | 140.3 → 108.8 | −31.5 (−52.5 to −14.9), p 0.000003 | 37 → 45 / 60, p 0.008 |
+| Arm P French | 43 | 298.6 → 283.0 | −15.6 (−27.9 to −6.3), p 0.0007 | 27 → 34 / 43, p 0.016 |
+| Arm W German (Wikisource) | 40 | 52.6 → 22.7 | −29.9 (−60.9 to −8.8), p 0.002 | 23 → 31 / 40, p 0.008 |
+| Arm W French | 38 | 11.3 → 8.0 | −3.4 (−6.4 to −1.1), p 0.006 | 36 → 36 / 38, p 1.00 |
+
+- **Arm W French is the case the binary missed.** Accept is flat (36/38 both), but the correction removes measurable severity.
+- In the other three cells, severity and accept agree.
+- The #7818 rates are on a common page length (the current stored text, or the draft's characters / 6.5), as Amendment 1 declared.
+- **#7835 T1/T2: not re-scored.** Its per-page verdicts are only in its scratch on main, which this box cannot read. One command on main does it: `node scripts/eval/queue-routes-7853/rescore-severity.mjs --study=7835 --dir=/root/jobs/fraktur-7835/fraktur-7835` (or that job's `$JOB_SCRATCH/fraktur-7835`). Whether T1's correction shows a severity difference that its 2/0 binary missed is therefore still open.
+
+### Write-back (the #7853 rule only)
+
+**178 pages written**, each through `cli-ocr.mjs apply --apply --only=<page>` from the arm's own read, with its guards, a `page_revisions` row and provenance.
+- Before applying, none of the 178 stored texts had changed since the arms read them.
+- Every page has its own run id in `results/writeback-applied.json`; undo any with `scripts/maintenance/revert-run.mjs --run-id <run>`.
+- The `--mark-stale` flags mark the pages' English stale for re-translation, as the lanes do. The stamps `queue-routes-7853-reread`, `gpu-agy-correct-lite-7567` and `agy-correct-lite-7558` name the lane that wrote each page.
+- Where the stored text was judged best (or equal best), or the best text was not accepted, nothing was written (32 pages).
+
+- **arm 3 (read@4, `--mark-stale=queue-routes-7853-reread`), German, 53 pages:** 69c850736c6f3cc53c852d3f, 69b51e84ff09e4fe943b0853, 69b51e22768235dc6598cabe, 69f74485a765ef41f8e34fca, 69f6ea215b7daf8a46ca7092, 69f6d590d39336429574fc30, 6a267b786c1f37c9c4f31d7b, 69f7586393b82a84a28d897d, 69b51db6efd8df28f2da9b71, 69906a08d69de0e69806f404, 698282c113bbc4a343553037, 69f69c69b16c1f69189b1762, 69f72f66af211d6a0f2d35ce, 69b51deb768235dc65989680, 69b51dfc768235dc6598ae41, 69f6a3812800194ef7aaeddf, 69f73d32d9cec79f316edf39, 69f6c0128bdaf9c97693687a, 69b51df1efd8df28f2dae063, 69f5380c11894bc044e8ac19, 69f7272d747ba9e9bc124acb, 69f665464054b4e094a037aa, 69b51ee19a81ef7feb3dc4b3, 69f7071bde04d0103979eef7, 69bda050f6d63c9197485f25, 69f6b9a72a628490d4b4abd7, 69f72829916cd76306418a12, 69f6d46b7f58c2f6fce81e75, 69b51edbc35d928cea4f0880, 69b51ece47b06ecd58196b5c, 69f75ad2cb3d36d8afe9d157, 69f67a13c9d0b9e0080de15b, 69b51de1cf111105c4292bb4, 69b51dff47b06ecd58188547, 69f6ef20fd0624dd7e0bcc96, 69f70b08821fcd6ee7caee2c, 69f731d788ce86668b71f678, 6a267da36c1f37c9c4f3aa55, 69f6b76e13e0cab6b64bf32e, 69b51ee3c35d928cea4f17e4, 69f697d7fcdb421394dc32af, 69f734ec5439ac83f7669e38, 69f76205b2b698b3bb82f72c, 69905885aaa7f10ed4cfa41c, 69f6a799fe946fc8915b8f6b, 69b51e90ff09e4fe943b0e48, 69b51eddc35d928cea4f10ca, 6aaaa171e77fda33e8d3f6cb, 69f681774d7efe10b47dcad5, 69b51e30ff09e4fe943a9887, 69b51e769a81ef7feb3d5aec, 69dbc9d31040d1d5e20a7449, 69bd9d236120d54bd0373bca.
+- **arm 3 (read@4, `--mark-stale=queue-routes-7853-reread`), French, 26 pages:** 699052538d19cbc90d9d5f9d, 69f6e4a3174a8dd59a4764e1, 69f74d92de9f6715ed50f0fc, 69bd9e8bf6d63c919747bb77, 69f6f6ab8d9c80951ecf8eda, 69f519481de6defeafd45614, 69e726d2a409200ea79efc21, 69ef288a85daccce30f2d132, 69f673ea86e31a67b72e221b, 69e7541d095c302d3fddd29c, 69b51eb0ff09e4fe943b3674, 69f6a0d2d8fb9d2160395c2b, 69f661a60ecacde91f35fb85, 69bda0acf6d63c9197489968, 69de0b324a4b38a1e32c8e17, 69f6c624f25d10d34eba7213, 69d37179035a3fc19f881f28, 69593349b91a6184ea944753, 6a9f34759a132af385446aac, 69e72b82a409200ea79f2b7b, 69f6820c8f7dc96ce85518cf, 69f6ea1be1d9277bf7b0bb3b, 69e961652beefe2f6f72b593, 69e7824cd93c1f6007503fa5, 69f6bdbd6a443d4296b081bb, 69f7200f1a245fba5cf13502.
+- **arm 4 (read@1, `--mark-stale=queue-routes-7853-reread`), German, 31 pages:** 69ae9bddf3bd47924caccfd0, 69c763626a0f3d112faf8d85, 6a21984bf11c08f10b2027a8, 69f6f8576662642ee90b413e, 6a267b216c1f37c9c4f30606, 69f68c2a7fed95a58f912c00, 69bd9fe2f6d63c9197482d93, 69bd9f31f6d63c919747fbfc, 6a267b1b6c1f37c9c4f304bf, 6a267c606c1f37c9c4f35fe8, 6984c26e1ae2339dcf4ba56c, 69c879332ada5eb2c0eb0fbe, 69b51df1cf111105c4293c7f, 69d378338b97c1230435a579, 69b51e0bcf111105c4295c4c, 69f71c84581c33d98fdc205d, 69f672a99d553fc8ff7a6b00, 69f504f1a0b121577c1d68af, 69f693cdbf7b9e1a0f6adced, 69f6f9ce7a37e36ab57a0ea1, 69f6ba308ae70ab9e04a4fba, 69bda10bf6d63c919748cc09, 69f765cf8a99dcc18563c4b4, 69b51de8efd8df28f2dad1e0, 69f684b4518bbb058caa7a33, 69b51decefd8df28f2dad8f3, 69aebe8c7dd4a7474d1f2e43, 69f68ba305ebe79c516d6354, 69f711fa806689416483fd21, 69dbcc131040d1d5e20bca85, 69dbc9d01040d1d5e20a7204.
+- **arm 4 (read@1, `--mark-stale=queue-routes-7853-reread`), French, 10 pages:** 69f7499d1336e2b84b0c4816, 69f6ca068a992e70c92650ee, 69f70603a191706ba778736e, 69b51e8e768235dc65995ec6, 69bda05ff6d63c91974864a4, 69f6c2b0cebc78a20d7c99fd, 69f6b48ddacbe9861fbeecba, 69f6b1764f6efa942398efc0, 69f6951724d2534d8b3c0beb, 69f6a2262d4ec0788760efc9.
+- **arm 2 (GPU draft > agy, `--mark-stale=gpu-agy-correct-lite-7567`), German, 26 pages:** 69f738eb40c9f2ef06fc0a45, 69f508120287812c7aee824d, 6a267b1e6c1f37c9c4f3053c, 69b51dc6768235dc65987b4e, 69f6b1be4159bfe285b68d08, 6a26c439aad44c98627ce324, 69c76a8073fe73db54030599, 69ade6cc2fcf4ffa86cec2fd, 69b51e74cf111105c429d79d, 69f69a9ccd3491dd9e11aae0, 69b51e00cf111105c4294f78, 69b51deb47b06ecd58186dcc, 6a267e576c1f37c9c4f3c479, 69f50ba26affa36f85fbf97b, 69f752900459050f952a9454, 69b51edbc35d928cea4f0c05, 69f6d9899aa852b491ba9550, 69b51e09efd8df28f2daf499, 69b51e06cf111105c42953b8, 69b51e0aefd8df28f2daf668, 6a243d680f0e4f405e630192, 69bd9d0e6120d54bd0373383, 69f773f86028036f8e239727, 69dbcc0b1040d1d5e20bc099, 69f6b5b79169821cc3b24ba1, 69dbc9d11040d1d5e20a7283.
+- **arm 2 (GPU draft > agy, `--mark-stale=gpu-agy-correct-lite-7567`), French, 6 pages:** 699201597c226bdd25f98c4c, 69f7310689033b600076bb1f, 69f66c9975c8d01b1451a2af, 69ee4ef36dd925d126f42606, 69bda103f6d63c919748c86d, 69905cd4aaa7f10ed4cfceae.
+- **arm 1 (the #7558 correction, `--mark-stale=agy-correct-lite-7558`), German, 21 pages:** 69bda001f6d63c919748395d, 69f50cefd07e737cc517c2c5, 69b51edc9a81ef7feb3dbdd7, 69f6d2ffee687af501c0ac06, 69b51df6cf111105c4294272, 69f74ec036ac84430f3dc683, 69bda06af6d63c9197487a3b, 69bda116f6d63c919748e157, 69f772bf888bbcb074e9a393, 69b51e8e9a81ef7feb3d75cc, 69f743806254e3fa461fb380, 69f7676843d815c54ccad156, 69b51e5bff09e4fe943ad0f9, 69f72bf244c4e504786fbfd2, 69f6eeca33d7d3ebe0ba1b1b, 6a267faf88f11913ee9c9c72, 69f6e48771801140bd3c585d, 69ade7005426286aa40cf162, 69b51e7647b06ecd58190c0a, 69ef2b1a85daccce30f2dcbb, 69bd9d7b6120d54bd0377062.
+- **arm 1 (the #7558 correction, `--mark-stale=agy-correct-lite-7558`), French, 5 pages:** 69f7023ee826d7c555571f3a, 69f6bc07bacc4f4f77e12b19, 69b51e3c768235dc6598e0cb, 69f67bc03700a5497d2db81e, 69f70c76aae884afc4b841b7.
+
+### Router evidence
+
+`router-evidence.score.json` (`exportScore`) is also at `scripts/eval/estimator/router-table/evidence/queue-routes-7853.score.json`, with its by-script cut. Cells: german-lite and french-lite. Routes: lite, lite>agy-flash-low, pero>agy-flash-low / lighton>agy-flash-low, agy-flash-low@4-read, agy-flash-low-read.
+
+**No rules.json entry was added.** If rules.json named the export, `build.py` on main (`results/router-check.json`) would do this:
+- **german-lite/print** keeps lite>opus. Pooled: lite 340/497, lite>agy-flash-low 235/307, agy-flash-low-read 366/430, lite>opus 299/307. rules.json carries agy-flash-low-read (1 a call), not the @4 read this test picks, so read@4's evidence is not pooled at all until rules.json names the route.
+- **french-lite/print** switches from HOLD (lite>agy-flash-low) to agy-flash-low-read, 79/90.
+
+### What this says
+
+- **German.**
+  - Correcting the stored Flash-Lite text is worse than re-reading the page, by 10 points of accept and 19 severity points per 1,000 words, at three times the agy calls a page. The #7558 lane's 25% cap and UNCHANGED answers left 27 of the 150 stored drafts in place (and foreign-letter refusals 5 more); a re-read replaces such pages.
+  - The GPU draft route sits between the two. It is not measurably worse than read@4 at n = 150 (p 0.11). E3's put-back refused 46 of its 150 pages, which then served the stored text.
+- **French.** The same ordering. At n = 60, the correction does not measurably beat the stored text it corrects.
+- **Quality on the queue now.** The stored text is accepted on 0.55 of German pages (0.48–0.63) and 0.70 of French (0.60–0.80), weighted to pages owed, as of 2026-10-31. After a read@4 it would be 0.82 (0.76–0.88) and 0.91 (0.84–0.97).
+
 ## 2026-10-31 · Does a life-words block stop the translator from glossing breath as "life force"? (#7458)
 
 **Question.** The model's own `<gloss>`, `<note>` and `<term>` apparatus says "life force" or "vital energy" on 17,696
