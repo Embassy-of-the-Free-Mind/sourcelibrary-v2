@@ -9,7 +9,7 @@ import { describe, it, expect } from 'vitest';
  * meaningful "relevance" metric, so leading with the earliest-printed
  * works is the most honest entry point.
  *
- * Server-side (src/app/embed/[tenant]/page.tsx):
+ * Server-side (src/app/embed/[tenant]/(library)/page.tsx):
  *   sortDefault = tenant === 'bph' ? 'year_asc' : 'popular';
  *   sort = (sp.sort as string) || sortDefault;
  *

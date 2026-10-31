@@ -13,6 +13,15 @@
  * `?view=catalog` / `?view=books` they don't render; on the bare-root
  * landing they pop in above the catalogue when SSR completes, same way
  * the hero already did.
+ *
+ * Scope: the (library) group, plus catalog/, catalogue/ and search/, which
+ * re-export it. NOT book/: a loading.tsx wraps everything below
+ * it in a Suspense boundary, so the 200 shell is flushed before the page runs
+ * and a redirect() or notFound() inside it can only stream (a meta refresh
+ * over a 200). The embed reader 307s a hidden repeat capture to its kept page
+ * (#5056) and the book page 404s a refused book, and both need a real status.
+ * collections/ is left out too: its [id] page has a notFound() gate
+ * (tests/unit/soft-404-loading-guard.test.ts).
  */
 export default function EmbedTenantLoading() {
     return (
