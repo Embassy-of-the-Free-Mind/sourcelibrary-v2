@@ -385,14 +385,14 @@ function Instrument({ doc, polledAt, pollErr }: { doc: LiveDoc; polledAt: string
         {/* ── coefficients ── */}
         <section className={card}>
           <h2 className={h2}>Coefficients</h2>
-          <p className="text-sm text-[#8b949e]">Change in the response for a step of one coded unit: pages a call a factor of 2.8 (1 → 2.8 → 8, in log pages), long edge a factor of 1.8 in pixels (768 → 1,357 → 2,400), thinking one level, the prompt line half its on/off contrast. Within book; 90% intervals by bootstrap. — : the runs cannot separate that term from the others.</p>
+          <p className="text-sm text-[#8b949e]">Change in the response for a step of one coded unit: pages a call a factor of 2.8 (1 → 2.8 → 8, in log pages), long edge a factor of 1.8 in pixels (768 → 1,357 → 2,400), thinking one level, the prompt line half its on/off contrast. Within book; 90% intervals by bootstrap. A dash (–) means the runs cannot separate that term from the others.</p>
           <div className="overflow-x-auto">
             <table className="mt-2 text-sm w-full"><thead><tr className="text-left text-[#8b949e] border-b border-[#30363d]"><th className="py-1 pr-3 font-normal">term</th>{R.base.map((b) => <th key={b} className="pr-3 font-normal">{BASE_NAME[b]}</th>)}</tr></thead>
               <tbody>{terms.map((t, j) => (
                 <tr key={t.name} className="border-b border-[#21262d]"><td className="py-1 pr-3">{t.name}</td>{R.base.map((b) => {
                   const f = fits[b]; const iv = ci(j, b);
                   const sig0 = iv && (iv[0] > 0 || iv[1] < 0);
-                  return <td key={b} className={`pr-3 ${sig0 ? 'text-[#f0f6fc] font-semibold' : ''}`}>{f.estimable[j] ? <>{BASE_FMT[b](f.beta[j])}{iv ? <span className="text-[#8b949e] font-normal"> [{BASE_FMT[b](iv[0])}, {BASE_FMT[b](iv[1])}]</span> : ''}</> : '—'}</td>;
+                  return <td key={b} className={`pr-3 ${sig0 ? 'text-[#f0f6fc] font-semibold' : ''}`}>{f.estimable[j] ? <>{BASE_FMT[b](f.beta[j])}{iv ? <span className="text-[#8b949e] font-normal"> [{BASE_FMT[b](iv[0])}, {BASE_FMT[b](iv[1])}]</span> : ''}</> : '–'}</td>;
                 })}</tr>
               ))}</tbody></table>
           </div>
