@@ -22,6 +22,7 @@
  *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
  *   node scripts/analysis/llm-verify-work-merges.mjs --coverage-only # exclusion report + coverage, NO LLM calls (free)
  *   node scripts/analysis/llm-verify-work-merges.mjs --include-backlog # ALSO judge hidden/backlog books (#4246 Phase 1)
+ *   node scripts/analysis/llm-verify-work-merges.mjs --authors=<file>  # judge ONLY these author ids (one per line)
  *   node scripts/analysis/llm-verify-work-merges.mjs --mega            # judge ONLY the >50-item mega-author blocks,
  *                                                                     # hierarchically: title-sorted chunks of ≤40, then
  *                                                                     # rounds over surviving group representatives until
@@ -50,6 +51,10 @@ const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
 const MEGA = process.argv.includes('--mega');
 const LIMIT_AUTHORS = parseInt((process.argv.find(a => a.startsWith('--limit-authors=')) || '').split('=')[1]
   || process.argv[process.argv.indexOf('--limit-authors') + 1] || '0', 10) || 0;
+// Judge ONLY these author ids (one per line): re-run the blocks that gained books
+// since the last pass (e.g. after an author_id backfill) instead of all of them.
+const AUTHORS_FILE = (process.argv.find(a => a.startsWith('--authors=')) || '').split('=')[1] || null;
+const ONLY_AUTHORS = AUTHORS_FILE ? new Set(fs.readFileSync(AUTHORS_FILE, 'utf8').split('\n').map(s => s.trim()).filter(Boolean)) : null;
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 const MODEL = 'gemini-3.1-flash-lite';
 const GEN_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`;
@@ -200,6 +205,7 @@ const candidates = [];
 const megaCandidates = [];
 let singleItemAuthors = 0, megaAuthors = 0, megaAuthorBooks = 0;
 for (const [aid, bks] of byAuthor) {
+  if (ONLY_AUTHORS && !ONLY_AUTHORS.has(String(aid))) continue;
   const items = new Map(); // key -> {ref,title,langs,years,currentWorkId,bookIds}
   for (const b of bks) {
     const key = b.work_id || `unset:${b.id}`;
