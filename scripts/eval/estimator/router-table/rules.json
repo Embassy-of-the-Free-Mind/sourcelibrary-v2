@@ -6,7 +6,8 @@
     "v1": "scripts/eval/estimator/ocr/results/ocr-v1-routes-ext-nuts.json",
     "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
     "capacity": "scripts/eval/estimator/chain/capacity.json",
-    "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json"
+    "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json",
+"defect_rates": "scripts/eval/estimator/router-table/defect-rates.json"
   },
   "draws": 40000,
   "seed": 6740,

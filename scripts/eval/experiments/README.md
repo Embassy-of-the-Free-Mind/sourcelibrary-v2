@@ -72,6 +72,7 @@ issue: [5695, 5740]
 | `superseded_by` | with `superseded` | the later file's name in this directory |
 | `issue` | no | the issue number, or a list |
 | `router_evidence` | for a judged `ocr` / `translation` result | the router-table cells (`scripts/eval/estimator/router-table/rules.json` `cells[].id`) this run added evidence to, `[latin-lite, german-lite]` — or `"none — <why>"` (a prompt test, no route compared). Required on NEW entries whose `measure` includes `judged` or `judged_vs_reference` (#7263): a judged result the router never reads does not change a route |
+| `defect_rates` | for an `ocr` / `translation` result dated 2026-10-30 or later | a repo path to the JSON with, per route, misleads and wrong_text per 1,000 words and the mean fidelity (`scripts/eval/route-judge-6740/defect-rate.py` writes one: run its `inventory` stage, then the `.py`) — or `"none — <why>"` (nothing was judged for defects). Required on NEW entries with a `measure` other than `none` (#6740): routes are decided on severity-weighted defect rates against the live route; accept k/n is a summary (eval-design.md §10.3, proposed in `scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/eval-design-10.3.md`) |
 
 Strings are double-quoted; lists sit on one line; nothing else of YAML is read
 (`scripts/eval/lib/experiment-header.mjs`). **Changing a result's status is
@@ -81,7 +82,8 @@ file. Never rewrite the body of an entry that has already landed: add a new entr
 
 CI (`scripts/eval/experiments-lint.mjs`, in `unit-tests.yml`) refuses a new dated
 entry without a valid header, a new judged OCR or translation entry without
-`router_evidence`, and an invalid header on any file. A weekly detector
+`router_evidence`, a new OCR or translation entry (from 2026-10-30) without
+`defect_rates`, and an invalid header on any file. A weekly detector
 (`scripts/audit/experiments-garden.mjs`) lists entries with no header, `undecided`
 entries left over 21 days, public pages that cite a superseded entry, and live
 entries whose verdicts disagree.

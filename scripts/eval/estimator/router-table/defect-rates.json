@@ -1,0 +1,3252 @@
+{
+ "_about": "Defect rates per 1,000 words of the candidate text, per router base cell x route, from the stored Opus verdicts (#6740, defect-rate.py; rule RULE.md in scripts/eval/route-judge-6740/results/defect-rate-2026-10-30). build.py shows them beside k/n; they do not enter the decision.",
+ "generated_from": "scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/score.json",
+ "cells": {
+  "latin-lite": {
+   "lite": {
+    "pages": 60,
+    "books": 39,
+    "words": 20947,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.42,
+    "median_words_per_page": 276.0,
+    "cosmetic_per_1k": 8.402,
+    "misleads_per_1k": 6.302,
+    "wrong_text_per_1k": 5.586,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.704,
+     10.51
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     4.531,
+     7.995
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     3.232,
+     8.865
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.713,
+     8.2409,
+     9.8864
+    ],
+    "misleads_per_1k_posterior": [
+     5.0337,
+     6.2555,
+     7.5174
+    ],
+    "wrong_text_per_1k_posterior": [
+     3.0207,
+     5.3006,
+     8.1539
+    ],
+    "class_mix": {
+     "O6:misleads": 87,
+     "O6:wrong_text": 41,
+     "O5:wrong_text": 31,
+     "O7:wrong_text": 26,
+     "O5:misleads": 12,
+     "O12:misleads": 8
+    }
+   },
+   "lite>opus": {
+    "pages": 30,
+    "books": 9,
+    "words": 10640,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.83,
+    "median_words_per_page": 251.0,
+    "cosmetic_per_1k": 2.82,
+    "misleads_per_1k": 0.0,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.61,
+     5.117
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.2053,
+     3.4108,
+     4.8549
+    ],
+    "misleads_per_1k_posterior": [
+     0.0065,
+     0.1574,
+     0.5072
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.0867,
+     0.3604
+    ],
+    "class_mix": {}
+   },
+   "lite>agy-flash-low": {
+    "pages": 58,
+    "books": 37,
+    "words": 20743,
+    "words_own_text_share": 0.51,
+    "fidelity_mean": 4.14,
+    "median_words_per_page": 279.5,
+    "cosmetic_per_1k": 5.351,
+    "misleads_per_1k": 3.085,
+    "wrong_text_per_1k": 0.964,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.409,
+     6.437
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.04,
+     4.569
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.459,
+     1.742
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.4342,
+     5.4386,
+     6.5468
+    ],
+    "misleads_per_1k_posterior": [
+     2.073,
+     3.1188,
+     4.4112
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.48,
+     0.9952,
+     1.6652
+    ],
+    "class_mix": {
+     "O6:misleads": 48,
+     "O6:wrong_text": 12,
+     "O5:misleads": 7,
+     "O5:wrong_text": 3,
+     "O17:misleads": 2,
+     "O7:misleads": 2
+    }
+   },
+   "agy-flash-low-read": {
+    "pages": 26,
+    "books": 26,
+    "words": 8029,
+    "words_own_text_share": 0.56,
+    "fidelity_mean": 4.23,
+    "median_words_per_page": 313.0,
+    "cosmetic_per_1k": 7.224,
+    "misleads_per_1k": 1.993,
+    "wrong_text_per_1k": 0.623,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.82,
+     9.021
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.796,
+     3.361
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.656
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.6086,
+     7.0626,
+     9.871
+    ],
+    "misleads_per_1k_posterior": [
+     1.1287,
+     2.0877,
+     3.2449
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.2055,
+     0.684,
+     1.412
+    ],
+    "class_mix": {
+     "O6:misleads": 11,
+     "O6:wrong_text": 5,
+     "O7:misleads": 2,
+     "O8:misleads": 1,
+     "T4:misleads": 1,
+     "O16:misleads": 1
+    }
+   },
+   "lite>agy-flash-low+diffqa": {
+    "pages": 60,
+    "books": 39,
+    "words": 21222,
+    "words_own_text_share": 0.54,
+    "fidelity_mean": 3.67,
+    "median_words_per_page": 279.5,
+    "cosmetic_per_1k": 6.503,
+    "misleads_per_1k": 4.995,
+    "wrong_text_per_1k": 4.194,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.247,
+     8.137
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.731,
+     6.614
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     1.725,
+     7.811
+    ],
+    "cosmetic_per_1k_posterior": [
+     5.256,
+     6.5167,
+     7.8287
+    ],
+    "misleads_per_1k_posterior": [
+     3.936,
+     4.976,
+     6.1284
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.7909,
+     3.9729,
+     6.9604
+    ],
+    "class_mix": {
+     "O6:misleads": 61,
+     "O6:wrong_text": 30,
+     "O5:wrong_text": 23,
+     "O7:wrong_text": 21,
+     "O5:misleads": 9,
+     "O12:misleads": 9
+    }
+   },
+   "gpu>agy-flash-low": {
+    "pages": 26,
+    "books": 9,
+    "words": 9606,
+    "words_own_text_share": 0.0,
+    "fidelity_mean": 4.27,
+    "median_words_per_page": 265.0,
+    "cosmetic_per_1k": 4.58,
+    "misleads_per_1k": 1.041,
+    "wrong_text_per_1k": 0.208,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.545,
+     6.615
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.687,
+     1.777
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.705
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.7081,
+     4.7494,
+     5.9181
+    ],
+    "misleads_per_1k_posterior": [
+     0.6216,
+     1.1094,
+     1.7127
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0283,
+     0.2767,
+     0.7232
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O6:wrong_text": 2,
+     "O8:misleads": 1,
+     "O5:misleads": 1,
+     "O10:misleads": 1,
+     "O12:misleads": 1
+    }
+   }
+  },
+  "latin-flash3": {
+   "3flash": {
+    "pages": 30,
+    "books": 30,
+    "words": 6881,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.07,
+    "median_words_per_page": 219.0,
+    "cosmetic_per_1k": 7.993,
+    "misleads_per_1k": 3.924,
+    "wrong_text_per_1k": 2.18,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.126,
+     10.256
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.074,
+     6.022
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.15,
+     5.263
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.1544,
+     7.8371,
+     9.6988
+    ],
+    "misleads_per_1k_posterior": [
+     1.8704,
+     3.9403,
+     6.6624
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.1224,
+     2.198,
+     6.6226
+    ],
+    "class_mix": {
+     "O6:misleads": 14,
+     "O8:misleads": 7,
+     "O6:wrong_text": 6,
+     "O1:wrong_text": 5,
+     "O12:misleads": 2,
+     "O7:wrong_text": 1
+    }
+   },
+   "3flash>agy-flash-low": {
+    "pages": 64,
+    "books": 64,
+    "words": 17727,
+    "words_own_text_share": 0.65,
+    "fidelity_mean": 4.28,
+    "median_words_per_page": 233.5,
+    "cosmetic_per_1k": 5.698,
+    "misleads_per_1k": 2.313,
+    "wrong_text_per_1k": 0.846,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.717,
+     6.83
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.41,
+     3.257
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.183,
+     1.811
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.5088,
+     5.7883,
+     7.1924
+    ],
+    "misleads_per_1k_posterior": [
+     1.4224,
+     2.3778,
+     3.4629
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.2951,
+     0.9103,
+     1.8141
+    ],
+    "class_mix": {
+     "O6:misleads": 25,
+     "O6:wrong_text": 9,
+     "O8:misleads": 5,
+     "O7:misleads": 3,
+     "O16:misleads": 2,
+     "O10:wrong_text": 2
+    }
+   }
+  },
+  "german-lite": {
+   "lite": {
+    "pages": 51,
+    "books": 51,
+    "words": 12980,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.98,
+    "median_words_per_page": 236,
+    "cosmetic_per_1k": 10.324,
+    "misleads_per_1k": 4.622,
+    "wrong_text_per_1k": 1.618,
+    "cosmetic_per_1k_ci95_by_book": [
+     8.181,
+     12.647
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.107,
+     6.278
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.487,
+     3.076
+    ],
+    "cosmetic_per_1k_posterior": [
+     7.8197,
+     9.8393,
+     11.9914
+    ],
+    "misleads_per_1k_posterior": [
+     3.2721,
+     4.6013,
+     6.1103
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.8618,
+     1.6364,
+     2.5833
+    ],
+    "class_mix": {
+     "O6:misleads": 37,
+     "O6:wrong_text": 6,
+     "O12:wrong_text": 6,
+     "O7:misleads": 4,
+     "O12:misleads": 4,
+     "O5:wrong_text": 4
+    }
+   },
+   "lite>opus": {
+    "pages": 30,
+    "books": 30,
+    "words": 6865,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.83,
+    "median_words_per_page": 211.5,
+    "cosmetic_per_1k": 2.476,
+    "misleads_per_1k": 1.02,
+    "wrong_text_per_1k": 0.146,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.26,
+     4.123
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     2.757
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.483
+    ],
+    "cosmetic_per_1k_posterior": [
+     1.9703,
+     3.1025,
+     4.4593
+    ],
+    "misleads_per_1k_posterior": [
+     0.3673,
+     1.3193,
+     2.7942
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0215,
+     0.1996,
+     0.5205
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O13:misleads": 1,
+     "O6:wrong_text": 1,
+     "O7:misleads": 1
+    }
+   },
+   "lite>agy-flash-low": {
+    "pages": 156,
+    "books": 82,
+    "words": 43991,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.26,
+    "median_words_per_page": 250.0,
+    "cosmetic_per_1k": 6.751,
+    "misleads_per_1k": 1.841,
+    "wrong_text_per_1k": 0.568,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.67,
+     7.884
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.283,
+     2.441
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.242,
+     0.957
+    ],
+    "cosmetic_per_1k_posterior": [
+     5.84,
+     6.7487,
+     7.7028
+    ],
+    "misleads_per_1k_posterior": [
+     1.2838,
+     1.8855,
+     2.6094
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.2176,
+     0.6126,
+     1.176
+    ],
+    "class_mix": {
+     "O6:misleads": 40,
+     "O7:misleads": 9,
+     "O6:wrong_text": 6,
+     "O12:misleads": 6,
+     "O5:misleads": 6,
+     "O11:misleads": 4
+    }
+   }
+  },
+  "german-flash3": {
+   "3flash": {
+    "pages": 30,
+    "books": 30,
+    "words": 8356,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.27,
+    "median_words_per_page": 265.5,
+    "cosmetic_per_1k": 9.335,
+    "misleads_per_1k": 1.316,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.7,
+     12.672
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.359,
+     2.441
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.5947,
+     8.8116,
+     11.3112
+    ],
+    "misleads_per_1k_posterior": [
+     0.7012,
+     1.4221,
+     2.3367
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.1093,
+     0.4399
+    ],
+    "class_mix": {
+     "O6:misleads": 9,
+     "O1:misleads": 2
+    }
+   },
+   "3flash>opus": {
+    "pages": 29,
+    "books": 29,
+    "words": 7919,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.79,
+    "median_words_per_page": 265,
+    "cosmetic_per_1k": 3.536,
+    "misleads_per_1k": 0.0,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.194,
+     5.288
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.6276,
+     4.1258,
+     5.8825
+    ],
+    "misleads_per_1k_posterior": [
+     0.0089,
+     0.2088,
+     0.6594
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.115,
+     0.4486
+    ],
+    "class_mix": {}
+   },
+   "3flash>agy-flash-low": {
+    "pages": 30,
+    "books": 30,
+    "words": 8416,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.43,
+    "median_words_per_page": 265.5,
+    "cosmetic_per_1k": 6.535,
+    "misleads_per_1k": 1.663,
+    "wrong_text_per_1k": 0.119,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.588,
+     8.662
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.536,
+     3.005
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.344
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.8476,
+     6.5589,
+     8.5602
+    ],
+    "misleads_per_1k_posterior": [
+     0.8863,
+     1.7813,
+     2.957
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0172,
+     0.1636,
+     0.4224
+    ],
+    "class_mix": {
+     "O6:misleads": 9,
+     "O12:misleads": 3,
+     "E2:misleads": 1,
+     "O16:misleads": 1,
+     "O6:wrong_text": 1
+    }
+   }
+  },
+  "german-tr-flash3": {
+   "flash3": {
+    "pages": 60,
+    "books": 60,
+    "words": 15859,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.8,
+    "median_words_per_page": 237.5,
+    "cosmetic_per_1k": 6.621,
+    "misleads_per_1k": 5.171,
+    "wrong_text_per_1k": 1.45,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.537,
+     7.883
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.691,
+     7.155
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.521,
+     2.708
+    ],
+    "cosmetic_per_1k_posterior": [
+     5.3984,
+     6.4547,
+     7.6298
+    ],
+    "misleads_per_1k_posterior": [
+     3.2906,
+     4.6512,
+     6.2154
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.6142,
+     1.3175,
+     2.2243
+    ],
+    "class_mix": {
+     "O6:misleads": 28,
+     "T10:misleads": 21,
+     "T15:misleads": 7,
+     "T7:wrong_text": 7,
+     "O6:wrong_text": 4,
+     "O7:misleads": 4
+    }
+   },
+   "opus-cli": {
+    "pages": 60,
+    "books": 60,
+    "words": 17248,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.1,
+    "median_words_per_page": 284.0,
+    "cosmetic_per_1k": 4.696,
+    "misleads_per_1k": 2.899,
+    "wrong_text_per_1k": 0.638,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.917,
+     5.595
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.042,
+     3.905
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.187,
+     1.12
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.0216,
+     4.777,
+     5.63
+    ],
+    "misleads_per_1k_posterior": [
+     2.2013,
+     3.0569,
+     4.0359
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.3785,
+     0.7107,
+     1.1262
+    ],
+    "class_mix": {
+     "T10:misleads": 17,
+     "T15:misleads": 13,
+     "O6:misleads": 10,
+     "T9:wrong_text": 3,
+     "O12:misleads": 2,
+     "T8:misleads": 2
+    }
+   }
+  },
+  "german-tr-lite": {
+   "flash-lite": {
+    "pages": 60,
+    "books": 60,
+    "words": 13375,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.53,
+    "median_words_per_page": 209.5,
+    "cosmetic_per_1k": 5.757,
+    "misleads_per_1k": 5.907,
+    "wrong_text_per_1k": 1.794,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.585,
+     7.08
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     4.448,
+     7.671
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     1.136,
+     2.506
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.9925,
+     5.6417,
+     7.4722
+    ],
+    "misleads_per_1k_posterior": [
+     2.9806,
+     4.7159,
+     6.6849
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.1101,
+     1.6795,
+     2.3653
+    ],
+    "class_mix": {
+     "O6:misleads": 21,
+     "E2:misleads": 13,
+     "T8:misleads": 12,
+     "T10:misleads": 8,
+     "T6:misleads": 6,
+     "T9:wrong_text": 6
+    }
+   },
+   "opus-cli": {
+    "pages": 60,
+    "books": 60,
+    "words": 17248,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.1,
+    "median_words_per_page": 284.0,
+    "cosmetic_per_1k": 4.696,
+    "misleads_per_1k": 2.899,
+    "wrong_text_per_1k": 0.638,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.876,
+     5.618
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.044,
+     3.946
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.236,
+     1.111
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.993,
+     4.777,
+     5.6065
+    ],
+    "misleads_per_1k_posterior": [
+     2.2211,
+     3.0569,
+     4.0371
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.3719,
+     0.7107,
+     1.1296
+    ],
+    "class_mix": {
+     "T10:misleads": 17,
+     "T15:misleads": 13,
+     "O6:misleads": 10,
+     "T9:wrong_text": 3,
+     "O12:misleads": 2,
+     "T8:misleads": 2
+    }
+   }
+  },
+  "french-lite": {
+   "lite": {
+    "pages": 47,
+    "books": 46,
+    "words": 11837,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.15,
+    "median_words_per_page": 259,
+    "cosmetic_per_1k": 5.998,
+    "misleads_per_1k": 2.365,
+    "wrong_text_per_1k": 1.014,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.356,
+     8.169
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.296,
+     3.698
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.333,
+     1.866
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.5531,
+     6.2967,
+     9.5747
+    ],
+    "misleads_per_1k_posterior": [
+     1.4129,
+     2.4364,
+     3.6454
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.2109,
+     1.1273,
+     2.6111
+    ],
+    "class_mix": {
+     "O6:misleads": 13,
+     "O7:misleads": 5,
+     "O16:misleads": 3,
+     "I1:wrong_text": 3,
+     "I4:wrong_text": 2,
+     "O1:wrong_text": 2
+    }
+   },
+   "lite>agy-flash-low": {
+    "pages": 96,
+    "books": 53,
+    "words": 24044,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.45,
+    "median_words_per_page": 265.0,
+    "cosmetic_per_1k": 5.324,
+    "misleads_per_1k": 1.414,
+    "wrong_text_per_1k": 0.374,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.063,
+     6.831
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.705,
+     2.375
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.102,
+     0.836
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.6605,
+     5.6696,
+     7.9957
+    ],
+    "misleads_per_1k_posterior": [
+     0.3904,
+     1.9486,
+     4.5407
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0329,
+     0.5387,
+     1.5424
+    ],
+    "class_mix": {
+     "O6:misleads": 9,
+     "O7:misleads": 5,
+     "E2:misleads": 4,
+     "O16:misleads": 4,
+     "O17:misleads": 3,
+     "O5:wrong_text": 3
+    }
+   }
+  },
+  "zh-siku-first-tr": {
+   "agy-flash-low@1": {
+    "pages": 30,
+    "books": 30,
+    "words": 7902,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.8,
+    "median_words_per_page": 283.5,
+    "cosmetic_per_1k": 4.935,
+    "misleads_per_1k": 3.67,
+    "wrong_text_per_1k": 2.404,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.765,
+     6.144
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.273,
+     5.161
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.293,
+     5.921
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.9365,
+     5.0442,
+     6.303
+    ],
+    "misleads_per_1k_posterior": [
+     2.7077,
+     3.6698,
+     4.7755
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.5837,
+     1.5213,
+     2.8347
+    ],
+    "class_mix": {
+     "O6:misleads": 15,
+     "T10:misleads": 9,
+     "O7:wrong_text": 9,
+     "O6:wrong_text": 5,
+     "T5:misleads": 1,
+     "T3:wrong_text": 1
+    }
+   }
+  },
+  "tibetan-yigdzin": {
+   "yigdzin": {
+    "pages": 60,
+    "books": 60,
+    "words": 32184,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.6,
+    "median_words_per_page": 530.5,
+    "cosmetic_per_1k": 10.813,
+    "misleads_per_1k": 3.045,
+    "wrong_text_per_1k": 1.212,
+    "cosmetic_per_1k_ci95_by_book": [
+     9.196,
+     12.478
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.166,
+     3.99
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.769,
+     1.702
+    ],
+    "cosmetic_per_1k_posterior": [
+     9.2493,
+     10.5986,
+     11.9384
+    ],
+    "misleads_per_1k_posterior": [
+     2.359,
+     3.0593,
+     3.7953
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.8638,
+     1.2204,
+     1.6253
+    ],
+    "class_mix": {
+     "O6:misleads": 83,
+     "O6:wrong_text": 18,
+     "O5:wrong_text": 9,
+     "E2:misleads": 8,
+     "O4:wrong_text": 7,
+     "O5:misleads": 3
+    }
+   },
+   "yigdzin>agy-flash-low": {
+    "pages": 60,
+    "books": 60,
+    "words": 32300,
+    "words_own_text_share": 0.5,
+    "fidelity_mean": 4.1,
+    "median_words_per_page": 532.5,
+    "cosmetic_per_1k": 2.663,
+    "misleads_per_1k": 0.526,
+    "wrong_text_per_1k": 0.217,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.959,
+     3.474
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.247,
+     0.859
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.061,
+     0.432
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.2219,
+     2.843,
+     3.508
+    ],
+    "misleads_per_1k_posterior": [
+     0.3248,
+     0.5636,
+     0.8448
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0904,
+     0.2337,
+     0.4301
+    ],
+    "class_mix": {
+     "O6:misleads": 14,
+     "O6:wrong_text": 3,
+     "O4:wrong_text": 2,
+     "O8:wrong_text": 1,
+     "O7:misleads": 1,
+     "O12:misleads": 1
+    }
+   },
+   "yigdzin>opus": {
+    "pages": 60,
+    "books": 60,
+    "words": 32244,
+    "words_own_text_share": 0.62,
+    "fidelity_mean": 3.98,
+    "median_words_per_page": 531.5,
+    "cosmetic_per_1k": 5.613,
+    "misleads_per_1k": 1.396,
+    "wrong_text_per_1k": 0.217,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.32,
+     7.033
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.57,
+     2.405
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.032,
+     0.43
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.5603,
+     5.6875,
+     6.9026
+    ],
+    "misleads_per_1k_posterior": [
+     0.7915,
+     1.4891,
+     2.3665
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0967,
+     0.2339,
+     0.4228
+    ],
+    "class_mix": {
+     "O6:misleads": 37,
+     "O6:wrong_text": 2,
+     "I5:misleads": 2,
+     "O5:misleads": 2,
+     "O4:wrong_text": 2,
+     "O5:wrong_text": 2
+    }
+   }
+  },
+  "zh-paddle-dice-lt090": {
+   "paddle": {
+    "pages": 30,
+    "books": 30,
+    "words": 5743,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.87,
+    "median_words_per_page": 168.0,
+    "cosmetic_per_1k": 6.443,
+    "misleads_per_1k": 5.746,
+    "wrong_text_per_1k": 4.876,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.812,
+     8.407
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.731,
+     7.578
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     2.375,
+     7.695
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.9157,
+     6.473,
+     8.2565
+    ],
+    "misleads_per_1k_posterior": [
+     4.19,
+     5.6829,
+     7.3456
+    ],
+    "wrong_text_per_1k_posterior": [
+     2.6997,
+     4.7,
+     7.1098
+    ],
+    "class_mix": {
+     "O6:misleads": 20,
+     "O6:wrong_text": 16,
+     "O5:wrong_text": 8,
+     "O5:misleads": 7,
+     "O11:misleads": 4,
+     "O11:wrong_text": 3
+    }
+   },
+   "paddle>opus": {
+    "pages": 30,
+    "books": 30,
+    "words": 6936,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.6,
+    "median_words_per_page": 201.5,
+    "cosmetic_per_1k": 4.469,
+    "misleads_per_1k": 1.73,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.828,
+     6.208
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.797,
+     2.695
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.3369,
+     4.8436,
+     6.6109
+    ],
+    "misleads_per_1k_posterior": [
+     1.0473,
+     1.8026,
+     2.6686
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.1303,
+     0.5227
+    ],
+    "class_mix": {
+     "O6:misleads": 7,
+     "O5:misleads": 4,
+     "E2:misleads": 1
+    }
+   },
+   "paddle>agy-flash-high": {
+    "pages": 30,
+    "books": 30,
+    "words": 5980,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.17,
+    "median_words_per_page": 167.5,
+    "cosmetic_per_1k": 5.017,
+    "misleads_per_1k": 3.846,
+    "wrong_text_per_1k": 3.846,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.367,
+     7.205
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     2.273,
+     5.627
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     1.443,
+     6.806
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.8094,
+     5.2554,
+     6.9581
+    ],
+    "misleads_per_1k_posterior": [
+     2.6627,
+     3.8538,
+     5.3249
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.8938,
+     3.7183,
+     6.0449
+    ],
+    "class_mix": {
+     "O6:wrong_text": 16,
+     "O6:misleads": 11,
+     "O5:misleads": 9,
+     "O5:wrong_text": 7,
+     "T4:misleads": 1,
+     "O11:misleads": 1
+    }
+   },
+   "paddle>agy-flash-low": {
+    "pages": 29,
+    "books": 29,
+    "words": 5452,
+    "words_own_text_share": 0.0,
+    "fidelity_mean": 4.31,
+    "median_words_per_page": 167,
+    "cosmetic_per_1k": 3.852,
+    "misleads_per_1k": 2.935,
+    "wrong_text_per_1k": 2.384,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.327,
+     5.607
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.521,
+     4.365
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.967,
+     4.137
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.7843,
+     5.5828,
+     9.3519
+    ],
+    "misleads_per_1k_posterior": [
+     1.8764,
+     2.9788,
+     4.3042
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.1727,
+     2.3757,
+     3.9273
+    ],
+    "class_mix": {
+     "O6:misleads": 7,
+     "O6:wrong_text": 6,
+     "O5:wrong_text": 4,
+     "O5:misleads": 4,
+     "O12:misleads": 2,
+     "O4:wrong_text": 1
+    }
+   }
+  },
+  "zh-6561-served": {
+   "paddle": {
+    "pages": 30,
+    "books": 30,
+    "words": 5196,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 2.77,
+    "median_words_per_page": 144.5,
+    "cosmetic_per_1k": 6.159,
+    "misleads_per_1k": 14.242,
+    "wrong_text_per_1k": 20.593,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.222,
+     8.503
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     9.593,
+     20.079
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     13.497,
+     29.512
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.3368,
+     6.269,
+     8.607
+    ],
+    "misleads_per_1k_posterior": [
+     9.117,
+     13.056,
+     17.4877
+    ],
+    "wrong_text_per_1k_posterior": [
+     11.9307,
+     17.7592,
+     24.6227
+    ],
+    "class_mix": {
+     "O6:misleads": 51,
+     "O6:wrong_text": 45,
+     "O5:wrong_text": 19,
+     "O1:wrong_text": 15,
+     "O4:wrong_text": 15,
+     "O11:misleads": 6
+    }
+   },
+   "paddle>opus": {
+    "pages": 30,
+    "books": 30,
+    "words": 6312,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.37,
+    "median_words_per_page": 183.5,
+    "cosmetic_per_1k": 3.327,
+    "misleads_per_1k": 1.743,
+    "wrong_text_per_1k": 0.634,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.713,
+     5.108
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.642,
+     3.427
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.631
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.5437,
+     3.9366,
+     5.5498
+    ],
+    "misleads_per_1k_posterior": [
+     0.684,
+     1.9834,
+     3.8611
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.1099,
+     0.7537,
+     1.8545
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O10:wrong_text": 4,
+     "O16:misleads": 2,
+     "O7:misleads": 2,
+     "E2:misleads": 1,
+     "O5:misleads": 1
+    }
+   }
+  },
+  "chinese-flash3": {
+   "3flash": {
+    "pages": 30,
+    "books": 30,
+    "words": 9298,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.13,
+    "median_words_per_page": 312.0,
+    "cosmetic_per_1k": 3.979,
+    "misleads_per_1k": 8.604,
+    "wrong_text_per_1k": 8.496,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.083,
+     4.972
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     5.957,
+     11.31
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     5.851,
+     11.446
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.2169,
+     4.1984,
+     5.3207
+    ],
+    "misleads_per_1k_posterior": [
+     6.5239,
+     8.427,
+     10.6044
+    ],
+    "wrong_text_per_1k_posterior": [
+     6.1779,
+     8.2497,
+     10.555
+    ],
+    "class_mix": {
+     "O6:misleads": 48,
+     "O6:wrong_text": 34,
+     "O5:wrong_text": 23,
+     "E2:wrong_text": 7,
+     "E2:misleads": 7,
+     "O5:misleads": 6
+    }
+   },
+   "3flash>agy-flash-low": {
+    "pages": 30,
+    "books": 30,
+    "words": 9298,
+    "words_own_text_share": 0.05,
+    "fidelity_mean": 3.27,
+    "median_words_per_page": 312.0,
+    "cosmetic_per_1k": 2.474,
+    "misleads_per_1k": 6.883,
+    "wrong_text_per_1k": 7.744,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.675,
+     3.368
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     5.017,
+     9.008
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     5.316,
+     10.13
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.0133,
+     2.8145,
+     3.7614
+    ],
+    "misleads_per_1k_posterior": [
+     5.2555,
+     6.7964,
+     8.5135
+    ],
+    "wrong_text_per_1k_posterior": [
+     5.8751,
+     7.5843,
+     9.4895
+    ],
+    "class_mix": {
+     "O6:wrong_text": 31,
+     "O6:misleads": 30,
+     "O5:misleads": 9,
+     "O5:wrong_text": 9,
+     "O11:misleads": 6,
+     "T4:wrong_text": 6
+    }
+   }
+  },
+  "zh-frame-6871": {
+   "paddle>agy-flash-low": {
+    "pages": 30,
+    "books": 30,
+    "words": 3722,
+    "words_own_text_share": 0.0,
+    "fidelity_mean": 4.27,
+    "median_words_per_page": 137.5,
+    "cosmetic_per_1k": 5.911,
+    "misleads_per_1k": 7.254,
+    "wrong_text_per_1k": 4.299,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.785,
+     8.55
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.123,
+     13.227
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     1.846,
+     7.21
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.2037,
+     6.0817,
+     8.33
+    ],
+    "misleads_per_1k_posterior": [
+     3.1404,
+     6.6019,
+     11.0711
+    ],
+    "wrong_text_per_1k_posterior": [
+     2.143,
+     4.1295,
+     6.671
+    ],
+    "class_mix": {
+     "O6:misleads": 17,
+     "O6:wrong_text": 13,
+     "O8:misleads": 4,
+     "E2:misleads": 3,
+     "O7:misleads": 2,
+     "O5:wrong_text": 2
+    }
+   }
+  },
+  "hebrew-flash3": {
+   "3flash": {
+    "pages": 30,
+    "books": 30,
+    "words": 8005,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 2.6,
+    "median_words_per_page": 222.0,
+    "cosmetic_per_1k": 5.621,
+    "misleads_per_1k": 10.868,
+    "wrong_text_per_1k": 14.491,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.317,
+     8.743
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     7.478,
+     15.301
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     9.26,
+     21.695
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.9244,
+     5.8753,
+     8.0802
+    ],
+    "misleads_per_1k_posterior": [
+     4.4621,
+     9.1119,
+     14.9928
+    ],
+    "wrong_text_per_1k_posterior": [
+     5.2535,
+     11.0803,
+     18.6205
+    ],
+    "class_mix": {
+     "O6:wrong_text": 47,
+     "O6:misleads": 44,
+     "O1:wrong_text": 34,
+     "O16:misleads": 10,
+     "O5:wrong_text": 10,
+     "O3:wrong_text": 8
+    }
+   },
+   "3flash>agy-flash-low": {
+    "pages": 28,
+    "books": 28,
+    "words": 7979,
+    "words_own_text_share": 0.0,
+    "fidelity_mean": 2.79,
+    "median_words_per_page": 256.5,
+    "cosmetic_per_1k": 5.138,
+    "misleads_per_1k": 9.525,
+    "wrong_text_per_1k": 12.909,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.403,
+     7.338
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     6.435,
+     13.726
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     7.738,
+     19.479
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.7391,
+     5.4216,
+     7.4365
+    ],
+    "misleads_per_1k_posterior": [
+     3.2094,
+     7.7885,
+     14.0579
+    ],
+    "wrong_text_per_1k_posterior": [
+     4.7476,
+     10.0838,
+     16.9461
+    ],
+    "class_mix": {
+     "O6:wrong_text": 55,
+     "O6:misleads": 35,
+     "O1:wrong_text": 28,
+     "O5:wrong_text": 9,
+     "O12:misleads": 6,
+     "O11:misleads": 6
+    }
+   }
+  },
+  "arabic-flash3": {
+   "3flash": {
+    "pages": 30,
+    "books": 30,
+    "words": 8038,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.5,
+    "median_words_per_page": 234.5,
+    "cosmetic_per_1k": 5.847,
+    "misleads_per_1k": 7.34,
+    "wrong_text_per_1k": 8.211,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.837,
+     8.069
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     4.812,
+     9.888
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     4.067,
+     13.143
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.276,
+     5.9978,
+     7.9799
+    ],
+    "misleads_per_1k_posterior": [
+     4.9865,
+     7.1397,
+     9.6576
+    ],
+    "wrong_text_per_1k_posterior": [
+     5.0113,
+     7.7256,
+     11.1588
+    ],
+    "class_mix": {
+     "O6:misleads": 43,
+     "O6:wrong_text": 42,
+     "O1:wrong_text": 14,
+     "O3:wrong_text": 4,
+     "O16:misleads": 4,
+     "O12:misleads": 3
+    }
+   },
+   "3flash>agy-flash-low": {
+    "pages": 29,
+    "books": 29,
+    "words": 7503,
+    "words_own_text_share": 0.08,
+    "fidelity_mean": 3.72,
+    "median_words_per_page": 229,
+    "cosmetic_per_1k": 6.131,
+    "misleads_per_1k": 6.397,
+    "wrong_text_per_1k": 6.931,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.259,
+     8.596
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     3.939,
+     8.95
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     3.026,
+     11.079
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.1308,
+     6.2694,
+     8.6122
+    ],
+    "misleads_per_1k_posterior": [
+     4.3624,
+     6.2647,
+     8.45
+    ],
+    "wrong_text_per_1k_posterior": [
+     4.2145,
+     6.5982,
+     9.4382
+    ],
+    "class_mix": {
+     "O6:misleads": 35,
+     "O6:wrong_text": 31,
+     "O1:wrong_text": 11,
+     "O12:wrong_text": 5,
+     "O3:wrong_text": 3,
+     "I3:misleads": 2
+    }
+   }
+  },
+  "latin-gpu-7263": {
+   "pero>agy-flash-low": {
+    "pages": 121,
+    "books": 20,
+    "words": 24193,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.33,
+    "median_words_per_page": 202,
+    "cosmetic_per_1k": 7.647,
+    "misleads_per_1k": 2.273,
+    "wrong_text_per_1k": 0.868,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.444,
+     9.074
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.101,
+     3.535
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.423,
+     1.414
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.5505,
+     7.6014,
+     8.7191
+    ],
+    "misleads_per_1k_posterior": [
+     1.552,
+     2.3163,
+     3.1811
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.5221,
+     0.8842,
+     1.2946
+    ],
+    "class_mix": {
+     "O6:misleads": 32,
+     "O6:wrong_text": 9,
+     "O8:misleads": 7,
+     "O7:misleads": 7,
+     "O7:wrong_text": 4,
+     "O1:wrong_text": 3
+    }
+   }
+  },
+  "latin-blank": {
+   "agy-flash-low@4": {
+    "pages": 26,
+    "books": 26,
+    "words": 5896,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.46,
+    "median_words_per_page": 213.5,
+    "cosmetic_per_1k": 4.749,
+    "misleads_per_1k": 1.526,
+    "wrong_text_per_1k": 0.17,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.018,
+     6.721
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.687,
+     2.663
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.501
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.5854,
+     5.0213,
+     6.6775
+    ],
+    "misleads_per_1k_posterior": [
+     0.6042,
+     1.7691,
+     3.4206
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0245,
+     0.2314,
+     0.6076
+    ],
+    "class_mix": {
+     "O6:misleads": 6,
+     "O7:misleads": 1,
+     "O6:wrong_text": 1,
+     "O8:misleads": 1,
+     "T6:misleads": 1
+    }
+   },
+   "agy-flash-low@4-written": {
+    "pages": 26,
+    "books": 26,
+    "words": 5896,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.46,
+    "median_words_per_page": 213.5,
+    "cosmetic_per_1k": 4.749,
+    "misleads_per_1k": 1.526,
+    "wrong_text_per_1k": 0.17,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.927,
+     6.567
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.725,
+     2.677
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.502
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.6207,
+     5.0213,
+     6.6077
+    ],
+    "misleads_per_1k_posterior": [
+     0.6066,
+     1.7691,
+     3.3372
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0228,
+     0.2314,
+     0.632
+    ],
+    "class_mix": {
+     "O6:misleads": 6,
+     "O7:misleads": 1,
+     "O6:wrong_text": 1,
+     "O8:misleads": 1,
+     "T6:misleads": 1
+    }
+   },
+   "agy-flash-low@4>agy-flash-low": {
+    "pages": 26,
+    "books": 26,
+    "words": 5813,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.58,
+    "median_words_per_page": 214.0,
+    "cosmetic_per_1k": 5.677,
+    "misleads_per_1k": 0.86,
+    "wrong_text_per_1k": 0.172,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.976,
+     7.717
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.167,
+     1.795
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.512
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.2245,
+     5.834,
+     7.6455
+    ],
+    "misleads_per_1k_posterior": [
+     0.4112,
+     0.9969,
+     1.8217
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0252,
+     0.2346,
+     0.6389
+    ],
+    "class_mix": {
+     "O6:misleads": 2,
+     "O7:misleads": 2,
+     "O6:wrong_text": 1,
+     "T6:misleads": 1
+    }
+   },
+   "agy-flash-low@4>agy-flash-low-written": {
+    "pages": 26,
+    "books": 26,
+    "words": 5813,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.58,
+    "median_words_per_page": 214.0,
+    "cosmetic_per_1k": 5.677,
+    "misleads_per_1k": 0.86,
+    "wrong_text_per_1k": 0.172,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.932,
+     7.621
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.163,
+     1.891
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.504
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.1624,
+     5.834,
+     7.6988
+    ],
+    "misleads_per_1k_posterior": [
+     0.4095,
+     0.9969,
+     1.8371
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0265,
+     0.2346,
+     0.6276
+    ],
+    "class_mix": {
+     "O6:misleads": 2,
+     "O7:misleads": 2,
+     "O6:wrong_text": 1,
+     "T6:misleads": 1
+    }
+   },
+   "pero>agy-flash-low-written": {
+    "pages": 90,
+    "books": 22,
+    "words": 23507,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.83,
+    "median_words_per_page": 245,
+    "cosmetic_per_1k": 7.147,
+    "misleads_per_1k": 4.212,
+    "wrong_text_per_1k": 2.34,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.148,
+     11.126
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.87,
+     11.961
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.571,
+     6.679
+    ],
+    "cosmetic_per_1k_posterior": [
+     5.712,
+     7.1036,
+     8.6084
+    ],
+    "misleads_per_1k_posterior": [
+     2.086,
+     4.1929,
+     6.8459
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.1498,
+     2.3334,
+     3.8941
+    ],
+    "class_mix": {
+     "O6:misleads": 45,
+     "O7:wrong_text": 24,
+     "O5:wrong_text": 13,
+     "O7:misleads": 11,
+     "O5:misleads": 10,
+     "O1:misleads": 9
+    }
+   },
+   "pero>agy-flash-low@4-written": {
+    "pages": 16,
+    "books": 16,
+    "words": 4192,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.56,
+    "median_words_per_page": 227.0,
+    "cosmetic_per_1k": 3.101,
+    "misleads_per_1k": 1.193,
+    "wrong_text_per_1k": 0.239,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.736,
+     4.768
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.226,
+     2.678
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.843
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.4182,
+     3.696,
+     5.2296
+    ],
+    "misleads_per_1k_posterior": [
+     0.4493,
+     1.4552,
+     2.8461
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0177,
+     0.3686,
+     1.082
+    ],
+    "class_mix": {
+     "O7:misleads": 3,
+     "O7:wrong_text": 1,
+     "D1:misleads": 1,
+     "O6:misleads": 1
+    }
+   }
+  },
+  "german-blank": {
+   "agy-flash-low@4": {
+    "pages": 28,
+    "books": 28,
+    "words": 6747,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.46,
+    "median_words_per_page": 229.5,
+    "cosmetic_per_1k": 4.891,
+    "misleads_per_1k": 0.889,
+    "wrong_text_per_1k": 0.148,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.0,
+     7.266
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.264,
+     1.81
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.519
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.4688,
+     5.3026,
+     7.405
+    ],
+    "misleads_per_1k_posterior": [
+     0.4065,
+     1.0351,
+     1.9087
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0057,
+     0.3143,
+     1.0834
+    ],
+    "class_mix": {
+     "O6:misleads": 3,
+     "O7:wrong_text": 1,
+     "O7:misleads": 1,
+     "E2:misleads": 1,
+     "O11:misleads": 1
+    }
+   },
+   "agy-flash-low@4-written": {
+    "pages": 72,
+    "books": 72,
+    "words": 19136,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.49,
+    "median_words_per_page": 251.0,
+    "cosmetic_per_1k": 5.33,
+    "misleads_per_1k": 0.836,
+    "wrong_text_per_1k": 0.052,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.137,
+     6.558
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.406,
+     1.313
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.168
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.3755,
+     5.4198,
+     6.5984
+    ],
+    "misleads_per_1k_posterior": [
+     0.5246,
+     0.8853,
+     1.3247
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0021,
+     0.1223,
+     0.4418
+    ],
+    "class_mix": {
+     "O6:misleads": 9,
+     "O7:misleads": 2,
+     "O7:wrong_text": 1,
+     "E2:misleads": 1,
+     "O11:misleads": 1,
+     "O12:misleads": 1
+    }
+   },
+   "agy-flash-low@4>agy-flash-low": {
+    "pages": 27,
+    "books": 27,
+    "words": 6686,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.56,
+    "median_words_per_page": 231,
+    "cosmetic_per_1k": 4.038,
+    "misleads_per_1k": 0.598,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.263,
+     6.29
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.138,
+     1.157
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.8618,
+     4.7947,
+     7.0096
+    ],
+    "misleads_per_1k_posterior": [
+     0.2816,
+     0.7099,
+     1.3046
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0002,
+     0.1349,
+     0.5741
+    ],
+    "class_mix": {
+     "O5:misleads": 1,
+     "O6:misleads": 1,
+     "O11:misleads": 1,
+     "O7:misleads": 1
+    }
+   },
+   "agy-flash-low@4>agy-flash-low-written": {
+    "pages": 47,
+    "books": 47,
+    "words": 12633,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.55,
+    "median_words_per_page": 246,
+    "cosmetic_per_1k": 4.749,
+    "misleads_per_1k": 0.475,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.326,
+     6.329
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.16,
+     0.848
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.6579,
+     4.9954,
+     6.4876
+    ],
+    "misleads_per_1k_posterior": [
+     0.2454,
+     0.5371,
+     0.9113
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.0735,
+     0.2953
+    ],
+    "class_mix": {
+     "O6:misleads": 2,
+     "O5:misleads": 1,
+     "O11:misleads": 1,
+     "O7:misleads": 1,
+     "O12:misleads": 1
+    }
+   },
+   "agy-flash-low@4>agy-flash-low@4-written": {
+    "pages": 20,
+    "books": 20,
+    "words": 5951,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.6,
+    "median_words_per_page": 270.5,
+    "cosmetic_per_1k": 5.545,
+    "misleads_per_1k": 0.336,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.467,
+     7.957
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     0.765
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.1018,
+     5.7201,
+     7.522
+    ],
+    "misleads_per_1k_posterior": [
+     0.1212,
+     0.4705,
+     1.0095
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0001,
+     0.1504,
+     0.6477
+    ],
+    "class_mix": {
+     "O6:misleads": 2
+    }
+   },
+   "agy-flash-low@8-written": {
+    "pages": 22,
+    "books": 22,
+    "words": 5964,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.32,
+    "median_words_per_page": 275.0,
+    "cosmetic_per_1k": 7.21,
+    "misleads_per_1k": 1.677,
+    "wrong_text_per_1k": 0.168,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.151,
+     9.827
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.561,
+     3.161
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.538
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.7058,
+     7.0674,
+     9.8495
+    ],
+    "misleads_per_1k_posterior": [
+     0.6712,
+     1.9336,
+     3.6466
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.023,
+     0.2288,
+     0.5846
+    ],
+    "class_mix": {
+     "O6:misleads": 3,
+     "O8:misleads": 3,
+     "O7:misleads": 1,
+     "O12:misleads": 1,
+     "O7:wrong_text": 1,
+     "O11:misleads": 1
+    }
+   },
+   "lighton-written": {
+    "pages": 30,
+    "books": 30,
+    "words": 7971,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.63,
+    "median_words_per_page": 265.0,
+    "cosmetic_per_1k": 11.542,
+    "misleads_per_1k": 10.664,
+    "wrong_text_per_1k": 2.885,
+    "cosmetic_per_1k_ci95_by_book": [
+     8.638,
+     14.586
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     6.561,
+     14.826
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     1.077,
+     4.869
+    ],
+    "cosmetic_per_1k_posterior": [
+     8.6185,
+     10.8309,
+     13.1346
+    ],
+    "misleads_per_1k_posterior": [
+     6.7774,
+     9.9965,
+     13.6632
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.5699,
+     2.8516,
+     4.4692
+    ],
+    "class_mix": {
+     "O6:misleads": 77,
+     "O6:wrong_text": 22,
+     "O7:misleads": 4,
+     "O11:misleads": 2,
+     "O8:misleads": 1,
+     "O12:wrong_text": 1
+    }
+   },
+   "pero-written": {
+    "pages": 29,
+    "books": 29,
+    "words": 7847,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.41,
+    "median_words_per_page": 261,
+    "cosmetic_per_1k": 18.606,
+    "misleads_per_1k": 16.439,
+    "wrong_text_per_1k": 1.529,
+    "cosmetic_per_1k_ci95_by_book": [
+     14.399,
+     22.651
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     10.596,
+     22.866
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.627,
+     2.721
+    ],
+    "cosmetic_per_1k_posterior": [
+     13.7372,
+     16.5811,
+     19.7433
+    ],
+    "misleads_per_1k_posterior": [
+     10.4666,
+     14.9269,
+     20.0439
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.7345,
+     1.5592,
+     2.6642
+    ],
+    "class_mix": {
+     "O6:misleads": 113,
+     "O6:wrong_text": 8,
+     "O7:misleads": 5,
+     "O7:wrong_text": 3,
+     "I4:misleads": 3,
+     "O12:misleads": 2
+    }
+   },
+   "lighton>agy-flash-low@4-written": {
+    "pages": 25,
+    "books": 25,
+    "words": 6119,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.24,
+    "median_words_per_page": 215,
+    "cosmetic_per_1k": 7.844,
+    "misleads_per_1k": 1.471,
+    "wrong_text_per_1k": 0.654,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.395,
+     10.53
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.458,
+     2.692
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.988
+    ],
+    "cosmetic_per_1k_posterior": [
+     5.7433,
+     7.6559,
+     9.7762
+    ],
+    "misleads_per_1k_posterior": [
+     0.7518,
+     1.6089,
+     2.6973
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0393,
+     0.9254,
+     2.7816
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O7:misleads": 2,
+     "O12:misleads": 1,
+     "O7:wrong_text": 1,
+     "O5:wrong_text": 1,
+     "O12:wrong_text": 1
+    }
+   },
+   "pero>agy-flash-low@4-written": {
+    "pages": 22,
+    "books": 22,
+    "words": 5661,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.23,
+    "median_words_per_page": 253.5,
+    "cosmetic_per_1k": 7.596,
+    "misleads_per_1k": 2.296,
+    "wrong_text_per_1k": 0.53,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.343,
+     10.601
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.912,
+     3.979
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.434
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.8668,
+     7.0819,
+     11.0755
+    ],
+    "misleads_per_1k_posterior": [
+     1.2668,
+     2.3979,
+     3.8218
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0614,
+     0.7006,
+     1.9
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O7:misleads": 3,
+     "O8:misleads": 2,
+     "D1:misleads": 1,
+     "O7:wrong_text": 1,
+     "O1:misleads": 1
+    }
+   }
+  },
+  "german-blank-fraktur": {
+   "agy-flash-low@4-written": {
+    "pages": 15,
+    "books": 15,
+    "words": 4253,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.2,
+    "median_words_per_page": 288,
+    "cosmetic_per_1k": 8.465,
+    "misleads_per_1k": 1.411,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.338,
+     11.037
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.228,
+     3.088
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.1901,
+     8.1775,
+     10.3801
+    ],
+    "misleads_per_1k_posterior": [
+     0.5927,
+     1.6232,
+     3.0808
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0002,
+     0.205,
+     0.9018
+    ],
+    "class_mix": {
+     "O6:misleads": 3,
+     "O7:misleads": 1,
+     "O12:misleads": 1,
+     "O8:misleads": 1
+    }
+   },
+   "agy-flash-low@8-written": {
+    "pages": 15,
+    "books": 15,
+    "words": 4104,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.13,
+    "median_words_per_page": 277,
+    "cosmetic_per_1k": 7.797,
+    "misleads_per_1k": 2.193,
+    "wrong_text_per_1k": 0.244,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.072,
+     11.299
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.662,
+     4.37
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.778
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.4735,
+     7.3408,
+     10.7799
+    ],
+    "misleads_per_1k_posterior": [
+     0.7627,
+     2.4915,
+     4.9578
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.036,
+     0.3281,
+     0.864
+    ],
+    "class_mix": {
+     "O6:misleads": 3,
+     "O8:misleads": 3,
+     "O7:misleads": 1,
+     "O12:misleads": 1,
+     "O7:wrong_text": 1,
+     "O11:misleads": 1
+    }
+   },
+   "lighton-written": {
+    "pages": 18,
+    "books": 18,
+    "words": 4880,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.22,
+    "median_words_per_page": 265.0,
+    "cosmetic_per_1k": 14.549,
+    "misleads_per_1k": 16.393,
+    "wrong_text_per_1k": 4.713,
+    "cosmetic_per_1k_ci95_by_book": [
+     10.782,
+     18.502
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     11.517,
+     21.791
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     2.197,
+     7.574
+    ],
+    "cosmetic_per_1k_posterior": [
+     10.3381,
+     13.0344,
+     16.0366
+    ],
+    "misleads_per_1k_posterior": [
+     10.6435,
+     14.9682,
+     19.7476
+    ],
+    "wrong_text_per_1k_posterior": [
+     2.6415,
+     4.5445,
+     6.9696
+    ],
+    "class_mix": {
+     "O6:misleads": 74,
+     "O6:wrong_text": 22,
+     "O7:misleads": 3,
+     "O11:misleads": 1,
+     "O8:misleads": 1,
+     "O12:wrong_text": 1
+    }
+   },
+   "pero-written": {
+    "pages": 18,
+    "books": 18,
+    "words": 4843,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.11,
+    "median_words_per_page": 254.5,
+    "cosmetic_per_1k": 22.3,
+    "misleads_per_1k": 24.778,
+    "wrong_text_per_1k": 2.271,
+    "cosmetic_per_1k_ci95_by_book": [
+     17.283,
+     26.992
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     17.582,
+     32.288
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.885,
+     3.99
+    ],
+    "cosmetic_per_1k_posterior": [
+     15.9955,
+     19.3226,
+     23.1204
+    ],
+    "misleads_per_1k_posterior": [
+     16.977,
+     22.3351,
+     28.1924
+    ],
+    "wrong_text_per_1k_posterior": [
+     1.0455,
+     2.2684,
+     3.9237
+    ],
+    "class_mix": {
+     "O6:misleads": 107,
+     "O6:wrong_text": 7,
+     "O7:misleads": 5,
+     "O7:wrong_text": 3,
+     "O12:misleads": 2,
+     "E2:misleads": 2
+    }
+   },
+   "lighton>agy-flash-low@4-written": {
+    "pages": 14,
+    "books": 14,
+    "words": 3711,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.14,
+    "median_words_per_page": 252.5,
+    "cosmetic_per_1k": 10.779,
+    "misleads_per_1k": 2.156,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     7.639,
+     14.588
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.588,
+     4.126
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     7.4197,
+     9.9284,
+     12.6292
+    ],
+    "misleads_per_1k_posterior": [
+     1.0107,
+     2.3226,
+     4.0573
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0003,
+     0.2318,
+     0.9495
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O7:misleads": 2,
+     "O12:misleads": 1
+    }
+   },
+   "pero>agy-flash-low@4-written": {
+    "pages": 13,
+    "books": 13,
+    "words": 3426,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.15,
+    "median_words_per_page": 280,
+    "cosmetic_per_1k": 8.757,
+    "misleads_per_1k": 3.211,
+    "wrong_text_per_1k": 0.292,
+    "cosmetic_per_1k_ci95_by_book": [
+     5.67,
+     13.746
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.193,
+     5.703
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.865
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.505,
+     7.1876,
+     11.6872
+    ],
+    "misleads_per_1k_posterior": [
+     1.7382,
+     3.2811,
+     5.2332
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0428,
+     0.3898,
+     1.0531
+    ],
+    "class_mix": {
+     "O6:misleads": 5,
+     "O7:misleads": 3,
+     "D1:misleads": 1,
+     "O8:misleads": 1,
+     "O7:wrong_text": 1,
+     "O1:misleads": 1
+    }
+   },
+   "kraken-written": {
+    "pages": 18,
+    "books": 18,
+    "words": 4399,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 2.28,
+    "median_words_per_page": 231.0,
+    "cosmetic_per_1k": 17.504,
+    "misleads_per_1k": 33.871,
+    "wrong_text_per_1k": 19.777,
+    "cosmetic_per_1k_ci95_by_book": [
+     10.194,
+     26.329
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     26.426,
+     42.537
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     13.34,
+     28.166
+    ],
+    "cosmetic_per_1k_posterior": [
+     7.9201,
+     12.0513,
+     16.6439
+    ],
+    "misleads_per_1k_posterior": [
+     25.2305,
+     30.9328,
+     37.1549
+    ],
+    "wrong_text_per_1k_posterior": [
+     10.1681,
+     16.4241,
+     23.9006
+    ],
+    "class_mix": {
+     "O6:misleads": 119,
+     "O6:wrong_text": 40,
+     "O7:wrong_text": 33,
+     "O7:misleads": 10,
+     "O10:misleads": 8,
+     "O11:misleads": 7
+    }
+   }
+  },
+  "german-blank-antiqua": {
+   "lighton-written": {
+    "pages": 12,
+    "books": 12,
+    "words": 3091,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.25,
+    "median_words_per_page": 283.0,
+    "cosmetic_per_1k": 6.794,
+    "misleads_per_1k": 1.618,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     4.108,
+     10.14
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.323,
+     3.435
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     4.5347,
+     6.7671,
+     9.2167
+    ],
+    "misleads_per_1k_posterior": [
+     0.6222,
+     1.8927,
+     3.6874
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0004,
+     0.2726,
+     1.1653
+    ],
+    "class_mix": {
+     "O6:misleads": 3,
+     "O7:misleads": 1,
+     "O11:misleads": 1
+    }
+   },
+   "pero-written": {
+    "pages": 11,
+    "books": 11,
+    "words": 3004,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.91,
+    "median_words_per_page": 318,
+    "cosmetic_per_1k": 12.65,
+    "misleads_per_1k": 2.996,
+    "wrong_text_per_1k": 0.333,
+    "cosmetic_per_1k_ci95_by_book": [
+     7.379,
+     18.911
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     6.947
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.186
+    ],
+    "cosmetic_per_1k_posterior": [
+     6.7624,
+     10.2132,
+     13.9245
+    ],
+    "misleads_per_1k_posterior": [
+     0.814,
+     3.2845,
+     7.1891
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.023,
+     0.5164,
+     1.5587
+    ],
+    "class_mix": {
+     "O6:misleads": 6,
+     "I4:misleads": 3,
+     "O6:wrong_text": 1
+    }
+   },
+   "lighton>agy-flash-low@4-written": {
+    "pages": 11,
+    "books": 11,
+    "words": 2408,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.36,
+    "median_words_per_page": 182,
+    "cosmetic_per_1k": 3.322,
+    "misleads_per_1k": 0.415,
+    "wrong_text_per_1k": 1.661,
+    "cosmetic_per_1k_ci95_by_book": [
+     1.171,
+     5.364
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     1.396
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     5.418
+    ],
+    "cosmetic_per_1k_posterior": [
+     2.5375,
+     4.1758,
+     6.1312
+    ],
+    "misleads_per_1k_posterior": [
+     0.1119,
+     0.8023,
+     2.0388
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.1045,
+     1.845,
+     5.655
+    ],
+    "class_mix": {
+     "O7:wrong_text": 1,
+     "O5:wrong_text": 1,
+     "O12:wrong_text": 1,
+     "O15:wrong_text": 1,
+     "O8:misleads": 1
+    }
+   }
+  },
+  "french-blank": {
+   "agy-flash-low": {
+    "pages": 26,
+    "books": 26,
+    "words": 5951,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.62,
+    "median_words_per_page": 213.5,
+    "cosmetic_per_1k": 5.377,
+    "misleads_per_1k": 0.672,
+    "wrong_text_per_1k": 0.504,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.524,
+     7.692
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     1.475
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.814
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.5836,
+     5.7675,
+     8.3922
+    ],
+    "misleads_per_1k_posterior": [
+     0.2605,
+     0.8712,
+     1.7379
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0411,
+     0.7241,
+     2.1153
+    ],
+    "class_mix": {
+     "O7:misleads": 1,
+     "O4:wrong_text": 1,
+     "D1:misleads": 1,
+     "O5:wrong_text": 1,
+     "O15:misleads": 1,
+     "O18:wrong_text": 1
+    }
+   },
+   "agy-flash-low-written": {
+    "pages": 47,
+    "books": 47,
+    "words": 11194,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.68,
+    "median_words_per_page": 218,
+    "cosmetic_per_1k": 4.467,
+    "misleads_per_1k": 0.447,
+    "wrong_text_per_1k": 0.357,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.079,
+     5.799
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.089,
+     0.9
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     1.002
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.3911,
+     4.8104,
+     6.5568
+    ],
+    "misleads_per_1k_posterior": [
+     0.1974,
+     0.5531,
+     1.0453
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.052,
+     0.4674,
+     1.2325
+    ],
+    "class_mix": {
+     "O7:misleads": 1,
+     "O4:wrong_text": 1,
+     "D1:misleads": 1,
+     "O5:wrong_text": 1,
+     "O15:misleads": 1,
+     "O18:wrong_text": 1
+    }
+   },
+   "agy-flash-low>agy-flash-low": {
+    "pages": 25,
+    "books": 25,
+    "words": 5911,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.72,
+    "median_words_per_page": 215,
+    "cosmetic_per_1k": 4.906,
+    "misleads_per_1k": 0.508,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.977,
+     6.847
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     1.165
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.7798,
+     5.1457,
+     6.7347
+    ],
+    "misleads_per_1k_posterior": [
+     0.2121,
+     0.6366,
+     1.2393
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0002,
+     0.1514,
+     0.6184
+    ],
+    "class_mix": {
+     "O6:misleads": 2,
+     "O7:misleads": 1
+    }
+   },
+   "agy-flash-low>agy-flash-low-written": {
+    "pages": 25,
+    "books": 25,
+    "words": 5911,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.72,
+    "median_words_per_page": 215,
+    "cosmetic_per_1k": 4.906,
+    "misleads_per_1k": 0.508,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     3.004,
+     6.761
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     1.124
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.7688,
+     5.1457,
+     6.7612
+    ],
+    "misleads_per_1k_posterior": [
+     0.222,
+     0.6366,
+     1.2704
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0002,
+     0.1514,
+     0.6463
+    ],
+    "class_mix": {
+     "O6:misleads": 2,
+     "O7:misleads": 1
+    }
+   },
+   "agy-flash-low@4-written": {
+    "pages": 24,
+    "books": 24,
+    "words": 5329,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 4.71,
+    "median_words_per_page": 216.0,
+    "cosmetic_per_1k": 4.691,
+    "misleads_per_1k": 0.751,
+    "wrong_text_per_1k": 0.0,
+    "cosmetic_per_1k_ci95_by_book": [
+     2.828,
+     6.693
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     0.0,
+     1.871
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.0,
+     0.0
+    ],
+    "cosmetic_per_1k_posterior": [
+     3.5365,
+     5.0186,
+     6.7454
+    ],
+    "misleads_per_1k_posterior": [
+     0.2761,
+     0.995,
+     2.114
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.0002,
+     0.1667,
+     0.6802
+    ],
+    "class_mix": {
+     "O8:misleads": 2,
+     "O14:misleads": 1,
+     "O12:misleads": 1
+    }
+   }
+  },
+  "english-blank-pre1800": {
+   "lighton": {
+    "pages": 29,
+    "books": 29,
+    "words": 9338,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.76,
+    "median_words_per_page": 276,
+    "cosmetic_per_1k": 9.21,
+    "misleads_per_1k": 2.356,
+    "wrong_text_per_1k": 3.32,
+    "cosmetic_per_1k_ci95_by_book": [
+     7.082,
+     11.557
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.019,
+     3.797
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.834,
+     7.841
+    ],
+    "cosmetic_per_1k_posterior": [
+     7.308,
+     8.9558,
+     10.7858
+    ],
+    "misleads_per_1k_posterior": [
+     1.4983,
+     2.4166,
+     3.4989
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.1746,
+     2.8152,
+     8.0541
+    ],
+    "class_mix": {
+     "O6:wrong_text": 20,
+     "O6:misleads": 20,
+     "O10:wrong_text": 4,
+     "O7:wrong_text": 3,
+     "O7:misleads": 1,
+     "O5:wrong_text": 1
+    }
+   },
+   "lighton-written": {
+    "pages": 29,
+    "books": 29,
+    "words": 9338,
+    "words_own_text_share": 1.0,
+    "fidelity_mean": 3.76,
+    "median_words_per_page": 276,
+    "cosmetic_per_1k": 9.21,
+    "misleads_per_1k": 2.356,
+    "wrong_text_per_1k": 3.32,
+    "cosmetic_per_1k_ci95_by_book": [
+     6.901,
+     11.489
+    ],
+    "misleads_per_1k_ci95_by_book": [
+     1.014,
+     3.724
+    ],
+    "wrong_text_per_1k_ci95_by_book": [
+     0.834,
+     8.156
+    ],
+    "cosmetic_per_1k_posterior": [
+     7.3025,
+     8.9558,
+     10.8021
+    ],
+    "misleads_per_1k_posterior": [
+     1.4781,
+     2.4166,
+     3.4761
+    ],
+    "wrong_text_per_1k_posterior": [
+     0.1743,
+     2.8152,
+     8.1246
+    ],
+    "class_mix": {
+     "O6:wrong_text": 20,
+     "O6:misleads": 20,
+     "O10:wrong_text": 4,
+     "O7:wrong_text": 3,
+     "O7:misleads": 1,
+     "O5:wrong_text": 1
+    }
+   }
+  }
+ }
+}

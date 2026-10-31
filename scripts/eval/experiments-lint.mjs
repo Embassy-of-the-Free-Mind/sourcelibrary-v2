@@ -13,6 +13,8 @@
  *   - every file that HAS a header: it parses and validates (always);
  *   - every dated entry (YYYY-MM-DD-*.md) ADDED by the PR: it has a header (--pr / --base), and when it is a judged
  *     OCR or translation result, a router_evidence field naming the router-table cells it fed, or "none — <why>" (#7263);
+ *     and, dated 2026-10-30 or later with stage ocr|translation, a defect_rates file (misleads / wrong_text per 1,000
+ *     words and fidelity per route) or "none — <why>" (#6740);
  *   - every dated entry: it has a header (--strict; once the backfill has landed).
  * Files without a header that were already on main are grandfathered and listed
  * as a count, until backfilled; the weekly garden (scripts/audit/experiments-garden.mjs)
@@ -27,7 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { readExperiment, canonIds, routerCellIds, needsRouterEvidence } from './lib/experiment-header.mjs';
+import { readExperiment, canonIds, routerCellIds, needsRouterEvidence, needsDefectRates } from './lib/experiment-header.mjs';
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'experiments');
 const REL = 'scripts/eval/experiments/';
@@ -44,6 +46,9 @@ export function lintExperiments(dir = DIR, { added = [], strict = false, canons 
     for (const p of problems) errors.push(`${n}: ${p}`);
     if (header && added.includes(n) && needsRouterEvidence(header) && header.router_evidence == null) {
       errors.push(`${n}: a judged ${header.stage} result needs router_evidence: [<cell ids>] — add its verdicts as evidence in scripts/eval/estimator/router-table/rules.json and rebuild (build.py) — or router_evidence: "none — <why>" (#7263)`);
+    }
+    if (header && added.includes(n) && needsDefectRates(header, n) && header.defect_rates == null) {
+      errors.push(`${n}: an ${header.stage} result from 2026-10-30 on needs defect_rates: <repo path> — the misleads and wrong_text per 1,000 words and fidelity per route (scripts/eval/route-judge-6740/defect-rate.py), decided against the live route (eval-design.md §10.3; text in scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/eval-design-10.3.md) — or defect_rates: "none — <why>"`);
     }
     if (header || problems.length || !DATED.test(n)) continue;
     if (strict || added.includes(n)) errors.push(`${n}: no header — a new entry starts with the front matter in ${REL}README.md`);
