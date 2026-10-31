@@ -118,9 +118,17 @@ await withMongo(async (db) => {
       normalizeReleaseWhen(rw, 'x');
       console.log(`  ${String(g.n).padStart(7)}  ${reason}: ${kind}:${ref} → ${rw.kind}:${rw.ref}`);
       if (!APPLY) continue;
-      const r = await B.updateMany({ 'pipeline_auto.hold.reason': reason, 'pipeline_auto.hold.issue': holdIssue ?? null, 'pipeline_auto.hold.release_when.backfilled_by': SWEEP, 'pipeline_auto.hold.release_when.ref': ref },
-        { $set: { 'pipeline_auto.hold.release_when.kind': rw.kind, 'pipeline_auto.hold.release_when.ref': rw.ref } });
-      await recordSweepActions(db, [{ sweep: SWEEP, book_id: `reason:${reason}`, action: 'hold-release-when-refreshed', detail: { reason, from: `${kind}:${ref}`, to: `${rw.kind}:${rw.ref}`, books: r.modifiedCount } }]);
+      // By id, BATCH at a time: one updateMany over 409K unindexed rows outlasts the socket (2026-10-31).
+      const match = { 'pipeline_auto.hold.reason': reason, 'pipeline_auto.hold.issue': holdIssue ?? null, 'pipeline_auto.hold.release_when.backfilled_by': SWEEP, 'pipeline_auto.hold.release_when.ref': ref };
+      let ids = [], modified = 0;
+      const flush = async () => {
+        if (!ids.length) return;
+        modified += (await B.updateMany({ ...match, id: { $in: ids } }, { $set: { 'pipeline_auto.hold.release_when.kind': rw.kind, 'pipeline_auto.hold.release_when.ref': rw.ref } })).modifiedCount;
+        ids = [];
+      };
+      for await (const b of B.find(match, { projection: { _id: 0, id: 1 } }).batchSize(BATCH)) { ids.push(b.id); if (ids.length >= BATCH) await flush(); }
+      await flush();
+      await recordSweepActions(db, [{ sweep: SWEEP, book_id: `reason:${reason}`, action: 'hold-release-when-refreshed', detail: { reason, from: `${kind}:${ref}`, to: `${rw.kind}:${rw.ref}`, books: modified } }]);
     }
     return;
   }
