@@ -143,7 +143,7 @@ The router serves three readers:
 What the optimum is:
 1. **A wrong page is priced.** Loss = cost per page + λ × P(wrong text), with λ = 20 × the cost of a good read (about $0.02 a page at current prices). It replaces the hand-set margins (8 points; best route + 2% wrong text) once the build job's joint gate lands.
 2. **An absolute bar as well as a relative one.** A route must reach ≥ 90% of pages accepted against the image, not only come close to the best route in its cell. A cell where no route clears it is flagged for a new engine or prompt, not routed.
-3. **The outcome is served text quality, measured honestly.** The number is judge-corrected defects per 1,000 words, plus the share of books over the absolute bar. Each is reported twice, per book and weighted by reads. Page acceptance is the instrument that decides a cell; it is not the goal.
+3. **The outcome is severe defects per 1,000 words** (Derek, 2026-11-01). A defect is severe when it changes what the English translation would say: a wrong word, name or number that changes the sense; invented text; another leaf's text; a missing line. Spelling variants, abbreviations, long s, punctuation and line breaks do not count, as long as the translation's meaning survives. Where a typed reference exists, test this directly: translate the machine read and the reference with the same model, then compare the two English texts for meaning. Elsewhere, the judge's MQM `misleads` + `wrong_text` classes stand in. Report per book and weighted by reads, judge-corrected. Page acceptance is the instrument that decides a cell; it is not the goal.
 
 What a route costs:
 
@@ -172,7 +172,13 @@ What holds regardless:
 - The bad books are mostly badly wrong, not marginal. Only 18 of the 71 sit at exactly 2 of 5 pages, and the median is 135 MQM points per 1,000 words.
 - The ranking results (AUC 0.66, ICC 0.38) do not depend on where the bar sits.
 
-To settle the number, calibrate the judge at #7866's own bar, on real reads with a typed reference: the PPI step under "Statistical methods". About 100 such pages split across print and manuscript would do. Until then V7 reports the figure with this caveat, and the read-weighted version beside it.
+To settle the number, calibrate the judge at #7866's own bar, on real reads with a typed reference: the PPI step under "Statistical methods". Use about 100 pages, split across print and manuscript.
+
+**A human baseline.** Human-typed editions (DTA, Wikisource, EEBO-TCP, CHURRO's transcriptions) get the same judge against the same images, about 60 pages. A flag on human text is either a real typist or edition error or a judge false alarm. Each flag is adjudicated: a second Opus pass on the cropped span, plus Gemini. That yields two numbers:
+- the human severe-defect rate, the honest comparator for "is machine text good enough?";
+- the judge's false-alarm rate on near-clean text.
+
+Job `router-defaults-calib-7263` runs both. Until it lands, V7 reports the figure with this caveat, and the read-weighted version beside it.
 
 ## Words used here
 
@@ -201,7 +207,7 @@ Each check below has a pass bar set before the data. A failing check stops the r
 | V4 | Does a switch reproduce? | A confirmation run on fresh books, paired, before the routing row ships | the winner stays within the margin on the fresh draw | before shipping |
 | V5 | Did the shipped switch help? | Served-quality draw in that cell before and after (one page per book, ≥ 30 books) | acceptance not worse; $ per accepted page lower | after shipping |
 | V6 | Is the optimum still optimal? | Monthly canary draw per shipped route | no drop beyond the margin; a drop reopens the cell | ongoing |
-| V7 | Is the whole library getting better? | The served-quality draw of #7866 (5 pages a book, stratified), monthly | judge-corrected defects per 1,000 words fall, and so does the share of books over the absolute bar; both reported raw and read-weighted (see "Decisions") | the outcome |
+| V7 | Is the whole library getting better? | The served-quality draw of #7866 (5 pages a book, stratified), monthly | judge-corrected severe defects per 1,000 words fall, set against the human-typed baseline; both reported raw and read-weighted (see "Decisions") | the outcome |
 
 - **V1–V3 decide whether the machinery can be trusted at all.** They run first: jobs `heldout-estimator-7263` and `judge-cal-churro-7263`, plus the simulation in the build-fix job.
 - **V4–V6 are per decision.**
