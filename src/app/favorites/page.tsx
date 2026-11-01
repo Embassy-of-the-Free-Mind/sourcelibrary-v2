@@ -511,6 +511,9 @@ export default function FavoritesPage() {
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 50vw, 33vw"
                   priority={i < 6}
+                  // croppedUrl is our own /api/crop-image address, which the optimiser
+                  // refuses (400 INVALID_IMAGE_OPTIMIZE_REQUEST); the crop is already sized.
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 flex flex-col justify-end p-4">

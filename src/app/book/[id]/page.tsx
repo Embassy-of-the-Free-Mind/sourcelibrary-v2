@@ -638,6 +638,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           photo_original: 1,
           archived_photo: 1,
           cropped_photo: 1,
+          // getPageImageUrl's pre-sized variants. Without display_photo every 'display' URL
+          // here (hero background, up to 40 pages) went through /api/image as the master,
+          // which refuses a page over 100 MP (Codex Sinaiticus facsimile, 413; #5448).
+          display_photo: 1,
+          enhanced_photo: 1,
           thumbnail: 1,
           thumbnail_blob: 1,
           image_display: 1,
