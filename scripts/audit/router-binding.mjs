@@ -7,12 +7,12 @@
 //   node scripts/audit/router-binding.mjs [--crontab=FILE | --ssh=root@HOST] [--json]
 //
 // Reads the crontab (default: `crontab -l` here), takes every non-comment cli-ocr-lane.mjs line in `run --cohort`,
-// `correct` or `armc --frame=first-read` mode, derives the routes it runs from its flags, and prints each served cell's status (ok, mismatch,
+// `correct` (or its `--reread-per-call` re-read) or `armc --frame=first-read` mode, derives the routes it runs from its flags, and prints each served cell's status (ok, mismatch,
 // waived, undecided, no-cell; see scripts/lib/router-binding.mjs). Then lists the decided cells (keep/switch, pages
 // waiting) that no line serves. Exit 1 on any mismatch, else 0. Read-only: no Mongo, no pages.
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
-import { loadCurrentTable, checkBinding, describeFinding, servedByFirstRead, servedByCorrect, servedByArmcFirstRead } from '../lib/router-binding.mjs';
+import { loadCurrentTable, checkBinding, describeFinding, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead } from '../lib/router-binding.mjs';
 import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 
@@ -28,7 +28,9 @@ export function servedByCrontab(text) {
     if (/\srun\s+--cohort=/.test(line)) {
       served.push(...servedByFirstRead({ languages: codes(flag('languages')), correct: codes(flag('correct')) || [], perCall: Number(flag('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }));
     } else if (/\scorrect\s+--/.test(line)) {
-      served.push(...servedByCorrect({ languages: CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|') }));
+      const languages = CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+      // --reread-per-call=N (#7853): the same frame re-read, not corrected
+      served.push(...(flag('reread-per-call') ? servedByReread({ languages, perCall: Number(flag('reread-per-call')) }) : servedByCorrect({ languages })));
     } else if (/\sarmc\s+--frame=first-read/.test(line)) {
       served.push(...servedByArmcFirstRead({ langs: (flag('langs') || 'la').split(',') }));
     }

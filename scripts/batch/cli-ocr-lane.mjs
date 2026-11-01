@@ -55,7 +55,7 @@
  *
  *   ... cli-ocr-lane.mjs correct-count
  *   ... cli-ocr-lane.mjs correct --out=DIR [--max-pages=N] [--concurrency=N] [--book-chunk=40] [--deadline-min=M]
- *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--apply]
+ *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--apply | --dry-run]
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
  * French book, idle in the pipeline and not held; a page whose stored OCR is a Flash-Lite draft of 300+ characters,
@@ -66,6 +66,20 @@
  * answer leaves the page; a CONTAIN answer leaves it and goes to DIR/../correct-contain-claims.jsonl for a by-eye check.
  * Every page tried goes to DIR/../correct-ledger.jsonl with its outcome and is not tried again; once a chunk is
  * ledgered its page images are deleted (only an applied run deletes them).
+ *
+ * RE-READ (#7853, Derek 2026-11-01: re-read the stored Flash-Lite text, do not correct it). `correct --reread-per-call=4`
+ * (and `correct-count --reread-per-call=4`) takes the SAME books and pages as above, but each chunk is read fresh by
+ * `cli-ocr.mjs read --per-call=4` (the live first-read prompt, 4 consecutive pages a call, no draft sent) and written by
+ * the plain `cli-ocr.mjs apply` over the stored text, with every guard the read path has: refusal and summary, empty and
+ * over-long reads, chatter, repetition loops, the truncation guard, the 40% shared-words floor against the stored text
+ * (a neighbouring leaf or an invention), a page rewritten since the read, and `--print-only` (the route's cell is print).
+ * Kept reads are reused before calling (#7469). The write stamps `ocr.pipeline = agy-reread-lite-7853` (REREAD_LANE)
+ * and its run id, the --reason names the route (agy-flash-low@4-read) and the lane run, and `--mark-stale` flags the
+ * English. Idempotent: the page selector refuses a page already stamped REREAD_LANE (and a re-read page is no longer a
+ * Flash-Lite page), and every page tried goes to DIR/../reread-ledger.jsonl, not the correction ledger, so a page the
+ * correction left (UNCHANGED, CONTAIN, the 25% cap) is re-read once. Claims DIR/../claims-reread/. The quota floor and
+ * pools are the correction lane's; there is no Claude fallback (the fallback serves Latin, which this mode does not).
+ * Router: the cells german-lite/print and french-lite/print, route agy-flash-low@4-read (servedByReread).
  *
  * QUOTA FLOOR. Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini weekly remaining
  * fraction is below the straight line to its reset (remaining time / 7 days), or the 5-hour bucket is below
@@ -185,7 +199,7 @@ import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
-import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByArmcFirstRead } from '../lib/router-binding.mjs';
+import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead } from '../lib/router-binding.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -275,6 +289,31 @@ export function correctMode({ buckets, gate = () => agyClaudeGate(process.env.AG
   const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
   return q.ok ? { mode: 'gemini', model: CORRECT_MODEL, lane: CORRECT_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
 }
+// ── re-read (#7853, header: RE-READ) ──
+/** The re-read's ocr.pipeline stamp: the provenance marker the page selector refuses, so a page is re-read once. */
+export const REREAD_LANE = 'agy-reread-lite-7853';
+/** `--reread-per-call` value → pages a call (1-4, the lanes' cap), or null when the flag is absent. Throws on a bad value. */
+export function parseRereadPerCall(v) {
+  if (v == null) return null;
+  const n = Number(v);
+  if (!(Number.isInteger(n) && n >= 1 && n <= 4)) throw new Error(`--reread-per-call must be 1 to 4, got ${v}`);
+  return n;
+}
+/** The router's id for the route a re-read run serves: agy-flash-low@4-read at 4 a call, agy-flash-low-read at 1. */
+export const rereadRoute = (perCall) => (perCall > 1 ? `agy-flash-low@${perCall}-read` : 'agy-flash-low-read');
+/** Which run this is: the re-read when the Gemini floor is open, else none (no Claude fallback: it serves Latin only). */
+export function rereadMode({ buckets, floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
+  const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
+  return q.ok ? { mode: 'reread', model: CORRECT_MODEL, lane: REREAD_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
+}
+/** The re-read's reader: the plain read (live first-read prompt, no draft), N pages a call, kept reads reused (no --fresh). */
+export function rereadReadArgs({ cli, ids, dir, model = CORRECT_MODEL, job, perCall }) {
+  return [cli, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${model}`, `--lane=${REREAD_LANE}`, `--job=${job}`, '--stop-on-quota', ...(perCall > 1 ? [`--per-call=${perCall}`] : [])];
+}
+/** The re-read's writer: the plain apply over the stored text, this chunk only, stamped and flagged with REREAD_LANE. */
+export function rereadApplyArgs({ cli, ids, dir, reason, apply }) {
+  return [cli, 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, `--lane=${REREAD_LANE}`, '--print-only', `--mark-stale=${REREAD_LANE}`, ...(apply ? ['--apply'] : [])];
+}
 export const LITE_MODELS = Object.freeze(['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview']);
 export const IDLE_STATUSES = Object.freeze(['complete', 'archive_complete', 'failed', 'parked', 'ocr_complete']);
 /**
@@ -345,12 +384,12 @@ export function claimBook(dir, bookId, me) {
  * Books a correction reader is reading right now on this box, from /proc (cli-ocr.mjs read --lane=<CORRECT_LANE>; the
  * book is the folder of its --page-ids-file). Covers a run that does not claim (code from before the claims).
  */
-export function liveReaderBooks(procDir = '/proc') {
+export function liveReaderBooks(procDir = '/proc', lanes = [CORRECT_LANE, REREAD_LANE]) {
   const out = new Set();
   for (const pid of fs.readdirSync(procDir).filter((d) => /^\d+$/.test(d))) {
     let argv;
     try { argv = fs.readFileSync(path.join(procDir, pid, 'cmdline'), 'utf8').split('\0'); } catch { continue; }
-    if (!argv.some((a) => a.endsWith('cli-ocr.mjs')) || !argv.includes('read') || !argv.includes(`--lane=${CORRECT_LANE}`)) continue;
+    if (!argv.some((a) => a.endsWith('cli-ocr.mjs')) || !argv.includes('read') || !lanes.some((l) => argv.includes(`--lane=${l}`))) continue;
     const f = argv.find((a) => a.startsWith('--page-ids-file='));
     if (f) out.add(path.basename(path.dirname(f.slice('--page-ids-file='.length))));
   }
@@ -381,10 +420,19 @@ function ledgerTail(file, set, state) {
   for (const l of text.slice(0, cut).split('\n').filter(Boolean)) { try { set.add(JSON.parse(l).page_id); } catch { /* skip */ } }
 }
 
+/**
+ * The Mongo match of the correctable pages of one book (see CORRECT in the header), shared by correct and the re-read.
+ * A page the re-read wrote carries ocr.pipeline = REREAD_LANE (and a Flash model): never selected again.
+ */
+export const correctablePageMatch = (bookId, skipPageTypes) => ({
+  book_id: bookId, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.pipeline': { $ne: REREAD_LANE }, 'ocr.edited_by': { $exists: false },
+  'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: skipPageTypes }, 'ocr.data': { $type: 'string' },
+});
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
 async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   const rows = await db.collection('pages').aggregate([
-    { $match: { book_id: book.id, ...VISIBLE_PAGE_MATCH, 'ocr.model': { $in: LITE_MODELS }, 'ocr.edited_by': { $exists: false }, 'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'ocr.data': { $type: 'string' } } },
+    // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
+    { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES) },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
@@ -409,11 +457,17 @@ function routeCheck(served, arg) {
 
 async function correctMain(mode, arg) {
   const APPLY = process.argv.includes('--apply');
+  // --dry-run says so out loud (no --apply is already a dry run); both together is a mistake, not a choice.
+  if (APPLY && process.argv.includes('--dry-run')) { console.error('--apply and --dry-run together'); process.exit(2); }
   const OUT = arg('out') && path.resolve(arg('out'));
   if (mode === 'correct' && !OUT) { console.error('correct needs --out=DIR'); process.exit(2); }
-  const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), 'correct-ledger.jsonl') : null);
+  // --reread-per-call=N (#7853, header: RE-READ): the same frame, re-read N a call instead of corrected
+  let REREAD;
+  try { REREAD = parseRereadPerCall(arg('reread-per-call')); } catch (e) { console.error(e.message); process.exit(2); }
+  const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), REREAD ? 'reread-ledger.jsonl' : 'correct-ledger.jsonl') : null);
   const CLAIMS = OUT ? path.join(path.dirname(OUT), 'correct-contain-claims.jsonl') : null;
-  if (mode === 'correct') await routeCheck(servedByCorrect({ languages: CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|') }), arg);
+  const LANGUAGE_NAMES = CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+  if (mode === 'correct') await routeCheck(REREAD ? servedByReread({ languages: LANGUAGE_NAMES, perCall: REREAD }) : servedByCorrect({ languages: LANGUAGE_NAMES }), arg);
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../lib/translate-core.mjs');
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
@@ -439,13 +493,14 @@ async function correctMain(mode, arg) {
   } else if (HOME && !fs.existsSync(HOME)) { console.error(`--agy-home: ${HOME} does not exist`); await client.close(); process.exit(2); }
   const POOL = poolName({ home: HOME });
   const CHILD_ENV = agyEnv(HOME);
-  const CLAIMS_DIR = path.join(path.dirname(LEDGER), 'claims');
+  const CLAIMS_DIR = path.join(path.dirname(LEDGER), REREAD ? 'claims-reread' : 'claims');
   const ME = { pid: process.pid, pool: POOL };
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
-  // The run's mode (header: CLAUDE FALLBACK). correct-count counts the Gemini lane's frame unless --fallback.
-  const M = mode === 'correct-count' ? (process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
-    : correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+  // The run's mode (header: CLAUDE FALLBACK; RE-READ has none). correct-count counts the Gemini lane's frame unless --fallback.
+  const gate = () => (REREAD ? rereadMode : correctMode)({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+  const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: CORRECT_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
+    : gate();
   if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
@@ -460,7 +515,7 @@ async function correctMain(mode, arg) {
       t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
       t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
     }
-    console.log(`correction queue (${M.lane}): ${JSON.stringify(t)}`);
+    console.log(`${REREAD ? 're-read' : 'correction'} queue (${M.lane}): ${JSON.stringify(t)}`);
     await client.close(); return;
   }
   const MAX = Number(arg('max-pages') || 200), CHUNK = Number(arg('book-chunk') || 40);
@@ -468,17 +523,21 @@ async function correctMain(mode, arg) {
   // Up to 8 (#7263): each book is one agy process (~0.8 of a core); main is CPU-bound at 3, gex45 has 20 threads.
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
   const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
-  const job = `cli-ocr-correct-${new Date().toISOString().slice(0, 10)}`;
+  const job = `cli-ocr-${REREAD ? 'reread' : 'correct'}-${new Date().toISOString().slice(0, 10)}`;
+  // The re-read's lane run id, named in every write's --reason and ledger row (each write's own run id is cli-ocr.mjs's).
+  const LANE_RUN = `cli-ocr-reread-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}-${process.pid}`;
+  const ROUTE = REREAD ? rereadRoute(REREAD) : null;
   fs.mkdirSync(OUT, { recursive: true });
   // The template, built once per day folder by the #5924 builder, which refuses if the live OCR prompt has moved.
   const TPL = path.join(OUT, 'fc-correct-prompt.txt');
-  if (!fs.existsSync(TPL)) {
+  if (!REREAD && !fs.existsSync(TPL)) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}): pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}${REREAD ? `; route ${ROUTE}, run ${LANE_RUN}${APPLY ? '' : ', DRY RUN'}` : ''}): pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
+  const dryWhy = {};   // a dry run's would-write / skip reasons (nothing is ledgered)
   const nextChunk = async () => {
     while (bi < books.length) {
       const b = books[bi++];
@@ -497,7 +556,7 @@ async function correctMain(mode, arg) {
       if (budget <= 0) { stop ??= 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop ??= 'deadline'; break; }
       // The mode's own gate, read again before every chunk: a reset or a spent Claude group ends the run.
-      const now = correctMode({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
+      const now = gate();
       if (now.mode !== M.mode) { stop ??= now.mode ? `mode changed to ${now.mode}: the next run takes it` : now.why; break; }
       const q = now.q;
       const c = await nextChunk();
@@ -514,13 +573,25 @@ async function correctMain(mode, arg) {
       const ids = path.join(dir, `page-ids-${Date.now()}.json`);
       fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
       console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}): ${take.length} of ${c.open.length} pages; pool ${POOL} ${q ? `weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%` : now.why}`);
-      const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
+      const CLI = path.join(HERE, 'cli-ocr.mjs');
+      const read = await run(REREAD ? rereadReadArgs({ cli: CLI, ids, dir, model: M.model, job, perCall: REREAD })
+        : [CLI, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
+      const reason = REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
+        : M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
         : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
-      const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${M.lane}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      const applied = await run(REREAD ? rereadApplyArgs({ cli: CLI, ids, dir, reason, apply: APPLY })
+        : [CLI, 'apply', `--out=${dir}`, `--reason=${reason}`, `--mark-stale=${M.lane}`, ...(APPLY ? ['--apply'] : [])], tag, CHILD_ENV);
+      if (!APPLY && applied === 0) {
+        // Dry run: say what the writer would do with each page of the chunk; ledger nothing, delete nothing.
+        let dry = {};
+        try { dry = JSON.parse(fs.readFileSync(path.join(dir, 'apply-summary-dry.json'), 'utf8')); } catch { /* none */ }
+        // a dry apply lists only its skips: a page it read and did not skip is one it would write
+        for (const p of take) { const why = dry.skipped_pages?.[p.id] ?? (fs.existsSync(path.join(dir, `${p.id}.meta.json`)) ? 'would write' : 'not_read'); dryWhy[why] = (dryWhy[why] || 0) + 1; }
+        console.log(`${tag}  dry: ${JSON.stringify(dryWhy)}`);
+      }
       if (!APPLY || applied !== 0) { release(); continue; }
       const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
       const sum = summaryFile ? JSON.parse(fs.readFileSync(summaryFile, 'utf8')) : {};
@@ -530,18 +601,20 @@ async function correctMain(mode, arg) {
         const why = written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
         const k = why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : 'other';
         tally[k]++;
-        fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, outcome: k, why, at: new Date().toISOString() }) + '\n');
+        fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, outcome: k, why, at: new Date().toISOString(), ...(REREAD && { lane: REREAD_LANE, route: ROUTE, lane_run: LANE_RUN, run: sum.run ?? null }) }) + '\n');
         ledger.add(p.id);
       }
       // The chunk is written and ledgered: its page images (~420 KB a page, ~1.3 GB a full run) are not needed again
       // (apply checks the recorded image hash; the prompt sent is in each write's provenance). The root disk is #6223.
       for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      // A block read keeps its images in one ws-call-<id> folder a call; this run holds the book's claim, so all are this chunk's.
+      if (REREAD) for (const w of fs.readdirSync(dir).filter((f) => f.startsWith('ws-call-'))) fs.rmSync(path.join(dir, w), { recursive: true, force: true });
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-  console.log(`\ncorrect run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  console.log(`\n${REREAD ? 're-read' : 'correct'} run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${APPLY ? JSON.stringify(tally) : `dry run: ${JSON.stringify(dryWhy)}`}`);
   await client.close();
 }
 

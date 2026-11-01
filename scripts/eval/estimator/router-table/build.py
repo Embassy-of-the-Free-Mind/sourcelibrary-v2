@@ -293,8 +293,13 @@ def main():
     DR, CAL = DRF.get('cells', {}), DRF.get('recheck') or {}
     RULE = P.get('decision_rule', {}).get('in_force', 'kn') if '--rule' not in sys.argv else arg('--rule')
     # the bar of the defect rule is the LIVE route: what the table current.json names runs now in each cell
-    LIVE_T = json.load(open(D + json.load(open(D + 'current.json'))['table'] + '.json'))
-    LIVE = {r['id']: (r['route'] if r['decision'].startswith('switch') else r['current']) for r in LIVE_T['rows']}
+    CUR = json.load(open(D + 'current.json'))
+    LIVE_T = json.load(open(D + CUR['table'] + '.json'))
+    # current.json `cells` (#7853): a cell moved to a newer build alone takes its live row from that build
+    live_rows = {r['id']: r for r in LIVE_T['rows']}
+    for cid, c in CUR.get('cells', {}).items():
+        live_rows[cid] = next(r for r in json.load(open(D + c['table'] + '.json'))['rows'] if r['id'] == cid)
+    LIVE = {r['id']: (r['route'] if r['decision'].startswith('switch') else r['current']) for r in live_rows.values()}
     if P.get('script_split', {}).get('on') and '--no-script-split' not in sys.argv: P['cells'] = expand_by_script(P)
     L = lambda k: json.load(open(arg('--' + k) or P['inputs'][k]))  # --pilot <path> until #7376 is on main
     pilot, v1, v2, cap = L('pilot')['cells'], L('v1')['cells'], {c['id']: c for c in L('v2')['cells']}, L('capacity')['channels']

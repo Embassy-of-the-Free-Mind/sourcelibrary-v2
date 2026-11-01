@@ -11,8 +11,11 @@
 // current.json in the router-table directory names the table whose decisions are live. Moving that pointer IS the
 // decision; the other tables (scenarios such as -unsplit, -router-tests) stay what-ifs. It also holds waivers: a cell
 // may run another route than the decided one until a date at most 14 days after the waiver was set, with a reason.
+// `cells` (#7853) moves the pointer for named cells only: {"<cell>": {table, set, why}} takes that cell's row from a
+// newer build while every other cell stays on `table`, so a decision about two cells does not carry along every other
+// change a rebuild makes.
 //
-// A lane derives the routes it runs from its own flags (servedByFirstRead, servedByCorrect) and calls checkBinding.
+// A lane derives the routes it runs from its own flags (servedByFirstRead, servedByCorrect, servedByReread) and calls checkBinding.
 // Each served cell gets one status:
 //   ok         the lane runs the decided route (keep or switch)
 //   mismatch   the decision is keep/switch and the lane runs something else, with no live waiver
@@ -29,11 +32,20 @@ export const WAIVER_MAX_DAYS = 14;
 // ISO 639-3 → the router's cell prefix. Only languages the router table has cells for.
 const CELL_LANGUAGE = Object.freeze({ lat: 'latin', deu: 'german', fra: 'french', ita: 'italian', eng: 'english' });
 
-/** The current table: { name, rows: Map(cell id → row), waivers, pointer }. Throws when the pointer or table is missing. */
+/**
+ * The current table: { name, rows: Map(cell id → row), waivers, pointer }. A cell named in pointer.cells takes its row
+ * from that entry's table (the row carries `table`). Throws when the pointer, a table, or a moved cell's row is missing.
+ */
 export function loadCurrentTable(dir = ROUTER_DIR) {
   const pointer = JSON.parse(fs.readFileSync(path.join(dir, 'current.json'), 'utf8'));
-  const table = JSON.parse(fs.readFileSync(path.join(dir, `${pointer.table}.json`), 'utf8'));
-  return { name: pointer.table, rows: new Map(table.rows.map((r) => [r.id, r])), waivers: pointer.waivers || [], pointer };
+  const read = (name) => JSON.parse(fs.readFileSync(path.join(dir, `${name}.json`), 'utf8'));
+  const rows = new Map(read(pointer.table).rows.map((r) => [r.id, r]));
+  for (const [cell, c] of Object.entries(pointer.cells || {})) {
+    const row = read(c.table).rows.find((r) => r.id === cell);
+    if (!row) throw new Error(`current.json cells: ${c.table} has no cell ${cell}`);
+    rows.set(cell, { ...row, table: c.table });
+  }
+  return { name: pointer.table, rows, waivers: pointer.waivers || [], pointer };
 }
 
 /**
@@ -64,6 +76,16 @@ export function servedByCorrect({ languages = ['German', 'French'] } = {}) {
 }
 
 /**
+ * Cells the re-read mode (`correct --reread-per-call=N`, #7853) runs: the correction lane's books and pages, read fresh
+ * by agy Flash-low, N pages a call. Print only: the writer runs --print-only, so a page the reader does not tag printed
+ * keeps its stored text, and no manuscript or unknown-script page is written.
+ */
+export function servedByReread({ languages = ['German', 'French'], perCall = 4 } = {}) {
+  const route = perCall > 1 ? `agy-flash-low@${perCall}-read` : 'agy-flash-low-read';
+  return languages.map((name) => ({ lane: 'reread', cell: `${name.toLowerCase()}-lite/print`, route }));
+}
+
+/**
  * Cells the arm-c lane (`armc --frame=first-read`, #7567) runs: the language's GPU draft (la PERO-OCR, it LightOnOCR)
  * corrected by agy Flash-low, scored as written. Other frames correct a stored draft and are not checked yet.
  */
@@ -89,7 +111,7 @@ const kn = (row, route) => {
 export function checkBinding(table, served, { today = new Date().toISOString().slice(0, 10) } = {}) {
   return served.map(({ lane, cell, route }) => {
     const row = table.rows.get(cell);
-    const base = { lane, cell, runs: route, runs_kn: kn(row, route), table: table.name };
+    const base = { lane, cell, runs: route, runs_kn: kn(row, route), table: row?.table || table.name };
     if (!row) return { ...base, status: 'no-cell' };
     const decision = String(row.decision || '');
     const f = { ...base, decision, decided: row.route, decided_kn: kn(row, row.route), pages_waiting: row.pages_waiting ?? null };
