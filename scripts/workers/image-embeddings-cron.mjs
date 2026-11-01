@@ -22,6 +22,13 @@
  *   GEMINI_API_KEY=$GEMINI_API_KEY_TIER3
  * so the Gemini calls run on the paid tier 3 quota (matches the existing
  * embed-gemini cron pattern in .claude/docs/hetzner-scheduler-crontab.md).
+ *
+ * --operator  bypass the spend dial (NOT the pause). Embeddings are
+ *             standing-approved, as for embed-site-pages; the cron passes it.
+ *             Without it this cron was refused by the spent global dial on
+ *             every night of the kept logs (2026-10-18 to 11-01; the scope
+ *             envelopes that once funded it expired 10-25) and wrote nothing
+ *             — the #4865 outage again.
  */
 
 import { spawn } from 'node:child_process';
@@ -33,6 +40,7 @@ import { isPaused } from '../lib/pause.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const REPO_ROOT = path.resolve(path.dirname(__filename), '..', '..');
+const OPERATOR = process.argv.includes('--operator');
 
 const PHASES = [
   {
@@ -103,7 +111,7 @@ async function main() {
     // envelope that is open means "image embeddings may run tonight". Their
     // spend lands against the envelope's books where it can be attributed and
     // against the global dial otherwise, exactly as the envelope contract says.
-    const gate = await budgetAllowsDispatchScoped(db, 'image-embeddings-cron', { control });
+    const gate = await budgetAllowsDispatchScoped(db, 'image-embeddings-cron', { control, bypass: OPERATOR });
     await client.close();
     if (!gate.allowed) process.exit(0);
     if (gate.envelopeIds) {
