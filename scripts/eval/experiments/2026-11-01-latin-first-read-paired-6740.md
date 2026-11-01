@@ -11,8 +11,7 @@ status: undecided
 decision: "Pending: the latin-blank/print route is Derek's call (#7862 DECISION); this test supplies the paired evidence."
 superseded_by: null
 issue: [6740, 7862, 7824, 7701, 7853]
-router_evidence: "pending"
-defect_rates: "scripts/eval/latin-paired-6740/results/score.json"
+router_evidence: "none — preregistration; the results PR exports the evidence"
 ---
 ## 2026-11-01 · Latin first reads: PERO > agy one a call (live), PERO > agy four a call, or agy read four a call? Paired, queue-weighted (#6740)
 
@@ -42,7 +41,7 @@ Code: `scripts/eval/latin-paired-6740/` (`lib.mjs`, `frame.mjs`, `arms.mjs`, `gp
 - **Draw**: sequential Poisson sampling, PPS on owed pages. One uniform a book (`makeRng(67401)` over all owing books in id order, before exclusions), key = U / owed; a stratum's books in ascending key, the rest its reserves in order.
 - **The page**: one interior unread page of the book (`isInterior` on `pages_count`), uniform from a stream seeded by the book id. Its block is the run of consecutive unread pages around it, cut to 4 with the page at a seeded position. A book that left the frame, that `spreadReason` marks as a possible unsplit spread, or that has no interior unread page is replaced by the stratum's next reserve.
 - **Typeface** (post-stratum): one agy call a page (`agyFace`, unchanged). A page tagged `none` (no printed body text) or an unfetchable image is replaced by the next reserve.
-- **Done before this file merged:** the census, exclusions, draw, page choice and face tags (98 books tagged; 52 drawn books replaced as possible unsplit spreads, 1 as `none`). The sample: 40 pages in 40 books, all e-rara; 37 Antiqua and 3 Fraktur; every block 4 pages.
+- **Done before this file merged:** the census, exclusions, draw, page choice and face tags (98 books tagged; 52 drawn books replaced as possible unsplit spreads, 1 as `none`). The sample: 40 pages in 40 books, all e-rara; 37 Antiqua and 3 Fraktur; every block 4 pages. While this PR's checks ran, the PERO drafts were made (158 of 160 block pages) and the arms ran (dry applies only). No text has been judged.
 - **Weights**: Horvitz–Thompson, a page stands for w = owed / π pages, π = min(1, n_h · owed / M_h). Every weighted figure uses w; unweighted k/n are reported beside it. The 52 spread replacements mean the weighted estimates describe the part of the queue the lane can read now, not the books waiting on a split check.
 
 ### Arms, all on the same page (`arms.mjs`; every apply is a DRY run with `--emit-written`; nothing is written)
