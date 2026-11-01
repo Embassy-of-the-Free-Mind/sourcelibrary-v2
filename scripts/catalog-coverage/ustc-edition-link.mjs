@@ -144,7 +144,8 @@ const JUDGE = `You decide whether a scanned book is a SPECIFIC printed edition r
 An edition = one printing: same text, same printer/publisher, same place, same year (allow ±1 for dating conventions).
 A reprint by another printer, another year, or another city is a DIFFERENT edition even if the title is identical.
 Evidence: our catalogue record and the OCR text of the first leaves (usually the title page with its imprint: place, printer, year).
-Weigh the title-page imprint above our catalogue record. If the OCR has no imprint and the record cannot separate the candidates, answer unsure.
+Weigh the title-page imprint above our catalogue record.
+If the OCR shows no imprint, decide from our record: USTC aims to list every edition, so when exactly ONE candidate is the same work by the same author within the year, answer same_edition (imprint_seen false). When two or more same-work candidates remain and nothing separates them (place, printer, volume, impression), answer unsure.
 A volume can bind several works: if our title page names a different work than the candidate, answer different_work.
 imprint_seen = true only if the OCR itself shows place, printer or year on a title page or colophon.
 Answer with ONE line of JSON and nothing else:
