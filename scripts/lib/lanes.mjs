@@ -302,6 +302,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/backfill-author-canonical-links.mjs', reason: 'metadata: author canonical links' },
   { file: 'scripts/maintenance/classify-text-role.mjs', reason: 'metadata: books.text_role' },
   { file: 'scripts/maintenance/fix-broken-image-thumb.mjs', reason: 'display: thumbnail URLs' },
+  { file: 'scripts/maintenance/rehost-walled-covers.mjs', reason: 'display: cover URLs moved from walled hosts to the R2 copy of the same page (#5448)' },
   { file: 'scripts/maintenance/seam-repair-6742/lean.mjs', reason: 'repair: minimal edge edits to served page translations at broken page joins, through writePageTranslation with a revision per page and an undo (#6742); no step work, skips held books; nightly cron, stops at the account\'s 60% weekly' },
   { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },

@@ -42,6 +42,10 @@
 
 # Weekly: clear image_thumb fields on books whose /pages/-thumb URL 404s (#1945)
 0 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-thumb-sweep.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/fix-broken-image-thumb.mjs --apply" >> /var/log/sourcelibrary/thumb-sweep.log 2>&1
+# Weekly: point covers stored on hosts browsers cannot load (gallica, SBB, Harvard) at our R2 copy of the same page (#5448, Derek 2026-11-01)
+15 6 * * 0 cd /root/sourcelibrary && [ -f scripts/maintenance/rehost-walled-covers.mjs ] && flock -n /tmp/sl-rehost-covers.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/rehost-walled-covers.mjs --apply" >> /var/log/sourcelibrary/rehost-walled-covers.log 2>&1
+# Daily: readers' broken-image reports from the last day, re-fetched; pages ntfy when any still fail (#5448, Derek 2026-11-01)
+50 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/broken-image-reports.mjs ] && flock -n /tmp/sl-broken-images.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/broken-image-reports.mjs --days=1 --alert" >> /var/log/sourcelibrary/broken-image-reports.log 2>&1
 
 # R2 coverage snapshot (daily — was 6h; the HEAD sweep was ~27% of all site traffic, 2026-06-11)
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
