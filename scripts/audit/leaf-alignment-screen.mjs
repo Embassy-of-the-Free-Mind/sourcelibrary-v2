@@ -47,7 +47,9 @@ const allScanRows = () => fs.readdirSync(OUT).filter((f) => /^scan-.*\.jsonl$/.t
 export async function loadRows(db, bookId, { jp2Repaired = false } = {}) {
   const docs = await db.collection('pages').aggregate([
     { $match: { book_id: bookId, page_number: { $gt: 0 }, hidden: { $ne: true }, repeat_of: { $exists: false } } },
-    { $project: { _id: 0, p: '$page_number', t: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, PREFIX] }, L: { $strLenCP: { $ifNull: ['$ocr.data', ''] } },
+    // ocr.data is not always a string (#4272): a non-string reads as no text.
+    { $project: { _id: 0, p: '$page_number', t: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $substrCP: ['$ocr.data', 0, PREFIX] }, ''] },
+      L: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] },
       type: '$page_type', bytes: '$archive_metadata.bytes', src: '$archive_metadata.source', w: '$image_width', h: '$image_height', split: { $gt: [{ $size: { $ifNull: ['$split_into', []] } }, 0] } } },
     { $sort: { p: 1 } },
   ], { allowDiskUse: false, maxTimeMS: 120000 }).toArray();
