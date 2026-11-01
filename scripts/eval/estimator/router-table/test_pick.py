@@ -312,5 +312,68 @@ class Multiplicity(unittest.TestCase):
         self.assertGreater(r['rates']['none']['boundary'], 0.10)          # the rule before: one of six passes often
         self.assertLessEqual(r['rates']['max-bonferroni']['boundary'], 0.05)
 
+class Defaults(unittest.TestCase):
+    """Derek, 2026-11-01 (router-optimization-paper.md, Decisions 1-2): the priced loss and the absolute bar."""
+    Q = {'switch': {'within': 0.08, 'p': 0.9, 'wrong_text_max': 0.04, 'bar': 'opus'}, 'hold': {'acc': 0.8, 'p': 0.9},
+         'loss': {'in_force': True, 'lambda_multiple': 20}, 'absolute_bar': {'in_force': True, 'acc': 0.9, 'p': 0.9}}
+    OLD = dict(Q, loss={'in_force': False}, absolute_bar={'in_force': False})
+
+    def r(self, rid, acc, usd_raw, pw, bar=False, spread=0.01):
+        d = [acc - spread, acc, acc + spread] * 100
+        return dict(id=rid, mean=acc, _d=d, wrong=0, wrate=pw, pw=pw, n=60, p80=sum(v >= 0.8 for v in d) / len(d),
+                    p_abs=sum(v >= 0.9 for v in d) / len(d), _usd_raw=usd_raw, _usd_acc=usd_raw / acc, _bar=bar)
+
+    def test_loss_prices_wrong_text_instead_of_the_margin(self):
+        # latin-lite/print's shape: the cheap corrector misses the old wrong-text margin (0.06 > the bar's 0.017 + 0.04)
+        opus, agy = self.r('opus', 0.94, 0.0019, 0.017, bar=True), self.r('agy', 0.95, 0.00096, 0.061)
+        M = [opus, agy]
+        self.assertEqual(B.decide({}, M, opus, self.OLD, STEADY, lambda b: b['wrate'] + 0.04), ('keep', opus))
+        c0 = B.good_read_usd(M, self.Q)
+        self.assertAlmostEqual(c0, agy['_usd_acc'])   # the cheapest priced route that clears the bar
+        self.assertEqual(B.decide({}, M, opus, self.Q, STEADY, None, c0=c0), ('switch', agy))
+
+    def test_loss_refuses_a_cheap_route_with_much_more_wrong_text(self):
+        # both in the gate; c0 = cheap's price: 20 x c0 x (0.10 - 0.01) = 1.8 c0 outweighs a 1 c0 saving
+        opus = self.r('opus', 0.96, 0.002, 0.01, bar=True)
+        cheap, good = self.r('cheap', 0.95, 0.0005, 0.10), self.r('good', 0.95, 0.001, 0.01)
+        M = [opus, cheap, good]; c0 = B.good_read_usd(M, self.Q)
+        self.assertEqual(B.decide({}, M, opus, self.Q, STEADY, None, c0=c0)[1]['id'], 'good')
+        self.assertEqual(B.decide({}, M, opus, self.OLD, STEADY, lambda b: b['wrate'] + 0.10)[1]['id'], 'cheap')
+
+    def test_every_route_free_orders_by_wrong_text(self):
+        # GPU-only cells: no route is priced, c0 is None, and the loss is P(wrong text) alone
+        a, b = self.r('a', 0.95, 0.0, 0.05), self.r('b', 0.94, 0.0, 0.02)
+        Q = dict(self.Q, switch=dict(self.Q['switch'], bar=None))
+        self.assertIsNone(B.good_read_usd([a, b], Q))
+        self.assertEqual(B.decide({}, [a, b], a, Q, STEADY, None, c0=None), ('switch', b))
+        self.assertEqual(B.decide({}, [a, b], a, dict(Q, loss={'in_force': False}), STEADY, lambda x: 0.10)[1]['id'], 'a')   # free tie -> higher acceptance
+
+    def test_absolute_bar_blocks_a_route_inside_the_relative_gate(self):
+        # within 0.08 of a 0.95 bar, but 0.88 on its own: not pickable; no other candidate -> NEEDS-ENGINE
+        opus, agy = self.r('opus', 0.95, 0.002, 0.01, bar=True), self.r('agy', 0.88, 0.0009, 0.01)
+        dec, pk = B.decide({}, [opus, agy], opus, self.Q, STEADY, None, c0=0.002)
+        self.assertTrue(dec.startswith('NEEDS-ENGINE (engine'), dec)
+        self.assertIn('only the Opus bar clears it', dec)
+        self.assertEqual(pk['id'], 'agy')
+        self.assertEqual(B.decide({}, [opus, agy], opus, self.OLD, STEADY, lambda b: 0.04)[0], 'switch')
+
+    def test_needs_engine_says_when_it_is_evidence(self):
+        thin = self.r('thin', 0.92, 0.001, 0.02, spread=0.05)   # mean over the bar, P(acc >= 0.9) = 2/3
+        dec = B.decide({}, [thin], thin, dict(self.Q, switch=dict(self.Q['switch'], bar=None)), STEADY, None, c0=0.001)[0]
+        self.assertTrue(dec.startswith('NEEDS-ENGINE (evidence'), dec)
+        self.assertIsNone(B.needs_engine([thin], self.OLD))
+
+    def test_a_clearing_route_is_decided(self):
+        opus, agy = self.r('opus', 0.96, 0.002, 0.01, bar=True), self.r('agy', 0.95, 0.0009, 0.01)
+        self.assertIsNone(B.needs_engine([opus, agy], self.Q))
+        self.assertEqual(B.decide({}, [opus, agy], opus, self.Q, STEADY, None, c0=0.0009), ('switch', agy))
+
+    def test_rules_json_carries_the_defaults(self):
+        import json
+        R = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rules.json')))
+        self.assertEqual(R['loss']['lambda_multiple'], 20)
+        self.assertEqual((R['absolute_bar']['acc'], R['absolute_bar']['p']), (0.9, 0.9))
+
+
 if __name__ == '__main__':
     unittest.main()

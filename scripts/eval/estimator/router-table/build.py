@@ -314,12 +314,54 @@ def pick(ok, cur, cost):
     return min(ok, key=lambda r: (cost(r), -r['mean'])) if ok else cur
 
 
-def decide(cell, M, cur, P, cost, wt_max, within=None):
+def in_force(P, k):
+    return bool((P.get(k) or {}).get('in_force'))
+
+
+def good_read_usd(M, P):
+    """The cell's cheapest good-read cost (rules.json loss): the lowest median dollars per accepted page among its
+    measured, priced routes that clear the absolute bar (the Opus bar routes included: they are what a good read costs
+    today), else among all its measured priced routes. None when no measured route is priced (every route free)."""
+    pr = [r for r in M if r.get('_usd_raw') and r['_usd_acc'] != float('inf')]
+    good = [r for r in pr if r.get('p_abs', 0) >= P['absolute_bar']['p']] if in_force(P, 'absolute_bar') else pr
+    return min(r['_usd_acc'] for r in (good or pr)) if pr else None
+
+
+def loss(r, cost, c0, P):
+    """The priced loss (Derek, 2026-11-01): cost + lambda x P(wrong text), lambda = lambda_multiple x c0, c0 the cell's
+    cheapest good-read cost. P(wrong text) = the posterior mean wrong-text rate (book-scaled, rules.json loss.wrong_text_prior).
+    c0 None (no route priced): every cost is 0, so the loss orders by P(wrong text) alone."""
+    return cost(r) + P['loss']['lambda_multiple'] * (c0 or 1.0) * r['pw']
+
+
+def needs_engine(M, P):
+    """The absolute bar (Derek, 2026-11-01): no pickable measured route has P(acc >= absolute_bar.acc) >= absolute_bar.p.
+    Returns the label, or None when a route clears it (or the bar is off). 'evidence' when the best route's posterior mean
+    is over the bar but its pages are too few to show it; 'engine' when even its mean is below."""
+    if not in_force(P, 'absolute_bar') or not M: return None
+    A = P['absolute_bar']; cand = [r for r in M if not is_bar(r, P)]
+    if any(r['p_abs'] >= A['p'] for r in cand): return None
+    b = max(cand or M, key=lambda r: r['p_abs'])
+    why = 'evidence' if b['mean'] >= A['acc'] else 'engine'
+    only_bar = any(r['p_abs'] >= A['p'] for r in M if is_bar(r, P))
+    return f"NEEDS-ENGINE ({why}: best {b['id']} P(acc >= {A['acc']:g}) = {b['p_abs']:.2f}, mean {b['mean']:.2f}" + ('; only the Opus bar clears it' if only_bar else '') + ')'
+
+
+def decide(cell, M, cur, P, cost, wt_max, within=None, c0=None):
+    """keep / switch / HOLD / NEEDS-ENGINE. With rules.json loss in force (c0 = the cell's good-read cost, good_read_usd),
+    the pick among the gate's passers is the lowest priced loss, and the wrong-text margin is not applied (the loss
+    prices wrong text); with absolute_bar in force a passer must also clear the absolute bar, and a cell where no
+    pickable route does is NEEDS-ENGINE. Neither in force: the rule of #7888 (margins, cheapest per accepted page)."""
     if cell.get('held'): return 'held', cur
     if not M: return 'keep (UNTESTED)', cur
     cand = [r for r in M if not is_bar(r, P)]
+    ne = needs_engine(M, P)
+    if ne: return ne, max(cand or M, key=lambda r: r['p_abs'])
     if not any(r['p80'] >= P['hold']['p'] for r in M): return 'HOLD', max(cand, key=lambda r: r['mean']) if cand else cur
-    p = pick(gate(M, P, wt_max, P['switch']['within'] if within is None else within)[1], cur, cost)
+    priced = in_force(P, 'loss')
+    ok = gate(M, P, (lambda best: float('inf')) if priced else wt_max, P['switch']['within'] if within is None else within)[1]
+    if in_force(P, 'absolute_bar'): ok = [r for r in ok if r['p_abs'] >= P['absolute_bar']['p']]
+    p = (min(ok, key=lambda r: (loss(r, cost, c0, P), cost(r), -r['mean'])) if ok else cur) if priced else pick(ok, cur, cost)
     return ('keep' if p is cur else 'switch'), p
 
 
@@ -387,8 +429,9 @@ def decide_defects(cell, rs, M, cur, live_id, P, cal):
             pa = within_p(r, live, R['accept_floor']['within'])
             g = dict(wrong_text=cw * mean(r, 'wrong_text') <= cw * mean(live, 'wrong_text') + R['wrong_text_delta_per_1k'],
                      accept=pa >= R['accept_floor']['p'], p_accept_floor=round(pa, 3))
+        if in_force(P, 'absolute_bar'): g['absolute'] = r['p_abs'] >= P['absolute_bar']['p']   # the absolute bar binds here too
         gates[r['id']] = g
-    ok = [r for r in cand if gates[r['id']]['wrong_text'] and gates[r['id']]['accept']]
+    ok = [r for r in cand if gates[r['id']]['wrong_text'] and gates[r['id']]['accept'] and gates[r['id']].get('absolute', True)]
     err = {r['id']: W / 1000 * (cm * mean(r, 'misleads') + R['wrong_text_weight'] * cw * mean(r, 'wrong_text')) for r in cand}
     cost = lambda r, wm: r['_usd_raw'] + wm * err[r['id']]
     wms = sorted({R['misleads_usd'], *R['misleads_usd_sensitivity']})
@@ -411,6 +454,9 @@ def main():
     if 'v1' in OFF: sys.argv.append('--legacy-prior')
     if 'v2' in OFF and P.get('judge_validity'): P['judge_validity']['in_force'] = False
     if 'v3' in OFF: P['switch']['multiplicity'] = {'method': 'none'}
+    # --off loss,absolute: the rule of #7888 (hand-set margins, no absolute bar), for the comparison build
+    for k in ('loss', 'absolute_bar'):
+        if k.split('_')[0] in OFF and P.get(k): P[k]['in_force'] = False
     # defects per 1,000 words (#6740 defect-rate.py): the decision under rules.json decision_rule.in_force = defects
     DRF = json.load(open(P['inputs']['defect_rates'])) if os.path.exists(P['inputs'].get('defect_rates', '')) else {}
     DR, CAL = DRF.get('cells', {}), DRF.get('recheck') or {}
@@ -494,6 +540,9 @@ def main():
     bars = {'absolute': lambda best: P['switch']['wrong_text_max'], 'relative': lambda best: best['wrate'] + P['switch']['wrong_text_max']}
     wt_abs, wt_rel = bars['relative' if rel else 'absolute'], bars['absolute' if rel else 'relative']  # wt_abs = the bar in force
     steady = lambda r: r['_usd_acc']
+    WP = (P.get('loss') or {}).get('wrong_text_prior', [1, 1])   # Beta prior on a route's wrong-text rate (the loss's P(wrong text))
+    # the rule of #7888 (hand-set margins, no absolute bar, cheapest per accepted page): reported beside the decision
+    P_OLD = dict(P, loss=dict(P.get('loss') or {}, in_force=False), absolute_bar=dict(P.get('absolute_bar') or {}, in_force=False))
     rows, ctx = [], {}
     for cell in P['cells']:
         rs = []
@@ -514,11 +563,12 @@ def main():
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)], prior_model=dict(zip(('mean', 'basis'), pb[cell['id'], r['id']])),
                            prior_pooled=pbp.get((cell['id'], r['id'])), prior_other=[round(ao, 2), round(bo, 2)], eff=x and [round(v, 4) for v in x['eff']],
                            k=k, n=n, wrong=w, wrate=wrate, top=top, judge_planted=x and x.get('judge_planted'), mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
-                           p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
+                           p80=sum(v >= P['hold']['acc'] for v in dr) / N, p_abs=sum(v >= P.get('absolute_bar', {}).get('acc', 0.9) for v in dr) / N,
+                           pw=None if not x else (WP[0] + x['eff'][2]) / (sum(WP) + x['eff'][1]), share=share(st), units=units_per_page(st), _d=dr,
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
                            _usd_raw=u, _usd_acc=u / q(dr, .5), _usd_ci=[u / q(dr, p) for p in (.95, .05)], _usd_acc_flat=u0 / q(dr, .5),
-                           _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, _usd_acc=u / q(do, .5)),
+                           _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, p_abs=sum(v >= P.get('absolute_bar', {}).get('acc', 0.9) for v in do) / N, _usd_acc=u / q(do, .5)),
                            defects=DR.get(cell.get('base') or cell['id'], {}).get(r['id']),
                            **({} if DR.get(cell.get('base') or cell['id'], {}).get(r['id']) or not x else {'defects_missing': 'tested, but no stored verdict with severity (or < 10 pages): k/n only'})))
         # Derek 11:54Z: in a manuscript or unknown-script cell a route with too few judged pages of that type is not
@@ -535,22 +585,25 @@ def main():
             ra.setdefault('_pd', {})[rb['id']] = pd; rb.setdefault('_pd', {})[ra['id']] = [-d for d in pd]
             ra.setdefault('paired', {})[rb['id']] = rb.setdefault('paired', {})[ra['id']] = f"{c['a_only']} vs {c['b_only']} of {c['n']} paired"
         cur = next(r for r in rs if r['id'] == cell['current']); M = [r for r in rs if r['tested'] and not few(r)]
-        dec, pk = decide(cell, M, cur, P, steady, wt_abs)
+        c0 = good_read_usd(M, P)   # the loss's lambda = lambda_multiple x c0 (dollars: stdout only)
+        dec, pk = decide(cell, M, cur, P, steady, wt_abs, c0=c0)
+        dmg, pmg = decide(cell, M, cur, P_OLD, steady, wt_abs)   # the old margins, reported only
         # Derek 11:54Z: too little manuscript evidence says so, never inherits print numbers; an unknown-script cell
         # likewise (its prior is print's, and a handful of pages would let it decide hundreds of thousands)
         thin = cell.get('script') in ('manuscript', 'unknown') and not M
         if cell.get('planned'): dec, pk = 'planned', next(r for r in rs if r['id'] == cell['planned']['route'])
         elif thin and dec != 'held':
             dec = f"HOLD ({cell['script']}: < {P['script_split']['min_manuscript_pages']} pages a route)" if any(r['tested'] for r in rs) else f"UNTESTED ({cell['script']})"
-        alt = decide(cell, M, cur, P, steady, wt_rel) if M else (dec, pk)
+        if cell.get('planned') or (thin and dec != 'held'): dmg, pmg = dec, pk   # the same override under the old margins
+        alt = decide(cell, M, cur, P, steady, wt_rel, c0=c0) if M else (dec, pk)
         Mo = [dict(r, **r['_o']) for r in M]; curo = dict(cur, **cur['_o'])
-        do_, po = decide(cell, Mo, curo, P, steady, wt_abs)
+        do_, po = decide(cell, Mo, curo, P, steady, wt_abs, c0=c0)
         other_prior = f"{dec} {pk['id']}" if cell.get('planned') or thin else f"{do_} {po['id']}"
-        dflat, pflat = decide(cell, M, cur, P, lambda r: r['_usd_acc_flat'], wt_abs)  # one flat points-per-page figure, for comparison
+        dflat, pflat = decide(cell, M, cur, P, lambda r: r['_usd_acc_flat'], wt_abs, c0=c0)  # one flat points-per-page figure, for comparison
         # sensitivity: margin 0.10 instead of 0.05. Reported only; the default margin is not changed.
         sens = None
         if dec in ('keep', 'switch'):
-            d10, p10 = decide(cell, M, cur, P, steady, wt_abs, within=P['switch']['sensitivity_within'])
+            d10, p10 = decide(cell, M, cur, P, steady, wt_abs, within=P['switch']['sensitivity_within'], c0=c0)
             best = gate(M, P, wt_abs, P['switch']['within'])[0]
             if p10 is pk: sens = 'no change'
             else:
@@ -560,7 +613,7 @@ def main():
                         + (' (the 0.05-0.10 band, >= 5x cheaper)' if 0.05 <= best['mean'] - p10['mean'] <= 0.10
                            and ratio >= P['switch']['sensitivity_cheaper'] else ''))
         pages = cell.get('pages_waiting', v2.get(cell.get('v2'), {}).get('pages_waiting', 0))
-        ctx[cell['id']] = (cell, M, cur, pages)
+        ctx[cell['id']] = (cell, M, cur, pages, c0)
         # the best agy / GPU route (a route that draws capacity and is not the bar) against the best measured Opus route
         bars, alts = [r for r in M if r['channel'] == 'claude'], [r for r in M if r['channel'] and r['channel'] != 'claude']
         vs_bar = None
@@ -582,6 +635,8 @@ def main():
         fdec, jinfo = judge_gate(cell, fdec, fpk, P, S)
         rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'],
                          decision_kn=dec, route_kn=pk['id'], rule=rule if RULE == 'defects' else 'k/n', live=live_id,
+                         decision_margins=dmg, route_margins=pmg['id'],
+                         loss_x_good_read=None if not in_force(P, 'loss') else {r['id']: round(loss(r, steady, c0, P) / (c0 or 1.0), 3) for r in M},
                          decision_defects=None if not ddec else ddec, route_defects=None if not ddec else dpk['id'], defects_rule=dinfo, vs_bar=vs_bar,
                          decision_flat_price=f"{dflat} {pflat['id']}", decision_other_prior=other_prior,
                          other_wrong_text_bar=None if alt[0] == dec and alt[1] is pk else f"{alt[0]} {alt[1]['id']}",
@@ -606,14 +661,14 @@ def main():
         left['claude'] = max(0.0, left['claude'] - t['claude_points']); left['agy'] = max(0.0, left['agy'] - t['agy_calls'])
     idle_after_tests = dict(left)
     def value(row):
-        cell, M, cur, pages = ctx[row['id']]
+        cell, M, cur, pages, _ = ctx[row['id']]
         d0 = next((r['mean'] for r in row['routes'] if r['stage'] == 'none'), 0.0)
         ok = gate(M, P, wt_abs, P['switch']['within'])[1]
         return max([(r['mean'] - d0) / r['units'] for r in ok if r['units']] or [0.0])
     for row in rows:
         row['decision_week'], row['route_week'] = row['decision'], row['route']
     for row in sorted([r for r in rows if r['decision_kn'] in ('keep', 'switch')], key=lambda r: -value(r)):
-        cell, M, cur, pages = ctx[row['id']]
+        cell, M, cur, pages, c0 = ctx[row['id']]
         if row['rule'] == 'defects':   # the defect rule prices raw pages in full; idle quota does not enter it
             pk = next(r for r in row['routes'] if r['id'] == row['route'])
             ch = S[pk['stage']]['channel']
@@ -622,7 +677,7 @@ def main():
         for r in row['routes']:
             ch, need = S[r['stage']]['channel'], pages * r['units']
             r['idle_fit'] = 1.0 if not ch or need <= 0 else min(1.0, left[ch] / need)
-        dec, pk = decide(cell, M, cur, P, lambda r: r['_usd_acc'] * (1 - r['idle_fit']), wt_abs)
+        dec, pk = decide(cell, M, cur, P, lambda r: r['_usd_acc'] * (1 - r['idle_fit']), wt_abs, c0=c0)
         row['decision_week'], row['route_week'] = (dec + row['decision'][len(row['decision_kn']):] if RULE == 'defects' else dec), pk['id']
         row['decision_week'] = judge_gate(cell, row['decision_week'], pk, P, S)[0]
         ch = S[pk['stage']]['channel']
@@ -632,7 +687,7 @@ def main():
     OUT = arg('--out-dir') or D   # --out-dir: an attribution build (V1-V3 on / off) written outside the repo
     if not OUT.endswith('/'): OUT += '/'
     before = {r['id']: r for r in json.load(open(arg('--before')))['rows']} if arg('--before') else {}
-    fmt = lambda d, rt: d + (f" → {rt}" if d.startswith(('switch', 'HOLD', 'planned')) else '')
+    fmt = lambda d, rt: d + (f" → {rt}" if d.startswith(('switch', 'HOLD', 'planned', 'NEEDS-ENGINE')) else '')
     for row in rows:
         b = before.get(row['id']) or before.get(row.get('base')); row['before'] = fmt(b['decision'], b['route']) if b else None
     calib = [(row['id'], r['id'], r['prior'], f"{r['k']}/{r['n']}") for row in rows for r in row['routes'] if r['tested']]
@@ -733,6 +788,27 @@ def main():
             out.append(f"| {k} | {f3(st.get('sensitivity'))} | {f3(st.get('specificity'))} | {f3(st.get('kappa'))} | {f3(st.get('dbg'))} | {v} | {len(cs)} |")
         held = [r for r in rows if (r.get('judge_validity') or {}).get('held')]
         out += ['', f"Cells held by the judge gate: {len(held)}" + (': ' + '; '.join(f"{r['id']} (was {r['judge_validity']['held']})" for r in held) if held else '') + '.']
+    if in_force(P, 'loss') or in_force(P, 'absolute_bar'):
+        LO, A = P.get('loss') or {}, P.get('absolute_bar') or {}
+        ne = [r for r in rows if r['decision'].startswith('NEEDS-ENGINE')]
+        ne_kind = lambda k: [r for r in ne if r['decision'].startswith(f'NEEDS-ENGINE ({k}')]
+        pg = lambda rs: sum(r['pages_waiting'] or 0 for r in rs)
+        out += ['', "**Defaults of 2026-11-01** (Derek; `.claude/docs/router-optimization-paper.md` \"Decisions\"; rules.json `loss`, `absolute_bar`). "
+                + (f"*Priced loss* (in force): among the routes that pass the multiplicity-controlled acceptance gate, the pick is the lowest "
+                   f"median dollars per accepted page + λ × P(wrong text), λ = {LO['lambda_multiple']:g} × the cell's cheapest good-read cost "
+                   "(the lowest dollars per accepted page among its measured priced routes that clear the absolute bar, the Opus bar included), "
+                   "P(wrong text) = the posterior mean of the book-scaled wrong-text rate; ties go to the cheaper route. The wrong-text margin is not applied "
+                   "(the loss prices wrong text); the acceptance margin stays, inside the gate. " if in_force(P, 'loss') else '')
+                + (f"*Absolute bar* (in force): a route is picked only with P(acc >= {A['acc']:g}) >= {A['p']:g}; a cell where no pickable route clears it is "
+                   "**NEEDS-ENGINE**, not decided (`engine`: even the best route's posterior mean is below the bar; `evidence`: its mean is over the bar, its pages too few to show it). " if in_force(P, 'absolute_bar') else '')
+                + "The loss column of the JSON (`loss_x_good_read`) is in units of the cell's good-read cost, so no dollars are committed.", '',
+                f"NEEDS-ENGINE: **{len(ne)} cells, {pg(ne):,} pages waiting** (engine {len(ne_kind('engine'))} cells / {pg(ne_kind('engine')):,} pages; "
+                f"evidence {len(ne_kind('evidence'))} / {pg(ne_kind('evidence')):,}); of them, only the Opus bar clears it in "
+                f"{sum('only the Opus bar' in r['decision'] for r in ne)} cells / {pg([r for r in ne if 'only the Opus bar' in r['decision']]):,} pages.", '']
+        mv = [r for r in rows if (r['decision_kn'].split(' (')[0], r['route_kn']) != (r['decision_margins'].split(' (')[0], r['route_margins'])]
+        out += [f"**Against the old margins** (the k/n rule of #7888: wrong text <= the best + {sw['wrong_text_max']:.0%}, cheapest per accepted page, no absolute bar): "
+                f"{len(mv)} cells' k/n decision moves.", '', '| cell | pages waiting | old margins | defaults | final decision |', '|---|---|---|---|---|']
+        out += [f"| {r['id']} | {r['pages_waiting']:,} | {fmt(r['decision_margins'], r['route_margins'])} | {fmt(r['decision_kn'], r['route_kn'])} | {fmt(r['decision'], r['route'])} |" for r in mv]
     if DR and P.get('decision_rule'):
         R = P['decision_rule']
         out += ['', f"**The defect rule** (rules.json `decision_rule`, in force: **{RULE}**; #6740). Where the k/n rule reaches keep / switch, the decision is #7824's S1 rule on defects per 1,000 words "
@@ -778,6 +854,10 @@ def main():
             di = row['defects_rule']
             if di and 'picks' in di:
                 print(row['id'], 'live', row['live'], '|', ' / '.join(di['picks'].values()), '|', fmt(row['decision'], row['route']), '| k/n', fmt(row['decision_kn'], row['route_kn']))
+    if in_force(P, 'loss'):
+        print(f"# the loss's good-read cost c0 per 1K accepted pages (lambda = {P['loss']['lambda_multiple']:g} x c0 per page) — fees: {fee_src}")
+        for cid, (_, _, _, _, c0) in ctx.items():
+            if c0: print(cid, f"c0 ${c0 * 1000:.2f}, lambda ${P['loss']['lambda_multiple'] * c0:.4f} a page")
     print(f"# dollars per 1K accepted pages, steady [90%] / this week — fees: {fee_src}")
     for row in rows:
         for r in row['routes']:
