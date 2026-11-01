@@ -70,7 +70,9 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-6">
           In the{' '}
           <Link href="/book/politicorum-libri-octo-aristotle" className="text-accent-rust hover:text-accent-rust underline"><em>Politics</em></Link>
-          {' '}(1515 edition), Aristotle drew a sharper distinction. Natural acquisition (producing food, raising livestock) has a natural limit. But <em>chrematistics</em>, the art of money-making through trade, appears to have no natural boundary. &ldquo;Of the art of acquisition there is one kind which by nature is a part of the management of a household&hellip; and there is a second kind which is generally called the art of wealth-getting.&rdquo; Money is &ldquo;barren,&rdquo; Aristotle declared; it cannot beget money. This became the intellectual foundation for the medieval prohibition on usury and framed economic thinking for the next two millennia.
+          {' '}(1515 edition), Aristotle drew a sharper distinction. Acquiring what a household needs, from crops and animals, has a natural limit. <em>Chrematistike</em>, the art of making money through trade, appears to have none. What he condemned outright was usury. The Greek word for interest, <em>tokos</em>, also means offspring, and the commentary in our edition turns on it: offspring are like their parents, &ldquo;but in usury, money gives birth to more money,&rdquo; so this way of getting wealth is &ldquo;most against nature&rdquo; (
+          <Link href="/book/politicorum-libri-octo-aristotle?page=32" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). Later writers called this the barrenness of money, but the word is not on the page: the offence is that money breeds. The argument became the foundation for the medieval prohibition on usury and framed economic thinking for the next two millennia.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -86,13 +88,17 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-6">
           For centuries, Aristotle&apos;s authority on economic questions was mediated through one text above all: the{' '}
           <Link href="/book/summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas" className="text-accent-rust hover:text-accent-rust underline"><em>Summa Theologica</em></Link>
-          {' '}of Thomas Aquinas. Questions 57&ndash;79 of the Secunda Secundae treat justice; Question 77 addresses the just price in buying and selling; Question 78 covers usury. Aquinas allowed that the just price is not fixed to a point but depends on common estimation, and many later readers, the Spanish scholastics among them, took this to mean the price current in the market rather than one calculated by philosophers or decreed by kings. How far Aquinas himself meant that is still argued over.
+          {' '}of Thomas Aquinas. Questions 57&ndash;79 of the Secunda Secundae treat justice; Question 77 addresses the just price in buying and selling; Question 78 covers usury. Aquinas allowed that the just price (<em>pretium iustum</em>) is not fixed to a point but depends on common estimation, and many later readers, the Spanish scholastics among them, took this to mean the price current in the market rather than one calculated by philosophers or decreed by kings. How far Aquinas himself meant that is still argued over.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Nicole Oresme pushed further. His{' '}
           <Link href="/book/traictie-de-la-premiere-invention-des-monnoies-oresme" className="text-accent-rust hover:text-accent-rust underline"><em>Traictie de la Premiere Invention des Monnoies</em></Link>
-          {' '}(c. 1355) is among the earliest treatises in Europe devoted entirely to money. Writing during the chaos of medieval currency debasement, Oresme argued that money belongs to the community, not the prince, and that manipulating the currency is a form of theft. His analysis of how debased coinage drives good money out of circulation anticipated Gresham&apos;s Law by two hundred years.
+          {' '}(c. 1355) is among the earliest treatises in Europe devoted entirely to money. Writing during the chaos of medieval currency debasement, Oresme argued that money belongs to the community, not the prince, and that manipulating the currency is a form of theft. He also saw what debasement does to a realm&apos;s metal: gold and silver leave it, carried abroad &ldquo;where it is valued at a higher price&rdquo; (
+          <Link href="/book/traictie-de-la-premiere-invention-des-monnoies-oresme?page=137" className="text-accent-rust hover:text-accent-rust underline">ch. 20</Link>
+          ). His 1864 editor, Louis Wolowski, wrote that Oresme had already formulated the principle later named after Gresham (
+          <Link href="/book/traictie-de-la-premiere-invention-des-monnoies-oresme?page=65" className="text-accent-rust hover:text-accent-rust underline">p. lix</Link>
+          ). That is Wolowski&apos;s reading. Oresme describes good metal leaving a debased realm, not a rule that bad coin drives good coin out of circulation.
         </p>
 
         <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
@@ -122,7 +128,11 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/dialogi-decem-incl-de-avaritia-al" className="text-accent-rust hover:text-accent-rust underline"><strong>Poggio Bracciolini</strong></Link>
-          {' '}(<em>De Avaritia</em>, 1428) wrote a humanist dialogue on greed that was remarkably sympathetic to merchants. Where the Scholastics agonised over whether trade was sinful, Bracciolini&apos;s characters argue that the desire for wealth drives civilisation forward. A Florentine anticipation of Mandeville by three centuries.
+          {' '}(<em>De Avaritia</em>, 1428) wrote a humanist dialogue on greed that gives the case for it a full hearing. One speaker argues that if everyone were content with enough there would be no temples, porticoes or palaces, and that republics, provinces, cities and kingdoms are nothing but &ldquo;public workshops of avarice&rdquo; (
+          <Link href="/book/dialogi-decem-incl-de-avaritia-al?page=167" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). The dialogue then answers him, proposing a law &ldquo;more sacred than all others: Let misers not be allowed in cities&rdquo; (
+          <Link href="/book/dialogi-decem-incl-de-avaritia-al?page=185" className="text-accent-rust hover:text-accent-rust underline">the reply</Link>
+          ). Mandeville&apos;s case is here three centuries early, but staged so that it can be refuted.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -131,9 +141,10 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/della-mercatura-et-del-mercante-perfetto-cotrugli" className="text-accent-rust hover:text-accent-rust underline"><strong>Benedetto Cotrugli</strong></Link>
-          {' '}(<em>Della Mercatura et del Mercante Perfetto</em>, written c. 1458, published 1573) produced the earliest known description of double-entry bookkeeping, predating{' '}
-          <Link href="/book/summa-de-arithmetica-geometria-proportioni-et-pacioli" className="text-accent-rust hover:text-accent-rust underline"><strong>Luca Pacioli</strong></Link>
-          {' '}&apos;s famous <Link href="/book/summa-de-arithmetica-geometria-proportioni-et-pacioli" className="text-accent-rust hover:text-accent-rust underline"><em>Summa de Arithmetica</em></Link> (1494) by thirty-five years. Pacioli systematised the method, but Cotrugli&apos;s four books on mercantile life (covering trade, the merchant&apos;s character, accounting, and maritime commerce) give us the fullest portrait of the commercial mind that made the Renaissance possible.
+          {' '}(<em>Della Mercatura et del Mercante Perfetto</em>, written c. 1458, published 1573) has a short chapter on keeping the books: entries go daily from the journal to the ledger, and at the end of each year the ledger is checked against the journal with a trial balance, the surplus or deficit carried to the capital account (
+          <Link href="/book/della-mercatura-et-del-mercante-perfetto-cotrugli?page=91" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). His manuscript is dated 1458, thirty-six years before{' '}
+          <strong>Luca Pacioli</strong>&apos;s <Link href="/book/summa-de-arithmetica-geometria-proportioni-et-proportionalit?page=417" className="text-accent-rust hover:text-accent-rust underline"><em>Summa de Arithmetica</em></Link> (1494), but it was not printed until 1573, so the first printed account of double entry is Pacioli&apos;s, and the much fuller one. Cotrugli&apos;s four books on mercantile life (covering trade, the merchant&apos;s character, accounting, and maritime commerce) give us the fullest portrait of the commercial mind that made the Renaissance possible.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -161,7 +172,11 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/relectiones-theologicae-xii-vitoria" className="text-accent-rust hover:text-accent-rust underline"><strong>Francisco de Vitoria</strong></Link>
-          {' '}(1557 edition of the <em>Relectiones Theologicae</em>) founded the school. His lectures on justice, international trade, and the rights of indigenous peoples established the framework that his students built upon. Vitoria argued that trade is a natural right, not merely a privilege granted by sovereigns.
+          {' '}(1557 edition of the <em>Relectiones Theologicae</em>) founded the school. His lectures on justice, international trade, and the rights of indigenous peoples established the framework that his students built upon. His right to trade comes from the lecture on the Indies (<em>De Indis</em>). Among the titles that could justify Spanish rule there, he lists a right to travel to the Indies and live there, and a right to trade, importing goods the Indians lack and exporting their gold and silver, which their princes may not forbid (
+          <Link href="/book/relectiones-theologicae-xii-vitoria?page=358" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). He grounds it in &ldquo;natural society&rdquo; and in the law of nations (<em>ius gentium</em>), which he says is not natural law itself but &ldquo;sufficiently derived&rdquo; from it (
+          <Link href="/book/relectiones-theologicae-xii-vitoria?page=365" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). The first right to trade in this story is an argument for Spanish entry into the Americas.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -171,7 +186,9 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/comentario-resolutorio-de-usuras-azpilcueta" className="text-accent-rust hover:text-accent-rust underline"><strong>Mart&iacute;n de Azpilcueta</strong></Link>
-          {' '}(<em>Comentario Resolutorio de Usuras</em>, 1568) formulated the quantity theory of money decades before Jean Bodin usually gets the credit. Watching Spanish prices soar as American silver flooded the markets, Azpilcueta reasoned that money, like any commodity, is worth less where it is abundant. A simple observation with enormous consequences.
+          {' '}(<em>Comentario Resolutorio de Usuras</em>; our copy, Antwerp 1568) wrote the passage that is usually credited with the quantity theory of money in the commentary on exchanges printed with it (<em>Comentario resolutorio de cambios</em>, 1556). Money, so far as it is bought and sold, is a merchandise, and like any merchandise it grows dear when it is scarce: where money is short, &ldquo;all other salable things, and even the hands and labor of men, are given for less money than where there is an abundance of it,&rdquo; as in France compared with Spain (
+          <Link href="/book/comentario-resolutorio-de-usuras-azpilcueta?page=54" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). Azpilcueta does not claim it as his own discovery. He calls it the common view of &ldquo;almost all people&hellip; throughout all of Christendom&rdquo; and cites the jurists before him. It was in print twelve years before Jean Bodin&apos;s reply to Malestroit (1568), where the idea is usually said to begin.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -198,7 +215,11 @@ export default function InvisibleHandPage() {
           <Link href="/book/l-alitinonfo-scaruffi" className="text-accent-rust hover:text-accent-rust underline"><strong>Gasparo Scaruffi</strong></Link>
           {' '}(<em>L&apos;Alitinonfo</em>, 1582; a Greek coinage meaning &ldquo;true light&rdquo;) proposed a universal monetary standard based on fixed gold-silver ratios, a rationalist vision of monetary order.{' '}
           <Link href="/book/le-opere-including-lezione-delle-monete-davanzati" className="text-accent-rust hover:text-accent-rust underline"><strong>Bernardo Davanzati</strong></Link>
-          {' '}(<em>Lezione delle Monete</em>, 1588) argued that money has no intrinsic value whatsoever: its worth derives purely from social convention and utility. This proto-subjectivist theory of value would take three centuries to be rediscovered by the Austrian School.
+          {' '}(<em>Lezione delle Monete</em>, 1588) explained prices by want and consent. All the things that satisfy human wants are worth, &ldquo;by the Consent of Nations&rdquo;, all the gold in the world, so each thing is worth as much gold as the share of happiness it brings (
+          <Link href="/book/a-discourse-upon-coins-davanzati?page=15" className="text-accent-rust hover:text-accent-rust underline">the 1696 English translation</Link>
+          ). That account of value looks forward to the Austrian School. His coin is not a convention, though: the ruler chooses its shape, stamp and name, but &ldquo;he may coin no Money but of the three known Metals&rdquo;, and the pieces must hold fine metal &ldquo;answerable to their Names&rdquo; (
+          <Link href="/book/a-discourse-upon-coins-davanzati?page=14" className="text-accent-rust hover:text-accent-rust underline">the page before</Link>
+          ).
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -254,12 +275,16 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/political-arithmetick-petty" className="text-accent-rust hover:text-accent-rust underline"><strong>Sir William Petty</strong></Link>
-          {' '}(<em>Political Arithmetick</em>, 1690) founded quantitative economics. He insisted on &ldquo;Number, Weight, and Measure&rdquo; rather than &ldquo;superlative Words, and intellectual Arguments&rdquo;: the first systematic attempt to measure national income, labour productivity, and state resources empirically.
+          {' '}(<em>Political Arithmetick</em>, 1690) founded quantitative economics. &ldquo;Instead of using only comparative and superlative Words, and intellectual Arguments,&rdquo; he set out to express himself &ldquo;in Terms of <em>Number, Weight, or Measure</em>&rdquo; (
+          <Link href="/book/political-arithmetick-petty?page=14" className="text-accent-rust hover:text-accent-rust underline">the preface</Link>
+          ): the first systematic attempt to measure national income, labour productivity, and state resources empirically.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/discourses-upon-trade-north" className="text-accent-rust hover:text-accent-rust underline"><strong>Sir Dudley North</strong></Link>
-          {' '}(<em>Discourses upon Trade</em>, 1691) produced the clearest pre-Smithian argument for free trade in just 41 pages. Trade restrictions harm national wealth; interest rates should be set by markets, not legislatures; and &ldquo;the World as to Trade, is but one Nation or People.&rdquo;
+          {' '}(<em>Discourses upon Trade</em>, 1691) produced the clearest pre-Smithian argument for free trade in just 41 pages. Trade restrictions harm national wealth; interest rates should be set by markets, not legislatures; and &ldquo;the whole World as to Trade, is but as one Nation or People, and therein Nations are as Persons&rdquo; (
+          <Link href="/book/discourses-upon-trade-north?page=10" className="text-accent-rust hover:text-accent-rust underline">the preface</Link>
+          ).
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -344,7 +369,11 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-8">
           Meanwhile,{' '}
           <Link href="/book/the-fable-of-the-bees-or-private-vices-publick-benefits-mandeville-2" className="text-accent-rust hover:text-accent-rust underline"><strong>Bernard Mandeville</strong></Link>
-          {' '}(<em>The Fable of the Bees</em>, 1724) had scandalised polite society with the opposite argument: &ldquo;Private Vices, Publick Benefits.&rdquo; Selfishness and vanity, not virtue, drive economic prosperity. Where Hutcheson and Smith saw moral harmony, Mandeville saw a useful paradox. The debate between them (is economic order moral or merely functional?) remains unresolved.
+          {' '}(<em>The Fable of the Bees</em>, 1724) had scandalised polite society with the opposite argument: &ldquo;Private Vices, Publick Benefits.&rdquo; Vice, not virtue, keeps trade and employment going. But the book ends by restating its paradox with a condition the title leaves out: &ldquo;Private Vices by the dextrous Management of a skilful Politician may be turned into Publick Benefits&rdquo; (
+          <Link href="/book/the-fable-of-the-bees-or-private-vices-publick-benefits-mandeville-2?page=444" className="text-accent-rust hover:text-accent-rust underline">the last page</Link>
+          ), and elsewhere its politicians, by duties and prohibitions, &ldquo;may always turn and divert the Course of Trade which way they please&rdquo; (
+          <Link href="/book/the-fable-of-the-bees-or-private-vices-publick-benefits-mandeville-2?page=131" className="text-accent-rust hover:text-accent-rust underline">Remark Q</Link>
+          ). Where Hutcheson and Smith saw moral harmony, Mandeville saw a useful paradox. The debate between them (is economic order moral or merely functional?) remains unresolved.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -354,9 +383,13 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-6">
           The idea of economic harmony found its most explicit expression in France.{' '}
           <Link href="/book/le-detail-de-la-france-boisguilbert" className="text-accent-rust hover:text-accent-rust underline"><strong>Pierre de Boisguilbert</strong></Link>
-          {' '}(<em>Le D&eacute;tail de la France</em>, 1707) was the first to systematically argue that agricultural prosperity, not gold accumulation, is the source of national wealth, anticipating the Physiocrats.{' '}
+          {' '}(<em>Le D&eacute;tail de la France</em>, 1695; our copy 1707) argued that money is only the means, and the goods useful to life are the end, so that &ldquo;a Country can be rich without much money&rdquo; (
+          <Link href="/book/le-detail-de-la-france-boisguilbert?page=78" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). The produce of the land, in his account, sets every other trade to work, a starting point the Physiocrats took up.{' '}
           <Link href="/book/oeuvres-economiques-et-philosophiques-quesnay" className="text-accent-rust hover:text-accent-rust underline"><strong>Fran&ccedil;ois Quesnay</strong></Link>
-          {' '}(<em>Oeuvres &Eacute;conomiques</em>, Oncken edition) built the <em>Tableau &Eacute;conomique</em>, the first model of the economy as a self-regulating circular flow.
+          {' '}(<em>Oeuvres &Eacute;conomiques</em>, Oncken edition) built the <em>Tableau &Eacute;conomique</em>, a model of how a year&apos;s harvest circulates between farmers, landowners and artisans. Its explanation supposes a large kingdom whose farming is brought to perfection and &ldquo;maintained by full freedom of trade and by the entire security of farming wealth&rdquo; (
+          <Link href="/book/oeuvres-economiques-et-philosophiques-quesnay?page=130" className="text-accent-rust hover:text-accent-rust underline">the page</Link>
+          ). The flow is orderly under a policy the sovereign keeps; it does not regulate itself.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
