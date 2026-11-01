@@ -7,10 +7,11 @@ import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import ocrRouting from '../../../scripts/lib/ocr-routing-table.json';
+import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
 import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { GRADES, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
+import { GRADES, LEARNED, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { RosterLine, TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -24,7 +25,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: 'Quality Center | Source Library',
   description:
-    'How good the transcriptions and translations in Source Library are, by language and by canon; what we have not measured; the experiments behind the figures; what readers have reported; and how to take part.',
+    'How good the transcriptions and translations in Source Library are: the share of live books that pass a check against the page images, how the other figures relate to it, what we have learned, the experiments behind the figures, what readers have reported, and how to take part.',
   alternates: { canonical: '/quality' },
 };
 
@@ -100,6 +101,19 @@ const STATUS_LABEL = {
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
+
+/* The served figure (#7263 V7): the #7866 draw of live books, read against the page images, weighted back to the
+   library. Read from its committed score.json, so a new month's draw moves the headline when that file moves. */
+const SERVED_RECORD = 'scripts/eval/experiments/2026-10-31-confidence-validation-7866.md';
+const servedFrame = Object.values(servedDraw.corpus.frame_books).reduce((a, b) => a + b, 0);
+const servedUsable = 1 - servedDraw.corpus.bad_share;
+const servedUsableCi = [1 - servedDraw.corpus.bad_share_ci95[1], 1 - servedDraw.corpus.bad_share_ci95[0]];
+const servedDate = servedDraw.generated_at.slice(0, 10);
+const servedWeakBooks = Math.round(servedDraw.corpus.bad_books_est / 100) * 100;
+/** "8/8 rejected at fidelity <= 2" → "8 of 8". */
+const kOfN = (v: string) => v.match(/^(\d+)\/(\d+)/)?.slice(1).join(' of ') ?? v;
+const englishTop = byLanguage.rows.filter(r => ['Latin', 'English', 'German'].includes(r.language) && r.translation);
+const englishTopRange = `${(Math.min(...englishTop.map(r => r.translation!.share)) * 100).toFixed(0)}–${pct(Math.max(...englishTop.map(r => r.translation!.share)))}`;
 
 /* Who reads which page (#6688): the rows of scripts/lib/ocr-routing-table.json, the one source the
    routing code exports and the routing README is generated from. Nothing about a row is typed here. */
@@ -207,6 +221,7 @@ function Row({ label, children }: { label: string; children: ReactNode }) {
 
 const PARTS: [string, string][] = [
   ['stands', 'Where quality stands'],
+  ['learned', 'What we have learned'],
   ['experiments', 'Experiments'],
   ['readers', 'What readers have told us'],
   ['take-part', 'Take part'],
@@ -279,6 +294,76 @@ export default function QualityCenterPage() {
       <article className="max-w-4xl font-body text-stone-700">
         {/* ── 1. Where quality stands ── */}
         <Section id="stands" title="Where quality stands">
+          <div className="max-w-3xl mb-6">
+            <p className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-3">
+              {pct(servedUsable)} of the books you can read here passed a check of their transcription against the page
+              images.
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books at random from the {n(servedFrame)} live
+              books that have a transcription, took five pages spread through each, and had an AI reviewer (Claude Opus) read
+              each page&rsquo;s text against the photograph of the page. A page passes when its text could be published as
+              that page&rsquo;s text: every line, in order, with the right words, names and numbers, and nothing that is not
+              on the page. A book passes when at least four of its five pages do. Weighted back to the whole library,{' '}
+              <b className="text-stone-900">
+                {pct(servedUsable)} of books passed (95% interval {(servedUsableCi[0] * 100).toFixed(0)}–{pct(servedUsableCi[1])})
+              </b>
+              {'. '}In the other {pct(servedDraw.corpus.bad_share)}, about {n(servedWeakBooks)} books, two or more of the five
+              pages had words wrong, missing or added, or text from another page.
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              This checks the transcription only, not the English. No person has checked these verdicts. On manuscripts the
+              reviewer agrees with people much less well than on print, and on real machine readings it errs towards
+              accepting, so the figure is more likely too high than too low (<a href="#learned" className={LINK}>finding 2</a>).
+            </p>
+            <p className="text-stone-700 leading-relaxed">
+              What we are doing about it: a second reading by a stronger model now corrects weak German and French
+              transcriptions (<IssueLink num={7558} />). Our cheap signals cannot yet pick out the weak books (
+              <a href="#learned" className={LINK}>finding 1</a>), so we will repeat this draw every month and report here
+              whether the share that passes rises (<IssueLink num={7263} />).
+            </p>
+            <Source>
+              <A href={`${BLOB}${SERVED_RECORD}`}>The record</A> and its figures,{' '}
+              <A href={`${BLOB}scripts/eval/confidence-7866/results/score.json`}>score.json</A> (<IssueLink num={7866} />).{' '}
+              {n(servedDraw.books.pages_judged)} pages; the books were drawn in four groups and weighted back to the library.
+              The reviewer turned down {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text,
+              and caught {kOfN(servedDraw.instrument.planted)} errors we planted.
+            </Source>
+          </div>
+
+          <Sub>Why other figures on this site are higher</Sub>
+          <p className="text-stone-700 leading-relaxed mb-3 max-w-3xl">
+            Each figure below answers a narrower question than the one above. Read them as parts of the picture, not as
+            rival headlines.
+          </p>
+          <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl mb-4">
+            <li>
+              <b className="text-stone-900">The best case, not what you are served.</b> The transcription figures in the
+              tables below come from the engine we use now, on test pages that have a published text to compare with, and
+              the page-image checks from 30 test pages for each way of reading. They say how good a method can be. Many pages
+              you read were transcribed earlier, by other engines, and on harder pages.
+            </li>
+            <li>
+              <b className="text-stone-900">The English judged against our transcription, not the page.</b> In the by-language
+              table, the English of {englishTopRange} of pages from Latin, English and German books is rated 4 or 5 of 5 (
+              {longDate(byLanguage.generated)}). That judge compares our English with our own transcription, so an error in
+              the transcription does not count against it. The same is true of the{' '}
+              <A href="/quality/methods#monthly-audit">monthly audit</A>, which found a major error in the English on 14.8% of
+              pages (95% interval 7.0–24.2%; 103 books, one page each, drawn 1 October 2026).
+            </li>
+            <li>
+              <b className="text-stone-900">A page and a book.</b> A page figure counts pages; the headline counts books, and a
+              book fails when two of its five pages do. The two cannot be compared directly.
+            </li>
+            <li>
+              <b className="text-stone-900">Different shelves and dates.</b> The spot check of 6 October 2026 (about 18 of 30
+              books with a defect visible on sight) covered the canon shelves only, with books of any visibility, and counted
+              wrong shelving, rights and broken books as well as text. Every figure on this page carries its date; the
+              newest is the one above.
+            </li>
+          </ul>
+
+          <Sub>How a page can go wrong</Sub>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             A page can go wrong in two places: the transcription can misread the scan, and the English can misread the
             transcription. We measure each against published texts where they exist. A score from a model judge is a
@@ -318,7 +403,13 @@ export default function QualityCenterPage() {
             </Row>
           </Figure>
 
-          <Sub>By language</Sub>
+          <Sub>By language: test pages, and the English judged on its own</Sub>
+          <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
+            This table is not a rate for the pages you are served. Its transcription columns measure the engine we use now
+            on test pages with a published text, the best measured case. The model-judge column rates our English against
+            our own transcription, not against the page, and the next column compares it with a published translation, so
+            it covers only works that have one.
+          </p>
           <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
             We score each transcription three ways: the raw share of characters that differ from a published text of the same
             printing, the share left once we allow the conventions our transcription instructions ask for (abbreviations written
@@ -406,7 +497,7 @@ export default function QualityCenterPage() {
                 is mostly marginal notes placed differently, and misreads.{' '}
               </>
             )}
-            Published-translation column: the <code>translation_fidelity</code> cells of{' '}
+            Published-translation column: the <code>translation_fidelity</code> entries of{' '}
             <A href={`${BLOB}src/data/ocr-benchmark-evidence.json`}>src/data/ocr-benchmark-evidence.json</A>
             {fidelityRun && <> (run {fidelityRun}{fidelityIssue && <>, <IssueLink num={fidelityIssue} /></>})</>}: one page per book,
             two blind model judges comparing our English with a published human translation of the same page. Methods and
@@ -500,8 +591,9 @@ export default function QualityCenterPage() {
             For four kinds of page we drew 30 pages for each way of reading them, and had Claude Opus, an AI reviewer,
             read every text against the photograph of its page. A page is accepted when it could be published as that page&rsquo;s text: every line, in
             order, with the right words, names and numbers. A page has wrong text when it says something the page does not:
-            words left out or added, another page&rsquo;s text, or a misread that changes the sense. Routes we measured but
-            do not use yet are listed with the route in use. We also checked {pageCheck.by_eye_agreement.of} of these texts by
+            words left out or added, another page&rsquo;s text, or a misread that changes the sense. Ways of reading we
+            measured but do not use yet are listed with the one in use. These are test pages, so the table says how good each
+            way of reading is, not what every stored page is like. We also checked {pageCheck.by_eye_agreement.of} of these texts by
             eye against the page; our verdict and the reviewer&rsquo;s agreed on {pageCheck.by_eye_agreement.n}.
           </p>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
@@ -545,8 +637,8 @@ export default function QualityCenterPage() {
             <A href={`${BLOB}scripts/lib/ocr-routing-table.json`}>scripts/lib/ocr-routing-table.json</A>; the counts are those
             of <A href={`${BLOB}${pageCheck.source}`}>score.json</A>, with the pages we read by eye in{' '}
             <A href={`${BLOB}${pageCheck.by_eye}`}>by-eye.md</A>. Write-up:{' '}
-            <A href={`${BLOB}scripts/eval/experiments/${pageCheck.writeup}`}>the route-judge pilot</A>; cost and acceptance per
-            route: <A href={`${BLOB}${pageCheck.router_table}`}>the router table of {longDate(pageCheck.date)}</A>{' '}
+            <A href={`${BLOB}scripts/eval/experiments/${pageCheck.writeup}`}>the reviewer pilot</A>; cost and acceptance for
+            each way of reading: <A href={`${BLOB}${pageCheck.router_table}`}>the table of {longDate(pageCheck.date)}</A>{' '}
             (<IssueLink num={pageCheck.issue} />).
           </Source>
 
@@ -684,11 +776,39 @@ export default function QualityCenterPage() {
           </Source>
         </Section>
 
-        {/* ── 2. Experiments ── */}
+        {/* ── 2. What we have learned (#7263) ── */}
+        <Section id="learned" title="What we have learned">
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            Findings that change how we measure and what we fix, newest last. Each links to its full record.
+          </p>
+          <ol className="max-w-3xl">
+            {LEARNED.map((f, i) => (
+              <li key={f.title} className="py-4 border-b border-stone-200 grid grid-cols-[2rem_1fr] gap-x-3">
+                <span className="font-serif text-xl text-stone-500 tabular-nums">{i + 1}.</span>
+                <div>
+                  <p className="font-semibold text-stone-900">{f.title}</p>
+                  <p className="text-stone-700 leading-relaxed mt-1">{f.text}</p>
+                  <p className="text-sm text-stone-500 mt-1">
+                    {f.n}; {longDate(f.date)}. <A href={f.record.href}>{f.record.label}</A>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Section>
+
+        {/* ── 3. Experiments ── */}
         <Section id="experiments" title="Experiments">
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             The quality figures above come from experiments, and each experiment has a written record: the question, how
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
+          </p>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            The records below are working notes, and use three words of ours. A <i>route</i> is a way of reading a page: the
+            engine that reads it first, and any engine that then corrects it, joined by &gt;, as in{' '}
+            <i>lite&gt;opus</i>. A <i>cell</i> is a kind of page, a language with print or manuscript, as in{' '}
+            <i>latin-lite/print</i>. <i>agy</i> is Google&rsquo;s Antigravity command-line tool, through which we run Gemini
+            models on a subscription.
           </p>
 
           {MONTH_NOTE && (
@@ -901,7 +1021,7 @@ export default function QualityCenterPage() {
           </Source>
         </Section>
 
-        {/* ── 3. What readers have told us ── */}
+        {/* ── 4. What readers have told us ── */}
         <Section id="readers" title="What readers have told us">
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             Between {longDate(feedback.window!.first)} and {longDate(feedback.window!.last)} readers sent{' '}
@@ -940,7 +1060,7 @@ export default function QualityCenterPage() {
           </Source>
         </Section>
 
-        {/* ── 4. Take part ── */}
+        {/* ── 5. Take part ── */}
         <Section id="take-part" title="Take part">
           <p className="leading-relaxed mb-4 max-w-3xl">
             The book above improved because someone read it closely and wrote in it. Readers here do the same: they find
