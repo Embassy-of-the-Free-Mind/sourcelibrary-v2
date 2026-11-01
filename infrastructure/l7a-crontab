@@ -76,3 +76,9 @@
 
 # Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
 13 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/data/scratch/sl/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=/root/sourcelibrary/.env.production.local $f --box l7a >> /data/scratch/sl/logs/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+
+# Atlas egress meter (#5189): a firewall counter on every packet from Atlas (tcp sport 27017), totalled daily.
+# Pages ntfy HIGH when this box received more than 40 GB in a day (Atlas bills $0.09/GB to non-AWS hosts;
+# October 2026 was 7.3 TB = $655 and nobody saw it until the invoice). Counting only: it never drops a packet.
+@reboot f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] && $f ensure
+5 0 * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] && $f report
