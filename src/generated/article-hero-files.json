@@ -635,6 +635,18 @@
    }
   ]
  },
+ "https://images.sourcelibrary.org/archived/6a26c3beaad44c98627cb64a/25.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/c1ff44470321-1280.avif",
+    "w": 1075
+   },
+   {
+    "src": "/articles/heroes/c1ff44470321-1920.avif",
+    "w": 1075
+   }
+  ]
+ },
  "https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg": {
   "srcset": [
    {
