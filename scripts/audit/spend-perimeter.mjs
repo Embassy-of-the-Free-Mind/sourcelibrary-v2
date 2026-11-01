@@ -84,6 +84,8 @@ const UNATTENDED = [
     note: '~24 plain HTTP requests a week to our own hosts, pushes ntfy on change; no model call (#4476)' },
   { match: 'agy-wal-checkpoint.py', spends: false, gated: false,
     note: 'SQLite WAL checkpoint on the Gemini CLI\'s local db; no model call (#6223)' },
+  { match: 'atlas-egress-meter.sh', spends: false, gated: false,
+    note: 'nftables byte counter on traffic from Atlas, read daily, ntfy over 40 GB/box/day; no model call, no Mongo query (#5189)' },
   { match: 'disk-steward.sh', spends: false, gated: false,
     note: 'reaps merged worktrees, trims the HF cache, archives idle job folders to R2 (private bucket, $0.015/GB-month, approved ~$3-5/month) while a disk is above 75%, removes agy .tmp leftovers; no model call (#6223)' },
   { match: 'cli-translate-lane.mjs', spends: false, gated: false,
