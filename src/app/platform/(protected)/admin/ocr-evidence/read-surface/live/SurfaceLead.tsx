@@ -50,7 +50,7 @@ export default function SurfaceLead({ doc }: { doc: LiveDoc }) {
         ) : conf.state === 'bad' ? (
           <span className="text-[#d29922]">the doc&apos;s confirmation field does not match the contract ({conf.problems.join('; ')})</span>
         ) : (
-          <span className="text-[#8b949e]">not in the live doc. publish-live.mjs does not carry the confirmation yet; until it does, read it on the <Link className="underline decoration-[#30363d] hover:text-[#58a6ff]" href="/platform/admin/ocr-evidence/read-surface">static page</Link>.</span>
+          <span className="text-[#8b949e]">not in the live doc for this language (publish-live.mjs --confirm writes it); read the confirmations on the<Link className="underline decoration-[#30363d] hover:text-[#58a6ff]" href="/platform/admin/ocr-evidence/read-surface">static page</Link>.</span>
         )}
       </p>
 
