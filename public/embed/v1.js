@@ -175,7 +175,7 @@
       parts.push('view=catalog', 'display=list');
     }
     // Sort param name differs by view: 'sort' for books grid, 'csort' for catalogue.
-    // Server-side strip-redirect (see src/app/embed/[tenant]/page.tsx) cleans
+    // Server-side strip-redirect (see src/app/embed/[tenant]/(library)/page.tsx) cleans
     // up the inactive one, so the user only thinks in terms of "data-sort".
     if (INITIAL_SORT) {
       parts.push((isCatalogue ? 'csort=' : 'sort=') + encodeURIComponent(INITIAL_SORT));

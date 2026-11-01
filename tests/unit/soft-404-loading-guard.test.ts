@@ -49,6 +49,16 @@ const FORBIDDEN_LOADING_FILES = [
   // the canonical one) before its notFound(); that logic must stay in the page,
   // so the segment simply cannot carry a loading.tsx.
   'src/app/author/[name]/loading.tsx',
+  // #5056: the embed reader 307s a hidden repeat capture to its kept page and the
+  // embed book page 404s a refused book; any of these would turn both into a 200.
+  // The catalogue skeleton lives in embed/[tenant]/(library)/ instead.
+  'src/app/embed/loading.tsx',
+  'src/app/embed/[tenant]/loading.tsx',
+  'src/app/embed/[tenant]/book/loading.tsx',
+  'src/app/embed/[tenant]/book/[slug]/loading.tsx',
+  'src/app/embed/[tenant]/book/[slug]/page/loading.tsx',
+  'src/app/embed/[tenant]/book/[slug]/page/[pageId]/loading.tsx',
+  'src/app/embed/[tenant]/collections/loading.tsx',
 ];
 
 describe('soft-404 guard: no loading.tsx above a route existence check (#3232, #3376)', () => {
