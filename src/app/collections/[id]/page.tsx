@@ -195,6 +195,11 @@ interface CuratedHighlight {
   id: string;
 }
 
+/** An authored link target for a phrase in a collection description
+ *  (`collections.mentioned_books`). `text` is matched case-insensitively; it
+ *  links to a book by `book_id` (`books.id`) or to a person by `author_id`. */
+type DescriptionMention = { text: string; book_id?: string; author_id?: string };
+
 /** Auto-link book titles found in description text to their book pages.
  *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
 // Inline markdown links [anchor](/path) authored in a collection description.
@@ -207,7 +212,7 @@ const MD_LINK_RE = /\[([^\]\n]+)\]\((\/[^)\s]+)\)/g;
 function linkBookTitles(
   text: string,
   allBooks: BookItem[],
-  explicitMentions?: { text: string; book_id: string }[],
+  explicitMentions?: DescriptionMention[],
   tenantSlug?: string | null,
   authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
 ): React.ReactNode {
@@ -242,7 +247,7 @@ function linkBookTitles(
 function autoLinkPlain(
   text: string,
   allBooks: BookItem[],
-  explicitMentions?: { text: string; book_id: string }[],
+  explicitMentions?: DescriptionMention[],
   tenantSlug?: string | null,
   authorLinks: { name: string; href: string; canonical?: string; count?: number }[] = [],
 ): React.ReactNode {
@@ -253,7 +258,11 @@ function autoLinkPlain(
   if (explicitMentions?.length) {
     // Sort longest first to avoid partial matches
     const sorted = [...explicitMentions].sort((a, b) => b.text.length - a.text.length);
-    for (const { text: mentionText, book_id } of sorted) {
+    for (const { text: mentionText, book_id, author_id } of sorted) {
+      // A mention names a book (book_id) or a person (author_id → /author/<id>,
+      // the same canonical link the byline auto-linker builds). #7897
+      const mentionHref = author_id ? authorUrl('', author_id) ?? undefined : undefined;
+      if (!book_id && !mentionHref) continue;
       const escaped = mentionText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       try {
         const regex = new RegExp(escaped, 'gi');
@@ -262,7 +271,7 @@ function autoLinkPlain(
           const start = match.index;
           const end = start + match[0].length;
           if (!usedRanges.some(([s, e]) => start < e && end > s)) {
-            matches.push({ start, end, title: match[0], id: book_id });
+            matches.push({ start, end, title: match[0], id: book_id || `author-${author_id}`, href: mentionHref });
             usedRanges.push([start, end]);
           }
         }
@@ -395,6 +404,8 @@ function autoLinkPlain(
 // ---------- Data fetching ----------
 
 const COMPACT_LIMIT = 14;
+// Paragraphs of the introduction shown before "Read more" (#7897).
+const INTRO_LEAD_PARAGRAPHS = 2;
 
 // A reading page that belongs to one collection and is written in code, not in
 // the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
@@ -1205,7 +1216,27 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
     ...books,
     ...mentionedBooks,
   ] as BookItem[];
-  const explicitMentions: { text: string; book_id: string }[] = collection.mentioned_books || [];
+  const explicitMentions: DescriptionMention[] = collection.mentioned_books || [];
+  const introParagraphs: string[] = (collection.expanded_description || collection.description || '')
+    .split('\n\n')
+    .map((p: string) => p.trim())
+    .filter(Boolean);
+  // The same authored links, resolved to hrefs for the exhibition layout (a
+  // client component), so a curated page links what its prose names (#7897).
+  const slugById = new Map(allBooksForLinking.map((b) => [b.id, (b as { slug?: string }).slug]));
+  const exhibitionMentions = explicitMentions.flatMap((m) => {
+    const href = m.author_id
+      ? authorUrl('', m.author_id)
+      : m.book_id ? tenantBookUrl({ id: m.book_id, slug: slugById.get(m.book_id) }, tenantSlug) : null;
+    return m.text && href ? [{ text: m.text, href }] : [];
+  });
+  // A curated exhibition that carries no description block of its own (yoga,
+  // courts-of-wonder, the-human-condition) used to hide the collection's intro
+  // entirely; it now shows it under the hero like every other collection.
+  const exhibitionHasDescription = Array.isArray(exhibition?.layout)
+    && exhibition.layout.some((b: { component?: string }) => b.component === 'description');
+  const renderIntroParagraph = (para: string) =>
+    renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks));
 
   return (
     <div className="min-h-screen bg-cream">
@@ -1349,6 +1380,37 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </div>
         </div>
       </div>
+
+      {/* Introduction — directly under the hero, before any band of covers, as
+          the collection-page spec orders it (§2: Introduction 4, First
+          translations 6). A reader learns what the tradition is and why these
+          books belong together before being shown them. Long intros show two
+          paragraphs; the rest sits behind a native disclosure (#7897). */}
+      {!exhibitionHasDescription && introParagraphs.length > 0 && (
+        <div id="introduction" className="bg-warm border-b border-border-light">
+          <div className="max-w-[1500px] mx-auto px-6 py-8">
+            <div className="max-w-4xl">
+              {introParagraphs.slice(0, INTRO_LEAD_PARAGRAPHS).map((para, i) => (
+                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                  {renderIntroParagraph(para)}
+                </p>
+              ))}
+              {introParagraphs.length > INTRO_LEAD_PARAGRAPHS && (
+                <details className="group mt-4">
+                  <summary className="cursor-pointer list-none text-sm text-muted hover:text-accent-rust transition-colors group-open:hidden">
+                    Read more &darr;
+                  </summary>
+                  {introParagraphs.slice(INTRO_LEAD_PARAGRAPHS).map((para, i) => (
+                    <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                      {renderIntroParagraph(para)}
+                    </p>
+                  ))}
+                </details>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Sub-collections grid */}
       {childCollections.length > 0 && (
@@ -1665,6 +1727,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               books={exhibitionBooks as any[]}
               images={galleryImages}
               collectionSlug={id}
+              mentions={exhibitionMentions}
             />
           </div>
         </div>
@@ -1747,21 +1810,6 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                   +{artworks.length - 15} more works
                 </Link>
               )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Overview description */}
-      {!exhibition?.layout && (collection.expanded_description || collection.description) && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-[1500px] mx-auto px-6 py-8">
-            <div className="max-w-4xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {renderInlineProse(para, (seg) => linkBookTitles(seg, allBooksForLinking, explicitMentions, tenantSlug, descriptionAuthorLinks))}
-                </p>
-              ))}
             </div>
           </div>
         </div>
