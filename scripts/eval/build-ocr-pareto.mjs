@@ -25,6 +25,11 @@
  *              An engine with no per-page meter is "not measured", never estimated (#6776)
  *   hard hands #6731's Greek-manuscript and Rashi-type panels (results/hard-hands-6731/scored-*.json), graded by the
  *              same rules (#6776)
+ *   chains     #6740's chained routes (draft engine → corrector), re-run on each panel's own pages from the panel's read
+ *              by the draft engine and scored by the same scorer (ocr-pareto-chains-6740/results/scored-chains.json).
+ *              A chain is a point like any engine, placed at its draft's price plus its corrector's, and joins only a
+ *              panel that holds its draft and every page of which it read; `chain` names the draft (for the arrow) and
+ *              counts the pages the correction made worse or better than the draft, by more than the 1-point margin
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
@@ -63,6 +68,7 @@ import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, grad
 import { canRunToday } from './lib/model-availability.mjs';
 import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
 import { extractTranscription } from '../lib/cli-chatter.mjs';
+import { MODEL_PRICING, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -390,6 +396,86 @@ const memoAcc = Object.values(memo.reduce((m, r) => {
 const pctRange = xs => `${Math.round(Math.min(...xs) * 100)}% to ${Math.round(Math.max(...xs) * 100)}%`;
 const prodModels = src => Object.entries(hardProd[src]).sort((a, b) => b[1] - a[1]);
 
+// ── chained routes (#6740): a draft engine's read, corrected against the image by another model ─────────────────
+// The rows were scored by run-chains.mjs with this file's scorer (benchmark-score.mjs, then the #6523 extractor) on the
+// panels' own pages, and its control re-scored every draft to the CER its dot here is drawn from. A CONTAIN answer (the
+// corrector said the draft is not this leaf's text, or the leaf cannot be read) is counted as not read, kind refusal.
+const CHAIN_DIR = path.join(__dirname, 'ocr-pareto-chains-6740', 'results');
+const CHAIN_FILE = path.join(CHAIN_DIR, 'scored-chains.json');
+const CHAIN_DATE = '2026-10-26';   // scripts/eval/experiments/2026-10-26-ocr-pareto-chained-routes-6740.md
+const CORRECTOR = {
+  'claude-opus-5-5+claude-cli': { label: 'Claude Opus 5.5', model: 'claude-opus-5-5' },
+  'gemini-3.8-flash+antigravity-cli': { label: 'Gemini 3.8 Flash', model: 'gemini-3.8-flash' },
+};
+const isChain = e => e.includes('>');
+const chainParts = e => { const [draft, corrector] = e.split('>'); return { draft, corrector }; };
+const chainRows = fs.existsSync(CHAIN_FILE) ? JSON.parse(fs.readFileSync(CHAIN_FILE, 'utf8')).rows.map(r => ({
+  page: r.page, stratum: stratumOf(r.page), engine: r.engine, cer: r.failure ? null : r.unplaced ? 1 : r.cer, failure: r.failure ?? null, failure_why: r.failure_why ?? null,
+  unplaced: !r.failure && !!r.unplaced, invented: null, date: CHAIN_DATE, file: path.relative(REPO, CHAIN_FILE),
+  // where the scoring box held no read by the draft engine, the chain corrected the stored read by the same engine:
+  // what the correction did to the page is measured against that draft's score, not the dot's
+  ...(r.draft_source === 'stored' ? { draft_cer: r.draft_cer } : {}),
+})) : [];
+// The corrector's price per page on a chart, on the #6293 preregistered x-axis formula every command-line point here is
+// placed on, extended by the draft: the request is the read request as metered for Flash-Lite in production (3,736 input
+// tokens: prompt and image), plus the draft at the corrector's own tokens per character on this chart, and the reply is
+// the output tokens the CLI reported for the page. Gemini at its Batch price, as the CLI read points; Opus at its
+// realtime list price, as the Claude API points. The CLIs' own instructions and tool turns are not counted (as for the
+// read points). $0 is billed; what a page draws on the subscription is in the detail.
+const CHAIN_METER = new Map();   // page|engine → meter row
+if (fs.existsSync(CHAIN_DIR)) for (const f of fs.readdirSync(CHAIN_DIR).filter(f => /^meter-.*\.jsonl$/.test(f))) {
+  for (const line of fs.readFileSync(path.join(CHAIN_DIR, f), 'utf8').split('\n').filter(Boolean)) { const o = JSON.parse(line); CHAIN_METER.set(`${o.stratum}|${o.slug}|${o.engine}`, o); }
+}
+const CHAIN_QUOTA = {
+  'claude-opus-5-5+claude-cli': 'about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot\'s meter, an upper bound; 0.004 at ten pages a call, #5924)',
+  'gemini-3.8-flash+antigravity-cli': `about ${(4.3632e-6 * 1e6).toFixed(1)} millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json)`,
+};
+const READ_IN = 3736;   // cli-cost.mjs LITE_IN: Flash-Lite's metered production input tokens a page
+function correctorUsd(engine, pages) {
+  const { corrector } = chainParts(engine);
+  const claude = corrector.startsWith('claude');
+  const outOf = m => (claude ? m.usage?.output : (m.usage?.output_tokens ?? 0) + (m.usage?.thinking_tokens ?? 0));
+  const ms = pages.map(p => CHAIN_METER.get(`${p}|${engine}`)).filter(m => m?.usage && outOf(m) != null && m.draft_chars != null);
+  if (!ms.length) return null;
+  // tokens per character of this corrector's corrected texts on these pages (an UNCHANGED answer has no text)
+  const withText = ms.filter(m => m.outcome === 'corrected' && m.answer_chars > 0);
+  const tpc = withText.reduce((a, m) => a + outOf(m), 0) / Math.max(1, withText.reduce((a, m) => a + m.answer_chars, 0));
+  const P = MODEL_PRICING[CORRECTOR[corrector].model];
+  const usd = ms.map(m => ((READ_IN + m.draft_chars * tpc) * P.input + outOf(m) * P.output) * (claude ? 1 : BATCH_MULTIPLIER) / 1e6);
+  return { usd_per_1k: mean(usd) * 1000, n: usd.length };
+}
+function chainCost(engine, chartId, pages) {
+  const { draft, corrector } = chainParts(engine);
+  const d = costOf(draft, chartId), c = correctorUsd(engine, pages);
+  if (!d || !c) return null;
+  return {
+    usd_per_1k: r3(d.usd_per_1k + c.usd_per_1k), basis: 'chain', billed_usd_per_1k: r3(d.basis === 'billed' ? d.usd_per_1k : 0),
+    detail: `the draft, ${LABEL[draft] || draft}, at ${d.basis === 'billed' ? 'its billed price' : 'its API price, $0 billed'} ($${r3(d.usd_per_1k)}), plus the correction by ${CORRECTOR[corrector].label} through its command-line tool, placed at the API price for the same request ($${r3(c.usd_per_1k)}, the mean of ${c.n} pages: the read request, the draft and the reply, ${corrector.startsWith('claude') ? 'realtime' : 'Batch'} rate; $0 billed; ${CHAIN_QUOTA[corrector]})`,
+    source: path.relative(REPO, CHAIN_DIR),
+  };
+}
+// #6740 sensitivity, never plotted: a Chinese chain re-scored with its metadata tags removed with their text (the CJK
+// path of the scorer keeps that text; its Latin-script path drops it). Written into the panel's chain note.
+const CJK_TAGS_FILE = path.join(CHAIN_DIR, 'cjk-tags-sensitivity.json');
+const CJK_TAGS = new Map(fs.existsSync(CJK_TAGS_FILE) ? JSON.parse(fs.readFileSync(CJK_TAGS_FILE, 'utf8')).rows.map(r => [`${r.page}|${r.engine}`, r.cer_tags_removed]) : []);
+function chainNote(points, ps, byEngine) {
+  const chains = points.filter(p => p.chain);
+  if (!chains.length) return null;
+  const pct = x => `${(Math.round(x * 1000) / 10).toFixed(1)}%`;
+  const tagged = chains.filter(p => ps.some(pg => CJK_TAGS.has(`${pg}|${p.engine}`)));
+  if (!tagged.length) return null;
+  const draft = chains[0].chain.draft;
+  const both = ps.filter(pg => tagged.every(p => CJK_TAGS.get(`${pg}|${p.engine}`) != null) && !byEngine.get(draft).get(pg).failure);
+  if (both.length < MIN_PAGES) return null;
+  const d = 1 - mean(both.map(pg => byEngine.get(draft).get(pg).cer));
+  return `The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the ${both.length} pages all read: ${labelOf(draft)} ${pct(d)}, `
+    + tagged.map(p => `${p.label} ${pct(1 - mean(both.map(pg => CJK_TAGS.get(`${pg}|${p.engine}`))))}`).join(', ') + '. A check, not plotted.';
+}
+/** The chains that join a panel: their draft is in it and they have a row (a failure counts) for every page. */
+function chainsFor(engines, pages, byChain) {
+  return [...byChain.keys()].filter(e => engines.includes(chainParts(e).draft) && [...pages].every(p => byChain.get(e).has(p))).sort();
+}
+
 // #6293's CLI arms: a chart keeps one only if it read every page of the chart's frozen set (minus the #6304 drops);
 // placed at the API's Batch price for the same requests (cli-cost*.json), basis 'quota'.
 const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.json');
@@ -438,7 +524,7 @@ function greedy(byEngine, start, floor, within) {
   for (;;) {
     let best = null;
     for (const e of [...byEngine.keys()].sort()) {
-      if (set.includes(e)) continue;
+      if (set.includes(e) || isChain(e)) continue;
       const s = intersect(shared, ran(byEngine, e));
       if (s.size >= floor && (!best || s.size > best.s.size)) best = { e, s };
     }
@@ -454,6 +540,7 @@ function secsOf(engine, pages) {
 }
 
 const numPts = d => `${d >= 0 ? '+' : '−'}${Math.abs(d * 100).toFixed(1)}`;
+const labelOf = e => (isChain(e) ? `${LABEL[chainParts(e).draft] || chainParts(e).draft} → ${CORRECTOR[chainParts(e).corrector]?.label || chainParts(e).corrector}` : LABEL[e] || e);
 
 /** One panel: every engine on the same pages, its own interval, its paired difference against the engine in use. */
 function panel(script, kind, byEngine, engines, pages, production, repeat, extra = {}) {
@@ -492,7 +579,7 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     const k = ps.length - rs.length;
     const inv = rs.filter(r => typeof r.invented === 'number').map(r => r.invented);
     const pt = {
-      engine: e, label: LABEL[e] || e, production: e === production,
+      engine: e, label: labelOf(e), production: e === production,
       mean_cer: r3(mn), accuracy: r3(1 - mn), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
       // over the pages it read
       fail_share: r3(rs.filter(r => r.cer > 0.5).length / rs.length),
@@ -502,11 +589,20 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
       ...(k / ps.length > PARTLY_MEASURED ? { partly_measured: `did not read ${k} of ${ps.length} pages (${Object.entries(kinds).map(([x, n]) => `${KIND_WORDS[x]} ${n}`).join(', ')}); its accuracy rests on the ${rs.length} it read` } : {}),
       // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
       words_not_in_ref: inv.length >= Math.max(MIN_PAGES, rs.length / 2) ? r3(median(inv)) : null,
-      cost: costOf(e, script.id),
-      route: routeOf(e, script.id),
+      cost: isChain(e) ? chainCost(e, script.id, ps) : costOf(e, script.id),
+      route: isChain(e) ? 'subscription' : routeOf(e, script.id),
       // median seconds a page from the arm's own meter, on this panel's pages (failed reads too: the time was spent)
       secs_per_page: secsOf(e, ps),
     };
+    if (isChain(e)) {
+      // what the correction did to each page against its own draft: made worse or better by more than the margin
+      const { draft, corrector } = chainParts(e);
+      const both = ps.map(p => { const c = byEngine.get(e).get(p), d = byEngine.get(draft).get(p); return [c.draft_cer !== undefined ? { cer: c.draft_cer, failure: c.draft_cer == null ? 'other' : null } : d, c]; })
+        .filter(([d, c]) => !d.failure && !c.failure);
+      pt.chain = { draft, corrector, n: both.length, worse: both.filter(([d, c]) => c.cer - d.cer > MARGIN.ocr).length, better: both.filter(([d, c]) => d.cer - c.cer > MARGIN.ocr).length,
+        unchanged_answers: ps.filter(p => /^unchanged$/.test(CHAIN_METER.get(`${p}|${e}`)?.outcome || '')).length,
+        stored_drafts: ps.filter(p => byEngine.get(e).get(p).draft_cer !== undefined).length };
+    }
     if (!pt.cost) pt.no_price = NO_PRICE[e] || (e === STORED ? 'the stored reads come from more than one model, so no one price applies'
       : isCli(e) ? 'run through a command-line tool on the subscription, $0 billed; no API price computed for these pages'
         : OWN_SERVER(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
@@ -539,6 +635,8 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
     placed, no_cost: noCost, ...extra,
   };
+  const cn = chainNote(points, ps, byEngine);
+  if (cn) p.chain_note = cn;
   p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page', canRun: canRunToday });
   return p;
 }
@@ -577,6 +675,9 @@ for (const script of SCRIPTS) {
   const rows = script.source && script.source !== 'syriac' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
   chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, failure: r.failure, failure_why: r.failure_why }));
   const byEngine = pagesOf(rows);
+  // the chains whose draft engine read this chart's pages; never picked by greedy(), added to a panel by chainsFor()
+  const byChain = pagesOf(chainRows.filter(r => byEngine.get(chainParts(r.engine).draft)?.has(r.page) && !EXCLUDE.has(r.page)));
+  const withChains = (engines, pages) => { const cs = chainsFor(engines, pages, byChain); for (const c of cs) byEngine.set(c, byChain.get(c)); return [...engines, ...cs]; };
   const production = script.production || LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
@@ -603,13 +704,13 @@ for (const script of SCRIPTS) {
   const panels = [];
   fam.forEach((x, i) => {
     const heading = FAMILY_HEADING[x.f] || x.f;
-    const pn = panel(script, i === 0 ? 'primary' : `family-${x.f.replace('|', '-')}`, byEngine, x.wide.engines, x.wide.pages, production, repeat, { role: i === 0 ? 'primary' : 'secondary', heading: i === 0 ? null : heading });
+    const pn = panel(script, i === 0 ? 'primary' : `family-${x.f.replace('|', '-')}`, byEngine, withChains(x.wide.engines, x.wide.pages), x.wide.pages, production, repeat, { role: i === 0 ? 'primary' : 'secondary', heading: i === 0 ? null : heading });
     panels.push(pn);
     if (i === 0) primarySets[script.id] = { engines: x.wide.engines, pages: [...x.wide.pages].sort() };
     // a second view: more engines on fewer pages of the same family, when it still has enough works
     const broad = greedy(byEngine, production, MIN_PAGES, x.ps);
     if (broad.engines.length > x.wide.engines.length) {
-      const pb = panel(script, `${i === 0 ? 'primary' : x.f.replace('|', '-')}-more-engines`, byEngine, broad.engines, broad.pages, production, repeat, { role: 'secondary', heading: `${heading}: more engines, fewer pages` });
+      const pb = panel(script, `${i === 0 ? 'primary' : x.f.replace('|', '-')}-more-engines`, byEngine, withChains(broad.engines, broad.pages), broad.pages, production, repeat, { role: 'secondary', heading: `${heading}: more engines, fewer pages` });
       if (pb.n_works >= MIN_WORKS_EXTRA) panels.push(pb);
     }
   });
@@ -620,7 +721,8 @@ for (const script of SCRIPTS) {
     const bySub = pagesOf(subRows), inSub = new Set(sub.pages);
     let ps = new Set(primarySets[script.id].pages.filter(p => inSub.has(p)));
     for (const e of sub.engines) ps = intersect(ps, ran(bySub, e));
-    if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines], ps, production, repeat,
+    for (const c of chainsFor(primarySets[script.id].engines, ps, byChain)) bySub.set(c, byChain.get(c));
+    if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines, ...chainsFor(primarySets[script.id].engines, ps, byChain)], ps, production, repeat,
       { role: 'secondary', heading: `${ps.size} pages drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')}` }));
   }
   charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, stored_now: STORED_NOW.get(script.id) || null, panels });
@@ -633,6 +735,12 @@ const out = {
   stored_now_census: OCR_ROUTING_TABLE.census,
   production_rule: 'the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns',
   grade_rules: GRADE_RULES,
+  // #6740: what a chained route is, for the legend, and the corrector deliberately left out
+  chains: chainRows.length ? {
+    what: 'a second model is given the page image and another engine’s reading of it, and fixes what the image contradicts. The arrow runs from that engine’s dot to the corrected result, scored on the same pages; its price is both steps.',
+    not_drawn: 'Gemini 3.1 Flash-Lite is not drawn as a corrector: tested as one, it failed at the task (#7275).',
+    source: path.relative(REPO, CHAIN_DIR),
+  } : null,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },
   charts,
   no_chart: [...noChart, ...NO_REFERENCE],

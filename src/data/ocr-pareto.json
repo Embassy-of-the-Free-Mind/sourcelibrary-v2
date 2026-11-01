@@ -13,6 +13,11 @@
   "directional": "Fit to read, but 10 to 19 works, or mostly famous texts a model may know by heart, or a modern edition as the reference rather than a transcription of the page.",
   "not_fit": "Fewer than 10 works, or the sample check found the references do not fit, or two error measures pooled, or the reference was located using our own engine’s reading. No frontier and no verdict."
  },
+ "chains": {
+  "what": "a second model is given the page image and another engine’s reading of it, and fixes what the image contradicts. The arrow runs from that engine’s dot to the corrected result, scored on the same pages; its price is both steps.",
+  "not_drawn": "Gemini 3.1 Flash-Lite is not drawn as a corrector: tested as one, it failed at the task (#7275).",
+  "source": "scripts/eval/ocr-pareto-chains-6740/results"
+ },
  "cost_sources": {
   "metered": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json",
   "other": "scripts/eval/ocr-engine-gpu-costs.json",
@@ -53,8 +58,9 @@
       "band": null,
       "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-09-16)"
      },
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
       "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/ocr-pareto-6293/scored/ref-ws-2026-10-12.json",
@@ -310,6 +316,102 @@
         "n_works": 44
        },
        "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.016,
+       "accuracy": 0.984,
+       "accuracy_ci95": [
+        0.976,
+        0.99
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 44,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4.622,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($3.343, the mean of 44 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 44,
+        "worse": 0,
+        "better": 7,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.021,
+        "ci95": [
+         0.003,
+         0.055
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.019,
+       "accuracy": 0.981,
+       "accuracy_ci95": [
+        0.973,
+        0.989
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 44,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 51.276,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($49.997, the mean of 44 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 44,
+        "worse": 1,
+        "better": 6,
+        "unchanged_answers": 12,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.019,
+        "ci95": [
+         -0.001,
+         0.052
+        ],
+        "n_pages": 44,
+        "n_works": 44
+       },
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -668,7 +770,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "Gemini 3.8 Flash (CLI, high) reads better than Gemini 3.1 Flash-Lite, the engine we use, by +2.7 points a page (95% interval +0.7 to +6.0). Also better: Claude Sonnet 5.5 and Gemini 3.8 Flash (CLI). Measured better, not runnable today: Gemini 3.7 Flash (CLI), Gemini 3 Flash and Mistral OCR 4.1."
+     "verdict": "Gemini 3.8 Flash (CLI, high) reads better than Gemini 3.1 Flash-Lite, the engine we use, by +2.7 points a page (95% interval +0.7 to +6.0). Also better: Claude Sonnet 5.5, Gemini 3.8 Flash (CLI) and 1 more. Measured better, not runnable today: Gemini 3.7 Flash (CLI), Gemini 3 Flash and Mistral OCR 4.1."
     },
     {
      "kind": "family-whole-anchored",
@@ -696,8 +798,9 @@
      ],
      "frontier": false,
      "noise": null,
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
       "scripts/eval/results/benchmark/latin-period-5126-2026-10-04.json",
       "scripts/eval/results/engine-wave1-6011/scored/eebo-tcp-5488-2026-10-06.json",
@@ -944,6 +1047,56 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.09,
+       "accuracy": 0.91,
+       "accuracy_ci95": [
+        0.889,
+        0.925
+       ],
+       "fail_share": 0.012,
+       "did_not_read": {
+        "k": 10,
+        "n": 93,
+        "kinds": {
+         "refusal": 8,
+         "other": 2
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 52.599,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($51.32, the mean of 91 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 83,
+        "worse": 11,
+        "better": 20,
+        "unchanged_answers": 3,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.002,
+        "ci95": [
+         -0.023,
+         0.025
+        ],
+        "n_pages": 83,
+        "n_works": 83
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
@@ -1101,6 +1254,56 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.121,
+       "accuracy": 0.879,
+       "accuracy_ci95": [
+        0.841,
+        0.91
+       ],
+       "fail_share": 0.047,
+       "did_not_read": {
+        "k": 7,
+        "n": 93,
+        "kinds": {
+         "refusal": 5,
+         "other": 2
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4.382,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($3.103, the mean of 91 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 86,
+        "worse": 16,
+        "better": 15,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.029,
+        "ci95": [
+         -0.07,
+         0.007
+        ],
+        "n_pages": 86,
+        "n_works": 86
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
@@ -1169,8 +1372,9 @@
       "band": null,
       "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-10-01)"
      },
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
       "scripts/eval/results/engine-wave1-6011/scored/eebo-tcp-5488-2026-10-06.json",
       "scripts/eval/results/engine-wave2-6011/scored/eebo-tcp-5488-2026-10-07.json",
@@ -1426,6 +1630,53 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.083,
+       "accuracy": 0.917,
+       "accuracy_ci95": [
+        0.901,
+        0.932
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 14,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 48.522,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($47.243, the mean of 14 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 14,
+        "worse": 0,
+        "better": 5,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.014,
+        "ci95": [
+         0.002,
+         0.031
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
@@ -1562,6 +1813,53 @@
        },
        "route": "api",
        "secs_per_page": null,
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.099,
+       "accuracy": 0.901,
+       "accuracy_ci95": [
+        0.873,
+        0.919
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 14,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4.168,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.889, the mean of 14 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 14,
+        "worse": 3,
+        "better": 3,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.002,
+        "ci95": [
+         -0.01,
+         0.005
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
        "on_frontier": false
       },
       {
@@ -1707,8 +2005,9 @@
       "band": null,
       "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-10-01)"
      },
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
       "scripts/eval/results/engine-wave1-6011/scored/eebo-tcp-5488-2026-10-06.json",
       "scripts/eval/results/ocr-pareto-6293/scored/eebo-tcp-5488-2026-10-12.json",
@@ -1865,6 +2164,55 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.052,
+       "accuracy": 0.948,
+       "accuracy_ci95": [
+        0.939,
+        0.957
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 1,
+        "n": 44,
+        "kinds": {
+         "other": 1
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 43.139,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($41.86, the mean of 43 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 43,
+        "worse": 3,
+        "better": 13,
+        "unchanged_answers": 10,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.008,
+        "ci95": [
+         0.003,
+         0.014
+        ],
+        "n_pages": 43,
+        "n_works": 42
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.8-flash+antigravity-cli",
        "label": "Gemini 3.8 Flash (CLI)",
        "production": false,
@@ -1948,6 +2296,55 @@
         "ci95": [
          -0.019,
          0.024
+        ],
+        "n_pages": 43,
+        "n_works": 42
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.055,
+       "accuracy": 0.945,
+       "accuracy_ci95": [
+        0.935,
+        0.954
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 1,
+        "n": 44,
+        "kinds": {
+         "other": 1
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4.218,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.939, the mean of 43 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 43,
+        "worse": 4,
+        "better": 10,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.005,
+        "ci95": [
+         0.001,
+         0.01
         ],
         "n_pages": 43,
         "n_works": 42
@@ -2250,8 +2647,9 @@
       "band": null,
       "why": "it ran on 2026-10-03, by another route than the read it repeats (2026-09-16)"
      },
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
       "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/ocr-pareto-6293/scored/ref-ws-2026-10-12.json",
@@ -2346,6 +2744,56 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.005,
+       "accuracy": 0.995,
+       "accuracy_ci95": [
+        0.989,
+        0.999
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 3,
+        "n": 22,
+        "kinds": {
+         "other": 3
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 51.723,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($50.444, the mean of 22 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 19,
+        "worse": 0,
+        "better": 1,
+        "unchanged_answers": 5,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.003,
+        "ci95": [
+         0.002,
+         0.005
+        ],
+        "n_pages": 19,
+        "n_works": 19
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.6-flash+antigravity-cli",
        "label": "Gemini 3.6 Flash (CLI)",
        "production": false,
@@ -2426,6 +2874,56 @@
        },
        "verdict": "better",
        "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.006,
+       "accuracy": 0.994,
+       "accuracy_ci95": [
+        0.989,
+        0.998
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 3,
+        "n": 22,
+        "kinds": {
+         "other": 3
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 4.386,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($3.107, the mean of 22 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 19,
+        "worse": 0,
+        "better": 2,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.003,
+        "ci95": [
+         0.001,
+         0.005
+        ],
+        "n_pages": 19,
+        "n_works": 19
+       },
+       "verdict": "better",
+       "on_frontier": false
       },
       {
        "engine": "gemini-3.1-flash-lite",
@@ -2891,7 +3389,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +0.4 points a page (95% interval +0.2 to +0.8). Measured better, not runnable today: Gemini 3.6 Flash (CLI) and Gemini 3 Flash."
+     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +0.4 points a page (95% interval +0.2 to +0.8). Also better: Gemini 3.1 Flash-Lite → Claude Opus 5.5 and Gemini 3.1 Flash-Lite → Gemini 3.8 Flash. Measured better, not runnable today: Gemini 3.6 Flash (CLI) and Gemini 3 Flash."
     }
    ]
   },
@@ -2920,15 +3418,117 @@
       "why": "20 or more works, independent reference, one measure"
      },
      "to_decide": null,
-     "frontier": false,
+     "frontier": true,
      "noise": null,
-     "date": "2026-10-03",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
      ],
      "placed": [
+      {
+       "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3 Flash → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.053,
+       "accuracy": 0.947,
+       "accuracy_ci95": [
+        0.858,
+        0.996
+       ],
+       "fail_share": 0.043,
+       "did_not_read": {
+        "k": 1,
+        "n": 24,
+        "kinds": {
+         "copy_filter": 1
+        }
+       },
+       "unplaced": 1,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 90.301,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($87.592, the mean of 23 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 23,
+        "worse": 2,
+        "better": 1,
+        "unchanged_answers": 4,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.039,
+        "ci95": [
+         -0.01,
+         0.13
+        ],
+        "n_pages": 23,
+        "n_works": 23
+       },
+       "verdict": "same",
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3 Flash → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.055,
+       "accuracy": 0.945,
+       "accuracy_ci95": [
+        0.85,
+        0.996
+       ],
+       "fail_share": 0.045,
+       "did_not_read": {
+        "k": 2,
+        "n": 24,
+        "kinds": {
+         "copy_filter": 1,
+         "empty": 1
+        }
+       },
+       "unplaced": 1,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 7.299,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($4.59, the mean of 23 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 22,
+        "worse": 2,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.004,
+        "ci95": [
+         -0.012,
+         0
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "same",
+       "on_frontier": true
+      },
       {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
@@ -2957,7 +3557,7 @@
        },
        "route": "api",
        "secs_per_page": null,
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "gemini-3.1-flash-lite",
@@ -2997,7 +3597,7 @@
         "n_works": 23
        },
        "verdict": "same",
-       "on_frontier": false
+       "on_frontier": true
       }
      ],
      "no_cost": [
@@ -3192,8 +3792,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
       "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/ocr-pareto-6293/scored/ref-ws-2026-10-12.json",
@@ -3266,6 +3867,54 @@
         "ci95": [
          -0.001,
          0
+        ],
+        "n_pages": 12,
+        "n_works": 12
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3 Flash → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.007,
+       "accuracy": 0.993,
+       "accuracy_ci95": [
+        0.985,
+        0.998
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 12,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 80.373,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($77.664, the mean of 12 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 12,
+        "worse": 1,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.001,
+        "ci95": [
+         -0.004,
+         0.001
         ],
         "n_pages": 12,
         "n_works": 12
@@ -3347,6 +3996,54 @@
         "diff": -0.001,
         "ci95": [
          -0.002,
+         0
+        ],
+        "n_pages": 12,
+        "n_works": 12
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3 Flash → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.008,
+       "accuracy": 0.992,
+       "accuracy_ci95": [
+        0.982,
+        0.999
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 12,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 6.775,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($4.066, the mean of 12 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 12,
+        "worse": 1,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.002,
+        "ci95": [
+         -0.005,
          0
         ],
         "n_pages": 12,
@@ -3754,8 +4451,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/greek-2026-09-21.json",
       "scripts/eval/results/benchmark/greek-ext-2026-09-21.json",
       "scripts/eval/results/benchmark/greek-ext2-2026-09-21.json",
@@ -3774,6 +4472,54 @@
       "scripts/eval/results/open-engine-print-5660/scored/greek-ext2-2026-10-03.json"
      ],
      "placed": [
+      {
+       "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3 Flash → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.089,
+       "accuracy": 0.911,
+       "accuracy_ci95": [
+        0.9,
+        0.922
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 109,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 105.907,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($103.198, the mean of 109 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 109,
+        "worse": 2,
+        "better": 28,
+        "unchanged_answers": 9,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.01,
+        "ci95": [
+         0.007,
+         0.014
+        ],
+        "n_pages": 109,
+        "n_works": 97
+       },
+       "verdict": "better",
+       "on_frontier": true
+      },
       {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash (CLI)",
@@ -3819,6 +4565,56 @@
        },
        "verdict": "same",
        "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3 Flash → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.096,
+       "accuracy": 0.904,
+       "accuracy_ci95": [
+        0.893,
+        0.915
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 3,
+        "n": 109,
+        "kinds": {
+         "empty": 3
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 6.872,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($4.163, the mean of 109 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 106,
+        "worse": 2,
+        "better": 11,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.003,
+        "ci95": [
+         0.001,
+         0.005
+        ],
+        "n_pages": 106,
+        "n_works": 94
+       },
+       "verdict": "better",
+       "on_frontier": false
       },
       {
        "engine": "gemini-3-flash-preview",
@@ -4240,7 +5036,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text",
-     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use."
+     "verdict": "The evidence points toward Gemini 3 Flash → Claude Opus 5.5 over Gemini 3 Flash, the engine we use (+1.0 points a page, 95% interval +0.7 to +1.4); directional only."
     },
     {
      "kind": "whole-independent-more-engines",
@@ -4264,8 +5060,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/greek-2026-09-21.json",
       "scripts/eval/results/engine-wave1-6011/scored/greek-2026-10-06.json",
       "scripts/eval/results/ocr-pareto-6293/scored/greek-2026-10-14.json",
@@ -4310,6 +5107,54 @@
        },
        "verdict": "same",
        "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3 Flash → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.088,
+       "accuracy": 0.912,
+       "accuracy_ci95": [
+        0.882,
+        0.942
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 10,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 68.869,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($66.16, the mean of 10 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 10,
+        "worse": 0,
+        "better": 1,
+        "unchanged_answers": 3,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.009,
+        "ci95": [
+         -0.001,
+         0.027
+        ],
+        "n_pages": 10,
+        "n_works": 10
+       },
+       "verdict": "same",
+       "on_frontier": false
       },
       {
        "engine": "gemini-3.7-flash+antigravity-cli",
@@ -4426,6 +5271,54 @@
        "route": "api",
        "secs_per_page": null,
        "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3 Flash → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.097,
+       "accuracy": 0.903,
+       "accuracy_ci95": [
+        0.87,
+        0.936
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 10,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 6.516,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($3.807, the mean of 10 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 10,
+        "worse": 0,
+        "better": 1,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0,
+        "ci95": [
+         -0.003,
+         0.003
+        ],
+        "n_pages": 10,
+        "n_works": 10
+       },
+       "verdict": "same",
+       "on_frontier": false
       },
       {
        "engine": "gemini-3.1-flash-lite",
@@ -4945,8 +5838,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
       "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
@@ -5153,6 +6047,57 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+       "label": "PaddleOCR-VL 1.6 → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.256,
+       "accuracy": 0.744,
+       "accuracy_ci95": [
+        0.731,
+        0.756
+       ],
+       "fail_share": 0.02,
+       "did_not_read": {
+        "k": 7,
+        "n": 498,
+        "kinds": {
+         "empty": 1,
+         "other": 6
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.293,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.257, the mean of 491 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 491,
+        "worse": 341,
+        "better": 67,
+        "unchanged_answers": 0,
+        "stored_drafts": 64
+       },
+       "vs_in_use": {
+        "diff": -0.045,
+        "ci95": [
+         -0.054,
+         -0.038
+        ],
+        "n_pages": 491,
+        "n_works": 258
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
@@ -5267,6 +6212,57 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+       "label": "PaddleOCR-VL 1.6 → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.306,
+       "accuracy": 0.694,
+       "accuracy_ci95": [
+        0.681,
+        0.706
+       ],
+       "fail_share": 0.041,
+       "did_not_read": {
+        "k": 7,
+        "n": 498,
+        "kinds": {
+         "empty": 1,
+         "other": 6
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 40.399,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($39.363, the mean of 491 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 491,
+        "worse": 411,
+        "better": 40,
+        "unchanged_answers": 15,
+        "stored_drafts": 64
+       },
+       "vs_in_use": {
+        "diff": -0.096,
+        "ci95": [
+         -0.105,
+         -0.087
+        ],
+        "n_pages": 491,
+        "n_works": 258
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
@@ -5308,6 +6304,7 @@
      "no_cost": [],
      "role": "primary",
      "heading": null,
+     "chain_note": "The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the 491 pages all read: PaddleOCR-VL 1.6 79.0%, PaddleOCR-VL 1.6 → Claude Opus 5.5 80.2%, PaddleOCR-VL 1.6 → Gemini 3.8 Flash 79.1%. A check, not plotted.",
      "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     },
     {
@@ -5332,8 +6329,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
@@ -5605,6 +6603,56 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+       "label": "PaddleOCR-VL 1.6 → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.24,
+       "accuracy": 0.76,
+       "accuracy_ci95": [
+        0.703,
+        0.804
+       ],
+       "fail_share": 0.053,
+       "did_not_read": {
+        "k": 2,
+        "n": 21,
+        "kinds": {
+         "other": 2
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.225,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.189, the mean of 19 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 19,
+        "worse": 16,
+        "better": 1,
+        "unchanged_answers": 0,
+        "stored_drafts": 19
+       },
+       "vs_in_use": {
+        "diff": -0.067,
+        "ci95": [
+         -0.097,
+         -0.04
+        ],
+        "n_pages": 19,
+        "n_works": 17
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
@@ -5714,6 +6762,56 @@
         ],
         "n_pages": 21,
         "n_works": 19
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
+       "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+       "label": "PaddleOCR-VL 1.6 → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.308,
+       "accuracy": 0.692,
+       "accuracy_ci95": [
+        0.639,
+        0.741
+       ],
+       "fail_share": 0.053,
+       "did_not_read": {
+        "k": 2,
+        "n": 21,
+        "kinds": {
+         "other": 2
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 39.971,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($38.935, the mean of 19 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 19,
+        "worse": 17,
+        "better": 2,
+        "unchanged_answers": 0,
+        "stored_drafts": 19
+       },
+       "vs_in_use": {
+        "diff": -0.135,
+        "ci95": [
+         -0.171,
+         -0.099
+        ],
+        "n_pages": 19,
+        "n_works": 17
        },
        "verdict": "worse",
        "on_frontier": false
@@ -5860,6 +6958,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text: more engines, fewer pages",
+     "chain_note": "The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the 19 pages all read: PaddleOCR-VL 1.6 82.7%, PaddleOCR-VL 1.6 → Claude Opus 5.5 83.6%, PaddleOCR-VL 1.6 → Gemini 3.8 Flash 82.0%. A check, not plotted.",
      "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     },
     {
@@ -5893,8 +6992,9 @@
      ],
      "frontier": true,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
       "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
@@ -6146,6 +7246,54 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+       "label": "PaddleOCR-VL 1.6 → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.254,
+       "accuracy": 0.746,
+       "accuracy_ci95": [
+        0.725,
+        0.763
+       ],
+       "fail_share": 0.02,
+       "did_not_read": {
+        "k": 0,
+        "n": 148,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.313,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.277, the mean of 148 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 148,
+        "worse": 110,
+        "better": 12,
+        "unchanged_answers": 0,
+        "stored_drafts": 15
+       },
+       "vs_in_use": {
+        "diff": -0.051,
+        "ci95": [
+         -0.064,
+         -0.039
+        ],
+        "n_pages": 148,
+        "n_works": 101
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
@@ -6252,6 +7400,54 @@
         "ci95": [
          -0.135,
          -0.06
+        ],
+        "n_pages": 148,
+        "n_works": 101
+       },
+       "verdict": "worse",
+       "on_frontier": false
+      },
+      {
+       "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+       "label": "PaddleOCR-VL 1.6 → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.308,
+       "accuracy": 0.692,
+       "accuracy_ci95": [
+        0.672,
+        0.709
+       ],
+       "fail_share": 0.047,
+       "did_not_read": {
+        "k": 0,
+        "n": 148,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 41.167,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($40.131, the mean of 148 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 148,
+        "worse": 129,
+        "better": 10,
+        "unchanged_answers": 4,
+        "stored_drafts": 15
+       },
+       "vs_in_use": {
+        "diff": -0.105,
+        "ci95": [
+         -0.12,
+         -0.089
         ],
         "n_pages": 148,
         "n_works": 101
@@ -6385,6 +7581,7 @@
      ],
      "role": "secondary",
      "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI) and Gemini 4 Argon low (CLI)",
+     "chain_note": "The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the 148 pages all read: PaddleOCR-VL 1.6 79.7%, PaddleOCR-VL 1.6 → Claude Opus 5.5 80.7%, PaddleOCR-VL 1.6 → Gemini 3.8 Flash 80.2%. A check, not plotted.",
      "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     }
    ]
@@ -6425,8 +7622,9 @@
      ],
      "frontier": false,
      "noise": null,
-     "date": "2026-10-14",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
       "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
@@ -6739,6 +7937,198 @@
        "on_frontier": false
       },
       {
+       "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+       "label": "PaddleOCR-VL 1.6 → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.182,
+       "accuracy": 0.818,
+       "accuracy_ci95": [
+        0.767,
+        0.867
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 1,
+        "n": 12,
+        "kinds": {
+         "other": 1
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 3.485,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.449, the mean of 11 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 11,
+        "worse": 7,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 11
+       },
+       "vs_in_use": {
+        "diff": -0.02,
+        "ci95": [
+         -0.036,
+         -0.005
+        ],
+        "n_pages": 11,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3 Flash → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.187,
+       "accuracy": 0.813,
+       "accuracy_ci95": [
+        0.769,
+        0.859
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 12,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 5.137,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($2.428, the mean of 12 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 12,
+        "worse": 7,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.024,
+        "ci95": [
+         -0.044,
+         -0.006
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3 Flash → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.203,
+       "accuracy": 0.797,
+       "accuracy_ci95": [
+        0.756,
+        0.843
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 12,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 49.309,
+        "basis": "chain",
+        "billed_usd_per_1k": 2.709,
+        "detail": "the draft, Gemini 3 Flash, at its billed price ($2.709), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($46.6, the mean of 12 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3-flash-preview",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 12,
+        "worse": 6,
+        "better": 1,
+        "unchanged_answers": 4,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": -0.039,
+        "ci95": [
+         -0.071,
+         -0.013
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+       "label": "PaddleOCR-VL 1.6 → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.231,
+       "accuracy": 0.769,
+       "accuracy_ci95": [
+        0.738,
+        0.798
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 1,
+        "n": 12,
+        "kinds": {
+         "other": 1
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 46.611,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.036,
+        "detail": "the draft, PaddleOCR-VL 1.6, at its billed price ($1.036), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($45.575, the mean of 11 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "paddleocr-vl-1.6",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 11,
+        "worse": 9,
+        "better": 1,
+        "unchanged_answers": 1,
+        "stored_drafts": 11
+       },
+       "vs_in_use": {
+        "diff": -0.068,
+        "ci95": [
+         -0.097,
+         -0.037
+        ],
+        "n_pages": 11,
+        "n_works": 11
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
@@ -6935,6 +8325,7 @@
      ],
      "role": "primary",
      "heading": null,
+     "chain_note": "The corrections answer in the library's tagged format, with a list of key terms and other metadata in tags, which no other engine here writes; on Chinese pages this scorer counts the text inside those tags (on Latin-script pages it drops it). With those tags removed as for Latin-script pages, on the 11 pages all read: Gemini 3 Flash 83.8%, Gemini 3 Flash → Claude Opus 5.5 84.5%, Gemini 3 Flash → Gemini 3.8 Flash 83.8%, PaddleOCR-VL 1.6 → Claude Opus 5.5 83.2%, PaddleOCR-VL 1.6 → Gemini 3.8 Flash 84.1%. A check, not plotted.",
      "verdict": "No verdict."
     }
    ]
@@ -6970,8 +8361,9 @@
      ],
      "frontier": false,
      "noise": null,
-     "date": "2026-10-12",
+     "date": "2026-10-26",
      "files": [
+      "scripts/eval/ocr-pareto-chains-6740/results/scored-chains.json",
       "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json",
       "scripts/eval/results/engine-wave2-6011/scored/ref-pinned-2026-10-07.json",
       "scripts/eval/results/ocr-pareto-6293/scored/ref-pinned-2026-10-12.json"
@@ -7002,6 +8394,47 @@
        "secs_per_page": null,
        "vs_in_use": {
         "diff": 0.008,
+        "ci95": null,
+        "n_pages": 5,
+        "n_works": 2
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.1 Flash-Lite → Gemini 3.8 Flash",
+       "production": false,
+       "mean_cer": 0.017,
+       "accuracy": 0.983,
+       "accuracy_ci95": null,
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 5,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 5.915,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Gemini 3.8 Flash through its command-line tool, placed at the API price for the same request ($4.636, the mean of 5 pages: the read request, the draft and the reply, Batch rate; $0 billed; about 4.4 millionths of the Google subscription's monthly calls a call (scripts/eval/estimator/ocr/route-costs.json))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "gemini-3.8-flash+antigravity-cli",
+        "n": 5,
+        "worse": 0,
+        "better": 1,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.009,
         "ci95": null,
         "n_pages": 5,
         "n_works": 2
@@ -7043,6 +8476,47 @@
         "diff": 0.004,
         "ci95": null,
         "n_pages": 4,
+        "n_works": 2
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite>claude-opus-5-5+claude-cli",
+       "label": "Gemini 3.1 Flash-Lite → Claude Opus 5.5",
+       "production": false,
+       "mean_cer": 0.022,
+       "accuracy": 0.978,
+       "accuracy_ci95": null,
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 5,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": {
+        "usd_per_1k": 99.986,
+        "basis": "chain",
+        "billed_usd_per_1k": 1.279,
+        "detail": "the draft, Gemini 3.1 Flash-Lite, at its billed price ($1.279), plus the correction by Claude Opus 5.5 through its command-line tool, placed at the API price for the same request ($98.707, the mean of 5 pages: the read request, the draft and the reply, realtime rate; $0 billed; about 0.0124 points of the Claude account-week a page at one page a call (the #6740 pilot's meter, an upper bound; 0.004 at ten pages a call, #5924))",
+        "source": "scripts/eval/ocr-pareto-chains-6740/results"
+       },
+       "route": "subscription",
+       "secs_per_page": null,
+       "chain": {
+        "draft": "gemini-3.1-flash-lite",
+        "corrector": "claude-opus-5-5+claude-cli",
+        "n": 5,
+        "worse": 0,
+        "better": 0,
+        "unchanged_answers": 0,
+        "stored_drafts": 0
+       },
+       "vs_in_use": {
+        "diff": 0.004,
+        "ci95": null,
+        "n_pages": 5,
         "n_works": 2
        },
        "on_frontier": false
