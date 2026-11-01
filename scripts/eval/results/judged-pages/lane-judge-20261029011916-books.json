@@ -1,0 +1,1435 @@
+{
+ "method": "judged-pages v1",
+ "source": "lane_judge_verdicts",
+ "run_id": "lane-judge-20261029011916-books",
+ "written_at": "2026-11-01T19:26:28.710Z",
+ "books": [
+  {
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "title": "Disquisitionum Magicarum Libri Sex",
+   "pages": [
+    {
+     "page_number": 723,
+     "page_id": "698fb9446b95eeda7d2d3b8c",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:20:33.219Z",
+     "text": "e62f057346f1ffc7",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Gomez. to. 3. c. 14. n. 8.",
+        "severity": "cosmetic",
+        "what": "the page spells it 'Gomes.' in several notes; the candidate normalises these to 'Gomez'"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>i *Ægid. Bellamera deciſ. 677.",
+        "severity": "cosmetic",
+        "what": "notes i, k and l are printed as footnotes below the text block, but the candidate tags them as marginalia"
+       },
+       {
+        "class": "E2",
+        "quote": "<vocab>vnctio extrema, Euchariſtia, Carnifex,",
+        "severity": "cosmetic",
+        "what": "an added vocabulary list that is not on the page"
+       }
+      ],
+      "reader_note": "The main text, section heading, side-notes and footnotes are transcribed faithfully. The only differences are the 'Gomes'→'Gomez' spelling, the footnotes being tagged as margin notes, and an added keyword list."
+     }
+    },
+    {
+     "page_number": 534,
+     "page_id": "698fb9446b95eeda7d2d3acf",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:20:45.666Z",
+     "text": "7af100c22a826da4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "D1",
+        "quote": "*eum peccare,qui ex naturalibus ſomnijs, etiam in-",
+        "severity": "cosmetic",
+        "what": "The italic span runs on through 'ratio eſt ... corporis', but on the page the italics stop at 'ſolitæ.'"
+       },
+       {
+        "class": "E2",
+        "quote": "Quando cauſa intrinſeca eſt corporalis",
+        "severity": "cosmetic",
+        "what": "The page's italic emphasis on 'intrinſeca eſt corporalis', 'naturalis', 'extrinſeca' and 'Diabolica' is not marked; the words themselves are all there."
+       }
+      ],
+      "reader_note": "The text matches the page line by line, including the marginal notes a–e, the signature E and the catchword 'fierent'. Only some italic emphasis differs from the page."
+     }
+    },
+    {
+     "page_number": 628,
+     "page_id": "698fb9446b95eeda7d2d3b2d",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:21:10.059Z",
+     "text": "c9f41ba077b549ef",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "b ſupra à nu. 31. & q. 5. per totam.\nF",
+        "severity": "cosmetic",
+        "what": "The letter 'F' is a section mark in the right margin, but the candidate puts it inside the left-margin block of footnotes a and b"
+       }
+      ],
+      "reader_note": "This is an accurate transcription of p. 12. The main text, marginal notes a–c, the header and the catchword 'dice' all match the image; the only slip is that the section letter 'F' is grouped with the left-margin notes."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69904dd67d19f3f2aac1d49d",
+   "title": "Utriusque Cosmi Historia",
+   "pages": [
+    {
+     "page_number": 147,
+     "page_id": "69904dd77d19f3f2aac1d530",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:21:21.713Z",
+     "text": "128310548f42a8e9",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<sig>CA-</sig>",
+        "severity": "cosmetic",
+        "what": "The page has the catchword 'CA:' (probably the start of CAPUT). The candidate tags it as a signature and writes it with a hyphen."
+       },
+       {
+        "class": "O8",
+        "quote": "musca in ossibus crescit",
+        "severity": "cosmetic",
+        "what": "The page appears to read 'mosca'; the candidate seems to have normalised it to the standard spelling 'musca'."
+       }
+      ],
+      "reader_note": "All 17 lines of text above the engraving of the Sun rising from the earth are transcribed in full and in order, and the image description is accurate. The only slips are in the catchword at the foot of the page and possibly one normalised spelling (mosca → musca)."
+     }
+    },
+    {
+     "page_number": 111,
+     "page_id": "69904dd77d19f3f2aac1d50c",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:21:33.149Z",
+     "text": "c20449807a448cee",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<sig>C A-</sig>",
+        "severity": "cosmetic",
+        "what": "the catchword 'C A-' is tagged as a signature"
+       },
+       {
+        "class": "E2",
+        "quote": "*Jupiter* verò *Martis* ſphæram",
+        "severity": "cosmetic",
+        "what": "italics added to names that are roman on the page (Martis, Saturni, Solem, Solis, Luna)"
+       }
+      ],
+      "reader_note": "The text is faithful and complete line by line, with only small differences in italics and how the catchword is tagged."
+     }
+    },
+    {
+     "page_number": 205,
+     "page_id": "69904dd77d19f3f2aac1d56a",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:21:42.803Z",
+     "text": "3126465109b18e43",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "facillimè moveatur",
+        "severity": "cosmetic",
+        "what": "page appears to print 'facilimè' with one l; candidate normalises it"
+       },
+       {
+        "class": "E2",
+        "quote": "in cap. præced. dictum eſt",
+        "severity": "cosmetic",
+        "what": "the italic on the page's 'in cap. præced.' is not marked, though other italic references are"
+       }
+      ],
+      "reader_note": "This is a complete and faithful transcription of p. 158: the end of chapter VII, the heading and summary of chapter VIII, and the full body text down to the catchword 'rum'. The only differences are minor spelling and italic-formatting slips."
+     }
+    },
+    {
+     "page_number": 169,
+     "page_id": "69904dd77d19f3f2aac1d546",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:21:55.381Z",
+     "text": "188691f8d1ba44de",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "holding a spherical wooden ball labelled A moving along the rim",
+        "severity": "cosmetic",
+        "what": "Image description is wrong: the engraving labels B, C, D and E, but the ball carries no A label and the E label is left out."
+       },
+       {
+        "class": "E2",
+        "quote": "*Triſmegiſtus ſermone ſuo ſecundo*",
+        "severity": "cosmetic",
+        "what": "Italics spread over 'ſuo', which is roman on the page."
+       }
+      ],
+      "reader_note": "The text matches the page line by line, including the header, page number 160 and catchword 'tit,'. Only the illustration description has a small labelling error."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69904fb17d19f3f2aac1d59a",
+   "title": "Tutte le Opere di Giulio Camillo",
+   "pages": [
+    {
+     "page_number": 149,
+     "page_id": "69904fb27d19f3f2aac1d62f",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:22:09.185Z",
+     "text": "1ac9467fed15d0c4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "congregrarono",
+        "severity": "cosmetic",
+        "what": "typo: the page reads 'congregarono'; the candidate adds an extra 'r'"
+       }
+      ],
+      "reader_note": "All 32 lines of page 140 are present and in order, along with the running head 'LA IDEA' and the page number. The only slip is the misspelling 'congregrarono'."
+     }
+    },
+    {
+     "page_number": 117,
+     "page_id": "69904fb27d19f3f2aac1d60f",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:22:32.826Z",
+     "text": "8d7e2d480c04a82f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "resolutio quedam",
+        "severity": "cosmetic",
+        "what": "the page appears to read 'quædam'; the ligature was dropped, while 'quæ' just after it was kept"
+       }
+      ],
+      "reader_note": "A complete and faithful reading of p. 108: the Pimander quotation and the Protheo, passer solitario and Pandora entries are all there in order, with the original spelling (e.g. 'abannata') kept."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "title": "De Perenni Philosophia libri X",
+   "pages": [
+    {
+     "page_number": 414,
+     "page_id": "6990527f8d19cbc90d9d65f4",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:23:18.008Z",
+     "text": "b8d09e8d887b4a3a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O10",
+        "quote": "ἑριγμάτῶ",
+        "severity": "misleads",
+        "what": "Greek word for 'gregis' is garbled into a non-word; the print reads approximately θρέμματος"
+       },
+       {
+        "class": "O10",
+        "quote": "Τόνδε ἥλιον, καὶ σελήνην",
+        "severity": "cosmetic",
+        "what": "the καὶ abbreviation before τόνδε is dropped"
+       }
+      ],
+      "reader_note": "The Latin text is complete and accurate line by line. Only small slips occur in the Greek: one garbled word (gregis) and one dropped καὶ before τόνδε."
+     }
+    },
+    {
+     "page_number": 545,
+     "page_id": "6990527f8d19cbc90d9d6677",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:23:27.640Z",
+     "text": "68a63c228d9eba5c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I checked every line against the image and found no wrong, missing or added words. The candidate matches the page line for line, including the running head and page number 548, the margin letters C and D, the italic summary of Chapter XXVII, the woodcut initial S and the catchword 'da,'."
+     }
+    },
+    {
+     "page_number": 578,
+     "page_id": "6990527f8d19cbc90d9d6698",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:23:45.775Z",
+     "text": "798678ea060d2fba",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O10",
+        "quote": "ὡς διὰ θεοσέβειαν ἀσκῶν ἄντικ᾽ δὲ οὐκ ἂν παραγένοιτο",
+        "severity": "misleads",
+        "what": "The Greek on the page reads ὡς δεῖ θεοσέβειαν ἀσκεῖν· αὕτη δὲ. The candidate gives διὰ, ἀσκῶν and the non-word ἄντικ᾽."
+       },
+       {
+        "class": "O10",
+        "quote": "ᾧτινι αὐτῷ δὲ εἰκὸς",
+        "severity": "misleads",
+        "what": "The page reads τὸν αὐτὸν δ᾽ εἰκὸς, which the candidate garbles."
+       },
+       {
+        "class": "O10",
+        "quote": "ποιεῖτε τοῖς θεοῖς ἡμᾶς ὁμοίως",
+        "severity": "cosmetic",
+        "what": "Small Greek slips: ποιεῖ τε and ὁμοίους on the page."
+       },
+       {
+        "class": "O8",
+        "quote": "hîc omnes uoluptates",
+        "severity": "cosmetic",
+        "what": "The page prints plain 'hic', with no circumflex."
+       },
+       {
+        "class": "E2",
+        "quote": "eius intuitum Philoſophiæ fi=\nnem prædicaſti:",
+        "severity": "cosmetic",
+        "what": "The page has a question mark after prædicaſti, not a colon."
+       }
+      ],
+      "reader_note": "The Latin is faithful line by line, including the summary, header, page number, signature and catchword. Some of the embedded Greek quotations from Iamblichus and Aristotle are misread, a few words into non-words."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69a5b9a7d76b98f272fcf382",
+   "title": "Le diverse et artificiose machine",
+   "pages": [
+    {
+     "page_number": 650,
+     "page_id": "69a5b9a7d76b98f272fcf60c",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:24:03.451Z",
+     "text": "51eded34e9bb1b81",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "sopra un medesimo polo",
+        "severity": "cosmetic",
+        "what": "page reads 'medesmo'; the spelling was normalised to 'medesimo'"
+       },
+       {
+        "class": "O8",
+        "quote": "nel medesimo tempo",
+        "severity": "cosmetic",
+        "what": "page reads 'medesmo tēpo'; the spelling was normalised to 'medesimo' and the abbreviation silently expanded"
+       }
+      ],
+      "reader_note": "The page is transcribed completely and in order, with the right numerals (2. 3. 4. 5., Q, S, D, AB). The only differences are that 'medesmo' was twice changed to 'medesimo' and the abbreviation 'tēpo' was silently written out as 'tempo'."
+     }
+    },
+    {
+     "page_number": 618,
+     "page_id": "69a5b9a7d76b98f272fcf5ec",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:24:24.209Z",
+     "text": "2d41f8f7c703262d",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "auec la manielle tourner",
+        "severity": "cosmetic",
+        "what": "page reads 'maniuelle' (crank); the candidate's own vocab line has it right"
+       },
+       {
+        "class": "O6",
+        "quote": "fichés mobillements auec",
+        "severity": "cosmetic",
+        "what": "page reads 'mobilement'"
+       }
+      ],
+      "reader_note": "A complete and faithful transcription of Ramelli chap. CLXXVII in French. All letter keys (A–S) are correct; the only slips are two small misspellings ('manielle', 'mobillements')."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69aebfc3e997cc01b0caafe3",
+   "title": "Lettere di M. Pietro Aretino (vol. 3)",
+   "pages": [
+    {
+     "page_number": 583,
+     "page_id": "69aebfc3e997cc01b0cab22a",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:00.930Z",
+     "text": "46eff11b1fe767a7",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "in l'ultima del S. Cosimo",
+        "severity": "cosmetic",
+        "what": "page prints 'l'vltima'; the candidate keeps v elsewhere ('vostre', 'Vinetia') but changed it to u here"
+       }
+      ],
+      "reader_note": "A complete and accurate reading of all three letter sections, with the header, page number and signature 'N n'. The only slip is 'l'ultima' for the page's 'l'vltima'."
+     }
+    },
+    {
+     "page_number": 508,
+     "page_id": "69aebfc3e997cc01b0cab1df",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:10.743Z",
+     "text": "133bfddab8af2e5f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line and the candidate matches it. Both letters, to the Priscianese and to M. Piero dal Medico, are transcribed in full and in order, and both are dated Di Nouembre in Vinetia M. D. XLV. The only changes are spelling conventions: the tilde in 'negãdo' is expanded and long s is modernised."
+     }
+    },
+    {
+     "page_number": 612,
+     "page_id": "69aebfc3e997cc01b0cab247",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:18.951Z",
+     "text": "2d5f89cdf9c5a773",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read every line of the page against the image. The transcription is complete and in the right order, from the 'LIBRO' running header to the closing date 'Di Dicembre in Vinetia. M. D. XLV.', with no misreadings that change the sense."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e13261c58d63664f271",
+   "title": "Il Pimandro",
+   "pages": [
+    {
+     "page_number": 89,
+     "page_id": "69b51e13261c58d63664f2ca",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:27.617Z",
+     "text": "18fa49ba6f3f6272",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I compared it line by line with the image: all 26 lines of the page, the 'SERM. X.' running head and page number 73 are there in order. The only changes are the usual conventions: line-end hyphens are joined, long s is printed as s, and 'Dii' loses its small capitals."
+     }
+    },
+    {
+     "page_number": 31,
+     "page_id": "69b51e13261c58d63664f290",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:36.940Z",
+     "text": "d5359648296a0c98",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "attignedo da la mente",
+        "severity": "cosmetic",
+        "what": "nasal tildes are dropped without expansion (attignēdo, cō, rēdo, dicēdo, potēte), while 'auēdo' is expanded to 'auendo'. This is inconsistent and leaves non-words, but the sense is clear."
+       },
+       {
+        "class": "O12",
+        "quote": "solo predicato nel silenzio da colui, che ha",
+        "severity": "cosmetic",
+        "what": "the faint catchword below the last line is left out"
+       }
+      ],
+      "reader_note": "All 27 lines, the header and page number match the page in order. The only slips are inconsistent handling of tilde abbreviations, such as 'co' and 'redo' for cō and rēdo."
+     }
+    },
+    {
+     "page_number": 74,
+     "page_id": "69b51e13261c58d63664f2bb",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:46.152Z",
+     "text": "14484e2329eca27e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<sig>C</sig>",
+        "severity": "misleads",
+        "what": "The page has no printed signature mark. The only mark at the foot is faint show-through from the other side of the leaf, and it does not read C."
+       },
+       {
+        "class": "O8",
+        "quote": "in fino a la verità",
+        "severity": "cosmetic",
+        "what": "The page prints 'veritá' with an acute accent; the candidate changes it to a grave accent."
+       }
+      ],
+      "reader_note": "Every line of the text and the heading for Sermon X is transcribed faithfully and in order; the only real problem is an invented signature mark 'C' that does not appear on the page."
+     }
+    },
+    {
+     "page_number": 127,
+     "page_id": "69b51e13261c58d63664f2f0",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:25:56.386Z",
+     "text": "439b98430197155a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "sparger si",
+        "severity": "cosmetic",
+        "what": "the page prints 'spargersi' as one word; the candidate splits it"
+       },
+       {
+        "class": "T6",
+        "quote": "delle iddii. Rendia",
+        "severity": "cosmetic",
+        "what": "'Rendia' is the last word of the final line, and the candidate also records it as the catchword in meta"
+       }
+      ],
+      "reader_note": "This is a faithful line-by-line reading of the end of Sermon XIII and the start of the Hymn (Sermon XIIII); only one split word, 'sparger si', differs from the page."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e4bcf111105c429a045",
+   "title": "Absconditorum a constitutione mundi clavis : qua mens humana tam in divinis, quam in humanis pertinget ad interiora velaminis aeternae veritatis ; una cum appendice pro pace religionis Christianae",
+   "pages": [
+    {
+     "page_number": 142,
+     "page_id": "69b51e4bcf111105c429a0d3",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:26:27.854Z",
+     "text": "d38a9850894056e9",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "D. 25. M. MartI.",
+        "severity": "misleads",
+        "what": "The second digit of the day is smudged. It looks closer to this font's 4 than to its 5, so the page may read 24, not 25. 25 March is the Feast of the Annunciation, so 25 may be a guess toward the expected date."
+       },
+       {
+        "class": "E2",
+        "quote": "->A<-",
+        "severity": "cosmetic",
+        "what": "The mark above ω looks like a small caret or Λ-shaped sign, not clearly the letter A."
+       }
+      ],
+      "reader_note": "The transcription follows the page closely, line by line, including the odd capitals. The one point to check is the day in the date line, which the image may show as 24 rather than 25."
+     }
+    },
+    {
+     "page_number": 56,
+     "page_id": "69b51e4bcf111105c429a07d",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:26:35.699Z",
+     "text": "1bd97d9d815e74b6",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<meta>violante</meta>",
+        "severity": "cosmetic",
+        "what": "catchword placed in a meta tag instead of being marked as the page's catchword"
+       },
+       {
+        "class": "D1",
+        "quote": "*sibi unitam possit*",
+        "severity": "cosmetic",
+        "what": "italics extended over 'possit', which is roman on the page"
+       }
+      ],
+      "reader_note": "The text matches the page line by line, including the header, page number 40 and sections 2 and 3. Only minor markup issues: the catchword 'violante' is in a meta tag, and 'possit' is wrongly italicised."
+     }
+    },
+    {
+     "page_number": 82,
+     "page_id": "69b51e4bcf111105c429a097",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:26:48.296Z",
+     "text": "db4e42ad894cea25",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<sig>C</sig>",
+        "severity": "cosmetic",
+        "what": "I can't see a signature mark on this leaf. The marks at the foot look like show-through or stamps, not a signature."
+       }
+      ],
+      "reader_note": "The body text, all 29 lines plus the catchword 'à Boaz', matches the page word for word. The only issue is a signature tag ('C') that I can't find printed on the leaf."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e88768235dc659950db",
+   "title": "Johannis Trithemii Primo Spanheimensis Deinde Divi Jacobi Peapolitani Abbatis Steganographia, Qvae Hvcvsqve A Nemine Intellecta, Sed Passim Vt Svpposititia Perniciosa ... Damnata ... Nvnc Tandem Vindicata Reserata Et Illvstrata : Vbi Post Vindicias Trithemii Clarissime Explicantvr Conjvrationes Spiritvvm Ex Arabicis, Hebraicis, Chaldaicis Et Graecis Spiritvvm Nominibvs ... Deinde Solvvntvr Et Exhibentvr Artificia Nova Steganographica A Trithemio ... Promissa, In Hvnc Diem A Neminae Capta ... Svmme Desiderata",
+   "pages": [
+    {
+     "page_number": 156,
+     "page_id": "69b51e88768235dc65995177",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:27:01.147Z",
+     "text": "48312f03e37738dd",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Reddere mercedem Unicuique secundum Con-",
+        "severity": "misleads",
+        "what": "the page prints 'ſavendum'; the candidate silently swaps in the expected word 'secundum'"
+       },
+       {
+        "class": "O8",
+        "quote": "nec demandare per",
+        "severity": "cosmetic",
+        "what": "the page reads 'demendare'; the candidate normalises it to 'demandare'"
+       }
+      ],
+      "reader_note": "The page is complete and in order, header and catchword included. In the cipher prayer, the page's odd 'ſavendum' is given as 'secundum', and in the last line 'demendare' is given as 'demandare'."
+     }
+    },
+    {
+     "page_number": 203,
+     "page_id": "69b51e88768235dc659951a6",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:27:08.450Z",
+     "text": "31d06fa882547a19",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I checked every line against the image and found no differences. That covers the cipher lines, the German 'Tenor secretus', the Cap. XIX heading, the table of 12 dukes with all its numerals, and the catchword 'gligen-'."
+     }
+    },
+    {
+     "page_number": 133,
+     "page_id": "69b51e88768235dc65995160",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:27:19.914Z",
+     "text": "868238ea83d07e51",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "etiam si tribus milliaribus",
+        "severity": "cosmetic",
+        "what": "word split; the page prints 'etiamsi'"
+       }
+      ],
+      "reader_note": "A complete and faithful transcription of page 121, with italic quotations, signature Q and catchword 'de' all kept; only trivial spacing differences."
+     }
+    },
+    {
+     "page_number": 113,
+     "page_id": "69b51e88768235dc6599514c",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:27:28.232Z",
+     "text": "b3e5b6bbd0d2d4f0",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line and found no differences that matter. The header, page number, chapter heading, prose paragraph, italic acrostic prayer, signature N 3 and catchword 'Sana' all match the page, in the same order."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b69ff8080b19f98fd128a3",
+   "title": "Christiani Hugenii ...Theoremata De Quadratura Hyperboles, Ellipsis Et Circuli, Ex Dato Portionum Gravitatis Centro : Quibus subjuncta est Exetasis Cyclometriæ Gregorii à S. Vincentio, editæ Anno MDCXLVII",
+   "pages": [
+    {
+     "page_number": 10,
+     "page_id": "69b69ff8080b19f98fd128ad",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:27:50.051Z",
+     "text": "013e57964b7c6505",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "neq",
+        "severity": "cosmetic",
+        "what": "The page's abbreviation 'neq;' loses its mark and isn't expanded, though 'quoq;' is expanded to 'quoque'. The two abbreviations are handled inconsistently."
+       }
+      ],
+      "reader_note": "This matches the page line by line, including the 'git,' catchword. The only slip is 'neq' on line 7, where the page has the abbreviation 'neq;' (neque)."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9cd86120d54bd037157c",
+   "title": "Rosarium philosophorum. Secunda pars alchimiae de lapide philosophico vero modo praeparando, continens exactam eius scientiae progressionem. Cum figuris rei perfectionem ostendentibus",
+   "pages": [
+    {
+     "page_number": 108,
+     "page_id": "69bd9cd86120d54bd03715e8",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:28:23.230Z",
+     "text": "4bde8011107e7261",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "<margin>Citrinatio</margin>",
+        "severity": "cosmetic",
+        "what": "The side-note is placed before the paragraph. On the page it sits beside the fourth line, 'philosophus: citrinatio non est aliud…'."
+       }
+      ],
+      "reader_note": "This is a faithful line-by-line reading. Abbreviations are expanded and the header, section title and catchword 'Vnde' are all kept. The only difference is that the 'Citrinatio' side-note appears a few lines above where it stands on the page."
+     }
+    },
+    {
+     "page_number": 167,
+     "page_id": "69bd9cd86120d54bd0371623",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:28:33.908Z",
+     "text": "3a23c0569ad93174",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Luna non ara.",
+        "severity": "misleads",
+        "what": "the marginal note reads 'Luna nostra.' (hyphenated 'no=/stra.'), but the candidate has 'non ara', which makes no sense"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Ignis fusio=\nnis.</margin>\nest humiditatis",
+        "severity": "cosmetic",
+        "what": "the note is placed before the first text line, but on the page it sits beside lines 2–3"
+       }
+      ],
+      "reader_note": "The main text matches the page line for line, but the second marginal note is misread: 'Luna non ara.' where the page has 'Luna nostra.'"
+     }
+    },
+    {
+     "page_number": 57,
+     "page_id": "69bd9cd86120d54bd03715b5",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:28:45.157Z",
+     "text": "18d173e1b9de1883",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<meta>catchword: ars</meta>",
+        "severity": "misleads",
+        "what": "The page has no catchword. The last line ends with the hyphenated 'ar=' and is followed only by the signature 'G iij', so 'ars' is a guess at the next page."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Vilißimus.</margin>\nfectione.",
+        "severity": "cosmetic",
+        "what": "The marginal note sits beside the 'vilissimus per putrefa-' line, not at the top of the page."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Mercurius\nnoster</margin>\nItem, Lapis quem Philoso=",
+        "severity": "cosmetic",
+        "what": "The note interrupts the printed line 'in magisterio. Item, ...', making it look like a new paragraph. On the page 'Item' continues the same line."
+       }
+      ],
+      "reader_note": "The text matches the page line for line. Only the note's position is off, and the metadata names a catchword ('ars') that isn't on the page."
+     }
+    },
+    {
+     "page_number": 118,
+     "page_id": "69bd9cd86120d54bd03715f2",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:28:56.866Z",
+     "text": "f4580cdfc57ea368",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "ex mercurio non ducunt",
+        "severity": "cosmetic",
+        "what": "The page has the abbreviation 'nõ'; the candidate expands it silently, although it keeps tildes elsewhere ('cõmixtione', 'dictũ')."
+       },
+       {
+        "class": "O8",
+        "quote": "Habet et electrum",
+        "severity": "cosmetic",
+        "what": "The page has 'electrũ'; the candidate expands it without saying so."
+       },
+       {
+        "class": "O8",
+        "quote": "secundum quod",
+        "severity": "cosmetic",
+        "what": "The page has the ꝙ abbreviation; the candidate expands it without saying so."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Spiritus nõ\nliquãtur me\ntallice·</margin>",
+        "severity": "cosmetic",
+        "what": "On the page this note starts beside 'rum est substantia', one line before where the candidate puts it."
+       }
+      ],
+      "reader_note": "The text is complete and accurate line by line; the only differences are a few silently expanded abbreviations (nõ, electrũ, ꝙ) and one margin note placed a line late."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c80aee6c6f3cc53c8465ce",
+   "title": "Dante con l'espositione di Christoforo Landino et di Alessandro Vellutello",
+   "pages": [
+    {
+     "page_number": 655,
+     "page_id": "69f73acc2a34140ad1d004a3",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:29:13.898Z",
+     "text": "33340f9cabcfc099",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "me non riprendo",
+        "severity": "cosmetic",
+        "what": "The page misprints 'ripreado' in the verse; the candidate silently corrects it to 'riprendo'."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>VELL.</margin>\nIn tra due cibi distanti, e mouenti",
+        "severity": "cosmetic",
+        "what": "A second 'VELL.' marker in the left margin (beside 'Similmente vn'agnello') is dropped; only the right-column one is kept."
+       },
+       {
+        "class": "O14",
+        "quote": "labelled above with letters D and B",
+        "severity": "cosmetic",
+        "what": "The woodcut also carries the label 'LVNA' at the top, which is left out of both the description and the insert."
+       },
+       {
+        "class": "E2",
+        "quote": "Decorative woodcut initial I with foliage and strapwork.",
+        "severity": "cosmetic",
+        "what": "The initial is described loosely: it shows figures or animals, not just foliage and strapwork."
+       }
+      ],
+      "reader_note": "The text follows the page closely and in sensible reading order (Allegoria, Landino, Argomento, verse, Vellutello). The only differences are one silently corrected misprint, a dropped duplicate 'VELL.' margin marker, and an incomplete description of the woodcut."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c819d56c6f3cc53c849537",
+   "title": "Sopra l' amore o vero convito di Platone",
+   "pages": [
+    {
+     "page_number": 207,
+     "page_id": "69f6848953953abfced43cfc",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:30:20.877Z",
+     "text": "60ef36439b0e88ce",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "in questo modo. Considera",
+        "severity": "cosmetic",
+        "what": "period added after 'modo'; the page has none"
+       }
+      ],
+      "reader_note": "The transcription matches the page line by line, including the header, page number 195, chapter heading Cap. XVIII, signature N 2 and catchword 'chi'. The only slip is one added period."
+     }
+    },
+    {
+     "page_number": 257,
+     "page_id": "69f6849b53953abfced43d2a",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:30:31.934Z",
+     "text": "6a1d2347c13551ff",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<meta>in noi</meta>",
+        "severity": "cosmetic",
+        "what": "catchword 'in noi' wrapped in a meta tag rather than marked as a catchword; text itself is correct"
+       }
+      ],
+      "reader_note": "A faithful, complete transcription of p. 243 (Cap. XV, the four divine furies and Love), with heading, signature Q 3 and catchword all present; accents and long-s are normalised, which is expected."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c86df86c6f3cc53c856ded",
+   "title": "Cabala, speculum artis et naturae, in alchymia",
+   "pages": [
+    {
+     "page_number": 16,
+     "page_id": "69d37046378e9d18b5fc2e27",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:31:06.339Z",
+     "text": "a9e1aeb379869507",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "qvanque",
+        "severity": "cosmetic",
+        "what": "The abbreviation 'qvanq;' (for qvanqvam, 'although') is wrongly expanded as the non-word 'qvanque'"
+       }
+      ],
+      "reader_note": "The text is complete and in the right order, but one abbreviation is wrongly expanded: 'qvanque' should be 'qvanqvam'. The handwritten underlining in the image is correctly left out of the text."
+     }
+    },
+    {
+     "page_number": 9,
+     "page_id": "69d37046378e9d18b5fc2e20",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:31:33.829Z",
+     "text": "0c9a6a35f2ecf66e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "cum sibi\ncharioribus benignæ",
+        "severity": "misleads",
+        "what": "page reads 'clarioribus' (more illustrious), not 'charioribus' (dearer)"
+       }
+      ],
+      "reader_note": "A close, complete transcription of the dedication's closing page, with the date and signature correct; one word is misread: 'charioribus' should be 'clarioribus'."
+     }
+    },
+    {
+     "page_number": 7,
+     "page_id": "69d37046378e9d18b5fc2e1e",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:31:46.450Z",
+     "text": "6d92061f6eb7ca63",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "MO CLARISSIMOQVE VIRO,",
+        "severity": "cosmetic",
+        "what": "The page has the misprint 'CLARISSMOQVE'; the candidate corrects it without saying so."
+       },
+       {
+        "class": "O8",
+        "quote": "imprimis veræ Medicinæ",
+        "severity": "misleads",
+        "what": "The page reads 'comprimis'; the candidate silently swaps in the expected 'imprimis'."
+       },
+       {
+        "class": "E2",
+        "quote": "a central mask or face, and human figures",
+        "severity": "cosmetic",
+        "what": "The headpiece shows a mask with fruit, foliage and scrolls. There are no clear human figures in it."
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of the Remmelin dedication page. Two printer's oddities are silently corrected: 'CLARISSMOQVE' and 'comprimis' (given as 'imprimis')."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c880496c6f3cc53c859041",
+   "title": "Mythologiae christianae sive virtutum & vitiorum vitae humanae imaginum libri tres",
+   "pages": [
+    {
+     "page_number": 130,
+     "page_id": "69f6a6ffd003c47d22ea0ed7",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:32:01.910Z",
+     "text": "4e92cf666f4910da",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "importunitatque conqueſta",
+        "severity": "cosmetic",
+        "what": "the page reads 'importunitatéque' (= importunitateque); the candidate drops the e, giving a non-word"
+       },
+       {
+        "class": "O11",
+        "quote": "<meta>catchword: I</meta>",
+        "severity": "misleads",
+        "what": "there is no catchword on the page; the last line ends 'furorem &'"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>\n40. Ars.\n</margin>",
+        "severity": "cosmetic",
+        "what": "this note sits beside 'quid de tot', but the candidate places it one line earlier"
+       }
+      ],
+      "reader_note": "The body text matches the page closely. A reader would notice only a catchword 'I' that isn't on the leaf, a dropped letter in 'importunitatque', and the 'Ars' marginal note set one line too high."
+     }
+    },
+    {
+     "page_number": 323,
+     "page_id": "69f6a72cd003c47d22ea0f98",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:32:12.850Z",
+     "text": "8b4197c8e26695d5",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "T6",
+        "quote": "Dum tu igitur Lucinam su-\nspendis",
+        "severity": "cosmetic",
+        "what": "catchword 'spendis' set as a final body-text line; it is also, correctly, given as the catchword in meta"
+       }
+      ],
+      "reader_note": "A faithful line-by-line text of p. 295; the only slip is that the catchword 'spendis' also appears as a last line of the main text, though on the page it stands alone at the foot beside the signature O 4."
+     }
+    },
+    {
+     "page_number": 154,
+     "page_id": "69f6a704d003c47d22ea0eed",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:32:27.594Z",
+     "text": "4811da5b4981b81e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "T6",
+        "quote": "quàm pau-\ncissimis",
+        "severity": "cosmetic",
+        "what": "the catchword 'cissimis' is placed in the body text and also tagged as meta, so it appears twice"
+       }
+      ],
+      "reader_note": "This is a faithful line-by-line transcription of p. 126: the end of the previous fable and section 9, Conciliatio, with its list of paired opponents. The only quirk is that the catchword 'cissimis' appears both in the text and in the catchword tag."
+     }
+    },
+    {
+     "page_number": 216,
+     "page_id": "69f6a712d003c47d22ea0f29",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:32:40.089Z",
+     "text": "d93af59a65fdf8f2",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "imaginem sudit",
+        "severity": "misleads",
+        "what": "page reads 'fudit' (poured/cast); 'sudit' is not a Latin word"
+       },
+       {
+        "class": "O8",
+        "quote": "omnium homi-\nnum judicia",
+        "severity": "cosmetic",
+        "what": "page appears to print 'homi-nem' (a misprint); the candidate silently corrects it to 'hominum'"
+       }
+      ],
+      "reader_note": "A complete, accurate reading of page 188 (fables 35–36). One slip: 'sudit' should be 'fudit'. The page's apparent misprint 'hominem' has been silently corrected to 'hominum'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69dbc7d71040d1d5e2094b24",
+   "title": "Flores astrologiae (Tr: Johannes Hispalensis)",
+   "pages": [
+    {
+     "page_number": 20,
+     "page_id": "69dbc7d71040d1d5e2094b38",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-29T01:32:53.869Z",
+     "text": "fe5f0f81d6077b08",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "fluminis assumptionē",
+        "severity": "wrong_text",
+        "what": "page has ɔsumptionē (consumptionem); the con-abbreviation was read as 'as', which changes the sense"
+       },
+       {
+        "class": "O6",
+        "quote": "casuz quoqueobustionis",
+        "severity": "misleads",
+        "what": "page reads quoqz ɔbustionis (quoque combustionis); the con/com sign is dropped and the words are run together, giving a non-word"
+       },
+       {
+        "class": "O12",
+        "quote": "Sol",
+        "severity": "cosmetic",
+        "what": "red paragraph mark printed before the caption 'Sol' is left out"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69de994c1b234a773e43a72e",
+   "title": "Il Teatro delle Favole Rappresentative (50 Commedia dell'Arte Scenarios)",
+   "pages": [
+    {
+     "page_number": 205,
+     "page_id": "69de994c1b234a773e43a7fb",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:33:52.400Z",
+     "text": "0177164ff3c77f71",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "sarà vostra moglie subito arriva suo Padre",
+        "severity": "cosmetic",
+        "what": "page reads 'arriua' (twice, lines 2 and 4); the candidate changes it to 'arriva' here but keeps 'arriua' later on the page"
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of the page, from the Giornata XXXI header and page 93, through the end of Atto Primo and the start of Atto Secondo, down to the signature 'A a' and the catchword 'fare'. The only slip is 'arriva' appearing as a modern spelling in two places."
+     }
+    },
+    {
+     "page_number": 62,
+     "page_id": "69de994c1b234a773e43a76c",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:34:22.284Z",
+     "text": "a77c251b3d540260",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "<margin>Fanciul.</margin>\nOliuetta con le fanciulle della Villa",
+        "severity": "cosmetic",
+        "what": "the margin speaker name 'Oliuetta' is moved into the body text; only 'Fanciul.' is kept as margin"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Pasque.</margin>\nBuratt. con banchi",
+        "severity": "cosmetic",
+        "what": "the margin name 'Buratt.' is moved into the body, and 'Pasque.' is shown as a margin note on its own"
+       },
+       {
+        "class": "O12",
+        "quote": "Flamin. uorrebbe entrare in casa",
+        "severity": "cosmetic",
+        "what": "the margin speaker 'Flamin.' is merged into the body text with no margin tag"
+       },
+       {
+        "class": "O8",
+        "quote": "suo strumento da sonare",
+        "severity": "cosmetic",
+        "what": "the page reads 'stromento'"
+       },
+       {
+        "class": "O8",
+        "quote": "esser a'stretto",
+        "severity": "cosmetic",
+        "what": "the page reads 'esser'astretto'; the apostrophe is misplaced"
+       }
+      ],
+      "reader_note": "All of the text is there and in order. Three marginal character names (Oliuetta, Buratt., Flamin.) have been pulled into the body text, and 'stromento' is normalised to 'strumento'."
+     }
+    },
+    {
+     "page_number": 82,
+     "page_id": "69de994c1b234a773e43a780",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:34:34.378Z",
+     "text": "a196c6e348d9bf85",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "I4",
+        "quote": "Woodcut headpiece ornament with scrolling foliage, flowers, and a central face/grotesque mask.",
+        "severity": "misleads",
+        "what": "The faint ornament is show-through from the other side of the leaf (along with 'GIORNATA X / La Sposa Comedia'), not a headpiece on this page; the mask detail is invented."
+       },
+       {
+        "class": "O8",
+        "quote": "uano per strada",
+        "severity": "cosmetic",
+        "what": "The page has 'uãno' (vanno); dropping the tilde leaves 'uano'."
+       }
+      ],
+      "reader_note": "The text of both acts, the margin speaker names, the header and the catchword all match the page; the only problem is that the image note describes a headpiece that is really show-through from the other side of the leaf."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69dea2564d19ec2e9ba76384",
+   "title": "Il Quinto Libro de Madrigali (Fifth Book of Madrigals)",
+   "pages": [
+    {
+     "page_number": 134,
+     "page_id": "69dea2564d19ec2e9ba7640a",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:34:43.423Z",
+     "text": "f26ef330fa9253c2",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<page-type>text</page-type>",
+        "severity": "cosmetic",
+        "what": "the page is almost all musical score, so tagging it as plain text is inaccurate"
+       }
+      ],
+      "reader_note": "All five lines of lyrics under the vocal staves match the page in order, including the elided \"n'i\" in the third voice, and the page number 126 and signature V are right. The page itself is a musical score with lyrics and instrumental parts."
+     }
+    },
+    {
+     "page_number": 103,
+     "page_id": "69dea2564d19ec2e9ba763eb",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:34:57.189Z",
+     "text": "d409da86b843f474",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<page-type>text</page-type>",
+        "severity": "cosmetic",
+        "what": "page is a music score, not running text"
+       },
+       {
+        "class": "E2",
+        "quote": "la mia vi - ta si - a la mia vi - ta si - a.\n\n*p*",
+        "severity": "cosmetic",
+        "what": "dynamic p moved: it opens each line on the page but sits after each line here"
+       },
+       {
+        "class": "E2",
+        "quote": "*p*",
+        "severity": "cosmetic",
+        "what": "f dynamics and the crescendo/diminuendo hairpins left out, though p is kept"
+       }
+      ],
+      "reader_note": "All ten lines of lyric underlay across both systems are correct and in order. The music itself is not transcribed, and the dynamics are given only partly: p is kept but sits after each line instead of before it, and f is left out."
+     }
+    },
+    {
+     "page_number": 111,
+     "page_id": "69dea2564d19ec2e9ba763f3",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:35:09.206Z",
+     "text": "9d00fded62e9f6a6",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<page-type>text</page-type>",
+        "severity": "cosmetic",
+        "what": "the page is almost entirely a musical score, not prose text"
+       },
+       {
+        "class": "E2",
+        "quote": "(b)",
+        "severity": "cosmetic",
+        "what": "editorial flat sign (♭) in brackets above the staff given as a letter b"
+       }
+      ],
+      "reader_note": "A reader gets every line of underlaid lyrics in order for both systems, the page number 103, the signature V and the footnote about the missing 6/4 rest. The music itself is only described, as you would expect for a score page."
+     }
+    },
+    {
+     "page_number": 29,
+     "page_id": "69dea2564d19ec2e9ba763a1",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:35:20.354Z",
+     "text": "f66749e98620f8d5",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<page-type>illustration</page-type>",
+        "severity": "cosmetic",
+        "what": "page is printed music with underlaid text; 'illustration' is a loose label"
+       }
+      ],
+      "reader_note": "All three systems of underlaid lyrics on this five-voice score page are given in order and match the image, with page number 21 and signature V; the notes and dynamics are not transcribed, as expected."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69e80555fdad300064d9cfc8",
+   "title": "Opera dell'arte del cucinare",
+   "pages": [
+    {
+     "page_number": 173,
+     "page_id": "69e80555fdad300064d9d075",
+     "lane": "gpu-agy-correct-lite-7567",
+     "route": "lighton>agy-flash-low",
+     "judged_at": "2026-10-29T01:35:40.908Z",
+     "text": "e92d2bddc6028005",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "così intiere",
+        "severity": "cosmetic",
+        "what": "the page has 'cosi' with no accent; the candidate adds a modern grave accent"
+       }
+      ],
+      "reader_note": "Every line is transcribed in order, including the CCIX and CCX headings and 'Cap. 207'; the only difference from the page is that 'cosi' is given a modern accent as 'così'."
+     }
+    }
+   ]
+  }
+ ]
+}

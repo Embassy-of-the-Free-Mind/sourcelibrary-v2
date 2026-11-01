@@ -1,0 +1,1233 @@
+{
+ "method": "judged-pages v1",
+ "source": "lane_judge_verdicts",
+ "run_id": "lane-judge-20261028124149",
+ "written_at": "2026-11-01T19:25:33.787Z",
+ "books": [
+  {
+   "book_id": "69b51dc4ff09e4fe943a88d7",
+   "title": "Fratris Basilii Valentini Benedicter Ordens, Geheime Bücher oder letztes Testament : Vom grossen Stein der Uralten Weisen und andern verborgenen Geheimnussen der Natur. Auß dem Original, so in dem hohen Altar zu Erffurt unter einem Marmorsteinen Täfflein gefunden, nachgeschrieben. Und nunmehr auff vielfältiges Begehren der Filiis doctrinae zu gutem, neben angehenckten zwölff Schlüsseln, und in Kupffer gebrachten Figuren ... durch den Druck ans Liecht gebracht",
+   "pages": [
+    {
+     "page_number": 103,
+     "page_id": "69b51dc4ff09e4fe943a893e",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T12:59:34.089Z",
+     "text": "fb2bcdce51c28c87",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "zuiuͤberkommen",
+        "severity": "cosmetic",
+        "what": "stray 'i' typo; the page has 'zuůberkommen'"
+       },
+       {
+        "class": "O13",
+        "quote": "<margin>D 1/5</margin>",
+        "severity": "cosmetic",
+        "what": "faint marginal marks, probably a later hand; the reading is uncertain and not flagged as such"
+       }
+      ],
+      "reader_note": "Faithful line-by-line transcription of p. 89 with header, signature and catchword kept; only a stray-letter typo in 'zuüberkommen' and an uncertain reading of faint marginal marks."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c888a16c6f3cc53c85a348",
+   "title": "Saturn Gnosis. Offizielles Publikationsorgan der deutschen Gross-Loge Fraternitas Saturni Orient Berlin",
+   "pages": [
+    {
+     "page_number": 56,
+     "page_id": "69d37a91f510a016bc1c2bc1",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:09:36.512Z",
+     "text": "4d78b7c3ef42dce5",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "with a diagonal stroke crossing through the lower right quadrant",
+        "severity": "misleads",
+        "what": "The symbol has a curved arc like a bowl across the lower half of the circle, not a diagonal stroke."
+       },
+       {
+        "class": "O8",
+        "quote": "Selbstbewußtsein hinaufzusteilen",
+        "severity": "cosmetic",
+        "what": "The page prints 'Selbstbewustsein' (no ß) here; the candidate silently corrected it."
+       }
+      ],
+      "reader_note": "The text matches the page line for line, but the description of the central symbol gets its shape wrong: the page shows a bowl-like arc in the lower half, not a diagonal stroke."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e63ff09e4fe943ae330",
+   "title": "Elucidarius Chymicus : Oder Erleuchterung und deutliche Erklerung, was die Fama fraternitatis vom Rosenkreutz für Chymische Secreta de lapide Philosophorum ... versteckt haben",
+   "pages": [
+    {
+     "page_number": 46,
+     "page_id": "69b51e63ff09e4fe943ae35e",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:09:53.195Z",
+     "text": "61793728b412256a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a faithful reading of the Latin end of the preface on p. 36. The candidate matches the page from 'mines quod ignorant' to 'didiceris?', followed by the fleuron tailpiece and the catchword ELUCI-. Line-end hyphenations are joined without loss."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51d48f23ccdcced3071e8",
+   "title": "Turba Philosophorum, Das ist, Das Buch von der güldenen Kunst : neben andern Authoribus, welche mit einander 36 Bücher in sich haben ; darinn die besten urältesten Philosophi zusam[m]en getragen welche tractiren alle einhellig von der Universal-Medicin ; in zwey Bücher abgetheilt .... 2, Das ander Theil Der güldinen kunst die sie sonst Chymia nennen : welches in sich hellt die Schrifften Morieni Romani, von den Metallischen dingen ..., mit andern Authoribus ...",
+   "pages": [
+    {
+     "page_number": 78,
+     "page_id": "69b51d48f23ccdcced307236",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:10:17.180Z",
+     "text": "f2d2e681c7568f15",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "haltem etliche Philosophi",
+        "severity": "cosmetic",
+        "what": "page has 'haltē' (halten); misread abbreviation"
+       },
+       {
+        "class": "O8",
+        "quote": "coaguliret",
+        "severity": "cosmetic",
+        "what": "page reads 'coaguliert'"
+       },
+       {
+        "class": "O8",
+        "quote": "vnabschiedtlich",
+        "severity": "cosmetic",
+        "what": "page reads 'vnabschiedlich'"
+       },
+       {
+        "class": "O8",
+        "quote": "Vnd dieses will ich",
+        "severity": "cosmetic",
+        "what": "page reads 'Vnnd'"
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of page 68. The only differences from the page are minor spelling slips, such as 'haltem' where the page has 'haltē' (halten)."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69bd935f2d11455793b3f097",
+   "title": "Essai sur le Culte et les Mystères de Mithra",
+   "pages": [
+    {
+     "page_number": 138,
+     "page_id": "69bd935f2d11455793b3f121",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:12:51.298Z",
+     "text": "7fdf327dba4cf179",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "The transcription matches the page line for line, including the header, the page number 125, the signature mark 11 and both footnotes. Only the end-of-line hyphenation has been removed."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69bd93a22d11455793b3fae6",
+   "title": "Die Mysterien des Mithra",
+   "pages": [
+    {
+     "page_number": 54,
+     "page_id": "69bd93a22d11455793b3fb1c",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:13:04.494Z",
+     "text": "7b04df3a5eec574e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "The text matches the page line for line, including the page number 32. The only change is that the hyphenated word 'Mannig-faltigkeit' is joined back into one word, which is a normal transcription convention."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51d7cf23ccdcced3081da",
+   "title": "Bergwerckschatz, Das ist, Außführlicher und vollkommener Bericht Von Bergwercken, nach der Ruten, und Witterung künstlich zubawen : Deßgleichen Von aller und jeder vollkommenen und unvollkommenen, reinen und unreinen, lebendigen und todten Metallen, Natur, Eygenschafft, Samen, Speise, Werckstadt, Auß und Eynzug, Fluß, Härte, Ab, und Auffsteigen. Wie auch Von mancherley Bergruten, als Fewr, Brandt, Spring, Schlag, Bebe, Unter, und Ober Ruten, Satz und Hebzeug, Lohe, und Röstfewer ...",
+   "pages": [
+    {
+     "page_number": 66,
+     "page_id": "69b51d7cf23ccdcced30821c",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:13:20.051Z",
+     "text": "08c69417c434f451",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Samen dem Golde",
+        "severity": "cosmetic",
+        "what": "page reads 'Goldt', not 'Golde'"
+       },
+       {
+        "class": "E2",
+        "quote": "wo dies",
+        "severity": "cosmetic",
+        "what": "end-of-line hyphenation garbled: page has 'die-' / 'se', candidate has 'dies' / 'se' with an extra s"
+       }
+      ],
+      "reader_note": "Complete, in-order transcription of p. 58. The only differences are two small spelling slips ('Golde' for 'Goldt', 'dies se' for 'die-se'), and neither changes the meaning."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b418b02b0edf3eaa2dda3a",
+   "title": "Les véritables clavicules de Salomon (PH296)",
+   "pages": [
+    {
+     "page_number": 74,
+     "page_id": "69f660dd3e426ed3299bd993",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:13:41.636Z",
+     "text": "a911ae18a00023d6",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Equille",
+        "severity": "cosmetic",
+        "what": "the page has 'Eguille' (needle), not 'Equille'"
+       },
+       {
+        "class": "E2",
+        "quote": "ecrivas",
+        "severity": "cosmetic",
+        "what": "typo: the page has 'Ecriras'"
+       },
+       {
+        "class": "E2",
+        "quote": "led, crâne",
+        "severity": "cosmetic",
+        "what": "the stray comma garbles 'led.' (ledit) crâne"
+       },
+       {
+        "class": "E2",
+        "quote": "ne pourras s'empecher",
+        "severity": "cosmetic",
+        "what": "the page has 'pourra'"
+       },
+       {
+        "class": "O6",
+        "quote": "de la Laine de bas la person=",
+        "severity": "cosmetic",
+        "what": "the page seems to read 'des bas de la person-'; a small word is dropped or garbled"
+       },
+       {
+        "class": "E2",
+        "quote": "tous le Matins",
+        "severity": "cosmetic",
+        "what": "the page has 'tous les Matins'"
+       }
+      ],
+      "reader_note": "This is a faithful, complete reading of the page. There are a few small slips, such as 'Equille' for 'Eguille' and 'ecrivas' for 'ecriras'. The red magical characters are described rather than drawn, but the facing image shows them."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a0a24020eca358f15e84edc",
+   "title": "Deliciae Physico-Mathematicae, Mathemat: und Philosophische Erquickstunden (1636 first edition)",
+   "pages": [
+    {
+     "page_number": 119,
+     "page_id": "6a0a24030eca358f15e84f53",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:37:04.776Z",
+     "text": "12b6df505c27faa6",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "das seynt 32 1/10 stadia",
+        "severity": "misleads",
+        "what": "The page prints the fraction 32 10/27 (numerator 10, small denominator about 27). The candidate gives 1/10."
+       },
+       {
+        "class": "O7",
+        "quote": "seyn als 32 1/10 Roßlauff",
+        "severity": "misleads",
+        "what": "The same fraction is misread again here. The page has 32 10/27."
+       },
+       {
+        "class": "O6",
+        "quote": "<sig>N ij</sig>",
+        "severity": "cosmetic",
+        "what": "The signature on the page reads D ij, not N ij."
+       }
+      ],
+      "reader_note": "The text is complete and in order, but the key distance result is given as '32 1/10' (twice) where the page prints 32 10/27, and the signature is misread."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "title": "Éléments d'économie politique pure, ou Théorie de la richesse sociale",
+   "pages": [
+    {
+     "page_number": 115,
+     "page_id": "6a8ee2e090f5a0e4155eb8db",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:37:29.269Z",
+     "text": "1990092c630ca3e5",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<scan-quality>good</scan-quality>",
+        "severity": "cosmetic",
+        "what": "an ink blot covers part of the last line, so 'good' slightly overstates the scan quality"
+       }
+      ],
+      "reader_note": "The transcription matches the page line for line. The only problem is the last line, where an ink blot covers 'une de-'; the candidate marks those words as unclear, which is a reasonable reading."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8ee22390f5a0e4155ea8f7",
+   "title": "L'ordre naturel et essentiel des sociétés politiques",
+   "pages": [
+    {
+     "page_number": 191,
+     "page_id": "6a8ee22490f5a0e4155ea9b6",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:37:48.577Z",
+     "text": "73ec5908021370f3",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Si ces deux autorités ne font point une seule & même autorité",
+        "severity": "misleads",
+        "what": "page reads 'ne sont point' (long s); 'font' changes the verb from 'are' to 'make'"
+       },
+       {
+        "class": "O6",
+        "quote": "les loix qu'elle établit, ne font plus des loix",
+        "severity": "misleads",
+        "what": "page reads 'ne sont plus des loix'; long s misread as f"
+       },
+       {
+        "class": "O6",
+        "quote": "vu qu'elles ne font plus autre chose que les volontés arbitraires",
+        "severity": "misleads",
+        "what": "page reads 'ne sont plus autre chose'; long s misread as f"
+       }
+      ],
+      "reader_note": "The text is complete and in order, but in three places the long s of 'sont' is read as f, giving 'font' and changing 'are' to 'make'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "698255e93e158c7e3c9a4f6e",
+   "title": "La nature dévoilée",
+   "pages": [
+    {
+     "page_number": 615,
+     "page_id": "6982cea7ce2bd49635b71272",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:42:20.357Z",
+     "text": "bf6ab7cc6519a057",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<meta>catchword: garde,</meta>",
+        "severity": "cosmetic",
+        "what": "'garde,' is the last word of the text line; the page prints no separate catchword"
+       }
+      ],
+      "reader_note": "The transcription matches the page line for line. Long s is modernised to s, and the 'catchword' tag just repeats the last word of the text."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69593455b282844d7b277cc3",
+   "title": "Theosophia Practica - Volume I",
+   "pages": [
+    {
+     "page_number": 530,
+     "page_id": "69593455b282844d7b277ed5",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:43:59.894Z",
+     "text": "b670e784521c90f7",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "(Int. Brief.)",
+        "severity": "cosmetic",
+        "what": "running-head letter number misread; the page appears to read \"(III. Brief.)\""
+       },
+       {
+        "class": "E2",
+        "quote": "der Lufft herrschen",
+        "severity": "cosmetic",
+        "what": "spelling slip: the page reads \"Luft\""
+       }
+      ],
+      "reader_note": "All of the body text is faithful and complete, from the end of §3 through §8 and the catchword \"Jahr\"; only the letter number in the running head is garbled (\"Int.\" where the page appears to read \"III.\"), plus a minor \"Lufft\" for \"Luft\"."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "title": "Reformatio Gentis Letticae in Ducatu Curlandiae",
+   "pages": [
+    {
+     "page_number": 21,
+     "page_id": "6a2121edf88bd9944a5840b7",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:45:11.902Z",
+     "text": "e945cdeb0a814811",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "I3",
+        "quote": "<columns>2</columns>",
+        "severity": "cosmetic",
+        "what": "the image shows two facing pages, transcribed as two columns of one page; the text itself is complete and in order"
+       },
+       {
+        "class": "O16",
+        "quote": "<columns>2</columns>",
+        "severity": "cosmetic",
+        "what": "self-reported layout is wrong: these are two pages of one column each, not one two-column page"
+       },
+       {
+        "class": "O5",
+        "quote": "vnd hat mit diesem Drachen nichts zu",
+        "severity": "cosmetic",
+        "what": "drops the word 'das' that the page has ('vnd hat das mit diesem Drachen')"
+       },
+       {
+        "class": "O8",
+        "quote": "wie er gestalt sey",
+        "severity": "cosmetic",
+        "what": "the page spells it 'gestallt'; other small spelling normalisations too, e.g. 'als' for 'alß' and 'vnd' for 'vnnd'"
+       },
+       {
+        "class": "O12",
+        "quote": "In vulgata Cap. 14. V. 24.",
+        "severity": "cosmetic",
+        "what": "the verse number in the margin is partly illegible ('V. 2?'); the transcription gives it as certain"
+       }
+      ],
+      "reader_note": "The text of both facing pages (the 'Das 5. Capitel' spread) is faithful and complete; a reader would only notice the spread is labelled as two columns, plus a dropped 'das' and a few spelling normalisations."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "title": "Theosophia Revelata. Das ist: Alle Göttliche Schriften Des Gottseligen und Hocherleuchteten Deutschen Theosophi Jacob Böhmens : Darinnen Die allertieffesten Geheimnisse Gottes und seines Wesens; der ewigen und zeitlichen Natur und Creatur; Schöpfung der Engel, und ihrer Hierarchien; des Falles Lucifers und seiner Legionen .... 2, Der 2. Teil. Darinnen nach Ordnung der Numeren folgende Bücher befindlich, als: XIX. De Signatura Rerum, Von der Geburt und Bezeichnung aller Wesen. XX. De Electione Gratiae, Von der Gnaden-Wahl. XXI. De Testamentis Christi Lib. III. Von Christi Testamenten 3. Büchl. als zwey von der H. Tauffe und eins vom H. Abendmahl. XXII. Mysterium Magnum, Erklärung des ersten Buchs Mosis. XXIII. Colloquium Viatorum, Gespräch einer erleuchteten und unerleuchteten Selen. XXIV. Suspiria Viatorum, Vom Heiligen Gebät. XXV. Quaest. Theosophicae CLXXVII. Hundert sieben u. siebenzig Theosophis. Fragen. XXVI. Tabulae Principiorum, Drey Taffeln Göttlicher Offenbarung. XXVII. Clavis, Schlüssel oder Erklärung der vornehmsten Puncten. XXVIII. Epistolae Theosophicae LXVI. Sechs und sechszig Theosophis. Send-Briefe : Denen allen beygefüget Der Lebens-Lauff des Hocherleuchteten Autoris. Nebst dreyen Registern ...",
+   "pages": [
+    {
+     "page_number": 230,
+     "page_id": "69b51e98cf111105c42a0eb7",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:45:48.746Z",
+     "text": "43cc8fa061d4caca",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Der Streit und Missverstand",
+        "severity": "misleads",
+        "what": "Page reads 'Aller Streit und Misverstand'. The woodcut initial is A, not D, so the chapter's first word is wrong."
+       },
+       {
+        "class": "O16",
+        "quote": "Decorative woodcut initial D",
+        "severity": "cosmetic",
+        "what": "The initial is an ornamental A, not a D."
+       },
+       {
+        "class": "O13",
+        "quote": "<margin>Eins und Unformet.</margin>",
+        "severity": "misleads",
+        "what": "Faint later handwritten note ('Eins / Unformet') beside §3 is tagged as a printed marginal, and 'und' is added."
+       },
+       {
+        "class": "O8",
+        "quote": "Missverstand",
+        "severity": "cosmetic",
+        "what": "The print spells it 'Misverstand'."
+       }
+      ],
+      "reader_note": "Faithful almost throughout, but Chapter 1 opens 'Aller Streit', not 'Der Streit' (the initial was misread), and a faint handwritten annotation is shown as a printed sidenote."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "title": "Le nouveau monde industriel et sociétaire, ou Invention du procédé d'industrie attrayante et naturelle distribuée en séries passionnées",
+   "pages": [
+    {
+     "page_number": 426,
+     "page_id": "6ad5489590dd8591ceb2ec64",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:46:16.607Z",
+     "text": "0ce643bb708e7f7a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "The transcription matches the page. The table of 810 characters is complete and correct, and both prose paragraphs follow the page word for word, with the original spellings 'enfans' and 'Fréderic' kept."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e9aff09e4fe943b1c2c",
+   "title": "Theosophia Revelata. Das ist: Alle Göttliche Schriften des Gottseligen und Hocherleuchteten Deutschen Theosophi Jacob Böhmens : Darin die allertieffesten Geheimnisse Gottes und seines Wesens; der ewigen und zeitlichen Natur und Creatur; Schöpfung der Engel und ihrer Hierarchien; des Falles Lucifers und seiner Legionen; .... 1, Aurora",
+   "pages": [
+    {
+     "page_number": 106,
+     "page_id": "69b51e9aff09e4fe943b1c96",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:46:33.394Z",
+     "text": "d9c25a8ba85244b8",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "cörperlichen",
+        "severity": "cosmetic",
+        "what": "page reads 'cörporlichen'; spelling modernised"
+       },
+       {
+        "class": "O6",
+        "quote": "(Pfal. 104: 3.)",
+        "severity": "cosmetic",
+        "what": "long s misread as f; page has 'Psal.' (Psalm reference)"
+       },
+       {
+        "class": "O8",
+        "quote": "Reihen-Tanz",
+        "severity": "cosmetic",
+        "what": "page spells 'Tantz' (likewise 'gantz', 'Substantz', 'tantzen'); tz silently normalised to z"
+       }
+      ],
+      "reader_note": "A complete, accurate text of p. 62 (Aurora ch. 5, §§15–20); only small spelling slips, e.g. 'Pfal.' for 'Psal.' and 'cörperlichen' for 'cörporlichen'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e94cf111105c42a05d5",
+   "title": "Beschreibung der drey Principien Göttliches Wesens. Das ist Von der ohn Ursprung ewigen Gebuhrt der H. Dreyfaltigkeit Gottes, und wie durch uns aus derselben sind geschaffen worden die Engel ... : Fürnemlich Von dem Menschen, woraus er geschaffen worden, und zu waserley Ende ...",
+   "pages": [
+    {
+     "page_number": 91,
+     "page_id": "69b51e94cf111105c42a0630",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:46:51.591Z",
+     "text": "60c4e2fb3db0e637",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "welche der Perlen begehren",
+        "severity": "cosmetic",
+        "what": "the page seems to read 'welcher der Perlen'; the final r was dropped"
+       }
+      ],
+      "reader_note": "The transcription follows the page line by line, with the header, page number 73, signature D and catchword 'sen'. The only difference is a possible lost letter in 'welche(r) der Perlen', which changes nothing for a reader."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8f624fe408ab73f484cec0",
+   "title": "Démonstration du principe de l'harmonie",
+   "pages": [
+    {
+     "page_number": 68,
+     "page_id": "6a8f624fe408ab73f484cf04",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:47:11.586Z",
+     "text": "5a24db267cdbad71",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "fons fondamentaux du *Mode*",
+        "severity": "misleads",
+        "what": "The page has italic 'ſons' (sons). The long s was misread as f, giving the non-word 'fons', and the italics were dropped. Everywhere else the candidate turns long s into s."
+       },
+       {
+        "class": "O16",
+        "quote": "<vocab>fons fondamentaux,",
+        "severity": "cosmetic",
+        "what": "The vocab tag repeats the misread 'fons' instead of 'sons'."
+       }
+      ],
+      "reader_note": "The page's text is complete and in the right order, but the first word reads 'fons fondamentaux' where the page has 'sons fondamentaux' (fundamental sounds)."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e639a81ef7feb3d4592",
+   "title": "Fama Fraternitatis : oder Entdeckung der Brüdersch. des Ordens d. Rosen Creutzes",
+   "pages": [
+    {
+     "page_number": 77,
+     "page_id": "69b51e639a81ef7feb3d45df",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:47:30.471Z",
+     "text": "feac04333353c207",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "beweget werden",
+        "severity": "cosmetic",
+        "what": "page prints 'bewegt'; extra e added"
+       },
+       {
+        "class": "E2",
+        "quote": "dennoch die-jenigen",
+        "severity": "cosmetic",
+        "what": "hyphen inserted; page has 'die jenigen' without one"
+       },
+       {
+        "class": "O11",
+        "quote": "Artzeney nimmermehr kommen vnnd ge-\nlangen",
+        "severity": "cosmetic",
+        "what": "catchword 'langen' put in the body as a text line and also tagged in meta"
+       }
+      ],
+      "reader_note": "This is a faithful transcription of page 64. The only slips are 'beweget' where the page has 'bewegt', a stray hyphen in 'die-jenigen', and the catchword 'langen' printed as part of the body text."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "698420e4e8a1d0539ce47e1d",
+   "title": "Offenbarung göttlicher Mayestat",
+   "pages": [
+    {
+     "page_number": 589,
+     "page_id": "6984a513d13ce2ed07ed0695",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:47:58.615Z",
+     "text": "7e14ff0ed4ec1e39",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "noch zeitlich recht",
+        "severity": "misleads",
+        "what": "the page reads 'zeitlich Liecht' (light), not 'recht'; this changes the sense of the blind devil seeing neither eternal nor temporal light"
+       },
+       {
+        "class": "O8",
+        "quote": "lauffet das Rädlin",
+        "severity": "cosmetic",
+        "what": "the page has 'laufft'"
+       },
+       {
+        "class": "O8",
+        "quote": "nach all seinem Wunsch",
+        "severity": "cosmetic",
+        "what": "the page spells it 'Wundsch'"
+       },
+       {
+        "class": "O8",
+        "quote": "Ihr Aufseher",
+        "severity": "cosmetic",
+        "what": "the page spells it 'Auffseher'"
+       }
+      ],
+      "reader_note": "This is a faithful, complete reading of p. 441, but one word is misread: 'zeitlich recht' should be 'zeitlich Liecht', and a few spellings are quietly modernised."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a08dd9fdb33045508580330",
+   "title": "Venus dans le cloître, ou la Religieuse en chemise (BSB Munich copy)",
+   "pages": [
+    {
+     "page_number": 123,
+     "page_id": "6a08dd9fdb330455085803ab",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:48:24.336Z",
+     "text": "559d344d17c8047b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "T6",
+        "quote": "(c'est ainsi qu'on appelle ces ani-",
+        "severity": "cosmetic",
+        "what": "catchword 'ani-' is copied into the body text as well as tagged in meta; the page's last text line ends at 'ces'"
+       }
+      ],
+      "reader_note": "The text matches the page line for line. The only slip is that the catchword 'ani-' is also attached to the last line of the body, so it will repeat the start of the next page."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69592fb8a41e40e9146a4943",
+   "title": "Traité dalchimie (16th c. Manuscript)",
+   "pages": [
+    {
+     "page_number": 49,
+     "page_id": "6a26f89437eba173bb6bb83a",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:49:05.768Z",
+     "text": "a486a5b3ce94804e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "type=\"engraving\"",
+        "severity": "misleads",
+        "what": "this is a hand-painted manuscript miniature with a jewelled painted frame, not an engraving"
+       },
+       {
+        "class": "O16",
+        "quote": "<script>printed</script>",
+        "severity": "cosmetic",
+        "what": "the page has no text at all, and the leaf is a manuscript painting, not print"
+       },
+       {
+        "class": "O16",
+        "quote": "<language>Latin</language>",
+        "severity": "cosmetic",
+        "what": "no text on the page, so no language can be read from it"
+       },
+       {
+        "class": "E2",
+        "quote": "holding a staff topped with a star and a dove",
+        "severity": "misleads",
+        "what": "image description error: the staff ends in a cluster of stars, and the dove sits on the figure's other hand"
+       },
+       {
+        "class": "E2",
+        "quote": "elaborate floral border with insects",
+        "severity": "cosmetic",
+        "what": "image description incomplete: the border mostly holds birds and a moth, and the cartouches sit in a frame set with jewels"
+       }
+      ],
+      "reader_note": "The page has no text: it is a painted alchemical miniature (a crowned king with a star sceptre and a dove, sun and star overhead, a crowned figure flying) with three empty panels below. The candidate correctly gives no text, but it mislabels the picture as a printed Latin engraving and slightly misplaces the dove."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6ad548d190dd8591ceb2eef3",
+   "title": "La fausse industrie morcelée, répugnante, mensongère, et l’industrie naturelle, combinée, attrayante, véridique, donnant quadruple produit (tome 2, première partie)",
+   "pages": [
+    {
+     "page_number": 310,
+     "page_id": "6ad548d190dd8591ceb2f029",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T13:52:27.832Z",
+     "text": "c3bf245f9bf7fcac",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<header>*</header>",
+        "severity": "cosmetic",
+        "what": "the mark beside the page number looks like 'x', not '*'"
+       }
+      ],
+      "reader_note": "The text matches the page line for line, including numerals and the small-caps CONSTANTES/INCONSTANTES/MIXTES; the only slip is the stray top-corner mark, given as '*' when the page seems to show 'x'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69c8792d6c6f3cc53c858414",
+   "title": "Histoire de la magie avec une exposition claire et précise de ses procédés, de ses rites et de ses mystères",
+   "pages": [
+    {
+     "page_number": 303,
+     "page_id": "69f6f9b05d5b68ca3e19d18c",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:07:25.964Z",
+     "text": "3eecb00076020ae4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "*les agapes de la haine*",
+        "severity": "cosmetic",
+        "what": "italics widened to take in 'les', which is roman on the page"
+       },
+       {
+        "class": "E2",
+        "quote": "*Le sabbat*",
+        "severity": "cosmetic",
+        "what": "italics widened to take in 'Le'; only 'sabbat' is italic on the page"
+       }
+      ],
+      "reader_note": "The page's full text is all there in order, with accurate wording, header and page number 259; only the span of two italic phrases is a little off."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e63768235dc659928d8",
+   "title": "Elucidarius Chymicus : Oder Erleuchterung und deutliche Erklerung, was die Fama fraternitatis vom Rosencreutz für Chymische Secreta de lapide Philosophorum, in ihrer Reformation der Welt mit verblümbten Worten versteckt haben",
+   "pages": [
+    {
+     "page_number": 35,
+     "page_id": "69b51e63768235dc659928fb",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:10:00.753Z",
+     "text": "5626d6c75d9b10a4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line against the image and found nothing that matters missing, added or changed. That covers the Latin quotations, the Theophrastus and Trevisanus testimonies, the header, the signature C and the catchword Khun-. One small doubt: the second digit of the page number is faint, but it most likely reads 32."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51ed3ff09e4fe943b565f",
+   "title": "Die Enneaden des Plotinus. 1",
+   "pages": [
+    {
+     "page_number": 225,
+     "page_id": "69b51ed3ff09e4fe943b5740",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:10:29.401Z",
+     "text": "dd3726e0cbb80258",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "das 2c scheint ganz überflüssig zu stehen",
+        "severity": "wrong_text",
+        "what": "The page has the Greek article 'το' (\"das το scheint…\"). The note says this word is superfluous; the candidate turns it into the abbreviation '2c' (etc.), so the note points at the wrong word."
+       },
+       {
+        "class": "O8",
+        "quote": "nung 2c. zu Hülfe kommt",
+        "severity": "cosmetic",
+        "what": "The Fraktur abbreviation ꝛc. (etc.) is rendered as '2c.'"
+       }
+      ],
+      "reader_note": "The text is complete and mostly accurate, but the note on 'το προς τελειωσιν αρετων ακτεον' reads 'das 2c scheint' where the page has 'das το scheint', so the reader can't tell which word is said to be superfluous."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "title": "Théorie de l'unité universelle",
+   "pages": [
+    {
+     "page_number": 121,
+     "page_id": "6a8ee22f90f5a0e4155eab81",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:10:54.561Z",
+     "text": "011336ffa5c84618",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<meta>M</meta> PRÉAMBULE.",
+        "severity": "cosmetic",
+        "what": "the section sign before PRÉAMBULE (a ꝟ/Ч-like printer's mark) is rendered as the letter 'M' inside a meta tag"
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of the opening Sommaires page: the title, the note on numerals, the Préambule heading and two italic paragraphs ending on 'de-'. Only the small symbol before PRÉAMBULE is shown wrongly as 'M'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b418b52b0edf3eaa2ddb30",
+   "title": "Clavicules de Salomon (PH298)",
+   "pages": [
+    {
+     "page_number": 101,
+     "page_id": "69f6697ee3fb913fe98fe9ce",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:11:12.774Z",
+     "text": "2c1e5660692b9e8b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "tu y enchasserus",
+        "severity": "cosmetic",
+        "what": "typo: the page reads 'enchasseras'"
+       },
+       {
+        "class": "O6",
+        "quote": "poirion",
+        "severity": "cosmetic",
+        "what": "the name is uncertain and looks more like 'poinon'"
+       }
+      ],
+      "reader_note": "The text matches the page line by line and both sigil groups are described in place; the only slips are a typo, 'enchasserus' for 'enchasseras', and an uncertain reading of one angel's name."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69924f495976b55115ffd9fa",
+   "title": "Textes et Monuments relatifs aux Mystères de Mithra, Vol. 2",
+   "pages": [
+    {
+     "page_number": 404,
+     "page_id": "69924f495976b55115ffdb8e",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:12:22.598Z",
+     "text": "b77f9fbdbc4c4a15",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "Fig. 282 shows a standing dadophore",
+        "severity": "cosmetic",
+        "what": "The printed captions 'Fig. 282.', 'Fig. 283.', 'Fig. 284.' and 'Fig. 285.' appear only inside the image descriptions, not as transcribed caption lines."
+       }
+      ],
+      "reader_note": "The whole page is transcribed accurately and in order, including the measurements and figure references. The only difference is that the figure captions are folded into the image descriptions instead of appearing as their own lines."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a44359d0235c9147000dd12",
+   "title": "Journal des voyages de Monsieur de Monconys … Seconde partie (Voyage d'Angleterre, Païs-Bas, Allemagne & Italie)",
+   "pages": [
+    {
+     "page_number": 96,
+     "page_id": "6a44359d0235c9147000dd72",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:12:47.961Z",
+     "text": "c7124ae236fe34a4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "puis dîner chez celuy de France",
+        "severity": "cosmetic",
+        "what": "page reads 'disner'; modernised to 'dîner'"
+       },
+       {
+        "class": "O8",
+        "quote": "pour aller dîner chez le Milord",
+        "severity": "cosmetic",
+        "what": "page reads 'disner'; modernised to 'dîner'"
+       },
+       {
+        "class": "O8",
+        "quote": "du defunct Sultan",
+        "severity": "cosmetic",
+        "what": "page reads 'defunt'; a 'c' was added"
+       },
+       {
+        "class": "E2",
+        "quote": "auant que ie fusse leuë",
+        "severity": "cosmetic",
+        "what": "page reads 'leué', not 'leuë'"
+       },
+       {
+        "class": "E2",
+        "quote": "& puis se rassit",
+        "severity": "cosmetic",
+        "what": "page has the apostrophe: 'r'assit'"
+       }
+      ],
+      "reader_note": "This is a complete and faithful transcription of p. 80, including the margin date, the asterisked entry and the small-type passage about the pendulum. The only differences are a few spellings modernised or changed ('dîner' for 'disner', 'defunct', 'leuë') that don't change the meaning."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e9647b06ecd58193ed8",
+   "title": "Von sechs Puncten Hohe und tieffe Gründung : I. Vom Gewächse der drey Principien ... II. Von dem vermischten Baum Böses und Gutes ... III. Vom Urstande der Widerwertigkeit des Gewächses ... IV. Wie der Heilige und Gute Baum des ewigen Lebens aus allen Gewächsen der dreyen Principien aus- und durch-wachse ... V. Vom Baum und Lebens-Gewächse der Verderbnüß ... VI. Vom Leben der Finsternüß ... ; Eine offene Pforte aller Heimligkeiten des Lebens, darinnen die Ursachen aller Wesen erkannt werden",
+   "pages": [
+    {
+     "page_number": 29,
+     "page_id": "69b51e9647b06ecd58193ef5",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:13:10.849Z",
+     "text": "bd193a1dec3a887a",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "da ihn sein Herz immer nachpeitschet",
+        "severity": "misleads",
+        "what": "The page has 'Herꝛ' (Herr, master), not 'Herz' (heart)."
+       },
+       {
+        "class": "O6",
+        "quote": "jedes wil Herz seyn",
+        "severity": "misleads",
+        "what": "The same Herr→Herz misread, repeated in §48 and three times in §49 ('wil Herz seyn', 'wil auch Herz seyn'). It changes 'wants to be master' to 'wants to be heart'."
+       },
+       {
+        "class": "E2",
+        "quote": "Liccht-welt",
+        "severity": "cosmetic",
+        "what": "Typo: the page reads 'Liecht-welt'. The same typo is repeated in the vocab tag."
+       },
+       {
+        "class": "E2",
+        "quote": "*Sonnen*",
+        "severity": "cosmetic",
+        "what": "Emphasis markup was added that the page does not show."
+       }
+      ],
+      "reader_note": "Each time the page has 'Herr' (master), the text reads 'Herz' (heart), five times in all, which changes the sense of the passages about the old Adam and about cold and heat each wanting to rule. Otherwise the text is complete and accurate."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8f61b8ddd2f57fe0f7f480",
+   "title": "Das nationale System der politischen Ökonomie",
+   "pages": [
+    {
+     "page_number": 305,
+     "page_id": "6a8f61b8ddd2f57fe0f7f5b1",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:13:29.300Z",
+     "text": "cf767f26815d4614",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "The transcription matches the page line for line. Every word, the running number 285 and the bracketed original pagination (276) agree with the image, and the paragraph breaks are kept."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "title": "Théorie des quatre mouvements et des destinées générales",
+   "pages": [
+    {
+     "page_number": 140,
+     "page_id": "6a8ee2e990f5a0e4155ebaa7",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:13:47.027Z",
+     "text": "3a30b3e8118b9d11",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line against the image and found no errors. Every line is there in order, including the section X heading, its subtitle and the bracketed asides. The odd spacing in \"for me exception\" is printed that way on the page."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69ef2b1085daccce30f2d945",
+   "title": "Die Lehre von den Tonempfindungen als physiologische Grundlage für die Theorie der Musik",
+   "pages": [
+    {
+     "page_number": 110,
+     "page_id": "69ef2b1085daccce30f2d9b3",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:14:01.237Z",
+     "text": "7f4dd4ac31b5f0b5",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a faithful, complete transcription of p. 77 ('Mittönen der Saiten'). Every paragraph is present and in order, the figure references and Greek node labels are correct, and the text ends mid-sentence at 'für die Form a', just as the page does."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6955770857e3b773024f2e57",
+   "title": "Pythagore et la philosophie pythagoricienne (avec fragments de Philolaüs et Archytas)",
+   "pages": [
+    {
+     "page_number": 755,
+     "page_id": "6955770857e3b773024f314a",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:14:14.734Z",
+     "text": "cf24a92339edca5b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<vocab>Pythagorisme,",
+        "severity": "cosmetic",
+        "what": "the vocab tag lists 'Pythagorisme', a word that does not appear on the page"
+       }
+      ],
+      "reader_note": "The body text, the footnote and the running head match the page line for line. The only flaw is one word in the vocab tag that is not on the page."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9eedf6d63c919747d754",
+   "title": "Morgen-Röte im Aufgangk das ist die Wurtzel oder Mutter der Philosophiae, Astrologiae und Theologiae, aus rechtem Grunde oder Beschreibung der Natur ...",
+   "pages": [
+    {
+     "page_number": 135,
+     "page_id": "69bd9eedf6d63c919747d7db",
+     "lane": "agy-correct-lite-7558",
+     "route": "lite>agy-flash-low",
+     "judged_at": "2026-10-28T14:14:32.432Z",
+     "text": "023dd3b26890c38c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "ganzen Engel",
+        "severity": "cosmetic",
+        "what": "the page prints 'gantzen'/'hertzen'; the candidate modernises tz to z throughout"
+       },
+       {
+        "class": "O8",
+        "quote": "wissenschafft",
+        "severity": "cosmetic",
+        "what": "the page reads 'wissenschaft'"
+       },
+       {
+        "class": "D1",
+        "quote": "*Erstlich ist die krafft",
+        "severity": "cosmetic",
+        "what": "markdown italics wrap the smaller-type paragraphs; nothing on the page is lost"
+       }
+      ],
+      "reader_note": "All of page 56 is there in the right order. The only differences are modernised spellings (tz written as z) and italic markup on the smaller-type passage."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -5,7 +5,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
-import { stalePages, type BookCheck, type PageFinding } from '@/lib/book-checks';
+import { stalePages, type BookCheck, type PageFinding, type PageNote } from '@/lib/book-checks';
 import { loadBookChecks, ownChecks, deriveWarnings, checkAnchor, pageAnchor, kindsOfFinding } from '@/lib/book-warnings';
 import { CHECK_METHODS, methodDocUrl, evidenceUrl, issueUrl } from '@/lib/check-methods';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -93,6 +93,36 @@ function Finding({ row, finding, stale, bookPath, showSentences }: {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/** How the reviewer rated a defect, in a reader's words. */
+const SEVERITY_LABEL = { cosmetic: 'minor', misleads: 'misleading', wrong_text: 'wrong text' } as const;
+
+/** One page read, in the reviewer's own words (#7896): its note and every defect it named, minor ones included. */
+function PageNoteBlock({ note, stale, bookPath }: { note: PageNote; stale: boolean; bookPath: string }) {
+  return (
+    <div className="font-sans text-[14px] leading-relaxed" style={{ color: 'var(--text-secondary)', opacity: stale ? 0.6 : 1 }}>
+      <p className="font-medium" style={{ color: 'var(--text-primary)' }}>
+        {note.page_number > 0
+          ? <Link href={`/book/${bookPath}/page-number/${note.page_number}`} className="underline underline-offset-2">Page {note.page_number}</Link>
+          : <>Page {note.page_number}</>}
+        {note.fidelity !== undefined && <span className="font-normal" style={{ color: 'var(--text-muted)' }}> · fidelity {note.fidelity} of 5</span>}
+        {stale && <span className="font-normal" style={{ color: 'var(--text-muted)' }}> · text changed since</span>}
+      </p>
+      {note.note && <p className="mt-0.5 font-serif text-[15px]">{note.note}</p>}
+      {note.defects.length > 0 && (
+        <ul className="mt-1 space-y-0.5 text-[13.5px]">
+          {note.defects.map((d, i) => (
+            <li key={i}>
+              <span style={{ color: 'var(--text-muted)' }}>{SEVERITY_LABEL[d.severity]}:</span>{' '}
+              {d.quote && <><q className="font-serif">{d.quote.length > 120 ? `${d.quote.slice(0, 117)}…` : d.quote}</q>{' — '}</>}
+              {d.what}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -201,6 +231,17 @@ export default async function BookChecksPage({ params }: PageProps) {
               )}
               {row.page_findings && row.page_findings.length === 0 && row.reader.kind !== 'detector' && (
                 <p className="mt-4 font-sans text-[14px]" style={{ color: 'var(--text-secondary)' }}>No serious finding on any page read.</p>
+              )}
+
+              {isPublic && row.page_notes && row.page_notes.length > 0 && (
+                <div className="mt-5 space-y-3">
+                  <h3 className="font-sans text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                    {row.reader.kind === 'human' ? 'What the reviewer wrote, page by page' : 'What the AI reviewer wrote, page by page'}
+                  </h3>
+                  {row.page_notes.map((n) => (
+                    <PageNoteBlock key={n.page_number} note={n} stale={stale.has(n.page_number)} bookPath={bookPath} />
+                  ))}
+                </div>
               )}
 
               <p className="mt-4 font-sans text-[13px]" style={{ color: 'var(--text-muted)' }}>
