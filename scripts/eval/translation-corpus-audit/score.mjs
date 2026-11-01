@@ -215,7 +215,7 @@ if (args.store) {
       const v = VV[m.id]; if (!v) continue;
       rows.push({ slug: `tca-${m.language.toLowerCase()}-${m.book_id.slice(-6)}-p${m.page_number}`, item_id: m.id, kind: m.kind, book_id: m.book_id, page_number: m.page_number,
         language: m.language, period: m.period, engine: m.model, arm: m.arm, prompt_version: m.prompt_version, prompt_hash: m.prompt_hash,
-        measure: 'judged', against: { judge: `claude-${judge}`, judge_packet_id: `${runId}/${judge}`, source_hash: m.ocr_hash, translation_hash: m.translation_hash },
+        measure: 'judged', against: { judge: /^(gemini|gpt)/.test(judge) ? judge : `claude-${judge}`, judge_packet_id: `${runId}/${judge}`, source_hash: m.ocr_hash, translation_hash: m.translation_hash },
         metric: { fidelity: v.fidelity, ...v.flags, n_defects_major: v.defects.filter((d) => d.severity === 'major').length, n_defects_minor: v.defects.filter((d) => d.severity === 'minor').length },
         control_expected: m.expected || null, repeat_of: m.repeat_of || null,
         scorer, scorer_version: Number(String(scorer).split('@')[1] || 1), rubric: args.scorer ? 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md + IMAGE-ADDENDUM.md' : 'scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md', run_id: runId, abstain: false, at: drawLog.at, provenance_captured: false, cost_usd: 0, issue: Number(args.issue || 5274) });
