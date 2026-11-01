@@ -234,6 +234,104 @@ Code: `scripts/eval/latin-paired-6740/` (`lib.mjs`, `frame.mjs`, `arms.mjs`, `gp
 - The face tag is one agy call a page (#7835 T4), not by eye: 98 calls on top of the arms' ~160.
 - Limits: Claude only via `claude -p` on this box's subscription; Gemini only through agy flash-low; no paid API; no cron or routing change; `current.json` is not moved.
 
+## Results (run 2026-11-01 01:20Z – 02:40Z)
+
+**Run.**
+- **Opus**: `claude-opus-5-5` via `claude -p` on this box's subscription, the image attached. 93 calls against the 220 cap (82 items, 11 controls, 0 unparsed), 02:20Z–02:26Z, after #7875 merged at 02:19:58Z. Weekly meter 46% before and after (shared account). List-price equivalent $5.62, not billed.
+- **agy**: `gemini-3.8-flash-low`, default pool, 2 at a time. 226 calls (98 face tags, 128 read and correction calls). No quota stop.
+- **GPU**: one hand-queued task (`00-lp-6740-gpu`), 01:20:01–01:20:58Z. PERO made 158 of 160 block-page drafts in 56 s. The filler was paused 01:12–01:22Z. SigLIP chunk c003 yielded at its shard boundary; no filler chunk was running, so none was stopped (logged on #6871).
+- **Paid API: $0.**
+- **Killed reads**: two arm-2 reads ended `exit -9`. Each was retried once; one was killed again, so its outcome stands (not written).
+- **Inbox**: no notes.
+- **Code fix after the prereg, no change of method.** `analyze.mjs router` now also writes the export's by-script cut (#7853's `evidence/by-script/` file); without it, build.py filed the k/n evidence under a `latin-blank/unknown` row. `score.json` also gains `study_cells`, the shape the header lint reads.
+- **Artifacts**: `scripts/eval/latin-paired-6740/results/` (`frame.json`, `score.json`, `router-evidence.score.json`, `router-check.json`, `writeback*.json`, `cascade-post-hoc.txt`). Texts, reads and verdicts are in `$JOB_SCRATCH/lp-6740/` (archived to R2 after 7 idle days).
+
+### Instrument: valid for this study
+- Wrong-page controls: 6/6 refused at fidelity ≤ 2 (2 per arm).
+- Planted errors: 5/5 caught (kinds B, C, D, E, B).
+- Noise floor: #7818's κ 0.87 (not rerun).
+
+### The three routes (40 pages, 40 books; weighted to the queue's owed pages)
+
+"Accept, all drawn" counts a page the route does not write as not accepted: that page stays scans-only. Defect rates are over the pages the route writes. CIs are book-cluster (= page) stratified bootstrap 95%. Severity uses MQM weights 1 / 5 / 25 per 1,000 words.
+
+| route | writes | accept, all drawn (weighted, 95% CI) | accept, written | severity / 1,000 words (95% CI) | wrong text / 1,000 | misleads / 1,000 | wrong-text pages | fidelity | agy calls a page | $ per accepted page |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 `pero>agy-flash-low-written` (live) | 22/40 | 19/40, 0.48 (0.33–0.63) | 19/22 | 15.2 (7.6–28.4) | 0.20 (0–0.66) | 0.59 (0–1.33) | 1 | 4.32 | 0.98 | 0.00177 |
+| **2 `pero>agy-flash-low@4-written`** | 23/40 | 22/40, 0.55 (0.41–0.70) | 22/23 | **9.3 (6.0–13.3)** | **0 (0–0)** | 0.56 (0–1.26) | 0 | 4.48 | **0.24** | 0.00038 |
+| 3 `agy-flash-low@4-written` | 37/40 | **30/40, 0.75 (0.63–0.88)** | 30/37 | 41.9 (21.3–64.2) | 0.92 (0.23–1.72) | 2.77 (1.45–3.86) | 5 | 4.27 | 0.30 | 0.00034 |
+
+- **Why the PERO routes write so few pages.** Of the live route's 18 unwritten pages:
+  - 12 were refused by the #7695 put-back (9 a flag that is not a like-for-like substitution, 3 a flag spanning a tag);
+  - 3 for letters outside the book's scripts;
+  - 2 under the shared-words floor against the draft;
+  - 1 with no PERO draft.
+  - Arm 2's 17 refusals are of the same kinds, plus one page the corrector tagged handwritten and one killed read.
+  - Read@4's 3 unwritten pages are foreign-letter refusals.
+- **Three Fraktur pages** (of 40): no route had any accepted.
+- **CER on CAMENA**: not available. None of the 40 books is in #6012's CAMENA manifest: an aligned page needs a stored read, and these books have none.
+
+### Primary: severity per 1,000 words, paired against the live route (Holm over two)
+
+| contrast | pages both wrote | difference (95% CI) | Wilcoxon p | Holm p | wrong text, live → candidate | misleads, live → candidate |
+|---|---|---|---|---|---|---|
+| pero@4 − live | 21 | −5.5 (−18.8 to +3.0) | 0.49 | 0.49 | 1 → 0 | 2 → 3 |
+| read@4 − live | 22 | +10.2 (−9.8 to +34.7) | 0.11 | 0.21 | 1 → 2 | 3 → 8 |
+
+**Neither is supported.** On the pages they share, the routes do not differ measurably at n = 21–22.
+
+### Gate and decision
+
+- **Gate** (accept, all drawn, within 5 points of live's 0.48): all three pass.
+- **Accept, paired over every drawn page** (exact McNemar):
+  - read@4 against live: 12 gained, 1 lost, p 0.003, +27.6 points (+12.7 to +42.7).
+  - read@4 against pero@4: 9 / 1, p 0.02, +20.0 (+7.4 to +34.9).
+  - pero@4 against live: 4 / 1, p 0.38, +7.5 (−2.5 to +17.8).
+- **#7862's S1 rule** (in-study rates, deflated):
+  - Wrong text per 1,000 words: live 0.24, pero@4 0.12, read@4 0.70.
+  - Misleads per 1,000 words: 0.58, 0.55, 1.65.
+  - Gate 1: read@4 fails the wrong-text gate (0.70 > 0.24 + 0.15). pero@4 passes both gates (acceptance floor P = 0.98).
+  - Defects cost a page (W = 211 words): live 0.27, pero@4 0.19.
+  - Price a raw page: live $0.00085, pero@4 $0.00021.
+  - **Pick: `pero>agy-flash-low@4-written` at w_m = $0.001, $0.01 and $0.1 → switch.** The pick no longer moves with the misleads weight. With GPU time priced, the result is the same.
+- **build.py on main** (`results/router-check.json`) with this export named in rules.json and the defect counts pooled through defect-rate.py `ADD`:
+  - latin-blank/print goes from HOLD to **switch → `pero>agy-flash-low@4-written`**. The k/n fallback would pick the live route.
+  - Pooled wrong text per 1,000 words, before → after:
+    - live: 2.33 (22 books) → 1.98 (44 books, 0.97–3.28);
+    - pero@4: 0.37 → 0.17 (39 books);
+    - read@4: 0.23 → 0.68 (63 books).
+  - The live route's pooled rate is still carried by the earlier depth sample's words (23,507 of 28,496).
+  - **Not applied**: rules.json and defect-rate.py are unchanged in this PR.
+
+### What the coverage gap means (post hoc, exploratory: `cascade.mjs`, chosen after seeing the write rates)
+
+- **pero@4, then read@4 on the pages pero@4 does not write**: accept, all drawn 0.75, severity 38.8 / 1,000 words, wrong text 0.89.
+- **read@4 alone**: 0.75, 41.9, 0.92.
+- **On the pages both wrote**, read@4 and pero@4 carry the same wrong text (0 and 0 defects, n = 23; severity +4.5, −0.3 to +9.2, p 0.11).
+- So read@4's higher rate comes from the pages the PERO put-back refuses: harder pages that the live route leaves unread today.
+- The S1 rule compares rates over written pages and prices raw pages, not coverage. It therefore picks the PERO route that writes fewer, easier pages. That is the preregistered rule, and it is reported as such.
+
+### Write-back
+**31 pages written**, each through `cli-ocr.mjs apply --apply --only=<page>` from the arm's own read directory: first reads only, printed only, the GPU arms' put-back against the draft, a `page_revisions` row and provenance.
+- All 31 were unread when read and when written.
+- Run ids are in `results/writeback-applied.json`; undo with `scripts/maintenance/revert-run.mjs --run-id <run>`.
+- The books keep their scans-only hold.
+- The reason text does not match the lane sampler's regexes, so these eval pages are not sampled as lane output.
+- Nothing was written on 9 pages: no route had an accepted text there.
+
+- **arm 3, read@4 (`agy-first-read-7701`), 15 pages:** 69b6b3d296dc15d4a16dab43, 69b6be518566c838146439b6, 69b6bed98566c83814646ec0, 69b6b08d96dc15d4a16ccba6, 69b6a2fd080b19f98fd18d98, 69b6fb2d3c7947b468d79f27, 69b6f8373c7947b468d67d12, 69b6dd43f8a84d859cdd71d9, 69b6e866f8a84d859cde7619, 69b64a1318b87551bfc6289b, 69b6700eb3f4fc044159b50a, 69b64ce118b87551bfc79187, 69b638321c1c21a3738355f8, 69b66b50b3f4fc044157d49c, 69b66968b3f4fc0441570d36.
+- **arm 2, pero@4 (`pero-agy4-first-read-6740`), 10 pages:** 69b68b892368e1fad321d788, 69b6b3ee96dc15d4a16dc7bc, 69b6bed48566c83814646cc4, 69b6812270c69d645a71d396, 69b69ba2080b19f98fd03251, 69b6edb73c7947b468d3b2a0, 69b6e59aa8d7b8d17a67dbfa, 69b6c5368566c838146685a5, 69b63eb81c1c21a373867fbf, 69b658b218b87551bfcf5494.
+- **arm 1, live (`pero-agy-first-read-7701`), 6 pages:** 69b6a0ae080b19f98fd13fc0, 69b6b33c96dc15d4a16d90c5, 69b6e6cca8d7b8d17a683ac0, 69b6f85b3c7947b468d6900f, 69b6568d18b87551bfce12ba, 69b6390c1c1c21a37383bf84.
+
+### Router evidence
+`router-evidence.score.json` (`exportScore`) is also at `scripts/eval/estimator/router-table/evidence/latin-paired-6740.score.json`, with its by-script cut. Cell: latin-blank. Routes: the three above, each over the pages it writes.
+
+### What this says
+- **The #7862 HOLD resolves.** On the same pages, PERO 4 a call leaves no more severity than PERO 1 a call (−5.5 per 1,000 words, CI −18.8 to +3.0) and accepts as many pages or more. It does this at a quarter of the agy calls. The S1 rule picks it at every weight.
+- **The live route's 2.33 wrong-text figure did not reproduce**: 0.20 per 1,000 words here (1 defect in 4,989 words, 22 pages; CI 0 to 0.66), as of 2026-11-01.
+- **Coverage is the open question.** Both PERO routes leave about 45% of the queue's pages unread. They accept 0.48 (live) and 0.55 (pero@4) of all drawn pages, against read@4's 0.75. Read@4's wrong text sits on those extra pages: all 5 of its wrong-text pages are pages pero@4 did not write (4 of them neither PERO route wrote; 3 are the Fraktur pages), 0.92 per 1,000 words overall.
+- **Implementing pero@4 needs code.** The armc lane has no 4-a-call mode yet: `armcRun` reads one page a call. The test drove `cli-ocr.mjs read --per-call=4` directly.
+
 ## 2026-11-01 · Does a hierarchical fit of acceptance predict router cells it has not seen, and how many pages is it worth? (#7263)
 
 PRIOR ART:
