@@ -269,6 +269,28 @@ function exportVerdicts() {
   console.log('exported', rows.length);
 }
 
-const stages = { draw, fetch: fetchAll, truth, judge, export: exportVerdicts };
+/** #7866's 800 page verdicts (lane_judge_verdicts, lane confidence-7866) as numbers: the page call, its MQM
+ *  misleads / wrong_text counts, the words of the page's stored text now, and the book's design weight, stratum, script
+ *  and human_read_count (books-known-fields: the reader-view field, #5048). The input of analyze.py's correction. */
+async function frame7866() {
+  const { c, db } = await mongo();
+  const v = await db.collection('lane_judge_verdicts').find({ lane: 'confidence-7866', kind: 'item' }, { projection: { _id: 0, usage: 0 } }).toArray();
+  const pages = new Map((await db.collection('pages').find({ id: { $in: v.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+  const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(v.map((r) => r.book_id))] } }, { projection: { _id: 0, id: 1, human_read_count: 1, read_count: 1 } }).toArray()).map((b) => [b.id, b]));
+  const { words } = await import('../confidence-7866/lib.mjs');
+  const rows = v.map((r) => {
+    const t = pages.get(r.page_id)?.ocr?.data, sev = (s) => (r.verdict?.defects || []).filter((d) => d.severity === s).length;
+    return { page_id: r.page_id, book_id: r.book_id, stratum: r.draw?.stratum, weight: r.draw?.weight, script: r.script_type, cell: r.cell_real, lang: r.lang,
+      judged: Boolean(r.verdict), judge_bad: r.verdict ? badPage(r.verdict) : null, misleads: r.verdict ? sev('misleads') : null, wrong_text: r.verdict ? sev('wrong_text') : null,
+      words_now: t ? words(t, r.lang) : null, text_sha_now: t ? sha(t.trim()).slice(0, 16) : null, text_sha_judged: r.write?.text_sha ?? null,
+      human_read_count: books.get(r.book_id)?.human_read_count ?? null, read_count: books.get(r.book_id)?.read_count ?? null };
+  });
+  await c.close();
+  const score = J(path.join(HERE, '../confidence-7866/results/score.json'));
+  fs.writeFileSync(path.join(RESULTS, 'frame-7866.json'), JSON.stringify({ read_at: new Date().toISOString(), frame_books: score.corpus.frame_books, rows }, null, 1) + '\n');
+  console.log('frame-7866', rows.length, 'pages; books with human_read_count', [...books.values()].filter((b) => b.human_read_count != null).length, 'of', books.size);
+}
+
+const stages = { draw, fetch: fetchAll, truth, judge, export: exportVerdicts, frame7866 };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();
