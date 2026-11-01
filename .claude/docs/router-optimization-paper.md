@@ -138,6 +138,46 @@ The router serves three readers:
 - **Failures count.** Refusals, format failures and empty reads are outcomes of the configuration (cost per *usable* page), not missing data.
 - **Drift.** Preview models and prompts change silently. Date-weight evidence, and expire it when the engine version changes.
 
+## Decisions (Derek, 2026-11-01: "defaults")
+
+What the optimum is:
+1. **A wrong page is priced.** Loss = cost per page + λ × P(wrong text), with λ = 20 × the cost of a good read (about $0.02 a page at current prices). It replaces the hand-set margins (8 points; best route + 2% wrong text) once the build job's joint gate lands.
+2. **An absolute bar as well as a relative one.** A route must reach ≥ 90% of pages accepted against the image, not only come close to the best route in its cell. A cell where no route clears it is flagged for a new engine or prompt, not routed.
+3. **The outcome is served text quality, measured honestly.** The number is judge-corrected defects per 1,000 words, plus the share of books over the absolute bar. Each is reported twice, per book and weighted by reads. Page acceptance is the instrument that decides a cell; it is not the goal.
+
+What a route costs:
+
+4. **Subscription quota is priced** at fee × the share of quota used, never $0.
+
+What it may do on its own:
+
+5. **A switch that passes V4 ships by itself** and is logged. A switch that adds a paid lane, a new cron or spend above the floor comes to Derek.
+6. **A standing R&D allowance**: about 10% of subscription quota a month plus at most $10 of paid flash-lite, spent by value of information (the cells with the most pages riding on the answer).
+
+Scope:
+
+7. **OCR first, then translation**, through the same machinery.
+8. **Manuscripts get a second, non-Claude judge** (Gemini on the CLI) before an Opus-written route can win. Manuscript cells stay on HOLD until V2 passes there.
+
+### Why the 43% is not the headline
+
+#7866 found "43% of live OCR'd books bad (36–51%)", and an earlier draft of this doc used it as V7's number. Derek doubted it, and on a closer read it overstates what readers get:
+- **"Bad" is a strict call.** A page is bad if Opus does not accept it or finds any one wrong-text span. A book is bad if 2 of its 5 judged pages are. 18 of the 71 bad books sit exactly at 2 of 5.
+- **The judge's false alarms are not subtracted.** At V2's print specificity (0.85), a perfectly clean book is called bad 16% of the time: P(≥ 2 of 5 flagged). At 0.90 it would be 8%. With book-level sensitivity near 0.9, the corrected share is about 36–43%, depending on which false-alarm rate holds. So the correction alone does not shrink it much. On manuscripts (κ 0.29) the call is weaker still, and their false-alarm rate is unmeasured.
+- **It counts books, not reading.** One Chinese encyclopedia lane (`zh-paddle-dice-lt090`, 11,049 volumes) is 23% of the frame, and 29 of the 71 bad books are Chinese. A volume nobody opens weighs the same as a book read daily.
+- **It is OCR against the image, not the English a reader sees.**
+
+What survives: the bad books are mostly badly wrong, not marginal (median 135 MQM points per 1,000 words, up to about five wrong-text spans). The ranking findings (AUC 0.66, ICC 0.38) do not depend on the threshold. V7 therefore reports the corrected, read-weighted figures above, with the raw 43% beside them labelled as the strict, uncorrected count.
+
+## Words used here
+
+- **Cell**: the kind of page, language × engine already stored × script (print, manuscript, unknown).
+- **Route**: one way to produce the text, engine × prompt × read mode × correction chain × pages per call × channel.
+- **Accepted**: Opus, with the page image, says the text is a faithful transcription under the fixed rubric. One scale; the four older verdict scales are mapped onto it, not pooled.
+- **Wrong text**: a span that is not on the page (invented, another leaf, a wrong reading that changes meaning).
+- **Decided**: the gate says one route is the cheapest adequate one for the cell. **HOLD**: not enough evidence. **Switch**: decided, and the winner differs from what production runs.
+- **Served**: what production actually stores and shows, as opposed to a test read.
+
 ## Validation: how we know it is working
 
 The router works if three things hold, each with a number we can check:
@@ -156,7 +196,7 @@ Each check below has a pass bar set before the data. A failing check stops the r
 | V4 | Does a switch reproduce? | A confirmation run on fresh books, paired, before the routing row ships | the winner stays within the margin on the fresh draw | before shipping |
 | V5 | Did the shipped switch help? | Served-quality draw in that cell before and after (one page per book, ≥ 30 books) | acceptance not worse; $ per accepted page lower | after shipping |
 | V6 | Is the optimum still optimal? | Monthly canary draw per shipped route | no drop beyond the margin; a drop reopens the cell | ongoing |
-| V7 | Is the whole library getting better? | The served-quality draw of #7866 (5 pages a book, stratified), monthly | the share of bad live books falls; it was 43% (36–51%) on 2026-10-31 | the outcome |
+| V7 | Is the whole library getting better? | The served-quality draw of #7866 (5 pages a book, stratified), monthly | judge-corrected defects per 1,000 words fall, and so does the share of books over the absolute bar; both reported raw and read-weighted (see "Decisions") | the outcome |
 
 - **V1–V3 decide whether the machinery can be trusted at all.** They run first: jobs `heldout-estimator-7263` and `judge-cal-churro-7263`, plus the simulation in the build-fix job.
 - **V4–V6 are per decision.**
