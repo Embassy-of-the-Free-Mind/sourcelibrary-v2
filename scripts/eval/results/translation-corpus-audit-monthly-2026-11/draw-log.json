@@ -1,0 +1,235 @@
+{
+  "seed": 20261101,
+  "at": "2026-11-01T04:30:27.260Z",
+  "quota": {
+    "Latin": 60,
+    "English": 36,
+    "German": 36,
+    "Greek": 36,
+    "French": 24,
+    "Italian": 18,
+    "Dutch": 18,
+    "Chinese": 18,
+    "Sanskrit": 12,
+    "Hebrew": 12,
+    "Arabic": 12,
+    "Tibetan": 12,
+    "Korean": 6,
+    "Spanish": 6,
+    "Japanese": 6
+  },
+  "scale": 0.32,
+  "arm_quota": false,
+  "weights": {
+    "Latin": {
+      "books": 9264,
+      "translated_pages": 1869243
+    },
+    "English": {
+      "books": 2313,
+      "translated_pages": 687275
+    },
+    "German": {
+      "books": 2670,
+      "translated_pages": 589030
+    },
+    "Greek": {
+      "books": 1074,
+      "translated_pages": 428780
+    },
+    "French": {
+      "books": 892,
+      "translated_pages": 284798
+    },
+    "Italian": {
+      "books": 566,
+      "translated_pages": 148948
+    },
+    "Dutch": {
+      "books": 564,
+      "translated_pages": 127509
+    },
+    "Chinese": {
+      "books": 2818,
+      "translated_pages": 345507
+    },
+    "Sanskrit": {
+      "books": 331,
+      "translated_pages": 82483
+    },
+    "Hebrew": {
+      "books": 230,
+      "translated_pages": 58143
+    },
+    "Arabic": {
+      "books": 260,
+      "translated_pages": 54993
+    },
+    "Tibetan": {
+      "books": 1569,
+      "translated_pages": 317708
+    },
+    "Korean": {
+      "books": 256,
+      "translated_pages": 52319
+    },
+    "Spanish": {
+      "books": 98,
+      "translated_pages": 25214
+    },
+    "Japanese": {
+      "books": 143,
+      "translated_pages": 18310
+    }
+  },
+  "visits": {
+    "Latin": {
+      "visits": 23,
+      "taken": 19,
+      "extra": 4,
+      "arms": {
+        "lite": 17,
+        "flash": 2
+      }
+    },
+    "English": {
+      "visits": 16,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 8,
+        "flash": 4
+      }
+    },
+    "German": {
+      "visits": 17,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 4,
+        "flash": 8
+      }
+    },
+    "Greek": {
+      "visits": 19,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 8,
+        "flash": 4
+      }
+    },
+    "French": {
+      "visits": 13,
+      "taken": 8,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 5
+      }
+    },
+    "Italian": {
+      "visits": 12,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 5,
+        "flash": 1
+      }
+    },
+    "Dutch": {
+      "visits": 14,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 4,
+        "flash": 2
+      }
+    },
+    "Chinese": {
+      "visits": 10,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 0,
+        "flash": 1,
+        "agy-flash": 5
+      }
+    },
+    "Sanskrit": {
+      "visits": 8,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 1
+      }
+    },
+    "Hebrew": {
+      "visits": 8,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 1
+      }
+    },
+    "Arabic": {
+      "visits": 8,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 2,
+        "flash": 2
+      }
+    },
+    "Tibetan": {
+      "visits": 8,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 0,
+        "flash": 4
+      }
+    },
+    "Korean": {
+      "visits": 6,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 0,
+        "flash": 2
+      }
+    },
+    "Spanish": {
+      "visits": 7,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 2,
+        "flash": 0
+      }
+    },
+    "Japanese": {
+      "visits": 9,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 1,
+        "flash": 1
+      }
+    }
+  },
+  "exclusions": {
+    "short_ocr": 192,
+    "page_type": 1680,
+    "short_translation": 127,
+    "no_candidate_page": 15
+  },
+  "arms": {},
+  "controls": {
+    "swap": 15,
+    "drop": 15,
+    "repeat": 15
+  }
+}
