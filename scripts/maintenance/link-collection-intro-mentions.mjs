@@ -95,6 +95,13 @@ function sharesTitleWord(mention, book) {
   return tokens(mention).some((t) => titleStems.has(stem(t)));
 }
 
+/** "Pseudo-Albertus Magnus" is not Albertus Magnus; "Pseudo-Dionysius" may
+ *  rightly be the record named "Pseudo-Dionysius the Areopagite". */
+/** A work's name in English prose carries a capital ("Micrographia", "Book of
+ *  Concord"); "collected letters" is a description, and would link everywhere. */
+const hasCapital = (t) => /\p{Lu}/u.test(t);
+const pseudoMismatch = (text, name) => /\bpseudo[-\s]/i.test(text) && !/pseudo/i.test(name || '');
+
 function buildPrompt(col, text, books, authors) {
   const bookLines = books.map((b) => `${b.id} | ${String(b.display_title || b.title).slice(0, 140)} | ${b.author || ''} | ${b.published || b.year || ''} | ${b.language || ''}`).join('\n');
   const authorLines = authors.map((a) => `${a.id} | ${a.name}`).join('\n');
@@ -173,7 +180,9 @@ async function processCollection(db, col) {
       : !onWordBoundaries(text, t) ? 'matches inside another word'
       : m.book_id && !bookIds.has(m.book_id) ? 'book not offered'
       : m.book_id && !sharesTitleWord(t, bookIds.get(m.book_id)) ? 'no title word in common'
+      : m.book_id && !hasCapital(t) ? 'generic lowercase phrase'
       : m.author_id && !authorIds.has(m.author_id) ? 'author not offered'
+      : m.author_id && pseudoMismatch(t, authorIds.get(m.author_id).name) ? 'pseudo-author linked to the real one'
       : !m.book_id && !m.author_id ? 'no target'
       : existing.has(t.toLowerCase()) ? 'already mentioned'
       : seen.has(t.toLowerCase()) ? 'duplicate' : null;
@@ -196,8 +205,14 @@ const filter = flag('all')
 const cols = await db.collection('collections').find(filter, { projection: { slug: 1, name: 1, description: 1, expanded_description: 1, mentioned_books: 1 } }).toArray();
 console.log(`${cols.length} collections; ${APPLY ? 'APPLY' : 'dry run'}; report → ${OUT}`);
 
-const results = [];
-let next = 0;
+// --from FILE re-applies a saved dry run instead of asking the model again
+// (keep and reuse every read). --kinds book|author|book,author limits what is
+// written: author entries need the #7897 renderer live first — the old one
+// turns a book_id-less mention into /book/undefined.
+const FROM = opt('from', null);
+const KINDS = new Set(opt('kinds', 'book,author').split(','));
+const results = FROM ? JSON.parse(readFileSync(FROM, 'utf8')).filter((r) => cols.some((c) => c.slug === r.slug)) : [];
+let next = FROM ? cols.length : 0;
 async function worker() {
   while (next < cols.length) {
     const col = cols[next++];
@@ -218,7 +233,16 @@ if (APPLY) {
   for (const r of results) {
     if (!r.proposed.length) continue;
     const col = cols.find((c) => c.slug === r.slug);
-    const add = r.proposed.map(({ _title, _name, ...m }) => m);
+    if (!col) continue;
+    // Re-check against the doc as it is NOW: another writer may have added the
+    // same phrase since the dry run.
+    const have = new Set((col.mentioned_books || []).map((m) => String(m.text || '').toLowerCase()));
+    const add = r.proposed
+      .filter((m) => KINDS.has(m.book_id ? 'book' : 'author') && !have.has(m.text.toLowerCase()))
+      .filter((m) => !(m.author_id && pseudoMismatch(m.text, m._name)))
+      .filter((m) => !(m.book_id && !hasCapital(m.text)))
+      .map(({ _title, _name, ...m }) => m);
+    if (!add.length) continue;
     const res = await db.collection('collections').updateOne({ slug: r.slug }, { $set: { mentioned_books: [...(col.mentioned_books || []), ...add] } });
     wrote += res.modifiedCount;
   }
