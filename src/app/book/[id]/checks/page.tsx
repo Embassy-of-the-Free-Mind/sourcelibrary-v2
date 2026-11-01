@@ -117,7 +117,7 @@ function PageNoteBlock({ note, stale, bookPath }: { note: PageNote; stale: boole
           {note.defects.map((d, i) => (
             <li key={i}>
               <span style={{ color: 'var(--text-muted)' }}>{SEVERITY_LABEL[d.severity]}:</span>{' '}
-              {d.quote && <><q className="font-serif">{d.quote.length > 120 ? `${d.quote.slice(0, 117)}…` : d.quote}</q>{' — '}</>}
+              {d.quote && <><q className="font-serif">{d.quote.length > 120 ? `${d.quote.slice(0, 117)}…` : d.quote}</q>{': '}</>}
               {d.what}
             </li>
           ))}
