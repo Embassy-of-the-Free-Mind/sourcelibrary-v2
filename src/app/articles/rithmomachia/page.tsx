@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ArticleImage from '@/components/articles/ArticleImage';
+import PageFigure from '@/components/articles/PageFigure';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 import { optimisedSrc } from '@/components/articles/image-hosts';
@@ -60,7 +61,9 @@ export default function RithmomachiaPage() {
           Source Library now holds the five major printed treatises on Rithmomachia, spanning 1496 to 1616,
           written in Latin, French, English, Italian, and German, all translated into English for the
           first time as a complete collection. Together they document one of the most remarkable intellectual
-          games ever invented, and its slow disappearance from European culture.
+          games ever invented, and its slow disappearance from European culture. You can also{' '}
+          <a href="#play-the-game">play it</a>: we rebuilt the 1563 English rules as a game for the
+          browser, with a three-minute tutorial and a new puzzle every day.
         </p>
 
         {/* Hero image — Selenus game board engraving */}
@@ -853,7 +856,8 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Even in 1563, the game was too complex for written strategy. Five hundred years
-          later, it still is. The only way to learn Rithmomachia is to play it.
+          later, it still is. The only way to learn Rithmomachia is to{' '}
+          <a href="#play-the-game">play it</a>.
         </p>
 
         <hr className="border-border-light my-12" />
@@ -979,30 +983,62 @@ export default function RithmomachiaPage() {
         <hr className="border-border-light my-12" />
 
         {/* Play the Game */}
-        <h2 className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6">
+        <h2 id="play-the-game" className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6 scroll-mt-24">
           Play the Game
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          We&rsquo;ve built a playable version of Rithmomachia, synthesized from all five treatises.
-          Challenge an AI opponent at three difficulty levels, or watch a demonstration game with
-          move-by-move commentary drawn from the primary sources. Every rule links back to the
-          original page where it appears.
+          Lever and Fulke wrote their book so that English readers could sit down and play. We took
+          them at their word and built the game they describe:{' '}
+          <a href="https://rithmomachia-game.vercel.app">Rithmomachia</a>, free in the browser on a
+          phone or a computer. It follows the 1563 rules: the same starting array, the same moves,
+          the six ways of taking, and the triumphs. Each rule in the game quotes the page of the book
+          it comes from.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          You don&rsquo;t need to read the treatise first. Nine short lessons teach the game on a small
+          board in about three minutes: you move each kind of man, take an enemy by equality, by
+          adding and by multiplying, besiege one, take the king, and finish with a triumph of 3, 5
+          and 7. When a capture happens, the sum that made it rises off the board, so you can see why
+          a man fell, yours or the computer&rsquo;s.
+        </p>
+
+        <PageFigure
+          src="/articles/rithmomachia/lesson-addition.jpg"
+          alt="The Rithmomachia game in a browser: lesson five, 'Two men add up'. A red 9 and a red triangle 16 have just taken an ivory 25, and the sum 9 + 16 = 25 floats above the board, beside Lever and Fulke's rule for taking by addition."
+          href="https://rithmomachia-game.vercel.app/#learn"
+        >
+          Lesson five of the tutorial: 9 and 16 both attack the 25, and 9 + 16 = 25 takes him. Beside
+          the board is the rule as Lever and Fulke printed it in 1563.
+        </PageFigure>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Then play the computer at four strengths, from Pupil to Magister, or a friend by sending a link after each move.
+          There is also a daily puzzle: one position, the same for everyone that day, and a single
+          move that takes the biggest number on the board. It trains the eye the game asks for, the
+          one that sees a sum, a difference or a product hiding in every number.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 my-8">
-          <Link
-            href="/rithmomachia"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors"
+          <a
+            href="https://rithmomachia-game.vercel.app/#learn"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust !text-white !no-underline rounded-lg font-medium hover:bg-accent-rust/90 transition-colors"
           >
-            Play Rithmomachia
-          </Link>
-          <Link
-            href="/rithmomachia?demo=true"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border-light rounded-lg font-medium hover:bg-warm transition-colors"
+            Learn in 3 minutes
+          </a>
+          <a
+            href="https://rithmomachia-game.vercel.app/#daily"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border-light !text-primary !no-underline rounded-lg font-medium hover:bg-warm transition-colors"
           >
-            Watch AI vs AI Demo
-          </Link>
+            Today&rsquo;s puzzle
+          </a>
+          <a
+            href="https://rithmomachia-game.vercel.app/#play"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border-light !text-primary !no-underline rounded-lg font-medium hover:bg-warm transition-colors"
+          >
+            Play the computer
+          </a>
         </div>
 
         {/* Footer */}
