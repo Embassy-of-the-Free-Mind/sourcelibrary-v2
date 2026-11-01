@@ -12,6 +12,7 @@ decision: "Pending: the latin-blank/print route is Derek's call (#7862 DECISION)
 superseded_by: null
 issue: [6740, 7862, 7824, 7701, 7853]
 router_evidence: "none — preregistration; the results PR exports the evidence"
+defect_rates: "none — preregistration; the results PR adds scripts/eval/latin-paired-6740/results/score.json"
 ---
 ## 2026-11-01 · Latin first reads: PERO > agy one a call (live), PERO > agy four a call, or agy read four a call? Paired, queue-weighted (#6740)
 
