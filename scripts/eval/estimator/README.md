@@ -8,6 +8,7 @@ How the pieces connect, and who owns each, is on #7263 (top of the issue).
 | track | current | kept for reproducibility | what it answers |
 |---|---|---|---|
 | **Router table, the decision-maker** | `router-table/` (`rules.json`, `build.py`; PR #7417; the prior's weight from `fit_prior.py`, #7263) | — | per cell: switch / keep / HOLD / test next, from acceptance against the page image (route-judge, #7376), with the models below as a weak prior (worth 7 pages, learned 2026-10-28) |
+| Held-out test of a hierarchical acceptance prior (#7263) | `heldout/` (`heldout.py`, `factors.py`, `breakdown.py`; results in `heldout/results/`) | — | does engine + draft + language + writing system + script type, partially pooled, predict acceptance in cells it has not seen, and what is that prediction worth in pages? A test only: `rules.json` does not read it |
 | Chained routes + capacity ("estimator v2", #7393) | `chain/` (`chain_v2.py`, `allocate_v2.py`, `capacity.json`, `cells.json`) | — | correction as a stage (draft → corrector), pages made better/worse, each channel's free week allocated across cells. A **prior** to the router table |
 | OCR estimator | `ocr/` `*_v1.py` (+ `fit_ocr_v1_arabic.py`, #7372) | `ocr/` `*_v0.py` | accuracy, did-not-read, number errors, cost per usable page per engine × language (#7320) |
 | OCR production rows | `ocr/route-census*.mjs`, `ocr/route-costs.json`, `ocr/quality-bars.json` | — | production's own record as estimator rows (#7375); prices per route |
