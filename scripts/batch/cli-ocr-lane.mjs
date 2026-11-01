@@ -431,6 +431,7 @@ export const correctablePageMatch = (bookId, skipPageTypes) => ({
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
 async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
   const rows = await db.collection('pages').aggregate([
+    // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
     { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES) },
     { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
