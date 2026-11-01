@@ -99,6 +99,19 @@ export function carriedTranslation(leaf, frame) {
 }
 
 /**
+ * The timestamps a leaf takes when the swap makes it live. The keyword and embedding deltas key on
+ * translation.updated_at / ocr.updated_at and skipped the leaf while it sat below zero, so one of them must move
+ * now: the English's when there is English (the stale sweep then sees English newer than the OCR under it, as it
+ * is), else the OCR's — an English book's leaf has no English, and without this it never reached keyword search
+ * (#7605: 6a1b91a0…, 6a1dc12b…, 6a1b7d89… returned nothing). Never both: OCR newer than English reads as stale.
+ */
+export function swapStamps(leaf, now) {
+  if (typeof leaf?.translation?.data === 'string' && leaf.translation.data.trim()) return { 'translation.updated_at': now };
+  if (typeof leaf?.ocr?.data === 'string' && leaf.ocr.data.trim()) return { 'ocr.updated_at': now };
+  return {};
+}
+
+/**
  * The `translatable` test the swap passes to leafNeeds/swapRefusal, built from translate-core's own two rules (passed
  * in, as above): a leaf is judged as the page it will be (its swapped-in number), and a leaf the lanes never translate
  * (#5154: an English book, whose reading text is its transcription, or an English page) needs no English. Without

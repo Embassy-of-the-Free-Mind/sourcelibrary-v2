@@ -1171,6 +1171,16 @@ export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH
 /** Languages read 4 pages a call (#7522 held quality on German and Latin print; French by the #7701 cheap-routes cell test,
  * 2026-10-29: read@4 24/24 written, 0 wrong text, against read@1's 20/21, 1 wrong text); every other language reads 1. */
 export const FIRST_READ_PER_CALL_LANGUAGES = Object.freeze(['lat', 'deu', 'fra']);
+/** Languages read MORE pages a call than --per-call, when --per-call > 1 (so --per-call=1 still reads one). German 8
+ * (#6740 read-surface, Derek 2026-11-01): on 78 German queue books 8 a call beat 4 paired 8-1 at about half the quota a
+ * accepted page; neither preregistered rule passed, so it runs as a decision under a router waiver (current.json), and the
+ * lane's acceptance k/n is the stop: back to 4 if it falls below live's. Latin stays 4 (8 reads long s as f). */
+export const FIRST_READ_PER_CALL_BY_LANGUAGE = Object.freeze({ deu: 8 });
+/** Pages a call for a first read in `lang` under `--per-call=perCall`. */
+export function firstReadPerCall(lang, perCall) {
+  if (!(perCall > 1) || !FIRST_READ_PER_CALL_LANGUAGES.includes(lang)) return 1;
+  return Math.max(perCall, FIRST_READ_PER_CALL_BY_LANGUAGE[lang] ?? perCall);
+}
 /** The languages read first after books with no OCR (the order before French moved to 4 a call). */
 const FIRST_READ_FIRST_LANGUAGES = Object.freeze(['lat', 'deu']);
 /** Libraries whose held, unread books here are manuscripts and archival hands (census 2026-10-29: Vat.sir., Cod. Pal., Universitätsarchiv). */
@@ -1240,7 +1250,7 @@ async function firstReadMain(mode, arg) {
   const LANGS = arg('languages') ? arg('languages').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : null;
   // --correct=deu[,…]: the languages whose first reads get the second pass (the router picks it per cell, #7701 arm B)
   const CORRECT_LANGS = arg('correct') ? arg('correct').split(',').map((l) => toLanguageCodes(l).codes[0] ?? l) : [];
-  if (mode === 'run') await routeCheck(servedByFirstRead({ languages: LANGS, correct: CORRECT_LANGS, perCall: Number(arg('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }), arg);
+  if (mode === 'run') await routeCheck(servedByFirstRead({ languages: LANGS, correct: CORRECT_LANGS, perCall: Number(arg('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }), arg);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
@@ -1312,7 +1322,7 @@ async function firstReadMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`run --cohort=${FIRST_READ_COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${PER_CALL}/call for ${FIRST_READ_PER_CALL_LANGUAGES.join('/')}${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`run --cohort=${FIRST_READ_COHORT}: pool ${POOL}; ${books.length} books in frame${LANGS ? ` (${LANGS.join(',')})` : ''}, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk, ${FIRST_READ_PER_CALL_LANGUAGES.map((l) => `${l} ${firstReadPerCall(l, PER_CALL)}`).join(', ')} a call${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0, booksTaken = 0;
   const tally = { written: 0, handwritten: 0, has_ocr_now: 0, failed: 0, other: 0, books: 0, books_skipped_handwritten: 0, spread_wait: 0, corrected: 0, correct_unchanged: 0, correct_other: 0 };
   const nextChunk = async () => {
@@ -1346,7 +1356,7 @@ async function firstReadMain(mode, arg) {
       budget -= take.length;
       tally.books++;
       const { model: routed } = ocrLaneForBook(book);
-      const perCall = FIRST_READ_PER_CALL_LANGUAGES.includes(firstReadLanguage(book)) ? perCallFor(book, { perCall: PER_CALL }) : 1;
+      const perCall = perCallFor(book, { perCall: firstReadPerCall(firstReadLanguage(book), PER_CALL) });
       const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
       const dir = path.join(OUT, book.id);
       fs.mkdirSync(dir, { recursive: true });

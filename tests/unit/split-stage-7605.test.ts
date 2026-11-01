@@ -107,6 +107,19 @@ describe('staged leaves: hidden, in leaf order, and still read by the lanes', ()
   });
 });
 
+describe('what a leaf is stamped with at the swap (swapStamps)', () => {
+  const now = new Date('2026-10-31T10:00:00Z');
+  it('moves the English timestamp when there is English, never the OCR one as well', () => {
+    expect(stage.swapStamps({ ocr: { data: 'Latin' }, translation: { data: 'English' } }, now)).toEqual({ 'translation.updated_at': now });
+  });
+  it('moves the OCR timestamp on a leaf with text and no English (an English book), so keyword search sees it', () => {
+    expect(stage.swapStamps({ ocr: { data: 'his stable essence' } }, now)).toEqual({ 'ocr.updated_at': now });
+  });
+  it('moves nothing on a leaf with no text', () => {
+    expect(stage.swapStamps({}, now)).toEqual({});
+  });
+});
+
 describe('when a swap may happen (swapRefusal)', () => {
   const frameOcr = (k: number) => `spread ${k}`;
   const frames = [1, 2].map((k) => ({ id: `F${k}`, page_number: k, ocr: { data: frameOcr(k) } }));

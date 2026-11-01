@@ -29,7 +29,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
-import { swapRefusal, swapTranslatable, stagedLeavesQuery, splitIntoByFrame, firstLeafByOldNumber, leafNumberOf, carriedTranslation } from '../lib/split-stage.mjs';
+import { swapRefusal, swapTranslatable, swapStamps, stagedLeavesQuery, splitIntoByFrame, firstLeafByOldNumber, leafNumberOf, carriedTranslation } from '../lib/split-stage.mjs';
 import { isTranslatablePage, sameLanguageReason } from '../lib/translate-core.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
@@ -108,11 +108,10 @@ try {
           await pages.bulkWrite([...into].map(([id, ids]) => ({ updateOne: { filter: { id, book_id: bookId, page_type: 'archived-spread' }, update: { $set: { split_into: ids } } } })), { session });
           const r2 = await pages.bulkWrite(leaves.map((l) => ({ updateOne: {
             filter: { id: l.id, book_id: bookId, page_number: l.page_number },
-            // translation.updated_at = the moment this English reached a live page. Three readers key on it: the stale
-            // sweep (OCR newer than English = stale; a carried translation is older than the cut OCR under it), and the
-            // keyword and embedding deltas, which skipped the leaf while it sat below zero.
+            // The moment this text reached a live page, on the field the stale sweep and the keyword/embedding deltas
+            // read (swapStamps: the English's, else the OCR's).
             update: { $set: { page_number: leafNumberOf(l), 'staged_split.swapped_at': now, updated_at: now,
-              ...(l.translation?.data ? { 'translation.updated_at': now } : {}) }, $unset: { hidden: '' } },
+              ...swapStamps(l, now) }, $unset: { hidden: '' } },
           } })), { session });
           if (r2.modifiedCount !== leaves.length) throw new Error(`promoted ${r2.modifiedCount}/${leaves.length} leaves: aborting the swap`);
         });

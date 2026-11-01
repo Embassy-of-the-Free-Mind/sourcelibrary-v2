@@ -31,6 +31,13 @@
    "set": "2026-11-01",
    "until": "2026-11-14",
    "reason": "#7853 (Derek 2026-11-01, the default taken): read@4 beats the #7558 correction on the stored-lite queue, weighted accept 0.82 against 0.72 (24 lost / 9 gained, Holm p 0.027) and 31 against 50 severity-weighted defects a 1,000 words, at 0.34 agy calls a page against 1.0; it does not reach the Opus bar the table keeps (lite>opus 299/307), and Opus has no capacity for the queue. Re-decide by 11-14 with the correction waiver: the Opus share, or a bar other than Opus for this cell."
+  },
+  {
+   "cell": "german-blank/print",
+   "lane": "first-read",
+   "set": "2026-11-01",
+   "until": "2026-11-15",
+   "reason": "#6740 read-surface, Derek 2026-11-01: German first reads at 8 a call (agy-flash-low@8-written) on the pooled paired evidence (78 queue books, 8 a call won 8-1, fewer wrong-text pages, about half the quota a accepted page) although neither preregistered rule passed. A decision, not a pass. Stop: back to 4 (FIRST_READ_PER_CALL_BY_LANGUAGE in cli-ocr-lane.mjs) if the lane's acceptance k/n falls below live's. Re-decide by 11-15 with the cell's k/n under @8."
   }
  ]
 }
