@@ -54,6 +54,8 @@ interface ExhibitionLayoutProps {
   books: BookRef[];
   images: GalleryImage[];
   collectionSlug: string;
+  /** Resolved from the collection's `mentioned_books` on the server (#7897). */
+  mentions?: ExhibitionMention[];
 }
 
 // ─── Helpers ────────────────────────────────────────────────────
@@ -93,7 +95,28 @@ function imagePageHref(img: GalleryImage, embedHref: (href: string) => string): 
  * Only matches display_title or title — never generic phrases.
  * Titles must be >= 10 chars to avoid false positives.
  */
-function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
+/** Authored phrase → link pairs resolved on the server from the collection's
+ *  `mentioned_books` (#7897). The same field the standard collection page reads,
+ *  so a short name ("Monas Hieroglyphica", "Ficino") links in both layouts. */
+export type ExhibitionMention = { text: string; href: string };
+const MentionsContext = createContext<ExhibitionMention[]>([]);
+
+function linkBookNames(text: string, books: BookRef[], mentions: ExhibitionMention[] = []): React.ReactNode {
+  // Authored mentions first (longest first), then title auto-detection fills gaps.
+  const mentionMatches: { start: number; end: number; href: string }[] = [];
+  const mentionUsed: [number, number][] = [];
+  for (const { text: mt, href } of [...mentions].sort((a, b) => b.text.length - a.text.length)) {
+    if (!mt || !href.startsWith('/')) continue;
+    const regex = new RegExp(mt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index, end = start + match[0].length;
+      if (!mentionUsed.some(([s, e]) => start < e && end > s)) {
+        mentionMatches.push({ start, end, href });
+        mentionUsed.push([start, end]);
+      }
+    }
+  }
   // Build title → book map, longest first to avoid partial matches
   const titleMap: { title: string; book: BookRef }[] = [];
   for (const book of books) {
@@ -105,8 +128,8 @@ function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
   titleMap.sort((a, b) => b.title.length - a.title.length);
 
   // Find matches
-  const matches: { start: number; end: number; book: BookRef }[] = [];
-  const used: [number, number][] = [];
+  const matches: { start: number; end: number; book?: BookRef; href?: string }[] = [...mentionMatches];
+  const used: [number, number][] = [...mentionUsed];
 
   for (const { title, book } of titleMap) {
     const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -131,8 +154,8 @@ function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
     parts.push(
       <Link
-        key={`${m.book.id}-${m.start}`}
-        href={bookUrl({ id: m.book.id, slug: m.book.slug })}
+        key={`${m.book?.id ?? m.href}-${m.start}`}
+        href={m.href ?? bookUrl({ id: m.book!.id, slug: m.book!.slug })}
         className="text-accent-rust hover:underline"
       >
         {text.slice(m.start, m.end)}
@@ -155,7 +178,7 @@ function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
  * Lets exhibition copy cite sources directly: quote → `/book/<id>?page=N`,
  * illustration → `/gallery/image/<id>`.
  */
-function renderRichText(text: string, books: BookRef[]): React.ReactNode {
+function renderRichText(text: string, books: BookRef[], mentions: ExhibitionMention[] = []): React.ReactNode {
   const re = /\[([^\]]+)\]\(([^)\s]+)\)/g;
   const parts: React.ReactNode[] = [];
   let lastIdx = 0;
@@ -165,7 +188,7 @@ function renderRichText(text: string, books: BookRef[]): React.ReactNode {
     if (match.index > lastIdx) {
       parts.push(
         <React.Fragment key={`t-${lastIdx}`}>
-          {linkBookNames(text.slice(lastIdx, match.index), books)}
+          {linkBookNames(text.slice(lastIdx, match.index), books, mentions)}
         </React.Fragment>
       );
     }
@@ -182,11 +205,11 @@ function renderRichText(text: string, books: BookRef[]): React.ReactNode {
     );
     lastIdx = match.index + full.length;
   }
-  if (parts.length === 0) return linkBookNames(text, books);
+  if (parts.length === 0) return linkBookNames(text, books, mentions);
   if (lastIdx < text.length) {
     parts.push(
       <React.Fragment key={`t-${lastIdx}`}>
-        {linkBookNames(text.slice(lastIdx), books)}
+        {linkBookNames(text.slice(lastIdx), books, mentions)}
       </React.Fragment>
     );
   }
@@ -239,6 +262,7 @@ function SectionsBlock({ sections, books }: {
   }[];
   books: BookRef[];
 }) {
+  const mentions = useContext(MentionsContext);
   return (
     <div className="space-y-12">
       {sections.map((section, si) => (
@@ -252,7 +276,7 @@ function SectionsBlock({ sections, books }: {
                 <span className="text-sm text-muted whitespace-nowrap">{section.period}</span>
               )}
             </div>
-            <p className="text-secondary leading-relaxed max-w-3xl">{renderRichText(section.description || '', books)}</p>
+            <p className="text-secondary leading-relaxed max-w-3xl">{renderRichText(section.description || '', books, mentions)}</p>
           </div>
 
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
@@ -618,6 +642,7 @@ function ThematicGalleryBlock({ clusters, books }: {
   }[];
   books: BookRef[];
 }) {
+  const mentions = useContext(MentionsContext);
   const embedHref = useContext(EmbedHrefContext);
   const validClusters = clusters.filter(c => c.images.some(img => imageUrl(img)));
   if (validClusters.length === 0) return null;
@@ -635,7 +660,7 @@ function ThematicGalleryBlock({ clusters, books }: {
               {cluster.theme}
             </h3>
             {cluster.description && (
-              <p className="text-sm text-muted mb-4">{renderRichText(cluster.description, books)}</p>
+              <p className="text-sm text-muted mb-4">{renderRichText(cluster.description, books, mentions)}</p>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Hero image — spans 2 cols on desktop */}
@@ -750,11 +775,12 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
 
 // ─── Layout Renderer ────────────────────────────────────────────
 
-export default function ExhibitionLayout({ layout, books, images, collectionSlug }: ExhibitionLayoutProps) {
+export default function ExhibitionLayout({ layout, books, images, collectionSlug, mentions = [] }: ExhibitionLayoutProps) {
   const embedHref = useEmbedHref();
   
   return (
     <EmbedHrefContext.Provider value={embedHref}>
+    <MentionsContext.Provider value={mentions}>
       <div className="space-y-10">
         {layout.map((block, i) => {
           switch (block.component) {
@@ -800,7 +826,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
               <div key={i} className="max-w-3xl">
                 {(block.paragraphs || []).map((p: string, pi: number) => (
                   <p key={pi} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                    {renderRichText(p, books)}
+                    {renderRichText(p, books, mentions)}
                   </p>
                 ))}
               </div>
@@ -815,6 +841,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
         }
       })}
       </div>
+    </MentionsContext.Provider>
     </EmbedHrefContext.Provider>
   );
 }
