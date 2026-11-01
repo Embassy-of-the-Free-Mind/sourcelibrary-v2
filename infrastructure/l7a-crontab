@@ -80,5 +80,5 @@
 # Atlas egress meter (#5189): a firewall counter on every packet from Atlas (tcp sport 27017), totalled daily.
 # Pages ntfy HIGH when this box received more than 40 GB in a day (Atlas bills $0.09/GB to non-AWS hosts;
 # October 2026 was 7.3 TB = $655 and nobody saw it until the invoice). Counting only: it never drops a packet.
-@reboot f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] && $f ensure
-5 0 * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] && $f report
+@reboot f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f ensure
+5 0 * * * f=/data/scratch/sl/sourcelibrary/scripts/workers/atlas-egress-meter.sh; [ -x $f ] || f=/root/bin/atlas-egress-meter.sh; [ -x $f ] && $f report
