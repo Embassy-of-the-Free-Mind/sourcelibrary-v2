@@ -192,6 +192,8 @@ async function pageOf(db, book, frame, rnd, perCall) {
   if (sc.script_type !== frame.script) return { skip: `script ${sc.script_type}, not ${frame.script}` };
   const image = getPageSource(p);
   if (!image) return { skip: 'no image source' };
+  // the bytes the readers and the judge will see: a placeholder (a 457-byte black IIIF tile, 2026-11-01) is no page
+  try { const r = await fetch(image); const n = (await r.arrayBuffer()).byteLength; if (!r.ok || n < 2000) return { skip: `image ${r.ok ? `under 2 KB (${n} B)` : `HTTP ${r.status}`}` }; } catch (e) { return { skip: `image fetch failed (${String(e.message).slice(0, 40)})` }; }
   if (all.length < perCall) return { skip: `book under ${perCall} pages` };
   const s = Math.min(i, all.length - perCall);
   return { page_id: p.id, page_number: p.page_number, image, block: all.slice(s, s + perCall).map((x) => x.id), stored: p.ocr.data, stored_model: p.ocr.model, script: sc,
@@ -377,7 +379,12 @@ async function judge() {
       const it = todo[i++]; calls++;
       const s = bySel.get(it.key);
       const text = it.set === 'wrong_page' ? readT(it.text_of, 'win') : readT(it.key, it.arms[0]);
-      const img = await imageFor(s.key, s.image);
+      let img;
+      // a page with no usable image (a placeholder, a dead link) is no route outcome: recorded, dropped from both arms
+      try { img = await imageFor(s.key, s.image); } catch (e) {
+        calls--; fs.appendFileSync(VO(), JSON.stringify({ ...it, image_error: e.message, at: new Date().toISOString() }) + '\n');
+        console.log(`  ${it.set} ${it.id}: no image (${e.message})`); continue;
+      }
       const r = await judgeAbsolute({ lang, text }, img);
       if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: String(r.raw || '').slice(0, 200) }); stop = 'quota reply'; break; }
       fs.appendFileSync(VO(), JSON.stringify({ ...it, ...r, at: new Date().toISOString() }) + '\n');
@@ -392,7 +399,10 @@ async function analyze() {
   const P = J('plan.json');
   const V = jsonl(VO()).filter((r) => r.verdict);
   const last = new Map(); for (const r of V) last.set(r.id, r);
-  const { items, controls } = judgeItems(P.selected, readT);
+  const noImage = new Set(jsonl(VO()).filter((r) => r.image_error).map((r) => r.key));
+  const { items, controls: allControls } = judgeItems(P.selected, readT);
+  const controls = allControls.filter((c) => !noImage.has(c.key));
+  P.selected = P.selected.filter((s) => !noImage.has(s.key));
   const vOf = (key, arm) => { const it = items.find((x) => x.key === key && x.arms.includes(arm)); const r = it && last.get(it.id); return r ? { accept: !!r.verdict.accept, wrong: wrongText(r.verdict), fidelity: r.verdict.fidelity } : null; };
   const pairs = P.selected.map((s) => { const w = vOf(s.key, 'win'), c = vOf(s.key, 'cur'); return w && c ? { key: s.key, book_id: s.book_id, win: w, cur: c } : null; });
   const ctl = controls.map((c) => last.get(c.id)).filter(Boolean).map((r) => ({ id: r.id, accept: !!r.verdict.accept }));
@@ -409,7 +419,7 @@ async function analyze() {
     winner: { ...P.winner, fresh: `${v.winner.k}/${v.n}`, fresh_ci90: w(v.winner.k, v.n), wrong_text: v.winner.wrong_text, served_outcomes: outcome('win') },
     current: { ...P.current, fresh: `${v.current.k}/${v.n}`, fresh_ci90: w(v.current.k, v.n), wrong_text: v.current.wrong_text, served_outcomes: outcome('cur') },
     rule, verdict: v.verdict, why: v.why, d: v.d == null ? null : +v.d.toFixed(3), d_ci95: v.ci95?.map((x) => +x.toFixed(3)) ?? null, separated_from_margin: v.separated,
-    gained: v.gained, lost: v.lost, sign_test_p: +v.sign_test_p.toFixed(4), pairs: v.n, unparsed_pairs: v.unparsed, identical_texts: identical,
+    gained: v.gained, lost: v.lost, sign_test_p: +v.sign_test_p.toFixed(4), pairs: v.n, unparsed_pairs: v.unparsed, identical_texts: identical, dropped_no_image: [...noImage],
     controls: v.controls, judge_calls: calls, frame: P.frame, n_drawn: P.n_drawn, seed: P.seed,
     per_page: pairs.map((p, i) => ({ book_id: P.selected[i].book_id, page_id: P.selected[i].page_id, page_number: P.selected[i].page_number, win: p?.win ?? null, cur: p?.cur ?? null })),
   };
