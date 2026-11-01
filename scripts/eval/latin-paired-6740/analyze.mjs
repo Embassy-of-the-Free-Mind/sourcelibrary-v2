@@ -249,6 +249,8 @@ function score() {
   out.agy_calls_total = jsonl(path.join(OUT, 'arms.jsonl')).filter((r) => !r.quota && !r.superseded).reduce((a, r) => a + (r.calls || 0), 0) + jsonl(path.join(OUT, 'tags.jsonl')).length;
   // the defect counts defect-rate.py --add-pooled reads (one page a book: pages = books)
   out.pooled = Object.fromEntries(ARMS.map((a) => { const c = out.arms[a].defect_counts; return [a, { pages: out.arms[a].judged, misleads: { defects: c.misleads, words: c.words }, wrong_text: { defects: c.wrong_text, words: c.words } }]; }));
+  // per route, the experiment header's defect_rates shape (defect-rate.py study_cells): weighted rates over the judged written pages
+  out.study_cells = Object.fromEntries(ARMS.map((a) => { const b = out.arms[a]; return [`latin-blank/${ROUTES[a]}`, { n: b.judged, books: b.judged, fidelity_mean: b.fidelity_mean_weighted, misleads_per_1k: b.defects_per_1000_weighted.misleads, wrong_text_per_1k: b.defects_per_1000_weighted.wrong_text, cosmetic_per_1k: b.defects_per_1000_weighted.cosmetic, severity_per_1k: b.severity_per_1000, accept_all_drawn_weighted: b.accept_all_drawn_weighted }]; }));
   const wb = writebackRows(ps);
   R('writeback.json', { rule: 'per page: the best judged arm (accepted; then fidelity; then fewer wrong_text, misleads, cosmetic; ties to the cheaper arm, read4 < pero4 < live), only where it was accepted and is the text its own dry apply would write, and the page was still unread when the arm read it.', pages: wb });
   out.writeback = { pages: wb.length, by_arm: wb.reduce((t, x) => ({ ...t, [x.arm]: (t[x.arm] ?? 0) + 1 }), {}) };
@@ -281,7 +283,11 @@ async function router() {
   const tar = spawnSync('git', ['-C', ROOT, 'archive', '--format=tar', 'origin/main', ...rebuildInputs(rules, RT), 'scripts/eval/route-judge-6740', 'scripts/eval/correction-pass-7818/results', 'scripts/eval/fraktur-paired-7835/results'], { maxBuffer: 1 << 30 });
   sh('tar', ['-x', '-C', dir], { input: tar.stdout, encoding: undefined });
   const ev = JSON.parse(fs.readFileSync(path.join(RESULTS, 'router-evidence.score.json'), 'utf8'));
-  for (const base of [dir, ROOT]) { fs.mkdirSync(path.dirname(path.join(base, EV)), { recursive: true }); fs.writeFileSync(path.join(base, EV), JSON.stringify(ev, null, 1) + '\n'); }
+  // the export and its by-script cut (#7853 router: build.py's script split reads evidence/by-script/<name>)
+  const BY = `${RT}/evidence/by-script/latin-paired-6740.score.json`;
+  for (const [f, body] of [[EV, ev], [BY, { source: ev.source, generated_at: ev.generated_at, of: EV, cells: ev.by_script_cells ?? {} }]]) {
+    for (const base of [dir, ROOT]) { fs.mkdirSync(path.dirname(path.join(base, f)), { recursive: true }); fs.writeFileSync(path.join(base, f), JSON.stringify(body, null, 1) + '\n'); }
+  }
   const sc = path.join(dir, 'scripts/eval/latin-paired-6740/results'); fs.mkdirSync(sc, { recursive: true }); fs.copyFileSync(path.join(RESULTS, 'score.json'), path.join(sc, 'score.json'));
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
