@@ -159,15 +159,20 @@ Scope:
 7. **OCR first, then translation**, through the same machinery.
 8. **Manuscripts get a second, non-Claude judge** (Gemini on the CLI) before an Opus-written route can win. Manuscript cells stay on HOLD until V2 passes there.
 
-### Why the 43% is not the headline
+### How far to trust the 43%
 
-#7866 found "43% of live OCR'd books bad (36–51%)", and an earlier draft of this doc used it as V7's number. Derek doubted it, and on a closer read it overstates what readers get:
-- **"Bad" is a strict call.** A page is bad if Opus does not accept it or finds any one wrong-text span. A book is bad if 2 of its 5 judged pages are. 18 of the 71 bad books sit exactly at 2 of 5.
-- **The judge's false alarms are not subtracted.** At V2's print specificity (0.85), a perfectly clean book is called bad 16% of the time: P(≥ 2 of 5 flagged). At 0.90 it would be 8%. With book-level sensitivity near 0.9, the corrected share is about 36–43%, depending on which false-alarm rate holds. So the correction alone does not shrink it much. On manuscripts (κ 0.29) the call is weaker still, and their false-alarm rate is unmeasured.
-- **It counts books, not reading.** One Chinese encyclopedia lane (`zh-paddle-dice-lt090`, 11,049 volumes) is 23% of the frame, and 29 of the 71 bad books are Chinese. A volume nobody opens weighs the same as a book read daily.
-- **It is OCR against the image, not the English a reader sees.**
+#7866 found "43% of live OCR'd books bad (36–51%)". /quality states it as "57% of books passed" (PR #7885). Derek doubted it (2026-11-01). Its error can run either way, and nothing yet says which way:
+- **The judge raises false alarms.** On CHURRO pages under 1 wrong character in 100, Opus accepted 82%, so it flagged 18% of near-clean texts (#7880). At that rate a clean book is called bad (≥ 2 of 5 pages flagged) about 22% of the time.
+- **The judge also misses errors.** On real machine reads over that line, it turned down only 38% (18–61%). So many bad pages pass. This is why /quality says the pass figure is "more likely too high than too low".
+- **The two bars differ.** V2 calibrated at 1% CER; #7866's "bad" is "not accepted, or any wrong-text span". Neither correction can simply be applied to the other. The honest range is wider than the printed CI, which covers sampling only.
+- **It counts books, not reading.** One Chinese lane (`zh-paddle-dice-lt090`, 11,049 volumes) is 23% of the frame, and 29 of the 71 bad books are Chinese. A volume nobody opens weighs the same as a book read daily.
+- **It is the transcription, not the English.**
 
-What survives: the bad books are mostly badly wrong, not marginal (median 135 MQM points per 1,000 words, up to about five wrong-text spans). The ranking findings (AUC 0.66, ICC 0.38) do not depend on the threshold. V7 therefore reports the corrected, read-weighted figures above, with the raw 43% beside them labelled as the strict, uncorrected count.
+What holds regardless:
+- The bad books are mostly badly wrong, not marginal. Only 18 of the 71 sit at exactly 2 of 5 pages, and the median is 135 MQM points per 1,000 words.
+- The ranking results (AUC 0.66, ICC 0.38) do not depend on where the bar sits.
+
+To settle the number, calibrate the judge at #7866's own bar, on real reads with a typed reference: the PPI step under "Statistical methods". About 100 such pages split across print and manuscript would do. Until then V7 reports the figure with this caveat, and the read-weighted version beside it.
 
 ## Words used here
 
