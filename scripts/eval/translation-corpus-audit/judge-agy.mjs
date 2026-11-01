@@ -17,6 +17,9 @@ import { gatedImageCall } from '../../lib/agy-cli.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true] : []).filter(Boolean));
 const DIR = args.dir, JUDGE = args.judge || 'gemini-flash', MODEL = args.model || 'gemini-3.8-flash';
+// --attempts: agy calls per item at most (default 4: two parse tries × two error retries). A heavy model under the
+// box's 40-a-day cap (agy-guard) runs with --attempts 1, so a retry never spends another item's call (#5274).
+const ATTEMPTS = Number(args.attempts || 4);
 const CONC = Number(args.concurrency || 3), LOG = args.log || path.join(process.env.JOB_SCRATCH || '/tmp', `agy-${JUDGE}.jsonl`);
 if (!DIR) { console.error('--dir required'); process.exit(1); }
 
@@ -53,9 +56,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   await Promise.all(Array.from({ length: CONC }, async () => {
     while (todo.length && !stop) {
       const it = todo.shift();
-      let v = null, r = null;
-      for (let attempt = 1; attempt <= 2 && !v && !stop; attempt++) {
-        r = await gatedImageCall(promptFor(it), fs.readFileSync(images[it.id].file), { model: MODEL, attempts: 2, tmp: process.env.TMPDIR || '/tmp' });
+      let v = null, r = null, spent = 0;
+      for (let attempt = 1; spent < ATTEMPTS && !v && !stop; attempt++) {
+        r = await gatedImageCall(promptFor(it), fs.readFileSync(images[it.id].file), { model: MODEL, attempts: Math.min(2, ATTEMPTS - spent), tmp: process.env.TMPDIR || '/tmp' });
+        spent += r.calls || 1;
         fs.appendFileSync(LOG, JSON.stringify({ at: new Date().toISOString(), id: it.id, judge: JUDGE, model: MODEL, attempt, cls: r.cls, secs: r.secs, calls: r.calls, usage: r.usage, err: r.err, text: String(r.text || '').slice(0, 6000) }) + '\n');
         if (r.cls === 'quota') { stop = `quota: ${r.err || r.text}`.slice(0, 300); break; }
         v = parseVerdict(r.text);
