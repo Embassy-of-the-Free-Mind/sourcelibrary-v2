@@ -190,6 +190,10 @@ const RT = {
   // draft files by german-cheaper-7701/run.mjs (no agy call).
   // #6740 read-surface confirmation (job read-surface-6740): the live read@4 (the 4-page piece of the drawn page's block)
   // against the response surface's Latin optimum, 8 a call with the image fitted to 1,600 px, on the SAME new queue pages.
+  // #6740 read-surface, German confirmation (read-surface-6740/confirm-de/RULE.md): era-stratified to the frame's unread pages.
+  'de-surface': { lang: 'German', draft: null, blank: 'deu', eraQuota: { 'before 1700': 17, '1700s': 11, '1800 on': 2 }, correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  // #6740 read-surface, German confirmation 2 (confirm-de2/RULE.md): drawn by confirm-de2/draw.mjs, read here unchanged.
+  'de-surface2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
   'la-surface': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8-1600px': { ...FRESH('gemini-3.8-flash-low'), perCall: 8, longEdge: 1600 } } },
   'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'kraken>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'kraken.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
@@ -387,8 +391,13 @@ async function drawBlank(db, name, t, isInterior) {
   for (const b of [...books]) if (excluded.has(b.id)) books.splice(books.indexOf(b), 1);
   const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
   const pages = [], tally = { books_in_frame: books.length, books_left_out: excluded.size, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
+  // #6740 read-surface (Amendment 6.8c): an era-stratified draw. t.eraQuota = {era: n}; a book of a full era is passed.
+  const eraOf = (pub) => { const m = String(pub ?? '').match(/1[4-9]\d\d/); const y = m ? Number(m[0]) : null; return y === null ? null : y < 1700 ? 'before 1700' : y < 1800 ? '1700s' : '1800 on'; };
+  const got = {};
+  if (t.eraQuota) tally.era_quota = t.eraQuota;
   for (const b of order) {
     if (pages.length >= N) break;
+    if (t.eraQuota) { const e = eraOf(b.published); if (!e || (got[e] || 0) >= (t.eraQuota[e] || 0)) continue; }
     tally.books_walked++;
     const unread = await db.collection('pages').find({ book_id: b.id, ...lane.UNREAD }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
     if (lane.spreadReason(b, unread)) { tally.spread_wait++; continue; }
@@ -404,7 +413,8 @@ async function drawBlank(db, name, t, isInterior) {
     let end = p.page_number;
     while (end + 1 - start < perCall && byNum.has(end + 1)) end++;
     const block = Array.from({ length: end - start + 1 }, (_, i) => byNum.get(start + i).id);
-    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0 });
+    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0, published: b.published ?? null, ...(t.eraQuota && { era: eraOf(b.published) }) });
+    if (t.eraQuota) got[eraOf(b.published)] = (got[eraOf(b.published)] || 0) + 1;
   }
   return { pages, frame: { ...tally, rule: `the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=${t.blank}, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of ${perCall}` } };
 }

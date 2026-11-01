@@ -34,7 +34,16 @@ export const DESIGN = [
   ['L1', 0, null, -1], ['L2', 0, null, -1],
   // Amendment 3: the sequential picks off the Box-Behnken points (the cheap corners at low thinking).
   ['X01', 1, -1, -1], ['X02', 1, 1, -1],
-].map(([id, x1, x2, x3]) => ({ id, x1, x2, x3, ppc: LEVELS.ppc[x1 + 1], edge: x2 === null ? null : LEVELS.edge[x2 + 1], think: LEVELS.think[x3 + 1], live: id.startsWith('L') }));
+  // Amendment 6: the low-thinking plane re-made on the default pool (pool sensitivity).
+  ['D05', -1, 0, -1], ['D06', 1, 0, -1], ['D09', 0, -1, -1], ['D10', 0, 1, -1],
+].map(([id, x1, x2, x3]) => ({ id, x1, x2, x3, ppc: LEVELS.ppc[x1 + 1], edge: x2 === null ? null : LEVELS.edge[x2 + 1], think: LEVELS.think[x3 + 1], live: id.startsWith('L'), x4: -1, x5: -1, prompt: 'live', prep: 'as served' }))
+  // Amendment 6 (second form), stage 1: the Definitive Screening Design (dsd.mjs -> design-dsd.json), x4 prompt, x5 prep.
+  .concat(JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'design-dsd.json'), 'utf8')).runs.map((r) => ({
+    id: r.id, x1: r.x[0], x2: r.x[1], x3: r.x[2], x4: r.x[3], x5: r.x[4], ppc: r.ppc, edge: r.edge, think: r.think, live: false, prompt: r.prompt === 'live' ? 'live' : 'line', prep: r.prep === 'as served' ? 'as served' : 'gnu' })))
+  // Third form: the incomplete-block screen (design-ib.json): G01–G08 and the live repeat LI, image as served, live prompt.
+  .concat(JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'design-ib.json'), 'utf8')).runs.map((r) => ({
+    id: r.id, x1: r.x[0], x2: null, x3: r.x[1], ppc: r.ppc, edge: null, think: r.think, live: false, prompt: 'live', prep: 'as served' })))
+  .concat([{ id: 'LI', x1: 0, x2: null, x3: -1, ppc: 4, edge: null, think: 'low', live: true, prompt: 'live', prep: 'as served' }]);
 // Phase A: the James pool (held to flash-low): the low-thinking runs and L1. Phase B: the default pool, the rest.
 export const phaseOf = (r) => (r.think === 'low' && r.id !== 'L2' ? 'A' : 'B');
 
@@ -51,7 +60,10 @@ function plan() {
 
 function pageIds(lang, run) {
   const panel = JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8'));
-  const targets = panel.langs[lang].targets;
+  // Third form: with an incomplete-block allocation in WORK, a cell reads only its books (LI reads every book).
+  const allocF = path.join(WORK, `ib-allocation-${lang}.json`);
+  const alloc = fs.existsSync(allocF) ? JSON.parse(fs.readFileSync(allocF, 'utf8')) : null;
+  const targets = panel.langs[lang].targets.filter((t) => !alloc || run.id === alloc.live || alloc.blocks[t.book_id]?.includes(run.id));
   return targets.flatMap((t) => (run.ppc === 1 ? [t.page_id] : run.ppc === 4 ? t.window4 : t.window8));
 }
 
@@ -64,7 +76,8 @@ function readRun(lang, runId, { agyHome, concurrency = 4 } = {}) {
   fs.writeFileSync(idsFile, JSON.stringify(pageIds(lang, run)));
   const args = ['--env-file=' + ENV, CLI_OCR, 'read', `--page-ids-file=${idsFile}`, `--out=${dir}`, `--model=gemini-3.8-flash-${run.think}`,
     `--per-call=${run.ppc}`, `--image-cache=${path.join(WORK, 'cache')}`, '--fresh', `--job=read-surface-6740-${lang}-${runId}`, `--concurrency=${concurrency}`, '--stop-on-quota',
-    ...(run.edge ? [`--long-edge=${run.edge}`] : []), ...(run.ppc > 1 ? ['--no-alone'] : [])];
+    ...(run.edge ? [`--long-edge=${run.edge}`] : []), ...(run.ppc > 1 ? ['--no-alone'] : []),
+    ...(run.prompt === 'line' ? [`--instruction-file=${path.join(path.dirname(fileURLToPath(import.meta.url)), 'prompt-lines', `${lang}.txt`)}`] : []), ...(run.prep === 'gnu' ? ['--image-prep=gnu'] : [])];
   fs.writeFileSync(path.join(dir, 'run.json'), JSON.stringify({ lang, ...run, agy_home: agyHome || 'default', started_at: new Date().toISOString(), argv: args.slice(1) }, null, 1));
   return new Promise((resolve) => {
     const log = fs.openSync(path.join(dir, 'read.log'), 'a');
@@ -96,12 +109,23 @@ async function phase(ph, langs, opts, parallel) {
   }));
 }
 
+// Amendment 6: before each run, the pool's weekly remaining (/root/agy-quota/pools.json); under 30 % stops the batch.
+const POOLS = '/root/agy-quota/pools.json';
+function poolLow(agyHome) {
+  try {
+    const p = JSON.parse(fs.readFileSync(POOLS, 'utf8')).pools.find((x) => x.pool === (agyHome ? path.basename(agyHome) : 'default'));
+    return p && p.weekly < 0.30 ? `weekly remaining ${p.weekly.toFixed(3)} < 0.30` : null;
+  } catch { return null; }
+}
+
 // batch (Amendment 2, sequential): named runs, e.g. --runs=de:C1,la:C1,de:L2, `parallel` at a time.
 async function batch(list, opts, parallel) {
   const todo = list.split(',').map((x) => { const [lang, id] = x.split(':'); return { lang, id }; });
   let quota = false;
   await Promise.all(Array.from({ length: parallel }, async () => {
     while (todo.length && !quota) {
+      const low = poolLow(opts.agyHome);
+      if (low) { quota = true; console.log(`pool: ${low}; stopping the batch`); break; }
       const q = todo.shift(), t0 = Date.now();
       const code = await readRun(q.lang, q.id, opts);
       console.log(`${new Date().toISOString()} ${q.lang} ${q.id} exit ${code} (${Math.round((Date.now() - t0) / 1000)}s)`);

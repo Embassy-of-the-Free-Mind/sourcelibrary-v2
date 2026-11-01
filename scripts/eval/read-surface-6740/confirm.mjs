@@ -35,7 +35,11 @@ const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
 const W = (f, x) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1));
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const slug = (route) => route.replace(/[^a-z0-9]+/gi, '_');
-const CELL = 'la-surface';
+// --cell=de-surface (Amendment 6, confirm-de/RULE.md): German, O = 8 a call at the served image, judged by quota cost.
+const CELL = arg('cell') || 'la-surface';
+const DE = CELL.startsWith('de-surface');
+const LANG = DE ? 'German' : 'Latin';
+const OPT = DE ? 'agy-flash-low@8' : 'agy-flash-low@8-1600px';
 const dirOf = (route) => path.join(OUT, 'corr', CELL, slug(route));
 const CLI_OCR = path.join(ROOT, 'scripts/batch/cli-ocr.mjs');
 const AGY_USD = 0.00087;                       // the #6740 fee basis: $200 a month, 4.36e-6 of a month a call
@@ -46,8 +50,11 @@ const GPU_USD_PER_SEC = 249 / (30 * 86400);    // gex45 at $249 a month
 // it passes the GPU-draft floor (30 word characters, cli-ocr.mjs) and the lane's print checks (gpuAloneWritten).
 export const ROUTES = {
   'agy-flash-low@4': { kind: 'read', live: true },
-  'agy-flash-low@8-1600px': { kind: 'read' },
+  [OPT]: { kind: 'read' },
 };
+// Amendment 6.2: quota cost, agy usage priced at gemini-3.8-flash list rates (output includes thinking).
+const RATE = { input: 0.75e-6, cached: 0.075e-6, output: 3.75e-6 };
+const usdOf = (u) => (u ? ((u.input || 0) - (u.cache_read || 0)) * RATE.input + (u.cache_read || 0) * RATE.cached + (u.output || 0) * RATE.output : 0);
 const LIVE = 'agy-flash-low@4';
 const LATER_READ = /the page has OCR now|OCR was rewritten after this read/;
 
@@ -120,7 +127,7 @@ async function packet() {
   const add = (route, sp, kind, text, extra = {}) => {
     const tag = kind === 'item' ? `${CELL}:${sp.page_id}:${h(text.trim())}` : `${kind}:${CELL}:${route}:${sp.page_id}:${extra.other ?? ''}`;
     const id = `j${h(tag).slice(0, 10)}`;
-    if (!items.has(id)) items.set(id, { id, task: 'ocr', lang: 'Latin', image_url: getPageSource(pages.get(sp.page_id)), text });
+    if (!items.has(id)) items.set(id, { id, task: 'ocr', lang: LANG, image_url: getPageSource(pages.get(sp.page_id)), text });
     key.push({ id: `k${h(`${kind}:${CELL}:${route}:${sp.page_id}:${extra.other ?? ''}`).slice(0, 10)}`, judged_as: id, cell: CELL, route, kind, page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, script_face: sp.script_face, ...extra });
   };
   for (const route of Object.keys(ROUTES).filter((r) => wr[r])) {
@@ -155,10 +162,10 @@ function plant() {
       const it = pk.items.find((x) => x.id === k.judged_as);
       for (let tries = 0; tries < 4; tries++) {
         const kind = kinds[(slot + tries) % 4];
-        const p = plantError(it.text, { kind, lang: 'Latin', seed: parseInt(h(`${k.judged_as}${kind}`).slice(0, 8), 16) });
+        const p = plantError(it.text, { kind, lang: LANG, seed: parseInt(h(`${k.judged_as}${kind}`).slice(0, 8), 16) });
         if (!p) continue;
         const id = `j${h(`planted:${k.judged_as}:${kind}`).slice(0, 10)}`;
-        pk.items.push({ id, task: 'ocr', lang: 'Latin', image_url: it.image_url, text: p.text });
+        pk.items.push({ id, task: 'ocr', lang: LANG, image_url: it.image_url, text: p.text });
         key.push({ id: `k${h(`planted:${CELL}:${k.route}:${k.page_id}:${kind}`).slice(0, 10)}`, judged_as: id, cell: CELL, route: k.route, kind: 'planted', page_id: k.page_id, book_id: k.book_id, script_face: face, source_item: k.judged_as, plant: p.plant });
         got++; slot++; break;
       }
@@ -193,9 +200,11 @@ function callsPerPage(route) {
   const d = dirOf(route);
   if (!fs.existsSync(d)) return null;
   const metas = fs.readdirSync(d).filter((f) => f.endsWith('.meta.json')).map((f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8')));
-  const block = jsonl(path.join(d, 'calls.jsonl')).reduce((t, c) => t + (c.calls ?? 1), 0);
+  const bc = jsonl(path.join(d, 'calls.jsonl'));
+  const block = bc.reduce((t, c) => t + (c.calls ?? 1), 0);
   const single = metas.filter((m) => !m.call_id).reduce((t, m) => t + (m.calls ?? 1), 0);
-  return { calls: block + single, pages: metas.length, per_page: +((block + single) / Math.max(1, metas.length)).toFixed(3) };
+  const usd = bc.reduce((t, c) => t + (c.usage || []).reduce((a, u) => a + usdOf(u), 0), 0) + metas.filter((m) => !m.call_id).reduce((t, m) => t + (m.usage || []).reduce((a, u) => a + usdOf(u), 0), 0);
+  return { calls: block + single, pages: metas.length, per_page: +((block + single) / Math.max(1, metas.length)).toFixed(3), usd, usd_per_1k_pages: +(1000 * usd / Math.max(1, metas.length)).toFixed(3) };
 }
 /** GPU seconds a page: the engine's own wall time over the pages it drafted (the card alone, no other tenant at the time). */
 function gpuSecsPerPage(file) {
@@ -229,6 +238,7 @@ function scoreRoutes(sps, wr, key, V, seedBase) {
       control: { wrong_page: cs.map((v) => v ? { accept: v.accept, fidelity: v.fidelity } : null), passed: cs.length === 2 && cs.every((v) => v && !v.accept && Number(v.fidelity) <= 2) },
       not_written: rows.filter((r) => !r.written).reduce((t, r) => { const x = String(r.why).replace(/:.*/, '').slice(0, 60); t[x] = (t[x] || 0) + 1; return t; }, {}),
       agy_calls_per_page: +per.toFixed(3), calls: cp, gpu_secs_per_page: gs,
+      quota_usd_per_1k_pages: cp?.usd_per_1k_pages ?? null, quota_usd_per_1k_accepted: cp && accDrawn ? +((cp.usd_per_1k_pages ?? 0) / accDrawn).toFixed(3) : null,
       usd_per_accepted_page: accDrawn ? +((per * AGY_USD + gpuUsd) / accDrawn).toFixed(5) : null,
       wrong_text_pages: rows.filter((r) => r.wt || r.inv).map((r) => ({ page_id: r.page_id, face: r.face, written: r.written, defects: r.wrong_text })), _rows: rows };
     R[route].eligible = R[route].written.wrong_text_ok && R[route].written.p_acc_ge_080 >= 0.9 && R[route].control.passed;
@@ -254,18 +264,20 @@ function score() {
     // the cheapest per accepted page among the live route and those that replace it. Planted controls both missed: void.
     const pls = stratum === 'all' ? pl : pl.filter((x) => x.face === stratum);
     const voided = pls.length >= 2 && pls.every((x) => !x.unjudged && !x.caught);
-    const replaces = Object.keys(R).filter((r) => r !== LIVE && R[r].eligible && paired[`${r}|${LIVE}`].p_a_within_008 >= 0.9 && R[r].agy_calls_per_page < R[LIVE].agy_calls_per_page);
+    // German (confirm-de/RULE.md 2): cheaper means a quota cost per accepted page at least 10 % below live's.
+    const cheaper = (r) => (DE ? R[r].quota_usd_per_1k_accepted <= 0.9 * R[LIVE].quota_usd_per_1k_accepted : R[r].agy_calls_per_page < R[LIVE].agy_calls_per_page);
+    const replaces = Object.keys(R).filter((r) => r !== LIVE && R[r].eligible && paired[`${r}|${LIVE}`].p_a_within_008 >= 0.9 && cheaper(r));
     const cand = [LIVE, ...replaces];
     const pick = voided ? null : [...cand].sort((x, y) => (R[x].usd_per_accepted_page ?? 9) - (R[y].usd_per_accepted_page ?? 9))[0];
     for (const r of Object.values(R)) delete r._rows;
     out.strata[stratum] = { n_drawn: pages.length, routes: R, paired, planted: { n: pls.length, caught: pls.filter((x) => x.caught).length, detail: pls }, decision: { pick, replaces, voided, why: voided ? 'both planted controls missed' : `routes that replace ${LIVE} by RULE.md 2, cheapest per accepted page` } };
     console.log(`\n[${stratum}] n=${pages.length} decision: ${pick} (replaces: ${replaces.join(', ') || 'none'})`);
-    for (const [r, x] of Object.entries(R)) console.log(`  ${r}: written ${x.written.accept} wt ${x.written.wrong_text} inv ${x.written.invented_or_wrong_leaf} P80 ${x.written.p_acc_ge_080} | all ${x.all_drawn.accept} | ctrl ${x.control.passed} | ${x.agy_calls_per_page} calls/pg ${x.gpu_secs_per_page ?? '-'} gpu s/pg $${x.usd_per_accepted_page}/acc | elig ${x.eligible}`);
+    for (const [r, x] of Object.entries(R)) console.log(`  ${r}: quota $${x.quota_usd_per_1k_pages}/1k pages $${x.quota_usd_per_1k_accepted}/1k accepted | written ${x.written.accept} wt ${x.written.wrong_text} inv ${x.written.invented_or_wrong_leaf} P80 ${x.written.p_acc_ge_080} | all ${x.all_drawn.accept} | ctrl ${x.control.passed} | ${x.agy_calls_per_page} calls/pg ${x.gpu_secs_per_page ?? '-'} gpu s/pg $${x.usd_per_accepted_page}/acc | elig ${x.eligible}`);
     for (const [p, x] of Object.entries(paired)) console.log(`  paired ${p}: ${x.a_only} vs ${x.b_only} of ${x.n} (both ${x.both}) P ${x.p_a_within_008}`);
     console.log(`  planted ${pls.filter((x) => x.caught).length}/${pls.length}`);
   }
   // RULE.md 2-4: O passes when it is eligible, paired within 0.08 of A, and cheaper in calls a page here.
-  out.decision = { passes: out.strata.all.decision.replaces.includes('agy-flash-low@8-1600px'), pick: out.strata.all.decision.pick };
+  out.decision = { passes: out.strata.all.decision.replaces.includes(OPT), pick: out.strata.all.decision.pick };
   console.log(`\ndecision: ${JSON.stringify(out.decision)}`);
   W('score.json', out);
 }
@@ -278,8 +290,8 @@ function evidence() {
   const agg = (rows) => { const n = rows.length, k = rows.filter((r) => r.v?.accept).length, w = rows.filter((r) => wt(r.v)).length; const cl = {};
     for (const r of rows) for (const c of new Set((r.v?.defects || []).map(cls))) cl[c] = (cl[c] || 0) + 1;
     return { n, books: new Set(rows.map((r) => r.book_id)).size, accept: `${k}/${n}`, wrong_text_pages: `${w}/${n}`, classes_k_of_n: Object.fromEntries(Object.entries(cl).sort((a, b) => b[1] - a[1]).map(([c, v]) => [c, `${v}/${n}`])) }; };
-  const gen = 'scripts/eval/read-surface-6740/confirm.mjs evidence (job read-surface-6740, #6740; no model calls in this step)';
-  const un = { generated_by: gen, provenance: '#6740 read-surface confirmation: judge.mjs draw --cells=la-surface (30 new Latin books in the first-read lane frame, both #7701 draws left out), correct (agy gemini-3.8-flash-low, AGY_HOME .agy-james; read@4 on the 4-page piece, the optimum 8 a call at a 1,600 px long edge); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm/RULE.md)',
+  const gen = `scripts/eval/read-surface-6740/confirm.mjs evidence --cell=${CELL} (#6740; no model calls in this step)`;
+  const un = { generated_by: gen, provenance: DE ? '#6740 read-surface German confirmation (job read-surface-2-6740): judge.mjs draw --cells=de-surface (30 new German books in the first-read lane frame, era-stratified 17/11/2, the #7701 draws and the Latin confirmation left out), correct (agy gemini-3.8-flash-low, default pool; read@4 on the 4-page piece, read@8 on the block); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm-de/RULE.md)' : '#6740 read-surface confirmation: judge.mjs draw --cells=la-surface (30 new Latin books in the first-read lane frame, both #7701 draws left out), correct (agy gemini-3.8-flash-low, AGY_HOME .agy-james; read@4 on the 4-page piece, the optimum 8 a call at a 1,600 px long edge); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm/RULE.md)',
     judge: 'claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image', cells: {} };
   const bys = { generated_by: gen, cells: {} };
   for (const [stratum, pages] of [['all', s.cells[CELL].pages]]) {
@@ -290,12 +302,13 @@ function evidence() {
     }
     const paired = Object.fromEntries(Object.entries(sc.strata[stratum].paired).map(([p, x]) => [p.split('|').map((r) => `${r}-written`).join('|'), { n: x.n, books: x.books, both: x.both, a_only: x.a_only, b_only: x.b_only, neither: x.neither }]));
     const name = stratum === 'all' ? CELL : `${CELL}-${stratum}`;
-    un.cells[name] = { task: 'ocr', lang: 'Latin', frame: s.cells[CELL].frame, routes, paired };
+    un.cells[name] = { task: 'ocr', lang: LANG, frame: s.cells[CELL].frame, routes, paired };
     if (stratum === 'all') bys.cells[`${CELL}|print`] = { routes, paired };
     else bys.cells[`${name}|print`] = { routes, paired };
   }
-  fs.writeFileSync(path.join(EV, 'read-surface-6740.score.json'), JSON.stringify(un, null, 1) + '\n');
-  fs.writeFileSync(path.join(EV, 'by-script', 'read-surface-6740.score.json'), JSON.stringify(bys, null, 1) + '\n');
+  const fn = CELL === 'de-surface2' ? 'read-surface-6740-de2.score.json' : DE ? 'read-surface-6740-de.score.json' : 'read-surface-6740.score.json';
+  fs.writeFileSync(path.join(EV, fn), JSON.stringify(un, null, 1) + '\n');
+  fs.writeFileSync(path.join(EV, 'by-script', fn), JSON.stringify(bys, null, 1) + '\n');
   console.log('wrote evidence/read-surface-6740.score.json and by-script/');
 }
 

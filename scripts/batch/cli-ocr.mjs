@@ -114,6 +114,8 @@
  * (BSB) is fetched once. `read --no-alone` (with --per-call) does not read a refused block's pages one per call: each
  * page that would have gone alone is listed in DIR/not-read.jsonl {page_id, from, call_id} and left unread, so a design
  * run costs one block (and its one retry) per call; the analysis prices those pages at the one-per-call rate.
+ * `read --image-prep=gnu` (Amendment 6) sends each image, after the long-edge fit, as grayscale + normalise + unsharp
+ * (scripts/lib/image-long-edge.mjs prepImage, #5250's arms); the meta's `image_fit` records `prep`.
  *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
@@ -145,7 +147,7 @@ import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
-import { fitLongEdge } from '../lib/image-long-edge.mjs';
+import { fitLongEdge, prepImage } from '../lib/image-long-edge.mjs';
 import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
@@ -181,8 +183,10 @@ const LONG_EDGE = arg('long-edge') ? Number(arg('long-edge')) : null;
 if (STAGE === 'read' && LONG_EDGE !== null && !(Number.isInteger(LONG_EDGE) && LONG_EDGE >= 256 && LONG_EDGE <= 8000)) { console.error('--long-edge must be 256 to 8000 px'); process.exit(2); }
 const IMAGE_CACHE = arg('image-cache') && path.resolve(arg('image-cache'));
 const NO_ALONE = process.argv.includes('--no-alone');
+const IMAGE_PREP = arg('image-prep') || null;
+if (STAGE === 'read' && IMAGE_PREP && IMAGE_PREP !== 'gnu') { console.error('--image-prep must be gnu'); process.exit(2); }
 if (STAGE === 'read' && NO_ALONE && PER_CALL < 2) { console.error('--no-alone is for --per-call >= 2'); process.exit(2); }
-if (STAGE === 'read' && (LONG_EDGE || IMAGE_CACHE) && (CORRECT_PROMPT || GPU_DRAFT)) { console.error('--long-edge / --image-cache are for a plain read'); process.exit(2); }
+if (STAGE === 'read' && (LONG_EDGE || IMAGE_CACHE || IMAGE_PREP) && (CORRECT_PROMPT || GPU_DRAFT)) { console.error('--long-edge / --image-cache / --image-prep are for a plain read'); process.exit(2); }
 // up to 8 (#7701 german-cheaper: the read@8 arm); the lanes still cap themselves at 4 (cli-ocr-lane.mjs --per-call 1-4)
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 8)) { console.error('--per-call must be 1 to 8'); process.exit(2); }
 // --per-call with --correct-prompt (#7701 arm C): N drafts and their images in one call (agy-cli.mjs correctBlockPrompt);
@@ -304,8 +308,9 @@ if (STAGE === 'read') {
       buf = Buffer.from(await res.arrayBuffer());
       if (cached) { fs.mkdirSync(IMAGE_CACHE, { recursive: true }); fs.writeFileSync(cached, buf); }
     }
-    if (!LONG_EDGE) return { buf, fit: null };
+    if (!LONG_EDGE && !IMAGE_PREP) return { buf, fit: null };
     const f = await fitLongEdge(buf, LONG_EDGE);
+    if (IMAGE_PREP) return { buf: await prepImage(f.buf, IMAGE_PREP), fit: { long_edge: LONG_EDGE, resized: f.resized, native: f.native, sent: f.sent, prep: IMAGE_PREP } };
     return { buf: f.buf, fit: { long_edge: LONG_EDGE, resized: f.resized, native: f.native, sent: f.sent } };
   };
   const notRead = (p, from, callId = null) => fs.appendFileSync(path.join(OUT, 'not-read.jsonl'), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, from, call_id: callId }) + '\n');

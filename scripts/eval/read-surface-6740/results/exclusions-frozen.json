@@ -1,0 +1,51 @@
+{
+ "note": "Amendment 6: the exclusions as they stood after the first 10 runs a language (results/score.json, 2026-10-31 02:15Z), frozen",
+ "de": [
+  {
+   "slug": "de-69e961962beefe2f6f72c109-p55",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "de-698420e1f1fb376a3d58061e-p62",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "de-698fb7926b95eeda7d2d3406-p22",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "de-69aebc3b9d616e7d167cf6f6-p31",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "de-69ae8ee96c4fe8889bb48265-p198",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  }
+ ],
+ "la": [
+  {
+   "slug": "la-6a4b18817622bb5aba12ac2e-p12",
+   "why": "by eye: the image is not the typed page (image is dedication title + opening verse 'Et sparsum in terras', ending at catchword 'Exposuitq;'; ref is the following page; italic verse, show-through)"
+  },
+  {
+   "slug": "la-69bda005f6d63c9197483c73-p521",
+   "why": "by eye: the image is not the typed page (image is p.65, emblems 841-855 (Patientia/Pax), two columns; ref is entries 828-840 (preceding page); facing page edge at left)"
+  },
+  {
+   "slug": "la-6a906bf4336010794b0d2ab0-p12",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "la-6a9078467f9d520dd42e41e2-p19",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "la-6a43779193aef4a7d61477df-p14",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  },
+  {
+   "slug": "la-6a9442802aee69fe0c623fea-p25",
+   "why": "unreadable by the route: no usable read in any 1-a-call run (Gemini filter cut or a refused reply)"
+  }
+ ]
+}

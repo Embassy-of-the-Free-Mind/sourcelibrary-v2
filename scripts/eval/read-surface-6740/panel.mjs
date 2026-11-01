@@ -8,7 +8,9 @@
 //   page per book from a page list; it has no window, century quota or typed-page filter). None draws a target that
 //   can be read 1, 4 or 8 pages a call with its own book's neighbours.
 //
-//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/read-surface-6740/panel.mjs --work=DIR
+//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/read-surface-6740/panel.mjs --work=DIR [--langs=en --merge]
+// Amendment 6 (second form): English (EEBO-TCP same-edition pages, the English rows only) is drawn alone with a fresh
+// seed-6740 stream and MERGED into an existing panel.json / refs.jsonl.gz, leaving German and Latin as they were.
 // Writes DIR/panel.json (targets, windows, quotas, seed) and DIR/refs.jsonl.gz (target typed text; private: never
 // committed, the R2 bucket is the store). Reads Mongo and the private R2 bucket; writes nothing else.
 import fs from 'node:fs';
@@ -29,7 +31,13 @@ const SEED = 6740;
 const QUOTA = {
   de: { source: 'dta', want: { '1500s': 2, '1600s': 14, '1700s': 14, '1800s': 14 }, n: 40 },
   la: { source: 'camena', want: { '1500s': 16, '1600s': 18, '1700s': 6, unknown: 2 }, n: 40 },
+  en: { source: 'eebo-tcp', manifest: 'manifest-matched', language: 'English', want: { '1500s': 12, '1600s': 26, '1700s': 2 }, n: 40 },
 };
+const LANGS = arg('langs') ? arg('langs').split(',') : ['de', 'la'];
+const MERGE = process.argv.includes('--merge');
+// Amendment 6 third form: --all keeps EVERY eligible book (a census of the typed-reference frame) as a target, in the same
+// seeded draw, for the incomplete-block screen; it is written to --work (a separate dir from the 40-book panel).
+const ALL = process.argv.includes('--all');
 const SPARES = 8;
 // The window the 8-a-call runs read: target at position 4 of 8 (t-3 … t+4); 4-a-call: position 2 of 4 (t-1 … t+2).
 const WIN8 = [-3, -2, -1, 0, 1, 2, 3, 4];
@@ -42,13 +50,14 @@ await client.connect();
 const db = client.db('bookstore');
 fs.mkdirSync(WORK, { recursive: true });
 const rand = rng(SEED);
-const panel = { issue: 6740, seed: SEED, built_at: new Date().toISOString(), quota: QUOTA, window8: WIN8, langs: {} };
-const refRows = [];
+const panel = MERGE ? JSON.parse(fs.readFileSync(path.join(WORK, 'panel.json'), 'utf8')) : { issue: 6740, seed: SEED, built_at: new Date().toISOString(), quota: QUOTA, window8: WIN8, langs: {} };
+if (MERGE) { panel.quota = { ...panel.quota, ...Object.fromEntries(LANGS.map((l) => [l, QUOTA[l]])) }; panel.merged = [...(panel.merged || []), { langs: LANGS, at: new Date().toISOString(), seed: SEED }]; }
+const refRows = MERGE ? readGz(path.join(WORK, 'refs.jsonl.gz')).filter((r) => !LANGS.some((l) => r.slug.startsWith(`${l}-`))) : [];
 
-for (const [lang, q] of Object.entries(QUOTA)) {
+for (const [lang, q] of Object.entries(QUOTA).filter(([l]) => LANGS.includes(l))) {
   const rows = readGz(path.join(OUTPUT, `typed-refs-6012-2026-10-06.${q.source}.aligned-pages.jsonl.gz`))
-    .filter((r) => r.kind === 'same-edition' && r.congruent && r.ref_page_idx[0] === r.ref_page_idx[1]);
-  const manifest = new Map(readGz(path.join(OUTPUT, `typed-refs-6012-2026-10-06.${q.source}.manifest.jsonl.gz`)).map((m) => [m.source_id, m]));
+    .filter((r) => r.kind === 'same-edition' && r.congruent && r.ref_page_idx[0] === r.ref_page_idx[1] && (!q.language || r.language === q.language));
+  const manifest = new Map(readGz(path.join(OUTPUT, `typed-refs-6012-2026-10-06.${q.source}.${q.manifest || 'manifest'}.jsonl.gz`)).map((m) => [m.source_id, m]));
   const byBook = new Map();
   for (const r of rows) { if (!byBook.has(r.book_id)) byBook.set(r.book_id, []); byBook.get(r.book_id).push(r); }
   const ids = [...byBook.keys()];
@@ -99,6 +108,7 @@ for (const [lang, q] of Object.entries(QUOTA)) {
   spares.sort(() => rand() - 0.5);
   while (chosen.length < q.n && spares.length) chosen.push(spares.shift());
   while (chosen.length > q.n) spares.unshift(chosen.pop());
+  if (ALL) { chosen.push(...spares.splice(0)); }
   const out = (e, spare) => {
     const t = e.pick.page_number;
     const tp = typed.get(e.pick.source_id).pages[e.pick.ref_page_idx[0]];

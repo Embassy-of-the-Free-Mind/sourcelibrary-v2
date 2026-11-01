@@ -1,0 +1,135 @@
+{
+ "generated_by": "scripts/eval/read-surface-6740/confirm.mjs evidence --cell=de-surface2 (#6740; no model calls in this step)",
+ "provenance": "#6740 read-surface German confirmation (job read-surface-2-6740): judge.mjs draw --cells=de-surface (30 new German books in the first-read lane frame, era-stratified 17/11/2, the #7701 draws and the Latin confirmation left out), correct (agy gemini-3.8-flash-low, default pool; read@4 on the 4-page piece, read@8 on the block); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm-de/RULE.md)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "cells": {
+  "de-surface2": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "rule": "confirm-de2/RULE.md: era × face strata, proportional with a floor of 4, at most 2 books a holding library within a cell, uniform body page",
+    "quota": {
+     "pre-1600|fraktur": 19,
+     "pre-1600|antiqua": 4,
+     "1600s|fraktur": 8,
+     "1600s|antiqua": 4,
+     "1700s|fraktur": 11,
+     "1700s|antiqua": 4,
+     "1800+|fraktur": 5,
+     "1800+|antiqua": 5
+    },
+    "filled": {
+     "1600s|fraktur": 8,
+     "1700s|fraktur": 11,
+     "1800+|antiqua": 5,
+     "1800+|fraktur": 5,
+     "pre-1600|fraktur": 19
+    },
+    "libraries": {
+     "1600s|fraktur": {
+      "n": 8,
+      "libs": {
+       "Bayerische Staatsbibliothek": 2,
+       "Internet Archive": 2,
+       "Zentralbibliothek Zürich": 2,
+       "ETH-Bibliothek Zürich": 1,
+       "Wellcome Collection": 1
+      },
+      "over_cap": 0
+     },
+     "1700s|fraktur": {
+      "n": 11,
+      "libs": {
+       "Bayerische Staatsbibliothek": 6,
+       "SLUB Dresden": 2,
+       "ETH-Bibliothek Zürich": 1,
+       "Internet Archive": 2
+      },
+      "over_cap": 4
+     },
+     "1800+|antiqua": {
+      "n": 5,
+      "libs": {
+       "New York Public Library": 1,
+       "e-rara (Swiss libraries)": 1,
+       "National Library of Naples": 1,
+       "Oxford University": 1,
+       "Harvard University": 1
+      },
+      "over_cap": 0
+     },
+     "1800+|fraktur": {
+      "n": 5,
+      "libs": {
+       "University of Michigan": 2,
+       "University of California": 1,
+       "Internet Archive": 1,
+       "unknown library": 1
+      },
+      "over_cap": 0
+     },
+     "pre-1600|fraktur": {
+      "n": 19,
+      "libs": {
+       "e-rara (Swiss libraries)": 17,
+       "Biblioteca Nazionale Centrale di Firenze": 1,
+       "Bayerische Staatsbibliothek": 1
+      },
+      "over_cap": 15
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 45,
+     "books": 45,
+     "accept": "39/45",
+     "wrong_text_pages": "3/45",
+     "classes_k_of_n": {
+      "O8": "22/45",
+      "O6": "14/45",
+      "E2": "12/45",
+      "O11": "4/45",
+      "O12": "4/45",
+      "T6": "3/45",
+      "O16": "2/45",
+      "D1": "2/45",
+      "O7": "2/45",
+      "O5": "1/45"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 45,
+     "books": 45,
+     "accept": "41/45",
+     "wrong_text_pages": "3/45",
+     "classes_k_of_n": {
+      "O8": "25/45",
+      "O6": "17/45",
+      "E2": "15/45",
+      "O12": "5/45",
+      "T6": "4/45",
+      "O11": "3/45",
+      "O16": "2/45",
+      "O7": "2/45",
+      "O5": "1/45",
+      "D1": "1/45",
+      "O17": "1/45"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 45,
+     "books": 45,
+     "both": 38,
+     "a_only": 3,
+     "b_only": 1,
+     "neither": 3
+    }
+   }
+  }
+ }
+}
