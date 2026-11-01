@@ -93,6 +93,36 @@ Route: none — eval only, no production writes
 
 `start` refuses such a brief with exit 8 when the line is missing, or when it is a bare model name. The check is `scripts/workers/brief-route-check.sh <brief>`, and you can run it on a draft brief. Why it is a check: on 10-28 and again on 10-29 an OCR job was dispatched on a model picked by habit. Both times Derek asked "is the router being used?"
 
+## A follow-up job on the same issue: the null-result stop rule (#7869)
+
+A job whose issue already had a job land in the last 48 h must say in its brief which decision it would move:
+
+```
+Moves: switch the Tibetan default from lite to flash if flash wins 25/30
+```
+
+This applies most of all when the earlier job landed "nothing switches" or another null result. If you cannot name a decision the new job could change, do not dispatch it. Repeat the eval only when the inputs have changed, and say in the brief what changed. Why: in the week to 2026-10-31, four read-surface jobs ran after the first had found nothing to switch (#7830). They took 63% of the milo account's last 24 h (≈ $10–14 a week, the 2026-10-31 value audit).
+
+`start` runs this check inside `brief-route-check.sh`. It never refuses. When the brief's `Lands:` issue appears in a landing from the last 48 h, on this box's `landings.txt` or another box's through the mesh, and the brief has no `Moves:` line, `start` prints a `warn:` line.
+
+## Job-session thrift: fresh sessions and Sonnet subagents (#7869)
+
+**Fresh session per stage.** Every turn re-reads the whole context, so cost grows with the square of a session's length. On cloudlayer, cache reads were 53% of job transcript cost in the week to 2026-10-31. The wrapper cannot cut a `claude -p` mid-turn, so the job makes the cut itself, and only at a stage boundary:
+1. The job runs `claude-job.sh ctx <name>` at each stage boundary (the HEADLESS RULES say when). It reads the last main-chain turn of the job's newest transcript and prints `FRESH` at 150K context or more.
+2. If work remains, the job writes `$JD/<name>.state.md` and ends its turn without the done file. The file is under 60 lines: done (with links), next, paths, detached processes, notes acted on.
+3. The wrapper sees a state file newer than `$JD/<name>.session`, which is touched at every session start. It starts a fresh session in the same worktree from the HEADLESS RULES, the brief and the state file, instead of `--continue`.
+
+More rules:
+- A long session that exits without a state file is resumed with one instruction: write the state file now.
+- `resume` and the sweep honour a pending state file the same way.
+- Fresh sessions do not spend resumes. `MAX_FRESH` (12) caps them.
+- A job moved on the weekly cap carries its last state file into the `-mv` brief.
+- Tuning: `JOB_FRESH_CTX=<tokens>`; `0` turns the rule off.
+
+Measured on 45 cloudlayer job transcripts from 2026-10-24 to 11-01, cutting at the first commit, push or comment past 150K: 28.5% of main-chain cost saved, and 49% on estimator-v2-6740 (one session, 320 turns, 479K mean context). The measurement does not count what a fresh session spends re-reading files, so the real saving is lower.
+
+**Subagents on Sonnet.** Every job session runs with `CLAUDE_CODE_SUBAGENT_MODEL=sonnet`. Subagents were 11% of transcript cost, all of it Opus. A brief that needs Opus subagents says so in its first 15 lines: `Subagents: opus — <why>` (for example, a judge that must match the production reader). The job's own model stays Opus.
+
 ## Steering a running job: the inbox (#6534)
 
 ```
