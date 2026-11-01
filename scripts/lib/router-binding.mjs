@@ -40,12 +40,14 @@ export function loadCurrentTable(dir = ROUTER_DIR) {
  * Cells and routes the first-read lane (`run --cohort=visible-unread`) runs, from its own flags. The route id is the
  * router's: agy-flash-low, `@N` when N pages go in a call (only for perCallLanguages), `>agy-flash-low` when the
  * correction pass runs, `-written` because the lane scores what it writes. Print only: the lane skips manuscripts.
+ * `perCallByLanguage` (the lane's FIRST_READ_PER_CALL_BY_LANGUAGE) raises N for a language when perCall > 1.
  */
-export function servedByFirstRead({ languages, correct = [], perCall = 1, perCallLanguages }) {
+export function servedByFirstRead({ languages, correct = [], perCall = 1, perCallLanguages, perCallByLanguage = {} }) {
   if (!Array.isArray(perCallLanguages)) throw new Error('servedByFirstRead: pass the lane\'s FIRST_READ_PER_CALL_LANGUAGES');
   const langs = languages && languages.length ? languages : Object.keys(CELL_LANGUAGE);
   return langs.map((lang) => {
-    let route = perCall > 1 && perCallLanguages.includes(lang) ? `agy-flash-low@${perCall}` : 'agy-flash-low';
+    const n = perCall > 1 && perCallLanguages.includes(lang) ? Math.max(perCall, perCallByLanguage[lang] ?? perCall) : 1;
+    let route = n > 1 ? `agy-flash-low@${n}` : 'agy-flash-low';
     if (correct.includes(lang)) route += '>agy-flash-low';
     route += '-written';
     return { lane: 'first-read', cell: CELL_LANGUAGE[lang] ? `${CELL_LANGUAGE[lang]}-blank/print` : `${lang}-blank/print`, route };

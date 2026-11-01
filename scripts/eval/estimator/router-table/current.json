@@ -11,6 +11,13 @@
    "set": "2026-10-31",
    "until": "2026-11-14",
    "reason": "#7818: the agy correction beats no correction by +13 points (95% CI +5 to +22; 8 gained, 0 lost of 60 books) but not the Opus bar the table keeps (lite>opus). Opus has no capacity for ~410K pages. Re-decide by 11-14 with the defect-rate rule (#7824) or an Opus share."
+  },
+  {
+   "cell": "german-blank/print",
+   "lane": "first-read",
+   "set": "2026-11-01",
+   "until": "2026-11-15",
+   "reason": "#6740 read-surface, Derek 2026-11-01: German first reads at 8 a call (agy-flash-low@8-written) on the pooled paired evidence (78 queue books, 8 a call won 8-1, fewer wrong-text pages, about half the quota a accepted page) although neither preregistered rule passed. A decision, not a pass. Stop: back to 4 (FIRST_READ_PER_CALL_BY_LANGUAGE in cli-ocr-lane.mjs) if the lane's acceptance k/n falls below live's. Re-decide by 11-15 with the cell's k/n under @8."
   }
  ]
 }

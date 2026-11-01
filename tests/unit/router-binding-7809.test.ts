@@ -13,7 +13,7 @@ import { checkBinding, servedByFirstRead, servedByCorrect, servedByArmcFirstRead
 import { servedByCrontab } from '../../scripts/audit/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { FIRST_READ_PER_CALL_LANGUAGES } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, firstReadPerCall } from '../../scripts/batch/cli-ocr-lane.mjs';
 
 const row = (id: string, decision: string, route: string) => ({ id, decision, route, routes: [{ id: route, k: 9, n: 10 }] });
 const table = (rows: ReturnType<typeof row>[], waivers: unknown[] = []) => ({ name: 't', rows: new Map(rows.map((r) => [r.id, r])), waivers });
@@ -25,6 +25,12 @@ describe('servedByFirstRead: the route id from the lane flags', () => {
       { lane: 'first-read', cell: 'german-blank/print', route: 'agy-flash-low@4>agy-flash-low-written' },
       { lane: 'first-read', cell: 'italian-blank/print', route: 'agy-flash-low-written' },
     ]);
+  });
+  it('perCallByLanguage raises one language when per-call > 1; --per-call=1 still reads one (#6740 German 8 a call)', () => {
+    expect(servedByFirstRead({ languages: ['deu', 'lat'], perCall: 4, perCallLanguages: PCL, perCallByLanguage: { deu: 8 } }).map((s: { route: string }) => s.route))
+      .toEqual(['agy-flash-low@8-written', 'agy-flash-low@4-written']);
+    expect(servedByFirstRead({ languages: ['deu'], perCall: 1, perCallLanguages: PCL, perCallByLanguage: { deu: 8 } })[0].route).toBe('agy-flash-low-written');
+    expect([firstReadPerCall('deu', 4), firstReadPerCall('lat', 4), firstReadPerCall('fra', 4), firstReadPerCall('deu', 1), firstReadPerCall('ita', 4)]).toEqual([8, 4, 4, 1, 1]);
   });
   it('refuses to guess the per-call languages', () => {
     expect(() => servedByFirstRead({ languages: ['deu'] } as never)).toThrow(/FIRST_READ_PER_CALL_LANGUAGES/);
@@ -67,7 +73,7 @@ describe('servedByCrontab', () => {
   ].join('\n');
   it('reads live lines only, one finding per lane and cell', () => {
     expect(servedByCrontab(cron)).toEqual([
-      { lane: 'first-read', cell: 'german-blank/print', route: 'agy-flash-low@4-written' },
+      { lane: 'first-read', cell: 'german-blank/print', route: 'agy-flash-low@8-written' },   // --per-call=4 reads German 8 (#6740)
       { lane: 'first-read', cell: 'french-blank/print', route: 'agy-flash-low@4-written' },
       { lane: 'armc-first-read', cell: 'latin-blank/print', route: 'pero>agy-flash-low-written' },
     ]);
@@ -84,8 +90,9 @@ describe('the committed pointer', () => {
     expect(t.rows.size).toBeGreaterThan(0);
   });
   it('the live first-read and arm-c routes match the current table (2026-10-30 gex45 crontab)', () => {
-    const served = [...servedByFirstRead({ languages: ['deu', 'fra'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }), ...servedByArmcFirstRead({ langs: ['la'] })];
-    expect(checkBinding(loadCurrentTable(), served).map((f: { status: string }) => f.status)).toEqual(['ok', 'ok', 'ok']);
+    // German runs 8 a call under the 2026-11-01 waiver (#6740) until the table decides the cell again.
+    const served = [...servedByFirstRead({ languages: ['deu', 'fra'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }), ...servedByArmcFirstRead({ langs: ['la'] })];
+    expect(checkBinding(loadCurrentTable(), served).map((f: { status: string }) => f.status)).toEqual(['waived', 'ok', 'ok']);
   });
 });
 
