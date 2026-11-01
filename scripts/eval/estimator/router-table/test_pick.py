@@ -190,5 +190,127 @@ class Units(unittest.TestCase):
         self.assertEqual(B.usd_per_page({'channel': None, 'paid': True, 'api_usd': 0.08}, rates), 0.08)
 
 
+
+class LatentCrashes(unittest.TestCase):
+    """#7263 audit 2026-11-01: n = 0 evidence and api_usd = None on a paid stage crashed the build."""
+    src = lambda self, k, n, books, w=0, **kw: dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=books, classes_k_of_n={}, **kw)
+
+    def test_zero_page_source_is_dropped(self):
+        x = B.pool_sources([self.src(0, 0, 0), self.src(9, 10, 5, w=1)], True)
+        self.assertEqual((x['accept'], x['sources']), ('9/10', 1))
+        self.assertAlmostEqual(x['eff'][1], 5.0)                        # 10 pages in 5 books: 5 book-scaled pages
+        self.assertIsNone(B.pool_sources([self.src(0, 0, 0)], True))    # nothing judged: untested, not a crash
+        self.assertIsNone(B.pool_sources([], True))
+
+    def test_zero_page_source_in_a_book_group(self):
+        x = B.pool_sources([self.src(0, 0, 3, _group='g'), self.src(8, 10, 4, _group='g')], True)
+        self.assertAlmostEqual(x['eff'][1], 4.0)
+
+    def test_no_books_behind_the_pages_is_untested(self):
+        self.assertIsNone(B.pool_sources([self.src(3, 4, 0)], True))   # books 0 scales n to 0: no wrate = w / 0
+
+    def test_paid_stage_without_a_price_is_never_cheapest(self):
+        rates = dict(claude=0.5, agy_month=200)
+        u = B.usd_per_page({'channel': None, 'paid': True, 'api_usd': None}, rates)
+        self.assertEqual(u, float('inf'))
+        free, unpriced = route('free', 0.95, 0.0), route('unpriced', 0.96, u)
+        cheap = route('cheap', 0.95, 0.001)
+        self.assertEqual(B.pick([unpriced, cheap], free, STEADY)['id'], 'cheap')
+
+
+class JudgeValidity(unittest.TestCase):
+    """V2 (#7263, #7880): where the judge prefers its own family's text, an Opus-written route cannot win on it alone."""
+    S = {'opus-img@10': {'channel': 'claude'}, 'agy': {'channel': 'agy'}, 'none': {'channel': None}}
+    Q = {'hold': {'acc': 0.8, 'p': 0.9}, 'judge_validity': {'in_force': True, 'judge_family': 'claude', 'second_judges': [], 'strata': {
+        'ocr/print': {'self_preference_valid': True, 'dbg': [-0.02, -0.18, 0.12]},
+        'ocr/manuscript': {'self_preference_valid': False, 'dbg': [0.43, 0.20, 0.66]},
+        'ocr/unknown': {'self_preference_valid': None}}}}
+    opus, agy = {'id': 'paddle>opus', 'stage': 'opus-img@10'}, {'id': 'paddle>agy', 'stage': 'agy'}
+
+    def gate(self, cell, dec, pk, Q=None):
+        return B.judge_gate(cell, dec, pk, Q or self.Q, self.S)
+
+    def test_manuscript_opus_keep_holds(self):
+        ms = {'id': 'zh-6561-served/manuscript', 'base': 'zh-6561-served', 'script': 'manuscript'}
+        dec, info = self.gate(ms, 'keep (k/n: manuscript: the defect rates are not split by script type)', self.opus)
+        self.assertEqual(dec, 'HOLD (judge not valid: self-preference)')
+        self.assertEqual(info['held'], 'keep paddle>opus')
+        self.assertEqual(self.gate(ms, 'switch', self.opus)[0], 'HOLD (judge not valid: self-preference)')
+
+    def test_other_writers_and_valid_strata_pass(self):
+        ms = {'id': 'x/manuscript', 'base': 'x', 'script': 'manuscript'}
+        self.assertEqual(self.gate(ms, 'switch', self.agy)[0], 'switch')                          # not the judge's family
+        self.assertEqual(self.gate(dict(ms, script='print', id='x/print'), 'keep', self.opus)[0], 'keep')   # print passes V2
+        self.assertEqual(self.gate(dict(ms, script='unknown', id='x/unknown'), 'keep', self.opus)[0], 'keep')  # unmeasured
+        self.assertEqual(self.gate(ms, 'HOLD', self.opus)[0], 'HOLD')
+        self.assertEqual(self.gate(ms, 'keep (UNTESTED)', self.opus)[0], 'keep (UNTESTED)')       # no judge involved
+        off = dict(self.Q, judge_validity=dict(self.Q['judge_validity'], in_force=False))
+        self.assertEqual(self.gate(ms, 'keep', self.opus, off), ('keep', None))
+
+    def test_translation_cells_are_their_own_stratum(self):
+        self.assertEqual(B.judge_stratum({'id': 'tibetan-tr/manuscript', 'base': 'tibetan-tr', 'script': 'manuscript'}), 'translate/manuscript')
+        self.assertEqual(B.judge_stratum({'id': 'german-tr-lite/print', 'base': 'german-tr-lite', 'script': 'print'}), 'translate/print')
+        self.assertEqual(B.judge_stratum({'id': 'tibetan-yigdzin/manuscript', 'base': 'tibetan-yigdzin', 'script': 'manuscript'}), 'ocr/manuscript')
+        tr = {'id': 'tibetan-tr/manuscript', 'base': 'tibetan-tr', 'script': 'manuscript'}
+        self.assertEqual(self.gate(tr, 'keep', self.opus)[0], 'keep')   # translate/manuscript not in strata: unmeasured
+
+    def test_a_second_judge_of_another_family_can_clear_it(self):
+        ms = {'id': 'x/manuscript', 'base': 'x', 'script': 'manuscript'}
+        jv = lambda e: dict(self.Q, judge_validity=dict(self.Q['judge_validity'], second_judges=[e]))
+        ok = dict(cell='x/manuscript', route='paddle>opus', judge='gemini-3.8-pro', family='gemini', accept='29/30')
+        dec, info = self.gate(ms, 'keep', self.opus, jv(ok))
+        self.assertEqual(dec, 'keep'); self.assertTrue(info['second_judge']['agrees'])
+        self.assertEqual(self.gate(ms, 'keep', self.opus, jv(dict(ok, accept='20/30')))[0], 'HOLD (judge not valid: self-preference)')
+        self.assertEqual(self.gate(ms, 'keep', self.opus, jv(dict(ok, family='claude', judge='sonnet')))[0], 'HOLD (judge not valid: self-preference)')
+
+
+class Multiplicity(unittest.TestCase):
+    """V3 (#7263): the cheapest passer of K candidates is picked, so the gate must control the error over all K."""
+    def P(self, **mu):
+        return {'switch': {'bar': 'opus', 'within': 0.08, 'p': 0.9, 'wrong_text_max': 0.04, 'multiplicity': mu}, 'hold': {'acc': 0.8, 'p': 0.9}}
+
+    def test_gate_p(self):
+        self.assertEqual(B.gate_p(self.P(method='none'), 6), 0.9)
+        self.assertAlmostEqual(B.gate_p(self.P(method='bonferroni', alpha=0.05), 5), 0.99)
+        self.assertAlmostEqual(B.gate_p(self.P(method='sidak', alpha=0.05), 1), 0.95)
+
+    def beta(self, rid, k, n, seed, channel='agy'):
+        import random
+        rng = random.Random(seed); d = [rng.betavariate(1 + k, 1 + n - k) for _ in range(4000)]
+        return dict(id=rid, mean=sum(d) / len(d), _d=d, wrate=0.0, wrong=0, n=n, channel=channel, _usd_acc=0.001,
+                    p80=sum(v >= 0.8 for v in d) / len(d))
+
+    def test_more_candidates_need_more_evidence(self):
+        bar = dict(self.beta('opus', 28, 30, 1), _bar=True)
+        c = dict(self.beta('agy', 29, 30, 2), _bar=False)
+        P0, P1 = self.P(method='none'), self.P(method='max-bonferroni', alpha=0.05)
+        pr = B.within_p(c, bar, 0.08)
+        self.assertTrue(0.9 <= pr < 0.99)                                          # passes alone at 0.9 ...
+        self.assertIn('agy', [r['id'] for r in B.gate([bar, c], P0, lambda b: 1, 0.08)[1]])
+        five = [c] + [dict(self.beta(f'x{i}', 20, 30, 10 + i), _bar=False) for i in range(4)]
+        self.assertNotIn('agy', [r['id'] for r in B.gate([bar] + five, P1, lambda b: 1, 0.08)[1]])   # ... not as one of 5 at 1 - 0.05 / 5
+
+    def test_no_bar_a_route_is_not_its_own_reference(self):
+        # no Opus route measured: before, the best by mean passed against itself however few its pages
+        lucky = dict(self.beta('lucky', 5, 5, 3), _bar=False)              # 5/5: posterior mean 0.86
+        solid = dict(self.beta('solid', 49, 60, 4), _bar=False)            # 49/60: 0.81
+        P0, P1 = self.P(method='none'), self.P(method='max-bonferroni', alpha=0.05)
+        self.assertEqual(B.gate([lucky, solid], P0, lambda b: 1, 0.08)[0]['id'], 'lucky')
+        self.assertIn('lucky', [r['id'] for r in B.gate([lucky, solid], P0, lambda b: 1, 0.08)[1]])     # the reference passes itself
+        self.assertNotIn('lucky', [r['id'] for r in B.gate([lucky, solid], P1, lambda b: 1, 0.08)[1]])  # 5 pages cannot show it
+
+    def test_simulated_false_pick_rate(self):
+        # v3_sim at the boundary (every candidate truly margin + 0.01 below the bar): six candidates at n = 30
+        import importlib.util as iu
+        sp = iu.spec_from_file_location('v3_sim', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'v3_sim.py'))
+        V = iu.module_from_spec(sp); sp.loader.exec_module(V)
+        routes = [dict(id='opus', n=30, prior=[4.7, 0.3], usd=0.002, _bar=True, est=0.95)] + \
+                 [dict(id=f'c{i}', n=30, prior=[4.4, 0.6], usd=0.0005 + i * 1e-4, _bar=False, est=0.87) for i in range(6)]
+        cell = dict(id='sim', current='opus', routes=routes, ref='opus', K=6)
+        Q = dict(self.P(method='none'), seed=1)
+        _, r = V.sim_cell((cell, Q, 300, 1000, 1, {'none': {'method': 'none'}, 'max-bonferroni': {'method': 'max-bonferroni', 'alpha': 0.05}}))
+        self.assertGreater(r['rates']['none']['boundary'], 0.10)          # the rule before: one of six passes often
+        self.assertLessEqual(r['rates']['max-bonferroni']['boundary'], 0.05)
+
 if __name__ == '__main__':
     unittest.main()
