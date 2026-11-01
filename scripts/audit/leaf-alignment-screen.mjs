@@ -33,6 +33,7 @@ import { MongoClient } from 'mongodb';
 import { proseOf, bookSignals, confirmed, imageOff, REPEAT_CONFIRM } from '../lib/leaf-alignment.mjs';
 import sharp from 'sharp';
 import { hashBuffer, hammingHex } from '../lib/page-alignment.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
 const STAGE = process.argv[2];
@@ -239,9 +240,10 @@ async function arbitrate() {
   async function arbitrateBook(r) {
     const cache = new Map(), bufs = new Map();
     const h = async (u) => { if (!cache.has(u)) { const b = await get(u); bufs.set(u, b); cache.set(u, await hashBuffer(b)); } return cache.get(u); };
-    const pages = await db.collection('pages').find({ book_id: r.book, page_number: { $gt: 0 }, hidden: { $ne: true } }, { projection: { page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, 'archive_metadata.source': 1 } }).toArray();
+    const pages = await db.collection('pages').find({ book_id: r.book, page_number: { $gt: 0 }, hidden: { $ne: true } }, { projection: { page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, 'archive_metadata.source': 1 } }).toArray();
     const by = new Map(pages.map((p) => [p.page_number, p]));
-    const shown = (p) => p?.display_photo || p?.archived_photo || p?.photo;
+    // The image the judge and the reader get (split-aware: a page split from a spread is its own half, not the spread).
+    const shown = (p) => (p ? getPageSource(p) : null);
     const out = { book: r.book, offset: [], blank: [], repeat: [] };
     // A named book (--books, a validation set) is always tested; in a ranked run, a book with a candidate offset or with
     // bulk_jp2 pages the #3368 repair never re-archived.
