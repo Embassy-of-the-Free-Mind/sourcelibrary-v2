@@ -44,6 +44,35 @@ export function spanishEligible(page: Pick<Page, 'translations' | 'translation_e
   return !!getTranslation(page, 'es')?.data;
 }
 
+/**
+ * The reading editions this pane can switch to besides English. Chinese joined
+ * Spanish for the Flora Sinensis edition translated from the Latin (#7537); a
+ * new language adds a key here, its name, its empty line and its draft note.
+ */
+export type EditionLang = 'es' | 'zh';
+const EDITION_LANGS: EditionLang[] = ['es', 'zh'];
+const EDITION_INFO: Record<EditionLang, { name: string; language: string; empty: string; copy: string; draftNote?: string }> = {
+  es: { name: 'Español', language: 'Spanish', empty: 'No hay traducción al español para esta página.', copy: 'Copy the Spanish translation' },
+  zh: {
+    name: '中文',
+    language: 'Chinese',
+    empty: '本页暂无中文译文。',
+    copy: 'Copy the Chinese translation',
+    // Said where the reader is looking, as the English pane's MachineDraftLine does.
+    draftNote: 'AI 译稿：据拉丁原文对照原书影像译出，尚未经人工审校。',
+  },
+};
+
+/** The name an edition goes by in the pane switch and the mobile bar. */
+export function editionName(lang: EditionLang): string {
+  return EDITION_INFO[lang].name;
+}
+
+/** The editions the current page actually has, in a stable order. */
+export function editionLangsFor(page: Pick<Page, 'translations' | 'translation_es'>): EditionLang[] {
+  return EDITION_LANGS.filter((l) => !!getTranslation(page, l)?.data);
+}
+
 // Mirrors LINE_WIDTH_CH in ReaderV2Bits.tsx (not exported there).
 const LINE_WIDTH_CH = { narrow: 55, comfortable: 70, wide: 86 } as const;
 
@@ -64,20 +93,22 @@ const LINE_WIDTH_CH = { narrow: 55, comfortable: 70, wide: 86 } as const;
  * and correctness, not a fix for a live bug.
  */
 export function SpanishProse({
-  page, settings, baseSize, suppressBlockquote = false,
+  page, settings, baseSize, suppressBlockquote = false, lang = 'es',
 }: {
   page: Page;
   settings: ReaderSettings;
   baseSize: number;
   suppressBlockquote?: boolean;
+  lang?: EditionLang;
 }) {
-  const raw = getTranslation(page, 'es')?.data || '';
+  const info = EDITION_INFO[lang];
+  const raw = getTranslation(page, lang)?.data || '';
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
 
   if (!text) {
     return (
       <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
-        No hay traducción al español para esta página.
+        {info.empty}
       </p>
     );
   }
@@ -85,6 +116,10 @@ export function SpanishProse({
   const fontSize = Math.round(baseSize * settings.textScale * 10) / 10;
 
   return (
+    <>
+    {info.draftNote && (
+      <p className="font-sans text-[12px] mb-4" style={{ color: 'var(--text-faint)' }}>{info.draftNote}</p>
+    )}
     <div
       className="prose-manuscript"
       data-reader-v2-typeface={settings.typeface}
@@ -101,11 +136,12 @@ export function SpanishProse({
         text={text}
         showMetadata={false}
         showNotes={settings.glosses}
-        language="Spanish"
+        language={info.language}
         columns={page.columns}
         pageType={page.page_type}
       />
     </div>
+    </>
   );
 }
 
@@ -124,22 +160,23 @@ export function SpanishProse({
  * No AI mark here. The pane already carries one, and it was rendering twice.
  */
 export function TranslationLanguageHeader({
-  lang, onChange, spanishAvailable, editing = false,
+  lang, onChange, available, editing = false,
 }: {
-  lang: 'en' | 'es';
-  onChange: (lang: 'en' | 'es') => void;
-  spanishAvailable: boolean;
+  lang: 'en' | EditionLang;
+  onChange: (lang: 'en' | EditionLang) => void;
+  /** The editions this page has (editionLangsFor); English is always offered. */
+  available: EditionLang[];
   editing?: boolean;
 }) {
   return (
     <>
       <CapsLabel style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>Translation</CapsLabel>
-      {spanishAvailable ? (
+      {available.length > 0 ? (
         <label className="inline-flex items-center">
           <span className="sr-only">Reading language</span>
           <select
-            value={lang}
-            onChange={(e) => onChange(e.target.value as 'en' | 'es')}
+            value={available.includes(lang as EditionLang) ? lang : 'en'}
+            onChange={(e) => onChange(e.target.value as 'en' | EditionLang)}
             /* 16px on phones. iOS Safari zooms the whole viewport when a form
                control under 16px takes focus, and a select is a form control —
                the search and librarian inputs already do this, this one was
@@ -152,7 +189,7 @@ export function TranslationLanguageHeader({
             }}
           >
             <option value="en">English</option>
-            <option value="es">Español</option>
+            {available.map((l) => <option key={l} value={l}>{EDITION_INFO[l].name}</option>)}
           </select>
         </label>
       ) : (
@@ -165,11 +202,11 @@ export function TranslationLanguageHeader({
 
 /** Copy-to-clipboard for the Spanish text — mirrors CopyTextButton in Reader2C.tsx,
  * which is not exported and hardcodes page.translation (English). */
-export function CopySpanishButton({ page }: { page: Page }) {
+export function CopySpanishButton({ page, lang = 'es' }: { page: Page; lang?: EditionLang }) {
   const [copied, setCopied] = useState(false);
-  const text = getTranslation(page, 'es')?.data || '';
+  const text = getTranslation(page, lang)?.data || '';
   if (!text) return null;
-  const label = 'Copy the Spanish translation';
+  const label = EDITION_INFO[lang].copy;
   return (
     <button
       type="button"

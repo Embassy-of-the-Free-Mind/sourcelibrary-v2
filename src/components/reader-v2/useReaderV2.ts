@@ -27,7 +27,7 @@ export interface ReaderSettings {
   lineHeight: number;
   glosses: boolean;
   /** Which translation to read, when a page carries more than one. */
-  translationLang: 'en' | 'es';
+  translationLang: 'en' | 'es' | 'zh';
 }
 
 export interface ViewState {
@@ -87,6 +87,7 @@ export function useReaderV2(
   // first. Only as an initial default: once they choose in the pane, the
   // stored preference wins, because the choice is theirs to keep.
   const spanishSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
+  const chineseSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/zh');
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
@@ -415,8 +416,11 @@ export function useReaderV2(
     // On the Spanish site, open in Spanish — but only for a reader who has
     // never chosen. Once they have picked a language in the pane their stored
     // choice wins, because the choice is theirs to keep.
-    setSettings(spanishSite && !stored ? { ...base, translationLang: 'es' } : base);
-  }, [spanishSite]);
+    // The same on /zh for the few books with a Chinese edition (#7537); on a page
+    // without one the pane simply shows English.
+    const siteLang = spanishSite ? 'es' : chineseSite ? 'zh' : null;
+    setSettings(siteLang && !stored ? { ...base, translationLang: siteLang } : base);
+  }, [spanishSite, chineseSite]);
   const updateSettings = useCallback((patch: Partial<ReaderSettings>) => {
     setSettings(prev => persistSettings({ ...prev, ...patch }));
   }, []);
