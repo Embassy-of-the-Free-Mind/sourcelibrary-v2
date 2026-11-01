@@ -39,6 +39,7 @@ export const ALLOWED_IMAGE_HOSTS = [
   'digi.vatlib.it',                  // Vatican
   'digital.bodleian.ox.ac.uk',       // Bodleian
   'iiif.bodleian.ox.ac.uk',
+  'image.library.jhu.edu',           // JHU Christine de Pizan Digital Scriptorium (BnF MSS, #7908)
   'digital.archives.go.jp',          // National Archives of Japan
   'contentdm.oclc.org',              // ContentDM (Laurenziana, etc.)
   'ccdl.claremont.edu',              // Claremont Colleges Digital Library (Nag Hammadi Archive)
