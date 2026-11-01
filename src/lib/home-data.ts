@@ -304,10 +304,13 @@ async function getCuratedShowcase(lang: HomeLang): Promise<CuratedShowcase> {
           ],
         },
       },
-      { $sample: { size: 4 } },
+      // A pinned set is a decision, so it keeps its order (the first is the large
+      // lead card); the open pool is drawn at random.
+      ...(pinned ? [] : [{ $sample: { size: 4 } }]),
       { $project: { _id: 0, slug: 1, name: 1, subtitle: 1, localized: 1, book_count: 1, artwork_count: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: ['$featured_images', 4] } } },
     ], { maxTimeMS: 5000 }).toArray(),
   ]);
+  if (pinned) docs.sort((a, b) => pinned.indexOf(a.slug as string) - pinned.indexOf(b.slug as string));
 
   const items: CuratedShowcaseItem[] = docs.map((doc) => {
     const imageCandidates = cardImageCandidates(doc.featured_images, coverOverride(doc.slug), doc.hero_image);
