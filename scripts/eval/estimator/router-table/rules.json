@@ -7,7 +7,8 @@
     "v2": "scripts/eval/estimator/chain/results/allocation-v2.json",
     "capacity": "scripts/eval/estimator/chain/capacity.json",
     "page_sizes": "scripts/eval/estimator/router-table/page-sizes-2026-10-26.json",
-"defect_rates": "scripts/eval/estimator/router-table/defect-rates.json"
+"defect_rates": "scripts/eval/estimator/router-table/defect-rates.json",
+    "pooled_prior": "scripts/eval/estimator/router-table/pooled-prior-2026-11-01.json"
   },
   "draws": 40000,
   "seed": 6740,
@@ -16,6 +17,8 @@
     "pages_measured": 7,
     "pages_pooled": 7,
     "_learned": "2026-10-28 (#7263, job router-backfill-all-7263; fit_prior.py, was 4 / 2 by hand). Empirical Bayes over the 15 tested routes whose prior comes from v1 / v2: route acceptance ~ Beta(m W, (1 - m) W), the book-scaled judged k of n beta-binomial around it. Maximum marginal likelihood W = 7.0 pages, profile 90% [3.5, 14.5], route bootstrap [3.4, 25.8]. Measured and pooled priors fitted apart give 4.3 [1.4, 12.5] and 10.5 [4.1, 29.2]; the split gains 0.52 log-likelihood for one more parameter, so one weight for both (the data do not say pooled priors are worse). Calibration: logit(acceptance) = 1.2 + 0.40 [0.20, 0.60] x logit(prior mean): the prior predicts the order of routes but its means are too extreme and too low. One route carries most of the misfit: Latin Flash-Lite, v1 0.035 (P(passes the absolute CER floors)) against 0.65 judged; without it W = 14.9. Refit after each backfill: python3 scripts/eval/estimator/router-table/fit_prior.py <table>.json.",
+    "pooled": {"in_force": true, "pages": 5,
+      "why": "V1 (#7263, 2026-11-01; held-out test #7878, scripts/eval/experiments/2026-11-01-hierarchical-heldout-7263.md): every route's prior mean is the partially pooled logit's prediction (engine + draft + language + writing system + script type; no engine x script interaction, which had no support), fitted on the other base cells' tested routes (pooled_prior.py, leave one base cell out, so a cell's own evidence enters once). Held out it beats the v1/v2 prior (log density -528.5 against -614.6 leaving a base cell out; ECE 0.014 against 0.249) and covers the 230 routes the v1/v2 prior left flat. Worth 5 pages: #7878 measured 5.2 [4.3, 6.4] for a new language, 5.5 [4.5, 6.7] for a new base cell, 6.4 [5.2, 7.8] for a new script split. pages_measured / pages_pooled / calibration below are the v1/v2 prior's, now the sensitivity ('the other prior'). Refit after each backfill: python3 scripts/eval/estimator/router-table/pooled_prior.py <table>.json --out <file>."},
     "flat": [1, 1],
     "_v1_charts_left_out": "German and French OCR have no v1 chart: latin-script-other is web-transcribed text and gives Flash-Lite 0.998, against 17/30 the judge accepted on Latin. Chinese print: v1 says its floors measure the reference panel's variant forms.",
     "clip": [0.02, 0.98],
@@ -54,7 +57,27 @@
     "bar_scope": "print",
     "_bar_scope": "Derek, 2026-10-28 12:06Z (job inbox, router-next-7263): 'I am assuming we need opus for manuscripts -- that is the plan ... at least for greek, maybe others measure ok.' So switch.bar = opus applies to PRINT (and unknown) cells only: in a MANUSCRIPT cell an Opus route is a candidate like any other, the gate's reference is the best measured route, and when no agy / GPU route clears it the router picks Opus. Greek manuscripts: Opus is the planned route (script_split.planned), no agy / GPU test needed to justify it.",
     "sensitivity_within": 0.10,
-    "sensitivity_cheaper": 5
+    "sensitivity_cheaper": 5,
+    "multiplicity": {"method": "max-bonferroni", "alpha": 0.03},
+    "_multiplicity": "V3 (#7263, 2026-11-01; v3_sim.py, scripts/eval/experiments/2026-11-01-router-validated-build-7263.md). The rule before (every candidate gated at P >= 0.9 against the best route by mean, cheapest passer wins) picks a route truly worse than the bar by more than the margin in up to 45% of a cell's decisions (15 of 43 decidable cells over 5%, mean 9.6%), for two reasons: no multiplicity control over the K candidates, and, where no Opus bar is measured, a reference chosen by the same draws it is compared with (the best by mean passes against itself on 5 pages). Simulated at each cell's real n and K, 1,000 replicates, every candidate at margin + 0.01 below the bar: Bonferroni / Šidák by K (alpha 0.02-0.10) leave 10-13 cells over 5% (worst 44%), and the joint set rule 14-15, because neither fixes the reference; max-bonferroni (each pickable route against the per-draw MAXIMUM of the reference set, at 1 - alpha / K) at alpha 0.05 leaves 2 cells at 5.9%, at 0.03 none (worst 3.6%, mean 0.5%). So max-bonferroni, alpha 0.03: the largest alpha with every cell <= 5%. The price is power: P(picking a candidate that truly ties the bar) falls from 0.155 to 0.052 averaged over cells (most cells' n are too small to show a tie at all). method none = the rule before (build.py --off v3)."
+  },
+  "judge_validity": {
+    "_about": "V2 (#7263): is the Opus route judge right, per stratum (task / script type), against human gold. A stratum whose self-preference (DBG = judge accept - gold accept, Opus-written minus Gemini-written) interval excludes 0 fails V2's self-preference bar: there a route the judge's own family wrote (judge_family; a stage on the claude channel) cannot win keep or switch on that judge alone. build.py judge_gate: HOLD (judge not valid: self-preference), unless a judge of another family clears the route (second_judges: {cell, route, judge, family, accept: 'k/n', source}; clears = P(acc >= hold.acc) >= hold.p under Beta(1 + k, 1 + n - k)). self_preference_valid null = not measured: no hold, shown as unmeasured. Sensitivity / specificity / kappa are stored for the record and for the judge correction (paper step 2); V2's accuracy bar (both >= 0.85 per routed language) is not met on print either (sensitivity 0.82) and does not gate anything yet.",
+    "in_force": true,
+    "source": "#7880 (scripts/eval/experiments/2026-11-01-judge-calibration-churro-7263.md; CHURRO-DS, 140 pages, one per document; truth = order-free CER <= 1% against the human transcription; values [estimate, 95% low, 95% high])",
+    "judge_family": "claude",
+    "bar": {"sensitivity": 0.85, "specificity": 0.85, "self_preference": "the DBG 95% interval includes 0"},
+    "strata": {
+      "ocr/print": {"n": 200, "sensitivity": [0.82, 0.74, 0.87], "specificity": [0.85, 0.75, 0.92], "kappa": [0.64, 0.51, 0.76], "dbg": [-0.02, -0.18, 0.12], "self_preference_valid": true,
+        "by_language": {"la": {"sensitivity": [0.80, 0.63, 0.90], "specificity": [0.75, 0.53, 0.89], "kappa": [0.55, 0.21, 0.83]}, "de": {"sensitivity": [0.74, 0.57, 0.85], "specificity": [0.81, 0.57, 0.93], "kappa": [0.50, 0.23, 0.78]}, "fr": {"sensitivity": [0.85, 0.69, 0.93], "specificity": [0.88, 0.66, 0.97], "kappa": [0.70, 0.50, 0.88]}, "en": {"sensitivity": [0.89, 0.74, 0.95], "specificity": [1.00, 0.80, 1.00], "kappa": [0.82, 0.64, 0.96]}}},
+      "ocr/manuscript": {"n": 150, "sensitivity": [0.65, 0.51, 0.76], "specificity": [0.66, 0.56, 0.74], "kappa": [0.29, 0.14, 0.45], "dbg": [0.43, 0.20, 0.66], "self_preference_valid": false,
+        "by_language": {"it": {"sensitivity": [0.68, 0.46, 0.85], "specificity": [0.52, 0.35, 0.68], "kappa": [0.18, -0.11, 0.42]}, "grc": {"sensitivity": [0.67, 0.44, 0.84], "specificity": [0.72, 0.55, 0.84], "kappa": [0.37, 0.14, 0.61]}, "la": {"sensitivity": [0.59, 0.36, 0.78], "specificity": [0.73, 0.56, 0.85], "kappa": [0.31, 0.02, 0.58]}}},
+      "ocr/unknown": {"self_preference_valid": null, "why": "not measured: pages of no recorded script type (mostly print by book majority, some manuscript); #7880 drew print and manuscript only. In these cells Opus is the bar, not a candidate (switch.bar_scope)."},
+      "translate/print": {"self_preference_valid": null, "why": "not measured against gold: the -0.11 to -0.13 of estimator v2 is a two-judge diff-in-diff with no gold (#7880 section 4), so it cannot tell bias from quality."},
+      "translate/manuscript": {"self_preference_valid": null, "why": "not measured against gold (as translate/print)."},
+      "translate/unknown": {"self_preference_valid": null, "why": "not measured against gold (as translate/print)."}
+    },
+    "second_judges": []
   },
   "_fallback_routes": "A cell's `fallback_routes` run ONLY when their gate opens, never by the pick: build.py does not read them. agy-opus (#7545): Claude Opus through agy, allowed only on an account whose Gemini weekly bucket reads 0 and whose Claude buckets hold 10% (agyClaudeGate, scripts/lib/agy-cli.mjs). Each carries paired evidence against the cell's Opus route, the router's gate on it (switch.within, switch.p, the wrong-text bar), and its draw on the account's Claude group as a fraction per page (agy /quota before and after).",
   "hold": { "_about": "HOLD when no measured route has P(acceptance >= hold.acc) >= hold.p.", "acc": 0.8, "p": 0.9 },

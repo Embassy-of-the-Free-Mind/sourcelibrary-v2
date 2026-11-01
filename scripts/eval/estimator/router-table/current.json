@@ -1,9 +1,9 @@
 {
  "_prior_art": "PRIOR ART: none — looked in scripts/eval/estimator/router-table/ (dated builds and rules.json only; nothing names the live table) and scripts/lib/ocr-routing-table.json (hand-edited production routes, not the k/n decisions).",
- "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. `cells` moves the pointer for the named cells only ({cell: {table, set, why}}: that cell's row comes from that build, every other cell from `table`), so a decision about two cells does not carry every other change a rebuild makes. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
- "table": "2026-10-31-correction-pass-7818",
- "set": "2026-10-31",
- "why": "2026-10-30-german-cheaper-7701 plus the #7818 paired test as evidence for german-lite and french-lite lite>agy-flash-low (Derek, 2026-10-31: correction cron on, evidence in, waiver for German). With it german-lite/print moves to keep lite>opus (waived below) and french-lite/print to HOLD; every first-read decision is unchanged from german-cheaper.",
+ "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. `cells` moves the pointer for the named cells only ({cell: {table, set, why}}: that cell's row comes from that build, every other cell from `table`; an older build keeps a cell where a newer `table` would carry a change nobody decided), so a decision about two cells does not carry every other change a rebuild makes. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
+ "table": "2026-11-01-validated-7263",
+ "set": "2026-11-01",
+ "why": "#7263 validated build (V1 pooled prior, V2 judge-validity gate, V3 multiplicity-controlled gate; scripts/eval/experiments/2026-11-01-router-validated-build-7263.md). Against 2026-10-31-correction-pass-7818, the cells V1-V3 move are explained there one by one (decision_diff.py). The cells whose change came from evidence pooled since 10-31 and that nobody decided (latin-blank/print and german-blank/print go to HOLD under the defect rule; see the 2026-11-01 reread-7853 note) stay on 7818 through `cells` below; french-lite/print and german-lite/print stay on Derek's #7853 decision.",
  "cells": {
   "german-lite/print": {
    "table": "2026-11-01-reread-7853",
@@ -14,6 +14,16 @@
    "table": "2026-11-01-reread-7853",
    "set": "2026-11-01",
    "why": "Derek took the #7853 default on 2026-11-01. With #7853 pooled the cell switches from HOLD to agy-flash-low@4-read (k/n: the live route lite>opus has no defect verdicts): 55/60, 2 wrong text, against lite>agy-flash-low 108/132 and agy-flash-low-read 79/90. The lane: cli-ocr-lane.mjs correct --reread-per-call=4."
+  },
+  "latin-blank/print": {
+   "table": "2026-10-31-correction-pass-7818",
+   "set": "2026-11-01",
+   "why": "Kept on 7818 when the pointer moved to 2026-11-01-validated-7263 (#7263): its change there (switch pero>agy-flash-low-written -> HOLD, the defect rule's pick moving with the misleads weight) comes from evidence pooled since 10-31, not from V1-V3, and was not decided. V1-V3 do not move it."
+  },
+  "german-blank/print": {
+   "table": "2026-10-31-correction-pass-7818",
+   "set": "2026-11-01",
+   "why": "Kept on 7818 when the pointer moved to 2026-11-01-validated-7263 (#7263): its change there (keep agy-flash-low@4-written -> HOLD, the defect rule's pick moving with the misleads weight) comes from evidence pooled since 10-31, not from V1-V3, and was not decided. The @8 first-read waiver below still applies."
   }
  },
  "waivers": [

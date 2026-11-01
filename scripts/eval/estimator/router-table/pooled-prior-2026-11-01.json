@@ -1,0 +1,1250 @@
+{
+ "_about": "The router's acceptance prior from the partially pooled logit of #7878 (#7263 V1). Stdlib only, no model calls, no DB.",
+ "table": "scripts/eval/estimator/router-table/2026-11-01-validated-7263.json",
+ "model": "#7878 c-add: logit p = mu + engine + draft + language + writing system + script type",
+ "fold": "leave one base cell out, hyperparameters from the full fit",
+ "routes_fitted": 258,
+ "routes": 355,
+ "hyper": {
+  "sig": {
+   "eng": 2.5,
+   "draft": 0.5,
+   "lang": 0.5,
+   "wsys": 1.0,
+   "stype": 0.2
+  },
+  "W": 13,
+  "lml": -540.46
+ },
+ "effects": {
+  "mu": {
+   "mu": 0.002
+  },
+  "eng": {
+   "agy-correct": 0.824,
+   "agy-correct-high": 0.8,
+   "agy-read": 0.719,
+   "flash3": 0.296,
+   "gpu": -0.756,
+   "kraken": -3.741,
+   "lighton": -1.065,
+   "lite": -0.307,
+   "opus-correct": 1.995,
+   "paddle": 0.203,
+   "pero": -1.227,
+   "tr-agy": 1.577,
+   "tr-draft": -0.368,
+   "tr-opus": 0.853,
+   "yigdzin": 0.202
+  },
+  "draft": {
+   "agy-read": 0.088,
+   "flash3": -0.432,
+   "gpu": 0.774,
+   "gpu-glm": 0.35,
+   "kraken": -0.457,
+   "lighton": -0.277,
+   "lite": -0.246,
+   "none": -0.145,
+   "paddle": 0.144,
+   "pero": 0.163,
+   "yigdzin": 0.038
+  },
+  "lang": {
+   "ar": -0.308,
+   "bo": 0.088,
+   "da": 0.177,
+   "de": -0.279,
+   "en": 0.612,
+   "enm": -0.144,
+   "es": 0.29,
+   "fr": 0.309,
+   "fro": -0.012,
+   "gmh": -0.497,
+   "grc": -0.28,
+   "he": -0.277,
+   "hi": 0.445,
+   "it": 0.245,
+   "ko": -0.103,
+   "la": -0.194,
+   "ota": 0.24,
+   "pt": -0.053,
+   "ru": 0.29,
+   "sa": -0.413,
+   "ta": 0.162,
+   "tr": -0.18,
+   "zh": -0.118
+  },
+  "wsys": {
+   "Arab": -0.274,
+   "Cyrl": 1.16,
+   "Deva": 0.127,
+   "Grek": -1.12,
+   "Hani": -0.472,
+   "Hebr": -1.108,
+   "Kore": -0.414,
+   "Latn": 1.098,
+   "Taml": 0.649,
+   "Tibt": 0.354
+  },
+  "stype": {
+   "manuscript": -0.159,
+   "print": 0.172,
+   "unknown": -0.013
+  }
+ },
+ "means": {
+  "arabic-flash3/print": {
+   "3flash": 0.5098,
+   "3flash>opus": 0.7801,
+   "3flash>agy-flash-low": 0.5442
+  },
+  "arabic-flash3/manuscript": {
+   "3flash": 0.4379,
+   "3flash>opus": 0.726,
+   "3flash>agy-flash-low": 0.4716
+  },
+  "arabic-flash3/unknown": {
+   "3flash": 0.4704,
+   "3flash>opus": 0.7511,
+   "3flash>agy-flash-low": 0.5046
+  },
+  "arabic-lite/print": {
+   "lite": 0.2858,
+   "lite>opus": 0.7676,
+   "agy-flash-low-read": 0.5357,
+   "agy-flash-low-read-diplomatic": 0.5357
+  },
+  "arabic-lite/manuscript": {
+   "lite": 0.2289,
+   "lite>opus": 0.7108,
+   "agy-flash-low-read": 0.4616,
+   "agy-flash-low-read-diplomatic": 0.4616
+  },
+  "chinese-flash3/print": {
+   "3flash": 0.6443,
+   "3flash>opus": 0.8639,
+   "3flash>agy-flash-low": 0.697
+  },
+  "chinese-flash3/manuscript": {
+   "3flash": 0.553,
+   "3flash>opus": 0.8118,
+   "3flash>agy-flash-low": 0.6104
+  },
+  "chinese-flash3/unknown": {
+   "3flash": 0.5913,
+   "3flash>opus": 0.8343,
+   "3flash>agy-flash-low": 0.647
+  },
+  "danish-lite/print": {
+   "lite": 0.6837
+  },
+  "danish-lite/manuscript": {
+   "lite": 0.6096
+  },
+  "danish-lite/unknown": {
+   "lite": 0.6426
+  },
+  "english-blank-pre1800/unknown": {
+   "scans-only": 0.8098,
+   "lighton": 0.6358,
+   "lighton-written": 0.6358
+  },
+  "english-gpu-7263/print": {
+   "lite": 0.7078,
+   "lite>agy-flash-low": 0.8616,
+   "lite>opus": 0.9512,
+   "gpu": 0.6004,
+   "gpu>agy-flash-low": 0.9443,
+   "gpu2>agy-flash-low+diff": 0.9443,
+   "agy-flash-low": 0.8749,
+   "gpu-glm>agy-flash-low": 0.9123
+  },
+  "english-gpu-7263/manuscript": {
+   "lite": 0.6402,
+   "lite>agy-flash-low": 0.82,
+   "lite>opus": 0.9342,
+   "gpu": 0.5261,
+   "gpu>agy-flash-low": 0.925,
+   "gpu2>agy-flash-low+diff": 0.925,
+   "agy-flash-low": 0.836,
+   "gpu-glm>agy-flash-low": 0.8836
+  },
+  "french-blank/print": {
+   "scans-only": 0.7874,
+   "agy-flash-low": 0.8923,
+   "agy-flash-low-written": 0.8923,
+   "agy-flash-low>agy-flash-low": 0.9243,
+   "agy-flash-low>agy-flash-low-written": 0.9243,
+   "agy-flash-low@4-written": 0.8923
+  },
+  "french-blank/manuscript": {
+   "scans-only": 0.7388,
+   "agy-flash-low": 0.8606,
+   "agy-flash-low-written": 0.8606,
+   "agy-flash-low>agy-flash-low": 0.901,
+   "agy-flash-low>agy-flash-low-written": 0.901,
+   "agy-flash-low@4-written": 0.8606
+  },
+  "french-gpu-7263/print": {
+   "lite": 0.6995,
+   "gpu": 0.5551,
+   "gpu>agy-flash-low": 0.942,
+   "gpu2>agy-flash-low+diff": 0.942,
+   "agy-flash-low": 0.8635,
+   "gpu-glm>agy-flash-low": 0.9148
+  },
+  "french-gpu-7263/manuscript": {
+   "lite": 0.6289,
+   "gpu": 0.4779,
+   "gpu>agy-flash-low": 0.9214,
+   "gpu2>agy-flash-low+diff": 0.9214,
+   "agy-flash-low": 0.8205,
+   "gpu-glm>agy-flash-low": 0.8861
+  },
+  "french-lite/print": {
+   "lite": 0.7954,
+   "lite>opus": 0.9716,
+   "lite>agy-flash-low": 0.9196,
+   "agy-flash-low-read": 0.9135,
+   "agy-flash-low@4-read": 0.9135
+  },
+  "french-lite/manuscript": {
+   "lite": 0.7357,
+   "lite>opus": 0.9604,
+   "lite>agy-flash-low": 0.8907,
+   "agy-flash-low-read": 0.8824,
+   "agy-flash-low@4-read": 0.8824
+  },
+  "french-lite/unknown": {
+   "lite": 0.7643,
+   "lite>opus": 0.9659,
+   "lite>agy-flash-low": 0.9048,
+   "agy-flash-low-read": 0.8974,
+   "agy-flash-low@4-read": 0.8974
+  },
+  "german-blank/print": {
+   "scans-only": 0.7733,
+   "agy-flash-low@4": 0.8468,
+   "agy-flash-low@4-written": 0.8468,
+   "agy-flash-low@4>agy-flash-low": 0.8555,
+   "agy-flash-low@4>agy-flash-low-written": 0.8555,
+   "agy-flash-low@4>agy-flash-low@4-written": 0.8555,
+   "agy-flash-low@8-written": 0.8468,
+   "lighton-written": 0.4719,
+   "pero-written": 0.7733,
+   "lighton>agy-flash-low@4-written": 0.8871,
+   "pero>agy-flash-low@4-written": 0.9176
+  },
+  "german-blank/manuscript": {
+   "scans-only": 0.718,
+   "agy-flash-low@4": 0.8007,
+   "agy-flash-low@4-written": 0.8007,
+   "agy-flash-low@4>agy-flash-low": 0.812,
+   "agy-flash-low@4>agy-flash-low-written": 0.812,
+   "agy-flash-low@4>agy-flash-low@4-written": 0.812,
+   "agy-flash-low@8-written": 0.8007,
+   "lighton-written": 0.3999,
+   "pero-written": 0.718,
+   "lighton>agy-flash-low@4-written": 0.8511,
+   "pero>agy-flash-low@4-written": 0.8902
+  },
+  "german-blank-fraktur/print": {
+   "agy-flash-low@4-written": 0.8468,
+   "agy-flash-low@8-written": 0.8468,
+   "lighton-written": 0.4719,
+   "pero-written": 0.7733,
+   "lighton>agy-flash-low@4-written": 0.8871,
+   "pero>agy-flash-low@4-written": 0.9176,
+   "kraken-written": 0.7733,
+   "kraken>agy-flash-low@4-written": 0.8871
+  },
+  "german-blank-antiqua/print": {
+   "agy-flash-low@4-written": 0.8468,
+   "agy-flash-low@8-written": 0.8468,
+   "lighton-written": 0.4719,
+   "pero-written": 0.7733,
+   "lighton>agy-flash-low@4-written": 0.8871,
+   "pero>agy-flash-low@4-written": 0.9176
+  },
+  "german-flash3/print": {
+   "3flash": 0.6353,
+   "3flash>opus": 0.8701,
+   "3flash>agy-flash-low": 0.7248
+  },
+  "german-flash3/manuscript": {
+   "3flash": 0.5473,
+   "3flash>opus": 0.8218,
+   "3flash>agy-flash-low": 0.6452
+  },
+  "german-flash3/unknown": {
+   "3flash": 0.582,
+   "3flash>opus": 0.8417,
+   "3flash>agy-flash-low": 0.6772
+  },
+  "german-gpu-7263/print": {
+   "lite": 0.5911,
+   "lite>agy-flash-low": 0.7988,
+   "lite>opus": 0.93,
+   "gpu": 0.5078,
+   "gpu>agy-flash-low": 0.9107,
+   "gpu2>agy-flash-low+diff": 0.9107,
+   "agy-flash-low": 0.8136,
+   "gpu-glm>agy-flash-low": 0.8938
+  },
+  "german-gpu-7263/manuscript": {
+   "lite": 0.5361,
+   "lite>agy-flash-low": 0.7597,
+   "lite>opus": 0.9135,
+   "gpu": 0.4534,
+   "gpu>agy-flash-low": 0.8901,
+   "gpu2>agy-flash-low+diff": 0.8901,
+   "agy-flash-low": 0.7761,
+   "gpu-glm>agy-flash-low": 0.87
+  },
+  "german-gpu-7263/unknown": {
+   "lite": 0.5628,
+   "lite>agy-flash-low": 0.779,
+   "lite>opus": 0.9215,
+   "gpu": 0.4797,
+   "gpu>agy-flash-low": 0.9001,
+   "gpu2>agy-flash-low+diff": 0.9001,
+   "agy-flash-low": 0.7943,
+   "gpu-glm>agy-flash-low": 0.8815
+  },
+  "german-lite/print": {
+   "lite": 0.6438,
+   "lite>opus": 0.9397,
+   "lite>agy-flash-low": 0.837,
+   "agy-flash-low-read": 0.8351,
+   "agy-flash-low@4-read": 0.8351
+  },
+  "german-lite/manuscript": {
+   "lite": 0.5658,
+   "lite>opus": 0.9177,
+   "lite>agy-flash-low": 0.7867,
+   "agy-flash-low-read": 0.7838,
+   "agy-flash-low@4-read": 0.7838
+  },
+  "german-lite/unknown": {
+   "lite": 0.5964,
+   "lite>opus": 0.9266,
+   "lite>agy-flash-low": 0.8069,
+   "agy-flash-low-read": 0.8043,
+   "agy-flash-low@4-read": 0.8043
+  },
+  "german-tr-flash3/print": {
+   "flash3": 0.585,
+   "opus-cli": 0.8569
+  },
+  "german-tr-flash3/manuscript": {
+   "flash3": 0.5129,
+   "opus-cli": 0.8166
+  },
+  "german-tr-flash3/unknown": {
+   "flash3": 0.5355,
+   "opus-cli": 0.8298
+  },
+  "german-tr-lite/print": {
+   "flash-lite": 0.7031,
+   "opus-cli": 0.8655
+  },
+  "german-tr-lite/manuscript": {
+   "flash-lite": 0.633,
+   "opus-cli": 0.8243
+  },
+  "german-tr-lite/unknown": {
+   "flash-lite": 0.6551,
+   "opus-cli": 0.8374
+  },
+  "greek-flash3/print": {
+   "3flash": 0.2671
+  },
+  "greek-flash3/manuscript": {
+   "3flash": 0.21,
+   "3flash>opus": 0.5016
+  },
+  "greek-flash3/unknown": {
+   "3flash": 0.2342
+  },
+  "greek-lite/print": {
+   "lite": 0.4745,
+   "lite>opus": 0.8798,
+   "agy-flash-low-read": 0.7059
+  },
+  "greek-lite/manuscript": {
+   "lite": 0.3997,
+   "lite>opus": 0.843,
+   "agy-flash-low-read": 0.6382
+  },
+  "hebrew-flash3/print": {
+   "3flash": 0.6191,
+   "3flash>opus": 0.8656,
+   "3flash>agy-flash-low": 0.6842
+  },
+  "hebrew-flash3/manuscript": {
+   "3flash": 0.5463,
+   "3flash>opus": 0.8258,
+   "3flash>agy-flash-low": 0.6156
+  },
+  "hebrew-flash3/unknown": {
+   "3flash": 0.5686,
+   "3flash>opus": 0.8386,
+   "3flash>agy-flash-low": 0.6369
+  },
+  "hindi-lite/print": {
+   "lite": 0.3227,
+   "agy-flash-low-read": 0.5631
+  },
+  "hindi-lite/unknown": {
+   "lite": 0.2883,
+   "agy-flash-low-read": 0.5223
+  },
+  "italian-gpu-7263/print": {
+   "lite": 0.6877,
+   "gpu": 0.603,
+   "gpu>agy-flash-low": 0.9322,
+   "gpu2>agy-flash-low+diff": 0.9322,
+   "agy-flash-low": 0.8505,
+   "gpu-glm>agy-flash-low": 0.9079
+  },
+  "italian-lite/print": {
+   "lite": 0.7485
+  },
+  "italian-lite/manuscript": {
+   "lite": 0.682
+  },
+  "italian-lite/unknown": {
+   "lite": 0.7112
+  },
+  "korean-lite/print": {
+   "lite": 0.4583,
+   "agy-flash-low-read": 0.6828
+  },
+  "korean-lite/manuscript": {
+   "lite": 0.3755,
+   "agy-flash-low-read": 0.6042
+  },
+  "korean-lite/unknown": {
+   "lite": 0.4116,
+   "agy-flash-low-read": 0.6396
+  },
+  "latin-blank/print": {
+   "scans-only": 0.6989,
+   "agy-flash-low@4": 0.8332,
+   "agy-flash-low@4-written": 0.8332,
+   "agy-flash-low@8-1600px-written": 0.8332,
+   "agy-flash-low@4>agy-flash-low": 0.8849,
+   "agy-flash-low@4>agy-flash-low-written": 0.8849,
+   "pero>agy-flash-low-written": 0.8718,
+   "pero>agy-flash-low@4-written": 0.8718
+  },
+  "latin-flash3/print": {
+   "3flash": 0.7765,
+   "3flash>opus": 0.9291,
+   "3flash>agy-flash-low": 0.8099
+  },
+  "latin-flash3/manuscript": {
+   "3flash": 0.7132,
+   "3flash>opus": 0.9031,
+   "3flash>agy-flash-low": 0.7524
+  },
+  "latin-flash3/unknown": {
+   "3flash": 0.7381,
+   "3flash>opus": 0.9136,
+   "3flash>agy-flash-low": 0.7752
+  },
+  "latin-gpu-7263/print": {
+   "lite": 0.61,
+   "lite>agy-flash-low": 0.8046,
+   "lite>opus": 0.9382,
+   "gpu": 0.5281,
+   "pero>agy-flash-low": 0.8317,
+   "gpu2>agy-flash-low+diff": 0.9159,
+   "agy-flash-low": 0.8096,
+   "gpu-glm>agy-flash-low": 0.8696
+  },
+  "latin-gpu-7263/manuscript": {
+   "lite": 0.5086,
+   "lite>agy-flash-low": 0.7308,
+   "lite>opus": 0.909,
+   "gpu": 0.4279,
+   "pero>agy-flash-low": 0.7656,
+   "gpu2>agy-flash-low+diff": 0.8774,
+   "agy-flash-low": 0.7366,
+   "gpu-glm>agy-flash-low": 0.815
+  },
+  "latin-lite/print": {
+   "lite": 0.7022,
+   "lite>opus": 0.9571,
+   "lite>agy-flash-low": 0.8746,
+   "agy-flash-low-read": 0.8655,
+   "lite>agy-flash-low+diffqa": 0.8746,
+   "gpu>agy-flash-low": 0.9468
+  },
+  "latin-lite/manuscript": {
+   "lite": 0.627,
+   "lite>opus": 0.9406,
+   "lite>agy-flash-low": 0.8321,
+   "agy-flash-low-read": 0.8202,
+   "lite>agy-flash-low+diffqa": 0.8321,
+   "gpu>agy-flash-low": 0.9266
+  },
+  "latin-lite/unknown": {
+   "lite": 0.701,
+   "lite>opus": 0.9566,
+   "lite>agy-flash-low": 0.8737,
+   "agy-flash-low-read": 0.8642,
+   "lite>agy-flash-low+diffqa": 0.8737,
+   "gpu>agy-flash-low": 0.9462
+  },
+  "mhg-lite/print": {
+   "lite": 0.7138
+  },
+  "mhg-lite/manuscript": {
+   "lite": 0.6463
+  },
+  "mhg-lite/unknown": {
+   "lite": 0.6777
+  },
+  "middle-english-lite/print": {
+   "lite": 0.6981
+  },
+  "middle-english-lite/manuscript": {
+   "lite": 0.6276
+  },
+  "middle-english-lite/unknown": {
+   "lite": 0.6587
+  },
+  "old-french-lite/print": {
+   "lite": 0.6916
+  },
+  "old-french-lite/manuscript": {
+   "lite": 0.6225
+  },
+  "ottoman-lite/print": {
+   "lite": 0.3271,
+   "agy-flash-low-read": 0.5524
+  },
+  "ottoman-lite/manuscript": {
+   "lite": 0.2574,
+   "agy-flash-low-read": 0.4687
+  },
+  "ottoman-lite/unknown": {
+   "lite": 0.2913,
+   "agy-flash-low-read": 0.5105
+  },
+  "portuguese-lite/print": {
+   "lite": 0.694
+  },
+  "portuguese-lite/manuscript": {
+   "lite": 0.6225
+  },
+  "portuguese-lite/unknown": {
+   "lite": 0.6546
+  },
+  "russian-lite/print": {
+   "lite": 0.3941,
+   "agy-flash-low-read": 0.6364
+  },
+  "russian-lite/manuscript": {
+   "lite": 0.3206,
+   "agy-flash-low-read": 0.5593
+  },
+  "russian-lite/unknown": {
+   "lite": 0.3449,
+   "agy-flash-low-read": 0.5855
+  },
+  "sanskrit-lite/print": {
+   "lite": 0.6294,
+   "lite>opus": 0.926,
+   "agy-flash-low-read": 0.8114
+  },
+  "sanskrit-lite/manuscript": {
+   "lite": 0.5551,
+   "lite>opus": 0.9002,
+   "agy-flash-low-read": 0.7578
+  },
+  "sanskrit-lite/unknown": {
+   "lite": 0.5865,
+   "lite>opus": 0.9117,
+   "agy-flash-low-read": 0.7811
+  },
+  "spanish-lite/print": {
+   "lite": 0.6781
+  },
+  "spanish-lite/manuscript": {
+   "lite": 0.6033
+  },
+  "spanish-lite/unknown": {
+   "lite": 0.6343
+  },
+  "tamil-lite/print": {
+   "lite": 0.4123,
+   "agy-flash-low-read": 0.6503
+  },
+  "tamil-lite/manuscript": {
+   "lite": 0.3389,
+   "agy-flash-low-read": 0.5757
+  },
+  "tamil-lite/unknown": {
+   "lite": 0.3701,
+   "agy-flash-low-read": 0.6082
+  },
+  "tengyur-tr/unknown": {
+   "agy-flash-low@1": 0.8727,
+   "3flash": 0.4941
+  },
+  "tibetan-tr/manuscript": {
+   "opus-cli": 0.6119,
+   "agy-flash-low@4": 0.8451
+  },
+  "tibetan-yigdzin/print": {
+   "yigdzin": 0.5923,
+   "yigdzin>agy-flash-low": 0.7877,
+   "yigdzin>opus": 0.9238
+  },
+  "tibetan-yigdzin/manuscript": {
+   "yigdzin": 0.519,
+   "yigdzin>agy-flash-low": 0.7287,
+   "yigdzin>opus": 0.8973
+  },
+  "tibetan-yigdzin/unknown": {
+   "yigdzin": 0.554,
+   "yigdzin>agy-flash-low": 0.7574,
+   "yigdzin>opus": 0.9103
+  },
+  "turkish-lite/print": {
+   "lite": 0.6999
+  },
+  "turkish-lite/manuscript": {
+   "lite": 0.6293
+  },
+  "turkish-lite/unknown": {
+   "lite": 0.6605
+  },
+  "zh-6561-served/print": {
+   "paddle": 0.6256,
+   "paddle>opus": 0.8532
+  },
+  "zh-6561-served/manuscript": {
+   "paddle": 0.5352,
+   "paddle>opus": 0.7999
+  },
+  "zh-frame-6871/manuscript": {
+   "paddle": 0.3385,
+   "paddle>opus": 0.7849,
+   "paddle>agy-flash-high": 0.5441,
+   "paddle>agy-flash-low": 0.5309
+  },
+  "zh-lite/print": {
+   "lite": 0.3024,
+   "lite>opus": 0.7742,
+   "agy-flash-low-read": 0.5387
+  },
+  "zh-lite/manuscript": {
+   "lite": 0.24,
+   "lite>opus": 0.7148,
+   "agy-flash-low-read": 0.4603
+  },
+  "zh-paddle-dice-lt090/manuscript": {
+   "paddle": 0.1331,
+   "paddle>opus": 0.7809,
+   "paddle>agy-flash-high": 0.3366,
+   "paddle>agy-flash-low": 0.5481
+  },
+  "zh-paddle-dice-lt090/unknown": {
+   "paddle": 0.1423,
+   "paddle>opus": 0.7918,
+   "paddle>agy-flash-high": 0.3521,
+   "paddle>agy-flash-low": 0.5658
+  },
+  "zh-siku-first-tr/print": {
+   "agy-flash-low@1": 0.7197
+  },
+  "zh-siku-first-tr/manuscript": {
+   "agy-flash-low@1": 0.6568
+  },
+  "zh-siku-tr/manuscript": {
+   "stored": 0.1652,
+   "agy-flash-low@1": 0.5384
+  }
+ },
+ "means_full_fit": {
+  "arabic-flash3/print": {
+   "3flash": 0.4377,
+   "3flash>opus": 0.7527,
+   "3flash>agy-flash-low": 0.4962
+  },
+  "arabic-flash3/manuscript": {
+   "3flash": 0.3607,
+   "3flash>opus": 0.6883,
+   "3flash>agy-flash-low": 0.4164
+  },
+  "arabic-flash3/unknown": {
+   "3flash": 0.3938,
+   "3flash>opus": 0.7175,
+   "3flash>agy-flash-low": 0.4511
+  },
+  "arabic-lite/print": {
+   "lite": 0.3011,
+   "lite>opus": 0.7862,
+   "agy-flash-low-read": 0.5407,
+   "agy-flash-low-read-diplomatic": 0.5407
+  },
+  "arabic-lite/manuscript": {
+   "lite": 0.2373,
+   "lite>opus": 0.7272,
+   "agy-flash-low-read": 0.4598,
+   "agy-flash-low-read-diplomatic": 0.4598
+  },
+  "chinese-flash3/print": {
+   "3flash": 0.4362,
+   "3flash>opus": 0.7508,
+   "3flash>agy-flash-low": 0.4944
+  },
+  "chinese-flash3/manuscript": {
+   "3flash": 0.3598,
+   "3flash>opus": 0.6862,
+   "3flash>agy-flash-low": 0.415
+  },
+  "chinese-flash3/unknown": {
+   "3flash": 0.3929,
+   "3flash>opus": 0.715,
+   "3flash>agy-flash-low": 0.4497
+  },
+  "danish-lite/print": {
+   "lite": 0.7204
+  },
+  "danish-lite/manuscript": {
+   "lite": 0.6524
+  },
+  "danish-lite/unknown": {
+   "lite": 0.683
+  },
+  "english-blank-pre1800/unknown": {
+   "scans-only": null,
+   "lighton": 0.6168,
+   "lighton-written": 0.6168
+  },
+  "english-gpu-7263/print": {
+   "lite": 0.8036,
+   "lite>agy-flash-low": 0.9185,
+   "lite>opus": 0.9726,
+   "gpu": 0.7231,
+   "gpu>agy-flash-low": 0.9683,
+   "gpu2>agy-flash-low+diff": 0.9683,
+   "agy-flash-low": 0.9187,
+   "gpu-glm>agy-flash-low": 0.9523
+  },
+  "english-gpu-7263/manuscript": {
+   "lite": 0.7465,
+   "lite>agy-flash-low": 0.8899,
+   "lite>opus": 0.9622,
+   "gpu": 0.6535,
+   "gpu>agy-flash-low": 0.9563,
+   "gpu2>agy-flash-low+diff": 0.9563,
+   "agy-flash-low": 0.8899,
+   "gpu-glm>agy-flash-low": 0.9347
+  },
+  "french-blank/print": {
+   "scans-only": null,
+   "agy-flash-low": 0.8941,
+   "agy-flash-low-written": 0.8941,
+   "agy-flash-low>agy-flash-low": 0.9199,
+   "agy-flash-low>agy-flash-low-written": 0.9199,
+   "agy-flash-low@4-written": 0.8941
+  },
+  "french-blank/manuscript": {
+   "scans-only": null,
+   "agy-flash-low": 0.8578,
+   "agy-flash-low-written": 0.8578,
+   "agy-flash-low>agy-flash-low": 0.8914,
+   "agy-flash-low>agy-flash-low-written": 0.8914,
+   "agy-flash-low@4-written": 0.8578
+  },
+  "french-gpu-7263/print": {
+   "lite": 0.7525,
+   "gpu": 0.6602,
+   "gpu>agy-flash-low": 0.9578,
+   "gpu2>agy-flash-low+diff": 0.9578,
+   "agy-flash-low": 0.8941,
+   "gpu-glm>agy-flash-low": 0.9369
+  },
+  "french-gpu-7263/manuscript": {
+   "lite": 0.6863,
+   "gpu": 0.5841,
+   "gpu>agy-flash-low": 0.9419,
+   "gpu2>agy-flash-low+diff": 0.9419,
+   "agy-flash-low": 0.8578,
+   "gpu-glm>agy-flash-low": 0.914
+  },
+  "french-lite/print": {
+   "lite": 0.7525,
+   "lite>opus": 0.9634,
+   "lite>agy-flash-low": 0.8933,
+   "agy-flash-low-read": 0.8941,
+   "agy-flash-low@4-read": 0.8941
+  },
+  "french-lite/manuscript": {
+   "lite": 0.6863,
+   "lite>opus": 0.9496,
+   "lite>agy-flash-low": 0.8571,
+   "agy-flash-low-read": 0.8578,
+   "agy-flash-low@4-read": 0.8578
+  },
+  "french-lite/unknown": {
+   "lite": 0.7162,
+   "lite>opus": 0.956,
+   "lite>agy-flash-low": 0.8739,
+   "agy-flash-low-read": 0.8744,
+   "agy-flash-low@4-read": 0.8744
+  },
+  "german-blank/print": {
+   "scans-only": null,
+   "agy-flash-low@4": 0.8261,
+   "agy-flash-low@4-written": 0.8261,
+   "agy-flash-low@4>agy-flash-low": 0.8666,
+   "agy-flash-low@4>agy-flash-low-written": 0.8666,
+   "agy-flash-low@4>agy-flash-low@4-written": 0.8666,
+   "agy-flash-low@8-written": 0.8261,
+   "lighton-written": 0.4476,
+   "pero-written": 0.41,
+   "lighton>agy-flash-low@4-written": 0.8168,
+   "pero>agy-flash-low@4-written": 0.8743
+  },
+  "german-blank/manuscript": {
+   "scans-only": null,
+   "agy-flash-low@4": 0.7726,
+   "agy-flash-low@4-written": 0.7726,
+   "agy-flash-low@4>agy-flash-low": 0.8232,
+   "agy-flash-low@4>agy-flash-low-written": 0.8232,
+   "agy-flash-low@4>agy-flash-low@4-written": 0.8232,
+   "agy-flash-low@8-written": 0.7726,
+   "lighton-written": 0.3704,
+   "pero-written": 0.3364,
+   "lighton>agy-flash-low@4-written": 0.7626,
+   "pero>agy-flash-low@4-written": 0.8329
+  },
+  "german-blank-fraktur/print": {
+   "agy-flash-low@4-written": 0.8261,
+   "agy-flash-low@8-written": 0.8261,
+   "lighton-written": 0.4476,
+   "pero-written": 0.41,
+   "lighton>agy-flash-low@4-written": 0.8168,
+   "pero>agy-flash-low@4-written": 0.8743,
+   "kraken-written": 0.0858,
+   "kraken>agy-flash-low@4-written": 0.7826
+  },
+  "german-blank-antiqua/print": {
+   "agy-flash-low@4-written": 0.8261,
+   "agy-flash-low@8-written": 0.8261,
+   "lighton-written": 0.4476,
+   "pero-written": 0.41,
+   "lighton>agy-flash-low@4-written": 0.8168,
+   "pero>agy-flash-low@4-written": 0.8743
+  },
+  "german-flash3/print": {
+   "3flash": 0.7542,
+   "3flash>opus": 0.9236,
+   "3flash>agy-flash-low": 0.7965
+  },
+  "german-flash3/manuscript": {
+   "3flash": 0.6882,
+   "3flash>opus": 0.8964,
+   "3flash>agy-flash-low": 0.7373
+  },
+  "german-flash3/unknown": {
+   "3flash": 0.7184,
+   "3flash>opus": 0.9091,
+   "3flash>agy-flash-low": 0.7646
+  },
+  "german-gpu-7263/print": {
+   "lite": 0.631,
+   "lite>agy-flash-low": 0.8255,
+   "lite>opus": 0.9373,
+   "gpu": 0.5226,
+   "gpu>agy-flash-low": 0.9277,
+   "gpu2>agy-flash-low+diff": 0.9277,
+   "agy-flash-low": 0.8261,
+   "gpu-glm>agy-flash-low": 0.8935
+  },
+  "german-gpu-7263/manuscript": {
+   "lite": 0.5518,
+   "lite>agy-flash-low": 0.7724,
+   "lite>opus": 0.9145,
+   "gpu": 0.442,
+   "gpu>agy-flash-low": 0.9017,
+   "gpu2>agy-flash-low+diff": 0.9017,
+   "agy-flash-low": 0.7726,
+   "gpu-glm>agy-flash-low": 0.8574
+  },
+  "german-gpu-7263/unknown": {
+   "lite": 0.5869,
+   "lite>agy-flash-low": 0.7967,
+   "lite>opus": 0.925,
+   "gpu": 0.4773,
+   "gpu>agy-flash-low": 0.9135,
+   "gpu2>agy-flash-low+diff": 0.9135,
+   "agy-flash-low": 0.7968,
+   "gpu-glm>agy-flash-low": 0.8738
+  },
+  "german-lite/print": {
+   "lite": 0.631,
+   "lite>opus": 0.9373,
+   "lite>agy-flash-low": 0.8255,
+   "agy-flash-low-read": 0.8261,
+   "agy-flash-low@4-read": 0.8261
+  },
+  "german-lite/manuscript": {
+   "lite": 0.5518,
+   "lite>opus": 0.9145,
+   "lite>agy-flash-low": 0.7724,
+   "agy-flash-low-read": 0.7726,
+   "agy-flash-low@4-read": 0.7726
+  },
+  "german-lite/unknown": {
+   "lite": 0.5869,
+   "lite>opus": 0.925,
+   "lite>agy-flash-low": 0.7967,
+   "agy-flash-low-read": 0.7968,
+   "agy-flash-low@4-read": 0.7968
+  },
+  "german-tr-flash3/print": {
+   "flash3": 0.6153,
+   "opus-cli": 0.8395
+  },
+  "german-tr-flash3/manuscript": {
+   "flash3": 0.5364,
+   "opus-cli": 0.7904
+  },
+  "german-tr-flash3/unknown": {
+   "flash3": 0.5715,
+   "opus-cli": 0.8131
+  },
+  "german-tr-lite/print": {
+   "flash-lite": 0.6153,
+   "opus-cli": 0.8395
+  },
+  "german-tr-lite/manuscript": {
+   "flash-lite": 0.5364,
+   "opus-cli": 0.7904
+  },
+  "german-tr-lite/unknown": {
+   "flash-lite": 0.5715,
+   "opus-cli": 0.8131
+  },
+  "greek-flash3/print": {
+   "3flash": 0.2671
+  },
+  "greek-flash3/manuscript": {
+   "3flash": 0.21,
+   "3flash>opus": 0.5016
+  },
+  "greek-flash3/unknown": {
+   "3flash": 0.2342
+  },
+  "greek-lite/print": {
+   "lite": 0.1679,
+   "lite>opus": 0.6213,
+   "agy-flash-low-read": 0.3502
+  },
+  "greek-lite/manuscript": {
+   "lite": 0.1271,
+   "lite>opus": 0.5455,
+   "agy-flash-low-read": 0.2817
+  },
+  "hebrew-flash3/print": {
+   "3flash": 0.266,
+   "3flash>opus": 0.5819,
+   "3flash>agy-flash-low": 0.3136
+  },
+  "hebrew-flash3/manuscript": {
+   "3flash": 0.2088,
+   "3flash>opus": 0.505,
+   "3flash>agy-flash-low": 0.2497
+  },
+  "hebrew-flash3/unknown": {
+   "3flash": 0.2323,
+   "3flash>opus": 0.539,
+   "3flash>agy-flash-low": 0.2764
+  },
+  "hindi-lite/print": {
+   "lite": 0.569,
+   "agy-flash-low-read": 0.7779
+  },
+  "hindi-lite/unknown": {
+   "lite": 0.5257,
+   "agy-flash-low-read": 0.745
+  },
+  "italian-gpu-7263/print": {
+   "lite": 0.7391,
+   "gpu": 0.6451,
+   "gpu>agy-flash-low": 0.9546,
+   "gpu2>agy-flash-low+diff": 0.9546,
+   "agy-flash-low": 0.8861,
+   "gpu-glm>agy-flash-low": 0.9322
+  },
+  "italian-lite/print": {
+   "lite": 0.7391
+  },
+  "italian-lite/manuscript": {
+   "lite": 0.6714
+  },
+  "italian-lite/unknown": {
+   "lite": 0.702
+  },
+  "korean-lite/print": {
+   "lite": 0.3175,
+   "agy-flash-low-read": 0.5557
+  },
+  "korean-lite/manuscript": {
+   "lite": 0.2524,
+   "agy-flash-low-read": 0.4762
+  },
+  "korean-lite/unknown": {
+   "lite": 0.2802,
+   "agy-flash-low-read": 0.5112
+  },
+  "latin-blank/print": {
+   "scans-only": null,
+   "agy-flash-low@4": 0.8375,
+   "agy-flash-low@4-written": 0.8375,
+   "agy-flash-low@8-1600px-written": 0.8375,
+   "agy-flash-low@4>agy-flash-low": 0.8756,
+   "agy-flash-low@4>agy-flash-low-written": 0.8756,
+   "pero>agy-flash-low-written": 0.8835,
+   "pero>agy-flash-low@4-written": 0.8835
+  },
+  "latin-flash3/print": {
+   "3flash": 0.7692,
+   "3flash>opus": 0.929,
+   "3flash>agy-flash-low": 0.8094
+  },
+  "latin-flash3/manuscript": {
+   "3flash": 0.7058,
+   "3flash>opus": 0.9036,
+   "3flash>agy-flash-low": 0.7531
+  },
+  "latin-flash3/unknown": {
+   "3flash": 0.7349,
+   "3flash>opus": 0.9155,
+   "3flash>agy-flash-low": 0.7791
+  },
+  "latin-gpu-7263/print": {
+   "lite": 0.6504,
+   "lite>agy-flash-low": 0.8375,
+   "lite>opus": 0.942,
+   "gpu": 0.5434,
+   "pero>agy-flash-low": 0.8835,
+   "gpu2>agy-flash-low+diff": 0.933,
+   "agy-flash-low": 0.8375,
+   "gpu-glm>agy-flash-low": 0.9012
+  },
+  "latin-gpu-7263/manuscript": {
+   "lite": 0.5725,
+   "lite>agy-flash-low": 0.7872,
+   "lite>opus": 0.9209,
+   "gpu": 0.4626,
+   "pero>agy-flash-low": 0.8448,
+   "gpu2>agy-flash-low+diff": 0.9089,
+   "agy-flash-low": 0.787,
+   "gpu-glm>agy-flash-low": 0.8675
+  },
+  "latin-lite/print": {
+   "lite": 0.6504,
+   "lite>opus": 0.942,
+   "lite>agy-flash-low": 0.8375,
+   "agy-flash-low-read": 0.8375,
+   "lite>agy-flash-low+diffqa": 0.8375,
+   "gpu>agy-flash-low": 0.933
+  },
+  "latin-lite/manuscript": {
+   "lite": 0.5725,
+   "lite>opus": 0.9209,
+   "lite>agy-flash-low": 0.7872,
+   "agy-flash-low-read": 0.787,
+   "lite>agy-flash-low+diffqa": 0.7872,
+   "gpu>agy-flash-low": 0.9089
+  },
+  "latin-lite/unknown": {
+   "lite": 0.6071,
+   "lite>opus": 0.9305,
+   "lite>agy-flash-low": 0.8102,
+   "agy-flash-low-read": 0.8099,
+   "lite>agy-flash-low+diffqa": 0.8102,
+   "gpu>agy-flash-low": 0.9199
+  },
+  "mhg-lite/print": {
+   "lite": 0.5763
+  },
+  "mhg-lite/manuscript": {
+   "lite": 0.4984
+  },
+  "mhg-lite/unknown": {
+   "lite": 0.5327
+  },
+  "middle-english-lite/print": {
+   "lite": 0.6551
+  },
+  "middle-english-lite/manuscript": {
+   "lite": 0.581
+  },
+  "middle-english-lite/unknown": {
+   "lite": 0.6141
+  },
+  "old-french-lite/print": {
+   "lite": 0.6828
+  },
+  "old-french-lite/manuscript": {
+   "lite": 0.6109
+  },
+  "ottoman-lite/print": {
+   "lite": 0.4264,
+   "agy-flash-low-read": 0.6642
+  },
+  "ottoman-lite/manuscript": {
+   "lite": 0.3516,
+   "agy-flash-low-read": 0.5904
+  },
+  "ottoman-lite/unknown": {
+   "lite": 0.384,
+   "agy-flash-low-read": 0.6232
+  },
+  "portuguese-lite/print": {
+   "lite": 0.6755
+  },
+  "portuguese-lite/manuscript": {
+   "lite": 0.6024
+  },
+  "portuguese-lite/unknown": {
+   "lite": 0.6351
+  },
+  "russian-lite/print": {
+   "lite": 0.7527,
+   "agy-flash-low-read": 0.8913
+  },
+  "russian-lite/manuscript": {
+   "lite": 0.6889,
+   "agy-flash-low-read": 0.8554
+  },
+  "russian-lite/unknown": {
+   "lite": 0.7182,
+   "agy-flash-low-read": 0.8723
+  },
+  "sanskrit-lite/print": {
+   "lite": 0.3685,
+   "lite>opus": 0.8266,
+   "agy-flash-low-read": 0.6088
+  },
+  "sanskrit-lite/manuscript": {
+   "lite": 0.2989,
+   "lite>opus": 0.7753,
+   "agy-flash-low-read": 0.5313
+  },
+  "sanskrit-lite/unknown": {
+   "lite": 0.3288,
+   "lite>opus": 0.7986,
+   "agy-flash-low-read": 0.5655
+  },
+  "spanish-lite/print": {
+   "lite": 0.744
+  },
+  "spanish-lite/manuscript": {
+   "lite": 0.6783
+  },
+  "spanish-lite/unknown": {
+   "lite": 0.7082
+  },
+  "tamil-lite/print": {
+   "lite": 0.6213,
+   "agy-flash-low-read": 0.8117
+  },
+  "tamil-lite/manuscript": {
+   "lite": 0.5468,
+   "agy-flash-low-read": 0.7586
+  },
+  "tamil-lite/unknown": {
+   "lite": 0.5801,
+   "agy-flash-low-read": 0.7834
+  },
+  "tengyur-tr/unknown": {
+   "agy-flash-low@1": 0.854,
+   "3flash": 0.4806
+  },
+  "tibetan-tr/manuscript": {
+   "opus-cli": 0.7212,
+   "agy-flash-low@4": 0.8364
+  },
+  "tibetan-yigdzin/print": {
+   "yigdzin": 0.6516,
+   "yigdzin>agy-flash-low": 0.8056,
+   "yigdzin>opus": 0.9272
+  },
+  "tibetan-yigdzin/manuscript": {
+   "yigdzin": 0.5792,
+   "yigdzin>agy-flash-low": 0.7511,
+   "yigdzin>opus": 0.9026
+  },
+  "tibetan-yigdzin/unknown": {
+   "yigdzin": 0.6113,
+   "yigdzin>agy-flash-low": 0.7756,
+   "yigdzin>opus": 0.9136
+  },
+  "turkish-lite/print": {
+   "lite": 0.6472
+  },
+  "turkish-lite/manuscript": {
+   "lite": 0.5726
+  },
+  "turkish-lite/unknown": {
+   "lite": 0.6059
+  },
+  "zh-6561-served/print": {
+   "paddle": 0.4143,
+   "paddle>opus": 0.8424
+  },
+  "zh-6561-served/manuscript": {
+   "paddle": 0.339,
+   "paddle>opus": 0.7952
+  },
+  "zh-frame-6871/manuscript": {
+   "paddle": 0.339,
+   "paddle>opus": 0.7952,
+   "paddle>agy-flash-high": 0.5451,
+   "paddle>agy-flash-low": 0.5538
+  },
+  "zh-lite/print": {
+   "lite": 0.3005,
+   "lite>opus": 0.7843,
+   "agy-flash-low-read": 0.5386
+  },
+  "zh-lite/manuscript": {
+   "lite": 0.2372,
+   "lite>opus": 0.725,
+   "agy-flash-low-read": 0.4582
+  },
+  "zh-paddle-dice-lt090/manuscript": {
+   "paddle": 0.339,
+   "paddle>opus": 0.7952,
+   "paddle>agy-flash-high": 0.5451,
+   "paddle>agy-flash-low": 0.5538
+  },
+  "zh-paddle-dice-lt090/unknown": {
+   "paddle": 0.3715,
+   "paddle>opus": 0.816,
+   "paddle>agy-flash-high": 0.5776,
+   "paddle>agy-flash-low": 0.588
+  },
+  "zh-siku-first-tr/print": {
+   "agy-flash-low@1": 0.7274
+  },
+  "zh-siku-first-tr/manuscript": {
+   "agy-flash-low@1": 0.6599
+  },
+  "zh-siku-tr/manuscript": {
+   "stored": 0.2288,
+   "agy-flash-low@1": 0.6599
+  }
+ }
+}
