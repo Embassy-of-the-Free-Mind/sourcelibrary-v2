@@ -13,7 +13,7 @@
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import { loadCurrentTable, checkBinding, describeFinding, servedByFirstRead, servedByCorrect, servedByArmcFirstRead } from '../lib/router-binding.mjs';
-import { FIRST_READ_PER_CALL_LANGUAGES, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
+import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, CORRECT_LANGUAGES } from '../batch/cli-ocr-lane.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
@@ -26,7 +26,7 @@ export function servedByCrontab(text) {
     if (/^\s*#/.test(line) || !line.includes('cli-ocr-lane.mjs')) continue;
     const flag = (n) => line.match(new RegExp(`--${n}=([^\\s"']+)`))?.[1];
     if (/\srun\s+--cohort=/.test(line)) {
-      served.push(...servedByFirstRead({ languages: codes(flag('languages')), correct: codes(flag('correct')) || [], perCall: Number(flag('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }));
+      served.push(...servedByFirstRead({ languages: codes(flag('languages')), correct: codes(flag('correct')) || [], perCall: Number(flag('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }));
     } else if (/\scorrect\s+--/.test(line)) {
       served.push(...servedByCorrect({ languages: CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|') }));
     } else if (/\sarmc\s+--frame=first-read/.test(line)) {
