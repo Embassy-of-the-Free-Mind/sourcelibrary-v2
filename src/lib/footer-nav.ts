@@ -25,21 +25,22 @@ export type FooterNavColumn = {
 // column renders as the small-print line at the bottom, not as a column, but
 // it lives here so the tenant filter covers it like everything else.
 export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
+  // Trimmed from 22 links to 15 (2026-11-01). Search, Explore and Sign in are
+  // in the header already; the podcast is retired (#5007) and its archive is
+  // reachable from Articles; Our vision, AI models and Contribute are linked
+  // from the pages that remain.
   {
     titleKey: 'colLibrary',
     links: [
       { key: 'texts', href: '/catalog' },
       { key: 'gallery', href: '/gallery' },
       { key: 'collections', href: '/collections' },
-      { key: 'search', href: '/search' },
       { key: 'askLibrarian', href: '/librarian' },
     ],
   },
   {
     titleKey: 'colDiscover',
     links: [
-      { key: 'explore', href: '/explore' },
-      { key: 'podcast', href: '/podcast' },
       { key: 'researchNotes', href: '/articles' },
       { key: 'identify', href: '/identify' },
       { key: 'forResearchers', href: '/for-researchers' },
@@ -48,11 +49,9 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
   {
     titleKey: 'colGetInvolved',
     links: [
-      { key: 'signUp', href: '/auth/signin' },
-      { key: 'contribute', href: '/contribute' },
       { key: 'checkPages', href: '/review' },
-      { key: 'developers', href: '/developers' },
       { key: 'connect', href: '/connect' },
+      { key: 'developers', href: '/developers' },
       { key: 'sponsorship', href: '/sponsors' },
     ],
   },
@@ -60,11 +59,9 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
     titleKey: 'colAbout',
     links: [
       { key: 'about', href: '/about' },
-      { key: 'vision', href: '/articles/vision' },
       { key: 'howItWorks', href: '/how-it-works' },
-      { key: 'faq', href: '/about/faq' },
-      { key: 'models', href: '/about/models' },
       { key: 'qualityCenter', href: '/quality' },
+      { key: 'faq', href: '/about/faq' },
     ],
   },
   {
