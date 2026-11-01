@@ -1,0 +1,20 @@
+{
+ "_doc": "PRIOR ART: volumes.mjs (per books.language volumes, no page-kind or cell dimension) — this adds the one cell it cannot see: Tibetan multi-leaf photos (EAP pecha frames, two or more leaves per served page), measured read-only on 2026-10-25 over the 1,406 live Tibetan books that hold #6948 frame pages (scripts/eval/split-leaf-5771/, job split-leaves-5771, #5771). planner_v0.py does not read this file yet: a cell decision needs a code change (its Tibetan entries are the whole-language correction loop and translation). Counts are pages with page_number > 0.",
+ "cell": "tibetan-multi-leaf-photo",
+ "language": "bo",
+ "measured_at": "2026-10-25",
+ "books": 1406,
+ "served_photos": 283833,
+ "photos_with_leaf_break": 240639,
+ "photos_whole_page_read": 50946,
+ "photos_whole_page_read_no_leaf_break": 15083,
+ "leaves_estimated": 581875,
+ "pages_waiting_translation": 78693,
+ "pages_waiting_translation_whole_page_read": 10236,
+ "arms": {
+  "seam": "the stored Yigdzin read as served (a whole-page read, or leaf reads joined at <leaf-break/>)",
+  "cut": "the stored read cut onto leaves at <leaf-break/> or the ledger's line counts; no re-OCR, $0",
+  "reread": "each leaf crop re-read alone with Yigdzin 1 (vLLM, gex45); Yigdzin 1 split-leaf reread (GPU) in ocr/route-costs.json"
+ },
+ "evidence": "scripts/eval/experiments/2026-10-25-split-leaf-reread-gate-5771.md"
+}
