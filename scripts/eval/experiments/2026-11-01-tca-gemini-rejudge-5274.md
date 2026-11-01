@@ -12,6 +12,7 @@ decision: "No route or prompt changed. For the paper (#4916), the cross-family s
 superseded_by: null
 issue: [5274, 4916]
 router_evidence: "none — the instrument is re-measured, not a route: the same wave-2 items, a different judge"
+defect_rates: "none — a judge-agreement measurement on wave 2's served-page draw, not a route comparison: no route is decided, and the pages carry fidelity and major-defect shares per judge, not misleads/wrong_text per 1,000 words"
 ---
 ## 2026-11-01 · Wave 2 re-judged by Gemini 3.8 Flash and Gemini 4 Argon (#5274, for #4916)
 <!-- PRIOR ART: 2026-10-30-tca-wave2-dual-judge-5274.md (the run re-judged here: its items, packets, prompt and Opus verdicts, unchanged); analyze-wave2.mjs (the estimator and self-preference form, reused in analyze-rejudge.mjs). -->
