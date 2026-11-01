@@ -54,7 +54,7 @@ describe('deriveWarnings', () => {
     const stamps = untouched([8, 10]);
     stamps.set(7, { page_number: 7, ocr: { updated_at: '2026-10-07T00:00:00Z' } });
     // page 9 has no record any more
-    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('lets a later clean read of the same page clear an earlier finding', () => {
@@ -69,7 +69,7 @@ describe('deriveWarnings', () => {
   it('never counts or warns about a soft-hidden page (page_number ≤ 0)', () => {
     const r = row({ pages_read: [-3, 8], text_provenance: [-3, 8].map((n) => ({ page_number: n, ocr_model: 'm', translation_model: 'm' })),
       page_findings: [{ page_number: -3, errors: [{ stage: 'ocr', class: 'O1' }] }] });
-    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('gives a book warning without a count when a fix verdict kept no per-page record', () => {

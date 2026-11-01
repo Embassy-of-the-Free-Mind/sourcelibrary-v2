@@ -1135,7 +1135,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     };
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
     // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
-    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id])).then(w => w.book);
+    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id]));
     const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
@@ -1325,9 +1325,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The four lookups above are independent (entity terms, quality warning,
     // related books, holder shelf): run them concurrently instead of one after
     // another. Only synchronous code sits between their creation and this await.
-    const [summaryEntities, bookWarning, tagRelated, librarySection] = await Promise.all([
+    const [summaryEntities, qualityWarnings, tagRelated, librarySection] = await Promise.all([
       summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP,
     ]);
+    const { book: bookWarning, checked: bookChecked } = qualityWarnings;
     const hasRelated = tagRelated.length > 0;
 
     // Publisher / place only — the DATE is surfaced separately as a labelled
@@ -1976,6 +1977,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {qualityStrings.qualitySeriousMeans}
                   {/* The checks record has no embed route: the warning stands on its own inside a partner frame. */}
                   {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
+                </p>
+              )}
+
+              {/* No serious finding standing (#7896): say the book was checked, or that it was not. One quiet line,
+                  so the absence of a warning is not read as a clean bill. Only where there is a transcription. */}
+              {!bookWarning && hasOcr && (
+                <p role="note" data-quality-check={bookChecked ? 'checked' : 'unchecked'} className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                  {bookChecked
+                    ? qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })
+                    : qualityStrings.qualityNotChecked}
+                  {bookChecked && !isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
                 </p>
               )}
 
