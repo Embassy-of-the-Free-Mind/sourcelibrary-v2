@@ -64,6 +64,10 @@ describe('archive lane table (#5448)', () => {
       .toBe('https://openapi.bnf.fr/iiif/image/v3/ark:/12148/bpt6k8728543t/f112/full/max/0/default.jpg');
     expect(gallicaOpenApiUrl('https://gallica.bnf.fr/iiif/ark:/12148/x/f1/0,0,10,10/full/0/default.jpg')).toBe('https://gallica.bnf.fr/iiif/ark:/12148/x/f1/0,0,10,10/full/0/default.jpg');
     expect(gallicaOpenApiUrl('https://example.org/a.jpg')).toBe('https://example.org/a.jpg');
+    // The short viewer form names the whole page too.
+    expect(gallicaOpenApiUrl(upgradeToFullRes('https://gallica.bnf.fr/ark:/12148/btv1b84061572/f9')))
+      .toBe('https://openapi.bnf.fr/iiif/image/v3/ark:/12148/btv1b84061572/f9/full/max/0/default.jpg');
+    expect(gallicaOpenApiUrl('https://gallica.bnf.fr/ark:/12148/btv1b84061572/f9.item')).toBe('https://gallica.bnf.fr/ark:/12148/btv1b84061572/f9.item');
     expect(getDomainLimit('https://openapi.bnf.fr/x')).toBeLessThanOrEqual(getDomainLimit('https://gallica.bnf.fr/x'));
   });
 

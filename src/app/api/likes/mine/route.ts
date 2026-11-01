@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'type is required (image, page, book, or collection)' }, { status: 400 });
     }
 
-    const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '1000'), 5000);
 
     const db = await getReadDb();
     const tenantFilter = tenantContext.id ? { tenantId: tenantContext.id } : {};
