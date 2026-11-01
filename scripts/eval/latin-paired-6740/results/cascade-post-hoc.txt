@@ -1,0 +1,4 @@
+pero4>read4: served 37/40, accept_all_w 0.754, sev/1k 38.8, wt/1k 0.89, misleads/1k 2.32
+live>read4: served 37/40, accept_all_w 0.729, sev/1k 36.7, wt/1k 0.81, misleads/1k 2.24
+pero4: served 23/40, accept_all_w 0.554, sev/1k 9.3, wt/1k 0.00, misleads/1k 0.56
+read4: served 37/40, accept_all_w 0.754, sev/1k 41.9, wt/1k 0.92, misleads/1k 2.77
