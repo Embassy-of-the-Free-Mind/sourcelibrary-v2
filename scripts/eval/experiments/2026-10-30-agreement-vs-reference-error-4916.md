@@ -11,6 +11,7 @@ status: informational
 decision: "Results section of the #4916 paper. No lane, route or field changed."
 superseded_by: null
 issue: [4916, 5313]
+defect_rates: "none — scored by character error against published references, not judged for defects; no route was compared"
 ---
 PRIOR ART: `2026-09-30-does-disagreement-between-two-reads-of-one-page-find-5313.md` scored disagreement against a model judge's label on served pages (rejected as a garble detector, P 0.3–0.45). This entry asks the paper's question against published references instead, on the sealed benchmark's reference tiers.
 
