@@ -137,7 +137,7 @@ export default function CannabisBanguePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>other</em> life of the plant lived in the East, under entirely different names, and those
             texts are in the collection too. The oldest is the most startling. The Chinese{' '}
-            <Link href="/book/the-divine-farmers-classic-of-materia-medica/page/69ee19caa478f461b9eb639b" className="text-accent-rust hover:text-accent-rust underline">
+            <Link href="/book/vol-22-37/page/6a3c71ec01fe4f593c1da542" className="text-accent-rust hover:text-accent-rust underline">
               <em>Shennong Bencao Jing</em>
             </Link>{' '}
             (by ~200 BCE) already warns that eating cannabis flowers &ldquo;makes people see ghosts and run
