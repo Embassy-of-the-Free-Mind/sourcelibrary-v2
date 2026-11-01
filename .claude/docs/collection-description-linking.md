@@ -24,7 +24,10 @@ things, in priority order:
    that restriction is deliberate, this is admin-authored prose rendered unescaped.
 2. **Explicit `mentioned_books`** — `{ text, book_id }` pairs on the collection doc,
    matched case-**in**sensitively, longest `text` first so a long-form claim ranges
-   before a short-form fallback.
+   before a short-form fallback. An entry may carry `author_id` instead of `book_id`
+   (`{ text: "Ficino", author_id: "marsilio-ficino" }` → `/author/<id>`, #7897). The
+   match has **no word boundaries**, so a short `text` lights up inside other words
+   ("Dee" in "indeed"): check every occurrence before adding one.
 3. **Auto-detection** — a book's `title` or `display_title` (≥8 chars) found as an exact
    substring of the description, plus author names resolved against the collection's
    author list.
@@ -45,6 +48,24 @@ Minute Bodies…`), and good prose names the short form (`Micrographia`). The lo
 is not a substring of the short one, so the match fails. **Assume a named work does not
 auto-link unless you have checked it.** That is exactly how the microscopy collection
 shipped with a description naming eleven works and linking none (#1867).
+
+### Curated exhibition pages read the same field
+
+A collection with a `curation_drafts` layout renders `ExhibitionLayout` instead of the
+standard bands. Its description, section and gallery-cluster prose is linked through the
+same `mentioned_books` (resolved to hrefs on the server, #7897), plus its own exact-title
+auto-detection over the books the layout references. If the layout has **no
+`description` block**, the collection's own intro renders under the hero; otherwise the
+exhibition's description replaces it.
+
+### Filling it in bulk
+
+`scripts/maintenance/link-collection-intro-mentions.mjs` proposes entries for the prose a
+reader actually sees (intro + exhibition text), using a Sonnet `claude -p` on the
+subscription, and accepts only what passes mechanical checks: verbatim in the prose,
+word boundaries on every occurrence, not a single common English word, a book link
+shares a title word with the book, only visible readable members offered. Dry run by
+default; `--apply --backup FILE`; `--from` re-applies a saved dry run.
 
 ## What to write
 
