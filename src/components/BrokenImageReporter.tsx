@@ -55,7 +55,11 @@ function handleError(e: Event) {
   const failedSrc = el.currentSrc || el.src;
   if (!failedSrc || reported.has(failedSrc)) return;
 
-  if (!failedSrc.includes('images.sourcelibrary.org') && !failedSrc.includes('/api/image')) return;
+  // Every host, not just ours: a page image served straight from a library (Gallica, 2026-11-01)
+  // breaks there, and 26 books went blank without a single report while this filtered to our own
+  // hosts. scripts/audit/broken-image-reports.mjs fetches each reported URL again and keeps only
+  // what still fails. data: and blob: URLs are ours to have built, not a host's to have lost.
+  if (!/^https?:|^\//.test(failedSrc)) return;
 
   // Dedup early so we don't queue multiple verify-checks for the same URL.
   reported.add(failedSrc);
