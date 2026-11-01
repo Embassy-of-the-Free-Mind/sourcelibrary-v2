@@ -21,7 +21,8 @@
  *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
  *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
- *                                                      build.py on origin/main + this export; publish; post flips
+ *                                                      build.py on origin/main + this export; publish; post flips,
+ *                                                      and the router binding (audit/router-table-drift.mjs) when it changes
  *   ... lane-judge-sampler.mjs annotate                    give older store records their script type (print / manuscript)
  *   ... lane-judge-sampler.mjs nightly --out=DIR           run, annotate, export, rebuild (the cron line)
  *   ... lane-judge-sampler.mjs weekly-pr --out=DIR         the repo copy: a PR with the export + rules.json entries
@@ -850,12 +851,25 @@ async function rebuild() {
   fs.writeFileSync(prevFile, JSON.stringify(pub, null, 1));
   if (!flag('no-publish')) { const { c, db } = await mongo(); try { await db.collection('ops_reports').replaceOne({ _id: pub._id }, pub, { upsert: true }); } finally { await c.close(); } }
   console.log(`rebuilt on ${ref} ${sha}: evidence added ${added.join(', ') || 'none'}; flips ${flips.length}`);
-  if (flips.length && !flag('no-post')) {
-    const body = [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
+  // Router binding (#7263, router-optimization-paper.md build step 5): has each decided cell of current.json shipped?
+  // Posted when its drift changes (a cell newly unshipped, mismatched, waived or fixed), with the flips or alone.
+  let binding = null;
+  const bindingFile = path.join(pubDir, 'binding-posted.json');
+  try {
+    const d = await import('../audit/router-table-drift.mjs');
+    const r = d.driftFromRepo();
+    const last = fs.existsSync(bindingFile) ? JSON.parse(fs.readFileSync(bindingFile, 'utf8')).signature : null;
+    if (r.signature !== last) binding = { md: d.driftMarkdown(r), signature: r.signature };
+    console.log(`router binding: ${JSON.stringify(r.tally)}${binding ? ' (changed)' : ''}`);
+  } catch (e) { console.log(`router binding: not run (${e.message})`); }
+  if ((flips.length || binding) && !flag('no-post')) {
+    const body = [...(flips.length ? [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
       '| cell | before | after | lane evidence |', '|---|---|---|---|',
       ...flips.map((f) => `| ${f.cell} | ${f.before} | ${f.after} | ${Object.entries(pub.lane_evidence[f.cell] ?? {}).map(([r, x]) => `${r} ${x.accept} (wrong text ${x.wrong_text}, ${x.books} books)`).join('; ') || 'none (other evidence moved)'} |`), '',
-      'Published: ops_reports `router-table:lane-judge`. The routing tables do not change from this (hold list).'].join('\n');
+      'Published: ops_reports `router-table:lane-judge`. The routing tables do not change from this (hold list).'] : []),
+    ...(binding ? [...(flips.length ? ['', '---', ''] : []), binding.md] : [])].join('\n');
     sh('gh', ['issue', 'comment', '7263', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', body]);
+    if (binding) fs.writeFileSync(bindingFile, JSON.stringify({ at: new Date().toISOString(), signature: binding.signature }));
   }
   // New containment candidates go on #7611, once each.
   const seenFile = path.join(OUT, 'contain-posted.json'), seen = new Set(fs.existsSync(seenFile) ? JSON.parse(fs.readFileSync(seenFile, 'utf8')) : []);
