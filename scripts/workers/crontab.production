@@ -319,6 +319,9 @@
 50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
 # Vercel prod build watcher (#5708)
 7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; VERCEL_TOKEN=\$VERCEL_API_TOKEN node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1  # #5708
+# Spend-gate refusal watcher (#7492): reads the embed-gemini / enrich-batch / site-pages logs, pages ntfy once when a
+# worker's gate refused ≥80% of its runs for 24 h (envelope expiry stops recurring crons silently; they exit 0). No database, no spend.
+5,20,35,50 * * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-gate-refusal-watch.mjs ] && flock -n /tmp/sl-spend-gate-watch.lock node scripts/audit/spend-gate-refusal-watch.mjs >> /var/log/sourcelibrary/spend-gate-refusal-watch.log 2>&1  # #7492
 # routing drift audit (#5871): DECISIONS.md against the live routers (OCR model, translation model, the OCR-trust table)
 # and the generated table in .claude/docs/ocr-engine-routing.md. No model call, no database. --apply files, rewrites or closes ONE
 # GitHub issue per finding class (label routing-drift); nothing automated reads those issues. Guarded on the script so the line is inert until it is on main.
