@@ -29,15 +29,21 @@
  *   2  could not run — no measurement was taken. Never read as clean.
  *
  * USAGE
- *   node --env-file=.env.production.local scripts/audit/broken-image-reports.mjs [--days=1] [--max=600] [--json]
+ *   node --env-file=.env.production.local scripts/audit/broken-image-reports.mjs [--days=1] [--max=600] [--json] [--alert]
+ *
+ * --alert (the daily Hetzner cron): on exit 1, page ntfy sourcelibrary-uptime once with the count
+ * and the three biggest places, so a broken image reaches a person the day a reader hits it.
  */
 import { MongoClient } from 'mongodb';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (k, d) => argv.find((a) => a.startsWith(`--${k}=`))?.split('=')[1] ?? d;
 const DAYS = Number(opt('days', '1'));
 const MAX = parseInt(opt('max', '600'), 10);
 const JSON_OUT = argv.includes('--json');
+const ALERT = argv.includes('--alert');
+const NTFY_TOPIC = process.env.BROKEN_IMAGE_TOPIC || 'https://ntfy.sh/sourcelibrary-uptime';
 const ORIGIN = 'https://sourcelibrary.org';
 // An honest UA, never a browser's: our own crawler gate 403s a Chrome UA that lacks a browser's other
 // headers, and that read as 340 "still broken" URLs that were serving readers fine (2026-11-01).
@@ -134,6 +140,15 @@ async function main() {
       console.log(`         ${r.title ?? ''} ${r.link}`);
     }
     if (JSON_OUT) console.log(JSON.stringify({ at: new Date(), days: DAYS, probed: urls.length, failing: failing.length, rows }));
+    if (ALERT && rows.length) {
+      const top = rows.slice(0, 3).map((r) => `${r.urls}× ${Object.keys(r.statuses).join(', ')} — ${r.title ?? ''} ${r.link}`).join('\n');
+      const res = await ntfyPost(NTFY_TOPIC, {
+        method: 'POST',
+        headers: { Title: `Broken images: ${failing.length} URL(s) on ${rows.length} page(s) still fail`, Priority: 'default', Tags: 'frame_with_picture' },
+        body: `Readers reported these in the last ${DAYS} day(s) and they still fail on a re-fetch:\n${top}\nFull list: node scripts/audit/broken-image-reports.mjs --days=${DAYS} (#5448)`,
+      });
+      console.log(`ntfy: ${res.status}`);
+    }
     process.exitCode = failing.length ? 1 : 0;
   } finally {
     await mc.close();
