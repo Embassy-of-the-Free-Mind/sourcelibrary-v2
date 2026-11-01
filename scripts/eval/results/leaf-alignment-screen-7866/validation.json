@@ -1,0 +1,97 @@
+{
+ "date": "2026-11-01",
+ "rule": "scripts/lib/leaf-alignment.mjs confirmed(): >= 2 of 3 sampled pages with the shown image k != 0 leaves off its source (dHash; thumbnail correlation on ties); or a text (>= 300 prose chars, >= 70% letters) on an image whose stored weight is < 0.25 of its writer median and whose ink share (pixels 15 grey levels under the paper) is < 0.5%; or strongRepeat (containment >= 0.9, sizes within 0.8, >= 50 shingles, no front matter, image dHash >= 20).",
+ "note": "The repeat and ink thresholds were set on these same two sets; the top-20 spot check of the corpus run (spot-check.json) is the out-of-sample check.",
+ "sets": {
+  "opus_7866": {
+   "books": 160,
+   "source": "#7866 draw, 5 pages a book judged blind by Opus",
+   "positive": "a page with an I1 wrong_text defect: 69af48642a821385be062737, 6a4cb63519ae103166961ce4",
+   "book_level": {
+    "recall": "2/2",
+    "flagged": 4,
+    "flagged_detail": {
+     "69af48642a821385be062737": "I1 (Opus)",
+     "6a4cb63519ae103166961ce4": "I1 (Opus)",
+     "6a060d36e16c60cb2a8946c7": "p.1 blank leaf carrying invented Latin, by eye (page not in the Opus sample)",
+     "69ac5f7cebeb54840de0f0a4": "p.8 blank leaf whose mirrored show-through was transcribed, by eye (page not in the Opus sample)"
+    },
+    "precision_vs_opus_labels": "2/4 = 0.50 (0.15-0.85)",
+    "precision_by_eye": "4/4",
+    "specificity_vs_opus_labels": "156/158 = 0.99 (0.96-1.00)"
+   },
+   "page_level_I1": {
+    "recall": "4/6 = 0.67 (0.30-0.90)",
+    "precision": "4/5 = 0.80 (0.38-0.96)"
+   },
+   "o1_confabulation": {
+    "note": "not the target class",
+    "recall": "0/20 (0.00-0.16)"
+   }
+  },
+  "clef_5803_by_eye": {
+   "books": 52,
+   "source": "scripts/eval/results/clef-audit-2026-10-17.json: confirmed_by_eye (22) + high read wrong_text (21) = 43 positives; high read right_text = 8 negatives; plus #7321 69d7e1dbe9e5e67989c37c37 (positive)",
+   "recall": "29/44 = 0.66 (0.51-0.78)",
+   "precision": "29/29 = 1.00 (0.88-1.00)",
+   "specificity": "8/8 = 1.00 (0.68-1.00)",
+   "positives": [
+    "69b68b4353f0f937bfd5a537",
+    "69af45f461b03be5fb7af39e",
+    "6a3579a482bf3ff3f867b074",
+    "6988a59e193b008ee3811520",
+    "69b63ee4a85a63b8ab194fed",
+    "69af47274a5e5a377fef937a",
+    "6988a59f89d9e7e535be96cc",
+    "69bd9cbf6120d54bd0370cee",
+    "69e74ef95cf1eaf3ad80e04c",
+    "69aebc7a0b218b96da7285d7",
+    "69afe285cf56258c938909b8",
+    "6988a59f090ba3597e45028a",
+    "6a45bf498355d631d121b59f",
+    "6a08f9349c1b82475e159a8d",
+    "69aebfdee997cc01b0cab898",
+    "69e420844fc48a88423e0e26",
+    "69b99dc81f30176bf4d37588",
+    "69ea0f6a13a685002bb8e16f",
+    "6a4c8052cf48e46d944cf636",
+    "6a1aa4fcc8638d1ea5c8061f",
+    "69907a17db8b55d19ec68f58",
+    "69e75e6acc48e59ad74ec89f",
+    "69bd9eb7f6d63c919747c751",
+    "69bda047f6d63c9197485cc0",
+    "69b64e7118b87551bfc88abe",
+    "69b69a89080b19f98fcfeb4c",
+    "69af48642a821385be062737",
+    "69c736b46a0f3d112faf76b0",
+    "69aec44d3b6ebce5e0ee5ba8",
+    "69bd9cb16120d54bd03705ed",
+    "69af0c30067c0c26ee26ab97",
+    "69b69d87080b19f98fd0c378",
+    "69b6b0fa96dc15d4a16cfb67",
+    "69bda054f6d63c91974860a6",
+    "69b21d42ddb4fa7c305b4693",
+    "69b6305f1c1c21a373801112",
+    "6a49edde0c5d29e580a6f94d",
+    "69c1bb658522835be845f635",
+    "69d5ae474dc55b8478de136d",
+    "6993881874305116d72cf0ab",
+    "6a3e6628629ea5110b4c8c98",
+    "69b6493418b87551bfc5b5b7",
+    "69d5abdc4dc55b8478ddd24d",
+    "69d7e1dbe9e5e67989c37c37"
+   ],
+   "negatives": [
+    "699383a150654cbbe29179f7",
+    "6a19526a3e125aa8d6dfe297",
+    "69dfebad090ad7d5c33b1903",
+    "69d5acb04dc55b8478dde57f",
+    "6a1b91a0e136dfef78198316",
+    "69f336b5876dd827cbc50d9c",
+    "6a16ce8d36e7b50b389158e9",
+    "6a1b7d89343719711d6ecfaa"
+   ],
+   "missed": "text-side shifts on e-rara books whose images are their own leaves and whose text has no blank leaf or repeat at the shift (the bytes-offset test is under its bar there); books without stored image bytes; #7321 (text from ~650 pages away, outside every window)"
+  }
+ }
+}
