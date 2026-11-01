@@ -142,10 +142,13 @@ export default function GlobalFooter() {
             </Link>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            <div className="col-start-1 md:col-start-2 lg:col-start-4 flex gap-1.5">
+            <div className="col-start-1 md:col-start-2 lg:col-start-4 flex items-center gap-5">
+              {/* A text link, not a bordered box: an outlined box beside the
+                  filled Donate button read as a text field and its submit
+                  button. Donate stays the one filled action in the bar. */}
               <FeedbackWidget
                 label={t.giveFeedback}
-                className="inline-flex items-center h-[34px] px-[13px] border border-white/20 text-sm font-medium text-white/70 hover:text-white hover:border-white/40 whitespace-nowrap transition-colors"
+                className="inline-flex items-center h-[34px] text-sm font-medium text-white/70 hover:text-white underline decoration-white/30 hover:decoration-white underline-offset-4 whitespace-nowrap transition-colors"
               />
               {showDonate && (
                 <Link
