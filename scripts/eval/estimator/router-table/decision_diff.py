@@ -7,12 +7,13 @@
 
   python3 scripts/eval/estimator/router-table/decision_diff.py <reference.json> <step1-name>=<t1.json> [<step2-name>=<t2.json> ...] [--md]
 
-The reference is the table the diff is against (e.g. 2026-10-31-correction-pass-7818); each later table turns one more
+The reference is the table the diff is against (e.g. 2026-10-31-correction-pass-7818; or current.json, read as the live
+rows: its table with each `cells` override from its own build); each later table turns one more
 change on. A cell's decision is its class (keep / switch / HOLD / UNTESTED / held / planned, the text before ' (') and its
 route; for HOLD and UNTESTED the route only names the best candidate, so a HOLD whose candidate moves is listed apart as
 'route only'. Each changed cell is attributed to every step at which its decision moved.
 """
-import json, sys
+import json, os, sys
 
 cls = lambda d: d.split(' (')[0].strip()
 
@@ -22,9 +23,20 @@ def key(row):
     return (c, row['route'])
 
 
+def live(path):
+    """current.json as a table: the rows of its `table`, each cell named in `cells` taken from that cell's own build
+    (the rows router-binding.mjs reads as live)."""
+    d = os.path.dirname(os.path.abspath(path)) + '/'
+    cur = json.load(open(path))
+    rows = {r['id']: r for r in json.load(open(d + cur['table'] + '.json'))['rows']}
+    for cid, c in cur.get('cells', {}).items():
+        rows[cid] = next(r for r in json.load(open(d + c['table'] + '.json'))['rows'] if r['id'] == cid)
+    return dict(rows=list(rows.values()))
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    ref = json.load(open(args[0]))
+    ref = live(args[0]) if args[0].endswith('current.json') else json.load(open(args[0]))
     steps = [(a.split('=', 1)[0], json.load(open(a.split('=', 1)[1]))) for a in args[1:]]
     chain = [('reference', {r['id']: r for r in ref['rows']})] + [(n, {r['id']: r for r in t['rows']}) for n, t in steps]
     ids = list(dict.fromkeys([i for _, t in chain for i in t]))
