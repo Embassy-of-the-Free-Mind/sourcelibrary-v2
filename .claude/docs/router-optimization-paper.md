@@ -27,6 +27,117 @@ The router serves three readers:
 - **The decision rule is biased.** Every candidate is gated at P ≥ 0.9 within 0.08 of the bar, and the cheapest passer wins. That rule has no multiplicity control, so it favours lucky winners.
 - **The judge is unvalidated.** Opus is the sole judge, including of Opus text. There is no gold reference.
 
+## The parameter space (from `2026-10-31-correction-pass-7818.json`)
+
+**Context: the kind of page, which we do not choose.**
+
+| dimension | values |
+|---|---|
+| language | 25 (German 19 cells, Chinese 12, Latin 9, French 7, Greek 5, Arabic 5, …) |
+| script type | print 41 cells, manuscript 40, unknown 28 |
+| task | OCR (read, correct) or translation |
+| existing read | the engine that already read the page (lite, 3 Flash, Paddle, Yigdzin, …) |
+
+- **Size.** 109 cells over 47 base kinds of page hold 5.2M waiting pages.
+- **Largest cells:**
+
+  | cell | pages waiting |
+  |---|---|
+  | Latin print, lite | 835K |
+  | Latin print, 3 Flash | 692K |
+  | Chinese manuscript, Paddle | 454K |
+  | German print, lite | 410K |
+  | Tibetan manuscript, Yigdzin | 273K |
+
+**Configuration: what we choose.**
+
+| dimension | values seen |
+|---|---|
+| first read | Flash-Lite, 3 Flash, agy 3.8 Flash-low, GPU engines (Paddle, LightOn, PERO, GLM, Yigdzin), Opus |
+| correction | none, agy Flash-low, Opus, a diff-QA variant |
+| pages per call | 1, 4, 8 |
+| input | image, text, image + text |
+| prompt | mostly unrecorded (85% of pages) |
+| thinking level | rarely varied |
+| channel (who pays) | paid API, Gemini subscription (agy), Claude subscription, GPU box |
+
+- 45 distinct configurations have been measured.
+- The realistic space is about 120 configurations a kind of page before prompts, so about 6,000 combinations overall.
+- 344 measurements have been made (about 5% of that), median n = 8.
+
+**Objective and constraints.**
+- **Minimize** dollars per accepted page. Quota is priced at its share of the fee.
+- **Quality floor:** acceptance within 0.08 of the best measured route. Wrong text no worse than the best route's rate + 2 points.
+- **Capacity:** each account's weekly limit, and GPU throughput.
+- **Policy, stated separately from the statistics:**
+  - on print, Opus is the bar and never a candidate;
+  - Opus is the planned route for Greek manuscripts.
+
+**Known flaws in the space.**
+- **The cell includes the existing read.** "Latin print, lite" and "Latin print, 3 Flash" are the same kind of page, so their evidence is split. Better: describe the page by language, script and condition, and treat the first read as a choice.
+- **Policy lives inside `build.py`** as exceptions, so the optimum is constrained without saying so.
+
+## Search method
+
+**Today.**
+- Tests are chosen by hand in job briefs. Only 3 cells name a next test.
+- Pilots run 20–30 pages on one or two configurations.
+- Production lanes add evidence through the nightly lane-judge sampler (`scripts/eval/lane-judge-sampler.mjs`). That is exploitation data, biased toward routes already served.
+
+**Planned.**
+1. **Rank cells by value of information:** pages waiting × the probability that the decision changes × the cost gap between the top two candidates. A cell where a decision moves 410K pages outranks one that moves 2K.
+2. **Within a cell, best-arm identification by top-two Thompson sampling** (Russo 2016). Sample from each configuration's posterior, measure the best and its closest challenger, and stop when P(the pick is within the margin of the best) ≥ 0.95 or the expected loss falls below a set floor. This replaces the fixed n floors (10 to HOLD, 30 to decide).
+3. **Screen in two stages.** Run 10 pages on every plausible configuration. Then run 30 paired books on the top two or three. This is successive halving: cheap rounds prune the space.
+4. **Pair.** Every configuration in a test reads the same books and pages, which removes the book-to-book variance (ICC 0.38).
+5. **Confirm (V4).** The winner is re-run on fresh books before its routing row ships, to guard against the winner's curse.
+6. **Explore with production traffic (V6).** Each month, a small share of a cell's pages goes to the runner-up. This catches a changed optimum when a model updates.
+
+## Statistical methods
+
+**Today (`build.py`).**
+- **Model:** a Beta-binomial on accepted k of n per cell × route. n is scaled to books (effective n).
+- **Prior:** v1/v2 means on 24 routes and flat on 230, worth 7 pages.
+- **Gate:** P(acc_route ≥ acc_bar − 0.08) ≥ 0.9. The bar is the best measured Opus route (print), or the best measured route (manuscript).
+- **Wrong-text bar:** relative, the best route + 2 points.
+- **Pick:** the lowest median expected dollars per accepted page among the routes that pass.
+- **Defect rule** (since 10-31): MQM-weighted defects per 1,000 words where measured, with acceptance as a floor. It decides about 3 of 109 cells.
+
+**Planned.**
+- **Prior mean from a partially pooled logit:** engine + draft + language + writing system + print/manuscript, no interaction. It is worth about 5 pages: V1 measured 5.2–6.4 held out (PR #7878).
+- **Judge correction.** Per stratum, the judge's sensitivity and specificity, measured on gold (V2, PR #7880), correct k/n through prediction-powered inference.
+  - Calibrate on real reads, not only planted errors: the two corrected k/n in opposite directions in #7880.
+- **Multiplicity.** Decide by the joint posterior probability that the pick is within the margin of the true best, over all candidates. Do not run independent per-route gates. Check the rule by simulation at real n and route count (V3): false switch ≤ 5% per decision.
+- **The unit is the book.** One page per book for cell rates. 5 pages per book for book-level claims (reliability 0.75 at ICC 0.38). A book random effect when pages share books.
+- **Loss.** Expected cost + λ × expected wrong text, with λ stated. This replaces the hand-set margins once λ is agreed.
+- **Report** intervals, n in books, and dates. Never a bare rate.
+
+## Measurement considerations
+
+- **The judge is the instrument, and it is imperfect.**
+  - Print: sensitivity 0.82, specificity 0.85, κ 0.64. Latin and German are weaker.
+  - Manuscripts: κ 0.29, and self-preference +0.43 on Opus-written text (#7880).
+  - Opus-written manuscript routes cannot win on the Opus judge alone. A non-Claude second judge is needed.
+  - Recalibrate on a fixed gold set monthly, because judge models update.
+- **One outcome, one definition.** Four verdict scales are pooled as "accepted" today. Fix one primary outcome (accept against the image, fixed rubric) and one secondary (defects per 1,000 words). Never mix scales inside a k/n.
+- **Gold has limits.**
+  - CHURRO-DS is research-only, and its languages and documents are not ours (domain shift).
+  - Planted errors are synthetic and calibrate differently from real ones.
+  - Use both, and report which.
+- **Agreement is not accuracy.** Two models agreeing is evidence, not truth (`.claude/docs/eval-design.md`). Run the A-vs-A noise floor before reading a small difference.
+- **Memorization.** Canonical texts score higher because models recite them (`paper/reading-or-reciting-chr2027.md`). Exclude or stratify famous passages in tests.
+- **Test frame vs served frame.**
+  - A pilot's pages may not look like the cell's waiting pages. Draw tests from the waiting pages.
+  - Study frames (Paddle dice < 0.90, English pre-1800) are applied to every page of a lane: say so.
+- **Provenance.**
+  - 85% of pages record no prompt, so their configuration cannot be identified. Every writer stamps engine, prompt, read mode and lane (#7389).
+  - Evidence without a stamp is not counted.
+- **Cost measurement.**
+  - Subscription quota is priced at its share of the fee. Counting idle quota as $0 is a scheduling rule, not a saving.
+  - Meter readings jump minute to minute: read them hours apart.
+  - Pages per call changes cost per page and must be part of the configuration.
+- **Failures count.** Refusals, format failures and empty reads are outcomes of the configuration (cost per *usable* page), not missing data.
+- **Drift.** Preview models and prompts change silently. Date-weight evidence, and expire it when the engine version changes.
+
 ## Validation: how we know it is working
 
 The router works if three things hold, each with a number we can check:
