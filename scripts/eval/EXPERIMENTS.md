@@ -2238,6 +2238,45 @@ The other 32 are invented spans inside otherwise-right pages (Paddle Chinese, Ko
 - `scripts/eval/estimator/router-table/evidence/confidence-validation-7866.score.json`: 1,552 records under real cell names (751 items + the 20 controls attached per route). **Not named in rules.json.**
 - Bad books (71): `results/bad-books.json` and the #7866 comment.
 
+## Amendment 1 (2026-11-01, before any Argon call): Gemini 4 Argon as a cheap screen on the same texts
+
+**Why.** Derek took the #7866 default on 2026-11-01: test agy Argon as a cheap first screen, on the same 820 texts, with about 820 Argon calls approved. 3.8 Flash cleared only 11% of books at the bar (above).
+
+**Instrument, unchanged except the model.**
+- `judge.mjs argon`: the `gemini` stage with `gemini-4-argon-low` and output `verdicts-argon.jsonl`.
+- Same `judgePrompt`, same image bytes (`OUT/img`), same marker-line suffix and one retry on an unparsed reply (`correction-pass-7818/lib.mjs judgeAgy`).
+- Blind to stratum, score, route and every other verdict.
+- Same texts: the 800 items and the 20 controls Opus judged, in queue order `makeRng(78668)`.
+- Concurrency 2. Stops when the account's Gemini pool reads empty on `/quota` (`AGY_GEMINI_EMPTY`), and on any agy quota refusal. At most 2 tries per text.
+
+**Permissions and placement.**
+- `AGY_ALLOW_HEAVY=7866` for this job only.
+- Box and job heavy caps raised for this job only (`AGY_HEAVY_BOX_CAP=900`, `AGY_HEAVY_DAILY_CAP=900`).
+- The run needs an agy login that may run Argon. The second account (`/root/.agy-james`) is held to 3.8 Flash low, and the stage refuses it.
+- On the box where job `leaf-screen-7866` ran (earthai-l7a), the default agy login is not signed in (checked 2026-11-01 01:00Z). So the run goes to a box with the main login, with the inputs below.
+- **Inputs:** the exact texts, controls, images and Opus verdicts of this study, tarred from `$JOB_SCRATCH/confidence-7866/` to R2:
+  - key `cold/l7a/leaf-screen-7866/confidence-7866-argon-inputs.tar.zst` (bucket `sl-corpus-snapshots`, 539,287,227 bytes, sha256 `915cc6d854aa033d54094b0dc90055c17bce4d82aad2e0b189f322b19a83bec3`).
+  - Restore on the running box:
+    ```
+    mkdir -p $JOB_SCRATCH && node scripts/workers/cold-r2.mjs get <key> | zstd -d | tar -C $JOB_SCRATCH -xf -
+    ```
+  - Then run:
+    ```
+    AGY_ALLOW_HEAVY=7866 AGY_HEAVY_BOX_CAP=900 AGY_HEAVY_DAILY_CAP=900 node scripts/eval/confidence-7866/judge.mjs argon
+    node scripts/eval/confidence-7866/analyze.mjs score
+    ```
+
+**Outcomes (`analyze.mjs score` → `score.json` `argon_secondary`: `geminiBlock`, unchanged, on the Argon file).**
+- **Sensitivity:** of the Opus-bad books (≥ 2 of 5 judged pages bad; 71 of 160), the share Argon flags (Argon calls ≥ 1 of the book's pages bad), with Wilson 95% CI.
+- **Clears:** the share of the 160 classified books Argon does not flag.
+- **Bar (preregistered):** Argon is good enough as a cheap first screen when sensitivity ≥ 0.90 **and** clears ≥ 30%.
+- **Self-preference:** κ, agreement, and Argon's miss rate on Opus-bad pages, split by stored text written by a Gemini model (`ocr.model` /^gemini/) against any other engine.
+- **Agreement with Opus:** Cohen κ on accept and on wrong-text pages, over all 800 pages; Spearman of points per word.
+- **Controls:** wrong-page rejected (8) and planted errors caught (12), as for Flash.
+- **Secondary, exploratory (not the bar):** the same screen with the Opus bad-book rule (Argon calls ≥ 2 of 5 bad), and the AUC of Argon's bad-page share for the Opus bad-book call.
+
+**What Argon cannot change.** Opus stays the reference. Argon changes no primary outcome, bad-book call or containment, and writes nothing to Mongo.
+
 ## 2026-10-30 · Can the existing merge lane be applied as is? (#7761)
 <!-- PRIOR ART: scripts/analysis/llm-verify-work-merges.mjs (the proposer; June validation 16/16); 2026-10-29-work-identity-recall-7761.md (the recall gap this closes part of); scripts/eval/work-recall/merge-precision.mjs (the second judge). -->
 
