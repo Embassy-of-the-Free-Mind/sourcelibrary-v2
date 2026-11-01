@@ -92,9 +92,17 @@ describe('freshness rule', () => {
     expect(f[0]).toMatch(/quality-feedback-themes/);
   });
 
-  it('reads all four dates from the repository', () => {
+  it('flags prose more than 7 days behind the newest measured record (#7263), not 7', () => {
+    expect(checkFreshness({ ...base, newestMeasured: '2026-10-13' })).toEqual([]);
+    const f = checkFreshness({ ...base, newestMeasured: '2026-10-14' });
+    expect(f).toHaveLength(1);
+    expect(f[0]).toMatch(/newest measured experiment record \(2026-10-14/);
+  });
+
+  it('reads all five dates from the repository', () => {
     const d = readDates(process.cwd());
     for (const v of Object.values(d)) expect(v).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(d.newestMeasured! <= d.newestExperiment!).toBe(true);
   });
 });
 

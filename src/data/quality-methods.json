@@ -1,6 +1,6 @@
 {
   "_about": "The register behind /quality/methods (#5918, #5937). One entry per rule, instrument and known gap. Edit here, never in the page. Every number needs a source link; tests/unit/quality-methods.test.ts checks the shape.",
-  "as_of": "2026-10-06",
+  "as_of": "2026-11-01",
   "rules": [
     {
       "id": "accuracy",
@@ -60,13 +60,26 @@
   ],
   "instruments": [
     {
+      "id": "served-draw",
+      "name": "Served-quality draw",
+      "question": "Of the live books that have a transcription, how many would a careful reader find usable when the text is read against the page images?",
+      "kind": "judged",
+      "scope": "160 live books drawn at random in four groups and weighted back to all 47,435 live books with a transcription; 5 pages spread through each book. A book counts as usable when at most one of its five pages falls short",
+      "cadence": "monthly, from 2026-10-31",
+      "latest": { "date": "2026-10-31", "headline": "57% of live books usable (95% CI 49–64%). In the other 43%, about 20,600 books, two or more of the five pages had text that was wrong, missing, added or from another page. This is the headline figure on the Quality Center", "source": "scripts/eval/experiments/2026-10-31-confidence-validation-7866.md" },
+      "on_finding": "Pages carrying another page's text are withheld the same day (6 pages in 2 books on 2026-10-31). The weak books are listed for re-reading, and a re-read is kept only after a check against the page image.",
+      "blind_to": "The English translation, and any person's judgment: the reviewer is an AI model (Claude Opus), which agrees with people's transcriptions well on printed pages and much less well on manuscripts (#7263, 2026-11-01)",
+      "issue": 7866,
+      "status": "running"
+    },
+    {
       "id": "monthly-audit",
       "name": "Monthly corpus audit",
       "question": "On a random page, does the English say what the transcription says?",
       "kind": "judged",
       "scope": "About 100 books drawn at random each month, one interior page each, all languages",
       "cadence": "monthly",
-      "latest": { "date": "2026-09-30", "headline": "14.3% of pages have a major error (95% CI 7.4–22.3)", "source": "scripts/eval/experiments/_series-monthly-translation-corpus-audit.md" },
+      "latest": { "date": "2026-10-30", "headline": "14.8% of pages have a major error in the English (95% CI 7.0–24.2), 103 books drawn on 1 October, one page each. September: 14.3% (7.4–22.3). A page figure for the English only, judged against our transcription, so it is lower than a book figure read against the page image", "source": "scripts/eval/experiments/_series-monthly-translation-corpus-audit.md" },
       "on_finding": "Defect classes become issues. Pages are not held automatically.",
       "blind_to": "The page image (a wrong leaf passes), page ends, and anything about the book as a whole",
       "issue": 5301,
@@ -80,7 +93,7 @@
       "kind": "judged",
       "scope": "30 books drawn at random, 3 consecutive pages each, read against the images",
       "cadence": "monthly (month 0 run 2026-10-06)",
-      "latest": { "date": "2026-10-06", "headline": "21 of 91 pages (23%) with a serious error; about 18 of 30 books with a defect visible on sight", "source": "scripts/eval/experiments/2026-10-06-random-book-spot-check-canon-shelves-5914.md" },
+      "latest": { "date": "2026-10-06", "headline": "On the canon shelves only, with books of any visibility, so not a rate for the library: 21 of 91 pages (23%) with a serious error; about 18 of 30 books with a defect visible on sight, counting wrong shelf, rights and broken structure as well as text errors", "source": "scripts/eval/experiments/2026-10-06-random-book-spot-check-canon-shelves-5914.md" },
       "on_finding": "Broken and in-copyright books are hidden the same day; each defect class becomes an issue.",
       "blind_to": "Rates for single languages (30 books is too few)",
       "issue": 5914,
