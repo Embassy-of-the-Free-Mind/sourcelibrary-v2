@@ -11,6 +11,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { notFound, permanentRedirect } from 'next/navigation';
 import collectionRedirects from '@/lib/collection-redirects.json';
 import CollectionSchema from '@/components/seo/CollectionSchema';
+import RecentlyTranslatedLinks from '@/components/home/RecentlyTranslatedLinks';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import CollectionFurtherReading from '@/components/collections/CollectionFurtherReading';
 import CollectionReadingList from '@/components/collections/CollectionReadingList';
@@ -2007,6 +2008,18 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           </p>
         )}
       </div>
+
+      {/* Server-rendered plain links to this collection's newest English-readable
+          books not already on the page (#3755). Apex only, like the catalog link:
+          partner subdomains are curated rooms. */}
+      {!tenantSlug && !isArtCollection && total > 0 && (
+        <RecentlyTranslatedLinks
+          collection={id}
+          limit={24}
+          excludeIds={[...books, ...curatedHighlightsData, ...firstTranslations].map((b) => b.id)}
+          className="px-6 md:px-12 max-w-[1500px] mx-auto pb-12"
+        />
+      )}
 
       {/* Further reading — adjacent works we hold, and the ones we don't. Sits
           AFTER the works grid on purpose: it is a handoff, not a member list,
