@@ -18,7 +18,7 @@ import { wilson, aucLowerIsPositive, binaryAgreement } from '../lib/agreement-st
 import { SEVERITY_WEIGHTS } from '../correction-pass-7818/lib.mjs';
 import { scorePlant } from '../lib/plant-ocr-errors.mjs';
 
-const VO = path.join(OUT, 'verdicts-opus.jsonl'), VG = path.join(OUT, 'verdicts-gemini.jsonl');
+const VO = path.join(OUT, 'verdicts-opus.jsonl'), VG = path.join(OUT, 'verdicts-gemini.jsonl'), VA = path.join(OUT, 'verdicts-argon.jsonl');
 const W8 = SEVERITY_WEIGHTS.main;
 const STRATA = ['high', 'middle', 'low', 'unmeasured'];
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
@@ -204,6 +204,7 @@ function score() {
     top_defects: Object.entries(b.pages.filter((p) => p.judged).flatMap((p) => (p.v.defects || []).filter((d) => d.severity !== 'cosmetic').map((d) => `${String(d.class).slice(0, 3)}:${d.severity}`)).reduce((m, k) => (m[k] = (m[k] ?? 0) + 1, m), {})).sort((a, c) => c[1] - a[1]).slice(0, 4).map(([k2, n]) => `${k2}×${n}`) }));
   const contain = books.flatMap((b) => b.pages.filter((p) => p.judged && (p.v.defects || []).some((d) => d.severity === 'wrong_text' && CONTAIN.test(String(d.class).toUpperCase().match(/^[IOTDE]\d+/)?.[0] ?? ''))).map((p) => ({ book: b.id, page: p.page_number, page_id: p.page, fidelity: p.v.fidelity, defects: p.v.defects.filter((d) => d.severity === 'wrong_text').map((d) => `${d.class}: ${String(d.quote).slice(0, 60)} (${d.what ?? ''})`), note: p.v.reader_note })));
   out.gemini_secondary = geminiBlock(books, vo);
+  out.argon_secondary = geminiBlock(books, vo, { file: VA, label: 'gemini-4-argon-low (agy)' }); // Amendment 1
   out.bad_books_n = bad.length; out.containment_candidates_n = contain.length;
   fs.mkdirSync(RESULTS, { recursive: true });
   fs.writeFileSync(path.join(RESULTS, 'score.json'), JSON.stringify(out, null, 1));
@@ -273,8 +274,8 @@ async function writeback() {
  * primary outcome, a bad-book call or containment. Preregistered screen bar: a book flagged when Gemini calls >= 1 of
  * its pages bad; GOOD ENOUGH AS A FIRST SCREEN when it flags >= 0.90 of the Opus-bad books and clears >= 30% of books.
  */
-function geminiBlock(books, vo) {
-  const G = new Map(jsonl(VG).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+function geminiBlock(books, vo, { file = VG, label = 'gemini-3.8-flash-low (agy)' } = {}) {
+  const G = new Map(jsonl(file).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
   if (!G.size) return null;
   const pages = books.flatMap((b) => b.pages.filter((p) => p.judged && G.has(p.id)).map((p) => ({ ...p, g: G.get(p.id), b })));
   const modelOf = new Map(J('draw.json').drawn.flatMap((b) => b.pages.map((q) => [q.page_id, q.model || ''])));
@@ -284,7 +285,7 @@ function geminiBlock(books, vo) {
     return { pages: ps.length, accept_agree: r3(a.observed), accept_kappa: r3(a.kappa), opus_accept: r3(a.positive_a), gemini_accept: r3(a.positive_b), wrong_text_agree: r3(wt.observed), wrong_text_kappa: r3(wt.kappa),
       gemini_misses_opus_bad: `${missed.length}/${opusBad.length}`, miss_rate: opusBad.length ? r3(missed.length / opusBad.length) : null,
       defect_rate_rho: r3(spearman(ps.map((p) => p.points / Math.max(1, p.words)), ps.map((p) => { let x = 0; for (const d of p.g.defects || []) x += W8[d.severity] ?? 0; return x / Math.max(1, p.words); }))) }; };
-  const ctl = jsonl(VG).filter((r) => r.verdict && r.set !== 'abs');
+  const ctl = jsonl(file).filter((r) => r.verdict && r.set !== 'abs');
   const wp = ctl.filter((r) => r.set === 'wrong_page'), pl = ctl.filter((r) => r.set === 'planted');
   // Book level: Gemini's bad-page share as a screen for the Opus bad-book call.
   const bk = books.filter((b) => b.classified).map((b) => { const ps = pages.filter((p) => p.b.id === b.id); return { ...b, g_n: ps.length, g_bad: ps.filter((p) => badPage(p.g)).length }; }).filter((b) => b.g_n >= MIN_JUDGED);
@@ -292,11 +293,14 @@ function geminiBlock(books, vo) {
   const sens = opusBad.filter((b) => b.g_bad >= 1).length;
   const meas = bk.filter((b) => b.measured);
   const gShare = (b) => -(b.g_bad / b.g_n), comb = (b) => b.score * (1 - b.g_bad / b.g_n);
-  const out = { model: 'gemini-3.8-flash-low (agy)', texts_judged: G.size, unparsed: jsonl(VG).filter((r) => !r.verdict).length,
+  const out = { model: label, texts_judged: G.size, unparsed: jsonl(file).filter((r) => !r.verdict).length,
     pages_all: pr(pages), self_preference: { stored_text_gemini: pr(pages.filter(gem)), stored_text_other: pr(pages.filter((p) => !gem(p))) },
     controls: { wrong_page: `${wp.filter((r) => !r.verdict.accept && r.verdict.fidelity <= 2).length}/${wp.length}`, planted: `${pl.filter((r) => r.catch?.caught).length}/${pl.length}` },
     screen: { books: bk.length, opus_bad: opusBad.length, flagged_by_gemini: flagged.length, sensitivity: `${sens}/${opusBad.length}`, sensitivity_wilson: opusBad.length ? wilson(sens, opusBad.length).map(r3) : null,
       cleared_share: r3(1 - flagged.length / Math.max(1, bk.length)), good_enough: opusBad.length ? sens / opusBad.length >= 0.9 && 1 - flagged.length / bk.length >= 0.3 : null },
+    // Amendment 1, exploratory: the screen at the Opus bad-book rule (>= 2 judged pages bad). Not the bar.
+    screen_ge2: (() => { const f2 = bk.filter((b) => b.g_bad >= 2), s2 = opusBad.filter((b) => b.g_bad >= 2).length;
+      return { flagged: f2.length, sensitivity: `${s2}/${opusBad.length}`, sensitivity_wilson: opusBad.length ? wilson(s2, opusBad.length).map(r3) : null, cleared_share: r3(1 - f2.length / Math.max(1, bk.length)) }; })(),
     auc_measured_books: { books: meas.length, confidence_score: meas.length ? r3(aucLowerIsPositive(meas, (b) => b.score, (b) => b.bad)) : null,
       gemini_bad_share: meas.length ? r3(aucLowerIsPositive(meas, gShare, (b) => b.bad)) : null, score_x_gemini: meas.length ? r3(aucLowerIsPositive(meas, comb, (b) => b.bad)) : null },
     auc_all_books_gemini_bad_share: bk.length ? r3(aucLowerIsPositive(bk, gShare, (b) => b.bad)) : null };

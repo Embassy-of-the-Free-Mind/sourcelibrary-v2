@@ -13,6 +13,10 @@
  *   ... judge.mjs gemini      the SECONDARY judge (Derek, 2026-10-31): agy gemini-3.8-flash-low, the same judgePrompt, on
  *                             every item and every control text Opus judged; agy concurrency 2; stops when the agy Gemini
  *                             pool reads empty on /quota. Never enters a primary outcome, a bad-book call or containment.
+ *   ... judge.mjs argon       Amendment 1 (2026-11-01, Derek's #7866 default): the same stage with agy gemini-4-argon-low on
+ *                             the same 820 texts → verdicts-argon.jsonl. Needs AGY_ALLOW_HEAVY=7866 and a box cap that
+ *                             holds the run (AGY_HEAVY_BOX_CAP / AGY_HEAVY_DAILY_CAP ≥ 900, this job only) and an agy
+ *                             login that may run Argon (not /root/.agy-james, which is held to 3.8 Flash low).
  *   [--max-calls=N] [--concurrency=3]
  */
 import fs from 'node:fs';
@@ -22,8 +26,9 @@ import { judgeAgy } from '../correction-pass-7818/lib.mjs';
 import { agyQuota, AGY_GEMINI_EMPTY } from '../../lib/agy-cli.mjs';
 import { plantError, scorePlant, ERROR_KINDS, langCode } from '../lib/plant-ocr-errors.mjs';
 
-const VO = path.join(OUT, 'verdicts-opus.jsonl'), VG = path.join(OUT, 'verdicts-gemini.jsonl');
+const VO = path.join(OUT, 'verdicts-opus.jsonl'), VG = path.join(OUT, 'verdicts-gemini.jsonl'), VA = path.join(OUT, 'verdicts-argon.jsonl');
 export const GEMINI_MODEL = 'gemini-3.8-flash-low';
+export const ARGON_MODEL = 'gemini-4-argon-low';
 const ctlFile = (id) => path.join(OUT, 'controls', `${id}.txt`);
 const saveCtl = (id, t) => { fs.mkdirSync(path.dirname(ctlFile(id)), { recursive: true }); fs.writeFileSync(ctlFile(id), t); };
 export const CALL_BUDGET = 900;
@@ -143,12 +148,12 @@ async function controls() {
 }
 
 /** The secondary judge: every Opus-judged text (items and controls) once through agy, blind, 2 at a time. */
-async function gemini() {
-  const opus = jsonl(VO).filter((r) => r.verdict), have = new Set(jsonl(VG).filter((r) => r.verdict).map((r) => r.id));
-  const tries = new Map(); for (const r of jsonl(VG)) if (!r.verdict) tries.set(r.id, (tries.get(r.id) ?? 0) + 1);
+async function gemini({ file = VG, model = GEMINI_MODEL } = {}) {
+  const opus = jsonl(VO).filter((r) => r.verdict), have = new Set(jsonl(file).filter((r) => r.verdict).map((r) => r.id));
+  const tries = new Map(); for (const r of jsonl(file)) if (!r.verdict) tries.set(r.id, (tries.get(r.id) ?? 0) + 1);
   const its = new Map(J('items.json').map((i) => [i.id, i]));
   const todo = shuffle(opus.filter((r) => !have.has(r.id) && (tries.get(r.id) ?? 0) < 2).sort((a, b) => (a.id < b.id ? -1 : 1)), makeRng(SEED.geminiQueue));
-  console.log(`gemini: ${todo.length} texts to judge`);
+  console.log(`${model}: ${todo.length} texts to judge`);
   const max = Number(arg('max-calls') ?? Infinity);
   let i = 0, calls = 0, stop = null, qAt = 0;
   const quotaOk = () => {
@@ -166,12 +171,12 @@ async function gemini() {
       const t = r.set === 'abs' ? text(r.page) : fs.existsSync(ctlFile(r.id)) ? fs.readFileSync(ctlFile(r.id), 'utf8') : null;
       if (t == null || !it) { console.log(`  ${r.id}: no text for the control, skipped`); continue; }
       let g;
-      try { g = await judgeAgy({ lang: it.lang, text: t }, await imageFor(r.page, it.image), { model: GEMINI_MODEL }); } catch (e) { g = { verdict: null, err: String(e.message || e).slice(0, 200) }; }
+      try { g = await judgeAgy({ lang: it.lang, text: t }, await imageFor(r.page, it.image), { model }); } catch (e) { g = { verdict: null, err: String(e.message || e).slice(0, 200) }; }
       if (g.quota) { stop = `agy quota (${g.err})`; break; }
       const rec = { id: r.id, set: r.set, book: r.book, stratum: r.stratum, page: r.page, judge: 'agy', ...g, at: new Date().toISOString() };
       if (r.set === 'planted' && g.verdict) rec.catch = scorePlant(g.verdict, r.plant);
-      fs.appendFileSync(VG, JSON.stringify(rec) + '\n');
-      console.log(`  gemini ${r.set} ${r.id}: ${g.verdict ? `accept=${g.verdict.accept} f${g.verdict.fidelity}` : g.err ? `ERR ${g.err}` : 'unparsed'}`);
+      fs.appendFileSync(file, JSON.stringify(rec) + '\n');
+      console.log(`  ${model} ${r.set} ${r.id}: ${g.verdict ? `accept=${g.verdict.accept} f${g.verdict.fidelity}` : g.err ? `ERR ${g.err}` : 'unparsed'}`);
     }
   }));
   console.log(`${calls} agy judge texts; ${stop ? `STOPPED: ${stop}` : 'queue done'}`);
@@ -180,6 +185,14 @@ async function gemini() {
 /** Fetch (and resize) every item's image once, before any judge call. */
 async function images() { let n = 0; for (const it of J('items.json')) { await imageFor(it.page, it.image); n++; } console.log(`images: ${n} ready; resized ${fs.readdirSync(path.join(OUT, 'img')).filter((x) => x.endsWith('.orig')).length}`); }
 
-const stages = { items, images, main, controls, gemini };
+/** Amendment 1: Argon on the same texts, the same prompt and image, blind; refuses to start without the heavy-model
+ *  permission and an account that may run it, so a misplaced run stops before its first call. */
+async function argon() {
+  if (!process.env.AGY_ALLOW_HEAVY) { console.error('argon: AGY_ALLOW_HEAVY is not set (agy-guard refuses Argon without it)'); process.exit(2); }
+  if (/agy-james/.test(process.env.AGY_HOME || '')) { console.error('argon: /root/.agy-james is held to gemini-3.8-flash-low'); process.exit(2); }
+  await gemini({ file: VA, model: ARGON_MODEL });
+}
+
+const stages = { items, images, main, controls, gemini: () => gemini(), argon };
 if (!stages[process.argv[2]]) { console.error(`stages: ${Object.keys(stages).join(' | ')}`); process.exit(2); }
 await stages[process.argv[2]]();
