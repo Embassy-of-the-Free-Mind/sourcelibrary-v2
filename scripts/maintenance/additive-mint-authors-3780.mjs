@@ -54,11 +54,39 @@
  *   - an existing doc that already carries a DIFFERENT id is never appended to;
  *   - minted docs carry `bdrc_ids: [id]`, and appends add the id to the doc,
  *     so a resolver can join on the id instead of a name.
+ * The same holds for `authority: { gnd: "118632477" }` (#7660): the holding
+ * library's GND id, harvested by harvest-catalogue-authority.mjs. It is stored in
+ * `gnd_ids` exactly as a BDRC id is stored in `bdrc_ids`, and two GND ids never
+ * converge. A verdict carries one authority, BDRC or GND.
  * Further optional verdict fields: `slug` (explicit doc id, still clash-checked),
  * `extra_variants` (other catalogue forms of the SAME person, e.g. the Wylie
  * name), `link_to` (a hand-reviewed existing doc: append there, no key match),
  * and `standalone: true` (a reviewed REJECTED match: mint, never append).
  * Run with `--source=<tag> --backup=<path>` so a batch reverts on its own.
+ *
+ * PROVENANCE (#7660, binding per Derek 2026-10-28). A verdict may carry `provenance`
+ * (copied onto a minted doc: where the record came from, e.g. {source: 'lobid.org/gnd',
+ * type: 'authority_control', gnd_id, gnd_uri} or {type: 'ai_derived', model, prompt…})
+ * and `variant_provenance` ([{form, source, type, …}] — one entry per form it adds).
+ * Each entry is stamped with the run (`--source`) and written on mint AND on append, so
+ * every variant a resolver matches on says where it came from; --revert pulls them.
+ * `--provenance-only` stamps docs a batch already wrote (found by exact variant) and
+ * writes nothing else.
+ *
+ * NAME-ONLY ADOPTION GUARD (added 2026-10-28, #7660). An append onto an EXISTING doc
+ * through the cluster key is a claim that two strings name one person, made on the
+ * name alone. Read over 70 sampled appends of the first model-classified batch, it
+ * was wrong at least 6 times: "Blake, William, House-keeper." onto the poet, "Ames,
+ * William. Quaker." onto the Puritan divine, "North, Dudley, 3d baron" onto the
+ * economist, "Juana de la Cruz (T.O.R.)" onto John of the Cross, "Hartmann, Johann,
+ * 1568-1631" onto the 19th-century composer, "W Swainson" onto C.A. Swainson. So a
+ * name-only append is refused (the string mints its own doc) when the string carries
+ * a qualifier beyond name and dates (a role, an epithet, "of X", "alias", a
+ * parenthesis), when its given-name initials disagree with the matched form, when it
+ * has no dates and its surname is carried by 15+ distinct people in our corpus, or
+ * (`--check-dates`) when its life dates disagree with the doc's Wikidata dates by more
+ * than 5 years (10 when the string says ca./approximately/?). A duplicate is the cheap
+ * error. After the guard, 1 of 60 sampled appends was wrong.
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/additive-mint-authors-3780.mjs --input <verdicts.jsonl>           # dry-run
@@ -76,7 +104,11 @@ const INPUT = (process.argv.find(a => a.startsWith('--input=')) || '').split('='
 const argv = (k) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || null;
 const BACKUP = argv('backup') || 'scripts/output/additive-mint-3780-backup.json';
 const SOURCE = argv('source') || 'additive-mint-3780';
-const PLAN_OUT = argv('plan');   // optional: write the full plan (mints, appends, skips, notes) as JSON
+const PLAN_OUT = argv('plan');
+const CHECK_DATES = process.argv.includes('--check-dates');
+const PROVENANCE_ONLY = process.argv.includes('--provenance-only');
+/** A verdict's variant_provenance for the forms actually written, each stamped with this run. */
+const vprov = (v, forms) => (v.variant_provenance || []).filter((p) => forms.includes(p.form)).map((p) => ({ ...p, run: SOURCE, at: new Date() }));   // optional: write the full plan (mints, appends, skips, notes) as JSON
 
 // The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
 import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
@@ -98,7 +130,8 @@ if (REVERT) {
   const del = await authors.deleteMany({ _id: { $in: saved.minted }, source: SOURCE });
   let pulls = 0;
   for (const ap of saved.appended) {
-    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}) } });
+    await authors.updateOne({ _id: ap.doc }, { $pull: { variant_provenance: { run: SOURCE } } });
+    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}), ...(ap.gnd ? { gnd_ids: ap.gnd } : {}) } });
     pulls += r.modifiedCount;
   }
   console.log(`Reverted: deleted ${del.deletedCount} minted docs, pulled variants from ${pulls} docs.`);
@@ -109,6 +142,28 @@ if (REVERT) {
 
 if (!INPUT || !existsSync(INPUT)) { console.error('Pass --input <verdicts.jsonl>'); process.exit(1); }
 const verdicts = readFileSync(INPUT, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
+
+// ── provenance-only: stamp what an earlier run of this batch wrote ───────────
+if (PROVENANCE_ONLY) {
+  let docsSet = 0, entries = 0, ambiguous = 0;
+  for (const v of verdicts) {
+    if (!v.provenance && !v.variant_provenance) continue;
+    const hits = await authors.find({ variants: v.string, merged_into: { $exists: false } }, { projection: { variants: 1, source: 1, provenance: 1, variant_provenance: 1 } }).limit(3).toArray();
+    if (hits.length !== 1) { ambiguous++; continue; }
+    const d = hits[0];
+    const forms = [v.string, ...(v.extra_variants || []), v.canonical_name].filter((f) => f && (d.variants || []).includes(f));
+    const have = new Set((d.variant_provenance || []).map((p) => `${p.form}|${p.run}`));
+    const add = vprov(v, forms).filter((p) => !have.has(`${p.form}|${p.run}`));
+    const set = d.source === SOURCE && v.provenance && !d.provenance ? { provenance: { ...v.provenance, run: SOURCE } } : null;
+    if (!APPLY) { if (set) docsSet++; entries += add.length; continue; }
+    if (set || add.length) await authors.updateOne({ _id: d._id }, { ...(set ? { $set: set } : {}), ...(add.length ? { $push: { variant_provenance: { $each: add } } } : {}) });
+    if (set) docsSet++;
+    entries += add.length;
+  }
+  console.log(`${APPLY ? 'stamped' : 'would stamp'}: provenance on ${docsSet} minted docs, ${entries} variant_provenance entries; ${ambiguous} verdicts whose string is on 0 or several docs (left alone)`);
+  await mc.close();
+  process.exit(0);
+}
 const actionable = verdicts.filter(v => (v.verdict === 'person' && v.canonical_name) || v.verdict === 'institution');
 console.log(`${verdicts.length} verdicts; acting on ${actionable.length} (person-with-name + institution). Others (compound/editor/defect/placeholder/uncertain) untouched.`);
 
@@ -118,7 +173,7 @@ const byKey = new Map();
 const usedIds = new Set();
 const byId = new Map();
 const byQid = new Map();
-for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, wikidata_id: 1 } }).batchSize(1000)) {
+for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, gnd_ids: 1, wikidata_id: 1 } }).batchSize(1000)) {
   byId.set(a._id, a);
   if (a.wikidata_id) byQid.set(a.wikidata_id, a._id);
   usedIds.add(a._id);
@@ -154,6 +209,7 @@ const candidateForms = new Set(
     .filter(s => s && !/[\s,]/.test(s)),
 );
 const extenders = new Map();    // bare form -> Set of canonicalKey of extending strings
+const surnamePeople = new Map(); // folded surname -> Set of first given-name initials (a person count, roughly)
 const stemOwners = new Map();   // single stem -> Set of full canonicalKeys containing it
 {
   const strings = await db.collection('books').aggregate([
@@ -163,6 +219,13 @@ const stemOwners = new Map();   // single stem -> Set of full canonicalKeys cont
   for (const form of candidateForms) extenders.set(form, new Set());
   // Index by first token so this stays linear in the corpus, not forms × corpus.
   for (const r of strings) {
+    {
+      const sn = surnameOf(r._id);
+      if (sn && sn.length >= 3) {
+        if (!surnamePeople.has(sn)) surnamePeople.set(sn, new Set());
+        surnamePeople.get(sn).add([...givenInitials(r._id)][0] || '');
+      }
+    }
     const n = norm(r._id).trim();
     const key = canonicalKey(r._id);
     for (const stem of key.split(' ')) {
@@ -194,6 +257,54 @@ const stemOwners = new Map();   // single stem -> Set of full canonicalKeys cont
  * corpus carry that stem. This gates MATCHING onto an existing doc, never
  * minting: a new doc for a mononym is safe, adopting someone else's is not.
  */
+// ── name-only adoption guard helpers (see NAME-ONLY ADOPTION GUARD above) ──
+function foldName(x) { return String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function surnameOf(x) { const f = foldName(x); return (f.includes(',') ? f.split(',')[0].trim() : f.replace(/[.,]/g, ' ').trim()).split(/\s+/).pop() || ''; }
+function givenInitials(x) {
+  const sn = surnameOf(x);
+  return new Set(foldName(x).replace(/\d+/g, ' ').replace(/[^a-z\s]/g, ' ').split(/\s+/)
+    .filter((t) => t && t !== sn && !/^(von|van|de|der|den|du|da|di|la|le|the|of|and)$/.test(t)).map((t) => t[0]));
+}
+const QUALIFIER = /\b(of|bp\.?|bishop|abp\.?|archbishop|baron|earl|duke|duc|lord|sir|quaker|jesuit|s\.?j\.?|o\.?p\.?|o\.?s\.?a\.?|o\.?f\.?m\.?|d\.?d\.?|m\.?d\.?|elder|younger|junior|senior|jr\.?|sr\.?|house-?keeper|minister|author|printer|bookseller|esq\.?|gent\.?|mrs?\.?|rev\.?|dr\.?|saint|st\.?|santo|santa|king|queen|pope|der jüngere|der ältere|priest|vicar|rector|curate|chaplain|schoolmaster|physician|surgeon|merchant|captain|colonel|gentleman|student|fellow|nonconformist|puritan|presbyterian|anabaptist|baptist|alias|called|pseud)\b|\(/i;
+const lifeOf = (s) => { const m = String(s).match(/(\d{3,4})\??\s*[-–]\s*(?:ca\.\s*|approximately\s*)?(\d{3,4})?/); return m ? { b: +m[1], d: m[2] ? +m[2] : null } : null; };
+const wdLife = new Map();
+async function wikidataLife(qid) {
+  if (!qid) return null;
+  if (wdLife.has(qid)) return wdLife.get(qid);
+  let life = null;
+  for (let a = 0; a < 4 && !life; a++) {
+    const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}&props=claims&format=json`, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) additive-mint' } }).catch(() => null);
+    if (r?.ok) {
+      const e = (await r.json().catch(() => ({})))?.entities?.[qid];
+      const y = (p) => Number(String(e?.claims?.[p]?.[0]?.mainsnak?.datavalue?.value?.time || '').match(/^[+-](\d{1,4})/)?.[1]) || null;
+      life = { b: y('P569'), d: y('P570') };
+    } else await new Promise((x) => setTimeout(x, 3000 * (a + 1)));
+  }
+  await new Promise((x) => setTimeout(x, 500));
+  wdLife.set(qid, life);
+  return life;
+}
+/** Why a NAME-ONLY append of string s onto existing doc `hit` (matched via variant `via`) is refused, or null. */
+const restOf = (x) => String(x || '').replace(/\d{3,4}\??\s*[-–]\s*(\d{3,4})?\??/g, ' ').replace(/^[^,]*,/, ' ').replace(/^[^,]*,/, ' ');
+// Anything left after "Surname, Given," and the dates is a qualifier ("House-keeper", "elder", "praeses").
+const residueOf = (x) => restOf(x).replace(/\b(?:ca|c|approximately|approx|circa|fl|active|d|b|aut)\b\.?/gi, ' ').replace(/[^\p{L}]+/gu, ' ').trim().toLowerCase();
+async function adoptionRefusal(s, hit, via) {
+  const rest = restOf(s);
+  const qualified = (String(s).includes(',') && residueOf(s)) || QUALIFIER.test(rest) || /\(/.test(s);
+  // The same qualifier on both sides ("Burnet, Gilbert, bp." / "Burnet, Gilbert, bp") is one heading written twice.
+  if (qualified && residueOf(s) !== residueOf(via)) return 'a qualifier beyond name and dates';
+  const si = givenInitials(s), vi = givenInitials(via || hit.canonical_name);
+  if (si.size && vi.size && ![...si].every((c) => vi.has(c)) && ![...vi].every((c) => si.has(c))) return `given-name initials ${[...si].join('')} vs ${[...vi].join('')}`;
+  const sd = lifeOf(s);
+  if (!sd && (surnamePeople.get(surnameOf(s))?.size || 0) >= 15) return `common surname (${surnamePeople.get(surnameOf(s)).size} people) and no dates`;
+  if (CHECK_DATES && sd && hit.wikidata_id) {
+    const dl = await wikidataLife(hit.wikidata_id);
+    const tol = /approx|ca\.|\?|circa/i.test(s) ? 10 : 5;
+    if (dl && ((dl.b && Math.abs(dl.b - sd.b) > tol) || (dl.d && sd.d && Math.abs(dl.d - sd.d) > tol))) return `dates ${sd.b}-${sd.d ?? ''} vs ${hit._id} ${dl.b}-${dl.d}`;
+  }
+  return null;
+}
+
 const keyTooThinToMatch = (key) => {
   const stems = key.split(' ').filter(Boolean);
   if (stems.length !== 1) return 0;
@@ -231,9 +342,12 @@ const skips = [];
 const notes = [];      // decisions worth reading even though they are not skips
 const claimedKeys = new Map();   // key -> minted doc id, so same-person strings in one run converge
 const claimedAuthority = new Map(); // minted doc id -> its authority id (bdrc), so different ids never converge
-const authorityOf = (v) => v.authority?.bdrc || null;
+const authorityOf = (v) => v.authority?.bdrc || v.authority?.gnd || null;
+/** The doc field an authority id lives in: bdrc_ids or gnd_ids. */
+const authorityKind = (v) => (v.authority?.bdrc ? 'bdrc' : v.authority?.gnd ? 'gnd' : null);
+const authorityField = (v) => (authorityKind(v) ? `${authorityKind(v)}_ids` : null);
 // Does an existing doc already belong to a DIFFERENT authority id?
-const otherAuthority = (doc, v) => Boolean(authorityOf(v) && doc?.bdrc_ids?.length && !doc.bdrc_ids.includes(authorityOf(v)));
+const otherAuthority = (doc, v) => Boolean(authorityOf(v) && doc?.[authorityField(v)]?.length && !doc[authorityField(v)].includes(authorityOf(v)));
 const mintedBySlug = new Map();  // slug -> { source } for docs minted THIS run, to resolve slug clashes
 
 // The CJK characters of a string, in order — the part romanization throws away.
@@ -275,7 +389,9 @@ const buildDoc = (id, display, s, v) => {
     wikidata_id: v.wikidata_id || null,
     entity_ids: [],
     ...(v.verdict === 'institution' ? { is_person: false } : {}),
-    ...(authorityOf(v) ? { bdrc_ids: [authorityOf(v)] } : {}),
+    ...(v.provenance ? { provenance: { ...v.provenance, run: SOURCE } } : {}),
+    ...(v.variant_provenance ? { variant_provenance: vprov(v, variants) } : {}),
+    ...(authorityOf(v) ? { [authorityField(v)]: [authorityOf(v)] } : {}),
     source: SOURCE,
     built_at: new Date(),
   };
@@ -283,8 +399,9 @@ const buildDoc = (id, display, s, v) => {
 
 const appendOf = (doc, v, extra = {}) => ({
   doc, variant: v.string, variant_slug: authorSlug(v.string) || null,
-  ...(authorityOf(v) ? { bdrc: authorityOf(v) } : {}),
+  ...(authorityOf(v) ? { [authorityKind(v)]: authorityOf(v) } : {}),
   ...(v.extra_variants?.length ? { extra_variants: v.extra_variants.filter(x => x && poisonScore(x) < POISON_MIN_EXTENDERS) } : {}),
+  ...(v.variant_provenance ? { variant_provenance: vprov(v, [v.string, ...(v.extra_variants || [])]) } : {}),
   ...extra,
 });
 
@@ -350,7 +467,7 @@ for (const v of actionable) {
     standalone = `same cluster key as ${keyHit._id} minted this run, but a different authority id (${claimedAuthority.get(keyHit._id)} vs ${authorityOf(v)})`;
   }
   if (!standalone && keyHit && !keyHit.minted && otherAuthority(keyHit, v)) {
-    standalone = `cluster key matches ${keyHit._id}, which carries a different authority id (${keyHit.bdrc_ids.join(',')})`;
+    standalone = `cluster key matches ${keyHit._id}, which carries a different authority id (${keyHit[authorityField(v)].join(',')})`;
   }
   if (!standalone && keyHit && !keyHit.minted && authorityOf(v)) {
     // An authority-backed person adopts an existing doc only through a reviewed link_to.
@@ -366,6 +483,12 @@ for (const v of actionable) {
   const thin = !standalone && keyHit && !keyHit.minted && !ALLOW_APPEND.has(`${keyHit._id}|${s}`) ? keyTooThinToMatch(matchedKey) : 0;
   if (thin) {
     standalone = `cluster key ${JSON.stringify(matchedKey)} is a single stem shared by ${thin} distinct people — too thin to adopt ${keyHit._id}'s identity`;
+  }
+  if (!standalone && keyHit && v.verdict === 'person' && !ALLOW_APPEND.has(`${keyHit._id}|${s}`)) {
+    // A doc minted earlier THIS run is adopted on the name alone too: test against the string that minted it.
+    const via = keyHit.minted ? mintedBySlug.get(keyHit._id)?.source : keyHit.viaVariant;
+    const why = await adoptionRefusal(s, keyHit.minted ? { _id: keyHit._id, canonical_name: via } : keyHit, via);
+    if (why) standalone = `not adopting ${keyHit._id} on the name alone: ${why}`;
   }
   if (standalone) notes.push(`${JSON.stringify(s)}: ${standalone}; minting separately`);
 
@@ -469,7 +592,8 @@ let appended = 0;
 for (const a of appends) {
   const r = await authors.updateOne(
     { _id: a.doc, merged_into: { $exists: false } },
-    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}) } },
+    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}), ...(a.gnd ? { gnd_ids: a.gnd } : {}) },
+      ...(a.variant_provenance?.length ? { $push: { variant_provenance: { $each: a.variant_provenance } } } : {}) },
   );
   appended += r.modifiedCount;
 }
