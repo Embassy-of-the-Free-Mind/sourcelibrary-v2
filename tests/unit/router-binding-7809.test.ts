@@ -4,10 +4,11 @@
 import { describe, it, expect } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { checkBinding, servedByFirstRead, servedByCorrect, servedByArmcFirstRead, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
+import { checkBinding, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { servedByCrontab } from '../../scripts/audit/router-binding.mjs';
@@ -76,6 +77,36 @@ describe('servedByCrontab', () => {
     expect(servedByCrontab('10 * * * * node scripts/batch/cli-ocr-lane.mjs correct --out=/x').map((s: { cell: string }) => s.cell))
       .toEqual(servedByCorrect({ languages: ['German', 'French'] }).map((s: { cell: string }) => s.cell));
   });
+  it('a correct line with --reread-per-call serves the re-read cells, print only (#7853)', () => {
+    expect(servedByCrontab('50 */2 * * * f=/root/sourcelibrary/scripts/batch/cli-ocr-lane.mjs; node $f correct --out=/x --reread-per-call=4 --agy-home=default --apply')).toEqual([
+      { lane: 'reread', cell: 'german-lite/print', route: 'agy-flash-low@4-read' },
+      { lane: 'reread', cell: 'french-lite/print', route: 'agy-flash-low@4-read' },
+    ]);
+  });
+});
+
+describe('servedByReread (#7853)', () => {
+  it('the route id from the pages a call; the print cells only (the writer runs --print-only)', () => {
+    expect(servedByReread({ languages: ['German'], perCall: 4 })).toEqual([{ lane: 'reread', cell: 'german-lite/print', route: 'agy-flash-low@4-read' }]);
+    expect(servedByReread({ languages: ['French'], perCall: 1 })).toEqual([{ lane: 'reread', cell: 'french-lite/print', route: 'agy-flash-low-read' }]);
+  });
+});
+
+describe('current.json `cells`: the pointer moved for named cells only (#7853)', () => {
+  it('a named cell takes its row from its own build; every other cell stays on `table`', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'rt-'));
+    const w = (n: string, o: unknown) => fs.writeFileSync(path.join(dir, n), JSON.stringify(o));
+    w('old.json', { rows: [row('a/print', 'keep', 'x'), row('b/print', 'HOLD', 'y')] });
+    w('new.json', { rows: [row('a/print', 'switch', 'z'), row('b/print', 'switch', 'w')] });
+    w('current.json', { table: 'old', cells: { 'b/print': { table: 'new', set: '2026-11-01', why: 't' } } });
+    const t = loadCurrentTable(dir);
+    expect([t.rows.get('a/print').route, t.rows.get('b/print').route, t.rows.get('b/print').table]).toEqual(['x', 'w', 'new']);
+    const f = checkBinding(t, [{ lane: 'l', cell: 'b/print', route: 'w' }])[0];
+    expect([f.status, f.table]).toEqual(['ok', 'new']);
+    w('current.json', { table: 'old', cells: { 'c/print': { table: 'new' } } });
+    expect(() => loadCurrentTable(dir)).toThrow(/no cell c\/print/);
+    fs.rmSync(dir, { recursive: true, force: true });
+  });
 });
 
 describe('the committed pointer', () => {
@@ -86,6 +117,14 @@ describe('the committed pointer', () => {
   it('the live first-read and arm-c routes match the current table (2026-10-30 gex45 crontab)', () => {
     const served = [...servedByFirstRead({ languages: ['deu', 'fra'], perCall: 4, perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES }), ...servedByArmcFirstRead({ langs: ['la'] })];
     expect(checkBinding(loadCurrentTable(), served).map((f: { status: string }) => f.status)).toEqual(['ok', 'ok', 'ok']);
+  });
+  it('the re-read mode (#7853): French read@4 is the decided route; German runs on the dated reread waiver (the Opus bar keeps lite>opus)', () => {
+    const f = checkBinding(loadCurrentTable(), servedByReread({ languages: ['German', 'French'], perCall: 4 }), { today: '2026-11-01' });
+    expect(f.map((x: { cell: string; status: string }) => [x.cell, x.status])).toEqual([['german-lite/print', 'waived'], ['french-lite/print', 'ok']]);
+    expect(f[0].waiver).toMatchObject({ lane: 'reread', until: '2026-11-14' });
+    expect(f[1]).toMatchObject({ decided: 'agy-flash-low@4-read', table: '2026-11-01-reread-7853' });
+    // the waiver is the reread lane's: after its date the German cell is a mismatch again, and pages
+    expect(checkBinding(loadCurrentTable(), servedByReread({ languages: ['German'], perCall: 4 }), { today: '2026-11-15' })[0].status).toBe('mismatch');
   });
 });
 

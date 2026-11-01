@@ -1,16 +1,36 @@
 {
  "_prior_art": "PRIOR ART: none — looked in scripts/eval/estimator/router-table/ (dated builds and rules.json only; nothing names the live table) and scripts/lib/ocr-routing-table.json (hand-edited production routes, not the k/n decisions).",
- "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
+ "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. `cells` moves the pointer for the named cells only ({cell: {table, set, why}}: that cell's row comes from that build, every other cell from `table`), so a decision about two cells does not carry every other change a rebuild makes. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
  "table": "2026-10-31-correction-pass-7818",
  "set": "2026-10-31",
  "why": "2026-10-30-german-cheaper-7701 plus the #7818 paired test as evidence for german-lite and french-lite lite>agy-flash-low (Derek, 2026-10-31: correction cron on, evidence in, waiver for German). With it german-lite/print moves to keep lite>opus (waived below) and french-lite/print to HOLD; every first-read decision is unchanged from german-cheaper.",
+ "cells": {
+  "german-lite/print": {
+   "table": "2026-11-01-reread-7853",
+   "set": "2026-11-01",
+   "why": "Derek took the #7853 default on 2026-11-01: the stored Flash-Lite queue is re-read with agy read@4, not corrected. The build pools #7853 (rules.json route agy-flash-low@4-read, evidence/queue-routes-7853.score.json): read@4 123/150 against lite>opus 299/307, and the defect rule keeps lite>opus (the Opus bar; read@4 is not rated in defect-rates.json, and its #7853 wrong text, 0.44 a 1,000 words weighted, is over the bar's 0.20 + 0.15). The decision is unchanged (keep lite>opus); the re-read runs on the waiver below. Only this cell and french-lite/print move: the same rebuild also moves latin-blank/print and german-blank/print to HOLD and changes the routes of french-gpu-7263/print and italian-gpu-7263/print (main's rules.json rebuilt alone gives all but italian-gpu-7263's route, which moves with the random draws when routes are added), none of which was decided here."
+  },
+  "french-lite/print": {
+   "table": "2026-11-01-reread-7853",
+   "set": "2026-11-01",
+   "why": "Derek took the #7853 default on 2026-11-01. With #7853 pooled the cell switches from HOLD to agy-flash-low@4-read (k/n: the live route lite>opus has no defect verdicts): 55/60, 2 wrong text, against lite>agy-flash-low 108/132 and agy-flash-low-read 79/90. The lane: cli-ocr-lane.mjs correct --reread-per-call=4."
+  }
+ },
  "waivers": [
   {
    "cell": "german-lite/print",
    "lane": "correct",
    "set": "2026-10-31",
    "until": "2026-11-14",
-   "reason": "#7818: the agy correction beats no correction by +13 points (95% CI +5 to +22; 8 gained, 0 lost of 60 books) but not the Opus bar the table keeps (lite>opus). Opus has no capacity for ~410K pages. Re-decide by 11-14 with the defect-rate rule (#7824) or an Opus share."
+   "reason": "#7818: the agy correction beats no correction by +13 points (95% CI +5 to +22; 8 gained, 0 lost of 60 books) but not the Opus bar the table keeps (lite>opus). Opus has no capacity for ~410K pages. Re-decide by 11-14 with the defect-rate rule (#7824) or an Opus share.",
+   "superseded": "2026-11-01 (#7853): Derek took re-read over correction; the gex45 correction lines move to `correct --reread-per-call=4`, which runs on the reread waiver below. This waiver stays only until its date, for a correct run that has not moved yet."
+  },
+  {
+   "cell": "german-lite/print",
+   "lane": "reread",
+   "set": "2026-11-01",
+   "until": "2026-11-14",
+   "reason": "#7853 (Derek 2026-11-01, the default taken): read@4 beats the #7558 correction on the stored-lite queue, weighted accept 0.82 against 0.72 (24 lost / 9 gained, Holm p 0.027) and 31 against 50 severity-weighted defects a 1,000 words, at 0.34 agy calls a page against 1.0; it does not reach the Opus bar the table keeps (lite>opus 299/307), and Opus has no capacity for the queue. Re-decide by 11-14 with the correction waiver: the Opus share, or a bar other than Opus for this cell."
   }
  ]
 }
