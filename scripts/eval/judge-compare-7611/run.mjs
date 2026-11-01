@@ -12,7 +12,8 @@
  *   AGY_ALLOW_HEAVY=7611 ... run.mjs judge --judge=argon --out=DIR
  *   ... run.mjs judge --judge=opus --out=DIR --repeat      (the Opus-vs-Opus noise floor, 30 items)
  *   ... run.mjs adjudicate --out=DIR [--max=150]           (Opus sees the image and both verdicts, blind)
- *   ... run.mjs score --out=DIR
+ *   ... run.mjs score --out=DIR [--judges=flash,argon,flash-medium,flash-high]
+ *   ... run.mjs cost --out=DIR [--judges=...]            (tokens per call per arm, priced against Flash-low; #7611 amendment)
  *
  * ITEMS. (a) the 180 planted-control items of judge-planted-7611 (36 A, 144 B-E) with their stored Opus verdicts;
  * (b) real lane output with a stored Opus verdict whose EXACT judged text is recovered: lane_judge_verdicts (text_hash
@@ -47,6 +48,9 @@ const PLANTED = path.join(ROOT, 'scripts/eval/judge-planted-7611/results/2026-10
 
 export const JUDGES = {
   flash: { model: 'gemini-3.8-flash-low', by: 'agy' },
+  // 2026-11-01 amendment (#7611): the same Flash at its two higher thinking tiers, on the default pool.
+  'flash-medium': { model: 'gemini-3.8-flash-medium', by: 'agy' },
+  'flash-high': { model: 'gemini-3.8-flash-high', by: 'agy' },
   argon: { model: 'gemini-4-argon-low', by: 'agy' },
   opus: { model: 'claude-opus-5-5', by: 'claude -p --model opus' },
 };
@@ -226,7 +230,7 @@ async function geminiCall(prompt, jpeg, model) {
 
 async function judge() {
   const who = arg('judge'); const J0 = JUDGES[who];
-  if (!J0) { console.error('--judge=flash|argon|opus'); process.exit(2); }
+  if (!J0) { console.error(`--judge=${Object.keys(JUDGES).join('|')}`); process.exit(2); }
   const repeat = flag('repeat');
   const items = J('items.json'), fr = J('frame.json');
   const texts = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(OUT, 'texts.json.gz'))));
@@ -240,7 +244,8 @@ async function judge() {
   const conc = Math.max(1, Math.min(6, Number(arg('concurrency') || 4)));
   // Stop rules (preregistered): a Gemini pool stops this judge when its weekly remaining falls MAX_WEEK_DROP below the
   // reading at start, or its 5-hour bucket under MIN_5H; Opus stops at the box's Claude weekly 85%.
-  const MAX_WEEK_DROP = Number(arg('max-week-drop') ?? 0.10), MIN_5H = Number(arg('min-5h') ?? 0.30);
+  // --min-week: an absolute floor on the pool's weekly remaining (the 2026-11-01 amendment stops at 0.15).
+  const MAX_WEEK_DROP = Number(arg('max-week-drop') ?? 0.10), MIN_5H = Number(arg('min-5h') ?? 0.30), MIN_WEEK = Number(arg('min-week') ?? 0);
   const limits = await import('../../lib/model-limits.mjs');
   const q0 = J0.by === 'agy' ? await poolQuota() : null;
   if (J0.by === 'agy' && !q0) { console.error('no quota reading for this pool: the stop rule cannot run, so the judge does not start'); process.exit(3); }
@@ -281,7 +286,7 @@ async function judge() {
     while (!stop && next < todo.length) {
       if (J0.by === 'agy' && calls - checkAt >= 25) {
         checkAt = calls; const q = await poolQuota();
-        if (q && q0 && (q0.weekly - q.weekly > MAX_WEEK_DROP || (q.fiveHour ?? 1) < MIN_5H)) { stop = `pool guard: weekly ${q0.weekly} -> ${q.weekly}, 5h ${q.fiveHour}`; break; }
+        if (q && q0 && (q0.weekly - q.weekly > MAX_WEEK_DROP || q.weekly < MIN_WEEK || (q.fiveHour ?? 1) < MIN_5H)) { stop = `pool guard: weekly ${q0.weekly} -> ${q.weekly}, 5h ${q.fiveHour}`; break; }
         console.log(`  [quota after ${calls}: weekly ${q?.weekly}, 5h ${q?.fiveHour}]`);
       }
       if (J0.by !== 'agy') { const b = limits.claudeBlocked({ weeklyMax: 85, sessionMax: 95 }); if (b) { stop = b.reason; break; } }
@@ -330,9 +335,14 @@ async function adjudicate() {
   // Every real item where a Gemini judge's accept differs from Opus's stored one: one adjudication per (item, judge).
   const todo = [];
   // --judge=X: one judge's disagreements (the 150 are split 75 per judge, so a judge run later is not crowded out).
+  // --reuse-prior: an item an earlier judge's disagreement already sent to the adjudicator is not sent again. Every
+  // disagreement on an item is the same one (Opus's accept against its negation), and the adjudicator's own accept is
+  // the label the scorer reads (ADJ_BORROW).
+  const settled = new Set(readJsonl(vf).filter((r) => r.adj).map((r) => r.id));
   for (const who of arg('judge') ? [arg('judge')] : ['flash', 'argon']) for (const v of firstVerdicts(path.join(OUT, `verdicts-${who}.jsonl`))) {
     const it = items.get(v.id); const op = texts[v.id]?.opus;
     if (!it || it.set !== 'real' || !op || op.accept === v.verdict.accept) continue;
+    if (flag('reuse-prior') && settled.has(v.id) && !done.has(`${who}:${v.id}`)) continue;
     const key = `${who}:${v.id}`; if (!done.has(key)) todo.push({ key, who, it, g: v.verdict, op });
   }
   const order = todo.map((t) => [h(`adj:${t.key}`), t]).sort((a, b) => a[0].localeCompare(b[0])).map(([, t]) => t).slice(0, Number(arg('max') || 150));
@@ -389,20 +399,49 @@ const kappa = (pairs) => {
 };
 const serious = (v) => new Set((v?.defects || []).filter((d) => d.severity !== 'cosmetic').map((d) => String(d.class || '').toUpperCase().slice(0, 3)));
 
+/** The adjudicated label of an item for judge w: its own adjudication where one ran; for the 2026-11-01 arms, else the
+ *  adjudication an earlier judge's disagreement on the same item got (Argon's first: all of its were adjudicated). */
+const ADJ_BORROW = { 'flash-medium': ['argon', 'flash'], 'flash-high': ['argon', 'flash'] };
+function adjFor(adj, w) {
+  const m = new Map();
+  for (const who of [w, ...(ADJ_BORROW[w] || [])]) for (const r of adj) if (r.judge === who && !m.has(r.id)) m.set(r.id, r.adj.accept);
+  return m;
+}
+
+/** The 2026-11-01 amendment's rule (preregistered in experiments/2026-11-01-flash-tier-judge-7611.md), per stratum. */
+export const TIER_RULE = { plants_min: 141, kappa_min: 0.75, selfpref_ci_hi_max: 0.10, screen_miss_max: 0.08, screen_clear_min: 0.40 };
+function tierDecision(out, arms) {
+  const res = {};
+  for (const w of arms) {
+    const pl = out.planted[w]?.caught?.k ?? null, sp = out.vs_adjudicated[w]?.miss_GEM_minus_GPU?.gemini;
+    const plantsOk = pl != null && pl >= TIER_RULE.plants_min, spOk = !!sp?.ci_book && sp.ci_book[1] < TIER_RULE.selfpref_ci_hi_max;
+    res[w] = { plants: pl, plants_ok: plantsOk, self_pref: sp, self_pref_ok: spOk, strata: {} };
+    for (const g of ['GEM', 'GPU', 'GPU>GEM', 'TR']) {
+      const k = out.real[w]?.[g]?.kappa ?? null, sc = out.screen[w]?.[g];
+      const miss = sc?.gemini_alone_missed_share ?? null, clear = sc ? +((out.real[w][g].pass_gemini.k) / sc.n).toFixed(3) : null;
+      res[w].strata[g] = { kappa: k, kappa_ok: k != null && k >= TIER_RULE.kappa_min, judge: plantsOk && spOk && k != null && k >= TIER_RULE.kappa_min,
+        screen_miss: miss, screen_miss_ci_book: sc?.gemini_alone_missed_share_ci_book ?? null, screen_clears: clear,
+        screen: miss != null && miss <= TIER_RULE.screen_miss_max && clear != null && clear >= TIER_RULE.screen_clear_min, ...(g === 'TR' ? { note: 'reported; the decision is about transcription' } : {}) };
+    }
+  }
+  return res;
+}
+
 function score() {
   const items = J('items.json'); const byId = new Map(items.map((x) => [x.id, x]));
   const texts = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(OUT, 'texts.json.gz'))));
   const plants = JSON.parse(fs.readFileSync(path.join(PLANTED, 'plants.json'), 'utf8'));
-  const V = Object.fromEntries(['flash', 'argon'].map((w) => [w, new Map(firstVerdicts(path.join(OUT, `verdicts-${w}.jsonl`)).map((r) => [r.id, r.verdict]))]));
-  const R = Object.fromEntries(['flash', 'argon', 'opus'].map((w) => [w, new Map(firstVerdicts(path.join(OUT, `verdicts-${w}-repeat.jsonl`)).map((r) => [r.id, r.verdict]))]));
+  const JW = (arg('judges') || 'flash,argon').split(',');
+  const V = Object.fromEntries(JW.map((w) => [w, new Map(firstVerdicts(path.join(OUT, `verdicts-${w}.jsonl`)).map((r) => [r.id, r.verdict]))]));
+  const R = Object.fromEntries([...JW, 'opus'].map((w) => [w, new Map(firstVerdicts(path.join(OUT, `verdicts-${w}-repeat.jsonl`)).map((r) => [r.id, r.verdict]))]));
   const opusOf = (id) => texts[id]?.opus;
   const out = { generated_at: new Date().toISOString(), calls: {}, planted: {}, real: {}, noise: {}, adjudication: {}, screen: {} };
-  for (const w of ['flash', 'argon']) {
+  for (const w of JW) {
     const rows = readJsonl(path.join(OUT, `verdicts-${w}.jsonl`)), rep = readJsonl(path.join(OUT, `verdicts-${w}-repeat.jsonl`));
     out.calls[w] = { calls: rows.length + rep.length, parsed: V[w].size, failed: Object.fromEntries(Object.entries(Object.groupBy(rows.filter((r) => !r.verdict), (r) => r.cls || 'x')).map(([k, v]) => [k, v.length])) };
   }
   // 1. Planted recall.
-  for (const w of ['opus', 'flash', 'argon']) {
+  for (const w of ['opus', ...JW]) {
     const P = items.filter((x) => x.set === 'planted').map((x) => ({ x, v: w === 'opus' ? opusOf(x.id) : V[w].get(x.id) })).filter((r) => r.v);
     const rows = P.map(({ x, v }) => ({ book: x.book_id, lang: x.lang, kind: x.kind, ...(x.kind === 'A' ? { accepted: !!v.accept } : scorePlant(v, plants[x.page_id][x.kind])) }));
     const E = rows.filter((r) => r.kind !== 'A'), A = rows.filter((r) => r.kind === 'A');
@@ -413,7 +452,7 @@ function score() {
   }
   // 2. Agreement with Opus on real items, by author group; self-preference.
   const groups = ['GEM', 'GPU', 'GPU>GEM', 'TR', 'ALL'];
-  for (const w of ['flash', 'argon']) {
+  for (const w of JW) {
     out.real[w] = {};
     const base = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id)).map((x) => {
       const g = V[w].get(x.id), o = opusOf(x.id); const sg = serious(g), so = serious(o);
@@ -449,19 +488,20 @@ function score() {
     }
   }
   // Noise floor: the same judge twice on the 30-item subset.
-  for (const w of ['opus', 'flash', 'argon']) {
+  for (const w of ['opus', ...JW]) {
     const pairs = [...R[w].entries()].map(([id, v]) => { const first = w === 'opus' ? opusOf(id) : V[w].get(id); return first ? { book: byId.get(id).book_id, a: !!first.accept, b: !!v.accept, fa: Number(first.fidelity), fb: Number(v.fidelity) } : null; }).filter(Boolean);
     if (pairs.length) out.noise[w] = { n: pairs.length, agree: kn(pairs.filter((p) => p.a === p.b).length, pairs.length), agree_ci_book: bookCI(pairs, (s) => rate(s, (p) => p.a === p.b)), kappa: kappa(pairs.map((p) => [p.a, p.b])), fidelity_same: pairs.filter((p) => p.fa === p.fb).length };
   }
   // The cross-judge agreement on the SAME 30 items, so the floor and the comparison read on one set.
   const noiseIds = J('frame.json').noise;
-  for (const w of ['flash', 'argon']) {
+  for (const w of JW) {
     const pr = noiseIds.map((id) => [V[w].get(id), opusOf(id), byId.get(id)]).filter(([g, o]) => g && o);
     if (pr.length) out.noise[`${w}_vs_opus_same30`] = { n: pr.length, agree: kn(pr.filter(([g, o]) => g.accept === o.accept).length, pr.length) };
   }
   // 3. Adjudication tallies.
   const adj = readJsonl(path.join(OUT, 'adjudications.jsonl')).filter((r) => r.adj);
-  for (const w of ['flash', 'argon']) {
+  out.adjudication_borrowed = Object.fromEntries(JW.filter((w) => ADJ_BORROW[w]).map((w) => { const own = new Set(adj.filter((r) => r.judge === w).map((r) => r.id)); return [w, [...adjFor(adj, w).keys()].filter((id) => !own.has(id) && V[w].has(id) && V[w].get(id).accept !== opusOf(id)?.accept).length]; }));
+  for (const w of JW) {
     const a = adj.filter((r) => r.judge === w); if (!a.length) continue;
     const kind = (r) => `${r.gemini_accept ? 'gemini passed, opus failed' : 'gemini failed, opus passed'} -> ${r.winner} right`;
     out.adjudication[w] = { n: a.length, winner: Object.fromEntries(Object.entries(Object.groupBy(a, (r) => r.winner)).map(([k, v]) => [k, v.length])),
@@ -470,8 +510,8 @@ function score() {
   }
   // 4. The screen: Gemini flags go to Opus; Gemini passes go to Opus at 20%. "Opus-confirmed failure" = Opus rejects
   // (after adjudication where one ran: the adjudicator's accept replaces Opus's on that item).
-  for (const w of ['flash', 'argon']) {
-    const adjOf = new Map(adj.filter((r) => r.judge === w).map((r) => [r.id, r.adj.accept]));
+  for (const w of JW) {
+    const adjOf = adjFor(adj, w);
     out.screen[w] = {};
     for (const grp of groups) {
       const rows = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id) && (grp === 'ALL' || x.author === grp)).map((x) => ({ book: x.book_id, g: V[w].get(x.id).accept, fail: !(adjOf.has(x.id) ? adjOf.get(x.id) : opusOf(x.id).accept) }));
@@ -480,15 +520,16 @@ function score() {
       out.screen[w][grp] = { n: rows.length, opus_confirmed_failures: F.length, gemini_passed_failures: F.filter((r) => r.g).length,
         missed_share: F.length ? +(missed / F.length).toFixed(3) : null, missed_share_ci_book: bookCI(rows, (s) => { const f = s.filter((r) => r.fail); return f.length ? f.filter((r) => r.g).length * 0.8 / f.length : null; }),
         opus_calls_per_100: +(100 * (flagged + 0.2 * passed) / rows.length).toFixed(1), saved_per_100: +(100 - 100 * (flagged + 0.2 * passed) / rows.length).toFixed(1),
-        gemini_alone_missed_share: F.length ? +(F.filter((r) => r.g).length / F.length).toFixed(3) : null, gemini_alone_false_alarms: rows.filter((r) => !r.g && !r.fail).length };
+        gemini_alone_missed_share: F.length ? +(F.filter((r) => r.g).length / F.length).toFixed(3) : null,
+        gemini_alone_missed_share_ci_book: bookCI(rows, (s) => { const f = s.filter((r) => r.fail); return f.length ? f.filter((r) => r.g).length / f.length : null; }), gemini_alone_false_alarms: rows.filter((r) => !r.g && !r.fail).length };
     }
   }
   // Against the adjudicated verdict (the adjudicator's accept where one ran, else the two agree or Opus's stands):
   // each judge's miss rate (passed a failing page) and false alarms (failed a passing page), by group. A judge that goes
   // easy on its own family misses more on GEM than on GPU, relative to the other judge.
   out.vs_adjudicated = {};
-  for (const w of ['flash', 'argon']) {
-    const adjOf = new Map(adj.filter((r) => r.judge === w).map((r) => [r.id, r.adj.accept]));
+  for (const w of JW) {
+    const adjOf = adjFor(adj, w);
     out.vs_adjudicated[w] = {};
     for (const grp of groups) {
       const rows = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id) && (grp === 'ALL' || x.author === grp)).map((x) => {
@@ -504,11 +545,38 @@ function score() {
     const rows = items.filter((x) => x.set === 'real' && V[w].has(x.id) && opusOf(x.id) && ['GEM', 'GPU'].includes(x.author)).map((x) => ({ book: x.book_id, author: x.author, g: V[w].get(x.id).accept, o: opusOf(x.id).accept, t: adjOf.has(x.id) ? adjOf.get(x.id) : opusOf(x.id).accept }));
     out.vs_adjudicated[w].miss_GEM_minus_GPU = { gemini: { diff: sp(rows, 'g') == null ? null : +sp(rows, 'g').toFixed(3), ci_book: bookCI(rows, (s) => sp(s, 'g')) }, opus: { diff: sp(rows, 'o') == null ? null : +sp(rows, 'o').toFixed(3), ci_book: bookCI(rows, (s) => sp(s, 'o')) } };
   }
+  if (JW.some((w) => ADJ_BORROW[w])) out.tier_decision = tierDecision(out, JW.filter((w) => ADJ_BORROW[w]));
   W('score.json', out);
   console.log(JSON.stringify(out, null, 1));
 }
 
-const STAGES = { frame, judge, adjudicate, score };
+// ---------------------------------------------------------------------------------------------------------------------
+// Cost per call, per tier (2026-11-01 amendment). agy charges the pool by token cost, so each arm's calls are priced at
+// the API list rates of gemini-3.8-flash (scripts/lib/model-pricing.mjs; thinking is inside output_tokens: total =
+// input + output) and scaled to the measured Flash-low figure: $/call(tier) = FLASH_LOW_USD × mean(tier) ÷ mean(low).
+const FLASH_LOW_USD = 0.00055;
+function cost() {
+  const JW = (arg('judges') || 'flash,flash-medium,flash-high').split(',');
+  const { input, output } = { input: 0.75, output: 3.75 };   // gemini-3.8-flash, $/M (model-pricing.mjs)
+  const usd = (u) => ((u.input_tokens || 0) * input + (u.cache_read_tokens || 0) * input * 0.1 + (u.output_tokens || 0) * output) / 1e6;
+  const runs = J('runs.json'), out = { rates_per_m: { input, output, cache_read: input * 0.1 }, flash_low_usd: FLASH_LOW_USD, arms: {} };
+  for (const w of JW) {
+    const rows = [...readJsonl(path.join(OUT, `verdicts-${w}.jsonl`)), ...readJsonl(path.join(OUT, `verdicts-${w}-repeat.jsonl`))].filter((r) => r.usage);
+    const parsed = rows.filter((r) => r.verdict).length, mean = (f) => +(rows.reduce((s, r) => s + f(r), 0) / rows.length).toFixed(1);
+    const R = runs.filter((r) => r.judge === w && r.quota_before && r.quota_after);
+    const drop = R.reduce((s, r) => s + (r.quota_before.weekly - r.quota_after.weekly), 0), qcalls = R.reduce((s, r) => s + r.calls, 0);
+    out.arms[w] = { model: JUDGES[w].model, calls_with_usage: rows.length, parsed, input: mean((r) => r.usage.input_tokens || 0), output: mean((r) => r.usage.output_tokens || 0),
+      thinking: mean((r) => r.usage.thinking_tokens || 0), cache_read: mean((r) => r.usage.cache_read_tokens || 0), list_usd_per_call: +(rows.reduce((s, r) => s + usd(r.usage), 0) / rows.length).toFixed(6),
+      secs_mean: mean((r) => r.secs || 0), calls_per_judgement: +(rows.length / Math.max(1, parsed)).toFixed(3),
+      quota: { calls: qcalls, weekly_drop: +drop.toFixed(4), per_call: qcalls ? +(drop / qcalls).toExponential(2) : null, pools: [...new Set(R.map((r) => r.agy_home))], note: 'noisy: other lanes share the pool' } };
+  }
+  const low = out.arms.flash?.list_usd_per_call;
+  for (const a of Object.values(out.arms)) if (low) { a.ratio_to_low = +(a.list_usd_per_call / low).toFixed(2); a.usd_per_call = +(FLASH_LOW_USD * a.ratio_to_low).toFixed(6); a.usd_per_judgement = +(a.usd_per_call * a.calls_per_judgement).toFixed(6); }
+  W('cost.json', out);
+  console.log(JSON.stringify(out, null, 1));
+}
+
+const STAGES = { frame, judge, adjudicate, score, cost };
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
   const s = STAGES[process.argv[2]];
   if (!s) { console.error(`stages: ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
