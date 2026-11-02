@@ -26,11 +26,11 @@ const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const LINK = 'text-accent-rust hover:underline';
 const STATUS_WORDS: Record<CellStatus, string> = {
   mismatch: 'another route, no waiver', unshipped: 'no lane runs it', waived: 'another route, waived',
-  served: 'served', undecided: 'undecided', idle: 'nothing waiting',
+  served: 'served', stored: 'keeps the stored text', undecided: 'undecided', idle: 'nothing waiting',
 };
 const STATUS_TONE: Record<CellStatus, string> = {
   mismatch: 'text-red-700 font-medium', unshipped: 'text-red-700 font-medium', waived: 'text-amber-700',
-  served: 'text-emerald-700', undecided: 'text-stone-500', idle: 'text-stone-500',
+  served: 'text-emerald-700', stored: 'text-stone-600', undecided: 'text-stone-500', idle: 'text-stone-500',
 };
 const fmt = (n: number | null | undefined) => (n == null ? '–' : n.toLocaleString('en-US'));
 
@@ -129,6 +129,7 @@ function Board({ doc, now }: { doc: RouterBoardDoc; now: Date }) {
         <span className="text-amber-700">waived {t('waived').cells}</span>;{' '}
         <span className="text-red-700">another route {t('mismatch').cells} ({fmt(t('mismatch').pages_waiting)} pages)</span>;{' '}
         <span className="text-red-700">no lane {t('unshipped').cells} ({fmt(t('unshipped').pages_waiting)} pages)</span>;{' '}
+        keeps the stored text {t('stored').cells};{' '}
         nothing waiting {t('idle').cells}.
       </p>
       <section className="grid gap-2">

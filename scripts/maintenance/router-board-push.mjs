@@ -84,7 +84,7 @@ export function routerBoard({ table, drift, lanes, today = new Date().toISOStrin
       routing_row: (status[row.id]?.routing_row || []).length > 0,
     });
   }
-  const rank = { mismatch: 0, unshipped: 1, waived: 2, served: 3, undecided: 4, idle: 5 };
+  const rank = { mismatch: 0, unshipped: 1, waived: 2, served: 3, stored: 4, undecided: 5, idle: 6 };
   cells.sort((a, b) => rank[a.status] - rank[b.status] || b.pages_waiting - a.pages_waiting || a.cell.localeCompare(b.cell));
   return { _id: DOC_ID, type: TYPE, as_of: today, table: drift.table, pointer_set: drift.pointer_set, crontabs: drift.crontabs,
     tally: drift.tally, routing_tables: drift.routing_tables, cells };

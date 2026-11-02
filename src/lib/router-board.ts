@@ -14,7 +14,7 @@ export const ROUTER_BOARD_ID = 'router-board:latest';
 /** The pusher runs hourly; older than this and the page says so in red: a dead pusher must not look like a calm table. */
 export const ROUTER_BOARD_STALE_MIN = 150;
 
-export type CellStatus = 'mismatch' | 'unshipped' | 'waived' | 'served' | 'undecided' | 'idle';
+export type CellStatus = 'mismatch' | 'unshipped' | 'waived' | 'served' | 'stored' | 'undecided' | 'idle';
 
 export interface CellLane {
   box: string; lane: string; runs: string; runs_kn: string | null; status: string;
