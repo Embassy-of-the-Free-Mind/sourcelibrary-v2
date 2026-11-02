@@ -85,6 +85,8 @@
     "_about": "Derek, 2026-11-01 ('defaults'; .claude/docs/router-optimization-paper.md, Decisions 1): a wrong page is priced. Among the routes that pass the multiplicity-controlled acceptance gate (switch.multiplicity, V3), the pick is the lowest loss = median dollars per accepted page + lambda x P(wrong text); lambda = lambda_multiple x the cell's cheapest good-read cost (the lowest median dollars per accepted page among its measured priced routes that clear absolute_bar, the Opus bar routes included; among all its priced routes when none clears; about $0.001 a page, so lambda about $0.02, at the default plan fee). P(wrong text) = the posterior mean wrong-text rate, Beta(wrong_text_prior + book-scaled wrong-text pages). Ties go to the cheaper route. With the loss in force the wrong-text margin (switch.wrong_text_max, wrong_text_bar) is not applied; the acceptance margin (switch.within) stays, as the gate's definition. The old margins' decision is reported beside each row (decision_margins). build.py --off loss: the rule before. The defect rule (decision_rule) keeps its own price per defect.",
     "in_force": true,
     "lambda_multiple": 20,
+    "lambda_sensitivity": [5, 20, 100],
+    "_lambda_sensitivity": "Rule 4 (Derek 2026-11-02, #7263): every build reports the final decision at each of these lambda_multiple values; if none moves between 5x and 100x, the 20x is harmless. Reported only.",
     "wrong_text_prior": [1, 1]
   },
   "absolute_bar": {
@@ -92,6 +94,36 @@
     "in_force": true,
     "acc": 0.9,
     "p": 0.9
+  },
+  "_policy_1102": "Derek, 2026-11-02 (#7263, 'Router rule changes'): default route GPU OCR -> agy 3.8 Flash correction -> agy 3.8 Flash translation; Opus only as the judge or where nothing else clears the hard floor. Three rules, each its own section with in_force, each off with build.py --off <name with dashes> (all three: --off policy-1102, which reproduces the table before them). Rule 4 (lambda sensitivity) is loss.lambda_sensitivity, reported only. Rule 5: the rules are frozen for a month after the first build under them; the evidence that moves decisions is lane-judge-sampler over what lanes wrote (#7611).",
+  "no_absolute_gate": {
+    "_about": "Rule 1. No 90% absolute gate on routing: NEEDS-ENGINE (absolute_bar) and HOLD (hold) do not block a cell. It is decided by the gate and the loss as if the bars were off, and the row carries needs_engine_flag / hold_flag, which direct tests (value of information). The output is labelled with the route's measured rate (#6174, publish before QA with provenance). Why: the gate made 51 cells / 3.5M pages unread, and at judge specificity ~0.88 a perfect route measures ~88%, so a 90% bar on raw judge scores is unreachable by construction. absolute_bar stays in_force so that the flag and the good-read cost (loss c0) are computed as before.",
+    "in_force": true
+  },
+  "hard_floor": {
+    "_about": "Rule 2. Invented text and wrong-leaf text block a route. Rate = pages with a class in `classes` (review-vocabulary.mjs CLASS_KIND confabulation and wrong_leaf: O1, O2, I1, I2, I6, T14; the label `invented` some score files use), pooled over the route's sources and book-scaled like acceptance (a page with two such classes counts twice, capped at n: an upper bound). Blocked when P(rate > rate) >= p under Beta(prior + pages), and at least min_pages such pages were seen: a route with none is never blocked (its rate is unmeasured, a test to run, not a block). A blocked route cannot be picked by the gate, the fallback or the defect rule; a live route that is blocked sends the defect rule back to k/n.",
+    "in_force": true,
+    "classes": [
+      "O1",
+      "O2",
+      "I1",
+      "I2",
+      "I6",
+      "T14",
+      "invented"
+    ],
+    "rate": 0.02,
+    "p": 0.9,
+    "prior": [
+      0.5,
+      0.5
+    ],
+    "min_pages": 1,
+    "draws": 4000
+  },
+  "no_served_privilege": {
+    "_about": "Rule 3. No privilege for an unmeasured served route: when no candidate passes the gate, the cell does not fall back to its current route (italian-gpu-7263/print kept an untested `lite` over four routes judged 30/30-39/40). The fallback is the lowest-loss measured agy / GPU route that clears the hard floor; only when none does, the lowest-loss Opus route that does; else HOLD (hard floor). The k/n fallback is not re-decided by the defect rule.",
+    "in_force": true
   },
   "decision_rule": {
     "_about": "#6740 (Derek, 2026-10-31: weighted defect rates, not the binary accept, are the quality measure, 'yes, and in general'). in_force = defects: where the k/n rule reaches keep / switch, the decision is #7824's S1 defect rule (route-judge-6740/results/defect-rate-2026-10-30/RULE.md): defects per 1,000 words from defect-rates.json (gamma-Poisson posterior, book-clustered by phi, the judge's labels deflated by the 80-defect re-check), the LIVE route (current.json's table: its route on switch, else its current route) as the bar. Gate 1, wrong text: posterior mean wrong text <= the bar's + wrong_text_delta_per_1k (no text served: P(wrong text <= ceiling_per_1k) >= ceiling_p). Gate 2, acceptance floor (k/n kept): P(acc_route >= acc_live - accept_floor.within) >= accept_floor.p, from the paired draws where the two routes were judged on the same pages, else their two Beta posteriors (build.py within_p); with no text served, P(acc >= hold.acc) >= hold.p. Pick: the lowest price per RAW page + words_per_page / 1000 x misleads_usd x (misleads + wrong_text_weight x wrong text); words per page = the median over the rated routes. A pick that changes across misleads_usd_sensitivity is HOLD, not switch. Falls back to the k/n decision, labelled '(k/n: why)', in a manuscript cell (the rates are not split by script type), when the live route has no defect verdicts, or when no other route has them; a route is rated with >= min_books books. in_force = kn: the rule before (the defect decision is still computed and shown).",
