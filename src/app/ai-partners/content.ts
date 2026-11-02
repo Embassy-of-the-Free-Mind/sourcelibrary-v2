@@ -4,7 +4,7 @@ export const PARTNERS_HTML = `
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>Historical sources, <em>translated</em> beside the page</h1>
+      <h1>The world’s largest library of <em>translated</em> ancient texts, grounded in the source</h1>
       <p>131,000 books in more than fifty languages, with their page scans. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
       <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
@@ -33,7 +33,7 @@ export const PARTNERS_HTML = `
     <div>
       <p class="eyebrow">The untranslated record</p>
       <h2>Most Renaissance Latin has never been translated into English</h2>
-      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, about half the books readable in English are the first English translation of their work: 11,357 so far.</p>
+      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, 11,357 books are the first English translation of their work, about half of all we have made readable in English. Half of them are Latin; the rest are from Chinese (1,946), German (1,447), Dutch, French, Greek, Tibetan and dozens of other languages.</p>
       <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: every translated book is searched for an earlier English translation, one at a time, by an AI search agent that links any translation it finds; 25,007 books had been searched by 2 November 2026. A book is marked a first translation only when no earlier one is found, and 11,357 works carry that mark. Spot checks of 55 marked books by a second model: 50 held, none was refuted, 5 unclear.</p>
     </div>
     <figure style="margin:0">
@@ -170,11 +170,12 @@ export const PARTNERS_HTML = `
       <p class="note">Measured 29 October 2026 with the o200k tokenizer over a random sample of 12,000 pages, multiplied by the exact counts of transcribed and translated pages; by the median page, about 14.5 billion. English Wikipedia’s articles hold about 5 billion words, some 6.5 billion tokens. In words the library is half as large again, 7.7 billion: Latin, Chinese and Sanskrit take more tokens per word than English.</p>
       <table class="ledger">
         <tr><td>Page views by readers, last 7 days</td><td class="n">103K</td></tr>
-        <tr><td>Pages fetched by ChatGPT and Claude for their users, last 30 days</td><td class="n">1.8M</td></tr>
+        <tr><td>Pages fetched by ChatGPT and Claude for their users, last 7 days</td><td class="n">28K</td></tr>
+        <tr><td>Library tool calls by Claude for its users through our MCP server, last 7 days</td><td class="n">35K</td></tr>
         <tr><td>Automated requests stopped at our network edge, per day</td><td class="n">~800K</td></tr>
         <tr><td>Bulk requests rate-limited by the site, last 30 days</td><td class="n">1.9M</td></tr>
       </table>
-      <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
+      <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the assistant figures from Cloudflare's logs by user agent (ChatGPT-User, Claude-User), 26 October–1 November, not counting search-index crawlers such as OAI-SearchBot; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
       <p>Representative works include Robert Fludd's <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="https://sourcelibrary.org/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="https://sourcelibrary.org/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="https://sourcelibrary.org/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="https://sourcelibrary.org/dataset">the dataset</a> is also available.</p>
     </div>
   </div>
