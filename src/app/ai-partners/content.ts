@@ -22,8 +22,8 @@ export const PARTNERS_HTML = `
       <li><a href="#v2-transcribed"><strong>Transcribed</strong><span>9.6M pages in the original script</span></a></li>
       <li><a href="#v2-translated"><strong>Translated</strong><span>5.7M pages into English</span></a></li>
       <li><a href="#v2-reviewed"><strong>Checked</strong><span>Language by language, with scholars</span></a></li>
-      <li><a href="#v2-rights"><strong>Rights cleared</strong><span>Public-domain originals</span></a></li>
-      <li><a href="#v2-available"><strong>Immediately available</strong><span>Streaming API and MCP</span></a></li>
+      <li><a href="#v2-rights"><strong>Rights</strong><span>Stated book by book</span></a></li>
+      <li><a href="#v2-available"><strong>Available now</strong><span>Streaming API and MCP</span></a></li>
     </ol>
   </div>
 </nav>
@@ -32,9 +32,9 @@ export const PARTNERS_HTML = `
   <div class="wrap why">
     <div>
       <p class="eyebrow">The untranslated record</p>
-      <h2>Most historical writing has never been translated into English</h2>
+      <h2>Most Renaissance Latin has never been translated into English</h2>
       <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, about half the books readable in English are the first English translation of their work: 11,357 so far.</p>
-      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: every translated book is searched for an earlier English translation, one at a time, by an AI search agent that links any translation it finds; 25,007 books had been searched by 2 November 2026. A book is marked a first translation only when no earlier one is found, and 11,357 works carry that mark, out of 22,538 books readable in English. Spot checks of 55 marked books by a second model: 50 held, none was refuted, 5 unclear.</p>
+      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: every translated book is searched for an earlier English translation, one at a time, by an AI search agent that links any translation it finds; 25,007 books had been searched by 2 November 2026. A book is marked a first translation only when no earlier one is found, and 11,357 works carry that mark. Spot checks of 55 marked books by a second model: 50 held, none was refuted, 5 unclear.</p>
     </div>
     <figure style="margin:0">
       <div class="frame"><img src="/ai-partners/img/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola"></div>
@@ -105,7 +105,7 @@ export const PARTNERS_HTML = `
       </table>
       <p>What they find goes back into how that language is read: which model, which instructions, and when a page needs a second reading. We have logged 427 experiments on reading and translation quality. Translations are tested against published human translations in fourteen languages, errors are sorted into 44 kinds, and the error rates are <a href="https://sourcelibrary.org/quality">published</a>.</p>
       <p class="note">Latin, two-fifths of the English pages: transcriptions differ from a published text of the same printing by a median 3.7% of characters (77 pages), most of it the long s read as f, and 86% of English pages were rated 4 or 5 of 5 by a model judge against a published human translation (71 pages). Figures for each language, with their samples, are on the <a href="https://sourcelibrary.org/quality">quality page</a>; as of 26 October 2026.</p>
-      <p>The record of that work comes with the text: several readings of the same page, how each was judged against the image, and each correction beside the reading it replaced. It shows where models fail on old books, and why. 1,535 people have offered to help, and readers report what they find.</p>
+      <p>A licence includes the record of this work: several readings of the same page, how each was judged against the image, and each correction beside the reading it replaced. It shows where models fail on old books, and why. 1,535 people have offered to help, and readers report what they find.</p>
       <div class="photos">
         <img src="/ai-partners/img/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam">
         <img src="/ai-partners/img/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica">
@@ -117,7 +117,7 @@ export const PARTNERS_HTML = `
 
 <section class="proof" id="v2-rights">
   <div class="wrap pf">
-    <h2 class="pword">Rights cleared</h2>
+    <h2 class="pword">Rights</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
       <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. Pages read or translated by Claude are excluded.</p>
@@ -138,7 +138,7 @@ export const PARTNERS_HTML = `
 
 <section class="proof" id="v2-available">
   <div class="wrap pf">
-    <h2 class="pword">Immediately available</h2>
+    <h2 class="pword">Available now</h2>
     <div>
       <p class="lede">The public library is available now through our streaming API and <a href="https://sourcelibrary.org/developers">MCP server</a>, with a stable citation link for every passage. The whole corpus, public and held, comprises about 21 billion tokens, three times the size of English Wikipedia: 15 billion in the original languages and 6 billion of English translation, each page aligned to its scan.</p>
       <p class="note">Measured 29 October 2026 with the o200k tokenizer over a random sample of 12,000 pages, multiplied by the exact counts of transcribed and translated pages; by the median page, about 14.5 billion. English Wikipedia’s articles hold about 5 billion words, some 6.5 billion tokens. In words the library is half as large again, 7.7 billion: Latin, Chinese and Sanskrit take more tokens per word than English.</p>
@@ -168,7 +168,7 @@ export const PARTNERS_HTML = `
       <span><i class="sw wt dk"></i><b>20.2M</b> scanned, waiting to be read</span>
     </div>
     <div class="offer dk">
-      <div><h3>An open release</h3><p>The reading is built and running. A partner's support would fund the remaining pages and their release to the public, as AI laboratories have done for other major libraries.</p></div>
+      <div><h3>An open release</h3><p>The tools that read these pages work today. A partner's support would fund the remaining pages and their release to the public, as Microsoft and OpenAI did for Harvard's Institutional Books.</p></div>
       <div><h3>Early access</h3><p>The partner receives each release in advance, together with held-back test sets and scholarly review in the languages of its choosing.</p></div>
       <div><h3>Acknowledgement</h3><p>The partner is credited on each release, alongside the Embassy of the Free Mind and the contributing libraries.</p></div>
     </div>
@@ -179,7 +179,7 @@ export const PARTNERS_HTML = `
   <div class="wrap">
     <div class="letter">
       <p class="eyebrow">Summary</p>
-      <p>Source Library is the largest library of translated historical sources: a digital archive of 131,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 11,357 works translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
+      <p>Source Library is a digital library of translated historical sources: 131,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 11,357 works translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
       <p>Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind. We welcome conversations with partners who wish to see the remaining 20.2 million pages read and released.</p>
       <p class="sig">Derek Lomas<span>Founder, Source Library</span></p>
       <p class="addr"><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">derek@sourcelibrary.org</a></p>
