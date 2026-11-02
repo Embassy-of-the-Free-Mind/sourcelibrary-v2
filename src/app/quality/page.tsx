@@ -463,10 +463,12 @@ export default function QualityCenterPage() {
               The old figure, for reconciliation: by {pct(servedUsable)}&rsquo;s own rule {pct(servedDraw.corpus.bad_share)}{' '}
               of books (95% interval {pct(servedDraw.corpus.bad_share_ci95[0])}–{pct(servedDraw.corpus.bad_share_ci95[1])}),
               about {n(servedWeakBooks)} books, had two or more of five pages with an error. Of the{' '}
-              {n(grades.pages)} pages, {n(grades.bad_7866.pages)} counted against a book under that rule:{' '}
-              {n(grades.bad_7866.by_grade.search_only.counted_bad)} of them pages whose worst fault changes the sense of a
-              word, and {n(grades.bad_7866.by_grade.not_this_page.counted_bad + grades.bad_7866.by_grade.mostly_wrong.counted_bad)}{' '}
-              pages substantially wrong or not this page at all.
+              {n(grades.pages)} pages, {n(grades.bad_7866.pages)} counted against their book under that rule, and the rule
+              weighed them all the same: {n(grades.bad_7866.by_grade.search_only.counted_bad)} whose worst fault changes
+              the sense of a word, {n(grades.bad_7866.by_grade.wrong_span.counted_bad + grades.bad_7866.by_grade.from_elsewhere.counted_bad)}{' '}
+              carrying a span the page does not have, and{' '}
+              {n(grades.bad_7866.by_grade.not_this_page.counted_bad + grades.bad_7866.by_grade.mostly_wrong.counted_bad)}{' '}
+              substantially wrong or not this page at all.
             </Source>
           </div>
 

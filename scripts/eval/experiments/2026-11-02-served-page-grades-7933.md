@@ -35,7 +35,7 @@ Code: `scripts/eval/confidence-7866/regrade.mjs`. One model call: none. Reads `l
 - a **page** is bad if the judge did not accept it **or** tagged any `wrong_text` defect;
 - a **book** is bad if ≥ 2 of its 5 drawn pages are bad.
 
-Both thresholds are defensible and neither was stated on the page. Their joint effect is that one clearly printed word — *Egypt*, read as `IJgyjDt` (`69aebc460d3d5e01e132c454` p. 187, otherwise complete and in order) — counts against its book exactly as another book's text does. 83 of the 206 pages that counted bad under that rule have no `wrong_text` defect at all: their worst fault changes the sense of a word.
+Both thresholds are defensible and neither was stated on the page. Their joint effect is that one clearly printed word — *Egypt*, read as `IJgyjDt` (`69aebc460d3d5e01e132c454` p. 187, otherwise complete and in order) — counts against its book exactly as another book's text does. 83 of the 289 pages that counted bad under that rule have no `wrong_text` defect at all: their worst fault changes the sense of a word.
 
 And the share is a point on a curve whose slope is the bar, not the corpus. #7263 corrected the same 800 verdicts for the judge's **misses** at a 1% CER page bar and got 93% of books bad (55–100%), 61% at a 5% bar. One point from that curve, quoted without the bar, is the misleading part.
 
