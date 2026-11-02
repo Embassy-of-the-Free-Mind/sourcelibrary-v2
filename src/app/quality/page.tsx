@@ -5,6 +5,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../scripts/eval/confidence-7866/results/served-grades.json';
 import judgeCal from '../../../scripts/eval/judge-cal-7866bar-7263/results/score.json';
+import iaNumbers from '../../../scripts/eval/results/numbers-5224/summary.json';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
 
 // The Quality Center (#5918): one question for a reader — how far can I trust the text on a page here,
@@ -46,14 +47,18 @@ const humanPer1k = human.flagged_per_1k;
 const oursSamePages = human.machine_same_pages.judge_proxy;
 const humanJudgedOff = human.judge_bad.split('/').map(Number) as [number, number];
 
+/** The Internet Archive's own OCR against ours on the same printed numbers, read blind on the page image (#5224). */
+const iaArchive = iaNumbers.sets['all|archive'];
+const iaOurs = iaNumbers.sets['all|lite'];
+
 /** Five bands, each describing the page; the reader's advice is the second line. */
 const serious = ['from_elsewhere', 'mostly_wrong', 'not_this_page'].reduce((a, k) => a + g[k].share, 0);
 const BANDS = [
   { key: 'clean', label: 'Clean', what: 'No error, or one or two slips that change nothing. Quote it.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
-  { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-500' },
+  { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-400' },
   { key: 'word', label: 'A word that changes the sense', what: 'Usually one misread word in an otherwise sound page. Check the scan before quoting.', share: g.search_only.share, color: 'bg-amber-300' },
-  { key: 'span', label: 'A word, number or line differs from the page', what: 'Something dropped or not on the page. Check the scan before quoting.', share: g.wrong_span.share, color: 'bg-amber-500' },
-  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'Do not rely on these pages; we withhold them as we find them.', share: serious, color: 'bg-amber-800' },
+  { key: 'span', label: 'A word, number or line differs from the page', what: 'Something dropped or not on the page. Check the scan before quoting.', share: g.wrong_span.share, color: 'bg-amber-600' },
+  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'Do not rely on these pages; we withhold them as we find them.', share: serious, color: 'bg-amber-900' },
 ];
 
 /** Languages with at least three books in the draw, fewest errors first. */
@@ -61,6 +66,20 @@ const LANGS = servedGrades.by_language
   .filter(r => r.books >= 3)
   .sort((x, y) => x.severe_per_1k - y.severe_per_1k);
 const UNIT: Record<string, string> = { words: 'words', 'Han characters': 'characters', syllables: 'syllables' };
+const WORD_LANGS = LANGS.filter(r => r.unit === 'words');
+const OTHER_LANGS = LANGS.filter(r => r.unit !== 'words');
+const RATE_MAX = Math.ceil(Math.max(...LANGS.map(r => r.severe_per_1k)) / 5) * 5;
+
+/** Page shares for a cut of the draw: nothing that changes the sense / a word that does / something not on the page. */
+type Shares = { says_what_the_page_says: number; misleads_somewhere: number; text_not_on_the_page: number; severe_per_1k?: number };
+const periods = (servedGrades as unknown as { by_period: Record<string, Shares & { books: number }> }).by_period;
+const PERIOD_ORDER = ['before 1500', '1500–1599', '1600–1699', '1700–1799', '1800–1899', '1900 and later'];
+const PERIOD_ROWS = PERIOD_ORDER.filter(k => periods[k]).map(k => ({ key: k, ...periods[k] }));
+const PERIOD_UNKNOWN = periods.unknown;
+const scripts = servedGrades.by_script as unknown as Record<string, Shares & { books: number }>;
+const SCRIPT_ROWS = [['print', 'Print'], ['manuscript', 'Manuscript']]
+  .filter(([k]) => scripts[k])
+  .map(([k, label]) => ({ key: k, label, ...scripts[k] }));
 
 /** Share of all tagged defects that are one word read as another. */
 const misread = servedGrades.defect_classes.find(c => c.class === 'O6');
@@ -100,7 +119,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 }
 
 /** One row of the human-vs-machine comparison: a rate per 1,000 words with its interval, on a shared scale. */
-function RateRow({ label, sub, rate, ci, max, color }: { label: string; sub: string; rate: number; ci: number[]; max: number; color: string }) {
+function RateRow({ label, sub, rate, ci, max, color, suffix = '' }: { label: string; sub: string; rate: number; ci: number[]; max: number; color: string; suffix?: string }) {
   return (
     <li className="grid grid-cols-[minmax(0,11rem)_1fr_4.5rem] gap-x-3 items-center py-2">
       <span className="text-sm">
@@ -112,9 +131,79 @@ function RateRow({ label, sub, rate, ci, max, color }: { label: string; sub: str
         <div className="absolute top-1/2 h-px bg-stone-900/60" style={{ left: `${(ci[0] / max) * 100}%`, width: `${((ci[1] - ci[0]) / max) * 100}%` }} />
       </div>
       <span className="text-right tabular-nums">
-        <span className="font-semibold text-stone-900">{one(rate)}</span>
-        <span className="block text-xs text-stone-500">{one(ci[0])}–{one(ci[1])}</span>
+        <span className="font-semibold text-stone-900">{one(rate)}{suffix}</span>
+        <span className="block text-xs text-stone-500">{one(ci[0])}–{one(ci[1])}{suffix}</span>
       </span>
+    </li>
+  );
+}
+
+function ChartTitle({ children }: { children: ReactNode }) {
+  return <h3 className="text-sm font-semibold text-stone-900 mb-2 mt-2">{children}</h3>;
+}
+
+/** Horizontal bars of a rate on one shared scale, with an optional reference line (the typed editions). */
+function RateChart({ rows, max, reference }: { rows: { label: string; sub: string; rate: number }[]; max: number; reference?: { value: number; label: string } }) {
+  return (
+    <div className="relative mb-4">
+      <ul className="space-y-1.5">
+        {rows.map(r => (
+          <li key={r.label} className="grid grid-cols-[7rem_1fr_3rem] md:grid-cols-[9rem_1fr_3rem] gap-x-3 items-center" title={`${r.label}: ${one(r.rate)} per 1,000 (${r.sub})`}>
+            <span className="text-sm leading-tight">
+              <span className="font-semibold text-stone-900">{r.label}</span>
+              <span className="block text-xs text-stone-500">{r.sub}</span>
+            </span>
+            <div className="relative h-4">
+              <div className="absolute inset-y-0 left-0 bg-stone-700 rounded-r-[3px]" style={{ width: `${Math.max(0.6, (r.rate / max) * 100)}%` }} />
+              {reference && (
+                <div className="absolute inset-y-[-4px] border-l-2 border-dashed border-amber-700" style={{ left: `${(reference.value / max) * 100}%` }} aria-hidden />
+              )}
+            </div>
+            <span className="text-right tabular-nums text-sm font-semibold text-stone-900">{one(r.rate)}</span>
+          </li>
+        ))}
+      </ul>
+      {reference && (
+        <p className="text-xs text-stone-600 mt-2">
+          <span className="inline-block w-3 border-t-2 border-dashed border-amber-700 mr-1.5 align-middle" />
+          {reference.label}, {one(reference.value)} per 1,000 words, checked the same way
+        </p>
+      )}
+    </div>
+  );
+}
+
+type ShareKey = 'says_what_the_page_says' | 'misleads_somewhere' | 'text_not_on_the_page';
+const SHARE_PARTS: { key: ShareKey; label: string; color: string }[] = [
+  { key: 'says_what_the_page_says', label: 'Nothing that changes the sense', color: 'bg-stone-800' },
+  { key: 'misleads_somewhere', label: 'A word that changes the sense', color: 'bg-amber-300' },
+  { key: 'text_not_on_the_page', label: 'Something not on the page', color: 'bg-amber-700' },
+];
+
+function ShareLegend() {
+  return (
+    <p className="text-xs text-stone-600 flex flex-wrap gap-x-4 gap-y-1 mb-3">
+      {SHARE_PARTS.map(p => (
+        <span key={p.key}><span className={`inline-block w-3 h-3 rounded-sm ${p.color} mr-1.5 align-[-1px]`} />{p.label}</span>
+      ))}
+    </p>
+  );
+}
+
+/** One stacked row of page shares, the first segment labelled. */
+function ShareRow({ label, sub, r }: { label: string; sub: string; r: Shares }) {
+  return (
+    <li className="grid grid-cols-[7rem_1fr_3rem] md:grid-cols-[9rem_1fr_3rem] gap-x-3 items-center">
+      <span className="text-sm leading-tight">
+        <span className="font-semibold text-stone-900">{label}</span>
+        <span className="block text-xs text-stone-500">{sub}</span>
+      </span>
+      <div className="flex h-6 gap-[2px]">
+        {SHARE_PARTS.map(p => r[p.key] > 0 && (
+          <div key={p.key} className={`${p.color} first:rounded-l-[3px] last:rounded-r-[3px]`} style={{ width: `${r[p.key] * 100}%` }} title={`${label}: ${p.label}, ${pct(r[p.key])}`} />
+        ))}
+      </div>
+      <span className="text-right tabular-nums text-sm font-semibold text-stone-900" title="Pages with nothing that changes the sense">{pct(r.says_what_the_page_says)}</span>
     </li>
   );
 }
@@ -174,6 +263,24 @@ export default function QualityCenterPage() {
           </p>
         </Section>
 
+        <Section id="archive" title="Beside the Internet Archive’s OCR">
+          <p className="mb-4">
+            Many of our books come from the Internet Archive, which publishes its own machine reading of every scan. We
+            read the pages again. On {n(iaArchive.books)} English books printed between 1800 and 1930, every printed number
+            where the two readings differed was checked against the page image. Share of {n(Math.round(iaArchive.printed))}{' '}
+            printed numbers read wrong:
+          </p>
+          <ul className="mb-3">
+            <RateRow label="Internet Archive OCR" sub={`${iaArchive.books} books, ${iaArchive.pages} pages`} rate={iaArchive.rate * 100} ci={iaArchive.ci.map(x => x * 100)} max={8} color="bg-stone-500" suffix="%" />
+            <RateRow label="Our transcription" sub="the same pages" rate={iaOurs.rate * 100} ci={iaOurs.ci.map(x => x * 100)} max={8} color="bg-stone-800" suffix="%" />
+          </ul>
+          <p className="text-sm text-stone-600">
+            Numbers are where the two differ most: dates, page references and figures, where a 3 read as an 8 changes a
+            year without anyone noticing. So on any page with numbers we show our own reading, not the Archive&rsquo;s.
+            Measured 30 September 2026, English only.
+          </p>
+        </Section>
+
         <Section id="stands" title="Page by page">
           <p className="mb-4">
             A page is counted clean only if nothing on it changes the sense, so a single misread word on a page of 300
@@ -181,7 +288,7 @@ export default function QualityCenterPage() {
           </p>
           <div className="flex h-10 w-full overflow-hidden rounded-sm mb-4" role="img" aria-label={BANDS.map(x => `${x.label}: ${pct(x.share)}`).join('; ')}>
             {BANDS.map(x => (
-              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'word' || x.key === 'span' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
+              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'word' || x.key === 'slips' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
                 {x.share >= 0.07 ? pct(x.share) : ''}
               </div>
             ))}
@@ -208,46 +315,73 @@ export default function QualityCenterPage() {
 
         <Section id="by-language" title="By language">
           <p className="mb-5">
-            The script matters more than anything else. English and Russian print come out below the rate of the typed
-            editions above. Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
+            The script matters more than anything else. English and Russian print come out below the typed-edition rate
+            ({one(humanPer1k.per_1k)} per 1,000 words). Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
             highest rates: the general-purpose models that read them were not built for those scripts, and they are next
             to be read again.
           </p>
-          <ul className="space-y-3 mb-4">
-            {LANGS.map(r => (
-              <li key={r.language} className="grid grid-cols-[6.5rem_1fr_5.5rem] md:grid-cols-[8rem_1fr_6.5rem] gap-x-3 items-center">
-                <span className="text-stone-900 font-semibold text-sm">
-                  {r.language}
-                  <span className="block text-xs font-normal text-stone-500">{r.books} books</span>
-                </span>
-                <div className="flex h-5 overflow-hidden rounded-sm bg-stone-200" aria-hidden>
-                  <div className="bg-stone-800" style={{ width: `${r.says_what_the_page_says * 100}%` }} />
-                  <div className="bg-amber-300" style={{ width: `${r.misleads_somewhere * 100}%` }} />
-                  <div className="bg-amber-600" style={{ width: `${r.text_not_on_the_page * 100}%` }} />
-                </div>
-                <span className="text-right tabular-nums text-sm">
-                  <span className="font-semibold text-stone-900">{one(r.severe_per_1k)}</span>
-                  <span className="block text-xs text-stone-500">per 1,000 {UNIT[r.unit] ?? r.unit}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-sm text-stone-600 flex flex-wrap gap-x-4 gap-y-1">
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-stone-800 mr-1.5 align-[-1px]" />Pages with nothing that changes the sense</span>
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-300 mr-1.5 align-[-1px]" />A word that changes the sense</span>
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-600 mr-1.5 align-[-1px]" />Something not on the page</span>
+          <ChartTitle>Meaning-changing errors per 1,000 words</ChartTitle>
+          <RateChart
+            rows={WORD_LANGS.map(r => ({ label: r.language, sub: `${r.books} books`, rate: r.severe_per_1k }))}
+            max={RATE_MAX}
+            reference={{ value: humanPer1k.per_1k, label: 'typed editions' }}
+          />
+          <ChartTitle>Per 1,000 characters (Chinese, Korean) or syllables (Tibetan)</ChartTitle>
+          <RateChart
+            rows={OTHER_LANGS.map(r => ({ label: r.language, sub: `${r.books} books, per ${UNIT[r.unit] ?? r.unit}`, rate: r.severe_per_1k }))}
+            max={RATE_MAX}
+          />
+          <p className="text-sm text-stone-600 mt-3 mb-8">
+            These count errors, not pages, so a long page with one slip does not look like a wrecked one. A character or a
+            syllable is not a word, so the second chart is not on the same footing as the first. A language with three to
+            six books is a rough reading, not a rate; Arabic and smaller languages had too few books to show.
           </p>
-          <p className="text-sm text-stone-600 mt-3">
-            The number on the right counts errors, not pages, so a long page with one slip does not look like a wrecked
-            one. Characters and syllables are not comparable with words. A language with three to six books is a rough
-            reading, not a rate; Arabic and smaller languages had too few books to show.
+
+          <ChartTitle>Share of pages, by what the reviewer found (the number is the first, dark share)</ChartTitle>
+          <ShareLegend />
+          <ul className="space-y-2 mb-2">
+            {[...LANGS].sort((x, y) => y.says_what_the_page_says - x.says_what_the_page_says).map(r => <ShareRow key={r.language} label={r.language} sub={`${r.books} books`} r={r} />)}
+          </ul>
+        </Section>
+
+        <Section id="by-period" title="By period of printing">
+          <p className="mb-5">
+            Books printed after 1600 come out alike, with about half to two thirds of pages clean. The earliest books are
+            the hardest: on the {PERIOD_ROWS[0]?.books ?? 0} books from before 1500 in the draw, in Greek, Latin, Arabic and
+            Chinese, most pages carry something the page does not have.
+          </p>
+          <ShareLegend />
+          <ul className="space-y-2 mb-3">
+            {PERIOD_ROWS.map(r => <ShareRow key={r.key} label={r.key} sub={`${r.books} books`} r={r} />)}
+          </ul>
+          <p className="text-sm text-stone-600 mb-8">
+            {PERIOD_UNKNOWN ? `${PERIOD_UNKNOWN.books} of the ${n(servedGrades.books)} books, most of them Chinese and Tibetan, carry no date in our catalogue and are left out of this chart. ` : ''}
+            Shares here are of the pages drawn, not weighted back to the library.
+          </p>
+
+          <ChartTitle>Print and manuscript</ChartTitle>
+          <ShareLegend />
+          <ul className="space-y-2 mb-3">
+            {SCRIPT_ROWS.map(r => <ShareRow key={r.key} label={r.label} sub={`${r.books} books`} r={r} />)}
+          </ul>
+          <p className="text-sm text-stone-600">
+            By pages the two look alike. Counted by errors, manuscripts carry more: {one(scripts.manuscript?.severe_per_1k ?? 0)}{' '}
+            against {one(scripts.print?.severe_per_1k ?? 0)} per 1,000 words or characters. Books whose catalogue record does not
+            say which they are are left out.
+          </p>
+        </Section>
+
+        <Section id="over-time" title="Over time">
+          <p>
+            This is the first check of its kind, made on {longDate(drawDate)}. We will repeat it every month on a fresh
+            draw, and a chart of how the figures move will appear here from the second.
           </p>
         </Section>
 
         <Section id="what-goes-wrong" title="What goes wrong">
           <p className="mb-4">
             {pct(misreadShare)} of the errors the reviewer found are one kind: a word or character read as another word
-            that exists, such as <i>feminis</i> (of women) for <i>ſeminis</i> (of seed). Typed editions make the same kind
+            that exists, such as <i>seminis</i> (of seed), printed with a long s, read as <i>feminis</i> (of women). Typed editions make the same kind
             of mistake. Much of the rest is the furniture of an old printed page, running heads, catchwords and note
             numbers, put in the wrong place. Text that is not on the page at all is rarer, and concentrated in the scripts
             with the highest rates. Three examples, each checked by eye against the scan:

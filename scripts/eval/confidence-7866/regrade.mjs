@@ -126,12 +126,23 @@ async function load() {
   const titles = new Map();
   for (const b of await db.collection('books').find(
     { _id: { $in: [...new Set(recs.map((r) => r.book_id))].map((x) => new ObjectId(x)) } },
-    { projection: { title: 1, language: 1 } }).toArray()) titles.set(String(b._id), b);
+    { projection: { title: 1, language: 1, year: 1, year_earliest: 1, published: 1 } }).toArray()) titles.set(String(b._id), b);
   await c.close();
   return { recs, texts, titles };
 }
 
 /* ── per page ── */
+
+/** The book's period of production, from `year` (else `year_earliest`, else a 4-digit year in `published`). */
+export const PERIODS = ['before 1500', '1500–1599', '1600–1699', '1700–1799', '1800–1899', '1900 and later', 'unknown'];
+export function periodOf(b) {
+  const raw = b?.year ?? b?.year_earliest ?? String(b?.published ?? '').match(/\b(1[0-9]{3})\b/)?.[1];
+  const y = Number.parseInt(String(raw ?? ''), 10);
+  if (!Number.isFinite(y) || y < 100 || y > 2100) return 'unknown';
+  if (y < 1500) return 'before 1500';
+  if (y >= 1900) return '1900 and later';
+  return `${Math.floor(y / 100) * 100}–${Math.floor(y / 100) * 100 + 99}`;
+}
 
 function pageRows({ recs, texts, titles }) {
   return recs.map((r) => {
@@ -140,7 +151,7 @@ function pageRows({ recs, texts, titles }) {
     const lang = r.lang ?? titles.get(r.book_id)?.language ?? 'unknown';
     return {
       book: r.book_id, page: r.page_number, title: titles.get(r.book_id)?.title ?? null,
-      lang, unit: unitOf(lang), script: r.script_type ?? 'unknown', route: r.route, cell: r.cell_real,
+      lang, unit: unitOf(lang), period: periodOf(titles.get(r.book_id)), script: r.script_type ?? 'unknown', route: r.route, cell: r.cell_real,
       stratum: r.draw?.stratum ?? 'unmeasured', weight: r.draw?.weight ?? 1,
       fidelity: Number(v.fidelity), accept: !!v.accept, grade: gradeOf(v),
       bad_7866: !v.accept || n('wrong_text') > 0,
@@ -269,6 +280,8 @@ function build(rows) {
       pages: ps.length, books: new Set(ps.map((r) => r.book)).size,
       languages: [...new Set(ps.map((r) => r.lang))].sort(),
       says_what_the_page_says: r4(ps.filter((r) => bucketOf(r.grade) === 'says_what_the_page_says').length / ps.length),
+      misleads_somewhere: r4(ps.filter((r) => bucketOf(r.grade) === 'misleads_somewhere').length / ps.length),
+      text_not_on_the_page: r4(ps.filter((r) => bucketOf(r.grade) === 'text_not_on_the_page').length / ps.length),
       fit_to_quote: r4(ps.filter((r) => r.grade === 'fit_to_quote').length / ps.length),
       severe_per_1k: w ? r2(((total(ps, (r) => r.misleads) + total(ps, (r) => r.wrong_text)) / w) * 1000) : null,
       ...rates(ps),
@@ -332,6 +345,7 @@ function build(rows) {
     by_language: langRows,
     by_script: cutBy((r) => r.script),
     by_route: cutBy((r) => r.route),
+    by_period: cutBy((r) => r.period),
     study_cells: studyCells,
     defect_totals: { all: defs.length, ...Object.fromEntries(['cosmetic', 'misleads', 'wrong_text'].map((s) => [s, defs.filter((d) => d.s === s).length])) },
     defect_classes: Object.values(classes).sort((a, b) => b.total - a.total).map((t) => ({
