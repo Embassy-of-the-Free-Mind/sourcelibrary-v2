@@ -142,6 +142,17 @@ const READER_NAME: Record<string, string> = {
 };
 /** Languages with at least three books in the draw: fewer is one or two books, not a language. */
 const gradeLanguages = grades.by_language.filter(r => r.books >= 3);
+/** "One error every N units", rounded to two significant figures: the per-1,000 rate a reader can picture. */
+const everyN = (per1k: number | null) => {
+  if (!per1k) return null;
+  const v = 1000 / per1k, mag = 10 ** Math.max(0, Math.floor(Math.log10(v)) - 1);
+  return n(Math.round(v / mag) * mag);
+};
+/** Meaning-changing errors on an average page of this language: why few pages are spotless even at a low rate. */
+const perPage = (r: { severe_per_1k: number | null; words: number; pages: number }) =>
+  r.severe_per_1k == null ? null : ((r.severe_per_1k * r.words) / r.pages / 1000).toFixed(1);
+/** Invented or recited text, another leaf, another page entirely, or a page never read: the failures readers fear most. */
+const notFromThisPage = grades.grades.from_elsewhere.share + grades.grades.not_this_page.share;
 const topClasses = grades.defect_classes.filter(c => c.total >= 25);
 /**
  * Three worked examples from served-grades.json: a misread that changes a name, a dropped unit, and
@@ -346,8 +357,9 @@ export default function QualityCenterPage() {
         <Section id="stands" title="Where quality stands">
           <div className="max-w-3xl mb-6">
             <p className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-3">
-              About half the pages you read here say what the scan says. A quarter carry a reading that changes the sense of
-              a word. A quarter carry something the page does not have.
+              About half the pages you read here say exactly what the scan says. Most of the rest have a word or a phrase
+              wrong: a misread that changes the sense, or a word garbled or dropped. Text that is invented, belongs to
+              another page, or was never read at all is rare: {pct(notFromThisPage, 1)} of pages.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
               On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books from the {n(servedFrame)} live books that
@@ -401,9 +413,15 @@ export default function QualityCenterPage() {
             {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text, and caught{' '}
             {kOfN(servedDraw.instrument.planted)} errors we planted.
           </Source>
+          <p className="max-w-3xl text-stone-700 leading-relaxed mt-3">
+            Counting only the flags a second reviewer upheld, the pages that say what the page says rise from{' '}
+            {pct(grades.buckets.says_what_the_page_says.share)} to{' '}
+            <b className="text-stone-900">{pct(grades.reread.says_what_the_page_says.share)}</b>. The reviewer also misses
+            errors, so neither figure is a ceiling; <a href="#trust" className={LINK}>how far to trust these figures</a>.
+          </p>
 
           <Sub>How far to trust these figures</Sub>
-          <div className="max-w-3xl">
+          <div id="trust" className="max-w-3xl scroll-mt-24">
             <p className="text-stone-700 leading-relaxed mb-3">
               One AI reviewer made every verdict above, and no person has checked them, beyond the three worked examples
               further down. We have measured that reviewer twice, and it errs in both directions.
@@ -478,11 +496,13 @@ export default function QualityCenterPage() {
               The same {n(grades.pages)} pages, split by the book&rsquo;s language. This is where the figures above come
               apart: English and Russian print is largely clean, Latin, German, Chinese and Tibetan sit near the middle, and
               Greek, Sanskrit and Korean are poor (so is Arabic, on too few books to table). Those are read by
-              general-purpose models never tested on their script, and nothing better has re-read them. The last column
-              counts errors, not pages, so a long page of
-              small slips does not look like a wrecked one; it is per 1,000 words for alphabetic scripts, per 1,000
-              characters for Chinese and Korean and per 1,000 syllables for Tibetan, and those units are not comparable with
-              each other.
+              general-purpose models never tested on their script, and nothing better has re-read them.
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              Read the first figure before the shares. A page is counted clean only if it has no meaning-changing error
+              anywhere, and a Latin page holds nearly 300 words, so one wrong word in 160 is enough to keep most Latin
+              pages out of that column. The unit is words for alphabetic scripts, characters for Chinese and Korean and
+              syllables for Tibetan, and those units are not comparable with each other.
             </p>
           </div>
           <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
@@ -493,10 +513,10 @@ export default function QualityCenterPage() {
                   <th className={th}>Language</th>
                   <th className={th}>Books</th>
                   <th className={th}>Pages</th>
-                  <th className={th}>Says what the page says</th>
-                  <th className={th}>A reading that changes the sense</th>
-                  <th className={th}>Something the page does not have</th>
-                  <th className={th}>Meaning-changing errors per 1,000</th>
+                  <th className={th}>One meaning-changing error in about</th>
+                  <th className={th}>Pages with no such error</th>
+                  <th className={th}>Pages whose worst error changes the sense of a word</th>
+                  <th className={th}>Pages with a word or phrase garbled, dropped or added</th>
                 </tr>
               </thead>
               <tbody>
@@ -508,13 +528,19 @@ export default function QualityCenterPage() {
                     </td>
                     <td className={td}>{r.books}</td>
                     <td className={td}>{r.pages}</td>
-                    <td className={td}><b className="text-stone-900">{pct(r.says_what_the_page_says)}</b></td>
+                    <td className={td}>
+                      {everyN(r.severe_per_1k) == null ? '–' : (
+                        <>
+                          <b className="text-stone-900">{everyN(r.severe_per_1k)} {r.unit}</b>
+                          <span className="block text-xs text-stone-500 mt-1">
+                            {r.severe_per_1k} per 1,000 · {perPage(r)} on an average page
+                          </span>
+                        </>
+                      )}
+                    </td>
+                    <td className={td}>{pct(r.says_what_the_page_says)}</td>
                     <td className={td}>{pct(r.misleads_somewhere)}</td>
                     <td className={td}>{pct(r.text_not_on_the_page)}</td>
-                    <td className={td}>
-                      {r.severe_per_1k ?? '–'}
-                      <span className="block text-xs text-stone-500 mt-1">{r.unit}</span>
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -526,7 +552,27 @@ export default function QualityCenterPage() {
             same cut by writing system and by reading method, are in the file. The draw was stratified by our confidence,
             not by language, so a language&rsquo;s own share here is a reading of between {gradeLanguages.at(-1)?.books} and{' '}
             {gradeLanguages[0]?.books} books and carries a wide interval. A share of 0% or 100% on three books means only
-            that: three books.
+            that: three books. The last column includes the rare invented or misplaced text; on its own that is{' '}
+            {pct(notFromThisPage, 1)} of pages across all languages.
+          </Source>
+
+          <div className="max-w-3xl mt-6">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              <b className="text-stone-900">Within Latin, the age of the book matters more than anything else.</b> Of the
+              Latin books in the draw, the 11 that are manuscripts or were printed before 1501 carry about 10 meaning-changing
+              errors per 1,000 words, and only 19% of their pages are clean. The 12 printed in 1501 or later carry about
+              2 per 1,000, with 60% of pages clean. That is close to what we measured on print against a typed scholarly
+              edition, where the edition itself carries about 1.5. The reading engine changes the rate by about a fifth;
+              the age of the book changes it four- to fivefold. The early books fail on gothic letter-forms and on the
+              abbreviations scribes and early printers used, which the engine expands into the wrong whole word. In a
+              herbal printed in 1484, <i>ſauine</i> (savin, a herb) became <i>semine</i> (seed), and <i>an. m. j</i>{' '}
+              (one handful) became <i>unciam i.</i> (one ounce), so the recipe changed. In a manuscript of Hierocles,{' '}
+              <i>agitari</i> became <i>aquari</i> twice. We opened both pages against the photograph.
+            </p>
+          </div>
+          <Source>
+            <A href={`${BLOB}scripts/eval/experiments/2026-11-02-latin-by-age-7933.md`}>The Latin split</A>: 141 Latin pages
+            from the same draw, unweighted, with the instances and the books named (<IssueLink num={7933} />).
           </Source>
 
           <Sub>What is actually wrong</Sub>
