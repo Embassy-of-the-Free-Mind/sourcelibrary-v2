@@ -169,7 +169,7 @@ export default async function RouterPage() {
         <h1 className="text-xl font-semibold text-stone-900">Router</h1>
         <p className={`text-xs ${stale ? 'text-red-700 font-medium' : 'text-stone-500'}`}>
           {doc ? `pushed ${age} min ago${doc.commit ? ` from ${doc.commit}` : ''}` : 'no push yet'}
-          {stale ? ` — older than ${ROUTER_BOARD_STALE_MIN} min: the pusher (router-board-push.mjs) is down, so this is out of date` : ''}
+          {stale ? `. Older than ${ROUTER_BOARD_STALE_MIN} min: the pusher (router-board-push.mjs) is down, so this is out of date` : ''}
         </p>
       </header>
       {error && <p className="text-sm text-red-700">Could not read the router board: {error}</p>}
