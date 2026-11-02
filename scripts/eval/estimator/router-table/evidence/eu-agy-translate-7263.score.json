@@ -1,0 +1,288 @@
+{
+ "generated_by": "scripts/eval/eu-agy-translate-7263/run.mjs evidence (job eu-agy-translate-cell-7263, #7263)",
+ "judge": "claude -p --model opus, sealed, Read only, stream-json transcript (page.jpg opened checked); route-judge judgePrompt translation form, image + stored OCR; blind (no arm in the prompt)",
+ "cells": {
+  "latin-tr-first": {
+   "task": "translation",
+   "lang": "Latin",
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "16/30",
+     "wrong_text_pages": "12/30",
+     "classes_k_of_n": {
+      "O6": "12/30",
+      "E2": "12/30",
+      "T9": "9/30",
+      "T6": "8/30",
+      "T7": "8/30",
+      "T10": "7/30",
+      "T8": "5/30",
+      "O12": "3/30",
+      "O7": "2/30",
+      "O11": "1/30",
+      "I4": "1/30",
+      "O5": "1/30",
+      "O10": "1/30",
+      "O17": "1/30",
+      "O8": "1/30",
+      "O3": "1/30",
+      "T5": "1/30"
+     },
+     "written": "30/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    },
+    "flash-lite": {
+     "n": 30,
+     "books": 30,
+     "accept": "11/30",
+     "wrong_text_pages": "14/30",
+     "classes_k_of_n": {
+      "O6": "17/30",
+      "E2": "17/30",
+      "T8": "12/30",
+      "T9": "11/30",
+      "T6": "11/30",
+      "T7": "10/30",
+      "O12": "5/30",
+      "T10": "4/30",
+      "O7": "4/30",
+      "O11": "3/30",
+      "O5": "2/30",
+      "I4": "1/30",
+      "O17": "1/30",
+      "O4": "1/30",
+      "T16": "1/30"
+     },
+     "written": "30/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|flash-lite": {
+     "n": 30,
+     "books": 30,
+     "both": 10,
+     "a_only": 6,
+     "b_only": 1,
+     "neither": 13
+    }
+   }
+  },
+  "german-tr-first": {
+   "task": "translation",
+   "lang": "German",
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "wrong_text_pages": "5/30",
+     "classes_k_of_n": {
+      "E2": "13/30",
+      "T10": "10/30",
+      "T6": "7/30",
+      "T8": "5/30",
+      "O6": "5/30",
+      "O3": "3/30",
+      "O7": "3/30",
+      "T9": "2/30",
+      "O8": "2/30",
+      "T16": "2/30",
+      "T5": "2/30",
+      "T7": "2/30",
+      "O5": "1/30",
+      "O17": "1/30",
+      "T2": "1/30",
+      "O11": "1/30",
+      "T15": "1/30",
+      "D1": "1/30"
+     },
+     "written": "29/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    },
+    "flash-lite": {
+     "n": 30,
+     "books": 30,
+     "accept": "20/30",
+     "wrong_text_pages": "9/30",
+     "classes_k_of_n": {
+      "E2": "14/30",
+      "O6": "12/30",
+      "T6": "6/30",
+      "T9": "6/30",
+      "O3": "3/30",
+      "O7": "3/30",
+      "T8": "3/30",
+      "T16": "2/30",
+      "T5": "2/30",
+      "T10": "2/30",
+      "O5": "1/30",
+      "O17": "1/30",
+      "O11": "1/30",
+      "D1": "1/30",
+      "O8": "1/30",
+      "T7": "1/30",
+      "T3": "1/30"
+     },
+     "written": "30/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|flash-lite": {
+     "n": 30,
+     "books": 30,
+     "both": 18,
+     "a_only": 4,
+     "b_only": 2,
+     "neither": 6
+    }
+   }
+  },
+  "italian-tr-first": {
+   "task": "translation",
+   "lang": "Italian",
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 23,
+     "books": 23,
+     "accept": "17/23",
+     "wrong_text_pages": "4/23",
+     "classes_k_of_n": {
+      "E2": "14/23",
+      "O6": "5/23",
+      "T9": "5/23",
+      "T8": "4/23",
+      "T7": "3/23",
+      "O8": "3/23",
+      "T13": "2/23",
+      "O12": "2/23",
+      "O4": "1/23",
+      "O16": "1/23",
+      "T6": "1/23",
+      "O11": "1/23",
+      "T10": "1/23",
+      "I1": "1/23",
+      "T14": "1/23",
+      "O5": "1/23",
+      "O10": "1/23"
+     },
+     "written": "23/23",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    },
+    "flash-lite": {
+     "n": 23,
+     "books": 23,
+     "accept": "13/23",
+     "wrong_text_pages": "8/23",
+     "classes_k_of_n": {
+      "E2": "12/23",
+      "O6": "11/23",
+      "T9": "5/23",
+      "T7": "4/23",
+      "T8": "4/23",
+      "O8": "3/23",
+      "T6": "3/23",
+      "T13": "3/23",
+      "T3": "3/23",
+      "T2": "2/23",
+      "T10": "2/23",
+      "O5": "2/23",
+      "O12": "2/23",
+      "T5": "2/23",
+      "O11": "1/23",
+      "I1": "1/23",
+      "O10": "1/23"
+     },
+     "written": "23/23",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|flash-lite": {
+     "n": 23,
+     "books": 23,
+     "both": 12,
+     "a_only": 5,
+     "b_only": 1,
+     "neither": 5
+    }
+   }
+  },
+  "french-tr-first": {
+   "task": "translation",
+   "lang": "French",
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "20/30",
+     "wrong_text_pages": "6/30",
+     "classes_k_of_n": {
+      "E2": "18/30",
+      "O6": "7/30",
+      "T10": "5/30",
+      "T8": "4/30",
+      "T6": "4/30",
+      "T5": "2/30",
+      "T3": "2/30",
+      "O12": "2/30",
+      "O8": "2/30",
+      "T9": "2/30",
+      "I4": "2/30",
+      "O5": "2/30",
+      "T15": "1/30",
+      "T7": "1/30",
+      "O17": "1/30",
+      "O18": "1/30",
+      "I6": "1/30",
+      "O16": "1/30",
+      "O1": "1/30"
+     },
+     "written": "30/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    },
+    "flash-lite": {
+     "n": 30,
+     "books": 30,
+     "accept": "17/30",
+     "wrong_text_pages": "10/30",
+     "classes_k_of_n": {
+      "E2": "14/30",
+      "T6": "9/30",
+      "O6": "6/30",
+      "T9": "5/30",
+      "T5": "3/30",
+      "O5": "3/30",
+      "T8": "3/30",
+      "O1": "3/30",
+      "I4": "2/30",
+      "T7": "2/30",
+      "T10": "2/30",
+      "T3": "1/30",
+      "D1": "1/30",
+      "T11": "1/30",
+      "T16": "1/30",
+      "O17": "1/30",
+      "O18": "1/30",
+      "O7": "1/30"
+     },
+     "written": "30/30",
+     "note": "every drawn page counts: a page the lane would not write is not accepted"
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|flash-lite": {
+     "n": 30,
+     "books": 30,
+     "both": 15,
+     "a_only": 5,
+     "b_only": 2,
+     "neither": 8
+    }
+   }
+  }
+ }
+}

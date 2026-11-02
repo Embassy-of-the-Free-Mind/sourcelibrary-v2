@@ -1,0 +1,95 @@
+{
+ "at": "2026-11-01T23:17:16.731Z",
+ "rule": "UNTRANSLATED pages (cli-translate-lane.mjs) of the frame books (plan rule); script class by the OCR <script> tag, else pages.script_type, else unknown (no book majority); mixed counts as print",
+ "langs": {
+  "Latin": {
+   "books": 260,
+   "pages": 53390,
+   "by_script": {
+    "print": 50525,
+    "manuscript": 451,
+    "unknown": 2414
+   },
+   "share": {
+    "print": 0.9463,
+    "manuscript": 0.0084,
+    "unknown": 0.0452
+   },
+   "by_ocr_model": {
+    "gemini-3-flash-preview": 2660,
+    "gemini-3.1-flash-lite-preview": 14965,
+    "gemini-3.8-flash-low": 20,
+    "gemini-3.1-flash-lite": 35724,
+    "claude-opus-5-5-low": 20,
+    "gemini-2.5-flash": 1
+   }
+  },
+  "German": {
+   "books": 352,
+   "pages": 44126,
+   "by_script": {
+    "print": 41965,
+    "manuscript": 724,
+    "unknown": 1437
+   },
+   "share": {
+    "print": 0.951,
+    "manuscript": 0.0164,
+    "unknown": 0.0326
+   },
+   "by_ocr_model": {
+    "gemini-3.1-flash-lite": 27869,
+    "gemini-3-flash-preview": 4456,
+    "gemini-3.8-flash-low": 1071,
+    "gemini-3.1-flash-lite-preview": 9702,
+    "ia-ocr/ABBYY FineReader 8.0": 280,
+    "ia-ocr/0.0.14": 607,
+    "gemini-2.5-flash": 17,
+    "ia-ocr/unknown": 124
+   }
+  },
+  "Italian": {
+   "books": 28,
+   "pages": 7484,
+   "by_script": {
+    "print": 4706,
+    "manuscript": 404,
+    "unknown": 2374
+   },
+   "share": {
+    "print": 0.6288,
+    "manuscript": 0.054,
+    "unknown": 0.3172
+   },
+   "by_ocr_model": {
+    "gemini-3-flash-preview": 1172,
+    "gemini-3.1-flash-lite-preview": 2350,
+    "ia-ocr/0.0.14": 906,
+    "gemini-3.1-flash-lite": 2316,
+    "ia-ocr/0.0.21": 740
+   }
+  },
+  "French": {
+   "books": 43,
+   "pages": 13483,
+   "by_script": {
+    "print": 12780,
+    "manuscript": 666,
+    "unknown": 37
+   },
+   "share": {
+    "print": 0.9479,
+    "manuscript": 0.0494,
+    "unknown": 0.0027
+   },
+   "by_ocr_model": {
+    "gemini-3.8-flash-low": 1069,
+    "human": 2,
+    "gemini-3.1-flash-lite-preview": 7509,
+    "gemini-3-flash-preview": 87,
+    "gemini-3.1-flash-lite": 4803,
+    "gemini-2.5-flash": 13
+   }
+  }
+ }
+}
