@@ -556,11 +556,11 @@ export default function QualityCenterPage() {
                   <tr key={c.class}>
                     <td className={`${td} font-semibold text-stone-900 w-[30%]`}>
                       {c.name}
-                      <span className="block text-xs font-normal font-mono text-stone-400 mt-1">{c.class}</span>
+                      <span className="block text-xs font-normal text-stone-500 mt-1">class {c.class}</span>
                     </td>
-                    <td className={td}>{c.total}</td>
-                    <td className={td}>{c.misleads}</td>
-                    <td className={td}>{c.wrong_text}</td>
+                    <td className={td}>{n(c.total)}</td>
+                    <td className={td}>{n(c.misleads)}</td>
+                    <td className={td}>{n(c.wrong_text)}</td>
                     <td className={td}>{c.languages.slice(0, 3).map(l => l.language).join(', ')}</td>
                   </tr>
                 ))}
@@ -597,8 +597,8 @@ export default function QualityCenterPage() {
               A second reading by a stronger model now corrects weak German and French transcriptions (
               <IssueLink num={7558} />). The cheap signals we already store cannot pick out the weak books (
               <a href="#learned" className={LINK}>finding 1</a>), so finding them means reading pages: we will repeat this
-              draw every month and report here whether the shares move (<IssueLink num={7263} />). The languages at the
-              bottom of the table above are the queue.
+              draw every month and report here whether the shares move (<IssueLink num={7263} />). The languages with the
+              lowest shares above — Greek, Sanskrit, Korean, Arabic — are the queue.
             </p>
           </div>
 
