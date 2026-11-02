@@ -57,7 +57,7 @@
     "@vercel/blob": "^2.8.2",
     "@xyflow/react": "^12.12.0",
     "abcjs": "^6.7.2",
-    "archiver": "^7.0.1",
+    "archiver": "^8.0.0",
     "axios": "^1.21.0",
     "botid": "^1.5.12",
     "clsx": "^2.1.1",
