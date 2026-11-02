@@ -32,9 +32,9 @@ export const PARTNERS_HTML = `
   <div class="wrap why">
     <div>
       <p class="eyebrow">The untranslated record</p>
-      <h2>Most of it has never been translated</h2>
-      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, most of the books we translate have no earlier English translation.</p>
-      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: of a random sample of 995 books we have translated, from Latin, German, Chinese, Sanskrit and other languages, a search found no earlier English translation for 59% (56–62%), and only a partial one for another 7%. Searched October 2026.</p>
+      <h2>Most historical writing has never been translated into English</h2>
+      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, about half the books readable in English are the first English translation of their work: 11,357 so far.</p>
+      <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: every translated book is searched for an earlier English translation, one at a time, by an AI search agent that links any translation it finds; 25,007 books had been searched by 2 November 2026. A book is marked a first translation only when no earlier one is found, and 11,357 works carry that mark, out of 22,538 books readable in English. Spot checks of 55 marked books by a second model: 50 held, none was refuted, 5 unclear.</p>
     </div>
     <figure style="margin:0">
       <div class="frame"><img src="/ai-partners/img/hero.jpg" alt="An early printed Latin page naming Marsilio Ficino and Pico della Mirandola"></div>
@@ -75,7 +75,7 @@ export const PARTNERS_HTML = `
   <div class="wrap pf">
     <h2 class="pword">Translated</h2>
     <div>
-      <p class="lede">5.7 million pages in English, each aligned with its original. Of these books, 6,043 appear in English for the first time.</p>
+      <p class="lede">5.7 million pages in English, each aligned with its original. Of these, 11,357 works appear in English for the first time.</p>
       <figure style="margin:8px 0 28px">
         <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta/page/20"><img src="/ai-partners/img/reader-sanskrit.jpg" alt="A page of Kamalākara’s Siddhānta-tattva-viveka in the reader: the scan, the Sanskrit transcription and the English translation side by side, with notes on technical terms" style="width:100%;height:auto;display:block;border:1px solid rgba(0,0,0,.08)" loading="lazy" width="1440" height="808"></a>
         <figcaption class="cap">Scan, transcription and translation side by side: Kamalākara’s <em>Discernment of the Principles of Astronomy</em> (1658), on the lengths of the cosmic cycle. Notes explain technical terms and give the original word.</figcaption>
@@ -120,6 +120,7 @@ export const PARTNERS_HTML = `
     <h2 class="pword">Rights cleared</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
+      <p>For a training licence, the holding libraries' own rights statements sort the books (counted 30 October 2026, of 28,700 books with text that are ready to license): 11,929 books, 2.6 million pages, whose library permits commercial use of text and images; 8,343 whose library states no terms for its images; and 8,428 whose library scans carry non-commercial or other restrictive terms, offered as text only and under legal review. Pages read or translated by Claude are excluded.</p>
       <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Search, retrieval for a user and individual use are free; training at scale is licensed directly. The terms and the rate card are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
     </div>
   </div>
@@ -178,7 +179,7 @@ export const PARTNERS_HTML = `
   <div class="wrap">
     <div class="letter">
       <p class="eyebrow">Summary</p>
-      <p>Source Library is the largest library of translated historical sources: a digital archive of 131,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 6,043 books translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
+      <p>Source Library is the largest library of translated historical sources: a digital archive of 131,000 books in more than fifty languages, over 20,000 of them readable in English, each translation set beside its original page. Among them are 11,357 works translated into English for the first time, and 2,347 from the Ritman Library in Amsterdam, available nowhere else online.</p>
       <p>Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind. We welcome conversations with partners who wish to see the remaining 20.2 million pages read and released.</p>
       <p class="sig">Derek Lomas<span>Founder, Source Library</span></p>
       <p class="addr"><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">derek@sourcelibrary.org</a></p>
