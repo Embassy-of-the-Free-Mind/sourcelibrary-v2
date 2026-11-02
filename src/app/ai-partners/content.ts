@@ -6,7 +6,7 @@ export const PARTNERS_HTML = `
     <div>
       <h1>Historical sources, <em>translated</em> beside the page</h1>
       <p>131,000 books in more than fifty languages, with their page scans. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
-      <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20ten-book%20sample">Request the ten-book sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
+      <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
     <figure>
       <img src="/ai-partners/img/fludd-empyrean.jpg" alt="Engraved circle of the heavens: a dark starry core, a ring of stars, and an outer band of flames">
@@ -105,7 +105,7 @@ export const PARTNERS_HTML = `
       </table>
       <p>What they find goes back into how that language is read: which model, which instructions, and when a page needs a second reading. We have logged 427 experiments on reading and translation quality. Translations are tested against published human translations in fourteen languages, errors are sorted into 44 kinds, and the error rates are <a href="https://sourcelibrary.org/quality">published</a>.</p>
       <p class="note">Latin, two-fifths of the English pages: transcriptions differ from a published text of the same printing by a median 3.7% of characters (77 pages), most of it the long s read as f, and 86% of English pages were rated 4 or 5 of 5 by a model judge against a published human translation (71 pages). Figures for each language, with their samples, are on the <a href="https://sourcelibrary.org/quality">quality page</a>; as of 26 October 2026.</p>
-      <p>A licence includes the record of this work: several readings of the same page, how each was judged against the image, and each correction beside the reading it replaced. It shows where models fail on old books, and why. 1,535 people have offered to help, and readers report what they find.</p>
+      <p>The record of this work is kept with the text: several readings of the same page, how each was judged against the image, and each correction beside the reading it replaced. It shows where models fail on old books, and why. 1,535 people have offered to help, and readers report what they find.</p>
       <div class="photos">
         <img src="/ai-partners/img/embassy.jpg" alt="The Embassy of the Free Mind, Amsterdam">
         <img src="/ai-partners/img/bibliotheca.jpg" alt="Guests in the Bibliotheca Philosophica Hermetica">
@@ -126,7 +126,33 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
-<section class="proof alt" id="v2-provenance">
+<section class="proof alt" id="v2-licence">
+  <div class="wrap pf">
+    <h2 class="pword">In a licence</h2>
+    <div>
+      <p class="lede">28,700 books with licensable text, 4.9 million pages. Books by language:</p>
+      <table class="ledger">
+        <tr><td>Latin <span class="note">· 1.99M pages</span></td><td class="n">15,629</td></tr>
+        <tr><td>English, original editions <span class="note">· 0.71M pages</span></td><td class="n">2,763</td></tr>
+        <tr><td>German <span class="note">· 0.57M pages</span></td><td class="n">2,707</td></tr>
+        <tr><td>Chinese <span class="note">· 0.16M pages</span></td><td class="n">2,331</td></tr>
+        <tr><td>Greek <span class="note">· 0.38M pages</span></td><td class="n">985</td></tr>
+        <tr><td>French <span class="note">· 0.26M pages</span></td><td class="n">857</td></tr>
+        <tr><td>Dutch <span class="note">· 0.12M pages</span></td><td class="n">565</td></tr>
+        <tr><td>Italian <span class="note">· 0.14M pages</span></td><td class="n">561</td></tr>
+        <tr><td>Sanskrit <span class="note">· 0.07M pages</span></td><td class="n">323</td></tr>
+        <tr><td>Russian <span class="note">· 0.09M pages</span></td><td class="n">229</td></tr>
+        <tr><td>Other languages, about 200 <span class="note">· 0.37M pages</span></td><td class="n">1,750</td></tr>
+        <tr class="total"><td>All</td><td class="n">28,700</td></tr>
+      </table>
+      <p class="note">Counted 30 October 2026, by the language of the edition. English editions are transcribed, not translated. Every other language comes with its English translation on most pages.</p>
+      <p>Each page is one record: the scan (with its crop where the page shares an image), the transcription, the English translation, the book's title, author, date and language, the holding library and its rights statement, the model and prompt version that wrote the transcription and the translation, a hash of the text, and quality flags such as marginalia or a book not yet fully translated. A per-book manifest lists every book with its rights class and page counts, and a datasheet describes how the set was built and what it leaves out.</p>
+      <p>Two samples are <a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">available on request</a>: ten complete books with notes, and 5,000 pages with their scans drawn from 2,256 books in 111 languages, with the datasheet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="proof" id="v2-provenance">
   <div class="wrap pf">
     <h2 class="pword">Provenance</h2>
     <div>
@@ -136,7 +162,7 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
-<section class="proof" id="v2-available">
+<section class="proof alt" id="v2-available">
   <div class="wrap pf">
     <h2 class="pword">Available now</h2>
     <div>
@@ -149,7 +175,7 @@ export const PARTNERS_HTML = `
         <tr><td>Bulk requests rate-limited by the site, last 30 days</td><td class="n">1.9M</td></tr>
       </table>
       <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
-      <p>A sample of ten books, with scans, transcriptions, translations and notes, is <a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20ten-book%20sample">available on request</a>. Representative works include Robert Fludd's <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="https://sourcelibrary.org/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="https://sourcelibrary.org/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="https://sourcelibrary.org/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="https://sourcelibrary.org/dataset">the dataset</a> is also available.</p>
+      <p>Representative works include Robert Fludd's <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="https://sourcelibrary.org/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="https://sourcelibrary.org/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="https://sourcelibrary.org/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="https://sourcelibrary.org/dataset">the dataset</a> is also available.</p>
     </div>
   </div>
 </section>
@@ -183,7 +209,7 @@ export const PARTNERS_HTML = `
       <p>Source Library is a non-profit project of Wisdom Frontiers and the Embassy of the Free Mind. We welcome conversations with partners who wish to see the remaining 20.2 million pages read and released.</p>
       <p class="sig">Derek Lomas<span>Founder, Source Library</span></p>
       <p class="addr"><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">derek@sourcelibrary.org</a></p>
-      <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20ten-book%20sample">Request the ten-book sample</a><a href="https://sourcelibrary.org/licensing">Licensing terms</a><a href="https://sourcelibrary.org/developers">API and MCP</a></p>
+      <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="https://sourcelibrary.org/licensing">Licensing terms</a><a href="https://sourcelibrary.org/developers">API and MCP</a></p>
     </div>
   </div>
 </section>
