@@ -79,6 +79,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     links: [
       { href: '/admin/pipeline', label: 'Pipeline' },
       { href: '/admin/pipeline/now', label: 'Pipeline now' },
+      { href: '/admin/router', label: 'Router' },
       { href: '/admin/processing', label: 'Processing' },
       { href: '/admin/quality', label: 'Quality' },
       { href: '/admin/scan-evaluation', label: 'Scan review' },
