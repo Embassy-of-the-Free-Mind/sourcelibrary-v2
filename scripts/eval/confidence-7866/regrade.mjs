@@ -39,8 +39,8 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { words } from '../route-judge-6740/defect-rate.mjs';
 import { HERE, RESULTS, SEED } from './lib.mjs';
 
-const LANE = 'confidence-7866';
-const RUN = 'confidence-validation-7866';
+export const LANE = 'confidence-7866';
+export const RUN = 'confidence-validation-7866';
 
 /** The taxonomy's own one-line names (`.claude/docs/page-error-taxonomy.md` headings). */
 const CLASS_NAME = {
@@ -101,14 +101,14 @@ export const bucketOf = (grade) =>
 
 /** The word unit of a language's script: rates are comparable within a script, never across. */
 /** The book's age band, from `books.published` (free text: the first four-digit run is the year). */
-const eraOf = (published) => {
+export const eraOf = (published) => {
   const y = Number(String(published ?? '').match(/\d{4}/)?.[0]);
   if (!y) return 'no date';
   return y <= 1500 ? 'before 1501' : y <= 1700 ? '1501–1700' : y <= 1900 ? '1701–1900' : 'after 1900';
 };
 /** Han characters and Tibetan syllables are not words: rates in those units never pool with alphabetic ones. */
-const isAlphabetic = (lang) => !/Chinese|Japanese|Korean|Tibetan/.test(lang);
-const unitOf = (lang) => (/Chinese|Japanese|Korean/.test(lang) ? 'Han characters' : /Tibetan/.test(lang) ? 'syllables' : 'words');
+export const isAlphabetic = (lang) => !/Chinese|Japanese|Korean|Tibetan/.test(lang);
+export const unitOf = (lang) => (/Chinese|Japanese|Korean/.test(lang) ? 'Han characters' : /Tibetan/.test(lang) ? 'syllables' : 'words');
 
 const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 const pctl = (a, p) => { const s = [...a].sort((x, y) => x - y); return s[Math.max(0, Math.min(s.length - 1, Math.floor(p * s.length)))]; };
@@ -174,13 +174,13 @@ function pageRows({ recs, texts, titles }) {
 
 /* ── weighted shares, stratified book-cluster bootstrap ── */
 
-const STRATA = ['high', 'middle', 'low', 'unmeasured'];
-function shares(books, keyOf, keys) {
+export const STRATA = ['high', 'middle', 'low', 'unmeasured'];
+export function shares(books, keyOf, keys) {
   let W = 0; const num = Object.fromEntries(keys.map((k) => [k, 0]));
   for (const b of books) for (const p of b.pages) { W += b.weight; const k = keyOf(p); if (k in num) num[k] += b.weight; }
   return { W, share: Object.fromEntries(keys.map((k) => [k, W ? num[k] / W : null])) };
 }
-function bootstrap(books, keyOf, keys, seed, B = 4000) {
+export function bootstrap(books, keyOf, keys, seed, B = 4000) {
   const rng = mulberry32(seed);
   const groups = STRATA.map((s) => books.filter((b) => b.stratum === s)).filter((g) => g.length);
   const draws = Object.fromEntries(keys.map((k) => [k, []]));
