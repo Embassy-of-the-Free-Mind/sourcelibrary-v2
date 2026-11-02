@@ -9649,10 +9649,10 @@
    "title": "Tibetan translation, corrected Kangyur text (#6948) [manuscript]",
    "pages_waiting": 0,
    "current": "opus-cli",
-   "decision": "keep (fallback: none passes the gate; the best agy / GPU route)",
-   "route": "opus-cli",
-   "decision_kn": "keep (fallback: none passes the gate; the best agy / GPU route)",
-   "route_kn": "opus-cli",
+   "decision": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route": "agy-flash-low@4",
+   "decision_kn": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route_kn": "agy-flash-low@4",
    "rule": "k/n",
    "live": "opus-cli",
    "needs_engine_flag": "NEEDS-ENGINE (engine: best opus-cli P(acc >= 0.9) = 0.26, mean 0.86)",
@@ -9660,8 +9660,8 @@
    "hard_floor_blocked": [],
    "lambda_sensitivity": {
     "5": "switch agy-flash-low@4",
-    "20": "keep opus-cli",
-    "100": "keep opus-cli"
+    "20": "switch agy-flash-low@4",
+    "100": "switch agy-flash-low@4"
    },
    "decision_margins": "HOLD",
    "route_margins": "opus-cli",
@@ -9682,7 +9682,7 @@
     "alt_wrate": 0.13333333333333333,
     "bar_wrate": 0.03333333333333333
    },
-   "decision_flat_price": "keep (fallback: none passes the gate; the best agy / GPU route) opus-cli",
+   "decision_flat_price": "switch (fallback: none passes the gate; the best agy / GPU route) agy-flash-low@4",
    "decision_other_prior": "switch opus-cli",
    "other_wrong_text_bar": null,
    "margin_010": null,
@@ -9837,8 +9837,8 @@
      "p_inv_over_floor": 0.271
     }
    ],
-   "decision_week": "keep (fallback: none passes the gate; the best agy / GPU route)",
-   "route_week": "opus-cli",
+   "decision_week": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route_week": "agy-flash-low@4",
    "before": "HOLD (k/n: manuscript: the defect rates are not split by script type) → opus-cli"
   },
   {

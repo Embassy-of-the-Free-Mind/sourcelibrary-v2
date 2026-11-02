@@ -397,8 +397,10 @@ def decide(cell, M, cur, P, cost, wt_max, within=None, c0=None):
     if ok: p = by_loss(ok)
     elif not in_force(P, 'no_served_privilege'): p = cur
     else:
-        alt = [r for r in cand if floor_ok(r, P)]
-        bar = [r for r in M if is_bar(r, P) and floor_ok(r, P)]
+        # Opus last in every cell, a manuscript's too (where it is a candidate, not the bar): by channel, not by is_bar
+        opus = lambda r: is_bar(r, P) or r.get('channel') == 'claude'
+        alt = [r for r in M if not opus(r) and floor_ok(r, P)]
+        bar = [r for r in M if opus(r) and floor_ok(r, P)]
         if not (alt or bar): return 'HOLD (hard floor: no measured route clears it)', max(cand or M, key=lambda r: r['mean'])
         p = by_loss(alt or bar)
         return ('keep' if p is cur else 'switch') + (' (fallback: none passes the gate; the best agy / GPU route)' if alt else

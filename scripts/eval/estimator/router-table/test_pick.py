@@ -423,6 +423,16 @@ class Policy1102(unittest.TestCase):
         self.assertEqual(dec.split(' (')[0], 'switch'); self.assertIn('fallback', dec)
         self.assertIn(pk['id'], ('a', 'b')); self.assertNotEqual(pk['id'], 'opus')
 
+    def test_manuscript_fallback_takes_opus_last(self):
+        # a manuscript cell (Opus a candidate, not _bar; tibetan-tr/manuscript's shape): the reference is a floor-blocked
+        # route, nothing passes, and the fallback takes the agy route although Opus has the lower loss
+        hi = dict(self.r('hi', 0.97, 0.0009, 0.01), channel='agy', hard_floor_block=True)
+        opus = dict(self.r('opus', 0.90, 0.002, 0.01), channel='claude')
+        agy = dict(self.r('agy', 0.70, 0.0009, 0.05), channel='agy')
+        Q = dict(self.Q, switch=dict(self.Q['switch'], bar=None, within=0.0, p=0.999999))
+        dec, pk = B.decide({}, [hi, opus, agy], opus, Q, STEADY, None, c0=0.002)
+        self.assertEqual((dec.split(' (')[0], pk['id']), ('switch', 'agy'))
+
     def test_floor_block_needs_seen_pages(self):
         r = lambda inv, eff: dict(inv=inv, inv_eff=eff[0], eff=[0, eff[1], 0])
         self.assertEqual(B.hard_floor_block(r('0/30', (0.0, 5.0)), self.Q, 1)[0], False)    # none seen: never blocked
