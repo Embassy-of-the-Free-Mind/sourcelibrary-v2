@@ -13,7 +13,7 @@
  *
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs count
  *   node --env-file=.env.production.local scripts/batch/cli-translate-lane.mjs run --out=DIR [--max-pages=60]
- *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--apply]
+ *        [--engine=claude-opus-5-5|gemini-3.8-flash+agy-cli] [--max-weekly-pct=70] [--agy-home=auto|default|DIR] [--apply]
  *
  * WHICH BOOKS. Those held with reason CLI_TRANSLATE_HOLD.reason: the orchestrator's Phase 4 holds a book when
  * translateLaneForBook (the `channel: "cli"` rows of scripts/lib/translation-routing-table.json) names a CLI reader.
@@ -27,6 +27,16 @@
  * advances it as it does any book with nothing left to translate. A page the reader failed or the writer refused is
  * written to the ledger (DIR/../cli-translate-ledger.jsonl) and not tried again; a book with ledgered pages stays held
  * and `count` names it, for a person to look at.
+ *
+ * WHICH READER. Opus rows: claude-translate.mjs. agy rows: cli-translate.mjs read (one page, or a folio-marked pair, a
+ * call), unless the row carries `per_call`; then claude-translate.mjs --cli=agy --per-call=N, the block reader the
+ * row's adoption sample measured (#7263: Latin, German, Italian, French at 4 a call). Both are written by
+ * cli-translate.mjs apply.
+ *
+ * WHICH AGY POOL (#7263). --agy-home=auto takes the agy login with the most Gemini weekly left whose quota floor is open
+ * (cli-ocr-lane.mjs quotaFloor: over the weekly pace line, 5-hour bucket over --floor-5h, default 0.25), read once at
+ * the start (scripts/lib/agy-pools.mjs); no pool open, no agy read this run. `default` or a DIR fixes the pool. The
+ * readers run with that AGY_HOME and AGY_POOL_SHARED=1. Without the flag the readers inherit the environment, as before.
  *
  * HOW IT FAILS. A usage-limit reply makes the reader exit 3; the run stops and the next resumes. A reader that exits 2
  * (claude-translate's OCR-first gate: the book's OCR is mostly flash-lite and the row has no adoption.ocr_checked) skips
@@ -42,6 +52,8 @@ import { translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES }
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
+import { agyEnv, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
+import { quotaFloor, parseAgyHome } from './cli-ocr-lane.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -61,12 +73,16 @@ export function readerArgs(lane, { ids, dir, job, ocrChecked }) {
   if (lane.engine === 'claude-opus-5-5') {
     return [reader, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, `--job=${job}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
   }
+  // A row's per_call (#7263): the block reader its adoption sample ran, Gemini through agy.
+  if (lane.row?.per_call) {
+    return [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', '--cli=agy', `--per-call=${lane.row.per_call}`, `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, `--job=${job}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
+  }
   return [reader, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${lane.model}`, ...(ocrChecked ? [`--ocr-checked=${ocrChecked}`] : [])];
 }
 
-function run(args) {
+function run(args, base = process.env) {
   console.log(`$ node ${args.map((a) => path.relative(process.cwd(), a) || a).join(' ')}`);
-  return spawnSync(process.execPath, args, { stdio: 'inherit', env: { ...process.env, CLI_JOB_NAME: process.env.CLI_JOB_NAME || 'cli-translate-lane-7075' } }).status;
+  return spawnSync(process.execPath, args, { stdio: 'inherit', env: { ...base, CLI_JOB_NAME: process.env.CLI_JOB_NAME || 'cli-translate-lane-7075' } }).status;
 }
 
 const readLedger = (f) => new Set(fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
@@ -75,14 +91,15 @@ async function heldBooks(db) {
   return db.collection('books').find(
     // The status first: it is indexed, and a held book carries both (pipeline-hold.mjs).
     { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason },
-    { projection: { id: 1, title: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
+    // title, publisher and image_source.provider: a row's `unless` reads them (translation-routing.mjs).
+    { projection: { id: 1, title: 1, publisher: 1, language: 1, visible: 1, image_source: 1, 'pipeline_auto.hold': 1 } },
   ).sort({ visible: -1, 'pipeline_auto.hold.held_at': 1 }).toArray();
 }
 
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--apply]'); process.exit(2); }
+  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--agy-home=auto|default|DIR] [--apply]'); process.exit(2); }
   const ENGINE = arg('engine') || null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
@@ -97,6 +114,23 @@ async function main() {
     const q = laneQuota(agy ? 'agy-flash-translate' : 'claude-opus-translate', { model: agy ? CLI_TRANSLATE_LANES[ENGINE].model : null, maxWeeklyPct: arg('max-weekly-pct') ?? null });
     if (!q.open) { console.log(`skip: lane ${q.lane} idles (${q.state}): ${q.why}`); return; }
     console.log(`quota: lane ${q.lane} ${q.state}: ${q.why}`);
+  }
+  // --agy-home (#7263): which agy login the agy readers spend; null = inherit the environment (as before the flag).
+  let AGY_ENV = null;
+  if (mode === 'run' && arg('agy-home')) {
+    const want = parseAgyHome(arg('agy-home'));
+    let home = want.home ?? null;
+    if (want.auto) {
+      const floor5h = Number(arg('floor-5h') ?? 0.25);
+      const pools = readPools();
+      for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
+      const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+      const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h }); return { open: f.ok, why: f.why }; });
+      if (!pick) { console.log('skip: no agy pool has its floor open; nothing read'); return; }
+      home = pick.home;
+    } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); process.exit(2); }
+    AGY_ENV = agyEnv(home);
+    console.log(`agy pool: ${poolName({ home })}`);
   }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
@@ -146,7 +180,7 @@ async function main() {
     const ids = path.join(dir, 'page-ids.json');
     fs.writeFileSync(ids, JSON.stringify(take.map((p) => p.id)));
     console.log(`\n${label}: ${take.length} of ${r.open.length} pages on ${lane.engine} (row ${lane.row.id})`);
-    const read = run(readerArgs(lane, { ids, dir, job, ocrChecked: lane.row.adoption?.ocr_checked }));
+    const read = run(readerArgs(lane, { ids, dir, job, ocrChecked: lane.row.adoption?.ocr_checked }), lane.engine !== 'claude-opus-5-5' && AGY_ENV ? AGY_ENV : process.env);
     if (read === 3) { console.log('usage limit reached: stopping; the next run resumes'); break; }
     if (read !== 0) { console.log(`  reader exited ${read}: book skipped this run`); continue; }
     const reason = `#7075 CLI translation lane: row ${lane.row.id}, ${lane.engine} (adopted on ${lane.row.adoption.sample})`;

@@ -7,8 +7,8 @@ canons: []
 n_books: 113
 n_pages: 113
 verdict: "On 113 untranslated pages (one per book; Latin 30, German 30, Italian 23 = the whole frame, French 30), agy Gemini 3.8 Flash-low at 4 pages a call was accepted more often than the Flash-Lite chained lane on the same pages in all four languages (Latin 16/30 vs 11/30, German 22/30 vs 20/30, Italian 17/23 vs 13/23, French 20/30 vs 17/30), with fewer wrong-text pages (12, 5, 4, 6 vs 14, 9, 8, 10). Neither route reaches 80% accepted, let alone the 90% absolute bar: every print cell is NEEDS-ENGINE."
-status: informational
-decision: "No routing row. The router (rules.json as of #7892: absolute bar 0.9, priced loss) gives NEEDS-ENGINE on latin/german/italian/french-tr-first/print; the rule before (#7888 margins) gives HOLD -> agy-flash-low@4. The retired switch margin (within 0.08, wrong text +0.04) would pass all four. 75 drawn pages got the accepted agy English (run cli-translate-20261101234912)."
+status: adopted
+decision: "Adopted 2026-11-02 (Derek: no 90% absolute gate; best agy/GPU route by loss, labelled with its measured rate; hard floor = invented / wrong-leaf). Rows latin-cli-agy4, german-cli-agy4, italian-cli-agy4, french-cli-agy4 (channel cli, gemini-3.8-flash+agy-cli, per_call 4, unless provider bph) added to scripts/lib/translation-routing-table.json; undo = revert those rows. Before that: no routing row under the router rule of #7892 (NEEDS-ENGINE). 75 drawn pages got the accepted agy English (run cli-translate-20261101234912)."
 superseded_by: null
 issue: [7263]
 router_evidence: [latin-tr-first, german-tr-first, italian-tr-first, french-tr-first]
