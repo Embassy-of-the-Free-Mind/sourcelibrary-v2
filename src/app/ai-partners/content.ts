@@ -4,7 +4,7 @@ export const PARTNERS_HTML = `
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>Historical sources, <em>translated</em> beside the page</h1>
+      <h1>The world’s largest library of <em>translated</em> ancient texts, grounded in the source</h1>
       <p>131,000 books in more than fifty languages, with their page scans. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
       <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
@@ -33,7 +33,7 @@ export const PARTNERS_HTML = `
     <div>
       <p class="eyebrow">The untranslated record</p>
       <h2>Most Renaissance Latin has never been translated into English</h2>
-      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, about half the books readable in English are the first English translation of their work: 11,357 so far.</p>
+      <p>The translation of ancient texts in fifteenth-century Florence helped give rise to the Renaissance. Yet some nine in ten Latin works written in the Renaissance have never been translated into English. In our own library, 11,357 books are the first English translation of their work, about half of all we have made readable in English. Half of them are Latin; the rest are from Chinese (1,946), German (1,447), Dutch, French, Greek, Tibetan and dozens of other languages.</p>
       <p class="cap" style="color:var(--night-muted)">Measured against the Universal Short Title Catalogue: of Latin works composed and printed 1480–1620, 93% (91–95%) have no English translation on record, from a seeded random sample of 1,000 catalogue works, each searched for an English translation by AI search agents and not yet checked by a human panel. A second search of the same sample with a different model found 97% (95–98%); it missed some well-known translations, so we quote the lower figure. Debora Shuger’s estimate was roughly 90%. In our library: every translated book is searched for an earlier English translation, one at a time, by an AI search agent that links any translation it finds; 25,007 books had been searched by 2 November 2026. A book is marked a first translation only when no earlier one is found, and 11,357 works carry that mark. Spot checks of 55 marked books by a second model: 50 held, none was refuted, 5 unclear.</p>
     </div>
     <figure style="margin:0">
