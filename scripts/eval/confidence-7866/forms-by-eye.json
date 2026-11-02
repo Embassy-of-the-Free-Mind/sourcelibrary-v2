@@ -1,0 +1,146 @@
+{
+ "_method": "Books in the #7866 draw whose verdict rows carry no script_type. Each was classified print or manuscript by eye on 2026-11-02, from one page image of the book (page noted) and, where the image was not decisive, its date and title (said in why). MS = manuscript. Read by scripts/eval/confidence-7866/book-grades.mjs only for books whose form is otherwise unknown.",
+ "_date": "2026-11-02",
+ "books": {
+  "69af48642a821385be062737": {
+   "form": "print",
+   "page": 10,
+   "why": "typeset incunable roman type"
+  },
+  "69b51ecbff09e4fe943b4ee9": {
+   "form": "print",
+   "page": 10,
+   "why": "typeset 17th c. dissertation"
+  },
+  "695924fa1cac2ce31a4a8a33": {
+   "form": "print",
+   "page": 10,
+   "why": "modern printed reprint contents page"
+  },
+  "699383b350654cbbe29181eb": {
+   "form": "MS",
+   "page": 10,
+   "why": "Vatican Greek MS, handwritten"
+  },
+  "69a5e3d7006a4098422165d4": {
+   "form": "MS",
+   "page": 10,
+   "why": "Vat.gr.2181 handwritten Greek"
+  },
+  "6953c90c77f38f6761bde04b": {
+   "form": "print",
+   "page": 10,
+   "why": "modern printed dedication poem"
+  },
+  "69ac5f7cebeb54840de0f0a4": {
+   "form": "print",
+   "page": 20,
+   "why": "typeset Huygens Oeuvres preface"
+  },
+  "6991fb158ffe22e92ae4e615": {
+   "form": "print",
+   "page": 10,
+   "why": "18th c. printed Italian/Latin"
+  },
+  "6953e47477f38f6761bee59e": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "697d9c999788c62e1238c87e": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "69906148322e01b1349a46f8": {
+   "form": "print",
+   "page": 10,
+   "why": "early modern English printed"
+  },
+  "69af13c4f837644f29a496d3": {
+   "form": "print",
+   "page": 10,
+   "why": "Heiberg Teubner typeset preface"
+  },
+  "699062feef12272ffdc8ef20": {
+   "form": "print",
+   "page": 10,
+   "why": "16th c. printed Cardano commentary"
+  },
+  "69af49c4d6be7ec9cc3246fd": {
+   "form": "print",
+   "page": 20,
+   "why": "typeset CML preface"
+  },
+  "6990795bb621b177c1af684d": {
+   "form": "print",
+   "page": 10,
+   "why": "printed Devanagari pothi, ruled border"
+  },
+  "69b5258b2379d2fed6c28c3c": {
+   "form": "print",
+   "page": 10,
+   "why": "16th c. Dutch blackletter printed"
+  },
+  "698192096df0137d367e6754": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "6abe9f2c6a920ffd924da190": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "6abedf77a43718d234bf11b2": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "6abe8dbb6a920ffd924d59c0": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "69b52bf1a2d71b015aa974b2": {
+   "form": "print",
+   "page": 20,
+   "why": "17th c. printed Italian verse"
+  },
+  "6970e3759b09d309d780a2a8": {
+   "form": "print",
+   "page": 5,
+   "why": "printed 1611-1659 / Derge woodblock, by date and title"
+  },
+  "69af11743bf2d972adad82be": {
+   "form": "print",
+   "page": 10,
+   "why": "printed Russian old orthography"
+  },
+  "6953aeae77f38f6761bd8524": {
+   "form": "print",
+   "page": 10,
+   "why": "modern autograph glossary, printed facsimile"
+  },
+  "695942607d14807348773a98": {
+   "form": "print",
+   "page": 10,
+   "why": "modern printed English edition"
+  },
+  "69b222ed56715b0e32475a8c": {
+   "form": "print",
+   "page": 10,
+   "why": "Aldine 1521 title page"
+  },
+  "699389a6ce15387065947dc0": {
+   "form": "MS",
+   "page": 20,
+   "why": "humanist hand Latin manuscript"
+  },
+  "699069f81cf6ed5fbc8f4967": {
+   "form": "print",
+   "page": 10,
+   "why": "Victorian printed contents page"
+  }
+ }
+}
