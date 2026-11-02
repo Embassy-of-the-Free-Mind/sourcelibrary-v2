@@ -30,8 +30,9 @@
  * PACE. The budget is a share of one agy pool's week (Derek, #7628: about a quarter). Three stops, first wins:
  *   --max-calls-day  model requests this job made today (the agy job ledger, AGY_JOB=enrich-agy; a row per
  *                    message), default 600;
- *   the quota floor  the pool's weekly bucket under the straight line to its reset, or its 5-hour bucket under 25%
- *                    (cli-ocr-lane.mjs quotaFloor), read once at start: no pool open → no call;
+ *   the quota floor  the pool's weekly bucket under the other lanes' weekly reserve (agy-pools.mjs weeklyReserve,
+ *                    0 in the last 36 h before the reset, #7911), or its 5-hour bucket under 25% (cli-ocr-lane.mjs
+ *                    quotaFloor), read once at start: no pool open → no call;
  *   a quota reply    stops the run at once; agy-cli.mjs records the limit and never calls a locked model again.
  *
  * PROVENANCE. summary.engine, reading_summary.engine and book_indexes.engine carry a write-provenance.mjs engine
@@ -127,7 +128,7 @@ export async function runEnrichAgyLane(o) {
   const maxTurns = Number(argOf(args, 'max-turns', MAX_TURNS));
   const model = argOf(args, 'model', DEFAULT_MODEL);
   const floor5h = Number(argOf(args, 'floor-5h', 0.25));
-  // --pace-off-until=ISO: no weekly pace line until then, to spend a pool out before its reset (cli-ocr-lane.mjs quotaFloor)
+  // --pace-off-until=ISO: no weekly reserve until then (cli-ocr-lane.mjs quotaFloor, #7911); an override, no cron line needs it
   const paceOffUntil = argOf(args, 'pace-off-until', null) ? Date.parse(argOf(args, 'pace-off-until', null)) : null;
   const runTag = argOf(args, 'run-tag', 'enrich-agy-7628');
   const run = `enrich-agy-${new Date().toISOString().replace(/[-:]/g, '').slice(0, 13)}-${process.pid}`;
@@ -143,8 +144,8 @@ export async function runEnrichAgyLane(o) {
   if (want === 'auto') {
     const pools = readPools();
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h, paceOffUntil }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
-    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h, paceOffUntil }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
+    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h, paceOffUntil, lane: 'enrich' }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h, paceOffUntil, lane: 'enrich' }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
     if (!pick) { report.stop = 'no pool above its quota floor'; console.log(`[ENRICH-AGY] ${report.stop}: nothing called`); return report; }
     home = pick.home;
   } else if (want !== 'default') home = path.resolve(want);
