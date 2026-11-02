@@ -60,6 +60,8 @@
  * the reader's reason, and the book is not offered again: it needs an OCR check or re-OCR, not another wave.
  *
  * PAUSE / RESUME: `touch <state>/STOP` pauses (checked before each wave and each book); `rm <state>/STOP` resumes.
+ *   A pause for a finding goes through `scripts/maintenance/lane-stops.mjs stop` (ticket + daily page, #7912); the
+ *   spot check below does that itself.
  *
  * --per-call=N (N > 1) reads N pages per call through claude-translate.mjs --cli=agy. OFF by default: on only once
  * block-drift covers caseless (Han) scripts for that reader in production (#7503).
@@ -76,6 +78,7 @@ import { UNTRANSLATED } from './cli-translate-lane.mjs';
 import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
+import { writeLaneStop } from '../lib/lane-stop.mjs';
 import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName } from '../lib/agy-pools.mjs';
 
 export { POOL_HOMES, parseQuota, poolName };
@@ -497,9 +500,18 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   const books = new Map((await db.collection('books').find({ id: { $in: items.map((i) => i.book_id) } }, { projection: { id: 1, title: 1 } }).toArray()).map((b) => [b.id, b.title]));
   const table = verdicts.map((v) => { const it = items.find((i) => i.page_id === v.page_id); return `| [${books.get(it?.book_id) ?? it?.book_id} p.${it?.page_number}](https://sourcelibrary.org/book/${it?.book_id}?page=${it?.page_number}) | ${v.verdict} | ${String(v.note || '').replace(/\|/g, '/').slice(0, 160)} |`; });
   const bad = verdicts.filter((v) => v.invented || v.wrong_leaf);
-  let contained = '';
+  let contained = '', ticket = null;
   if (bad.length) {
-    fs.writeFileSync(P.stop, `paused by spot check ${path.basename(dir)}: ${bad.length} invented/wrong-leaf page(s); see #${ISSUE}\n`);
+    // The STOP goes through the lane-stop helper (#7912): it also opens/reuses a `contained` ticket, registers
+    // the STOP on this box, and the daily `lane-stops.mjs check` pages until a person releases it.
+    // The STOP is written FIRST, before the withholds, exactly as before.
+    const reason = `paused by spot check ${path.basename(dir)}: ${bad.length} invented/wrong-leaf page(s); see #${ISSUE}`;
+    const evidence = bad.map((v) => { const it = items.find((i) => i.page_id === v.page_id); return { label: `${books.get(it?.book_id) ?? it?.book_id} p.${it?.page_number}`, url: `https://sourcelibrary.org/book/${it?.book_id}?page=${it?.page_number}`, note: `${v.verdict}: ${String(v.invented_quote || v.note || '').slice(0, 200)}` }; });
+    evidence.push({ label: 'spot-check verdicts', url: null, note: `${path.join(dir, 'verdicts.json')} on this box` });
+    const ls = await writeLaneStop({ lane: 'siku-translate (#5600)', stopPath: P.stop, reason, kind: 'containment', laneIssue: ISSUE, evidence, by: 'siku-translate-lane spot check (Opus against the image)', commentLaneIssue: false })
+      .catch((e) => { fs.writeFileSync(P.stop, `${reason}\n`); log(`lane-stop helper FAILED (${e.message}); STOP written bare`); return null; });
+    for (const a of ls?.actions ?? []) log(`lane-stop: ${a}`);
+    ticket = ls?.ticket ?? null;
     const byB = new Map();
     for (const v of bad) { const it = items.find((i) => i.page_id === v.page_id); (byB.get(it.book_id) ?? byB.set(it.book_id, []).get(it.book_id)).push(it.page_number); }
     for (const [bid, nums] of byB) {
@@ -512,7 +524,7 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   comment([`**Siku lane spot check** (${t.n} pages judged by Opus against the page image, drawn at random from ${byBook.size} books written since the last check; lane total ${s.written_total} pages).`, '',
     `Bar (draft, Derek 2026-10-27): 0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3. **Result: ${t.wrongLeaf} wrong-leaf, ${t.invented} invented, sense errors on ${t.sense}/${t.n} → ${t.pass ? 'PASS' : 'FAIL'}.**`, '',
     '| page | verdict | note |', '|---|---|---|', ...table,
-    ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.`] : []),
+    ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.${ticket?.url ? ` Ticket (paged daily while the STOP stands): ${ticket.url}` : ''}`] : []),
     ...(!t.pass && !bad.length ? ['', 'The sense-error rate is over the bar; the lane keeps running (the bar\'s stop is invented or wrong-leaf text). Raising it here for a look.'] : []),
   ].join('\n'));
   delete s.spot_deferred_since; delete s.spot_deferred_paged;
