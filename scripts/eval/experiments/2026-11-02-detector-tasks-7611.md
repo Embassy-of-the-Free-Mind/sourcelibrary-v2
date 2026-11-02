@@ -4,11 +4,11 @@ measure: [judged, agreement]
 languages: [la, de, fr, it, ar, he, zh, lzh, bo]
 scripts: [Latn, Arab, Hebr, Hani, Tibt]
 canons: []
-n_books: 0
-n_pages: 0
-verdict: "Preregistered; no result yet."
-status: undecided
-decision: "Pending. Changes how the all-books transcription QA pass (#7896) is run: which detector and which accept rule."
+n_books: 266
+n_pages: 281
+verdict: "Only the strict Opus rule (S) passes the preregistered bar. It catches 60/60 plants and, against the new blind labels, finds 169/182 pages with an error that matters (0.93) at precision 0.95. That costs $0.0023 a page, the price of today's Opus judge, which finds 111/182 (0.61). The correction diff (C) is cheaper ($0.0013) and catches 58/60 plants, but finds only 0.77 of real errors on the held-out half. The re-read diff (R) flags almost every page (κ 0.27) and catches 130/140 plants. As a fixer, C made 622 changes that matter for the better and 262 for the worse, but on already-corrected Latin GPU>GEM pages it did more harm than good (9 fixed, 19 made worse). The labels come from an Opus adjudicator that saw S's review, so S's numbers have a shared-judge bias."
+status: adopted
+decision: "For the all-books transcription pass (#7896), run S: the same Opus call with the strict accept rule (about 237K judgements, about $552, against $520 planned). Do not use C or R as the detector. C as an automatic fixer is out of scope here; this is evidence for a Tibetan-GPU and Gemini-read correction lane, not for Latin GPU>GEM. No cron, router rules.json or book_checks change in this PR."
 superseded_by: null
 issue: [7611, 7896]
 router_evidence: "none — a detector comparison on items whose Opus verdicts are already router evidence; it adds no route k/n"
@@ -82,3 +82,128 @@ Among the arms (C, R, S, CS) with
 - **agy:** at most about 600 calls (C 270 + 60 = 330, R 270 + 36 = 306, plus retries). Read `agy -p /quota` first; stop if the default pool's Gemini weekly remaining falls below **0.15** or its 5-hour bucket under 0.30 (resume after reset), checked every 25 calls.
 - **Opus:** at most about 700 calls (S 270 + 96 = 366, adjudications ≤ 270, plus retries), under `claude-pace-guard`, stop at the account's weekly 85%.
 - No Argon, no paid API, no production writes (no `book_checks`, pages, router `rules.json` or cron). Outputs in `results/2026-11-02/`.
+
+### Results (run 2026-11-02 08:18Z to 09:26Z, after this preregistration was pushed at 5655ccea9)
+
+**Calls.**
+- **agy, 663 in all**, against a budget of about 600. C made 331 calls, R made 332, all `gemini-3.8-flash-low` on the default pool. The 26 R retries were replies cut before `<<<END>>>` and are counted. The overrun of about 10% is retries.
+  - C: 330/330 items answered. 40 answered UNCHANGED and 3 answered CONTAIN.
+  - R: 302/306 answered. 4 items were still cut after 3 tries; they are left out (3 real pages, 1 plant page).
+  - The pool's weekly remaining went from 0.615 to 0.593, never near the 0.15 stop.
+- **Opus, 616 calls** (budget about 700): S made 366, all parsed, and the adjudicator 250 (248 pages, 2 retries after unparsed replies). The account stayed under the 85% weekly stop.
+
+**Deviations, all declared and all decided from the first 34 diffs, before any label or score was seen:**
+1. Chinese folding: added the Siku variant pairs of `grounding-6871/skqs-real.py` and 擧舉 栢柏 呌叫 臯皐 攷考 両兩. The ditto mark 丨 is dropped.
+2. In every script, a hunk whose keys join to the same string is a join or split. This covers a dropped tsheg (ཕྱིནཔ / ཕྱིན པ) and the Hebrew maqaf. A deleted run of 3 or more tokens (4 or more Han) that the other text holds elsewhere is MOVED, not changed; an inserted run likewise.
+3. Past the 40-spot cap, the order is: spots both arms proposed, then C's, then R's (C's fix accounting needs C's spots). On adjudicated pages, 1,514 of C's 1,603 spots were shown. Most of the 2,992 cut spots are R's.
+4. **Introduced errors.** The adjudicator read `matters` as "does the candidate differ from the page here". So `matters` is false wherever the page prints the candidate, and the preregistered "introduced, where matters" would always be 0. Introduced is therefore counted as every C spot where the page prints the STORED reading. Counted hunks already exclude the folded conventions. This is an upper bound: an unfolded variant character counts.
+5. Adjudication ran in three rounds while the arms finished. A page was planned only once all three arms had answered; the last round took the 3 pages with an R answer missing.
+
+**Labels.** All 270 real pages are labelled: 248 by this run's adjudicator, 18 by the existing Opus = Flash-medium agreement, and 4 by an earlier adjudication. **182/270 (67%) have an error that matters.**
+- The new adjudications moved 22 labels: 18 from pass to fail, 4 from fail to pass.
+- By stratum: Tibetan GPU 42/45, Chinese GPU and GPU>GEM 58/86, Gemini reads 39/60, Latin and Italian GPU>GEM 21/49, Hebrew and Arabic 22/30.
+- The base rate is 0.67, so the precision bar of 0.70 is only just above flagging every page. κ is reported for that reason.
+
+**1. Plants.** C and S ran on the 60-item subset; R on all 144, plus 35 clean pages with an R read.
+
+| arm | caught | named | by kind B / C / D / E | clean pages flagged |
+|---|---|---|---|---|
+| C (at threshold) | **58/60** | 56 | 14 / 15 / 15 / 14 | (not run) |
+| R (at threshold) | **130/140** | 137 | 30 / 30 / 35 / 35 | **29/35** |
+| S | **60/60** | 60 | 15 / 15 / 15 / 15 | 12/36 |
+| stored Opus (#7807) | 143/144 | 142 | | 1/36 |
+| Flash-medium (#7918) | 143/144 | 141 | | 13/36 |
+
+- C at "any change" catches 59/60. Its two misses at threshold are one number change (B) and one inserted sentence (E). A single changed word on a long page scores under 0.22 per 100.
+- R's 10 misses are number and noun swaps (B, C). R names 137/140 plants, but where the re-read otherwise agrees with the page, one swapped word scores under R's threshold of 0.55.
+- The "clean" pages are pages Opus had accepted. Opus passes have real errors about a third of the time (#7918), so S's 12/36 and Flash-medium's 13/36 are not all false alarms. They were not adjudicated.
+
+**2. Real pages, errors that matter.** C and R use thresholds picked on half 0 and are scored on half 1; the reverse split is shown beside. All others are shown on all 270 pages, with half 1 for comparison.
+
+| arm | threshold (per 100 tokens) | recall | precision | κ | AUC |
+|---|---|---|---|---|---|
+| **C** held-out | 0.224 (reverse 0.143) | **68/88 = 0.77** (reverse 0.84) | 68/84 = 0.81 (0.86) | 0.42 | **0.78** |
+| C, any change, all 270 | > 0 | 149/182 = 0.82 | 149/178 = 0.84 | 0.48 | |
+| **R** held-out | 0.552 (reverse 0.575) | 88/88 = 1.00 (0.98) | **88/124 = 0.71** (0.77) | **0.27** | 0.81 |
+| **S**, all 270 | — | **169/182 = 0.93** | **169/178 = 0.95** | **0.82** | |
+| S, half 1 | — | 82/88 = 0.93 | 82/88 = 0.93 | 0.80 | |
+| CS (C flags, S confirms), half 1 | — | 63/88 = 0.72 | 63/67 = 0.94 | 0.57 | |
+| stored Opus, all 270 | — | 111/182 = 0.61 | 111/112 = 0.99 | 0.50 | |
+| Flash-medium, all 270 | — | 161/182 = 0.88 | 161/182 = 0.88 | 0.65 | |
+
+By stratum, all 270 pages (C at its primary threshold; R at its own):
+
+| stratum | errors | C recall / precision | C AUC | R recall / precision | R AUC | S recall / precision | stored Opus recall | Flash-medium recall / precision |
+|---|---|---|---|---|---|---|---|---|
+| Tibetan GPU | 42/45 | 0.93 / 0.95 | 0.93 | 1.00 / 0.93 | 0.57 | 0.93 / 0.93 | **0.43** | 0.98 / 0.93 |
+| Chinese GPU, GPU>GEM | 58/86 | 0.79 / 0.81 | 0.72 | 1.00 / 0.74 | 0.83 | 0.95 / 0.96 | 0.78 | 0.97 / 0.92 |
+| Latin, Italian GPU>GEM | 21/49 | **0.62 / 0.62** | 0.71 | 1.00 / **0.53** | 0.74 | 0.90 / 0.95 | **0.29** | 0.52 / 0.58 |
+| Gemini reads | 39/60 | 0.77 / 0.86 | 0.84 | 0.97 / 0.71 | 0.70 | 0.90 / 0.97 | 0.62 | 0.87 / 0.92 |
+| Hebrew, Arabic | 22/30 | 0.86 / 0.86 | 0.73 | 1.00 / 0.79 | 0.90 | 0.95 / 0.91 | 0.82 | 0.86 / 0.90 |
+
+**S is today's Opus judge with the strict rule, and it accepts a strict subset of what Opus accepted.** S passes 92 pages, every one of which stored Opus also passed (158). The 66 it removes are where Opus's recall goes from 0.61 to 0.93: Opus saw those slips and forgave them, as #7918's qualitative section found.
+
+**3. C as a fixer** (175 real pages where C changed a counted word, 1,514 of C's spots adjudicated).
+- **Fixed:** 622 spots where the page prints C's reading and the difference matters. A further 350 match the page but the adjudicator says they do not matter.
+- **Made worse:** 262 spots where the page prints the stored reading (an upper bound; see deviation 4). In 87 of them R proposed the same wrong reading, which is the shape of a shared Flash misreading.
+- Other or unclear: 222 and 57.
+- **Net: +360 spots.** By page: 66 better, 42 worse, 44 mixed, 23 no change that matters.
+
+| stratum | fixed | made worse |
+|---|---|---|
+| Tibetan GPU | **310** | 47 |
+| Gemini reads | 112 | 43 |
+| Chinese GPU, GPU>GEM | 146 | 123 |
+| Hebrew, Arabic | 45 | 30 |
+| Latin, Italian GPU>GEM | **9** | **19** |
+
+- C found 3 leaves whose stored text is another text (`CONTAIN`): the Ruth chapter 1 substitution #7918 described, a medal legend, and a Hebrew fragment from elsewhere.
+- Correcting a page that agy Flash-low has already corrected (Latin GPU>GEM) does more harm than good.
+
+**4. Cost per page** (from tokens; the method is #7918's).
+
+| arm | tokens in / out (thinking) | ratio to the Flash-low judge | $ per call | $ per page | 237K pages |
+|---|---|---|---|---|---|
+| C | 27,819 / 2,314 (1,537) | 2.28 | $0.00125 | **$0.00126** | $298 |
+| R | 24,867 / 3,390 (2,658) | 2.42 | $0.00133 | $0.00146 | $346 |
+| S | (Opus list $0.072 vs the judge's $0.068) | 1.06 × Opus | $0.00233 | **$0.00233** | **$552** |
+| CS | | | | $0.00278 (S on the 65% C flags) | $659 |
+| stored Opus | | | | $0.0022 | $520 |
+| Flash-medium | | | | $0.00248 | $588 |
+
+C costs about 2.3 Flash-low judge calls, because the stored text rides in the prompt and is written back out.
+
+**5. Decision, by the preregistered rule.**
+
+| arm | plants ≥ 141/144 share | recall ≥ 0.85 | precision ≥ 0.70 | $ / page | passes |
+|---|---|---|---|---|---|
+| C | 58/60 ✗ (needs 59) | 0.77 ✗ | 0.81 ✓ | $0.00126 | no |
+| R | 130/140 ✗ | 1.00 ✓ | 0.71 ✓ (base rate 0.67) | $0.00146 | no |
+| **S** | **60/60 ✓** | **0.93 ✓** | **0.95 ✓** | **$0.00233** | **yes** |
+| CS | C ✗ | 0.72 ✗ | 0.94 ✓ | $0.00278 | no |
+
+**Recommended: S, the only arm that passes.**
+- The closest cheaper arm is **C**. It misses the plant bar by one item and has real-page recall of 0.77, with 0.62 on Latin and Italian GPU>GEM.
+- C's score is a good ranking on Tibetan GPU (AUC 0.93), but weak where Flash itself reads poorly.
+- R is not a detector at this bar: it flags 91% of pages (242/267), and its κ against the label is 0.27.
+
+### Limits
+
+- **The referee is Opus, and it saw S's review** (and stored Opus's and Flash-medium's) beside C's and R's spots. S's numbers therefore share a judge with the label. Stored Opus was also a review, yet the adjudicator overruled it on 71 of its passes, so it does not simply side with the Opus reviews. A non-Opus or by-eye check of a sample of S's 66 extra rejections is the next step before the book-page wording changes.
+- The sample is weighted toward hard cells (67% of pages fail), so none of these rates is a library rate.
+- The Tibetan κ values are meaningless: 42 of 45 pages fail.
+- Plants are Latin, German and French print only.
+
+### Recommendation for judging every book (#7896)
+
+- **Run S:** the same `claude -p --model opus` call with the strict accept line (`detect.mjs` `STRICT_ACCEPT`). About 237K judgements, about **$552**, against $520 for the lenient rule. On these pages it finds 0.93 of the errors that matter, where the lenient rule finds 0.61.
+- **Expect many more pages to fail:** 92/270 pass here, against 158. The "checked, no serious errors" line on the book page then means something closer to what it says, and fewer pages will carry it. That is public copy, so it is Derek's call.
+- **Do not use C or R as the detector.** A C correction lane is worth a separate test on Tibetan GPU and on Gemini reads, where it fixed 310 and 112 spots against 47 and 43. It is not worth one on pages agy has already corrected.
+
+**Artifacts** in `scripts/eval/judge-compare-7611/results/2026-11-02/`:
+- `out-{C,R,S}.jsonl.gz`: C's corrected texts, R's reads, S's verdicts, with tokens;
+- `diffs.json.gz`: the counted hunks per item and arm;
+- `adjudications-new.jsonl.gz`: 248 pages, with spots and answers;
+- `score.json`, `setup.json` (prompt hashes), and `runs.json` (quota readings).
+
+Runner: `detect.mjs` (`setup`, `call`, `diff`, `plan`, `adjudicate`, `score`).

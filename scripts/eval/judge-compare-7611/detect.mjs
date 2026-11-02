@@ -360,6 +360,8 @@ function adjudicationPlan() {
   const plan = [];
   for (const x of F.real) {
     const d = D[x.id], l = L(x.id), s = S.get(x.id)?.verdict;
+    // A page is planned once all three arms have answered (rounds can run while the arms finish); --final takes the rest.
+    if (!process.argv.includes('--final') && (!d.C || d.C.missing || d.R.missing || !s)) continue;
     const fC = d.C && !d.C.missing ? (d.C.kind === 'contain' || d.C.hunks.length > 0) : null, fR = d.R && !d.R.missing ? d.R.hunks.length > 0 : null, fS = s ? !s.accept : null;
     const disagree = [fC, fR, fS].some((f) => f != null && f !== !l.accept);
     const cChanged = !!(d.C && !d.C.missing && d.C.hunks.length);
@@ -498,7 +500,7 @@ function score() {
   };
   out.plants = { C: planted('C', F.sub), R: planted('R', F.planted), R_on_C_subset: planted('R', F.sub), S: planted('S', [...F.sub, ...F.clean]) };
   // C's fix accounting from the new adjudications' spots.
-  { const tally = { spots_with_c: 0, fixed: 0, introduced: 0, fixed_trivial: 0, introduced_trivial: 0, other: 0, unclear: 0, missing: 0, cut_spots: 0 }; const per = {}; const pages = { better: 0, worse: 0, mixed: 0, same: 0 };
+  { const tally = { spots_with_c: 0, fixed: 0, introduced: 0, fixed_trivial: 0, introduced_r_agreed: 0, other: 0, unclear: 0, missing: 0, cut_spots: 0 }; const per = {}; const pages = { better: 0, worse: 0, mixed: 0, same: 0 };
     for (const r of real) {
       const a = NEW.get(r.id); if (!a || !D[r.id]?.C?.hunks?.length) continue;
       const ans = new Map((a.adj.spots || []).map((s) => [Number(s.n), s]));
@@ -509,7 +511,9 @@ function score() {
         tally.spots_with_c++;
         const v = ans.get(s.n); if (!v) { tally.missing++; continue; }
         if (v.page_prints === c.letter) { if (v.matters) { tally.fixed++; P2.fixed++; f++; } else tally.fixed_trivial++; }
-        else if (v.page_prints === 'candidate') { if (v.matters) { tally.introduced++; P2.introduced++; i++; } else tally.introduced_trivial++; }
+        // The adjudicator's `matters` is about candidate vs page, so it is false wherever the page prints the candidate:
+        // a C change there is counted as introduced (counted hunks are already non-convention), split by whether R agreed.
+        else if (v.page_prints === 'candidate') { tally.introduced++; P2.introduced++; i++; if (s.alts.some((x) => x.arms.includes('C') && x.arms.includes('R'))) tally.introduced_r_agreed++; }
         else if (v.page_prints === 'unclear') tally.unclear++; else tally.other++;
       }
       pages[f && i ? 'mixed' : f ? 'better' : i ? 'worse' : 'same']++;
@@ -547,7 +551,7 @@ function score() {
 }
 
 const STAGES = { setup, call, diff, adjudicate, score, plan: () => { const { plan } = adjudicationPlan(); console.log(JSON.stringify({ pages: plan.length, disagree: plan.filter((p) => p.why.disagree).length, c_changed: plan.filter((p) => p.why.cChanged).length, spots: plan.reduce((s, p) => s + p.spots.length, 0), cut: plan.reduce((s, p) => s + p.cut, 0) })); } };
-export { STAGES, frame, readJsonl, P, J, W, h, OUT };
+export { STAGES, frame, readJsonl, P, J, W, h, OUT, adjudicationPlan };
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
   const s = STAGES[process.argv[2]];
   if (!s) { console.error(`stages: ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
