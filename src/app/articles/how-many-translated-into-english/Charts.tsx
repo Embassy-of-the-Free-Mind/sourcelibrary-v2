@@ -53,27 +53,32 @@ function RangeBars({ title, rows, max, labelWidth = 120, showOurs }: {
 }
 
 // Works first printed 1400-1700 that have ever been published in English.
+// Latin: validated work-level counts (translation-gap-paper.md §5.10, all print,
+// sonnet/strict/paper readings). Others: works composed in the language with an
+// English translation, raw share to share / 0.62 (search sensitivity).
+// Latin range is the paper reading's 95% interval (central 20,176).
 const BY_LANGUAGE: Range[] = [
-  { label: 'Latin', low: 21400, high: 46000, ours: 5234, note: 'of 306,352 works' },
-  { label: 'French', low: 1600, high: 10800, ours: 204, note: 'of 124,168 works' },
-  { label: 'Dutch', low: 500, high: 5700, ours: 221, note: 'of 74,378 works' },
-  { label: 'Spanish', low: 1000, high: 4500, ours: 29, note: 'of 59,582 works' },
-  { label: 'Italian', low: 1200, high: 3400, ours: 193, note: 'of 68,819 works' },
-  { label: 'German', low: 700, high: 2900, ours: 652, note: 'of 221,931 works' },
+  { label: 'Latin', low: 15600, high: 25400, ours: 5234, note: 'of 266,593 works' },
+  { label: 'French', low: 1700, high: 2700, ours: 204, note: 'of 124,168 works' },
+  { label: 'Italian', low: 1200, high: 1900, ours: 193, note: 'of 68,819 works' },
+  { label: 'Spanish', low: 1000, high: 1600, ours: 29, note: 'of 59,582 works' },
+  { label: 'German', low: 700, high: 1200, ours: 652, note: 'of 221,931 works' },
+  { label: 'Dutch', low: 500, high: 800, ours: 221, note: 'of 74,378 works' },
 ];
 
 export function ByLanguageChart() {
   return (
     <div className="my-8">
-      <RangeBars title="Works printed 1400 to 1700 that have ever been published in English" rows={BY_LANGUAGE} max={50000} showOurs />
+      <RangeBars title="Works printed 1400 to 1700 that have ever been published in English" rows={BY_LANGUAGE} max={30000} showOurs />
       <div className="flex flex-wrap gap-x-6 gap-y-1 font-body text-sm text-stone-600 mt-2">
         <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 rounded-sm" style={{ background: ELSEWHERE }} />estimated range, translated anywhere</span>
         <span className="inline-flex items-center gap-2"><i className="inline-block w-[3px] h-3.5 rounded-sm" style={{ background: SL }} />readable in English on Source Library</span>
       </div>
       <p className="font-body text-sm text-stone-500 mt-3">
-        Share of a random sample that has an English translation, times the number of works in the
-        Universal Short Title Catalogue grouped into works. Latin: 1,000 works searched (2026).
-        Other languages: about 300 works each (October 2026), so their ranges are wide.
+        Latin: from 1,000 works searched one by one, counted in works (2026). Other languages: about
+        300 works searched each (October 2026), counting only works first written in that language;
+        the range runs from what the search found to that figure corrected for the translations it
+        is known to miss.
       </p>
     </div>
   );
@@ -83,15 +88,15 @@ export function ByLanguageChart() {
 const INSTRUMENTS: Range[] = [
   { label: 'In the catalogues', low: 576, high: 576, note: 'works with an English record in LoC, Open Library or Wikidata' },
   { label: 'Catalogues, recounted', low: 790, high: 1890, note: 'capture–recapture across the three lists' },
-  { label: 'Random sample', low: 21400, high: 46000, note: 'works searched one by one' },
+  { label: 'Searched sample', low: 15600, high: 25400, note: 'works searched one by one' },
 ];
 
 export function InstrumentsChart() {
   return (
     <div className="my-8">
-      <RangeBars title="Latin works printed 1400 to 1700 in English: three ways of counting" rows={INSTRUMENTS} max={50000} labelWidth={136} />
+      <RangeBars title="Latin works printed 1400 to 1700 in English: three ways of counting" rows={INSTRUMENTS} max={30000} labelWidth={136} />
       <p className="font-body text-sm text-stone-500 mt-3">
-        The catalogue lists and the sample count the same 306,352 works. The lists can only find
+        The catalogue lists and the sample count the same Latin works. The lists can only find
         what libraries have recorded as a translation from Latin, and the three of them miss the
         same things, so even the recount stays small.
       </p>

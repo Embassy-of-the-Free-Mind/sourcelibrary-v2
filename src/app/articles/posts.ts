@@ -1116,7 +1116,7 @@ export const posts: BlogPost[] = [
     title: 'How Many Old Books Have Been Translated into English?',
     subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
     summary:
-      'Of some 855,000 works printed in Europe before 1700, 26,000 to 73,000 have ever been put into English. Three estimates, and why catalogues see so few.',
+      'Of some 815,000 works printed in Europe before 1700, about 21,000 to 34,000 have ever been put into English. Three estimates, and why catalogues miss most.',
     date: '2 November 2026',
     readTime: '9 min read',
     kind: 'research',

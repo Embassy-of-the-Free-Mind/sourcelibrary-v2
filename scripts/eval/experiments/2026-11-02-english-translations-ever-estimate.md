@@ -6,55 +6,67 @@ scripts: [Latn]
 canons: []
 n_books: 2500
 n_pages: null
-verdict: "Of about 855,000 works first printed in Europe 1400–1700 in six languages (USTC, grouped into works), roughly 26,000 to 73,000 have ever been published in English (3–9%), from the sampled shares already measured (Latin n=1000, #2684; five vernaculars n=300 each, 2026-10-30) times the work counts. Latin is 21,400–46,000 of it. A capture–recapture estimate from the three catalogue lists (LoC 041$h, Open Library, Wikidata) on the Latin works they land on gives only about 800 to 1,900: the lists share one blind spot, so they estimate the catalogue-visible part, about 2–9% of the sampled figure. The Renaissance Cultural Crossroads catalogue (6,482 entries in 2020, translations printed in Britain 1473–1640, editions) is a floor and is consistent. Source Library has 6,533 of these works readable in English. 2026-11-02."
+verdict: "Of about 815,000 works first printed in Europe 1400–1700 in six languages (USTC, grouped into works), roughly 20,700 to 33,600 have ever been published in English (2.5–4%). Latin is 15,600–25,400 (the validated work-level count, translation-gap-paper.md §5.10, paper reading, 95% interval); the five vernaculars add 5,100–8,200, counting only works composed in the language (17 sampled positives). A capture–recapture estimate from the LoC, Open Library and Wikidata lists on Latin gives about 800–1,900: the lists share one blind spot, so it measures what they can see, about a tenth. Renaissance Cultural Crossroads ('over four thousand translations' printed in Britain 1473–1640) is a floor, cleared. Source Library has 6,533 of these works readable in English, a fifth to a third of the English record. A first draft (26,000–73,000) was wrong; see Corrections. 2026-11-02."
 status: informational
 decision: "Published as /articles/how-many-translated-into-english. No write to any store. The catalogue-only figure must never be quoted as the size of the English record."
 superseded_by: null
-issue: [7751, 7769, 2684]
+issue: [7954, 7751, 7769, 2684]
 ---
-## 2026-11-02 · How many early printed works have ever been translated into English? Three estimates (#7751)
-<!-- PRIOR ART: 2026-10-30-translation-share-by-language.md (the vernacular shares used here), .claude/docs/translation-gap-methodology.md (the Latin n=1000 study), the #7769 landing table (per-source counts on earthai-l7a, /data/scratch/sl/jobs/translation-staging-7769-mv/landing-table.txt). Nothing new was sampled or searched; this note combines measured figures and adds the capture–recapture step. -->
+## 2026-11-02 · How many early printed works have ever been translated into English? Three estimates (#7954)
+<!-- PRIOR ART: translation-gap-paper.md §5.7–5.10 (Latin work-level counts, catalogue capture); 2026-10-30-translation-share-by-language.md (the vernacular samples and origin tags); the #7769 landing table (earthai-l7a, /data/scratch/sl/jobs/translation-staging-7769-mv/landing-table.txt). Nothing new was sampled or searched; this note combines measured figures and adds the capture–recapture step. -->
 
-**Question.** Nobody has counted how many of the works printed before 1700 have ever been put into English. Derek asked whether it can be estimated. Three instruments, each with a different bias, were combined. No model calls and no writes.
+**Question.** Nobody has counted how many of the works printed before 1700 have ever been put into English. Three instruments with different biases. No model calls and no writes.
 
 ### 1. Sampled share × number of works
 
-Frames: phase-11 USTC works (K=6, PR #7774). Shares: Latin from the June n=1000 study (93% of Renaissance-composed works have no English; 85% of all works printed in the period have none, because the frame includes ancient and medieval texts reprinted then). Vernaculars from the 2026-10-30 study, n≈300 each: low = works composed in the language with an English translation (N column); high = any English edition, the larger of the raw share and the Rogan–Gladen corrected share.
+**Latin** is taken whole from `translation-gap-paper.md` §5.10: translated works, all print 1400–1700, extrapolated from the 1480–1620 sample, corrected for title-group splitting: **20,176 [15,636–25,374]** (paper reading) of 266,593 works. Renaissance-composed only: 9,348 (paper), 6,988 (strict), 5,725 (sonnet). These are upper bounds (the split count k is a floor).
 
-| Language | Works | Share low–high | Works in English |
-|---|---|---|---|
-| Latin | 306,352 | 7–15% | 21,400–46,000 |
-| French | 124,168 | 1.3–8.7% | 1,600–10,800 |
-| Dutch | 74,378 | 0.7–7.6% | 500–5,700 |
-| Spanish | 59,582 | 1.7–7.6% | 1,000–4,500 |
-| Italian | 68,819 | 1.7–4.9% | 1,200–3,400 |
-| German | 221,931 | 0.3–1.3% | 700–2,900 |
-| **Total** | **855,230** | | **26,400–73,200** |
+**Vernaculars** (2026-10-30 samples, n≈300 each, phase-11 frames). Only works **composed in the language** with an English translation count (origin tag N):
+- E (the edition is a translation *from* English) is not a translation into English.
+- V (the edition is itself a translation of a third-language work) is counted under that language already, if it is one of the six.
+Low = N share as found; high = N share / 0.62, the measured sensitivity of the search (it found 8 of 13 confirmed translations). False positives among N are taken as ~0, since every positive was origin-tagged by reading its evidence.
+
+| Language | Works | N / n | Low | High |
+|---|---|---|---|---|
+| Latin | 266,593 | (paper §5.10) | 15,600 | 25,400 |
+| French | 124,168 | 4 / 299 | 1,700 | 2,700 |
+| Italian | 68,819 | 5 / 295 | 1,200 | 1,900 |
+| Spanish | 59,582 | 5 / 299 | 1,000 | 1,600 |
+| German | 221,931 | 1 / 299 | 700 | 1,200 |
+| Dutch | 74,378 | 2 / 299 | 500 | 800 |
+| **Total** | **815,471** | | **20,700** | **33,600** |
 
 Caveats:
-- The vernacular frames count each newspaper issue as a work (German 69,646 issues; fixed later in #7814). Newspapers are almost never translated, so the share falls and the work count rises by about the same factor; the product barely moves (German excluding newspapers: 2.0% of ~152,000 ≈ 3,000).
-- The vernacular intervals rest on about 13 confirmed positives in the 60-work double-read subsets. They are wide and the point estimates are not stable.
-- Searches were run by AI agents; no human panel yet. Search misses push the figure down; the Latin study's false positives were few.
+- The vernacular figures rest on 17 positives; the Wilson intervals on each are wide (German 1/299: 0.06–1.9%).
+- The vernacular frames count each newspaper issue as a work (German 69,646; Dutch 20,958; French 17,599; fixed later in #7814). That inflates the denominator, not the product.
+- The vernacular frames use phase-11 grouping, which splits famous works more than the paper's corrected count; their translated counts lean high in the same way.
 
 ### 2. Capture–recapture on the catalogue lists (Latin)
 
-The three staged lists of English translations, landed on Latin USTC works (#7769 landing table): LoC 498 works, Open Library 104, Wikidata 53; union 576; works in one list only: 419, 57, 18. Assuming no work is in all three (the counts give −3 for the triple, i.e. about zero), the pairwise overlaps are LoC∩OL ≈ 45, LoC∩WD ≈ 33, OL∩WD ≈ 2.
+The three staged lists, landed on Latin works (#7769 landing table): LoC 498 works, Open Library 104, Wikidata 53; union 576; in one list only: 419, 57, 18. Solving for pairwise overlaps with no triple (the counts give −3 for it): LoC∩OL ≈ 45, LoC∩WD ≈ 33, OL∩WD ≈ 2.
 
-Chapman estimator N = (n1+1)(n2+1)/(m+1) − 1:
-- LoC × Open Library: 499 × 105 / 46 − 1 ≈ **1,140**
-- LoC × Wikidata: 499 × 54 / 34 − 1 ≈ **790**
-- Open Library × Wikidata: 105 × 54 / 3 − 1 ≈ **1,890** (two shared works; unstable)
+Chapman N = (n1+1)(n2+1)/(m+1) − 1: LoC×OL ≈ 1,140; LoC×WD ≈ 790; OL×WD ≈ 1,890 (two shared works, unstable).
 
-Random landing failure does not bias this (it scales both counts and the overlap together). Dependence does: all three lists are modern library records and favour the same famous works and the same recent translations, so the overlap is too large and N too small. The method estimates the population the catalogues are able to see, about 800–1,900 Latin works, against 21,400–46,000 from sampling. Consistent with the two direct checks of catalogue recall: Latin catalogues find English for 1.4% of works against a sampled 7–15%; in the vernacular study, 0 of 72 confirmed translations were in the catalogues.
+Random landing failure does not bias this (it scales both counts and the overlap). Dependence does: the three are modern library records with the same bias to famous works and recent translations, so N is too small. It estimates what these lists can see: about 800–1,900 of 15,600–25,400, a tenth or less. The paper's direct measure for the larger assembled catalogue (Index Translationum, LoC, Open Library, HathiTrust, series) is one in four to one in ten (§5.9, quotable figure 3). The vernacular samples' 0 of 72 was against that assembled catalogue, not these three lists.
 
 ### 3. An outside count
 
-Renaissance Cultural Crossroads (Warwick, Barker and Hosington): translations printed in England, Scotland and Ireland, and English translations printed abroad, 1473–1640. "Over four thousand translations" (project page); 6,482 entries in 2020 (review in *Renaissance et Réforme* 43.3, 2020). Entries are editions and include translations into Latin and other languages. Even counted whole it is a tenth of the low estimate, which is expected: it stops in 1640 and counts only what was printed in Britain then, while estimate 1 counts translations made at any date up to now. It is a floor, and the estimate clears it.
+Renaissance Cultural Crossroads (Warwick, Hosington): translations printed in England, Scotland and Ireland, and English translations printed abroad, 1473–1640: "over four thousand translations, involving almost thirty languages" (project page, checked 2026-11-02). Editions, including translations into Latin and other languages, and source languages beyond our six. A floor, cleared. A figure of 6,482 entries (2020) appeared in a search summary of a review, but the review could not be opened, so it is not used.
 
 ### Source Library
 
-Within these six frames, Source Library has 6,533 works readable in English (Latin 5,234, German 652, Dutch 221, French 204, Italian 193, Spanish 29; phase-11 reports, `readable.sl`). That is the same order as a tenth to a quarter of the estimated English record for this period, although some of them had been translated before.
+Within these frames, 6,533 works readable in English (Latin 5,234, German 652, Dutch 221, French 204, Italian 193, Spanish 29; phase-11 `readable.sl`). Against 20,700–33,600: a fifth to a third. The paper's §5.8(c) gives 25.9–36.6% for Latin in work units.
+
+### Spot check (2026-11-02)
+
+Six positive verdicts drawn at random from the vernacular final verdicts (seed 1102): 3 were English originals (James II's *Reasons for withdrawing from Rochester* in Spanish; a French *London Gazette* issue; Fuller's *Brief Discovery* in Dutch), 2 were translations of a third-language work whose English exists (La Puente's *Life of Balthasar Alvarez*, London 1868, checked on archive.org; Piatti's *Happines of a Religious State*, Rouen 1632, STC 20001, checked in library catalogues), and 1 was unsure. None was N. The sources were real; the use of "any English" in the first draft was the error.
+
+### Corrections
+
+The first draft of this note and of the article (PR #7956, before review) said 26,000–73,000. Two errors:
+1. Latin used the cluster-level rates (7% / 15%) times the phase-11 work count. The paper's work-level count is about 2.5× lower on the translated side, because famous works are split across more title groups.
+2. The vernacular high end used "any English edition", which includes English originals (E) and double-counts translations of works in another of the six languages (V). The spot check above found 5 of 5 positives were E or V.
 
 ### Reproduce
 
-Landing table and reports: earthai-l7a `/data/scratch/sl/jobs/translation-staging-7769-mv/`. Shares: the two prior experiment files. Arithmetic: this file.
+Landing table and reports: earthai-l7a `/data/scratch/sl/jobs/translation-staging-7769-mv/`. Vernacular verdicts: `/data/scratch/sl/jobs/translation-share-7751/artifacts/translation-share/`. Latin counts: `translation-gap-paper.md` §5.10. Arithmetic: this file.

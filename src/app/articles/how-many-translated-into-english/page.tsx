@@ -10,7 +10,7 @@ const HERO_ALT =
   'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), in a printed border: translated formerly out of the Arabick into Greek, thence into Latine and Dutch, and now into English by Doctor Everard.';
 const TITLE = 'How Many Old Books Have Been Translated into English?';
 const DESCRIPTION =
-  'Of some 855,000 works printed in Europe before 1700, between 26,000 and 73,000 have ever been put into English. Three ways of counting, and why the catalogues see so little.';
+  'Of some 815,000 works printed in Europe before 1700, about 21,000 to 34,000 have ever been put into English. Three ways of counting, and why the catalogues see so little.';
 
 export const metadata: Metadata = withArticleMeta('how-many-translated-into-english', {
   title: `${TITLE} - Articles - Source Library`,
@@ -59,11 +59,11 @@ export default function HowManyTranslatedPage() {
     >
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Of the roughly 855,000 works printed in Latin, German, French, Italian, Spanish and Dutch
-          before 1700, somewhere between 26,000 and 73,000 have ever been published in English. That
-          is between three and nine in every hundred. The figure has never been counted directly,
-          because there is no list to count. This is how we estimated it, and why the obvious method
-          gives an answer ten to fifty times too small.
+          Of the roughly 815,000 works printed in Latin, German, French, Italian, Spanish and Dutch
+          before 1700, somewhere around 21,000 to 34,000 have ever been published in English: two to
+          four in every hundred. The figure has never been counted directly, because there is no
+          list to count. This is how we estimated it, and why the obvious method gives an answer
+          about ten times too small.
         </p>
         <p className={P}>
           In 1650 John Everard&apos;s{' '}
@@ -81,9 +81,8 @@ export default function HowManyTranslatedPage() {
           <p className={P}>
             There is a good census of what was printed. The Universal Short Title Catalogue at St
             Andrews lists more than 1.65 million surviving editions printed in Europe before 1700.
-            Grouping the editions of the same text gives works: our grouping of the six largest
-            languages comes to about 855,000 works, 306,000 of them in Latin. The method and its
-            limits are in{' '}
+            Grouping the editions of the same text gives works: about 267,000 in Latin and 550,000 in
+            the five largest vernaculars. The method and its limits are in{' '}
             <Link href="/articles/how-much-in-english">How Much of the Written Past Can You Read in English?</Link>
           </p>
           <p className={P}>
@@ -100,41 +99,46 @@ export default function HowManyTranslatedPage() {
         <section className="mb-16">
           <h2 className={H2}>Counting by sample</h2>
           <p className={P}>
-            Searching all 855,000 works would take years. Searching a random sample takes days, and
-            the share found in the sample, multiplied by the number of works, gives the total. We
-            drew 1,000 Latin works at random in June 2026 and about 300 works in each of five other
+            Searching every work would take years. Searching a random sample takes days, and the
+            share found in the sample, multiplied by the number of works, gives the total. We drew
+            1,000 Latin works at random in June 2026 and about 300 works in each of five other
             languages in October. An AI search agent looked for any published English translation of
-            each, and recorded the translator, the publisher, the year and a line of evidence. For
-            sixty works in each of the five languages a second model searched blind, and a third
-            settled the disagreements by opening the sources.
+            each, and recorded the translator, the publisher, the year and a line of evidence. A
+            second model checked a share of them blind, and a third settled the disagreements by
+            opening the sources.
           </p>
           <ByLanguageChart />
           <Table
-            head={['Language', 'Works printed 1400–1700', 'Share ever in English', 'Works ever in English']}
+            head={['Language', 'Works printed 1400–1700', 'Ever in English']}
             rows={[
-              ['Latin', '306,352', '7% to 15%', '21,400 to 46,000'],
-              ['French', '124,168', '1.3% to 8.7%', '1,600 to 10,800'],
-              ['Dutch', '74,378', '0.7% to 7.6%', '500 to 5,700'],
-              ['Spanish', '59,582', '1.7% to 7.6%', '1,000 to 4,500'],
-              ['Italian', '68,819', '1.7% to 4.9%', '1,200 to 3,400'],
-              ['German', '221,931', '0.3% to 1.3%', '700 to 2,900'],
-              ['All six', '855,230', '3% to 9%', '26,400 to 73,200'],
+              ['Latin', '266,593', '15,600 to 25,400'],
+              ['French', '124,168', '1,700 to 2,700'],
+              ['Italian', '68,819', '1,200 to 1,900'],
+              ['Spanish', '59,582', '1,000 to 1,600'],
+              ['German', '221,931', '700 to 1,200'],
+              ['Dutch', '74,378', '500 to 800'],
+              ['All six', 'about 815,000', 'about 20,700 to 33,600'],
             ]}
           />
           <p className={P}>
-            The ranges are wide for two different reasons. For Latin the question is which works
-            count. Of Latin works composed in the Renaissance, 7% have an English translation. Of all
-            Latin works printed in the period, 15% do, because the printers also reissued Cicero,
-            Augustine and Aquinas, and those were translated long ago.
+            Latin carries most of the total. Part of the reason is that the presses also reprinted
+            ancient and medieval authors, and many of those have long been in English. Counting only
+            Latin works written in the Renaissance, the figure is 5,700 to 9,300, under one in
+            twenty-five. The Latin
+            counts are in works, not editions or title groups. A famous text was printed under many
+            title wordings, and counting each wording as a separate work would inflate the
+            translated side about two and a half times, because the famous texts are the translated
+            ones.
           </p>
           <p className={P}>
-            For the other languages the samples are small: about a dozen confirmed translations
-            across the five double-checked subsets. The low end counts only works written in that
-            language and later put into English. The high end also counts editions that were
-            themselves translations, a French version of a Latin treatise or a Dutch printing of an
-            English sermon, and it corrects for the search agent missing about four translations in
-            ten. German is lowest: German printers produced vast numbers of sermons, disputations,
-            ordinances and newsletters, and almost none of them have reached English.
+            For the other languages two corrections matter. Many of the editions the searches found
+            in English were not translations into English at all: a French printing of the{' '}
+            <em>London Gazette</em>, a Dutch version of an English pamphlet, a Spanish rendering of
+            James II&apos;s reasons for leaving Rochester. Others were translations of a Latin or
+            Spanish book, whose English version is already counted under that language. Neither kind
+            is counted here; only works first written in the language are. That leaves few
+            confirmed cases, seventeen across the five samples, so the ranges are rough. The high end
+            allows for the search agent missing about four translations in ten.
           </p>
         </section>
 
@@ -157,22 +161,21 @@ export default function HowManyTranslatedPage() {
           </p>
           <InstrumentsChart />
           <p className={P}>
-            That is between a tenth and a fiftieth of what the sample finds. The method assumes the
-            lists are independent catches, and these are not. All three are modern library records,
-            and they favour the same famous works in the same recent translations. Lists that share
-            a blind spot overlap more than independent ones would, and the estimate comes out too
-            small. So capture and recapture here measures something narrower: how much of the
-            English record the catalogues are able to see. The direct checks agree. For Latin the
-            catalogues find English for 1.4% of works, against 7% to 15% in the sample. In the
-            October samples, none of the 72 English editions the searches found were in the
-            catalogue lists.
+            That is roughly a tenth of what the sample finds. The method assumes the lists are
+            independent catches, and these are not. All three are modern library records, and they
+            favour the same famous works in the same recent translations. Lists that share a blind
+            spot overlap more than independent ones would, and the estimate comes out too small. So
+            capture and recapture here measures something narrower: how much of the English record
+            these catalogues are able to see.
           </p>
           <p className={P}>
-            This is the main finding of the exercise. A count built from catalogues, however
-            carefully matched, sees only a few in every hundred of the translations that exist. Any statement
-            that a book &ldquo;has never been translated&rdquo; resting on catalogue searches alone is
-            weak evidence, which is why each Source Library book is searched individually before it
-            is marked as a first translation.
+            The sample confirms it directly. Of the Latin works it found translated, the much larger
+            catalogue of translations we assembled earlier, from the Index Translationum, the Library
+            of Congress, Open Library, HathiTrust and the scholarly series, lists between one in four
+            and one in ten. In the October samples for the other languages, it listed none of the
+            translations the searches found. A statement that a book &ldquo;has never been
+            translated&rdquo; resting on catalogue searches alone is weak evidence, which is why each
+            Source Library book is searched individually before it is marked as a first translation.
           </p>
         </section>
 
@@ -180,13 +183,12 @@ export default function HowManyTranslatedPage() {
           <h2 className={H2}>What one scholarly catalogue counted</h2>
           <p className={P}>
             Scholars have counted one corner by hand. The Renaissance Cultural Crossroads catalogue,
-            built at the University of Warwick by Brenda Hosington, Sara Barker and colleagues, lists
-            the translations printed in England, Scotland and Ireland from 1473 to 1640, and English
-            translations printed abroad. The project described &ldquo;over four thousand
-            translations&rdquo;; by 2020 it held 6,482 entries, according to a review in{' '}
-            <em>Renaissance et Réforme</em>. Philemon Holland&apos;s{' '}
+            built at the University of Warwick under Brenda Hosington, lists the translations printed
+            in England, Scotland and Ireland from 1473 to 1640, and English translations printed
+            abroad: &ldquo;over four thousand translations&rdquo;, in the project&apos;s words.
+            Philemon Holland&apos;s{' '}
             <Link href="/book/the-historie-of-the-world-commonly-called-the-naturall-trans?page=11">Pliny</Link>{' '}
-            of 1601 is one of them.
+            of 1601 is the kind of book it lists.
           </p>
           <div className="max-w-md mx-auto">
             <PageFigure
@@ -198,28 +200,27 @@ export default function HowManyTranslatedPage() {
             />
           </div>
           <p className={P}>
-            The catalogue counts editions, not works, and includes translations into Latin and other
-            languages printed in Britain. So it holds fewer than 6,482 works in English, perhaps
-            around 3,700 if reprints run at the rate they do in English printing generally. It covers
-            only 168 years and only books printed then, while our estimate counts translations made at
-            any date up to today. It should come out well below 26,000, and it does. It is a floor,
-            not a check on the upper end.
+            The catalogue counts editions, not works, and it includes translations into Latin and
+            other languages printed in Britain. It covers only 168 years and only books printed then,
+            and it reaches beyond our six languages to Greek and the classics. Our estimate counts
+            translations made at any date up to today. So the catalogue should come out well below
+            our figure, and it does. It shows the estimate is not too low; it cannot check the upper
+            end.
           </p>
         </section>
 
         <section className="mb-16">
           <h2 className={H2}>Where Source Library stands</h2>
           <p className={P}>
-            Within the same six languages and the same works, Source Library has 6,533 works readable
-            in English: 5,234 in Latin, 652 in German, 221 in Dutch, 204 in French, 193 in Italian and
-            29 in Spanish. Set against an English record of 26,000 to 73,000 works, that is the same
-            order as a tenth to a quarter of everything ever translated from early European print,
-            although some of ours had been translated before. Across the whole library, all periods
-            and languages, 11,357 books are marked as the first English translation of their work,
-            each after its own search.
+            Within the same six languages, Source Library has 6,533 works readable in English: 5,234
+            in Latin, 652 in German, 221 in Dutch, 204 in French, 193 in Italian and 29 in Spanish.
+            Set against an English record of about 21,000 to 34,000 works, that is a fifth to a
+            third as many as all earlier translators produced, though some of ours had been
+            translated before. Across the whole library, all periods and languages, 11,357 books are
+            marked as the first English translation of their work, each after its own search.
           </p>
           <p className={P}>
-            In German the two figures are closest. The sample suggests that 700 to 2,900 German works
+            In German the two figures are close. The sample suggests that 700 to 1,200 German works
             printed before 1700 had ever been published in English. Source Library has 652.
           </p>
         </section>
@@ -237,15 +238,16 @@ export default function HowManyTranslatedPage() {
           </p>
           <p className={P}>
             The searches were made by AI agents and have not yet been checked by a panel of human
-            readers. Where they disagreed with a second model, a third read the sources, and the
-            known error rate is built into the high end of each range. Missed translations push the
-            estimate down, so if it is wrong it is more likely too low than too high.
+            readers. Errors run both ways. A search that misses a translation pushes the count down;
+            the Latin work counts are upper bounds, because some editions of the same text were not
+            recognised as the same work. The Latin sample was drawn from books printed 1480 to 1620
+            and extended to 1400 to 1700.
           </p>
           <p className="font-body text-sm text-stone-500 leading-relaxed">
             Sources: Universal Short Title Catalogue (St Andrews), grouped into works by Source
-            Library (October 2026). Library of Congress MARC records (2016 snapshot), Open Library and
-            Wikidata, matched to those works. Renaissance Cultural Crossroads, University of Warwick;
-            review in <em>Renaissance et Réforme</em> 43.3 (2020). Samples, searches and arithmetic:{' '}
+            Library (2026). Library of Congress MARC records (2016 snapshot), Open Library and
+            Wikidata, matched to those works. Renaissance Cultural Crossroads, University of Warwick.
+            Samples, searches and arithmetic:{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/2026-11-02-english-translations-ever-estimate.md">the experiment note</a>.
           </p>
         </section>
