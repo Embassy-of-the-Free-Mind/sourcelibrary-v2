@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-02T09:37:41.122Z",
+ "generated_at": "2026-11-02T09:45:01.826Z",
  "source": {
   "lane": "confidence-7866",
   "run_id": "confidence-validation-7866",
@@ -106,31 +106,31 @@
  },
  "reread": {
   "says_what_the_page_says": {
-   "share": 0.58,
+   "share": 0.5808,
    "ci95": [
-    0.564,
-    0.596
+    0.5291,
+    0.6317
    ]
   },
   "misleads_somewhere": {
-   "share": 0.053,
+   "share": 0.0528,
    "ci95": [
-    0.0382,
-    0.0682
+    0.0373,
+    0.0699
    ]
   },
   "text_not_on_the_page": {
-   "share": 0.3669,
+   "share": 0.366,
    "ci95": [
-    0.3481,
-    0.3859
+    0.3178,
+    0.4166
    ]
   },
   "fit_to_quote": {
-   "share": 0.4766,
+   "share": 0.4773,
    "ci95": [
-    0.4643,
-    0.49
+    0.4261,
+    0.5281
    ]
   },
   "note": {

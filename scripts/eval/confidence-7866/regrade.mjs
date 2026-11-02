@@ -192,12 +192,17 @@ const CUM = Object.fromEntries(Object.entries(REREAD).map(([tag, row]) => {
 
 function rereadShares(books, seed, B = 4000) {
   const rng = mulberry32(seed);
-  const Wtot = books.reduce((a, b) => a + b.weight * b.pages.length, 0);
   const keys = [...BUCKETS, 'fit_to_quote'];
   const draws = Object.fromEntries(keys.map((k) => [k, []]));
+  const groups = STRATA.map((s) => books.filter((b) => b.stratum === s)).filter((g) => g.length);
   for (let i = 0; i < B; i++) {
+    // Resample books within strata AND resample every tag: the interval has to carry the sampling
+    // error as well as the tag error, or the corrected figure reads as the more precise one.
+    const samp = [];
+    for (const g of groups) for (let j = 0; j < g.length; j++) samp.push(g[Math.floor(rng() * g.length)]);
+    const Wtot = samp.reduce((a, b) => a + b.weight * b.pages.length, 0);
     const num = Object.fromEntries(keys.map((k) => [k, 0]));
-    for (const b of books) for (const p of b.pages) {
+    for (const b of samp) for (const p of b.pages) {
       let wt = 0, mis = 0, cos = p.cosmetic;
       for (const d of p.defects) {
         if (d.s === 'cosmetic') continue;

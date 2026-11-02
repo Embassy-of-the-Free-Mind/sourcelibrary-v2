@@ -6,7 +6,7 @@ scripts: [Latn, Hani, Tibt, Grek, Cyrl, Deva, Arab, Hang]
 canons: []
 n_books: 160
 n_pages: 800
-verdict: "#7866's 800 verdicts re-graded on the rubric's own four grades instead of its 2-of-5 pass/fail. Design-weighted, 43% of pages are fit to quote (38-51% CI), 8% fit to read, 24% carry a reading that changes the sense, 18% a span the page does not carry, 2.2% a span from somewhere else, 3.6% are substantially wrong and 1.5% are not this page at all. So half the pages say what the page says, a quarter mislead on a word, a quarter carry something the page does not have, and 1 in 60 is another page. Resampling every misleads/wrong_text tag from #6740's blind re-read matrix moves 'says what the page says' to 58% (56-60). By language: English 83% clean (0.9 severe defects per 1k words), Russian 93%, Tibetan 62%, Chinese 52%, German 51%, Latin 41%, Greek 20% (19.3 per 1k), Sanskrit and Korean 0% of 15 pages each. By reading method: LightOnOCR 10/10, Esukhia e-text 80%, IA djvu 65%, Paddle 55%, 3 Flash 48%, Flash-Lite 41%. 1,227 of 2,747 defects are one class, O6 (a word read as another word that exists); invention (O1+O4) is 97, concentrated in Greek, Korean and Sanskrit."
+verdict: "#7866's 800 verdicts re-graded on the rubric's own four grades instead of its 2-of-5 pass/fail. Design-weighted, 43% of pages are fit to quote (38-48% CI), 8% fit to read, 24% carry a reading that changes the sense, 18% a span the page does not carry, 2.2% a span from somewhere else, 3.6% are substantially wrong and 1.5% are not this page at all. So half the pages say what the page says, a quarter mislead on a word, a quarter carry something the page does not have, and 1 in 60 is another page. Resampling every misleads/wrong_text tag from #6740's blind re-read matrix moves 'says what the page says' to 58% (53-63). By language: English 83% clean (0.9 severe defects per 1k words), Russian 93%, Tibetan 62%, Chinese 52%, German 51%, Latin 41%, Greek 20% (19.3 per 1k), Sanskrit and Korean 0% of 15 pages each. By reading method: LightOnOCR 10/10, Esukhia e-text 80%, IA djvu 65%, Paddle 55%, 3 Flash 48%, Flash-Lite 41%. 1,227 of 2,747 defects are one class, O6 (a word read as another word that exists); invention (O1+O4) is 97, concentrated in Greek, Korean and Sanskrit."
 status: informational
 decision: "/quality now leads with the distribution and reconciles the old 57% in prose; the rubric doc and content.ts no longer say section 5 has never been run. No routing change, no rules.json entry, no re-read, no model call: a re-score of stored verdicts."
 superseded_by: null
@@ -59,14 +59,16 @@ By book (weighted): 13.9% are clean on all five pages, 28.1% have only misleadin
 
 ### 3. The judge errs in both directions, and both are quantified
 
-- **Over-flagging.** #6740 (`2026-10-30-defect-rate-router-6740.md` §"Calibration (steer 1 A)") re-read 80 of this judge's own tags blind, each by a fresh Opus call seeing only the quoted span and the page image: of 40 `wrong_text` tags, 28 held as wrong text, 4 as misleads, 3 cosmetic, 5 were the page; of 40 `misleads`, **17 were re-read as wrong text**, 8 held, 5 cosmetic, 10 were the page. Resampling every non-cosmetic tag from that matrix (4,000 draws, cosmetic tags carried unchanged, fidelity 1–2 pages kept as judged since the wrong-page controls validate that call):
+- **Over-flagging.** #6740 (`2026-10-30-defect-rate-router-6740.md` §"Calibration (steer 1 A)") re-read 80 of this judge's own tags blind, each by a fresh Opus call seeing only the quoted span and the page image: of 40 `wrong_text` tags, 28 held as wrong text, 4 as misleads, 3 cosmetic, 5 were the page; of 40 `misleads`, **17 were re-read as wrong text**, 8 held, 5 cosmetic, 10 were the page. Resampling every non-cosmetic tag from that matrix (4,000 draws, books resampled within strata as well, cosmetic tags carried unchanged, fidelity 1–2 pages kept as judged since the wrong-page controls validate that call):
 
   | | as tagged | after the blind re-read |
   |---|---|---|
-  | says what the page says | 50.8% | **58.0%** (56.4–59.6) |
-  | fit to quote | 42.8% | 47.7% (46.4–49.0) |
-  | a reading that changes the sense | 24.2% | 5.3% (3.8–6.9) |
-  | something the page does not have | 25.0% | 36.7% (34.8–38.6) |
+  | says what the page says | 50.8% (45.7–55.9) | **58.1%** (52.9–63.2) |
+  | fit to quote | 42.8% (37.9–47.6) | 47.7% (42.6–52.8) |
+  | a reading that changes the sense | 24.2% (21.0–27.7) | 5.3% (3.7–7.0) |
+  | something the page does not have | 25.0% (20.6–29.6) | 36.6% (31.8–41.7) |
+
+  Both intervals resample books within strata; the corrected column also resamples every tag. An interval over tag error alone would be three times narrower and would make the corrected figure read as the more precise one, which it is not.
 
   The misleads / wrong_text line is unstable, as #6740 said; the clean share is not. Read "roughly 42% of pages have at least one error that changes the sense", and do not lean on how it splits.
 - **Under-flagging.** #7263: at a 1% CER bar on pages with a typed scholarly reference, sensitivity 0.42 on print (0.23–0.64) and 0.45 on Chinese manuscripts (0.29–0.62); specificity 0.88 and 1.00. These shares are not a ceiling on quality.
