@@ -170,11 +170,12 @@ export const PARTNERS_HTML = `
       <p class="note">Measured 29 October 2026 with the o200k tokenizer over a random sample of 12,000 pages, multiplied by the exact counts of transcribed and translated pages; by the median page, about 14.5 billion. English Wikipedia’s articles hold about 5 billion words, some 6.5 billion tokens. In words the library is half as large again, 7.7 billion: Latin, Chinese and Sanskrit take more tokens per word than English.</p>
       <table class="ledger">
         <tr><td>Page views by readers, last 7 days</td><td class="n">103K</td></tr>
-        <tr><td>Pages fetched by ChatGPT and Claude for their users, last 30 days</td><td class="n">1.8M</td></tr>
+        <tr><td>Pages fetched by ChatGPT and Claude for their users, last 7 days</td><td class="n">28K</td></tr>
+        <tr><td>Library tool calls by Claude for its users through our MCP server, last 7 days</td><td class="n">35K</td></tr>
         <tr><td>Automated requests stopped at our network edge, per day</td><td class="n">~800K</td></tr>
         <tr><td>Bulk requests rate-limited by the site, last 30 days</td><td class="n">1.9M</td></tr>
       </table>
-      <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
+      <p class="note">Search engines and assistants acting for a user read freely. Training crawlers get the licence terms and a preview of each book. Counted 28 October 2026 from the site's logs; the assistant figures from Cloudflare's logs by user agent (ChatGPT-User, Claude-User), 26 October–1 November, not counting search-index crawlers such as OAI-SearchBot; the edge figure is the average of 26–27 October (blocked, or challenged and not passed), from Cloudflare.</p>
       <p>Representative works include Robert Fludd's <a href="https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd">History of the Two Worlds</a> (1617); Athanasius Kircher's <a href="https://sourcelibrary.org/book/mundus-subterraneus-kircher">Mundus Subterraneus</a> (1678); the <a href="https://sourcelibrary.org/book/imperial-collection-of-mathematical-essentials-vol-2">Collected Essentials of Mathematics</a> commissioned by the Kangxi emperor (1723); Kamalākara's <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta">Discernment of the Principles of Astronomy</a> (1658), a Sanskrit treatise that takes issue with Bhāskara; and the <a href="https://sourcelibrary.org/book/collected-works-of-the-8th-gyalwang-drukpa-kunzik-chokyi-1768-1822">collected works</a> of the eighth Gyalwang Drukpa (1768–1822). A description of <a href="https://sourcelibrary.org/dataset">the dataset</a> is also available.</p>
     </div>
   </div>
