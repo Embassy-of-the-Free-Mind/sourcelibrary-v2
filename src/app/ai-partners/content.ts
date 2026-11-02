@@ -120,7 +120,7 @@ export const PARTNERS_HTML = `
     <h2 class="pword">Rights cleared</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
-      <p>For a training licence, the holding libraries' own rights statements sort the books (counted 30 October 2026, of 28,700 books with text that are ready to license): 11,929 books, 2.6 million pages, whose library permits commercial use of text and images; 8,343 whose library states no terms for its images; and 8,428 whose library scans carry non-commercial or other restrictive terms, offered as text only and under legal review. Pages read or translated by Claude are excluded.</p>
+      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. Pages read or translated by Claude are excluded.</p>
       <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Search, retrieval for a user and individual use are free; training at scale is licensed directly. The terms and the rate card are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
     </div>
   </div>
