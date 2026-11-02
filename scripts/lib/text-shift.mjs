@@ -84,3 +84,52 @@ export function computeTextShiftMoves(pages, { verdict, isTarget } = {}) {
   }
   return moves;
 }
+
+/**
+ * Moves for a book whose text sits a DIFFERENT number of leaves off in different
+ * stretches (#7949: e-rara's PDF had a cover sheet in front and one leaf photographed
+ * twice, so the text is one leaf late up to that leaf and three late after it).
+ *
+ * `segments` say, for each stretch of TARGET slots, which slot holds its text:
+ * slot t in [from, to] takes the text now on slot t + delta. A target whose source
+ * slot does not exist is cleared (its leaf was never read). Slots outside every
+ * segment are not touched. Sources are read from the pre-move state, so moves never
+ * chain. Segments must not overlap.
+ *
+ * @param {Array<object>} pages
+ * @param {Array<{from:number, to:number, delta:number}>} segments
+ * @returns {Array<{page_number:number, src_page_number:number|null, cleared:boolean, set:object, unset:string[]}>}
+ */
+export function computeSegmentMoves(pages, segments) {
+  const sortedSeg = [...segments].sort((a, b) => a.from - b.from);
+  for (let i = 0; i < sortedSeg.length; i++) {
+    const s = sortedSeg[i];
+    if (!Number.isInteger(s.from) || !Number.isInteger(s.to) || !Number.isInteger(s.delta) || s.from > s.to) throw new Error(`bad segment ${JSON.stringify(s)}`);
+    if (i && sortedSeg[i - 1].to >= s.from) throw new Error('segments overlap');
+  }
+  const byNum = new Map(pages.map((p) => [p.page_number, p]));
+  const moves = [];
+  for (const seg of sortedSeg) {
+    for (let t = seg.from; t <= seg.to; t++) {
+      if (!byNum.has(t)) continue;
+      const src = byNum.get(t + seg.delta);
+      const set = {};
+      const unset = [];
+      for (const f of SHIFT_FIELDS) {
+        if (src && src[f] !== undefined) set[f] = src[f];
+        else unset.push(f);
+      }
+      moves.push({ page_number: t, src_page_number: src ? src.page_number : null, cleared: !src, set, unset });
+    }
+  }
+  return moves;
+}
+
+/** Parse "1-79:+1,80-4162:+3" into segments. */
+export function parseSegments(spec) {
+  return String(spec).split(',').map((part) => {
+    const m = part.trim().match(/^(\d+)-(\d+):([+-]?\d+)$/);
+    if (!m) throw new Error(`bad segment "${part}" (want FROM-TO:+DELTA)`);
+    return { from: Number(m[1]), to: Number(m[2]), delta: Number(m[3]) };
+  });
+}
