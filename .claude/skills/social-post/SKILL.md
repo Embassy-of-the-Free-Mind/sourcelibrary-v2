@@ -30,6 +30,10 @@ The API returns what we store. Only the image shows what the book says.
    to read yourself (the *Mutus Liber* motto; Fludd's diagram labels). `search_images` with a query, then open the page.
 3. **Search hits** (`search_translations`) last. They had the highest failure rate.
 
+End a carousel on a payoff, not a plain plate. A slide captioned "The last plate." left the best line in the
+book unseen; a zoomed crop of the plate's own inscription made the ending. Zoom in on the detail: a full page at feed size
+is a beige rectangle.
+
 What works: a surprising name or fact as the hook (Cleopatra, Leonardo, "a book with no words"); a question that
 invites comments; one idea per post. Formats: a carousel of 5–7 slides (cover, 3–5 content, a closing call), a
 quote card, or a single image with a one-line caption. 4:5 (1080×1350) for both platforms.
@@ -54,8 +58,12 @@ Use `get_quote` with `include_image: true` (and `context: true` near a page edge
 6. **The image itself is sound.** Open the full-size scan: missing blocks, cut-off plates and bleed-through happen
    (two Leonardo plates were unusable).
 
-Then check the **captions**: every number, date, place and claim either has a source you looked at, or comes out.
-"1,000-page" and "the critics came" were cut for that reason.
+Then check the **captions and slide notes**: every number, date, place and claim either has a source you looked at, or comes out.
+"1,000-page" and "the critics came" were cut for that reason. Two more traps from the first batch, both caught only on a re-read:
+- **"Only", "every", "all", "never" are claims about the whole book.** Open every page they cover before using one.
+  "The only sentence on the plates" went live on the *Mutus Liber* post; plate 15 has "Oculatus abis" on two banners.
+- **Re-read the caption after the slides change.** The 1625 caption still promised Cleopatra after her slide was dropped.
+  The last step before publishing is to read caption and slides together, as the reader will see them.
 
 ## 3. Render
 
@@ -70,7 +78,9 @@ images with ImageMagick (`magick in.jpg -crop WxH+X+Y +repage out.jpg`), keeping
 ## 4. Publish
 
 Posting is public: Derek says go once per batch. Then post the first one and schedule the rest in the Page's Planner
-(Meta Business Suite) a few days apart. In Chrome the Page's cover-photo button opens a native file picker the
+(Meta Business Suite) a few days apart. A post can be corrected after it is published or scheduled: from the post's
+"…" menu, choose Edit post. You can change the caption, remove photos with their ×, and add photos through the editor's hidden file input
+(added photos go at the end, so to replace slide 5 of 7 you remove 5–7 and re-add them in order). In Chrome the Page's cover-photo button opens a native file picker the
 browser tools cannot drive; find the hidden `input[type=file]` with `find` and use `file_upload`. Facebook's reel
 composer also has one: check the URL before uploading.
 
