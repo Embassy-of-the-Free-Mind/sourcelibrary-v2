@@ -25,10 +25,12 @@ function sectionOf(el: Element | null): string {
   return (h?.textContent || s.id || '').trim().slice(0, 80);
 }
 
-// Inner HTML of a block with comment highlights unwrapped, so a comment never reads as an edit.
+// Inner HTML of a block with comment highlights unwrapped and nested block keys removed,
+// so neither a comment nor a key on an inner block reads as an edit.
 function cleanHTML(el: Element): string {
   const c = el.cloneNode(true) as Element;
   c.querySelectorAll('mark.ap-c').forEach((m) => m.replaceWith(...Array.from(m.childNodes)));
+  c.querySelectorAll('[data-k]').forEach((n) => n.removeAttribute('data-k'));
   return c.innerHTML.replace(/\s+/g, ' ').trim();
 }
 
