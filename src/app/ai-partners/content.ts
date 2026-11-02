@@ -142,7 +142,7 @@ export const PARTNERS_HTML = `
         <tr><td>Italian <span class="note">· 0.14M pages</span></td><td class="n">561</td></tr>
         <tr><td>Sanskrit <span class="note">· 0.07M pages</span></td><td class="n">323</td></tr>
         <tr><td>Russian <span class="note">· 0.09M pages</span></td><td class="n">229</td></tr>
-        <tr><td>Other languages, about 200 <span class="note">· 0.37M pages</span></td><td class="n">1,750</td></tr>
+        <tr><td>Other languages <span class="note">· 0.37M pages</span></td><td class="n">1,750</td></tr>
         <tr class="total"><td>All</td><td class="n">28,700</td></tr>
       </table>
       <p class="note">Counted 30 October 2026, by the language of the edition. English editions are transcribed, not translated. Every other language comes with its English translation on most pages.</p>
