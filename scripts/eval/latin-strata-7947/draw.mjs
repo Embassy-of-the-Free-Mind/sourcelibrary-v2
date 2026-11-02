@@ -116,7 +116,7 @@ console.log('cells', Object.entries(cells).map(([k, v]) => `${k}:${v.frame_books
 async function eligible(id) {
   return db.collection('pages').aggregate([
     { $match: { book_id: id, page_number: { $gt: 0 }, 'ocr.data': { $regex: '\\S' }, 'translation.data': { $regex: '\\S' } } },
-    { $project: { _id: 0, page_number: 1, len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } } } },
+    { $project: { _id: 0, page_number: 1, len: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } } } },
     { $sort: { page_number: 1 } },
   ]).toArray();
 }
