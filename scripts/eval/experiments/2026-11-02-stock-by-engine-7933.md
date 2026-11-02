@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: [census]
+measure: [none]
 languages: [la, de, en, grc, fr, zh, bo, sa, ko, ar, nl, it]
 scripts: [Latn, Grek, Hani, Tibt, Deva, Hang, Arab]
 canons: []
@@ -12,7 +12,7 @@ decision: "/quality says the measured text is mostly the older reads and that th
 superseded_by: null
 issue: [7933, 7866]
 router_evidence: "none — a census of stored provenance; no judged page"
-defect_rates: null
+defect_rates: "none — a census of which engine wrote stored text; no page was judged"
 ---
 ## 2026-11-02 · The stock is mostly the old reads: which engine wrote the text a reader sees (#7933)
 
