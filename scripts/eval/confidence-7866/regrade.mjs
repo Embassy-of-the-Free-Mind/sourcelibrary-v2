@@ -34,6 +34,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { MongoClient, ObjectId } from 'mongodb';
 import { words } from '../route-judge-6740/defect-rate.mjs';
 import { HERE, RESULTS, SEED } from './lib.mjs';
@@ -344,11 +345,14 @@ function build(rows) {
   };
 }
 
-const rows = pageRows(await load());
-const out = build(rows);
-const file = path.join(RESULTS, 'served-grades.json');
-fs.mkdirSync(RESULTS, { recursive: true });
-fs.writeFileSync(file, `${JSON.stringify(out, null, 1)}\n`);
-console.log(`${path.relative(path.resolve(HERE, '../../..'), file)}: ${out.pages} pages, ${out.books} books, ${out.words.toLocaleString('en-US')} words`);
-for (const k of BUCKETS) console.log(`  ${k}: ${out.buckets[k].pages} pages, ${(out.buckets[k].share * 100).toFixed(1)}% weighted (${out.buckets[k].ci95.map((x) => (x * 100).toFixed(0)).join('-')}%)`);
-console.log(`  after #6740's blind re-read of the tags: says what the page says ${(out.reread.says_what_the_page_says.share * 100).toFixed(1)}%`);
+// Run only as a script: #7947 imports gradeOf() without loading Mongo or rewriting served-grades.json.
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const rows = pageRows(await load());
+  const out = build(rows);
+  const file = path.join(RESULTS, 'served-grades.json');
+  fs.mkdirSync(RESULTS, { recursive: true });
+  fs.writeFileSync(file, `${JSON.stringify(out, null, 1)}\n`);
+  console.log(`${path.relative(path.resolve(HERE, '../../..'), file)}: ${out.pages} pages, ${out.books} books, ${out.words.toLocaleString('en-US')} words`);
+  for (const k of BUCKETS) console.log(`  ${k}: ${out.buckets[k].pages} pages, ${(out.buckets[k].share * 100).toFixed(1)}% weighted (${out.buckets[k].ci95.map((x) => (x * 100).toFixed(0)).join('-')}%)`);
+  console.log(`  after #6740's blind re-read of the tags: says what the page says ${(out.reread.says_what_the_page_says.share * 100).toFixed(1)}%`);
+}
