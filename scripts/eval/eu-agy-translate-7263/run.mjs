@@ -151,7 +151,7 @@ export function dryDb(db) {
     return (name) => { const c = t.collection(name); return new Proxy(c, { get(ct, m) { if (typeof m === 'string' && WRITES.test(m)) return noop; const v = ct[m]; return typeof v === 'function' ? v.bind(ct) : v; } }); };
   } });
 }
-async function doorVerdict(db, pageId, text, { model, finishReason } = {}) {
+export async function doorVerdict(db, pageId, text, { model, finishReason } = {}) {
   const page = await db.collection('pages').findOne({ id: pageId });
   const book = await db.collection('books').findOne({ id: page.book_id });
   const r = await writePageTranslation(dryDb(db), { page, book, text, model, jobId: 'eu-agy-translate-7263-dry', note: 'dry', refuseUnhealthy: true, finishReason,
@@ -360,7 +360,8 @@ async function analyze() {
     if (served(arm, key) == null) return { written: false, accept: false, wrong: false, fidelity: null, judged: false, why: (arm === 'a' ? A : R).get(key)?.why ?? 'not run' };
     const it = items.find((x) => x.key === key && x.arms.includes(arm)); const r = it && last.get(it.id);
     if (!r) return null;
-    return { written: true, judged: true, accept: !!r.verdict.accept, wrong: wrongText(r.verdict), fidelity: r.verdict.fidelity, defects: (r.verdict.defects || []).map((d) => `${d.class}:${d.severity}`), reader_note: r.verdict.reader_note };
+    const words = served(arm, key).replace(/<[^>]+>/g, ' ').split(/\s+/).filter((w) => /\p{L}|\d/u.test(w)).length;
+    return { written: true, judged: true, words, accept: !!r.verdict.accept, wrong: wrongText(r.verdict), fidelity: r.verdict.fidelity, defects: (r.verdict.defects || []).map((d) => `${d.class}:${d.severity}`), reader_note: r.verdict.reader_note };
   };
   const cell = (rows) => {
     const ok = rows.filter((p) => p.a && p.r);
@@ -395,6 +396,14 @@ async function analyze() {
     return { wrong_pages: rows.length, ocr_carried_only: ocr, translator: rows.length - ocr };
   };
   for (const lang of LANGS) cells[lang].wrong_text_origin = { a: origin(lang, 'a'), r: origin(lang, 'r') };
+  // The dispatcher's report form (2026-11-01 23:56Z): severe defects per 1,000 English words (paper decision 3: the judge's
+  // misleads + wrong_text stand in) and pages with invented (O1, T10) or wrong-leaf / another page's (I1, I2, T4, T5) wrong text.
+  const INVENTED = /^(O1|T10):wrong_text$/, WRONG_LEAF = /^(I1|I2|T4|T5):wrong_text$/;
+  for (const lang of LANGS) for (const arm of ['a', 'r']) {
+    const rows = per.filter((p) => p.lang === lang && p[arm]?.judged);
+    const sev = rows.reduce((t, p) => t + p[arm].defects.filter((d) => /:(misleads|wrong_text)$/.test(d)).length, 0), w = rows.reduce((t, p) => t + p[arm].words, 0);
+    (cells[lang].report ??= {})[arm] = { severe_per_1k_words: w ? +(sev * 1000 / w).toFixed(2) : null, english_words: w, invented_pages: rows.filter((p) => p[arm].defects.some((d) => INVENTED.test(d))).length, wrong_leaf_pages: rows.filter((p) => p[arm].defects.some((d) => WRONG_LEAF.test(d))).length };
+  }
   const usage = { agy_calls: [...A.values()].reduce((a, r) => a + (r.calls || 0), 0), lite_calls: [...R.values()].reduce((a, r) => a + r.calls, 0), lite_usd: +[...R.values()].reduce((a, r) => a + r.usd, 0).toFixed(4), judge_calls: jsonl(path.join(OUT, 'verdicts.jsonl')).length,
     judge_opened: jsonl(path.join(OUT, 'verdicts.jsonl')).filter((r) => r.opened).length };
   const res = { at: new Date().toISOString(), seed: SEED, judge: 'claude -p --model opus, sealed, Read only, stream-json transcript (page.jpg opened checked); route-judge judgePrompt translation form, image + stored OCR; blind (no arm in the prompt)', cells, usage, per_page: per };

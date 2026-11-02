@@ -1,5 +1,5 @@
 {
- "at": "2026-11-01T23:50:16.868Z",
+ "at": "2026-11-02T00:04:20.499Z",
  "seed": 72631101,
  "judge": "claude -p --model opus, sealed, Read only, stream-json transcript (page.jpg opened checked); route-judge judgePrompt translation form, image + stored OCR; blind (no arm in the prompt)",
  "cells": {
@@ -349,6 +349,20 @@
      "ocr_carried_only": 7,
      "translator": 7
     }
+   },
+   "report": {
+    "a": {
+     "severe_per_1k_words": 4.35,
+     "english_words": 15851,
+     "invented_pages": 1,
+     "wrong_leaf_pages": 1
+    },
+    "r": {
+     "severe_per_1k_words": 7.31,
+     "english_words": 14500,
+     "invented_pages": 0,
+     "wrong_leaf_pages": 0
+    }
    }
   },
   "German": {
@@ -650,6 +664,20 @@
      "wrong_pages": 9,
      "ocr_carried_only": 3,
      "translator": 6
+    }
+   },
+   "report": {
+    "a": {
+     "severe_per_1k_words": 4.92,
+     "english_words": 9143,
+     "invented_pages": 0,
+     "wrong_leaf_pages": 1
+    },
+    "r": {
+     "severe_per_1k_words": 5.57,
+     "english_words": 8261,
+     "invented_pages": 0,
+     "wrong_leaf_pages": 2
     }
    }
   },
@@ -1085,6 +1113,20 @@
      "ocr_carried_only": 2,
      "translator": 6
     }
+   },
+   "report": {
+    "a": {
+     "severe_per_1k_words": 2.77,
+     "english_words": 8289,
+     "invented_pages": 0,
+     "wrong_leaf_pages": 1
+    },
+    "r": {
+     "severe_per_1k_words": 5.72,
+     "english_words": 7864,
+     "invented_pages": 1,
+     "wrong_leaf_pages": 2
+    }
    }
   },
   "French": {
@@ -1473,6 +1515,20 @@
      "ocr_carried_only": 2,
      "translator": 8
     }
+   },
+   "report": {
+    "a": {
+     "severe_per_1k_words": 3.25,
+     "english_words": 9860,
+     "invented_pages": 1,
+     "wrong_leaf_pages": 0
+    },
+    "r": {
+     "severe_per_1k_words": 4.09,
+     "english_words": 8317,
+     "invented_pages": 1,
+     "wrong_leaf_pages": 3
+    }
    }
   }
  },
@@ -1496,6 +1552,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 500,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1510,6 +1567,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 484,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -1535,6 +1593,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 1226,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1549,6 +1608,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 1181,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1578,6 +1638,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 344,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1590,6 +1651,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 349,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1613,6 +1675,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 262,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1626,6 +1689,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 212,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1648,6 +1712,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 405,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1661,6 +1726,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 356,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1691,6 +1757,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 121,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1705,6 +1772,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 100,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1729,6 +1797,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 1140,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1745,6 +1814,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 1044,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1772,6 +1842,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 149,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1784,6 +1855,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 91,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1806,6 +1878,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 484,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1819,6 +1892,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 454,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1842,6 +1916,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 294,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1855,6 +1930,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 422,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -1879,6 +1955,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 539,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1892,6 +1969,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 460,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -1914,6 +1992,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 547,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -1926,6 +2005,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 505,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1951,6 +2031,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 499,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1963,6 +2044,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 448,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -1986,6 +2068,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 465,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -1999,6 +2082,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 459,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2024,6 +2108,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 426,
     "accept": false,
     "wrong": false,
     "fidelity": 2,
@@ -2043,6 +2128,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 323,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2071,6 +2157,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 193,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2082,6 +2169,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 154,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -2105,6 +2193,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 808,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2116,6 +2205,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 718,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2142,6 +2232,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 852,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2156,6 +2247,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 806,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2184,6 +2276,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 288,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2196,6 +2289,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 253,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2219,6 +2313,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 279,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2232,6 +2327,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 243,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -2255,6 +2351,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 481,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2267,6 +2364,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 460,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2289,6 +2387,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 171,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2298,6 +2397,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 75,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2321,6 +2421,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 993,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2335,6 +2436,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 876,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2358,6 +2460,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 1505,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2376,6 +2479,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 1415,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -2408,6 +2512,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 499,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2422,6 +2527,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 450,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2446,6 +2552,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 313,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2458,6 +2565,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 290,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2483,6 +2591,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 590,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -2502,6 +2611,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 572,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -2533,6 +2643,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 336,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2545,6 +2656,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 272,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2566,6 +2678,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 565,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2581,6 +2694,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 493,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -2607,6 +2721,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 577,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2619,6 +2734,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 535,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -2644,6 +2760,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 297,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2658,6 +2775,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 234,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2680,6 +2798,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 243,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2693,6 +2812,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 192,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2716,6 +2836,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 602,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2730,6 +2851,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 601,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2753,6 +2875,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 317,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2762,6 +2885,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 287,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2781,6 +2905,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 390,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -2794,6 +2919,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 358,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -2816,6 +2942,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 491,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -2845,6 +2972,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 360,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -2879,6 +3007,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 111,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -2891,6 +3020,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 95,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2913,6 +3043,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 273,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2922,6 +3053,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 264,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2943,6 +3075,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 409,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2955,6 +3088,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 339,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -2976,6 +3110,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 418,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -2988,6 +3123,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 401,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3009,6 +3145,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 373,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3021,6 +3158,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 321,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3042,6 +3180,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 385,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3055,6 +3194,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 327,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -3078,6 +3218,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 157,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3089,6 +3230,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 119,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3108,6 +3250,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 278,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3120,6 +3263,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 226,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3144,6 +3288,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 480,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3155,6 +3300,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 421,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3179,6 +3325,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 229,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3190,6 +3337,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 189,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3212,6 +3360,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 327,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3223,6 +3372,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 282,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3244,6 +3394,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 439,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3259,6 +3410,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 446,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3282,6 +3434,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 545,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3293,6 +3446,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 488,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3316,6 +3470,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 89,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3328,6 +3483,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 55,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3351,6 +3507,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 268,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3362,6 +3519,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 238,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3384,6 +3542,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 202,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3395,6 +3554,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 158,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3417,6 +3577,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 136,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3429,6 +3590,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 124,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3451,6 +3613,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 38,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3465,6 +3628,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 237,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3488,6 +3652,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 347,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3501,6 +3666,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 323,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -3523,6 +3689,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 624,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3539,6 +3706,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 562,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3562,6 +3730,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 129,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3573,6 +3742,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 92,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3605,6 +3775,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 134,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -3628,6 +3799,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 342,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3641,6 +3813,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 265,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3665,6 +3838,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 204,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3677,6 +3851,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 123,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3699,6 +3874,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 358,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3716,6 +3892,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 292,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3745,6 +3922,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 409,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -3761,6 +3939,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 368,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -3786,6 +3965,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 340,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3795,6 +3975,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 300,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3816,6 +3997,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 237,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3829,6 +4011,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 221,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3853,6 +4036,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 44,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3864,6 +4048,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 242,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3886,6 +4071,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 313,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -3895,6 +4081,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 296,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3918,6 +4105,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 327,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3931,6 +4119,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 300,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3953,6 +4142,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 177,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3966,6 +4156,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 153,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -3989,6 +4180,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 187,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4000,6 +4192,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 178,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4021,6 +4214,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 232,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4033,6 +4227,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 189,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -4055,6 +4250,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 335,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4068,6 +4264,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 328,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4090,6 +4287,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 1034,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4103,6 +4301,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 1049,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4129,6 +4328,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 537,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4143,6 +4343,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 496,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4166,6 +4367,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 229,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4180,6 +4382,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 198,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4202,6 +4405,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 320,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4211,6 +4415,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 335,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -4234,6 +4439,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 283,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4245,6 +4451,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 244,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4267,6 +4474,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 427,
     "accept": false,
     "wrong": true,
     "fidelity": 1,
@@ -4280,6 +4488,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 446,
     "accept": false,
     "wrong": true,
     "fidelity": 1,
@@ -4305,6 +4514,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 422,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4318,6 +4528,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 362,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -4343,6 +4554,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 646,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -4356,6 +4568,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 585,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4381,6 +4594,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 283,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4393,6 +4607,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 250,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4417,6 +4632,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 538,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4430,6 +4646,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 502,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4456,6 +4673,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 275,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4469,6 +4687,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 231,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4490,6 +4709,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 336,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4499,6 +4719,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 299,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4522,6 +4743,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 330,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4533,6 +4755,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 287,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4555,6 +4778,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 278,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -4566,6 +4790,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 225,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -4587,6 +4812,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 1444,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4601,6 +4827,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 1424,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4628,6 +4855,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 307,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4641,6 +4869,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 150,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4664,6 +4893,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 238,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4675,6 +4905,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 202,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4696,6 +4927,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 284,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4708,6 +4940,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 6,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4729,6 +4962,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 346,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4740,6 +4974,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 281,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4759,6 +4994,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 769,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -4772,6 +5008,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 704,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -4795,6 +5032,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 348,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -4808,6 +5046,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 260,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4831,6 +5070,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 397,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4845,6 +5085,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 371,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4869,6 +5110,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 378,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4883,6 +5125,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 320,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -4907,6 +5150,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 218,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4919,6 +5163,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 185,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4940,6 +5185,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 573,
     "accept": false,
     "wrong": true,
     "fidelity": 4,
@@ -4951,6 +5197,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 579,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -4974,6 +5221,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 354,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -4985,6 +5233,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 298,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5006,6 +5255,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 231,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5018,6 +5268,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 206,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5037,6 +5288,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 390,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5048,6 +5300,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 343,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -5070,6 +5323,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 359,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5082,6 +5336,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 111,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -5104,6 +5359,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 232,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5116,6 +5372,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 232,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5137,6 +5394,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 308,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5150,6 +5408,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 239,
     "accept": false,
     "wrong": true,
     "fidelity": 3,
@@ -5173,6 +5432,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 48,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5184,6 +5444,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 52,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5206,6 +5467,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 133,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -5220,6 +5482,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 130,
     "accept": false,
     "wrong": false,
     "fidelity": 3,
@@ -5242,6 +5505,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 134,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5257,6 +5521,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 126,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5282,6 +5547,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 75,
     "accept": false,
     "wrong": true,
     "fidelity": 1,
@@ -5298,6 +5564,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 72,
     "accept": false,
     "wrong": true,
     "fidelity": 1,
@@ -5323,6 +5590,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 233,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -5335,6 +5603,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 211,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5357,6 +5626,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 237,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5366,6 +5636,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 193,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5385,6 +5656,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 496,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5398,6 +5670,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 448,
     "accept": false,
     "wrong": false,
     "fidelity": 4,
@@ -5420,6 +5693,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 31,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5429,6 +5703,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 38,
     "accept": true,
     "wrong": false,
     "fidelity": 4,
@@ -5450,6 +5725,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 242,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5459,6 +5735,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 198,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5480,6 +5757,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 220,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5491,6 +5769,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 176,
     "accept": true,
     "wrong": false,
     "fidelity": 5,
@@ -5510,6 +5789,7 @@
    "a": {
     "written": true,
     "judged": true,
+    "words": 227,
     "accept": false,
     "wrong": true,
     "fidelity": 2,
@@ -5526,6 +5806,7 @@
    "r": {
     "written": true,
     "judged": true,
+    "words": 250,
     "accept": false,
     "wrong": true,
     "fidelity": 2,

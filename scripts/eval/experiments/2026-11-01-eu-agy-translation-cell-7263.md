@@ -74,12 +74,23 @@ PRIOR ART:
   - **Totals.** Translator-made wrong text: **18 pages for agy, 27 for Flash-Lite**.
   - **Latin agy**: T9 (silent omission, 4 pages) and T7 (fluent English over a garbled source, 4).
   - The stored OCR was not judged on its own. The split is from the class codes the translation judge gave.
+- **In the dispatcher's report form** (2026-11-01 23:56Z):
+  - "severe" = the judge's `misleads` + `wrong_text` defects per 1,000 English words (paper decision 3);
+  - "invented" = an O1 / T10 wrong-text defect;
+  - "wrong leaf" = I1 / I2 / T4 / T5 wrong text.
+
+  | language | severe / 1k words, agy@4 | severe / 1k words, Flash-Lite | invented pages agy / lite | wrong-leaf pages agy / lite | does agy beat the served route? |
+  |---|---|---|---|---|---|
+  | Latin | 4.35 | 7.31 | 1 / 0 | 1 / 0 | yes on acceptance (+0.17) and severe defects; both far under the bar |
+  | German | 4.92 | 5.57 | 0 / 0 | 1 / 2 | yes on the point estimate; CI of d includes −0.10 |
+  | Italian | 2.77 | 5.72 | 0 / 1 | 1 / 2 | yes |
+  | French | 3.25 | 4.09 | 1 / 1 | 0 / 3 | yes on the point estimate |
 - **Cost.**
   - agy: 128 calls for 415 pages, 0.31 calls a page; the table's `agy-text@4` stage says 0.267, measured on Tibetan.
   - Flash-Lite: 118 calls for 727 pages, $0.669 at the synchronous list price, so about $0.00046 a page at Batch.
   - Opus: 233 judge calls on the box account's subscription.
 
-### The router's decision (build `2026-11-01-eu-translate-7263`; `current.json` not moved)
+### The router's decision (build `2026-11-02-queue-eu-7263`, which also carries the tests[] queue evidence; `current.json` not moved)
 
 New cells `latin-tr-first`, `german-tr-first`, `italian-tr-first` and `french-tr-first`:
 - routes `flash-lite` (current; new stage `lite-text`) and `agy-flash-low@4` (stage `agy-text@4`), paired;

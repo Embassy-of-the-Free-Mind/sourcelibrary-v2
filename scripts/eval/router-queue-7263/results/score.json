@@ -1,0 +1,3503 @@
+{
+ "at": "2026-11-02T00:32:01.234Z",
+ "seed": 72631102,
+ "judge": "claude -p --model opus, sealed, Read only, stream-json transcript (page.jpg opened checked); route-judge judgePrompt OCR form; second judge (manuscript): correction-pass-7818 judgeAgy, gemini-3.8-flash-low on agy",
+ "cells": {
+  "latin-lite/print": {
+   "base": "latin-lite",
+   "script": "print",
+   "lang": "Latin",
+   "route": "lite>agy-flash-low+diffqa",
+   "draft": "lite",
+   "diffqa": true,
+   "tally": {
+    "books_in_frame": 15733,
+    "excluded_evidence": 0,
+    "walked": 104,
+    "no_page": 68,
+    "no_page_of_script": 6,
+    "image": 0
+   },
+   "evidence_files": 40,
+   "route_result": {
+    "n": 30,
+    "books": 30,
+    "accept": "10/30",
+    "ci95": [
+     0.192,
+     0.512
+    ],
+    "wrong_text_pages": "18/30",
+    "classes_k_of_n": {
+     "O6": "18/30",
+     "O5": "13/30",
+     "O16": "9/30",
+     "O12": "9/30",
+     "I4": "5/30",
+     "O7": "5/30",
+     "O11": "5/30",
+     "E2": "4/30",
+     "O8": "4/30",
+     "O1": "4/30",
+     "O10": "3/30",
+     "D1": "3/30",
+     "T6": "2/30",
+     "O4": "2/30",
+     "O18": "1/30",
+     "I1": "1/30",
+     "O14": "1/30"
+    },
+    "severe_per_1k_words": 12.38,
+    "defects_by_severity": {
+     "cosmetic": 53,
+     "misleads": 79,
+     "wrong_text": 78
+    },
+    "words_judged": 12680,
+    "served_outcomes": {
+     "apply refused": 19,
+     "diff-QA merged": 11
+    },
+    "unchanged_pages": 19,
+    "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+   },
+   "controls": [
+    {
+     "id": "wp-latin-69b51e10efd8df28f2dafebe-latin-6a459547285287bec80d0ab6",
+     "opus": false,
+     "gemini": null
+    },
+    {
+     "id": "wp-latin-69dbc9ac1040d1d5e20a53f4-latin-69af45cb4a5e5a377fef9045",
+     "opus": false,
+     "gemini": null
+    }
+   ],
+   "per_page": [
+    {
+     "key": "latin-69b2f46c5ef23d31023f6eef",
+     "book_id": "69b2f46c5ef23d31023f6caf",
+     "page_id": "69b2f46c5ef23d31023f6eef",
+     "page_number": 576,
+     "words": 170,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O10",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbc9ac1040d1d5e20a53f4",
+     "book_id": "69dbc9ac1040d1d5e20a53ed",
+     "page_id": "69dbc9ac1040d1d5e20a53f4",
+     "page_number": 7,
+     "words": 135,
+     "han": 0,
+     "served": "apply refused: correction changes 30% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b4d66f853c26e0d1562007",
+     "book_id": "69b4d66f853c26e0d1561fa2",
+     "page_id": "69b4d66f853c26e0d1562007",
+     "page_number": 101,
+     "words": 222,
+     "han": 0,
+     "served": "diff-QA merged (2 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbcadb1040d1d5e20af6ae",
+     "book_id": "69dbcadb1040d1d5e20af614",
+     "page_id": "69dbcadb1040d1d5e20af6ae",
+     "page_number": 154,
+     "words": 660,
+     "han": 0,
+     "served": "apply refused: correction changes 32% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b51df4cf111105c4294111",
+     "book_id": "69b51df4cf111105c429406a",
+     "page_id": "69b51df4cf111105c4294111",
+     "page_number": 167,
+     "words": 196,
+     "han": 0,
+     "served": "apply refused: correction changes 46% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbcb101040d1d5e20b178b",
+     "book_id": "69dbcb101040d1d5e20b16f2",
+     "page_id": "69dbcb101040d1d5e20b178b",
+     "page_number": 153,
+     "words": 851,
+     "han": 0,
+     "served": "apply refused: correction changes 47% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6a26c120aad44c98627bf905",
+     "book_id": "6a26c11faad44c98627bf8cb",
+     "page_id": "6a26c120aad44c98627bf905",
+     "page_number": 58,
+     "words": 143,
+     "han": 0,
+     "served": "diff-QA merged (0 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6a42778e28e9db2e39c1f6f0",
+     "book_id": "6a42778e28e9db2e39c1f6c6",
+     "page_id": "6a42778e28e9db2e39c1f6f0",
+     "page_number": 42,
+     "words": 43,
+     "han": 0,
+     "served": "apply refused: correction changes 67% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 1,
+      "defects": [
+       {
+        "class": "O18",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbc8761040d1d5e2099de5",
+     "book_id": "69dbc8761040d1d5e2099de0",
+     "page_id": "69dbc8761040d1d5e2099de5",
+     "page_number": 5,
+     "words": 294,
+     "han": 0,
+     "served": "apply refused: correction changes 26% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b301f5c22956d8a0de5933",
+     "book_id": "69b301f5c22956d8a0de5680",
+     "page_id": "69b301f5c22956d8a0de5933",
+     "page_number": 691,
+     "words": 254,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "I4",
+        "severity": "misleads"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b51e3eff09e4fe943aa436",
+     "book_id": "69b51e3eff09e4fe943aa31a",
+     "page_id": "69b51e3eff09e4fe943aa436",
+     "page_number": 284,
+     "words": 451,
+     "han": 0,
+     "served": "diff-QA merged (1 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "T6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "T6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69af45cb4a5e5a377fef9045",
+     "book_id": "69af45cb4a5e5a377fef8ff8",
+     "page_id": "69af45cb4a5e5a377fef9045",
+     "page_number": 77,
+     "words": 336,
+     "han": 0,
+     "served": "diff-QA merged (3 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "misleads"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbccdb0f8c5edf20f4f257",
+     "book_id": "69dbccdb0f8c5edf20f4f067",
+     "page_id": "69dbccdb0f8c5edf20f4f257",
+     "page_number": 496,
+     "words": 1052,
+     "han": 0,
+     "served": "apply refused: correction changes 41% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69ac9becdc7bbeb92062181a",
+     "book_id": "69ac9becdc7bbeb9206217d2",
+     "page_id": "69ac9becdc7bbeb92062181a",
+     "page_number": 72,
+     "words": 344,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b51e10efd8df28f2dafebe",
+     "book_id": "69b51e10efd8df28f2dafda0",
+     "page_id": "69b51e10efd8df28f2dafebe",
+     "page_number": 286,
+     "words": 164,
+     "han": 0,
+     "served": "diff-QA merged (2 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbc92c1040d1d5e20a121a",
+     "book_id": "69dbc92c1040d1d5e20a120e",
+     "page_id": "69dbc92c1040d1d5e20a121a",
+     "page_number": 12,
+     "words": 281,
+     "han": 0,
+     "served": "apply refused: correction changes 138% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O12",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b1dddc537bff0aca8a9795",
+     "book_id": "69b1dddc537bff0aca8a9709",
+     "page_id": "69b1dddc537bff0aca8a9795",
+     "page_number": 140,
+     "words": 425,
+     "han": 0,
+     "served": "apply refused: correction changes 93% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 1,
+      "defects": [
+       {
+        "class": "I1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "I1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O11",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69f6c371b143b843562cc094",
+     "book_id": "69c83ed06c6f3cc53c85029f",
+     "page_id": "69f6c371b143b843562cc094",
+     "page_number": 280,
+     "words": 671,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O14",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69d3711f9d1fa2c24fe98130",
+     "book_id": "69c8576e6c6f3cc53c854059",
+     "page_id": "69d3711f9d1fa2c24fe98130",
+     "page_number": 26,
+     "words": 1506,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O10",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O10",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O4",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69e747b785f786e884a4977d",
+     "book_id": "69e747b785f786e884a496c1",
+     "page_id": "69e747b785f786e884a4977d",
+     "page_number": 188,
+     "words": 1135,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O10",
+        "severity": "misleads"
+       },
+       {
+        "class": "O10",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbc7ea1040d1d5e209579e",
+     "book_id": "69dbc7ea1040d1d5e2095783",
+     "page_id": "69dbc7ea1040d1d5e209579e",
+     "page_number": 27,
+     "words": 433,
+     "han": 0,
+     "served": "apply refused: correction changes 68% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6a459547285287bec80d0ab6",
+     "book_id": "6a459547285287bec80d0a84",
+     "page_id": "6a459547285287bec80d0ab6",
+     "page_number": 50,
+     "words": 281,
+     "han": 0,
+     "served": "apply refused: correction changes 36% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6a45b155ea488df8c60a465d",
+     "book_id": "6a45b155ea488df8c60a4638",
+     "page_id": "6a45b155ea488df8c60a465d",
+     "page_number": 36,
+     "words": 148,
+     "han": 0,
+     "served": "diff-QA merged (1 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b655c818b87551bfcd80f2",
+     "book_id": "69b655c818b87551bfcd80ea",
+     "page_id": "69b655c818b87551bfcd80f2",
+     "page_number": 8,
+     "words": 292,
+     "han": 0,
+     "served": "diff-QA merged (0 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "T6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6a267d6c6c1f37c9c4f3a004",
+     "book_id": "6a267d6c6c1f37c9c4f39fe6",
+     "page_id": "6a267d6c6c1f37c9c4f3a004",
+     "page_number": 30,
+     "words": 254,
+     "han": 0,
+     "served": "diff-QA merged (0 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbc9511040d1d5e20a2091",
+     "book_id": "69dbc9511040d1d5e20a2023",
+     "page_id": "69dbc9511040d1d5e20a2091",
+     "page_number": 110,
+     "words": 583,
+     "han": 0,
+     "served": "apply refused: correction changes 35% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O1",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b30090e28f56bd7494225b",
+     "book_id": "69b30090e28f56bd74941f9a",
+     "page_id": "69b30090e28f56bd7494225b",
+     "page_number": 705,
+     "words": 282,
+     "han": 0,
+     "served": "diff-QA merged (2 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b656d218b87551bfce36e3",
+     "book_id": "69b656d218b87551bfce36aa",
+     "page_id": "69b656d218b87551bfce36e3",
+     "page_number": 57,
+     "words": 323,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "misleads"
+       },
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69dbccb40f8c5edf20f4ce4d",
+     "book_id": "69dbccb40f8c5edf20f4cdfb",
+     "page_id": "69dbccb40f8c5edf20f4ce4d",
+     "page_number": 82,
+     "words": 478,
+     "han": 0,
+     "served": "diff-QA merged (1 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O5",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69bd9c7d6120d54bd036f7ab",
+     "book_id": "69bd9c7d6120d54bd036f555",
+     "page_id": "69bd9c7d6120d54bd036f7ab",
+     "page_number": 598,
+     "words": 273,
+     "han": 0,
+     "served": "diff-QA merged (5 spans put back)",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "D1",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    }
+   ]
+  },
+  "latin-flash3/unknown": {
+   "base": "latin-flash3",
+   "script": "unknown",
+   "lang": "Latin",
+   "route": "3flash>agy-flash-low",
+   "draft": "3flash",
+   "tally": {
+    "books_in_frame": 15733,
+    "excluded_evidence": 1,
+    "walked": 389,
+    "no_page": 107,
+    "no_page_of_script": 252,
+    "image": 0
+   },
+   "evidence_files": 14,
+   "route_result": {
+    "n": 30,
+    "books": 30,
+    "accept": "22/30",
+    "ci95": [
+     0.556,
+     0.858
+    ],
+    "wrong_text_pages": "5/30",
+    "classes_k_of_n": {
+     "O8": "14/30",
+     "O6": "13/30",
+     "E2": "7/30",
+     "O16": "6/30",
+     "O12": "6/30",
+     "D1": "6/30",
+     "O11": "4/30",
+     "T6": "2/30",
+     "O5": "2/30",
+     "T7": "1/30",
+     "I4": "1/30",
+     "O7": "1/30"
+    },
+    "severe_per_1k_words": 5.37,
+    "defects_by_severity": {
+     "cosmetic": 68,
+     "misleads": 39,
+     "wrong_text": 12
+    },
+    "words_judged": 9498,
+    "served_outcomes": {
+     "apply refused": 12,
+     "correction": 18
+    },
+    "unchanged_pages": 12,
+    "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+   },
+   "controls": [
+    {
+     "id": "wp-latin-69b2210656715b0e32474293-latin-6991c5413074a1745a410a11",
+     "opus": false,
+     "gemini": null
+    },
+    {
+     "id": "wp-latin-69907008245959b9547d63f1-latin-69b301fbc22956d8a0de59c0",
+     "opus": false,
+     "gemini": null
+    }
+   ],
+   "per_page": [
+    {
+     "key": "latin-6977ad1ba954603a0a846c77",
+     "book_id": "697796e4b58638948b302822",
+     "page_id": "6977ad1ba954603a0a846c77",
+     "page_number": 59,
+     "words": 459,
+     "han": 0,
+     "served": "apply refused: more transcription headers than the draft: restarted or refused read",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69528ff8b184004c526a13dc",
+     "book_id": "69528ff8b184004c526a1365",
+     "page_id": "69528ff8b184004c526a13dc",
+     "page_number": 119,
+     "words": 307,
+     "han": 0,
+     "served": "apply refused: more transcription headers than the draft: restarted or refused read",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b2218508069e96e84301c9",
+     "book_id": "69b2218508069e96e8430161",
+     "page_id": "69b2218508069e96e84301c9",
+     "page_number": 104,
+     "words": 288,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6994436edc4ead2eae407237",
+     "book_id": "6994436edc4ead2eae4071db",
+     "page_id": "6994436edc4ead2eae407237",
+     "page_number": 92,
+     "words": 159,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "T6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69905d712fd6a0399389f530",
+     "book_id": "69905d712fd6a0399389f481",
+     "page_id": "69905d712fd6a0399389f530",
+     "page_number": 175,
+     "words": 371,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6958de1ff26aeac672f1f32f",
+     "book_id": "6958de1ff26aeac672f1f2ba",
+     "page_id": "6958de1ff26aeac672f1f32f",
+     "page_number": 117,
+     "words": 88,
+     "han": 0,
+     "served": "apply refused: correction changes 63% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b52c453dd6d9423027f1ca",
+     "book_id": "69b52c453dd6d9423027f160",
+     "page_id": "69b52c453dd6d9423027f1ca",
+     "page_number": 106,
+     "words": 316,
+     "han": 0,
+     "served": "apply refused: correction changes 89% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "T7",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "T7",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "T7",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6988ca3a200d744998371653",
+     "book_id": "6988a5a04e0a871daa2ae29c",
+     "page_id": "6988ca3a200d744998371653",
+     "page_number": 142,
+     "words": 411,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6991c5413074a1745a410a11",
+     "book_id": "6991c5413074a1745a4109c2",
+     "page_id": "6991c5413074a1745a410a11",
+     "page_number": 79,
+     "words": 591,
+     "han": 0,
+     "served": "apply refused: correction changes 66% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b631311c1c21a373805e2f",
+     "book_id": "69b631311c1c21a373805e2d",
+     "page_id": "69b631311c1c21a373805e2f",
+     "page_number": 2,
+     "words": 278,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b267fd2195606b88d9a1b5",
+     "book_id": "69b267fd2195606b88d9a15b",
+     "page_id": "69b267fd2195606b88d9a1b5",
+     "page_number": 90,
+     "words": 175,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-68611c806122a466ae2491b1",
+     "book_id": "68611c716122a466ae2491ab",
+     "page_id": "68611c806122a466ae2491b1",
+     "page_number": 3,
+     "words": 78,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-698433ff24f0fbeb075e53e6",
+     "book_id": "698420e3d31cb006fd2462cc",
+     "page_id": "698433ff24f0fbeb075e53e6",
+     "page_number": 106,
+     "words": 229,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b2210656715b0e32474293",
+     "book_id": "69b2210656715b0e3247421f",
+     "page_id": "69b2210656715b0e32474293",
+     "page_number": 116,
+     "words": 206,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b43d2706b196d69f66f1a0",
+     "book_id": "69b43d2706b196d69f66f14f",
+     "page_id": "69b43d2706b196d69f66f1a0",
+     "page_number": 81,
+     "words": 168,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b301fbc22956d8a0de59c0",
+     "book_id": "69b301fbc22956d8a0de598d",
+     "page_id": "69b301fbc22956d8a0de59c0",
+     "page_number": 51,
+     "words": 171,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b4d67135f432bda051c869",
+     "book_id": "69b4d67135f432bda051c750",
+     "page_id": "69b4d67135f432bda051c869",
+     "page_number": 281,
+     "words": 224,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-695a4b7c17edeac041d6b304",
+     "book_id": "695a4b7c17edeac041d6b2f3",
+     "page_id": "695a4b7c17edeac041d6b304",
+     "page_number": 17,
+     "words": 351,
+     "han": 0,
+     "served": "apply refused: more transcription headers than the draft: restarted or refused read",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6990700f245959b9547d6598",
+     "book_id": "6990700f245959b9547d6544",
+     "page_id": "6990700f245959b9547d6598",
+     "page_number": 84,
+     "words": 535,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "T6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b2f4755ef23d31023f7282",
+     "book_id": "69b2f4755ef23d31023f7221",
+     "page_id": "69b2f4755ef23d31023f7282",
+     "page_number": 97,
+     "words": 233,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6991d8ca8c1030b12444ca91",
+     "book_id": "6991d8ca8c1030b12444ca39",
+     "page_id": "6991d8ca8c1030b12444ca91",
+     "page_number": 88,
+     "words": 280,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6992009a768b426600239d91",
+     "book_id": "6992009a768b426600239d59",
+     "page_id": "6992009a768b426600239d91",
+     "page_number": 56,
+     "words": 582,
+     "han": 0,
+     "served": "apply refused: more transcription headers than the draft: restarted or refused read",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-699065b03dc2ed39a49f26c6",
+     "book_id": "699065b03dc2ed39a49f25b8",
+     "page_id": "699065b03dc2ed39a49f26c6",
+     "page_number": 270,
+     "words": 261,
+     "han": 0,
+     "served": "apply refused: correction changes 36% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "I4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b525d62f891867c1ae5d05",
+     "book_id": "69b525d62f891867c1ae5d04",
+     "page_id": "69b525d62f891867c1ae5d05",
+     "page_number": 1,
+     "words": 156,
+     "han": 0,
+     "served": "apply refused: correction changes 65% of the draft's words: check by eye",
+     "changed": false,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69591181ecb01322b3069dcd",
+     "book_id": "694f397b53410e29f94e13ea",
+     "page_id": "69591181ecb01322b3069dcd",
+     "page_number": 286,
+     "words": 640,
+     "han": 0,
+     "served": "apply refused: more transcription headers than the draft: restarted or refused read",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O12",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b303de5facc83a9a3db436",
+     "book_id": "69b303de5facc83a9a3db3c1",
+     "page_id": "69b303de5facc83a9a3db436",
+     "page_number": 117,
+     "words": 283,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O7",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69907008245959b9547d63f1",
+     "book_id": "69907008245959b9547d63ae",
+     "page_id": "69907008245959b9547d63f1",
+     "page_number": 67,
+     "words": 214,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-6976464c4fefa3b62e5bc8d7",
+     "book_id": "6975158ba88d83c830d99e24",
+     "page_id": "6976464c4fefa3b62e5bc8d7",
+     "page_number": 162,
+     "words": 375,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O16",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69ac8521960d5ad0b47316e9",
+     "book_id": "69ac8521960d5ad0b47315ab",
+     "page_id": "69ac8521960d5ad0b47316e9",
+     "page_number": 318,
+     "words": 863,
+     "han": 0,
+     "served": "apply refused: letters outside the book's scripts",
+     "changed": false,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O6",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": null
+    },
+    {
+     "key": "latin-69b2697fea90278696507d40",
+     "book_id": "69b2697fea90278696507c6e",
+     "page_id": "69b2697fea90278696507d40",
+     "page_number": 210,
+     "words": 206,
+     "han": 0,
+     "served": "correction",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": null
+    }
+   ]
+  },
+  "zh-paddle-dice-lt090/manuscript": {
+   "base": "zh-paddle-dice-lt090",
+   "script": "manuscript",
+   "lang": "Chinese",
+   "route": "paddle>agy-flash-low",
+   "draft": "paddle",
+   "secondJudge": true,
+   "tally": {
+    "books_in_frame": 10979,
+    "excluded_evidence": 0,
+    "walked": 33,
+    "no_page": 3,
+    "no_page_of_script": 0,
+    "image": 0
+   },
+   "evidence_files": 20,
+   "route_result": {
+    "n": 30,
+    "books": 30,
+    "accept": "19/30",
+    "ci95": [
+     0.455,
+     0.781
+    ],
+    "wrong_text_pages": "9/30",
+    "classes_k_of_n": {
+     "O6": "13/30",
+     "O11": "10/30",
+     "E2": "5/30",
+     "O5": "4/30",
+     "O8": "4/30",
+     "D1": "3/30",
+     "O4": "2/30",
+     "O12": "2/30",
+     "O7": "1/30"
+    },
+    "severe_per_1k_words": 11.09,
+    "defects_by_severity": {
+     "cosmetic": 17,
+     "misleads": 24,
+     "wrong_text": 18
+    },
+    "words_judged": 3789,
+    "second_judge": {
+     "judge": "gemini-3.8-flash-low (agy)",
+     "family": "gemini",
+     "accept": "18/30",
+     "wrong_text_pages": "10/30",
+     "both_accept": 13
+    },
+    "served_outcomes": {
+     "read judged; apply would refuse": 30
+    },
+    "unchanged_pages": 0,
+    "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+   },
+   "controls": [
+    {
+     "id": "wp-zh-6a3c75e239b4508b04e5e54a-zh-6a3c6b4039b4508b04e4240b",
+     "opus": false,
+     "gemini": false
+    },
+    {
+     "id": "wp-zh-6a3c7b6d01fe4f593c21e8ab-zh-6a3c78ad01fe4f593c20a235",
+     "opus": false,
+     "gemini": false
+    }
+   ],
+   "per_page": [
+    {
+     "key": "zh-6a3c6eb301fe4f593c1c537b",
+     "book_id": "6a3c6eb301fe4f593c1c5358",
+     "page_id": "6a3c6eb301fe4f593c1c537b",
+     "page_number": 35,
+     "words": 10,
+     "han": 160,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3cea53db5eb2b6767350f0",
+     "book_id": "6a3cea53db5eb2b676735098",
+     "page_id": "6a3cea53db5eb2b6767350f0",
+     "page_number": 88,
+     "words": 35,
+     "han": 232,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3cba073dce6cfad7498ecc",
+     "book_id": "6a3cba073dce6cfad7498e94",
+     "page_id": "6a3cba073dce6cfad7498ecc",
+     "page_number": 56,
+     "words": 23,
+     "han": 202,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3ce6960a0011cb4bc06758",
+     "book_id": "6a3ce6960a0011cb4bc0673f",
+     "page_id": "6a3ce6960a0011cb4bc06758",
+     "page_number": 25,
+     "words": 18,
+     "han": 161,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4
+     }
+    },
+    {
+     "key": "zh-6a3c6d6801fe4f593c1bac59",
+     "book_id": "6a3c6d6801fe4f593c1bac19",
+     "page_id": "6a3c6d6801fe4f593c1bac59",
+     "page_number": 64,
+     "words": 11,
+     "han": 133,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3cbc94f9474f825c16177b",
+     "book_id": "6a3cbc94f9474f825c16172e",
+     "page_id": "6a3cbc94f9474f825c16177b",
+     "page_number": 77,
+     "words": 24,
+     "han": 190,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c5f7f879008ba7e155f26",
+     "book_id": "6a3c5f7f879008ba7e155ed4",
+     "page_id": "6a3c5f7f879008ba7e155f26",
+     "page_number": 82,
+     "words": 53,
+     "han": 168,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3cc222f9474f825c174b40",
+     "book_id": "6a3cc222f9474f825c174b03",
+     "page_id": "6a3cc222f9474f825c174b40",
+     "page_number": 60,
+     "words": 10,
+     "han": 160,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c727e01fe4f593c1dfd41",
+     "book_id": "6a3c727e01fe4f593c1dfd19",
+     "page_id": "6a3c727e01fe4f593c1dfd41",
+     "page_number": 40,
+     "words": 10,
+     "han": 97,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O7",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c648039b4508b04e2798e",
+     "book_id": "6a3c648039b4508b04e27967",
+     "page_id": "6a3c648039b4508b04e2798e",
+     "page_number": 39,
+     "words": 48,
+     "han": 297,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c63f8af3c49b59c5ca004",
+     "book_id": "6a3c63f8af3c49b59c5c9fc0",
+     "page_id": "6a3c63f8af3c49b59c5ca004",
+     "page_number": 68,
+     "words": 60,
+     "han": 328,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "E2",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3ceb1795fcd455630535c6",
+     "book_id": "6a3ceb1695fcd4556305355c",
+     "page_id": "6a3ceb1795fcd455630535c6",
+     "page_number": 106,
+     "words": 10,
+     "han": 151,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c64c539b4508b04e29e89",
+     "book_id": "6a3c64c539b4508b04e29e05",
+     "page_id": "6a3c64c539b4508b04e29e89",
+     "page_number": 132,
+     "words": 52,
+     "han": 364,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "E2",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "misleads"
+       },
+       {
+        "class": "O4",
+        "severity": "wrong_text"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c7b6d01fe4f593c21e8ab",
+     "book_id": "6a3c7b6d01fe4f593c21e7dc",
+     "page_id": "6a3c7b6d01fe4f593c21e8ab",
+     "page_number": 84,
+     "words": 15,
+     "han": 63,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c78ad01fe4f593c20a235",
+     "book_id": "6a3c78ad01fe4f593c20a1d7",
+     "page_id": "6a3c78ad01fe4f593c20a235",
+     "page_number": 94,
+     "words": 12,
+     "han": 139,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c650739b4508b04e2c065",
+     "book_id": "6a3c650739b4508b04e2c02b",
+     "page_id": "6a3c650739b4508b04e2c065",
+     "page_number": 58,
+     "words": 47,
+     "han": 367,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       },
+       {
+        "class": "D1",
+        "severity": "misleads"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "O5",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c774901fe4f593c200ff7",
+     "book_id": "6a3c774901fe4f593c200fb2",
+     "page_id": "6a3c774901fe4f593c200ff7",
+     "page_number": 69,
+     "words": 16,
+     "han": 174,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       },
+       {
+        "class": "D1",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c6b76af3c49b59c5ec6b4",
+     "book_id": "6a3c6b76af3c49b59c5ec651",
+     "page_id": "6a3c6b76af3c49b59c5ec6b4",
+     "page_number": 99,
+     "words": 16,
+     "han": 108,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c6c8c01fe4f593c1b2545",
+     "book_id": "6a3c6c8c01fe4f593c1b250f",
+     "page_id": "6a3c6c8c01fe4f593c1b2545",
+     "page_number": 54,
+     "words": 16,
+     "han": 96,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c612040c88a541d8edf85",
+     "book_id": "6a3c612040c88a541d8edf43",
+     "page_id": "6a3c612040c88a541d8edf85",
+     "page_number": 66,
+     "words": 27,
+     "han": 339,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c6ae5af3c49b59c5eb36f",
+     "book_id": "6a3c6ae5af3c49b59c5eb316",
+     "page_id": "6a3c6ae5af3c49b59c5eb36f",
+     "page_number": 89,
+     "words": 9,
+     "han": 88,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c79bd01fe4f593c212083",
+     "book_id": "6a3c79bd01fe4f593c21204c",
+     "page_id": "6a3c79bd01fe4f593c212083",
+     "page_number": 55,
+     "words": 23,
+     "han": 138,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c77fb01fe4f593c206271",
+     "book_id": "6a3c77fb01fe4f593c20617a",
+     "page_id": "6a3c77fb01fe4f593c206271",
+     "page_number": 76,
+     "words": 10,
+     "han": 145,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": []
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c790e01fe4f593c20ceb6",
+     "book_id": "6a3c790e01fe4f593c20ce6a",
+     "page_id": "6a3c790e01fe4f593c20ceb6",
+     "page_number": 75,
+     "words": 13,
+     "han": 176,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c75e239b4508b04e5e54a",
+     "book_id": "6a3c75e239b4508b04e5e50f",
+     "page_id": "6a3c75e239b4508b04e5e54a",
+     "page_number": 59,
+     "words": 21,
+     "han": 308,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3cbcd5ec254ff6cadf3a8d",
+     "book_id": "6a3cbcd5ec254ff6cadf39db",
+     "page_id": "6a3cbcd5ec254ff6cadf3a8d",
+     "page_number": 57,
+     "words": 32,
+     "han": 254,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O8",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c7af901fe4f593c21b56f",
+     "book_id": "6a3c7af901fe4f593c21b51a",
+     "page_id": "6a3c7af901fe4f593c21b56f",
+     "page_number": 85,
+     "words": 10,
+     "han": 155,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O4",
+        "severity": "wrong_text"
+       },
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c6b4039b4508b04e4240b",
+     "book_id": "6a3c6b4039b4508b04e423d1",
+     "page_id": "6a3c6b4039b4508b04e4240b",
+     "page_number": 58,
+     "words": 12,
+     "han": 136,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       },
+       {
+        "class": "O11",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 5
+     }
+    },
+    {
+     "key": "zh-6a3c6b6639b4508b04e43afd",
+     "book_id": "6a3c6b6639b4508b04e43a92",
+     "page_id": "6a3c6b6639b4508b04e43afd",
+     "page_number": 107,
+     "words": 27,
+     "han": 198,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O12",
+        "severity": "misleads"
+       },
+       {
+        "class": "E2",
+        "severity": "misleads"
+       },
+       {
+        "class": "O8",
+        "severity": "cosmetic"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": true,
+      "fidelity": 3
+     }
+    },
+    {
+     "key": "zh-6a3c693d39b4508b04e3d940",
+     "book_id": "6a3c693d39b4508b04e3d8f5",
+     "page_id": "6a3c693d39b4508b04e3d940",
+     "page_number": 75,
+     "words": 45,
+     "han": 156,
+     "served": "read judged; apply would refuse: more transcription headers than the draft: restarted or refused read",
+     "changed": true,
+     "opus": {
+      "accept": true,
+      "wrong": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "severity": "misleads"
+       }
+      ]
+     },
+     "gemini": {
+      "accept": false,
+      "wrong": false,
+      "fidelity": 3
+     }
+    }
+   ]
+  }
+ }
+}

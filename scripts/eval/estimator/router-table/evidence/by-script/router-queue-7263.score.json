@@ -1,0 +1,136 @@
+{
+ "generated_by": "scripts/eval/router-queue-7263/run.mjs analyze (job eu-agy-translate-cell-7263, #7263: the live table tests[] ranks 1-3)",
+ "cells": {
+  "latin-lite-q7263|print": {
+   "routes": {
+    "lite>agy-flash-low+diffqa": {
+     "n": 30,
+     "books": 30,
+     "accept": "10/30",
+     "ci95": [
+      0.192,
+      0.512
+     ],
+     "wrong_text_pages": "18/30",
+     "classes_k_of_n": {
+      "O6": "18/30",
+      "O5": "13/30",
+      "O16": "9/30",
+      "O12": "9/30",
+      "I4": "5/30",
+      "O7": "5/30",
+      "O11": "5/30",
+      "E2": "4/30",
+      "O8": "4/30",
+      "O1": "4/30",
+      "O10": "3/30",
+      "D1": "3/30",
+      "T6": "2/30",
+      "O4": "2/30",
+      "O18": "1/30",
+      "I1": "1/30",
+      "O14": "1/30"
+     },
+     "severe_per_1k_words": 12.38,
+     "defects_by_severity": {
+      "cosmetic": 53,
+      "misleads": 79,
+      "wrong_text": 78
+     },
+     "words_judged": 12680,
+     "served_outcomes": {
+      "apply refused": 19,
+      "diff-QA merged": 11
+     },
+     "unchanged_pages": 19,
+     "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+    }
+   }
+  },
+  "latin-flash3-q7263|unknown": {
+   "routes": {
+    "3flash>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "ci95": [
+      0.556,
+      0.858
+     ],
+     "wrong_text_pages": "5/30",
+     "classes_k_of_n": {
+      "O8": "14/30",
+      "O6": "13/30",
+      "E2": "7/30",
+      "O16": "6/30",
+      "O12": "6/30",
+      "D1": "6/30",
+      "O11": "4/30",
+      "T6": "2/30",
+      "O5": "2/30",
+      "T7": "1/30",
+      "I4": "1/30",
+      "O7": "1/30"
+     },
+     "severe_per_1k_words": 5.37,
+     "defects_by_severity": {
+      "cosmetic": 68,
+      "misleads": 39,
+      "wrong_text": 12
+     },
+     "words_judged": 9498,
+     "served_outcomes": {
+      "apply refused": 12,
+      "correction": 18
+     },
+     "unchanged_pages": 12,
+     "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+    }
+   }
+  },
+  "zh-paddle-dice-lt090-q7263|manuscript": {
+   "routes": {
+    "paddle>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "19/30",
+     "ci95": [
+      0.455,
+      0.781
+     ],
+     "wrong_text_pages": "9/30",
+     "classes_k_of_n": {
+      "O6": "13/30",
+      "O11": "10/30",
+      "E2": "5/30",
+      "O5": "4/30",
+      "O8": "4/30",
+      "D1": "3/30",
+      "O4": "2/30",
+      "O12": "2/30",
+      "O7": "1/30"
+     },
+     "severe_per_1k_words": 11.09,
+     "defects_by_severity": {
+      "cosmetic": 17,
+      "misleads": 24,
+      "wrong_text": 18
+     },
+     "words_judged": 3789,
+     "second_judge": {
+      "judge": "gemini-3.8-flash-low (agy)",
+      "family": "gemini",
+      "accept": "18/30",
+      "wrong_text_pages": "10/30",
+      "both_accept": 13
+     },
+     "served_outcomes": {
+      "read judged; apply would refuse": 30
+     },
+     "unchanged_pages": 0,
+     "note": "the drawn pages, each as the route would serve it (a page the apply guards refuse serves the stored draft)"
+    }
+   }
+  }
+ }
+}
