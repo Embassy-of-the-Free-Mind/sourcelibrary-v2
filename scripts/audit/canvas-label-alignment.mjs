@@ -54,7 +54,7 @@ const outFile = path.join(OUT, BOOK ? `book-${BOOK}.jsonl` : `books-${PROVIDER}.
 const out = fs.createWriteStream(outFile);
 try {
   const q = BOOK ? { id: BOOK } : { 'image_source.provider': PROVIDER, 'image_source.iiif_manifest': { $exists: true }, pages_ocr: { $gt: 0 } };
-  let cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, visible: 1, pages_count: 1, image_source: 1, image_resolution_upgraded_at: 1 } }).sort({ _id: 1 });
+  let cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, visible: 1, pages_count: 1, image_source: 1, image_resolution_upgraded_at: 1 } }).sort({ _id: 1 }).batchSize(100);
   if (LIMIT) cursor = cursor.limit(LIMIT);
   const tally = {};
   for await (const b of cursor) {
