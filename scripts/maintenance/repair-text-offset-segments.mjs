@@ -14,6 +14,9 @@
  * canvas labels (scripts/lib/canvas-label-alignment.mjs). The script refuses unless the
  * book scores `shifted` before and at least --min-aligned (default 0.95) of scored pages
  * land at offset 0 after. A wrong segment spec therefore cannot be written.
+ * A book the labels cannot score (ordinal labels, or an unreachable manifest) is refused
+ * unless --by-eye names the opened slots that showed the moved text, one near each end of
+ * every segment; the gate used is recorded on the book_events row.
  * Also refused: human-edited text in scope, split pages, a book already repaired
  * (book_events text_shift_repair with the same spec).
  *
@@ -52,8 +55,20 @@ const MIRRORS_ONLY = args.includes('--mirrors-only');
 // AFTER the repair for the same number is also redirected: the trade taken on #7605. Unknown codes
 // cannot be found and are not touched.
 const SHORTLINKS_ONLY = args.includes('--shortlinks-only');
-if (!BOOK || !SPEC) { console.error('usage: --book ID --segments "A-B:+d,C-D:+e" [--issue N] [--apply]'); process.exit(1); }
+// Books the label gate cannot score (e-rara ordinal labels, or a manifest this box cannot fetch:
+// e-rara answers 403 to clawdbot): the slots whose image was OPENED and showed the text this move
+// puts on them. Each segment needs one in its first third and one in its last third. Used only when
+// the labels cannot score; a book they can score is still gated on them.
+const BY_EYE = flag('by-eye') ? flag('by-eye').split(',').map(Number) : null;
+if (!BOOK || !SPEC) { console.error('usage: --book ID --segments "A-B:+d,C-D:+e" [--issue N] [--by-eye S1,S2] [--apply]'); process.exit(1); }
 const segments = parseSegments(SPEC);
+if (BY_EYE) {
+  for (const s of segments) {
+    const third = (s.to - s.from) / 3;
+    const ok = BY_EYE.some((n) => n >= s.from && n <= s.from + third) && BY_EYE.some((n) => n <= s.to && n >= s.to - third);
+    if (!ok) { console.log(`[REFUSE] --by-eye needs an opened slot in the first and last third of ${s.from}-${s.to}`); process.exit(2); }
+  }
+}
 
 
 async function redirectKnownShortlinks(pages, moves, repairedAt) {
@@ -128,11 +143,18 @@ try {
     process.exit(0);
   }
 
-  const mj = await (await fetch(manifest, { signal: AbortSignal.timeout(60000) })).json();
-  const labels = (mj.sequences?.[0]?.canvases ?? mj.items ?? []).map((c) => labelNumber(c.label));
+  let labels = null;
+  try {
+    const mj = await (await fetch(manifest, { signal: AbortSignal.timeout(60000) })).json();
+    labels = (mj.sequences?.[0]?.canvases ?? mj.items ?? []).map((c) => labelNumber(c.label));
+  } catch (e) {
+    if (!BY_EYE) throw e;
+    console.log(`  manifest unreadable here (${e.message.slice(0, 60)}): gating by eye`);
+  }
 
   const pages = await db.collection('pages').find({ book_id: BOOK, page_number: { $gte: 1 } }).sort({ page_number: 1 }).toArray();
-  if (labels.length !== pages.length) { console.log(`[REFUSE] manifest has ${labels.length} canvases, book has ${pages.length} pages`); process.exit(2); }
+  if (labels && labels.length !== pages.length) { console.log(`[REFUSE] manifest has ${labels.length} canvases, book has ${pages.length} pages`); process.exit(2); }
+  labels ??= [];
   if (pages.some((p) => p.split_side)) { console.log('[REFUSE] split pages in the book'); process.exit(2); }
 
   const moves = computeSegmentMoves(pages, segments);
@@ -158,7 +180,9 @@ try {
   console.log(`  after (simulated): ${afterV.verdict} offset-0 share=${zeroShare.toFixed(3)} scored=${afterV.scored} ${JSON.stringify(afterV.histogram)}`);
   const residual = offsetRuns(afterRows).filter((r) => r.offset !== 0 && r.scored >= 3);
   if (residual.length) console.log(`  residual non-zero runs after the move (read by eye): ${residual.map((r) => `${r.from}-${r.to}:${r.offset}(${r.scored})`).join(' ')}`);
-  if (before.verdict !== 'shifted' || zeroShare < MIN_ALIGNED) { console.log(`[REFUSE] gate: need before=shifted and after offset-0 share >= ${MIN_ALIGNED}`); process.exit(2); }
+  const gate = BY_EYE && before.verdict === 'unscored' ? { by: 'eye', slots: BY_EYE } : { by: 'labels' };
+  if (gate.by === 'eye') console.log(`  gate: labels cannot score this book; by eye at slots ${BY_EYE.join(',')}`);
+  else if (before.verdict !== 'shifted' || zeroShare < MIN_ALIGNED) { console.log(`[REFUSE] gate: need before=shifted and after offset-0 share >= ${MIN_ALIGNED}`); process.exit(2); }
 
   const cleared = moves.filter((m) => m.cleared).map((m) => m.page_number);
   // Text whose slot is overwritten (a move target) and which no move carries elsewhere. Slots outside every segment keep their text.
@@ -206,7 +230,7 @@ try {
   await recountBook(db, BOOK, { reason: 'repair-text-offset-segments', now });
   await db.collection('book_events').insertOne({
     book_id: BOOK, type: 'text_shift_repair', at: now, source: 'repair-text-offset-segments',
-    details: { segments: SPEC, pages: moves.length, cleared, orphaned, revisions: revisions.length, revision_source: SOURCE, before, after: { histogram: afterV.histogram, zero_share: zeroShare }, issue: ISSUE, backup: backupFile },
+    details: { segments: SPEC, gate, pages: moves.length, cleared, orphaned, revisions: revisions.length, revision_source: SOURCE, before, after: { histogram: afterV.histogram, zero_share: zeroShare }, issue: ISSUE, backup: backupFile },
   });
 
   await redirectKnownShortlinks(pages, moves, now);
