@@ -588,8 +588,7 @@ export default function QualityCenterPage() {
               Latin books in the draw, the 11 that are manuscripts or were printed before 1501 carry about 10 meaning-changing
               errors per 1,000 words, and only 19% of their pages are clean. The 12 printed in 1501 or later carry about
               2 per 1,000, with 60% of pages clean. That is close to what we measured on print against a typed scholarly
-              edition, where the edition itself carries about 1.5. The reading engine changes the rate by about a fifth;
-              the age of the book changes it four- to fivefold. The early books fail on gothic letter-forms and on the
+              edition, where the edition itself carries about 1.5. The early books fail on gothic letter-forms and on the
               abbreviations scribes and early printers used, which the engine expands into the wrong whole word. In a
               herbal printed in 1484, <i>ſauine</i> (savin, a herb) became <i>semine</i> (seed), and <i>an. m. j</i>{' '}
               (one handful) became <i>unciam i.</i> (one ounce), so the recipe changed. In a manuscript of Hierocles,{' '}
@@ -649,7 +648,9 @@ export default function QualityCenterPage() {
           <Source>
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_language_route</code>, unweighted. In Chinese
             the engines read different material: PaddleOCR the manuscripts, the Gemini models printed books, so those
-            rows are not a contest. The full list, including engines that read one or two books, is in the file.
+            rows are not a contest. The full list, including engines that read one or two books, is in the file. The
+            library&rsquo;s own mix of engines: <A href={`${BLOB}scripts/eval/experiments/2026-11-02-stock-by-engine-7933.md`}>the
+            census</A>.
           </Source>
           <div className="max-w-3xl mt-6">
             <p className="text-stone-700 leading-relaxed mb-3">
@@ -661,17 +662,28 @@ export default function QualityCenterPage() {
               on English. And general-purpose models are poor on Greek, Sanskrit and Korean, at one error in every 50 to 60
               words or characters. Those pages wait for an engine that has been tested on their script.
             </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              <b className="text-stone-900">These are the reads already in the library, not the ones we make now.</b> In a
+              random sample of 28,053 live pages, Flash-Lite wrote 47% of the transcriptions and Gemini 3 Flash 22%; Gemini
+              3.8 Flash, which reads pages now, has written 1.5%. Latin is 72% Flash-Lite, and Latin printed before 1501 is
+              90%. The English follows the same pattern: Flash-Lite 52%, 3 Flash 44%, 3.8 Flash 2%. Where 3.8 Flash has re-read pages
+              Flash-Lite read, it cut the Latin pages a reviewer called misleading from 41% to 8% (250 pages,{' '}
+              <IssueLink num={5924} />). The draw also leans toward Gemini 3 Flash in Latin (80% of its Latin pages,
+              against 28% of the library&rsquo;s), so the Latin rate above is probably lower than the library&rsquo;s as
+              it stands.
+            </p>
           </div>
 
           <Sub>By the age and hand of the book</Sub>
           <div className="max-w-3xl">
             <p className="text-stone-700 leading-relaxed mb-3">
               Alphabetic scripts only, so every rate is per 1,000 words. Manuscripts and books printed before 1501 are hard
-              for every engine we use; print from after 1700 is much cleaner. The book&rsquo;s age matters more than the
-              engine. Before 1501, Gemini 3 Flash and Flash-Lite make the same number of errors
-              ({eraRoute('before 1501', '3flash')?.severe_per_1k} and {eraRoute('before 1501', 'lite')?.severe_per_1k} per
-              1,000); the gap between them opens only on later print. Languages are mixed in each row, so a row with more
-              Greek in it looks worse for that reason.
+              for every engine we use; print from after 1700 is much cleaner. In this draw the early books read by Gemini 3
+              Flash and by Flash-Lite come out alike ({eraRoute('before 1501', '3flash')?.severe_per_1k} and{' '}
+              {eraRoute('before 1501', 'lite')?.severe_per_1k} per 1,000), but those are different books, five or so each.
+              Where both engines read the same gothic pages, readers preferred the Flash reading on 14 of 15
+              (<IssueLink num={6375} />), so the engine still matters on early print. Languages are mixed in each row, so a
+              row with more Greek in it looks worse for that reason.
             </p>
           </div>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
