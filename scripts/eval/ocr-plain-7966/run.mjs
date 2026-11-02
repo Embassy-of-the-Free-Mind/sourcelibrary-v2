@@ -232,7 +232,7 @@ const agyReads = () => new Map(jsonl(F.agy).filter((r) => !r.quota).map((r) => [
 // text). <vocab> and <image-desc> are dropped by #7941's rule already; C's bare <image/> by its self-closing rule.
 const NOTE = /<note\b[^>]*>[\s\S]*?<\/note>/gi;
 async function normRead(text) { const { normalise } = await import('../judge-cal-7866bar-7263/three-way.mjs'); return normalise('ours', { text: String(text || '').replace(NOTE, ' ') }).text; }
-function readsOf(engine) { return engine === 'lite' ? new Map([...liteReads()].map(([k, r]) => [k, { text: r.outcome === 'text' || r.outcome === 'truncated' ? r.text : '', outcome: r.outcome, out_tokens: r.outTok }])) : new Map([...agyReads()].map(([k, r]) => [k, { text: r.text, outcome: r.problem ? `problem: ${r.problem}` : 'text', out_tokens: (r.usage || []).reduce((s, u) => s + (u?.output_tokens ?? u?.output ?? 0), 0) }])); }
+function readsOf(engine) { return engine === 'lite' ? new Map([...liteReads()].map(([k, r]) => [k, { text: r.outcome === 'text' || r.outcome === 'truncated' ? r.text : '', outcome: r.outcome, out_tokens: r.outTok }])) : new Map([...agyReads()].map(([k, r]) => [k, { text: r.problem ? '' : r.text, outcome: r.problem ? `problem: ${r.problem}` : 'text', out_tokens: (r.usage || []).reduce((s, u) => s + (u?.output_tokens ?? u?.output ?? 0), 0) }])); }
 
 // ── stage judge ──
 async function judge() {
@@ -270,6 +270,9 @@ async function judge() {
   console.log(stop ? `STOPPED: ${stop}` : 'judge: done', `Opus calls ${spent()}; meter ${JSON.stringify(state.meter ?? null)}`);
 }
 async function shrink(uid) { const sharp = (await import('sharp')).default; return sharp(fs.readFileSync(path.join(OUT, 'img', `${uid}.jpg`))).resize(3000, 3000, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 90 }).toBuffer(); }
+// A read the lane does not serve (lite: RECITATION / no text; agy: cli-ocr's guard refuses it, never written) counts as
+// an empty page: not accepted, one wrong_text flag (pre-registration, measure 1).
+const EMPTY_VERDICT = { empty: true, verdict: { accept: false, fidelity: 0, defects: [{ class: 'O5', severity: 'wrong_text', what: 'empty read' }] } };
 const severe = (d) => d.severity === 'misleads' || d.severity === 'wrong_text';
 
 // ── stage score ──
@@ -301,7 +304,7 @@ async function score() {
     const reads = readsOf(e);
     for (const p of ps) for (const a of ARMS) {
       const r = reads.get(`${a}:${p.uid}`); if (!r) continue;
-      const it = itemOf(p.uid), v = V.get(`${e}-${a}-${p.uid}`), raw = r.text || '';
+      const it = itemOf(p.uid), raw = r.text || '', v = raw.trim() ? V.get(`${e}-${a}-${p.uid}`) : EMPTY_VERDICT;
       const row = { engine: e, arm: a, uid: p.uid, set: p.set, lang: p.lang, outcome: r.outcome, out_tokens: r.out_tokens ?? null, chars: raw.length,
         n_note: (raw.match(/<note\b/gi) || []).length, n_vocab: (raw.match(/<vocab\b/gi) || []).length, n_term: (raw.match(/<term\b/gi) || []).length, n_image_desc: (raw.match(/<image-desc\b/gi) || []).length, n_image_marker: (raw.match(/<image\s*\/>/gi) || []).length, n_margin: (raw.match(/<margin\b/gi) || []).length };
       if (p.set === 'Z') {
@@ -331,13 +334,17 @@ async function score() {
     extra: rate((r) => (r.extra ?? 0) * r.units, (r) => (r.extra == null ? 0 : r.units), 1),
     cer_norm: rate((r) => (r.cer_norm ?? 0) * (r.ref_chars ?? 0), (r) => r.ref_chars ?? 0, 1),
     out_tokens: (s) => s.reduce((x, r) => x + (r.out_tokens ?? 0), 0) / s.length,
+    out_tokens_median: (s) => { const v = s.map((r) => r.out_tokens ?? 0).sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; },
   };
+  const IDX = new Map(rows.map((r) => [`${r.engine}|${r.arm}|${r.uid}`, r])); const row1 = (e, a, uid) => IDX.get(`${e}|${a}|${uid}`);
   for (const e of ENGINES) {
-    const full = ps.filter((p) => ARMS.every((a) => rows.some((r) => r.engine === e && r.arm === a && r.uid === p.uid && r.judged)));
+    const full = ps.filter((p) => ARMS.every((a) => row1(e, a, p.uid)?.judged));
     const eo = out.engines[e] = { n_pages: full.length, by_lang: {} };
-    for (const lang of ['ALL', 'English', 'Latin', 'German', 'Chinese']) {
-      const P = full.filter((p) => lang === 'ALL' || p.lang === lang); if (!P.length) continue;
-      const R = (a, sub) => sub.map((p) => rows.find((r) => r.engine === e && r.arm === a && r.uid === p.uid));
+    // ANSWERED (reported, not decided on): the pages where this engine served text in all four arms
+    const answered = (p) => ARMS.every((a) => { const r = row1(e, a, p.uid); return r?.chars > 0 && ['text', 'truncated'].includes(String(r.outcome)); });
+    for (const lang of ['ALL', 'ANSWERED', 'English', 'Latin', 'German', 'Chinese']) {
+      const P = full.filter((p) => lang === 'ALL' || (lang === 'ANSWERED' ? answered(p) : p.lang === lang)); if (!P.length) continue;
+      const R = (a, sub) => sub.map((p) => row1(e, a, p.uid));
       const L = eo.by_lang[lang] = { n: P.length, arms: {}, diffs: {} };
       for (const a of ARMS) L.arms[a] = Object.fromEntries(Object.entries(MEAS).map(([m, f]) => [m, r3(f(R(a, P)))]));
       L.arms.A.counts = { note: R('A', P).reduce((s, r) => s + r.n_note, 0), vocab: R('A', P).reduce((s, r) => s + r.n_vocab, 0), term: R('A', P).reduce((s, r) => s + r.n_term, 0), image_desc: R('A', P).reduce((s, r) => s + r.n_image_desc, 0) };
