@@ -108,7 +108,7 @@ const LIVE = { visible: true, pages_count: { $gt: 0 } };
 const books = db.collection('books');
 const byAuthor = new Map();
 const cursor = books.find({ author_id: { $in: womenIds } },
-  { projection: { author_id: 1, visible: 1, pages_count: 1, translation_state: 1, language: 1 } });
+  { projection: { author_id: 1, visible: 1, pages_count: 1, translation_state: 1, language: 1 } }).batchSize(1000);
 const readableIds = new Set((await books.find({ author_id: { $in: womenIds }, ...READABLE_IN_ENGLISH_FILTER },
   { projection: { _id: 1 } }).toArray()).map((b) => String(b._id)));
 const totals = { books: 0, live: 0, hidden: 0, live_readable_in_english: 0, all_readable_in_english: 0 };
