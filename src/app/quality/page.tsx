@@ -388,7 +388,9 @@ export default function QualityCenterPage() {
           <p className="mb-5">
             Books printed after 1600 come out alike, with about half to two thirds of pages clean. The earliest books are
             the hardest: on the {PERIOD_ROWS[0]?.books ?? 0} books from before 1500 in the draw, in Greek, Latin, Arabic and
-            Chinese, most pages carry something the page does not have.
+            Chinese, most pages carry something the page does not have. Part of that is handwriting rather than date: in
+            Latin, where a larger study checked each book&rsquo;s form on its image, manuscripts carried about four times
+            the errors of print in every century, and books printed before 1501 were only a little worse than later ones.
           </p>
           <ShareLegend />
           <ul className="space-y-2 mb-3">
