@@ -32,11 +32,13 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/import/new-world-wave.mjs --list scripts/import/new-world-candidates.json
  *   node scripts/import/new-world-wave.mjs --list ... --commit --limit 20
+ *   ... --sweep women-wave-7908   # record each import as a sweep_log row (the wave tag)
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync } from 'node:fs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const arg = (n, d) => { const i = process.argv.indexOf(n); return i > -1 ? process.argv[i + 1] : d; };
@@ -44,6 +46,7 @@ const LIST = arg('--list', 'scripts/import/new-world-candidates.json');
 const LIMIT = parseInt(arg('--limit', '999'), 10);
 const DELAY_MS = parseInt(arg('--delay', '900'), 10);
 const ONLY = arg('--region', null);
+const SWEEP = arg('--sweep', null);
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // IA refuses anonymous bulk fetch above ~5 req/s and answers with a TCP refusal,
@@ -310,6 +313,10 @@ async function main() {
         }));
       }
       await db.collection('pages').insertMany(docs, { ordered: false });
+    }
+    if (SWEEP) {
+      await recordSweepAction(db, { sweep: SWEEP, book_id: bookIdStr, action: 'imported-hidden',
+        detail: { importer: 'new-world-wave', ia: b.ia, region: b.region || null, pages: pageCount } });
     }
     imported++;
     pagesTotal += pageCount;
