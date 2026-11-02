@@ -80,6 +80,14 @@ describe('computeSegmentMoves', () => {
     expect(moves.filter((m: any) => m.cleared).map((m: any) => m.page_number)).toEqual([8, 9, 10]);
     expect((moves.find((m: any) => m.page_number === 9) as any).unset).toContain('ocr');
   });
+  it('moves the withheld marker with the text it withholds', () => {
+    const withWithheld = pages.map((p) => (p.page_number === 7 ? { page_number: 7, ocr: p.ocr, translation_withheld: { reason: 'invented_by_eye' } } : p));
+    const moves = computeSegmentMoves(withWithheld, parseSegments('4-10:+3'));
+    const by = new Map(moves.map((m: any) => [m.page_number, m]));
+    expect((by.get(4) as any).set.translation_withheld).toEqual({ reason: 'invented_by_eye' });
+    expect((by.get(4) as any).unset).toContain('translation');
+    expect((by.get(7) as any).unset).toContain('translation_withheld');
+  });
   it('refuses overlapping or malformed segments', () => {
     expect(() => computeSegmentMoves(pages, parseSegments('1-5:+1,5-10:+3'))).toThrow(/overlap/);
     expect(() => parseSegments('1-5:x')).toThrow();

@@ -26,7 +26,10 @@
  * repair-erara-text-shift.mjs exactly: the two text payloads, their
  * derivatives, and the layout metadata OCR produces alongside them.
  */
-export const SHIFT_FIELDS = ['ocr', 'translation', 'translation_summary', 'translation_keywords', 'page_type', 'columns'];
+// translation_withheld, translation_es and translations belong to the text too (#7949): the
+// segment repair moved the text without them, leaving three contained pages' markers on the
+// wrong slots and their OCR looking untranslated, i.e. queued for a paid re-translation.
+export const SHIFT_FIELDS = ['ocr', 'translation', 'translation_summary', 'translation_keywords', 'page_type', 'columns', 'translation_withheld', 'translation_es', 'translations'];
 
 /**
  * Compute the moves for a p(N+1) -> p(N) text shift.
