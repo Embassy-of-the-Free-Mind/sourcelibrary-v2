@@ -38,8 +38,9 @@ const g = servedGrades.grades as Record<string, Grade>;
 const frameBooks = Object.values(servedDraw.corpus.frame_books).reduce((a, x) => a + x, 0);
 const drawDate = servedDraw.generated_at.slice(0, 10);
 
-/** Meaning-changing errors per 1,000 words across the library's printed pages (#7866 draw, re-graded #7933). */
-const printPer1k = servedGrades.by_script.print.severe_per_1k;
+/** The same judge-flag rate over the library's printed pages, from the #7866 random draw (#7263 `corpus_7866_judge_proxy_per_1k`). */
+const corpusPrint = judgeCal.corpus_7866_judge_proxy_per_1k.print;
+const printPer1k = corpusPrint.per_1k;
 
 /** The same reviewer on 60 printed pages that also exist as human-typed scholarly editions (#7263). */
 const human = judgeCal.human_arm;
@@ -229,9 +230,10 @@ function Header() {
             {n(Math.round(1000 - printPer1k))} words in every 1,000 carry no error that changes the meaning.
           </p>
           <p className="font-body text-lg text-stone-700 leading-relaxed">
-            Typed scholarly editions are not error-free either. On pages where both exist, the same check found{' '}
-            {one(oursSamePages.per_1k)} such errors per 1,000 words in our text and {one(humanPer1k.per_1k)} in the edition
-            typed by people. Every page is shown beside its scan, so you can always check.
+            Where a scholarly edition typed by people exists, our text carries about as many errors as the edition. For
+            most books here nobody has typed the text, and the alternative is the Internet Archive&rsquo;s machine reading,
+            which gets printed numbers wrong about {Math.round(iaArchive.rate / iaOurs.rate)} times as often as ours. Every page is shown beside its scan, so you can
+            always check.
           </p>
         </div>
       </div>
@@ -242,7 +244,7 @@ function Header() {
 /* ── page ── */
 
 export default function QualityCenterPage() {
-  const max = Math.ceil(Math.max(humanPer1k.ci95[1], oursSamePages.ci95[1], printPer1k) + 0.5);
+  const max = Math.ceil(Math.max(humanPer1k.ci95[1], oursSamePages.ci95[1]) + 0.5);
   return (
     <ContentPageLayout header={<><SiteHeader variant="light" /><Header /></>} bg="bg-cream">
       <article className="max-w-3xl font-body text-stone-700 leading-relaxed">
@@ -257,15 +259,18 @@ export default function QualityCenterPage() {
             <RateRow label="Our transcription" sub="the same pages" rate={oursSamePages.per_1k} ci={oursSamePages.ci95} max={max} color="bg-stone-800" />
           </ul>
           <p className="text-sm text-stone-600">
-            The reviewer found at least one such error on {humanJudgedOff[0]} of the {humanJudgedOff[1]} typed pages. The
-            ranges are 95% intervals and overlap: on these pages the two cannot be told apart. They are cleaner than the
-            library as a whole: across every script, printed pages average {one(printPer1k)} per 1,000 words.
+            The two cannot be told apart: the 95% ranges overlap, and the reviewer found at least one such error on{' '}
+            {humanJudgedOff[0]} of the {humanJudgedOff[1]} typed pages. Books that someone has typed up tend to be clean,
+            well-printed copies, easier for any reader. On a typical printed page from the library our rate is about{' '}
+            {Math.round(corpusPrint.per_1k)} per 1,000 words; nobody has typed those pages, so there is no human figure to
+            set beside it.
           </p>
         </Section>
 
         <Section id="archive" title="Beside the Internet Archive’s OCR">
           <p className="mb-4">
-            Many of our books come from the Internet Archive, which publishes its own machine reading of every scan. We
+            For most books here there is no typed edition. What a reader would otherwise have is the Internet
+            Archive&rsquo;s own machine reading, published with every scan, and many of our books come from there. We
             read the pages again. On {n(iaArchive.books)} English books printed between 1800 and 1930, every printed number
             where the two readings differed was checked against the page image. Share of {n(Math.round(iaArchive.printed))}{' '}
             printed numbers read wrong:
@@ -316,7 +321,7 @@ export default function QualityCenterPage() {
         <Section id="by-language" title="By language">
           <p className="mb-5">
             The script matters more than anything else. English and Russian print come out below the typed-edition rate
-            ({one(humanPer1k.per_1k)} per 1,000 words). Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
+            ({one(humanPer1k.per_1k)} per 1,000 words, on easier pages). Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
             highest rates: the general-purpose models that read them were not built for those scripts, and they are next
             to be read again.
           </p>
