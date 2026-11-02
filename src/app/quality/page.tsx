@@ -151,6 +151,30 @@ const everyN = (per1k: number | null) => {
 /** Meaning-changing errors on an average page of this language: why few pages are spotless even at a low rate. */
 const perPage = (r: { severe_per_1k: number | null; words: number; pages: number }) =>
   r.severe_per_1k == null ? null : ((r.severe_per_1k * r.words) / r.pages / 1000).toFixed(1);
+type Cut = { books: number; pages: number; says_what_the_page_says: number; severe_per_1k: number | null };
+const unitOfLanguage = (lang: string) => grades.by_language.find(r => r.language === lang)?.unit ?? 'words';
+/**
+ * Engines compared only WITHIN a language (#7933): the engine-only cut is confounded, because each engine was
+ * given different languages. Cells with fewer than three books are left out; languages in the order of the table
+ * above, then best engine first.
+ */
+const engineRows = (() => {
+  const order = grades.by_language.map(r => r.language);
+  return Object.entries(grades.by_language_route as Record<string, Cut>)
+    .map(([k, v]) => { const [language, route] = k.split(' · '); return { language, route, ...v }; })
+    .filter(r => r.books >= 3)
+    .sort((a, b) => order.indexOf(a.language) - order.indexOf(b.language) || (a.severe_per_1k ?? 0) - (b.severe_per_1k ?? 0));
+})();
+/** The book's age and hand, alphabetic scripts only (one unit: words). */
+const ERA_ORDER = ['manuscript', 'before 1501', '1501–1700', '1701–1900', 'after 1900', 'no date'];
+const ERA_LABEL: Record<string, string> = {
+  manuscript: 'Manuscripts', 'before 1501': 'Printed before 1501', '1501–1700': 'Printed 1501–1700',
+  '1701–1900': 'Printed 1701–1900', 'after 1900': 'Printed after 1900', 'no date': 'Printed, date not recorded',
+};
+const eraRows = ERA_ORDER.map(k => ({ key: k, ...(grades.by_era_alphabetic as Record<string, Cut>)[k] })).filter(r => r.books);
+const eraRoute = (era: string, route: string) =>
+  (grades.by_era_route_alphabetic as Record<string, Cut>)[`${era} · ${route}`];
+
 /** Invented or recited text, another leaf, another page entirely, or a page never read: the failures readers fear most. */
 const notFromThisPage = grades.grades.from_elsewhere.share + grades.grades.not_this_page.share;
 const topClasses = grades.defect_classes.filter(c => c.total >= 25);
@@ -573,6 +597,112 @@ export default function QualityCenterPage() {
           <Source>
             <A href={`${BLOB}scripts/eval/experiments/2026-11-02-latin-by-age-7933.md`}>The Latin split</A>: 141 Latin pages
             from the same draw, unweighted, with the instances and the books named (<IssueLink num={7933} />).
+          </Source>
+
+          <Sub>By reading engine</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              A table of engines alone would mislead, because each engine was given different books: Greek and Sanskrit
+              went to Gemini 3 Flash, Korean to Flash-Lite, Chinese manuscripts to PaddleOCR. So this compares engines only
+              within one language, and only where an engine read at least three books in the draw. The counts are pages,
+              not shares of the library, and many cells are a handful of books.
+            </p>
+          </div>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[640px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Language</th>
+                  <th className={th}>Read by</th>
+                  <th className={th}>Books</th>
+                  <th className={th}>Pages</th>
+                  <th className={th}>One meaning-changing error in about</th>
+                  <th className={th}>Pages with no such error</th>
+                </tr>
+              </thead>
+              <tbody>
+                {engineRows.map(r => (
+                  <tr key={`${r.language}-${r.route}`}>
+                    <td className={`${td} font-semibold text-stone-900`}>{r.language}</td>
+                    <td className={td}>{READER_NAME[r.route] ?? r.route}</td>
+                    <td className={td}>{r.books}</td>
+                    <td className={td}>{r.pages}</td>
+                    <td className={td}>
+                      {r.severe_per_1k ? (
+                        <>
+                          <b className="text-stone-900">{everyN(r.severe_per_1k)} {unitOfLanguage(r.language)}</b>
+                          <span className="block text-xs text-stone-500 mt-1">{r.severe_per_1k} per 1,000</span>
+                        </>
+                      ) : (
+                        <b className="text-stone-900">none found</b>
+                      )}
+                    </td>
+                    <td className={td}>{pct(r.says_what_the_page_says)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_language_route</code>, unweighted. In Chinese
+            the engines read different material: PaddleOCR the manuscripts, the Gemini models printed books, so those
+            rows are not a contest. The full list, including engines that read one or two books, is in the file.
+          </Source>
+          <div className="max-w-3xl mt-6">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              Three things stand out. Gemini 3 Flash beats Flash-Lite where both read the same language: about 2 errors per
+              1,000 words against 6 in German, and 5 against 13 in Latin. In English both are good. Engines built or chosen
+              for one kind of page do best: LightOnOCR, on our own GPU, found no meaning-changing error in ten English pages,
+              and the Tibetan pages taken from Esukhia&rsquo;s typed edition have about one error in 2,000 syllables. The
+              Internet Archive&rsquo;s own OCR, which we import for some English books, is worse than either Gemini model
+              on English. And general-purpose models are poor on Greek, Sanskrit and Korean, at one error in every 50 to 60
+              words or characters. Those pages wait for an engine that has been tested on their script.
+            </p>
+          </div>
+
+          <Sub>By the age and hand of the book</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              Alphabetic scripts only, so every rate is per 1,000 words. Manuscripts and books printed before 1501 are hard
+              for every engine we use; print from after 1700 is much cleaner. The book&rsquo;s age matters more than the
+              engine. Before 1501, Gemini 3 Flash and Flash-Lite make the same number of errors
+              ({eraRoute('before 1501', '3flash')?.severe_per_1k} and {eraRoute('before 1501', 'lite')?.severe_per_1k} per
+              1,000); the gap between them opens only on later print. Languages are mixed in each row, so a row with more
+              Greek in it looks worse for that reason.
+            </p>
+          </div>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[560px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Kind of book</th>
+                  <th className={th}>Books in the draw</th>
+                  <th className={th}>Pages</th>
+                  <th className={th}>One meaning-changing error in about</th>
+                  <th className={th}>Pages with no such error</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eraRows.map(r => (
+                  <tr key={r.key}>
+                    <td className={`${td} font-semibold text-stone-900`}>{ERA_LABEL[r.key] ?? r.key}</td>
+                    <td className={td}>{r.books}</td>
+                    <td className={td}>{r.pages}</td>
+                    <td className={td}>
+                      <b className="text-stone-900">{everyN(r.severe_per_1k)} words</b>
+                      <span className="block text-xs text-stone-500 mt-1">{r.severe_per_1k} per 1,000</span>
+                    </td>
+                    <td className={td}>{pct(r.says_what_the_page_says)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_era_alphabetic</code> and{' '}
+            <code>by_era_route_alphabetic</code>, unweighted. The date is the catalogue&rsquo;s; a manuscript is a book whose
+            pages our records mark as handwritten, whatever its date.
           </Source>
 
           <Sub>What is actually wrong</Sub>
