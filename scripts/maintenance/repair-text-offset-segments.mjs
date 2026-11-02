@@ -161,7 +161,10 @@ try {
   if (before.verdict !== 'shifted' || zeroShare < MIN_ALIGNED) { console.log(`[REFUSE] gate: need before=shifted and after offset-0 share >= ${MIN_ALIGNED}`); process.exit(2); }
 
   const cleared = moves.filter((m) => m.cleared).map((m) => m.page_number);
-  const orphaned = pages.map((p) => p.page_number).filter((n) => byNum.get(n).ocr?.data && !moves.some((m) => m.src_page_number === n));
+  // Text whose slot is overwritten (a move target) and which no move carries elsewhere. Slots outside every segment keep their text.
+  const targets = new Set(moves.map((m) => m.page_number));
+  const sources = new Set(moves.map((m) => m.src_page_number));
+  const orphaned = [...targets].filter((n) => byNum.get(n).ocr?.data && !sources.has(n));
   const textOf = (p) => String(p?.ocr?.data || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 70);
   console.log(`  ${moves.length} moves; cleared (never read, queue OCR): ${cleared}; text left on no page (snapshotted): ${orphaned}`);
   for (const s of segments) {
