@@ -57,7 +57,16 @@ fs.mkdirSync(F.leaves, { recursive: true }); fs.mkdirSync(path.join(OUT, 'items'
 export const SEED = Object.freeze({ added: 79411, queue: 79412, adjOrder: 79413, boot: 79414, random: 79415, randomPages: 79416 });
 /** The brief's cap (300 Opus calls) set against Derek's additions: A's aligned pages x 3 arms + N_B x 3 + N_C x 2,
  *  the rest for adjudication. */
-export const OPUS_CAP = 300, N_B = 35, N_C = 30, WRAP = 72;
+// TAKEN: 400, not the brief's 300 — Derek's two inbox notes (13:48Z, 14:16Z) re-judge every arm on normalised text and
+// add the random stratum (>= 60 English pages, plus Latin and German); subscription only, $0 billed; still a hard stop.
+export const OPUS_CAP = 400, N_B = 35, WRAP = 72;
+/** Set C sizes per language (Derek 14:16Z: the random stratum is the headline, >= 60 pages; Latin / German added
+ *  where the Archive has text). */
+export const N_C = Object.freeze({ English: 60, Latin: 10, German: 10 });
+/** What each stratum's pages are like (Derek 14:16Z: a typed edition marks a cleaner, easier copy). */
+export const DIFFICULTY = Object.freeze({ A: 'easy: books with a same-edition typed edition (DTA, EEBO-TCP, CAMENA), cleaner copies than the library at large',
+  B: 'easy: English books with a proofread Wikisource / Gutenberg transcription, cleaner copies than the library at large',
+  C: 'typical: pages drawn at random from Archive-sourced books in the library' });
 /** ALIGN_F1 (fixed before any Archive text was judged): the leaf whose words best match the typed page (F1 of the
  *  two word multisets, normalizeForScript latin, words of >= 3 letters), searched over EVERY leaf of the item; the
  *  page is aligned when that F1 >= ALIGN_F1. The leaf our image was cut from (photo URL page/n<k>) is recorded. */
@@ -295,21 +304,30 @@ async function added() {
 // 12 tries a book. The leaf is our image's own (k); it moves only when another leaf matches our read by F1 >= 0.5 and
 // beats leaf k by 0.2 (the djvu index drifting from the image index, #5124 "shifted").
 async function random() {
+  const lang = (process.argv.find((a) => a.startsWith('--lang=')) || '--lang=English').slice(7);
+  if (!N_C[lang]) throw new Error(`--lang= one of ${Object.keys(N_C)}`);
   const { c, db } = await mongo();
+  const prev = fs.existsSync(F.random) ? J(F.random) : { drawn: [], skipped: [], frames: {} };
+  const done = new Set([...prev.drawn, ...prev.skipped].filter((r) => (r.lang || 'English') === lang).map((r) => r.book_id));
   const inAB = new Set([...printDrawn().map((d) => d.book_id), ...(fs.existsSync(F.added) ? J(F.added).added.map((r) => r.book_id) : [])]);
-  const frame = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: 'English', ia_identifier: { $exists: true, $nin: [null, ''] } }, { projection: { _id: 0, id: 1, published: 1, ia_identifier: 1, pages_count: 1 } }).toArray())
-    .filter((b) => { const y = yearOf(b.published); return y && y >= 1800 && y <= 1930 && !inAB.has(b.id); }).sort((a, b) => a.id.localeCompare(b.id));
-  console.log('frame', frame.length, 'books');
-  const out = [], skipped = [];
+  // English: published 1800–1930; Latin and German: any date (the Archive's text of them is mostly early print)
+  const frame = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: lang === 'German' ? /^German/ : lang, ia_identifier: { $exists: true, $nin: [null, ''] } }, { projection: { _id: 0, id: 1, published: 1, ia_identifier: 1, pages_count: 1 } }).toArray())
+    .filter((b) => { const y = yearOf(b.published); return (lang !== 'English' || (y && y >= 1800 && y <= 1930)) && !inAB.has(b.id); }).sort((a, b) => a.id.localeCompare(b.id));
+  console.log(lang, 'frame', frame.length, 'books');
+  const out = prev.drawn.filter((r) => (r.lang || 'English') === lang), skipped = [];
+  const others = { drawn: prev.drawn.filter((r) => (r.lang || 'English') !== lang), skipped: prev.skipped.filter((r) => (r.lang || 'English') !== lang) };
+  const prevSkipped = prev.skipped.filter((r) => (r.lang || 'English') === lang);
   const letters = (s) => String(s || '').replace(/[^\p{L}]/gu, '').length;
-  for (const b of shuffle(frame, makeRng(SEED.random))) {
-    if (out.length >= N_C) break;
+  const seedOf = { English: SEED.random, Latin: SEED.random + 1, German: SEED.random + 2 };
+  for (const b of shuffle(frame, makeRng(seedOf[lang]))) {
+    if (out.length >= N_C[lang]) break;
+    if (done.has(b.id)) continue;   // resumable: the books already drawn or skipped keep their outcome
     const pages = (await db.collection('pages').find({ book_id: b.id }, { projection: { _id: 0, translation: 0, ocr_history: 0 } }).toArray())
       .filter((p) => isInterior(p.page_number, b.pages_count) && eligiblePage(p) && String(p.photo || '').includes(`/${b.ia_identifier}/page/n`)).sort((x, y) => x.page_number - y.page_number);
-    if (!pages.length) { skipped.push({ book_id: b.id, why: 'no eligible page with an image of this Archive item' }); continue; }
-    if (pages.some(servesArchive) && pages.filter(servesArchive).length > pages.length / 2) { skipped.push({ book_id: b.id, why: 'we serve the Archive text on this book' }); continue; }
+    if (!pages.length) { skipped.push({ lang, book_id: b.id, why: 'no eligible page with an image of this Archive item' }); continue; }
+    if (pages.some(servesArchive) && pages.filter(servesArchive).length > pages.length / 2) { skipped.push({ lang, book_id: b.id, why: 'we serve the Archive text on this book' }); continue; }
     const L = await leaves(b.ia_identifier);
-    if (!L.leaves) { skipped.push({ book_id: b.id, why: 'no_djvu_xml' }); continue; }
+    if (!L.leaves) { skipped.push({ lang, book_id: b.id, why: 'no_djvu_xml' }); continue; }
     let pick = null, tries = 0;
     for (const p of shuffle(pages, makeRng((SEED.randomPages ^ parseInt(sha(b.id).slice(0, 8), 16)) >>> 0))) {
       if (tries++ >= 12) break;
@@ -323,18 +341,19 @@ async function random() {
       pick = { p, k, leaf, f1_photo: +sc[k].toFixed(4), f1_best: +sc[best].toFixed(4), best };
       break;
     }
-    if (!pick) { skipped.push({ book_id: b.id, why: 'no page passed in 12 tries' }); continue; }
-    const row = { uid: `rnd-${b.id}`, set: 'C', lang: 'English', book_id: b.id, page_id: pick.p.id, page_number: pick.p.page_number, ia: b.ia_identifier, year: yearOf(b.published),
+    if (!pick) { skipped.push({ lang, book_id: b.id, why: 'no page passed in 12 tries' }); continue; }
+    const row = { uid: `rnd-${b.id}`, set: 'C', lang, book_id: b.id, page_id: pick.p.id, page_number: pick.p.page_number, ia: b.ia_identifier, year: yearOf(b.published),
       image: imageUrl(pick.p), engine: pick.p.ocr?.model ?? null, ocr_source: pick.p.ocr?.source ?? null, ocr_hash: sha(pick.p.ocr.data).slice(0, 16),
       photo_leaf: pick.k, leaf: pick.leaf, f1_vs_ours_photo: pick.f1_photo, f1_vs_ours_best: pick.f1_best, best_leaf: pick.best, n_leaves: L.leaves.length,
       ia_engine: iaEngine(L), ia_ocr: L.ocr, ia_ocr_module: L.ocr_module_version, ia_ocr_date: L.ocr_date };
     fs.writeFileSync(path.join(OUT, 'items', `${row.uid}.json`), JSON.stringify({ uid: row.uid, read: pick.p.ocr.data }));
-    try { await imageFor(row.uid, row.image); } catch (e) { skipped.push({ book_id: b.id, why: `image: ${String(e.message).slice(0, 60)}` }); continue; }
+    try { await imageFor(row.uid, row.image); } catch (e) { skipped.push({ lang, book_id: b.id, why: `image: ${String(e.message).slice(0, 60)}` }); continue; }
     out.push(row); console.log('C', out.length, row.uid, row.year, row.engine, row.ia_engine, 'leaf', row.leaf, 'photo', row.photo_leaf, 'f1', row.f1_vs_ours_photo);
   }
   await c.close();
-  fs.writeFileSync(F.random, JSON.stringify({ seed: [SEED.random, SEED.randomPages], n: N_C, frame_books: frame.length, drawn: out, skipped }, null, 1));
-  console.log(`C: ${out.length}; skipped ${skipped.length}`, JSON.stringify(skipped.reduce((m, s) => ((m[s.why] = (m[s.why] || 0) + 1), m), {})));
+  fs.writeFileSync(F.random, JSON.stringify({ seed: [SEED.random, SEED.randomPages], n: N_C, frames: { ...(prev.frames || { English: prev.frame_books }), [lang]: frame.length },
+    drawn: [...others.drawn, ...out], skipped: [...others.skipped, ...prevSkipped, ...skipped] }, null, 1));
+  console.log(`C ${lang}: ${out.length}; skipped ${skipped.length} new`, JSON.stringify(skipped.reduce((m, s) => ((m[s.why] = (m[s.why] || 0) + 1), m), {})));
 }
 
 const MAX_IMAGE_BYTES = 4e6, RESIZE_PX = 3000;   // run.mjs imageFor
@@ -414,6 +433,9 @@ async function judge() {
   }), 'judge');
 }
 const severe = (d) => d.severity === 'misleads' || d.severity === 'wrong_text';
+/** A severe flag about what the NORMALISER removed (running heads, page numbers, signatures, catchwords, table
+ *  layout): the eye check (5 Archive verdicts) found the judge charging these. Reported, and a rate without them. */
+export const ARTEFACT = /running[- ]head|page number|page-num|pagination|folio number|catchword|signature|header|footer|column|table (is |was )?(flatten|collapse|lost|run)|layout|line break/i;
 
 // ── stage adjudicate ──
 export const ADJ3_PROMPT = (lang, points) => `Each image named below is part of one printed page in ${lang}. Transcriptions of the page were checked against the page image, and the checker raised the points below. For each point, open its image with Read, look at it yourself and say what the page actually prints there.
@@ -495,7 +517,8 @@ function armSummary(rs) {
     adjudicated_pages: ad.length, adjudicated_words: ad.reduce((s, r) => s + r.words, 0), adjudicated_flags: ad.reduce((s, r) => s + r.flagged, 0),
     confirmed: ad.reduce((s, r) => s + r.real, 0), split: ad.reduce((s, r) => s + r.split, 0), false_alarm: ad.reduce((s, r) => s + r.false_alarm, 0), unanswered: ad.reduce((s, r) => s + r.unanswered, 0),
     confirmed_per_1k: ad.length ? r4(real(ad)) : null, confirmed_per_1k_ci95: ad.length ? boot(ad, real) : null, confirmed_or_split_per_1k: ad.length ? r4(realOrSplit(ad)) : null,
-    o7_numeral_flags: rs.reduce((s, r) => s + r.o7, 0) };
+    o7_numeral_flags: rs.reduce((s, r) => s + r.o7, 0), normaliser_artefact_flags: rs.reduce((s, r) => s + r.artefact, 0),
+    flagged_per_1k_without_artefacts: r4(ratio((r) => r.flagged - r.artefact, w, 1000)(rs)), flagged_per_1k_without_artefacts_ci95: boot(rs, ratio((r) => r.flagged - r.artefact, w, 1000)) };
   if (rs[0].cer_norm != null) {
     const cr = ratio((r) => r.cer_raw * r.ref_chars, (r) => r.ref_chars), cn = ratio((r) => r.cer_norm * r.ref_chars, (r) => r.ref_chars), cc = ratio((r) => r.cer_conv * r.ref_chars, (r) => r.ref_chars);
     const nr = ratio((r) => r.numbers_wrong, (r) => r.ref_numbers), withN = rs.filter((r) => r.ref_numbers);
@@ -519,7 +542,8 @@ function score() {
     // adjudicated: both adjudicators answered for this page (or the page has no flag in any arm: nothing to adjudicate)
     const adjudicated = !flaggedPages.has(p.uid) || (adjPages.has(`${p.uid}|opus`) && adjPages.has(`${p.uid}|sonnet`));
     const refNorm = p.ref ? universal([p.ref.text, ...(p.ref.notes || [])].join('\n')) : null;
-    const words = p.ref ? normalizeForScript(refNorm, 'latin').split(' ').filter(Boolean).length : normalizeForScript(p.norm.ours, 'latin').split(' ').filter(Boolean).length;
+    const nw = (t) => normalizeForScript(t, 'latin').split(' ').filter(Boolean).length;
+    const words = p.ref ? nw(refNorm) : Math.max(nw(p.norm.ours), nw(p.norm.archive));   // set C: no reference; the fuller of the two reads
     for (const arm of arms) {
       const v = V.get(`${arm}-${p.uid}`), defs = v.verdict.defects || [];
       const res = defs.map((d, k) => ({ d, k })).filter(({ d }) => severe(d)).map(({ k }) => adjOf.get(`${arm}-${p.uid}#${k}`) || {})
@@ -529,10 +553,10 @@ function score() {
       const refLines = machine ? refNorm.split('\n') : null;
       const rawText = arm === 'ours' ? p.raw.ours.replace(/<[^<>]*>/g, ' ') : p.raw[arm];
       rows.push({ uid: p.uid, set: p.set, lang: p.lang, book_id: p.book_id, year: p.year, century: centuryOf(p.year), ia_engine: p.ia_engine, in_benchmark: p.benchmarks.length > 0, benchmarks: p.benchmarks,
-        ours_empty: !String(p.norm.ours || '').trim(), arm, words, words_basis: p.ref ? 'typed reference' : 'our normalised read', text_sha: v.text_sha, accept: v.verdict.accept, fidelity: Number(v.verdict.fidelity),
+        ours_empty: !String(p.norm.ours || '').trim(), arm, words, words_basis: p.ref ? 'typed reference' : 'the larger of the two normalised reads', text_sha: v.text_sha, accept: v.verdict.accept, fidelity: Number(v.verdict.fidelity),
         judge_bad: !v.verdict.accept || defs.some((d) => d.severity === 'wrong_text'), flagged: res.length, adjudicated,
         real: adjudicated ? res.filter((x) => x === 'real').length : 0, split: adjudicated ? res.filter((x) => x === 'split').length : 0, false_alarm: adjudicated ? res.filter((x) => x === 'false_alarm').length : 0, unanswered: adjudicated ? res.filter((x) => x === 'unanswered').length : 0,
-        o7: defs.filter((d) => d.class === 'O7').length, archive_lines_dropped: arm === 'archive' ? p.dropped.archive.length : null,
+        o7: defs.filter((d) => d.class === 'O7').length, artefact: defs.filter((d) => severe(d) && (ARTEFACT.test(String(d.what || '')) || d.class === 'O11' || d.class === 'O17')).length, archive_lines_dropped: arm === 'archive' ? p.dropped.archive.length : null,
         ref_chars: machine ? flat(refNorm).replace(/ /g, '').length : null,
         cer_raw: machine ? r4(cerChars(p.ref.text.split('\n'), rawText)) : null, cer_norm: machine ? r4(cerChars(refLines, p.norm[arm])) : null, cer_conv: machine ? r4(cerLines(refNorm, p.norm[arm], 'latin')) : null,
         ref_numbers: nm?.ref_numbers ?? null, numbers_wrong: nm?.wrong ?? null });
@@ -545,14 +569,25 @@ function score() {
     align_rule: `set A/B: best F1 of typed-reference words over every Archive leaf >= ${ALIGN_F1}; set C: the image's own leaf (moved only for a clear drift)`,
     judge: 'route-judge-6740 judgePrompt via confidence-7866 judgeAbsolute; claude -p --model opus (subscription); blind to source, normalised text',
     adjudicators: 'opus + sonnet via claude -p, ADJ3_PROMPT, all arms of a page in one call, unlabelled; confirmed = both say the page prints something else',
-    rates: 'flagged/confirmed per 1,000 words of the typed reference (set C: of our normalised read); CER = order-free character error of the typed reference inside the text (raw: no normaliser; norm: normalised, case and punctuation kept; conv: normalised + normalizeForScript folds); numbers = typed-page digit runs missing from the text',
+    difficulty: DIFFICULTY,
+    rates: 'flagged/confirmed per 1,000 words of the typed reference (set C: of the larger of the two normalised reads); CER = order-free character error of the typed reference inside the text (raw: no normaliser; norm: normalised, case and punctuation kept; conv: normalised + normalizeForScript folds); numbers = typed-page digit runs missing from the text',
     three_way: { pages: new Set(rows.filter(three).map((r) => r.uid)).size, by_lang: {} }, cuts: {}, archive_vs_ours_random: null };
   for (const lang of ['ALL', 'English', 'Latin', 'German']) { const a = pick((r) => three(r) && (lang === 'ALL' || r.lang === lang)); if (a.length) out.three_way.by_lang[lang] = a; }
   const cut = (name, keyf, base = three) => { const ks = [...new Set(rows.filter(base).map(keyf))].sort(); out.cuts[name] = Object.fromEntries(ks.map((k) => [String(k), pick((r) => base(r) && keyf(r) === k)])); };
   cut('set', (r) => r.set); cut('century', (r) => r.century); cut('archive_engine', (r) => r.ia_engine); cut('in_benchmark', (r) => (r.in_benchmark ? 'in a reference set' : 'not in any reference set'));
   cut('language_x_engine', (r) => `${r.lang} / ${r.ia_engine}`);
+  cut('archive_engine_family', (r) => (/ABBYY/.test(r.ia_engine) ? 'ABBYY FineReader' : /ia-ocr/.test(r.ia_engine) ? 'ia-ocr (tesseract)' : 'unknown'));
   cut('ours_read', (r) => (r.ours_empty ? 'our stored read is empty' : 'our stored read has text'));
-  out.archive_vs_ours_random = { pages: new Set(rows.filter((r) => r.set === 'C').map((r) => r.uid)).size, all: pick((r) => r.set === 'C'), by_engine: {}, by_century: {} };
+  out.archive_vs_ours_random = { difficulty: DIFFICULTY.C, headline: 'English 1800–1930, the random stratum (Derek 14:16Z: the headline for Archive vs ours)',
+    pages: new Set(rows.filter((r) => r.set === 'C').map((r) => r.uid)).size, by_lang: {}, by_engine: {}, by_century: {} };
+  for (const lang of ['English', 'Latin', 'German']) { const a = pick((r) => r.set === 'C' && r.lang === lang); if (a.length) out.archive_vs_ours_random.by_lang[lang] = a; }
+  out.three_way.difficulty = `${DIFFICULTY.A}; ${DIFFICULTY.B}. The easy-page comparison only.`;
+  // per arm: the random stratum's rate over the typed (easy) stratum's, English, where both exist
+  const easyEn = Object.fromEntries(pick((r) => three(r) && r.lang === 'English' && r.year >= 1800 && r.year <= 1930).map((o) => [o.arm, o])), randEn = Object.fromEntries(pick((r) => r.set === 'C' && r.lang === 'English').map((o) => [o.arm, o]));
+  const q = (a, b) => (a != null && b ? +(a / b).toFixed(3) : null);
+  // like for like: the typed English pages of 1800–1930 (the random stratum's period), not the EEBO 1600s pages
+  out.random_over_typed_english = Object.fromEntries(['archive', 'ours'].filter((a) => easyEn[a] && randEn[a]).map((a) => [a, { flagged_per_1k: q(randEn[a].flagged_per_1k, easyEn[a].flagged_per_1k), judge_bad: q(randEn[a].judge_bad, easyEn[a].judge_bad), confirmed_per_1k: q(randEn[a].confirmed_per_1k, easyEn[a].confirmed_per_1k),
+    typed: { flagged_per_1k: easyEn[a].flagged_per_1k, judge_bad: easyEn[a].judge_bad, n: easyEn[a].n_pages }, random: { flagged_per_1k: randEn[a].flagged_per_1k, judge_bad: randEn[a].judge_bad, n: randEn[a].n_pages } }]));
   for (const k of [...new Set(rows.filter((r) => r.set === 'C').map((r) => r.ia_engine))].sort()) out.archive_vs_ours_random.by_engine[k] = pick((r) => r.set === 'C' && r.ia_engine === k);
   for (const k of [...new Set(rows.filter((r) => r.set === 'C').map((r) => r.century))].sort()) out.archive_vs_ours_random.by_century[k] = pick((r) => r.set === 'C' && r.century === k);
   // paired: per page, archive minus ours (the same pages, the same judge)
@@ -567,7 +602,7 @@ function score() {
     not_aligned_best_is_image_leaf: `${al.filter((r) => r.status === 'not_aligned' && r.leaf === r.photo_leaf).length}/${al.filter((r) => r.status === 'not_aligned').length}`,
     not_aligned_by_engine: al.filter((r) => r.status === 'not_aligned').reduce((m, r) => ((m[r.ia_engine] = (m[r.ia_engine] || 0) + 1), m), {}),
     set_B: fs.existsSync(F.added) ? { pages: J(F.added).added.length, skipped: J(F.added).skipped.reduce((m, s) => ((m[s.why] = (m[s.why] || 0) + 1), m), {}), same_leaf_as_5124: J(F.added).added.filter((r) => r.leaf === r.leaf_5124).length } : null,
-    set_C: fs.existsSync(F.random) ? { pages: J(F.random).drawn.length, frame_books: J(F.random).frame_books, skipped: J(F.random).skipped.reduce((m, s) => ((m[s.why] = (m[s.why] || 0) + 1), m), {}), leaf_moved_from_image_leaf: J(F.random).drawn.filter((r) => r.leaf !== r.photo_leaf).length } : null };
+    set_C: fs.existsSync(F.random) ? { pages: J(F.random).drawn.reduce((m, r) => ((m[r.lang] = (m[r.lang] || 0) + 1), m), {}), frame_books: J(F.random).frames, skipped: J(F.random).skipped.reduce((m, s) => { const k = `${s.lang || 'English'}: ${s.why}`; m[k] = (m[k] || 0) + 1; return m; }, {}), leaf_moved_from_image_leaf: J(F.random).drawn.filter((r) => r.leaf !== r.photo_leaf).length } : null };
   out.archive_furniture_lines_dropped = rows.filter((r) => r.arm === 'archive').reduce((s, r) => s + r.archive_lines_dropped, 0);
   out.opus_calls = opusSpent(); out.sonnet_calls = jsonl(F.adj).filter((r) => r.judge === 'sonnet').length;
   fs.writeFileSync(path.join(RESULTS, 'three-way.json'), JSON.stringify(out, null, 1) + '\n');
@@ -581,7 +616,8 @@ function score() {
   const line = (lab, o) => console.log(lab.padEnd(34), o.arm.padEnd(8), `n=${o.n_pages}`, `flag/1k ${o.flagged_per_1k} ${JSON.stringify(o.flagged_per_1k_ci95)}`, `conf/1k ${o.confirmed_per_1k} (${o.adjudicated_pages}p)`, `cer raw/norm/conv ${o.cer_raw ?? '-'}/${o.cer_norm ?? '-'}/${o.cer_conv ?? '-'}`, `num ${o.number_error_rate ?? '-'}`, `bad ${o.judge_bad}`);
   for (const [k, xs] of Object.entries(out.three_way.by_lang)) for (const o of xs) line(`3-way ${k}`, o);
   for (const [c, m] of Object.entries(out.cuts)) for (const [k, xs] of Object.entries(m)) for (const o of xs) line(`${c}: ${k}`.slice(0, 34), o);
-  for (const o of out.archive_vs_ours_random.all) line('random C', o);
+  for (const [k, xs] of Object.entries(out.archive_vs_ours_random.by_lang)) for (const o of xs) line(`random C ${k}`, o);
+  console.log(JSON.stringify(out.random_over_typed_english));
   console.log(JSON.stringify(out.paired_flags), 'opus', out.opus_calls, 'sonnet', out.sonnet_calls);
 }
 
