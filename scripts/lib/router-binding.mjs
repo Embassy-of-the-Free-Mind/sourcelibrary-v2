@@ -131,10 +131,22 @@ export function describeFinding(f) {
 }
 
 /**
- * A lane's start-up check. mode: off | warn (print, page once a day per cell) | refuse (also exit 9 on a mismatch).
+ * #7913: ROUTER_BINDING_REFUSE=1 turns a lane's `warn` into `refuse`: a lane that runs a route contradicting its cell's
+ * decision, with no live waiver, exits 9 instead of paging and running. OFF by default until Derek's go is recorded on
+ * #7913 (the router paper's build step 5: refuse once V1-V3 pass); then the env is set in the lane crontabs. An
+ * explicit --route-check=off still skips the check; `refuse` stays `refuse`.
+ */
+export function effectiveMode(mode, env = process.env) {
+  return mode === 'warn' && env.ROUTER_BINDING_REFUSE === '1' ? 'refuse' : mode;
+}
+
+/**
+ * A lane's start-up check. mode: off | warn (print, page once a day per cell) | refuse (also exit 9 on a mismatch;
+ * effectiveMode: warn becomes refuse under ROUTER_BINDING_REFUSE=1).
  * `page` is called with (title, body) for mismatches not yet paged today; a page failure never stops the lane.
  */
-export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '/tmp', log = console.log, today } = {}) {
+export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '/tmp', log = console.log, today, env = process.env } = {}) {
+  mode = effectiveMode(mode, env);
   if (mode === 'off') return [];
   let table;
   try { table = loadCurrentTable(); } catch (e) {
@@ -158,7 +170,7 @@ export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '
     } catch { /* never stop a lane for a page */ }
   }
   if (bad.length && mode === 'refuse') {
-    log(`route-check: REFUSED (--route-check=refuse): ${bad.length} cell(s) not on their decided route`);
+    log(`route-check: REFUSED (${env.ROUTER_BINDING_REFUSE === '1' ? 'ROUTER_BINDING_REFUSE=1' : '--route-check=refuse'}): ${bad.length} cell(s) not on their decided route`);
     process.exit(9);
   }
   return findings;
