@@ -407,6 +407,39 @@ The classes do not tag names, so names are not counted on their own. Of the 13 c
 
 `scripts/eval/ocr-error-to-translation-7611/`: `build.py` (error list and provenance), `fetch.mjs` and `revs.mjs` (read-only Mongo), `xlate.mjs` (the live prompt on agy, no writes), `judge.py` and `judge-prompt.md`, `score.py`. Outputs are in `results/2026-11-02/`: `pages.jsonl.gz`, `spots.jsonl.gz`, `controls.jsonl.gz`, `fills.jsonl.gz`, `judge-raw.jsonl.gz` and `score.md`.
 
+## 2026-11-02 · Latin on /quality: manuscripts and incunabula versus later print (#7933)
+
+PRIOR ART: `scripts/eval/confidence-7866/regrade.mjs` (`by_language`, `by_script`, `by_route`). It cuts by language and by reading method, but not by date, and its `script_type` field is `unknown` for a third of the Latin books, so it cannot show this split. This is a one-off re-cut of the same stored verdicts (`lane_judge_verdicts`, lane `confidence-7866`, run `confidence-validation-7866`), joined to `books.published`.
+
+### Method
+
+The 145 Latin pages from #7866's draw, each judged by Claude Opus against the page image. Four pages were left out because they hold no text: a manuscript's colour-checker target and three of its pages that were never read. "Severe" means a defect tagged `misleads` or `wrong_text`. Rates are words-weighted and **unweighted by stratum**, so they describe these books, not the library. The Hierocles manuscript (Laurenziana, Plutei; `script_type: unknown`, dated 1450) is counted with the manuscripts.
+
+| Latin books | Books | Pages | Pages clean | Severe per 1,000 words |
+|---|---|---|---|---|
+| Manuscript, or printed before 1501 | 11 | 48 | 19% | 10.5 |
+| Printed 1501 or later | 12 | 58 | 60% | 2.3 |
+| Date unknown | 7 | 35 | 49% | 4.2 |
+
+By engine within the old group: 3 Flash 10.0 per 1,000 (22 pages), Flash-Lite 12.1 (25 pages). After 1500: 3 Flash 2.2 (56 pages). The engine moves the rate by a fifth; age moves it by a factor of four to five.
+
+### Instances, opened against the image by eye
+
+- **Herbarius latinus, printed 1484, page 94** (`69dbca3a1040d1d5e20aa385`, gothic type, Flash-Lite). The page reads `ſauine polegij` (savin, a herb); the text has *semine polegii* (seed). The page reads `an̄ · m · j` (one handful); the text has *ana unciam i.* (one ounce). The page reads `dolo:|roſa`; the text has *dolosa*. A recipe's dose and its ingredient are changed.
+- **Hierocles on the Golden Verses, manuscript c. 1450, page 237** (`699389a6ce15387065947dc0`, humanist hand, 3 Flash). The page reads `agitatio uideatur agitari` and `deum agitari credibile est`; the text has *aquari* both times. A struck-through `utroq;` is transcribed as *uicem*.
+
+### Instances as the reviewer reported them (not opened)
+
+- Herbarius page 21: `pip nigꝝ` (piper nigrum) read as *pip mgn*, three times; s/f and r/z confusions throughout (*feuct⁹*, *azbozes*).
+- Herbarius page 302: *prouocat uentrem* where the page has *urinam*.
+- Hierocles page 61: a clear *Dementia* normalised to the expected *Clementia*.
+- Benjamin minor (Herzog August Bibliothek, Wolfenbüttel), page 11: two marginal notes, *Lia* and *Rachel*, that are on the facing page, not this one.
+
+### What it does not show
+
+- 29 books. The split is large enough to survive that, but each row's figure is uncertain by several points.
+- One judge. It over-flags about a third of `misleads` and misses more than half of strict-bar errors (#6740, #7263). Both apply to both groups.
+
 ## 2026-11-02 · Is a CORRECTION diff, a RE-READ diff, or a STRICTER Opus rule a better transcription detector than the verdict prompt? (#7611)
 
 PRIOR ART:
