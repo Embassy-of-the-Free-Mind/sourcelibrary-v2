@@ -57,8 +57,10 @@ try {
       const votes = { visible: 0, consistent: 0, unclear: 0 };
       res.samples = [];
       for (const s of picks) {
-        const page = await db.collection('pages').findOne({ book_id: r.book_id, page_number: s }, { projection: { photo: 1, archived_photo: 1 } });
-        const shown = page?.archived_photo || page?.photo;
+        const page = await db.collection('pages').findOne({ book_id: r.book_id, page_number: s }, { projection: { photo: 1, archived_photo: 1, split_side: 1 } });
+        // A split page's archive is the whole spread, never one canvas: no vote (the repair refuses split books too).
+        if (page?.split_side) { votes.unclear++; continue; }
+        const shown = page?.archived_photo || page?.photo; // image-pick-ok: unsplit leaf; the question is which leaf the stored archive holds
         const t = s + r.offset;
         if (!shown || !canvases[s - 1] || !canvases[t - 1]) { votes.unclear++; continue; }
         const [h, hs, ht] = await Promise.all([hashUrl(shown), hashUrl(canvasImage(canvases[s - 1])), hashUrl(canvasImage(canvases[t - 1]))]);
