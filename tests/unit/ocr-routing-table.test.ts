@@ -125,8 +125,8 @@ describe('OCR routing table by page kind (scripts/lib/ocr-routing-table.json)', 
   });
 
   it('PAGE: /quality renders the rows from the JSON and types none of its own', () => {
-    const page = read('src/app/quality/page.tsx');
-    expect(page).toMatch(/import ocrRouting from '\.\.\/\.\.\/\.\.\/scripts\/lib\/ocr-routing-table\.json'/);
+    const page = read('src/app/quality/record/page.tsx');
+    expect(page).toMatch(/import ocrRouting from '\.\.\/\.\.\/\.\.\/\.\.\/scripts\/lib\/ocr-routing-table\.json'/);
     expect(page).toContain('ocrRouting.rows.map(');
     expect(page).toContain('ocrRouting.not_adopted.map(');
     for (const k of ['row.kind', 'row.reader', 'row.why', 'row.in_use']) expect(page).toContain(`{${k}}`);
