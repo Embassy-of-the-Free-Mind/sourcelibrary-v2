@@ -13,13 +13,28 @@
  * WHO IT STOPS: a person or session starting a CLI translation read (claude-translate.mjs, cli-translate.mjs) on
  * pages whose OCR came from a flash-lite model. It prints the OCR engine mix of the target pages and refuses to
  * start until the run names what was checked: `--ocr-checked="<pages opened against the image, and the verdict>"`.
- * It never blocks a run whose transcription came from anything else, and it writes nothing.
+ * It never blocks a run whose transcription came from anything else, and it writes nothing. A flash-lite page a person
+ * edited, or whose read says it has no text, is not counted as unchecked (uncheckedLite, #7263).
  */
 
 const LITE = /flash-lite/i;
 export const OCR_LITE_SHARE_LIMIT = 0.2;
+/** A stored read that says the page has no text to translate (the armc frame's own test, cli-ocr-lane.mjs armcPages). */
+const NO_TEXT = /<page-type>\s*(illustration|plate|map|blank)/i;
 
-/** Summarise the OCR engines behind `pages` (objects carrying `ocr.model`). */
+/**
+ * Is this page an UNCHECKED flash-lite draft? (#7263) Not when a person edited it (ocr.edited_by, or source manual):
+ * that read has been checked. Not when the read itself says the page is an illustration, plate, map or blank: there is
+ * no text for a translation to rest on. The armc lane (cli-ocr-lane.mjs) writes its correction with the corrector's
+ * model, so a corrected page is no longer a flash-lite page at all; these two are what that lane leaves as they are.
+ */
+export function uncheckedLite(p) {
+  if (!LITE.test(p?.ocr?.model || '')) return false;
+  if (p.ocr.edited_by || p.ocr.source === 'manual') return false;
+  return !NO_TEXT.test(p.ocr.data || '');
+}
+
+/** Summarise the OCR engines behind `pages` (objects carrying `ocr.model`); `lite` counts unchecked flash-lite pages. */
 export function ocrEngineMix(pages) {
   const mix = new Map();
   for (const p of pages) {
@@ -27,7 +42,7 @@ export function ocrEngineMix(pages) {
     mix.set(m, (mix.get(m) || 0) + 1);
   }
   const total = pages.length;
-  const lite = [...mix].filter(([m]) => LITE.test(m)).reduce((s, [, n]) => s + n, 0);
+  const lite = pages.filter(uncheckedLite).length;
   return { total, lite, liteShare: total ? lite / total : 0, mix: [...mix].sort((a, b) => b[1] - a[1]) };
 }
 
@@ -37,7 +52,9 @@ export function ocrEngineMix(pages) {
  */
 export function ocrFirstGate(pages, ocrChecked) {
   const r = ocrEngineMix(pages);
-  const line = `OCR under these ${r.total} pages: ` + r.mix.map(([m, n]) => `${m} ${n}`).join(', ');
+  const allLite = r.mix.filter(([m]) => LITE.test(m)).reduce((s, [, n]) => s + n, 0);
+  const line = `OCR under these ${r.total} pages: ` + r.mix.map(([m, n]) => `${m} ${n}`).join(', ')
+    + (allLite > r.lite ? ` (${allLite - r.lite} flash-lite page(s) edited by a person or with no text: not counted)` : '');
   if (r.liteShare <= OCR_LITE_SHARE_LIMIT) return { ok: true, message: line };
   if (ocrChecked && ocrChecked.trim().length >= 10) return { ok: true, message: `${line}\nOCR checked: ${ocrChecked.trim()}` };
   return {

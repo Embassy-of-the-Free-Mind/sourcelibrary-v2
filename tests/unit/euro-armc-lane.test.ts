@@ -10,7 +10,7 @@ import os from 'os';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { armcDraftText, armcLang, armcUndrafted, armcPaths, ARMC_ENGINES, ARMC_LANE, ARMC_REASON } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { LANES } from '../../scripts/eval/lane-judge-sampler.mjs';
@@ -75,5 +75,30 @@ describe('put-back to the stored reading', () => {
     const back = applyDiffVerdicts(stored, next, flags, flags.map((f: { i: number }) => ({ i: f.i, winner: 'draft' })));
     expect(back.text).toBe('Et dixit quod non sunt xij libri in domo eius, et fuit anno 1550 in urbe Roma.');
     expect(back.reverted).toBe(2);
+  });
+});
+
+describe('translate-held frame (#7263): the books the CLI translation lane waits on', () => {
+  const book = (o: Record<string, unknown> = {}) => ({ id: 'b1', title: 'De umbris idearum', language: 'Latin', visible: true, pipeline_auto: { status: 'ocr_complete' }, ...o });
+  it('takes Latin only', () => {
+    expect(ARMC_TRANSLATE_LANGS).toEqual(['la']);
+  });
+  it('takes an idle unheld book routed to a cli translation row', () => {
+    expect(armcTranslateBookOk(book())).toBe(true);
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'archive_complete' } }))).toBe(true);
+  });
+  it('takes a book held for the CLI translation lane, and no other hold', () => {
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'held', hold: { reason: 'translate-cli-7075' } } }))).toBe(true);
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'held', hold: { reason: 'scans-only-publish-7270' } } }))).toBe(false);
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'ocr_complete', hold: { reason: 'invented-ocr-6056' } } }))).toBe(false);
+  });
+  it('refuses a busy, hidden, spread or pipeline_auto.held book', () => {
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'translating' } }))).toBe(false);
+    expect(armcTranslateBookOk(book({ visible: false }))).toBe(false);
+    expect(armcTranslateBookOk(book({ needs_splitting: true }))).toBe(false);
+    expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'ocr_complete', held: true } }))).toBe(false);
+  });
+  it('refuses a book the routing table does not send to a cli row (BPH stays on its Batch row)', () => {
+    expect(armcTranslateBookOk(book({ image_source: { provider: 'bph' } }))).toBe(false);
   });
 });
