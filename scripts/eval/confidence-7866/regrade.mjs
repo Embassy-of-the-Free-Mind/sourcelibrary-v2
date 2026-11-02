@@ -99,6 +99,14 @@ export const bucketOf = (grade) =>
     : grade === 'search_only' ? 'misleads_somewhere' : 'text_not_on_the_page');
 
 /** The word unit of a language's script: rates are comparable within a script, never across. */
+/** The book's age band, from `books.published` (free text: the first four-digit run is the year). */
+const eraOf = (published) => {
+  const y = Number(String(published ?? '').match(/\d{4}/)?.[0]);
+  if (!y) return 'no date';
+  return y <= 1500 ? 'before 1501' : y <= 1700 ? '1501–1700' : y <= 1900 ? '1701–1900' : 'after 1900';
+};
+/** Han characters and Tibetan syllables are not words: rates in those units never pool with alphabetic ones. */
+const isAlphabetic = (lang) => !/Chinese|Japanese|Korean|Tibetan/.test(lang);
 const unitOf = (lang) => (/Chinese|Japanese|Korean/.test(lang) ? 'Han characters' : /Tibetan/.test(lang) ? 'syllables' : 'words');
 
 const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
@@ -126,7 +134,7 @@ async function load() {
   const titles = new Map();
   for (const b of await db.collection('books').find(
     { _id: { $in: [...new Set(recs.map((r) => r.book_id))].map((x) => new ObjectId(x)) } },
-    { projection: { title: 1, language: 1 } }).toArray()) titles.set(String(b._id), b);
+    { projection: { title: 1, language: 1, published: 1 } }).toArray()) titles.set(String(b._id), b);
   await c.close();
   return { recs, texts, titles };
 }
@@ -140,7 +148,7 @@ function pageRows({ recs, texts, titles }) {
     const lang = r.lang ?? titles.get(r.book_id)?.language ?? 'unknown';
     return {
       book: r.book_id, page: r.page_number, title: titles.get(r.book_id)?.title ?? null,
-      lang, unit: unitOf(lang), script: r.script_type ?? 'unknown', route: r.route, cell: r.cell_real,
+      lang, unit: unitOf(lang), era: eraOf(titles.get(r.book_id)?.published), script: r.script_type ?? 'unknown', route: r.route, cell: r.cell_real,
       stratum: r.draw?.stratum ?? 'unmeasured', weight: r.draw?.weight ?? 1,
       fidelity: Number(v.fidelity), accept: !!v.accept, grade: gradeOf(v),
       bad_7866: !v.accept || n('wrong_text') > 0,
@@ -263,8 +271,8 @@ function build(rows) {
       accept: `${ps.filter((r) => r.accept).length}/${ps.length}`,
     };
   };
-  const cutBy = (keyOf) => Object.fromEntries([...new Set(rows.map(keyOf))].map((v) => {
-    const ps = rows.filter((r) => keyOf(r) === v), w = total(ps, (r) => r.words);
+  const cutBy = (keyOf, from = rows) => Object.fromEntries([...new Set(from.map(keyOf))].map((v) => {
+    const ps = from.filter((r) => keyOf(r) === v), w = total(ps, (r) => r.words);
     return [v, {
       pages: ps.length, books: new Set(ps.map((r) => r.book)).size,
       languages: [...new Set(ps.map((r) => r.lang))].sort(),
@@ -332,6 +340,13 @@ function build(rows) {
     by_language: langRows,
     by_script: cutBy((r) => r.script),
     by_route: cutBy((r) => r.route),
+    // The engine cut above is confounded: each engine was given different languages (Greek and
+    // Sanskrit to 3 Flash, Korean to Flash-Lite, Chinese to Paddle). Compare engines only WITHIN a
+    // language, and the age and hand of the book only within alphabetic scripts, where the unit is
+    // the same. Unweighted: page counts, not shares of the library.
+    by_language_route: cutBy((r) => `${r.lang} · ${r.route}`),
+    by_era_alphabetic: cutBy((r) => (r.script === 'manuscript' ? 'manuscript' : r.era), rows.filter((r) => isAlphabetic(r.lang))),
+    by_era_route_alphabetic: cutBy((r) => `${r.script === 'manuscript' ? 'manuscript' : r.era} · ${r.route}`, rows.filter((r) => isAlphabetic(r.lang))),
     study_cells: studyCells,
     defect_totals: { all: defs.length, ...Object.fromEntries(['cosmetic', 'misleads', 'wrong_text'].map((s) => [s, defs.filter((d) => d.s === s).length])) },
     defect_classes: Object.values(classes).sort((a, b) => b.total - a.total).map((t) => ({
