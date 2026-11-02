@@ -1112,6 +1112,18 @@ export const posts: BlogPost[] = [
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
   },
   {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 855,000 works printed in Europe before 1700, 26,000 to 73,000 have ever been put into English. Three estimates, and why catalogues see so few.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
+  },
+  {
     slug: 'how-much-in-english',
     title: 'How Much of the Written Past Can You Read in English?',
     subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
