@@ -400,8 +400,9 @@ const kappa = (pairs) => {
 const serious = (v) => new Set((v?.defects || []).filter((d) => d.severity !== 'cosmetic').map((d) => String(d.class || '').toUpperCase().slice(0, 3)));
 
 /** The adjudicated label of an item for judge w: its own adjudication where one ran; for the 2026-11-01 arms, else the
- *  adjudication an earlier judge's disagreement on the same item got (Argon's first: all of its were adjudicated). */
-const ADJ_BORROW = { 'flash-medium': ['argon', 'flash'], 'flash-high': ['argon', 'flash'] };
+ *  adjudication an earlier judge's disagreement on the same item got (Argon's first: all of its were adjudicated; then
+ *  Flash-low's; for high, then medium's, which ran first). */
+const ADJ_BORROW = { 'flash-medium': ['argon', 'flash'], 'flash-high': ['argon', 'flash', 'flash-medium'] };
 function adjFor(adj, w) {
   const m = new Map();
   for (const who of [w, ...(ADJ_BORROW[w] || [])]) for (const r of adj) if (r.judge === who && !m.has(r.id)) m.set(r.id, r.adj.accept);
