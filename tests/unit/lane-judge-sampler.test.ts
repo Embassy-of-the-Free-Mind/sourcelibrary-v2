@@ -181,7 +181,11 @@ describe('exportScore', () => {
 });
 
 describe('addEvidence (rules.json as text)', () => {
-  const text = fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8');
+  // The fixture is the live rules.json with this sampler's OWN evidence entries stripped. The weekly run
+  // writes those entries into the very cells this test adds to, so reading the file raw made the test pass
+  // or fail by what week it was (#7611). Stripping them keeps the guard and makes it week-independent.
+  const raw = fs.readFileSync(path.join(__dirname, '../../scripts/eval/estimator/router-table/rules.json'), 'utf8');
+  const text = raw.replace(new RegExp(`,\\s*\\{"score": "${EVIDENCE_PATH}"[^{}]*\\}`, 'g'), '');
   const entry = (cell: string, route: string) => ({ score: EVIDENCE_PATH, cell, route });
   it('adds one entry to one route, changes only that line, and is idempotent', () => {
     const out = addEvidence(text, 'french-lite', 'lite>agy-flash-low', entry('french-lite', 'lite>agy-flash-low'));
@@ -190,9 +194,12 @@ describe('addEvidence (rules.json as text)', () => {
     const changed = out.split('\n').filter((l, i) => l !== text.split('\n')[i]);
     expect(changed).toHaveLength(1);
     expect(addEvidence(out, 'french-lite', 'lite>agy-flash-low', entry('french-lite', 'lite>agy-flash-low'))).toBe(out);
-    // the same route id in another cell is a different route
-    const de = JSON.parse(out).cells.find((c: { id: string }) => c.id === 'german-lite').routes.find((x: { id: string }) => x.id === 'lite>agy-flash-low');
-    expect(de.evidence.some((e: { score: string }) => e.score === EVIDENCE_PATH)).toBe(false);
+    // The same route id in another cell is a different route: the german-lite line is untouched.
+    // (Assert it is UNCHANGED, not that it lacks EVIDENCE_PATH — this sampler's own weekly run adds
+    // its score file to german-lite, and an absence assertion would fail the week it does. #7611.)
+    const ev = (t: string) => JSON.parse(t).cells.find((c: { id: string }) => c.id === 'german-lite').routes.find((x: { id: string }) => x.id === 'lite>agy-flash-low').evidence;
+    expect(ev(out)).toEqual(ev(text));
+    expect(ev(out).some((e: { cell: string; score: string }) => e.score === EVIDENCE_PATH && e.cell === 'french-lite')).toBe(false);
   });
   it('gives a route with no evidence list one', () => {
     const out = addEvidence(text, 'french-lite', 'lite>opus', entry('french-lite', 'lite>opus'));
