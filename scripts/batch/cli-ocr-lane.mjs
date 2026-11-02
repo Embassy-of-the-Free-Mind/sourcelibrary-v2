@@ -58,7 +58,8 @@
  *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--shard=K/N] [--reread-per-call=4] [--apply | --dry-run]
  *
  * Pages: the router test's frame (scripts/eval/route-judge-6740/judge.mjs, de-lite / fr-lite): a visible German or
- * French book, idle in the pipeline and not held; a page whose stored OCR is a Flash-Lite draft of 300+ characters,
+ * French book, idle in the pipeline and not held (or held for the CLI translation lane, whose OCR-first gate waits on this
+ * lane, #7263); a page whose stored OCR is a Flash-Lite draft of 300+ characters,
  * not handwritten, not human-edited, not withheld, not a skipped page type, inside the book (15%-95% of its pages,
  * where the test drew). Each is read once by `cli-ocr.mjs read --correct-prompt` (the #5924 one-page template,
  * fc-prompt.mjs, exactly as judged) and written by `cli-ocr.mjs apply` with every guard, stamped `ocr.pipeline =
@@ -195,6 +196,7 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
+import { CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
@@ -502,8 +504,12 @@ async function correctMain(mode, arg) {
   const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: CORRECT_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
     : gate();
   if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
+  // A book held for the CLI translation lane (CLI_TRANSLATE_HOLD, #7263) is in the frame too: that lane's OCR-first gate
+  // skips a book whose OCR is mostly a Flash-Lite draft, so this lane is the one that can unblock it. Without this, the
+  // German and French cli rows of translation-routing-table.json would take those books out of the correction frame.
   const books = (await db.collection('books').find(
-    { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
+    { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
+      $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
     { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
   ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
     .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
