@@ -34,7 +34,7 @@
  * cli-translate.mjs apply.
  *
  * WHICH AGY POOL (#7263). --agy-home=auto takes the agy login with the most Gemini weekly left whose quota floor is open
- * (cli-ocr-lane.mjs quotaFloor: over the weekly pace line, 5-hour bucket over --floor-5h, default 0.25), read once at
+ * (cli-ocr-lane.mjs quotaFloor: over the other lanes' weekly reserve (agy-pools.mjs weeklyReserve, #7911), 5-hour bucket over --floor-5h, default 0.25), read once at
  * the start (scripts/lib/agy-pools.mjs); no pool open, no agy read this run. `default` or a DIR fixes the pool. The
  * readers run with that AGY_HOME and AGY_POOL_SHARED=1. Without the flag the readers inherit the environment, as before.
  *
@@ -125,7 +125,7 @@ async function main() {
       const pools = readPools();
       for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
       const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-      const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h }); return { open: f.ok, why: f.why }; });
+      const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h, lane: 'cli-translate' }); return { open: f.ok, why: f.why }; });
       if (!pick) { console.log('skip: no agy pool has its floor open; nothing read'); return; }
       home = pick.home;
     } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); process.exit(2); }
