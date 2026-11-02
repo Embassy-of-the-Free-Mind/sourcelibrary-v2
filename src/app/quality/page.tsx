@@ -452,12 +452,12 @@ export default function QualityCenterPage() {
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
               The deeper reason is that the answer depends far more on where the bar is set than on which pages were
-              drawn. Ask for pages that are letter-perfect and almost nothing passes: corrected for the reviewer&rsquo;s
-              misses, 93% of books have two pages carrying at least a few wrong letters (<IssueLink num={7263} />) — and a
-              typed scholarly edition would not pass that bar either, since the ones we checked against carry about 1.5
-              meaning-changing errors per 1,000 words themselves. Ask instead whether a reader would be misled, and about
-              half the pages are clean. Both are true of the same library. So this page reports the distribution and the
-              error rate per thousand words, and says which bar each figure uses.
+              drawn. Ask for books that are letter-perfect across five pages and almost none passes: corrected for the
+              reviewer&rsquo;s misses, 93% have two pages carrying at least a few wrong letters (<IssueLink num={7263} />).
+              A bar like that fails typed scholarly editions too — the ones we check our pages against turn out to carry
+              about 1.5 meaning-changing errors per 1,000 words of their own. Ask instead whether a reader would be
+              misled, and about half the pages are clean. Both are true of the same library. So this page reports the
+              distribution and the error rate per thousand words, and says which bar each figure uses.
             </p>
             <Source>
               The old figure, for reconciliation: by {pct(servedUsable)}&rsquo;s own rule {pct(servedDraw.corpus.bad_share)}{' '}
