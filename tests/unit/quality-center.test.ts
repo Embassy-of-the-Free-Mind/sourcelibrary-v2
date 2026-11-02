@@ -196,3 +196,48 @@ describe('the Pareto sample check (#6304) on /quality', () => {
     expect(() => dropReason('something new')).toThrow();
   });
 });
+
+/**
+ * The served-quality lead on /quality reads TWO committed files that must describe the SAME
+ * draw (#7933): score.json for the draw's description (how many books, from what frame, on
+ * what date, how the controls went) and served-grades.json for every figure in the grade
+ * table, the by-language cut and the defect list. Nothing in the page ties them together,
+ * and regrade.mjs is a separate command from the one that writes score.json. So a month's
+ * new draw that regenerates one and not the other renders a page reading "on <new date> we
+ * drew N books" above last month's grades, with no error anywhere. Assert the join.
+ */
+describe('the served-quality lead reads one draw, not two', () => {
+  const read = (p: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), p), 'utf8'));
+  const score = read('scripts/eval/confidence-7866/results/score.json');
+  const grades = read('scripts/eval/confidence-7866/results/served-grades.json');
+  const sum = (xs: unknown[], f: (x: never) => number) => (xs as never[]).reduce((a, x) => a + f(x), 0);
+
+  it('score.json and served-grades.json count the same books and pages', () => {
+    expect(grades.books).toBe(score.books.drawn);
+    expect(grades.pages).toBe(score.books.pages_judged);
+  });
+
+  it('served-grades.json names the run and the record it was built from', () => {
+    expect(grades.source.run_id).toBe('confidence-validation-7866');
+    expect(fs.existsSync(path.join(process.cwd(), grades.source.record))).toBe(true);
+  });
+
+  it('every page falls in exactly one grade, and the shares cover the draw', () => {
+    expect(sum(Object.values(grades.grades), (g: { pages: number }) => g.pages)).toBe(grades.pages);
+    expect(sum(Object.values(grades.grades), (g: { share: number }) => g.share)).toBeCloseTo(1, 3);
+  });
+
+  it('the by-language rows add up to the draw', () => {
+    expect(sum(grades.by_language, (r: { pages: number }) => r.pages)).toBe(grades.pages);
+    expect(sum(grades.by_language, (r: { books: number }) => r.books)).toBe(grades.books);
+  });
+
+  it('the corrected shares carry the sampling error, not the tag error alone', () => {
+    // Resampling only the judge's tags gave a band three times narrower than the figure it
+    // corrects, which reads as "correcting made it more precise". It did not: the correction
+    // adds a second source of error on top of the same 160 books.
+    const width = (ci: number[]) => ci[1] - ci[0];
+    expect(width(grades.reread.says_what_the_page_says.ci95))
+      .toBeGreaterThanOrEqual(width(grades.buckets.says_what_the_page_says.ci95) * 0.8);
+  });
+});
