@@ -4,8 +4,8 @@ export const PARTNERS_HTML = `
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>The world’s largest library of <em>translated</em> ancient texts, grounded in the source</h1>
-      <p>131,000 books in more than fifty languages, with their page scans. Over 20,000 are transcribed and translated into English, each translation set opposite the page it came from, so any line can be checked against the original.</p>
+      <h1>22,500 historical books in English, <em>grounded</em> in the source</h1>
+      <p>Translated from more than fifty languages, most of them printed between 1450 and 1800, and each translation set opposite the page it came from, so any line can be checked against the original. About half had never been in English before. Behind them stand 131,000 books with their page scans.</p>
       <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
     <figure>
@@ -80,15 +80,16 @@ export const PARTNERS_HTML = `
         <a href="https://sourcelibrary.org/book/siddhanta-tattva-viveka-bhatta/page/20"><img src="/ai-partners/img/reader-sanskrit.jpg" alt="A page of Kamalākara’s Siddhānta-tattva-viveka in the reader: the scan, the Sanskrit transcription and the English translation side by side, with notes on technical terms" style="width:100%;height:auto;display:block;border:1px solid rgba(0,0,0,.08)" loading="lazy" width="1440" height="808"></a>
         <figcaption class="cap">Scan, transcription and translation side by side: Kamalākara’s <em>Discernment of the Principles of Astronomy</em> (1658), on the lengths of the cosmic cycle. Notes explain technical terms and give the original word.</figcaption>
       </figure>
-      <h3 style="margin-top:8px">Translated pages, by century</h3>
-      <p class="note" style="margin-bottom:18px">By date of the book. About 0.9M translated pages belong to books with no recorded date and are not shown.</p>
-      <div class="bar"><span>before 1400</span><i style="width:17%"></i><span>0.17M</span></div>
-      <div class="bar"><span>1400s</span><i style="width:40%"></i><span>0.4M</span></div>
-      <div class="bar"><span>1500s</span><i style="width:100%"></i><span>1.0M</span></div>
-      <div class="bar"><span>1600s</span><i style="width:90%"></i><span>0.9M</span></div>
-      <div class="bar"><span>1700s</span><i style="width:90%"></i><span>0.9M</span></div>
-      <div class="bar"><span>1800s</span><i style="width:90%"></i><span>0.9M</span></div>
-      <div class="bar"><span>1900–1930</span><i style="width:50%"></i><span>0.5M</span></div>
+      <h3 style="margin-top:8px">Books readable in English, by date</h3>
+      <p class="note" style="margin-bottom:18px">By the year the edition was printed, or the manuscript written, which is often later than the work was composed. The darker part of each bar is the books marked as first English translations. 4,168 books with no recorded date are not shown. Counted 2 November 2026.</p>
+      <div class="bar"><span>before 1400</span><i class="st"><b style="width:5.0%"></b><s style="width:6.0%"></s></i><span>507</span></div>
+      <div class="bar"><span>1400s</span><i class="st"><b style="width:12.8%"></b><s style="width:17.8%"></s></i><span>1,404</span></div>
+      <div class="bar"><span>1500s</span><i class="st"><b style="width:39.7%"></b><s style="width:35.0%"></s></i><span>3,422</span></div>
+      <div class="bar"><span>1600s</span><i class="st"><b style="width:72.0%"></b><s style="width:28.0%"></s></i><span>4,586</span></div>
+      <div class="bar"><span>1700s</span><i class="st"><b style="width:31.3%"></b><s style="width:18.6%"></s></i><span>2,289</span></div>
+      <div class="bar"><span>1800s</span><i class="st"><b style="width:14.5%"></b><s style="width:57.0%"></s></i><span>3,279</span></div>
+      <div class="bar"><span>1900 on</span><i class="st"><b style="width:7.6%"></b><s style="width:55.3%"></s></i><span>2,884</span></div>
+      <div class="legend" style="margin-top:14px"><span><i class="sw tr"></i>first English translation</span><span><i class="sw tc"></i>other books readable in English</span></div>
     </div>
   </div>
 </section>
