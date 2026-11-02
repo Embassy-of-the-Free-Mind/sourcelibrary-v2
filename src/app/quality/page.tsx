@@ -8,6 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import ocrRouting from '../../../scripts/lib/ocr-routing-table.json';
 import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
+import servedGrades from '../../../scripts/eval/confidence-7866/results/served-grades.json';
 import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
@@ -25,7 +26,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: 'Quality Center | Source Library',
   description:
-    'How good the transcriptions and translations in Source Library are: the share of live books that pass a check against the page images, how the other figures relate to it, what we have learned, the experiments behind the figures, what readers have reported, and how to take part.',
+    'How good the transcriptions and translations in Source Library are: what a check of live books against the page images found, grade by grade and language by language, which kinds of error account for it, how far the reviewer can be trusted, what we have learned, what readers have reported, and how to take part.',
   alternates: { canonical: '/quality' },
 };
 
@@ -105,13 +106,62 @@ const canon = latestCanonStatus();
 /* The served figure (#7263 V7): the #7866 draw of live books, read against the page images, weighted back to the
    library. Read from its committed score.json, so a new month's draw moves the headline when that file moves. */
 const SERVED_RECORD = 'scripts/eval/experiments/2026-10-31-confidence-validation-7866.md';
+const SERVED_GRADES = 'scripts/eval/confidence-7866/results/served-grades.json';
 const servedFrame = Object.values(servedDraw.corpus.frame_books).reduce((a, b) => a + b, 0);
 const servedUsable = 1 - servedDraw.corpus.bad_share;
-const servedUsableCi = [1 - servedDraw.corpus.bad_share_ci95[1], 1 - servedDraw.corpus.bad_share_ci95[0]];
 const servedDate = servedDraw.generated_at.slice(0, 10);
 const servedWeakBooks = Math.round(servedDraw.corpus.bad_books_est / 100) * 100;
 /** "8/8 rejected at fidelity <= 2" → "8 of 8". */
 const kOfN = (v: string) => v.match(/^(\d+)\/(\d+)/)?.slice(1).join(' of ') ?? v;
+
+/* The grade ladder (#7933): the SAME 800 verdicts as the record above, re-graded on the rubric's four grades
+   (.claude/docs/quality-rubric-and-sampling.md §5) and cut by language, writing system and reading method, by
+   scripts/eval/confidence-7866/regrade.mjs. A distribution, not one pass/fail share at an unstated bar. */
+const grades = servedGrades as typeof servedGrades & {
+  grade_label: Record<string, string>;
+  grades: Record<string, { pages: number; share: number; ci95: [number, number] }>;
+};
+/** The reader-facing order, worst last, each row saying what a reader can do with such a page. */
+const LADDER: { key: string; can: string }[] = [
+  { key: 'fit_to_quote', can: 'Quote it without opening the scan' },
+  { key: 'fit_to_read', can: 'Read it; check the scan before quoting' },
+  { key: 'search_only', can: 'Find the page by it, but do not trust the reading' },
+  { key: 'wrong_span', can: 'Do not rely on it: a word or number is not the page’s' },
+  { key: 'from_elsewhere', can: 'Do not rely on it: part is from somewhere else' },
+  { key: 'mostly_wrong', can: 'Do not rely on it: most of the page is wrong or missing' },
+  { key: 'not_this_page', can: 'Do not rely on it: it is another page’s text' },
+];
+/** Plain names for the reading methods the draw happened to catch; a route not here shows its own id. */
+const READER_NAME: Record<string, string> = {
+  lite: 'Gemini Flash-Lite', '3flash': 'Gemini 3 Flash', paddle: 'PaddleOCR-VL', yigdzin: 'Yig-dzin (Tibetan)',
+  'yigdzin>agy-flash-low': 'Yig-dzin, then Gemini Flash', 'lite>agy-flash-low': 'Flash-Lite, then Gemini Flash',
+  'pero>agy-flash-low': 'PERO, then Gemini Flash', 'lighton-written': 'LightOnOCR (our GPU)',
+  'import:ia_djvu': 'the Internet Archive’s own OCR', 'import:corpus': 'a typed edition',
+  'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'Claude Opus',
+  'model:gemini-2.5-flash': 'Gemini 2.5 Flash', 'model:none': 'no engine recorded',
+};
+/** Languages with at least three books in the draw: fewer is one or two books, not a language. */
+const gradeLanguages = grades.by_language.filter(r => r.books >= 3);
+const topClasses = grades.defect_classes.filter(c => c.total >= 25);
+/**
+ * Three worked examples from served-grades.json: a misread that changes a name, a dropped unit, and
+ * a heading turned to nonsense. Each was checked against its page image by eye on 2026-11-02 (#7933)
+ * — that is why these three and not others. Keyed by class and the opening of the reviewer's own
+ * quote, so a regeneration falls back to that class's first example rather than dropping the block.
+ */
+const EXAMPLE_PICKS: [string, string][] = [
+  ['O6', '故吉觀順'],
+  ['O7', 'two hundred .'],
+  ['O1', 'ACen Wad'],
+];
+const examples = EXAMPLE_PICKS
+  .map(([k, prefix]) => {
+    const c = grades.defect_classes.find(x => x.class === k);
+    const e = c?.examples.find(x => x.quote.startsWith(prefix))
+      ?? c?.examples.find(x => x.severity === 'wrong_text') ?? c?.examples[0];
+    return e && c ? { ...e, name: c.name } : null;
+  })
+  .filter((e): e is NonNullable<typeof e> => e != null);
 const englishTop = byLanguage.rows.filter(r => ['Latin', 'English', 'German'].includes(r.language) && r.translation);
 const englishTopRange = `${(Math.min(...englishTop.map(r => r.translation!.share)) * 100).toFixed(0)}–${pct(Math.max(...englishTop.map(r => r.translation!.share)))}`;
 
@@ -296,39 +346,260 @@ export default function QualityCenterPage() {
         <Section id="stands" title="Where quality stands">
           <div className="max-w-3xl mb-6">
             <p className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-3">
-              {pct(servedUsable)} of the books you can read here passed a check of their transcription against the page
-              images.
+              About half the pages you read here say what the scan says. A quarter carry a reading that changes the sense of
+              a word. A quarter carry something the page does not have.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
-              On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books at random from the {n(servedFrame)} live
-              books that have a transcription, took five pages spread through each, and had an AI reviewer (Claude Opus) read
-              each page&rsquo;s text against the photograph of the page. A page passes when its text could be published as
-              that page&rsquo;s text: every line, in order, with the right words, names and numbers, and nothing that is not
-              on the page. A book passes when at least four of its five pages do. Weighted back to the whole library,{' '}
-              <b className="text-stone-900">
-                {pct(servedUsable)} of books passed (95% interval {(servedUsableCi[0] * 100).toFixed(0)}–{pct(servedUsableCi[1])})
-              </b>
-              {'. '}In the other {pct(servedDraw.corpus.bad_share)}, about {n(servedWeakBooks)} books, two or more of the five
-              pages had words wrong, missing or added, or text from another page.
+              On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books from the {n(servedFrame)} live books that
+              have a transcription — in four groups, by how much confidence our own records gave us in each, then weighted
+              back to the library — took five pages spread through each, and had an AI reviewer (Claude Opus) read each of
+              the {n(grades.pages)} pages against the photograph of the page. It marked every defect it found with a kind
+              and one of three weights: a slip that misleads nobody, a reading that changes the sense, or text the page
+              does not carry. Those weights give each page a grade, and this is how the {n(grades.pages)} pages fell.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 mb-1">
+            <table className="min-w-[640px] w-full text-sm text-stone-700">
+              <caption className="sr-only">Share of pages in each grade, weighted back to the library, with 95% intervals</caption>
+              <thead>
+                <tr>
+                  <th className={th}>What a reader can do with the page</th>
+                  <th className={th}>What the reviewer found</th>
+                  <th className={th}>Pages</th>
+                  <th className={th}>Share of the library (95% interval)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LADDER.map(({ key, can }) => {
+                  const g = grades.grades[key];
+                  return (
+                    <tr key={key}>
+                      <td className={`${td} font-semibold text-stone-900 w-[26%]`}>{can}</td>
+                      <td className={`${td} w-[36%]`}>{grades.grade_label[key]}</td>
+                      <td className={td}>{g.pages}</td>
+                      <td className={td}>
+                        <b className="text-stone-900">{pct(g.share, g.share < 0.05 ? 1 : 0)}</b>{' '}
+                        <span className="text-stone-500 text-xs">
+                          ({pct(g.ci95[0], g.ci95[0] < 0.05 ? 1 : 0)}–{pct(g.ci95[1], g.ci95[1] < 0.05 ? 1 : 0)})
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, re-graded from the same{' '}
+            {n(servedDraw.books.pages_judged)} verdicts as <A href={`${BLOB}${SERVED_RECORD}`}>the record</A> (
+            <IssueLink num={7866} />, <IssueLink num={7933} />). The four grades are{' '}
+            <a href="#the-grades" className={LINK}>our own published rubric</a>; the last three rows split what it calls{' '}
+            <i>not usable</i>, because
+            a wrong word and another book&rsquo;s page are not the same failure. Books were drawn in four groups and
+            weighted back to the library; the interval is a bootstrap over books. The reviewer turned down{' '}
+            {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text, and caught{' '}
+            {kOfN(servedDraw.instrument.planted)} errors we planted.
+          </Source>
+
+          <Sub>How far to trust these figures</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              One AI reviewer made every verdict above, and no person has checked them, beyond the three worked examples
+              further down. We have measured that reviewer twice, and it errs in both directions.
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed mb-3">
+              <li>
+                <b className="text-stone-900">It flags things that are not wrong.</b> Eighty of its own flags were read
+                again by a fresh reviewer that saw only the quoted words and the photograph. A fifth of the
+                &ldquo;text the page does not carry&rdquo; flags and a third of the &ldquo;changes the sense&rdquo; flags
+                did not hold up; and 17 of 40 it had called misleading were re-read as outright wrong, so the line between
+                those two is unstable. Re-running the table above with that correction:{' '}
+                <b className="text-stone-900">{pct(grades.reread.says_what_the_page_says.share)}</b> of pages say what the
+                page says ({pct(grades.reread.says_what_the_page_says.ci95[0])}–
+                {pct(grades.reread.says_what_the_page_says.ci95[1])}) and{' '}
+                {pct(grades.reread.text_not_on_the_page.share)} carry something the page does not
+                (<IssueLink num={6740} />).
+              </li>
+              <li>
+                <b className="text-stone-900">It misses more than it over-flags.</b> On pages where a typed scholarly
+                edition exists to check against, it catches fewer than half the pages that are wrong by a strict
+                letter-for-letter bar (42% on print, 45% on Chinese manuscripts). So the shares above are not a ceiling on
+                how good the text is; they are what one reviewer saw (<IssueLink num={7263} />).
+              </li>
+              <li>
+                <b className="text-stone-900">In plain units.</b> On printed pages with a typed edition to compare with, our
+                machine reading carries about 2 to 3 meaning-changing errors per 1,000 words. A human-typed scholarly
+                edition of the very same pages carries about 1.5. Machine reading is roughly one and a half to two times the
+                human error rate on print, not ten times (<IssueLink num={7263} />).
+              </li>
+            </ul>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              This checks the transcription only, not the English. On manuscripts the reviewer agrees with people much less
+              well than on print, and there it favours readings made by its own model family (
+              <a href="#learned" className={LINK}>finding 2</a>).
+            </p>
+          </div>
+
+          <Sub>Why there is no single number here</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              This page used to open with one: <i>{pct(servedUsable)} of books passed</i>. It came from the same check,
+              counting a book as failed when two of its five pages carried any error at all. That rule puts a page whose
+              only fault is the word <i>Egypt</i> printed clearly and read as <i>IJgyjDt</i> in the same bin as a page
+              carrying another book&rsquo;s text, and it hides how much of the library sits in between. We have stopped
+              leading with it.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
-              This checks the transcription only, not the English. No person has checked these verdicts. On manuscripts the
-              reviewer agrees with people much less well than on print, and on real machine readings it errs towards
-              accepting, so the figure is more likely too high than too low (<a href="#learned" className={LINK}>finding 2</a>).
-            </p>
-            <p className="text-stone-700 leading-relaxed">
-              What we are doing about it: a second reading by a stronger model now corrects weak German and French
-              transcriptions (<IssueLink num={7558} />). Our cheap signals cannot yet pick out the weak books (
-              <a href="#learned" className={LINK}>finding 1</a>), so we will repeat this draw every month and report here
-              whether the share that passes rises (<IssueLink num={7263} />).
+              The deeper reason is that the answer depends far more on where the bar is set than on which pages were
+              drawn. Ask for books that are letter-perfect across five pages and almost none passes: corrected for the
+              reviewer&rsquo;s misses, 93% have two pages carrying at least a few wrong letters (<IssueLink num={7263} />).
+              A bar like that fails typed scholarly editions too — the ones we check our pages against turn out to carry
+              about 1.5 meaning-changing errors per 1,000 words of their own. Ask instead whether a reader would be
+              misled, and about half the pages are clean. Both are true of the same library. So this page reports the
+              distribution and the error rate per thousand words, and says which bar each figure uses.
             </p>
             <Source>
-              <A href={`${BLOB}${SERVED_RECORD}`}>The record</A> and its figures,{' '}
-              <A href={`${BLOB}scripts/eval/confidence-7866/results/score.json`}>score.json</A> (<IssueLink num={7866} />).{' '}
-              {n(servedDraw.books.pages_judged)} pages; the books were drawn in four groups and weighted back to the library.
-              The reviewer turned down {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text,
-              and caught {kOfN(servedDraw.instrument.planted)} errors we planted.
+              The old figure, for reconciliation: by {pct(servedUsable)}&rsquo;s own rule {pct(servedDraw.corpus.bad_share)}{' '}
+              of books (95% interval {pct(servedDraw.corpus.bad_share_ci95[0])}–{pct(servedDraw.corpus.bad_share_ci95[1])}),
+              about {n(servedWeakBooks)} books, had two or more of five pages with an error. Of the{' '}
+              {n(grades.pages)} pages, {n(grades.bad_7866.pages)} counted against their book under that rule, and the rule
+              weighed them all the same: {n(grades.bad_7866.by_grade.search_only.counted_bad)} whose worst fault changes
+              the sense of a word, {n(grades.bad_7866.by_grade.wrong_span.counted_bad + grades.bad_7866.by_grade.from_elsewhere.counted_bad)}{' '}
+              carrying a span the page does not have, and{' '}
+              {n(grades.bad_7866.by_grade.not_this_page.counted_bad + grades.bad_7866.by_grade.mostly_wrong.counted_bad)}{' '}
+              substantially wrong or not this page at all.
             </Source>
+          </div>
+
+          <Sub>By language</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              The same {n(grades.pages)} pages, split by the book&rsquo;s language. This is where the figures above come
+              apart: English and Russian print is largely clean, Latin, German, Chinese and Tibetan sit near the middle, and
+              Greek, Sanskrit and Korean are poor (so is Arabic, on too few books to table). Those are read by
+              general-purpose models never tested on their script, and nothing better has re-read them. The last column
+              counts errors, not pages, so a long page of
+              small slips does not look like a wrecked one; it is per 1,000 words for alphabetic scripts, per 1,000
+              characters for Chinese and Korean and per 1,000 syllables for Tibetan, and those units are not comparable with
+              each other.
+            </p>
+          </div>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[860px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Language</th>
+                  <th className={th}>Books</th>
+                  <th className={th}>Pages</th>
+                  <th className={th}>Says what the page says</th>
+                  <th className={th}>A reading that changes the sense</th>
+                  <th className={th}>Something the page does not have</th>
+                  <th className={th}>Meaning-changing errors per 1,000</th>
+                </tr>
+              </thead>
+              <tbody>
+                {gradeLanguages.map(r => (
+                  <tr key={r.language}>
+                    <td className={`${td} font-semibold text-stone-900`}>
+                      {r.language}
+                      <span className="block text-xs font-normal text-stone-500 mt-1">{r.routes.map(x => READER_NAME[x.route] ?? x.route).filter((v, i, a) => a.indexOf(v) === i).slice(0, 2).join(', ')}</span>
+                    </td>
+                    <td className={td}>{r.books}</td>
+                    <td className={td}>{r.pages}</td>
+                    <td className={td}><b className="text-stone-900">{pct(r.says_what_the_page_says)}</b></td>
+                    <td className={td}>{pct(r.misleads_somewhere)}</td>
+                    <td className={td}>{pct(r.text_not_on_the_page)}</td>
+                    <td className={td}>
+                      {r.severe_per_1k ?? '–'}
+                      <span className="block text-xs text-stone-500 mt-1">{r.unit}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Source>
+            <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_language</code>. Languages with fewer than
+            three books in the draw are left out of this table; every figure above it counts them. The full list, and the
+            same cut by writing system and by reading method, are in the file. The draw was stratified by our confidence,
+            not by language, so a language&rsquo;s own share here is a reading of between {gradeLanguages.at(-1)?.books} and{' '}
+            {gradeLanguages[0]?.books} books and carries a wide interval. A share of 0% or 100% on three books means only
+            that: three books.
+          </Source>
+
+          <Sub>What is actually wrong</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              The reviewer tagged {n(grades.defect_totals.all)} defects on the {n(grades.pages)} pages, each with one of{' '}
+              <A href="/research/page-errors">44 named kinds</A>. Almost half of them are one kind: a single word or
+              character read as another word that exists. Outright invention is rare and concentrated — in Greek, Korean
+              and Sanskrit, where the engine was reading a script it reads badly. The rest is largely the furniture of an
+              early printed page: running heads, signature marks, catchwords and footnote numbers put in the wrong place or
+              read as letters.
+            </p>
+          </div>
+          <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+            <table className="min-w-[760px] w-full text-sm text-stone-700">
+              <thead>
+                <tr>
+                  <th className={th}>Kind of defect</th>
+                  <th className={th}>Found</th>
+                  <th className={th}>Of which misleads</th>
+                  <th className={th}>Of which text the page does not carry</th>
+                  <th className={th}>Mostly in</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topClasses.map(c => (
+                  <tr key={c.class}>
+                    <td className={`${td} font-semibold text-stone-900 w-[30%]`}>
+                      {c.name}
+                      <span className="block text-xs font-normal text-stone-500 mt-1">class {c.class}</span>
+                    </td>
+                    <td className={td}>{n(c.total)}</td>
+                    <td className={td}>{n(c.misleads)}</td>
+                    <td className={td}>{n(c.wrong_text)}</td>
+                    <td className={td}>{c.languages.slice(0, 3).map(l => l.language).join(', ')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="max-w-3xl mt-6 space-y-4">
+            {examples.map(e => (
+              <div key={`${e.book}-${e.page}-${e.quote}`} className="rounded-sm border border-stone-200 bg-white px-4 py-4">
+                <div className="text-xs uppercase tracking-wider text-stone-400 mb-2">
+                  {e.name} · {e.language} · {e.severity === 'wrong_text' ? 'text the page does not carry' : e.severity === 'misleads' ? 'changes the sense' : 'misleads nobody'}
+                </div>
+                <p className="font-mono text-sm leading-relaxed text-stone-800 mb-2 break-words">{e.quote}</p>
+                <p className="text-[0.95rem] leading-relaxed text-stone-700">{e.what}</p>
+                <p className="text-xs text-stone-500 mt-2">
+                  <A href={`/book/${e.book}?page=${e.page}`}>{e.title ?? 'the page'}</A>, page {e.page}
+                </p>
+              </div>
+            ))}
+          </div>
+          <Source>
+            The quoted span and the explanation are the reviewer&rsquo;s own words about our text, not a person&rsquo;s;
+            so is the name of the kind, which is not always a tight fit (the third example above is perfectly legible, and
+            the kind it is filed under is named for illegible leaves). These three were each opened against the page image
+            and confirmed by eye on {longDate('2026-11-02')}; the other {n(grades.defect_totals.all - 3)} were not. Open
+            any page beside its scan and judge for yourself; if we have it wrong, the Feedback button at the foot of that
+            page reaches us. All {n(grades.defect_totals.all)} defects, by kind and language, are in{' '}
+            <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>.
+          </Source>
+
+          <Sub>What we are doing about it</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed">
+              A second reading by a stronger model now corrects weak German and French transcriptions (
+              <IssueLink num={7558} />). The cheap signals we already store cannot pick out the weak books (
+              <a href="#learned" className={LINK}>finding 1</a>), so finding them means reading pages: we will repeat this
+              draw every month and report here whether the shares move (<IssueLink num={7263} />). The languages with the
+              lowest shares above — Greek, Sanskrit, Korean, Arabic — are the queue.
+            </p>
           </div>
 
           <Sub>Why other figures on this site are higher</Sub>
@@ -693,7 +964,9 @@ export default function QualityCenterPage() {
             (status as of {OPEN_WORK_AS_OF}). Each item links to its public issue, which is the current record.
           </Source>
 
-          <Sub>How a page will be graded, and which pages we check</Sub>
+          <div id="the-grades" className="scroll-mt-24">
+            <Sub>How a page is graded, and which pages we check</Sub>
+          </div>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             The figures above use different scales, chosen study by study. We are replacing them with one grade per page,
             built from published standards: the error severities of{' '}
@@ -722,8 +995,10 @@ export default function QualityCenterPage() {
             to tune the next fix.
           </p>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            None of this has run yet. The first graded round, and a check of the grades by people who read each language,
-            come before any grade replaces the figures above.
+            The grades themselves have now been computed once, on the {n(grades.pages)} pages at the top of this page, from
+            one AI reviewer&rsquo;s severities. What has not run is the rest of the plan: the standing monthly draw with its
+            own strata for title pages, blank pages and tables, and the check of the grades by people who read each
+            language. Until that check, every grade on this page is a model&rsquo;s opinion, labelled as one.
           </p>
           <Source>
             The rubric, the sampling plan, and a count of what is measured in each language and period today:{' '}
