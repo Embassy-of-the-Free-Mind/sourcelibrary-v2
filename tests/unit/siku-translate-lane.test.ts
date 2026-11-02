@@ -10,7 +10,7 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { claudeQuota } from '../../scripts/lib/agy-pools.mjs';
+import { claudeQuota, LANE_RESERVES } from '../../scripts/lib/agy-pools.mjs';
 import { parseQuota, poolGate, choosePool, rankBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
 
 const fx = (f: string) => fs.readFileSync(path.join(__dirname, '../fixtures/siku-lane', f), 'utf8');
@@ -38,13 +38,14 @@ describe('siku lane: pool gate', () => {
     expect(parseQuota('{"status":"ERROR"}')).toBeNull();
     expect(parseQuota('agy-guard: no --model given\n{"status":"SUCCESS","command":{"data":{"groups":[]}}}')).toBeNull();
   });
-  it('opens above 0.35, or above 0.05 within 24 h of the reset', () => {
+  it('opens above the other lanes\' reserve, and above empty in the last 36 h before the reset (#7911)', () => {
     const far = '2026-10-30T21:59:44Z', near = '2026-10-28T10:00:00Z';
-    expect(poolGate({ weekly: 0.64, weeklyReset: far }, { now: NOW }).open).toBe(true);
-    expect(poolGate({ weekly: 0.35, weeklyReset: far }, { now: NOW }).open).toBe(false);
-    expect(poolGate({ weekly: 0.2, weeklyReset: far }, { now: NOW }).open).toBe(false);
-    expect(poolGate({ weekly: 0.2, weeklyReset: near }, { now: NOW }).open).toBe(true);
-    expect(poolGate({ weekly: 0.04, weeklyReset: near }, { now: NOW }).open).toBe(false);
+    const others = Object.entries(LANE_RESERVES).reduce((s, [k, v]) => (k === 'siku' ? s : s + v), 0);
+    expect(poolGate({ weekly: 0.2, weeklyReset: far }, { now: NOW }).open).toBe(true); // was shut under 0.35
+    expect(poolGate({ weekly: others + 0.001, weeklyReset: far }, { now: NOW }).open).toBe(true);
+    expect(poolGate({ weekly: others, weeklyReset: far }, { now: NOW }).open).toBe(false);
+    expect(poolGate({ weekly: 0.04, weeklyReset: near }, { now: NOW }).open).toBe(true);
+    expect(poolGate({ weekly: 0.002, weeklyReset: near }, { now: NOW }).open).toBe(false); // a spent pool's residue
     expect(poolGate(null).open).toBe(false);
   });
   it('uses the open pool with most weekly left, never a busy one', () => {
@@ -53,7 +54,7 @@ describe('siku lane: pool gate', () => {
     expect(choosePool([a, b], { now: NOW }).home).toBe('/root/.agy-james');
     expect(choosePool([a, { ...b, busy: 1234 }], { now: NOW }).home).toBeNull();
     expect(choosePool([a, { ...b, reading: parseQuota(fx('quota-spent.json')) }], { now: NOW }).home).toBeNull();
-    expect(choosePool([{ ...a, reading: { weekly: 0.3, weeklyReset: '2026-10-30T21:59:44Z' } }], { now: NOW })).toBeNull();
+    expect(choosePool([{ ...a, reading: { weekly: 0.05, weeklyReset: '2026-10-30T21:59:44Z' } }], { now: NOW })).toBeNull();
   });
 });
 

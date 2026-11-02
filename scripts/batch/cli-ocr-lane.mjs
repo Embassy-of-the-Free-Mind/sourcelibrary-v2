@@ -81,13 +81,13 @@
  * pools are the correction lane's; there is no Claude fallback (the fallback serves Latin, which this mode does not).
  * Router: the cells german-lite/print and french-lite/print, route agy-flash-low@4-read (servedByReread).
  *
- * QUOTA FLOOR. Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini weekly remaining
- * fraction is below the straight line to its reset (remaining time / 7 days), or the 5-hour bucket is below
- * --floor-5h (default 0.25, so the other lanes on the pool keep their window). An unreadable /quota stops it too.
- * `--pace-off-until=ISO` drops the weekly pace line until that time (the 5-hour floor still holds), so a pool can be
- * spent out before its reset instead of paced to it; after that time the line is back with no edit (Derek 2026-10-29).
- * `--weekly-end=F` bends the line to end at F instead of 0 (line = F + (1 - F) × remaining time / 7 days), so a pool
- * the lane has to itself can be spent down to F by its reset and no further (#7263: the second pool, F = 0.10).
+ * QUOTA FLOOR (drain by reset, #7911). Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini
+ * weekly remaining fraction is below the weekly RESERVE (scripts/lib/agy-pools.mjs weeklyReserve: the declared needs
+ * of the lanes that must not starve, 0 in the last 36 h before the reset), or the 5-hour bucket is below --floor-5h
+ * (default 0.25, so the other lanes on the pool keep their window). The 5-hour floor does the pacing; there is no
+ * even-burn line. An unreadable /quota stops it too. `--pace-off-until=ISO` drops the reserve until that time (the
+ * 5-hour floor still holds); an override for a hand run, no cron line needs it. `--weekly-end=F` keeps at least F in
+ * the pool, the last 36 h included, so a pool can be spent down to F and no further (#7263).
  *
  * POOL (#7263). `--agy-home` picks the agy login every call of the run uses, its reads and its /quota floor alike:
  * `default` (the box's own login; also what no flag means, as before), a DIR (a second login, scripts/workers/
@@ -171,7 +171,7 @@
  *   ... armc-count --lane-dir=L
  *   ... armc --lane-dir=L --out=DIR [--max-pages=N] [--book-chunk=40] [--concurrency=N] [--deadline-min=M]
  *        [--floor-5h=0.25] [--agy-home=default|auto|DIR] [--weekly-end=0] [--wait-quota] [--weekly-floor=F] [--book=ID] [--apply]
- *        (--weekly-floor: a hand-run pilot's fixed weekly floor in place of the pace line, as E2/E5 ran; never on cron)
+ *        (--weekly-floor: a hand-run pilot's fixed weekly floor in place of the weekly reserve, as E2/E5 ran; never on cron)
  *        drafted pages, re-checked against the frame, read and applied a book chunk at a time (claims L/claims-armc/),
  *        stamped ocr.pipeline = ARMC_LANE, --mark-stale (a flag; nothing re-translates on it). Every page tried goes to
  *        L/armc-ledger.jsonl and is not tried again; its image is deleted once ledgered. CONTAIN claims go to
@@ -198,7 +198,7 @@ import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '.
 import { toLanguageCodes } from '../lib/language-normalize.mjs';
 import { scriptFamily } from '../lib/quality-gate-screens.mjs';
 import { agyClaudeGate, AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
-import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
+import { agyEnv, quotaBuckets, readQuotaStdout, readPools, choosePool, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
 import { laneRouteCheck, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead } from '../lib/router-binding.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
@@ -327,22 +327,22 @@ export async function lastPageNumber(db, bookId) {
   const p = await db.collection('pages').findOne({ book_id: bookId, page_number: { $gt: 0 } }, { sort: { page_number: -1 }, projection: { _id: 0, page_number: 1 } });
   return p?.page_number ?? 0;
 }
-const WEEK_MS = 7 * 24 * 3600 * 1000;
-
 /**
- * The quota floor. `buckets`: agy /quota's Gemini buckets {id, remaining_fraction, reset_time}. Returns
- * { ok, why, weekly, line, five_h }: not ok when the weekly bucket is under the straight line to its reset, the 5-hour
- * bucket is under `floor5h`, or either bucket is missing.
+ * The quota floor (header: QUOTA FLOOR). `buckets`: agy /quota's Gemini buckets {id, remaining_fraction, reset_time};
+ * `lane`: the caller's key in LANE_RESERVES, if it has one (its own reserve is not kept from it). Returns
+ * { ok, why, weekly, line, five_h } (`line` = the weekly floor in force): not ok when the weekly bucket is under the
+ * reserve (or --weekly-end, or a pilot's weeklyFloor), the 5-hour bucket is under `floor5h`, or either bucket is missing.
  */
-export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null } = {}) {
+export function quotaFloor(buckets, { now = Date.now(), floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, weeklyFloor = null, lane = null } = {}) {
   const weekly = buckets?.find((b) => b.id === 'gemini-weekly'), five = buckets?.find((b) => b.id === 'gemini-5h');
   if (!weekly || typeof weekly.remaining_fraction !== 'number' || !weekly.reset_time) return { ok: false, why: 'no Gemini weekly bucket in /quota' };
-  // weeklyFloor (a hand-run pilot, armc --weekly-floor=F, #7567): a fixed floor in place of the pace line, as E2/E5 ran (0.40)
-  const line = weeklyFloor != null ? weeklyFloor : weeklyEnd + (1 - weeklyEnd) * Math.min(1, Math.max(0, (Date.parse(weekly.reset_time) - now) / WEEK_MS));
-  // --pace-off-until: spend the pool out before its reset (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
+  // --pace-off-until: no reserve until then (Derek 2026-10-29 "spend it out"); the 5-hour floor still holds
   const paceOff = paceOffUntil != null && now < paceOffUntil;
+  const reserve = paceOff ? 0 : weeklyReserve({ resetTime: weekly.reset_time, now, lane });
+  // weeklyFloor (a hand-run pilot, armc --weekly-floor=F, #7567): a fixed floor in place of the reserve, as E2/E5 ran (0.40)
+  const line = weeklyFloor != null ? weeklyFloor : Math.max(weeklyEnd, reserve);
   const r = { weekly: weekly.remaining_fraction, line, five_h: five?.remaining_fraction ?? null };
-  if (!paceOff && weekly.remaining_fraction < line) return { ok: false, why: `weekly ${(100 * weekly.remaining_fraction).toFixed(1)}% is under the pace line ${(100 * line).toFixed(1)}%`, ...r };
+  if (weekly.remaining_fraction < line) return { ok: false, why: `weekly ${(100 * weekly.remaining_fraction).toFixed(1)}% is under the ${weeklyFloor != null ? 'weekly floor' : line === reserve ? 'weekly reserve' : '--weekly-end floor'} ${(100 * line).toFixed(1)}%`, ...r };
   if (typeof five?.remaining_fraction !== 'number') return { ok: false, why: 'no Gemini 5-hour bucket in /quota', ...r };
   if (five.remaining_fraction < floor5h) return { ok: false, why: `5-hour bucket ${(100 * five.remaining_fraction).toFixed(1)}% is under ${100 * floor5h}%`, ...r };
   return { ok: true, why: null, ...r };
@@ -534,7 +534,7 @@ async function correctMain(mode, arg) {
     const r = spawnSync(process.execPath, [path.join(HERE, '../eval/flash-reread-5924/fc-prompt.mjs'), TPL], { stdio: 'inherit', env: process.env });
     if (r.status !== 0) { console.error('fc-prompt.mjs refused: the correction template could not be built; nothing read'); await client.close(); process.exit(1); }
   }
-  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}${REREAD ? `; route ${ROUTE}, run ${LANE_RUN}${APPLY ? '' : ', DRY RUN'}` : ''}): pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
+  console.log(`correct (${M.mode}: ${M.model}, ${M.lane}${M.mode === 'fallback' ? `; ${M.why}` : ''}${REREAD ? `; route ${ROUTE}, run ${LANE_RUN}${APPLY ? '' : ', DRY RUN'}` : ''}): pool ${POOL}${WEEKLY_END ? ` (weekly floor ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame${SHARD ? ` (shard ${SHARD.k}/${SHARD.n})` : ''}, up to ${MAX} pages, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a book chunk${Number.isFinite(DEADLINE) ? `, no new chunk after ${new Date(DEADLINE).toISOString()}` : ''}`);
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, other: 0 };
   const dryWhy = {};   // a dry run's would-write / skip reasons (nothing is ledgered)
@@ -719,7 +719,7 @@ async function gpuMain(mode, arg) {
   const TPL = path.join(OUT, `gpu-correct-prompt-${GPU_TEMPLATE.hash}.txt`);
   fs.writeFileSync(TPL, tplText);
   const { getPageSource } = await import('../lib/page-image-url.mjs');
-  console.log(`gpu-correct: pool ${POOL}${WEEKLY_END ? ` (pace line ends at ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
+  console.log(`gpu-correct: pool ${POOL}${WEEKLY_END ? ` (weekly floor ${100 * WEEKLY_END}%)` : ''}; ${books.length} books in frame, up to ${MAX} pages${Number.isFinite(MAX_BOOKS) ? ` in ${MAX_BOOKS} books` : ''}, ${CONCURRENCY} book(s) at a time, ${CHUNK} pages a chunk; template ${GPU_TEMPLATE.hash}`);
   let budget = MAX, stop = null, bi = 0, booksTaken = 0;
   const tally = { written: 0, check_flagged: 0, unchanged: 0, contain: 0, manuscript: 0, blank: 0, other: 0, agy_calls: 0, pero_secs: 0, books: 0 };
   const nextChunk = async () => {
@@ -1030,10 +1030,10 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
   if (!(Number.isInteger(CONCURRENCY) && CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--concurrency must be 1 to 8'); process.exit(2); }
   const DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
   const WAIT = process.argv.includes('--wait-quota');
-  // --weekly-floor=F: a hand-run pilot's fixed floor instead of the pace line (never on the cron line)
+  // --weekly-floor=F: a hand-run pilot's fixed floor instead of the weekly reserve (never on the cron line)
   const WEEKLY_FLOOR = arg('weekly-floor') != null ? Number(arg('weekly-floor')) : null;
   if (WEEKLY_FLOOR != null && !(WEEKLY_FLOOR >= 0.2 && WEEKLY_FLOOR < 1)) { console.error('--weekly-floor must be in [0.2, 1)'); process.exit(2); }
-  // --pace-off-until=ISO (#7701): spend the pool out before that time, as the first-read lines do; the 5-hour floor holds
+  // --pace-off-until=ISO (#7701): no weekly reserve before that time (an override; #7911 needs no cron line to set it)
   const PACE_OFF_UNTIL = arg('pace-off-until') ? Date.parse(arg('pace-off-until')) : null;
   if (PACE_OFF_UNTIL !== null && !Number.isFinite(PACE_OFF_UNTIL)) { console.error('--pace-off-until must be an ISO time'); process.exit(2); }
   const floorOpts = { floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, weeklyFloor: WEEKLY_FLOOR, paceOffUntil: PACE_OFF_UNTIL };

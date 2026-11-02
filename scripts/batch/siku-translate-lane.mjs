@@ -23,9 +23,10 @@
  * POOL GATE. Every agy pool on the box is read with `agy -p /quota --output-format json` (0 tokens): the default HOME,
  * and each AGY_HOME in POOL_HOMES that exists. A non-default pool that another process is using (AGY_HOME in its
  * environment, e.g. a measurement job) is skipped; a lane marked AGY_POOL_SHARED=1 (cli-ocr-lane correct) only shares
- * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if
- * weekly remaining > 0.35, or > 0.05 when its weekly reset is < 24 h away (quota idle before a reset is free, Derek
- * 2026-10-26). The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
+ * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if weekly
+ * remaining is above the other lanes' weekly reserve (agy-pools.mjs weeklyReserve; 0 in the last 36 h before the
+ * reset, when it must still be above AGY_GEMINI_EMPTY), drain by reset (#7911; was 0.35, 0.05 in the last 24 h).
+ * The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
  * that fails twice in a row stops the wave and pings ntfy.
  *
  * BOOKS. Held `paddle-zh-5600-ocr-only` or `gpu-backlog-5660`, rung `transcribed` or `translating`, OCR on >= 80% of
@@ -76,7 +77,8 @@ import { UNTRANSLATED } from './cli-translate-lane.mjs';
 import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
-import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName } from '../lib/agy-pools.mjs';
+import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
+import { AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 
 export { POOL_HOMES, parseQuota, poolName };
 
@@ -92,7 +94,6 @@ export const FIRST_HOLD = 'zh-histories-7546';
 export const PRIORITY_IDS = Object.freeze(new Set(['6ae0bab64adf2ffb52f71058', '6ae0baf94adf2ffb52f7121a', '6ae0bb854adf2ffb52f7166f', '6ae0bb894adf2ffb52f7170c', '6ae0bbc74adf2ffb52f7176e', '6ae0bd3d4adf2ffb52f72384', '6ae0bdca4adf2ffb52f72677', '6ae0bdce4adf2ffb52f72711', '6ae0beb34adf2ffb52f72f36', '6ae0bef64adf2ffb52f7304b', '6ae0befa4adf2ffb52f730c0', '6ae0befe4adf2ffb52f7311a', '6ae0bf3b4adf2ffb52f731bb', '6ae0bf3f4adf2ffb52f7321e', '6ae0bf424adf2ffb52f732bf', '6ae0bf884adf2ffb52f73494', '6ae0bf9a4adf2ffb52f73668', '6ae0bfa24adf2ffb52f736b3', '6ae0c5d74adf2ffb52f75eba', '6ae0c5db4adf2ffb52f75f31', '6ae0c61d4adf2ffb52f76087']));
 export const RUNGS = Object.freeze(['transcribed', 'translating']);
 export const MIN_OCR_SHARE = 0.8;
-export const FLOOR = Object.freeze({ weekly: 0.35, nearReset: 0.05, nearResetHours: 24 });
 export const SPOT_EVERY = 5000;
 export const SPOT_N = 10;
 export const MODEL = 'gemini-3.8-flash-low';
@@ -116,7 +117,8 @@ export const CHAT_REPLY_RE = /作为一个人工智能|人工智能语言模型|
 export function poolGate(reading, { now = Date.now() } = {}) {
   if (!reading) return { open: false, why: 'no reading' };
   const h = reading.weeklyReset ? (Date.parse(reading.weeklyReset) - now) / 3600e3 : Infinity;
-  const floor = h < FLOOR.nearResetHours ? FLOOR.nearReset : FLOOR.weekly;
+  // a spent pool keeps a residue and never reads exactly 0 (agy-cli.mjs AGY_GEMINI_EMPTY)
+  const floor = Math.max(weeklyReserve({ resetTime: reading.weeklyReset, now, lane: 'siku' }), AGY_GEMINI_EMPTY);
   const w = reading.weekly;
   const why = `weekly ${w.toFixed(3)} remaining, floor ${floor} (reset in ${Number.isFinite(h) ? h.toFixed(1) : '?'} h)`;
   return { open: w > floor, floor, why };
