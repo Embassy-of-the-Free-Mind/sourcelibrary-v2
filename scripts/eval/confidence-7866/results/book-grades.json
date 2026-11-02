@@ -1,0 +1,3565 @@
+{
+ "generated_at": "2026-11-02T15:44:41.854Z",
+ "source": {
+  "lane": "confidence-7866",
+  "run_id": "confidence-validation-7866",
+  "issue": 7866,
+  "page_grades": "results/served-grades.json",
+  "forms_by_eye": "forms-by-eye.json"
+ },
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image. One judge, no person has checked these verdicts.",
+ "rule": {
+  "error": "a defect the judge marked misleads (changes the sense) or wrong_text (text the page does not carry)",
+  "unit": "words; Chinese, Japanese and Korean at 1.5 characters a word; Tibetan by syllable",
+  "A": "at most 1 error per 1,000 words, and every page is this page’s text",
+  "B": "at most 5 errors per 1,000 words, and every page is this page’s text",
+  "C": "more than 5 errors per 1,000 words, but every page is this page’s text",
+  "D": "at least one of the five pages is another page’s text, or mostly wrong (fidelity 1 or 2)"
+ },
+ "min_books_per_cell": 3,
+ "books": 160,
+ "pages": 800,
+ "words": 190421,
+ "form_sources": {
+  "verdict script_type": 132,
+  "by eye": 28
+ },
+ "overall": {
+  "books": 160,
+  "A": {
+   "books": 34,
+   "share": 0.1987,
+   "ci95": [
+    0.1434,
+    0.2608
+   ]
+  },
+  "B": {
+   "books": 50,
+   "share": 0.328,
+   "ci95": [
+    0.2563,
+    0.4002
+   ]
+  },
+  "C": {
+   "books": 51,
+   "share": 0.3349,
+   "ci95": [
+    0.2627,
+    0.4043
+   ]
+  },
+  "D": {
+   "books": 25,
+   "share": 0.1383,
+   "ci95": [
+    0.0913,
+    0.19
+   ]
+  }
+ },
+ "by_form": [
+  {
+   "books": 84,
+   "A": {
+    "books": 24,
+    "share": 0.2507,
+    "ci95": [
+     0.1702,
+     0.3359
+    ]
+   },
+   "B": {
+    "books": 33,
+    "share": 0.4133,
+    "ci95": [
+     0.3077,
+     0.5164
+    ]
+   },
+   "C": {
+    "books": 19,
+    "share": 0.2423,
+    "ci95": [
+     0.1541,
+     0.3379
+    ]
+   },
+   "D": {
+    "books": 8,
+    "share": 0.0938,
+    "ci95": [
+     0.037,
+     0.161
+    ]
+   },
+   "form": "print"
+  },
+  {
+   "books": 76,
+   "A": {
+    "books": 10,
+    "share": 0.1296,
+    "ci95": [
+     0.0579,
+     0.2116
+    ]
+   },
+   "B": {
+    "books": 17,
+    "share": 0.2148,
+    "ci95": [
+     0.1317,
+     0.3107
+    ]
+   },
+   "C": {
+    "books": 32,
+    "share": 0.4581,
+    "ci95": [
+     0.3535,
+     0.5625
+    ]
+   },
+   "D": {
+    "books": 17,
+    "share": 0.1974,
+    "ci95": [
+     0.1169,
+     0.2768
+    ]
+   },
+   "form": "manuscript"
+  }
+ ],
+ "by_language_form": [
+  {
+   "language": "Chinese",
+   "form": "manuscript",
+   "books": 58,
+   "A": {
+    "books": 8,
+    "share": 0.1348,
+    "ci95": [
+     0.0528,
+     0.2315
+    ]
+   },
+   "B": {
+    "books": 14,
+    "share": 0.2315,
+    "ci95": [
+     0.1259,
+     0.3461
+    ]
+   },
+   "C": {
+    "books": 26,
+    "share": 0.4876,
+    "ci95": [
+     0.3673,
+     0.6045
+    ]
+   },
+   "D": {
+    "books": 10,
+    "share": 0.1461,
+    "ci95": [
+     0.0731,
+     0.2338
+    ]
+   }
+  },
+  {
+   "language": "Latin",
+   "form": "print",
+   "books": 25,
+   "A": {
+    "books": 2,
+    "share": 0.0819,
+    "ci95": [
+     0,
+     0.2048
+    ]
+   },
+   "B": {
+    "books": 12,
+    "share": 0.4836,
+    "ci95": [
+     0.2841,
+     0.683
+    ]
+   },
+   "C": {
+    "books": 7,
+    "share": 0.276,
+    "ci95": [
+     0.1175,
+     0.4372
+    ]
+   },
+   "D": {
+    "books": 4,
+    "share": 0.1585,
+    "ci95": [
+     0.0383,
+     0.317
+    ]
+   }
+  },
+  {
+   "language": "English",
+   "form": "print",
+   "books": 19,
+   "A": {
+    "books": 11,
+    "share": 0.5753,
+    "ci95": [
+     0.3513,
+     0.7992
+    ]
+   },
+   "B": {
+    "books": 8,
+    "share": 0.4247,
+    "ci95": [
+     0.2008,
+     0.6487
+    ]
+   },
+   "C": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "language": "German",
+   "form": "print",
+   "books": 15,
+   "A": {
+    "books": 2,
+    "share": 0.1153,
+    "ci95": [
+     0,
+     0.301
+    ]
+   },
+   "B": {
+    "books": 8,
+    "share": 0.5375,
+    "ci95": [
+     0.2815,
+     0.774
+    ]
+   },
+   "C": {
+    "books": 5,
+    "share": 0.3472,
+    "ci95": [
+     0.1361,
+     0.5583
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "language": "Tibetan",
+   "form": "manuscript",
+   "books": 7,
+   "A": {
+    "books": 2,
+    "share": 0.2977,
+    "ci95": [
+     0,
+     0.5954
+    ]
+   },
+   "B": {
+    "books": 3,
+    "share": 0.4186,
+    "ci95": [
+     0.1349,
+     0.7163
+    ]
+   },
+   "C": {
+    "books": 1,
+    "share": 0.1349,
+    "ci95": [
+     0,
+     0.4046
+    ]
+   },
+   "D": {
+    "books": 1,
+    "share": 0.1488,
+    "ci95": [
+     0,
+     0.4465
+    ]
+   }
+  },
+  {
+   "language": "Greek",
+   "form": "print",
+   "books": 4,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 2,
+    "share": 0.5,
+    "ci95": [
+     0,
+     1
+    ]
+   },
+   "C": {
+    "books": 1,
+    "share": 0.25,
+    "ci95": [
+     0,
+     0.75
+    ]
+   },
+   "D": {
+    "books": 1,
+    "share": 0.25,
+    "ci95": [
+     0,
+     0.75
+    ]
+   }
+  },
+  {
+   "language": "Russian",
+   "form": "print",
+   "books": 3,
+   "A": {
+    "books": 3,
+    "share": 1,
+    "ci95": [
+     1,
+     1
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "language": "Korean",
+   "form": "manuscript",
+   "books": 3,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 1,
+    "share": 0.3333,
+    "ci95": [
+     0,
+     1
+    ]
+   },
+   "D": {
+    "books": 2,
+    "share": 0.6667,
+    "ci95": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "language": "French",
+   "form": "print",
+   "books": 3,
+   "A": {
+    "books": 1,
+    "share": 0.269,
+    "ci95": [
+     0.269,
+     0.269
+    ]
+   },
+   "B": {
+    "books": 1,
+    "share": 0.2969,
+    "ci95": [
+     0.2969,
+     0.2969
+    ]
+   },
+   "C": {
+    "books": 1,
+    "share": 0.4342,
+    "ci95": [
+     0.4342,
+     0.4342
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "language": "Latin",
+   "form": "manuscript",
+   "books": 3,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 2,
+    "share": 0.7195,
+    "ci95": [
+     0.439,
+     1
+    ]
+   },
+   "D": {
+    "books": 1,
+    "share": 0.2805,
+    "ci95": [
+     0,
+     0.561
+    ]
+   }
+  },
+  {
+   "language": "Sanskrit",
+   "form": "print",
+   "books": 3,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 2,
+    "share": 0.6882,
+    "ci95": [
+     0.6882,
+     0.6882
+    ]
+   },
+   "D": {
+    "books": 1,
+    "share": 0.3118,
+    "ci95": [
+     0.3118,
+     0.3118
+    ]
+   }
+  },
+  {
+   "language": "Tibetan",
+   "form": "print",
+   "books": 3,
+   "A": {
+    "books": 3,
+    "share": 1,
+    "ci95": [
+     1,
+     1
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  }
+ ],
+ "by_year_form": [
+  {
+   "years": "before 1501",
+   "form": "print",
+   "books": 8,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 1,
+    "share": 0.1368,
+    "ci95": [
+     0,
+     0.2736
+    ]
+   },
+   "C": {
+    "books": 4,
+    "share": 0.5112,
+    "ci95": [
+     0.2556,
+     0.639
+    ]
+   },
+   "D": {
+    "books": 3,
+    "share": 0.352,
+    "ci95": [
+     0.0874,
+     0.6166
+    ]
+   }
+  },
+  {
+   "years": "before 1501",
+   "form": "manuscript",
+   "books": 4,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "C": {
+    "books": 2,
+    "share": 0.5619,
+    "ci95": [
+     0.3429,
+     1
+    ]
+   },
+   "D": {
+    "books": 2,
+    "share": 0.4381,
+    "ci95": [
+     0,
+     0.6571
+    ]
+   }
+  },
+  {
+   "years": "1501–1600",
+   "form": "print",
+   "books": 13,
+   "A": {
+    "books": 2,
+    "share": 0.1751,
+    "ci95": [
+     0,
+     0.3501
+    ]
+   },
+   "B": {
+    "books": 4,
+    "share": 0.2812,
+    "ci95": [
+     0.0559,
+     0.5122
+    ]
+   },
+   "C": {
+    "books": 6,
+    "share": 0.4878,
+    "ci95": [
+     0.231,
+     0.7504
+    ]
+   },
+   "D": {
+    "books": 1,
+    "share": 0.0559,
+    "ci95": [
+     0,
+     0.1678
+    ]
+   }
+  },
+  {
+   "years": "1601–1800",
+   "form": "print",
+   "books": 25,
+   "A": {
+    "books": 4,
+    "share": 0.1335,
+    "ci95": [
+     0.0292,
+     0.2542
+    ]
+   },
+   "B": {
+    "books": 16,
+    "share": 0.6766,
+    "ci95": [
+     0.507,
+     0.8401
+    ]
+   },
+   "C": {
+    "books": 3,
+    "share": 0.1343,
+    "ci95": [
+     0,
+     0.2715
+    ]
+   },
+   "D": {
+    "books": 2,
+    "share": 0.0557,
+    "ci95": [
+     0.0265,
+     0.1142
+    ]
+   }
+  },
+  {
+   "years": "after 1800",
+   "form": "print",
+   "books": 33,
+   "A": {
+    "books": 18,
+    "share": 0.5329,
+    "ci95": [
+     0.3633,
+     0.7026
+    ]
+   },
+   "B": {
+    "books": 10,
+    "share": 0.3263,
+    "ci95": [
+     0.1726,
+     0.4952
+    ]
+   },
+   "C": {
+    "books": 5,
+    "share": 0.1407,
+    "ci95": [
+     0.0281,
+     0.2533
+    ]
+   },
+   "D": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "years": "unknown",
+   "form": "print",
+   "books": 5,
+   "A": {
+    "books": 0,
+    "share": 0,
+    "ci95": [
+     0,
+     0
+    ]
+   },
+   "B": {
+    "books": 2,
+    "share": 0.3584,
+    "ci95": [
+     0.1397,
+     0.7957
+    ]
+   },
+   "C": {
+    "books": 1,
+    "share": 0.2187,
+    "ci95": [
+     0,
+     0.656
+    ]
+   },
+   "D": {
+    "books": 2,
+    "share": 0.423,
+    "ci95": [
+     0.2043,
+     0.8603
+    ]
+   }
+  },
+  {
+   "years": "unknown",
+   "form": "manuscript",
+   "books": 70,
+   "A": {
+    "books": 10,
+    "share": 0.1411,
+    "ci95": [
+     0.0642,
+     0.2268
+    ]
+   },
+   "B": {
+    "books": 17,
+    "share": 0.2337,
+    "ci95": [
+     0.1385,
+     0.3372
+    ]
+   },
+   "C": {
+    "books": 28,
+    "share": 0.4376,
+    "ci95": [
+     0.3285,
+     0.5439
+    ]
+   },
+   "D": {
+    "books": 15,
+    "share": 0.1876,
+    "ci95": [
+     0.1123,
+     0.2655
+    ]
+   }
+  }
+ ],
+ "book_list": [
+  {
+   "id": "6a2032e218654bf8e1903a74",
+   "title": "[A collection of Fatāwī, with citations from works on Fiqh] Or. 7189",
+   "language": "Arabic",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1345,
+   "errors": 27,
+   "per_1k": 20.07,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69f325c852a77bb28fdb5cd7",
+   "title": "Kitāb al-Tabṣirah fī ʻilm al-hayʼah",
+   "language": "Arabic",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 807,
+   "errors": 30,
+   "per_1k": 37.17,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69e72b65a409200ea79f24ac",
+   "title": "Առակdelays Եdelays (Aesop's Fables in Armenian)",
+   "language": "Armenian",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1827,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 741,
+   "errors": 4,
+   "per_1k": 5.4,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69a5f088b29703bc86eb5b9f",
+   "title": "Tughtk (Letters)",
+   "language": "Armenian",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1838,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 623,
+   "errors": 5,
+   "per_1k": 8.03,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c77eb01fe4f593c2059aa",
+   "title": "此事難知·卷一 (vol 1)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 468,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3c717039b4508b04e54364",
+   "title": "御纂朱子全書·卷四十五~卷四十七 (vol 86)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 517,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3cb6b857c1f37219c4be66",
+   "title": "尚書精義·卷二十四~卷二十七 (vol 8)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 506,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3c6c4039b4508b04e47d57",
+   "title": "日知錄·卷十六~卷十七 (vol 10)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 515,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3cbf6af9474f825c167fd4",
+   "title": "六藝之一錄·卷八十一~卷八十三 (vol 39)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 365,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3cc04eec254ff6cae055ca",
+   "title": "周易參義·卷三~卷四 (vol 3)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 451,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3c681caf3c49b59c5d6839",
+   "title": "山堂肆考·卷九十一~卷九十三 (vol 42)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 392,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3c789501fe4f593c2095b3",
+   "title": "書畫彙考·卷二十七 (vol 27)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 498,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a3cb6e357c1f37219c4d49d",
+   "title": "欽定周官義疏·卷二十九 (vol 18)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 536,
+   "errors": 1,
+   "per_1k": 1.87,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3cc0fcec254ff6cae0836e",
+   "title": "周易玩辭困學記·卷十二 (vol 10)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 489,
+   "errors": 1,
+   "per_1k": 2.05,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3cbdffec254ff6cadfc2ed",
+   "title": "證治準繩·卷一百四~卷一百五 (vol 87)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 445,
+   "errors": 1,
+   "per_1k": 2.25,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3ce86e552d34d98411ba7e",
+   "title": "欽定儀禮義疏·卷七~卷八 (vol 7)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 433,
+   "errors": 1,
+   "per_1k": 2.31,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3cbc19ec254ff6caded88e",
+   "title": "禮記注疏·卷四十八~卷四十九 (vol 90)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 867,
+   "errors": 2,
+   "per_1k": 2.31,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c69f0af3c49b59c5e3dff",
+   "title": "普濟方·卷三百八十九~卷三百九十 (vol 278)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 429,
+   "errors": 1,
+   "per_1k": 2.33,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3ceede8642f0445b15fae8",
+   "title": "御定淵鑑類函·卷二百四十六 (vol 278)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 605,
+   "errors": 2,
+   "per_1k": 3.31,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3cb61c57c1f37219c48b6c",
+   "title": "尚書注疏·卷十~卷十一 (vol 17)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 775,
+   "errors": 3,
+   "per_1k": 3.87,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c709939b4508b04e4fd36",
+   "title": "禮記集說·卷一百二十八~卷一百二十九 (vol 147)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 506,
+   "errors": 2,
+   "per_1k": 3.95,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c67ebaf3c49b59c5d4a5b",
+   "title": "天中記·卷五十一 (vol 51)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 504,
+   "errors": 2,
+   "per_1k": 3.97,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c742a01fe4f593c1eed13",
+   "title": "稗編·卷九十~卷九十一 (vol 49)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 494,
+   "errors": 2,
+   "per_1k": 4.05,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c782401fe4f593c20707d",
+   "title": "釋氏稽古略·卷四 (vol 4)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 727,
+   "errors": 3,
+   "per_1k": 4.12,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c66baaf3c49b59c5cce74",
+   "title": "欽定書經傳說彙纂·卷二十一 (vol 16)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 919,
+   "errors": 4,
+   "per_1k": 4.35,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c6c3739b4508b04e4771c",
+   "title": "義府·卷上 (vol 1)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 404,
+   "errors": 2,
+   "per_1k": 4.95,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a3c634a4daf85677d170c3e",
+   "title": "御定佩文韻府·卷九十八之四 (vol 248)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1195,
+   "errors": 6,
+   "per_1k": 5.02,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cbcb1ec254ff6cadf2564",
+   "title": "禮書·七十四~卷七十八 (vol 14)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 541,
+   "errors": 3,
+   "per_1k": 5.55,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cc00af9474f825c16d659",
+   "title": "四書通·孟子通卷十三~孟子通卷十四 (vol 17)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 692,
+   "errors": 4,
+   "per_1k": 5.78,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cf0f14701a906f10f42be",
+   "title": "四書集編·中庸集編·卷上~卷下 (vol 19)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1042,
+   "errors": 7,
+   "per_1k": 6.72,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c800701fe4f593c21f0ba",
+   "title": "童溪易傳·卷四~卷六 (vol 2)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 445,
+   "errors": 3,
+   "per_1k": 6.75,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c6b3539b4508b04e41c43",
+   "title": "說略·卷十四~卷十五 (vol 7)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 553,
+   "errors": 4,
+   "per_1k": 7.24,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c740601fe4f593c1ed8cd",
+   "title": "稗編·卷二十五~卷二十六 (vol 16)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 547,
+   "errors": 4,
+   "per_1k": 7.32,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c742501fe4f593c1ee9a5",
+   "title": "稗編·卷八十三~卷八十四 (vol 45)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 519,
+   "errors": 4,
+   "per_1k": 7.7,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cead3c895e71c6023cccb",
+   "title": "十三經注疏正字·卷四十一~卷四十三 (vol 14)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 502,
+   "errors": 4,
+   "per_1k": 7.97,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cb8223dce6cfad748b627",
+   "title": "詩傳大全·卷二~卷三 (vol 4)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 675,
+   "errors": 6,
+   "per_1k": 8.88,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cbbbb87ee3d48c89d0bbc",
+   "title": "禮記注疏·卷三~卷四 (vol 3)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 870,
+   "errors": 8,
+   "per_1k": 9.2,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cf0d98642f0445b168124",
+   "title": "四書集編·論語集编·卷一~卷二 (vol 2)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1020,
+   "errors": 10,
+   "per_1k": 9.8,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c5e5340c88a541d8e0f82",
+   "title": "古今事文類聚前集·卷五~卷六 (vol 3)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 405,
+   "errors": 4,
+   "per_1k": 9.87,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c648f39b4508b04e2814a",
+   "title": "御定佩文韻府·卷七十四之一 (vol 575)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1271,
+   "errors": 13,
+   "per_1k": 10.23,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cc06aec254ff6cae06603",
+   "title": "周易辯錄·卷二 (vol 2)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 534,
+   "errors": 6,
+   "per_1k": 11.24,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c783401fe4f593c2078f6",
+   "title": "佛祖歷代通載·卷二十一 (vol 14)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 619,
+   "errors": 7,
+   "per_1k": 11.31,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cbc42ec254ff6cadef090",
+   "title": "周禮訂義·卷六十九~卷七十 (vol 29)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 509,
+   "errors": 6,
+   "per_1k": 11.78,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cc269ec254ff6cae10e55",
+   "title": "書集傳纂疏·卷二 (vol 9)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1091,
+   "errors": 13,
+   "per_1k": 11.92,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3cee494701a906f10e7df5",
+   "title": "御定淵鑑類函·卷二百五十二~卷二百五十三 (vol 140)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 499,
+   "errors": 6,
+   "per_1k": 12.02,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6992cf0e284cdd19fef46f38",
+   "title": "植物名實圖考(六)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": 1848,
+   "year_bucket": "after 1800",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 238,
+   "errors": 3,
+   "per_1k": 12.61,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c690e39b4508b04e3b94b",
+   "title": "普濟方·卷九十六 (vol 62)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 463,
+   "errors": 6,
+   "per_1k": 12.95,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c6a3faf3c49b59c5e5140",
+   "title": "三易洞璣·卷十~卷十一 (vol 5)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 615,
+   "errors": 8,
+   "per_1k": 13,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c6f0b01fe4f593c1c88df",
+   "title": "四如講稿·卷四~卷六 (vol 2)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 560,
+   "errors": 8,
+   "per_1k": 14.29,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cef198642f0445b160a98",
+   "title": "御定淵鑑類函·卷三百四十二~卷三百四十三 (vol 334)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 626,
+   "errors": 10,
+   "per_1k": 15.97,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c64ab39b4508b04e28ee7",
+   "title": "御定佩文韻府·卷八十二之二 (vol 602)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1236,
+   "errors": 23,
+   "per_1k": 18.61,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c6a5eaf3c49b59c5e6355",
+   "title": "七政推步·卷一~卷二 (vol 1)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 862,
+   "errors": 17,
+   "per_1k": 19.72,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c6ae2af3c49b59c5eb179",
+   "title": "欽定協紀辨方書·卷二 (vol 2)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 256,
+   "errors": 6,
+   "per_1k": 23.44,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c7b0701fe4f593c21b92f",
+   "title": "江南經畧·卷五上 (vol 8)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 244,
+   "errors": 6,
+   "per_1k": 24.59,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c628e40c88a541d8f46a5",
+   "title": "御定佩文韻府·卷十六之十~卷十六之十一 (vol 69)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 977,
+   "errors": 25,
+   "per_1k": 25.58,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c5e7840c88a541d8e2644",
+   "title": "御定康熙字典·卷十三 (vol 12)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1205,
+   "errors": 31,
+   "per_1k": 25.72,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c6964af3c49b59c5df098",
+   "title": "普濟方·卷二百十六 (vol 149)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 371,
+   "errors": 12,
+   "per_1k": 32.32,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c60d540c88a541d8eb14f",
+   "title": "御定駢字類編·卷五十五: Imperial Parallel Characters (vol 238)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 753,
+   "errors": 26,
+   "per_1k": 34.51,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "695924fa1cac2ce31a4a8a33",
+   "title": "道藏 (Daozang - Taoist Canon)",
+   "language": "Chinese",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1445,
+   "year_bucket": "before 1501",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2007,
+   "errors": 72,
+   "per_1k": 35.87,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3c61bf879008ba7e1600b0",
+   "title": "益古演段(三) (vol 3)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 407,
+   "errors": 23,
+   "per_1k": 56.46,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3cf0368642f0445b1635b5",
+   "title": "御製律呂正義後編·卷三十二~卷三十三 (vol 17)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 206,
+   "errors": 13,
+   "per_1k": 63.11,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a3c622a879008ba7e1611b9",
+   "title": "西清古鑑·卷九 (vol 37)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 170,
+   "errors": 11,
+   "per_1k": 64.71,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a3cbfadf9474f825c16a32a",
+   "title": "六藝之一錄·卷二百三十七~卷二百三十八 (vol 103)",
+   "language": "Chinese",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 203,
+   "errors": 32,
+   "per_1k": 157.89,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69aea449f7e8488296c57afc",
+   "title": "Enten - Eller: Et livs-fragment",
+   "language": "Danish",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1878,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1705,
+   "errors": 1,
+   "per_1k": 0.59,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6953aeae77f38f6761bd8524",
+   "title": "Demotic Magical Papyrus of London and Leiden Vol. 3",
+   "language": "Demotic",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1904,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1109,
+   "errors": 14,
+   "per_1k": 12.62,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69b5258b2379d2fed6c28c3c",
+   "title": "Een liedtboecxken, tracterende van den offer des Heeren.",
+   "language": "Dutch",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1562,
+   "year_bucket": "1501–1600",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1871,
+   "errors": 29,
+   "per_1k": 15.5,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6ab6dbb4b393fe0e2d473db8",
+   "title": "Episodes from an unwritten history",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1910,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1273,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6ad16ee93ba103d8eb309cfd",
+   "title": "Waikare-moana, the Sea of the Rippling Waters",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1897,
+   "year_bucket": "after 1800",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1605,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69b99d166ed9e04909908b37",
+   "title": "The Path of Purity (Visuddhimagga)",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1922,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1577,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6953c90c77f38f6761bde04b",
+   "title": "Poems from the Divan of Hafiz",
+   "language": "English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1897,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 892,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69dc241f39623978967d80db",
+   "title": "The Mysteries of the Heart Doctrine",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1902,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1465,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69906148322e01b1349a46f8",
+   "title": "A Guide to Grand-Jury Men",
+   "language": "English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1630,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 814,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69e413312d8eeae8614a0296",
+   "title": "Ancient Symbol Worship: Influence of the Phallic Idea in the Religions of Antiquity",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1874,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1505,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6ab234fa4ac37d55a213b70f",
+   "title": "Mental chemistry",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1922,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 853,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "699069f81cf6ed5fbc8f4967",
+   "title": "History of the Rise and Influence of the Spirit of Rationalism in Europe, Vol. I",
+   "language": "English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1865,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1226,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6ab22f314ac37d55a2130b91",
+   "title": "Thought-force in business and everyday life;: Being a series of lessons in personal magnetism, psychic influence, thougt-force, concentration, will power and practical mental science",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1901,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1585,
+   "errors": 1,
+   "per_1k": 0.63,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a4ad79ad6371d99e7666afa",
+   "title": "Political Disquisitions: or, An Enquiry into Public Errors, Defects, and Abuses, Vol. 2",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1774,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1541,
+   "errors": 1,
+   "per_1k": 0.65,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "695942607d14807348773a98",
+   "title": "Sepher Yetzirah (Book of Formation) - Westcott",
+   "language": "English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 847,
+   "errors": 1,
+   "per_1k": 1.18,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6ab246d287d2180b7f5e908c",
+   "title": "The travels of Fa-hsien (399-414 A.D.), or, Record of the Buddhistic kingdoms 1923",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1923,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1192,
+   "errors": 2,
+   "per_1k": 1.68,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6ab2477c87d2180b7f5ea56f",
+   "title": "Women under primitive Buddhism : laywomen and almswomen",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1930,
+   "year_bucket": "after 1800",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1617,
+   "errors": 3,
+   "per_1k": 1.86,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69aebc460d3d5e01e132c454",
+   "title": "The Philocalia of Origen",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1911,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1938,
+   "errors": 4,
+   "per_1k": 2.06,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69e009b7846d79f28d566e5a",
+   "title": "An Account of the Polynesian Race: Its Origins and Migrations, Vol. 2",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1880,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1686,
+   "errors": 4,
+   "per_1k": 2.37,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "697d9c999788c62e1238c87e",
+   "title": "The great mystery of godliness",
+   "language": "English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1659,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 754,
+   "errors": 2,
+   "per_1k": 2.65,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6ab6de98b393fe0e2d475120",
+   "title": "Fraud Of Modern Theosophy",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1912,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 752,
+   "errors": 2,
+   "per_1k": 2.66,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6990540938e1fdee57b366e9",
+   "title": "Elementary Principles in Statistical Mechanics",
+   "language": "English",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1902,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 840,
+   "errors": 3,
+   "per_1k": 3.57,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69e961652beefe2f6f72b4a8",
+   "title": "大唐西域記 (Da Tang Xiyu Ji / Records of Western Regions)",
+   "language": "French",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1853,
+   "year_bucket": "after 1800",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1320,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69ac5f7cebeb54840de0f0a4",
+   "title": "Oeuvres complètes, Tome 13: Dioptrique (Pt. 1)",
+   "language": "French",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1916,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1643,
+   "errors": 6,
+   "per_1k": 3.65,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69c73f1a6a0f3d112faf7a97",
+   "title": "Recherches sur l'origine des découvertes attribuées aux modernes",
+   "language": "French",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1766,
+   "year_bucket": "1601–1800",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1023,
+   "errors": 11,
+   "per_1k": 10.75,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a8b76ef313cdd0126cb79af",
+   "title": "Die Pilzthiere oder Schleimpilze, nach dem neuesten Standpunkte bearbeitet",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1885,
+   "year_bucket": "after 1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 2034,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6975158ca88d83c830d99e32",
+   "title": "Aurea Catena Homeri. Das ist: eine Beschreibung von dem Ursprung der Natur",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1738,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1297,
+   "errors": 1,
+   "per_1k": 0.77,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69c63cd593cbf3c0fd742522",
+   "title": "De viribus et usu auri et argenti debite praeparati. Das ist: vom Nutz und Gebrauch der wahren Gold- und Silber Artzneyen",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1699,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 740,
+   "errors": 1,
+   "per_1k": 1.35,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a26d4dcf5273a8d907ae5b3",
+   "title": "Joh. Kampffs, ... über das Königreich Böhmen und benachbarte Länder, gestellte Propheceyungen",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1757,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1363,
+   "errors": 2,
+   "per_1k": 1.47,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69b51e05768235dc6598b5c1",
+   "title": "Karl Grosherzog von Frankfurt, Koenigliche Hoheit : in einer Vorlesung im Museum zu Frankfurt",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1810,
+   "year_bucket": "after 1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 658,
+   "errors": 1,
+   "per_1k": 1.52,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a243d6f0f0e4f405e630221",
+   "title": "Ueber den Nutzen eines frühzeitigen Studiums der Kirchengeschichte : nebst einer Anzeige seiner Vorlesungen",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1787,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1232,
+   "errors": 2,
+   "per_1k": 1.62,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a905a9c785d9b40577f5c91",
+   "title": "Practica: auff das Schaltjar, nach der heyligen vnd seeligen Geburt Jesu Christi vnsers Heylands. M.DCIIII. Auss dem monatlichen vnd täglischen lauff der Sonnen vnd anderer Stern gerechnet vnd gestellet,",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1600,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1353,
+   "errors": 3,
+   "per_1k": 2.22,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6970e3729b09d309d780a29e",
+   "title": "De amore dialogi tres",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1564,
+   "year_bucket": "1501–1600",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1121,
+   "errors": 3,
+   "per_1k": 2.68,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69c795636a0f3d112fafa029",
+   "title": "Aperta arca arcani artificiosissimi. Das ist: eröffneter unnd offenstehender Kasten",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1623,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 863,
+   "errors": 3,
+   "per_1k": 3.48,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69b51dd6cf111105c42917c0",
+   "title": "Particulare Ex Universali. Oder Kurtzer Entwurff Einer sonderbahren Artzney, so auch in denen gefährlichsten Kranckheiten Wunder thut : Deren Hoch-ansehnlichen deß H. Röm. Reichs Academicorum Naturæ Curiosorum ... unterworffen",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1677,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 494,
+   "errors": 2,
+   "per_1k": 4.05,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a267ed26c1f37c9c4f3cc35",
+   "title": "Newer wol-mundierter und wol-außstaffierter Post-Reuter oder astrologisches unparthey-isches Bedencken: von dem fernern vermuthlichen Zustande des jetzigen noch immerwährenden bluttriefenden Kriegs-Wesens",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1645,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1772,
+   "errors": 9,
+   "per_1k": 5.08,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69bd9fb2f6d63c9197481c0b",
+   "title": "Bedencken über Esaiae Stiefels Büchlein: von dreyerley Zustand des Menschen und dessen newen Gebuhrt ...",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1682,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 2111,
+   "errors": 12,
+   "per_1k": 5.68,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a26beb30e247ebad6de873c",
+   "title": "Gründliche Beschreibung Des Newerbauten Minerischen Bads Der Churf. Stadt Newenmarckt in der Obern Pfaltz : Wie man dasselbig zu mancherley kranckheiten vnd leibsgebrechen nützlich vnnd brauchen, auch jeden zufällen mit heylsamen artzneyen begegnen soll ; Auß befelch eines Ersamen Rahts daselbsten: Durch tägliche erfahrung vnnd Spagyrische obeservation an tag geben",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1598,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1444,
+   "errors": 11,
+   "per_1k": 7.62,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a49137aac0c339f55337966",
+   "title": "Ain nutzliche trostliche und kurtze undterrichtung, wie man sich in dem schwären leuffen der pestilentz halten solle, dem gemainen man zuhilff und gutem der nit andern beystandt hat verordnet.",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1563,
+   "year_bucket": "1501–1600",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1241,
+   "errors": 10,
+   "per_1k": 8.06,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a26bda553acc54a8c4d5117",
+   "title": "Apologia vnd Refutation Sebastiani Greiffen, Wider das Famos Libell vnd Schmehe gesprech, von den Alchimistischen Artzten dem Paracelso vnd seinen Discipulis, Vnter dem Tittel vnd schein einer Leyen warnunge",
+   "language": "German",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1589,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 670,
+   "errors": 12,
+   "per_1k": 17.91,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69b30030a1a4246ddb45ba45",
+   "title": "Novum Testamentum Graece (Elzevir 1670)",
+   "language": "Greek",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1670,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1061,
+   "errors": 2,
+   "per_1k": 1.89,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69af13c4f837644f29a496d3",
+   "title": "Claudii Ptolemaei Opera quae Exstant Omnia, Vol. I (Heiberg 1898)",
+   "language": "Greek",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1898,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1332,
+   "errors": 4,
+   "per_1k": 3,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69942a43045dfc482ad76202",
+   "title": "Opera Graece et Latine (Heinsius Edition)",
+   "language": "Greek",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1616,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 4271,
+   "errors": 43,
+   "per_1k": 10.07,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "699383b350654cbbe29181eb",
+   "title": "Aeschylus and Aristotle, Posterior Analytics (MS, 14th c.)",
+   "language": "Greek",
+   "form": "manuscript",
+   "form_source": "by eye",
+   "year": 1350,
+   "year_bucket": "before 1501",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1306,
+   "errors": 46,
+   "per_1k": 35.22,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69a5e3d7006a4098422165d4",
+   "title": "Comoediae (with scholia)",
+   "language": "Greek",
+   "form": "manuscript",
+   "form_source": "by eye",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2142,
+   "errors": 91,
+   "per_1k": 42.48,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69b222ed56715b0e32475a8c",
+   "title": "Greek Anthology: Florilegium Epigrammatum (Aldine Press, 2nd ed.)",
+   "language": "Greek",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1521,
+   "year_bucket": "1501–1600",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 493,
+   "errors": 22,
+   "per_1k": 44.62,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69b52bf1a2d71b015aa974b2",
+   "title": "Dell'elixir vitae",
+   "language": "Italian",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1624,
+   "year_bucket": "1601–1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1975,
+   "errors": 2,
+   "per_1k": 1.01,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a0856c249638a50931c2bd0",
+   "title": "Le ricchezze della lingua volgare ...",
+   "language": "Italian",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1543,
+   "year_bucket": "1501–1600",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 5729,
+   "errors": 26,
+   "per_1k": 4.54,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69f3296eaeeee0fa38c658ea",
+   "title": "Sinjong Hwangjye kuchʻyŏp mundap",
+   "language": "Korean",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 4733,
+   "errors": 31,
+   "per_1k": 6.55,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69f3263852a77bb28fdb6738",
+   "title": "Ŭpchʻong",
+   "language": "Korean",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 313,
+   "errors": 14,
+   "per_1k": 44.68,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69f3273552a77bb28fdb6f93",
+   "title": "Yŏsa chʻoryak",
+   "language": "Korean",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 343,
+   "errors": 33,
+   "per_1k": 96.12,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69b2ff09a1a4246ddb45ab68",
+   "title": "Novum Instrumentum omne (First Greek New Testament)",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1516,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 2214,
+   "errors": 1,
+   "per_1k": 0.45,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "699062feef12272ffdc8ef20",
+   "title": "In Cl. Ptolemaei de Astrorum Iudiciis Commentaria",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1555,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1368,
+   "errors": 1,
+   "per_1k": 0.73,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a50a00bad1859a71f41bf9e",
+   "title": "De genere vitaque homeri libellus herodoti halicarnassei historiographi libri novem, musarum nominibus inscripti, interprete lavren. Val. Accesserunt huic editioni plus minus novem folia, quae in primo lib. à Laurentio praetermissa, iam primum à Conrado heresbachio è Graeco suis locis sunt adiecta, cum alia in caeteris libris acceßione castigationeque ad Graecum exemplar facta item de genere vitaque homeri libellus, iam primum ab eodem heresbachio è Graeco in Latinum conversus. Homeru bios",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1584,
+   "year_bucket": "1501–1600",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1726,
+   "errors": 2,
+   "per_1k": 1.16,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69af49c4d6be7ec9cc3246fd",
+   "title": "Corpus Medicorum Latinorum, Vol. V",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1915,
+   "year_bucket": "after 1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 2599,
+   "errors": 4,
+   "per_1k": 1.54,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6970e3759b09d309d780a2a8",
+   "title": "Anatomia sive exenteratio draconis fanatici. [Dissertatie] praeside Isaacus Froereisenius",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1623,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1734,
+   "errors": 3,
+   "per_1k": 1.73,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "698192096df0137d367e6754",
+   "title": "Menippus sive dialogorum satyricorum centuria",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1617,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1147,
+   "errors": 2,
+   "per_1k": 1.74,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69b51ecbff09e4fe943b4ee9",
+   "title": "Diss. iur. de abstinentia iuris naturae a fallacibus regulis putativi processus summarii",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1740,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1539,
+   "errors": 3,
+   "per_1k": 1.95,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69c4ec33a3a4a7c546ee6113",
+   "title": "Menippus sive dialogorum satyricorum centuria",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1618,
+   "year_bucket": "1601–1800",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1930,
+   "errors": 4,
+   "per_1k": 2.07,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a4cb63519ae103166961ce4",
+   "title": "De Rebus Fatisque Huius Seculi Illustrioribus Disserit Atque Ad Actum Eucharisticum Pro Pace Caesareo-Ottomannica Novissime Sancita Illustrissimos Comites Ac Dominos, Dn. Heinricum XVIII. Patriae Patrem Optimum, Dominum Nostrum Clementissimum, Dn. Heinricum XXII. Dn. Heinricum XXVII. Iunioris Lineae Ruthenos Tum quoque Maxime Venerandos Dnn. Inspectores, Omnesque Cuiuscunque Ordinis Eruditos, Humillime observantissime ac perofficiose Invitat M. Georgius Ludovicus Goldner, Illustris Ruthenei Rector",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 3162,
+   "errors": 8,
+   "per_1k": 2.53,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a4bdb49913003fb726acfd2",
+   "title": "Theelogia Medica, i.e. De Usu & Abusu Potus Calidi cum herba Thee, Exercitatio, Quam Sub Praesidio Dn. Johannis Thile Publico expositurus est Carolus Christianus Kirchmaierus, Wittebergensis, Ad D. XXXI. Decembr. A. M.DC.LXXXVII.",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1298,
+   "errors": 4,
+   "per_1k": 3.08,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6991fb158ffe22e92ae4e615",
+   "title": "Laurentii Medicis Magnifici Vita",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1784,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1594,
+   "errors": 5,
+   "per_1k": 3.14,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69b6315b1c1c21a373806c60",
+   "title": "[De contemptu mundi]",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1478,
+   "year_bucket": "before 1501",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 919,
+   "errors": 3,
+   "per_1k": 3.26,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a4aaa6914a573f467717452",
+   "title": "Disputationis Theologicae Pars Posterior, De Christi theanthrōpu, Etaim Qua Homo Est, Speciali in Ecclesia, quae in terris militat, praesentia gratiosa , Cuius subnexas positiones Praeside Iusto Fewrbornio, S. Theologiae Doctore ... Publice respondendo pr",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1626,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1432,
+   "errors": 5,
+   "per_1k": 3.49,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a43999ec3ccb765a984106b",
+   "title": "Ius Tertii Orthodoxi Circa Caussam Jesuitico-Jansenianam, Dissertatione Historico-Theologica Deductum, In Celeberrima Leucorea Sub Praesidio Dn. Aegidii Strauchii publice defendet M. Marcus Schnering, Bileberga Holsatus. Prid. Kal. Maii, A. MDCLXIII. In Auditorio Maiori",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1663,
+   "year_bucket": "1601–1800",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1591,
+   "errors": 6,
+   "per_1k": 3.77,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a4cdd6959e2a5b6929d856a",
+   "title": "Mater Eva Virum Dominum Desiderans h. e. Dissertatio Philologica-Theologica De Verbis Evae, nato Caiino, prolatis & Gen. IV. I. descriptis, Quam Praeside Dn. Philippo Ludovico Hannekenio ventilandam proponit Autor Paulus Susemihl Philos. M. Ecclesiae Grunbergensis h. t. Diaconus. Ad Diem Ian. 1675.",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1675,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1236,
+   "errors": 5,
+   "per_1k": 4.05,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a4eb04e9251fb3056f71cc0",
+   "title": "Conclusiones de testamentorum ordinatione. Quas, sub praesido D. Joannis harpprechti, V.i. D. Et in alma Tubingensium academia professoris eminentissimi ordinarii exercitii causâ, horâ locoque solitis, ad D. 4.ian. Examinandas proponet Martinus gassenfaydt mergenthaimicus f.",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1316,
+   "errors": 8,
+   "per_1k": 6.08,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a4b13117622bb5aba1291de",
+   "title": "oratio",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1597,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1247,
+   "errors": 9,
+   "per_1k": 7.22,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69dbc7d71040d1d5e2094b24",
+   "title": "Flores astrologiae (Tr: Johannes Hispalensis)",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1495,
+   "year_bucket": "before 1501",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1588,
+   "errors": 12,
+   "per_1k": 7.56,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1478,
+   "year_bucket": "before 1501",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 3987,
+   "errors": 33,
+   "per_1k": 8.28,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a4ae0a29a3f4fa983d99ff6",
+   "title": "Synopsis septem ss. Conciliorum oecumenicorum Graece. Ex codice manuscripto bibliothecae Augustanae.",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1595,
+   "year_bucket": "1501–1600",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 796,
+   "errors": 8,
+   "per_1k": 10.05,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69dbc99f1040d1d5e20a4e4f",
+   "title": "Rhetorica ad C. Herennium. Add: Partitiones oratoriae",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1488,
+   "year_bucket": "before 1501",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 1359,
+   "errors": 15,
+   "per_1k": 11.04,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69f33085876dd827cbc47601",
+   "title": "Breviary",
+   "language": "Latin",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": 1381,
+   "year_bucket": "before 1501",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 949,
+   "errors": 11,
+   "per_1k": 11.59,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69af48642a821385be062737",
+   "title": "Arati Phaenomena, Geographia, Ora Maritima",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1488,
+   "year_bucket": "before 1501",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1067,
+   "errors": 15,
+   "per_1k": 14.06,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69b631a81c1c21a373809577",
+   "title": "Horae beatae Mariae virginis",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1480,
+   "year_bucket": "before 1501",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 273,
+   "errors": 4,
+   "per_1k": 14.65,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "699389a6ce15387065947dc0",
+   "title": "Hierocles on Pythagorean Golden Verses; Hermes Trismegistus",
+   "language": "Latin",
+   "form": "manuscript",
+   "form_source": "by eye",
+   "year": 1450,
+   "year_bucket": "before 1501",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 807,
+   "errors": 17,
+   "per_1k": 21.07,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69dbca3a1040d1d5e20aa385",
+   "title": "Herbarius latinus (with German synonyms) (ISTC ih00063000)",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1484,
+   "year_bucket": "before 1501",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 758,
+   "errors": 26,
+   "per_1k": 34.3,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6a0c53ef99c52ea845a06388",
+   "title": "Richard of St. Victor: Benjamin minor (De praeparatione animi ad contemplationem)",
+   "language": "Latin",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": 1250,
+   "year_bucket": "before 1501",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 230,
+   "errors": 9,
+   "per_1k": 39.13,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6a4b6cf066f4462393d6f8a6",
+   "title": "Catholicum carmen, ad Philippum Melanchthonem",
+   "language": "Latin",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 372.7,
+   "stratum": "middle",
+   "pages": 5,
+   "words": 527,
+   "errors": 23,
+   "per_1k": 43.64,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "6953e47477f38f6761bee59e",
+   "title": "Sidereal Messenger - English Translation with Kepler Dioptrics",
+   "language": "Latin-English",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1611,
+   "year_bucket": "1601–1800",
+   "weight": 398.9,
+   "stratum": "high",
+   "pages": 5,
+   "words": 1278,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69af11dba03f6f3663ba9133",
+   "title": "Сочинения А.П. Чехова. Том 10: Остров Сахалин",
+   "language": "Russian",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1914,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1278,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69af11743bf2d972adad82be",
+   "title": "Полное собрание сочинений И.С. Тургенева. Том 12",
+   "language": "Russian",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1898,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1654,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69af202426ba85fcaeca5f8d",
+   "title": "Сочинения Д.И. Писарева. Т. 3, 2-я половина",
+   "language": "Russian",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1894,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 3481,
+   "errors": 1,
+   "per_1k": 0.29,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a060d36e16c60cb2a8946c7",
+   "title": "सुश्रुतसंहिता Suśruta Saṃhitā (Sanskrit, Acharya critical edition)",
+   "language": "Sanskrit",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1915,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2077,
+   "errors": 28,
+   "per_1k": 13.48,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6990795bb621b177c1af684d",
+   "title": "Jataka Alankara with Tika",
+   "language": "Sanskrit",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1865,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 615,
+   "errors": 10,
+   "per_1k": 16.26,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "69dea5f84d19ec2e9ba77e07",
+   "title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+   "language": "Sanskrit",
+   "form": "print",
+   "form_source": "verdict script_type",
+   "year": 1800,
+   "year_bucket": "1601–1800",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 781,
+   "errors": 60,
+   "per_1k": 76.82,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69e7aac45f1a22ab19a8d12c",
+   "title": "Thadrak Kanjur rGyud 'bum Nya",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2602,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6abe8dbb6a920ffd924d59c0",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞ (Derge Tengyur, vol. 22)",
+   "language": "Tibetan",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1982,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2035,
+   "errors": 0,
+   "per_1k": 0,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6abe9f2c6a920ffd924da190",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། རི (Derge Tengyur, vol. 56)",
+   "language": "Tibetan",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1982,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2314,
+   "errors": 1,
+   "per_1k": 0.43,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6abedf77a43718d234bf11b2",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། བི (Derge Tengyur, vol. 124)",
+   "language": "Tibetan",
+   "form": "print",
+   "form_source": "by eye",
+   "year": 1982,
+   "year_bucket": "after 1800",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2209,
+   "errors": 2,
+   "per_1k": 0.91,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "69e78b784a6785cfd60d5767",
+   "title": "bde chog bong zhal snyan brgyud las/ thun mong sngon ‘gro’i chos spyod sku gsum bgrod pa’i them skas (EAP105-2-3-18)",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 1015,
+   "errors": 1,
+   "per_1k": 0.99,
+   "wrong_page": false,
+   "grade": "A"
+  },
+  {
+   "id": "6a14e1232f45ee330c27337d",
+   "title": "Tshamdrak rNying rgyud Cha",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2499,
+   "errors": 5,
+   "per_1k": 2,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69e7ac4a5f1a22ab19aa63f4",
+   "title": "Neyphug Thor bu dGongs 'dus chos skor",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 4157,
+   "errors": 13,
+   "per_1k": 3.13,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "69e7965d80b52390feb195d8",
+   "title": "rje dben sa pa blo bzang don grub kyi tshe sgrub thun mong ma yin pa dang rdo rje rnal ‘byor ma’i sgrub thabs dngos grub kun ‘byung",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 1086,
+   "errors": 5,
+   "per_1k": 4.6,
+   "wrong_page": false,
+   "grade": "B"
+  },
+  {
+   "id": "6a14e12d2f45ee330c273e25",
+   "title": "Tshamdrak rNying rgyud Na",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 2980,
+   "errors": 30,
+   "per_1k": 10.07,
+   "wrong_page": true,
+   "grade": "D"
+  },
+  {
+   "id": "69e787a74a6785cfd60ccb4b",
+   "title": "yid bzhin mdzod dang btags grol",
+   "language": "Tibetan",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": null,
+   "year_bucket": "unknown",
+   "weight": 230.9,
+   "stratum": "low",
+   "pages": 5,
+   "words": 2037,
+   "errors": 23,
+   "per_1k": 11.29,
+   "wrong_page": false,
+   "grade": "C"
+  },
+  {
+   "id": "6ad191c342debc962692561e",
+   "title": "Ebtún land papers, 1561–1869",
+   "language": "Yucatec Maya",
+   "form": "manuscript",
+   "form_source": "verdict script_type",
+   "year": 1561,
+   "year_bucket": "1501–1600",
+   "weight": 254.84,
+   "stratum": "unmeasured",
+   "pages": 5,
+   "words": 917,
+   "errors": 5,
+   "per_1k": 5.45,
+   "wrong_page": false,
+   "grade": "C"
+  }
+ ]
+}
