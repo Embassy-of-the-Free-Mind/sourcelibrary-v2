@@ -5,13 +5,13 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../scripts/eval/confidence-7866/results/served-grades.json';
 import judgeCal from '../../../scripts/eval/judge-cal-7866bar-7263/results/score.json';
-import iaNumbers from '../../../scripts/eval/results/numbers-5224/summary.json';
+import threeWay from '../../../scripts/eval/judge-cal-7866bar-7263/results/three-way.json';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
 
 // The Quality Center (#5918): one question for a reader — how far can I trust the text on a page here,
 // and in my language? — answered from the #7866 check of live books against the page images, re-graded
-// on the rubric's grades (#7933), and set beside the same reviewer's reading of human-typed scholarly
-// editions of the same pages (#7263 human arm). Voice: .claude/docs/quality-statements.md — describe the
+// on the rubric's grades (#7933), and set beside the same reviewer's reading of the Internet Archive's OCR
+// and of human-typed editions of the same pages (#7941 three-way; #7263 human arm). Voice: .claude/docs/quality-statements.md — describe the
 // errors, not the work. Everything that audits these figures (the full grade table, the reviewer's measured
 // errors, which engine reads which page, every experiment, what readers reported) is on /quality/record.
 // Every number here is read at build time from committed files.
@@ -20,7 +20,7 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: 'Quality Center | Source Library',
   description:
-    'How accurate the transcriptions in Source Library are: errors per 1,000 words beside human-typed scholarly editions of the same pages, page by page and language by language, what goes wrong, and how to check a page yourself.',
+    'How accurate the transcriptions in Source Library are: errors per 1,000 words beside the Internet Archive’s OCR and human-typed editions of the same pages, page by page and language by language, what goes wrong, and how to check a page yourself.',
   alternates: { canonical: '/quality' },
 };
 
@@ -42,15 +42,34 @@ const drawDate = servedDraw.generated_at.slice(0, 10);
 const corpusPrint = judgeCal.corpus_7866_judge_proxy_per_1k.print;
 const printPer1k = corpusPrint.per_1k;
 
-/** The same reviewer on 60 printed pages that also exist as human-typed scholarly editions (#7263). */
-const human = judgeCal.human_arm;
-const humanPer1k = human.flagged_per_1k;
-const oursSamePages = human.machine_same_pages.judge_proxy;
-const humanJudgedOff = human.judge_bad.split('/').map(Number) as [number, number];
+/** #7263's typed-edition rate, on the same un-normalised basis as the by-language rates: the reference line there. */
+const humanPer1k = judgeCal.human_arm.flagged_per_1k;
 
-/** The Internet Archive's own OCR against ours on the same printed numbers, read blind on the page image (#5224). */
-const iaArchive = iaNumbers.sets['all|archive'];
-const iaOurs = iaNumbers.sets['all|lite'];
+/**
+ * Three readings of the same pages (#7941): the Internet Archive's OCR, ours, and a human-typed edition, each put
+ * through one normaliser and judged blind by the same reviewer against the page image. Set C (pages drawn at random
+ * from Archive-sourced books) is the headline for the Archive against ours; sets A + B (pages that have a typed
+ * edition) are the three-way.
+ */
+type Arm = { arm: string; n_pages: number; flagged_per_1k: number; flagged_per_1k_ci95: number[]; judge_bad: number };
+const armOf = (rows: Arm[], arm: string) => {
+  const r = rows.find(x => x.arm === arm);
+  if (!r) throw new Error(`three-way.json: no ${arm} arm`);
+  return r;
+};
+const twRandom = threeWay.archive_vs_ours_random.by_lang as unknown as Record<string, Arm[]>;
+const rndArchive = armOf(twRandom.English, 'archive');
+const rndOurs = armOf(twRandom.English, 'ours');
+const RANDOM_OTHER = (['Latin', 'German'] as const).map(l => ({ lang: l, archive: armOf(twRandom[l], 'archive'), ours: armOf(twRandom[l], 'ours') }));
+const randomPaired = threeWay.paired_flags.random;
+const twAll = threeWay.three_way.by_lang.ALL as unknown as Arm[];
+const twArchive = armOf(twAll, 'archive');
+const twOurs = armOf(twAll, 'ours');
+const twHuman = armOf(twAll, 'human');
+const twSets = threeWay.cuts.set as unknown as Record<'A' | 'B', Arm[]>;
+const scholarly = { ours: armOf(twSets.A, 'ours'), human: armOf(twSets.A, 'human') };
+const wikisource = { ours: armOf(twSets.B, 'ours'), human: armOf(twSets.B, 'human') };
+const twDate = threeWay.generated_at.slice(0, 10);
 
 /** Five bands, each describing the page; the reader's advice is the second line. */
 const serious = ['from_elsewhere', 'mostly_wrong', 'not_this_page'].reduce((a, k) => a + g[k].share, 0);
@@ -230,10 +249,11 @@ function Header() {
             {n(Math.round(1000 - printPer1k))} words in every 1,000 carry no error that changes the meaning.
           </p>
           <p className="font-body text-lg text-stone-700 leading-relaxed">
-            Where a scholarly edition typed by people exists, our text carries about as many errors as the edition. For
-            most books here nobody has typed the text, and the alternative is the Internet Archive&rsquo;s machine reading,
-            which gets printed numbers wrong about {Math.round(iaArchive.rate / iaOurs.rate)} times as often as ours. Every page is shown beside its scan, so you can
-            always check.
+            For most books here nobody has typed the text, and what a reader would otherwise have is the Internet
+            Archive&rsquo;s machine reading. On pages drawn at random, the same reviewer found about{' '}
+            {Math.round(rndArchive.flagged_per_1k)} such errors per 1,000 words in the Archive&rsquo;s text and about{' '}
+            {Math.round(rndOurs.flagged_per_1k)} in ours. Where people have typed an edition, ours has no more errors than
+            theirs. Every page is shown beside its scan, so you can always check.
           </p>
         </div>
       </div>
@@ -244,45 +264,60 @@ function Header() {
 /* ── page ── */
 
 export default function QualityCenterPage() {
-  const max = Math.ceil(Math.max(humanPer1k.ci95[1], oursSamePages.ci95[1]) + 0.5);
+  const rndMax = Math.ceil(rndArchive.flagged_per_1k_ci95[1] / 5) * 5;
+  const twMax = Math.ceil(twArchive.flagged_per_1k_ci95[1] / 5) * 5;
   return (
     <ContentPageLayout header={<><SiteHeader variant="light" /><Header /></>} bg="bg-cream">
       <article className="max-w-3xl font-body text-stone-700 leading-relaxed">
-        <Section id="compared" title="Beside a human-typed edition">
+        <Section id="archive" title="Beside the Internet Archive’s OCR">
           <p className="mb-4">
-            The fairest yardstick for a machine transcription is a transcription typed by people. We took{' '}
-            {human.pages} printed pages that also exist in typed scholarly editions and had the same AI reviewer check
-            both against the page image. Meaning-changing errors per 1,000 words:
+            Many of our books come from the Internet Archive, which publishes its own machine reading with every scan.
+            That is what a reader would otherwise have. We drew {rndArchive.n_pages} pages at random from those books,
+            English printed between 1800 and 1930, put both readings into the same plain form so the reviewer could not
+            tell which was which, and had the same AI reviewer check each against the page image. Meaning-changing errors
+            per 1,000 words:
           </p>
           <ul className="mb-3">
-            <RateRow label="Typed scholarly edition" sub={`${human.pages} pages, typed by people`} rate={humanPer1k.per_1k} ci={humanPer1k.ci95} max={max} color="bg-stone-500" />
-            <RateRow label="Our transcription" sub="the same pages" rate={oursSamePages.per_1k} ci={oursSamePages.ci95} max={max} color="bg-stone-800" />
+            <RateRow label="Internet Archive OCR" sub={`${rndArchive.n_pages} pages, one per book`} rate={rndArchive.flagged_per_1k} ci={rndArchive.flagged_per_1k_ci95} max={rndMax} color="bg-stone-500" />
+            <RateRow label="Our transcription" sub="the same pages" rate={rndOurs.flagged_per_1k} ci={rndOurs.flagged_per_1k_ci95} max={rndMax} color="bg-stone-800" />
           </ul>
+          <p className="text-sm text-stone-600 mb-2">
+            The reviewer found at least one such error on {pct(rndArchive.judge_bad)} of the Archive&rsquo;s pages and{' '}
+            {pct(rndOurs.judge_bad)} of ours. Page by page, ours had fewer on {randomPaired.ours_fewer_flags} of{' '}
+            {randomPaired.pages} pages and the Archive on {randomPaired.archive_fewer_flags}. The gap is wider on older
+            books: on ten random pages each,{' '}
+            {RANDOM_OTHER.map((r, i) => (
+              <span key={r.lang}>
+                {i > 0 && ' and '}
+                {r.lang} {one(r.archive.flagged_per_1k)} against {one(r.ours.flagged_per_1k)}
+              </span>
+            ))}
+            , too few pages for a firm figure.
+          </p>
           <p className="text-sm text-stone-600">
-            The two cannot be told apart: the 95% ranges overlap, and the reviewer found at least one such error on{' '}
-            {humanJudgedOff[0]} of the {humanJudgedOff[1]} typed pages. Books that someone has typed up tend to be clean,
-            well-printed copies, easier for any reader. On a typical printed page from the library our rate is about{' '}
-            {Math.round(corpusPrint.per_1k)} per 1,000 words; nobody has typed those pages, so there is no human figure to
-            set beside it.
+            The Archive&rsquo;s text was made so that its books can be found and searched; it was never meant to be read as
+            the text of the book. Measured {longDate(twDate)}.
           </p>
         </Section>
 
-        <Section id="archive" title="Beside the Internet Archive’s OCR">
+        <Section id="compared" title="Beside a human-typed edition">
           <p className="mb-4">
-            For most books here there is no typed edition. What a reader would otherwise have is the Internet
-            Archive&rsquo;s own machine reading, published with every scan, and many of our books come from there. We
-            read the pages again. On {n(iaArchive.books)} English books printed between 1800 and 1930, every printed number
-            where the two readings differed was checked against the page image. Share of {n(Math.round(iaArchive.printed))}{' '}
-            printed numbers read wrong:
+            The fairest yardstick for a machine reading is a transcription typed by people. On {twAll[0].n_pages} printed
+            pages that also exist in a typed edition, the same reviewer checked all three readings the same way.
+            Meaning-changing errors per 1,000 words:
           </p>
           <ul className="mb-3">
-            <RateRow label="Internet Archive OCR" sub={`${iaArchive.books} books, ${iaArchive.pages} pages`} rate={iaArchive.rate * 100} ci={iaArchive.ci.map(x => x * 100)} max={8} color="bg-stone-500" suffix="%" />
-            <RateRow label="Our transcription" sub="the same pages" rate={iaOurs.rate * 100} ci={iaOurs.ci.map(x => x * 100)} max={8} color="bg-stone-800" suffix="%" />
+            <RateRow label="Internet Archive OCR" sub={`${twArchive.n_pages} pages`} rate={twArchive.flagged_per_1k} ci={twArchive.flagged_per_1k_ci95} max={twMax} color="bg-stone-400" />
+            <RateRow label="Typed edition" sub="the same pages, typed by people" rate={twHuman.flagged_per_1k} ci={twHuman.flagged_per_1k_ci95} max={twMax} color="bg-stone-500" />
+            <RateRow label="Our transcription" sub="the same pages" rate={twOurs.flagged_per_1k} ci={twOurs.flagged_per_1k_ci95} max={twMax} color="bg-stone-800" />
           </ul>
           <p className="text-sm text-stone-600">
-            Numbers are where the two differ most: dates, page references and figures, where a 3 read as an 8 changes a
-            year without anyone noticing. So on any page with numbers we show our own reading, not the Archive&rsquo;s.
-            Measured 30 September 2026, English only.
+            Typed editions are not free of error either. Beside scholarly editions of the very same printing
+            ({scholarly.human.n_pages} pages from DTA, EEBO-TCP and CAMENA) the two are level, {one(scholarly.human.flagged_per_1k)}{' '}
+            against our {one(scholarly.ours.flagged_per_1k)}. Wikisource and Project Gutenberg texts often follow another
+            printing or tidy the spelling, so they differ from the page more often ({one(wikisource.human.flagged_per_1k)}{' '}
+            against our {one(wikisource.ours.flagged_per_1k)}). Books that someone has typed up are often cleaner copies; for
+            English of 1800 to 1930 the random pages above were no harder, but early printing is.
           </p>
         </Section>
 

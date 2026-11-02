@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-02T13:23:00.748Z",
+ "generated_at": "2026-11-02T16:30:24.934Z",
  "source": {
   "lane": "confidence-7866",
   "run_id": "confidence-validation-7866",
@@ -1201,6 +1201,1225 @@
    "wrong_text_per_1k": 2.26,
    "fidelity_mean": 3.68,
    "accept": "30/60"
+  }
+ },
+ "by_language_route": {
+  "Chinese · paddle": {
+   "pages": 278,
+   "books": 58,
+   "languages": [
+    "Chinese"
+   ],
+   "says_what_the_page_says": 0.5504,
+   "misleads_somewhere": 0.2194,
+   "text_not_on_the_page": 0.2302,
+   "fit_to_quote": 0.5216,
+   "severe_per_1k": 7.12,
+   "words": 50846,
+   "cosmetic_per_1k": 6.27,
+   "misleads_per_1k": 3.99,
+   "wrong_text_per_1k": 3.13,
+   "fidelity_mean": 4.18,
+   "accept": "181/278"
+  },
+  "Latin · 3flash": {
+   "pages": 108,
+   "books": 23,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.4537,
+   "misleads_somewhere": 0.2963,
+   "text_not_on_the_page": 0.25,
+   "fit_to_quote": 0.3333,
+   "severe_per_1k": 5.01,
+   "words": 34099,
+   "cosmetic_per_1k": 5.66,
+   "misleads_per_1k": 2.93,
+   "wrong_text_per_1k": 2.08,
+   "fidelity_mean": 3.81,
+   "accept": "71/108"
+  },
+  "German · 3flash": {
+   "pages": 42,
+   "books": 11,
+   "languages": [
+    "German"
+   ],
+   "says_what_the_page_says": 0.6667,
+   "misleads_somewhere": 0.2143,
+   "text_not_on_the_page": 0.119,
+   "fit_to_quote": 0.4762,
+   "severe_per_1k": 2.29,
+   "words": 10051,
+   "cosmetic_per_1k": 9.75,
+   "misleads_per_1k": 1.69,
+   "wrong_text_per_1k": 0.6,
+   "fidelity_mean": 4.19,
+   "accept": "36/42"
+  },
+  "English · 3flash": {
+   "pages": 36,
+   "books": 10,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 0.8333,
+   "misleads_somewhere": 0.1389,
+   "text_not_on_the_page": 0.0278,
+   "fit_to_quote": 0.8333,
+   "severe_per_1k": 0.89,
+   "words": 7852,
+   "cosmetic_per_1k": 4.08,
+   "misleads_per_1k": 0.76,
+   "wrong_text_per_1k": 0.13,
+   "fidelity_mean": 4.69,
+   "accept": "33/36"
+  },
+  "German · lite": {
+   "pages": 32,
+   "books": 8,
+   "languages": [
+    "German"
+   ],
+   "says_what_the_page_says": 0.3125,
+   "misleads_somewhere": 0.4688,
+   "text_not_on_the_page": 0.2188,
+   "fit_to_quote": 0.0938,
+   "severe_per_1k": 6.39,
+   "words": 7671,
+   "cosmetic_per_1k": 15.77,
+   "misleads_per_1k": 5.08,
+   "wrong_text_per_1k": 1.3,
+   "fidelity_mean": 3.78,
+   "accept": "21/32"
+  },
+  "Tibetan · yigdzin": {
+   "pages": 31,
+   "books": 7,
+   "languages": [
+    "Tibetan"
+   ],
+   "says_what_the_page_says": 0.4839,
+   "misleads_somewhere": 0.1935,
+   "text_not_on_the_page": 0.3226,
+   "fit_to_quote": 0.3548,
+   "severe_per_1k": 5.46,
+   "words": 14093,
+   "cosmetic_per_1k": 3.19,
+   "misleads_per_1k": 3.69,
+   "wrong_text_per_1k": 1.77,
+   "fidelity_mean": 3.61,
+   "accept": "20/31"
+  },
+  "English · lite": {
+   "pages": 29,
+   "books": 8,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 0.8621,
+   "misleads_somewhere": 0.1034,
+   "text_not_on_the_page": 0.0345,
+   "fit_to_quote": 0.7931,
+   "severe_per_1k": 0.46,
+   "words": 8667,
+   "cosmetic_per_1k": 3.23,
+   "misleads_per_1k": 0.35,
+   "wrong_text_per_1k": 0.12,
+   "fidelity_mean": 4.79,
+   "accept": "25/29"
+  },
+  "Greek · 3flash": {
+   "pages": 29,
+   "books": 6,
+   "languages": [
+    "Greek"
+   ],
+   "says_what_the_page_says": 0.2069,
+   "misleads_somewhere": 0.1034,
+   "text_not_on_the_page": 0.6897,
+   "fit_to_quote": 0.2069,
+   "severe_per_1k": 19.6,
+   "words": 10562,
+   "cosmetic_per_1k": 4.17,
+   "misleads_per_1k": 9.09,
+   "wrong_text_per_1k": 10.51,
+   "fidelity_mean": 3.31,
+   "accept": "8/29"
+  },
+  "Latin · lite": {
+   "pages": 27,
+   "books": 7,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.2222,
+   "misleads_somewhere": 0.3333,
+   "text_not_on_the_page": 0.4444,
+   "fit_to_quote": 0.1111,
+   "severe_per_1k": 13.17,
+   "words": 5466,
+   "cosmetic_per_1k": 17.01,
+   "misleads_per_1k": 9.7,
+   "wrong_text_per_1k": 3.48,
+   "fidelity_mean": 3.44,
+   "accept": "10/27"
+  },
+  "English · import:ia_djvu": {
+   "pages": 20,
+   "books": 6,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 0.65,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0.15,
+   "fit_to_quote": 0.5,
+   "severe_per_1k": 2.42,
+   "words": 4966,
+   "cosmetic_per_1k": 8.46,
+   "misleads_per_1k": 1.41,
+   "wrong_text_per_1k": 1.01,
+   "fidelity_mean": 4.05,
+   "accept": "14/20"
+  },
+  "Russian · 3flash": {
+   "pages": 15,
+   "books": 3,
+   "languages": [
+    "Russian"
+   ],
+   "says_what_the_page_says": 0.9333,
+   "misleads_somewhere": 0.0667,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.9333,
+   "severe_per_1k": 0.16,
+   "words": 6441,
+   "cosmetic_per_1k": 1.4,
+   "misleads_per_1k": 0.16,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.93,
+   "accept": "14/15"
+  },
+  "Korean · lite": {
+   "pages": 15,
+   "books": 3,
+   "languages": [
+    "Korean"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.1333,
+   "text_not_on_the_page": 0.8667,
+   "fit_to_quote": 0,
+   "severe_per_1k": 17.78,
+   "words": 4387,
+   "cosmetic_per_1k": 2.05,
+   "misleads_per_1k": 7.07,
+   "wrong_text_per_1k": 10.71,
+   "fidelity_mean": 2.4,
+   "accept": "0/15"
+  },
+  "Tibetan · pipeline:derge-tengyur-import-5497": {
+   "pages": 15,
+   "books": 3,
+   "languages": [
+    "Tibetan"
+   ],
+   "says_what_the_page_says": 0.8,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.6667,
+   "severe_per_1k": 0.48,
+   "words": 6187,
+   "cosmetic_per_1k": 2.59,
+   "misleads_per_1k": 0.48,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "14/15"
+  },
+  "Chinese · 3flash": {
+   "pages": 12,
+   "books": 8,
+   "languages": [
+    "Chinese"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.3333,
+   "text_not_on_the_page": 0.6667,
+   "fit_to_quote": 0,
+   "severe_per_1k": 23.45,
+   "words": 4349,
+   "cosmetic_per_1k": 2.76,
+   "misleads_per_1k": 13.57,
+   "wrong_text_per_1k": 9.89,
+   "fidelity_mean": 2.92,
+   "accept": "0/12"
+  },
+  "Sanskrit · 3flash": {
+   "pages": 12,
+   "books": 3,
+   "languages": [
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.4167,
+   "text_not_on_the_page": 0.5833,
+   "fit_to_quote": 0,
+   "severe_per_1k": 17.14,
+   "words": 2742,
+   "cosmetic_per_1k": 20.79,
+   "misleads_per_1k": 12.76,
+   "wrong_text_per_1k": 4.38,
+   "fidelity_mean": 3.42,
+   "accept": "4/12"
+  },
+  "English · lighton-written": {
+   "pages": 10,
+   "books": 3,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.9,
+   "severe_per_1k": 0,
+   "words": 3165,
+   "cosmetic_per_1k": 1.9,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.9,
+   "accept": "10/10"
+  },
+  "Italian · 3flash": {
+   "pages": 10,
+   "books": 2,
+   "languages": [
+    "Italian"
+   ],
+   "says_what_the_page_says": 0.3,
+   "misleads_somewhere": 0.4,
+   "text_not_on_the_page": 0.3,
+   "fit_to_quote": 0.2,
+   "severe_per_1k": 3.63,
+   "words": 7713,
+   "cosmetic_per_1k": 4.54,
+   "misleads_per_1k": 2.2,
+   "wrong_text_per_1k": 1.43,
+   "fidelity_mean": 3.7,
+   "accept": "6/10"
+  },
+  "French · lite": {
+   "pages": 9,
+   "books": 2,
+   "languages": [
+    "French"
+   ],
+   "says_what_the_page_says": 0.8889,
+   "misleads_somewhere": 0.1111,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.7778,
+   "severe_per_1k": 1.55,
+   "words": 1939,
+   "cosmetic_per_1k": 6.7,
+   "misleads_per_1k": 1.55,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.67,
+   "accept": "8/9"
+  },
+  "Armenian · lite": {
+   "pages": 9,
+   "books": 2,
+   "languages": [
+    "Armenian"
+   ],
+   "says_what_the_page_says": 0.3333,
+   "misleads_somewhere": 0.5556,
+   "text_not_on_the_page": 0.1111,
+   "fit_to_quote": 0.1111,
+   "severe_per_1k": 8.02,
+   "words": 1122,
+   "cosmetic_per_1k": 11.59,
+   "misleads_per_1k": 7.13,
+   "wrong_text_per_1k": 0.89,
+   "fidelity_mean": 4,
+   "accept": "7/9"
+  },
+  "Danish · lite": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Danish"
+   ],
+   "says_what_the_page_says": 0.8,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.6,
+   "severe_per_1k": 0.57,
+   "words": 1745,
+   "cosmetic_per_1k": 5.73,
+   "misleads_per_1k": 0.57,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "4/5"
+  },
+  "French · 3flash": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "French"
+   ],
+   "says_what_the_page_says": 0.4,
+   "misleads_somewhere": 0.4,
+   "text_not_on_the_page": 0.2,
+   "fit_to_quote": 0.4,
+   "severe_per_1k": 4.11,
+   "words": 1460,
+   "cosmetic_per_1k": 6.16,
+   "misleads_per_1k": 2.74,
+   "wrong_text_per_1k": 1.37,
+   "fidelity_mean": 4,
+   "accept": "2/5"
+  },
+  "Latin-English · 3flash": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Latin-English"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 1325,
+   "cosmetic_per_1k": 0.75,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "5/5"
+  },
+  "Yucatec Maya · model:claude-opus-5-5": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Yucatec Maya"
+   ],
+   "says_what_the_page_says": 0.6,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0.2,
+   "fit_to_quote": 0.2,
+   "severe_per_1k": 4.68,
+   "words": 1068,
+   "cosmetic_per_1k": 12.17,
+   "misleads_per_1k": 3.75,
+   "wrong_text_per_1k": 0.94,
+   "fidelity_mean": 3.8,
+   "accept": "4/5"
+  },
+  "Arabic · 3flash": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Arabic"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.4,
+   "text_not_on_the_page": 0.6,
+   "fit_to_quote": 0,
+   "severe_per_1k": 18,
+   "words": 1500,
+   "cosmetic_per_1k": 6.67,
+   "misleads_per_1k": 15.33,
+   "wrong_text_per_1k": 2.67,
+   "fidelity_mean": 3.2,
+   "accept": "0/5"
+  },
+  "Arabic · lite": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Arabic"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 1,
+   "fit_to_quote": 0,
+   "severe_per_1k": 39.47,
+   "words": 760,
+   "cosmetic_per_1k": 19.74,
+   "misleads_per_1k": 19.74,
+   "wrong_text_per_1k": 19.74,
+   "fidelity_mean": 2.8,
+   "accept": "0/5"
+  },
+  "Dutch · 3flash": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Dutch"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.4,
+   "text_not_on_the_page": 0.6,
+   "fit_to_quote": 0,
+   "severe_per_1k": 15.34,
+   "words": 1890,
+   "cosmetic_per_1k": 12.17,
+   "misleads_per_1k": 13.23,
+   "wrong_text_per_1k": 2.12,
+   "fidelity_mean": 3.2,
+   "accept": "0/5"
+  },
+  "Demotic · 3flash": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "Demotic"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0.6,
+   "text_not_on_the_page": 0.4,
+   "fit_to_quote": 0,
+   "severe_per_1k": 14.93,
+   "words": 938,
+   "cosmetic_per_1k": 11.73,
+   "misleads_per_1k": 7.46,
+   "wrong_text_per_1k": 7.46,
+   "fidelity_mean": 3.8,
+   "accept": "2/5"
+  },
+  "Tibetan · yigdzin>agy-flash-low": {
+   "pages": 4,
+   "books": 1,
+   "languages": [
+    "Tibetan"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 1784,
+   "cosmetic_per_1k": 3.36,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "4/4"
+  },
+  "Latin · model:none": {
+   "pages": 4,
+   "books": 1,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.25,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0.75,
+   "fit_to_quote": 0.25,
+   "severe_per_1k": null,
+   "words": 0,
+   "cosmetic_per_1k": null,
+   "misleads_per_1k": null,
+   "wrong_text_per_1k": null,
+   "fidelity_mean": 2,
+   "accept": "1/4"
+  },
+  "Sanskrit · lite": {
+   "pages": 3,
+   "books": 1,
+   "languages": [
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 1,
+   "fit_to_quote": 0,
+   "severe_per_1k": 118.33,
+   "words": 431,
+   "cosmetic_per_1k": 9.28,
+   "misleads_per_1k": 58,
+   "wrong_text_per_1k": 60.32,
+   "fidelity_mean": 2,
+   "accept": "0/3"
+  },
+  "Chinese · lite": {
+   "pages": 3,
+   "books": 3,
+   "languages": [
+    "Chinese"
+   ],
+   "says_what_the_page_says": 0.3333,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0.6667,
+   "fit_to_quote": 0.3333,
+   "severe_per_1k": 23.85,
+   "words": 545,
+   "cosmetic_per_1k": 12.84,
+   "misleads_per_1k": 9.17,
+   "wrong_text_per_1k": 14.68,
+   "fidelity_mean": 2.67,
+   "accept": "1/3"
+  },
+  "Chinese · model:claude-opus-5-5": {
+   "pages": 2,
+   "books": 2,
+   "languages": [
+    "Chinese"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 479,
+   "cosmetic_per_1k": 2.09,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.5,
+   "accept": "2/2"
+  },
+  "French · model:gemini-2.5-flash": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "French"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 1,
+   "fit_to_quote": 0,
+   "severe_per_1k": 19.95,
+   "words": 401,
+   "cosmetic_per_1k": 4.99,
+   "misleads_per_1k": 14.96,
+   "wrong_text_per_1k": 4.99,
+   "fidelity_mean": 3,
+   "accept": "0/1"
+  },
+  "Armenian · 3flash": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "Armenian"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 104,
+   "cosmetic_per_1k": 19.23,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "1/1"
+  },
+  "Greek · lite": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "Greek"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 1,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0,
+   "severe_per_1k": 4.41,
+   "words": 227,
+   "cosmetic_per_1k": 13.22,
+   "misleads_per_1k": 4.41,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "1/1"
+  },
+  "Latin · pero>agy-flash-low": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 343,
+   "cosmetic_per_1k": 2.92,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "1/1"
+  },
+  "German · model:claude-opus-5-5": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "German"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 263,
+   "cosmetic_per_1k": 3.8,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "1/1"
+  }
+ },
+ "by_era_alphabetic": {
+  "1501–1700": {
+   "pages": 112,
+   "books": 24,
+   "languages": [
+    "Dutch",
+    "English",
+    "German",
+    "Greek",
+    "Italian",
+    "Latin",
+    "Latin-English",
+    "Yucatec Maya"
+   ],
+   "says_what_the_page_says": 0.4196,
+   "misleads_somewhere": 0.3304,
+   "text_not_on_the_page": 0.25,
+   "fit_to_quote": 0.2857,
+   "severe_per_1k": 5.57,
+   "words": 37161,
+   "cosmetic_per_1k": 8.32,
+   "misleads_per_1k": 3.88,
+   "wrong_text_per_1k": 1.7,
+   "fidelity_mean": 3.88,
+   "accept": "73/112"
+  },
+  "1701–1900": {
+   "pages": 108,
+   "books": 22,
+   "languages": [
+    "Armenian",
+    "Danish",
+    "English",
+    "French",
+    "German",
+    "Greek",
+    "Latin",
+    "Russian",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.713,
+   "misleads_somewhere": 0.2037,
+   "text_not_on_the_page": 0.0833,
+   "fit_to_quote": 0.6111,
+   "severe_per_1k": 3.56,
+   "words": 29476,
+   "cosmetic_per_1k": 4.78,
+   "misleads_per_1k": 2.37,
+   "wrong_text_per_1k": 1.19,
+   "fidelity_mean": 4.4,
+   "accept": "90/108"
+  },
+  "no date": {
+   "pages": 75,
+   "books": 15,
+   "languages": [
+    "English",
+    "German",
+    "Greek",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.5333,
+   "misleads_somewhere": 0.28,
+   "text_not_on_the_page": 0.1867,
+   "fit_to_quote": 0.44,
+   "severe_per_1k": 7.79,
+   "words": 21046,
+   "cosmetic_per_1k": 6.27,
+   "misleads_per_1k": 3.18,
+   "wrong_text_per_1k": 4.61,
+   "fidelity_mean": 4.04,
+   "accept": "56/75"
+  },
+  "after 1900": {
+   "pages": 70,
+   "books": 14,
+   "languages": [
+    "Demotic",
+    "English",
+    "French",
+    "Latin",
+    "Russian",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.6429,
+   "misleads_somewhere": 0.1857,
+   "text_not_on_the_page": 0.1714,
+   "fit_to_quote": 0.5857,
+   "severe_per_1k": 3.38,
+   "words": 19801,
+   "cosmetic_per_1k": 6.06,
+   "misleads_per_1k": 2.22,
+   "wrong_text_per_1k": 1.16,
+   "fidelity_mean": 4.33,
+   "accept": "50/70"
+  },
+  "before 1501": {
+   "pages": 45,
+   "books": 9,
+   "languages": [
+    "Greek",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.1778,
+   "misleads_somewhere": 0.2444,
+   "text_not_on_the_page": 0.5778,
+   "fit_to_quote": 0.0889,
+   "severe_per_1k": 13.86,
+   "words": 12336,
+   "cosmetic_per_1k": 9.65,
+   "misleads_per_1k": 9.24,
+   "wrong_text_per_1k": 4.62,
+   "fidelity_mean": 3.13,
+   "accept": "13/45"
+  },
+  "manuscript": {
+   "pages": 30,
+   "books": 9,
+   "languages": [
+    "Arabic",
+    "German",
+    "Latin",
+    "Sanskrit",
+    "Yucatec Maya"
+   ],
+   "says_what_the_page_says": 0.2,
+   "misleads_somewhere": 0.1333,
+   "text_not_on_the_page": 0.6667,
+   "fit_to_quote": 0.1,
+   "severe_per_1k": 18.46,
+   "words": 5091,
+   "cosmetic_per_1k": 13.36,
+   "misleads_per_1k": 11.2,
+   "wrong_text_per_1k": 7.27,
+   "fidelity_mean": 3.13,
+   "accept": "7/30"
+  }
+ },
+ "by_era_route_alphabetic": {
+  "1501–1700 · 3flash": {
+   "pages": 88,
+   "books": 20,
+   "languages": [
+    "Dutch",
+    "English",
+    "German",
+    "Greek",
+    "Italian",
+    "Latin",
+    "Latin-English"
+   ],
+   "says_what_the_page_says": 0.4659,
+   "misleads_somewhere": 0.2841,
+   "text_not_on_the_page": 0.25,
+   "fit_to_quote": 0.3523,
+   "severe_per_1k": 5.32,
+   "words": 31006,
+   "cosmetic_per_1k": 6.42,
+   "misleads_per_1k": 3.55,
+   "wrong_text_per_1k": 1.77,
+   "fidelity_mean": 3.92,
+   "accept": "58/88"
+  },
+  "1701–1900 · 3flash": {
+   "pages": 65,
+   "books": 15,
+   "languages": [
+    "Armenian",
+    "English",
+    "German",
+    "Greek",
+    "Latin",
+    "Russian",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.7385,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0.0615,
+   "fit_to_quote": 0.6769,
+   "severe_per_1k": 1.63,
+   "words": 19000,
+   "cosmetic_per_1k": 4,
+   "misleads_per_1k": 1.32,
+   "wrong_text_per_1k": 0.32,
+   "fidelity_mean": 4.52,
+   "accept": "56/65"
+  },
+  "no date · 3flash": {
+   "pages": 61,
+   "books": 14,
+   "languages": [
+    "English",
+    "German",
+    "Greek",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.541,
+   "misleads_somewhere": 0.2623,
+   "text_not_on_the_page": 0.1967,
+   "fit_to_quote": 0.4426,
+   "severe_per_1k": 8.75,
+   "words": 17148,
+   "cosmetic_per_1k": 6.12,
+   "misleads_per_1k": 3.27,
+   "wrong_text_per_1k": 5.48,
+   "fidelity_mean": 3.98,
+   "accept": "46/61"
+  },
+  "1701–1900 · lite": {
+   "pages": 37,
+   "books": 9,
+   "languages": [
+    "Armenian",
+    "Danish",
+    "English",
+    "French",
+    "German",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.6486,
+   "misleads_somewhere": 0.2432,
+   "text_not_on_the_page": 0.1081,
+   "fit_to_quote": 0.4865,
+   "severe_per_1k": 7.79,
+   "words": 8471,
+   "cosmetic_per_1k": 6.96,
+   "misleads_per_1k": 4.6,
+   "wrong_text_per_1k": 3.19,
+   "fidelity_mean": 4.16,
+   "accept": "29/37"
+  },
+  "after 1900 · 3flash": {
+   "pages": 28,
+   "books": 7,
+   "languages": [
+    "Demotic",
+    "English",
+    "French",
+    "Latin",
+    "Russian",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.4643,
+   "misleads_somewhere": 0.25,
+   "text_not_on_the_page": 0.2857,
+   "fit_to_quote": 0.4643,
+   "severe_per_1k": 5.92,
+   "words": 8786,
+   "cosmetic_per_1k": 7.63,
+   "misleads_per_1k": 3.98,
+   "wrong_text_per_1k": 1.93,
+   "fidelity_mean": 4.14,
+   "accept": "17/28"
+  },
+  "before 1501 · 3flash": {
+   "pages": 24,
+   "books": 5,
+   "languages": [
+    "Greek",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.0833,
+   "misleads_somewhere": 0.1667,
+   "text_not_on_the_page": 0.75,
+   "fit_to_quote": 0,
+   "severe_per_1k": 13.99,
+   "words": 8151,
+   "cosmetic_per_1k": 6.01,
+   "misleads_per_1k": 8.59,
+   "wrong_text_per_1k": 5.4,
+   "fidelity_mean": 2.79,
+   "accept": "4/24"
+  },
+  "1501–1700 · lite": {
+   "pages": 23,
+   "books": 7,
+   "languages": [
+    "German",
+    "Greek",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.2609,
+   "misleads_somewhere": 0.5217,
+   "text_not_on_the_page": 0.2174,
+   "fit_to_quote": 0.0435,
+   "severe_per_1k": 6.7,
+   "words": 5823,
+   "cosmetic_per_1k": 18.38,
+   "misleads_per_1k": 5.5,
+   "wrong_text_per_1k": 1.2,
+   "fidelity_mean": 3.74,
+   "accept": "15/23"
+  },
+  "after 1900 · import:ia_djvu": {
+   "pages": 20,
+   "books": 6,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 0.65,
+   "misleads_somewhere": 0.2,
+   "text_not_on_the_page": 0.15,
+   "fit_to_quote": 0.5,
+   "severe_per_1k": 2.42,
+   "words": 4966,
+   "cosmetic_per_1k": 8.46,
+   "misleads_per_1k": 1.41,
+   "wrong_text_per_1k": 1.01,
+   "fidelity_mean": 4.05,
+   "accept": "14/20"
+  },
+  "before 1501 · lite": {
+   "pages": 20,
+   "books": 5,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.25,
+   "misleads_somewhere": 0.35,
+   "text_not_on_the_page": 0.4,
+   "fit_to_quote": 0.15,
+   "severe_per_1k": 14.84,
+   "words": 3842,
+   "cosmetic_per_1k": 17.96,
+   "misleads_per_1k": 11.45,
+   "wrong_text_per_1k": 3.38,
+   "fidelity_mean": 3.45,
+   "accept": "8/20"
+  },
+  "after 1900 · lite": {
+   "pages": 17,
+   "books": 5,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 0.8235,
+   "misleads_somewhere": 0.1176,
+   "text_not_on_the_page": 0.0588,
+   "fit_to_quote": 0.7647,
+   "severe_per_1k": 0.67,
+   "words": 4488,
+   "cosmetic_per_1k": 2.01,
+   "misleads_per_1k": 0.45,
+   "wrong_text_per_1k": 0.22,
+   "fidelity_mean": 4.76,
+   "accept": "14/17"
+  },
+  "no date · lite": {
+   "pages": 13,
+   "books": 3,
+   "languages": [
+    "English",
+    "German"
+   ],
+   "says_what_the_page_says": 0.4615,
+   "misleads_somewhere": 0.3846,
+   "text_not_on_the_page": 0.1538,
+   "fit_to_quote": 0.3846,
+   "severe_per_1k": 3.85,
+   "words": 3635,
+   "cosmetic_per_1k": 7.15,
+   "misleads_per_1k": 3.03,
+   "wrong_text_per_1k": 0.83,
+   "fidelity_mean": 4.23,
+   "accept": "9/13"
+  },
+  "manuscript · 3flash": {
+   "pages": 12,
+   "books": 6,
+   "languages": [
+    "Arabic",
+    "German",
+    "Latin",
+    "Sanskrit"
+   ],
+   "says_what_the_page_says": 0.0833,
+   "misleads_somewhere": 0.25,
+   "text_not_on_the_page": 0.6667,
+   "fit_to_quote": 0.0833,
+   "severe_per_1k": 18.56,
+   "words": 2586,
+   "cosmetic_per_1k": 10.83,
+   "misleads_per_1k": 13.53,
+   "wrong_text_per_1k": 5.03,
+   "fidelity_mean": 3.33,
+   "accept": "1/12"
+  },
+  "manuscript · lite": {
+   "pages": 10,
+   "books": 2,
+   "languages": [
+    "Arabic",
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0.9,
+   "fit_to_quote": 0,
+   "severe_per_1k": 23.18,
+   "words": 1769,
+   "cosmetic_per_1k": 16.96,
+   "misleads_per_1k": 11.31,
+   "wrong_text_per_1k": 11.87,
+   "fidelity_mean": 3,
+   "accept": "1/10"
+  },
+  "1701–1900 · lighton-written": {
+   "pages": 5,
+   "books": 1,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.8,
+   "severe_per_1k": 0,
+   "words": 1604,
+   "cosmetic_per_1k": 2.49,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.8,
+   "accept": "5/5"
+  },
+  "after 1900 · lighton-written": {
+   "pages": 5,
+   "books": 2,
+   "languages": [
+    "English"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 1561,
+   "cosmetic_per_1k": 1.28,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "5/5"
+  },
+  "manuscript · model:claude-opus-5-5": {
+   "pages": 4,
+   "books": 1,
+   "languages": [
+    "Yucatec Maya"
+   ],
+   "says_what_the_page_says": 0.75,
+   "misleads_somewhere": 0.25,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 0.25,
+   "severe_per_1k": 2.72,
+   "words": 736,
+   "cosmetic_per_1k": 13.59,
+   "misleads_per_1k": 2.72,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4,
+   "accept": "4/4"
+  },
+  "manuscript · model:none": {
+   "pages": 4,
+   "books": 1,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 0.25,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0.75,
+   "fit_to_quote": 0.25,
+   "severe_per_1k": null,
+   "words": 0,
+   "cosmetic_per_1k": null,
+   "misleads_per_1k": null,
+   "wrong_text_per_1k": null,
+   "fidelity_mean": 2,
+   "accept": "1/4"
+  },
+  "1701–1900 · model:gemini-2.5-flash": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "French"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 1,
+   "fit_to_quote": 0,
+   "severe_per_1k": 19.95,
+   "words": 401,
+   "cosmetic_per_1k": 4.99,
+   "misleads_per_1k": 14.96,
+   "wrong_text_per_1k": 4.99,
+   "fidelity_mean": 3,
+   "accept": "0/1"
+  },
+  "before 1501 · pero>agy-flash-low": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "Latin"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 343,
+   "cosmetic_per_1k": 2.92,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "1/1"
+  },
+  "1501–1700 · model:claude-opus-5-5": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "Yucatec Maya"
+   ],
+   "says_what_the_page_says": 0,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 1,
+   "fit_to_quote": 0,
+   "severe_per_1k": 9.04,
+   "words": 332,
+   "cosmetic_per_1k": 9.04,
+   "misleads_per_1k": 6.02,
+   "wrong_text_per_1k": 3.01,
+   "fidelity_mean": 3,
+   "accept": "0/1"
+  },
+  "no date · model:claude-opus-5-5": {
+   "pages": 1,
+   "books": 1,
+   "languages": [
+    "German"
+   ],
+   "says_what_the_page_says": 1,
+   "misleads_somewhere": 0,
+   "text_not_on_the_page": 0,
+   "fit_to_quote": 1,
+   "severe_per_1k": 0,
+   "words": 263,
+   "cosmetic_per_1k": 3.8,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 5,
+   "accept": "1/1"
   }
  },
  "study_cells": {

@@ -52,6 +52,61 @@ describe('loopVerdict — refuses degeneration', () => {
   });
 });
 
+describe('loopVerdict — token-run arm (one short token repeated in a row)', () => {
+  // Real shapes from the corpus mirror, 2026-11-02. The share arm passed both.
+  const KOREAN_SHORT_PAGE =
+    '<language>Korean</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n\n' +
+    '건니와 엇지 잇는 겻을 몯 듇고 비록 엇지\n하나 헌휘 도로 븨기 긇어 긇고 왈 됴 흠\n' +
+    '정긇 긇어 긇인 가 긇어 벋인 긇을 앗 긇 긇\n' + ('긇 '.repeat(15) + '\n').repeat(3) + '<vocab>Korean manuscript</vocab>';
+  const LATIN_RUN_IN_TEXT =
+    'ꝑ cōiderādū tenuitas venaz eft fignū ꝑ uena eft rupta. ꝑ tenuis. ꝑ ear ꝑ ourities ꝑ fignū ꝑ eft '.repeat(30) +
+    'ꝑ '.repeat(400) + 'Fundo as. aui. atū. i. ꝑ funda iacere. vel in funda lapide mittere. '.repeat(30);
+
+  it('refuses a short page that collapses into one syllable (body under the share arm minimum)', () => {
+    const v = loopVerdict(KOREAN_SHORT_PAGE);
+    expect(v.refuse).toBe(true);
+    expect(v.reason).toBe('token_run');
+    expect(v.reps).toBe(47);
+  });
+
+  it('refuses a long run inside a page that is otherwise text (share under one half)', () => {
+    const v = loopVerdict(LATIN_RUN_IN_TEXT);
+    expect(v.refuse).toBe(true);
+    expect(v.reason).toBe('token_run');
+    expect(v.share).toBeLessThan(0.5);
+  });
+
+  it('passes word-level repetition genuine text does carry: a few repeats, or one per line', () => {
+    const prose = 'Pleni sunt caeli et terra gloria tua. Hosanna in excelsis. Benedictus qui venit in nomine Domini. ' +
+      'Agnus Dei, qui tollis peccata mundi, miserere nobis. Dona nobis pacem. ';
+    expect(loopVerdict('Sanctus Sanctus Sanctus Dominus Deus Sabaoth. ' + prose).reason).not.toBe('token_run');
+    expect(loopVerdict('oṃ āḥ hūṃ hūṃ hūṃ phaṭ svāhā. ' + prose).reason).not.toBe('token_run');
+    // 24 in a row is under the bar; the bar is a parameter, not a guess baked into callers.
+    expect(loopVerdict('word '.repeat(5) + 'et '.repeat(24) + 'finis').refuse).toBe(false);
+  });
+
+  it('passes a table row that repeats one sign across its columns (御製歷象考成, a real false positive)', () => {
+    const head = '正午度 〇 〇一 〇二 〇三 〇四 〇五 〇六 〇七 〇八 〇九 一〇 一一 一二 一三 一四 一五 一六 一七 一八 一九 二〇';
+    const text = '<language>Chinese</language>\n\n' + head + '\n黃道宮 ' + '三 '.repeat(31) + '\n度 ' +
+      Array.from({ length: 31 }, (_, i) => '〇一二三四五六七八九'[i % 10]).join(' ') + '\n';
+    expect(loopVerdict(text).reason).not.toBe('token_run');
+    expect(loopVerdictTs(text).reason).not.toBe('token_run');
+  });
+
+  it('ignores a run of punctuation or numerals — ditto marks and table zeros are layout', () => {
+    expect(loopVerdict('Tabula ' + '0 '.repeat(60) + '〃 '.repeat(40) + 'finis').refuse).toBe(false);
+  });
+
+  it('the TS twin agrees', () => {
+    for (const text of [KOREAN_SHORT_PAGE, LATIN_RUN_IN_TEXT]) {
+      const a = loopVerdict(text);
+      const b = loopVerdictTs(text);
+      expect({ refuse: b.refuse, reason: b.reason, reps: b.reps, share: b.share })
+        .toEqual({ refuse: a.refuse, reason: a.reason, reps: a.reps, share: a.share });
+    }
+  });
+});
+
 describe('loopVerdict — must NOT refuse', () => {
   it('passes a litany, where each repetition carries a different name', () => {
     const names = ['Sancta Maria', 'Sancta Dei Genitrix', 'Sancta Virgo virginum', 'Mater Christi',
