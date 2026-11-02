@@ -54,7 +54,7 @@ const outFile = path.join(OUT, BOOK ? `book-${BOOK}.jsonl` : `books-${PROVIDER}.
 const out = fs.createWriteStream(outFile);
 try {
   const q = BOOK ? { id: BOOK } : { 'image_source.provider': PROVIDER, 'image_source.iiif_manifest': { $exists: true }, pages_ocr: { $gt: 0 } };
-  let cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, visible: 1, pages_count: 1, image_source: 1 } }).sort({ _id: 1 });
+  let cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, visible: 1, pages_count: 1, image_source: 1, image_resolution_upgraded_at: 1 } }).sort({ _id: 1 });
   if (LIMIT) cursor = cursor.limit(LIMIT);
   const tally = {};
   for await (const b of cursor) {
@@ -64,10 +64,18 @@ try {
       // Only the head of each OCR is needed for <page-num>; don't pull whole texts.
       const pages = await db.collection('pages').aggregate([
         { $match: { book_id: b.id, page_number: { $gte: 1 } } },
-        { $project: { _id: 0, page_number: 1, 'ocr.data': { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 400] } } },
+        { $project: { _id: 0, page_number: 1, archive_source: '$archive_metadata.source', 'ocr.data': { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 400] } } },
         { $sort: { page_number: 1 } },
       ]).toArray();
       const rows = slotOffsets(pages, labels);
+      // Which image do readers see? The offset is text vs CANVAS position. It is reader-visible when the
+      // shown image is the canvas at that slot (archived from IIIF, or re-fetched by an upgrade); when
+      // the image came from the same shifted source as the text (an unupgraded PDF archive), text and
+      // image agree and only the source pointer is off (#7949 vol. 2).
+      const src = {};
+      for (const p of pages) src[p.archive_source ?? 'none'] = (src[p.archive_source ?? 'none'] ?? 0) + 1;
+      row.archive_sources = src;
+      row.upgraded = Boolean(b.image_resolution_upgraded_at);
       Object.assign(row, { canvases: labels.length, pages: pages.length, numeric_labels: labels.filter((l) => l != null).length }, bookVerdict(rows));
       const runs = offsetRuns(rows).filter((r) => r.scored >= 3);
       row.runs = runs;

@@ -21,9 +21,9 @@ describe('printedNumber / labelNumber', () => {
     expect(printedNumber('<page-num>none</page-num>')).toBeNull();
     expect(printedNumber(undefined)).toBeNull();
   });
-  it('reads e-rara and common label forms; bracketed numbers are canvas ordinals but still numbers', () => {
+  it('reads printed-number label forms; a bracketed label is a canvas ordinal, not a printed number', () => {
     expect(labelNumber('136')).toBe(136);
-    expect(labelNumber('[78]')).toBe(78);
+    expect(labelNumber('[78]')).toBeNull();
     expect(labelNumber('S. 12')).toBe(12);
     expect(labelNumber({ '@value': '7' })).toBe(7);
     expect(labelNumber('IV')).toBeNull();

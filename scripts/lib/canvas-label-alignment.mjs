@@ -33,10 +33,15 @@ export function printedNumber(ocrData) {
   return /^\d{1,4}$/.test(s) ? Number(s) : null;
 }
 
-/** A canvas label as an integer: "136", "[136]", "S. 136", "p. 136". Null otherwise. */
+/**
+ * A canvas label as an integer: "136", "S. 136", "p. 136". Null otherwise.
+ * A BRACKETED label ("[78]") is null: e-rara brackets the canvas ordinal on leaves that print no
+ * number, so it is the slot, not a printed page, and reading it as one makes every book whose
+ * labels are all ordinals look shifted by its count of unnumbered front leaves.
+ */
 export function labelNumber(label) {
   const raw = typeof label === 'object' && label !== null ? (label['@value'] ?? label.none?.[0] ?? label.en?.[0]) : label;
-  const s = String(raw ?? '').trim().replace(/^(?:s\.|p\.|pag\.|seite|page)\s*/i, '').replace(/^\[(.*)\]$/, '$1').trim();
+  const s = String(raw ?? '').trim().replace(/^(?:s\.|p\.|pag\.|seite|page)\s*/i, '').trim();
   return /^\d{1,4}$/.test(s) ? Number(s) : null;
 }
 
