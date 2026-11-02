@@ -465,6 +465,11 @@ export default function QualityCenterPage() {
 
         <Section id="doing" title="What we are doing">
           <ul className="list-disc pl-5 space-y-2">
+            <li>
+              Most of the text measured here was read by earlier, cheaper models: Flash-Lite wrote nearly half of the
+              transcriptions you see. The model we read with now, Gemini 3.8 Flash, has re-read about 2% so far. Where it
+              has, the Latin pages a reviewer called misleading fell from 41% to 8%.
+            </li>
             <li>A second model now re-reads transcriptions against the page image, starting with German and French.</li>
             <li>Greek, Sanskrit, Korean and Arabic are next, with readers chosen for each script.</li>
             <li>Pages that are mostly wrong or carry another page&rsquo;s text are withheld as we find them.</li>
