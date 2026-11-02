@@ -4,25 +4,29 @@ import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import servedDraw from '../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../scripts/eval/confidence-7866/results/served-grades.json';
+import judgeCal from '../../../scripts/eval/judge-cal-7866bar-7263/results/score.json';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
 
 // The Quality Center (#5918): one question for a reader — how far can I trust the text on a page here,
 // and in my language? — answered from the #7866 check of live books against the page images, re-graded
-// on the rubric's four grades (#7933). Everything that audits that answer (the full grade table, the
-// reviewer's measured errors, which engine reads which page, every experiment, what readers reported)
-// is on /quality/record. Every number here is read at build time from committed files.
+// on the rubric's grades (#7933), and set beside the same reviewer's reading of human-typed scholarly
+// editions of the same pages (#7263 human arm). Voice: .claude/docs/quality-statements.md — describe the
+// errors, not the work. Everything that audits these figures (the full grade table, the reviewer's measured
+// errors, which engine reads which page, every experiment, what readers reported) is on /quality/record.
+// Every number here is read at build time from committed files.
 export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Quality Center | Source Library',
   description:
-    'How good the transcriptions in Source Library are: what share of pages you can quote, read, or only search by, language by language, what goes wrong, and how to check a page yourself.',
+    'How accurate the transcriptions in Source Library are: errors per 1,000 words beside human-typed scholarly editions of the same pages, page by page and language by language, what goes wrong, and how to check a page yourself.',
   alternates: { canonical: '/quality' },
 };
 
 const RECORD = '/quality/record';
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 const n = (v: number) => v.toLocaleString('en-US');
+const one = (v: number) => v.toFixed(1);
 const longDate = (iso: string) =>
   new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
@@ -30,22 +34,33 @@ const longDate = (iso: string) =>
 
 type Grade = { pages: number; share: number; ci95: number[] };
 const g = servedGrades.grades as Record<string, Grade>;
-const b = servedGrades.buckets as Record<string, Grade>;
 const frameBooks = Object.values(servedDraw.corpus.frame_books).reduce((a, x) => a + x, 0);
 const drawDate = servedDraw.generated_at.slice(0, 10);
 
-/** Four grades, as a reader would use them. The rubric's "not usable" is one band here; /quality/record splits it. */
+/** Meaning-changing errors per 1,000 words across the library's printed pages (#7866 draw, re-graded #7933). */
+const printPer1k = servedGrades.by_script.print.severe_per_1k;
+
+/** The same reviewer on 60 printed pages that also exist as human-typed scholarly editions (#7263). */
+const human = judgeCal.human_arm;
+const humanPer1k = human.flagged_per_1k;
+const oursSamePages = human.machine_same_pages.judge_proxy;
+const humanJudgedOff = human.judge_bad.split('/').map(Number) as [number, number];
+
+/** Five bands, each describing the page; the reader's advice is the second line. */
+const serious = ['from_elsewhere', 'mostly_wrong', 'not_this_page'].reduce((a, k) => a + g[k].share, 0);
 const BANDS = [
-  { key: 'quote', label: 'Quote it', what: 'No error, or one or two small slips that mislead no one.', share: g.fit_to_quote.share, ci: g.fit_to_quote.ci95, color: 'bg-stone-800' },
-  { key: 'read', label: 'Read it, check before quoting', what: 'Several small slips, none of which changes the sense.', share: g.fit_to_read.share, ci: g.fit_to_read.ci95, color: 'bg-stone-500' },
-  { key: 'search', label: 'Search by it, check the scan', what: 'At least one misread word that changes the sense.', share: g.search_only.share, ci: g.search_only.ci95, color: 'bg-amber-400' },
-  { key: 'no', label: 'Do not rely on it', what: 'Words, numbers or whole lines the page does not carry, or another page’s text.', share: b.text_not_on_the_page.share, ci: b.text_not_on_the_page.ci95, color: 'bg-amber-700' },
+  { key: 'clean', label: 'Clean', what: 'No error, or one or two slips that change nothing. Quote it.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
+  { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-500' },
+  { key: 'word', label: 'A word that changes the sense', what: 'Usually one misread word in an otherwise sound page. Check the scan before quoting.', share: g.search_only.share, color: 'bg-amber-300' },
+  { key: 'span', label: 'A word, number or line differs from the page', what: 'Something dropped or not on the page. Check the scan before quoting.', share: g.wrong_span.share, color: 'bg-amber-500' },
+  { key: 'serious', label: 'Mostly wrong, or another page’s text', what: 'Do not rely on these pages; we withhold them as we find them.', share: serious, color: 'bg-amber-800' },
 ];
 
-/** Languages with at least three books in the draw, best first. */
+/** Languages with at least three books in the draw, fewest errors first. */
 const LANGS = servedGrades.by_language
   .filter(r => r.books >= 3)
-  .sort((x, y) => y.says_what_the_page_says - x.says_what_the_page_says);
+  .sort((x, y) => x.severe_per_1k - y.severe_per_1k);
+const UNIT: Record<string, string> = { words: 'words', 'Han characters': 'characters', syllables: 'syllables' };
 
 /** Share of all tagged defects that are one word read as another. */
 const misread = servedGrades.defect_classes.find(c => c.class === 'O6');
@@ -58,14 +73,13 @@ const EXAMPLE_PICKS: [string, string][] = [
   ['O1', 'ACen Wad'],
 ];
 const SEVERITY: Record<string, string> = {
-  wrong_text: 'Text the page does not carry',
+  wrong_text: 'Not what the page says',
   misleads: 'Changes the sense',
-  cosmetic: 'Misleads no one',
+  cosmetic: 'Changes nothing',
 };
 const examples = EXAMPLE_PICKS.map(([k, prefix]) => {
   const c = servedGrades.defect_classes.find(x => x.class === k);
-  const e = c?.examples.find(x => x.quote.startsWith(prefix));
-  return e ?? null;
+  return c?.examples.find(x => x.quote.startsWith(prefix)) ?? null;
 }).filter((e): e is NonNullable<typeof e> => e != null);
 
 /* ── bits ── */
@@ -85,6 +99,26 @@ function Section({ id, title, children }: { id: string; title: string; children:
   );
 }
 
+/** One row of the human-vs-machine comparison: a rate per 1,000 words with its interval, on a shared scale. */
+function RateRow({ label, sub, rate, ci, max, color }: { label: string; sub: string; rate: number; ci: number[]; max: number; color: string }) {
+  return (
+    <li className="grid grid-cols-[minmax(0,11rem)_1fr_4.5rem] gap-x-3 items-center py-2">
+      <span className="text-sm">
+        <span className="font-semibold text-stone-900">{label}</span>
+        <span className="block text-xs text-stone-500">{sub}</span>
+      </span>
+      <div className="relative h-5 bg-stone-200 rounded-sm" aria-hidden>
+        <div className={`${color} h-full rounded-sm`} style={{ width: `${(rate / max) * 100}%` }} />
+        <div className="absolute top-1/2 h-px bg-stone-900/60" style={{ left: `${(ci[0] / max) * 100}%`, width: `${((ci[1] - ci[0]) / max) * 100}%` }} />
+      </div>
+      <span className="text-right tabular-nums">
+        <span className="font-semibold text-stone-900">{one(rate)}</span>
+        <span className="block text-xs text-stone-500">{one(ci[0])}–{one(ci[1])}</span>
+      </span>
+    </li>
+  );
+}
+
 function Header() {
   return (
     <div className="bg-cream">
@@ -100,11 +134,15 @@ function Header() {
         </figure>
         <div className="order-1 md:order-2 md:pb-10">
           <p className="text-xs uppercase tracking-wider text-stone-500 mb-3">Quality Center</p>
-          <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-stone-900 mb-5">How far can you trust the text?</h1>
+          <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-stone-900 mb-5">How accurate is the text?</h1>
+          <p className="font-body text-lg text-stone-700 leading-relaxed mb-3">
+            Every transcription here was made by a machine reading the page image. On printed pages, about{' '}
+            {n(Math.round(1000 - printPer1k))} words in every 1,000 carry no error that changes the meaning.
+          </p>
           <p className="font-body text-lg text-stone-700 leading-relaxed">
-            Every transcription here was made by a machine reading the page image. About half the pages say exactly what
-            the scan says. Most of the rest have a misread word or two; some have text the page does not carry. Every page
-            is shown beside its scan, so you can always check.
+            Typed scholarly editions are not error-free either. On pages where both exist, the same check found{' '}
+            {one(oursSamePages.per_1k)} such errors per 1,000 words in our text and {one(humanPer1k.per_1k)} in the edition
+            typed by people. Every page is shown beside its scan, so you can always check.
           </p>
         </div>
       </div>
@@ -115,13 +153,35 @@ function Header() {
 /* ── page ── */
 
 export default function QualityCenterPage() {
+  const max = Math.ceil(Math.max(humanPer1k.ci95[1], oursSamePages.ci95[1], printPer1k) + 0.5);
   return (
     <ContentPageLayout header={<><SiteHeader variant="light" /><Header /></>} bg="bg-cream">
       <article className="max-w-3xl font-body text-stone-700 leading-relaxed">
-        <Section id="stands" title="What a page is fit for">
+        <Section id="compared" title="Beside a human-typed edition">
+          <p className="mb-4">
+            The fairest yardstick for a machine transcription is a transcription typed by people. We took{' '}
+            {human.pages} printed pages that also exist in typed scholarly editions and had the same AI reviewer check
+            both against the page image. Meaning-changing errors per 1,000 words:
+          </p>
+          <ul className="mb-3">
+            <RateRow label="Typed scholarly edition" sub={`${human.pages} pages, typed by people`} rate={humanPer1k.per_1k} ci={humanPer1k.ci95} max={max} color="bg-stone-500" />
+            <RateRow label="Our transcription" sub="the same pages" rate={oursSamePages.per_1k} ci={oursSamePages.ci95} max={max} color="bg-stone-800" />
+          </ul>
+          <p className="text-sm text-stone-600">
+            The reviewer found at least one such error on {humanJudgedOff[0]} of the {humanJudgedOff[1]} typed pages. The
+            ranges are 95% intervals and overlap: on these pages the two cannot be told apart. They are cleaner than the
+            library as a whole: across every script, printed pages average {one(printPer1k)} per 1,000 words.
+          </p>
+        </Section>
+
+        <Section id="stands" title="Page by page">
+          <p className="mb-4">
+            A page is counted clean only if nothing on it changes the sense, so a single misread word on a page of 300
+            words moves it down a band. Measured that strictly, this is how the library&rsquo;s pages fall:
+          </p>
           <div className="flex h-10 w-full overflow-hidden rounded-sm mb-4" role="img" aria-label={BANDS.map(x => `${x.label}: ${pct(x.share)}`).join('; ')}>
             {BANDS.map(x => (
-              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'search' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
+              <div key={x.key} className={`${x.color} flex items-center justify-center text-sm font-semibold ${x.key === 'word' || x.key === 'span' ? 'text-stone-900' : 'text-white'}`} style={{ width: `${x.share * 100}%` }}>
                 {x.share >= 0.07 ? pct(x.share) : ''}
               </div>
             ))}
@@ -134,60 +194,63 @@ export default function QualityCenterPage() {
                   <div className="font-semibold text-stone-900">{x.label}</div>
                   <div className="text-sm text-stone-600">{x.what}</div>
                 </div>
-                <div className="text-right tabular-nums">
-                  <div className="font-semibold text-stone-900">{pct(x.share)}</div>
-                  <div className="text-xs text-stone-500">{pct(x.ci[0])}–{pct(x.ci[1])}</div>
-                </div>
+                <div className="text-right tabular-nums font-semibold text-stone-900">{pct(x.share)}</div>
               </li>
             ))}
           </ul>
           <p className="text-sm text-stone-600">
             On {longDate(drawDate)} we drew {n(servedGrades.books)} books at random from the {n(frameBooks)} with a
             transcription, took five pages from each, and had an AI reviewer (Claude Opus) compare each of the{' '}
-            {n(servedGrades.pages)} pages with its photograph. Shares are weighted back to the whole library; the small
-            figures are 95% intervals. This measures the transcription, not the English translation.
+            {n(servedGrades.pages)} pages with its photograph. Shares are weighted back to the whole library; intervals are
+            in <A href={RECORD}>the full record</A>. This measures the transcription, not the English translation.
           </p>
         </Section>
 
         <Section id="by-language" title="By language">
           <p className="mb-5">
-            Quality depends mostly on the script. English and Russian print is largely clean. Latin, German, French,
-            Chinese and Tibetan sit in the middle. Greek, Sanskrit and Korean are poor: the general-purpose models that
-            read them were never good at those scripts, and they are first in line to be read again.
+            The script matters more than anything else. English and Russian print come out below the rate of the typed
+            editions above. Latin, German, French, Chinese and Tibetan sit in between. Greek, Sanskrit and Korean have the
+            highest rates: the general-purpose models that read them were not built for those scripts, and they are next
+            to be read again.
           </p>
           <ul className="space-y-3 mb-4">
             {LANGS.map(r => (
-              <li key={r.language} className="grid grid-cols-[6.5rem_1fr_3rem] md:grid-cols-[8rem_1fr_3.5rem] gap-x-3 items-center">
+              <li key={r.language} className="grid grid-cols-[6.5rem_1fr_5.5rem] md:grid-cols-[8rem_1fr_6.5rem] gap-x-3 items-center">
                 <span className="text-stone-900 font-semibold text-sm">
                   {r.language}
                   <span className="block text-xs font-normal text-stone-500">{r.books} books</span>
                 </span>
                 <div className="flex h-5 overflow-hidden rounded-sm bg-stone-200" aria-hidden>
                   <div className="bg-stone-800" style={{ width: `${r.says_what_the_page_says * 100}%` }} />
-                  <div className="bg-amber-400" style={{ width: `${r.misleads_somewhere * 100}%` }} />
-                  <div className="bg-amber-700" style={{ width: `${r.text_not_on_the_page * 100}%` }} />
+                  <div className="bg-amber-300" style={{ width: `${r.misleads_somewhere * 100}%` }} />
+                  <div className="bg-amber-600" style={{ width: `${r.text_not_on_the_page * 100}%` }} />
                 </div>
-                <span className="text-right tabular-nums font-semibold text-stone-900 text-sm">{pct(r.says_what_the_page_says)}</span>
+                <span className="text-right tabular-nums text-sm">
+                  <span className="font-semibold text-stone-900">{one(r.severe_per_1k)}</span>
+                  <span className="block text-xs text-stone-500">per 1,000 {UNIT[r.unit] ?? r.unit}</span>
+                </span>
               </li>
             ))}
           </ul>
           <p className="text-sm text-stone-600 flex flex-wrap gap-x-4 gap-y-1">
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-stone-800 mr-1.5 align-[-1px]" />Says what the page says</span>
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-400 mr-1.5 align-[-1px]" />A word that changes the sense</span>
-            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-700 mr-1.5 align-[-1px]" />Text the page does not carry</span>
+            <span><span className="inline-block w-3 h-3 rounded-sm bg-stone-800 mr-1.5 align-[-1px]" />Pages with nothing that changes the sense</span>
+            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-300 mr-1.5 align-[-1px]" />A word that changes the sense</span>
+            <span><span className="inline-block w-3 h-3 rounded-sm bg-amber-600 mr-1.5 align-[-1px]" />Something not on the page</span>
           </p>
           <p className="text-sm text-stone-600 mt-3">
-            A language with three to six books in the draw is a rough reading, not a rate. Arabic and smaller languages had
-            too few books to show.
+            The number on the right counts errors, not pages, so a long page with one slip does not look like a wrecked
+            one. Characters and syllables are not comparable with words. A language with three to six books is a rough
+            reading, not a rate; Arabic and smaller languages had too few books to show.
           </p>
         </Section>
 
         <Section id="what-goes-wrong" title="What goes wrong">
           <p className="mb-4">
             {pct(misreadShare)} of the errors the reviewer found are one kind: a word or character read as another word
-            that exists, such as <i>feminis</i> (of women) for <i>ſeminis</i> (of seed). Much of the rest is the furniture of
-            an old printed page, running heads, catchwords and note numbers, put in the wrong place. Invented text is rarer
-            and concentrated in the poorly read scripts. Three real examples, each checked by eye against the scan:
+            that exists, such as <i>feminis</i> (of women) for <i>ſeminis</i> (of seed). Typed editions make the same kind
+            of mistake. Much of the rest is the furniture of an old printed page, running heads, catchwords and note
+            numbers, put in the wrong place. Text that is not on the page at all is rarer, and concentrated in the scripts
+            with the highest rates. Three examples, each checked by eye against the scan:
           </p>
           <div className="space-y-3">
             {examples.map(e => (
@@ -206,37 +269,38 @@ export default function QualityCenterPage() {
         <Section id="trust" title="How far to trust these figures">
           <ul className="list-disc pl-5 space-y-2">
             <li>
-              <b className="text-stone-900">One AI reviewer made every verdict.</b> No person has checked them beyond spot
-              checks. It catches all the planted errors we test it with, but on real pages it both over-flags and misses.
+              <b className="text-stone-900">One AI reviewer made every verdict.</b> People have checked only a handful
+              of them by eye. It caught every error we planted, but on real pages it both over-flags and misses.
             </li>
             <li>
               <b className="text-stone-900">It over-flags.</b> When a second reviewer re-read its flags, enough fell away to
-              raise the share that says what the page says from {pct(b.says_what_the_page_says.share)} to{' '}
+              raise the share of pages with nothing that changes the sense from{' '}
+              {pct(servedGrades.buckets.says_what_the_page_says.share)} to{' '}
               {pct(servedGrades.reread.says_what_the_page_says.share)}.
             </li>
             <li>
-              <b className="text-stone-900">It also misses.</b> Against typed scholarly editions it catches fewer than half
-              the pages with any wrong letter. On print, our machine reading carries about 2 to 3 meaning-changing errors
-              per 1,000 words; a typed scholarly edition of the same pages carries about 1.5.
+              <b className="text-stone-900">It also misses.</b> Against typed editions it caught fewer than half the pages
+              with a wrong letter. That is why the comparison above uses the same reviewer for both texts.
             </li>
             <li>
-              <b className="text-stone-900">It is weakest on manuscripts</b>, where it agrees with human transcribers far
-              less than on print.
+              <b className="text-stone-900">Manuscripts are harder</b> for the reviewer as well as the reader: it agrees with
+              human transcribers far less often on handwriting than on print.
             </li>
           </ul>
         </Section>
 
-        <Section id="doing" title="What we are doing about it">
+        <Section id="doing" title="What we are doing">
           <ul className="list-disc pl-5 space-y-2">
-            <li>A stronger model now re-reads weak transcriptions against the page image, starting with German and French.</li>
+            <li>A second model now re-reads transcriptions against the page image, starting with German and French.</li>
             <li>Greek, Sanskrit, Korean and Arabic are next, with readers chosen for each script.</li>
-            <li>We will repeat this check every month and show here whether the shares move.</li>
+            <li>Pages that are mostly wrong or carry another page&rsquo;s text are withheld as we find them.</li>
+            <li>We will repeat this check every month and show here whether the figures move.</li>
           </ul>
         </Section>
 
-        <Section id="take-part" title="Help us fix it">
+        <Section id="take-part" title="Help us improve it">
           <p className="mb-4">
-            Readers find what no measurement catches: a page shifted against its scan, a reversed sentence, a wrong date.
+            Readers notice what no measurement catches: a page shifted against its scan, a reversed sentence, a wrong date.
             If a page is wrong, the Feedback button at the foot of that page reaches us.
           </p>
           <ul className="divide-y divide-stone-200 border-y border-stone-200">
