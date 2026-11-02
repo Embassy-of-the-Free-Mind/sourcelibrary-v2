@@ -1,0 +1,27 @@
+{
+ "ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "base_md5": "79a7257d516eaabefe76594978e8c4f4",
+ "arms": {
+  "A": {
+   "md5": "79a7257d516eaabefe76594978e8c4f4",
+   "chars": 12761
+  },
+  "A2": {
+   "md5": "79a7257d516eaabefe76594978e8c4f4",
+   "chars": 12761
+  },
+  "B": {
+   "md5": "98e15a2d424400a7b4c48fd67dc6a901",
+   "chars": 12560
+  },
+  "C": {
+   "md5": "c8093848fc229313c16689b522eb300b",
+   "chars": 12218
+  }
+ }
+}
