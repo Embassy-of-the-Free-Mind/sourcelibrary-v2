@@ -4,8 +4,8 @@ export const PARTNERS_HTML = `
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>22,500 historical books in English, <em>grounded</em> in the source</h1>
-      <p>Translated from more than fifty languages, most of them printed between 1450 and 1800, and each translation set opposite the page it came from, so any line can be checked against the original. About half had never been in English before. Behind them stand 131,000 books with their page scans.</p>
+      <h1>The world's largest library of <em>translated</em> historical sources</h1>
+      <p>22,500 books in English, translated from more than fifty languages, most of them printed between 1450 and 1800. Each translation is set opposite the page it came from, so any line can be checked against the original. About half had never been in English before. Behind them stand 131,000 books with their page scans.</p>
       <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20AI%20partnership">Talk to us</a></p>
     </div>
     <figure>
