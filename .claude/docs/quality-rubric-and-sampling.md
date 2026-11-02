@@ -1,10 +1,10 @@
 # Quality rubric and sampling plan: what every quality number means, and which pages it is measured on
 
-> **Design, not running (checked 2026-10-29, #7759).** The rubric and the standing sample below are not run by any lane. The checks that do run are listed in `book-process.md`.
+> **The grade ladder of §5 has been computed once; the standing sample has not (checked 2026-11-02, #7933).** `scripts/eval/confidence-7866/regrade.mjs` grades #7866's 800 drawn pages (160 live books, 5 pages each, one Opus judge) on §5's four grades, from the judge's own MQM severities, and `/quality` leads with that distribution. Everything else below — the standing monthly draw and its strata (§6), the human calibration of the grade boundaries (§5.3) — is still design, run by no lane. The checks that do run are listed in `book-process.md`.
 
 PRIOR ART: `.claude/docs/eval-design.md` (the measure vocabulary, registry, reference rules, decision cards; it says how a number is *stored and compared*, not what a page's grade *is* or how a corpus-wide sample is drawn and weighted), `.claude/docs/page-error-taxonomy.md` (the 44 classes, by eye, presence only, no severity scale), #5438 (quality round 1: a one-off 12-cell backlog sample with a ship rule), #4925 (decision-grade reference plan, OCR only), #3499 (the held-out reserve policy for unpublished books), #5274 / #5301 (the monthly served-translation audit this plan extends), #5914 (the monthly image-and-book arm). None of them adopts a published rubric or sizes and weights a standing sample over the whole served corpus. This doc does both and links them rather than restating them.
 
-**Read this when:** you are about to quote a quality number, design a judge or a rubric, draw a sample for an eval, or add a figure to `/quality`. Living doc (undated). Issue: #5984. Status: **design**. Nothing here has been run. The inventory in §8 is measured; every paid step is a follow-up with a price (§9).
+**Read this when:** you are about to quote a quality number, design a judge or a rubric, draw a sample for an eval, or add a figure to `/quality`. Living doc (undated). Issue: #5984. Status: **§5 computed once (#7933), the rest design**. The inventory in §8 is measured; every paid step is a follow-up with a price (§9).
 
 **Readers:**
 - Derek, deciding what to fund;
