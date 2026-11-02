@@ -584,12 +584,14 @@ export default function QualityCenterPage() {
 
           <div className="max-w-3xl mt-6">
             <p className="text-stone-700 leading-relaxed mb-3">
-              <b className="text-stone-900">Within Latin, the age of the book matters more than anything else.</b> Of the
-              Latin books in the draw, the 11 that are manuscripts or were printed before 1501 carry about 10 meaning-changing
-              errors per 1,000 words, and only 19% of their pages are clean. The 12 printed in 1501 or later carry about
-              2 per 1,000, with 60% of pages clean. That is close to what we measured on print against a typed scholarly
-              edition, where the edition itself carries about 1.5. The early books fail on gothic letter-forms and on the
-              abbreviations scribes and early printers used, which the engine expands into the wrong whole word. In a
+              <b className="text-stone-900">Within Latin, handwriting matters more than age.</b> In this draw, the 11 Latin
+              books that are manuscripts or were printed before 1501 carry about 10 meaning-changing errors per 1,000
+              words, against about 2 for the 12 printed later; but that group mixes the two, and a third of the draw&rsquo;s
+              Latin books had no record of whether they are handwritten. A larger study that drew 109 Latin books by era
+              and by form, and checked the form of each on its image, separates them: manuscripts carry about four times
+              the errors of print in every era, and books printed before 1501 are only a little worse than later print
+              (<IssueLink num={7947} />). The failures are abbreviations, which scribes used far more than printers, read
+              as the wrong whole word. In a
               herbal printed in 1484, <i>ſauine</i> (savin, a herb) became <i>semine</i> (seed), and <i>an. m. j</i>{' '}
               (one handful) became <i>unciam i.</i> (one ounce), so the recipe changed. In a manuscript of Hierocles,{' '}
               <i>agitari</i> became <i>aquari</i> twice. We opened both pages against the photograph.
@@ -677,8 +679,10 @@ export default function QualityCenterPage() {
           <Sub>By the age and hand of the book</Sub>
           <div className="max-w-3xl">
             <p className="text-stone-700 leading-relaxed mb-3">
-              Alphabetic scripts only, so every rate is per 1,000 words. Manuscripts and books printed before 1501 are hard
-              for every engine we use; print from after 1700 is much cleaner. In this draw the early books read by Gemini 3
+              Alphabetic scripts only, so every rate is per 1,000 words. The dates and the manuscript label come from our
+              records, which are often missing or wrong, so the early rows here likely hold manuscripts filed as print.
+              In Latin, where each book&rsquo;s form was checked on its image, the difference is handwriting, not date
+              (<IssueLink num={7947} />). In this draw the early books read by Gemini 3
               Flash and by Flash-Lite come out alike ({eraRoute('before 1501', '3flash')?.severe_per_1k} and{' '}
               {eraRoute('before 1501', 'lite')?.severe_per_1k} per 1,000), but those are different books, five or so each.
               Where both engines read the same gothic pages, readers preferred the Flash reading on 14 of 15
