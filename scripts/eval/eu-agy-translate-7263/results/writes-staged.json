@@ -1,0 +1,525 @@
+{
+ "a": [
+  {
+   "key": "la-69b6313d1c1c21a373805efe",
+   "page_id": "69b6313d1c1c21a373805efe",
+   "book_id": "69b6313d1c1c21a373805ee1",
+   "arm": "a"
+  },
+  {
+   "key": "la-69bd9bda46b01553e33bf52c",
+   "page_id": "69bd9bda46b01553e33bf52c",
+   "book_id": "69bd9bda46b01553e33bf343",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b51de7efd8df28f2dad069",
+   "page_id": "69b51de7efd8df28f2dad069",
+   "book_id": "69b51de7efd8df28f2dacf1e",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a4f7fbb2a450f51978d0c9f",
+   "page_id": "6a4f7fbb2a450f51978d0c9f",
+   "book_id": "6a4f7fbb2a450f51978d0be0",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a4b9608a25898ec8788ab7c",
+   "page_id": "6a4b9608a25898ec8788ab7c",
+   "book_id": "6a4b9608a25898ec8788ab12",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b51d0147b06ecd58182ddf",
+   "page_id": "69b51d0147b06ecd58182ddf",
+   "book_id": "69b51d0147b06ecd58182c35",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b51e57cf111105c429b334",
+   "page_id": "69b51e57cf111105c429b334",
+   "book_id": "69b51e57cf111105c429b041",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a42c73597284560a2b1106e",
+   "page_id": "6a42c73597284560a2b1106e",
+   "book_id": "6a42c73597284560a2b11004",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b51e22261c58d6366500e5",
+   "page_id": "69b51e22261c58d6366500e5",
+   "book_id": "69b51e22261c58d63664fed6",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b62ff21c1c21a3737fcb0e",
+   "page_id": "69b62ff21c1c21a3737fcb0e",
+   "book_id": "69b62ff21c1c21a3737fc7af",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b51e61ff09e4fe943adf5f",
+   "page_id": "69b51e61ff09e4fe943adf5f",
+   "book_id": "69b51e61ff09e4fe943adea6",
+   "arm": "a"
+  },
+  {
+   "key": "la-69b62fca1c1c21a3737fab3e",
+   "page_id": "69b62fca1c1c21a3737fab3e",
+   "book_id": "69b62fca1c1c21a3737fa7b0",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a4b7a2fc0fa233644e2ec2c",
+   "page_id": "6a4b7a2fc0fa233644e2ec2c",
+   "book_id": "6a4b7a2fc0fa233644e2ebbb",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a4302c54e06bc233ecfb553",
+   "page_id": "6a4302c54e06bc233ecfb553",
+   "book_id": "6a4302c54e06bc233ecfb52a",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a4eb78eccea9baa4f496272",
+   "page_id": "6a4eb78eccea9baa4f496272",
+   "book_id": "6a4eb78eccea9baa4f496253",
+   "arm": "a"
+  },
+  {
+   "key": "la-6a45875031e306b784335a8f",
+   "page_id": "6a45875031e306b784335a8f",
+   "book_id": "6a45875031e306b7843359e4",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69bda06af6d63c91974875a8",
+   "page_id": "69bda06af6d63c91974875a8",
+   "book_id": "69bda06af6d63c919748703b",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26daa605d7c1d9b1088503",
+   "page_id": "6a26daa605d7c1d9b1088503",
+   "book_id": "6a26daa605d7c1d9b108849d",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26d6cff5273a8d907b668e",
+   "page_id": "6a26d6cff5273a8d907b668e",
+   "book_id": "6a26d6cff5273a8d907b6688",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69b6b26a96dc15d4a16d3ecb",
+   "page_id": "69b6b26a96dc15d4a16d3ecb",
+   "book_id": "69b6b26a96dc15d4a16d3ebd",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26dbd805d7c1d9b108fb4d",
+   "page_id": "6a26dbd805d7c1d9b108fb4d",
+   "book_id": "6a26dbd805d7c1d9b108fb42",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69aebe747dd4a7474d1f2c72",
+   "page_id": "69aebe747dd4a7474d1f2c72",
+   "book_id": "69aebe747dd4a7474d1f2b5e",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69aebc94bbaa08897384dc11",
+   "page_id": "69aebc94bbaa08897384dc11",
+   "book_id": "69aebc94bbaa08897384dbf0",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26c0cc499b6fd27da8f366",
+   "page_id": "6a26c0cc499b6fd27da8f366",
+   "book_id": "6a26be390e247ebad6de6f6d",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69b51dcccf111105c42907ae",
+   "page_id": "69b51dcccf111105c42907ae",
+   "book_id": "69b51dcccf111105c42905a2",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a905113ee2696c62355f116",
+   "page_id": "6a905113ee2696c62355f116",
+   "book_id": "6a905113ee2696c62355f08b",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26d4e4f5273a8d907ae60a",
+   "page_id": "6a26d4e4f5273a8d907ae60a",
+   "book_id": "6a26d4e4f5273a8d907ae5ff",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a493dc0c73c0a4520238690",
+   "page_id": "6a493dc0c73c0a4520238690",
+   "book_id": "6a493dc0c73c0a4520238646",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a494a4c824310de51ec01ff",
+   "page_id": "6a494a4c824310de51ec01ff",
+   "book_id": "6a494a4c824310de51ec01f4",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26d148f5273a8d9079da8f",
+   "page_id": "6a26d148f5273a8d9079da8f",
+   "book_id": "6a26d148f5273a8d9079da81",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26c7caaad44c98627e75f2",
+   "page_id": "6a26c7caaad44c98627e75f2",
+   "book_id": "6a26c7caaad44c98627e75ef",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a4943ac3c715f5afcd53152",
+   "page_id": "6a4943ac3c715f5afcd53152",
+   "book_id": "6a4943ac3c715f5afcd53133",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26d7526be3d771538bb54b",
+   "page_id": "6a26d7526be3d771538bb54b",
+   "book_id": "6a26d7526be3d771538bb4c4",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69a683b0256d25f466059842",
+   "page_id": "69a683b0256d25f466059842",
+   "book_id": "69a683b0256d25f4660595df",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a494309d2cbca6a182084bb",
+   "page_id": "6a494309d2cbca6a182084bb",
+   "book_id": "6a494309d2cbca6a182084b2",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a26d6feefb0687b170ebb44",
+   "page_id": "6a26d6feefb0687b170ebb44",
+   "book_id": "6a26d6feefb0687b170ebb3d",
+   "arm": "a"
+  },
+  {
+   "key": "ge-6a4942add2cbca6a1820825f",
+   "page_id": "6a4942add2cbca6a1820825f",
+   "book_id": "6a4942add2cbca6a18208253",
+   "arm": "a"
+  },
+  {
+   "key": "ge-69b51e42cf111105c42994dd",
+   "page_id": "69b51e42cf111105c42994dd",
+   "book_id": "69b51e42cf111105c4299456",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a0b45ec1615109dc53b2056",
+   "page_id": "6a0b45ec1615109dc53b2056",
+   "book_id": "6a0b45ec1615109dc53b2009",
+   "arm": "a"
+  },
+  {
+   "key": "it-69b51e30cf111105c42982c1",
+   "page_id": "69b51e30cf111105c42982c1",
+   "book_id": "69b51e30cf111105c4298181",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a0b352d688e6a8e15f67b97",
+   "page_id": "6a0b352d688e6a8e15f67b97",
+   "book_id": "6a0b352d688e6a8e15f67ab4",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a42714462d175ca9e4e2859",
+   "page_id": "6a42714462d175ca9e4e2859",
+   "book_id": "6a42714462d175ca9e4e274d",
+   "arm": "a"
+  },
+  {
+   "key": "it-69b51e12261c58d63664f23a",
+   "page_id": "69b51e12261c58d63664f23a",
+   "book_id": "69b51e12261c58d63664efd4",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a4eae4a8112cac04007b56b",
+   "page_id": "6a4eae4a8112cac04007b56b",
+   "book_id": "6a4eae4a8112cac04007b55e",
+   "arm": "a"
+  },
+  {
+   "key": "it-6aa1d50f77169abff16221ab",
+   "page_id": "6aa1d50f77169abff16221ab",
+   "book_id": "6aa1d50d77169abff1622188",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a4f72b5a692969b9145b88e",
+   "page_id": "6a4f72b5a692969b9145b88e",
+   "book_id": "6a4f72b5a692969b9145b887",
+   "arm": "a"
+  },
+  {
+   "key": "it-69de98ae1b234a773e43914b",
+   "page_id": "69de98ae1b234a773e43914b",
+   "book_id": "69de98ae1b234a773e439044",
+   "arm": "a"
+  },
+  {
+   "key": "it-69aec209d52cb53c46bfdc06",
+   "page_id": "69aec209d52cb53c46bfdc06",
+   "book_id": "69aec209d52cb53c46bfdbab",
+   "arm": "a"
+  },
+  {
+   "key": "it-69b21c7a429e087c6f864cfe",
+   "page_id": "69b21c7a429e087c6f864cfe",
+   "book_id": "69b21c7a429e087c6f864c06",
+   "arm": "a"
+  },
+  {
+   "key": "it-69b1c68949f47c4e327132c5",
+   "page_id": "69b1c68949f47c4e327132c5",
+   "book_id": "69b1c68949f47c4e32713245",
+   "arm": "a"
+  },
+  {
+   "key": "it-69f3372e876dd827cbc518f6",
+   "page_id": "69f3372e876dd827cbc518f6",
+   "book_id": "69f3372e876dd827cbc518a3",
+   "arm": "a"
+  },
+  {
+   "key": "it-6a42ccc897284560a2b15674",
+   "page_id": "6a42ccc897284560a2b15674",
+   "book_id": "6a42ccc897284560a2b15573",
+   "arm": "a"
+  },
+  {
+   "key": "it-69de99581b234a773e43a974",
+   "page_id": "69de99581b234a773e43a974",
+   "book_id": "69de99581b234a773e43a889",
+   "arm": "a"
+  },
+  {
+   "key": "it-69b51e31768235dc6598db0f",
+   "page_id": "69b51e31768235dc6598db0f",
+   "book_id": "69b51e31768235dc6598d9ba",
+   "arm": "a"
+  },
+  {
+   "key": "it-69aec31f6a0dcd3e10f9ece7",
+   "page_id": "69aec31f6a0dcd3e10f9ece7",
+   "book_id": "69aec31f6a0dcd3e10f9ec96",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a8ee22490f5a0e4155eaa0b",
+   "page_id": "6a8ee22490f5a0e4155eaa0b",
+   "book_id": "6a8ee22390f5a0e4155ea8f7",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69bda08ef6d63c9197488bc2",
+   "page_id": "69bda08ef6d63c9197488bc2",
+   "book_id": "69bda08ef6d63c9197488afb",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a26da6605d7c1d9b10861c3",
+   "page_id": "6a26da6605d7c1d9b10861c3",
+   "book_id": "6a26da6605d7c1d9b10861b7",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69e7298da409200ea79f0828",
+   "page_id": "69e7298da409200ea79f0828",
+   "book_id": "69e7298da409200ea79f0783",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69b9a2fc69930cad41a7622c",
+   "page_id": "69b9a2fc69930cad41a7622c",
+   "book_id": "69b9a2fc69930cad41a76199",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69bc855d173577a33742071b",
+   "page_id": "69bc855d173577a33742071b",
+   "book_id": "69bc855d173577a3374206d5",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6aa35ce7b8b2420aa5934f26",
+   "page_id": "6aa35ce7b8b2420aa5934f26",
+   "book_id": "6aa35ce7b8b2420aa5934e00",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a499d83d702014d1ddf825d",
+   "page_id": "6a499d83d702014d1ddf825d",
+   "book_id": "6a499d83d702014d1ddf8256",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a08f50d50bd891addfb81a9",
+   "page_id": "6a08f50d50bd891addfb81a9",
+   "book_id": "6a08f50d50bd891addfb80d1",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a8ee2d790f5a0e4155eb6d8",
+   "page_id": "6a8ee2d790f5a0e4155eb6d8",
+   "book_id": "6a8ee2d790f5a0e4155eb614",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a8ee2e090f5a0e4155eb8f9",
+   "page_id": "6a8ee2e090f5a0e4155eb8f9",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69e72986a409200ea79f06f1",
+   "page_id": "69e72986a409200ea79f06f1",
+   "book_id": "69e72986a409200ea79f06be",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69bd9e636120d54bd037cbe7",
+   "page_id": "69bd9e636120d54bd037cbe7",
+   "book_id": "69bd9e636120d54bd037cbbe",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a8ee2fc90f5a0e4155ebd7f",
+   "page_id": "6a8ee2fc90f5a0e4155ebd7f",
+   "book_id": "6a8ee2fc90f5a0e4155ebc35",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69de11b786e6d59321ba11c2",
+   "page_id": "69de11b786e6d59321ba11c2",
+   "book_id": "69de11b786e6d59321ba101a",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a4ad95ed6371d99e7668b43",
+   "page_id": "6a4ad95ed6371d99e7668b43",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69b51ed3c35d928cea4efd3b",
+   "page_id": "69b51ed3c35d928cea4efd3b",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69aebf557f4db3ff4c028da0",
+   "page_id": "69aebf557f4db3ff4c028da0",
+   "book_id": "69aebf557f4db3ff4c028d76",
+   "arm": "a"
+  },
+  {
+   "key": "fr-6a499d50d702014d1ddf824a",
+   "page_id": "6a499d50d702014d1ddf824a",
+   "book_id": "6a499d50d702014d1ddf823d",
+   "arm": "a"
+  },
+  {
+   "key": "fr-69bda0bbf6d63c919748a930",
+   "page_id": "69bda0bbf6d63c919748a930",
+   "book_id": "69bda0bbf6d63c919748a5d9",
+   "arm": "a"
+  }
+ ],
+ "r": [
+  {
+   "key": "la-69b51e58ff09e4fe943acf86",
+   "page_id": "69b51e58ff09e4fe943acf86",
+   "book_id": "69b51e58ff09e4fe943ace4f",
+   "arm": "r"
+  },
+  {
+   "key": "ge-6a4942a5d2cbca6a18208247",
+   "page_id": "6a4942a5d2cbca6a18208247",
+   "book_id": "6a4942a5d2cbca6a18208213",
+   "arm": "r"
+  },
+  {
+   "key": "ge-6a26d97eb93c5428e7453349",
+   "page_id": "6a26d97eb93c5428e7453349",
+   "book_id": "6a26d97eb93c5428e7453341",
+   "arm": "r"
+  },
+  {
+   "key": "it-69b51e271cd2669798985a77",
+   "page_id": "69b51e271cd2669798985a77",
+   "book_id": "69b51e271cd2669798985931",
+   "arm": "r"
+  },
+  {
+   "key": "fr-69b4c0836248be021e01f456",
+   "page_id": "69b4c0836248be021e01f456",
+   "book_id": "69b4c0836248be021e01f25c",
+   "arm": "r"
+  },
+  {
+   "key": "fr-6a26da52863cf28d8f64e281",
+   "page_id": "6a26da52863cf28d8f64e281",
+   "book_id": "6a26da52863cf28d8f64e265",
+   "arm": "r"
+  }
+ ],
+ "skipped": [],
+ "lite_higher_but_agy_written": [
+  {
+   "key": "la-6a4eb78eccea9baa4f496272",
+   "agy": 4,
+   "lite": 5
+  },
+  {
+   "key": "ge-69aebc94bbaa08897384dc11",
+   "agy": 4,
+   "lite": 5
+  },
+  {
+   "key": "ge-6a26c0cc499b6fd27da8f366",
+   "agy": 4,
+   "lite": 5
+  },
+  {
+   "key": "fr-69e7298da409200ea79f0828",
+   "agy": 4,
+   "lite": 5
+  },
+  {
+   "key": "fr-6a08f50d50bd891addfb81a9",
+   "agy": 4,
+   "lite": 5
+  },
+  {
+   "key": "fr-69e72986a409200ea79f06f1",
+   "agy": 4,
+   "lite": 5
+  }
+ ]
+}
