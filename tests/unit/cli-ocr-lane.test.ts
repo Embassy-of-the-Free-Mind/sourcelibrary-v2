@@ -13,7 +13,7 @@ import { spreadReason, byQueueOrder, CLI_MODEL_FOR, perCallFor, quotaFloor, isIn
 import { isApiOcrModel } from '../../scripts/lib/ocr-routing.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { quotaBuckets, parseQuota, agyEnv, choosePool } from '../../scripts/lib/agy-pools.mjs';
+import { quotaBuckets, parseQuota, agyEnv, choosePool, LANE_RESERVES } from '../../scripts/lib/agy-pools.mjs';
 import os from 'os';
 
 describe('spreadReason', () => {
@@ -87,25 +87,40 @@ describe('pages a call by script (#7558)', () => {
 
 describe('the correction lane quota floor (#7558)', () => {
   const now = Date.parse('2026-10-27T16:00:00Z');
-  const reset = '2026-10-30T22:00:00Z'; // 3.25 days left: the pace line is 3.25 / 7 = 46.4%
+  const reset = '2026-10-30T22:00:00Z'; // 3.25 days left: the old pace line would be 46.4%
   const b = (weekly: number, fiveH: number | null = 0.9) => [{ id: 'gemini-weekly', remaining_fraction: weekly, reset_time: reset }, ...(fiveH === null ? [] : [{ id: 'gemini-5h', remaining_fraction: fiveH, reset_time: '2026-10-27T20:00:00Z' }])];
-  it('runs while the week is above the straight line to its reset', () => {
-    const q = quotaFloor(b(0.63), { now });
+  const reserve = Object.values(LANE_RESERVES).reduce((s, v) => s + v, 0);
+  it('runs below the old even-burn line while the week is above the reserve (drain by reset, #7911)', () => {
+    const q = quotaFloor(b(0.3), { now });
     expect(q.ok).toBe(true);
-    expect(q.line).toBeCloseTo(3.25 / 7, 3);
+    expect(q.line).toBeCloseTo(reserve, 6);
   });
-  it('stops under the line', () => {
-    expect(quotaFloor(b(0.45), { now }).ok).toBe(false);
+  it('stops under the reserve, and says so', () => {
+    const q = quotaFloor(b(reserve - 0.01), { now });
+    expect(q.ok).toBe(false);
+    expect(q.why).toMatch(/weekly reserve/);
+    expect(q.why).not.toMatch(/pace line/);
+  });
+  it('a reserved lane is not held back by its own reserve', () => {
+    expect(quotaFloor(b(reserve - 0.01), { now, lane: 'enrich' }).ok).toBe(true);
+    expect(quotaFloor(b(reserve - 0.01), { now, lane: 'enrich' }).line).toBeCloseTo(reserve - LANE_RESERVES.enrich, 6);
+  });
+  it('drops the reserve to 0 in the last 36 h before the reset; the 5-hour floor still binds', () => {
+    const late = Date.parse(reset) - 35 * 3600e3;
+    expect(quotaFloor(b(0.02), { now: late }).ok).toBe(true);
+    expect(quotaFloor(b(0.02), { now: late }).line).toBe(0);
+    expect(quotaFloor(b(0.02, 0.2), { now: late }).ok).toBe(false);
+    expect(quotaFloor(b(0.02), { now: Date.parse(reset) - 37 * 3600e3 }).ok).toBe(false);
   });
   it('stops when the 5-hour bucket is under its floor, so the other lanes keep their window', () => {
     expect(quotaFloor(b(0.63, 0.2), { now }).ok).toBe(false);
     expect(quotaFloor(b(0.63, 0.2), { now, floor5h: 0.1 }).ok).toBe(true);
   });
-  it('--pace-off-until drops the pace line until that time, never the 5-hour floor', () => {
+  it('--pace-off-until drops the reserve until that time, never the 5-hour floor', () => {
     const until = now + 3600_000;
-    expect(quotaFloor(b(0.2), { now, paceOffUntil: until }).ok).toBe(true);
-    expect(quotaFloor(b(0.2), { now: until + 1, paceOffUntil: until }).ok).toBe(false);
-    expect(quotaFloor(b(0.2, 0.1), { now, paceOffUntil: until }).ok).toBe(false);
+    expect(quotaFloor(b(0.05), { now, paceOffUntil: until }).ok).toBe(true);
+    expect(quotaFloor(b(0.05), { now: until + 1, paceOffUntil: until }).ok).toBe(false);
+    expect(quotaFloor(b(0.05, 0.1), { now, paceOffUntil: until }).ok).toBe(false);
   });
   it('fails closed on an unreadable /quota', () => {
     expect(quotaFloor(null, { now }).ok).toBe(false);
@@ -166,10 +181,10 @@ describe('the correction lane on a second pool (#7263)', () => {
   const now = Date.parse('2026-10-28T09:00:00Z');
   const reset = '2026-11-03T22:25:00Z'; // 6.56 days left
   const b = (weekly: number) => [{ id: 'gemini-weekly', remaining_fraction: weekly, reset_time: reset }, { id: 'gemini-5h', remaining_fraction: 0.9 }];
-  it('--weekly-end bends the pace line to end at that fraction, not 0', () => {
-    const plain = quotaFloor(b(0.9), { now }), bent = quotaFloor(b(0.9), { now, weeklyEnd: 0.1 });
-    expect(bent.line).toBeCloseTo(0.1 + 0.9 * plain.line, 6);
-    expect(quotaFloor(b(0.1), { now: Date.parse(reset) - 1000, weeklyEnd: 0.1 }).ok).toBe(false);
+  it('--weekly-end keeps at least that fraction, the last 36 h included', () => {
+    expect(quotaFloor(b(0.9), { now, weeklyEnd: 0.5 }).line).toBe(0.5);
+    expect(quotaFloor(b(0.9), { now, weeklyEnd: 0.01 }).line).toBeCloseTo(quotaFloor(b(0.9), { now }).line, 6);
+    expect(quotaFloor(b(0.09), { now: Date.parse(reset) - 1000, weeklyEnd: 0.1 }).ok).toBe(false);
     expect(quotaFloor(b(0.12), { now: Date.parse(reset) - 1000, weeklyEnd: 0.1 }).ok).toBe(true);
   });
   it('--agy-home: no flag keeps the default login (as before), a DIR or auto picks another', () => {
@@ -191,7 +206,7 @@ describe('the correction lane on a second pool (#7263)', () => {
     const pools = [{ home: null, reading: { weekly: 0.42 } }, { home: '/j', reading: { weekly: 0.97 } }, { home: '/k', busy: 9, reading: { weekly: 0.99 } }];
     expect(choosePool(pools, () => ({ open: true })).home).toBe('/j');
     expect(choosePool(pools, () => ({ open: false }))).toBeNull();
-    // the fullest pool under its pace line does not shut a smaller open one
+    // the fullest pool under its own floor does not shut a smaller open one
     expect(choosePool(pools, (r) => ({ open: r.weekly < 0.5 })).home).toBeNull();
   });
   it('two runs never hold one book: a live claim refuses, a dead or old claim is taken over', () => {
