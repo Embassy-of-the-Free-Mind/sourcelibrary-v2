@@ -241,6 +241,19 @@ export function printedPageNumber(text) {
 }
 
 /**
+ * The printed page MARK a transcription tags (<page-num>), whole: digits folded to ASCII, case, spacing and
+ * punctuation dropped ("140 a" → "140a", "fol. 3v" → "fol3v"), or null when it carries no digit. Two reads of one
+ * call are a repeat only when the whole mark repeats: inserted leaves (140 a, 140 b …, live re-read lane 2026-11-03:
+ * 9 of 11 refusals were these) and folio sides (12a / 12b) are different leaves with one number.
+ */
+export function printedPageMark(text) {
+  const m = String(text || '').match(/<page-num\b[^>]*>([\s\S]*?)<\/page-num>/i);
+  if (!m) return null;
+  const k = foldDigits(m[1]).normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  return /\d/.test(k) ? k : null;
+}
+
+/**
  * The multi-image OCR version (#5021 Part A.4): one call read `reads[i]` for `pages[i]`. Where a page has a stored
  * transcription (`stored`: Map<page id, text>; the draft a correction corrects, or the text a re-read replaces), the
  * absorption check (k = the call's median, else 0: two transcriptions of one leaf are the same length) and the number
@@ -252,7 +265,7 @@ export function ocrBlockRefusals(pages, reads, { stored = new Map() } = {}) {
   if (!pages || pages.length < 2) return [];
   const out = new Map();
   const add = (n, reason, detail) => { if (!out.has(n)) out.set(n, { page_number: n, reason, detail }); };
-  const pn = pages.map((p, i) => printedPageNumber(reads[i]));
+  const pn = pages.map((p, i) => printedPageMark(reads[i]));
   pn.forEach((v, i) => { if (v != null && pn.some((w, j) => j !== i && w === v)) add(pages[i].page_number, 'ocr-same-page-num', `two reads of the call print page ${v}`); });
   const withStored = pages.map((p, i) => ({ p, i, src: stored.get(p.id) })).filter((x) => x.src && x.src.trim());
   if (withStored.length >= 2) {
