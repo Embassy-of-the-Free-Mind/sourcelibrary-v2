@@ -126,6 +126,10 @@ $HOST_RULES
   processes and their output files; inbox notes acted on) and end your turn WITHOUT the done file. The wrapper
   starts a fresh session in this worktree with the brief and that file. Never mid-step.
 - Subagents run on Sonnet (CLAUDE_CODE_SUBAGENT_MODEL) unless the brief has a \`Subagents: opus — <why>\` line.
+  An Agent call that judges, reads page images or translates passes \`model: "opus"\` itself, which overrides that
+  default; a skill's "Opus reviewer" without it would silently run on Sonnet and change what the measurement means.
+- A session past about 300K context is compacted automatically, mid-step if need be, and keeps only a short summary
+  (measured: 184K down to 7K). Keep what you need in files, and re-read your brief ($JD/$1.brief.txt) if it happens.
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
@@ -505,6 +509,12 @@ fresh_prompt() {  # $1 name, $2 n -> rules, brief, then the state file the last 
 # Subagents on Sonnet (#7869): they were 11% of transcript cost, all Opus. A brief that needs Opus subagents
 # says `Subagents: opus — <why>` in its first 15 lines.
 subagent_model() { case "$(brief_header Subagents "$1" | tr 'A-Z' 'a-z')" in opus*) echo opus ;; *) echo sonnet ;; esac; }
+# Hard backstop for the fresh-session rule above, which only fires when a job reaches a stage boundary and asks:
+# compact automatically at 30% of the 1M window, about 300K (#7869). Twelve jobs averaged over 300K a turn in the week
+# to 2026-11-03, read-surface-2-6740 519K. Measured 2026-11-03 on Claude Code 2.1.316: at 5%, a 35K context did not
+# compact and a 60K one did, so the percentage is of about 1M. Off: `Compact: off — <why>` in the brief's first 15
+# lines, for a job that cannot survive a mid-step summary. Tuning: JOB_COMPACT_PCT.
+compact_pct() { case "$(brief_header Compact "$1" | tr 'A-Z' 'a-z')" in off*) ;; *) echo "${JOB_COMPACT_PCT:-30}" ;; esac; }
 
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
@@ -518,7 +528,9 @@ run() {  # inside tmux
   trap 'kill $hb 2>/dev/null' EXIT
   rm -f "$JD/$name.stopped"
   export CLAUDE_CODE_SUBAGENT_MODEL="$(subagent_model "$JD/$name.brief.txt")"
-  echo "[claude-job] subagents: $CLAUDE_CODE_SUBAGENT_MODEL; fresh session at ${FRESH_CTX} context tokens" >> "$log"
+  pct="$(compact_pct "$JD/$name.brief.txt")"
+  if [ -n "$pct" ]; then export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE="$pct"; else unset CLAUDE_AUTOCOMPACT_PCT_OVERRIDE; fi
+  echo "[claude-job] subagents: $CLAUDE_CODE_SUBAGENT_MODEL; fresh session at ${FRESH_CTX} context tokens; auto-compact at ${pct:-default}%" >> "$log"
   f=0
   if [ "${2:-fresh}" = manual ] && fresh_due "$name"; then  # `resume` or a sweep after the job wrote its state file
     f=1; echo "[claude-job] manual resume as fresh session 1/$MAX_FRESH (state file) $(date -u +%FT%TZ)" >> "$log"

@@ -75,6 +75,20 @@ describe('claude-job.sh fresh session per stage', () => {
   });
 });
 
+describe('claude-job.sh auto-compact backstop', () => {
+  it('defaults to 30%, honours JOB_COMPACT_PCT, and a brief can turn it off', () => {
+    const root = setup();
+    const b = path.join(root, 'b.txt');
+    fs.writeFileSync(b, 'Lands: #1\n');
+    expect(lib(root, `compact_pct ${b}`)).toBe('30');
+    expect(lib(root, `compact_pct ${b}`, { JOB_COMPACT_PCT: '20' })).toBe('20');
+    fs.writeFileSync(b, 'Lands: #1\nCompact: off — replays one long stage from memory\n');
+    expect(lib(root, `compact_pct ${b}`)).toBe('');
+    fs.writeFileSync(b, 'Lands: #1\n' + '\n'.repeat(20) + 'Compact: off\n');
+    expect(lib(root, `compact_pct ${b}`)).toBe('30');
+  });
+});
+
 describe('claude-job.sh subagent model', () => {
   it('is sonnet unless the brief header says opus', () => {
     const root = setup();
