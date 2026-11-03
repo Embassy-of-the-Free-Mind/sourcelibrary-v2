@@ -155,8 +155,8 @@ async function controls() {
   await runQueue(jobs);
 }
 
-const cmd = process.argv[2];
-if (cmd === 'collect') collect();
+const cmd = import.meta.url === `file://${process.argv[1]}` ? process.argv[2] : null;
+if (cmd === null) { /* imported (score.mjs) */ } else if (cmd === 'collect') collect();
 else if (cmd === 'main') await main();
 else if (cmd === 'controls') await controls();
 else console.log('usage: judge.mjs collect|main|controls');
