@@ -349,7 +349,7 @@ export default function QualityCenterPage() {
             On {longDate(drawDate)} we drew {n(servedGrades.books)} books at random from the {n(frameBooks)} with a
             transcription, took five pages from each, and had an AI reviewer (Claude Opus) compare each of the{' '}
             {n(servedGrades.pages)} pages with its photograph. Shares are weighted back to the whole library; intervals are
-            in <A href={RECORD}>the full record</A>. This measures the transcription, not the English translation.
+            in <A href={RECORD}>the full record</A>. This measures the transcription. On the same pages, 15% of translated pages carry a major error in the English itself, and about a third of pages are wrong somewhere once a misread transcription is counted too (<A href={`${RECORD}`}>the record</A>).
           </p>
         </Section>
 
