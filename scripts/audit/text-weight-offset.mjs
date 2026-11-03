@@ -63,7 +63,7 @@ try {
     try {
       const pages = await db.collection('pages').aggregate([
         { $match: { book_id: id, page_number: { $gte: 1 } } },
-        { $project: { _id: 0, page_number: 1, archived_photo: 1, photo: 1, split_side: 1, len: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 3000] } } },
+        { $project: { _id: 0, page_number: 1, archived_photo: 1, photo: 1, split_side: 1, len: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] }, head: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $substrCP: ['$ocr.data', 0, 3000] }, ''] } } },
         { $sort: { page_number: 1 } },
       ]).toArray();
       if (pages.some((p) => p.split_side)) { row.verdict = 'skip-split'; throw null; }
