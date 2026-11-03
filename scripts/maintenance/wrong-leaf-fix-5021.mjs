@@ -159,8 +159,8 @@ async function build() {
     const ps = await db.collection('pages').aggregate([
       { $match: { book_id: b, page_number: { $in: pages } } },
       { $project: { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'translation.updated_at': 1, 'translation.edited_by': 1, 'translation.source': 1,
-        has_tr: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
-        no_text: { $regexMatch: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } },
+        has_tr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
+        no_text: { $regexMatch: { input: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } },
         tw: '$translation_withheld.reason', tw_at: '$translation_withheld.withheld_at' } },
     ]).toArray();
     const found = new Set(ps.map((p) => p.page_number));
@@ -271,7 +271,7 @@ async function doBook(rows, { applyOcr, apply, home }) {
   const fresh = new Map((await db.collection('pages').aggregate([
     { $match: { id: { $in: rows.map((r) => r.page_id) } } },
     { $project: { _id: 0, id: 1, 'ocr.model': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'translation.updated_at': 1, 'translation.edited_by': 1, 'translation.source': 1, 'translation_withheld.withheld_at': 1, 'translation_withheld.reason': 1,
-      no_text: { $regexMatch: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
+      no_text: { $regexMatch: { input: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } } } },
   ]).toArray()).map((p) => [p.id, p]));
   let work = [];
   for (const r of rows) {
