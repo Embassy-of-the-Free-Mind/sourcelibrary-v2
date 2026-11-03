@@ -2333,6 +2333,24 @@
    "pages": [
     617
    ]
+  },
+  {
+   "book_id": "69ea0b27e639a70bb4cc5866",
+   "title": "Toscanelli and Columbus: The Letter and Chart",
+   "language": "English",
+   "pages": [
+    236
+   ],
+   "source": "sonnet-only below-cut flag, Opus-confirmed"
+  },
+  {
+   "book_id": "69ee47436dd925d126f41aba",
+   "title": "Antiquities, Historical and Monumental, of the County of Cornwall",
+   "language": "English",
+   "pages": [
+    539
+   ],
+   "source": "sonnet-only below-cut flag, Opus-confirmed"
   }
  ]
 }
