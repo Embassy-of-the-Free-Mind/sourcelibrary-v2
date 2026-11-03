@@ -11,6 +11,8 @@ status: undecided
 decision: "Recommended: route printed Devanagari from the hidden Sanskrit backlog to Surya 2 on the GEX45 GPU filler (an ocr-filler-routes.tsv row and a writer). Surya is slightly worse on a typical page, never loses or invents a page, and is weak on two-column indexes. Manuscripts and Śāradā stay on Flash. Derek decides (#7243)."
 superseded_by: null
 issue: [7243, 6740, 6871]
+router_evidence: "none — no router-table cell routes Sanskrit print to a GPU engine yet (only sanskrit-lite); the cell is added with the ocr-filler route if Derek takes the DECISION on #7243"
+defect_rates: "none — the judge graded the worst error per page on the #6740 0-4 scale with planted controls, not a per-defect inventory, so defect-rate.py has no rows to read; per-page grades are in sanskrit-gex45-7243/severity-confirm.json"
 ---
 <!-- PRIOR ART: 2026-10-24-sanskrit-gex45-vs-flash-7243.md (the exploratory test this confirms: same harness, references, scorer and gate; it asked for this run). Nothing else scored Surya on Devanagari. -->
 ## 2026-11-03 · Does Surya 2 hold against Flash on 50 new printed Devanagari books? (#7243 confirmation)
