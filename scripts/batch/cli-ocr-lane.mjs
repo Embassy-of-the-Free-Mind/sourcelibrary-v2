@@ -82,6 +82,26 @@
  * pools are the correction lane's; there is no Claude fallback (the fallback serves Latin, which this mode does not).
  * Router: the cells german-lite/print and french-lite/print, route agy-flash-low@4-read (servedByReread).
  *
+ * LATIN RE-READ (#7263, Derek 2026-11-03 "prioritize the queue of the flash 3.8 re-read and retranslate"; V4, PR #8000:
+ * 20/30 accepted against the served 9/30). `correct --reread-per-call=4 --reread-languages=Latin [--reread-tiers=readers,period]`
+ * is the re-read above with every guard, on visible Latin books, with these additions:
+ *   - PRINT ONLY, in three layers. A book that manuscriptReason names, or that the by-eye file marks manuscript
+ *     (LATIN_BY_EYE), is out: manuscripts go to the Opus reader (#7947). A page whose stored read is tagged handwritten,
+ *     mixed or none, or whose script_type says so, is out. A page with no tag and no printed script_type ("unknown") is
+ *     read only in a book dated 1550 or later, or one the by-eye file marks print. The reader's own tag then decides the
+ *     write (--print-only).
+ *   - English it can be re-translated into: only a book routed to latin-cli-agy4. BPH's Latin books have their own row,
+ *     and a stale flag on those would queue the paid translate worker (mark-stale-translations.mjs ACTUATION).
+ *   - ORDER: `readers` (human_read_count > 0, most-read first), `period` (1501-1700), `rest` (rereadTier); inside a tier, books
+ *     with the most English first. --reread-tiers restricts a run. The stale English it leaves is drained by
+ *     cli-translate-lane.mjs stale, in the same order.
+ *
+ * LATIN FIRST (#7263). `latin-first --agy-home=P --max-pages=N --concurrency=C --deadline-min=M [--root=/root/jobs] [--apply]`
+ * is one pool's cron run, in order (latinFirstSteps): the Latin re-read of the readers and period tiers; then, with the
+ * time left, the German/French correction; then the rest of Latin. Each step is its own `correct` run with its own folder
+ * and ledger, and stops at the pool's floor, so a step that finds the floor shut costs one /quota call. The reserves
+ * (LANE_RESERVES) hold in every step.
+ *
  * QUOTA FLOOR (drain by reset, #7911). Before each book chunk the lane reads `agy -p /quota` and stops when the Gemini
  * weekly remaining fraction is below the weekly RESERVE (scripts/lib/agy-pools.mjs weeklyReserve: the declared needs
  * of the lanes that must not starve, 0 in the last 36 h before the reset), or the 5-hour bucket is below --floor-5h
@@ -275,7 +295,7 @@ async function heldBooks(db) {
 // ── correct (#7558) ──
 export const CORRECT_LANE = 'agy-correct-lite-7558';
 export const CORRECT_MODEL = 'gemini-3.8-flash-low';
-/** The cells the route passed (#7520): German and French. Latin was not measured. */
+/** The cells the correction passed (#7520): German and French. Latin is re-read, not corrected (#7263: REREAD_LANGUAGE_NAMES). */
 export const CORRECT_LANGUAGES = /^(German|French)/;
 /** The Claude fallback (#7545, header): Latin lite>opus, where lite>agy-opus accepted 15/15 against claude -p's 15/15. */
 export const FALLBACK = Object.freeze({ model: 'claude-opus-5-5-low', languages: /^(Latin)/, lane: 'agy-opus-correct-lite-7545',
@@ -308,9 +328,75 @@ export function parseRereadPerCall(v) {
 /** The router's id for the route a re-read run serves: agy-flash-low@4-read at 4 a call, agy-flash-low-read at 1. */
 export const rereadRoute = (perCall) => (perCall > 1 ? `agy-flash-low@${perCall}-read` : 'agy-flash-low-read');
 /** Which run this is: the re-read when the Gemini floor is open, else none (no Claude fallback: it serves Latin only). */
-export function rereadMode({ buckets, floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now() } = {}) {
+export function rereadMode({ buckets, floor5h = 0.25, weeklyEnd = 0, paceOffUntil = null, now = Date.now(), languages = CORRECT_LANGUAGES } = {}) {
   const q = quotaFloor(buckets, { now, floor5h, weeklyEnd, paceOffUntil });
-  return q.ok ? { mode: 'reread', model: CORRECT_MODEL, lane: REREAD_LANE, languages: CORRECT_LANGUAGES, q } : { mode: null, why: `quota floor: ${q.why}` };
+  return q.ok ? { mode: 'reread', model: CORRECT_MODEL, lane: REREAD_LANE, languages, q } : { mode: null, why: `quota floor: ${q.why}` };
+}
+// ── Latin re-read (#7263, header: LATIN RE-READ) ──
+export const REREAD_LANGUAGE_NAMES = Object.freeze(['Latin', 'German', 'French']);
+/** `--reread-languages=Latin[,German]` → names, or null when absent. Throws on a language the route has no cell for. */
+export function parseRereadLanguages(v) {
+  if (v == null) return null;
+  const names = String(v).split(',').filter(Boolean);
+  for (const n of names) if (!REREAD_LANGUAGE_NAMES.includes(n)) throw new Error(`--reread-languages: ${n} is not one of ${REREAD_LANGUAGE_NAMES.join(', ')}`);
+  if (!names.length) throw new Error('--reread-languages: name a language');
+  return names;
+}
+export const REREAD_TIERS = Object.freeze(['readers', 'period', 'rest']);
+/** `--reread-tiers=readers,period` → names, or null when absent. Throws on an unknown tier. */
+export function parseRereadTiers(v) {
+  if (v == null) return null;
+  const tiers = String(v).split(',').filter(Boolean);
+  for (const t of tiers) if (!REREAD_TIERS.includes(t)) throw new Error(`--reread-tiers: ${t} is not one of ${REREAD_TIERS.join(', ')}`);
+  return tiers;
+}
+/** A book's year: `year`, else the first four digits of `published`; null when it has neither. */
+export function bookYear(book) {
+  const y = Number(book?.year);
+  if (Number.isInteger(y) && y > 0) return y;
+  const m = /\b(\d{4})\b/.exec(String(book?.published || ''));
+  return m ? Number(m[1]) : null;
+}
+export function rereadTier(book) {
+  if ((book?.human_read_count ?? 0) > 0) return 'readers';
+  const y = bookYear(book);
+  return y != null && y >= 1501 && y <= 1700 ? 'period' : 'rest';
+}
+/** Tier, then most-read, then most English (the pages a reader sees the fix in twice), then id. */
+export const byRereadPriority = (a, b) => REREAD_TIERS.indexOf(rereadTier(a)) - REREAD_TIERS.indexOf(rereadTier(b))
+  || (b.human_read_count ?? 0) - (a.human_read_count ?? 0) || (b.pages_translated ?? 0) - (a.pages_translated ?? 0) || String(a.id).localeCompare(String(b.id));
+/** The translation row a re-read Latin book's stale English goes to (scripts/lib/translation-routing-table.json). */
+export const LATIN_TRANSLATE_ROW = 'latin-cli-agy4';
+/** Year from which a page with no script tag is read on the reader's own tag; earlier or undated books need a by-eye verdict. */
+export const UNKNOWN_SCRIPT_FROM_YEAR = 1550;
+const LATIN_BY_EYE_FILE = path.join(HERE, 'latin-reread-script-by-eye.json');
+/** The by-eye verdicts on early books with untagged pages: { print: Set, manuscript: Set } of book ids. */
+export function loadLatinByEye(file = LATIN_BY_EYE_FILE) {
+  const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+  return { print: new Set(Object.keys(j.print || {})), manuscript: new Set(Object.keys(j.manuscript || {})) };
+}
+/** Why the Latin re-read leaves this book, or null. */
+export function latinRereadSkip(book, byEye = { manuscript: new Set() }) {
+  const ms = manuscriptReason(book);
+  if (ms) return ms;
+  if (byEye.manuscript.has(book.id)) return 'manuscript by eye';
+  const row = translateLaneForBook(book).row?.id;
+  return row === LATIN_TRANSLATE_ROW ? null : `translation row ${row ?? 'batch'}, not ${LATIN_TRANSLATE_ROW}`;
+}
+/** May a page with no script tag in this book be read? From UNKNOWN_SCRIPT_FROM_YEAR on, or with a by-eye print verdict. */
+export function untaggedPagesAllowed(book, byEye = { print: new Set() }) {
+  const y = bookYear(book);
+  return (y != null && y >= UNKNOWN_SCRIPT_FROM_YEAR) || byEye.print.has(book.id);
+}
+/** One pool's `latin-first` run (header: LATIN FIRST): [{ step, args, minMinutes }], each a `correct` run of this file. */
+export function latinFirstSteps({ home, root, date, maxPages, latinMaxPages = 8000, concurrency, chunk = 40, apply }) {
+  const common = [`--concurrency=${concurrency}`, `--book-chunk=${chunk}`, `--agy-home=${home}`, ...(apply ? ['--apply'] : [])];
+  const latin = (tiers) => ['correct', '--reread-per-call=4', '--reread-languages=Latin', `--reread-tiers=${tiers}`, `--out=${root}/cli-ocr-reread/${date}`, `--max-pages=${latinMaxPages}`, ...common];
+  return [
+    { step: 'latin-priority', args: latin('readers,period') },
+    { step: 'german-french-correct', args: ['correct', `--out=${root}/cli-ocr-correct/${date}`, `--max-pages=${maxPages}`, ...common] },
+    { step: 'latin-rest', args: latin('rest') },
+  ];
 }
 /** The re-read's reader: the plain read (live first-read prompt, no draft), N pages a call, kept reads reused (no --fresh). */
 export function rereadReadArgs({ cli, ids, dir, model = CORRECT_MODEL, job, perCall }) {
@@ -435,16 +521,18 @@ export const correctablePageMatch = (bookId, skipPageTypes) => ({
   'ocr.source': { $ne: 'manual' }, translation_withheld: { $ne: true }, page_type: { $nin: skipPageTypes }, 'ocr.data': { $type: 'string' },
 });
 /** The correctable pages of one book (see CORRECT in the header), filtered in Mongo; ids and page numbers only. */
-async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES }) {
+async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES, printOnly = null }) {
   const rows = await db.collection('pages').aggregate([
     // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
     { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES) },
-    { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } } } },
+    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
   const last = await lastPageNumber(db, book.id);
-  return rows.filter((p) => isInterior(p.page_number, last));
+  // printOnly (the Latin re-read, header): scriptClass's order, the tag and then the field; an unknown page only where allowed
+  const script = (p) => (p.printed ? 'print' : p.script_type === 'printed' ? 'print' : p.script_type ? 'other' : 'unknown');
+  return rows.filter((p) => isInterior(p.page_number, last) && (!printOnly || script(p) === 'print' || (script(p) === 'unknown' && printOnly.untagged)));
 }
 
 /**
@@ -472,7 +560,15 @@ async function correctMain(mode, arg) {
   try { REREAD = parseRereadPerCall(arg('reread-per-call')); } catch (e) { console.error(e.message); process.exit(2); }
   const LEDGER = arg('ledger') || (OUT ? path.join(path.dirname(OUT), REREAD ? 'reread-ledger.jsonl' : 'correct-ledger.jsonl') : null);
   const CLAIMS = OUT ? path.join(path.dirname(OUT), 'correct-contain-claims.jsonl') : null;
-  const LANGUAGE_NAMES = CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+  let REREAD_NAMES, TIERS;
+  try { REREAD_NAMES = parseRereadLanguages(arg('reread-languages')); TIERS = parseRereadTiers(arg('reread-tiers')); } catch (e) { console.error(e.message); process.exit(2); }
+  if ((REREAD_NAMES || TIERS) && !REREAD) { console.error('--reread-languages and --reread-tiers go with --reread-per-call'); process.exit(2); }
+  const LANGUAGE_NAMES = REREAD_NAMES ?? CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
+  const REREAD_LANGUAGES = new RegExp(`^(${LANGUAGE_NAMES.join('|')})`);
+  // The Latin re-read's book and page rules and its order (header: LATIN RE-READ); German and French keep theirs.
+  const LATIN = !!REREAD_NAMES?.includes('Latin');
+  if (LATIN && REREAD_NAMES.length > 1) { console.error('--reread-languages: Latin runs alone (its own frame and order)'); process.exit(2); }
+  const BY_EYE = LATIN ? loadLatinByEye() : null;
   if (mode === 'correct') await routeCheck(REREAD ? servedByReread({ languages: LANGUAGE_NAMES, perCall: REREAD }) : servedByCorrect({ languages: LANGUAGE_NAMES }), arg);
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../lib/translate-core.mjs');
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -504,8 +600,8 @@ async function correctMain(mode, arg) {
   const held = new Set();
   process.on('exit', () => { for (const id of held) releaseBookClaim(CLAIMS_DIR, id); });
   // The run's mode (header: CLAUDE FALLBACK; RE-READ has none). correct-count counts the Gemini lane's frame unless --fallback.
-  const gate = () => (REREAD ? rereadMode : correctMode)({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL });
-  const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: CORRECT_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
+  const gate = () => (REREAD ? rereadMode : correctMode)({ buckets: readQuota(HOME), gate: () => agyClaudeGate(HOME || ''), floor5h: FLOOR5H, weeklyEnd: WEEKLY_END, paceOffUntil: PACE_OFF_UNTIL, languages: REREAD_LANGUAGES });
+  const M = mode === 'correct-count' ? (REREAD ? { mode: 'reread', languages: REREAD_LANGUAGES, lane: REREAD_LANE } : process.argv.includes('--fallback') ? { mode: 'fallback', ...FALLBACK } : { mode: 'gemini', languages: CORRECT_LANGUAGES, lane: CORRECT_LANE })
     : gate();
   if (!M.mode) { console.log(`correct: not run: ${M.why}`); await client.close(); return; }
   // A book held for the CLI translation lane (CLI_TRANSLATE_HOLD, #7263) is in the frame too: that lane's OCR-first gate
@@ -514,14 +610,17 @@ async function correctMain(mode, arg) {
   const books = (await db.collection('books').find(
     { visible: true, pages_count: { $gt: 0 }, language: { $regex: M.languages }, 'pipeline_auto.held': { $ne: true },
       $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] },
-    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1 } },
-  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k))
-    .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+    { projection: { id: 1, title: 1, language: 1, pages_count: 1, processing_priority: 1, ...(LATIN && { year: 1, published: 1, publisher: 1, image_source: 1, human_read_count: 1, pages_translated: 1 }) } },
+  ).toArray()).filter((b) => (!arg('book') || b.id === arg('book')) && (!SHARD || bookShard(b.id, SHARD.n) === SHARD.k)
+      && (!LATIN || (!latinRereadSkip(b, BY_EYE) && (!TIERS || TIERS.includes(rereadTier(b))))))
+    .sort(LATIN ? byRereadPriority : (a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));
+  // A Latin page's print rule (header: LATIN RE-READ); undefined elsewhere, as before
+  const pageRule = (b) => (LATIN ? { printOnly: { untagged: untaggedPagesAllowed(b, BY_EYE) } } : {});
   if (mode === 'correct-count') {
     const t = {};
     for (const b of books) {
-      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
-      const k = String(b.language).match(M.languages)[1];
+      const ps = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id));
+      const k = LATIN ? rereadTier(b) : String(b.language).match(M.languages)[1];
       t[k] ??= { books: 0, books_with_pages: 0, pages: 0 };
       t[k].books++; t[k].pages += ps.length; if (ps.length) t[k].books_with_pages++;
     }
@@ -555,7 +654,7 @@ async function correctMain(mode, arg) {
       if (!claimBook(CLAIMS_DIR, b.id, ME)) continue;  // another live run is on this book
       held.add(b.id);
       ledgerTail(LEDGER, ledger, tailState);
-      const open = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES })).filter((p) => !ledger.has(p.id));
+      const open = (await correctablePages(db, b, { SKIP_TRANSLATION_PAGE_TYPES, ...pageRule(b) })).filter((p) => !ledger.has(p.id));
       if (open.length) return { book: b, open };
       releaseBookClaim(CLAIMS_DIR, b.id); held.delete(b.id);
     }
@@ -588,7 +687,8 @@ async function correctMain(mode, arg) {
         : [CLI, 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${M.model}`, `--correct-prompt=${TPL}`, `--lane=${M.lane}`, `--job=${job}`, '--stop-on-quota'], tag, CHILD_ENV);
       if (read === 3) { release(); stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
       if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-      const reason = REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
+      const reason = LATIN ? `#7263 Latin re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-03; V4, PR #8000: 20/30 accepted against the served 9/30); lane run ${LANE_RUN}`
+        : REREAD ? `#7853 re-read lane, route ${ROUTE}: the stored Flash-Lite text replaced by a fresh ${M.model} read of the image through agy, ${REREAD} page(s) a call (Derek 2026-11-01: re-read, not correct; read@4 accepted 0.82 German / 0.91 French against the correction's 0.72 / 0.78); lane run ${LANE_RUN}`
         : M.mode === 'fallback' ? `#7545 Claude fallback of the correction lane: Flash-Lite draft corrected by ${M.model} through agy on an account whose Gemini pool is empty (${FALLBACK.why})`
         : `#7558 correction lane: Flash-Lite draft corrected by ${CORRECT_MODEL} through agy (lite>agy-flash-low passed #7520's router test on German and French)`;
       const t0 = Date.now();
@@ -626,6 +726,21 @@ async function correctMain(mode, arg) {
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   console.log(`\n${REREAD ? 're-read' : 'correct'} run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${APPLY ? JSON.stringify(tally) : `dry run: ${JSON.stringify(dryWhy)}`}`);
   await client.close();
+}
+
+/** One pool's cron run: latinFirstSteps in order, each with the minutes left (header: LATIN FIRST). */
+async function latinFirstMain(arg) {
+  const home = arg('agy-home'), maxPages = Number(arg('max-pages')), concurrency = Number(arg('concurrency')), minutes = Number(arg('deadline-min'));
+  if (!home || !(maxPages > 0) || !(concurrency > 0) || !(minutes > 0)) { console.error('latin-first needs --agy-home --max-pages --concurrency --deadline-min'); process.exit(2); }
+  const end = Date.now() + minutes * 60_000;
+  const steps = latinFirstSteps({ home, root: arg('root') || '/root/jobs', date: new Date().toISOString().slice(0, 10), maxPages, concurrency, apply: process.argv.includes('--apply') });
+  for (const { step, args } of steps) {
+    const left = Math.floor((end - Date.now()) / 60_000);
+    if (left < 5) { console.log(`latin-first: ${left} min left: stop before ${step}`); break; }
+    console.log(`\nlatin-first: ${step}, ${left} min left`);
+    const code = await run([fileURLToPath(import.meta.url), ...args, `--deadline-min=${left}`]);
+    console.log(`latin-first: ${step} exited ${code}`);
+  }
 }
 
 // ── gpu-correct (#7263, route C) ──
@@ -1468,6 +1583,7 @@ async function main() {
     if (arg('cohort') !== FIRST_READ_COHORT) { console.error(`--cohort: the only cohort is ${FIRST_READ_COHORT}`); process.exit(2); }
     return firstReadMain(mode, arg);
   }
+  if (mode === 'latin-first') { await latinFirstMain(arg); return; }
   if (!['count', 'run'].includes(mode)) { console.error('usage: cli-ocr-lane.mjs count | run --out=DIR [--max-pages=120] [--book=ID] [--apply] | count --cohort=visible-unread | run --cohort=visible-unread --out=DIR [--apply] | correct-count | correct --out=DIR [--apply]'); process.exit(2); }
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
