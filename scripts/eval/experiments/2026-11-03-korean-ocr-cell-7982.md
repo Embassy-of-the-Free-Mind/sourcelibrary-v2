@@ -218,7 +218,7 @@ Scope:
 - **Inbox note.** Report the STORED arm on live books as the served-quality figure for Korean, on the #7866 rubric, with Wilson intervals.
 - **The live subset is 28 of the 30 drawn books** (`visible: true`, `pages_count > 0`). The two hidden books, *Wŏlchʻon chip* and *Yang Pʻung-un chyŏn*, are left out.
 - **Grading.** One page per book, graded by `confidence-7866/regrade.mjs gradeOf` / `bucketOf` on the same Opus verdict. Rates per 1,000 use `route-judge-6740/defect-rate.mjs words()`, the function /quality uses.
-- **Weighting.** Unweighted over books. The draw floors hangul and mixed books at 8 of 30, so hangul is over-represented against its share of pages. On the 22 hanja pages alone, the stored read says what the page says on 1/22. `results/served.json`, `score.mjs served`.
+- **Weighting.** Unweighted over books. The draw floors hangul and mixed books at 8 of 30, so hangul is over-represented against its share of pages. On the 21 live hanja pages alone it says what the page says on 1/21, and its text is not on the page on 16/21. `results/served.json`, `score.mjs served`.
 
 | #7866 bucket | k/n | share | Wilson 95% |
 |---|---|---|---|
