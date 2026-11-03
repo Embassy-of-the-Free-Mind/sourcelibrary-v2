@@ -712,7 +712,7 @@ const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the p
  */
 const SUMMARY_SUBJECT = '(?:the )?(?:[\\w-]+ ){0,2}(?:text|translation|transcription|list|listing|entry|entries|passage|section|catalog(?:ue)?|content|discussion|narrative|enumeration|series|remainder|rest|page|lines?|verses?|chapter|commentary|treatise|argument|account|description|recipes?|remedies)';
 /** An omission that is not of the page's own prose: a parallel text in another language, a table, figures, notation. */
-const SUMMARY_NOT_PROSE = '(?![^\\])\\n]{0,80}\\b(?:original|parallel|facing|latin|greek|hebrew|syriac|arabic|aramaic|coptic|armenian|ethiopic|irish|gaelic|welsh|german|french|italian|spanish|dutch|sanskrit|tibetan|chinese|japanese|persian|turkish|table|tables|tabular|notation|numbers|numerals|figures|diagrams?|cross-references|references|index|repeats|duplicates?|convention)\\b)';
+const SUMMARY_NOT_PROSE = '(?![^\\])\\n]{0,80}\\b(?:original|parallel|facing|latin|greek|hebrew|syriac|arabic|aramaic|coptic|armenian|ethiopic|irish|gaelic|welsh|german|french|italian|spanish|dutch|sanskrit|tibetan|chinese|japanese|persian|turkish|cuneiform|transliteration|hieroglyph(?:s|ic)?|table|tables|tabular|notation|numbers|numerals|figures|diagrams?|cross-references|references|index|repeats|duplicates?|convention)\\b)';
 /** A damaged or unreadable source, described as such: not a placeholder for a translation. */
 const SUMMARY_DAMAGE = '(?![^\\])\\n]{0,120}\\b(?:illegible|unreadable|damaged|obscured|fragment(?:ary|ed|s)?|faded|torn|lost|missing|cut off|effaced)\\b)';
 /**

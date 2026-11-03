@@ -426,6 +426,7 @@ describe('translationReasoningLeak', () => {
       '<note>The text continues from the previous page: ...standard of a good man to use and enjoy them. If, therefore, they are handed over for the purpose of enjoyment, no one doubts that the person who received them does not become the owner, for they are not handed over so that the ownership is stripped from the one who hands them over, but so that the legatee may use and enjoy them. Therefore, since the vessels do not become the property of the usufructuary, they can be claimed by the owner.</note>',
       'but rather that the god must be prevented from interfering with his welfare.\n\n(The list continues regarding the classification of worship):\n4. Worship of visible things, animate or inanimate.',
       '<note>The text continues from the previous page: ...The Wardens having repeated the same thing, all together we perform the sign.</note>\n# The End.',
+      '### OBVERSE II\n\n(Cuneiform text omitted for brevity)\n\n1. ..... its brilliant ........ let him behold.',
       'Blessed are You, Lord, who loves His people Israel. [Continue with] the <term>Shema</term> until "to You they answered with a song."',
       '<note>from the previous page: [continues regarding the dissolution of betrothals].</note> of fickleness, and he shall recover the dowry which he gave',
       '<note>The text continues from the previous page, discussing property disputes near borders.</note> that if it has sent its roots into the neighbour\'s field, the tree belongs to him in whose land it stands.',
