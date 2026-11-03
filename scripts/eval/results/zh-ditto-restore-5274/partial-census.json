@@ -1,0 +1,26 @@
+{
+ "leaves": 94172,
+ "pages": 62892,
+ "scored": 62491,
+ "unscored": 401,
+ "bands": {
+  "kept ≥ 90%": 33408,
+  "lost all": 20018,
+  "lost 10-50%": 6212,
+  "lost over half": 2843,
+  "leaf has none": 10
+ },
+ "marks_on_leaves": 1935150,
+ "marks_stored": 1149385,
+ "held": {
+  "kept ≥ 90%": 6716,
+  "lost all": 2695,
+  "lost 10-50%": 1170,
+  "lost over half": 484,
+  "leaf has none": 3
+ },
+ "zero_pages_where_leaf_has_marks": 20018,
+ "zero_pages_where_leaf_has_none": 10,
+ "pages_to_fix_lt90": 29073,
+ "books_to_fix_lt90": 783
+}
