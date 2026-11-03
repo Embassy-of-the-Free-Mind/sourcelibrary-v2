@@ -4,16 +4,16 @@ measure: [judged, agreement]
 languages: [la, de, fr, it, es, nl, en]
 scripts: [Latn]
 canons: []
-n_books: 2500
+n_books: 3200
 n_pages: null
-verdict: "Of about 815,000 works first printed in Europe 1400–1700 in six languages (USTC, grouped into works), roughly 18,000 to 40,000 have ever been published in English (2–5%). Latin is 15,600–25,400 (the validated work-level count, translation-gap-paper.md §5.10, paper reading, 95% interval); the five vernaculars add about 2,000–15,000, counting only works composed in the language, as Wilson 95% intervals on 17 sampled positives (German: 1); a Luther check sets German's floor at ~300. A capture–recapture estimate from the LoC, Open Library and Wikidata lists on Latin gives about 800–1,900: the lists share one blind spot, so it measures what they can see, about a tenth. Renaissance Cultural Crossroads ('over four thousand translations' printed in Britain 1473–1640) is a floor, cleared. Source Library has 6,533 of these works readable in English, a sixth to a third of the English record. Two earlier drafts (26,000–73,000; 20,700–33,600) were wrong; see Corrections. 2026-11-02."
+verdict: "Of about 815,000 works first printed in Europe 1400–1700 in six languages (USTC, grouped into works), roughly 18,000 to 39,000 have ever been published in English (2–5%). Latin is 15,600–25,400 (the validated work-level count, translation-gap-paper.md §5.10, paper reading, 95% interval); the five vernaculars add about 2,300–13,900, counting only works composed in the language, as Wilson 95% intervals on 22 sampled positives (German: 6 of 1,000, 600–2,900, 2026-11-03); a Luther check (~300–860) agrees. A capture–recapture estimate from the LoC, Open Library and Wikidata lists on Latin gives about 800–1,900: the lists share one blind spot, so it measures what they can see, about a tenth. Renaissance Cultural Crossroads ('over four thousand translations' printed in Britain 1473–1640) is a floor, cleared. Source Library has 6,533 of these works readable in English, a sixth to a third of the English record. Two earlier drafts (26,000–73,000; 20,700–33,600) were wrong; see Corrections. 2026-11-02, German updated 2026-11-03."
 status: informational
 decision: "Published as /articles/how-many-translated-into-english. No write to any store. The catalogue-only figure must never be quoted as the size of the English record."
 superseded_by: null
 issue: [7954, 7751, 7769, 2684]
 ---
 ## 2026-11-02 · How many early printed works have ever been translated into English? Three estimates (#7954)
-<!-- PRIOR ART: translation-gap-paper.md §5.7–5.10 (Latin work-level counts, catalogue capture); 2026-10-30-translation-share-by-language.md (the vernacular samples and origin tags); the #7769 landing table (earthai-l7a, /data/scratch/sl/jobs/translation-staging-7769-mv/landing-table.txt). Nothing new was sampled or searched; this note combines measured figures and adds the capture–recapture step. -->
+<!-- PRIOR ART: translation-gap-paper.md §5.7–5.10 (Latin work-level counts, catalogue capture); 2026-10-30-translation-share-by-language.md (the vernacular samples and origin tags); the #7769 landing table (earthai-l7a, /data/scratch/sl/jobs/translation-staging-7769-mv/landing-table.txt). Nothing new was sampled or searched; this note combines measured figures and adds the capture–recapture step. German from 2026-11-03-german-translation-share-n1000.md (#8001). -->
 
 **Question.** Nobody has counted how many of the works printed before 1700 have ever been put into English. Three instruments with different biases. No model calls and no writes.
 
@@ -21,7 +21,7 @@ issue: [7954, 7751, 7769, 2684]
 
 **Latin** is taken whole from `translation-gap-paper.md` §5.10: translated works, all print 1400–1700, extrapolated from the 1480–1620 sample, corrected for title-group splitting: **20,176 [15,636–25,374]** (paper reading) of 266,593 works. Renaissance-composed only: 9,348 (paper), 6,988 (strict), 5,725 (sonnet). These are upper bounds (the split count k is a floor).
 
-**Vernaculars** (2026-10-30 samples, n≈300 each, phase-11 frames). Only works **composed in the language** with an English translation count (origin tag N):
+**Vernaculars** (2026-10-30 samples, n≈300 each, phase-11 frames; German from the 2026-11-03 n=1,000 sample, same frame and seed). Only works **composed in the language** with an English translation count (origin tag N):
 - E (the edition is a translation *from* English) is not a translation into English.
 - V (the edition is itself a translation of a third-language work) is counted under that language already, if it is one of the six.
 Each range is the **Wilson 95% interval** on k/n times the frame. An earlier draft used N/n to N/(0.62n), which hid how little 1–5 cases can say. Search misses (sensitivity 0.62, 8 of 13) push the truth up within these intervals; false positives among N are taken as ~0, since every positive was origin-tagged by reading its evidence.
@@ -32,11 +32,11 @@ Each range is the **Wilson 95% interval** on k/n times the frame. An earlier dra
 | French | 124,168 | 4 / 299 | 0.52–3.39% | 650–4,200 |
 | Italian | 68,819 | 5 / 295 | 0.73–3.91% | 500–2,700 |
 | Spanish | 59,582 | 5 / 299 | 0.72–3.85% | 430–2,300 |
-| German | 221,931 | 1 / 299 | 0.06–1.87% | 300*–4,200 |
+| German | 221,931 | 6 / 999 | 0.28–1.30% | 600*–2,900 |
 | Dutch | 74,378 | 2 / 299 | 0.18–2.41% | 140–1,800 |
-| **Total** | **815,471** | | | **~17,600–40,500** |
+| **Total** | **815,471** | | | **~17,900–39,300** |
 
-\* German's single N case is Osiander's *Catechismus* (1533; Cranmer's *Catechism*, 1548). Its other positives were La Puente (Spanish), Tasso (Italian) and Pearse (an English original). The interval's low end (130) is below a direct floor: **the Luther check**. Luther has 1,507 works in the German frame (USTC-linked). Of 25 drawn at random (seed 1103), 9 are in English (*Freedom of a Christian*; the Invocavit sermons, twice, split across two works; Rogationtide sermon and *Preparing to Die*, LW 42, checked; *Against the Antinomians*, LW 47, checked; Large Catechism; a hymn; the 1697 extract of *On the Jews*), 6 are not German-composed (3 Bible books, Latin *Tessaradecas*, German *Formula Missae*, an Estonian catechism), 8 unclear or later compilations (*Disavowal of Purgatory* not confirmed in LW). Wilson 95% on 9/25: 20–57%, so Luther alone is ~300–860 works in English. The rest of the German classification is from memory of LW contents, not a catalogue lookup. A larger German sample (~1,000 works) is the next measurement.
+\* German is the n=1,000 sample (`2026-11-03-german-translation-share-n1000.md`, #8001; 999 well-posed). Its six N cases, all first printed in the 1500s (none of the 841 1600s works): Osiander, *Catechismus* 1533 (Cranmer 1548); *Probierbüchlein* 1539 (Sisco & Smith 1949); Ercker, *Beschreibung … Ertzt* 1574 (Pettus 1683; Sisco & Smith 1951); Spangenberg, *Auslegunge der Episteln und Evangelien* 1553 (Carver); Karlstadt, *Wider die alte und newe papistische Messen* 1524 (Burnett 2011); Luther, *Großer Katechismus* (Stirewalt 1851). Origins of all 24 positives: N 6, V 15, E 3. Gemini found 4 of 9 confirmed translations on the 254 double-read works (sensitivity 0.44); the sensitivity-adjusted N is ~2,400 [620–8,000], not used in the table. The earlier n=299 sample had one N case (Osiander; Wilson 130–4,200). Six Luther works were drawn; five are in English, but four are German versions of his Latin (V), so N is 1/1,000 (Wilson ~40–1,250), and "any English" 5/1,000 gives ~470–2,590; both overlap **the Luther check**. Luther has 1,507 works in the German frame (USTC-linked). Of 25 drawn at random (seed 1103), 9 are in English (*Freedom of a Christian*; the Invocavit sermons, twice, split across two works; Rogationtide sermon and *Preparing to Die*, LW 42, checked; *Against the Antinomians*, LW 47, checked; Large Catechism; a hymn; the 1697 extract of *On the Jews*), 6 are not German-composed (3 Bible books, Latin *Tessaradecas*, German *Formula Missae*, an Estonian catechism), 8 unclear or later compilations (*Disavowal of Purgatory* not confirmed in LW). Wilson 95% on 9/25: 20–57%, so Luther alone is ~300–860 works in English. The rest of the German classification is from memory of LW contents, not a catalogue lookup. The n=1,000 sample above replaced the ~300 one.
 
 Caveats:
 - The vernacular frames count each newspaper issue as a work (German 69,646; Dutch 20,958; French 17,599; fixed later in #7814). That inflates the denominator, not the product.
@@ -56,7 +56,7 @@ Renaissance Cultural Crossroads (Warwick, Hosington): translations printed in En
 
 ### Source Library
 
-Within these frames, 6,533 works readable in English (Latin 5,234, German 652, Dutch 221, French 204, Italian 193, Spanish 29; phase-11 `readable.sl`). Against ~18,000–40,000: a sixth to a third. The paper's §5.8(c) gives 25.9–36.6% for Latin in work units.
+Within these frames, 6,533 works readable in English (Latin 5,234, German 652, Dutch 221, French 204, Italian 193, Spanish 29; phase-11 `readable.sl`). Against ~18,000–39,000: a sixth to a third. The paper's §5.8(c) gives 25.9–36.6% for Latin in work units.
 
 ### Spot check (2026-11-02)
 
@@ -69,7 +69,8 @@ The first draft of this note and of the article (PR #7956, before review) said 2
 2. The vernacular high end used "any English edition", which includes English originals (E) and double-counts translations of works in another of the six languages (V). The spot check above found 5 of 5 positives were E or V.
 
 3. (Third pass, same day.) The vernacular ranges were N/n to N/(0.62n): German 700–1,200 from one sampled work. Replaced by Wilson 95% intervals, and German's floor by the Luther check, which alone puts ~300–860 German works in English.
+4. German replaced by the n=1,000 sample, 2026-11-03: 300–4,200 (1/299, Luther floor) became 600–2,900 (6/999, Wilson). Total ~17,600–40,500 became ~17,900–39,300; the article's "about 18,000 to 40,000" became "about 18,000 to 39,000".
 
 ### Reproduce
 
-Landing table and reports: earthai-l7a `/data/scratch/sl/jobs/translation-staging-7769-mv/`. Vernacular verdicts: `/data/scratch/sl/jobs/translation-share-7751/artifacts/translation-share/`. Latin counts: `translation-gap-paper.md` §5.10. Arithmetic: this file.
+Landing table and reports: earthai-l7a `/data/scratch/sl/jobs/translation-staging-7769-mv/`. Vernacular verdicts: `/data/scratch/sl/jobs/translation-share-7751/artifacts/translation-share/`; German n=1,000: clawdbot `/mnt/HC_Volume_105839809/jobs/german-share-7954/artifacts/`. Latin counts: `translation-gap-paper.md` §5.10. Arithmetic: this file.

@@ -55,14 +55,14 @@ function RangeBars({ title, rows, max, labelWidth = 120, showOurs }: {
 // Works first printed 1400-1700 that have ever been published in English.
 // Latin: validated work-level count (translation-gap-paper.md §5.10, paper reading,
 // 95% interval; central 20,176). Others: works composed in the language with an
-// English translation, Wilson 95% interval on k of ~300 sampled; German's floor is
-// the Luther check (9 of 25 Luther works in English, 95% low bound x 1,507).
+// English translation, Wilson 95% interval on k of ~300 sampled; German is 6 of
+// 999 well-posed in the n=1,000 sample (2026-11-03, 0.28-1.30% x 221,931).
 const BY_LANGUAGE: Range[] = [
   { label: 'Latin', low: 15600, high: 25400, ours: 5234, note: 'of 266,593 works' },
   { label: 'French', low: 650, high: 4200, ours: 204, note: 'of 124,168 works' },
   { label: 'Italian', low: 500, high: 2700, ours: 193, note: 'of 68,819 works' },
   { label: 'Spanish', low: 430, high: 2300, ours: 29, note: 'of 59,582 works' },
-  { label: 'German', low: 300, high: 4200, ours: 652, note: 'of 221,931 works' },
+  { label: 'German', low: 600, high: 2900, ours: 652, note: 'of 221,931 works' },
   { label: 'Dutch', low: 140, high: 1800, ours: 221, note: 'of 74,378 works' },
 ];
 
@@ -75,10 +75,10 @@ export function ByLanguageChart() {
         <span className="inline-flex items-center gap-2"><i className="inline-block w-[3px] h-3.5 rounded-sm" style={{ background: SL }} />readable in English on Source Library</span>
       </div>
       <p className="font-body text-sm text-stone-500 mt-3">
-        Latin: from 1,000 works searched one by one, counted in works (2026). Other languages: about
-        300 works searched each (October 2026), counting only works first written in that language.
-        Each bar is a 95% interval; the samples found only one to five such works per language, so
-        the bars are long.
+        Latin: from 1,000 works searched one by one, counted in works (2026). German: 1,000 works
+        searched (November 2026). Other languages: about 300 works searched each (October 2026).
+        Outside Latin, only works first written in that language count. Each bar is a 95% interval;
+        the samples found only two to six such works per language, so the bars are long.
       </p>
     </div>
   );
