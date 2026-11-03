@@ -9,7 +9,21 @@ import feedback from '@/data/quality-feedback-themes.json';
 import ocrRouting from '../../../../scripts/lib/ocr-routing-table.json';
 import servedDraw from '../../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../../scripts/eval/confidence-7866/results/served-grades.json';
-import englishOn7866 from '../../../../scripts/eval/results/translation-on-7866-draw/summary.json';
+/* The English on the #7866 pages (#7968). scripts/eval/results/ is not deployed (.vercelignore), so the figures
+   used here are copied from scripts/eval/results/translation-on-7866-draw/summary.json (generated 2026-11-02);
+   update them with that file. */
+const englishOn7866 = {
+  translator: {
+    fidelity_ge4_weighted: { pages: 481, books: 102 },
+    major_page_share_weighted: { share: 0.1532, ci95: [0.1109, 0.198] },
+    major_per_1k_english_words_weighted: { value: 0.52 },
+  },
+  end_to_end: { e2e_wrong_weighted: { share: 0.3438, ci95: [0.2885, 0.4008] } },
+  inherited: {
+    risk_ratio_weighted: { value: 2.0686 },
+    attributable_fraction_of_major_pages_weighted: { value: 0.3707, ci95: [0.1305, 0.6076] },
+  },
+} as const;
 import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../../research/quality/open/issues';
