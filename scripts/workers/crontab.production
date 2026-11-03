@@ -377,3 +377,6 @@
 # Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
 7 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box hetzner >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
 50 2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-corpus.lock timeout 20m node --no-warnings --env-file=.env.production.local $f --corpus >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+
+# Router board (#7913): the router table's decisions against the repo crontabs' lanes -> ops_reports, rendered at /admin/router.
+17 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/router-board-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-router-board.lock timeout 5m node --no-warnings --env-file=.env.production.local $f >> /var/log/sourcelibrary/router-board.log 2>&1  # /admin/router (#7913)

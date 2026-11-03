@@ -19,6 +19,8 @@
 //   waived     a lane runs another route under a live waiver in current.json
 //   mismatch   a lane runs another route, no waiver
 //   unshipped  no lane serves the cell and pages are waiting: a decision that never reached production
+//   stored     no lane serves the cell, and its decided route is the text already served (a stage `none` route: keep
+//              the stored draft or English): there is nothing to run, so no lane is owed (#7913)
 //   idle       no lane serves the cell and nothing is waiting (an experiment frame, or a drained queue)
 // It also says whether either hand-edited routing table (scripts/lib/ocr-routing-table.json,
 // translation-routing-table.json) names the cell, and how old those tables are against the decision.
@@ -61,19 +63,20 @@ export function driftReport({ table, crontabs, routingTables, today = new Date()
     const mine = findings.filter((f) => f.cell === row.id);
     const order = ['ok', 'waived', 'mismatch'];
     const best = mine.map((f) => f.status).sort((a, b) => order.indexOf(a) - order.indexOf(b))[0];
-    const status = best === 'ok' ? 'served' : best || ((row.pages_waiting || 0) > 0 ? 'unshipped' : 'idle');
+    const stored = (row.routes || []).find((x) => x.id === row.route)?.stage === 'none';
+    const status = best === 'ok' ? 'served' : best || (stored ? 'stored' : (row.pages_waiting || 0) > 0 ? 'unshipped' : 'idle');
     const set = table.pointer?.cells?.[row.id]?.set || table.pointer?.set || null;
     const named = Object.entries(routingTables).filter(([, t]) => t.text.includes(row.id)).map(([f]) => path.basename(f));
     cells.push({ cell: row.id, decision: String(row.decision).split(' ')[0], route: row.route, pages_waiting: row.pages_waiting ?? 0, table: row.table || table.name, decided_set: set,
       status, lanes: mine.map((f) => ({ box: f.box, lane: f.lane, runs: f.runs, status: f.status, ...(f.waiver && { waiver_until: f.waiver.until }) })), routing_row: named });
   }
-  const rank = { unshipped: 0, mismatch: 1, waived: 2, served: 3, idle: 4 };
+  const rank = { unshipped: 0, mismatch: 1, waived: 2, served: 3, stored: 4, idle: 5 };
   cells.sort((a, b) => rank[a.status] - rank[b.status] || b.pages_waiting - a.pages_waiting || a.cell.localeCompare(b.cell));
   const tally = {}; for (const c of cells) { tally[c.status] = tally[c.status] || { cells: 0, pages_waiting: 0 }; tally[c.status].cells++; tally[c.status].pages_waiting += c.pages_waiting; }
   const tables = Object.entries(routingTables).map(([f, t]) => ({ file: f, as_of: t.as_of, changed: t.changed, days_behind_pointer: days(t.changed || t.as_of, table.pointer?.set) }));
   return { as_of: today, table: table.name, pointer_set: table.pointer?.set ?? null, crontabs: Object.keys(crontabs), tally, cells, routing_tables: tables,
     // what the nightly poster compares: a change in this is news, the same drift again is not
-    signature: cells.filter((c) => c.status !== 'served' && c.status !== 'idle').map((c) => `${c.cell}:${c.status}:${c.route}`).join('|') };
+    signature: cells.filter((c) => !['served', 'stored', 'idle'].includes(c.status)).map((c) => `${c.cell}:${c.status}:${c.route}`).join('|') };
 }
 
 const fmt = (n) => Number(n || 0).toLocaleString('en-US');
@@ -83,14 +86,15 @@ export function driftMarkdown(r) {
   const lines = [
     `**Router binding (#7263, \`scripts/audit/router-table-drift.mjs\`)**: ${r.cells.length} decided cells in \`current.json\` (${r.table}, set ${r.pointer_set}). `
       + `Served on the decided route: ${t('served').cells}. Another route under a waiver: ${t('waived').cells}. Another route, no waiver: ${t('mismatch').cells} (${fmt(t('mismatch').pages_waiting)} pages waiting). `
-      + `No lane at all: ${t('unshipped').cells} (${fmt(t('unshipped').pages_waiting)} pages waiting). Nothing waiting: ${t('idle').cells}.`,
+      + `No lane at all: ${t('unshipped').cells} (${fmt(t('unshipped').pages_waiting)} pages waiting). Keeps the stored text (nothing to run): ${t('stored').cells} (${fmt(t('stored').pages_waiting)} pages). Nothing waiting: ${t('idle').cells}.`,
     '',
     `Routing tables: ${r.routing_tables.map((x) => `\`${path.basename(x.file)}\` last changed ${x.changed || x.as_of}${x.days_behind_pointer != null ? ` (${x.days_behind_pointer} days before the pointer)` : ''}`).join('; ')}. `
       + `${r.cells.filter((c) => c.routing_row.length).length} of ${r.cells.length} decided cells are named by a routing-table row.`,
     '',
     '| cell | decision → route | pages waiting | status | lanes (box: lane runs route) |', '|---|---|---|---|---|',
-    ...r.cells.filter((c) => c.status !== 'idle').map((c) => `| ${c.cell} | ${c.decision} → ${c.route} | ${fmt(c.pages_waiting)} | **${c.status}** | ${c.lanes.map((l) => `${l.box.replace(/^infrastructure\//, '')}: ${l.lane} ${l.runs} (${l.status}${l.waiver_until ? ` until ${l.waiver_until}` : ''})`).join('<br>') || 'none'} |`),
+    ...r.cells.filter((c) => c.status !== 'idle' && c.status !== 'stored').map((c) => `| ${c.cell} | ${c.decision} → ${c.route} | ${fmt(c.pages_waiting)} | **${c.status}** | ${c.lanes.map((l) => `${l.box.replace(/^infrastructure\//, '')}: ${l.lane} ${l.runs} (${l.status}${l.waiver_until ? ` until ${l.waiver_until}` : ''})`).join('<br>') || 'none'} |`),
     '',
+    `Keeps the stored text (decided route is the served draft or English, no lane owed): ${r.cells.filter((c) => c.status === 'stored').map((c) => `${c.cell} (${fmt(c.pages_waiting)})`).join(', ') || 'none'}.`,
     `Idle (no lane, nothing waiting): ${r.cells.filter((c) => c.status === 'idle').map((c) => c.cell).join(', ') || 'none'}.`,
     'Crontabs read: the repo copies (' + r.crontabs.map((c) => `\`${c}\``).join(', ') + '), not a live `crontab -l`. A switch ships through a routing PR on the hold list after its V4 confirmation run (`scripts/eval/router-confirm/`).',
   ];
