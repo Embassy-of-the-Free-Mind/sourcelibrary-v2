@@ -46,6 +46,7 @@ await Promise.all(Array.from({ length: 8 }, async () => {
       if (han < MIN_HAN) continue;
       rows.push({ pid: p.id, bid: b.id, pn: p.page_number, fam: b.title.match(FAM)[0], han, marks: count(t, /丨/g), alt: count(t, /[｜|│┃〡]/g),
         pipeline: p.ocr?.pipeline ?? null, qa: p.ocr?.qa_screen?.status ?? null, dice: p.ocr?.qa_screen?.dice ?? null, pb: p.ocr?.qa_screen?.pb ?? null,
+        // image-pick-ok: records the lane's own input (ocr.engine.input.image_url) as a field; checked equal to getPageSource on all 35 drawn pages, none split
         translated: Boolean(p.translation?.data), tr_model: p.translation?.model ?? null, w: p.image_width ?? null, h: p.image_height ?? null, ia: p.photo_original ?? null, r2: p.archived_photo ?? null, held: isHeld(b) });
     }
     if (next % 200 === 0) console.error(next, 'books', rows.length, 'pages');
