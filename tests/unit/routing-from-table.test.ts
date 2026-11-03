@@ -20,7 +20,7 @@ import {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-core.mjs';
-import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
+import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, cliBookFilter, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
 import { getTranslateModelForBook as getTranslateModelForBookTs } from '../../src/lib/types/ai-models';
 
 type Route = { engine: string; default?: boolean; families?: Record<string, { from: string; hidden?: boolean }> };
@@ -217,6 +217,55 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     const g = readerArgs(translateLaneForBook(t, { language: 'Greek' }), { ids: 'i.json', dir: 'd', job: 'j' }) as string[];
     expect(path.relative(ROOT, g[0])).toBe('scripts/batch/cli-translate.mjs');
     expect(g.some((x) => x.startsWith('--per-call'))).toBe(false);
+  });
+
+  it('cliBookFilter selects exactly the books translateLaneForBook sends to a cli lane (#7263)', () => {
+    // A matcher for the only shapes cliBookFilter writes: a RegExp, a string, { $nin }, { $not: RegExp }.
+    type Clause = Record<string, unknown>;
+    const get = (b: Record<string, unknown>, k: string) => k.split('.').reduce<unknown>((o, p) => (o as Record<string, unknown> | undefined)?.[p], b);
+    const fits = (b: Record<string, unknown>, c: Clause) => Object.entries(c).every(([k, cond]) => {
+      const v = get(b, k);
+      if (cond instanceof RegExp) return typeof v === 'string' && cond.test(v);
+      if (typeof cond === 'string') return v === cond;
+      const o = cond as { $nin?: string[]; $not?: RegExp };
+      if (o.$nin) return !o.$nin.includes(v as string);
+      if (o.$not) return !(typeof v === 'string' && o.$not.test(v));
+      throw new Error(`unexpected condition on ${k}`);
+    });
+    const t = TRANSLATION_ROUTING_TABLE;
+    const f = cliBookFilter(t) as { $or: Clause[] };
+    const books: Record<string, unknown>[] = [];
+    for (const language of ['Latin', 'latin', 'Latin; Greek', 'Neo-Latin', 'German', 'Middle High German', 'French', 'Italian', 'Greek', 'Ancient Greek', 'Greek, Latin', 'Pali', 'Hebrew', 'Tibetan', 'English', 'Spanish', '']) {
+      for (const image_source of [undefined, { provider: 'bph' }, { provider: 'mdz' }]) {
+        for (const extra of [{}, { title: 'Plutarch Loeb' }, { publisher: 'William Heinemann' }]) books.push({ language, ...(image_source ? { image_source } : {}), ...extra });
+      }
+    }
+    for (const b of books) {
+      expect([b, f.$or.some((c) => fits(b, c))]).toEqual([b, translateLaneForBook(t, b).channel === 'cli']);
+    }
+    expect(cliBookFilter({ default: t.default, rows: t.rows.filter((r: { channel?: string }) => r.channel !== 'cli') })).toBeNull();
+  });
+
+  it('under the translate brake, Phase 4 holds books for their CLI lane and dispatches nothing to an API lane (#7263)', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/workers/pipeline-orchestrator.mjs'), 'utf8');
+    expect(src).toMatch(/const cliOnly = translateGate\.paused && CLI_TRANSLATE_BOOK_FILTER != null;/);
+    const hold = src.indexOf('const held = await routeBookToCliTranslateLane(');
+    const stop = src.indexOf('if (cliOnly) {', hold);
+    expect(hold).toBeGreaterThan(-1);
+    expect(stop).toBeGreaterThan(hold);
+    expect(stop).toBeLessThan(src.indexOf("if (phase4Lane(book) === 'chained')", hold));
+    // A book it cannot act on stays put, so the cap is on holds, not on books selected (else the refused ones starve the rest).
+    expect(src).toMatch(/if \(cliOnly && cliHolds >= TRANSLATE_SUBMIT_LIMIT\) break;/);
+    expect(src).toMatch(/if \(\(cliOnly \|\| freshBooks\.length === 0\) && gapLimit > 0\)/);
+  });
+
+  it('the CLI translation lane asks the OCR-first gate before a book takes budget, and refunds a refused read (#7263)', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/batch/cli-translate-lane.mjs'), 'utf8');
+    const loop = src.slice(src.indexOf('let budget = MAX;'));
+    const gate = loop.indexOf('await gateBeforeRead(db, take,');
+    expect(gate).toBeGreaterThan(-1);
+    expect(gate).toBeLessThan(loop.indexOf('budget -= take.length;'));
+    expect(loop).toMatch(/if \(read === 2\) budget \+= take\.length;/);
   });
 
   it('the correction lane keeps the books the CLI translation lane waits on (its OCR-first gate) in its frame', () => {

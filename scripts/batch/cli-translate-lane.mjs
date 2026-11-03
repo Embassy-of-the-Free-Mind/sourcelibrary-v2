@@ -54,6 +54,7 @@ import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
 import { agyEnv, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
 import { quotaFloor, parseAgyHome } from './cli-ocr-lane.mjs';
+import { ocrFirstGate, NO_TEXT } from '../lib/ocr-first-gate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
@@ -83,6 +84,22 @@ export function readerArgs(lane, { ids, dir, job, ocrChecked }) {
 function run(args, base = process.env) {
   console.log(`$ node ${args.map((a) => path.relative(process.cwd(), a) || a).join(' ')}`);
   return spawnSync(process.execPath, args, { stdio: 'inherit', env: { ...base, CLI_JOB_NAME: process.env.CLI_JOB_NAME || 'cli-translate-lane-7075' } }).status;
+}
+
+/**
+ * The readers' OCR-first gate, asked before a book takes any of the run's page budget (#7263). A reader the gate stops
+ * exits 2 having read nothing, but its pages had already been taken from the budget, and the lane holds books oldest
+ * first: the Flash-Lite books Phase 4 holds first (most Latin books at ocr_complete; the armc correction is what lets
+ * them through) would have spent the whole budget on refusals every run. ocr.data stays on the server: the gate needs
+ * only whether a read says it has no text (NO_TEXT), so that is all the projection returns.
+ */
+export async function gateBeforeRead(db, take, ocrChecked) {
+  const pages = await db.collection('pages').aggregate([
+    { $match: { id: { $in: take.map((p) => p.id) } } },
+    { $project: { _id: 0, 'ocr.model': 1, 'ocr.edited_by': 1, 'ocr.source': 1,
+      no_text: { $regexMatch: { input: { $ifNull: ['$ocr.data', ''] }, regex: NO_TEXT.source, options: 'i' } } } },
+  ]).toArray();
+  return ocrFirstGate(pages.map((p) => ({ ocr: { ...p.ocr, data: p.no_text ? '<page-type>blank' : '' } })), ocrChecked);
 }
 
 const readLedger = (f) => new Set(fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
@@ -158,6 +175,7 @@ async function main() {
   const MAX = Number(arg('max-pages') || 60);
   const job = `cli-tr-${new Date().toISOString().slice(0, 10)}`;
   let budget = MAX;
+  const gated = { books: 0, pages: 0 };
   for (const r of plan) {
     const { book, lane } = r;
     const label = `${book.id} ${String(book.title || '').slice(0, 40)}`;
@@ -174,6 +192,8 @@ async function main() {
     }
     if (budget <= 0 || r.open.length === 0) continue;
     const take = r.open.slice(0, budget);
+    const gate = await gateBeforeRead(db, take, lane.row.adoption?.ocr_checked);
+    if (!gate.ok) { gated.books++; gated.pages += take.length; continue; }
     budget -= take.length;
     const dir = path.join(OUT, book.id);
     fs.mkdirSync(dir, { recursive: true });
@@ -182,6 +202,7 @@ async function main() {
     console.log(`\n${label}: ${take.length} of ${r.open.length} pages on ${lane.engine} (row ${lane.row.id})`);
     const read = run(readerArgs(lane, { ids, dir, job, ocrChecked: lane.row.adoption?.ocr_checked }), lane.engine !== 'claude-opus-5-5' && AGY_ENV ? AGY_ENV : process.env);
     if (read === 3) { console.log('usage limit reached: stopping; the next run resumes'); break; }
+    if (read === 2) budget += take.length;   // refused before any call (its gate, or its arguments): nothing was read
     if (read !== 0) { console.log(`  reader exited ${read}: book skipped this run`); continue; }
     const reason = `#7075 CLI translation lane: row ${lane.row.id}, ${lane.engine} (adopted on ${lane.row.adoption.sample})`;
     const applied = run([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])]);
@@ -197,6 +218,7 @@ async function main() {
     const remaining = await db.collection('pages').countDocuments({ book_id: book.id, ...UNTRANSLATED });
     if (remaining === 0) console.log(`  released: ${JSON.stringify(await releaseBook(db, book.id, { note: `every untranslated page written by the ${lane.engine} lane (#7075)`, source: 'cli-translate-lane' }))}`);
   }
+  if (gated.books) console.log(`\nOCR-first gate: ${gated.books} book(s), ${gated.pages} page(s) wait on a Flash-Lite transcription (the OCR correction lanes, cli-ocr-lane.mjs); none took budget`);
   await client.close();
 }
 
