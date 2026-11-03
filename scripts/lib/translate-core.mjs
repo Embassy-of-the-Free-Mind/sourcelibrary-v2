@@ -37,7 +37,7 @@ import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { createRequire } from 'node:module';
-import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
+import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, cliBookFilter, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
 
 export { CLI_TRANSLATE_HOLD };
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
@@ -155,6 +155,9 @@ export function getTranslateModelForBook(book) {
 export function translateLaneForBook(book) {
   return laneFromTable(TRANSLATION_ROUTING_TABLE, book);
 }
+
+/** The Mongo filter for the books translateLaneForBook sends to a cli lane (cliBookFilter over the table, #7263). */
+export const CLI_TRANSLATE_BOOK_FILTER = cliBookFilter(TRANSLATION_ROUTING_TABLE);
 
 /**
  * Languages where flash measurably beats lite at TRANSLATION, judged blind

@@ -73,7 +73,7 @@ describe('English modernization is reader-triggered', () => {
     const gapFill = orchestrator.slice(start, end);
     const filterAt = gapFill.search(/\$not:\s*\{\s*\$in:\s*\[\s*\{\s*\$toLower:\s*\{\s*\$ifNull:\s*\['\$language'[^\]]*\]\s*\}\s*\},\s*ENGLISH_VARIANTS_P4\s*\]/);
     expect(filterAt, 'Phase 4 gap-fill no longer excludes ENGLISH_VARIANTS_P4 — released English books would be dispatched to paid modernization.').toBeGreaterThan(-1);
-    expect(filterAt, 'the English filter must run BEFORE $limit, or English books still take the gap-fill slots').toBeLessThan(gapFill.indexOf('$limit: effectiveLimit'));
+    expect(filterAt, 'the English filter must run BEFORE $limit, or English books still take the gap-fill slots').toBeLessThan(gapFill.indexOf('$limit: selectLimit'));
   });
 
   it('a filtered-out English book still leaves ocr_complete — advanced, not stranded (#5271)', () => {

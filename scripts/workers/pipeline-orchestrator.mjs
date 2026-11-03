@@ -29,7 +29,7 @@ import {
 } from '../lib/image-extraction-request.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, CLI_TRANSLATE_BOOK_FILTER, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
@@ -4929,9 +4929,18 @@ Rules:
         // either lane; the reapers above and jobs already dispatched carry on.
         const translateGate = await enrolBrake(db, 'translate');
         const effectiveLimit = translateGate.paused ? 0 : Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        // The brake stops the two API lanes, not the routing to a subscription CLI lane (#7263). The CLI lanes do not
+        // ask the brake (lanes-registry exemption, #7387: their own adoption sample and OCR-first gate), but their books
+        // reach them only through the hold below, so under a standing NO-GO (2026-10-10) they received none:
+        // `translate-cli-7075` held 0 books while 991 Latin books sat at ocr_complete. Under the brake Phase 4 selects
+        // only the books a cli row takes (CLI_TRANSLATE_BOOK_FILTER) and holds them; nothing is dispatched to an API lane.
+        const cliOnly = translateGate.paused && CLI_TRANSLATE_BOOK_FILTER != null;
+        const selectLimit = cliOnly ? TRANSLATE_SUBMIT_LIMIT : effectiveLimit;
+        const p4Guard = [...(cliOnly ? [CLI_TRANSLATE_BOOK_FILTER] : [])];
         console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
+        if (cliOnly) console.log(`  Translate brake on: routing only books a CLI lane takes (up to ${selectLimit}) to their hold (#7263)`);
 
-        if (effectiveLimit === 0) {
+        if (selectLimit === 0) {
           console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
         }
 
@@ -4951,19 +4960,20 @@ Rules:
         const chainedGuard = chainedOn
           ? [{ $or: [{ processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }, { id: { $nin: chainedBusy } }] }]
           : [];
+        p4Guard.push(...chainedGuard);
         let chainedRoom = chainedOn
           ? Math.max(0, PHASE4_MAX_OPEN - await db.collection(TRANSLATE_RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } }))
           : 0;
         let chainedPrompts = null;
         if (chainedOn) console.log(`  Chained lane: ${chainedBusy.length} book(s) busy in a run, room for ${chainedRoom} new run(s) (max ${PHASE4_MAX_OPEN})`);
 
-        let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
+        let freshBooks = selectLimit > 0 ? await db.collection('books').aggregate([
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
           // translating them produces two-page texts the split then discards.
           { $match: {
             'pipeline_auto.status': { $in: ['ocr_complete'] },
             $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
-            ...(chainedGuard.length ? { $and: chainedGuard } : {}),
+            ...(p4Guard.length ? { $and: p4Guard } : {}),
           } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
@@ -4987,7 +4997,7 @@ Rules:
           // English book back onto the translation lane.
           // processing_priority must survive too: it picks the lane below.
           { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, publisher: 1 } },
-          { $limit: effectiveLimit }
+          { $limit: selectLimit }
         ]).toArray() : [];
         if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, publisher: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
 
@@ -5048,14 +5058,14 @@ Rules:
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
         // Books at chapters_complete/complete often have untranslated pages from batch failures or splits.
         let partialBooks = [];
-        if (freshBooks.length === 0 && effectiveLimit > 0) {
+        if (freshBooks.length === 0 && selectLimit > 0) {
           partialBooks = await db.collection('books').aggregate([
             { $match: {
               'pipeline_auto.status': { $in: ['translate_partial', 'translate_complete', 'chapters_complete', 'complete'] },
               pages_ocr: { $gt: 0 },
               // Spread guard (#2449)
               $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
-              ...(chainedGuard.length ? { $and: chainedGuard } : {}),
+              ...(p4Guard.length ? { $and: p4Guard } : {}),
             }},
             // English books are never gap-filled (#4958): an English book at `complete` has
             // 0 translated pages BY POLICY, so it always reads as "under-translated" here, and
@@ -5070,7 +5080,7 @@ Rules:
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1, ...NEWEST_FIRST } },
-            { $limit: effectiveLimit },
+            { $limit: selectLimit },
           ]).toArray();
           if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, publisher: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, image_source: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
@@ -5145,6 +5155,11 @@ Rules:
                 await setPipelineStatus(db, book.id, 'translate_complete');
                 log.translate_advanced++;
               }
+              continue;
+            }
+            // Under the brake only the hold above runs (a book a scope override added is not dispatched).
+            if (cliOnly) {
+              console.log(`  Not dispatched (translate brake ${translateGate.gate_id}): ${label}`);
               continue;
             }
 
