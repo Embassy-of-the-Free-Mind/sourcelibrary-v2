@@ -4,6 +4,7 @@ import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 import { pageStatusSources } from './src/lib/page-status';
+import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
 
 const nextConfig: NextConfig = {
@@ -693,7 +694,13 @@ const nextConfig: NextConfig = {
 // concern, so only wrap when the PostHog credentials are actually present.
 const withAnalytics = (config: typeof nextConfig) =>
   process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
-    ? withPostHogConfig(config, {
+    ? withPostHogConfig({
+        ...config,
+        // The wrapper awaits this hook, then runs the upload: only the browser's maps go up (#7731).
+        compiler: { ...config.compiler, runAfterProductionCompile: async ({ distDir }) => {
+          console.log(`Dropped ${await dropServerSourcemaps(distDir)} server source maps before the PostHog upload`);
+        } },
+      }, {
         personalApiKey: process.env.POSTHOG_API_KEY,
         projectId: process.env.POSTHOG_PROJECT_ID,
         host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
