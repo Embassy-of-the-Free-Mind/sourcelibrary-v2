@@ -46,7 +46,7 @@ const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of 
 // `claude -p` prefers an API key over the subscription login, and node --env-file loads one: strip it (#6553).
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 
-function claudeCall(prompt, cwd) {
+export function claudeCall(prompt, cwd) {
   const blocked = claudeBlocked();
   if (blocked) return Promise.resolve({ text: '', cls: 'usage_limit', err: blocked.reason, secs: 0, not_called: true });
   return new Promise((resolve) => {
@@ -71,7 +71,7 @@ function claudeCall(prompt, cwd) {
 }
 
 const isImage = (b) => b && b.length > 4 && ((b[0] === 0xff && b[1] === 0xd8) || (b[0] === 0x89 && b[1] === 0x50) || (b[0] === 0x52 && b[1] === 0x49) || (b[0] === 0x47 && b[1] === 0x49) || (b[0] === 0x49 && b[1] === 0x49) || (b[0] === 0x4d && b[1] === 0x4d) || (b[0] === 0x00 && b[1] === 0x00));
-async function fetchLeaf(page, file) {
+export async function fetchLeaf(page, file) {
   if (fs.existsSync(file) && fs.statSync(file).size > 3000) return 'cached';
   const sharp = (await import('sharp')).default;
   for (const f of ['display_photo', 'photo', 'archived_photo', 'photo_original']) {
