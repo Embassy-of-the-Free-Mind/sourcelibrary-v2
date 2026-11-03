@@ -39,7 +39,7 @@
  * readers run with that AGY_HOME and AGY_POOL_SHARED=1. Without the flag the readers inherit the environment, as before.
  *
  * STALE (#7263, Derek 2026-11-03): `stale --stale-lane=agy-reread-lite-7853 --row=latin-cli-agy4 --out=DIR [--per-call=1]
- * [--concurrency=6] [--book-chunk=40] [--max-pages=N] [--deadline-min=M] [--floor-5h=0.25] [--agy-home=auto|default|DIR] [--apply]`
+ * [--concurrency=6] [--book-chunk=40] [--max-pages=N] [--deadline-min=M] [--floor-5h=0.25] [--agy-home=auto|default|DIR] [--book=ID[,ID]] [--apply]`
  * re-translates pages whose OCR a lane rewrote and whose English therefore predates it: `ocr.pipeline` is the lane and
  * `translation_stale` is set, whichever writer set it (the daily sweep's ocr_newer keeps its marker and has no lane). This is
  * the decision the WHICH PAGES rule above leaves out, taken for the Latin re-read: V4 (PR #8000) measured the pair, wrong end
@@ -47,8 +47,8 @@
  * snapshots the old English and clears the flag, and refuses a human-edited translation. A page the writer leaves goes to
  * DIR/../cli-retranslate-ledger.jsonl and is not retried. It stops at the pool's quota floor with every reserve
  * in LANE_RESERVES kept, including cli-translate's own: first translations keep theirs. Order: cli-ocr-lane.mjs
- * byRereadPriority. --per-call defaults to 1 until the #5021 anchor guard is merged and its first live run is clean;
- * then 4, the row's own number.
+ * byRereadPriority. --per-call defaults to 1; the gex45 line runs 4, the row's own number, since the #5021 anchor guard
+ * (#8009) merged and its first live run was clean (2026-11-03: 117 pages in 40 calls, none refused; Opus: 10/10 on the right leaf).
  *
  * HOW IT FAILS. A usage-limit reply makes the reader exit 3; the run stops and the next resumes. A reader that exits 2
  * (claude-translate's OCR-first gate: the book's OCR is mostly flash-lite and the row has no adoption.ocr_checked) skips
@@ -171,7 +171,7 @@ async function staleMain(arg) {
   const books = (await db.collection('books').find(
     { id: { $in: ids }, visible: true, 'pipeline_auto.held': { $ne: true } },
     { projection: { id: 1, title: 1, publisher: 1, language: 1, year: 1, published: 1, image_source: 1, human_read_count: 1, pages_translated: 1 } },
-  ).toArray()).map((b) => ({ ...b, lane: translateLaneForBook(b) })).filter((b) => b.lane.row?.id === ROW).sort(byRereadPriority);
+  ).toArray()).map((b) => ({ ...b, lane: translateLaneForBook(b) })).filter((b) => b.lane.row?.id === ROW && (!arg('book') || arg('book').split(',').includes(b.id))).sort(byRereadPriority);
   console.log(`stale (${LANE} → row ${ROW}, ${PER_CALL} a call): pool ${POOL}; ${books.length} of ${ids.length} books with stale pages on this row; up to ${MAX} pages, ${CONCURRENCY} at a time${APPLY ? '' : ', DRY RUN'}`);
   let budget = MAX, bi = 0, stop = null;
   const tally = { written: 0, not_written: 0, books: 0 };
@@ -181,7 +181,8 @@ async function staleMain(arg) {
       if (budget <= 0) { stop = 'page budget spent'; break; }
       if (Date.now() >= DEADLINE) { stop = 'deadline'; break; }
       if (bi >= books.length) { stop = 'queue empty'; break; }
-      const q = quotaFloor(quotaBuckets(readQuotaStdout(home)), { floor5h });
+      // Read twice, as readPool does: one failed /quota in a long run (2026-11-03 14:30) must not end the run for the hour
+      const q = quotaFloor(quotaBuckets(readQuotaStdout(home)) ?? quotaBuckets(readQuotaStdout(home)), { floor5h });
       if (!q.ok) { stop = `quota floor: ${q.why}`; break; }
       const book = books[bi++];
       const open = (await db.collection('pages').find(staleLanePages(book.id, LANE), { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id));
