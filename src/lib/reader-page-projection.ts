@@ -76,6 +76,13 @@ export const READER_PAGE_PROJECTION = {
 export const PAGE_API_PROJECTION = Object.freeze({ detected_images: 0, 'translation.text': 0, 'translation.text_from': 0 });
 
 /**
+ * #7965: the same doors, reading the notes layer. `translation.text` / `text_from` ARE fetched, because the
+ * reader composes a page from its layer (src/lib/reader-text-layer.ts `takeReaderTextLayers`), which strips
+ * them with withoutTextLayer before anything else sees the page. Use only through that helper.
+ */
+export const PAGE_API_LAYER_PROJECTION = Object.freeze({ detected_images: 0 });
+
+/**
  * The same for the reader route, whose projection is an inclusion list (`translation: 1` whole —
  * MongoDB cannot exclude a sub-field there): drop the two fields from the fetched page. Key order
  * is kept, so a backfilled page serialises exactly as a page that never had them.
