@@ -30,7 +30,7 @@ for f in "$QUEUE"/"$PREFIX"-*.jsonl; do
     node scripts/audit/leaf-shift-screen-5021.mjs agy --out "$OUT" --name "$name" --model gemini-3.8-flash-low --concurrency "${CONC:-4}"
     ans="$OUT/$name/answers-agy-gemini-3.8-flash-low.jsonl"
   fi
-  want=$(wc -l < "$OUT/$name/requests.jsonl"); got=$(grep -c '"answer":"' "$ans" 2>/dev/null || echo 0)
+  want=$(wc -l < "$OUT/$name/requests.jsonl"); got=$(grep -c '"answer":"' "$ans" 2>/dev/null); got=${got:-0}
   echo "$(date -u +%FT%TZ) $name answered $got/$want"
   # A quota stop leaves the chunk short; a few unparseable replies do not.
   if [ "$got" -lt $((want * 95 / 100)) ]; then reason="quota stop in $name ($got/$want)"; break; fi

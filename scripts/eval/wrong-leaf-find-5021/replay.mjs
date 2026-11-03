@@ -53,8 +53,8 @@ for (const b of blocks) {
   const by = new Map(ps.map((p) => [p.page_number, p]));
   const pages = b.pages.map((n) => by.get(n)).filter(Boolean);
   if (pages.length !== b.pages.length) { console.warn(`${b.id}: missing pages`); continue; }
-  const hasRule = pages.some((p) => RULE_LINE.test(p.ocr?.data || ''));
-  RULE_LINE.lastIndex = 0;
+  // A fresh non-global copy: RULE_LINE is /g (for replace), and .test on a /g regex carries lastIndex between calls.
+  const hasRule = pages.some((p) => new RegExp(RULE_LINE.source, 'm').test(p.ocr?.data || ''));
   const mk = (arm, rep, prompt, pageNums, extra = {}) => jobs.push({ key: `${b.id}|${arm}|${rep}|${pageNums.join(',')}`, block: b.id, arm, rep, pages: pageNums, prompt, book_id: b.book_id, model: arm === 'single' || arm === 'anchor' ? REF_MODEL : MODEL, ...extra });
   const reps = b.kind === 'shifted' ? [0, 1] : [0];
   if (ARMS.includes('single')) {
