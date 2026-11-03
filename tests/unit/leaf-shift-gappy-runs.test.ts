@@ -93,6 +93,26 @@ describe('leaf-shift gappy runs: rule edges', () => {
     expect(res.runs.map((r: any) => [r.start, r.end, r.strong])).toEqual([[2, 5, true]]);
   });
 
+  it('absorption: a block page whose English is as long as its own leaf plus the next, corroborated by a next vote', () => {
+    const at = '2026-04-01T12:30:07.000Z';
+    const later = '2026-04-01T12:40:00.000Z';
+    const src = (n: number) => `text\n${v(n)} ${'x'.repeat(600)}`;
+    // English runs about 0.9 of the source on every page; page 4's carries leaves 4 and 5; page 5's votes next.
+    const en = (chars: number, num: number | null) => `text\n${num ?? ''} ${'y'.repeat(chars)}`;
+    const pages = [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
+      page_number: n,
+      ocr: src(n),
+      tr: n === 4 ? en(1100, v(4)) : n === 5 ? en(540, v(6)) : en(540, v(n)),
+      updated: n <= 3 ? later : at,
+      page_type: 'text',
+    }));
+    const res = classifyBook(pages, { rule: 'gappy', absorb: true });
+    expect(res.absorptions.map((a: any) => [a.p, a.corroborated.map((c: any) => c.p)])).toEqual([[4, [5]]]);
+    // Not one block with its successor: the same page does not absorb.
+    const split = pages.map(p => (p.page_number === 5 ? { ...p, updated: later } : p));
+    expect(classifyBook(split, { rule: 'gappy', absorb: true }).absorptions).toEqual([]);
+  });
+
   it('the write-time gate keeps the strict rule: the Karl shape passes blockLeafShiftRuns', () => {
     const pages = controls.karl.pages.map((p: any) => ({ page_number: p.page_number, ocr: { data: p.ocr } }));
     const tr = new Map(controls.karl.pages.map((p: any) => [p.page_number, p.tr]));

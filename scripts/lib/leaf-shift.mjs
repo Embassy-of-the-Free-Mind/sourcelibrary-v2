@@ -16,6 +16,16 @@ export const HEAD_LINE_MAX = 90;
 export const STRONG_MIN = 30;
 export const MAX_GAP = 2;
 export const NAME_MIN_VOTES = 2;
+// Absorption (#5021, Derek 2026-11-03): thresholds on log length ratios, see absorptionsOf.
+export const ABSORB_OWN_MIN = 0.5;
+export const ABSORB_TWO_MAX = 0.2;
+export const ABSORB_SRC_MIN = 300;
+export const ABSORB_LOOKAHEAD = 3;
+// One block's pages are written one by one, milliseconds apart (Postel 178/179: 41 ms; the next block
+// 5 min later), so "same translation.updated_at" means within this many ms.
+export const ABSORB_SAME_BLOCK_MS = 2000;
+// Page types whose English legitimately runs long or short against the leaf (an index, an apparatus).
+const ABSORB_SKIP_TYPES = new Set(['index', 'errata', 'title-page', 'blank', 'bibliography', 'contents', 'toc', 'glossary', 'apparatus', 'archived-spread', 'digitizer-insert', 'illustration']);
 
 // Zero code point of each decimal-digit block we expect in the corpus.
 const DIGIT_ZEROS = [
@@ -161,8 +171,10 @@ const votes = (eng, own, a, b) => [...eng].filter(n => own.has(n) && !a.has(n) &
  * @param {{rule?: 'strict'|'gappy', names?: boolean}} [opts]  rule: how votes make a run (strict is
  *   the write-time gate's, unchanged; gappy is the audit's, see gappyRuns). names: also compute the
  *   capitalised-token vote (nameCls) and the runs where it fills the pages numbers leave silent.
+ *   absorb: also find absorbing pages (absorptionsOf); pages may carry enChars (a withheld page's
+ *   length), updated (translation.updated_at, ISO) and page_type.
  */
-export function classifyBook(pages, { rule = 'strict', names = false } = {}) {
+export function classifyBook(pages, { rule = 'strict', names = false, absorb = false } = {}) {
   const rows = pages.map(p => {
     const o = splitLayer(p.ocr);
     const t = splitLayer(p.tr);
@@ -175,6 +187,7 @@ export function classifyBook(pages, { rule = 'strict', names = false } = {}) {
       tBody: numbersIn(t.body),
       tHead: numbersIn(t.head, { brackets: false }),
       ...(names ? { oNames: namesIn(o.body), tNames: namesIn(t.body) } : {}),
+      ...(absorb ? { enLen: p.enChars ?? String(p.tr || '').length, srcLen: String(p.ocr || '').length, upd: p.updated ?? null, ptype: p.page_type ?? null } : {}),
     };
   });
   const byPn = new Map(rows.map(r => [r.page_number, r]));
@@ -221,8 +234,50 @@ export function classifyBook(pages, { rule = 'strict', names = false } = {}) {
   // The name signal (#5021): a page the numbers leave silent takes its capitalised-token verdict.
   if (names) for (const r of rows) r.cls2 = r.cls === 'none' && r.nameCls ? r.nameCls : r.cls;
   const runsNames = names ? gappyRuns(rows, 'cls2') : undefined;
+  const absorptions = absorb ? absorptionsOf(rows) : undefined;
   const count = key => rows.reduce((a, r) => ((a[r[key]] = (a[r[key]] || 0) + 1), a), {});
-  return { rows, runs, ...(rule === 'gappy' ? { strictRuns: strict } : {}), ...(names ? { runsNames, nameClasses: count('nameCls') } : {}), classes: count('cls'), hdrClasses: count('hdr') };
+  return { rows, runs, ...(absorb ? { absorptions } : {}), ...(rule === 'gappy' ? { strictRuns: strict } : {}), ...(names ? { runsNames, nameClasses: count('nameCls') } : {}), classes: count('cls'), hdrClasses: count('hdr') };
+}
+
+/**
+ * ABSORPTION (#5021; Derek's session 2026-11-03, tested on the controls). A block slide starts with one
+ * page whose English holds its OWN leaf and the NEXT one: from there on every page carries its
+ * successor. With k = the book's median log(EN chars / SRC chars) over text pages (SRC >= ABSORB_SRC_MIN),
+ * page n absorbs when it and n+1 were written in one block (translation.updated_at within
+ * ABSORB_SAME_BLOCK_MS) and
+ *   |log EN(n) - k - log SRC(n)| > ABSORB_OWN_MIN  and  |log EN(n) - k - log(SRC(n) + SRC(n+1))| < ABSORB_TWO_MAX.
+ * It needs no printed number and no letter case, so it reaches caseless scripts. It is a CANDIDATE
+ * generator, not a verdict: an index or apparatus page whose English expands, and bilingual or heavily
+ * annotated editions (Śakuntalā: 30 hits, 2 corroborated, on 2026-11-03), fire it too. So index and
+ * apparatus page types are skipped, and `corroborated` lists the pages n+1..n+ABSORB_LOOKAHEAD that vote
+ * next or prev, and n itself when it votes next (by number, or by name where the numbers are silent).
+ * The audit reports an absorption as found only when that list is non-empty. Measured 2026-11-03:
+ * 3 of 4 controls, and 40 of 59 corroborated pages outside the number runs real by Opus with the scans.
+ */
+function absorptionsOf(rows) {
+  const textLike = r => r.translated && !ABSORB_SKIP_TYPES.has(r.ptype) && r.srcLen >= ABSORB_SRC_MIN && r.enLen > 0;
+  const ratios = rows.filter(textLike).map(r => Math.log(r.enLen / r.srcLen)).sort((a, b) => a - b);
+  if (ratios.length < 5) return [];
+  const k = ratios[Math.floor(ratios.length / 2)];
+  const byPn = new Map(rows.map(r => [r.page_number, r]));
+  const out = [];
+  for (const r of rows) {
+    const N = byPn.get(r.page_number + 1);
+    if (!textLike(r) || !N || !N.translated || !r.upd || !N.upd || Math.abs(Date.parse(r.upd) - Date.parse(N.upd)) > ABSORB_SAME_BLOCK_MS) continue;
+    const own = Math.log(r.enLen) - k - Math.log(r.srcLen);
+    const two = Math.log(r.enLen) - k - Math.log(r.srcLen + N.srcLen);
+    if (Math.abs(own) <= ABSORB_OWN_MIN || Math.abs(two) >= ABSORB_TWO_MAX) continue;
+    const corroborated = [];
+    // n itself counts when it votes next: an absorbing page prints its successor's numbers (Corpus p.82).
+    for (let d = 0; d <= ABSORB_LOOKAHEAD; d++) {
+      const q = byPn.get(r.page_number + d);
+      let c = q && (q.cls === 'next' || q.cls === 'prev' ? q.cls : q.nameCls === 'next' || q.nameCls === 'prev' ? q.nameCls : null);
+      if (d === 0 && c !== 'next') c = null;
+      if (c) corroborated.push({ p: q.page_number, c, by: q.cls === c ? 'numbers' : 'names' });
+    }
+    out.push({ p: r.page_number, k: Math.round(k * 100) / 100, own: Math.round(own * 100) / 100, two: Math.round(two * 100) / 100, corroborated });
+  }
+  return out;
 }
 
 /** The 2026-10-13 rule: >= MIN_RUN adjacent page_numbers that all vote one direction. */

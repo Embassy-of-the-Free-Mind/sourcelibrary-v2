@@ -17,6 +17,8 @@
  *
  * Selection: every flagged book when there are ≤ --select of them; otherwise a seeded random --select stratified by
  * tier (proportional allocation), tier A called first. Results are checkpointed per run in <out>/results.jsonl.
+ * A negative control is the same file shape with tier `neg` and a two-page window drawn from an UNflagged book:
+ * the confirmer is asked the same blind question, so its rate of `next`/`prev` there is its own false-call rate.
  * A page whose English is already withheld is not sent (no live English to judge); --as-of rebuilds the English from
  * page_revisions as translation-leaf-shift.mjs does (for the controls, which are withheld).
  *
@@ -139,7 +141,7 @@ function loadFlagged(src) {
   for (const f of files) for (const l of fs.readFileSync(f, 'utf8').split('\n')) {
     if (!l) continue;
     let j; try { j = JSON.parse(l); } catch { continue; }
-    if (j.flagged) out.set(j.book_id, { ...j, frame: path.basename(f).split('.')[0] });
+    if (j.flagged) out.set(j.book_id, { ...j, frame: j.frame || path.basename(f).split('.')[0] });
   }
   return [...out.values()];
 }
@@ -147,7 +149,7 @@ function loadFlagged(src) {
 export function selectBooks(flagged, n, seed) {
   const rnd = mulberry32(seed);
   const byTier = { A: flagged.filter((b) => b.tier === 'A'), B: flagged.filter((b) => b.tier === 'B') };
-  if (flagged.length <= n) return { picked: [...byTier.A, ...byTier.B], quota: { A: byTier.A.length, B: byTier.B.length } };
+  if (flagged.length <= n) return { picked: [...byTier.A, ...byTier.B, ...flagged.filter((b) => b.tier !== 'A' && b.tier !== 'B')], quota: { A: byTier.A.length, B: byTier.B.length } };
   const qa = Math.round((n * byTier.A.length) / flagged.length);
   const quota = { A: qa, B: n - qa };
   const sortId = (xs) => [...xs].sort((x, y) => (x.book_id < y.book_id ? -1 : 1));
@@ -216,7 +218,7 @@ async function main() {
       fs.writeFileSync(path.join(dir, 'prompt.txt'), prompt);
       const r = await claudeCall(prompt, dir);
       const verdicts = r.cls ? null : parseVerdicts(r.text);
-      const human = pages.filter((p) => runPages.includes(p.page_number) && (p.translation?.source === 'human' || p.translation?.edited_by)).map((p) => p.page_number);
+      const human = pages.filter((p) => runPages.includes(p.page_number) && (['human', 'manual'].includes(p.translation?.source) || p.translation?.edited_by)).map((p) => p.page_number);
       fs.appendFileSync(resultsFile, JSON.stringify({ ...row, images: window.filter((w) => w.image).length, human, cls: r.cls || (verdicts ? null : 'unparsed'), verdicts, model: r.model, usage: r.usage, secs: r.secs, ...(verdicts ? {} : { raw: r.text.slice(0, 1500), err: r.err }) }) + '\n');
       if (r.cls === 'usage_limit') { stop = true; console.error('usage limit: stopping at this run; re-run to resume'); }
       if (++n % 10 === 0) console.error(`  ${n} calls, ${queue.length} left`);

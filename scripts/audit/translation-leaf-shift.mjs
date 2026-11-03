@@ -51,6 +51,11 @@
  *              which cannot move a page, were all false: tier B is a noise floor there.
  *   coverage   84% of translated pages in caseless-label books cast no vote (Tibetan 99%), and
  *              3,862 of 5,903 such books have no testable pair. No flag is NOT "aligned".
+ * MEASURED 2026-11-03 (#5021), scripts/eval/experiments/2026-11-03-leaf-shift-library-5021.md: every live
+ *              translated book (24,859), gappy rule: 1,164 flagged, 310 tier A. Opus with the scans, blind to the
+ *              direction (scripts/audit/leaf-shift-confirm-5021.mjs): tier A 76/80 real, tier B 156/220, 0/20 on
+ *              random unflagged windows; the v2/v5 single-page lane 3/22 runs. Absorption (absorptionsOf, the
+ *              `absorbed` field) confirms 40/59 outside the number runs. Names alone sit at the noise floor.
  * A flag is a work list; open the scan before acting on it (measurement-instruments.md).
  *
  * Usage (node --env-file=.env.production.local):
@@ -114,7 +119,7 @@ function selfTest() {
 // ---------------------------------------------------------------------------------------------
 async function loadBook(db, bookId, asOf) {
   let pages = await db.collection('pages')
-    .find({ book_id: bookId }, { projection: { page_number: 1, id: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.prompt_version': 1, 'translation.updated_at': 1, 'translation.model': 1 } })
+    .find({ book_id: bookId }, { projection: { page_number: 1, id: 1, page_type: 1, 'translation_withheld.updated_at': 1, 'translation_withheld.chars': 1, 'ocr.data': 1, 'translation.data': 1, 'translation.prompt_version': 1, 'translation.updated_at': 1, 'translation.model': 1 } })
     .sort({ page_number: 1 }).toArray();
   // Negative page_numbers are hidden pages (moved out of the reading order); readers never see them.
   pages = pages.filter(p => p.page_number >= 0);
@@ -130,20 +135,20 @@ async function loadBook(db, bookId, asOf) {
       const r = firstAfter.get(p.id || String(p._id));
       // A revision row holds the value it REPLACED, so the first one after as-of is the text as-of.
       if (r && typeof r.data === 'string') {
-        p.translation = { data: r.data, prompt_version: r.prompt_version };
+        p.translation = { data: r.data, prompt_version: r.prompt_version, updated_at: p.translation?.updated_at ?? p.translation_withheld?.updated_at, model: p.translation?.model ?? null };
         restored++;
       }
     }
   }
   return {
     restored,
-    pages: pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: p.translation?.data || '', pv: p.translation?.prompt_version != null ? String(p.translation.prompt_version).replace(/^v/i, '') : null, model: p.translation?.model || null })),
+    pages: pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: p.translation?.data || '', pv: p.translation?.prompt_version != null ? String(p.translation.prompt_version).replace(/^v/i, '') : null, model: p.translation?.model || null, page_type: p.page_type ?? null, updated: p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null })),
   };
 }
 
 function summarise(book, loaded) {
   const { pages } = loaded;
-  const res = classifyBook(pages, { rule: 'gappy', names: true });
+  const res = classifyBook(pages, { rule: 'gappy', names: true, absorb: true });
   const strict = res.strictRuns;
   const translated = res.rows.filter(r => r.translated);
   const pvCount = {};
@@ -181,6 +186,9 @@ function summarise(book, loaded) {
     strictTier: !strict.length ? null : strict.some(x => x.strong) ? 'A' : 'B',
     // Name-signal runs that no numbers-only run covers (reported separately; see --names notes).
     nameRuns: nameOnly,
+    // Absorbing pages (scripts/lib/leaf-shift.mjs absorptionsOf): all, and those a vote corroborates.
+    absorptions: res.absorptions.length,
+    absorbed: res.absorptions.filter(a => a.corroborated.length),
     ...(loaded.restored ? { restored: loaded.restored } : {}),
   };
 }
