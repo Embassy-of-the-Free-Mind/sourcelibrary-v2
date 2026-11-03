@@ -141,6 +141,7 @@ import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
 import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
+import { ocrBlockRefusals } from '../lib/block-page-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
@@ -462,8 +463,19 @@ if (STAGE === 'read') {
     fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (texts ? null : 'page_markers_mismatch'), calls, nudged, usage, tool_calls: tools }) + '\n');
     if (!texts) { console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round((Date.now() - t0) / 1000)}s)`); return null; }
     const redo = [];
+    // #5021 (block-page-guard.mjs ocrBlockRefusals): a page whose read holds its neighbour's leaf, against the page's
+    // stored text where it has one (the draft, or the text a re-read replaces), or that prints the same page number as
+    // another read of the call, is read again alone. A correction's UNCHANGED / CONTAIN answer is not a transcription.
+    const asRead = texts.map((t) => (CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(t) ? '' : t));
+    const stored = new Map(group.map((q) => [q.id, q.ocr?.data || storedText.get(q.id) || '']));
+    const wrongLeaf = new Set();
+    for (const g of ocrBlockRefusals(group, asRead, { stored })) {
+      wrongLeaf.add(g.page_number);
+      fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: g }) + '\n');
+    }
     for (const [i, p] of group.entries()) {
       const text = texts[i];
+      if (wrongLeaf.has(p.page_number)) { redo.push(p); continue; }
       // A correction's UNCHANGED / CONTAIN answer is not a transcription: no chatter or cut-text check (readOne: the same).
       const answer = CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(text);
       const chatter = answer ? null : ocrReadProblem(text, { header: !CORRECT_PROMPT || p.ocr?.source === 'gpu' });
@@ -517,6 +529,10 @@ if (STAGE === 'read') {
     for (const p of redo ?? group) await readOne(p, from);
   };
   let groups = pages.map((p) => [p]);
+  // The stored transcription of each page, for the block guard (#5021); read apart from the page, so a first read is
+  // not mistaken for a correction anywhere else in this script.
+  const storedText = new Map();
+  if (PER_CALL > 1) for (const r of await db.collection('pages').find({ id: { $in: pages.map((p) => p.id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()) if (r.ocr?.data) storedText.set(r.id, r.ocr.data);
   if (PER_CALL > 1) {
     // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
     const order = new Map(ids.map((id, i) => [id, i]));
