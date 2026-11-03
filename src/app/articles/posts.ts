@@ -105,9 +105,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',

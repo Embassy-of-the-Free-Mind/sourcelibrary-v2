@@ -444,6 +444,21 @@ const nextConfig: NextConfig = {
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
       { source: '/partners', destination: '/ai-partners', permanent: true },
+      // The in-site Rithmomachia game departed from the 1563 rules it cites; the
+      // corrected game is a standalone app (#7821). Apex and www only: a tenant
+      // host serves global routes directly and must never redirect off its
+      // subdomain (tenant-lockdown.md). Temporary, so /rithmomachia stays the
+      // address to hand out if the game moves.
+      ...[
+        { source: '/rithmomachia', hash: '' },
+        { source: '/rithmomachia/guide', hash: '#rules' },
+        { source: '/rithmomachia/scenarios', hash: '#learn' },
+      ].map(({ source, hash }) => ({
+        source,
+        has: [{ type: 'host' as const, value: '(www\\.)?sourcelibrary\\.org' }],
+        destination: `https://rithmomachia-game.vercel.app/${hash}`,
+        permanent: false,
+      })),
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       // Choreia renamed to its main idea (2026-10-19).
