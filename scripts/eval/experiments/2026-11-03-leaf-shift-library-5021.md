@@ -161,7 +161,7 @@ pages cast no number vote, and a slide whose start the absorption test misses is
 **Replicated?** No. One scan, one Opus read per run. Precision rests on 300 books (80 / 220) and 59 absorption
 windows; the negative control on 20 windows.
 
-**Not done.** The 495 confirmed pages not withheld; the 868 flagged books not sent to Opus; the 4,484 absorbing pages
+**Not done.** The 495 confirmed pages not withheld; the 864 flagged books not sent to Opus; the 4,484 absorbing pages
 beyond the 59 judged; embeddings for caseless scripts; re-translation (paid). The absorption test is not in the
 write-time gate.
 
