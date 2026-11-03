@@ -641,6 +641,8 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   const correct = m.mode === 'correct';
+  // correct.mjs --draft-dir reads have no `mode`, so this comes before the correct branch.
+  if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file or --draft-dir (an eval read), not the stored OCR'); continue; }
   // Route C (#7263): a correction of a GPU engine's draft of a page with no OCR. Its reply carries the full header.
   const gpu = correct && m.draft?.source === 'gpu';
   if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
@@ -746,7 +748,6 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       if (text.trim() === ref.trim()) { skip(m, 'every change was put back by the diff guard: ' + stands); continue; }
     }
   } else if (correct) {
-    if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
