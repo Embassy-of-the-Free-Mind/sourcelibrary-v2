@@ -30,6 +30,7 @@ import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { stripAnchor } from './block-page-guard.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
@@ -984,10 +985,16 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
   };
   const entries = []; // in order, for the positional fallback
   const raws = [];
+  // #5021: a block prompt that carried block-page-guard.mjs anchorRule gets an anchor at the head of each section;
+  // it is taken off here, before sanitizeTranslationTags would unwrap it into the English, and returned.
+  const anchors = new Map();
+  const anchorList = [];
   let match;
   while ((match = regex.exec(responseText || '')) !== null) {
     const pageNum = parseInt(match[1], 10);
-    const raw = match[2].trim();
+    const { text: raw, anchor } = stripAnchor(match[2]);
+    anchors.set(pageNum, anchor);
+    anchorList.push(anchor);
     const text = sanitizeTranslationTags(raw);
     entries.push(text);
     raws.push(raw);
@@ -1004,8 +1011,10 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
     translations.clear();
     truncated.length = 0;
     pages.forEach((p, i) => { if (!tooShort(p, entries[i]) && !cut(p, raws[i])) translations.set(p.page_number, entries[i]); });
+    anchors.clear();
+    pages.forEach((p, i) => anchors.set(p.page_number, anchorList[i]));
   }
-  return { translations, returned: entries.length, discarded: null, truncated };
+  return { translations, returned: entries.length, discarded: null, truncated, anchors };
 }
 
 // Refused output is stored truncated — a 350K-char loop is evidence of a loop,
