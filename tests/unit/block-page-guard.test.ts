@@ -189,6 +189,8 @@ describe('multi-image OCR', () => {
   it('reads a printed page number', () => {
     expect(printedPageNumber('<page-num>२३</page-num>\ntext')).toBe(23);
     expect(printedPageNumber('no tag')).toBeNull();
+    expect(printedPageNumber('<page-num>12a</page-num>')).toBeNull();
+    expect(printedPageNumber('<page-num>fol. 3v</page-num>')).toBeNull();
   });
   it('two reads of one call that print the same page number are both refused', () => {
     const pages = [1, 2, 3].map((n) => ({ id: `p${n}`, page_number: n }));

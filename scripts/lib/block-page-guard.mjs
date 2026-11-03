@@ -234,6 +234,8 @@ export function blockPageRefusals(pages, translations, { anchors = null, prevOcr
 export function printedPageNumber(text) {
   const m = String(text || '').match(/<page-num\b[^>]*>([\s\S]*?)<\/page-num>/i);
   if (!m) return null;
+  // A folio side (12a / 12b, 3r / 3v, a pecha's recto and verso) shares its number with the other side: no claim.
+  if (/\d\s*[abrv]\b|\b(recto|verso)\b/i.test(foldDigits(m[1]))) return null;
   const d = foldDigits(m[1]).match(/\d{1,5}/);
   return d && Number(d[0]) > 0 ? Number(d[0]) : null;
 }
