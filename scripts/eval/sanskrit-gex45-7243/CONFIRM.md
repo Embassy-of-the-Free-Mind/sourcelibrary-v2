@@ -68,3 +68,13 @@ stays on Flash and the write-up says which condition failed.
 ## Out of scope
 Manuscripts, Śāradā, and the throughput of a sustained lane (S's pages/h from this task is reported, not gated). No page
 text is written to Mongo; stored reads are only read.
+
+## Amendment 2a (2026-11-03, after scoring; a correction, disclosed)
+The first scoring fed the 10 stored Flash reads to the scorer and the grader as `ocr.data` is stored. That text carries
+the OCR apparatus (`<vocab>…</vocab>`, `<meta>…</meta>`, `<language>`, `<page-type>`, `<scan-quality>` …) that the
+reader and every text surface remove content-and-all, so the vocab lists were scored as text and three were graded as
+misleading. That was the scorer's error, not Flash's. F is now the stored read's **reader-visible text**:
+`stripEditorialWrappers()` from `scripts/lib/strip-editorial-wrappers.mjs` (`confirm-stored.mjs`, field `text_visible`),
+and those 10 pages were re-graded by fresh graders. Nothing else changed (same references, keys, controls and rule). The
+agy and Surya outputs carry no such tags. Both scorings are kept: the first in `results-confirm-rawstored.json.gz`.
+Under both scorings, all four conditions pass.
