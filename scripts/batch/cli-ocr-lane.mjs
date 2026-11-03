@@ -525,7 +525,7 @@ async function correctablePages(db, book, { SKIP_TRANSLATION_PAGE_TYPES, printOn
   const rows = await db.collection('pages').aggregate([
     // strlen-safe: correctablePageMatch carries 'ocr.data': { $type: 'string' }, the stage before
     { $match: correctablePageMatch(book.id, SKIP_TRANSLATION_PAGE_TYPES) },
-    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
+    { $project: { _id: 0, id: 1, page_number: 1, script_type: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: printOnly ? '<script>\\s*(handwrit|manuscript|mixed|none|n/a)' : '<script>\\s*handwritten', options: 'i' } }, printed: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*print', options: 'i' } } } },
     { $match: { n: { $gte: 300 }, hw: false } },
     { $sort: { page_number: 1 } },
   ]).toArray();
