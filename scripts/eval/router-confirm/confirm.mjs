@@ -418,7 +418,15 @@ export const judgeArmIds = (P) => (P.arms?.length ? [...P.arms.slice(1), P.arms[
 async function judge() {
   const P = J('plan.json');
   const lang = P.lang_name ?? LANG_NAME[frameFor(P.cell).lang];   // a plan from another draw names its language (zh-gemini-reocr-7263)
-  const { items, controls } = judgeItems(P.selected, readT, DEFAULT_SEED, judgeArmIds(P));
+  let { items, controls } = judgeItems(P.selected, readT, DEFAULT_SEED, judgeArmIds(P));
+  // --retest=ARM,...: those arms' texts and the controls judged again under a `#retest` id, mixed into the queue (the
+  // earlier verdicts stay, zh-reocr-cheap-arms-7263): a same-sitting row for the comparator and a test-retest figure.
+  const retest = String(arg('retest') || '').split(',').filter(Boolean);
+  if (retest.length) {
+    const again = (it) => ({ ...it, id: `${it.id}#retest` });
+    items = shuffle([...items, ...items.filter((it) => it.arms.some((x) => retest.includes(x))).map(again)], makeRng(DEFAULT_SEED + 3));
+    controls = [...controls, ...controls.map(again)];
+  }
   const have = jsonl(VO()), done = new Set(have.filter((r) => r.verdict).map((r) => r.id));
   const cap = Number(arg('max-calls') || 80), made = have.filter((r) => r.verdict || r.usage).length;
   const todo = [...controls, ...items].filter((it) => !done.has(it.id));

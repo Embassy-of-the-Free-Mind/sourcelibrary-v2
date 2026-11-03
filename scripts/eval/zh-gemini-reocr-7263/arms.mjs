@@ -14,6 +14,13 @@
  *   arms.mjs setup     --out=DIR                  plan.json's arms, texts/<key>.served.txt, set/manifest.jsonl for correct.mjs
  *   arms.mjs paddle    --out=DIR --lane=LANEDIR   texts/<key>.P.txt from the lane's reads, through the lane's guards
  *   arms.mjs opus      --out=DIR                  texts/<key>.O.txt from set/reads
+ *
+ * Cheaper correctors on the same prompt and image (zh-reocr-cheap-arms, correct.mjs --draft-dir, --cli=agy):
+ *   PFL paddle>agy-flash-low   PFM paddle>agy-flash-medium   SFL stored>agy-flash-low   PSN paddle>sonnet   SSN stored>sonnet
+ *   arms.mjs cheap-setup   --out=DIR             the arms in plan.json; set-<arm>/manifest.jsonl and drafts/<page_id>.txt.
+ *                                                The Paddle draft is the read itself: Pu on print (guard off), P on Siku
+ *   arms.mjs cheap-collect --out=DIR --arm=ARM   texts/<key>.ARM.txt: corrected, or UNCHANGED serves the draft;
+ *                                                contain / no answer serves the stored text
  * Reads Mongo for book facts only. Writes nothing to it (readonly-mongo.mjs).
  */
 import '../router-confirm/readonly-mongo.mjs';
@@ -31,6 +38,8 @@ const T = (k, a) => path.join(OUT, 'texts', `${k}.${a}.txt`);
 const logRow = (r) => fs.appendFileSync(path.join(OUT, 'arms.jsonl'), JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n');
 const read = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null);
 const stage = process.argv[2];
+const CHEAP = [['PFL', 'paddle>agy-flash-low', 'paddle'], ['PFM', 'paddle>agy-flash-medium', 'paddle'], ['SFL', 'gemini>agy-flash-low', 'stored'], ['PSN', 'paddle>sonnet', 'paddle'], ['SSN', 'gemini>sonnet', 'stored']];
+const draftArm = (kind) => (kind === 'stored' ? 'lite' : P.stratum === 'siku' ? 'P' : 'Pu');
 
 async function books() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
@@ -107,4 +116,23 @@ if (stage === 'lane-plan') {
     logRow({ key: s.key, arm: 'O', route: 'gemini>opus', written: !!ok, why: out, reason: m.reason ?? m.contain_reason ?? null });
   }
   console.log(JSON.stringify(tally));
-} else { console.error('stages: lane-plan | setup | paddle | opus'); process.exit(2); }
+} else if (stage === 'cheap-setup') {
+  for (const [arm, route, kind] of CHEAP) {
+    if (!P.arms.some((a) => a.arm === arm)) P.arms.push({ arm, route, kind: 'correct', calls_per_page: 1 });
+    const dir = path.join(OUT, `set-${arm}`); fs.mkdirSync(path.join(dir, 'drafts'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'manifest.jsonl'), P.selected.map((s) => JSON.stringify({ page_id: s.page_id, book_id: s.book_id, slug: s.key, page_number: s.page_number, why: 'zh-reocr-cheap-arms-7263', stored_model: s.stored_model })).join('\n') + '\n');
+    for (const s of P.selected) fs.copyFileSync(T(s.key, draftArm(kind)), path.join(dir, 'drafts', `${s.page_id}.txt`));
+  }
+  fs.writeFileSync(planF, JSON.stringify(P, null, 1));
+  console.log(`${CHEAP.length} arms set up`);
+} else if (stage === 'cheap-collect') {
+  const arm = arg('arm'), [, route, kind] = CHEAP.find((c) => c[0] === arm), tally = {};
+  for (const s of P.selected) {
+    const R = path.join(OUT, `set-${arm}`, 'reads'), m = JSON.parse(read(path.join(R, `${s.page_id}.meta.json`)) ?? '{}'), t = read(path.join(R, `${s.page_id}.txt`));
+    const out = m.outcome ?? 'not read', text = out === 'corrected' && t ? t : out === 'unchanged' ? read(T(s.key, draftArm(kind))) : read(T(s.key, 'lite'));
+    fs.writeFileSync(T(s.key, arm), text);
+    tally[out] = (tally[out] ?? 0) + 1;
+    logRow({ key: s.key, arm, route, written: out === 'corrected', why: out, reason: m.reason ?? null });
+  }
+  console.log(arm, JSON.stringify(tally));
+} else { console.error('stages: lane-plan | setup | paddle | opus | cheap-setup | cheap-collect'); process.exit(2); }

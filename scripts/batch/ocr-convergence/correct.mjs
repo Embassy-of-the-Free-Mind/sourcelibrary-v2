@@ -30,6 +30,11 @@
  * the same --model on the same live prompt and instruction, of the same image bytes and the same stored draft, and
  * uses it instead of calling (meta `reused_from`). UNCHANGED and CONTAIN answers carry no text and are not kept.
  * `--fresh` always calls: a repeat-noise eval needs fresh reads.
+ *
+ * EVAL ONLY (#7263, cheaper correctors on the same prompt): `--draft-dir=DIR` corrects DIR/<page_id>.txt instead of the
+ * stored OCR. `--cli=agy` sends the same prompt through `agy -p` in a gated workspace (AGY_HOME picks the pool) and
+ * reads what was opened from the gate's log. `--max-calls=N` stops the run after N calls. --draft-dir needs
+ * CANDIDATE_READS=off: the reuse key names the stored draft, so a kept read would not match the draft sent.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,11 +48,14 @@ import { checkWrittenText } from '../../lib/write-text-guard.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
 import { splitPages } from '../claude-ocr.mjs';
+import { agyCall, agyUsage, installToolGate, gateReads, CLI_SAFE_ARGS } from '../../lib/agy-cli.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/ocr-convergence/correct.mjs';
-const CLI = 'claude';
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
+const CLI = arg('cli', 'claude');
+const DRAFT_DIR = arg('draft-dir') && path.resolve(arg('draft-dir'));
+const MAX_CALLS = Number(arg('max-calls', Infinity));
 const SETDIR = arg('set-dir') && path.resolve(arg('set-dir'));
 const OUT = SETDIR && path.join(SETDIR, 'reads');
 const MODEL = arg('model', 'opus');
@@ -97,6 +105,14 @@ function claudeCall(prompt, cwd, transcript) {
   });
 }
 
+/** claudeCall's result from one gated `agy -p` call (eval only, see the header). */
+async function agyCorrectCall(prompt, cwd, transcript) {
+  const log = installToolGate(cwd, { task: 'ocr' });
+  const r = await agyCall(['-p', prompt, '--model', MODEL, ...CLI_SAFE_ARGS], cwd);
+  fs.writeFileSync(transcript, JSON.stringify({ text: r.text, usage: r.usage, cls: r.cls, tools: gateReads(log) }) + '\n');
+  return { text: r.text, opened: new Set(gateReads(log).map((f) => path.basename(f))), model: MODEL, usage: agyUsage(r.usage), code: r.code, cls: r.cls === 'quota' ? 'usage_limit' : r.cls || null, err: r.err, secs: r.secs };
+}
+
 /**
  * The reply split into its n answers (splitPages: markers exactly p01..pNN, or null). A short lead-in before the first
  * marker ("Corrections follow") is dropped and returned as `preamble`; anything longer, or with a tag in it, is left in
@@ -126,6 +142,8 @@ export function parseAnswer(ans) {
 
 async function main() {
   if (!SETDIR) { console.error('--set-dir=DIR is required (see the header)'); process.exit(2); }
+  if (DRAFT_DIR && process.env.CANDIDATE_READS !== 'off') { console.error('--draft-dir needs CANDIDATE_READS=off (see the header)'); process.exit(2); }
+  const draftOf = (p) => (DRAFT_DIR ? fs.readFileSync(path.join(DRAFT_DIR, `${p.id}.txt`), 'utf8') : p.ocr?.data || '');
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not on PATH`); process.exit(1); }
   const manifest = fs.readFileSync(path.join(SETDIR, 'manifest.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
@@ -166,7 +184,7 @@ async function main() {
   const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1)) });
   const writePage = (p, ans, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), ans.outcome === 'corrected' ? ans.text : '');
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(p.ocr?.data || '') }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
   };
 
   /** One call over a group. Returns the pages left unanswered. */
@@ -178,15 +196,17 @@ async function main() {
     fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
     group.forEach((p, i) => {
       fs.writeFileSync(path.join(dir, `${pageName(i)}.jpg`), im[i].buf);
-      fs.writeFileSync(path.join(dir, `${draftName(i)}.txt`), p.ocr?.data || '');
-      fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), p.ocr?.data || '');
+      fs.writeFileSync(path.join(dir, `${draftName(i)}.txt`), draftOf(p));
+      fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), draftOf(p));
     });
     const sent = base + correctInstruction(group.length);
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
     const t0 = new Date();
-    const r = await claudeCall(sent, dir, path.join(SETDIR, 'transcripts', `${callId}.jsonl`)); nCalls++;
+    if (nCalls >= MAX_CALLS) { stop = `--max-calls=${MAX_CALLS}`; return group; }
+    nCalls++;
+    const r = await (CLI === 'agy' ? agyCorrectCall : claudeCall)(sent, dir, path.join(SETDIR, 'transcripts', `${callId}.jsonl`));
     fs.rmSync(dir, { recursive: true, force: true });
     const { answers, preamble } = r.cls ? { answers: null, preamble: null } : splitAnswers(r.text, group.length);
     fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: group[0].book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (answers ? null : 'page_count_mismatch'), preamble, opened: [...r.opened].sort(), usage: r.usage }) + '\n');

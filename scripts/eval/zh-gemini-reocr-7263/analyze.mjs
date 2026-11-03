@@ -4,7 +4,9 @@
 // scripts/eval/korean-cell-7982/score.mjs (the router-evidence export this copies the shape of).
 /**
  * Score #7263's Chinese re-read cell test, per stratum: accept k/n, wrong text, severe per 1,000 characters, paired P−S, O−S.
- *   node scripts/eval/zh-gemini-reocr-7263/analyze.mjs --scratch=DIR --results=DIR --evidence=DIR
+ *   node scripts/eval/zh-gemini-reocr-7263/analyze.mjs --scratch=DIR --results=DIR --evidence=DIR [--tag=cheap-arms]
+ * --tag writes score-<tag>.json and zh-reocr-<tag>-7263.score.json beside #8008's files, and adds each correct arm
+ * against O (paired, #8008's verdicts) and against the #retest verdicts of O judged in the same sitting.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,6 +17,7 @@ const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=')
 const SCR = path.resolve(arg('scratch')), RES = path.resolve(arg('results')), EVID = path.resolve(arg('evidence'));
 const jsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const SEVERE = new Set(['misleads', 'wrong_text']);
+const TAG = arg('tag');
 const out = { at: new Date().toISOString(), issue: 7263, strata: {} };
 const evid = {}, byScript = {};
 
@@ -23,7 +26,7 @@ for (const st of ['print', 'siku']) {
   const T = (k, a) => { const f = path.join(OUT, 'texts', `${k}.${a}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
   const { items, controls } = judgeItems(P.selected, T, DEFAULT_SEED, judgeArmIds(P));
   const last = new Map(jsonl(path.join(OUT, 'verdicts.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r]));
-  const vOf = (key, arm) => { const it = items.find((x) => x.key === key && x.arms.includes(arm)), r = it && last.get(it.id); if (!r) return null;
+  const vOf = (key, armName) => { const re = armName.endsWith('#retest'), arm = armName.replace('#retest', ''), it = items.find((x) => x.key === key && x.arms.includes(arm)), r = it && last.get(re ? `${it.id}#retest` : it.id); if (!r) return null;
     const d = r.verdict.defects || [];
     return { accept: !!r.verdict.accept, wrong: wrongText(r.verdict), fidelity: r.verdict.fidelity, severe: d.filter((x) => SEVERE.has(x.severity)).length, misleads: d.filter((x) => x.severity === 'misleads').length, wrong_defects: d.filter((x) => x.severity === 'wrong_text').length, classes: [...new Set(d.filter((x) => SEVERE.has(x.severity)).map((x) => x.class))], defects: d }; };
   const ctl = controls.map((c) => last.get(c.id)).filter(Boolean).map((r) => ({ accept: !!r.verdict.accept, fidelity: r.verdict.fidelity }));
@@ -44,6 +47,12 @@ for (const st of ['print', 'siku']) {
     res.arms[a.arm] = { route: a.route, ...summary(a.arm), served_outcomes: outcomes, ...(a.arm === cmp ? {} : { vs_stored: pair(a.arm, cmp) }) };
   }
   res.between.O_vs_P = pair('O', 'P');
+  if (TAG) {
+    for (const a of P.arms.filter((x) => !['served', 'P', 'Pu', 'O'].includes(x.arm))) { res.between[`${a.arm}_vs_O`] = pair(a.arm, 'O'); res.between[`${a.arm}_vs_O_retest`] = pair(a.arm, 'O#retest'); }
+    const rt = P.selected.map((s) => [vOf(s.key, 'O'), vOf(s.key, 'O#retest')]).filter(([x, y]) => x && y);
+    res.retest_O = { n: rt.length, accepted_first: rt.filter(([x]) => x.accept).length, accepted_retest: rt.filter(([, y]) => y.accept).length, accept_agree: rt.filter(([x, y]) => x.accept === y.accept).length, wrong_first: rt.filter(([x]) => x.wrong).length, wrong_retest: rt.filter(([, y]) => y.wrong).length };
+    res.retest_controls = controls.map((c) => last.get(`${c.id}#retest`)).filter(Boolean).map((r) => ({ accept: !!r.verdict.accept, fidelity: r.verdict.fidelity }));
+  }
   if (st === 'print') res.between.O_vs_Pu = pair('O', 'Pu');
   for (const m of [...new Set(P.selected.map((s) => (/flash-lite/.test(s.stored_model) ? 'lite' : '3flash')))]) {
     const sel = P.selected.filter((s) => (/flash-lite/.test(s.stored_model) ? 'lite' : '3flash') === m);
@@ -62,14 +71,15 @@ for (const st of ['print', 'siku']) {
   evid[cellId] = block;
   byScript[`${cellId}/${st === 'print' ? 'print' : 'manuscript'}`] = block;
 }
-const head = { generated_by: 'scripts/eval/zh-gemini-reocr-7263/analyze.mjs', provenance: '#7263 Chinese re-read cell: 30 + 30 books, one page each, seed 20261103, books PPS on frame pages; arms on the same pages; Opus judge blind to arm against the image, 2 wrong-page controls a stratum', judge: 'claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image', mapping: 'wrong_text = a wrong_text defect; accept = the judge accepts' };
+const head = { generated_by: 'scripts/eval/zh-gemini-reocr-7263/analyze.mjs', provenance: `#7263 Chinese re-read cell${TAG ? ` (${TAG}: cheaper correctors on the same pages)` : ''}: 30 + 30 books, one page each, seed 20261103, books PPS on frame pages; arms on the same pages; Opus judge blind to arm against the image, 2 wrong-page controls a stratum`, judge: 'claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image', mapping: 'wrong_text = a wrong_text defect; accept = the judge accepts' };
 out.cells = Object.fromEntries(Object.entries(out.strata).map(([st, r]) => [st, r.study_cells]));   // the shape experiments-lint reads
 fs.mkdirSync(RES, { recursive: true });
-fs.writeFileSync(path.join(RES, 'score.json'), JSON.stringify(out, null, 1) + '\n');
-fs.writeFileSync(path.join(EVID, 'zh-gemini-reocr-7263.score.json'), JSON.stringify({ ...head, cells: evid }, null, 1) + '\n');
-fs.writeFileSync(path.join(EVID, 'by-script/zh-gemini-reocr-7263.score.json'), JSON.stringify({ ...head, cells: byScript }, null, 1) + '\n');
+const evidName = TAG ? `zh-reocr-${TAG}-7263.score.json` : 'zh-gemini-reocr-7263.score.json';
+fs.writeFileSync(path.join(RES, TAG ? `score-${TAG}.json` : 'score.json'), JSON.stringify(out, null, 1) + '\n');
+fs.writeFileSync(path.join(EVID, evidName), JSON.stringify({ ...head, cells: evid }, null, 1) + '\n');
+fs.writeFileSync(path.join(EVID, 'by-script', evidName), JSON.stringify({ ...head, cells: byScript }, null, 1) + '\n');
 // the file confirm.mjs writes for a run (router-confirm/results/<cell>-<date>.json): one per stratum, verdicts page by page
-for (const [st, r] of Object.entries(out.strata)) fs.writeFileSync(path.join(RES, '../../router-confirm/results', `chinese-gemini-${st}-${out.at.slice(0, 10)}.json`), JSON.stringify({ at: out.at, cell: `chinese-gemini/${st}`, issue: 7263, rule: { within: 0.08, wrong_text_max: 0.04, source: 'rules.json switch' }, comparator: 'served', ...r }, null, 1) + '\n');
+for (const [st, r] of Object.entries(out.strata)) fs.writeFileSync(path.join(RES, '../../router-confirm/results', `chinese-gemini-${st}${TAG ? `-${TAG}` : ''}-${out.at.slice(0, 10)}.json`), JSON.stringify({ at: out.at, cell: `chinese-gemini/${st}`, issue: 7263, rule: { within: 0.08, wrong_text_max: 0.04, source: 'rules.json switch' }, comparator: 'served', ...r }, null, 1) + '\n');
 const show = (x) => JSON.stringify(x);
 for (const [st, r] of Object.entries(out.strata)) {
   console.log(`\n== ${st} n=${r.n} controls ${show(r.controls)} `);

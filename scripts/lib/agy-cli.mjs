@@ -92,6 +92,9 @@ export function installToolGate(dir, { task = 'ocr' } = {}) {
 }
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
 
+/** The paths the gate let the model read, from the same log. */
+export const gateReads = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.decision === 'allow' && r.path).map((r) => r.path); } catch { return []; } };
+
 /** The answer inside the markers, and why the reply is not a clean one (null when it is). */
 export function unwrapRead(raw) {
   const u = unwrapSentinels(raw);
