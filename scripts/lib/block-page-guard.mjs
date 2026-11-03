@@ -63,6 +63,9 @@ export function anchorRule(pageNumbers) {
   return `\n\nPAGE ANCHORS. Begin EACH page's <translation page="N"> with one anchor line, then that page's translation:\n<anchor-first>FIRST</anchor-first><anchor-last>LAST</anchor-last>\nFIRST is a copy of the first ${ANCHOR_CHARS} characters, and LAST a copy of the last ${ANCHOR_CHARS} characters, of the source text printed under "--- Page N ---" for THAT page (not counting spaces or tags), in the original script, untranslated. For example, page ${ex}'s section opens with the first and last characters of page ${ex}'s source. Copy them from the page itself before you translate it, and then translate that page and only that page: never carry text over from the page before or after. The anchor line is checked against the page and removed.\n`;
 }
 
+/** A page's source text: `ocr` as a string, or `ocr.data`. */
+const srcOf = (p) => (typeof p?.ocr === 'string' ? p.ocr : String(p?.ocr?.data ?? ''));
+
 const ANCHOR_RE = /<anchor-(first|last)>([\s\S]*?)<\/anchor-\1>/gi;
 
 /** One section's text without its anchors, and the anchors. Unclosed or stray anchor tags are removed too. */
@@ -133,7 +136,7 @@ export function anchorVerdicts(pages, anchors, { prevOcr = null, nextOcr = null 
   // Each source folded twice, without and with its metadata: a half matches when it matches either. Copied from the
   // metadata of an illegible page, it matches that page (and ties a neighbour with the same metadata, which keeps it).
   const both = (t) => [anchorFold(t), anchorFold(t, { meta: true })];
-  const src = pages.map((p) => both(p.ocr?.data ?? p.ocr ?? ''));
+  const src = pages.map((p) => both(srcOf(p)));
   const before = prevOcr != null ? both(prevOcr) : null, after = nextOcr != null ? both(nextOcr) : null;
   return pages.map((p, i) => {
     const a = anchors?.get(p.page_number) || {};
@@ -166,7 +169,7 @@ export function lengthRatioK(pairs, { min = 3 } = {}) {
  * than 3 text pages.
  */
 export function blockAbsorptions(pages, translations, { k = null } = {}) {
-  const rows = pages.map((p) => ({ page_number: p.page_number, src: String(p.ocr?.data ?? p.ocr ?? ''), en: String(translations.get(p.page_number) ?? ''), type: p.page_type ?? null }));
+  const rows = pages.map((p) => ({ page_number: p.page_number, src: srcOf(p), en: String(translations.get(p.page_number) ?? ''), type: p.page_type ?? null }));
   const K = lengthRatioK(rows) ?? k;
   if (K == null) return [];
   const textLike = (r) => r && !ABSORB_SKIP_TYPES.has(r.type) && r.src.length >= ABSORB_SRC_MIN && r.en.length > 0;
@@ -198,7 +201,7 @@ export function blockNumberVotes(pages, translations, { prevOcr = null, nextOcr 
   const first = pages[0]?.page_number, last = pages[pages.length - 1]?.page_number;
   const rows = [
     ...(prevOcr != null ? [{ page_number: first - 1, ocr: prevOcr, tr: '' }] : []),
-    ...pages.map((p) => ({ page_number: p.page_number, ocr: String(p.ocr?.data ?? p.ocr ?? ''), tr: String(translations.get(p.page_number) ?? '') })),
+    ...pages.map((p) => ({ page_number: p.page_number, ocr: srcOf(p), tr: String(translations.get(p.page_number) ?? '') })),
     ...(nextOcr != null ? [{ page_number: last + 1, ocr: nextOcr, tr: '' }] : []),
   ];
   const inCall = new Set(pages.map((p) => p.page_number));
