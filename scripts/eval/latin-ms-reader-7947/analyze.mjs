@@ -12,13 +12,15 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { classOf, kindOf, claimsOf } from '../latin-strata-7947/lib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k) => args[args.indexOf(`--${k}`) + 1];
 const SCR = opt('scratch'), OUT = opt('out');
-const J = (...p) => JSON.parse(fs.readFileSync(path.join(...p), 'utf8'));
+// A committed run keeps its bulky files gzipped: read <f> or <f>.gz.
+const J = (...p) => { const f = path.join(...p); return JSON.parse(fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : zlib.gunzipSync(fs.readFileSync(`${f}.gz`)).toString('utf8')); };
 const ROUTE = { stored: 'stored (Flash-Lite)', agyread: 'agy-flash-low@4', armc: 'pero>agy-flash-low (arm c, E3 put-back)', opus: 'claude-opus (claude-ocr.mjs, 1 a call)', liteopus: 'lite>opus (correct.mjs)' };
 const COST_ORDER = ['armc', 'agyread', 'opus', 'liteopus'];
 const WRONG_KINDS = new Set(['invented text', 'invented margin', 'wrong leaf', 'strip of several openings: described or invented, not read']);
@@ -57,7 +59,8 @@ for (const SET of ['ms', 'inc']) {
       const p = set.find((x) => x.book_id === k.book_id && x.page_number === rp.page_number);
       if (!p) continue;
       const row = { arm: k.arm, book_id: k.book_id, page_number: p.page_number, words: p.words, ocr_score: rp.ocr_score, right_page: rp.right_page,
-        source: served.find((s) => s.page_id === p.page_id).arms[k.arm].source, judged: { serious: 0, wrong: 0 }, confirmed: { serious: 0, wrong: 0 }, classes: [], calls: [] };
+        source: served.find((s) => s.page_id === p.page_id).arms[k.arm].source,
+        same_text: (() => { const sv = served.find((s) => s.page_id === p.page_id).arms; return sv[k.arm].text === sv.stored.text; })(), judged: { serious: 0, wrong: 0 }, confirmed: { serious: 0, wrong: 0 }, classes: [], calls: [] };
       for (const c of claimsOf(r.book_id, rp)) {
         if (c.lane === 'tr' || c.e.severity !== 'serious') continue;
         const v = verdict.get(c.claim_id);
@@ -87,6 +90,9 @@ for (const SET of ['ms', 'inc']) {
     for (const r of rs) {
       const s = S.get(`${r.book_id}:${r.page_number}`);
       if (!s || arm === 'stored') continue;
+      // A page where the arm serves the stored text unchanged (its fallback) differs from S only by judge noise: it is
+      // counted apart (decided after the first look, 2026-11-03: both "gains" were such pages), and is the repeat check.
+      if (r.same_text) { paired.identical_text = (paired.identical_text ?? 0) + 1; if (r[mode].serious !== s[mode].serious) paired.identical_text_verdict_differs = (paired.identical_text_verdict_differs ?? 0) + 1; continue; }
       const d = r[mode].serious - s[mode].serious;
       paired[d < 0 ? 'better' : d > 0 ? 'worse' : 'same']++;
       if (r[mode].wrong && !s[mode].wrong) paired.gains_wrong_text.push(`${r.book_id}:${r.page_number}`);
@@ -116,9 +122,48 @@ for (const SET of ['ms', 'inc']) {
       sense_per_1000_words: out.arms[arm].sense_per_1000, classes_k_of_n: out.arms[arm].classes_k_of_n,
       note: arm === 'stored' ? 'the stored text, judged in the same packets' : `served = the arm's read where usable, else the stored text (RULE.md); read on ${out.arms[arm].read_served}/${out.arms[arm].pages}` }])) };
 }
+// The solo control (solo.mjs): the same entries judged alone, first-reader calls (no second reader), against the
+// side-by-side first-reader calls on the same entries.
+const SOLO = path.join(SCR, 'judge', 'ms-solo');
+if (fs.existsSync(path.join(SOLO, 'first/reviews'))) {
+  const key = J(SOLO, 'key.json');
+  const set = J(SCR, 'sets', 'ms.json');
+  const side = new Map(fs.readdirSync(path.join(SCR, 'judge/ms/first/reviews')).flatMap((f) => J(SCR, 'judge/ms/first/reviews', f)).map((r) => [r.book_id, r]));
+  const solo = fs.readdirSync(path.join(SOLO, 'first/reviews')).flatMap((f) => J(SOLO, 'first/reviews', f));
+  const tally = {};
+  for (const r of solo) {
+    const k = key[r.book_id];
+    const t = (tally[k.arm] ??= { pages: 0, words: 0, serious_solo: 0, serious_side: 0, score_solo: 0, score_side: 0, accept_solo: 0, accept_side: 0 });
+    for (const rp of r.pages || []) {
+      const sp = side.get(r.book_id)?.pages?.find((x) => x.page_number === rp.page_number);
+      const ser = (x) => claimsOf(r.book_id, x).filter((c) => c.lane !== 'tr' && c.e.severity === 'serious').length;
+      if (!sp) continue;
+      const a = ser(rp), b = ser(sp);
+      t.pages++; t.words += set.find((p) => p.book_id === k.book_id && p.page_number === rp.page_number).words;
+      t.serious_solo += a; t.serious_side += b; t.score_solo += rp.ocr_score ?? 0; t.score_side += sp.ocr_score ?? 0;
+      t.accept_solo += a ? 0 : 1; t.accept_side += b ? 0 : 1;
+    }
+  }
+  result.solo_control = Object.fromEntries(Object.entries(tally).map(([arm, t]) => [arm, { pages: t.pages,
+    judged_per_1000_solo: +(1000 * t.serious_solo / t.words).toFixed(2), judged_per_1000_side_by_side: +(1000 * t.serious_side / t.words).toFixed(2),
+    accept_solo: `${t.accept_solo}/${t.pages}`, accept_side_by_side: `${t.accept_side}/${t.pages}`,
+    ocr_score_mean_solo: +(t.score_solo / t.pages).toFixed(2), ocr_score_mean_side_by_side: +(t.score_side / t.pages).toFixed(2) }]));
+  console.log('solo control (judged, same entries):', JSON.stringify(result.solo_control));
+}
 fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(path.join(OUT, 'analysis.json'), JSON.stringify(result, null, 1));
 fs.writeFileSync(path.join(OUT, 'latin-ms-reader-7947.score.json'), JSON.stringify(score, null, 1));
+// The experiments-lint defect_rates shape (#6740): per (set | arm), confirmed calls; misleads = serious calls that are not
+// text-not-on-the-leaf; fidelity = the judge's ocr_score (no translation here).
+const dr = {};
+for (const [SET, o] of Object.entries(result.sets)) for (const arm of Object.keys(o.arms)) {
+  const rs = o.rows.filter((r) => r.arm === arm), w = rs.reduce((s, r) => s + r.words, 0);
+  const n = (f) => rs.reduce((s, r) => s + f(r), 0);
+  dr[`${SET === 'ms' ? 'manuscript' : 'incunabula'}|${arm}`] = { route: ROUTE[arm], books: o.arms[arm].books, pages: rs.length, words: w,
+    misleads_per_1k: +(1000 * n((r) => r[o.mode].serious - r[o.mode].wrong) / w).toFixed(2), wrong_text_per_1k: +(1000 * n((r) => r[o.mode].wrong) / w).toFixed(2),
+    fidelity_mean: o.arms[arm].ocr_score_mean };
+}
+fs.writeFileSync(path.join(OUT, 'defect-rates.json'), JSON.stringify({ issue: 7947, note: 'Confirmed serious calls (second reader) per set and arm, OCR only. Words = the stored page\'s count for every arm. One Opus reader per book judging all arms blind, side by side; REVIEWER.md scale.', study_cells: dr }, null, 1));
 for (const [SET, o] of Object.entries(result.sets)) {
   console.log(`\n== ${SET} (${o.mode}; ${o.books} books, ${o.pages} pages, ${o.words} words) — #7947 baseline stored ${o.stored_7947_baseline.point} [${o.stored_7947_baseline.ci95}]`);
   for (const [arm, a] of Object.entries(o.arms)) console.log(arm.padEnd(9), `${a.sense_per_1000.point} [${a.sense_per_1000.ci95}]`.padEnd(20), `judged ${a.sense_per_1000_judged.point}`.padEnd(14), `accept ${a.accept}`.padEnd(13), `wrong ${a.wrong_text_pages}`.padEnd(11), `≤2 ${a.ocr_score_le2}`.padEnd(9), `mean ${a.ocr_score_mean}`, a.paired_vs_stored ? JSON.stringify({ b: a.paired_vs_stored.better, w: a.paired_vs_stored.worse, gain: a.paired_vs_stored.gains_wrong_text }) : '', a.floor ? `floor ${a.floor.clears}` : '');

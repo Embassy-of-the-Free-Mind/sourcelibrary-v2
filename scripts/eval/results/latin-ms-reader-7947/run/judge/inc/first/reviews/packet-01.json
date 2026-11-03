@@ -1,0 +1,134 @@
+[
+  {
+    "book_id": "b01-k", "slot": 1, "title": "Chiromantia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "in quampluribus", "image": "in quāpluriū (quamplurium)", "problem": "case ending changed", "severity": "minor" },
+          { "ocr": "et concavatus sulcus", "image": "& ceucauatus sulcus (ceu cauatus)", "problem": "'ceu' (as if) merged into a non-word 'concavatus'; the simile is lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "sumpfe/rit", "image": "sumpse/rit", "problem": "long s read as f", "severity": "minor" },
+          { "ocr": "incisuras", "image": "incissuras", "problem": "silent normalisation of spelling", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>Homicidii periculo</margin>", "image": "margins read only 'Caue ab isto hoie' and 'Homicide q̄les' beside this passage", "problem": "a marginal note that is not on the page is invented", "severity": "serious", "class": "O12" },
+          { "ocr": "Orbiculi in ea tot plagas homicidia", "image": "Orbiculi in ea tot p̄sagunt homicidia", "problem": "verb 'presagunt' (foretell) misread as 'plagas'; the sentence loses its verb", "severity": "moderate", "class": "O6" },
+          { "ocr": "Si epatica e regione tuberculi famis terminet", "image": "e regione tuberculi ifamis terminet'", "problem": "'infamis' read as 'famis'", "severity": "moderate", "class": "O6" },
+          { "ocr": "et quandoque afferis dilaniabitur", "image": "& q aliquādo afferis dilaniabitur", "problem": "'qui aliquando' rendered as 'quandoque'; relative pronoun dropped", "severity": "minor" },
+          { "ocr": "et quandoque furiis agitabit: quandoque de causa ferro se percutiet et quandoque maritimis", "image": "& q aliq̄do furiis agitabit': q̄ de cā ferro se pcutiet & q maritimis", "problem": "the repeated 'qui' (the man who…) systematically replaced by 'quandoque'; passives (agitabitur, uexabitur) made active", "severity": "moderate", "class": "O6" },
+          { "ocr": "quis longam", "image": "q̄uis (quamvis) longam", "problem": "abbreviation mark ignored", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the whole first block runs together as one paragraph and margins are grouped at the top, so the note positions are lost", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "morfum canis expectato et ma[wavy serpent-like vertical line]iuxta fummum angulum si rubra fuerit homi / debit. Tale fignum [wavy line]dici designabit. … minē cito ifirmandum", "image": "morsū cāis expectato et ma[xime illis i ptibus qbꝰ linee rū]debūt. Tale signū [sign] iuxta supmū āgulū si rubꝛ fuerit ho[minē cito isirmā]dū designabit", "problem": "the lines wrapped around the printed signs are read in the wrong order, so clauses are spliced into each other ('…homi / debit', 'dici designabit') and the passage cannot be read", "severity": "serious", "class": "O6" },
+          { "ocr": "Talis vero [double circle or figure eight] prope vi neas", "image": "Talis uero p̄pe ui[te li]neas — no double-circle sign; the X sign belongs to 'Figura talis'", "problem": "a sign not on the page is described, and the X sign before 'Figura talis' is dropped", "severity": "moderate", "class": "O14" },
+          { "ocr": "cuius longior et si iterfecta linea", "image": "cuius lōgior & ñ itersecta liea", "problem": "'non' read as 'si'; the condition is reversed", "severity": "moderate", "class": "O6" },
+          { "ocr": "Parva tamen hæc inter se difcrepant", "image": "Pa℞ tñ (Parum tamen)", "problem": "'parum' (little) read as 'parva'", "severity": "minor" },
+          { "ocr": "fignum, cafus, mafculum, fimile …", "image": "ſignum, caſus, maſculum", "problem": "long s transcribed as f throughout the page, margins included", "severity": "minor", "class": "O9" },
+          { "ocr": "<sig>c ii</sig>", "image": "e ii", "problem": "signature misread", "severity": "minor" },
+          { "ocr": "concubinatumque", "image": "cōcubinaꝝq; (concubinarumque)", "problem": "misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "stray '<gloss>n</gloss>' tag in the reader text ('lineæ rui<gloss>n</gloss>')", "severity": "minor", "class": "D1" } ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A good page 14. Page 26 invents a marginal note and misreads several verbs. On page 39 the text around the printed signs is spliced out of order, and long s is rendered as f throughout; an expert would see both on sight."
+  },
+  {
+    "book_id": "b01-m", "slot": 2, "title": "Chiromantia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "in quam plurium", "image": "in quāpluriū", "problem": "word split", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nec ad uitalem aut discriminalem pungat", "image": "nec ad uitalē aut discriminalē ꝑtingat (pertingat)", "problem": "'pertingat' (reaches) read as 'pungat'", "severity": "moderate", "class": "O6" },
+          { "ocr": "triangulo probet", "image": "triangulo p̄bet (prebet)", "problem": "abbreviation expanded wrongly", "severity": "minor" },
+          { "ocr": "peryodum", "image": "pervodum (sic)", "problem": "letter form uncertain; minor", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 39, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "quidam punctus rubee", "image": "q̄dā puctū ſbrubee (quedam punctum subrubee)", "problem": "'sub-' dropped and endings changed", "severity": "minor" },
+          { "ocr": "periturum in aquis", "image": "pitu℞ i aq̄s (in aquas)", "problem": "case changed", "severity": "minor" },
+          { "ocr": "<unclear>rumdebunt</unclear>", "image": "rū/debūt", "problem": "honestly flagged as unclear; reading kept", "severity": "minor" },
+          { "ocr": "Talis uero prope uitæ lineas", "image": "Talis uero [X sign between lines] p̄pe ui te li neas", "problem": "the placement of the sign is ambiguous; only one X sign is given for 'Figura talis'", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the best of the three readings. It expands abbreviations correctly and reads the text around the signs on page 39 in the right order. 'pungat' for 'pertingat' and a few case slips are its only real errors."
+  },
+  {
+    "book_id": "b01-r", "slot": 3, "title": "Chiromantia", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "nos primi definximus", "image": "nos primi di/stinximus", "problem": "'distinximus' read as a non-word", "severity": "moderate", "class": "O6" },
+          { "ocr": "principales.v.numero sut", "image": "principaliores.v.numero sūt", "problem": "'principaliores' read as 'principales', which clashes with the 'Minus principales' that follows", "severity": "moderate", "class": "O6" },
+          { "ocr": "Tuberculum inter sectione", "image": "Tuberculo inter sectione", "problem": "case misread", "severity": "minor" },
+          { "ocr": "uia folis, fereno, fulcus p caneam", "image": "uia solis, sereno, sulcus p caueam", "problem": "long s read as f and u read as n in several words", "severity": "minor" },
+          { "ocr": "quæ quis certam", "image": "quæ q̄uis (quamvis)", "problem": "abbreviation mark dropped, giving 'quis'", "severity": "minor" },
+          { "ocr": "<meta>catchword: pro</meta>", "image": "'pro' is the last word of the text line, not a catchword", "problem": "page furniture mis-tagged", "severity": "minor", "class": "O11" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Orbiculi in ea tot plagunt homicidia", "image": "p̄sagunt homicidia", "problem": "verb misread to a non-word", "severity": "moderate", "class": "O6" },
+          { "ocr": "grebo gerendis", "image": "q rebꝰ gerendis", "problem": "'qui rebus' garbled into a non-word", "severity": "moderate", "class": "O6" },
+          { "ocr": "non infecta", "image": "non insecta", "problem": "long s read as f, giving 'not infected' instead of 'not cut'", "severity": "moderate", "class": "O6" },
+          { "ocr": "pbationes auctores", "image": "ꝓbatiores auctores", "problem": "misread", "severity": "minor" },
+          { "ocr": "pungat", "image": "ꝑtingat", "problem": "'pertingat' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "cauca, ex celere", "image": "cauea, ex scelere", "problem": "letter slips", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "vocab tag names 'Tibertus', who is not named on the page (metadata, not reader text)", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Si simile signum [triangle] apparet orale uel uitae lineae iuxta supremum angulum si rubeum fuerit homine cito infirmabitur. Tale signum [curved line] dū dignabit.", "image": "Si simile signū [Δ] p̄pe toralē uel uitæ lineā iuēies morsū cāis expectato et maxime illis i ptibus qbꝰ linee rūdebūt. Tale signū [sign] iuxta supmū āgulū si rub℞ fuerit hominē cito isirmādū designabit.", "problem": "the dog-bite prognosis ('morsum canis expectato … rumdebunt') is dropped and two sentences are fused; 'prope toralem' becomes 'apparet orale'", "severity": "serious", "class": "O5" },
+          { "ocr": "Stella in morte pollicis", "image": "Stella in mōte policis", "problem": "'monte' (mount of the thumb) read as 'morte' (death)", "severity": "moderate", "class": "O6" },
+          { "ocr": "Tale signum [star symbol] iuxta tria anguli", "image": "Tale signū [looped-cross sign] iuxta triā/guli", "problem": "the printed sign is described wrongly, and 'trianguli' is split", "severity": "moderate", "class": "O14" },
+          { "ocr": "te li gura talis … Talis uero apparet ui neas", "image": "Fi/gura talis … Talis uero p̄pe ui[te li]neas", "problem": "interleaved fragments read out of place; garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "fursum respiciente quidam ex masculo mulieris", "image": "sursum ꝓspiciēte g̃uidā ex masculo mulierē", "problem": "'grauidam' (pregnant) read as 'quidam'; the sentence loses its subject", "severity": "moderate", "class": "O6" },
+          { "ocr": "litoralis ab idice", "image": "si tora/lis ab idice", "problem": "'si toralis' read as 'litoralis'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Nam inferius dorso", "image": "Nā iferiētis dorso (in ferientis)", "problem": "'ferientis' (the percussio) read as 'inferius'", "severity": "moderate", "class": "O6" },
+          { "ocr": "cuius logior & si itersecta linea", "image": "cuius lōgior & ñ itersecta liea", "problem": "'non' read as 'si'; the condition is reversed", "severity": "moderate", "class": "O6" },
+          { "ocr": "pitue hoiem, eqlif, pitue i aqf", "image": "pitu℞ hoiem, eq̄lis, pitu℞ i aq̄s", "problem": "abbreviations garbled", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the margin notes are output after a <column-break/> as a separate column of plain text, not tagged as margins, so they read as body text at the end of the page", "severity": "moderate", "class": "O12" } ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is a near-diplomatic reading with many unexpanded abbreviations and long s read as f. It drops the dog-bite passage on page 39 and garbles much of that page ('in morte pollicis', 'litoralis'), and also contains non-words such as 'definximus' and 'grebo'."
+  }
+]
