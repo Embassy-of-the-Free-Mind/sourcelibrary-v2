@@ -649,6 +649,15 @@ const nextConfig: NextConfig = {
         destination: '/gallery/:path*',
         permanent: true,
       },
+      // The BPH catalogue on /libraries/<bph> linked each record to
+      // /libraries/<slug>/catalog/<ubn>, which has no route (~150 404s a
+      // month in not_found_reports, Oct 2026). Catalogue records live at
+      // /embed/bph/catalog/<ubn|uuid>; send old and indexed links there.
+      {
+        source: '/libraries/:slug(bibliotheca-philosophica-hermetica|bph)/catalog/:key*',
+        destination: '/embed/bph/catalog/:key*',
+        permanent: true,
+      },
       // Short, sayable aliases for the MCP setup guide ("sourcelibrary.org/mcp").
       // The guide's canonical URL is /connect; these exist to be typed and read aloud.
       ...['/mcp', '/claude', '/chatgpt'].map((source) => ({
