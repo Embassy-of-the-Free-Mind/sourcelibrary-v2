@@ -14,7 +14,8 @@ import { gatePagesForRequest } from '@/lib/metered-gate';
 import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
-import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
+import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
+import { takeReaderTextLayers, applyReaderTextLayer, type ReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
 
 export const preferredRegion = 'fra1';
 
@@ -53,7 +54,7 @@ export async function GET(
     const full = searchParams.get('full') === 'true';
 
     // Default: exclude detected_images (large array unused by the reader)
-    const projection = full ? undefined : PAGE_API_PROJECTION;
+    const projection = full ? undefined : PAGE_API_LAYER_PROJECTION;
 
     // Tenant subdomains and /[tenant]/... paths get tenantId injected by the
     // proxy and stay tenant-scoped. Calls from the global main domain (e.g.
@@ -84,6 +85,11 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
+    // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
+    // `?full=true` is untouched: the whole stored document, raw `data` included (what an editor loads).
+    let layers = new Map<string, ReaderTextLayer>();
+    if (!full) ({ pages: [page], layers } = await takeReaderTextLayers(db, [page]));
+
     // Metered reader (#4357): strip gated text for anonymous callers beyond
     // the book's free sample. Exempt: tenant-scoped requests (proxy-injected
     // tenantId = partner reading room) and a valid citation token for THIS
@@ -101,7 +107,7 @@ export async function GET(
     // Deterministic for readers; a flagged proxy pool also gets its extraction
     // ref (#6950), and that response is never cached.
     const ref = await poolRefFor(request);
-    return NextResponse.json(markPageForReader(page, undefined, { ref }), {
+    return NextResponse.json(markPageForReader(applyReaderTextLayer(page, layers), undefined, { ref }), {
       headers: { 'Cache-Control': ref ? 'private, no-store' : 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {

@@ -2720,18 +2720,39 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
+  // A page read from the notes layer (#7965) carries COMPOSED markup in translation.data (text + annotations,
+  // put back inline). An editor edits the STORED text, so it is loaded first (`?full=true`, the whole stored
+  // document); until it arrives the translation cannot be edited or saved.
+  const fromLayer = !!r.currentPage.translation?.layer;
+  const [storedTr, setStoredTr] = useState<{ id: string; data: string } | null>(null);
+  useEffect(() => {
+    if (!editing || !fromLayer || storedTr?.id === r.currentPageId) return;
+    let live = true;
+    const id = r.currentPageId;
+    fetch(`/api/pages/${encodeURIComponent(id)}?full=true`)
+      .then(res => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((p: { translation?: { data?: unknown } }) => {
+        if (live) setStoredTr({ id, data: typeof p?.translation?.data === 'string' ? p.translation.data : '' });
+      })
+      .catch(() => { if (live) setSaveError('Could not load the stored translation to edit. Reload and try again.'); });
+    return () => { live = false; };
+  }, [editing, fromLayer, r.currentPageId, storedTr?.id]);
+  const storedReady = !fromLayer || storedTr?.id === r.currentPageId;
+
   const originalOcr = r.currentPage.ocr?.data || '';
-  const originalTr = r.currentPage.translation?.data || '';
+  const originalTr = fromLayer ? (storedReady ? storedTr!.data : '') : (r.currentPage.translation?.data || '');
 
   useEffect(() => {
     if (!editing) return;
     const stored = draftsRef.current.get(r.currentPageId);
     setDraft({
       ocr: stored?.ocr ?? (r.currentPage.ocr?.data || ''),
-      translation: stored?.translation ?? (r.currentPage.translation?.data || ''),
+      translation: stored?.translation ?? originalTr,
     });
     setSaveError(null);
-  }, [editing, r.currentPageId, r.currentPage]);
+    // originalTr changes once, when a layer page's stored text arrives (storedReady).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing, r.currentPageId, r.currentPage, storedReady]);
 
   const setDraftField = (field: 'ocr' | 'translation', value: string) => {
     setDraft(prev => {
@@ -2741,7 +2762,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     });
   };
 
-  const dirty = editing && (draft.ocr !== originalOcr || draft.translation !== originalTr);
+  const trDirty = storedReady && draft.translation !== originalTr; // a layer page's translation only once its stored text is in
+  const dirty = editing && (draft.ocr !== originalOcr || trDirty);
 
   const saveEdits = async () => {
     if (!dirty) { setEditing(false); return; }
@@ -2752,11 +2774,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
         ocr: draft.ocr !== originalOcr
           ? { data: draft.ocr, language: r.book.language || 'Latin' }
           : undefined,
-        translation: draft.translation !== originalTr
+        translation: trDirty
           ? { data: draft.translation, language: 'English' }
           : undefined,
       });
       if (updated) r.applyPageUpdate(updated as unknown as Page);
+      setStoredTr(null);
       draftsRef.current.delete(r.currentPageId);
       setEditing(false);
     } catch {
@@ -3610,6 +3633,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     <textarea
       value={field === 'ocr' ? draft.ocr : draft.translation}
       onChange={e => setDraftField(field, e.target.value)}
+      readOnly={field === 'translation' && !storedReady}
       spellCheck={false}
       className={`w-full h-full resize-none outline-none p-6 ${r.settings.typeface === 'sans' ? 'font-sans' : 'font-body'}`}
       style={{
