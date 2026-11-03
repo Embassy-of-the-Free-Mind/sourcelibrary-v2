@@ -72,8 +72,13 @@ Write a spec (JSON) next to the images, then:
     NODE_PATH=<main checkout>/node_modules node .claude/skills/social-post/render.mjs <dir>/spec.json
 
 Slide kinds `cover`, `image`, `quote`, `end`; the header of `render.mjs` documents the fields. Put the `/q/` shortlink
-in `foot` on quote cards so the card itself carries its citation. Look at every slide before calling it done. Crop
-images with ImageMagick (`magick in.jpg -crop WxH+X+Y +repage out.jpg`), keeping an engraved nameplate where there is one.
+in `foot` on quote cards so the card itself carries its citation. Look at every slide before calling it done.
+
+**Crop to the image, always.** Show the plate, the diagram or the text block, not the leaf: paper margins, the
+binding edge and the library stamp make a picture read as a beige rectangle at feed size. `render.mjs` crops every
+image to its printed area by default (`crop.mjs`: the longest dense band of ink in each direction). Look at each crop;
+for a detail, give `"crop": "WxH+X+Y"` (keep an engraved nameplate where there is one), and for an image you have
+already cropped, give `"crop": "none"`.
 
 ## 4. Publish
 
