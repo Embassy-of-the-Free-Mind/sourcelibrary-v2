@@ -398,12 +398,12 @@ def decide(cell, M, cur, P, cost, wt_max, within=None, c0=None):
     elif not in_force(P, 'no_served_privilege'): p = cur
     else:
         # Opus last in every cell, a manuscript's too (where it is a candidate, not the bar): by channel, not by is_bar
-        opus = lambda r: is_bar(r, P) or r.get('channel') == 'claude'
+        opus = lambda r: is_bar(r, P) or (r.get('channel') == 'claude' and not r.get('candidate'))   # a stage marked candidate (Sonnet, #7263) is an ordinary route
         alt = [r for r in M if not opus(r) and floor_ok(r, P)]
         bar = [r for r in M if opus(r) and floor_ok(r, P)]
         if not (alt or bar): return 'HOLD (hard floor: no measured route clears it)', max(cand or M, key=lambda r: r['mean'])
         p = by_loss(alt or bar)
-        return ('keep' if p is cur else 'switch') + (' (fallback: none passes the gate; the best agy / GPU route)' if alt else
+        return ('keep' if p is cur else 'switch') + ((' (fallback: none passes the gate; the best candidate route, Sonnet)' if p.get('candidate') else ' (fallback: none passes the gate; the best agy / GPU route)') if alt else
                                                      ' (fallback: no agy / GPU route clears the hard floor; Opus)'), p
     return ('keep' if p is cur else 'switch'), p
 
@@ -609,7 +609,7 @@ def main():
             dr = [rng.betavariate(a, b) for _ in range(N)]; m = sum(dr) / N; u, u0 = usd_per_page(st, rates), usd_per_page(st0, rates)
             do = [rng_o.betavariate(ao, bo) for _ in range(N)]  # the other prior (a sensitivity), its own stream
             rs.append(dict(id=r['id'], stage=r['stage'], channel=st['channel'], lane=st.get('lane'),
-                           _bar=P['switch'].get('bar') == 'opus' and st['channel'] == 'claude' and not (cell.get('script') == 'manuscript' and P['switch'].get('bar_scope') == 'print'), points=st.get('points'), points_flat=st0.get('points'),
+                           _bar=P['switch'].get('bar') == 'opus' and st['channel'] == 'claude' and not st.get('candidate') and not (cell.get('script') == 'manuscript' and P['switch'].get('bar_scope') == 'print'), candidate=bool(st.get('candidate')), points=st.get('points'), points_flat=st0.get('points'),
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)], prior_model=dict(zip(('mean', 'basis'), pb[cell['id'], r['id']])),
                            prior_pooled=pbp.get((cell['id'], r['id'])), prior_other=[round(ao, 2), round(bo, 2)], eff=x and [round(v, 4) for v in x['eff']],
                            k=k, n=n, wrong=w, wrate=wrate, top=top, judge_planted=x and x.get('judge_planted'), mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
