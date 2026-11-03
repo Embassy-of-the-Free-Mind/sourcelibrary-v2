@@ -42,6 +42,7 @@ for (const b of mine) {
     { $project: { _id: 0, n: '$page_number', t: '$translation.updated_at', m: '$translation.model', pv: '$translation.prompt_version', ty: '$page_type',
       wh: { $cond: [{ $ifNull: ['$translation_withheld', false] }, 1, 0] }, hu: { $cond: [{ $or: [{ $ifNull: ['$translation.edited_by', false] }, { $in: ['$translation.source', ['human', 'manual']] }] }, 1, 0] },
       tr: S('$translation.data'), oc: S('$ocr.data') } },
+    // strlen-safe: tr and oc are S() output above, a $cond on $type that yields '' for any non-string.
     { $project: { n: 1, t: 1, m: 1, pv: 1, ty: 1, wh: 1, hu: 1, en: { $strLenCP: '$tr' }, src: { $strLenCP: '$oc' },
       h: { $substrCP: ['$tr', 0, 24] }, tl: { $substrCP: ['$tr', { $max: [0, { $subtract: [{ $strLenCP: '$tr' }, 24] }] }, 24] },
       st: { $substrCP: ['$oc', { $max: [0, { $subtract: [{ $strLenCP: '$oc' }, 60] }] }, 60] },
