@@ -256,7 +256,9 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 export function boxWeekly() {
   try {
     const d = JSON.parse(fs.readFileSync('/root/.claude-limits/latest.json', 'utf8'));
-    const me = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress;
+    // A job runs `claude` under CLAUDE_CONFIG_DIR (gex45: /root/.claude-milo), and the spawned `claude -p` inherits it:
+    // ~/.claude.json there is a different login (2026-11-03: dereklomas@ 9% vs the job's milolomas@ 81%).
+    const me = JSON.parse(fs.readFileSync(path.join(process.env.CLAUDE_CONFIG_DIR || os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress;
     const a = d.accounts.find((x) => x.email === me);
     const w = a?.limits?.find((l) => l.key === 'weekly_all:all');
     return w ? { account: a.email, pct: w.percent, resets_at: w.resets_at, checked_at: d.checked_at } : null;
