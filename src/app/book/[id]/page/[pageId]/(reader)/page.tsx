@@ -19,6 +19,7 @@ import { localizedTitle } from '@/lib/localized';
 import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
 import { ocrMeasure } from '@/lib/ocr-measure';
@@ -123,17 +124,20 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav).
   // Inclusion list, not `{ detected_images: 0 }` — see reader-page-projection.ts.
-  const currentPage = withoutTextLayer(await db.collection('pages').findOne(
+  const fetchedPage = await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
-  )); // #5942: the stored text layer never reaches the payload
+  );
+  const currentPage = withoutTextLayer(fetchedPage); // #5942: the stored text layer never reaches the payload
 
   if (!currentPage) {
     notFound();
   }
 
   // Step 2: Book lookup + nav pages + music transcriptions in parallel
-  const [bookResult, navPages, musicTranscriptions] = await Promise.all([
+  // The notes layer (#7965): read here, beside the book, while `fetchedPage` still carries translation.text;
+  // applied last, below, after the English-original swap and the metered gate.
+  const [bookResult, navPages, musicTranscriptions, textLayers] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
       .find(readerPageListFilter(currentPage.book_id as string))
@@ -157,6 +161,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         return [{ id: pageId, page_number: currentPage.page_number }];
       }),
     getTranscriptionsForPage(db, pageId),
+    loadReaderTextLayers(db, [fetchedPage]),
   ]);
 
   if (!bookResult) {
@@ -240,7 +245,10 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // carries the invisible provenance imprimatur in the translation. It is
   // deterministic — content-keyed, no per-request input — so this page stays
   // safely ISR/CDN-cacheable. The editor save path strips it before storing.
-  const markedPage = markPageForReader(servedPage, scopedBookId);
+  //
+  // The notes layer (#7965) goes in first: a page with a current translation.text and a page_annotations doc
+  // for it is read from the layer; any other page is served exactly as before.
+  const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
   return (
     <>

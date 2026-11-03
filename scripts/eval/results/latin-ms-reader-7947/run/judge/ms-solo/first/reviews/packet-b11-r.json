@@ -1,0 +1,58 @@
+[
+  {
+    "book_id": "b11-r",
+    "slot": 1,
+    "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1562 humanist Latin oration in praise of Lodi (Laus Pompeia): its Roman foundation by Gn. Pompeius, its sacks by the Milanese, its castella, its jurists (Oldradus Tressenus). The packet gives no tradition or collection, and civic encomium sits outside the esoteric core, so it fits only a general early-modern Latin / Italian civic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. Manuscript page numerals run 4, 15, 26 on image pages 14, 25, 36, so the offset is a constant 10 and the sequence is coherent. No translation exists for any of the three pages (OCR only). The Harvard College Library Imaging Services colour bar is a capture target, not a licence stamp.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page; the reader gets the Latin only.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Hac omnia quae superiùs", "image": "Hæc omnia quæ superiùs", "problem": "æ-ligature dropped/misread to 'Hac' (and 'quae' normalised) while the rest of the transcription keeps æ; meaning recoverable", "severity": "minor" },
+          { "ocr": "patriae nostrae", "image": "patriæ nostræ", "problem": "ligature normalised to ae, inconsistent with the page's own convention elsewhere", "severity": "minor" },
+          { "ocr": "obseruauimus<unclear>que</unclear>", "image": "obseruauimus'q3 (the -que abbreviation)", "problem": "correct expansion, but flagged <unclear> needlessly", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page; the reader gets the Latin only.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<unclear>Cum</unclear> et", "image": "C(?)n et — abbreviated word at the very end of the page", "problem": "plausible expansion of an abbreviated last word, honestly flagged as unclear; cannot confirm at this resolution", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page; the reader gets the Latin only.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription of this clean humanist cursive is close to perfect across all three pages: right leaves, no inventions, and only ligature-normalisation slips. There is no translation to judge, and shelf placement is unclear for a civic encomium of Lodi."
+  }
+]

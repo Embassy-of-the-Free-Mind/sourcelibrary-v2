@@ -25,6 +25,8 @@
  *
  * The count is a FLOOR: the rule is a list of phrases read off real hits, and a leak worded another way is
  * not in the net. PREFILTER must stay a superset of the rule (tests/unit/page-integrity.test.ts pins it).
+ * Kind `summary-placeholder` (#6117, 2026-11-03) is counted in by_kind but is not in the headline: the write gate
+ * does not refuse it, and 57 of 62 hits read by eye were real (the rest: a fragmentary source, a parallel text).
  */
 import { MongoClient } from 'mongodb';
 import { mkdirSync, writeFileSync, appendFileSync, readFileSync, existsSync } from 'node:fs';

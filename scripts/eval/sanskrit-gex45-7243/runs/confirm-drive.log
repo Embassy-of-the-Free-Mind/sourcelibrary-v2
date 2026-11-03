@@ -1,0 +1,6 @@
+2026-11-03T09:35:01Z [queue] start; GPU 2 MiB
+2026-11-03T09:35:01Z [S] start; GPU 2 MiB
+2026-11-03T09:35:41Z [S] up after 40 s
+2026-11-03T09:36:52Z [S] S wall 71 s peak 15344 MiB 50 rows
+2026-11-03T09:37:00Z [all] DRIVE-END GPU 2 MiB
+2026-11-03T09:37:00Z [queue] end; GPU 2 MiB; rows 50

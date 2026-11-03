@@ -87,6 +87,31 @@ export const getRepeatKeeperId = cache(async function getRepeatKeeperId(bookId: 
   }
 });
 
+/**
+ * The real page behind a page id with junk stuck to its end, or null.
+ *
+ * not_found_reports logged ~200 of these a month (from 2026-09-12): a valid
+ * 24-hex page id followed by extra characters, e.g. `…cab155` + `26`, all
+ * with no referrer — links copied or retyped by people and chat assistants.
+ * 161 of 200 resolved, in the same book, to their first 24 characters. Only
+ * a page in the SAME book answers, so a stray id can never land a reader in
+ * another book.
+ */
+export const getTrimmedPageId = cache(async function getTrimmedPageId(bookId: string, pageId: string): Promise<string | null> {
+  const m = /^([0-9a-f]{24}).+$/i.exec(pageId);
+  if (!m) return null;
+  try {
+    const db = await getReadDb();
+    const page = await db.collection('pages').findOne(
+      { id: m[1].toLowerCase(), book_id: bookId },
+      { projection: { _id: 0, id: 1 } },
+    );
+    return page ? (page.id as string) : null;
+  } catch {
+    return null;
+  }
+});
+
 export function isArchivedSplit<T extends object>(page: T | null | undefined): page is T & { page_number: number; split_into: string[] } {
   const p = page as { page_number?: unknown; split_into?: unknown } | null | undefined;
   return !!p

@@ -20,7 +20,7 @@
 const LITE = /flash-lite/i;
 export const OCR_LITE_SHARE_LIMIT = 0.2;
 /** A stored read that says the page has no text to translate (the armc frame's own test, cli-ocr-lane.mjs armcPages). */
-const NO_TEXT = /<page-type>\s*(illustration|plate|map|blank)/i;
+export const NO_TEXT = /<page-type>\s*(illustration|plate|map|blank)/i;
 
 /**
  * Is this page an UNCHECKED flash-lite draft? (#7263) Not when a person edited it (ocr.edited_by, or source manual):

@@ -115,6 +115,24 @@ export function translateLaneForBook(table, book) {
   return { channel: 'batch', engine: translateEngineFor(table, book), row: tableRowFor(table, book) };
 }
 
+/**
+ * A Mongo filter over `books` selecting exactly the books translateLaneForBook routes to a cli row (#7263): one
+ * clause per cli row, its language regex plus its `unless` as negations. A book no cli row fits is batch, whatever
+ * batch row it fits, so the union of the cli clauses is the whole cli set. The pipeline orchestrator's Phase 4 selects
+ * by it while the translate brake is on, so a Batch-bound book never takes a slot it cannot use. Provider rows are
+ * Batch-only today; a cli `match.provider` row is matched by provider. Returns null when the table has no cli row.
+ */
+export function cliBookFilter(table) {
+  const clauses = compile(table).filter(({ row }) => channelOf(row) === 'cli').map(({ row, re, unlessTitle, unlessPublisher, unlessProviders }) => ({
+    ...(re
+      ? { language: re, ...(unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {}) }
+      : { 'image_source.provider': row.match.provider }),
+    ...(unlessTitle ? { title: { $not: unlessTitle } } : {}),
+    ...(unlessPublisher ? { publisher: { $not: unlessPublisher } } : {}),
+  }));
+  return clauses.length ? { $or: clauses } : null;
+}
+
 export function translateEngineFor(table, book) {
   return tableRowFor(table, book)?.engine ?? table.default.engine;
 }

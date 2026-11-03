@@ -5,6 +5,7 @@ import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
 import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 
@@ -31,13 +32,14 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
 
   // Same inclusion list as the production reader (reader-page-projection.ts),
   // so the previews render from the same field set.
-  const currentPage = withoutTextLayer(await db.collection('pages').findOne(
+  const fetchedPage = await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
-  )); // #5942: the stored text layer never reaches the payload
+  );
+  const currentPage = withoutTextLayer(fetchedPage); // #5942: the stored text layer never reaches the payload
   if (!currentPage) notFound();
 
-  const [bookResult, navPages] = await Promise.all([
+  const [bookResult, navPages, textLayers] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
       .find(readerPageListFilter(currentPage.book_id as string))
@@ -47,6 +49,7 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
       .toArray()
       .then(pages => pages.filter(isReaderListedPage))
       .catch(() => [{ id: pageId, page_number: currentPage.page_number }]),
+    loadReaderTextLayers(db, [fetchedPage]), // the notes layer, as the production reader reads it (#7965)
   ]);
 
   if (!bookResult) notFound();
@@ -61,7 +64,7 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
   return {
     book,
     // English edition, English leaf: the transcription is the text (#7100).
-    page: serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book),
+    page: applyReaderTextLayer(serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book), textLayers),
     pageList: JSON.parse(JSON.stringify(navPages)) as Page[],
   };
 }

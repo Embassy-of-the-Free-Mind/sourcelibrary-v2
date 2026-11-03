@@ -1,0 +1,124 @@
+[
+  {
+    "book_id": "b07-k", "slot": 1, "title": "Pontifical of the Abbey of Montier-en-Der", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Dominus abbas", "image": "Domnus abbas", "problem": "spelling normalised to the expected form", "severity": "minor", "class": "O8" },
+          { "ocr": "Capitula et costas in laudibus", "image": "Capitula et cottas [= collectas, abbreviated]", "problem": "abbreviation of 'collectas' misread as a non-word 'costas'", "severity": "moderate", "class": "O6" },
+          { "ocr": "In die · xxviii", "image": "Indie·xxviiii·", "problem": "folio numeral short by one minim (28 for 29)", "severity": "moderate", "class": "O7" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 2, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "In vigilia beati bernardi", "image": "Invigilia bti bchari [b with stroke = Berchari, St Bercharius, founder of Montier-en-Der]", "problem": "the abbey's own founder's feast replaced by the more familiar St Bernard", "severity": "serious", "class": "O8" },
+          { "ocr": "Ad vesperas · in vigilia · f · c · l", "image": "Advs in vigi(li)a·f·c·li·", "problem": "folio reference 151 read as 150", "severity": "moderate", "class": "O7" },
+          { "ocr": "Ad vesperas i primis vesperis", "image": "Advs i(n) p(ri)mis vs", "problem": "suspension of 'in' left unexpanded among otherwise expanded words", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 3, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "A close, line-faithful read that keeps the folio table usable, but it turns the vigil of St Bercharius, the abbey's founder, into St Bernard and slips on two folio numerals and 'collectas'."
+  },
+  {
+    "book_id": "b07-m", "slot": 2, "title": "Pontifical of the Abbey of Montier-en-Der", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "In die missa f. iiii.", "image": "Indie missa·f·iii·", "problem": "folio 3 read as 4", "severity": "moderate", "class": "O7" },
+          { "ocr": "Ad vesperas laudes terciam folio xlviii", "image": "Ad vesp· laud· terciā·f·c· xlviii", "problem": "the hundreds 'c' dropped: folio 148 given as 48", "severity": "moderate", "class": "O7" },
+          { "ocr": "In die xxviii. Ad vesperas in vigilia f. lvi.", "image": "Indie·xxviiii·Ad vs in vigilia·f·c·lvi·", "problem": "29 read as 28 and 'c' dropped (156 given as 56)", "severity": "moderate", "class": "O7" },
+          { "ocr": "Ad vesperas f. l. Missa f. iiii. xx. xiii. ... Ad vesperas f. l.", "image": "Ad vesp·f·c·l·Missa·f· iiii·xx·xiii ... Ad vs·f·c·l·", "problem": "'c' dropped twice: folio 150 given as 50", "severity": "moderate", "class": "O7" },
+          { "ocr": "In vigilia nativitatis domini ... In epiphania", "image": "In vigilia natal(is) d(omi)ni ... In epyph(an)ia", "problem": "spellings and the feast name normalised to the expected forms", "severity": "minor", "class": "O8" },
+          { "ocr": "De sancto sacramento ... De sancta ia:", "image": "De s(an)cto sacrame(n)ti ... De s(anct)o ia:", "problem": "case and gender changed (the catchword is 'sancto Iacobo')", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 2, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Adventus·f·...", "image": "Advs [= Ad vesperas]", "problem": "the abbreviation for 'Ad vesperas' is expanded as 'Adventus' all 12 times, so the table now points to Advent instead of Vespers at every entry", "severity": "serious", "class": "O6" },
+          { "ocr": "Adventus primis·f·clii", "image": "Advs i(n) p(ri)mis vs·f·c·lii", "problem": "'in' and the second 'vesperis' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "In vigilia beati Eucharii", "image": "Invigilia bti bchari [= Berchari, founder of Montier-en-Der]", "problem": "the founder saint replaced by St Eucharius", "severity": "serious", "class": "O8" },
+          { "ocr": "cobo·f·ii·Adventus in vigilia·f·ci", "image": "cobo·f·c·ii·Advs in vigi(li)a·f·c·li·", "problem": "folio 102 given as 2 and folio 151 as 101", "severity": "moderate", "class": "O7" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 3, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not usable as a folio table: on page 2 every 'Ad vesperas' becomes 'Adventus', the founder saint becomes Eucharius, and on both index pages folio numbers lose their hundreds. The chant page is right."
+  },
+  {
+    "book_id": "b07-r", "slot": 3, "title": "Pontifical of the Abbey of Montier-en-Der", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "In die · xxviii", "image": "Indie·xxviiii·", "problem": "folio numeral short by one minim (28 for 29)", "severity": "moderate", "class": "O7" },
+          { "ocr": "· fo · c · xlvii · ... Missa · fo · vii", "image": "·f·c·xlvii· ... Mis·f·vii", "problem": "the single 'f' is written as 'fo' throughout (only the first two are 'fo' on the leaf)", "severity": "minor", "class": "O8" },
+          { "ocr": "De · sancta : ia :", "image": "De s(anct)o ia:", "problem": "wrong gender (the catchword is 'sancto Iacobo')", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 2, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "In vigilia beati bernardi", "image": "Invigilia bti bchari [= Berchari, founder of Montier-en-Der]", "problem": "the abbey's founder replaced by St Bernard", "severity": "serious", "class": "O8" },
+          { "ocr": "Dedicatione ecclesie · f · c · xv · Ad vesperas · f · c · liiii", "image": "Dedicatiōe ecclie·f·c·xv·Advs·f·c·liii·", "problem": "folio 153 given as 154 (likewise after 'In die · f · c · xxii')", "severity": "moderate", "class": "O7" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 3, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "six <image-desc> tags for the small initials sit inline between the phrases ('Dominus vobiscum. <image-desc …>Et cum spiritu tuo.'), breaking the reader text", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Faithful to the layout and mostly accurate, but it turns the vigil of St Bercharius into St Bernard and misreads a few folio numerals. The chant text is right but cluttered with inline image tags."
+  },
+  {
+    "book_id": "b07-t", "slot": 4, "title": "Pontifical of the Abbey of Montier-en-Der", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "In die missa· folio iiii", "image": "Indie missa·f·iii·", "problem": "folio 3 read as 4", "severity": "moderate", "class": "O7" },
+          { "ocr": "De sacra trinitate", "image": "De sācta [= sancta] trinitate", "problem": "abbreviated 'sancta' read as 'sacra'", "severity": "minor", "class": "O6" },
+          { "ocr": "Ad vesperas laudes et terciam", "image": "Ad vesp· laud· terciā", "problem": "'et' added", "severity": "minor" },
+          { "ocr": "In vigilia nativitatis domini ... De sancto sacramento", "image": "In vigilia natal(is) d(omi)ni ... De s(an)cto sacrame(n)ti", "problem": "normalised to the expected forms", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 2, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 3, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "The best of the four: the folio numbers are right (including 'xxviiii') and it gives the founder's name as the honest '<unclear>bchari</unclear>' rather than a guessed saint. It has one numeral slip ('iiii' for 'iii') and reads 'sacra' for 'sancta'."
+  }
+]

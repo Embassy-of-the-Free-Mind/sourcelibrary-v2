@@ -1,0 +1,170 @@
+{
+ "issue": 7991,
+ "note": "Transcription lane, #7866 judge (judgePrompt task ocr), per language | form on the image | OCR engine. Unweighted drawn pages, one a book. confirmed = after SECOND-READER.md.",
+ "judged": {
+  "Greek|manuscript|gemini-3-flash-preview": {
+   "books": 18,
+   "pages": 18,
+   "words": 6352,
+   "misleads_per_1k": 7.71,
+   "wrong_text_per_1k": 19.05,
+   "cosmetic_per_1k": 5.04,
+   "fidelity_mean": 2.44
+  },
+  "Greek|manuscript|gemini-3.1-flash-lite-preview": {
+   "books": 1,
+   "pages": 1,
+   "words": 243,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 16.46,
+   "cosmetic_per_1k": 8.23,
+   "fidelity_mean": 2
+  },
+  "Greek|print|gemini-3-flash-preview": {
+   "books": 21,
+   "pages": 21,
+   "words": 7351,
+   "misleads_per_1k": 6.12,
+   "wrong_text_per_1k": 4.49,
+   "cosmetic_per_1k": 5.99,
+   "fidelity_mean": 3.86
+  },
+  "Sanskrit|manuscript|gemini-3-flash-preview": {
+   "books": 12,
+   "pages": 12,
+   "words": 2697,
+   "misleads_per_1k": 20.76,
+   "wrong_text_per_1k": 11.49,
+   "cosmetic_per_1k": 8.53,
+   "fidelity_mean": 2.58
+  },
+  "Sanskrit|manuscript|gemini-3.1-flash-lite": {
+   "books": 1,
+   "pages": 1,
+   "words": 81,
+   "misleads_per_1k": 37.04,
+   "wrong_text_per_1k": 24.69,
+   "cosmetic_per_1k": 49.38,
+   "fidelity_mean": 3
+  },
+  "Sanskrit|manuscript|gemini-3.1-flash-lite-preview": {
+   "books": 5,
+   "pages": 5,
+   "words": 893,
+   "misleads_per_1k": 14.56,
+   "wrong_text_per_1k": 21.28,
+   "cosmetic_per_1k": 6.72,
+   "fidelity_mean": 1.6
+  },
+  "Sanskrit|print|gemini-3-flash-preview": {
+   "books": 7,
+   "pages": 7,
+   "words": 1120,
+   "misleads_per_1k": 10.71,
+   "wrong_text_per_1k": 4.46,
+   "cosmetic_per_1k": 16.07,
+   "fidelity_mean": 3.71
+  },
+  "Sanskrit|print|gemini-3.1-flash-lite": {
+   "books": 1,
+   "pages": 1,
+   "words": 147,
+   "misleads_per_1k": 13.61,
+   "wrong_text_per_1k": 6.8,
+   "cosmetic_per_1k": 47.62,
+   "fidelity_mean": 3
+  },
+  "Sanskrit|print|gemini-3.1-flash-lite-preview": {
+   "books": 4,
+   "pages": 4,
+   "words": 519,
+   "misleads_per_1k": 15.41,
+   "wrong_text_per_1k": 28.9,
+   "cosmetic_per_1k": 15.41,
+   "fidelity_mean": 2.5
+  }
+ },
+ "study_cells": {
+  "Greek|manuscript|gemini-3-flash-preview": {
+   "books": 18,
+   "pages": 18,
+   "words": 6352,
+   "misleads_per_1k": 1.89,
+   "wrong_text_per_1k": 16.85,
+   "cosmetic_per_1k": 12.44,
+   "fidelity_mean": 2.44
+  },
+  "Greek|manuscript|gemini-3.1-flash-lite-preview": {
+   "books": 1,
+   "pages": 1,
+   "words": 243,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 16.46,
+   "cosmetic_per_1k": 8.23,
+   "fidelity_mean": 2
+  },
+  "Greek|print|gemini-3-flash-preview": {
+   "books": 21,
+   "pages": 21,
+   "words": 7351,
+   "misleads_per_1k": 1.22,
+   "wrong_text_per_1k": 3.54,
+   "cosmetic_per_1k": 11.7,
+   "fidelity_mean": 3.86
+  },
+  "Sanskrit|manuscript|gemini-3-flash-preview": {
+   "books": 12,
+   "pages": 12,
+   "words": 2697,
+   "misleads_per_1k": 5.56,
+   "wrong_text_per_1k": 10.01,
+   "cosmetic_per_1k": 24.84,
+   "fidelity_mean": 2.58
+  },
+  "Sanskrit|manuscript|gemini-3.1-flash-lite": {
+   "books": 1,
+   "pages": 1,
+   "words": 81,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 12.35,
+   "cosmetic_per_1k": 98.77,
+   "fidelity_mean": 3
+  },
+  "Sanskrit|manuscript|gemini-3.1-flash-lite-preview": {
+   "books": 5,
+   "pages": 5,
+   "words": 893,
+   "misleads_per_1k": 6.72,
+   "wrong_text_per_1k": 17.92,
+   "cosmetic_per_1k": 15.68,
+   "fidelity_mean": 1.6
+  },
+  "Sanskrit|print|gemini-3-flash-preview": {
+   "books": 7,
+   "pages": 7,
+   "words": 1120,
+   "misleads_per_1k": 1.79,
+   "wrong_text_per_1k": 2.68,
+   "cosmetic_per_1k": 25.89,
+   "fidelity_mean": 3.71
+  },
+  "Sanskrit|print|gemini-3.1-flash-lite": {
+   "books": 1,
+   "pages": 1,
+   "words": 147,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 6.8,
+   "cosmetic_per_1k": 61.22,
+   "fidelity_mean": 3
+  },
+  "Sanskrit|print|gemini-3.1-flash-lite-preview": {
+   "books": 4,
+   "pages": 4,
+   "words": 519,
+   "misleads_per_1k": 3.85,
+   "wrong_text_per_1k": 13.49,
+   "cosmetic_per_1k": 42.39,
+   "fidelity_mean": 2.5
+  }
+ }
+}

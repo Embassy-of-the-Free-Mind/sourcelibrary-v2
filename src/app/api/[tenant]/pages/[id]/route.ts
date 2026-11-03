@@ -13,7 +13,8 @@ import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
-import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
+import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
+import { takeReaderTextLayers, applyReaderTextLayer, type ReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
 
 export const preferredRegion = 'fra1';
 
@@ -65,7 +66,7 @@ export async function GET(
     const tenantFilter = tenant === 'default' ? { $in: [tenantId, null] } : tenantId;
 
     // Default: exclude detected_images (large array unused by the reader)
-    const projection = full ? undefined : PAGE_API_PROJECTION;
+    const projection = full ? undefined : PAGE_API_LAYER_PROJECTION;
     let page = await db.collection('pages').findOne(
       { id, tenantId: tenantFilter },
       projection ? { projection } : undefined
@@ -86,6 +87,11 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
+    // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
+    // `?full=true` is untouched: the whole stored document, raw `data` included (what an editor loads).
+    let layers = new Map<string, ReaderTextLayer>();
+    if (!full) ({ pages: [page], layers } = await takeReaderTextLayers(db, [page]));
+
     // Metered reader (#4357): the 'default' tenant is the main library, so it
     // meters like the global twin; named tenants (bph/kloss/…) are partner
     // reading rooms and stay exempt, as is a valid ?cite= citation token for
@@ -101,7 +107,7 @@ export async function GET(
 
     // Reader-path provenance: translation carries the invisible imprimatur
     // (deterministic, no ref — cache-safe). Mirrors the global twin.
-    return NextResponse.json(markPageForReader(page), {
+    return NextResponse.json(markPageForReader(applyReaderTextLayer(page, layers)), {
       headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
