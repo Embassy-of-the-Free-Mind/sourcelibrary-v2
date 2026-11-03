@@ -153,6 +153,12 @@ describe('the defect rule decides, k/n is the fallback (#6740)', () => {
     // Latin Flash-Lite: the live Opus route has 9 books of defect verdicts (< 10): k/n decides, labelled
     expect([by['latin-lite/print'].rule, by['latin-lite/print'].decision]).toEqual(['k/n', 'keep (k/n: the live route lite>opus has no defect verdicts (9 books))']);
   });
+  it('latin-lite/print is a person\'s decision (#7263): it binds the re-read at 4 a call, and the row keeps the rule\'s own pick', () => {
+    const table = loadCurrentTable(RT);
+    const [f] = checkBinding(table, servedByReread({ languages: ['Latin'], perCall: 4 }), { today: '2026-11-03' });
+    expect([f.cell, f.status, f.decided]).toEqual(['latin-lite/print', 'ok', 'agy-flash-low@4-read']);
+    expect(table.rows.get('latin-lite/print').rule_alone).toMatch(/agy-flash-low-read$/);
+  });
   const py = spawnSync('python3', ['--version']);
   it.skipIf(py.status !== 0)('build.py decide_defects: switch, gates, the weight HOLD and every fallback (test_pick.py DefectRule)', () => {
     const r = spawnSync('python3', ['-m', 'unittest', 'test_pick.DefectRule'], { cwd: RT, encoding: 'utf8' });

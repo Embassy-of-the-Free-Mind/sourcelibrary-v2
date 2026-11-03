@@ -648,7 +648,8 @@ def main():
             """The cell's decision under rules Px: (k/n decision, k/n route, defect decision, route, info, rule, final
             decision, final route, judge-gate info). Run once with the rules in force, and per λ for the sensitivity."""
             dec, pk = decide(cell, M, cur, Px, steady, wt_abs, c0=c0)
-            if cell.get('planned'): dec, pk = 'planned', next(r for r in rs if r['id'] == cell['planned']['route'])
+            # planned.decision (#7263): a person's decision that binds like a rule's (a 'switch (...)' label), where plain `planned` only names the route
+            if cell.get('planned'): dec, pk = cell['planned'].get('decision', 'planned'), next(r for r in rs if r['id'] == cell['planned']['route'])
             elif thin and dec != 'held':
                 dec = f"HOLD ({cell['script']}: < {Px['script_split']['min_manuscript_pages']} pages a route)" if any(r['tested'] for r in rs) else f"UNTESTED ({cell['script']})"
             # THE DEFECT RULE (rules.json decision_rule): it decides where the k/n rule reaches keep / switch; k/n stays the
@@ -699,6 +700,8 @@ def main():
                           p_within=within_p(aa, bb, w), alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
         rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'],
                          decision_kn=dec, route_kn=pk['id'], rule=rule if RULE == 'defects' else 'k/n', live=live_id,
+                         # what the rule alone picks under a person's planned decision, so the table shows both
+                         **({'rule_alone': (lambda d: f"{d[0]} {d[1]['id']}")(decide(cell, M, cur, P, steady, wt_abs, c0=c0))} if (cell.get('planned') or {}).get('decision') else {}),
                          # no_absolute_gate: the bars that no longer block ride on the row as flags (they direct tests)
                          needs_engine_flag=needs_engine(M, P) if in_force(P, 'no_absolute_gate') and M else None,
                          hold_flag=bool(M) and in_force(P, 'no_absolute_gate') and not any(r['p80'] >= P['hold']['p'] for r in M),
