@@ -12,7 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { splitAnnotations } from '../../lib/annotation-layer.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
-import { parseNotes, inlineNotes } from './lib.mjs';
+import { parseNotes, inlineNotes, requestParts, previousNotes } from './lib.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const B = process.env.BENCH7499 || `${process.env.JOB_SCRATCH}/bench7499`;
@@ -21,6 +21,17 @@ const OUT = path.join(HERE, '../results/notes-step-7965');
 const jl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const BAD = new Set(['wrong', 'partly_wrong', 'unsupported']);
 const DRAWS = 2000;
+// Cross-page repeat (Derek's inbox note, 2026-11-03 09:45Z; secondary, not in the rule): a note repeats the previous
+// page when its anchor, normalised, equals a previous-page note's, or its body shares >= half its content words
+// (Jaccard, words of 3+ letters) with one. Previous page = the stored English #7499's request carried (both arms saw
+// it: (a) inline in its continuity seed, (b) as the notes list). One page per book: only k = 1 is measurable here.
+const normA = (s) => String(s || '').toLowerCase().normalize('NFKD').replace(/\p{M}/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const words = (s) => new Set(normA(s).split(' ').filter((w) => w.length >= 3));
+const jacc = (a, b) => { if (!a.size || !b.size) return 0; let i = 0; for (const w of a) if (b.has(w)) i++; return i / (a.size + b.size - i); };
+export function repeatsPrevious(note, prev) {
+  const an = normA(note.anchor), bw = words(note.body);
+  return prev.some((p) => (an && an === normA(p.anchor)) || jacc(bw, words(p.body)) >= 0.5);
+}
 const r1 = (x) => (x == null || Number.isNaN(x) ? null : Math.round(x * 10) / 10);
 
 function bootDiff(pages, fx, fy) {
@@ -80,7 +91,11 @@ function engine(E) {
   const plainRows = new Map(jl(`${B}/arms/${E}-plain.jsonl`).filter((r) => r.text).map((r) => [r.uid, r]));
   const outTok = (r) => Number(r?.usage?.output_tokens ?? r?.out ?? 0) + Number(r?.thinking ?? 0);
   const mech = { a: { pages: 0, notes: 0, zero: 0, out_tokens: 0 }, b: { pages: 0, notes: 0, zero: 0, out_tokens: 0, unparsed: 0, step_out_tokens: 0, plain_out_tokens: 0, anchors: { exact: 0, fuzzy: 0, repeated: 0, missing: 0 }, types: {} } };
-  for (const [uid, r] of A) { const n = inlineNotes(r.text).notes.length; mech.a.pages++; mech.a.notes += n; if (!n) mech.a.zero++; mech.a.out_tokens += outTok(r); }
+  const cli13 = new Map(jl(`${B}/req/cli-v13.jsonl`).map((r) => [r.uid, r]));
+  const prevOf = (uid) => previousNotes(requestParts(cli13.get(uid).prompt).previous);
+  for (const m of [mech.a, mech.b]) m.repeat = { pages_with_prev_notes: 0, notes: 0, repeats: 0 };
+  const addRepeat = (m, uid, notes) => { const prev = prevOf(uid); if (!prev.length) return; m.repeat.pages_with_prev_notes++; for (const n of notes) { m.repeat.notes++; if (repeatsPrevious(n, prev)) m.repeat.repeats++; } };
+  for (const [uid, r] of A) { const ns = inlineNotes(r.text).notes; const n = ns.length; mech.a.pages++; mech.a.notes += n; if (!n) mech.a.zero++; mech.a.out_tokens += outTok(r); addRepeat(mech.a, uid, ns.map((x) => ({ anchor: x.anchor?.exact || '', body: x.body }))); }
   for (const [uid, r] of Bn) {
     const pl = plainRows.get(uid); if (!pl) continue;
     const p = parseNotes(r.text, splitAnnotations(pl.text).text);
@@ -88,13 +103,14 @@ function engine(E) {
     if (!p.ok) mech.b.unparsed++;
     mech.b.notes += p.annotations.length; if (!p.annotations.length) mech.b.zero++;
     mech.b.step_out_tokens += outTok(r); mech.b.plain_out_tokens += outTok(pl);
+    addRepeat(mech.b, uid, p.annotations.map((x) => ({ anchor: x.anchor.exact, body: x.body })));
     for (const a of p.annotations) { mech.b.anchors[a.how === 'exact' ? 'exact' : a.how === 'fuzzy' ? 'fuzzy' : a.how === 'repeated' ? 'repeated' : 'missing']++; mech.b.types[a.type] = (mech.b.types[a.type] || 0) + 1; }
   }
   mech.b.out_tokens = mech.b.step_out_tokens + mech.b.plain_out_tokens;
   const an = mech.b.anchors, tot = an.exact + an.fuzzy + an.repeated + an.missing;
   mech.b.anchor_resolution = tot ? r1((100 * (an.exact + an.fuzzy)) / tot) : null;
   mech.b.anchor_found_at_all = tot ? r1((100 * (an.exact + an.fuzzy + an.repeated)) / tot) : null;
-  for (const m of [mech.a, mech.b]) { m.notes_per_page = r1(m.notes / Math.max(1, m.pages)); m.out_tokens_per_page = Math.round(m.out_tokens / Math.max(1, m.pages)); }
+  for (const m of [mech.a, mech.b]) { m.repeat.per100 = m.repeat.notes ? r1((100 * m.repeat.repeats) / m.repeat.notes) : null; m.notes_per_page = r1(m.notes / Math.max(1, m.pages)); m.out_tokens_per_page = Math.round(m.out_tokens / Math.max(1, m.pages)); }
   mech.b.step_out_tokens_per_page = Math.round(mech.b.step_out_tokens / Math.max(1, mech.b.pages));
   mech.b.plain_out_tokens_per_page = Math.round(mech.b.plain_out_tokens / Math.max(1, mech.b.pages));
   res.mechanical = mech;
