@@ -19,7 +19,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 /** Other agy logins this box may carry (scripts/workers/agy-guard.sh AGY_HOME, #7517). */
-export const POOL_HOMES = Object.freeze(['/root/.agy-james']);
+export const POOL_HOMES = Object.freeze(['/root/.agy-james', '/root/.agy-milo']);
 /** Env marks of lanes that share a pool rather than own it (see BUSY). */
 export const SHARED_MARKS = Object.freeze(['AGY_POOL_SHARED=1', 'SIKU_LANE_CHILD=1']);
 
