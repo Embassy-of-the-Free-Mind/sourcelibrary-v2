@@ -8,7 +8,7 @@ n_books: 24859
 n_pages: 5743761
 verdict: "English slides onto the wrong leaf inside multi-page calls because the model folds the next leaf into one page's section and then fills every later tag one leaf ahead; the tags stay numbered and in order, so the parser, which trusts them, writes the slide. Replaying 30 slid calls on the same input and model reproduces it in 17 of 62 calls (12 of 31 blocks), 17 of 23 at the same page as the stored slide, against 1 of 30 clean calls; removing in-page '---' rules changes nothing (6/20 vs 6/20). Single-page-written pages carry none (0 of 499, Opus with scans). Sonnet and agy Flash-low both pass the held-out gate overall (recall 0.973 and 0.947, 0 false flags in 75); neither is proven on Han (7 of 8 natural Han shifts, Wilson 0.53-0.98)."
 status: adopted
-decision: "No production write (eval only, read-only on Mongo). Opus-confirmed Han and Tibetan wrong-leaf pages and the scale screen's flags are listed for wrong-leaf-fix-5021 on #5021. The screen ran on subscription headroom (Sonnet to 90% of the milolomas week, agy on the milo pool); no cron was installed."
+decision: "No production write (eval only, read-only on Mongo). 30 Opus-confirmed wrong-leaf pages (confirmed-for-fix.json) and 365 screen flags are listed for wrong-leaf-fix-5021 on #5021. Sonnet is the screen for readers' books (80% precision on its shift flags there); agy Flash-low is not used on Chinese at scale (25%, none-class all false). Single-page-written pages are dropped from the frame. No cron installed."
 superseded_by: null
 issue: [5021]
 router_evidence: "none — a cause analysis and a detector's gate, not a comparison of translation routes"
@@ -163,19 +163,49 @@ leaf was folded into the screens (they see the English's end), not run separatel
 | both | natural Tibetan | 1/1 | 0/18 |
 
 Both pass overall; for Han the point estimate is 0.71-0.875 and the interval reaches 0.36, so the gate is not met there.
-Both miss the same Han page (a list of book titles). **Price:** Sonnet, about 1.4 weekly points per 1,000 pages on the
-milolomas login (1,370 calls moved it 81% → 83%, integer meter, with this session on the same login); agy Flash-low,
-about 4 weekly points per 1,000 calls on the milo pool (264 calls: 76% → 75% weekly, 49% → 44% of the 5-hour bucket).
-Fee × share: the plans' fees are not recorded in the repo; at $200 a month for Max 20x that is about $0.65 per 1,000 pages
-for Sonnet.
+Both miss the same Han page (a list of book titles). **Price** (whole run, Cost below): Sonnet about 1.1 weekly points per 1,000 pages on the milolomas login, about $0.50
+per 1,000 at a Max 20x fee; agy Flash-low about 2.2 weekly points per 1,000 calls on the milo pool. Both integer meters.
 
-**6. Screen on the frame** — SCALE_PLACEHOLDER
+**6. Screen on the frame** (`queue.py`, `scale-runner.sh`, `scale-flags.jsonl.gz`; 21:05-22:10Z, then stopped). One
+page window a call, prompt v3, pages already screened by the 11-03 shift screen left out.
+
+| queue | screen | pages | shift flags | Opus on a seeded sample (one page a book) | est. wrong-leaf rate |
+|---|---|---|---|---|---|
+| Chinese, lite-preview write groups of 6-20 (13,137 pages, 161 books; 39 books read) | agy Flash-low | 2,472 | 33 next/prev (1.3%) + 147 none | next/prev 2 of 8 real + 1 mixed (25%, 7-59); none 0 of 7 | about 0.3% (0.1-0.8) |
+| Readers' books, most-read first, pages after an over-long page in the call (35,425 pages, 2,274 books; 178 read) | Sonnet | 2,328 | 72 next/prev (3.1%) + 16 none | next/prev 16 of 20 (80%, 58-92); none 0 of 3 | about 2.5% (1.8-2.8) |
+
+agy's `none` on Chinese is a false class: one illustrated book (69dea7a3, woodcuts whose English describes the picture)
+gave 108 of the first 147. Its next/prev precision on natural Chinese pages (25%) is far below its gate (0 false
+flags in 79 random own pages), because the queue concentrates the hard cases (picture books, star maps, tables). So the
+agy runner was stopped after two chunks; Sonnet was stopped at 22:05Z with the meter at 85% (it was not near the 90%
+stop: about 25-80 calls a minute). Both are resumable (`scale-runner.sh`, a STOP file, ntfy at the end).
+
+**How much is out there, by language** (wrong-leaf pages still served; the alone-written quarter is ruled out, 0/499).
+
+| frame | estimate | basis |
+|---|---|---|
+| all scripts, top 0.5% by risk | about 9,300 (shift screen 11-03), less what was contained since | 228/266 Opus |
+| all scripts, the rest | about 25,000 (13,000-48,000), now known to sit in the 4.17M multi-page pages | 9/1,957 below the cut (11-03) |
+| readers' books, carry pages after an over-long page | about 880 of 35,425 (640-1,010) if the 178 most-read books screened are typical | this run |
+| Chinese, lite-preview 6-20 groups | about 45 of 13,137 (12-100) by agy flags × precision; a random 200 gave 1 confirmed flag plus 1 in 40 unflagged, about 3% with a very wide interval | this run |
+| Chinese, other multi-page writes (234K pages) | not measured: 0 flags in a random 100 | this run |
+| Tibetan | about 10 books (upper 45) by LaBSE (11-03); here 1 next and 3 two-leaf pages among 65 enriched | Part B 11-03, this run |
+
+The tail cannot be split by language with what was confirmed: the random below-cut sample holds 9 pages.
+
+**The list.** `confirmed-for-fix.json`: 30 Opus-confirmed pages not withheld by this read-only job (21 next, 3 prev, 6
+two-leaf; Han 10, Tibetan 4, the rest readers' books in Latin, French, German, Greek, Arabic, Sanskrit, English).
+`scale-flags.jsonl.gz`: 365 screen flags (105 next/prev, 163 none, 97 multi), unconfirmed, with the precisions above.
 
 ### Cost
 
 - 2026-11-03 · Gemini API, replay (698 calls: 129 gemini-3.1-flash-lite-preview, 569 gemini-3.1-flash-lite) · #5021 ·
   2.51M tokens in, 0.93M out · ≈ $2.0 at Flash-Lite list prices; the gemini_usage rows meter $6.2, because the preview
   model is not in `model-pricing.mjs` and falls to the $1.5/$9 default.
-- Sonnet and Opus on the milolomas subscription, agy on the milo pool: see the price lines above; no cash.
+- 2026-11-03 · `claude -p` sonnet + opus on milolomas200921@gmail.com (gex45) · #5021 · 3,617 Sonnet screen calls, 148
+  Opus confirmations with scans · weekly meter 81% → 85% (integer; this session on the same login) · about 1.1 points
+  per 1,000 Sonnet pages; fee × share, at $200 a month for Max 20x (the plan is not recorded), about $0.50 per 1,000.
+- 2026-11-03 · agy gemini-3.8-flash-low on /root/.agy-milo · #5021 · 2,736 calls · weekly Gemini 76% → 70% · about 2.2
+  points per 1,000 calls; fee × share at the pool's plan fee (not recorded). Root's Latin pool was not used.
 
 **Replicated?** The replay is its own replication of the stored slides (2 reps per slid input). The rest is one run.
