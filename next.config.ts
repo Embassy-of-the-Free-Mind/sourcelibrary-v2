@@ -52,8 +52,9 @@ const nextConfig: NextConfig = {
   // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
   // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
   // page's images are served statically and never through it: keep them out (#7710).
+  // Article heroes are pre-sized AVIFs, served statically too (26 MB; #7956).
   outputFileTracingExcludes: {
-    '/api/image': ['./public/ai-partners/img/**'],
+    '/api/image': ['./public/ai-partners/img/**', './public/articles/heroes/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
