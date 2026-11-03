@@ -7,6 +7,9 @@
 /**
  * #7982 scoring (scripts/eval/experiments/2026-11-03-korean-ocr-cell-7982.md §Outcomes). No model calls, no Mongo.
  *   node scripts/eval/korean-cell-7982/score.mjs score     → results/score.json, results/router-evidence.score.json (+ by-script)
+ *   node scripts/eval/korean-cell-7982/score.mjs served    → results/served.json: the STORED arm on the LIVE drawn books, graded on
+ *                                                            the #7866 rubric (regrade.mjs gradeOf / bucketOf, imported), Wilson 95%
+ *                                                            (Derek, job inbox 2026-11-03 09:49Z)
  *   node scripts/eval/korean-cell-7982/score.mjs router    → results/router-check.json (build.py on a copy; rules.json unchanged)
  */
 import fs from 'node:fs';
@@ -208,7 +211,35 @@ function router() {
   });
 }
 
+async function served() {
+  const { gradeOf, bucketOf } = await import('../confidence-7866/regrade.mjs');
+  const { words } = await import('../route-judge-6740/defect-rate.mjs');
+  const { wilson } = await import('../lib/agreement-stats.mjs');
+  const { ps, items, vs } = load();
+  const main = new Map(vs.filter((r) => r.set === 'main' && r.verdict).map((r) => [r.id, r.verdict]));
+  const live = ps.filter((p) => p.visible);
+  const rows = live.map((p) => {
+    const it = items.find((x) => x.page === p.page_id && x.arms.includes('stored')), v = main.get(it.id), ds = v.defects || [];
+    const n = (sv) => ds.filter((d) => d.severity === sv).length;
+    return { page_id: p.page_id, book: p.book, stratum: p.stratum, stored: p.stored_route, grade: gradeOf(v), bucket: bucketOf(gradeOf(v)), accept: !!v.accept, fidelity: Number(v.fidelity),
+      words: words(fs.readFileSync(path.join(OUT, 'arms', 'stored', `${p.page_id}.txt`), 'utf8')), wrong_text: n('wrong_text'), misleads: n('misleads'), cosmetic: n('cosmetic') };
+  });
+  const share = (f) => { const k = rows.filter(f).length, [lo, hi] = wilson(k, rows.length); return { k, n: rows.length, share: r3(k / rows.length), wilson95: [r3(lo), r3(hi)] }; };
+  const W = rows.reduce((t, r) => t + r.words, 0), tot = (k) => rows.reduce((t, r) => t + r[k], 0);
+  const out = { generated_at: new Date().toISOString(), frame: 'the drawn pages whose book is LIVE (visible, pages_count > 0): 28 of the 30 (the 2 hidden books are left out); one page a book; the STORED read as served', books: rows.length,
+    rubric: 'scripts/eval/confidence-7866/regrade.mjs gradeOf / bucketOf on the same Opus judgePrompt verdict (#7866 rubric); rates per 1,000 by route-judge-6740/defect-rate.mjs words() (the unit /quality uses)',
+    grades: Object.fromEntries(['fit_to_quote', 'fit_to_read', 'search_only', 'wrong_span', 'from_elsewhere', 'mostly_wrong', 'not_this_page'].map((g) => [g, share((r) => r.grade === g)])),
+    buckets: Object.fromEntries(['says_what_the_page_says', 'misleads_somewhere', 'text_not_on_the_page'].map((b) => [b, share((r) => r.bucket === b)])),
+    accept: share((r) => r.accept), words: W, severe_per_1k: r3(1000 * (tot('misleads') + tot('wrong_text')) / W), wrong_text_per_1k: r3(1000 * tot('wrong_text') / W), misleads_per_1k: r3(1000 * tot('misleads') / W),
+    by_stored_engine: Object.fromEntries(['stored-3flash', 'stored-lite'].map((e) => { const h = rows.filter((r) => r.stored === e); return [e, { n: h.length, says_what_the_page_says: `${h.filter((r) => r.bucket === 'says_what_the_page_says').length}/${h.length}`, text_not_on_the_page: `${h.filter((r) => r.bucket === 'text_not_on_the_page').length}/${h.length}` }]; })),
+    unweighted_note: 'k/n over one page a book, not weighted to pages (the draw floors hangul and mixed books); the HT-weighted accept over all 30 is in score.json',
+    pages: rows };
+  R('served.json', out);
+  console.log(JSON.stringify({ ...out, pages: undefined }, null, 1));
+}
+
 const cmd = process.argv[2];
-if (cmd === 'score') score();
+if (cmd === 'served') await served();
+else if (cmd === 'score') score();
 else if (cmd === 'router') await router();
 else console.log('usage: score.mjs score|router');

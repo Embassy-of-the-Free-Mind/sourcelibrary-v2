@@ -6,7 +6,7 @@ scripts: [Hani, Hang]
 canons: []
 n_books: 30
 n_pages: 30
-verdict: "On 30 Korean pages (one per book, live and hidden, blind Opus against the image, instrument valid 8/8 wrong-page, 6/6 planted, 2026-11-03), no route reads Korean well: Opus accepts the stored read on 2/30 (wrong text on 25/30), agy 3.8 Flash low 3/30 (25/30), PaddleOCR-VL-1.6 5/30 (17/30) and Qwen3-VL-8B 2/30 (23/30). Every candidate has invented-text pages, so the preregistered hard floor blocks all three: HOLD, and no production re-read. PaddleOCR-VL is the best arm on hanja print (3/11 accepted, wrong text 5/11, against stored 1/11 and 9/11) but writes nothing or garbage on 4 of 8 hangul and mixed pages; against stored it is better on P = 0.89, short of the 0.95 bar. One live stored page was invented throughout and is contained."
+verdict: "On 30 Korean pages (one per book, live and hidden, blind Opus against the image, instrument valid 8/8 wrong-page, 6/6 planted, 2026-11-03), no route reads Korean well: Opus accepts the stored read on 2/30 (wrong text on 25/30), agy 3.8 Flash low 3/30 (25/30), PaddleOCR-VL-1.6 5/30 (17/30) and Qwen3-VL-8B 2/30 (23/30). Every candidate has invented-text pages, so the preregistered hard floor blocks all three: HOLD, and no production re-read. PaddleOCR-VL is the best arm on hanja print (3/11 accepted, wrong text 5/11, against stored 1/11 and 9/11) but writes nothing or garbage on 4 of 8 hangul and mixed pages; against stored it is better on P = 0.89, short of the 0.95 bar. On the #7866 rubric, the stored read on the 28 live books says what the page says on 1/28 (3.6%, Wilson 0.6–17.7%), and its text is not on the page on 23/28 (82%, 64–92%). One live stored page was invented throughout and is contained."
 status: rejected
 decision: "No production re-read of Korean (DECISION on #7982). HOLD (hard floor) for the cell: all three candidates are blocked. rules.json is not changed: build.py with this evidence pooled would move korean-lite/manuscript to paddle, which writes nothing on hangul manuscripts. Split the Korean cell by script mix before any Korean evidence enters it. The next test is paddle>agy-flash-low on hanja print. Contained: Yŏja sanghaeng pʻyŏn p.37 (English withheld; the book was already held)."
 superseded_by: null
@@ -212,6 +212,26 @@ Scope:
   - #7982 is labelled `contained`.
 - **Hidden book, not touched.** The stored read of *Yang Pʻung-un chyŏn* p.21 (69f3249752a77bb28fdb3556, hidden book) is also not the leaf's text: a loop of invented syllables. The book is hidden, so no reader sees it.
 - These two writes are the only Mongo writes, apart from `cli-ocr.mjs read`'s lane book list (`lane_job_books`, 30 books). The brief's "no Mongo writes" is read as no experiment write-back; the containment rule is a standing default that needs no ask.
+
+### Served quality: the stored read on the live books (Derek, job inbox 2026-11-03 09:49Z)
+
+- **Inbox note.** Report the STORED arm on live books as the served-quality figure for Korean, on the #7866 rubric, with Wilson intervals.
+- **The live subset is 28 of the 30 drawn books** (`visible: true`, `pages_count > 0`). The two hidden books, *Wŏlchʻon chip* and *Yang Pʻung-un chyŏn*, are left out.
+- **Grading.** One page per book, graded by `confidence-7866/regrade.mjs gradeOf` / `bucketOf` on the same Opus verdict. Rates per 1,000 use `route-judge-6740/defect-rate.mjs words()`, the function /quality uses.
+- **Weighting.** Unweighted over books. The draw floors hangul and mixed books at 8 of 30, so hangul is over-represented against its share of pages. On the 22 hanja pages alone, the stored read says what the page says on 1/22. `results/served.json`, `score.mjs served`.
+
+| #7866 bucket | k/n | share | Wilson 95% |
+|---|---|---|---|
+| says what the page says (fit to quote or read) | 1/28 | 3.6% | 0.6–17.7% |
+| misleads somewhere (search only) | 4/28 | 14.3% | 5.7–31.5% |
+| text not on the page | 23/28 | 82.1% | 64.4–92.1% |
+
+- **Grades**: fit to quote 1, fit to read 0, search only 4, wrong span 15, mostly wrong 6, not this page 2.
+- **Opus accept**: 2/28 (7.1%, 2.0–22.6%).
+- **Severe (misleads + wrong text)**: 32.7 per 1,000 `words()` units (5,971 units). Wrong text 15.4, misleads 17.3.
+  - /quality's 17.8 is the same measure over 3 books and 15 pages (#7866).
+  - On 28 books it is about twice that.
+- **By stored engine**: `3flash` says what the page says on 1/21, `lite` on 0/7.
 
 ### What this says
 - **Korean OCR is bad on every route we have.**
