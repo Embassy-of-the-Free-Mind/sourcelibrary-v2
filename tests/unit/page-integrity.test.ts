@@ -379,6 +379,59 @@ describe('translationReasoningLeak', () => {
     expect(translationReasoningLeak('<meta>Page 405 is missing from the provided transcription.</meta>\ndominion. But the daemon')).toMatchObject({ kind: 'input-talk', readerVisible: false });
     expect(translationReasoningLeak('The provided text contains no content to modernize, as it consists only of a blank page.')).toMatchObject({ kind: 'input-talk', readerVisible: true });
   });
+  // #6117, found on #7968: Marcellus, De medicamentis (69af49c4d6be7ec9cc3246fd) p.84, as stored.
+  const P84 = '<meta>Note: This content seems to be a continuation from the previous page\'s index and headers, but follows the specific source text structure provided.</meta>\n<note>The text continues from the previous page\'s section on head treatments and purgatives.</note>\n...[text continues as per original structure]...\n\n<summary>This page continues the catalog of remedies for parasitic infestations of the scalp and introduces new treatments for head congestion and phlegm-related ailments.</summary>\n<keywords>Marcellus Empiricus, De Medicamentis, porrigo, papulae</keywords>';
+  it('a placeholder or a description where the translation should be is its own kind', () => {
+    for (const t of [
+      P84,
+      'Such a one has offended and is not deprived by the law itself if, for the third time... [text continues regarding the suspension of those who confer benefices]... the Archbishop speaks thus in his decree.',
+      'Item, for the gout:\n\n(list continues repeating similar collation notes)',
+      '[This page is a continuation of the previous translation; see page 12 for the finalized English.]',
+      'Of the first remedy, take rue and honey.\n\n[The rest of the recipes are omitted for brevity.]',
+      'And the second chapter opens thus. [Remainder of the passage omitted for brevity.]',
+      '<note>The text continues from the previous page, discussing property disputes.</note>\n\n',
+      '<header>LIVES OF THE SOPHISTS</header>\n[The text continues from the previous page, detailing the impact of Nicetes of Smyrna on the rhetorical arts of his time.]',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'summary-placeholder', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('editorial brackets, a damaged source and a note beside a real translation are not a placeholder', () => {
+    for (const t of [
+      'he wrote that the stone [sic] was found in the river, and that the waters were bitter.',
+      'and the vessel shall be [illegible] for nine days, until the matter turns black.',
+      'Awake[ ] awake[ ] put on your strength [Zion, pu]t on your beautiful garments [...]',
+      'for the King of Kings [ … ] and he gave thanks to the Lord.',
+      '<note>The remaining text on this page is illegible due to water damage.</note> And so the work ended.',
+      'in the year of our Lord [remaining text illegible]',
+      '[The rest of the page is torn away.]',
+      'TABLE I. (continued)\n\n| Sign | Degree |',
+      'They have tied me to a stake. [*Alarums continued.*]',
+      '(he continues) "But the soul, my friend, is not so easily persuaded."',
+      '[continued on next page]',
+      '(continues with **the kingdom of God to appear**, omitting **immediately**)',
+      'A B C D E F G H I K L M N O P Q R S T U W X Y Z (A-Z, with \'j\' and \'v\' omitted as per 17th-century convention)',
+      '[Latin translation omitted for brevity as it repeats the Greek text above]',
+      '[The text continues describing the exorcism of a young woman in Catalonia:]\n\nThere was in Catalonia a girl',
+      // a bridge over the sentence carried across the page break: the leaf's words are all there
+      '# BOOK IX.\n\nChapter I. [The text continues, discussing how worms] sometimes are born; as was said above concerning the poisonous offspring of fennel and sage.',
+      'from the channels the canon has arranged in the transverse direction\n\n->**Fig. 124b.**<-\n\n[The text continues describing the mechanism.]',
+      'and so the chapter ends with the third remedy [rest of text continues on next page]',
+      '(my own, with the variation of Hercher\'s text omitted for the sake of brevity)',
+      'Of the sun and moon. [Greek text continues with the same meaning] Of the stars, which are many.',
+      'the bards sang of it, saying: [text continues with obscured rhythmic verse] and the king was pleased.',
+      // a centring marker (->…<-) is not a tag: the English after it is still English
+      '->### P R E F A C E .<-\n\n...immortalize <note>The text continues from the previous page\'s word "immortalize."</note>, and who knows if they do not live longer because of it?',
+      '# PLATONIC THEOLOGY\n<note>The page contains a block of Latin text, but the resolution and fading make individual words impossible to distinguish. The text appears to be a continuation of a philosophical treatise.</note>',
+      '<note>The text continues from the previous page: ...standard of a good man to use and enjoy them. If, therefore, they are handed over for the purpose of enjoyment, no one doubts that the person who received them does not become the owner, for they are not handed over so that the ownership is stripped from the one who hands them over, but so that the legatee may use and enjoy them. Therefore, since the vessels do not become the property of the usufructuary, they can be claimed by the owner.</note>',
+      'but rather that the god must be prevented from interfering with his welfare.\n\n(The list continues regarding the classification of worship):\n4. Worship of visible things, animate or inanimate.',
+      '<note>The text continues from the previous page: ...The Wardens having repeated the same thing, all together we perform the sign.</note>\n# The End.',
+      'Blessed are You, Lord, who loves His people Israel. [Continue with] the <term>Shema</term> until "to You they answered with a song."',
+      '<note>from the previous page: [continues regarding the dissolution of betrothals].</note> of fickleness, and he shall recover the dowry which he gave',
+      '<note>The text continues from the previous page, discussing property disputes near borders.</note> that if it has sent its roots into the neighbour\'s field, the tree belongs to him in whose land it stands.',
+      '<note>The text appears to be corrupt here; the printer seems to have dropped a line.</note> and the fire must be gentle.',
+    ]) expect(translationReasoningLeak(t), t).toBeNull();
+  });
   it('the bare thinking-channel label at the head of a page is its own kind', () => {
     expect(translationReasoningLeak('thought\n<meta>This page continues the legal analysis</meta>')).toMatchObject({ kind: 'thought-token' });
     expect(translationReasoningLeak('164  ST. AMBROSE.\nthought\nthat he was restored to us')).toBeNull();
