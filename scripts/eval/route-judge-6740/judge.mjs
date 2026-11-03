@@ -848,9 +848,9 @@ export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'bool
 export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
-export function opusCall(prompt, cwd) {
+export function opusCall(prompt, cwd, model = 'opus') {
   return new Promise((resolve) => {
-    const child = spawn('claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     const timer = setTimeout(() => child.kill('SIGKILL'), 900e3);
     child.stdout.on('data', (d) => { out += d; }); child.stderr.on('data', (d) => { err += d; });

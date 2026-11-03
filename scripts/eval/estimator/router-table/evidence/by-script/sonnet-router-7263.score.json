@@ -1,0 +1,129 @@
+{
+ "source": "#7263 sonnet-router",
+ "generated_at": "2026-11-03T13:20:37.920Z",
+ "cells": {
+  "latin-flash3|print": {
+   "routes": {
+    "sonnet-read": {
+     "n": 26,
+     "books": 26,
+     "accept": "22/26",
+     "wrong_text_pages": "1/26",
+     "classes_k_of_n": {
+      "O11": "10/26",
+      "O12": "3/26",
+      "O8": "8/26",
+      "O6": "12/26",
+      "O16": "2/26",
+      "O9": "1/26",
+      "O10": "1/26",
+      "E2": "1/26",
+      "O4": "1/26",
+      "O5": "1/26"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "sonnet-read|3flash": {
+     "n": 26,
+     "books": 26,
+     "both": 17,
+     "a_only": 5,
+     "b_only": 1,
+     "neither": 3
+    }
+   }
+  },
+  "latin-flash3|unknown": {
+   "routes": {
+    "sonnet-read": {
+     "n": 4,
+     "books": 4,
+     "accept": "3/4",
+     "wrong_text_pages": "1/4",
+     "classes_k_of_n": {
+      "O6": "3/4",
+      "O8": "2/4",
+      "O17": "1/4",
+      "T6": "1/4"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "sonnet-read|3flash": {
+     "n": 4,
+     "books": 4,
+     "both": 2,
+     "a_only": 1,
+     "b_only": 1,
+     "neither": 0
+    }
+   }
+  },
+  "chinese-flash3|print": {
+   "routes": {
+    "sonnet-read": {
+     "n": 20,
+     "books": 20,
+     "accept": "7/20",
+     "wrong_text_pages": "11/20",
+     "classes_k_of_n": {
+      "O11": "8/20",
+      "E2": "9/20",
+      "O6": "13/20",
+      "O5": "6/20",
+      "O16": "7/20",
+      "O8": "3/20",
+      "O12": "3/20",
+      "O4": "1/20",
+      "O1": "1/20",
+      "O15": "1/20"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "sonnet-read|3flash": {
+     "n": 20,
+     "books": 20,
+     "both": 1,
+     "a_only": 6,
+     "b_only": 1,
+     "neither": 12
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "lite>sonnet": {
+     "n": 20,
+     "books": 20,
+     "accept": "11/20",
+     "wrong_text_pages": "5/20",
+     "classes_k_of_n": {
+      "O6": "11/20",
+      "O8": "4/20",
+      "O7": "2/20",
+      "O12": "3/20",
+      "E2": "5/20",
+      "O5": "1/20",
+      "O10": "1/20"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "lite>sonnet|lite": {
+     "n": 20,
+     "books": 20,
+     "both": 4,
+     "a_only": 7,
+     "b_only": 1,
+     "neither": 8
+    }
+   }
+  }
+ }
+}
