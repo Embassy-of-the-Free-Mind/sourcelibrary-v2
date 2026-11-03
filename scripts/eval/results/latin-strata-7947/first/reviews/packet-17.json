@@ -1,0 +1,716 @@
+[
+  {
+    "book_id": "6a4b56df619ab78551a731c0",
+    "slot": 55,
+    "title": "Christiano bockelmanno sedinensi, Pomerano, ... Johannes gundermannus hilperhusanus francus.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1598 Stettin gratulatory Latin poem (propempticon) for a student leaving home; no tradition or collection is assigned, so nothing it can be off-shelf from. It is humanist occasional verse, not esoterica.",
+    "rights_flag": null,
+    "structure_note": "Page 5 is the title page (handwritten '37 a' folio, signature 'G' under the imprint), page 7 is signed 'A 2', so pages 1–4 are probably binding or preceding items in a Sammelband. 14 pages, all OCR'd, 8 translated; nothing broken in this run.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "iuveni Eruditae humanitatis, et humanae eruditionis, patriâ Studiorum gratiâ abeunti",
+            "english": "a young man / Going away to foreign lands for the sake of learned humanity and human learning",
+            "problem": "The genitives describe the young man ('of learned humanity and humane learning'), and he is leaving his HOMELAND (patriâ) 'for the sake of studies'. The translation drops 'studiorum gratiâ' and invents 'to foreign lands'.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "<vocab> lists 'Joachim Rhete, Andreas Kellner', who are not on the page (the imprint says only 'Typis Kellnerianis')",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Calliopea",
+            "image": "Calliopæa",
+            "problem": "diphthong normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "interitum tibi fors incerta minatur",
+            "english": "uncertain death threatens you",
+            "problem": "'Uncertain fortune (fors) threatens you with ruin', not 'uncertain death'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Long runs of &nbsp; entities (about 50 on one line) are stored in the OCR to place the turned-over '(pratis,' and the catchword",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Capta, movet laudis quae generosus amor?",
+            "image": "Cæpta, movet laudis quæ generosus amor?",
+            "problem": "cæpta (begun) misread as capta (captured); the translation follows it ('love of praise you have captured')",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<script>handwritten</script> / <warning>Handwritten [Humanist cursive hand]</warning>",
+            "image": "printed italic type",
+            "problem": "The page is tagged as handwritten but it is printed",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Quis verò credat, non, Bockelmanne, canendum Cæpta, movet laudis quæ generosus amor?",
+            "english": "But who would believe, Bockelmann, that there is no song to be sung, which moves the generous love of praise you have captured?",
+            "problem": "This should read 'Who would believe, Bockelmann, that what generous love of praise has begun is not worth singing?' The translation misconstrues the line from the 'capta' misreading.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Ast ego sus certè videor docuisse Minervam",
+            "english": "But I surely seem to have taught Minerva",
+            "problem": "'sus' (the pig) is dropped. The proverb 'sus Minervam', a pig teaching Minerva, is the poet's self-mockery; without it the line reads as a boast.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean transcription of a short 1598 occasional poem. The translations are readable but loose: one misread ('Capta' for 'Cæpta'), a dropped proverb and a garbled title-page dedication. Nothing an expert would flag on sight."
+  },
+  {
+    "book_id": "69f33939876dd827cbc54881",
+    "slot": 36,
+    "title": "Book of hours",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A small illuminated Latin manuscript book of hours with a metal clasp (Harvard). No tradition is assigned; it fits a primary-source library as devotional liturgy.",
+    "rights_flag": null,
+    "structure_note": "330 pages, 321 translated. A pencil folio '80' is visible on page 163. The scans show one page with colour bars beside it, so each image is the reading page. Nothing odd.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "cum tribularet clamaui",
+            "image": "cum tribula-rer clamaui",
+            "problem": "tribularer read as tribularet",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 163,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Quia cinere",
+            "image": "Quia cinerē",
+            "problem": "the suspension mark on cinerem is lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "intecto.",
+            "english": "covered.",
+            "problem": "The opening word is the end of 'in tecto' (Ps 101:8, a sparrow 'on the housetop'), not 'covered'; this is a seam from the previous page",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 244,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<warning>Handwritten [Gothic textualis formata]</warning>",
+            "image": "the same rounded humanist bookhand as the other pages",
+            "problem": "wrong script description, and it is inconsistent with pages 82 and 163",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "In hoc cognovi quoniam voluisti me",
+            "english": "In this I have known that you have willed it",
+            "problem": "It means 'that you have favoured me' (voluisti me); the object is lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good. Psalm text is transcribed accurately from a clear manuscript hand and translated in Douay-like English, with only small slips."
+  },
+  {
+    "book_id": "69f3391e876dd827cbc547fb",
+    "slot": 33,
+    "title": "[Collection containing 1 Mass, 2 Glorias, 1 Sanctus (fragmentary), 1 Te Deum, 3 hymns, 42 motets, ... 2 textless pieces",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 16th-century music manuscript (Regensburg Proske-Bibliothek C 120, the label is visible on page 16) is a real primary source. As held here it is mensural notation in microfilm strips, which is not a readable or translatable text, so the language 'Latin' and the translation lane do not fit it.",
+    "rights_flag": null,
+    "structure_note": "Every 'page' is a thin contact-print strip (about 2000×220 px) with about six whole openings of the book, held by hands. Each record is therefore many leaves and nothing is legible at this size (I5/I7). The 30 pages, all 'translated', are 30 model descriptions of strips.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "### Musical Content Overview ... Staves: Five-line staves ... Clefs: C-clefs ... and F-clefs",
+            "image": "six openings of mensural notation in one strip, illegible at this resolution",
+            "problem": "No transcription. The 'OCR' is a generic description of what a 16th-century partbook contains, including claims about clefs and underlay that cannot be seen at this size.",
+            "severity": "serious",
+            "class": "O14"
+          },
+          {
+            "ocr": "<note>The provided image is a composite of multiple openings ... The following is a representation of the structural layout</note>",
+            "image": "-",
+            "problem": "The model's commentary is stored as page text",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(the description)",
+            "english": "### Musical Content Overview ...",
+            "problem": "The 'translation' is the English description again; nothing on the page is translated",
+            "severity": "serious",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "A strip of six openings of notation is presented to readers as a prose page with an invented heading 'Musical Content Overview'",
+            "severity": "serious",
+            "class": "I5"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "The text labels identified within the musical staves include: Superius, Altus, Tenor, Bassus",
+            "image": "no voice labels are legible at 220 px height; only the archive card 'Regensburg Proske-Bibliothek C 120 ... II' can be made out",
+            "problem": "Voice-part labels are asserted that cannot be read in the image, which is likely confabulated from what partbooks usually carry",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(whole page)",
+            "image": "six openings, some with blank staves",
+            "problem": "description instead of transcription",
+            "severity": "serious",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Tenor",
+            "english": "Tenor <gloss>Holding voice</gloss>",
+            "problem": "Glosses are added to labels that are not legible on the page; the page itself is not translated",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary>This page identifies the standard voice-part designations ...</summary> and <keywords> are stored in the reader translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Due to the high-level perspective of the scan, individual words are not legible ... Marginalia and annotations in a cursive humanistic hand.",
+            "image": "illegible strip of six openings",
+            "problem": "Description instead of transcription. It admits the text is illegible yet asserts 'Superius/Tenor/Bassus' headers and humanist marginalia.",
+            "severity": "serious",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(description)",
+            "english": "The manuscript is likely a choirbook ...",
+            "problem": "a model description translated as if it were the page",
+            "severity": "serious",
+            "class": "T12"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary>This page discusses the general contents of the manuscript ...</summary> and <keywords> leak into the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Not a readable text. Each page is a microfilm contact strip of about six openings of music, and every 'transcription' and 'translation' is a model's generic description of a partbook, with labels it could not have read. It should be withdrawn from the OCR and translation lanes, and readers should not be shown it as 30 translated pages."
+  },
+  {
+    "book_id": "69f33489876dd827cbc4d064",
+    "slot": 14,
+    "title": "De morbius et officys vivendi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century manuscript of Jacobus de Cessolis' chess allegory (the chapters on the pawns as the smith and the city guards, Frederick II's Capua gate). It is a legitimate primary source, but the catalogue title 'De morbius et officys vivendi' is garbled; the usual title is De moribus hominum et officiis nobilium (super ludo scaccorum).",
+    "rights_flag": null,
+    "structure_note": "Pencil leaf numbers match the run: page 21 = 9, page 39 = 18, page 57 = 27, two images per leaf. But the OCR tags page 21 as <page-num>1</page-num> where the leaf reads 9. The title is misspelled (I7, moderate).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>1</page-num>",
+            "image": "9",
+            "problem": "wrong page number",
+            "severity": "minor",
+            "class": "O16"
+          },
+          {
+            "ocr": "<margin>Anacarsis philosophus</margin> ... dicit Anacarsis philosophus Cui dicit",
+            "image": "Anacar-sis Qui dicit (margin shows only a manicule)",
+            "problem": "'philosophus' is added to the text and a marginal note is invented",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "contemplantes et lectores septuageni",
+            "image": "Contemplatores et lectores scripturarum (abbreviated)",
+            "problem": "Likely misread. The translation builds a Septuagint note on it.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "in libro noctium cum antiquas de Socrate",
+            "image": "in libro noctium antiquarum (?) de Socrate",
+            "problem": "title of Gellius' work garbled",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "lectores septuageni",
+            "english": "the seventy <note>referring to the Septuagint or a group of seventy scholars</note>",
+            "problem": "An invented scholarly note on a misread word",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "per diem vialem unam a summo lucis ortu usque ad solem alterum orientem immobilis",
+            "english": "during a day's journey ... he stood immobile",
+            "problem": "Gellius' point is that Socrates stood a whole day and night, sunrise to sunrise; 'a day's journey' is nonsense",
+            "severity": "minor"
+          },
+          {
+            "source": "Pauperes rebus et nobiles quae non consueti legibus moventur ad praeda",
+            "english": "The poor are moved by goods, and the nobles ... are moved to plunder",
+            "problem": "garbled source rendered fluently with no flag",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Cum fugat immitis frigora mors.",
+            "image": "Cura fugit multo diluiturque mero.",
+            "problem": "The Ovid line (Ars am. 1.238, 'care flees and is diluted with much wine') is replaced by an invented line about cruel death",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Summa amicitia est in eorum fide spem habere quorum perfidia totiens deceptus sis",
+            "image": "Summa amentia est ...",
+            "problem": "'amentia' (madness) read as 'amicitia' (friendship); the sense is reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "quia miles indiget hinc fabrica. calcaria et sellas",
+            "image": "quia miles indiget hic frena, calcaria et sellas",
+            "problem": "'frena' (bridles) lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "per hunc significantur in malleo Siquidem dolabro ... Totum in trulla",
+            "image": "Primi significantur in malleo, Secundi in dolabro ... Tertii in trulla",
+            "problem": "The first/second/third enumeration of the trades is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "non solum metalla vini et navigantibus corpora",
+            "image": "non sola metalla verum et navigantium corpora",
+            "problem": "'verum' read as 'vini', which yields 'wines'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "temporibus inimicorum pacis",
+            "image": "imposita numorum pactione (?)",
+            "problem": "The ransom agreement becomes 'times of peace'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(no margins in col. 2)",
+            "image": "margins 'fabri debent esse fideles', 'fides est servanda', 'li. v. ca. viii ...'",
+            "problem": "marginalia dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Cum fugat immitis frigora mors",
+            "english": "When cruel death puts the chills to flight.",
+            "problem": "The translation follows an invented OCR line; the original is about wine banishing care",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Summa amicitia est in eorum fide spem habere",
+            "english": "The greatest friendship is to have hope in the faith of those whose perfidy you have so often been deceived by",
+            "problem": "The source says it is the height of MADNESS; the translation reverses the moral",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Alveum sic formatum tenemus",
+            "english": "We hold the trough <note>the square/container for the pieces</note>",
+            "problem": "An invented explanatory note on a doubtful reading",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "calcaria",
+            "english": "Shoes",
+            "problem": "calcaria = spurs",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "peregrinum hospitem de laboribus amissis pro aut paululo quo peregrinus pependeat est appensus",
+            "image": "peregrinum hospitem de latrocinio accusasset, ipse autem patibulo quo peregrinus pependerat est appensus",
+            "problem": "The end of the exemplum is garbled: the false-accusing host was himself hanged on the pilgrim's gallows ('patibulo' becomes 'paululo', 'latrocinio accusasset' becomes 'laboribus amissis')",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Temeritas in iudicio punitur et omnia cooperantur in bonum (text and margin)",
+            "image": "Timentibus [Deum] beatitudo promittitur et omnia cooperantur in bonum",
+            "problem": "An invented maxim about rashness in judgement replaces 'to those who fear God blessedness is promised'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>Constat res nota</margin> / Constat in eis sit ratio",
+            "image": "Constantia in custodia / Constantia in eis sit tanta",
+            "problem": "'constantia' misread, both in the text and the margin",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nam stantibus loco fortioris fuit in humana pro aliud",
+            "image": "Nam statua(?) ille formatus fuit in humana specie habens",
+            "problem": "description of the figure garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "qui omnia videt non ut respondeat",
+            "image": "qui omnia novit et ponderat",
+            "problem": "misread, which gives an invented clause",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Premissio vero capitis iudicis",
+            "image": "in semicirculo vero capitis iudicis",
+            "problem": "misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "peregrinum hospitem de laboribus amissis ... est appensus",
+            "english": "he had the pilgrim guest hanged for the lost labors for a little bit [of gain] for which the pilgrim hung",
+            "problem": "The exemplum's outcome (the guilty host hanged) is lost and the guilt is reversed; it is fluent over garble",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Temeritas in iudicio punitur",
+            "english": "Rashness in judgment is punished, and all things work together for good.",
+            "problem": "translates an invented OCR sentence",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "qui omnia videt non ut respondeat",
+            "english": "who sees all things, not so that He may answer",
+            "problem": "invented clause carried over",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "A <page-num>27</page-num> tag sits at the top of the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A genuine 15th-century Cessolis manuscript with a misspelled catalogue title. The bastarda reading is shaky. On two of three pages the OCR substitutes plausible but wrong sentences (an invented Ovid line, 'amicitia' for 'amentia', an invented maxim on rashness), and the fluent translation carries them to the reader."
+  },
+  {
+    "book_id": "69dbccbf0f8c5edf20f4cf0a",
+    "slot": 22,
+    "title": "Chiromantia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Antiochus Tibertus' Chiromantia (Bologna, 1494, BSB copy): a core divination/occult text.",
+    "rights_flag": null,
+    "structure_note": "Page 39 is signed 'e ii', which is consistent. Page 39's image URL uses a different key form (…/69dbccbf…-0039.jpg rather than …/<id>/39.jpg), but it is the right leaf. 55 pages, 51 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "principales.v.numero sut",
+            "image": "principaliores.v.numero sut",
+            "problem": "comparative lost",
+            "severity": "minor"
+          },
+          {
+            "ocr": "uia folis ... fereno tempore",
+            "image": "uia solis ... sereno tempore",
+            "problem": "long s read as f (the translation is still right)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Mercurio ex trianguli forma suam pro (page ends)",
+            "english": "Mercury, keeping his proportion from the shape of the triangle; or if the line of life pours forth certain little branches into the cavity.",
+            "problem": "The last clause is not on this page; it is lookahead from the next page or invented",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> blocks are stored in the reader translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Caue ab isto hoie Homicide qles</margin>",
+            "image": "two separate side notes: 'Caue ab isto hoie' and 'Homicide quales'",
+            "problem": "side notes merged",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "ferlentis / grebo gerendis / probationes auctores",
+            "image": "ferientis / q[ui] rebus gerendis / probatiores auctores",
+            "problem": "small misreads",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Torale contingens nequam impudentem ac infortunatum facit",
+            "english": "Whoever is to have a long period touching the torus makes him in no way impudent and unfortunate",
+            "problem": "'nequam' (worthless) read as negation; the sense is reversed (it makes him worthless, shameless and unlucky)",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Cephalea quo formatur (margin)",
+            "english": "Headache, how it is formed.",
+            "problem": "'cephalea' here is the head line, not a headache",
+            "severity": "moderate"
+          },
+          {
+            "source": "tuberculi infamis",
+            "english": "the tubercle of the infamous <note>a hand marking associated with ill-repute</note>",
+            "problem": "invented explanatory note",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "Caue ab isto hoie Homicide quales (first margin)",
+            "english": "(omitted)",
+            "problem": "first marginal note dropped",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Si simile signum Δ apparet orale uel uitae lineae iuxta supremum angulum si rubeum fuerit homine cito infirmabitur",
+            "image": "Si simile signum Δ prope toralem uel uitae lineam inueniens ... morsum canis expectato ... iuxta supremum angulum si rubea fuerit hominem cito infirmandum designabit",
+            "problem": "Interleaved lines around the symbols are conflated; 'morsum canis' (dog bite) is dropped from the text, and the margin shows 'Morsus canis'",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Stella in morte pollicis",
+            "image": "Stella in monte pollicis",
+            "problem": "'monte' read as 'morte'; the translation gives 'on the death of the thumb'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "litoralis ab idice deflectat",
+            "image": "si toralis ab indice deflectat",
+            "problem": "'si toralis' run together as 'litoralis'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Tale signum dū dignabit",
+            "english": "Such a sign signifies while he is being dignified",
+            "problem": "Nonsense; the source says the sign designates a man soon to fall ill",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "litoralis",
+            "english": "litoralis <gloss>coast line/minor line</gloss>",
+            "problem": "an invented gloss on a misread word (toralis)",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Stella in morte pollicis",
+            "english": "A star on the death of the thumb",
+            "problem": "should be 'on the mount of the thumb'",
+            "severity": "moderate"
+          },
+          {
+            "source": "margin list (Casus ab alto … Viri)",
+            "english": "(omitted)",
+            "problem": "The side-note column is dropped from the translation",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Good incunable print and mostly accurate OCR. The translation reverses one judgement ('nequam' read as 'in no way'), adds a clause from beyond the page and coins glosses on misreads. It is usable with care, but an expert would catch these."
+  }
+]

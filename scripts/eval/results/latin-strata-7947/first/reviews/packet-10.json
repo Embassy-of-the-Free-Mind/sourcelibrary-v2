@@ -1,0 +1,881 @@
+[
+  {
+    "book_id": "69906f694b3bd4d1fffd0b26",
+    "slot": 5,
+    "title": "Wonders of the East / Astronomical-Calendrical Treatise",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 12th-century illustrated English manuscript (Bodleian; constellation myths after Hyginus plus the Marvels of the East). No tradition or collection is assigned; it fits early-science and astronomy holdings.",
+    "rights_flag": null,
+    "structure_note": "The images are not a uniform page sequence. Page 20 is a close-up detail: the Gemini miniature plus a sliver of the next column, which shows only the first letters of each line. Page 39 is a full two-page opening in one frame (I3; both pages are read, with printed folio '13' at the top right). Page 58 is a single leaf. The source looks like a set of photographic slides or details rather than a full facsimile, so 77 'pages' do not map one-to-one to leaves.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "m",
+            "image": "in",
+            "problem": "line-initial fragment misread (the column is cut off, so only first letters are visible)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(OCR holds only the line-initial fragments 'C / fru / qu / id / ex / cer / Qu / eu …' plus the Gemini miniature)",
+            "english": "\"[He] placed Taurus among the stars in honor of Jove … It has in all fifteen stars\" … \"Castor and Pollux, moreover, the brothers, were placed among the stars on account of the unbreakable concord … These have 15 stars, as shown he...\"",
+            "problem": "The translation gives full Taurus and Gemini paragraphs that are not visible on this image. It was made from a different, fuller read than the OCR pane, so the reader sees prose the image does not show.",
+            "severity": "serious",
+            "class": "T14"
+          },
+          {
+            "source": "(no Taurus or Cancer drawing in the frame)",
+            "english": "[Illustration: … the constellation Taurus, showing a bull in profile …] … [Illustration: … the constellation Cancer, depicted as a large crab …]",
+            "problem": "Describes illustrations of Taurus and Cancer that are not in the image; only Gemini is shown (and a sliver of another drawing at the bottom edge).",
+            "severity": "serious",
+            "class": "T14"
+          }
+        ],
+        "other": [
+          {
+            "note": "<warning> about the cropped column is shown in the reader translation pane, and the fragment column is rendered with guessed completions ('likely \"fructus\"', 'likely \"ex\"')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "### De auriga.",
+            "image": "red rubric 'De agitatore' with 'Auriga' beside it",
+            "problem": "rubric normalised to 'De auriga'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Ceriocũ",
+            "image": "Cenocu (?)",
+            "problem": "the corrupt name is read uncertainly, but the translation correctly flags it as Erichthonius",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "iñt̃ deos qdrigarũ̃ usũ h̃mĩ̃t",
+            "english": "permitted the use of chariots among the gods",
+            "problem": "loose: Jupiter admitted him (the inventor) among the gods / the stars for the invention; sense roughly kept",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Two-page opening captured as one image (spread not split)",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 58,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "VIII pedū",
+            "image": "vii pedu (reads as 'vıı')",
+            "problem": "chest width numeral probably VII, not VIII (the Marvels text has VII)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Ham <note>Likely a scribe's error for 'Nam' (For)</note>",
+            "image": "Ham",
+            "problem": "editorial note embedded inside the transcription",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "lata cū pectore VIII pedū",
+            "english": "with a chest eight feet wide",
+            "problem": "carries the probable numeral misread (seven)",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A beautiful illuminated manuscript, read competently where the image shows a full page (39, 58). Page 20, a cropped detail, carries a translation of two constellation chapters and two illustrations that are not in the image. The image set is a mix of details, openings and single leaves, not a leaf-by-leaf facsimile."
+  },
+  {
+    "book_id": "6992544259cdabeb78f1d4df",
+    "slot": 93,
+    "title": "Breviarium Romanum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 1888 Pustet Roman Breviary from Toronto (Kelly Library). It is a mainstream liturgical text, not an esoteric one, but no tradition is assigned and it is a legitimate Latin primary source.",
+    "rights_flag": null,
+    "structure_note": "970 pages, 930 with OCR and 900 translated, so roughly 70 pages are missing translation. Page 714 carries a bracketed printed page number [152] from the separately paginated appendix (Officium parvum); this is the volume's own pagination, not a defect.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 244,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 476,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 714,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "plum Dómini, sacrárium Spíritus sancti: sola sine exémplo placuísti Dómino nostro Jesu Christo: ora pro pópulo, intérveni pro clero, intercéde pro devóto femíneo sexu.",
+            "english": "(absent — translation begins at 'Lord, have mercy')",
+            "problem": "the first five lines of the page (end of the Marian antiphon) are dropped from the translation",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "et confitébor nómini tuo Dómine",
+            "english": "and will give praise, O name of the Lord",
+            "problem": "should be 'I will give praise to thy name, O Lord'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>A decorative drop cap 'D' appears.</meta>' sits inline inside the psalm verse in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean modern print, transcribed nearly perfectly. The translations are faithful except on page 714, where the opening antiphon lines were silently dropped and one psalm verse was misconstrued."
+  },
+  {
+    "book_id": "69dbcb321040d1d5e20b3397",
+    "slot": 108,
+    "title": "Opera [Latin]. Tr: Marsilius Ficinus",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An incunable of Ficino's Latin Plato (BSB), core to the Platonic/Hermetic shelf. 'published: Unknown' should be filled in (the first edition is Florence c.1484).",
+    "rights_flag": null,
+    "structure_note": "The running heads LIBER / CHAR are fragments of a split running title and are transcribed as <header>. 431 pages, 425 with OCR, 418 translated: small gaps.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 108,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "phi: Mibi sane uoluptas ptare uidetur: semp q[ue] uidebitur. Ipfe autem noueris o protarche dis tationis officium: baud amplius apud te assen tiendi socrati uel dissentiendi potestas erit: pro: Cum iam nobis philebe cōcesseris dispu tationis officium: baud amplius …",
+            "image": "… semp[er]q[ue] uidebitur. Ipse autem noueris o protarche. pro: Cum iam nobis philebe cōcesseris disputationis officium: haud amplius …",
+            "problem": "Protarchus' line is duplicated into Philebus' speech (dittography), so Philebus is given words he does not say",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "ocr": "Ue lebo uel quomodocunq[ue] uis",
+            "image": "Uerum deinceps o socrates una cum uolente philebo uel quomodocunq[ue] uis",
+            "problem": "a line dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "restor",
+            "image": "testor",
+            "problem": "misread ('I call to witness')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ipse autem noueris o protarche dis tationis officium: baud amplius apud te …",
+            "english": "Philebus: … But you yourself, O Protarchus, know the office of the disputation; no longer will the power of agreeing or disagreeing with Socrates be yours.",
+            "problem": "carries the OCR dittography: Philebus is made to say Protarchus' following line",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "source": "Ue lebo uel quomodocunq[ue] uis / conemur absolue re",
+            "english": "Let us try to complete it as you wish, or however you wish.",
+            "problem": "drops 'Socrates, together with Philebus, if he is willing'",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "source": "atq[ue] restor",
+            "english": "and pray",
+            "problem": "should be 'and call to witness' (testor), which the following reply depends on ('we shall be witnesses')",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 216,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "hominis cum fit disciplinarum uenditio",
+            "image": "Nihilominus cum sit disciplinarum uenditio",
+            "problem": "first word misread; carried as 'the selling of human disciplines'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ho: Euz fatorem nominare decz",
+            "image": "ho: Eum sane qui alias facultates uenundat / artium uenditorem nominare decet",
+            "problem": "a line and a half dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "lucti prece teris studiosum",
+            "image": "lucri pre ceteris studiosum",
+            "problem": "'lucri' (gain) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "dicere tina dicans: the: esto: uide rursus",
+            "image": "discretiuā dicamus: the: esto: ho: uide rursus",
+            "problem": "garbled term and a dropped speaker tag",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "artificem questus grā contentiosum",
+            "english": "an artist of gain for the sake of contention",
+            "problem": "inverted: the sophist is contentious for the sake of gain",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "lucti prece teris studiosum",
+            "english": "studious of the tricks of wrestling",
+            "problem": "invented from the misread; the text says 'eager for profit above all else'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Quid ō bif potissimum ostensurus exempla hec inducis … ? ho: Ad discernēdū quodā modo ptinent",
+            "english": "Stranger: On what account … do you bring in these examples …? Theaetetus: They pertain in a way to discerning",
+            "problem": "speakers swapped through this exchange (Theaetetus asks, the Stranger answers); 'Theaetetus' is also given two consecutive lines elsewhere",
+            "severity": "moderate",
+            "class": "other:speaker-attribution"
+          },
+          {
+            "source": "dicere tina dicans",
+            "english": "To speak, that is, discerning",
+            "problem": "fluent rendering of a garble; it should be 'let us call it the discriminative (art)'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 320,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "so: In curfu igit q qui uolens",
+            "image": "so: In cursu igitur deterior est / qui preter uoluntatem agit mala: quam qui uolens",
+            "problem": "the conclusion of the running argument is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "figure itaq inconcinitas ria uero ad utium",
+            "image": "figure itaq[ue] inconcinnitas uoluntaria ad uirtutem corporis attinet: contraria uero ad uitium",
+            "problem": "half a sentence dropped, which inverts the claim",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "et pulchra et turpia: ie cundū corpus facit",
+            "image": "et pulchra et turpia: Quapropter qui habitu corporis prestat / quotiens mala secundum corpus facit",
+            "problem": "clause dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "o Iudice",
+            "image": "o Eudice",
+            "problem": "vocative of Eudicus misread as 'judge'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ani morhyme qdā fuasit",
+            "image": "animi morbus me quidam inuasit",
+            "problem": "garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "figure itaq inconcinitas ria uero ad utium",
+            "english": "Therefore, the lack of harmony in the figure belongs to vice.",
+            "problem": "Socrates' point is reversed: voluntary ungainliness belongs to the body's excellence, and only the involuntary kind to vice",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "source": "In curfu igit q qui uolens",
+            "english": "In running, then, he who does so willingly.",
+            "problem": "the conclusion 'in running, the one who does badly unwillingly is worse than the one who does so willingly' is lost",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "source": "te nunc inuocabo apemanti fili",
+            "english": "son of Apemantus <note>a reference to Socrates' father, Sophroniscus, though here used as a formal address</note>",
+            "problem": "invented and wrong note: the son of Apemantus is Eudicus, the speaker addressed",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "o Iudice semper dicentes interturbat",
+            "english": "interrupts those who are speaking, O judge",
+            "problem": "carries the misread of 'Eudice'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ani morhyme qdā fuasit",
+            "english": "my mind wavers",
+            "problem": "should be 'a certain sickness of mind has come over me'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR tags 'Spero autem hūc' as a catchword; it is running text in the middle of the page",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Ficino's Plato is read well enough to follow, but the OCR regularly drops lines and duplicates one, and a speaker is misattributed. On page 320 a dropped half-sentence reverses Socrates' conclusion in the Hippias Minor, and a note invents a wrong identification."
+  },
+  {
+    "book_id": "69f32ed5876dd827cbc44913",
+    "slot": 94,
+    "title": "Sermo generalis de naturis rerum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Thomas of Cantimpré's encyclopedia of nature (a Harvard manuscript): animals, bees, stones and their virtues. It fits medieval natural history and lapidary lore.",
+    "rights_flag": null,
+    "structure_note": "200 pages, 193 with OCR and 190 translated. The manuscript's own foliation (25 on page 50, a number on page 98) is consistent with the order. Nothing structural stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Vrso xx die",
+            "image": "Vrso xxx die",
+            "problem": "gestation numeral wrong (30 days, after Pliny)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "aliud est accedentibus uenatoribus occisus",
+            "image": "a iudeis crudelissimis uenatoribus occisus",
+            "problem": "'killed by the most cruel Jews [as] hunters' (end of an allegory) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Si amigdalas uulpes comedit mouet et calefactionem epatis pane et tpe et uale",
+            "image": "Si amigdalas wlpes comederit moritur. Dicit Calefactionem epatis patitur tempore estiuali",
+            "problem": "'moritur' (dies) misread as 'mouet'; the summer liver-heat clause garbled",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "et cum uite pendit in longum",
+            "image": "et eius uitam protendit in longum",
+            "problem": "'prolongs its life' misread",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Vrsus in mediana comedit formicas",
+            "image": "Vrsus pro medicina comedit formicas",
+            "problem": "'as medicine' lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ursa plene uidetur",
+            "image": "ursam parientem uidere",
+            "problem": "'to see a bear giving birth' misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ut dicit ambigitur",
+            "image": "ut dicit ambrosius",
+            "problem": "source name (Ambrose) lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Capra inpedica quando mosu parit pede",
+            "image": "Capta et impedita quandoque morsu precidit pedem",
+            "problem": "'caught in a trap, it bites off its foot' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Si amigdalas uulpes comedit mouet …",
+            "english": "If a fox eats almonds, it moves and warms the liver with bread and... and it is well.",
+            "problem": "the text says a fox that eats almonds dies; the translation says it is well",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "et cum uite pendit in longum",
+            "english": "and hangs itself in length",
+            "problem": "the fox prolongs its life; the translation has it hang itself",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Vrso xx die",
+            "english": "after twenty days",
+            "problem": "carries the wrong numeral (thirty)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "sic et igne leopardorum aco domesticant",
+            "english": "they are domesticated by the fire of leopards",
+            "problem": "fluent nonsense over a garble",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Vlpes dolosa lingula foue fodit et uentre sui scrobis exornat",
+            "english": "the deceitful fox digs with its tongue and decorates the stomach of the badger's burrow",
+            "problem": "the source says the fox enters and fouls the hole with its dung; the translation is invented",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Vlpes sedem uelidorum et quod uoluppes est",
+            "english": "The fox is a dweller of holes",
+            "problem": "the source gives Isidore's etymology (vulpes, quasi volupes); the translation invents a claim",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Capra inpedica quando mosu parit pede ut",
+            "english": "When the goat is impeded and gives birth to its young",
+            "problem": "a fox caught in a trap biting off its foot becomes a goat giving birth",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 98,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "sunt reges 7 qi pnapes mt apes",
+            "image": "sunt reges et quasi principes inter apes",
+            "problem": "Tironian et kept as '7', which the translation reads as a numeral",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "n hq agut in maiou mpio",
+            "image": "nec quicquam agunt sine maiorum imperio",
+            "problem": "'sine' (without) lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "inortuus idem plouis",
+            "image": "mortuus quidem floribus",
+            "problem": "misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "alias furos explorare",
+            "image": "alias fucos explorare",
+            "problem": "drones (fucos) misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "sunt reges 7 qi pnapes mt apes",
+            "english": "There are seven kings who are the princes of the bees.",
+            "problem": "invented number: 'there are kings and, as it were, princes among the bees'",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "n hq agut in maiou mpio",
+            "english": "They do not act in the command of the greater.",
+            "problem": "reversed: they do nothing without the elders' command",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Quies ipis 7 m matutino don vna excoet gemo aut ipha huano",
+            "english": "if one is exhausted, the dew or the human",
+            "problem": "fluent garble; the source says they rest until one rouses them with a double or triple buzz",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "qub e cap adolescenaa adopa exut. 7 rip dea auchut",
+            "english": "To them, the youth of the young are given, and they listen to the truth.",
+            "problem": "invented; the source says the young go out to work and bring things in",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "inortuus idem plouis",
+            "english": "the dead are the same as the rain",
+            "problem": "nonsense from a misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 145,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Fures et intrites domum et furandi in iustis partibus domum carbones ponit",
+            "image": "Fures intrantes domum causa furandi in .iiii. partibus domus carbones ponunt",
+            "problem": "'four corners' misread as 'just parts'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Statim fumi uapore currit mures et oculos thiracium ut fugiat adomo purates domum tuam. Frag fures et punere putat",
+            "image": "Statim fumi uapore currunt mentes et oculos [habitantium] ut fugiant a domo putantes domum ruituram. Itaque fures impune rapiunt",
+            "problem": "garbled: the inhabitants flee thinking the house is falling, and the thieves rob with impunity",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "apud dragondas",
+            "image": "apud trogodytas",
+            "problem": "Troglodytes misread as 'dragons'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Una lacte soluit multis et mane pepit",
+            "image": "Mulieris lacte solutus que marem peperit",
+            "problem": "garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Freneticos facit.",
+            "english": "It helps the frenzied.",
+            "problem": "reversed: the stone makes people frantic (correct OCR)",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Statim fumi uapore currit mures … Frag fures et punere putat quod eis domo placet.",
+            "english": "the vapor of the smoke will cause mice to run and their eyes to shine, so that they flee, purifying your house. The thieves will think that what pleases the house is for them.",
+            "problem": "invented sense (mice, purifying); the source describes a thieves' trick that drives the householders out",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Una lacte soluit multis et mane pepit",
+            "english": "Dissolved in milk, it helps many conditions and facilitates childbirth.",
+            "problem": "the source means 'dissolved in the milk of a woman who bore a boy'; childbirth is invented",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Hic lapis saliare et uxores manitas",
+            "english": "This stone helps against sickness and adulterous wives.",
+            "problem": "the source says it reconciles wives to husbands",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Nychomantia uel alabastrum",
+            "english": "Nychomantia <gloss>Necromancy stone</gloss>",
+            "problem": "invented gloss; Nicomar is alabaster, not necromancy",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Lagapis frigide et sicce complexionis … Vulneratus auulnere ferrum extrahit.",
+            "english": "The Lagapis <gloss>Magnet</gloss> … It extracts iron from a wound.",
+            "problem": "Lagapis is a separate stone and is wrongly glossed as 'Magnet'",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page images are a clear, legible Gothic hand, but the flash-lite OCR misreads its abbreviations throughout. The translation turns the garbles into confident prose: an invented 'seven kings' of the bees, the elders' command reversed, a fox that is 'well' after eating almonds where the text says it dies, and a stone that 'helps the frenzied' where it makes people frantic. An expert would not trust these pages."
+  },
+  {
+    "book_id": "69dbcbe41040d1d5e20bb28f",
+    "slot": 26,
+    "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The pseudo-Senecan Formula vitae honestae (Martin of Braga) with a Latin school commentary, printed 1490 (BSB). It fits classical and moral-philosophy holdings, and the 'Seneca' attribution is the period one.",
+    "rights_flag": null,
+    "structure_note": "37 pages, 37 with OCR, 34 translated: three pages lack translation. Signature 'b ij' on page 18 is consistent.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "nihil inceptū affirmes",
+            "image": "nihil inexptū affirmes",
+            "problem": "'inexpertum' (untested) read as 'inceptum'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "sicut infēdū amic’",
+            "image": "sicut int'dū amic'",
+            "problem": "'interdum' (sometimes) misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Quidq’ in li. fast.",
+            "image": "Ouidi' in li. fast.",
+            "problem": "Ovid's name lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "nihil inceptū affirmes",
+            "english": "Do not affirm anything at the start",
+            "problem": "should be 'affirm nothing untested'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Glolēs q prudēs hō ñ dz diffinire seu notificare dubia Sz ptrahere sentē tā donec veritate experiri poterit.",
+            "english": "<note>gloss: the prudent man should not define or announce doubtful things …</note>",
+            "problem": "a sentence of the commentary is shown as a note rather than as text",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "source": "tristem faciē siue frontē aduersa amicus et blanda adulator ostendit",
+            "english": "a friend sometimes shows a sad face or forehead to an adversary",
+            "problem": "misparsed: a friend shows a stern face, a flatterer a pleasant one ('to an adversary' is invented)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "sicut infēdū amic’ ōndit faciē iratā",
+            "english": "just as a faithful friend shows an angry face",
+            "problem": "'faithful' comes from the misread 'interdum' (sometimes)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Valissimū",
+            "image": "Utilissimū",
+            "problem": "misread ('most useful')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Tullius in padoris",
+            "english": "in *Padoris* <note>likely a reference to Tusculan Disputations or similar rhetorical works</note>",
+            "problem": "wrong guess: 'padoxis' is the Paradoxa Stoicorum",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Hec est uersia presentis capituli et partia. In qua Seneca prima officia proponit.",
+            "image": "Hec ē vltia ps h' capituli de temperantia. In qua seneca plurima officia temperantie superaddit cum repetitione quorundam prehabitorum.",
+            "problem": "the commentary's opening sentence is replaced by an invented paraphrase",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "Nec tria discipula suat unt superare magistrum",
+            "image": "Hec tria discipulum faciunt superare magistrum",
+            "problem": "'Hec' read as 'Nec', which reverses the proverb",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "quibus apposuit et sponsore",
+            "image": "quibus anpositus et prepositus est in dignitate sed humilis ut prius patuit. Neque etiam continens alicuius insipientiam spernere debet",
+            "problem": "a sentence dropped and the remainder garbled",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Helas fortuna",
+            "image": "Nescis fortuna",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Noli sis uetosus",
+            "image": "Non sis verbosus",
+            "problem": "misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Nec tria discipula suat unt superare magistrum",
+            "english": "And do not let the disciple seek to surpass the master.",
+            "problem": "the proverb is reversed: 'these three things make the pupil surpass the master'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Hec est uersia presentis capituli … Seneca prima officia proponit",
+            "english": "This is the meaning of the present chapter … Seneca proposes the first offices",
+            "problem": "the source says this is the last part of the chapter on temperance and that it adds further duties",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "source": "Noli sis uetosus",
+            "english": "Do not be contentious.",
+            "problem": "Cato says 'do not be wordy'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Quia uilipost oia",
+            "english": "Because it despises all things",
+            "problem": "the source says 'because it orders all things' (Wisdom 8); the translation is invented",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Diu uiuas tam diu discas",
+            "english": "Live as long as you may learn.",
+            "problem": "inverted: 'as long as you live, keep learning'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Iusticia per hec uirtus est",
+            "english": "Justice is through this virtue.",
+            "problem": "should be 'Justice is the next virtue' (post hec)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The large-type text of Martin of Braga is read well. The dense, abbreviated commentary is read poorly, worst on page 27, where a misread reverses the closing proverb and the commentary's opening is paraphrased rather than transcribed. Usable for the main text; the commentary needs a re-read."
+  }
+]

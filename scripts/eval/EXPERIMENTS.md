@@ -141,6 +141,893 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-02 · The Internet Archive's OCR, ours and a human-typed edition, on the same pages and judged by the same reviewer (#7941)
+
+**What the Archive text is.** The Internet Archive's OCR (`_djvu.xml`, the "Full text" link) is a **search layer**. It exists so a book can be found and searched inside. It is not meant to be read as the text of the book. This study measures it as a reading text because a reader asks "is this better than what I would get from the Archive?". The answer says nothing about how well the Archive's text does the job it was built for.
+
+### Design
+
+All three texts of a page go through **one normaliser** before they are judged and before they are scored (`three-way.mjs normalise`). This follows Derek's inbox note of 2026-11-02 13:48Z, applied before any judge call.
+- **Furniture** (running heads, page numbers, signatures, catchwords) is removed by source, because each source marks it differently:
+  - Ours: the tagged blocks are dropped.
+  - Typed editions: none is present.
+  - Archive: a fixed rule drops bare page numbers, short numbered or capitalised first and last lines, running heads repeated two leaves away, signature marks, and a catchword that matches the next leaf's first word.
+- **Then, the same for every arm:** NFC; long s to s; æ/œ to ae/oe; curly quotes to straight; markdown asterisks dropped; line-end hyphens joined; abbreviations left as printed. The result is one stream of text re-wrapped at 72 columns, so no arm can be recognised by its layout. Marginalia and notes stay as text in every arm.
+- The draw and the normaliser were committed before the first judge call: commit `f3407bb01`.
+
+**Three strata**, with a difficulty field in the JSON (Derek, 14:16Z):
+
+| set | pages (one per book) | difficulty | texts |
+|---|---|---|---|
+| A | 30 of #7263's 60 print pages (English 13, Latin 7, German 10) | easy: same-edition typed editions (DTA, EEBO-TCP, CAMENA) | Archive, ours, human |
+| B | 35 #5124 English pages, seeded | easy: proofread Wikisource (28) / Gutenberg (7) transcriptions | Archive, ours, human |
+| **C** | **60 English 1800–1930, 10 Latin, 10 German**, drawn at random from live Archive-sourced books | **typical** | Archive, ours |
+
+- **Alignment (A, B).** The Archive leaf is the one whose words best match the typed page (F1 ≥ 0.5), searched over every leaf of the item.
+  - A: 30 of the 46 IA books aligned, and all 30 at the leaf our image was cut from. 16 did not align and 14 books have no Archive item.
+  - Non-aligned by language: Latin 9 of 16, English 4 of 17, German 3 of 13. In 10 of the 16, the best leaf *is* our image's leaf: the Archive simply misread it (mostly ia-ocr 0.0.21 on early print).
+  - **A's Latin Archive figures are therefore from the Archive's better pages.** Fewer than half failed (16/46), so no stop was triggered.
+  - B: 35 of 35 aligned, all at #5124's by-eye leaf.
+- **Set C.** The leaf is our image's own Archive leaf; 0 moved for drift. Skipped: 41 English books where we serve the Archive's own text, so C compares the Archive with **our own reads**. Also skipped: 10 books with no usable page and 1 with no djvu.
+- **Judge.** #7866's judge, unchanged: `judgeAbsolute`, route-judge `judgePrompt`, Opus via `claude -p` on the subscription, against the page image. Each text is judged on its own, blind to its source; no verdict is reused, because #7263's were made on un-normalised text.
+- **Adjudication.** Every misleads / wrong_text flag of a page, all arms together, unlabelled and shuffled. Each flag was shown cropped to its line, to Opus and to Sonnet (`ADJ3_PROMPT`). **Confirmed** = both say the page prints something else. 46 pages were adjudicated, in seeded order, until the Opus cap.
+- **Rates.**
+  - Flags per 1,000 words of the typed page. In C, per 1,000 words of the fuller of the two reads.
+  - Judge-bad page: not accepted, or a wrong_text defect.
+  - CER: the typed page's lines located in the text. Raw = no normaliser; norm = normalised, case and punctuation kept; conv = normalised plus `normalizeForScript` folds.
+  - Numbers: digit runs of the typed page missing from the text.
+  - Book-cluster bootstrap, 2,000 draws, 95%. Every page is its own book, so n pages = n books.
+
+### Results
+
+**Headline: typical pages (set C, random, Archive vs ours)**
+
+| language | n | Archive flags /1k | ours flags /1k | Archive pages judged bad | ours judged bad | confirmed /1k Archive / ours (adjudicated pages) |
+|---|---|---|---|---|---|---|
+| **English 1800–1930** | 60 | **10.9** (7.4–14.9) | **1.06** (0.54–1.67) | 55% (42–67) | 15% (7–25) | 8.9 (4.4–13.8) / 1.1 (0.5–1.9) (40) |
+| Latin (1525–1865, 8 of 10 before 1700) | 10 | 34.7 (25.1–48.4) | 6.0 (1.3–11.3) | 100% | 40% (10–70) | 35.4 / 4.8 (2) |
+| German (1684–1922) | 10 | 20.1 (14.2–32.4) | 3.1 (1.0–4.5) | 100% | 40% (10–70) | 26.7 / 0.8 (4) |
+
+**Easy pages (sets A + B, with a typed edition): the three-way**
+
+| language | n | Archive | ours | human-typed | judged bad A / O / H |
+|---|---|---|---|---|---|
+| **all** | 65 | **22.6** (18.0–27.5) | **2.2** (1.4–3.1) | **3.6** (2.3–4.9) | 82% / 28% / 34% |
+| confirmed /1k (25 pages) | | 19.0 (12.0–27.7) | 1.2 (0.4–2.0) | 2.7 (0.7–5.3) | |
+| English | 48 | 18.2 (14.0–22.9) | 2.3 (1.5–3.2) | 3.9 (2.6–5.4) | 79% / 35% / 42% |
+| Latin | 7 | 70.1 (52–90) | 4.0 (0–10.6) | 0.8 (0–2.6) | 100% / 14% / 14% |
+| German | 10 | 27.2 (15.9–40.2) | 0 (0–0) | 2.3 (0–6.5) | 80% / 0% / 10% |
+
+**Against the typed reference (A + B, 65 pages):**
+
+| | Archive | ours (all pages) | ours (62 pages with a stored read) |
+|---|---|---|---|
+| CER raw | 6.1% | 8.0% | — |
+| CER normalised | 5.9% (4.6–7.3) | 6.9% (2.6–12.4) | **2.4%** (1.7–3.3) vs Archive 6.1% (4.7–7.4) |
+| CER normalised + folds | 4.8% | 6.1% | 1.7% vs Archive 4.9% |
+| typed-page numbers missing (399) | 17.8% (11.3–28.4) | 8.3% (2.5–17.0) | 5.4% (1.1–10.3) vs Archive 18.1% |
+
+**Three of our stored reads are empty** (two in B, one in A; a fourth, in C, too). We serve nothing on those pages and the Archive serves its text, so they are counted. Each scores CER 100%, which is why our pooled CER sits above the Archive's while every other measure favours ours. Pooled CER is dominated by them; read the 62-page column.
+
+**Paired, page by page (flags per word):** ours fewer on 57 of 65 typed pages and the Archive fewer on 1 (7 tied). On the random pages: ours fewer on 55 of 80, the Archive on 2 (23 tied).
+
+**Cuts Derek asked for** (flags per 1,000 words, Archive / ours / human; every cut is in `three-way.json`):
+
+| cut | n | Archive | ours | human |
+|---|---|---|---|---|
+| typed, Archive = ABBYY FineReader (8, 9, 11) | 13 | 19.4 | 2.5 | 3.9 |
+| typed, Archive = ia-ocr / tesseract | 51 | 24.2 | 2.1 | 3.5 |
+| random, ia-ocr 0.0.21 | 48 | 10.8 | 1.6 | — |
+| random, ABBYY 8.0 / 9.0 / 11.0 | 11 / 4 / 7 | 21.1 / 43.3 / 38.0 | 1.8 / 2.3 / 5.1 | — |
+| typed, 17th century | 23 | 36.6 | 3.7 | 2.4 |
+| typed, 19th / 20th century | 14 / 20 | 14.4 / 6.9 | 1.1 / 1.2 | 3.5 / 3.9 |
+| random, 19th / 20th century | 31 / 38 | 12.5 / 12.3 | 1.6 / 0.9 | — |
+| typed, book in a reference set (`scripts/eval/benchmark/*.json`) | 45 | 19.5 | 2.3 | 4.2 |
+| typed, book in no reference set | 20 | 30.6 | 1.9 | 1.9 |
+
+- **Random over typed, like for like** (English 1800–1930; typed n = 29, random n = 60):
+  - Archive: flags 10.9 / 8.7 = 1.25×; judged bad 0.84×.
+  - Ours: flags 1.06 / 1.33 = 0.80×; judged bad 0.73×.
+  - On this judge, typical English 1800–1930 pages are **not** clearly harder than the typed-edition ones for either reader. The selection Derek named (#7263: 2.5 against 6.0 per 1,000) shows on early print, not here. The pooled typed rates are higher than the random ones only because the typed set holds 17th-century EEBO pages.
+- **Reference-set books** do not flatter ours: ours is 2.3 in them and 1.9 outside them.
+
+### What it says
+
+- **On every stratum, language, century and Archive engine, the same judge flags the Archive's text 5× to 20× more than ours (more where ours drew no flag at all).** On typical English pages it is about 10×: 10.9 against 1.1 per 1,000 words, with judged-bad pages at 55% against 15%. The gap is widest on early print and Latin, where the Archive's tesseract text is often unreadable.
+- **The Archive's ABBYY items are not better than its tesseract items** on these pages. The ABBYY random pages are older books.
+- **Human-typed editions are not error-free to this judge.** On A, #7263's same-edition DTA / EEBO / CAMENA pages, the typed text draws 1.8 against ours 2.3, as in #7263. On B, Wikisource / Gutenberg, the typed text draws more flags than ours: 4.6 against 2.2.
+  - Gutenberg often follows another printing, and Wikisource silently regularises.
+  - The adjudicators upheld 15 of 16 of the English human flags.
+  - So the typed edition is the CER reference, but not a perfect reading of the page.
+
+### Limits
+
+- **The adjudication is anchored.** As #7263 warned, the prompt states the checker's claim. The two adjudicators answered "the page prints something else" on 691 of 716 point answers and "the transcription is right" on 2. So the confirmed rate is an **upper bound**. It tracks the flag rate and does not separate arms by false alarms. A blind re-read, with no claim shown, is the next check.
+- **The normaliser makes some flags.** 46 of the Archive's 420 typed-set flags (ours 4, human 5) charge running heads, page numbers or table layout that the normaliser removed in every arm. Without them: Archive 20.1, ours 2.0, human 3.3 per 1,000 words.
+- **One judge and one judge family.** Opus judges, Opus and Sonnet adjudicate. Small cells: Latin and German n = 7–10 per stratum; engine and century cells of 1–5 pages are in the JSON but are not quotable.
+- **Set A's Latin Archive arm is the aligned 7 of 16** (see Design). C's Latin and German pages are mostly early print with a low Archive–ours word overlap (F1 0–0.6), so the Archive text was kept at our image's leaf on identity alone.
+- **Our arm is what we serve** (Flash, Flash-Lite, LightOn, 2.5 Flash), not one engine. The random stratum leaves out books where we serve the Archive's own text: 41 of about 100 English books tried.
+
+### Eye check (5 Archive-arm verdicts, by eye, seed 79417)
+
+All 5 confirmed against the page image:
+- `ge-69afe356…`: "noch 1 ua einfaches" for *noch auf nichts einfaches*, "munen" for *Antithesis*, "Härte" for *hätte*.
+- `rnd-6a085a91…`: Aldine-italic Ovid read as garble, with the ProQuest caption read as page text.
+- `en-69569052…`: side-notes ("And to their movable Goods.", "Examples where there are Obligations…") spliced into the sentences.
+- `en5124-…-pg48225p119`: "Ftirst" for *Fürst*, "6-5" for *6·5*.
+- `rnd-6ab6e065…`: accepted, rightly, with cosmetic slips ("lesous" for *Iēsous*, "Tiie" for *The*).
+
+In two of the five, some flags are normaliser artefacts: a running head and a flattened table (Limits above).
+
+### Spend
+
+- Opus via `claude -p` on the subscription: 402 calls. That is 355 judge calls, 46 adjudication calls and 1 re-run.
+- The brief capped Opus at 300. Derek's two notes required re-judging every arm on normalised text and a 60 + 20 page random stratum, so the cap was raised to 400, kept as a hard stop; concurrency ran 2 over.
+- Sonnet: 45 calls. Weekly meter 67% → 68%.
+- No Gemini, no paid API, no writes to pages, books or router tables. $0 billed.
+
+### Reproduce
+
+```
+E=--env-file=/root/sourcelibrary/.env.production.local; T=scripts/eval/judge-cal-7866bar-7263/three-way.mjs
+TYPED_REFS_DIR=$JOB_SCRATCH/typed-refs-6012 node $E scripts/eval/judge-cal-7866bar-7263/run.mjs fetch   # set A items (manifests from R2 eval-refs/typed-refs-6012/manifests)
+node $E $T ia && node $E $T align && node $E $T added && for L in English Latin German; do node $E $T random --lang=$L; done
+node $E $T judge && node $E $T adjudicate && node $T score      # node $T show <uid> prints a page's three normalised texts
+```
+Committed: `results/three-way.json` (by stratum, language and cut, with `difficulty`), `three-way-pages.jsonl` (per page and arm, numbers only), the alignment and draw rows, and the verdicts and adjudications without quotes. No page text is committed.
+
+## 2026-11-02 · The stock is mostly the old reads: which engine wrote the text a reader sees (#7933)
+
+PRIOR ART: `scripts/audit/model-usage-snapshot.mjs` counts every page by `ocr.model` and `translation.model` and feeds /about/models, but its `ops_reports/model-usage` document was last written 2026-10-02 and it does not cut by language, date or visibility. This is a one-off random sample instead: `$sample` of 40,000 pages (transcription) and 30,000 (translation), joined to `books` for `visible`, `pages_count`, `language`, `published`, kept if the book is live and the field holds more than 20 characters. Shares are of sampled pages, so each is within about half a point at these sizes.
+
+### Transcriptions (28,053 live pages)
+
+| Engine (`ocr.model`) | Share |
+|---|---|
+| Gemini Flash-Lite (3.1, preview and GA) | 47.3% |
+| Gemini 3 Flash (preview) | 22.1% |
+| Yig-dzin (Tibetan) | 12.2% |
+| PaddleOCR-VL | 10.2% |
+| Internet Archive OCR (incl. no model recorded) | 5.1% |
+| Gemini 3.8 Flash (agy) | 1.5% |
+| LightOnOCR | 0.7% |
+| Claude Opus | 0.3% |
+
+By language, share of each language's pages: Latin 72% Flash-Lite, 28% 3 Flash, 0% 3.8 (n 9,007); German 76 / 18 / 5 (n 2,845); English 48 / 26 / 0, the rest IA and LightOnOCR (n 2,616); French 73 / 24 / 2; Dutch 86 / 13 / 0; Sanskrit 64 / 36 / 0; Arabic 66 / 31 / 1; Greek 17 / 82 / 0; Korean 29 / 71 / 0; Chinese 93% Paddle; Tibetan 74% Yig-dzin, 20% IA. Latin before 1501 (n 2,900): 90% Flash-Lite.
+
+20% of sampled pages carry an `ocr.updated_at` in the last 30 days. By the engine on them: Paddle 43%, Yig-dzin 19%, 3 Flash 11%, Flash-Lite 11%, 3.8 Flash 8%. The recent writing is mostly Chinese and Tibetan; Latin and German are barely touched.
+
+### English translations (16,740 live translated pages)
+
+Flash-Lite 52.4% (preview 25.2, GA 27.2), Gemini 3 Flash 43.8%, Gemini 3.8 Flash 2.2%, Claude Opus 1.0%. Latin's English is 83% Flash-Lite (n 6,240); German 68% 3 Flash; Tibetan 92% 3 Flash; Chinese 58% 3 Flash and 23% 3.8.
+
+### What it means for the figures on /quality
+
+- **The figures describe old reads.** The route that reads pages now (Gemini 3.8 Flash through the CLI, with re-read or correction of Flash-Lite text) has touched about 2% of either layer. Its measured effect where it has run: on 250 Flash-Lite Latin pages, the share a blind Opus reader called misleading fell from 41% to 8% (`2026-10-23-flash-reread-lite-latin-books-5924.md`).
+- **The draw's Latin is not the stock's Latin.** In the #7866 draw, Latin pages were 108 by 3 Flash and 27 by Flash-Lite (80 / 20); the stock is 28 / 72. Per-language rows on /quality are unweighted, and Flash-Lite Latin ran 13.2 meaning-changing errors per 1,000 words against 5.0 for 3 Flash, so the published Latin rate (6.2) is probably low for the stock as it stands. Part of that gap is age (Flash-Lite holds 90% of the incunabula), so a straight reweighting would overstate it; the honest statement is "probably higher, by an amount this draw cannot fix".
+
+### For the next draw
+
+The #7866 draw was stratified by our stored confidence score, because its question was whether that score predicts a bad book. A draw meant to say how good the library is, and whether it is improving, should be stratified by what this study found predicts quality:
+
+1. **Strata: engine × age band × hand**, within language groups, allocated in proportion to the stock with a floor of a few books per hard cell (incunabula, manuscripts, Greek, Sanskrit, Korean), and weighted back. The engine stratum is the one that moves as re-reads land.
+2. **Two frames, reported separately.** *Stock*: what a reader sees now. *Flow*: pages written in the last 30 days, which measures the current route. The 2026-10-24 flow check (#6056) was 8 of 10 Chinese books; rotate or stratify it by language.
+3. **A fixed panel.** Re-judge the same 800 pages after they are re-read: a paired before/after is far tighter than two independent draws, and it is what "is it getting better" asks.
+4. **Translation on the same pages**, judged against the image and the stored transcription, so each English defect is attributed to the reading or to the translating.
+
+## 2026-11-02 · Half the pages, not 57% of the books: #7866's draw re-graded on the published ladder, by language, with the defects named (#7933)
+
+PRIOR ART:
+- `scripts/eval/confidence-7866/analyze.mjs` and `results/score.json`: the **same 800 verdicts**. They answer #7866's question — does our stored confidence score predict a bad book — and report one binary per book (bad = ≥ 2 of 5 pages bad). Neither the page distribution nor any language cut is in them.
+- `scripts/eval/confidence-7866/results/defect-rates.json` (#7824 weights): severity rates per 1,000 words by **stratum and study cell**, never by language, and never as a page grade.
+- `scripts/eval/route-judge-6740/defect-rate.mjs` `words()` and the MQM 1/5/25 weights: imported, not restated.
+- `scripts/eval/lane-judge-sampler.mjs` `exportScore`: pools the same records by (cell, route) for the router, which is a different unit from a reader-facing grade.
+- `.claude/docs/quality-rubric-and-sampling.md` §5: defines the four grades, their severities and their rules. Defined since #5984, **computed on no sample until now**.
+- Searched `scripts/eval/INDEX.md`, `gh issue list --search "grade ladder"`, `git grep fit_to_quote`: nothing grades a drawn sample on the published ladder.
+
+Code: `scripts/eval/confidence-7866/regrade.mjs`. One model call: none. Reads `lane_judge_verdicts` and each page's stored text (word counts only), writes `results/served-grades.json`.
+
+**Question (Derek, 2026-11-02).** "The quality center says that 57% of the books are ok and 43% are bad. That's misleading. Also, let's show the results by language, etc. and qualitatively understand what isn't right, if anything."
+
+### 1. Why the one number misled
+
+`/quality` led with *57% of the books you can read here passed a check of their transcription against the page images*, from #7866. That figure is two binarisations of a rich verdict:
+
+- a **page** is bad if the judge did not accept it **or** tagged any `wrong_text` defect;
+- a **book** is bad if ≥ 2 of its 5 drawn pages are bad.
+
+Both thresholds are defensible and neither was stated on the page. Their joint effect is that one clearly printed word — *Egypt*, read as `IJgyjDt` (`69aebc460d3d5e01e132c454` p. 187, otherwise complete and in order) — counts against its book exactly as another book's text does. 83 of the 289 pages that counted bad under that rule have no `wrong_text` defect at all: their worst fault changes the sense of a word.
+
+And the share is a point on a curve whose slope is the bar, not the corpus. #7263 corrected the same 800 verdicts for the judge's **misses** at a 1% CER page bar and got 93% of books bad (55–100%), 61% at a 5% bar. One point from that curve, quoted without the bar, is the misleading part.
+
+### 2. The ladder (`regrade.mjs`, the rubric's §5)
+
+A page's grade comes from the judge's own fields: its severities are MQM's (cosmetic = minor, misleads = major, wrong_text = critical) and its fidelity scale is in the prompt (1 = not this page's text at all … 5 = faithful and complete). §5's *not usable* is split into four, because a wrong word, an invented span, a half-missing page and another book's page are different failures and different fixes.
+
+| grade | rule | pages | share, design-weighted (95% book bootstrap) |
+|---|---|---|---|
+| fit to quote | no defect, or ≤ 2 cosmetic | 352 | **42.8%** (37.9–47.6) |
+| fit to read | ≥ 3 cosmetic, no major | 58 | 8.0% (6.0–10.2) |
+| fit for search only | ≥ 1 misleads, no wrong_text | 184 | **24.2%** (21.0–27.7) |
+| not usable · wrong span | ≥ 1 wrong_text, none from elsewhere | 143 | 17.7% (14.1–21.4) |
+| not usable · from elsewhere | ≥ 1 wrong_text of O1/O2/O3/I1/T17 | 17 | 2.2% (1.2–3.3) |
+| not usable · mostly wrong | fidelity 2 | 35 | 3.6% (2.2–5.2) |
+| not usable · not this page | fidelity 1 | 11 | 1.5% (0.2–3.3) |
+
+Collapsed to what a reader can act on: **50.8% (45.7–55.9) of pages say what the page says, 24.2% (21.0–27.7) carry a reading that changes a word's sense, 25.0% (20.6–29.6) carry something the page does not have.** About 1 page in 60 is not this page's text at all.
+
+By book (weighted): 13.9% are clean on all five pages, 28.1% have only misleading readings, 24.8% have one page carrying something off, 19.4% two or more, 13.8% have a page substantially wrong or not its own.
+
+### 3. The judge errs in both directions, and both are quantified
+
+- **Over-flagging.** #6740 (`2026-10-30-defect-rate-router-6740.md` §"Calibration (steer 1 A)") re-read 80 of this judge's own tags blind, each by a fresh Opus call seeing only the quoted span and the page image: of 40 `wrong_text` tags, 28 held as wrong text, 4 as misleads, 3 cosmetic, 5 were the page; of 40 `misleads`, **17 were re-read as wrong text**, 8 held, 5 cosmetic, 10 were the page. Resampling every non-cosmetic tag from that matrix (4,000 draws, books resampled within strata as well, cosmetic tags carried unchanged, fidelity 1–2 pages kept as judged since the wrong-page controls validate that call):
+
+  | | as tagged | after the blind re-read |
+  |---|---|---|
+  | says what the page says | 50.8% (45.7–55.9) | **58.1%** (52.9–63.2) |
+  | fit to quote | 42.8% (37.9–47.6) | 47.7% (42.6–52.8) |
+  | a reading that changes the sense | 24.2% (21.0–27.7) | 5.3% (3.7–7.0) |
+  | something the page does not have | 25.0% (20.6–29.6) | 36.6% (31.8–41.7) |
+
+  Both intervals resample books within strata; the corrected column also resamples every tag. An interval over tag error alone would be three times narrower and would make the corrected figure read as the more precise one, which it is not.
+
+  The misleads / wrong_text line is unstable, as #6740 said; the clean share is not. Read "roughly 42% of pages have at least one error that changes the sense", and do not lean on how it splits.
+- **Under-flagging.** #7263: at a 1% CER bar on pages with a typed scholarly reference, sensitivity 0.42 on print (0.23–0.64) and 0.45 on Chinese manuscripts (0.29–0.62); specificity 0.88 and 1.00. These shares are not a ceiling on quality.
+- **Size, in plain units** (#7263 §5): a machine read of printed pages carries 2.5 severe defects per 1,000 words by the judge proxy and 3.4 by a translation test (1.2 of which is that test's own noise); a **human-typed scholarly edition of the same pages carries 1.45 confirmed**. Machine reading is roughly 1.5–2× the human rate on print.
+
+### 4. By language
+
+Weighted within language. The draw was stratified by our own confidence, not by language, so a language's own share rests on its own books (3 to 59) and carries a wide interval; a 0% or 100% on three books means three books. The rate column counts defects, not pages: per 1,000 words for alphabetic scripts, per 1,000 Han characters for Chinese and Korean, per 1,000 syllables for Tibetan. **Not comparable across those units.**
+
+| language | books | pages | says what the page says | changes the sense | not on the page | severe / 1k | wrong_text / 1k | reading method |
+|---|---|---|---|---|---|---|---|---|
+| Chinese | 59 | 295 | 52.1% | 23.0% | 24.9% | 8.48 | 3.44 | PaddleOCR-VL, 3 Flash |
+| Latin | 28 | 140 | 41.4% | 29.9% | 28.7% | 6.16 | 2.03 | 3 Flash, Flash-Lite |
+| English | 19 | 95 | **82.5%** | 12.0% | 5.5% | **0.93** | 0.32 | Flash-Lite, IA djvu, LightOnOCR |
+| German | 15 | 75 | 50.8% | 33.0% | 16.2% | 4.00 | 0.78 | Flash-Lite, 3 Flash |
+| Tibetan | 10 | 50 | 62.4% | 18.1% | 19.4% | 3.63 | 1.09 | Yig-dzin, Esukhia e-text |
+| Greek | 6 | 30 | **20.0%** | 13.3% | **66.7%** | **19.28** | 9.08 | 3 Flash |
+| French | 3 | 15 | 64.8% | 20.6% | 14.6% | 4.47 | 0.79 | Flash-Lite |
+| Korean | 3 | 15 | **0%** | 13.3% | **86.7%** | 17.78 | 8.89 | Flash-Lite |
+| Russian | 3 | 15 | **93.3%** | 6.7% | 0% | 0.16 | 0 | Flash-Lite |
+| Sanskrit | 3 | 15 | **0%** | 34.4% | **65.6%** | 30.89 | 13.24 | Flash-Lite |
+
+Below three books, and so left out of the table but inside the totals: Arabic 2/10 (0% clean, 25.2 per 1k), Armenian 2/10 (40%), Italian 2/10 (30%), Danish 1/5 (80%), Dutch 1/5, Demotic 1/5, Yucatec Maya 1/5, Latin-English 1/5.
+
+**The spread is the finding.** The library is not uniformly 57% good. English and Russian print is largely clean; Latin, German, Chinese and Tibetan sit in the middle; Greek, Sanskrit, Arabic and Korean are poor, and those are exactly the cells a cheap general model read and nothing has re-read. Two of them (Greek, Sanskrit) #7866 had already flagged in passing; this puts a number on them.
+
+By reading method (pages, share clean, severe per 1k):
+
+| method | books | pages | says what the page says | severe / 1k |
+|---|---|---|---|---|
+| LightOnOCR, our GPU (English pre-1800) | 3 | 10 | 100% | 0 |
+| a typed edition (Esukhia Derge) | 3 | 15 | 80.0% | 0.48 |
+| the Internet Archive's own OCR | 6 | 20 | 65.0% | 2.42 |
+| PaddleOCR-VL | 58 | 278 | 55.0% | 7.12 |
+| Gemini 3 Flash | 72 | 290 | 47.6% | 7.27 |
+| Yig-dzin | 7 | 31 | 48.4% | 5.46 |
+| **Gemini Flash-Lite** | 37 | 138 | **41.3%** | **9.44** |
+
+Flash-Lite is the worst method in the draw and the one with the widest reach. That is a measured case for Derek's 2026-10-29 steer to retire it, on served pages rather than test pages.
+
+### 5. What is actually wrong: 2,747 defects by class
+
+1,304 cosmetic, 849 misleads, 594 wrong_text, on 207,581 words.
+
+| class | name | total | cosmetic | misleads | wrong_text | mostly in |
+|---|---|---|---|---|---|---|
+| O6 | meaning-changing misread | **1,227** | 296 | 592 | 339 | Chinese 340, Latin 229, Greek 170 |
+| O8 | silent normalisation | 272 | 238 | 30 | 4 | German 95, Latin 69 |
+| E2 | the instruments lie | 242 | 229 | 13 | 0 | Latin 62, English 48 |
+| O11 | page furniture mis-tagged | 206 | 172 | 27 | 7 | Chinese 150, Latin 18 |
+| O12 | marginalia and apparatus | 174 | 123 | 43 | 8 | Chinese 69, Tibetan 40 |
+| O5 | silent omission | 168 | 49 | 53 | 66 | Chinese 81, Latin 32 |
+| O16 | self-reported tags wrong | 124 | 110 | 14 | 0 | Chinese 50, Latin 30 |
+| O7 | numerals, dates and units | 79 | 12 | 27 | 40 | Chinese 28, Latin 14 |
+| O1 | confabulation | 68 | 0 | 4 | 64 | Greek 24, Latin 16, Chinese 13 |
+| T6 | catchword and seam | 33 | 28 | 3 | 2 | Latin 15, German 12 |
+| O10 | secondary script garbled | 30 | 11 | 10 | 9 | Demotic 11, Chinese 7 |
+| O4 | block repetition | 29 | 3 | 0 | 26 | Chinese 11, Tibetan 8 |
+| O17 | table structure | 14 | 2 | 8 | 4 | Chinese 8, French 3 |
+| I3 | spread not split | 13 | 6 | 6 | 1 | Greek 5, Dutch 4 |
+
+Read off it:
+
+1. **Nearly half of everything found is one class.** O6 is a word read as *another word that exists*: `欽定四庫全書` → `金定四庫全書`; *Egypt* → `IJgyjDt`; a subscript dropped from an integral so η₁ reads as η. It is the class that defeats proof-reading by fluency, because the output is fluent.
+2. **Outright invention is rare and local.** O1 + O4 is 97 defects, 90 of them `wrong_text`, concentrated in Greek (27), Korean (14) and Chinese (24) — the scripts the serving engine reads badly. In Korean a tail turns into thousands of repeats of `됴히`; in Greek a whole line is replaced by plausible Greek that is not on the leaf.
+3. **The long tail is the furniture of an early printed page**, and it is mostly cosmetic: running heads set as body text, signature marks (`n ij`) dropped, footnote numbers read as `l` or `+` or as an apostrophe (which silently turns *Rhys Davids* into a possessive), catchwords doubled into the text, long s written out where the reference keeps it. 1,304 of 2,747 defects mislead no one.
+4. **Numbers are the sharp edge for scholarship.** O7 is only 79 defects but 40 of them are `wrong_text`: `三元九司` → `三九九司`, and the unit *li* dropped so "ten *li* square" reads "ten square". A reader cannot see these without the leaf.
+5. **O16 says the page's own self-report is unreliable** (110 cosmetic): `<script>handwritten</script>` on a printed woodblock, invented catchwords. That matters because other lanes read those tags.
+
+### 6. Limits
+
+- One judge, Opus, on every verdict. No person has checked any of the 800. §3 bounds its error in both directions from two separate studies, neither of which is a human calibration of *these* pages.
+- The draw was stratified by confidence, so every by-language and by-method number is a by-product of that draw, not a designed sample of the language. Small cells are small.
+- Transcription only. The English is not graded here.
+- The blind re-read matrix (§3) comes from 80 defects across all of #6740's corpus, not from these 800 pages, and did not cover cosmetic tags.
+- `words()` counts Han characters for Chinese and Korean and tsheg syllables for Tibetan, so the per-1,000 column is three different units.
+
+### Reproduce
+
+```
+node --env-file=.env.production.local scripts/eval/confidence-7866/regrade.mjs
+```
+
+Writes `scripts/eval/confidence-7866/results/served-grades.json` only. `/quality` imports that file at build time, so a new month's draw moves the page when the file moves.
+
+## 2026-11-02 · Do the transcription errors Opus passed reach the English? (#7611)
+
+PRIOR ART:
+- `2026-11-01-flash-tier-judge-7611.md` (#7918, plus the qualitative section in #7928) found that at least 52 of 158 transcription pages Opus passed carry an error the adjudicator says matters. This entry takes those adjudications as its input.
+- `scripts/eval/judge-compare-7611/results/2026-10-30` and `2026-11-01`: items, and the blind Opus adjudications with `real_defects[]` (`class`, `quote`, `matters`).
+- `scripts/batch/cli-translate.mjs read`: the live translate prompt and the agy call, reused in `xlate.mjs` without its R2 and `lane_job_books` writes.
+
+**Question (Derek, 2026-11-02).** "Then I guess we need to evaluate the translations resulting from these. If the translations are fine, it's not an issue." Readers mostly read the English. If the translator silently repairs a misread, then the transcription error costs readers little.
+
+### Method
+
+1. **Error list (`build.py`).** Every adjudicated `real_defects` entry with `matters: true` on a real transcription item (task ≠ translation), from any judge arm, whatever Opus decided. Duplicates across arms were merged by (item, quote).
+   - **264 errors on 78 pages. 203 of them are on the 58 pages Opus passed.**
+   - Each was joined to the page's live `translation.data` and to the OCR the English was made from. Translations carry no source hash, so the source is the OCR in force at `translation.updated_at`, rebuilt from `page_revisions`. This is inferred from dates.
+
+   | where the error stands | errors |
+   |---|---:|
+   | no live English (28 pages; 1 of them `health_blocked`) | 115 |
+   | live English made from the same transcription that was judged | 52 |
+   | live English made from an earlier transcription that has the same misread | 57 |
+   | live English made from a transcription without this misread (the judged text was a router-test candidate, or a later re-read) | 40 |
+
+   Many judged texts were router-test candidates that were never stored, which explains the last row and most of the "no live English" pages. To test the lane as it runs now on those pages, **6 no-English pages (23 errors; Latin GPU>GEM, Latin GEM and Chinese GPU) were translated from the judged text** with the live prompt on agy `gemini-3.8-flash-low`. These are labelled `flash-fill` and reported separately.
+2. **Judge (`judge.py`, `judge-prompt.md`).** One blind `claude -p --model opus` call per page.
+   - Inputs: the page image, opened with Read; the transcription the English was made from; the English; and the error spots as quoted strings. It is not told which reading is right.
+   - For each spot it reads the image and returns the image reading, whether the transcription matches the image, the English passage, and one outcome: `carried`, `repaired`, `dropped`, `not_an_error` or `other`. It also gives a severity: `none`, `cosmetic`, `misleads` or `wrong_text`.
+   - 66 calls: 42 real pages and 24 controls. List-equivalent cost $23.56 on the subscription, through claude-pace-guard.
+3. **Positive control.** 24 real pages that were not in the error list, each with one misread planted in the transcription: a number, a name, a title, or a fluent word swap. The English was made from the edited text by the live prompt on agy Flash, which used 24 of the 30 agy calls; the fills used the other 6. I read each control's English myself to set the truth.
+   - The translator itself repaired 6 plants (5 with a `<note>` naming the misread) and dropped 2, a running head and a number. So the controls test both directions: 16 `carried`, 6 `repaired`, 2 `dropped`.
+   - **Judge on controls: 23/24.** 16/16 carried, 6/6 repaired, and 1/2 dropped. The miss was "gli altri tre" rendered as "the other frenzies": the number was left out, and the judge called that `other` with that reason. Its image reading was the true text on all 24.
+
+### Results
+
+The judge disagrees with the adjudicator on 23 of 132 spots: it reads the image as matching the transcription. Mostly these are abbreviation marks and case endings (`fortunâ`/`fortunā`), 11 Tibetan spots and 5 Chinese ones. They are excluded below. **109 confirmed errors**:
+
+| stratum | n | carried | repaired | dropped | other | reader loses (misleads + wrong_text) |
+|---|---:|---|---|---|---:|---|
+| Tibetan GPU | 58 | 6 (10%, 5–21%) | 51 (88%, 77–94%) | 0 | 1 | 3 (5%, 2–14%) |
+| Latin/German/French Gemini reads | 24 | 13 (54%, 35–72%) | 8 (33%, 18–53%) | 2 | 1 | 8 (33%, 18–53%) |
+| Latin GPU>GEM | 9 | 4 (44%, 19–73%) | 3 (33%, 12–65%) | 2 | 0 | 1 (11%, 2–44%) |
+| Hebrew | 9 | 3 (33%, 12–65%) | 4 (44%, 19–73%) | 0 | 2 | 3 (33%, 12–65%) |
+| Chinese GPU | 8 | 2 (25%, 7–59%) | 5 (62%, 31–86%) | 0 | 1 | 2 (25%, 7–59%) |
+| Arabic | 1 | 1 | 0 | 0 | 0 | 1 |
+| **all** | 109 | **29 (27%, 19–36%)** | **71 (65%, 56–73%)** | 4 (4%, 1–9%) | 5 | **18 (17%, 11–25%)** |
+
+| class | n | carried | repaired | reader loses |
+|---|---:|---|---|---|
+| O6 word change | 87 | 17 (20%, 13–29%) | 66 (76%, 66–84%) | 11 (13%, 7–21%) |
+| O5 dropped text | 4 | 2 | 2 | 1 |
+| O7/O11 numbers, running titles, signatures | 3 | 2 | 1 | 1 |
+| other (O10 Greek in Latin, O14/O16 image descriptions, O8, O1, O4, O12) | 15 | 8 (53%, 30–75%) | 2 | 5 (33%, 15–58%) |
+
+The classes do not tag names, so names are not counted on their own. Of the 13 carried errors that mislead, 2 are names (Mingding, Bourguesi) and 2 are Greek quotations inside Latin.
+
+- **On pages Opus passed** (94 errors): 24% carried (17–34%) and 68% repaired. 12% (7–20%) leave the reader with a wrong meaning. On pages Opus failed (15): 40% carried, and 47% leave the reader with a wrong meaning.
+- **By English source:** live English from the same transcription: 17% carried, 83% repaired (n=42). From an earlier transcription with the misread: 30% carried (n=50). Fresh Flash fills: 41% carried (n=17).
+- **Carried errors:** 16 cosmetic and 13 misleading. 7 of the 29 carry a translator `<note>`, but the running English still follows the misread.
+- **By page:** 11 of the 38 pages with a confirmed error have at least one spot where the English misleads or is wrong.
+
+**Why it splits this way.** A misread that produces a **non-word**, or a broken spelling of a stock phrase, is repaired: the translator reads through it. Most Tibetan GPU "errors that matter" are of this kind: བཤེགས for གཤེགས, སངས་རྒས for སངས་རྒྱས, བདོད for འདོད, all in Kangyur formulae. The same goes for a known canonical text: the Massachusett Job page (labelled Hebrew) comes out as KJV Job whatever the misread. A misread that produces a **real word, a name or a number** is carried, because nothing tells the translator it is wrong: Ehern 'iron' for Eyern 'eggs', ཐོས 'heard' for བསྟན 'taught', 臣明鼎 for 臣明昂. The Gemini reads carry more because their errors are fluent by construction.
+
+### Examples (all live English unless marked)
+
+**Carried** (transcription → image → English):
+1. Tibetan: རྣམ་པར་ཐར་པ་བརྒྱད་ཐོས་ནས ('heard') → བསྟན ('taught') → "King Destroyer of All Enemies heard the eight liberations from the Lord Tathagata" (book `69e7ab9e…`, p.269).
+2. German: "Ehern" → "Eyern" (eggs) → "hair, semen, iron, and other such merely sodomitic things" (`69b51e63…` p.35).
+3. Chinese: 臣明鼎 → 臣明昂 → "Your servant Mingding, Seal-Holding Abbot of Wanshou Temple" (`6a3c770f…` p.33).
+4. Arabic: المجمعة ('agreed') → الممكنة ('possible') → "matters commonly agreed upon that should be pursued or avoided" (`69c1b7af…` p.29).
+5. Latin: "fluminis assumptionē" → "ꝯsumptionē" (consumptionem) → "the burning of a river or its taking" (`69dbc7d7…` p.20).
+6. German: "das 2c" → "das το" (the Greek article) → 'the "etc." seems to stand quite superfluously' (`69b51ed3…` p.225).
+7. French: "Bourguefi" → "Bourgueſi" → "Mr. Bourguefi came to see me" (`6a44359d…` p.96).
+8. Tibetan: རྭ་ལས་ལ → རྭ་ལས་ཁབ་རལ → "work with bone, ivory, or horn": one craft is lost (`69e7ab2c…` p.330).
+9. Hebrew: `<sig>ח 3</sig>` → ח 8 3 → the signature is copied without the 8 (`69b4cd3d…` p.291).
+10. French image description: "staff topped with a star and a dove" → a sceptre with a cluster of stars. The English note repeats the description (`69592fb8…` p.49).
+
+**Repaired:**
+1. Tibetan: དེ་བཞིན་བཤེགས་པ → གཤེགས → "the Tathagata, the Arhat".
+2. Tibetan: སངས་རྒས → སངས་རྒྱས → "the Perfectly Complete Buddha Akshobhya".
+3. Tibetan: བདོད་པ → འདོད་པ → "the gods of the Desire Realm".
+4. German: "noch zeitlich recht" → "Liecht" → "sees neither the eternal nor temporal light".
+5. German: "transmuret" → "transmutiret" → "Art transmutes this same matter into iron in five months".
+6. Chinese: 荒服者王曰祭 → 王日祭 → "the daily sacrifice, the monthly…".
+7. Chinese (flash-fill): 從滅法開平方 → 減法 → "extracting the square root by subtracting".
+8. Latin (flash-fill): "illud fieri afferendum est" → "asserendum" → "it should not be asserted".
+9. Latin (flash-fill): "efferni nefas est" → "efferri" → "it is forbidden to publish it to the multitude".
+10. Massachusett (labelled Hebrew): "NEwutche Job noow8hhinnum" → a different word on the leaf → "Wherefore, Job, I pray thee, hear my speeches" (KJV).
+
+**Dropped (4):** Latin "per teneri-/rum Dei" (tenerrimum) is left out of the English, twice (`69c81b3f…` p.205). Two Greek spots in a flash-fill Latin page appear only inside a note.
+
+### What this means for #7896
+
+- **Tibetan (GPU):** errors mostly repair. 10% are carried and 5% leave the reader with a wrong meaning. **Judge the English against the image.** A transcription judge with a strict rule would fail these pages over non-words a reader never meets. If transcription is still judged, the rule should fail a page only for a fluent swap (a real word, name or number for another), not for a misspelling of a stock phrase. The few Tibetan errors that do carry are exactly that kind (heard/taught).
+- **Latin, German and French Gemini reads:** errors carry (54%), and a third leave the reader with a wrong meaning. **Judge both.** Transcription QA matters here as it stands.
+- **Chinese, Latin GPU>GEM, Hebrew and Arabic:** small n (8, 9, 9, 1) and mixed results; names and numbers carry. **Judge both.** On Hebrew, the transcription judge is also what catches wrong-leaf confabulation (below).
+- **Everywhere:** the transcription is quoted, searched and cited directly (`/book` quotes, snippets), so a carried-or-not test only answers the English half. The English judge is the reader-facing gate. The transcription judge is what protects quotes.
+
+### Wrong English found (listed only; this job writes nothing)
+
+| book | page | what is wrong |
+|---|---:|---|
+| 69c1bab38522835be8459bf4 (Commentaries on the Bible and the Mishnah) | 250 | **Wrong leaf / confabulated:** the transcription and English render Avot ch. 4 (Ben Zoma) and a ברכו line, but the image is a different passage (Avot ch. 3). Both Opus reads agree. The book is visible and in `loop_quarantine_hold`, and the page is not withheld. |
+| 69e7ab9e5f1a22ab19a9b03b (Kangyur) | 269 | "heard the eight liberations" for "taught" |
+| 69e7ab2c5f1a22ab19a9418f (Kangyur) | 330 | one craft missing from the list |
+| 6a3c770f01fe4f593c1ff7e4 | 33 | name Mingding for Ming'ang |
+| 6a3c647039b4508b04e270ea | 60 | 釋構 for 釋褠: "Dressing in Trousers to Manage Affairs" |
+| 69b51e63768235dc659928d8 | 35 | "iron" for eggs |
+| 69b51ed3ff09e4fe943b565f | 225 | "etc." for the Greek article |
+| 69c81aed6c6f3cc53c849851 | 205 | "tenerrimum Dei" passage left out |
+| 69c1b7affe4b8f25b92010a5 | 29 | "agreed upon" for "possible" |
+| 69dbc7d71040d1d5e2094b24 | 20 | "its taking" for its consumption |
+| 6a44359d0235c9147000dd12 | 96 | name Bourguefi |
+| 69592fb8a41e40e9146a4943 | 49 | description note: staff with star and dove |
+| 69b4cd3dd5b6c3815e1a504b | 291 | signature ח 3 for ח 8 3 |
+| 69e7abf05f1a22ab19aa0a8f | 94 | a closing phrase left out |
+
+### Caveats
+
+- The input is the adjudicated defects, so it inherits #7918's sampling: hard cells are over-weighted, and only pages where two judges disagreed were adjudicated. This is a rate per adjudicated error, not per page in the library.
+- The judge is Opus pointed at spots, like the adjudicator. It is checked by 24 controls (23/24), but nobody re-read the Tibetan or Chinese real spots by eye.
+- Whether the English was made from the same transcription is inferred from dates, because translations carry no source hash. That is worth adding: `translation.source_ocr_hash`.
+- The Massachusett page is labelled Hebrew in the items, and is counted as Hebrew above.
+
+### Files
+
+`scripts/eval/ocr-error-to-translation-7611/`: `build.py` (error list and provenance), `fetch.mjs` and `revs.mjs` (read-only Mongo), `xlate.mjs` (the live prompt on agy, no writes), `judge.py` and `judge-prompt.md`, `score.py`. Outputs are in `results/2026-11-02/`: `pages.jsonl.gz`, `spots.jsonl.gz`, `controls.jsonl.gz`, `fills.jsonl.gz`, `judge-raw.jsonl.gz` and `score.md`.
+
+## 2026-11-02 · Why Latin struggles: a stratified review by era and form, with severity (#7947)
+
+PRIOR ART: `2026-11-02-latin-by-age-7933.md` (the #7866 re-cut this study was asked to make decision-grade: 29 books,
+2 manuscripts, 8 incunabula, form unknown for a third), `scripts/eval/spot-check/` (REVIEWER.md, SECOND-READER.md,
+redact-rights.mjs, reused verbatim), `scripts/eval/confidence-7866/regrade.mjs` (`gradeOf()`, imported; it now runs its
+main only as a script). The draw is new because no existing draw stratifies by era and hand.
+
+### Frame and draw (model-free)
+
+Live Latin books (`visible`, `pages_count > 0`, language Latin) with at least 3 translated pages: 9,174 books.
+Era from the first 4-digit year of `published` (a "14th century" becomes 1350; no year is its own row). Hand from the
+pages' own `script_type` tags (`bookHand()`, ≥ 3 tagged pages; else manuscript before 1450, print after). Seed 20261102,
+8 books per cell (smaller cells: all), 3 pages per book at 25/50/75% of the pages that carry both texts, skipping pages
+under 40 words. Then every drawn book's form was checked on one image (Sonnet, one call per 37 books): 8 of 109 were
+reclassified. The whole "before 1450, print" cell was four manuscripts and a blockbook (the pages' tags said
+`printed`), and italic-type verse had been tagged handwritten. The tables use the form seen on the image.
+
+### Review
+
+Opus (`claude -p`, subscription) with `REVIEWER.md` verbatim, image-grounded, 22 packets of 5 books. A second Opus
+reader with `SECOND-READER.md` on all 288 serious calls: 251 confirmed, 12 reclassified (still serious), 23 real but
+not serious, 2 not an error. A miss check: a fresh reader re-read 10 books (30 pages) the first reader had found clean;
+it found one serious error (a dropped prefix, `ob intolerantiam` → `in tolerantia`), 0.23 per 1,000 words. So the
+rates below are not much inflated by over-calls and not much deflated by misses, reader against reader. Neither reader
+is a reference transcription; a typed-edition check of this judge type found it misses about half of strict-bar
+errors on print (`2026-11-01-judge-calibration-7866-bar-7263.md`).
+
+Severity mapping (stated in `analyze.mjs`): a `serious` call counts as sense-changing. It is text not on the leaf
+(`wrong_text`) for page and OCR classes and for dropped or invented English; otherwise `misleads`. Moderate and minor
+are cosmetic. Page fidelity = min(OCR score, translation score); a wrong leaf is 1. Book grade: D if any page has
+fidelity ≤ 2, else A ≤ 1 sense error per 1,000 words, B ≤ 5, C more. **These rates use REVIEWER.md's "serious", which
+is stricter than #7866's "misleads"**: compare cells within this study, not with the 10.7 per 1,000 of #7933.
+
+### 1. Per cell (confirmed calls; book-cluster bootstrap 95% CI)
+
+| Cell (era · form on the image) | Books | Pages | Sense-changing errors per 1,000 words | Text not on the leaf, per 1,000 | Pages clean | Books A / B / C / D |
+|---|---|---|---|---|---|---|
+| before 1450 · manuscript | 11 | 33 | 5.22 (3.85–6.90) | 3.12 (1.91–4.62) | 10/33 | 0 / 2 / 0 / 9 |
+| before 1450 · print | 2 | 6 | 0 | 0 | 6/6 | 2 / 0 / 0 / 0 |
+| 1450–1500 · manuscript | 8 | 24 | 3.07 (1.41–5.00) | 1.75 (0.85–2.69) | 15/24 | 2 / 2 / 0 / 4 |
+| 1450–1500 · print | 8 | 24 | 1.66 (0.77–2.45) | 0.96 (0.32–1.57) | 13/24 | 3 / 1 / 0 / 4 |
+| 1501–1550 · manuscript | 8 | 24 | 5.30 (1.16–10.99) | 2.95 (0.84–5.99) | 13/24 | 3 / 1 / 0 / 4 |
+| 1501–1550 · print | 8 | 24 | 0.75 (0.10–1.71) | 0.25 (0–0.61) | 21/24 | 6 / 1 / 0 / 1 |
+| 1551–1600 · manuscript | 6 | 18 | 6.86 (3.17–12.41) | 3.72 (1.11–6.99) | 9/18 | 1 / 1 / 0 / 4 |
+| 1551–1600 · print | 10 | 30 | 1.94 (0.62–3.58) | 0.97 (0–2.32) | 24/30 | 5 / 3 / 0 / 2 |
+| 1601–1700 · manuscript | 8 | 24 | 4.67 (2.56–6.57) | 2.85 (1.66–4.16) | 14/24 | 2 / 2 / 2 / 2 |
+| 1601–1700 · print | 8 | 24 | 1.00 (0.11–1.93) | 0.38 (0–0.90) | 19/24 | 6 / 1 / 0 / 1 |
+| 1701+ · manuscript | 8 | 24 | 3.63 (0–8.50) | 2.12 (0–4.89) | 20/24 | 6 / 0 / 0 / 2 |
+| 1701+ · print | 8 | 24 | 1.00 (0.09–2.46) | 0.63 (0–1.42) | 19/24 | 5 / 2 / 0 / 1 |
+| undated · manuscript | 7 | 21 | 3.58 (1.87–6.37) | 2.21 (1.19–3.86) | 9/21 | 1 / 0 / 0 / 6 |
+| undated · print | 9 | 27 | 0.83 (0–1.90) | 0.42 (0–0.95) | 23/27 | 6 / 0 / 0 / 3 |
+| **all manuscript** | 56 | 168 | **4.43 (3.45–5.51)** | 2.61 (2.01–3.28) | 90/168 | 15 / 8 / 2 / 31 |
+| **all print** | 53 | 159 | **1.15 (0.74–1.59)** | 0.58 (0.32–0.86) | 125/159 | 33 / 8 / 0 / 12 |
+| print before 1501 | 10 | 30 | 1.42 (0.59–2.20) | 0.82 (0.24–1.40) | 19/30 | 5 / 1 / 0 / 4 |
+| print 1501 and later | 34 | 102 | 1.13 (0.60–1.73) | 0.53 (0.23–0.91) | 83/102 | 22 / 7 / 0 / 5 |
+
+As judged (first reader only): manuscript 4.76 (3.70–5.95), print 1.34 (0.89–1.83); every cell is within its CI of
+the confirmed figure (`analysis/analysis.json`, `modes.judged`). In plain terms: a manuscript page carries about 1.2
+sense-changing errors, and 59 of 168 manuscript pages (35%) are wrong or mostly wrong; a printed page carries about 0.4,
+and 17 of 159 (11%) are wrong or mostly wrong. More than half the manuscripts (31 of 56) have at least one such page.
+
+### 2. Error kinds (confirmed calls; a keyword rule over the reviewers' own words, so counts are approximate)
+
+- **Manuscripts before 1501** (57 pages): abbreviation read wrongly 23, a translation built on that misread 23,
+  translation's own error 12, invented text 7, strip read from expectation 4, numerals 5, invented margin 3.
+  - [Origen, Tractatus super Leviticum, p47](https://sourcelibrary.org/book/6a0c53fc99c52ea845a06630/page/47): the leaf has
+    `n[on] tam[en] om[n]ia conceduntur` (but not all is granted); the text has *etiam omnia conceduntur* (even all), and
+    the English follows it.
+  - [Conpotus magistri Roperti anglici, p30](https://sourcelibrary.org/book/69f32d7e876dd827cbc42eb1/page/30): the leaf has
+    the 76-year / 940-lunation cycle; the text has *16 anni … 20 luner*.
+- **Manuscripts 1501 and later** (90 pages): translation's own error 20, the facing leaf's edge read as this page's
+  margin or column 12, translation built on a misread 12, numerals 11, abbreviation 7, strip read from expectation 5.
+  - [Pontifical, p2](https://sourcelibrary.org/book/69f33932876dd827cbc5487b/page/2): `Adv̄s` (ad vesperas) expanded as
+    *Adventus* every time, and folio numbers lose their `c` (f. c. ii, 102, becomes 2).
+  - [Composite manuscript relating to Federico Borromeo, p10](https://sourcelibrary.org/book/69f33ac2876dd827cbc58229/page/10):
+    the image is a 2000 × 220 px microfilm strip of several openings; the text is a fluent Latin letter about the
+    Ambrosiana built from the catalogue title. (Contained.)
+- **Print before 1501** (30 pages): translation's own error 5, a passage dropped from the English 3, abbreviation 3,
+  translation built on a misread 3, a column or line dropped from the OCR 2, numerals 2, long s 1.
+  - [Scotus, Quaestiones, p591](https://sourcelibrary.org/book/69dbc9c01040d1d5e20a5f41/page/591): `cōmuni ꝯcordia`
+    (common agreement) read as *communi discordia*; the sons divide the land "by common discord".
+  - [Cicero, De officiis with commentary, p93](https://sourcelibrary.org/book/69dbc9571040d1d5e20a25e1/page/93): a
+    14-line commentary column and a line of Cicero are missing from the OCR.
+- **Print 1501 and later** (102 pages): translation's own error 10, wrong leaf 5 (one book), numerals 4, a passage
+  dropped from the English 4, long s 2.
+  - [Cicero, Ad Atticum, p526](https://sourcelibrary.org/book/6a0851ce15c643eb1af4b329/page/526): `negant` (they deny)
+    rendered "they say", and a `non` dropped from the OCR: two sentences say the opposite of Cicero.
+  - [Bruni, Historiarum Florentinarum, p162](https://sourcelibrary.org/book/69aeb688bf00526d1d64c3b9/page/162): the
+    image is printed page 143 (checked by eye); the text is page 148. The gap grows from 1 to 7 pages through the book:
+    the Internet Archive leaf-drift class (#3368, #4790). (Contained.)
+- Long s read as f is now rare (7 calls in all): the long-s pass (#5924) restored it in stored lite and flash Latin
+  from 1501 on.
+
+Translation errors that come from the OCR versus the translator's own: before 1501, manuscripts 23 vs 13, print 3
+vs 8. In later print the translator's own errors lead (negations, `negant`, lookahead text from the next page).
+
+### 3. Within-cell comparisons
+
+- **Route, within manuscripts (pooled; observational, not paired):** Flash-Lite 6.3 per 1,000 (4.8–7.9; 34 books,
+  95 pages), Gemini 3 Flash 2.8 (1.9–3.9; 27 books, 73 pages). The reader is tangled with the holding library: all 10 Embassy (BPH)
+  manuscripts and the strip films were read by Flash-Lite, the Laurenziana, Leiden, Bodleian and Vatican ones by 3
+  Flash, and Harvard's split 12 to 10. Part of the gap may be the books, so the test below pairs them. **Within print:** Flash-Lite 1.17 (0.37–2.13), 3 Flash 1.02 (0.46–1.68): no difference. Print before 1501
+  is nearly all Lite (8 of 10 books), so it cannot be split.
+- **Abbreviation density:** the OCR expands most marks, so marks kept in the transcription do not predict the rate
+  (before 1501: < 0.5 marks per 100 words 3.95 per 1,000, ≥ 3 marks 1.42). By density seen on the image (the form
+  check): heavy 3.8 (2.6–5.2), some 2.4 (1.8–3.3), few 3.2 (1.5–5.1). Handwriting, not mark density, carries the
+  difference.
+
+### 4. Corpus scale (live Latin books, 2026-11-02; form from the pages' own tags, which this draw found wrong for 8 of 109)
+
+| Era · form | Live books | Pages | Pages with OCR | Pages translated |
+|---|---|---|---|---|
+| manuscript, all eras | 584 | 115,397 | 104,870 | 98,092 |
+|   of which before 1450 | 249 | 51,068 | 46,651 | 44,209 |
+|   of which 1450–1500 | 125 | 34,146 | 31,106 | 29,304 |
+|   of which undated | 101 | 11,935 | 10,671 | 9,739 |
+| print 1450–1500 | 1,843 | 486,605 | 258,053 | 245,568 |
+| print 1501–1700 | 21,692 | 5,440,661 | 1,323,033 | 1,146,151 |
+| print 1701+ | 4,540 | 1,541,082 | 371,737 | 340,690 |
+| print, undated | 3,295 | 237,712 | 89,173 | 36,527 |
+
+Harvard `VIT.BB` microfilm records (all Latin): 26 books, 24 live; about 20 of them are wholly strips of several
+openings at about 220 px high (w/h ≥ 4 on every page), roughly 380 pages, nearly all translated.
+
+### 5. What would fix each weak cell (none launched here)
+
+- **Manuscripts, every era (584 books, 98K translated pages).** The routing table already names the reader:
+  "Handwritten pages → Claude Opus" (`scripts/lib/ocr-routing-table.json`, #6544: 9.9% CER against 16.1% for
+  Flash-Lite on 76 expert-transcribed pages), not yet routed. Test: re-read this draw's 26 Lite-read manuscripts
+  (78 pages, strips excluded) with `scripts/batch/claude-ocr.mjs` (subscription), and judge them with the same
+  REVIEWER.md + second reader. Adopt if sense errors per 1,000 words at least halve and no page gains invented text.
+  About 1% of one account-week.
+- **Microfilm strips (Harvard VIT.BB, ~20 books).** No reader can read a 220-px strip of six openings; every reviewed
+  page was invented or a description. Withhold the strip pages (detector-scale, so it needs a yes) and re-source each
+  opening at full resolution. Test: fetch one canvas at full size from Harvard's IIIF (it answers 403 to this box) and
+  see whether a single opening is legible.
+- **Incunabula (1,843 books; 7 of the 8 drawn read by Flash-Lite).** Already gated from new translation
+  (`latin-incunabula` in `scripts/lib/ocr-trust-gate.mjs`). The measured upgrade for Lite Latin print is the Opus
+  correction of the Lite draft (`2026-10-24-latin-lite-opus-correct-vs-flash-reread-5924.md`: misleading pages 86/225
+  → 6/225). Test: the 24 drawn incunabula pages through the lite>opus correction, same judging; adopt if no page stays
+  wrong or mostly wrong and the rate halves.
+- **Print 1501 and later.** No reader change: 1.1 per 1,000, the same on both readers. The leading kinds are the
+  translator's own (negations) and IA leaf drift, which has its own detector and repair (#4790).
+
+### Containment (same run, by eye, `containment-on-finding.md`)
+
+Held (`latin-strata-contained-7947`, release on #7947) and translations withheld, 14 pages:
+`69f33432876dd827cbc4c619` p4, 6, 7; `69f32f93876dd827cbc45a7c` p2, 4; `69f33ac2876dd827cbc58229` p4, 8, 10;
+`69f33a41876dd827cbc57c62` p10, 20, 29 (microfilm strips, invented or recited text); `6a4a8b150cf770dd0072204e` p10
+(blank verso, invented provenance inscription); `69aeb688bf00526d1d64c3b9` p82, 162, 243 (another leaf's text). The
+Mass collection `69f3391e876dd827cbc547fb` was not contained: its OCR describes the strip rather than inventing text
+(second reader: real, not serious). Not touched: the stored OCR on those pages (withholding moves the English only),
+and book summaries. Two of them (`…c4c619`, `…c58229`) echo the invented OCR ("codification of ecclesiastical
+modes", "technical musical instructions"), so that derived-metadata repair is still owed.
+
+### Files
+
+`scripts/eval/latin-strata-7947/` (draw.mjs, run-reviews.sh, build-second.mjs, analyze.mjs, lib.mjs);
+`scripts/eval/results/latin-strata-7947/` (draw/sample.json.gz, first/reviews, second/verdicts.json, misses/reviews,
+form/, analysis/). Re-run: `node scripts/eval/latin-strata-7947/analyze.mjs --run scripts/eval/results/latin-strata-7947 --out scripts/eval/results/latin-strata-7947/analysis`.
+Cost: about $70 list-equivalent on the Claude subscription (22 + 10 + 2 Opus calls, 3 Sonnet calls); no paid API.
+
+## 2026-11-02 · Latin on /quality: manuscripts and incunabula versus later print (#7933)
+
+PRIOR ART: `scripts/eval/confidence-7866/regrade.mjs` (`by_language`, `by_script`, `by_route`). It cuts by language and by reading method, but not by date, and its `script_type` field is `unknown` for a third of the Latin books, so it cannot show this split. This is a one-off re-cut of the same stored verdicts (`lane_judge_verdicts`, lane `confidence-7866`, run `confidence-validation-7866`), joined to `books.published`.
+
+### Method
+
+The 145 Latin pages from #7866's draw, each judged by Claude Opus against the page image. Four pages were left out because they hold no text: a manuscript's colour-checker target and three of its pages that were never read. "Severe" means a defect tagged `misleads` or `wrong_text`. Rates are words-weighted and **unweighted by stratum**, so they describe these books, not the library. The Hierocles manuscript (Laurenziana, Plutei; `script_type: unknown`, dated 1450) is counted with the manuscripts.
+
+| Latin books | Books | Pages | Pages clean | Severe per 1,000 words |
+|---|---|---|---|---|
+| Manuscript, or printed before 1501 | 11 | 48 | 19% | 10.5 |
+| Printed 1501 or later | 12 | 58 | 60% | 2.3 |
+| Date unknown | 7 | 35 | 49% | 4.2 |
+
+By engine within the old group: 3 Flash 10.0 per 1,000 (22 pages), Flash-Lite 12.1 (25 pages). After 1500: 3 Flash 2.2 (56 pages). The engine moves the rate by a fifth; age moves it by a factor of four to five.
+
+### Instances, opened against the image by eye
+
+- **Herbarius latinus, printed 1484, page 94** (`69dbca3a1040d1d5e20aa385`, gothic type, Flash-Lite). The page reads `ſauine polegij` (savin, a herb); the text has *semine polegii* (seed). The page reads `an̄ · m · j` (one handful); the text has *ana unciam i.* (one ounce). The page reads `dolo:|roſa`; the text has *dolosa*. A recipe's dose and its ingredient are changed.
+- **Hierocles on the Golden Verses, manuscript c. 1450, page 237** (`699389a6ce15387065947dc0`, humanist hand, 3 Flash). The page reads `agitatio uideatur agitari` and `deum agitari credibile est`; the text has *aquari* both times. A struck-through `utroq;` is transcribed as *uicem*.
+
+### Instances as the reviewer reported them (not opened)
+
+- Herbarius page 21: `pip nigꝝ` (piper nigrum) read as *pip mgn*, three times; s/f and r/z confusions throughout (*feuct⁹*, *azbozes*).
+- Herbarius page 302: *prouocat uentrem* where the page has *urinam*.
+- Hierocles page 61: a clear *Dementia* normalised to the expected *Clementia*.
+- Benjamin minor (Herzog August Bibliothek, Wolfenbüttel), page 11: two marginal notes, *Lia* and *Rachel*, that are on the facing page, not this one.
+
+### What it does not show
+
+- 29 books. The split is large enough to survive that, but each row's figure is uncertain by several points.
+- One judge. It over-flags about a third of `misleads` and misses more than half of strict-bar errors (#6740, #7263). Both apply to both groups.
+
+## 2026-11-02 · Is a CORRECTION diff, a RE-READ diff, or a STRICTER Opus rule a better transcription detector than the verdict prompt? (#7611)
+
+PRIOR ART:
+- `2026-11-01-flash-tier-judge-7611.md` (PR #7918, qualitative section PR #7928): the 540 items, the stored Opus verdicts, Flash-medium/high verdicts, 267 adjudications, and the finding this test answers: Opus is lenient (at least 52 of the 158 transcription pages it passed have an error that matters), Flash at medium/high finds real word changes but invents defects and counts conventions.
+- `scripts/eval/judge-compare-7611/run.mjs`: items, texts, `adjudicatePrompt`, the gated agy call, the scorer's statistics. Reused; the new arms live in `detect.mjs` beside it.
+- #5313 (`two-read-garble-5313.mjs`): a re-read diff as a garble screen, AUC 0.80–0.85, precision 0.3–0.45 on Flash-lite and Flash 3. This reruns that idea on 3.8 Flash against image-checked labels.
+- #7701 / #7558 correct lane (`cli-ocr-lane.mjs`, `cli-ocr.mjs read --correct-prompt`): the live correction template, `fc-prompt.mjs`, hash `0601ef30e816f7a7` (built 2026-11-02 from live OCR prompt "Standard OCR" v19.1; the same hash as `GPU_TEMPLATE`), called on `CORRECT_MODEL = gemini-3.8-flash-low`.
+- #7835 (`fraktur-paired-7835/`): correct-vs-re-read as two WRITERS, judged. Here they are two DETECTORS.
+- Folding: `scripts/lib/latin-diffqa.mjs` (`wordTokens`, `fold`, `classifyHunk`: long s, u/v, i/j, æ/œ, case, punctuation, hyphenation joins are LOW), `scripts/lib/tibetan-yatags-guard.mjs` (`syllableTokens`, `alignSyllables`), `scripts/lib/correction-diff-guard.mjs` (abbreviation marks), the kyūjitai/shinjitai pairs of `scripts/eval/benchmark-score.mjs` (not importable: restated).
+
+**Question (Derek, 2026-11-02).** "I wonder if the judgement prompt works better or a correction prompt or a re-read (diff)." Which detector should the all-books transcription QA pass (#7896, about 237K judgements) run, and with which accept rule?
+
+### Items
+
+From #7807's frame (`results/2026-10-30/items.json`, `texts.json.gz`, seed 7611), transcription only:
+- **Real: the 270 real transcription items** (GEM 90, GPU 90, GPU>GEM 90). Translation (TR) is out of scope.
+- **Plants (Latin, German, French; 36 pages).** R reads each of the 36 pages once and is diffed against all 5 versions (A clean + B–E planted), so R is scored on all 144 plants and 36 clean pages. C and S take input per version, so they run on a **seeded subset of 60 planted items, 15 of each kind B–E** (first 15 per kind in `h('plantsub:7611:'+id)` order); S also judges the 36 clean A pages. This keeps the calls inside the budget.
+- **Strata** (reporting): Tibetan GPU (45); Chinese GPU and GPU>GEM (86); Latin and Italian GPU>GEM (49); Gemini reads (GEM Latin, German, French, Chinese: 60); Hebrew and Arabic GEM (30).
+
+### Arms (one page a call, with the image)
+
+- **C (correct).** `gemini-3.8-flash-low` through `agy -p` on the default pool (the live #7701/#7558 correct lane's model: its thinking level is low). Prompt = the live template above with the stored text in `{draft}`, then ` @./page.jpg`, exactly as `cli-ocr.mjs read --correct-prompt` sends it; tool gate as there; answer unwrapped with `unwrapRead`. The corrected text is kept.
+  - `UNCHANGED` = no change (score 0). `CONTAIN: …` = flagged at every threshold (the corrector says the text is not this leaf's).
+- **R (re-read).** The same model and pool, the live OCR prompt (`liveOcrPrompt`, v19.1) + the `sentinels-6523` image sentence (the `cli-ocr.mjs` default), on the image alone.
+- **S (strict Opus).** `claude -p --model opus` (`opusCall`, image in the workspace, Read only), `judgePrompt` unchanged except its accept question, which is replaced by: *accept is false if the candidate has ANY word-level difference from the page (a wrong word, a wrong letter that makes another word, a wrong number or numeral), ANY dropped or added word or line, or ANY wrong name, title, running title, heading or folio number, however small. Spelling conventions never fail a page: variant or old/new character forms, abbreviations kept or written out, long s written as s, u/v and i/j, ligatures, accents written or not, punctuation, tsheg and shad, line breaks, hyphenation and the library's markup.* Same output schema, same `parseVerdict`.
+- **Retries:** an agy call that is unparsed, cut, or did not open the image is tried again, at most 3 tries an item; an Opus call likewise.
+
+### Detection score for C and R
+
+Diff of the arm's text against the stored text, word level, after folding conventions:
+- **Tokens** (tag lines and `<meta>`/`<vocab>`/… blocks out, other tags out): Latin-script pages, `latin-diffqa.wordTokens` (its `fold`: ſ→s, æ, œ, u/v, i/j, case, edge punctuation), plus U+0364 combining e → umlaut; Tibetan, `syllableTokens`, with མྱ→མ; Chinese, one Han character a token, kyūjitai→shinjitai pairs plus 巳/已 and 弟/第 folded; Hebrew and Arabic, whitespace words with marks (niqqud, harakat), tatweel and edge punctuation out, Arabic alef forms folded.
+- **Alignment:** `alignSyllables` on the folded keys; runs of unequal keys are hunks.
+- **Conventions dropped:** on Latin-script pages, a hunk `classifyHunk` calls LOW (case/punctuation, join/split, long s), or an abbreviation hunk (one side carries an abbreviation mark and its base letters are a subsequence of the other side), is a convention and does not count.
+- **Score = changed tokens per 100 stored tokens**: Σ over counted hunks of max(stored side, arm side) ÷ stored tokens × 100.
+
+### Reference labels
+
+- **Plants:** known. A plant is **caught** when the page is flagged at the arm's threshold; **named** when a counted hunk touches the planted span (B/C/E: a stored-side token of the plant's `after`; D: the arm side holds at least half of the dropped line's words). S: `scorePlant`, as before.
+- **Real pages, existing label:** the adjudicator's accept where #7807 / #7918 adjudicated the item; else stored Opus and Flash-medium agree (every disagreement of theirs was adjudicated) and that agreement is the label.
+- **New adjudication, one blind Opus call a page** on every real page where (a) any arm's flag disagrees with the existing label (C and R flag = at least one counted hunk; S flag = reject), or (b) C made at least one counted change (the fix accounting below). The adjudicator is #7807's `adjudicatePrompt` generalised from two reviews to N, unlabelled and in seeded order:
+  - the stored Opus verdict, Flash-medium's verdict, S's verdict, and the earlier adjudication's `real_defects` where one exists (each as a review: accept, defects with quote/what);
+  - C's and R's counted hunks, shown as **numbered spots**: the stored span and the alternative reading(s) proposed for it, unattributed (up to 40 spots a page; past 40, spots both C and R propose first, then the rest in page order; the cut is counted);
+  - it answers #7807's JSON (`accept`, `real_defects` with `matters`, `false_defects`, `note`) plus `spots: [{n, page_prints: "stored" | "A" | "B" | "neither" | "unclear", matters: bool}]`, where A/B are the proposed readings.
+  - **Label = this adjudication's accept** where one ran (it saw every earlier review's spots, so it reuses them); else the existing label. A page **has an error that matters** when the label is reject.
+- **C's fix accounting** (the "useful pages" half): over C's counted changes on real pages, from `spots`: **fixed** = the page prints C's reading and the stored text was wrong there; **introduced** = the page prints the stored reading (C made it wrong), counted where `matters`; **convention/unclear** reported apart. Net = fixed − introduced, overall and per stratum, and pages where C's text is better / worse / mixed.
+
+### Scoring
+
+- **Threshold for C and R:** items split in half by `h('half:7611:'+id)` (stratified by stratum). On the calibration half, pick the threshold that maximises recall subject to precision ≥ 0.70; if none reaches 0.70, the one that maximises F1. Report recall and precision on the other half, and the reverse split as a check. A second, preregistered **secondary** threshold: score > 0 (any counted change).
+- **Per arm:** plant recall (C, S: of 60; R: of 144) and named share, clean-page false alarms; recall and precision of matters-errors on real pages, overall and per stratum, Wilson and book-bootstrap 95% CIs; AUC of the C and R scores (overall and per stratum); κ against the label.
+- **Baselines on the same pages, same labels:** the stored Opus verdict and Flash-medium.
+- **Cost per page:** agy $/call = $0.00055 × (mean list cost of the arm's calls ÷ mean list cost of #7807's Flash-low judge calls), list cost at gemini-3.8-flash rates ($0.75/M input, $3.75/M output incl. thinking, cache read at 10%), times calls per parsed result. Opus $/call = $0.0022 × (mean list cost of S's calls ÷ mean list cost of the stored Opus noise-floor judge calls, `verdicts-opus-repeat`).
+- **One named combination, CS:** C flags at its threshold, S confirms (page fails only when both say so). Recall/precision computed from the two arms' outputs; cost = C + (share C flags) × S.
+
+### Decision rule (set now)
+
+Among the arms (C, R, S, CS) with
+1. plant recall ≥ 141/144 or the same share of their plants (≥ 59/60);
+2. recall of matters-errors on real pages ≥ 0.85 (C, R: on the held-out half);
+3. precision ≥ 0.70,
+
+**recommend the cheapest per page** for the all-books pass. If none passes, say so, and say which arm is closest and why.
+
+### Budget and stops
+
+- **agy:** at most about 600 calls (C 270 + 60 = 330, R 270 + 36 = 306, plus retries). Read `agy -p /quota` first; stop if the default pool's Gemini weekly remaining falls below **0.15** or its 5-hour bucket under 0.30 (resume after reset), checked every 25 calls.
+- **Opus:** at most about 700 calls (S 270 + 96 = 366, adjudications ≤ 270, plus retries), under `claude-pace-guard`, stop at the account's weekly 85%.
+- No Argon, no paid API, no production writes (no `book_checks`, pages, router `rules.json` or cron). Outputs in `results/2026-11-02/`.
+
+### Results (run 2026-11-02 08:18Z to 09:26Z, after this preregistration was pushed at 5655ccea9)
+
+**Calls.**
+- **agy, 663 in all**, against a budget of about 600. C made 331 calls, R made 332, all `gemini-3.8-flash-low` on the default pool. The 26 R retries were replies cut before `<<<END>>>` and are counted. The overrun of about 10% is retries.
+  - C: 330/330 items answered. 40 answered UNCHANGED and 3 answered CONTAIN.
+  - R: 302/306 answered. 4 items were still cut after 3 tries; they are left out (3 real pages, 1 plant page).
+  - The pool's weekly remaining went from 0.615 to 0.593, never near the 0.15 stop.
+- **Opus, 616 calls** (budget about 700): S made 366, all parsed, and the adjudicator 250 (248 pages, 2 retries after unparsed replies). The account stayed under the 85% weekly stop.
+
+**Deviations, all declared and all decided from the first 34 diffs, before any label or score was seen:**
+1. Chinese folding: added the Siku variant pairs of `grounding-6871/skqs-real.py` and 擧舉 栢柏 呌叫 臯皐 攷考 両兩. The ditto mark 丨 is dropped.
+2. In every script, a hunk whose keys join to the same string is a join or split. This covers a dropped tsheg (ཕྱིནཔ / ཕྱིན པ) and the Hebrew maqaf. A deleted run of 3 or more tokens (4 or more Han) that the other text holds elsewhere is MOVED, not changed; an inserted run likewise.
+3. Past the 40-spot cap, the order is: spots both arms proposed, then C's, then R's (C's fix accounting needs C's spots). On adjudicated pages, 1,514 of C's 1,603 spots were shown. Most of the 2,992 cut spots are R's.
+4. **Introduced errors.** The adjudicator read `matters` as "does the candidate differ from the page here". So `matters` is false wherever the page prints the candidate, and the preregistered "introduced, where matters" would always be 0. Introduced is therefore counted as every C spot where the page prints the STORED reading. Counted hunks already exclude the folded conventions. This is an upper bound: an unfolded variant character counts.
+5. Adjudication ran in three rounds while the arms finished. A page was planned only once all three arms had answered; the last round took the 3 pages with an R answer missing.
+
+**Labels.** All 270 real pages are labelled: 248 by this run's adjudicator, 18 by the existing Opus = Flash-medium agreement, and 4 by an earlier adjudication. **182/270 (67%) have an error that matters.**
+- The new adjudications moved 22 labels: 18 from pass to fail, 4 from fail to pass.
+- By stratum: Tibetan GPU 42/45, Chinese GPU and GPU>GEM 58/86, Gemini reads 39/60, Latin and Italian GPU>GEM 21/49, Hebrew and Arabic 22/30.
+- The base rate is 0.67, so the precision bar of 0.70 is only just above flagging every page. κ is reported for that reason.
+
+**1. Plants.** C and S ran on the 60-item subset; R on all 144, plus 35 clean pages with an R read.
+
+| arm | caught | named | by kind B / C / D / E | clean pages flagged |
+|---|---|---|---|---|
+| C (at threshold) | **58/60** | 56 | 14 / 15 / 15 / 14 | (not run) |
+| R (at threshold) | **130/140** | 137 | 30 / 30 / 35 / 35 | **29/35** |
+| S | **60/60** | 60 | 15 / 15 / 15 / 15 | 12/36 |
+| stored Opus (#7807) | 143/144 | 142 | | 1/36 |
+| Flash-medium (#7918) | 143/144 | 141 | | 13/36 |
+
+- C at "any change" catches 59/60. Its two misses at threshold are one number change (B) and one inserted sentence (E). A single changed word on a long page scores under 0.22 per 100.
+- R's 10 misses are number and noun swaps (B, C). R names 137/140 plants, but where the re-read otherwise agrees with the page, one swapped word scores under R's threshold of 0.55.
+- The "clean" pages are pages Opus had accepted. Opus passes have real errors about a third of the time (#7918), so S's 12/36 and Flash-medium's 13/36 are not all false alarms. They were not adjudicated.
+
+**2. Real pages, errors that matter.** C and R use thresholds picked on half 0 and are scored on half 1; the reverse split is shown beside. All others are shown on all 270 pages, with half 1 for comparison.
+
+| arm | threshold (per 100 tokens) | recall | precision | κ | AUC |
+|---|---|---|---|---|---|
+| **C** held-out | 0.224 (reverse 0.143) | **68/88 = 0.77** (reverse 0.84) | 68/84 = 0.81 (0.86) | 0.42 | **0.78** |
+| C, any change, all 270 | > 0 | 149/182 = 0.82 | 149/178 = 0.84 | 0.48 | |
+| **R** held-out | 0.552 (reverse 0.575) | 88/88 = 1.00 (0.98) | **88/124 = 0.71** (0.77) | **0.27** | 0.81 |
+| **S**, all 270 | — | **169/182 = 0.93** | **169/178 = 0.95** | **0.82** | |
+| S, half 1 | — | 82/88 = 0.93 | 82/88 = 0.93 | 0.80 | |
+| CS (C flags, S confirms), half 1 | — | 63/88 = 0.72 | 63/67 = 0.94 | 0.57 | |
+| stored Opus, all 270 | — | 111/182 = 0.61 | 111/112 = 0.99 | 0.50 | |
+| Flash-medium, all 270 | — | 161/182 = 0.88 | 161/182 = 0.88 | 0.65 | |
+
+By stratum, all 270 pages (C at its primary threshold; R at its own):
+
+| stratum | errors | C recall / precision | C AUC | R recall / precision | R AUC | S recall / precision | stored Opus recall | Flash-medium recall / precision |
+|---|---|---|---|---|---|---|---|---|
+| Tibetan GPU | 42/45 | 0.93 / 0.95 | 0.93 | 1.00 / 0.93 | 0.57 | 0.93 / 0.93 | **0.43** | 0.98 / 0.93 |
+| Chinese GPU, GPU>GEM | 58/86 | 0.79 / 0.81 | 0.72 | 1.00 / 0.74 | 0.83 | 0.95 / 0.96 | 0.78 | 0.97 / 0.92 |
+| Latin, Italian GPU>GEM | 21/49 | **0.62 / 0.62** | 0.71 | 1.00 / **0.53** | 0.74 | 0.90 / 0.95 | **0.29** | 0.52 / 0.58 |
+| Gemini reads | 39/60 | 0.77 / 0.86 | 0.84 | 0.97 / 0.71 | 0.70 | 0.90 / 0.97 | 0.62 | 0.87 / 0.92 |
+| Hebrew, Arabic | 22/30 | 0.86 / 0.86 | 0.73 | 1.00 / 0.79 | 0.90 | 0.95 / 0.91 | 0.82 | 0.86 / 0.90 |
+
+**S is today's Opus judge with the strict rule, and it accepts a strict subset of what Opus accepted.** S passes 92 pages, every one of which stored Opus also passed (158). The 66 it removes are where Opus's recall goes from 0.61 to 0.93: Opus saw those slips and forgave them, as #7918's qualitative section found.
+
+**3. C as a fixer** (175 real pages where C changed a counted word, 1,514 of C's spots adjudicated).
+- **Fixed:** 622 spots where the page prints C's reading and the difference matters. A further 350 match the page but the adjudicator says they do not matter.
+- **Made worse:** 262 spots where the page prints the stored reading (an upper bound; see deviation 4). In 87 of them R proposed the same wrong reading, which is the shape of a shared Flash misreading.
+- Other or unclear: 222 and 57.
+- **Net: +360 spots.** By page: 66 better, 42 worse, 44 mixed, 23 no change that matters.
+
+| stratum | fixed | made worse |
+|---|---|---|
+| Tibetan GPU | **310** | 47 |
+| Gemini reads | 112 | 43 |
+| Chinese GPU, GPU>GEM | 146 | 123 |
+| Hebrew, Arabic | 45 | 30 |
+| Latin, Italian GPU>GEM | **9** | **19** |
+
+- C found 3 leaves whose stored text is another text (`CONTAIN`): the Ruth chapter 1 substitution #7918 described, a medal legend, and a Hebrew fragment from elsewhere.
+- Correcting a page that agy Flash-low has already corrected (Latin GPU>GEM) does more harm than good.
+
+**4. Cost per page** (from tokens; the method is #7918's).
+
+| arm | tokens in / out (thinking) | ratio to the Flash-low judge | $ per call | $ per page | 237K pages |
+|---|---|---|---|---|---|
+| C | 27,819 / 2,314 (1,537) | 2.28 | $0.00125 | **$0.00126** | $298 |
+| R | 24,867 / 3,390 (2,658) | 2.42 | $0.00133 | $0.00146 | $346 |
+| S | (Opus list $0.072 vs the judge's $0.068) | 1.06 × Opus | $0.00233 | **$0.00233** | **$552** |
+| CS | | | | $0.00278 (S on the 65% C flags) | $659 |
+| stored Opus | | | | $0.0022 | $520 |
+| Flash-medium | | | | $0.00248 | $588 |
+
+C costs about 2.3 Flash-low judge calls, because the stored text rides in the prompt and is written back out.
+
+**5. Decision, by the preregistered rule.**
+
+| arm | plants ≥ 141/144 share | recall ≥ 0.85 | precision ≥ 0.70 | $ / page | passes |
+|---|---|---|---|---|---|
+| C | 58/60 ✗ (needs 59) | 0.77 ✗ | 0.81 ✓ | $0.00126 | no |
+| R | 130/140 ✗ | 1.00 ✓ | 0.71 ✓ (base rate 0.67) | $0.00146 | no |
+| **S** | **60/60 ✓** | **0.93 ✓** | **0.95 ✓** | **$0.00233** | **yes** |
+| CS | C ✗ | 0.72 ✗ | 0.94 ✓ | $0.00278 | no |
+
+**Recommended: S, the only arm that passes.**
+- The closest cheaper arm is **C**. It misses the plant bar by one item and has real-page recall of 0.77, with 0.62 on Latin and Italian GPU>GEM.
+- C's score is a good ranking on Tibetan GPU (AUC 0.93), but weak where Flash itself reads poorly.
+- R is not a detector at this bar: it flags 91% of pages (242/267), and its κ against the label is 0.27.
+
+### Limits
+
+- **The referee is Opus, and it saw S's review** (and stored Opus's and Flash-medium's) beside C's and R's spots. S's numbers therefore share a judge with the label. Stored Opus was also a review, yet the adjudicator overruled it on 71 of its passes, so it does not simply side with the Opus reviews. A non-Opus or by-eye check of a sample of S's 66 extra rejections is the next step before the book-page wording changes.
+- The sample is weighted toward hard cells (67% of pages fail), so none of these rates is a library rate.
+- The Tibetan κ values are meaningless: 42 of 45 pages fail.
+- Plants are Latin, German and French print only.
+
+### Recommendation for judging every book (#7896)
+
+- **Run S:** the same `claude -p --model opus` call with the strict accept line (`detect.mjs` `STRICT_ACCEPT`). About 237K judgements, about **$552**, against $520 for the lenient rule. On these pages it finds 0.93 of the errors that matter, where the lenient rule finds 0.61.
+- **Expect many more pages to fail:** 92/270 pass here, against 158. The "checked, no serious errors" line on the book page then means something closer to what it says, and fewer pages will carry it. That is public copy, so it is Derek's call.
+- **Do not use C or R as the detector.** A C correction lane is worth a separate test on Tibetan GPU and on Gemini reads, where it fixed 310 and 112 spots against 47 and 43. It is not worth one on pages agy has already corrected.
+
+**Artifacts** in `scripts/eval/judge-compare-7611/results/2026-11-02/`:
+- `out-{C,R,S}.jsonl.gz`: C's corrected texts, R's reads, S's verdicts, with tokens;
+- `diffs.json.gz`: the counted hunks per item and arm;
+- `adjudications-new.jsonl.gz`: 248 pages, with spots and answers;
+- `score.json`, `setup.json` (prompt hashes), and `runs.json` (quota readings).
+
+Runner: `detect.mjs` (`setup`, `call`, `diff`, `plan`, `adjudicate`, `score`).
+
+## 2026-11-02 · Can agy 3.8 Flash re-read the 506 looping pages? (#4850, gated test)
+
+Part of #4850. The token-run arm of the loop guard (#7945) refuses a transcription in which one short word repeats 25 or more times. 506 pages in 169 live books already carry such a read, with English made from it. Before the fan-out, this test checks whether the subscription agy reader (`gemini-3.8-flash`) is good enough to re-read them.
+
+PRIOR ART:
+- `scripts/eval/agy-ocr-per-call-6740/` (`read.mjs`, `results.json`): the agy read eval this test follows. That eval measured per-call batching on random pages. This one uses one page a call, on pages whose stored read looped.
+- `scripts/eval/confidence-7866/judge.mjs`: the judge, imported unchanged (`correction-pass-7818/lib.mjs judgeAbsolute`, the route-judge-6740 prompt, Opus via `claude -p` with the page image).
+- `scripts/batch/cli-ocr.mjs`: the production agy OCR reader and writer. Both the read and the one write went through it.
+
+### Method
+
+- **Frame.** All 506 (book, page) pairs in `pages_by_reason.source_loop` of the token-run dry run (`/root/qa-6056/tokenrun-withhold-dry.json`, 2026-11-02), built by `frame.mjs`. The stratum is the book's `language` plus the stored read's own `<script>` tag. A Latin, Greek or Hebrew page with no tag counts as print. The counts match the brief: Greek MS 154, Latin MS 95, Latin print 92, Korean MS 23, Armenian MS 22, Hebrew print 22, other 98 (Chinese, 14 pages, is skipped because it routes to PaddleOCR).
+- **Draw** (`draw.mjs`, seed 4850). 30 pages, at most one per book: Greek MS 8, Latin MS 6, Latin print 6, Korean MS 2, Armenian MS 2, Hebrew print 2, other 4. The 4 "other" pages are Syriac, Georgian and two Greek print.
+- **Read.** `cli-ocr.mjs read --model=gemini-3.8-flash --fresh --concurrency=3`: the live OCR prompt, one page a call, the archived page image, root's agy login on agy 1.4.12. The fallback login's weekly pool read 3.7% and was not used. The run made 35 calls (5 pages were read twice by cli-ocr's own retry) and used 1.92 M tokens, 64 K a page on average. It took 16 minutes.
+- **Guard.** A read fails if cli-ocr's reply checks refuse it (exit, wrapper, header) or `loopVerdict` refuses it.
+- **Judge.** For every page, the stored read and the new read were each judged blind: one text per call with the page image, in a seeded random order, so the judge never saw the pair. That made 60 Opus calls. Better, same or worse compares the new read's fidelity with the old read's. A page could be written only if it passed the guard, was rated better, and its new read had no `wrong_text` defect.
+
+### Results
+
+| stratum | n | guard pass | better / same / worse | fidelity old → new | new accepted | wrong_text spans old → new | written |
+|---|---:|---:|---|---|---:|---|---:|
+| Greek MS | 8 | 7 | 5 / 2 / 0 (1 failed) | 1.25 → 1.86 | 0 | 35 → 58 | 0 |
+| Latin MS | 6 | 6 | 4 / 2 / 0 | 1.83 → 2.83 | 1 | 28 → 33 | 1 |
+| Latin print | 6 | 6 | 5 / 1 / 0 | 2.00 → 2.83 | 0 | 23 → 33 | 0 |
+| Korean MS | 2 | 2 | 1 / 1 / 0 | 1.50 → 2.00 | 0 | 9 → 18 | 0 |
+| Armenian MS | 2 | 2 | 2 / 0 / 0 | 1.00 → 3.00 | 0 | 9 → 6 | 0 |
+| Hebrew print | 2 | 2 | 0 / 1 / 1 | 2.50 → 1.00 | 0 | 6 → 7 | 0 |
+| other | 4 | 4 | 2 / 2 / 0 | 1.50 → 2.00 | 0 | 21 → 21 | 0 |
+| **all** | **30** | **29** | **19 / 9 / 1 (1 failed)** | **1.63 → 2.31** | **1** | **131 → 176** | **1** |
+
+The failed Greek MS page (p.843) came back with no `<<<BEGIN>>>` marker on both tries. The wrong_text columns cover the 29 pages that have both verdicts.
+
+What the judge says, in its own reader notes:
+- **Greek MS.** The new reads are "fluent invention" or "fluent Greek the image doesn't support", with no uncertainty marked, on 5 of 7. The old reads were invented Greek that ended in a loop. The loop made the failure obvious; the new reads hide the same failure.
+- **Latin print.** Every new read covers the whole page, where the old reads lost a column or its last quarter to the loop. But all six carry sense-changing misreads: numerals (ix→iij, xxx→lxx), negations, names of jurists, and a merged dose.
+- **Hebrew print, p.46.** The stored read was the best old read in the sample (fidelity 4, the body matched). The new read says the page is blank, so its fidelity is 1. `loopVerdict` passes a blank read, so the cheap gate cannot catch this failure.
+- **Korean MS.** The new reads misread names and units, or impose the wrong language on cursive Sino-Korean notes.
+- **The page that was written** (Latin MS, book 69c89d196c6f3cc53c85d762, p.704) is the Mandaic/Latin page from the dry-run comment. The old read had turned the edge of the facing page into 26 lines of repeated `<unclear>ܘ</unclear>`. The new read has all 28 Latin lines and leaves the edge out, and Opus gave it fidelity 5 with no defects. It was written by `cli-ocr.mjs apply --lane=agy-reread-4850 --mark-stale=agy-reread-4850` as run `cli-ocr-20261102181126-1376126`, with the judge verdict in `ocr.engine.run.reason`. To undo it: `scripts/maintenance/revert-run.mjs --run-id cli-ocr-20261102181126-1376126`. The page now carries `translation_stale` (lane agy-reread-4850), which the translate worker picks up. This job did not translate it.
+
+**Gemini pool use** (agy `/quota`, root's login). Weekly fell 43.50% → 42.70% and the 5-hour bucket 82.78% → 80.10% over the read window. That is at most 0.027 weekly points and 0.089 five-hour points a page. "At most" because the pool is shared: in the next 20 minutes, with no agy call from this box, weekly fell another 0.74 points. Projected to the other 476 pages, a fan-out would cost about 13 points of the weekly pool and about 43 points of 5-hour windows (two or more windows), and take about 4 hours at concurrency 3.
+
+### Go / no-go for the other 476
+
+Mid-run, the dispatching session proposed this lane: an agy 3.8 Flash read, `loopVerdict` on every page, and an Opus check on about 1 page in 20. On these numbers it is **not safe for any stratum**:
+
+- **Greek MS (146 left): no.** Opus accepted 0 of 7 new reads. Wrong-text spans rose from 35 to 58, and the judge calls the new text fluent invention. Writing it would remove the one sign a free detector can see (the loop), leave invented Greek in its place, and re-translate from that.
+- **Korean MS (21), Hebrew print (20), other (80, Chinese excluded): no.** Opus accepted 0 of 8 across these strata. One Hebrew page went from fidelity 4 to a "blank page" read that the gate passes. Korean wrong-text spans doubled (9 → 18).
+- **Latin print (86), Latin MS (89), Armenian MS (20): no as a write lane.** These are the closest cases: 11 of 14 better, fidelity up about one point, every Latin print page now complete. But Opus accepted 1 of 14. A 1-in-20 audit can show that a mostly good lane stays good. It cannot make a mostly failing lane safe: with an accept rate around 1 in 30 (95% CI 0.6–17%), the sample would only confirm that the lane is writing text Opus does not accept, and the re-translation would already have replaced the English.
+
+What to do instead:
+1. Trim the looping tail in place, in both the transcription and the English (the #4850 proposal). That removes the loop and adds no new text.
+2. Keep the withhold arm at the ≥50% share.
+3. Re-read these pages later with a stronger reader behind a per-book gate (for Greek manuscripts, the Argon re-read lane gate of #6769), not with Flash.
+
+### Files
+
+`scripts/eval/results/agy-reread-4850/`: `frame.mjs`, `draw.mjs` and `draw.json` (the 30 pages), `old-texts.mjs`, `judge.mjs`, `score.mjs`, and `results.json`. `results.json` holds the per-stratum table, the per-page guard, verdicts and token use, all 60 verdicts, the quota readings and the write. The new reads are kept in R2 `candidate-reads/` by cli-ocr (#7075).
+
 ## 2026-11-01 · Wave 2 re-judged by Gemini 3.8 Flash and Gemini 4 Argon (#5274, for #4916)
 <!-- PRIOR ART: 2026-10-30-tca-wave2-dual-judge-5274.md (the run re-judged here: its items, packets, prompt and Opus verdicts, unchanged); analyze-wave2.mjs (the estimator and self-preference form, reused in analyze-rejudge.mjs). -->
 
@@ -1427,6 +2314,66 @@ So both higher tiers find real failures that Opus passed. **Against the adjudica
 - Flash low alone: $134. It fails (#7807).
 - Flash medium alone: $588. Flash high alone: $1,197. Both fail as judge in every stratum, and both cost more than Opus.
 - **The one passing option, a medium screen with Opus on the pages it fails, on GPU>GEM:** $0.00248 + 0.52 × $0.0022 = **$0.0036 a page**. Applied to every judgement, that is about **$860**, 65% more than Opus alone. A screen saves money only when it is cheaper than the judge it screens for, and medium is not.
+
+### What the judges disagreed about (qualitative, added 2026-11-02)
+
+This reads the 360 real items' disagreements and the blind Opus adjudications, which were reused across arms as the preregistration allows. The 270 transcription items are covered; translation is left out.
+
+**Where they disagree.** Medium and Opus disagree on 76 of the 270 transcription pages. In 73 of them, Flash rejects a page that Opus passed.
+- Tibetan GPU: 25. Chinese GPU and GPU>GEM: 17. Latin GPU>GEM: 12.
+- German, French and Latin Gemini reads: 13 together.
+- Hebrew, Arabic and Italian: 6.
+- High's pattern is the same.
+
+**The hard scripts are hard for the OCR, but the judges agree on them.** Opus passes only 5 of 15 Hebrew pages and 7 of 15 Arabic. Medium rejects the same pages for the same reasons, so these pages produce almost no disagreements.
+- Most of these pages are rabbinic cursive, both Ashkenazic and Sephardic.
+- Rejected pages show confabulation, plus one canonical substitution: Ruth chapter 1 written in place of an unrelated cursive leaf.
+- One "Hebrew" leaf is in an Indic script.
+- Both judges see failures this gross. The trouble is the reading lane (Gemini Flash 3 on cursive Hebrew), not the judge. The sample has no Greek.
+
+**Who was right when Flash rejected an Opus pass.** The adjudicator rejected the page on 44 of the 72 adjudicated cases for medium, and 48 of 70 for high.
+- **38 of those 44 are word-level changes that alter the text**, not conventions:
+  - Tibetan: ཐོས་ནས ('heard') for བསྟན ('taught'); ཚང for ཚད; སེམས་དཔའ dropped.
+  - Chinese: 益 ('more') for 葢 ('for, because'); 周 for 困 in the running title of 周易玩辭困學記; 貢 for 貞 in a genealogy.
+  - Latin: long-s 'ſine' read as 'fine'; non-words 'clatinc' and 'teneri-/rum'.
+  - German: 'franck' for 'kranck' (sick).
+  - French: 'fons' for 'ſons'.
+- 3 are dropped text. Only 1 is a margin or folio label alone.
+- A recurring adjudicator line is "Review N found the error but still accepted". Across all 200 adjudications from #7807 and this run, it is said of the Opus review 31 times and of the Gemini review 10 times. Opus often *sees* the misread, calls it a slip and passes the page at fidelity 4. Its misses are mostly lenience in the accept decision, not blindness.
+
+**Where Flash was wrong (28 for medium).** The adjudicator listed 76 false defect claims on those pages: "misreadings" the page does not contain, spelling conventions treated as errors (巳/已, མེད/མྱེད, expanded abbreviations), and correct leaf-break markup called a defect. These come mostly from Latin, Tibetan and Chinese. More thinking makes Flash find real errors *and* invent them.
+
+**What this means for "checked by Opus".** Of the 158 transcription pages Opus passed, at least 52 (33%) have an error that the adjudicator says matters, found once another judge pointed at the spot. That is a lower bound, since pages both judges passed were not adjudicated. By stratum:
+
+| stratum | Opus passed | with a real error | notes |
+|---|---|---|---|
+| Tibetan GPU | 26 | 18 | |
+| Chinese GPU and GPU>GEM | 41 | 12 | |
+| Latin GPU>GEM | 34 | 9 | |
+| French, German and Latin Gemini reads | 35 | 11 | |
+| Hebrew | 5 | 2 | |
+| Arabic | 7 | 0 | |
+| Italian | 9 | 0 | |
+
+Two caveats:
+- The sample is weighted toward hard cells, so this is not a library rate.
+- The adjudicator is Opus reading a spot it was pointed at, which is easier than finding the error unprompted. The 33% is how often an unprompted Opus pass misses a pointed-out error, not how often a reader meets one.
+
+It still revises the reading of #7866. A fidelity-4 pass on Tibetan or Chinese is often a page with a meaning-changing misread, and the "checked, no serious errors" line on the book page (#7896) is weakest exactly there.
+
+**What matters more than what.** Ranked by what a reader loses, using the adjudicator's `matters` flags:
+1. Word changes that read fluently: O6, the large majority.
+2. Dropped words or lines: O5.
+3. Wrong titles, names and numbers: running titles, genealogies, folio numbers.
+
+Conventions (variant characters, abbreviation expansion, long s kept or not, tsheg punctuation) are the bulk of what the adjudicator marks as not mattering. A judge that cannot separate the two (Flash at medium or high) over-rejects. A judge that sees both and forgives both (Opus) under-rejects.
+
+**Next test (#7611 follow-up).** Is a different *task* a better detector than a verdict prompt? Three arms on these same 540 items:
+- a **correction** prompt, whose diff against the stored text is the detection, and whose output is also the fix;
+- an independent **re-read**, diffed against the stored text. #5313 found AUC 0.80–0.85 but precision 0.3–0.45 on Flash-lite and Flash 3; this test reruns it on 3.8 Flash;
+- **Opus with a stricter accept rule**: any word-level change fails the page, conventions excepted.
+
+It is scored on the plants and on adjudicated disagreements, at each arm's measured cost per page.
 
 ### Recommendation for judging every book (#7896)
 

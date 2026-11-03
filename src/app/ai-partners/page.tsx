@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { preload } from 'react-dom';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { PARTNERS_HTML } from './content';
+import EditMode from './EditMode';
 import './ai-partners.css';
 
 const DESCRIPTION =
@@ -36,6 +37,7 @@ export default function AiPartnersPage() {
     <>
       <ConditionalSiteHeader variant="dark" />
       <main className="ai-partners" dangerouslySetInnerHTML={{ __html: PARTNERS_HTML }} />
+      <EditMode />
     </>
   );
 }

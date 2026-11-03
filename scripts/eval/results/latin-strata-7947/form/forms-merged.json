@@ -1,0 +1,765 @@
+{
+ "6a0c53fc99c52ea845a06630": {
+  "book_id": "6a0c53fc99c52ea845a06630",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "early protogothic book hand, ruled"
+ },
+ "69f32d7e876dd827cbc42eb1": {
+  "book_id": "69f32d7e876dd827cbc42eb1",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "scholastic hand, rubrics"
+ },
+ "699065ab3dc2ed39a49f2311": {
+  "book_id": "699065ab3dc2ed39a49f2311",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "handwritten cursive alchemical text"
+ },
+ "6958e011cf7070242ed4235c": {
+  "book_id": "6958e011cf7070242ed4235c",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "some",
+  "note": "blackletter verse, Google scan, folio no."
+ },
+ "69906f694b3bd4d1fffd0b26": {
+  "book_id": "69906f694b3bd4d1fffd0b26",
+  "form": "manuscript",
+  "script": "other",
+  "abbreviations": "some",
+  "note": "romanesque minuscule with painted illustrations"
+ },
+ "699067e68da6face82f779a6": {
+  "book_id": "699067e68da6face82f779a6",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "gothic cursive with red paraphs"
+ },
+ "69f32becb6c06ca8a5e75ef3": {
+  "book_id": "69f32becb6c06ca8a5e75ef3",
+  "form": "manuscript",
+  "script": "other",
+  "abbreviations": "some",
+  "note": "caroline minuscule, two columns"
+ },
+ "69b52bdad6bd9f58edb24fe0": {
+  "book_id": "69b52bdad6bd9f58edb24fe0",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "small gothic hand, two columns, rubrics"
+ },
+ "69b52cb28a30f8bb136614f0": {
+  "book_id": "69b52cb28a30f8bb136614f0",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "gothic hand with red initials and marginalia"
+ },
+ "69c86e2d6c6f3cc53c856e3d": {
+  "book_id": "69c86e2d6c6f3cc53c856e3d",
+  "form": "blockbook",
+  "script": "gothic",
+  "abbreviations": "some",
+  "note": "calendar with woodcut illustrations and text cut in block"
+ },
+ "69f33432876dd827cbc4c619": {
+  "book_id": "69f33432876dd827cbc4c619",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "handwritten text with music notation, film strip"
+ },
+ "69b52caf8a30f8bb13661450": {
+  "book_id": "69b52caf8a30f8bb13661450",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "book hand with dense glosses"
+ },
+ "69f32f93876dd827cbc45a7c": {
+  "book_id": "69f32f93876dd827cbc45a7c",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "handwritten text with neumes, film strip"
+ },
+ "69f33489876dd827cbc4d064": {
+  "book_id": "69f33489876dd827cbc4d064",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "bastarda hand, ruled columns, marginalia"
+ },
+ "69f335b4876dd827cbc4ee76": {
+  "book_id": "69f335b4876dd827cbc4ee76",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "humanist bookhand verse"
+ },
+ "69f334a7876dd827cbc4d248": {
+  "book_id": "69f334a7876dd827cbc4d248",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "humanist minuscule, gold initial, marginalia"
+ },
+ "69f337b3876dd827cbc529da": {
+  "book_id": "69f337b3876dd827cbc529da",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "gothic rotunda with notation and miniature"
+ },
+ "69f33704876dd827cbc51619": {
+  "book_id": "69f33704876dd827cbc51619",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "fast cursive hand"
+ },
+ "69f337ce876dd827cbc52e83": {
+  "book_id": "69f337ce876dd827cbc52e83",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "humanist italic hand"
+ },
+ "69f3359e876dd827cbc4ecfc": {
+  "book_id": "69f3359e876dd827cbc4ecfc",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "charter-hand legal text with red paraphs"
+ },
+ "69f33618876dd827cbc4fc2c": {
+  "book_id": "69f33618876dd827cbc4fc2c",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "humanist hand with illuminated initial"
+ },
+ "69dbccbf0f8c5edf20f4cf0a": {
+  "book_id": "69dbccbf0f8c5edf20f4cf0a",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "heavy",
+  "note": "early printed roman type with marginal headings"
+ },
+ "69dbc7a11040d1d5e2092e73": {
+  "book_id": "69dbc7a11040d1d5e2092e73",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "heavy",
+  "note": "gothic type with red rubrication"
+ },
+ "699062f1ef12272ffdc8e56e": {
+  "book_id": "699062f1ef12272ffdc8e56e",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman incunable type"
+ },
+ "69dbc8841040d1d5e209a132": {
+  "book_id": "69dbc8841040d1d5e209a132",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "some",
+  "note": "gothic type, incunable"
+ },
+ "69dbcbe41040d1d5e20bb28f": {
+  "book_id": "69dbcbe41040d1d5e20bb28f",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "some",
+  "note": "gothic types of two sizes, signature b ij"
+ },
+ "69dbc86f1040d1d5e20998a1": {
+  "book_id": "69dbc86f1040d1d5e20998a1",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "heavy",
+  "note": "two-column gothic incunable with rubrication"
+ },
+ "69dbc9c01040d1d5e20a5f41": {
+  "book_id": "69dbc9c01040d1d5e20a5f41",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "heavy",
+  "note": "two-column gothic incunable, dense abbreviations"
+ },
+ "69dbc9571040d1d5e20a25e1": {
+  "book_id": "69dbc9571040d1d5e20a25e1",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type text with commentary, signature m iii"
+ },
+ "69f338e1876dd827cbc54599": {
+  "book_id": "69f338e1876dd827cbc54599",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "few",
+  "note": "hand-written text in painted frame; opposite page gothic hand"
+ },
+ "69f33964876dd827cbc54e04": {
+  "book_id": "69f33964876dd827cbc54e04",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "gothic hand with painted border and initials"
+ },
+ "69f33932876dd827cbc5487b": {
+  "book_id": "69f33932876dd827cbc5487b",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "humanist script with gilt initials, coat of arms"
+ },
+ "69f3391e876dd827cbc547fb": {
+  "book_id": "69f3391e876dd827cbc547fb",
+  "form": "manuscript",
+  "script": "other",
+  "abbreviations": "few",
+  "note": "music manuscript film strip, staves"
+ },
+ "69f3394f876dd827cbc54be6": {
+  "book_id": "69f3394f876dd827cbc54be6",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "humanist cursive, struck-out words"
+ },
+ "69f338cc876dd827cbc5431d": {
+  "book_id": "69f338cc876dd827cbc5431d",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "humanist italic hand, ruled lines"
+ },
+ "69f33939876dd827cbc54881": {
+  "book_id": "69f33939876dd827cbc54881",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "small humanist hand, coloured initials"
+ },
+ "69f33925876dd827cbc5481b": {
+  "book_id": "69f33925876dd827cbc5481b",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "some",
+  "note": "gothic cursive hand, ruled, rubric heading"
+ },
+ "6a45f83a8d74c68ab9b236e1": {
+  "book_id": "6a45f83a8d74c68ab9b236e1",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type, astronomical tables"
+ },
+ "6a0851ce15c643eb1af4b329": {
+  "book_id": "6a0851ce15c643eb1af4b329",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type, Cicero letters"
+ },
+ "69b63dd11c1c21a37385fa56": {
+  "book_id": "69b63dd11c1c21a37385fa56",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type"
+ },
+ "69dbc8751040d1d5e2099d42": {
+  "book_id": "69dbc8751040d1d5e2099d42",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "heavy",
+  "note": "gothic type, heavy abbreviations"
+ },
+ "69b00f6ce485bbb15c6b29cb": {
+  "book_id": "69b00f6ce485bbb15c6b29cb",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "roman type, herbal"
+ },
+ "69b3002aa1a4246ddb45b7ed": {
+  "book_id": "69b3002aa1a4246ddb45b7ed",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type"
+ },
+ "69c899d56c6f3cc53c85cfb2": {
+  "book_id": "69c899d56c6f3cc53c85cfb2",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type, marginalia printed"
+ },
+ "69af11509553e8701d660b15": {
+  "book_id": "69af11509553e8701d660b15",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type with Greek"
+ },
+ "69f33ac2876dd827cbc58229": {
+  "book_id": "69f33ac2876dd827cbc58229",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "handwritten music and text, multi-view strip"
+ },
+ "69f33a73876dd827cbc57e4d": {
+  "book_id": "69f33a73876dd827cbc57e4d",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "calligraphic italic hand, verse"
+ },
+ "69f33a41876dd827cbc57c62": {
+  "book_id": "69f33a41876dd827cbc57c62",
+  "form": "manuscript",
+  "script": "other",
+  "abbreviations": "some",
+  "note": "handwritten music book, thumbnail strip"
+ },
+ "6a4e381c806e65f390cf11aa": {
+  "book_id": "6a4e381c806e65f390cf11aa",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type verse"
+ },
+ "69b418ab2b0edf3eaa2dd947": {
+  "book_id": "69b418ab2b0edf3eaa2dd947",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "italic cursive hand with Hebrew"
+ },
+ "69f33a4e876dd827cbc57c95": {
+  "book_id": "69f33a4e876dd827cbc57c95",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "humanist hand, ruled dots"
+ },
+ "6a4e4abfd6b40547a16a0119": {
+  "book_id": "6a4e4abfd6b40547a16a0119",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "few",
+  "note": "cursive list of authors"
+ },
+ "6a4a8b150cf770dd0072204e": {
+  "book_id": "6a4a8b150cf770dd0072204e",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type verse"
+ },
+ "69568909be7c607c5f03c44d": {
+  "book_id": "69568909be7c607c5f03c44d",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "heavy",
+  "note": "roman type, many abbreviations"
+ },
+ "6a4b56df619ab78551a731c0": {
+  "book_id": "6a4b56df619ab78551a731c0",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type verse"
+ },
+ "6a085d0349638a50931ce8b7": {
+  "book_id": "6a085d0349638a50931ce8b7",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type"
+ },
+ "6a08514149638a50931b85a3": {
+  "book_id": "6a08514149638a50931b85a3",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type with printed marginalia"
+ },
+ "6a4a600c3f0b4659d1bc3283": {
+  "book_id": "6a4a600c3f0b4659d1bc3283",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type"
+ },
+ "6a06cd51c749b698e5b2b36e": {
+  "book_id": "6a06cd51c749b698e5b2b36e",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "print with only a few marginal manuscript notes"
+ },
+ "69b4cc34d2bf9b45ea478d30": {
+  "book_id": "69b4cc34d2bf9b45ea478d30",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "heavy",
+  "note": "roman type, many abbreviations"
+ },
+ "699051d48d19cbc90d9d51ce": {
+  "book_id": "699051d48d19cbc90d9d51ce",
+  "form": "mixed",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic print with extensive handwritten marginalia"
+ },
+ "69f33b4e876dd827cbc58b00": {
+  "book_id": "69f33b4e876dd827cbc58b00",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "mirror-image humanist hand, illustration"
+ },
+ "69b4188d2b0edf3eaa2dd39d": {
+  "book_id": "69b4188d2b0edf3eaa2dd39d",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "humanist/italic hand, ruled"
+ },
+ "d850a255-4633-43d5-8383-7c67a7e55144": {
+  "book_id": "d850a255-4633-43d5-8383-7c67a7e55144",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "cursive hand, English and Latin"
+ },
+ "69b4ccd0d5b6c3815e1a26fb": {
+  "book_id": "69b4ccd0d5b6c3815e1a26fb",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "few",
+  "note": "calligraphic italic captions, drawing"
+ },
+ "69b3f721a107e55a0ee1b52e": {
+  "book_id": "69b3f721a107e55a0ee1b52e",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "dense cursive, strikethroughs"
+ },
+ "69b4193f2b0edf3eaa2df265": {
+  "book_id": "69b4193f2b0edf3eaa2df265",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "italic-style hand"
+ },
+ "69b419052b0edf3eaa2de888": {
+  "book_id": "69b419052b0edf3eaa2de888",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "cursive hand, recipes"
+ },
+ "69b419382b0edf3eaa2df003": {
+  "book_id": "69b419382b0edf3eaa2df003",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "framed italic hand"
+ },
+ "6a4bd679ce03c0929df13652": {
+  "book_id": "6a4bd679ce03c0929df13652",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type with Greek"
+ },
+ "6a4bf38def49f280c10d9e90": {
+  "book_id": "6a4bf38def49f280c10d9e90",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type"
+ },
+ "6a4a5a3e3f0b4659d1bc10e4": {
+  "book_id": "6a4a5a3e3f0b4659d1bc10e4",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type"
+ },
+ "6a483fab0278a71dd7757b38": {
+  "book_id": "6a483fab0278a71dd7757b38",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type"
+ },
+ "6a4ee20ad5c834174f8160f6": {
+  "book_id": "6a4ee20ad5c834174f8160f6",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type verse"
+ },
+ "69aeb688bf00526d1d64c3b9": {
+  "book_id": "69aeb688bf00526d1d64c3b9",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type with marginal notes in italic, ligatures"
+ },
+ "6a4bd575ce03c0929df13275": {
+  "book_id": "6a4bd575ce03c0929df13275",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "roman text with italic quotes, signature mark"
+ },
+ "6a26c4ebaad44c98627d34ce": {
+  "book_id": "6a26c4ebaad44c98627d34ce",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "few",
+  "note": "italic type definitions, roman headings"
+ },
+ "69d66608bf5afe33937f8c15": {
+  "book_id": "69d66608bf5afe33937f8c15",
+  "form": "unsure",
+  "script": "other",
+  "abbreviations": "few",
+  "note": "pasted blue circle, almost no legible text"
+ },
+ "69b51e02261c58d63664e132": {
+  "book_id": "69b51e02261c58d63664e132",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "handwritten bibliographic list"
+ },
+ "69b418d42b0edf3eaa2ddfeb": {
+  "book_id": "69b418d42b0edf3eaa2ddfeb",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "heavy",
+  "note": "handwritten text with alchemical symbols"
+ },
+ "69b4194bddff1f043992a157": {
+  "book_id": "69b4194bddff1f043992a157",
+  "form": "manuscript",
+  "script": "italic",
+  "abbreviations": "few",
+  "note": "hand-drawn emblem with italic calligraphic lettering"
+ },
+ "69d8ca5fa09828f83ddcabf9": {
+  "book_id": "69d8ca5fa09828f83ddcabf9",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "few",
+  "note": "watercolour mushrooms with handwritten labels"
+ },
+ "69b418f82b0edf3eaa2de64c": {
+  "book_id": "69b418f82b0edf3eaa2de64c",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "handwritten alchemical text with ruled margins"
+ },
+ "69b418a62b0edf3eaa2dd7f1": {
+  "book_id": "69b418a62b0edf3eaa2dd7f1",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "ruled-frame handwritten page, alchemical signs"
+ },
+ "69d665f8bf5afe33937f8a3f": {
+  "book_id": "69d665f8bf5afe33937f8a3f",
+  "form": "manuscript",
+  "script": "cursive-hand",
+  "abbreviations": "some",
+  "note": "handwritten cursive on paper"
+ },
+ "69de0ce780210ba13d79f8b7": {
+  "book_id": "69de0ce780210ba13d79f8b7",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "modern roman type, Priapeia"
+ },
+ "69af55c8ec9e6c278212dc48": {
+  "book_id": "69af55c8ec9e6c278212dc48",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "modern edition, roman type with algebraic signs"
+ },
+ "6a243e810f0e4f405e63470f": {
+  "book_id": "6a243e810f0e4f405e63470f",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type, long s, u for v"
+ },
+ "6a100a46f71729295096edcb": {
+  "book_id": "6a100a46f71729295096edcb",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "two-column roman with italic quotes and marginalia"
+ },
+ "6980941fbcce774f5bbd7db3": {
+  "book_id": "6980941fbcce774f5bbd7db3",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "roman/italic Latin mixed with fraktur German"
+ },
+ "69bda035f6d63c91974856ae": {
+  "book_id": "69bda035f6d63c91974856ae",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type, italic marginalia, text curved at edge"
+ },
+ "69e41e88d0364cb0bcf78875": {
+  "book_id": "69e41e88d0364cb0bcf78875",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "modern roman print, Google scan"
+ },
+ "6992544259cdabeb78f1d4df": {
+  "book_id": "6992544259cdabeb78f1d4df",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "modern breviary, roman with red rubrics"
+ },
+ "69f32ed5876dd827cbc44913": {
+  "book_id": "69f32ed5876dd827cbc44913",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "gothic cursive with many suspensions"
+ },
+ "69f330cf876dd827cbc47ea6": {
+  "book_id": "69f330cf876dd827cbc47ea6",
+  "form": "manuscript",
+  "script": "humanist-hand",
+  "abbreviations": "some",
+  "note": "humanist hand with interlinear glosses, Amphitruo"
+ },
+ "69f32dfb876dd827cbc43551": {
+  "book_id": "69f32dfb876dd827cbc43551",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "two-column scholastic gothic with rubrics and initials"
+ },
+ "69b51eb4768235dc659977b1": {
+  "book_id": "69b51eb4768235dc659977b1",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "single-column gothic book hand"
+ },
+ "69f32cac34076d2bddeb3877": {
+  "book_id": "69f32cac34076d2bddeb3877",
+  "form": "manuscript",
+  "script": "gothic-hand",
+  "abbreviations": "heavy",
+  "note": "illuminated Bible leaf, gothic hand, historiated initials"
+ },
+ "6a4a37637517ab961c03347e": {
+  "book_id": "6a4a37637517ab961c03347e",
+  "form": "unsure",
+  "script": "other",
+  "abbreviations": "few",
+  "note": "watermark/infrared image, no text"
+ },
+ "6a4d9f49167a618b2ad92368": {
+  "book_id": "6a4d9f49167a618b2ad92368",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type verse, marginal note"
+ },
+ "69b3f763a107e55a0ee1d27a": {
+  "book_id": "69b3f763a107e55a0ee1d27a",
+  "form": "manuscript",
+  "script": "other",
+  "abbreviations": "some",
+  "note": "Carolingian-type minuscule, open book"
+ },
+ "6a4ed795df0b2269c3dbd379": {
+  "book_id": "6a4ed795df0b2269c3dbd379",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "few",
+  "note": "printed chronological tables, roman and italic"
+ },
+ "6a4b7062998fdd30218fa2cf": {
+  "book_id": "6a4b7062998fdd30218fa2cf",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type with some roman and Greek"
+ },
+ "6a4f262dfafa84405cd5012f": {
+  "book_id": "6a4f262dfafa84405cd5012f",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type, long s, dark scan"
+ },
+ "6a4a54cc0deff67032eaf004": {
+  "book_id": "6a4a54cc0deff67032eaf004",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type treatise, numbered paragraphs"
+ },
+ "6a4ba12edebad28d8e8dddbf": {
+  "book_id": "6a4ba12edebad28d8e8dddbf",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type, numbered theses"
+ },
+ "6a4e42f17d2e40767268db33": {
+  "book_id": "6a4e42f17d2e40767268db33",
+  "form": "print",
+  "script": "italic",
+  "abbreviations": "some",
+  "note": "italic type with marginal notes"
+ },
+ "69dbcb321040d1d5e20b3397": {
+  "book_id": "69dbcb321040d1d5e20b3397",
+  "form": "print",
+  "script": "gothic",
+  "abbreviations": "heavy",
+  "note": "incunable gothic type, two columns"
+ },
+ "6a26b95961b3857ed05a93d5": {
+  "book_id": "6a26b95961b3857ed05a93d5",
+  "form": "print",
+  "script": "roman",
+  "abbreviations": "some",
+  "note": "roman type with ornamental header"
+ }
+}

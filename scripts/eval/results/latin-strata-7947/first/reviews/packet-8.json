@@ -1,0 +1,759 @@
+[
+  {
+    "book_id": "6a26c4ebaad44c98627d34ce",
+    "slot": 77,
+    "title": "Elementorum Geographiae Universalis, ad faciem Sphaericae Euclideae, Dn. Erhardi Weigelii ... Synopsis Mnemoneutica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "1669 Jena geography disputation after Weigel's Euclidean method; early modern science, in scope though no tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "pages_count 58 but only 25 pages have OCR/translation (25 eligible) — more than half the book has no text yet. Sampled pages are in order (A2 at p7, B at p13, Def. LXXVII–LXXX at p19); nothing else stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Paludes idem saepè important quod Lacus",
+            "english": "Marshes often import the same as Lakes",
+            "problem": "calque: 'important' = 'mean, signify'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> says the page 'defines the four major oceans'; the page defines three (Pacific, Hyperborean, Southern) — derived summary miscounts",
+            "severity": "minor",
+            "class": "E1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "&nbsp;&nbsp;&nbsp;&nbsp;vel angularis",
+            "image": "indented 'vel angularis'",
+            "problem": "HTML &nbsp; entities used for the indented division tree; shows as raw entities if the renderer escapes them",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "inline <note>original: \"Situs\"</note> and <note> gloss on Loxodromia in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean: a well-printed 1669 text transcribed almost word for word and translated faithfully, including the bracket-tree divisions. The only issue is that 33 of its 58 pages have no text yet."
+  },
+  {
+    "book_id": "69dbc8841040d1d5e209a132",
+    "slot": 25,
+    "title": "Speculum de honestate vitae. Octo puncta perfectionis assequendae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Incunable (1490) pseudo-Bernardine devotional treatise; medieval spiritual primary source, no tradition assigned.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "commozabitur ... glozia ... fozte",
+            "image": "commorabitur ... gloria ... forte (r rotunda)",
+            "problem": "r rotunda transcribed as z, inconsistently with 'orantem' elsewhere",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "habere fixam: ad quam destinationem",
+            "image": "habere fixam· ⁊ ad quam destinationem",
+            "problem": "et (⁊) dropped, which changes how the clause is parsed",
+            "severity": "minor"
+          },
+          {
+            "ocr": "aqua distractam",
+            "image": "a qua distractam",
+            "problem": "word division (a qua)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "fortaffis",
+            "image": "fortassis",
+            "problem": "long-s read as f",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "illos egregios flores sanctissimos patres",
+            "english": "those egregious flowers, the most holy fathers",
+            "problem": "'egregious' is pejorative in English; should be 'excellent/outstanding'",
+            "severity": "minor"
+          },
+          {
+            "source": "qui incomprobabili flagrabant studio",
+            "english": "who burned with an incomparable zeal",
+            "problem": "incomprobabili ('irreproachable') rendered as 'incomparable'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "instabile:pusum:inozdinatum",
+            "image": "instabile:ꝓfusum:inordinatum (profusum)",
+            "problem": "pro-abbreviation dropped; 'pusum' is not a word",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "vespere preterite diei rationem erige",
+            "image": "rationem exige",
+            "problem": "exige misread as erige",
+            "severity": "minor"
+          },
+          {
+            "ocr": "fentina",
+            "image": "sentina",
+            "problem": "long-s read as f",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "aliquid immoderatum:instabile:pusum[profusum]:inordinatum",
+            "english": "nothing immoderate, unstable, presumptuous, or disordered",
+            "problem": "profusum ('lavish, excessive') rendered as 'presumptuous'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "rationem erige [exige]",
+            "english": "set up an account of the past day",
+            "problem": "should be 'demand an account of the past day'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->¶Finis.<-' centring arrows in the OCR and translation text (shows as arrows wherever the renderer does not read them as centring)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good. A clean incunable with readable Gothic type, faithful translations, and only small abbreviation slips (profusum → 'presumptuous'). Nothing a reader would flag on sight."
+  },
+  {
+    "book_id": "69b3f721a107e55a0ee1b52e",
+    "slot": 66,
+    "title": "Excerpta astrologica: Hermes Trismegistus, al-Kindi (VLO 52)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "17th-c. Leiden manuscript of Latin astrological excerpts (Hermes, al-Kindi); core Hermetic/astrological material. Page 155 is a copied catalogue of the Digby manuscripts given to the Bodleian in 1634, part of the same miscellany.",
+    "rights_flag": null,
+    "structure_note": "Every image is a full two-page opening (5,596×3,541), and the OCR says it 'covers the right-hand page' only. On p51 and p100 the left-hand page is full text that runs straight into the right page (p100: the left page ends with the catchword 'Una' and the right page begins 'Una natura'). That left-hand text is not in this record's OCR, and with one record per opening (record 155 = folio 149) no other record can hold it. About half the manuscript's text — every verso — looks untranscribed and untranslated (I3, spread not split). pages_translated 154 of 196 OCR'd.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "bellum dubitaturum accidet",
+            "image": "bellum indubitatum accidet",
+            "problem": "'undoubted war' read as 'war will be doubtful' — prognosis reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "duos vel hostis <gloss>seu</gloss> <insert>fratres</insert> fratris",
+            "image": "duces vel hostis, vel (seu above) fratris",
+            "problem": "duces (leaders) read as duos; 'fratres' insert invented — the significator of leaders/enemy/brother becomes 'brothers'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ntes, atine bene tenere",
+            "image": "…mtus, aliud voce tenere",
+            "problem": "'to hold another thing in speech' misread as 'to hold well'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "In signo <gloss>magis</gloss> bene terreo",
+            "image": "In signo vero (quoque above) terreo",
+            "problem": "'magis bene' invented for 'vero'/'quoque'",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "huius ianus intellectus",
+            "image": "huius sanus intellectus",
+            "problem": "sanus read as ianus",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Luna horum alterutri obliquans",
+            "image": "Luna horum alterum relinquens",
+            "problem": "'leaving one' read as 'veering to either'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "per quamvis infelicem intuitionem",
+            "image": "per quamvis infelicem in cardine",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "bellum dubitaturum [image: indubitatum] accidet",
+            "english": "it happens that the war will be doubtful",
+            "problem": "sense reversed: the source says war will certainly come",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "duos vel hostis seu fratres fratris",
+            "english": "indicates brothers (or the host's brothers)",
+            "problem": "source signifies leaders, or the enemy, or brothers; 'host's brothers' is invented",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "huius ianus intellectus",
+            "english": "the understanding of this gate",
+            "problem": "garble translated fluently ('sound understanding')",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the image is a full opening; the left page (full text, ending '…sed alie-' into this page's 'mtus') is not transcribed in this record",
+            "severity": "serious",
+            "class": "I3"
+          },
+          {
+            "note": "<gloss>, <insert>, <unclear> markup inline in the OCR text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 100,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Illa figura d<unclear>e</unclear>struet, quin <insert>quod</insert> plueret, propter hoc q spēialr d<unclear>e</unclear>struit vniuersale",
+            "image": "Illa figura ō [non] destruet, quin (over struck 'quomodo') plueret, propter hoc quod specialis ō [non] destruit universale",
+            "problem": "both negations (ō = non) dropped — 'will not prevent rain, because the particular does not destroy the universal' becomes the opposite",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "sedm nam ostentorum per illud tempus",
+            "image": "secundum naturam planetarum qui faciunt illud tempus",
+            "problem": "'planets that make that weather' read as 'portents through that time'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "si aliqua particlaris anni facit",
+            "image": "si aliqua figura alicuius anni faciet",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Si fuerit Luna in aliq angulorū",
+            "image": "Cum fuerit Luna…",
+            "problem": "minor misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Illa figura destruet … quia specialis destruit universale",
+            "english": "that figure will destroy that it would rain, because it especially destroys the universal",
+            "problem": "sense reversed (source: the particular figure does NOT cancel the general rain, only diminishes it); 'sed bene diminuet' then contradicts the English",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "secundum naturam ostentorum",
+            "english": "according to the nature of the signs [exhibited]",
+            "problem": "should be 'planets which make that weather'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the image is a full opening; the left page (full text ending with catchword 'Una') is not transcribed — the right page's 'Una natura' continues it",
+            "severity": "serious",
+            "class": "I3"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 155,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "cu picturis Principis Henrici & (ut videtur) <unclear>et</unclear> Monachi translatoris",
+            "image": "cu picturis Principis Henrici 4ti (ut videtur) et Monachi translatoris",
+            "problem": "regnal number '4ti' (Henry IV) dropped",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Insufficientia Avicennæ",
+            "image": "Sufficientia Avicennæ",
+            "problem": "title inverted (Avicenna's Sufficientia)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Insufficientia Avicennæ",
+            "english": "The Insufficiency of Avicenna",
+            "problem": "should be Avicenna's Sufficientia (a known title)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Principis Henrici",
+            "english": "Prince Henry",
+            "problem": "Henry IV lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->…<-' centring arrows around the heading in OCR and translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Do not show as is. The openings were never split, so every left-hand page of this manuscript appears to be missing from the text. On the pages that are transcribed, dropped negations ('non destruet' → 'destroys'; 'indubitatum' → 'doubtful') reverse the astrological judgements in fluent English."
+  },
+  {
+    "book_id": "d850a255-4633-43d5-8383-7c67a7e55144",
+    "slot": 64,
+    "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "17th-c. English/Latin alchemical manuscript (Speculum luminum recipes, Turba/Morienus florilegium, Ripley's Pupilla Alchymiae); squarely Rosicrucian/alchemical (BPH).",
+    "rights_flag": null,
+    "structure_note": "Catalogue language is 'Latin', but large parts are English (pp88, 132). 180 pages, 174 translated; nothing broken in the sample.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "pone in duplum vini fortis",
+            "image": "pone in decuplo urine ꝑate (in tenfold … urine)",
+            "problem": "ingredient and proportion both wrong: tenfold urine becomes double strong wine",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "3. calefac sanguinis aquae … in sanguinis faecis lixivio … in sanguinis aqua",
+            "image": "3º calefac eandem aquam … in eandem aquam … in eandem aquam",
+            "problem": "'eandem' (the same) repeatedly read as 'sanguinis', inventing 'blood water'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "distillare per silentium",
+            "image": "p filtrum (per filtrum)",
+            "problem": "'through a filter' read as 'through silence'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "De cinere sanguinis humani 3. partes",
+            "image": "De cineribus sanguinis humani 3 lb. (li.)",
+            "problem": "unit (pounds) read as 'parts'",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "pone in duplum vini fortis [image: decuplo urine]",
+            "english": "place it in double the amount of strong wine",
+            "problem": "the reader gets the wrong solvent and the wrong ratio in a recipe",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "distillare per silentium",
+            "english": "distill it by silence <note>possibly meaning a slow, quiet distillation</note>",
+            "problem": "garble translated, with a speculative note invented to explain it",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "3. calefac sanguinis aquae",
+            "english": "Heat the water of the blood three times",
+            "problem": "source: 'thirdly, heat the same water'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<term>/<gloss>/<note> markup inline in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 88,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>ej</sig>",
+            "image": "catchword 'ei' at foot",
+            "problem": "catchword tagged as signature",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<note>original: …</note> blocks repeat the whole Latin passages inside the English, plus <term>/<gloss> markup",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 132,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "finis est written, terminum posuisti",
+            "image": "Since it is written, terminum posuisti",
+            "problem": "'Since it is' read as 'finis est'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "out of the we drawe artificially our 2 most necessary",
+            "image": "out of them we drawe artificially our 2 ☿ most necessary",
+            "problem": "mercury symbol ☿ and 'them' dropped; the two things drawn are mercuries",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "prae-rire",
+            "image": "praete-rire",
+            "problem": "syllable dropped at line break",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "finis est written",
+            "english": "The end is written:",
+            "problem": "should be 'Since it is written'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "our 2 [☿] most necessary",
+            "english": "our two things most necessary",
+            "problem": "mercuries lost (follows the OCR)",
+            "severity": "minor"
+          },
+          {
+            "source": "being red lead, Antimony mineral preparate, and Vitriol Rom.",
+            "english": "these are <note>red lead</note> prepared mineral Antimony and Roman Vitriol",
+            "problem": "'red lead' demoted into a note, garbling the identification of the Red Lion",
+            "severity": "moderate",
+            "class": "T3"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->…<-' centring arrows around the Ripley heading in the OCR",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The English and italic pages are good. The heavily abbreviated Latin recipe page (p45) is badly misread: tenfold urine becomes double strong wine, and 'the same water' becomes blood water, so the recipe is wrong. An alchemy reader would catch this on sight."
+  },
+  {
+    "book_id": "69dbc7a11040d1d5e2092e73",
+    "slot": 23,
+    "title": "De modo opponendi et respondendi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "1493 incunable logic treatise attributed to Albertus Magnus; scholastic primary source, no tradition assigned.",
+    "rights_flag": null,
+    "structure_note": "pages 65, OCR 65, translated 61. Image keys switch form (archived/<id>/16.jpg vs archived/<id>-0033.jpg) but both carry the book_id; nothing else stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ergo ā pmo si aliqd nō est",
+            "image": "ergo a primo si aliquid est aliquid nō est",
+            "problem": "'est aliquid' dropped; the conditional 'if something is, something is not' loses its antecedent",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Sed illud qd mouet naturaliter sursum z nō mouetur naturaliter deozsum",
+            "image": "Sed illud qd movetur naturaliter sursum nō movetur naturaliter deorsum",
+            "problem": "'z' (et) inserted, turning the premise into a fragment",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Daioz ... Ez ista duo ... ergo regula vnū",
+            "image": "Maior ... Sz ista duo ... ergo per regulam vnū",
+            "problem": "initials/abbreviations misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ergo ā pmo si aliqd nō est",
+            "english": "Therefore, by the first point, if something is not",
+            "problem": "the argument's step 'if something is, something is not' is lost",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "source": "suppono q tmin? infinit? ponat aliquid. vt vult phs in fine",
+            "english": "…as the philosopher wants at the end of the first Prior Analytics, where he says … Then I argue thus: every 'not-man' is something positioned. But every 'not-something' is a 'not-man' …",
+            "problem": "the translation carries on past the last word on the page ('in fine'), adding a whole argument that is not on this leaf (lookahead from the next page)",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "other": [
+          {
+            "note": "<note>continues from previous page…</note>, <term> markup and <summary> in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Scdō sic. omne totū integrale est boiem",
+            "image": "Scdō sic. omne totū integrale sequitur suas partes. sed hō mortuus est totum integrale ad hominem",
+            "problem": "a full line skipped, so the argument makes no sense",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Ad scōm dōm q hō mortu? ⁊ hō ad vocē solū",
+            "image": "Ad scōm dōm q hō mortuus acceptum ad vocem solum",
+            "problem": "'⁊ hō' invented for 'acceptum'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quedā est medij in ꝓparatōe ad extrema",
+            "image": "in ꝯparatione (comparatione)",
+            "problem": "con- abbreviation read as pro-",
+            "severity": "minor"
+          },
+          {
+            "ocr": "quare sequit hō mortuus est. ⁊ hō est",
+            "image": "hō mortuus est. ergo hō est",
+            "problem": "ergo read as et",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "omne totū integrale est boiem",
+            "english": "every integral whole is of a man",
+            "problem": "nonsense from the skipped line, rendered fluently",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "nō aut cptum ad fcatū",
+            "english": "but not taken regarding the effect",
+            "problem": "significatum ('meaning') rendered 'effect'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "in ꝓparatōe ad extrema … aliter paratur ad animal",
+            "english": "in preparation to the extremities … prepared differently to 'animal'",
+            "problem": "comparatio ('relation') rendered 'preparation' throughout",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 48,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Item quod quis terminus communis habeat … tunc propositionem ad predicatum quod puenit quibusdam et quibusdam non est uerum",
+            "image": "Dicendum quod quamvis terminus communis habeat … tamen per comparationem ad predicatum (quod convenit quibusdam et quibusdam non) non est verum",
+            "problem": "the reply ('Dicendum') becomes another objection ('Item'), and the 'non' before 'est verum' is dropped, so the solution is reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "et nunquam cadit sub arte. sed singularia non cadunt sub arte",
+            "image": "et numquam circa sensus. quare nulla distinctio erit hic. Decimo sic. omnis distinctio cadit sub arte. sed singularia non cadunt sub arte",
+            "problem": "a line and a half skipped, merging the ninth and tenth arguments",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Nono prout per boetium quod uel est de intelligit particulare de sensu",
+            "image": "Minor patet per boetium quod universale est dum intelligitur, particulare dum sentitur",
+            "problem": "'Minor patet' read as a second 'Nono'; the Boethius dictum is garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "uniuersali, uel, uirtuoce",
+            "image": "vniuersali, vniuoce",
+            "problem": "v normalised to u; 'univoce' read as 'uirtuoce'",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "… quod puenit quibusdam et quibusdam non est uerum",
+            "english": "then the proposition to the predicate that comes to some and to some not is true",
+            "problem": "the author's solution is reversed (source: it is NOT true by comparison to the predicate)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Nono … Nono … Undecimo",
+            "english": "Ninthly … Ninthly … Eleventhly",
+            "problem": "two 'Ninthly' arguments and no tenth reach the reader",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "source": "quod tu est impossibile",
+            "english": "which to you is impossible",
+            "problem": "tamen ('nevertheless') read as tu",
+            "severity": "minor"
+          },
+          {
+            "source": "omnes species uirtuoce",
+            "english": "all species virtually",
+            "problem": "should be 'univocally'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Readable in outline, but the heavily abbreviated incunable type defeats the lite OCR in the places that matter. It skips lines, merges numbered arguments, and on p48 drops a 'non' so that the author's solution reads as its opposite. A logician would flag this."
+  }
+]

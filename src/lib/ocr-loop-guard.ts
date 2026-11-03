@@ -20,6 +20,11 @@ const MAX_PERIOD = 200;
 const RUN_MIN_REPS = 5;
 const RUN_MIN_CHARS = 80;
 const SCREEN_MAX = 0.35;
+/** Token-run arm (2026-11-02) — rationale and measurement on the .mjs twin. */
+export const DEFAULT_MIN_TOKEN_RUN = 25;
+const TOKEN_MAX_CP = 4;
+/** A run confined to one line must be this long: past any table's column count. */
+const ONE_LINE_TOKEN_RUN = 60;
 
 /** Elements whose contents describe the page rather than transcribe it. */
 const META = ['language', 'page-type', 'script', 'quality', 'scan-quality', 'image-desc',
@@ -92,6 +97,25 @@ export function distinctTrigramShare(cp: string[]): number {
   return seen.size / (cp.length - 2);
 }
 
+/** Longest run of one identical short letter token, and how many lines it spans. */
+export function tokenRun(text: string): { reps: number; chars: number; unit: string; lines: number } {
+  // Lines matter: a TABLE row legitimately repeats one sign across its columns
+  // (御製歷象考成: 黃道宮 三 三 三 … thirty times), and it ends at the line break.
+  // A loop runs on across lines. So keep line breaks, drop markup.
+  const lines = String(text || '').replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/<[^>]*>/g, ' ').split(/\n/);
+  let best = { reps: 0, chars: 0, unit: '', lines: 0 };
+  let prev: string | null = null, run = 0, startLine = 0;
+  lines.forEach((line, li) => {
+    for (const t of line.split(/\s+/).filter(Boolean)) {
+      if (t === prev) run++; else { prev = t; run = 1; startLine = li; }
+      if (run > best.reps && [...t].length <= TOKEN_MAX_CP && /\p{L}/u.test(t)) {
+        best = { reps: run, chars: run * ([...t].length + 1), unit: ` ${t}`, lines: li - startLine + 1 };
+      }
+    }
+  });
+  return best;
+}
+
 export function guardEnabled(): boolean {
   return String(process.env.OCR_LOOP_GUARD || '').toLowerCase() !== 'off';
 }
@@ -106,12 +130,18 @@ export function loopVerdict(text: string, {
   minRun = DEFAULT_MIN_RUN,
   minShare = DEFAULT_MIN_SHARE,
   minReps = DEFAULT_MIN_REPS,
-}: { minBody?: number; minRun?: number; minShare?: number; minReps?: number } = {}): LoopVerdict {
+  minTokenRun = DEFAULT_MIN_TOKEN_RUN,
+}: { minBody?: number; minRun?: number; minShare?: number; minReps?: number; minTokenRun?: number } = {}): LoopVerdict {
   const empty = { share: 0, covered: 0, period: 0, reps: 0, chars: 0, unit: '', runs: 0 };
   if (!guardEnabled()) return { refuse: false, reason: 'guard_disabled', body: 0, ...empty };
 
   const cp = normalise(transcriptionBody(text));
   const body = cp.length;
+  const tr = tokenRun(text);
+  if (tr.reps >= minTokenRun && (tr.lines >= 2 || tr.reps >= ONE_LINE_TOKEN_RUN)) {
+    return { refuse: true, reason: 'token_run', share: +(tr.chars / Math.max(1, body)).toFixed(3), covered: tr.chars, body,
+      period: tr.unit.length, reps: tr.reps, chars: tr.chars, unit: tr.unit, runs: 1 };
+  }
   if (body < minBody) return { refuse: false, reason: 'body_too_short', body, ...empty };
   if (distinctTrigramShare(cp) > SCREEN_MAX) {
     return { refuse: false, reason: 'not_repetitive', body, ...empty };

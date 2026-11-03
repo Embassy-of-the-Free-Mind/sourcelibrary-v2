@@ -375,5 +375,84 @@ class Defaults(unittest.TestCase):
         self.assertEqual((R['absolute_bar']['acc'], R['absolute_bar']['p']), (0.9, 0.9))
 
 
+class Policy1102(unittest.TestCase):
+    """Derek, 2026-11-02 (#7263): no absolute gate, a hard floor on invented / wrong-leaf text, no privilege for an
+    unmeasured served route, λ sensitivity. Each rule is its own flag; all off is the rule of Defaults above."""
+    HF = {'in_force': True, 'classes': ['O1', 'I1'], 'rate': 0.02, 'p': 0.9, 'prior': [0.5, 0.5], 'min_pages': 1, 'draws': 4000}
+    Q = dict(Defaults.Q, no_absolute_gate={'in_force': True}, hard_floor=HF, no_served_privilege={'in_force': True})
+    OFF = dict(Q, no_absolute_gate={'in_force': False}, hard_floor=dict(HF, in_force=False), no_served_privilege={'in_force': False})
+    r = Defaults.r
+
+    def test_below_the_bar_is_decided_not_needs_engine(self):
+        # the shape of test_absolute_bar_blocks_a_route_inside_the_relative_gate: 0.88 alone, within 0.08 of the bar
+        opus, agy = self.r('opus', 0.95, 0.002, 0.01, bar=True), self.r('agy', 0.88, 0.0009, 0.01)
+        self.assertTrue(B.decide({}, [opus, agy], opus, self.OFF, STEADY, None, c0=0.002)[0].startswith('NEEDS-ENGINE'))
+        self.assertEqual(B.decide({}, [opus, agy], opus, self.Q, STEADY, None, c0=0.002), ('switch', agy))
+        self.assertIsNotNone(B.needs_engine([opus, agy], self.Q))   # the flag the row carries
+
+    def test_hold_is_a_flag_too(self):
+        r = self.r('r', 0.70, 0.001, 0.01)
+        self.assertEqual(B.decide({}, [r], r, self.OFF, STEADY, None, c0=0.001)[0].split(' (')[0], 'NEEDS-ENGINE')
+        self.assertEqual(B.decide({}, [r], r, self.Q, STEADY, None, c0=0.001)[0], 'keep')
+
+    def test_hard_floor_blocks_an_inventing_route(self):
+        opus, agy, gpu = self.r('opus', 0.96, 0.002, 0.01, bar=True), self.r('agy', 0.95, 0.0009, 0.01), self.r('gpu', 0.95, 0.001, 0.01)
+        agy['hard_floor_block'] = True
+        self.assertEqual(B.decide({}, [opus, agy, gpu], opus, self.Q, STEADY, None, c0=0.0009)[1]['id'], 'gpu')
+        self.assertEqual(B.decide({}, [opus, agy, gpu], opus, self.OFF, STEADY, None, c0=0.0009)[1]['id'], 'agy')
+
+    def test_opus_only_where_nothing_else_clears_the_floor(self):
+        opus, agy = self.r('opus', 0.96, 0.002, 0.01, bar=True), self.r('agy', 0.95, 0.0009, 0.01)
+        lite = self.r('lite', 0.70, 0.0, 0.2)
+        agy['hard_floor_block'] = lite['hard_floor_block'] = True
+        dec, pk = B.decide({}, [opus, agy, lite], lite, self.Q, STEADY, None, c0=0.002)
+        self.assertEqual((dec.split(' (')[0], pk['id']), ('switch', 'opus'))
+        self.assertIn('Opus', dec)
+        opus['hard_floor_block'] = True
+        self.assertTrue(B.decide({}, [opus, agy, lite], lite, self.Q, STEADY, None, c0=0.002)[0].startswith('HOLD (hard floor'))
+
+    def test_no_privilege_for_an_untested_current_route(self):
+        # italian-gpu-7263/print: an untested `lite` kept over measured routes none of which passes the gate
+        opus = self.r('opus', 0.99, 0.002, 0.0, bar=True)
+        a, b = self.r('a', 0.80, 0.0009, 0.05), self.r('b', 0.82, 0.0012, 0.02)
+        lite = dict(self.r('lite', 0.5, 0.0, 0.0), tested=False)
+        M = [opus, a, b]
+        self.assertEqual(B.decide({}, M, lite, self.OFF, STEADY, None, c0=0.002)[0].split(' (')[0], 'NEEDS-ENGINE')
+        self.assertEqual(B.decide({}, M, lite, dict(self.Q, no_served_privilege={'in_force': False}), STEADY, None, c0=0.002), ('keep', lite))
+        dec, pk = B.decide({}, M, lite, self.Q, STEADY, None, c0=0.002)
+        self.assertEqual(dec.split(' (')[0], 'switch'); self.assertIn('fallback', dec)
+        self.assertIn(pk['id'], ('a', 'b')); self.assertNotEqual(pk['id'], 'opus')
+
+    def test_manuscript_fallback_takes_opus_last(self):
+        # a manuscript cell (Opus a candidate, not _bar; tibetan-tr/manuscript's shape): the reference is a floor-blocked
+        # route, nothing passes, and the fallback takes the agy route although Opus has the lower loss
+        hi = dict(self.r('hi', 0.97, 0.0009, 0.01), channel='agy', hard_floor_block=True)
+        opus = dict(self.r('opus', 0.90, 0.002, 0.01), channel='claude')
+        agy = dict(self.r('agy', 0.70, 0.0009, 0.05), channel='agy')
+        Q = dict(self.Q, switch=dict(self.Q['switch'], bar=None, within=0.0, p=0.999999))
+        dec, pk = B.decide({}, [hi, opus, agy], opus, Q, STEADY, None, c0=0.002)
+        self.assertEqual((dec.split(' (')[0], pk['id']), ('switch', 'agy'))
+
+    def test_floor_block_needs_seen_pages(self):
+        r = lambda inv, eff: dict(inv=inv, inv_eff=eff[0], eff=[0, eff[1], 0])
+        self.assertEqual(B.hard_floor_block(r('0/30', (0.0, 5.0)), self.Q, 1)[0], False)    # none seen: never blocked
+        self.assertEqual(B.hard_floor_block(r('6/30', (6.0, 30.0)), self.Q, 1)[0], True)     # 20%: blocked
+        self.assertEqual(B.hard_floor_block(r('1/600', (1.0, 600.0)), self.Q, 1)[0], False)  # 0.2%: under the floor
+        self.assertEqual(B.hard_floor_block(dict(inv=None), self.Q, 1), (False, None))       # untested
+
+    def test_pool_sources_counts_floor_classes(self):
+        x = dict(accept='20/30', wrong_text_pages='5/30', books=10, classes_k_of_n={'O1': '2/30', 'I1': '1/30', 'O6': '9/30'})
+        p = B.pool_sources([x], True, ('O1', 'I1'))
+        self.assertEqual(p['inv'], '3/30')
+        self.assertAlmostEqual(p['inv_eff'], 3 * 10 / 30)
+        self.assertEqual(B.pool_sources([x], True)['inv'], '0/30')   # no classes named: nothing counted
+
+    def test_rules_json_carries_the_flags(self):
+        import json
+        R = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rules.json')))
+        for k in B.POLICY_1102: self.assertIn('in_force', R[k])
+        self.assertEqual(R['loss']['lambda_sensitivity'], [5, 20, 100])
+
+
 if __name__ == '__main__':
     unittest.main()

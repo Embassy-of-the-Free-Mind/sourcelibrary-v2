@@ -31,7 +31,8 @@ import { SEED, N, CALL_CAP, MIN_REF_LETTERS, MIN_HAN, truthLatin, truthHan } fro
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const RESULTS = path.join(HERE, 'results');
 const OUT = path.join(process.env.JOB_SCRATCH || os.tmpdir(), 'judge-cal-7866bar');
-const REFS = '/data/scratch/sl/typed-refs-6012';
+// TYPED_REFS_DIR: another box rebuilds the manifests from R2 (three-way.mjs refs, #7941)
+const REFS = process.env.TYPED_REFS_DIR || '/data/scratch/sl/typed-refs-6012';
 const VERDICTS = path.join(OUT, 'verdicts.jsonl');
 fs.mkdirSync(RESULTS, { recursive: true }); fs.mkdirSync(path.join(OUT, 'items'), { recursive: true });
 const sha = (s) => createHash('sha256').update(String(s)).digest('hex');

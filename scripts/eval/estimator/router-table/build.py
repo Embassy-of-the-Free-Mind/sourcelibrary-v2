@@ -147,10 +147,12 @@ def is_bar(r, P):
     return P['switch'].get('bar') == 'opus' and r.get('channel') == 'claude'
 
 
-def pool_sources(xs, cluster):
+def pool_sources(xs, cluster, inv_classes=()):
     """A route's judged pages pooled over its sources (each {accept: 'k/n', wrong_text_pages, books, classes_k_of_n
     [, _group, _w, judge_planted]}): accept / wrong text / books / classes, and eff = the book-scaled (accepted, judged,
-    wrong-text) pages the posterior sees. None when nothing was judged."""
+    wrong-text) pages the posterior sees. None when nothing was judged. inv / inv_eff: pages with a class in
+    inv_classes (rules.json hard_floor: invented or wrong-leaf text), raw and book-scaled; a page with two such classes
+    counts twice, capped at the source's n, so the count is an upper bound."""
     # a source with no judged pages (n = 0) carries nothing and would divide by zero in the book scaling below
     xs = [x for x in xs if int(x['accept'].split('/')[1]) > 0]
     if not xs: return None
@@ -174,10 +176,13 @@ def pool_sources(xs, cluster):
     if eff[1] <= 0: return None   # no books behind the pages (books 0, or weight 0): nothing to pool
     # the judge's planted-error catch rate (#7611), from any source that measured it (lane-judge-sampler's planted controls)
     jp = [x['judge_planted'] for x in xs if x.get('judge_planted')]
+    inv_x = lambda x: min(nn(x), sum(int(v.split('/')[0]) for c, v in x['classes_k_of_n'].items() if c in inv_classes))
+    inv = sum(inv_x(x) for x in xs)
     return dict(accept=f'{k}/{n}', wrong_text_pages=f'{w}/{n}', books=sum(x['books'] for x in xs if not x.get('_group')) + sum(g[0] for g in grp.values()), classes_k_of_n={c: f'{v}/{n}' for c, v in cl.items()}, sources=len(xs), eff=eff,
-                judge_planted=jp[0] if len(jp) == 1 else None)
+                judge_planted=jp[0] if len(jp) == 1 else None, inv=f'{inv}/{n}', inv_eff=sum(inv_x(x) * f(x) for x in xs))
 
 
+POLICY_1102 = ('no_absolute_gate', 'hard_floor', 'no_served_privilege')   # rules.json sections, each with in_force
 UNSPLIT = set()  # evidence sources with no by-script file (expand_by_script): they enter /unknown only
 
 
@@ -348,21 +353,58 @@ def needs_engine(M, P):
     return f"NEEDS-ENGINE ({why}: best {b['id']} P(acc >= {A['acc']:g}) = {b['p_abs']:.2f}, mean {b['mean']:.2f}" + ('; only the Opus bar clears it' if only_bar else '') + ')'
 
 
+def hard_floor_block(r, P, seed):
+    """The hard floor (rules.json hard_floor, Derek 2026-11-02, #7263 rule 2): (blocked, P(rate > hard_floor.rate)). The
+    rate is the route's invented-or-wrong-leaf pages, book-scaled like acceptance, under Beta(prior + pages). A route
+    with fewer than min_pages such pages (raw) is never blocked: an unmeasured rate directs a test, it does not block."""
+    H = P.get('hard_floor') or {}
+    if not H or r.get('inv') is None: return False, None
+    k_raw = int(r['inv'].split('/')[0]); a0, b0 = H['prior']; ke, ne = r['inv_eff'], r['eff'][1]
+    rng = random.Random(seed)
+    pr = sum(rng.betavariate(a0 + ke, b0 + max(ne - ke, 0)) > H['rate'] for _ in range(H['draws'])) / H['draws']
+    return k_raw >= H['min_pages'] and pr >= H['p'], round(pr, 3)
+
+
+def floor_ok(r, P):
+    """A route the hard floor does not block (always, with hard_floor off)."""
+    return not in_force(P, 'hard_floor') or not r.get('hard_floor_block')
+
+
 def decide(cell, M, cur, P, cost, wt_max, within=None, c0=None):
     """keep / switch / HOLD / NEEDS-ENGINE. With rules.json loss in force (c0 = the cell's good-read cost, good_read_usd),
     the pick among the gate's passers is the lowest priced loss, and the wrong-text margin is not applied (the loss
     prices wrong text); with absolute_bar in force a passer must also clear the absolute bar, and a cell where no
-    pickable route does is NEEDS-ENGINE. Neither in force: the rule of #7888 (margins, cheapest per accepted page)."""
+    pickable route does is NEEDS-ENGINE. Neither in force: the rule of #7888 (margins, cheapest per accepted page).
+    The rules of 2026-11-02 (#7263; each its own flag, --off <name>):
+      no_absolute_gate: NEEDS-ENGINE and HOLD do not block; the cell is decided and the flag rides on the row
+        (needs_engine_flag), the route labelled with its measured rate.
+      hard_floor: a route whose invented-or-wrong-leaf rate is over the floor (hard_floor_block) cannot be picked.
+      no_served_privilege: when no candidate passes the gate the cell does not keep its current route: it takes the
+        lowest-loss measured agy / GPU route that clears the hard floor, else (only then) the lowest-loss Opus route that
+        does, else HOLD (hard floor)."""
     if cell.get('held'): return 'held', cur
     if not M: return 'keep (UNTESTED)', cur
+    NA = in_force(P, 'no_absolute_gate')
     cand = [r for r in M if not is_bar(r, P)]
     ne = needs_engine(M, P)
-    if ne: return ne, max(cand or M, key=lambda r: r['p_abs'])
-    if not any(r['p80'] >= P['hold']['p'] for r in M): return 'HOLD', max(cand, key=lambda r: r['mean']) if cand else cur
+    if ne and not NA: return ne, max(cand or M, key=lambda r: r['p_abs'])
+    if not NA and not any(r['p80'] >= P['hold']['p'] for r in M): return 'HOLD', max(cand, key=lambda r: r['mean']) if cand else cur
     priced = in_force(P, 'loss')
     ok = gate(M, P, (lambda best: float('inf')) if priced else wt_max, P['switch']['within'] if within is None else within)[1]
-    if in_force(P, 'absolute_bar'): ok = [r for r in ok if r['p_abs'] >= P['absolute_bar']['p']]
-    p = (min(ok, key=lambda r: (loss(r, cost, c0, P), cost(r), -r['mean'])) if ok else cur) if priced else pick(ok, cur, cost)
+    if in_force(P, 'absolute_bar') and not NA: ok = [r for r in ok if r['p_abs'] >= P['absolute_bar']['p']]
+    ok = [r for r in ok if floor_ok(r, P)]
+    by_loss = lambda rs: min(rs, key=lambda r: (loss(r, cost, c0, P), cost(r), -r['mean'])) if priced else pick(rs, None, cost)
+    if ok: p = by_loss(ok)
+    elif not in_force(P, 'no_served_privilege'): p = cur
+    else:
+        # Opus last in every cell, a manuscript's too (where it is a candidate, not the bar): by channel, not by is_bar
+        opus = lambda r: is_bar(r, P) or r.get('channel') == 'claude'
+        alt = [r for r in M if not opus(r) and floor_ok(r, P)]
+        bar = [r for r in M if opus(r) and floor_ok(r, P)]
+        if not (alt or bar): return 'HOLD (hard floor: no measured route clears it)', max(cand or M, key=lambda r: r['mean'])
+        p = by_loss(alt or bar)
+        return ('keep' if p is cur else 'switch') + (' (fallback: none passes the gate; the best agy / GPU route)' if alt else
+                                                     ' (fallback: no agy / GPU route clears the hard floor; Opus)'), p
     return ('keep' if p is cur else 'switch'), p
 
 
@@ -413,7 +455,9 @@ def decide_defects(cell, rs, M, cur, live_id, P, cal):
     no_text = live_id == 'scans-only'
     if not no_text and not (live in M and rated(live)):
         return None, None, dict(why=f'the live route {live_id} has no defect verdicts' + (f" ({live['defects']['books']} books)" if live.get('defects') else ''))
-    cand = [r for r in M if rated(r) and (not is_bar(r, P) or r is live)]
+    if not no_text and not floor_ok(live, P):   # the bar itself is blocked: k/n (with the floor) decides
+        return None, None, dict(why=f'the live route {live_id} fails the hard floor')
+    cand = [r for r in M if rated(r) and (not is_bar(r, P) or r is live) and floor_ok(r, P)]
     if not [r for r in cand if r is not live]:
         return None, None, dict(why='no other route has defect verdicts')
     cm, cw = cal.get('misleads', 1.0), cal.get('wrong_text', 1.0)
@@ -430,7 +474,7 @@ def decide_defects(cell, rs, M, cur, live_id, P, cal):
             pa = within_p(r, live, R['accept_floor']['within'])
             g = dict(wrong_text=cw * mean(r, 'wrong_text') <= cw * mean(live, 'wrong_text') + R['wrong_text_delta_per_1k'],
                      accept=pa >= R['accept_floor']['p'], p_accept_floor=round(pa, 3))
-        if in_force(P, 'absolute_bar'): g['absolute'] = r['p_abs'] >= P['absolute_bar']['p']   # the absolute bar binds here too
+        if in_force(P, 'absolute_bar') and not in_force(P, 'no_absolute_gate'): g['absolute'] = r['p_abs'] >= P['absolute_bar']['p']   # the absolute bar binds here too
         gates[r['id']] = g
     ok = [r for r in cand if gates[r['id']]['wrong_text'] and gates[r['id']]['accept'] and gates[r['id']].get('absolute', True)]
     err = {r['id']: W / 1000 * (cm * mean(r, 'misleads') + R['wrong_text_weight'] * cw * mean(r, 'wrong_text')) for r in cand}
@@ -458,6 +502,10 @@ def main():
     # --off loss,absolute: the rule of #7888 (hand-set margins, no absolute bar), for the comparison build
     for k in ('loss', 'absolute_bar'):
         if k.split('_')[0] in OFF and P.get(k): P[k]['in_force'] = False
+    # --off no-absolute-gate,hard-floor,no-served-privilege (or policy-1102, all three): the rules of 2026-11-02 (#7263)
+    # one by one; all three off reproduces the table before them
+    for k in POLICY_1102:
+        if (k.replace('_', '-') in OFF or 'policy-1102' in OFF) and P.get(k): P[k]['in_force'] = False
     # defects per 1,000 words (#6740 defect-rate.py): the decision under rules.json decision_rule.in_force = defects
     DRF = json.load(open(P['inputs']['defect_rates'])) if os.path.exists(P['inputs'].get('defect_rates', '')) else {}
     DR, CAL = DRF.get('cells', {}), DRF.get('recheck') or {}
@@ -534,7 +582,7 @@ def main():
                 nc = y['name_check']; y['accept'] = nc['accept_after_name_check']
                 w0, n0 = map(int, y['wrong_text_pages'].split('/')); y['wrong_text_pages'] = f"{w0 + nc['with_name_error']}/{n0}"
             xs.append(y)
-        return pool_sources(xs, P['cluster_by_book'])
+        return pool_sources(xs, P['cluster_by_book'], (P.get('hard_floor') or {}).get('classes', ()))
 
     # wrong-text bar (#7461): relative = at most the best route's rate + wrong_text_max; the other bar is a sensitivity
     rel = P['switch'].get('wrong_text_bar', 'absolute') == 'relative'
@@ -543,7 +591,8 @@ def main():
     steady = lambda r: r['_usd_acc']
     WP = (P.get('loss') or {}).get('wrong_text_prior', [1, 1])   # Beta prior on a route's wrong-text rate (the loss's P(wrong text))
     # the rule of #7888 (hand-set margins, no absolute bar, cheapest per accepted page): reported beside the decision
-    P_OLD = dict(P, loss=dict(P.get('loss') or {}, in_force=False), absolute_bar=dict(P.get('absolute_bar') or {}, in_force=False))
+    P_OLD = dict(P, loss=dict(P.get('loss') or {}, in_force=False), absolute_bar=dict(P.get('absolute_bar') or {}, in_force=False),
+                 **{k: dict(P[k], in_force=False) for k in POLICY_1102 if P.get(k)})
     rows, ctx = [], {}
     for cell in P['cells']:
         rs = []
@@ -572,6 +621,9 @@ def main():
                            _o=dict(_d=do, mean=sum(do) / N, p80=sum(v >= P['hold']['acc'] for v in do) / N, p_abs=sum(v >= P.get('absolute_bar', {}).get('acc', 0.9) for v in do) / N, _usd_acc=u / q(do, .5)),
                            defects=DR.get(cell.get('base') or cell['id'], {}).get(r['id']),
                            **({} if DR.get(cell.get('base') or cell['id'], {}).get(r['id']) or not x else {'defects_missing': 'tested, but no stored verdict with severity (or < 10 pages): k/n only'})))
+            # the hard floor's count (rules.json hard_floor): its own random stream, so the draws above do not move
+            rr = rs[-1]; rr['inv'], rr['inv_eff'] = (x['inv'], round(x['inv_eff'], 4)) if x else (None, None)
+            rr['hard_floor_block'], rr['p_inv_over_floor'] = hard_floor_block(rr, P, f"{P['seed']}:{cell['id']}:{r['id']}:floor")
         # Derek 11:54Z: in a manuscript or unknown-script cell a route with too few judged pages of that type is not
         # measured (it would decide on print's prior); the cell says UNTESTED / HOLD below
         few = lambda r: cell.get('script') in ('manuscript', 'unknown') and r['n'] < P['script_split']['min_manuscript_pages']
@@ -587,14 +639,37 @@ def main():
             ra.setdefault('paired', {})[rb['id']] = rb.setdefault('paired', {})[ra['id']] = f"{c['a_only']} vs {c['b_only']} of {c['n']} paired"
         cur = next(r for r in rs if r['id'] == cell['current']); M = [r for r in rs if r['tested'] and not few(r)]
         c0 = good_read_usd(M, P)   # the loss's lambda = lambda_multiple x c0 (dollars: stdout only)
-        dec, pk = decide(cell, M, cur, P, steady, wt_abs, c0=c0)
-        dmg, pmg = decide(cell, M, cur, P_OLD, steady, wt_abs)   # the old margins, reported only
         # Derek 11:54Z: too little manuscript evidence says so, never inherits print numbers; an unknown-script cell
         # likewise (its prior is print's, and a handful of pages would let it decide hundreds of thousands)
         thin = cell.get('script') in ('manuscript', 'unknown') and not M
-        if cell.get('planned'): dec, pk = 'planned', next(r for r in rs if r['id'] == cell['planned']['route'])
-        elif thin and dec != 'held':
-            dec = f"HOLD ({cell['script']}: < {P['script_split']['min_manuscript_pages']} pages a route)" if any(r['tested'] for r in rs) else f"UNTESTED ({cell['script']})"
+        live_id = LIVE.get(cell['id'], cur['id'])
+
+        def final(Px):
+            """The cell's decision under rules Px: (k/n decision, k/n route, defect decision, route, info, rule, final
+            decision, final route, judge-gate info). Run once with the rules in force, and per λ for the sensitivity."""
+            dec, pk = decide(cell, M, cur, Px, steady, wt_abs, c0=c0)
+            if cell.get('planned'): dec, pk = 'planned', next(r for r in rs if r['id'] == cell['planned']['route'])
+            elif thin and dec != 'held':
+                dec = f"HOLD ({cell['script']}: < {Px['script_split']['min_manuscript_pages']} pages a route)" if any(r['tested'] for r in rs) else f"UNTESTED ({cell['script']})"
+            # THE DEFECT RULE (rules.json decision_rule): it decides where the k/n rule reaches keep / switch; k/n stays the
+            # floor gate inside it and the fallback, labelled, where the defect verdicts cannot decide. A k/n fallback
+            # (no_served_privilege: no candidate passed the gate) is not re-decided by it.
+            # A k/n HOLD (no route reaches P(acc >= hold.acc) >= hold.p) is decided by defects only to SWITCH off the live
+            # route: keeping it would bind a route the absolute acceptance bar refuses, so the HOLD stands
+            ddec, dpk, dinfo = decide_defects(cell, rs, M, cur, live_id, Px, CAL) if dec in ('keep', 'switch', 'HOLD') and Px.get('decision_rule') and DR else (None, None, None)
+            if dec == 'HOLD' and ddec and not (ddec == 'switch' and dpk['id'] != live_id):
+                dinfo = dict(dinfo, why=f"the HOLD stands; the defect rule would {ddec.split(' (')[0]} {dpk['id']}"); ddec = dpk = None
+            rule = 'defects' if ddec else 'k/n'
+            dinfo_label = f"{dec} (k/n: {dinfo['why']})" if not ddec and dinfo else dec
+            fdec, fpk = (ddec, dpk) if RULE == 'defects' and ddec else ((dinfo_label, pk) if RULE == 'defects' else (dec, pk))
+            fdec, jinfo = judge_gate(cell, fdec, fpk, Px, S)
+            return dec, pk, ddec, dpk, dinfo, rule, fdec, fpk, jinfo
+
+        dec, pk, ddec, dpk, dinfo, rule, fdec, fpk, jinfo = final(P)
+        # λ sensitivity (Derek 2026-11-02, #7263 rule 4): the final decision at each lambda_multiple of loss.lambda_sensitivity
+        lam = {f"{x:g}": (lambda t: f"{t[6].split(' (')[0]} {t[7]['id']}")(final(dict(P, loss=dict(P['loss'], lambda_multiple=x))))
+               for x in (P.get('loss') or {}).get('lambda_sensitivity', [])} if in_force(P, 'loss') else None
+        dmg, pmg = decide(cell, M, cur, P_OLD, steady, wt_abs)   # the old margins, reported only
         if cell.get('planned') or (thin and dec != 'held'): dmg, pmg = dec, pk   # the same override under the old margins
         alt = decide(cell, M, cur, P, steady, wt_rel, c0=c0) if M else (dec, pk)
         Mo = [dict(r, **r['_o']) for r in M]; curo = dict(cur, **cur['_o'])
@@ -622,20 +697,12 @@ def main():
             bb, aa = max(bars, key=lambda r: r['mean']), max(alts, key=lambda r: r['mean']); w = P['switch']['within']
             vs_bar = dict(bar=bb['id'], bar_mean=bb['mean'], alt=aa['id'], alt_mean=aa['mean'], gap=aa['mean'] - bb['mean'],
                           p_within=within_p(aa, bb, w), alt_wrate=aa['wrate'], bar_wrate=bb['wrate'])
-        # THE DEFECT RULE (rules.json decision_rule): it decides where the k/n rule reaches keep / switch; k/n stays the
-        # floor gate inside it and the fallback, labelled, where the defect verdicts cannot decide
-        live_id = LIVE.get(cell['id'], cur['id'])
-        # A k/n HOLD (no route reaches P(acc >= hold.acc) >= hold.p) is decided by defects only to SWITCH off the live
-        # route: keeping it would bind a route the absolute acceptance bar refuses, so the HOLD stands
-        ddec, dpk, dinfo = decide_defects(cell, rs, M, cur, live_id, P, CAL) if dec in ('keep', 'switch', 'HOLD') and P.get('decision_rule') and DR else (None, None, None)
-        if dec == 'HOLD' and ddec and not (ddec == 'switch' and dpk['id'] != live_id):
-            dinfo = dict(dinfo, why=f"the HOLD stands; the defect rule would {ddec.split(' (')[0]} {dpk['id']}"); ddec = dpk = None
-        rule = 'defects' if ddec else 'k/n'
-        dinfo_label = f"{dec} (k/n: {dinfo['why']})" if not ddec and dinfo else dec
-        fdec, fpk = (ddec, dpk) if RULE == 'defects' and ddec else ((dinfo_label, pk) if RULE == 'defects' else (dec, pk))
-        fdec, jinfo = judge_gate(cell, fdec, fpk, P, S)
         rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'],
                          decision_kn=dec, route_kn=pk['id'], rule=rule if RULE == 'defects' else 'k/n', live=live_id,
+                         # no_absolute_gate: the bars that no longer block ride on the row as flags (they direct tests)
+                         needs_engine_flag=needs_engine(M, P) if in_force(P, 'no_absolute_gate') and M else None,
+                         hold_flag=bool(M) and in_force(P, 'no_absolute_gate') and not any(r['p80'] >= P['hold']['p'] for r in M),
+                         hard_floor_blocked=[r['id'] for r in rs if r.get('hard_floor_block') and in_force(P, 'hard_floor')], lambda_sensitivity=lam,
                          decision_margins=dmg, route_margins=pmg['id'],
                          loss_x_good_read=None if not in_force(P, 'loss') else {r['id']: round(loss(r, steady, c0, P) / (c0 or 1.0), 3) for r in M},
                          decision_defects=None if not ddec else ddec, route_defects=None if not ddec else dpk['id'], defects_rule=dinfo, vs_bar=vs_bar,
@@ -763,11 +830,13 @@ def main():
                    + ('' if row['decision'] == row['decision_kn'] and row['route'] == row['route_kn'] else f"; **k/n: {fmt(row['decision_kn'], row['route_kn'])}**")
                    + ('' if row['decision_flat_price'] == f"{row['decision_kn']} {row['route_kn']}" else f"; k/n with the flat price: {row['decision_flat_price']}")
                    + ('' if row['decision_other_prior'] == f"{row['decision_kn']} {row['route_kn']}" else f"; **k/n with the {OP} prior: {row['decision_other_prior']}**")
+                   + (f"; flag: {row['needs_engine_flag']}" if row.get('needs_engine_flag') else '')
+                   + (f"; flag: HOLD (no route P(acc >= {h['acc']}) >= {h['p']})" if row.get('hold_flag') else '')
                    + (f"; **test next #{row['test_next']}**" if row.get('test_next') else '')
                    + (f" ({'absolute' if rel else 'relative'} wrong-text bar: {row['other_wrong_text_bar']})" if row['other_wrong_text_bar'] else '')
                    + (f"; before: {row['before']}" if row['before'] and row['before'] != fmt(row['decision'], row['route']) else '')) if j == 0 else ''
             out.append(f"| {row['title'] if j == 0 else ''} | {f'{row['pages_waiting']:,}' if j == 0 else ''} | {'●' if r['id'] == row['current'] else ''} | {r['id']} | {r['lane'] or '—'} | {acc} | "
-                       f"{f'{r['wrong']}/{r['n']}' if r['tested'] else '—'} | {', '.join(f'{c} {v}' for c, v in r['top']) or '—'} | {cost(r)} | "
+                       f"{f'{r['wrong']}/{r['n']}' if r['tested'] else '—'}{f'; invented / wrong leaf {r['inv']}' + (' **(hard floor)**' if r.get('hard_floor_block') and in_force(P, 'hard_floor') else '') if r.get('inv') and r['inv'][0] != '0' else ''} | {', '.join(f'{c} {v}' for c, v in r['top']) or '—'} | {cost(r)} | "
                        f"{f'{row['pages_waiting'] * r['share']:.1f}' if r['share'] else '—'} | {dec} |")
         if row['caveat']: out.append(f"| | | | | | *{row['caveat']}* | | | | | |")
     vb = sorted([r for r in rows if r['vs_bar']], key=lambda r: -r['vs_bar']['gap'])
@@ -810,6 +879,35 @@ def main():
         out += [f"**Against the old margins** (the k/n rule of #7888: wrong text <= the best + {sw['wrong_text_max']:.0%}, cheapest per accepted page, no absolute bar): "
                 f"{len(mv)} cells' k/n decision moves.", '', '| cell | pages waiting | old margins | defaults | final decision |', '|---|---|---|---|---|']
         out += [f"| {r['id']} | {r['pages_waiting']:,} | {fmt(r['decision_margins'], r['route_margins'])} | {fmt(r['decision_kn'], r['route_kn'])} | {fmt(r['decision'], r['route'])} |" for r in mv]
+    if any(P.get(k) for k in POLICY_1102):
+        H = P.get('hard_floor') or {}
+        on = lambda k: '**in force**' if in_force(P, k) else 'off'
+        hf = [r for r in rows if r['hard_floor_blocked']]
+        fb = [r for r in rows if '(fallback' in r['decision_kn']]
+        fl = [r for r in rows if r.get('needs_engine_flag') or r.get('hold_flag')]
+        out += ['', "**The rules of 2026-11-02** (Derek, #7263; rules.json `no_absolute_gate`, `hard_floor`, `no_served_privilege`; "
+                "`build.py --off no-absolute-gate,hard-floor,no-served-privilege` (or `--off policy-1102`) is the rule before). "
+                f"*No absolute gate* ({on('no_absolute_gate')}): NEEDS-ENGINE and HOLD are flags that direct tests, not blocks; the cell is decided "
+                "and its output is labelled with the route's measured rate. "
+                f"*Hard floor* ({on('hard_floor')}): a route is blocked when P(invented or wrong-leaf rate > {H.get('rate', 0):g}) >= {H.get('p', 0):g} "
+                f"(Beta({', '.join(f'{v:g}' for v in H.get('prior', []))}) + book-scaled pages with a class in {', '.join(H.get('classes', []))}; at least {H.get('min_pages', 0)} such pages). "
+                f"*No privilege for an unmeasured served route* ({on('no_served_privilege')}): when no candidate passes the gate, the pick is the lowest-loss "
+                "measured agy / GPU route that clears the hard floor, else the lowest-loss Opus route that does (Opus only where nothing else clears it), "
+                "else HOLD (hard floor).", '',
+                f"Blocked by the hard floor: {sum(len(r['hard_floor_blocked']) for r in hf)} routes in {len(hf)} cells"
+                + (': ' + '; '.join(f"{r['id']} ({', '.join(r['hard_floor_blocked'])})" for r in hf) if hf else '') + '.', '',
+                f"Decided by the fallback: {len(fb)} cells, {sum(r['pages_waiting'] or 0 for r in fb):,} pages waiting"
+                + (': ' + '; '.join(f"{r['id']} → {r['route_kn']}" for r in fb) if fb else '') + '.', '',
+                f"Decided with a NEEDS-ENGINE or HOLD flag (a test to run, not a block): {len(fl)} cells, {sum(r['pages_waiting'] or 0 for r in fl):,} pages waiting."]
+    if any(r.get('lambda_sensitivity') for r in rows):
+        LS = P['loss']['lambda_sensitivity']
+        mv = [r for r in rows if len(set(r['lambda_sensitivity'].values())) > 1]
+        out += ['', f"**λ sensitivity** (#7263 rule 4): the final decision with λ = {', '.join(f'{x:g}×' for x in LS)} the cell's good-read cost "
+                f"(in force: {P['loss']['lambda_multiple']:g}×). Cells whose decision moves across the range: **{len(mv)}** "
+                f"({sum(r['pages_waiting'] or 0 for r in mv):,} pages waiting)" + ('; elsewhere the choice of λ does not matter.' if mv else '; the choice of λ does not change any decision.'), '']
+        if mv:
+            out += ['| cell | pages waiting | ' + ' | '.join(f'λ {x:g}×' for x in LS) + ' |', '|' + '---|' * (len(LS) + 2)]
+            out += [f"| {r['id']} | {r['pages_waiting'] or 0:,} | " + ' | '.join(r['lambda_sensitivity'][f'{x:g}'] for x in LS) + ' |' for r in mv]
     if DR and P.get('decision_rule'):
         R = P['decision_rule']
         out += ['', f"**The defect rule** (rules.json `decision_rule`, in force: **{RULE}**; #6740). Where the k/n rule reaches keep / switch, the decision is #7824's S1 rule on defects per 1,000 words "

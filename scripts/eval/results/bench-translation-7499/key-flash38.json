@@ -1,0 +1,1742 @@
+{
+ "engine": "flash38",
+ "judge": "opus (claude -p)",
+ "items": {
+  "flash38-0001": {
+   "kind": "ARMS",
+   "page_id": "6a06b0aff12363da8cfdc945_00193",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0002": {
+   "kind": "ARMS",
+   "page_id": "69e8b28a2ff2a8dc09e77ff4_00036",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0003": {
+   "kind": "ARMS",
+   "page_id": "69e7494885f786e884a4e57a_00024",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0004": {
+   "kind": "ARMS",
+   "page_id": "69e7267ca409200ea79ef51d_00353",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0005": {
+   "kind": "ARMS",
+   "page_id": "6a0e54e98831ddc9459ad225_00087",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0006": {
+   "kind": "ARMS",
+   "page_id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0007": {
+   "kind": "ARMS",
+   "page_id": "69942c54b2f6748db4abd74f_00047",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0008": {
+   "kind": "ARMS",
+   "page_id": "69c1bc788522835be84637be_00003",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0009": {
+   "kind": "ARMS",
+   "page_id": "69e72c70a409200ea79f48f9_00078",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0010": {
+   "kind": "ARMS",
+   "page_id": "69a956dc65ddd05bbcd3d160_00285",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0011": {
+   "kind": "ARMS",
+   "page_id": "69c1ba738522835be8458e8d_00072",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0012": {
+   "kind": "ARMS",
+   "page_id": "69afd049ae982b9d51d6dd32_00292",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0013": {
+   "kind": "ARMS",
+   "page_id": "69c1bc6b8522835be8463238_00270",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0014": {
+   "kind": "ARMS",
+   "page_id": "69935b198e28d8f4c5d3c249_00406",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0015": {
+   "kind": "ARMS",
+   "page_id": "6a06657a64d4bf2ce5510151_00636",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0016": {
+   "kind": "ARMS",
+   "page_id": "69e72c8ca409200ea79f4dd6_00556",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b"
+   }
+  },
+  "flash38-0017": {
+   "kind": "ARMS",
+   "page_id": "69ef251c85daccce30f2b1f2_00309",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0018": {
+   "kind": "ARMS",
+   "page_id": "6a3067d0c4fd77fb5b9f8378_00057",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0019": {
+   "kind": "ARMS",
+   "page_id": "69b21dca94025df5d2909ff2_00123",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0020": {
+   "kind": "WRONG",
+   "page_id": "69d91e423a50087f7bd9afc5_00214",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-WRONG",
+    "T2": "flash38-v20"
+   },
+   "wrong_from": "69e13c79998131d6a99c0917_00310"
+  },
+  "flash38-0021": {
+   "kind": "ARMS",
+   "page_id": "6a3c61db40c88a541d8f091d_00083",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0022": {
+   "kind": "WRONG",
+   "page_id": "69c1bb998522835be8460578_00001",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-WRONG",
+    "T2": "flash38-v20"
+   },
+   "wrong_from": "69c1bb558522835be845f021_00073"
+  },
+  "flash38-0023": {
+   "kind": "ARMS",
+   "page_id": "69944b932aa4c20217a33f12_00232",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0024": {
+   "kind": "ARMS",
+   "page_id": "6992cf0970ab3737555456ae_00100",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0025": {
+   "kind": "ARMS",
+   "page_id": "69c79fed92b884e4f817374f_00107",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0026": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f05879008ba7e15291d_00045",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0027": {
+   "kind": "ARMS",
+   "page_id": "69c1bb558522835be845f021_00073",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0028": {
+   "kind": "ARMS",
+   "page_id": "69e7268ca409200ea79ef73b_00111",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0029": {
+   "kind": "ARMS",
+   "page_id": "69e7538b095c302d3fddb092_00355",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0030": {
+   "kind": "ARMS",
+   "page_id": "6a21994b4b61907ea5ffb7e5_00027",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-plain",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0031": {
+   "kind": "ARMS",
+   "page_id": "69d5ac26d0bd3547a5655542_00560",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0032": {
+   "kind": "ARMS",
+   "page_id": "699243fabc722ec0ee80b251_00066",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0033": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b1879008ba7e15fba1_00068",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v13",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0034": {
+   "kind": "ARMS",
+   "page_id": "69e80662fdad300064d9ed7c_00171",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0035": {
+   "kind": "ARMS",
+   "page_id": "69f3285baeeee0fa38c6445e_00006",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0036": {
+   "kind": "ARMS",
+   "page_id": "69de101d5cedf736edb85346_00027",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0037": {
+   "kind": "ARMS",
+   "page_id": "69c1bbee8522835be8460bc5_00015",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0038": {
+   "kind": "ARMS",
+   "page_id": "69d13d751c2a66dc094b168d_00129",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0039": {
+   "kind": "ARMS",
+   "page_id": "699437c36879ff0184cb7381_00164",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0040": {
+   "kind": "ARMS",
+   "page_id": "69e13c79998131d6a99c0917_00310",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0041": {
+   "kind": "ARMS",
+   "page_id": "69e748b385f786e884a4cbdb_00137",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0042": {
+   "kind": "ARMS",
+   "page_id": "6a09fcbaedaf0f8bef57b987_00024",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v13",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0043": {
+   "kind": "ARMS",
+   "page_id": "69e7491f85f786e884a4dc2f_00182",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-plain",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0044": {
+   "kind": "ARMS",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0045": {
+   "kind": "ARMS",
+   "page_id": "69942ffcbb14908bbd9a1123_00426",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0046": {
+   "kind": "PLANT",
+   "page_id": "69e748b385f786e884a4cbdb_00137",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "You will perhaps catch only the wind in your fist thereafter.",
+    "new": "You will not perhaps catch only the wind in your fist thereafter.",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "flash38-0047": {
+   "kind": "ARMS",
+   "page_id": "69e7491a85f786e884a4d6f9_00789",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0048": {
+   "kind": "ARMS",
+   "page_id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0049": {
+   "kind": "ARMS",
+   "page_id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0050": {
+   "kind": "ARMS",
+   "page_id": "69c1bac18522835be845a172_00225",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0051": {
+   "kind": "ARMS",
+   "page_id": "6a3c6191879008ba7e15f0b2_00070",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0052": {
+   "kind": "DUP",
+   "page_id": "6a06b0aff12363da8cfdc945_00193",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13_DUP"
+   }
+  },
+  "flash38-0053": {
+   "kind": "ARMS",
+   "page_id": "69e7490585f786e884a4d1aa_00097",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0054": {
+   "kind": "ARMS",
+   "page_id": "6955747af63a757109173a5d_00381",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13"
+   }
+  },
+  "flash38-0055": {
+   "kind": "ARMS",
+   "page_id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0056": {
+   "kind": "ARMS",
+   "page_id": "69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0057": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0058": {
+   "kind": "ARMS",
+   "page_id": "69f33d92876dd827cbc5c190_00121",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0059": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b3879008ba7e15fc71_00112",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0060": {
+   "kind": "ARMS",
+   "page_id": "69e72c7da409200ea79f4a01_00053",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0061": {
+   "kind": "ARMS",
+   "page_id": "69c1bbd28522835be8460a78_00032",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-plain",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0062": {
+   "kind": "ARMS",
+   "page_id": "69b525b56be6046083030af0_00213",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13"
+   }
+  },
+  "flash38-0063": {
+   "kind": "DUP",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13_DUP",
+    "T2": "flash38-v13"
+   }
+  },
+  "flash38-0064": {
+   "kind": "PLANT",
+   "page_id": "699243fabc722ec0ee80b251_00066",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "And threw Pharaoh and his army into the Sea of Reeds",
+    "new": "And threw Reeds and his army into the Sea of Pharaoh",
+    "how": "swap Pharaoh ↔ Reeds"
+   }
+  },
+  "flash38-0065": {
+   "kind": "ARMS",
+   "page_id": "69b2f3b821208ea9dc278c50_00277",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0066": {
+   "kind": "ARMS",
+   "page_id": "69a97a56f3f3d2fb7de27928_00144",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0067": {
+   "kind": "ARMS",
+   "page_id": "69e72c65a409200ea79f47bd_00106",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0068": {
+   "kind": "ARMS",
+   "page_id": "69e748da49abba5e98281b25_00103",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0069": {
+   "kind": "ARMS",
+   "page_id": "69e80670fdad300064d9ef9d_00599",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0070": {
+   "kind": "ARMS",
+   "page_id": "69942bfeb2f6748db4abc97f_00100",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0071": {
+   "kind": "ARMS",
+   "page_id": "69e8b2962ff2a8dc09e780a7_00722",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0072": {
+   "kind": "PLANT",
+   "page_id": "6a3c6192879008ba7e15f12e_00065",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "Answer: \"These reasons and conditions are of eight kinds.",
+    "new": "Answer: \"These reasons and conditions are of four kinds.",
+    "how": "eight → four"
+   }
+  },
+  "flash38-0073": {
+   "kind": "ARMS",
+   "page_id": "69907971b621b177c1af74df_00309",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0074": {
+   "kind": "ARMS",
+   "page_id": "697711607e1d5a07ae945879_00073",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0075": {
+   "kind": "PLANT",
+   "page_id": "69a97a56f3f3d2fb7de27928_00144",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "And these arguments indeed 9 participate in some sort of plausibility; but those who make Typhon to be the Sun are not even worthy of being heard.",
+    "new": "And these arguments indeed 9 participate in some sort of plausibility; but those who make Typhon to be the Sun are even worthy of being heard.",
+    "how": "\\bare not\\b → are"
+   }
+  },
+  "flash38-0076": {
+   "kind": "ARMS",
+   "page_id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0077": {
+   "kind": "ARMS",
+   "page_id": "699258c28812793469fdd6be_00160",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0078": {
+   "kind": "ARMS",
+   "page_id": "69c1bb1c8522835be845cf19_00160",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0079": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0080": {
+   "kind": "ARMS",
+   "page_id": "69bd9d6a6120d54bd0376a04_00060",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0081": {
+   "kind": "ARMS",
+   "page_id": "69e7490d85f786e884a4d40e_00180",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0082": {
+   "kind": "ARMS",
+   "page_id": "69e8b26b2ff2a8dc09e77afc_00118",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0083": {
+   "kind": "ARMS",
+   "page_id": "69c1bb998522835be8460578_00001",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0084": {
+   "kind": "ARMS",
+   "page_id": "695aa97dbe4023bd34bd6715_00348",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v13",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0085": {
+   "kind": "ARMS",
+   "page_id": "69e72674a409200ea79ef3ae_00219",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0086": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e153836_00013",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0087": {
+   "kind": "ARMS",
+   "page_id": "6a09fcc5edaf0f8bef57ba2f_00022",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0088": {
+   "kind": "ARMS",
+   "page_id": "69bfccd88ab50eb88e8c69fd_00521",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v20",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0089": {
+   "kind": "ARMS",
+   "page_id": "69c1bbc68522835be8460774_00281",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0090": {
+   "kind": "PLANT",
+   "page_id": "69d5ac26d0bd3547a5655542_00560",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "By that divine truth, fear is banished from the soul.",
+    "new": "By that divine truth, fear is not banished from the soul.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "flash38-0091": {
+   "kind": "WRONG",
+   "page_id": "69938d895d28b693146d0231_00106",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-WRONG",
+    "T2": "flash38-v20"
+   },
+   "wrong_from": "69938e35d5a98fd66f430c9c_00153"
+  },
+  "flash38-0092": {
+   "kind": "DUP",
+   "page_id": "69942ffcbb14908bbd9a1123_00426",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13_DUP"
+   }
+  },
+  "flash38-0093": {
+   "kind": "ARMS",
+   "page_id": "69920bb1e0a548a13d884da7_00342",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0094": {
+   "kind": "ARMS",
+   "page_id": "699ef9fd15618a982bb1ebd9_00790",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0095": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0096": {
+   "kind": "PLANT",
+   "page_id": "69b2fedda1a4246ddb45a8df_00318",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13_PLANT"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "For Diomedes, the valiant warrior, slew twelve Thracian heroes, all the best among them, beside his companions.",
+    "new": "For Diomedes, the valiant warrior, slew ten Thracian heroes, all the best among them, beside his companions.",
+    "how": "twelve → ten"
+   }
+  },
+  "flash38-0097": {
+   "kind": "ARMS",
+   "page_id": "69b2fedda1a4246ddb45a8df_00318",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0098": {
+   "kind": "ARMS",
+   "page_id": "69e72c75a409200ea79f4976_00100",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0099": {
+   "kind": "ARMS",
+   "page_id": "699249c5a2d53df4853bfdaf_00012",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0100": {
+   "kind": "ARMS",
+   "page_id": "69e3ff61b142e5dd9d6b0095_00128",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0101": {
+   "kind": "ARMS",
+   "page_id": "69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0102": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b5879008ba7e15fd28_00117",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0103": {
+   "kind": "PLANT",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Even when solicitation takes place, women who are steady and bold must be tested, for their true thoughts are not easily disclosed.",
+    "new": "Even when solicitation takes place, women who are steady and bold must be tested, for their true thoughts are easily disclosed.",
+    "how": "\\bare not\\b → are"
+   }
+  },
+  "flash38-0104": {
+   "kind": "ARMS",
+   "page_id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0105": {
+   "kind": "ARMS",
+   "page_id": "69e8b2642ff2a8dc09e778a1_00439",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0106": {
+   "kind": "ARMS",
+   "page_id": "69afd4147e835c55c61b4e3d_00089",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0107": {
+   "kind": "ARMS",
+   "page_id": "6a312d8867a0ec73f1bc373f_00050",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0108": {
+   "kind": "ARMS",
+   "page_id": "6952e4b477f38f6761bc7d4c_00296",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0109": {
+   "kind": "ARMS",
+   "page_id": "69e72c60a409200ea79f46f6_00141",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0110": {
+   "kind": "ARMS",
+   "page_id": "69938e35d5a98fd66f430c9c_00153",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0111": {
+   "kind": "ARMS",
+   "page_id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0112": {
+   "kind": "DUP",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13_DUP"
+   }
+  },
+  "flash38-0113": {
+   "kind": "ARMS",
+   "page_id": "6a3c6192879008ba7e15f12e_00065",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0114": {
+   "kind": "ARMS",
+   "page_id": "6a3c61ec40c88a541d8f0f4a_00018",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0115": {
+   "kind": "PLANT",
+   "page_id": "69e7490585f786e884a4d1aa_00097",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "And similarly, the comment of Natha, \"Since the second case is occasionally seen somewhere, it is so everywhere,\" is indeed an authoritative statement.",
+    "new": "And similarly, the comment of Natha, \"Since the third case is occasionally seen somewhere, it is so everywhere,\" is indeed an authoritative statement.",
+    "how": "second → third"
+   }
+  },
+  "flash38-0116": {
+   "kind": "ARMS",
+   "page_id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0117": {
+   "kind": "ARMS",
+   "page_id": "69b63e602a1dde00d5a9d059_00042",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0118": {
+   "kind": "ARMS",
+   "page_id": "69c1bad18522835be845aabc_00251",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0119": {
+   "kind": "ARMS",
+   "page_id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0120": {
+   "kind": "ARMS",
+   "page_id": "6952e4cc77f38f6761bc8c0b_00121",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v20",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0121": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v13b",
+    "T3": "flash38-plain",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0122": {
+   "kind": "ARMS",
+   "page_id": "69e41a008a8dae1074c52565_00515",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0123": {
+   "kind": "ARMS",
+   "page_id": "6a08c5ffe4e4b7b8793e97a9_00024",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0124": {
+   "kind": "ARMS",
+   "page_id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0125": {
+   "kind": "ARMS",
+   "page_id": "696925034fa3b04c6de86f6b_00397",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0126": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0127": {
+   "kind": "ARMS",
+   "page_id": "69920bd5e0a548a13d886144_00793",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0128": {
+   "kind": "ARMS",
+   "page_id": "69b4cd44d5b6c3815e1a52de_00215",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain"
+   }
+  },
+  "flash38-0129": {
+   "kind": "ARMS",
+   "page_id": "69c7e216295ea01b70c8d7d2_00039",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0130": {
+   "kind": "ARMS",
+   "page_id": "69935b208e28d8f4c5d3c445_00228",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0131": {
+   "kind": "ARMS",
+   "page_id": "69e7299ba409200ea79f0b56_00211",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0132": {
+   "kind": "ARMS",
+   "page_id": "69e792f880b52390feb17389_00344",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0133": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e1537d3_00017",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0134": {
+   "kind": "ARMS",
+   "page_id": "69938d895d28b693146d0231_00106",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0135": {
+   "kind": "ARMS",
+   "page_id": "69c1bc708522835be84634e8_00067",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  },
+  "flash38-0136": {
+   "kind": "ARMS",
+   "page_id": "6a08a3a28fae3d3f19b789cd_00022",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0137": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3c879008ba7e153862_00029",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-v13",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0138": {
+   "kind": "WRONG",
+   "page_id": "69a97a56f3f3d2fb7de27928_00144",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-WRONG"
+   },
+   "wrong_from": "69938d895d28b693146d0231_00106"
+  },
+  "flash38-0139": {
+   "kind": "ARMS",
+   "page_id": "69c1bae08522835be845b1f6_00067",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0140": {
+   "kind": "ARMS",
+   "page_id": "69e72698a409200ea79ef8c3_00129",
+   "lang": "Chinese",
+   "group": "chinese",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v13b",
+    "T3": "flash38-v20",
+    "T4": "flash38-v13"
+   }
+  },
+  "flash38-0141": {
+   "kind": "ARMS",
+   "page_id": "69b99f256ed9e0490990aa8a_00185",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0142": {
+   "kind": "ARMS",
+   "page_id": "69b2222608069e96e8432997_00377",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-plain"
+   }
+  },
+  "flash38-0143": {
+   "kind": "ARMS",
+   "page_id": "69920befebe5b0fa6be5d569_00199",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13b",
+    "T4": "flash38-v20"
+   }
+  },
+  "flash38-0144": {
+   "kind": "ARMS",
+   "page_id": "69b2f32121208ea9dc2779bb_00214",
+   "lang": "Greek",
+   "group": "greek",
+   "labels": {
+    "T1": "flash38-v13b",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0145": {
+   "kind": "ARMS",
+   "page_id": "69d5ac2ed0bd3547a5655830_00063",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13b",
+    "T4": "flash38-plain"
+   }
+  },
+  "flash38-0146": {
+   "kind": "ARMS",
+   "page_id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "lang": "Persian",
+   "group": "persian",
+   "labels": {
+    "T1": "flash38-v20",
+    "T2": "flash38-plain",
+    "T3": "flash38-v13",
+    "T4": "flash38-v13b"
+   }
+  },
+  "flash38-0147": {
+   "kind": "ARMS",
+   "page_id": "69d91e423a50087f7bd9afc5_00214",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-plain",
+    "T2": "flash38-v20",
+    "T3": "flash38-v13"
+   }
+  },
+  "flash38-0148": {
+   "kind": "PLANT",
+   "page_id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "group": "hebrew-aramaic",
+   "labels": {
+    "T1": "flash38-v13_PLANT",
+    "T2": "flash38-plain"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "He is very fond of Israel, and many servants from Israel serve before him.",
+    "new": "He is not very fond of Israel, and many servants from Israel serve before him.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "flash38-0149": {
+   "kind": "ARMS",
+   "page_id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "lang": "Sanskrit",
+   "group": "sanskrit-pali",
+   "labels": {
+    "T1": "flash38-v13",
+    "T2": "flash38-plain",
+    "T3": "flash38-v20"
+   }
+  }
+ },
+ "did_not_read": {
+  "flash38-v13": {
+   "69e72c8ca409200ea79f4dd6_00556": "wrapper: reply cut before <<<END>>>"
+  },
+  "flash38-v20": {
+   "6955747af63a757109173a5d_00381": "timeout",
+   "69b4cd44d5b6c3815e1a52de_00215": "timeout",
+   "69b525b56be6046083030af0_00213": "timeout"
+  }
+ }
+}

@@ -1,0 +1,5298 @@
+{
+ "at": "2026-11-02T18:10:59.961Z",
+ "rule": "better = new fidelity > old (blind absolute #7866 judge); write-eligible = guard pass AND better AND 0 wrong_text defects in the new read",
+ "table": [
+  {
+   "stratum": "Greek MS",
+   "n": 8,
+   "guard_pass": 7,
+   "better": 5,
+   "same": 2,
+   "worse": 0,
+   "failed": 1,
+   "old_fid": 1.25,
+   "new_fid": 1.86,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "Latin MS",
+   "n": 6,
+   "guard_pass": 6,
+   "better": 4,
+   "same": 2,
+   "worse": 0,
+   "failed": 0,
+   "old_fid": 1.83,
+   "new_fid": 2.83,
+   "new_accept": 1,
+   "write_eligible": 1
+  },
+  {
+   "stratum": "Latin print",
+   "n": 6,
+   "guard_pass": 6,
+   "better": 5,
+   "same": 1,
+   "worse": 0,
+   "failed": 0,
+   "old_fid": 2,
+   "new_fid": 2.83,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "Korean MS",
+   "n": 2,
+   "guard_pass": 2,
+   "better": 1,
+   "same": 1,
+   "worse": 0,
+   "failed": 0,
+   "old_fid": 1.5,
+   "new_fid": 2,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "Armenian MS",
+   "n": 2,
+   "guard_pass": 2,
+   "better": 2,
+   "same": 0,
+   "worse": 0,
+   "failed": 0,
+   "old_fid": 1,
+   "new_fid": 3,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "Hebrew print",
+   "n": 2,
+   "guard_pass": 2,
+   "better": 0,
+   "same": 1,
+   "worse": 1,
+   "failed": 0,
+   "old_fid": 2.5,
+   "new_fid": 1,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "other",
+   "n": 4,
+   "guard_pass": 4,
+   "better": 2,
+   "same": 2,
+   "worse": 0,
+   "failed": 0,
+   "old_fid": 1.5,
+   "new_fid": 2,
+   "new_accept": 0,
+   "write_eligible": 0
+  },
+  {
+   "stratum": "ALL",
+   "n": 30,
+   "guard_pass": 29,
+   "better": 19,
+   "same": 9,
+   "worse": 1,
+   "failed": 1,
+   "old_fid": 1.63,
+   "new_fid": 2.31,
+   "new_accept": 1,
+   "write_eligible": 1
+  }
+ ],
+ "quota": [
+  {
+   "tag": "before-read",
+   "at": "2026-11-02T17:35:38.615293Z",
+   "buckets": {
+    "gemini-weekly": 0.4350048005580902,
+    "gemini-5h": 0.8277663588523865,
+    "3p-weekly": 0.06823839992284775,
+    "3p-5h": 1
+   }
+  },
+  {
+   "tag": "after-read",
+   "at": "2026-11-02T17:51:12.254449Z",
+   "buckets": {
+    "gemini-weekly": 0.42696821689605713,
+    "gemini-5h": 0.8009689450263977,
+    "3p-weekly": 0.06823839992284775,
+    "3p-5h": 1
+   }
+  }
+ ],
+ "pages": [
+  {
+   "stratum": "Greek MS",
+   "book": "69938985ce1538706594752c",
+   "page_number": 742,
+   "page_id": "69938985ce15387065947812",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Apart from a few opening words, the transcription is invented Greek that collapses into hundreds of repeated 'ἦν'. It does not give the manuscript's text of Republic II–III."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 11,
+    "note": "Most of the Book II text before the red book heading is invented pseudo-Plato rather than the manuscript's words. The Book III heading and the Homer quotations are roughly right."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 57102,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "699383a750654cbbe2917f1b",
+   "page_number": 31,
+   "page_id": "6a271d4463b04f91e2dec007",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "Almost none of this transcription matches the page: most lines are 'ἣν' repeated over and over, the margin is a made-up repeated 'τὸ αὐτὸ', and none of the real minuscule text or marginal notes appears."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The line count roughly matches the leaf, but much of the Greek is ungrammatical filler that the faint minuscule does not support, and the left-margin notes are misplaced, so it should not be published as the page's text."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 104986,
+   "agy_calls": 2,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "6993892b74305116d72d1169",
+   "page_number": 180,
+   "page_id": "6993892b74305116d72d121d",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Two manuscript pages are presented as one page in two columns: the left half is largely made-up Greek, and the right half breaks down into lines of repeated 'ὡς', so almost none of what is on the leaves is reliably transcribed."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 13,
+    "note": "This is really two pages photographed together, and the transcription only looks plausible: on both pages many lines don't say what the handwriting says, including the names Orpheus, Rhea, Zeus and Hera, so it can't be published as this page's text."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 71267,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "69b52c583dd6d9423027f75a",
+   "page_number": 533,
+   "page_id": "69b52c583dd6d9423027f96f",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "Only the opening words and the page number 262 match the page. Nearly all the rest is invented Greek, ending in many lines of repeated 'ὧν', so it can't be read alongside the manuscript."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "The beginning and end of the page roughly follow the manuscript, but most of the dense abbreviated cursive has been turned into fluent Greek the image doesn't support, with no uncertainty marked. The 'fol. 161 r' marginal label is not on the leaf."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 44071,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "699388f374305116d72d08a6",
+   "page_number": 180,
+   "page_id": "699388f374305116d72d095a",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "Apart from a few opening words, the transcription has nothing to do with the leaf: invented Greek degenerates into lines of 'ἂν ἂν ἂν' repeated to the bottom of the page."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "The line count and the marginal names match the leaf, but much of the Greek text is fluent invention that does not follow the minuscule on the page."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 84966,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "69b52c653dd6d9423027fda4",
+   "page_number": 843,
+   "page_id": "69b52c653dd6d942302800ef",
+   "language": "Greek",
+   "guard": "reply: no <<<BEGIN>>> marker",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "Only the first few lines loosely match the page; from about line 9 on it is one token ('ςω·') repeated, and the 26 lines of real prescription text are lost."
+   },
+   "new": null,
+   "cmp": "failed",
+   "write_eligible": false,
+   "agy_tokens": 74388,
+   "agy_calls": 2,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "6993881874305116d72cf0ab",
+   "page_number": 79,
+   "page_id": "6993881874305116d72cf0fa",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "Beyond the first word or two of each column, almost nothing matches the manuscript. The Greek is invented, it ends in a run of repeated 'τῶν', the margin text is copied from the candidate's own column, and the heavy scholia at the bottom are missing."
+   },
+   "new": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 11,
+    "note": "Almost none of the Greek matches the leaf: the transcription is fluent but invented, with angels, inflammation and therapy in an astronomical text, plus a repeated passage and made-up marginal notes."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 46231,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Greek MS",
+   "book": "69dbca0b1040d1d5e20a8d6e",
+   "page_number": 9,
+   "page_id": "69dbca0b1040d1d5e20a8d77",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "This is a printed Aldine-type Greek page about the elements of the voice and differences (διαφοραί). The transcription is mostly invented, is wrongly tagged as handwritten, drops the last third of the page and most of the marginalia, and ends in a long run of repeated ἣ."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 10,
+    "note": "Long stretches don't match the printed Galen text: phrases are invented, the name Thessalus is lost, one phrase is duplicated, a clause is dropped, and the signature mark is wrong. It can't be trusted as a transcription of this page."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 60369,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "69b43d56ee0300187dbd1cd0",
+   "page_number": 95,
+   "page_id": "69b43d56ee0300187dbd1d2f",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Apart from a few opening words, the transcription doesn't match the leaf. Column 1 is invented Latin and column 2 is pages of repeated 'vix', so Tacitus's text on the deaths of Petronius and Thrasea is missing."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "The Petronius passage in the left column is mostly right, but whole stretches of the right column (Silia, Thermus, Cossutianus) and the top of the left column are fluent Latin that is not on the leaf."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 57131,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "6953ab1077f38f6761bd67aa",
+   "page_number": 117,
+   "page_id": "6953ab1077f38f6761bd67e7",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Column 2 breaks down into rows of meaningless ꝑ symbols for its last 20 or so lines, column 1 repeats one line and drops another, and many words throughout are garbled or invented."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 12,
+    "note": "This is the right page, a Latin text on the tides, but many lines are badly misread or invented. Examples: 'Philipponus' where the page has 'supponimus', 'occidentis' where it has 'orientis', and a dropped 'non' in the Sextum passage. The text can't be relied on beside the image."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 48731,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "69dbc8291040d1d5e20977ea",
+   "page_number": 234,
+   "page_id": "69dbc8291040d1d5e20978d4",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The text is heavily garbled; the main lemma blocks are missing, and the right column turns into thousands of repeated 'ꝑ' signs, so this cannot serve as the transcription of this page."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "Readers would find whole stretches of the page missing: the 'Si sanguis' lemma with its number 15, the start of the 'Lachryme in acutis' lemma, and several lines on 'mediocres'. There are also several misread words, such as 'occultum' for 'documentum' and 'caliginose' for 'salfuginose'."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 62870,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "69c89d196c6f3cc53c85d762",
+   "page_number": 704,
+   "page_id": "69f7474918d8b7b6c680fac3",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 2,
+    "note": "The Latin main text, page number 17, signature C and 'Tom. III' match the leaf line for line. But the candidate adds 26 lines of made-up 'Mandaic' marginalia that are really the edge of the facing page, and these marginalia don't exist on this leaf."
+   },
+   "new": {
+    "fidelity": 5,
+    "accept": true,
+    "wrong_text": 0,
+    "note": "I read the page line by line and found no defects. The transcription has all 28 lines of Latin text in order, with the page number 17 and the signature line 'Tom. III, C'. The script fragments at the edge of the facing page were correctly left out."
+   },
+   "cmp": "better",
+   "write_eligible": true,
+   "agy_tokens": 53697,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "69b51ed4cf111105c42a46f7",
+   "page_number": 286,
+   "page_id": "69b51ed4cf111105c42a4815",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "Only the first few lines of the left column roughly follow the manuscript. The rest is mostly invented 'et' filler, and the right column's real text is entirely missing."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "The page has the right number of lines in the right order, but several abbreviated words are misread. Most visibly, the John 10:28 quotation ('vitam aeternam do eis et non peribunt... non rapiet eas quisquam') is turned into different wording."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 75293,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin MS",
+   "book": "69b3f78da107e55a0ee1dd03",
+   "page_number": 1000,
+   "page_id": "69b3f78da107e55a0ee1e0eb",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "Most of this is gibberish. Column 2 is padded with whole lines of 'et. et. et.', and the text doesn't follow the manuscript's chapter on scorpion stings and its cure."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 7,
+    "note": "The order and outline are roughly right (scorpion chapter, symptoms, cure, two columns), but large parts of both columns are confident nonsense ('alleluia', 'leoparditus', 'morsusAvsectionis'), the doses are doubtful and the margin notes are wrong, so the page cannot be trusted as a transcription."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 55959,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69dbc8601040d1d5e2098bb7",
+   "page_number": 99,
+   "page_id": "69dbc8601040d1d5e2098c1a",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "This is a reject. The candidate has the wrong running head, leaves out the second main-text column and the lower commentary, and breaks down into an endless string of ꝙ signs."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "The main text columns are mostly right, but the header is wrong (Tractatus II instead of III), the 'handwritten margins' are actually text cut off from the facing page, and several glosses contain invented or garbled phrases, worst in gloss b."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 131529,
+   "agy_calls": 2,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69dbc9cd1040d1d5e20a6e64",
+   "page_number": 232,
+   "page_id": "69dbc9cd1040d1d5e20a6f4c",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The left column and the glosses are present but full of misreads; the glosses appear twice, and the right column breaks off halfway into thousands of repeated ꝝ symbols."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "The order and coverage are mostly right, but several jurists' names are misread (Azo→Esto, Goffredus→Hostiensis, Pylius→periculum/patet), and 'matrimonio' appears as 'simonio', so readers would be misled about which authorities and topics the page cites."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 58339,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69dbca981040d1d5e20ad021",
+   "page_number": 40,
+   "page_id": "69dbca981040d1d5e20ad049",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Column 1 is mostly readable but has a duplicated line and a dropped clause. Column 2 loses several passages and then turns into a long run of repeated 'ꝛ', so its last dozen or so lines are missing."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 2,
+    "note": "Column 1 has a garbled and partly dropped passage on the Commentator's opinion ('non video. Similiter'), an invented 'in .3. de anima' citation, and several misread words in both columns that change the arguments."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 66050,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69c7f5406c6f3cc53c841b77",
+   "page_number": -260,
+   "page_id": "69c7f6976c6f3cc53c841ebf",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The Latin columns are mostly right apart from a few slips and one dropped clause. The Greek, especially on p.503, is largely filler made of repeated 'ἣ' rather than the printed text, and the two-page spread is treated as a single page."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 14,
+    "note": "The Latin columns are reliable apart from two misreads ('per se', 'pertica'), but much of the Greek is garbled into plausible-looking text that is not on the page, with LXX wording substituted in places."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 62867,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69ef2f3455d5fee247f6c924",
+   "page_number": 718,
+   "page_id": "69ef2f3455d5fee247f6cbf2",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The text is heavily garbled and has lines dropped, and it ends in thousands of repeated 'ꝫ' glyphs instead of the final line."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "This is the right page and the text is complete, but there are many misreadings. Several change the sense (non/tribus diebus, validam/rancidam, vina/vitis, continuetur/resoluatur), and a dose is merged away in the second column."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 78244,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Latin print",
+   "book": "69dbc9c91040d1d5e20a6b2e",
+   "page_number": 166,
+   "page_id": "69dbc9c91040d1d5e20a6bd4",
+   "language": "Latin",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 3,
+    "note": "Column 2 falls apart into thousands of repeated ꝯ signs, so its last quarter is lost. Both columns are full of misreads and wrong numerals, and column 1 drops a passage."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 2,
+    "note": "All of the page's lines are here and in order, but there are several wrong numerals (ix→iij, xxx→lxx) and some misreads that change the sense (a missing 'si', ipsum for licet, a garbled Azo/Roffredus passage), so the text can't be relied on for close reading."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 65125,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Korean MS",
+   "book": "69f33e53876dd827cbc5e2f2",
+   "page_number": 31,
+   "page_id": "69f33e53876dd827cbc5e311",
+   "language": "Korean",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "This page of clear, readable Hangul cursive (about 15 lines) is shown as a few garbled syllables followed by hundreds of repeated 'ᄯᅴ' fillers, so it cannot be used as a transcription."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 9,
+    "note": "Many lines differ from the leaf: names are misread (순부인 given as 온부인, 셰번 as 뎨변, 황셩 as 쟝형), the unit is wrong (오십결 given as 오십필), syllables are dropped, and legible spans are marked illegible. The transcription can't be trusted beside the image."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 106065,
+   "agy_calls": 2,
+   "read_secs": null
+  },
+  {
+   "stratum": "Korean MS",
+   "book": "69f328089e1cab5867a34dce",
+   "page_number": 11,
+   "page_id": "69f328089e1cab5867a34dd9",
+   "language": "Korean",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Only the first few columns loosely match the cursive page; the remaining columns are rows of repeated 々 filler, so most of the page's text is missing or made up."
+   },
+   "new": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 9,
+    "note": "Only scattered words match the leaf, such as 孔雀, 越, 休洗紅, 回紋, 可汗 and 元祖. Most of the text, including the Japanese emperor list and the Sugawara katakana note, is invented and imposes the wrong language on cursive Sino-Korean notes."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 41726,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Armenian MS",
+   "book": "69d66beb4da4f8dce52f2434",
+   "page_number": 72,
+   "page_id": "69f290d43d9a9c4aad8a24ec",
+   "language": "Armenian",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Apart from a few word shapes in the first lines, the text doesn't match the leaf: the second half is repeated 'իւր' and 'ծ' filler, and the faint lighter-ink rubrics are lost or invented."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 1,
+    "note": "All 21 lines are there in the right order, but many words, especially in the lower third and the numerals, are uncertain or look filled in. The text reads as garbled Armenian with uncertainty marked only on the faint red rubrics."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 42009,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Armenian MS",
+   "book": "69d66bdb4da4f8dce52f2047",
+   "page_number": 136,
+   "page_id": "69d66bdb4da4f8dce52f20cf",
+   "language": "Armenian",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "Apart from the page number and the header word 'խնդիր', the text doesn't match the leaf: much of it is invented, and the right column ends in repeated 'ըզ' filler."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "The text follows the page's argument (Aquinas on circumcision, end of article 1 and article 2), but several lines in both columns are nonsense words or likely misreads. One example: 'Jesus's' baptism where the sense requires John's. A margin numeral is also missing. The scan is low-resolution, so I couldn't check every word."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 42205,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Hebrew print",
+   "book": "69c1bbc48522835be846073a",
+   "page_number": 46,
+   "page_id": "69c1bbc48522835be8460768",
+   "language": "Hebrew",
+   "guard": "pass",
+   "old": {
+    "fidelity": 4,
+    "accept": false,
+    "wrong_text": 1,
+    "note": "The body text matches the leaf, including the Elijah verses, לישועתך, the לקי lines, the Mahanaim verse and the priestly blessing. But the first line wrongly puts 'יהי יהוה' where the page has אליהו, and the small repetition rubrics are guessed."
+   },
+   "new": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 2,
+    "note": "The leaf is a full handwritten page of vocalised Hebrew verses and protective formulas with instructions to repeat them, but the transcription says the page is blank."
+   },
+   "cmp": "worse",
+   "write_eligible": false,
+   "agy_tokens": 41183,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "Hebrew print",
+   "book": "69c1bb3c8522835be845d9af",
+   "page_number": 448,
+   "page_id": "69c1bb3c8522835be845db6f",
+   "language": "Hebrew",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Only the first line or two loosely follow this handwritten leaf. After that the text is made up and turns into endless repeats of \"בחי'\", so it has nothing to do with the page."
+   },
+   "new": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Almost none of this transcription matches the handwritten page. Beyond a few scattered words, it is invented text, wrong from the first word ('הקדמה' instead of 'בבריאה'), and it has fewer lines than the leaf."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 36977,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "other",
+   "book": "69c1bb658522835be845f635",
+   "page_number": 163,
+   "page_id": "69c1bb658522835be845f6d8",
+   "language": "Syriac",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "Only the page number 157 is right. The rest is Ottoman Turkish in Arabic script, mostly 'پاشا' repeated, set beside a handwritten Syriac page it has nothing to do with."
+   },
+   "new": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 1,
+    "note": "A reader gets only the page number 157; none of the purple-ink Syriac-script text is transcribed, and the notes wrongly call it German shorthand."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 37910,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "other",
+   "book": "69e8b1a22ff2a8dc09e764f9",
+   "page_number": 27,
+   "page_id": "69e8b1a22ff2a8dc09e76514",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 8,
+    "note": "The text ends in thousands of repeated 'ᾖ', so the end of the page is lost; one lemma is missing and most of the Greek is garbled."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 12,
+    "note": "I read the page image myself. The Latin commentary is mostly accurate, but nearly every Greek lemma and variant reading is misread. Since the notes turn on those exact Greek words, a reader can't follow the textual criticism from this transcription."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 85577,
+   "agy_calls": 1,
+   "read_secs": null
+  },
+  {
+   "stratum": "other",
+   "book": "6a08527915c643eb1af4d06d",
+   "page_number": 12,
+   "page_id": "6a08527915c643eb1af4d079",
+   "language": "Greek",
+   "guard": "pass",
+   "old": {
+    "fidelity": 2,
+    "accept": false,
+    "wrong_text": 4,
+    "note": "The first ~40 lines are badly garbled, then the text collapses into endless repeated ἣ, and the last ~15 lines of the page are missing."
+   },
+   "new": {
+    "fidelity": 3,
+    "accept": false,
+    "wrong_text": 6,
+    "note": "This is the right page (Herodotus IX, the Plataea burials through Mykale) and broadly in order. But many words are misread or garbled, some are added (e.g. 'ἰωνίην τοιούτων'), several readings are wrong in the Artabazus passage, and a marginal name is dropped."
+   },
+   "cmp": "better",
+   "write_eligible": false,
+   "agy_tokens": 82302,
+   "agy_calls": 2,
+   "read_secs": null
+  },
+  {
+   "stratum": "other",
+   "book": "69d5abdc4dc55b8478ddd24d",
+   "page_number": 249,
+   "page_id": "69d5abdc4dc55b8478ddd346",
+   "language": "Georgian",
+   "guard": "pass",
+   "old": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 5,
+    "note": "Apart from the page number 121, almost nothing here matches the leaf: a few invented phrases are followed by columns of placeholder 'ჵჵჵ' lines in place of the two columns of Nuskhuri text."
+   },
+   "new": {
+    "fidelity": 1,
+    "accept": false,
+    "wrong_text": 2,
+    "note": "This page is two columns of Georgian nuskhuri with red marginal chapter numbers, but the transcription beside it is made-up Armenian text that matches none of it."
+   },
+   "cmp": "same",
+   "write_eligible": false,
+   "agy_tokens": 44548,
+   "agy_calls": 1,
+   "read_secs": null
+  }
+ ],
+ "verdicts": [
+  {
+   "page_id": "69b3f78da107e55a0ee1e0eb",
+   "book": "69b3f78da107e55a0ee1dd03",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "aut. et. et. et. et. et. et. et. et. et. et. et.",
+      "severity": "wrong_text",
+      "what": "Lines of invented filler; the page has real text here"
+     },
+     {
+      "class": "O4",
+      "quote": "et. et. et. et. et. et. et. et. et. et. et. et.",
+      "severity": "wrong_text",
+      "what": "Repeated filler lines near the end of column 2"
+     },
+     {
+      "class": "O1",
+      "quote": "f. et. et. et. z. et. et. et. et. et. et. et. et.",
+      "severity": "wrong_text",
+      "what": "More filler in column 2"
+     },
+     {
+      "class": "O6",
+      "quote": "Dicit inestat. De punctura scorp",
+      "severity": "wrong_text",
+      "what": "Column 1 is garbled throughout; words don't match the page"
+     },
+     {
+      "class": "O6",
+      "quote": "Et scit. Scorpiones al\nheumz adam et scorpio est al",
+      "severity": "wrong_text",
+      "what": "Second D initial ('Dicunt quidam quod scorpio...') misread and merged"
+     },
+     {
+      "class": "O6",
+      "quote": "Red initial H</image-desc>Hec punctura est",
+      "severity": "misleads",
+      "what": "The initial is A ('Apparet...'), not H"
+     },
+     {
+      "class": "O6",
+      "quote": "ultolital. oiau. qutut. z. hat. gultur.",
+      "severity": "wrong_text",
+      "what": "Column 2 garbled into nonsense"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>De morsu scorpionis</margin>",
+      "severity": "misleads",
+      "what": "Rubric/margin text invented; real marginalia dropped (e.g. right-margin 'de alafa dale et medicamine', left-margin notes)"
+     },
+     {
+      "class": "T7",
+      "quote": "dar. in balneo. est. nehem. et. uanua.",
+      "severity": "misleads",
+      "what": "Confident output with no marks of uncertainty over garbled text"
+     }
+    ],
+    "reader_note": "Most of this is gibberish. Column 2 is padded with whole lines of 'et. et. et.', and the text doesn't follow the manuscript's chapter on scorpion stings and its cure."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "4c3a9147a798b2d2",
+   "secs": 15,
+   "at": "2026-11-02T17:48:32.969Z"
+  },
+  {
+   "page_id": "69b52c653dd6d942302800ef",
+   "book": "69b52c653dd6d9423027fda4",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "E2",
+      "quote": "This request was blocked by Gemini's filters. They can occasionally trigger by mistake on safe coding, security, or biology-related queries.",
+      "severity": "wrong_text",
+      "what": "The candidate is an API refusal/error message, not a transcription. None of the page's roughly 27 lines of Greek medical-recipe text are present."
+     },
+     {
+      "class": "O15",
+      "quote": "You can [send feedback](https://ai.google.dev/gemini-api/docs/troubleshooting#file-bug) or read more about [our policies here]",
+      "severity": "wrong_text",
+      "what": "A system or chat message with links is stored in place of the page text."
+     },
+     {
+      "class": "O12",
+      "quote": "This request was blocked by Gemini's filters.",
+      "severity": "wrong_text",
+      "what": "The marginal recipe numbers on the right (ρνδ, ρνε, ρνϛ) and the folio number 415 are all missing."
+     }
+    ],
+    "reader_note": "The transcription pane shows a Gemini 'request blocked' error message instead of the dense handwritten Greek recipe text on folio 415, so the page has no transcription at all."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "95d649babf741186",
+   "secs": 8,
+   "at": "2026-11-02T17:48:41.396Z"
+  },
+  {
+   "page_id": "6953ab1077f38f6761bd67e7",
+   "book": "6953ab1077f38f6761bd67aa",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "partes oculi in quo est opaca humiditas atque\nuva recipiunt",
+      "severity": "wrong_text",
+      "what": "page reads roughly 'in quorum ... habundat aque[a]'; 'opaca humiditas' and 'uva' are not on the page"
+     },
+     {
+      "class": "O1",
+      "quote": "Sed autem medius planetarum ad eorum quamlibet po\nsitus est tantus erit quod unicuique suorum in\nstat",
+      "severity": "wrong_text",
+      "what": "page reads 'Sol autem medius planetarum adeo ingenioso positus est tamquam cor quod virtutes undique ministrat'; candidate text is invented"
+     },
+     {
+      "class": "O6",
+      "quote": "et ideo similis est motus eorum\ninferiorum et transmutatio",
+      "severity": "wrong_text",
+      "what": "page has 'et ideo fortissime motus corporum inferiorum et transmutat'"
+     },
+     {
+      "class": "O6",
+      "quote": "Terra autem de causa",
+      "severity": "wrong_text",
+      "what": "page has 'Tercia autem causa'"
+     },
+     {
+      "class": "O6",
+      "quote": "habet lunaris solis speciales",
+      "severity": "misleads",
+      "what": "page has 'alteratiuum ... luminarium solis speciales'; line garbled"
+     },
+     {
+      "class": "O6",
+      "quote": "vivifica facit exalare humores",
+      "severity": "misleads",
+      "what": "page has 'vivificus facit ebullire humores'"
+     },
+     {
+      "class": "O1",
+      "quote": "vim eorum que philipponus dicit · Sed est",
+      "severity": "wrong_text",
+      "what": "the name 'Philipponus' is not on the page; page reads roughly 'eorum que supponimus · Secundum est'"
+     },
+     {
+      "class": "O6",
+      "quote": "maribus et ubi etiam est mare subterius quod",
+      "severity": "wrong_text",
+      "what": "page has 'et invenitur mare istud quod'; 'subterius' is invented"
+     },
+     {
+      "class": "O6",
+      "quote": "lunius aquilunseus vocat",
+      "severity": "misleads",
+      "what": "page has 'lunium a quibusdam vocat'"
+     },
+     {
+      "class": "O6",
+      "quote": "defectus fatiscitus · in hoc tenore cuius",
+      "severity": "wrong_text",
+      "what": "page has 'defectum faciens in uno mense tum hic accessus'"
+     },
+     {
+      "class": "O6",
+      "quote": "· Scilicet autem mare quod est in confinio",
+      "severity": "misleads",
+      "what": "page has 'Similiter autem mare quod est inter ...'"
+     },
+     {
+      "class": "O6",
+      "quote": "angulus emisperii occidentis in regione a",
+      "severity": "wrong_text",
+      "what": "page has 'orientis'; the sense is inverted"
+     },
+     {
+      "class": "O6",
+      "quote": "occidentis incipit antrecedere mare",
+      "severity": "misleads",
+      "what": "page has 'incipit accedere mare'"
+     },
+     {
+      "class": "O6",
+      "quote": "emisperii maris et regionis non sunt anguli",
+      "severity": "wrong_text",
+      "what": "page has 'emisperii unius regionis', not 'maris et regionis'"
+     },
+     {
+      "class": "O6",
+      "quote": "et quod usque incipit antequam in\nregione una quia ipse incipit recessivis",
+      "severity": "wrong_text",
+      "what": "page has 'et quod ipse incipit accessus in regione una est ipse incipit recessus'"
+     },
+     {
+      "class": "O6",
+      "quote": "terius et in fluviis ipsis",
+      "severity": "wrong_text",
+      "what": "page has 'longe a litoribus et in litoribus ipsis'"
+     },
+     {
+      "class": "T8",
+      "quote": "causam nam est variari in fluctus et e\nfluxu maris",
+      "severity": "wrong_text",
+      "what": "page has 'non est variari in fluxu et refluxu'; the negation is lost"
+     },
+     {
+      "class": "O6",
+      "quote": "et tamen in fluvio non percipit",
+      "severity": "misleads",
+      "what": "page has 'in litore'"
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>luna, mare, fluxus, refluxus, accessus, recessus, emisperium, azimuth, cenith, angulus medii celi, angulus medie noctis, orizon, Philipponus, sinus persicus, animadbar</vocab>",
+      "severity": "cosmetic",
+      "what": "the vocab tag lists 'Philipponus', which comes from the misread"
+     }
+    ],
+    "reader_note": "This is the right page, a Latin text on the tides, but many lines are badly misread or invented. Examples: 'Philipponus' where the page has 'supponimus', 'occidentis' where it has 'orientis', and a dropped 'non' in the Sextum passage. The text can't be relied on beside the image."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "69fd9f9703ff245f",
+   "secs": 31,
+   "at": "2026-11-02T17:48:48.552Z"
+  },
+  {
+   "page_id": "69e8b1a22ff2a8dc09e76514",
+   "book": "69e8b1a22ff2a8dc09e764f9",
+   "stratum": "other",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O10",
+      "quote": "Καὶ Πολύβιος δὲ φησίν",
+      "severity": "wrong_text",
+      "what": "page reads Καὶ Πολύβιος δ' ὀρθῶς"
+     },
+     {
+      "class": "O10",
+      "quote": "Ὅταν δ’ ἀναγκάζῃ ( ἢ ἐξωκεανισμὸν )",
+      "severity": "misleads",
+      "what": "page has τὸν ἐξωκεανισμὸν; a spurious '( ἢ' was put in"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀπωκεανισμὸν. ἀπωκεανίζειν & καταπωκεανίζειν",
+      "severity": "wrong_text",
+      "what": "page gives the variant ἀποκναίζων / ἀποκναίζειν & καταποκναίζειν; the emendation the note turns on is lost"
+     },
+     {
+      "class": "O10",
+      "quote": "pro καταπωκεάνισεν dixit συμπεπληχὼς",
+      "severity": "wrong_text",
+      "what": "Greek here is misread; page has καταποκναίζειν and a different verb"
+     },
+     {
+      "class": "O10",
+      "quote": "Καὶ βουλεύειν ὡς ὑπολείπεται ἡ ἀπολογία",
+      "severity": "wrong_text",
+      "what": "lemma misread; page has ...οὐκ ἀπολείπει τῆς ἀνωμαλίας"
+     },
+     {
+      "class": "O6",
+      "quote": "legitur ὑπονοολογίας",
+      "severity": "wrong_text",
+      "what": "page's manuscript variant is ἀνωμολογίας"
+     },
+     {
+      "class": "O10",
+      "quote": "Διόπερ ἵν’ ἀπόλιποι τὴν ὑπερβολὴν ἀφείλετο",
+      "severity": "misleads",
+      "what": "Polybius quotation garbled"
+     },
+     {
+      "class": "O6",
+      "quote": "Ὡς ἄρα ἕν τι ποιητοῦ βεβαιῶσαι",
+      "severity": "wrong_text",
+      "what": "page reads καὶ ὑπὸ τοῦ ποιητοῦ βεβαιοῦται; the note discusses exactly these words"
+     },
+     {
+      "class": "O6",
+      "quote": "ἕν τι ποιητικὸν βεβαιῶσαι",
+      "severity": "wrong_text",
+      "what": "proposed conjecture misread (page: ὑπὸ τοῦ πολλοῦ βεβαιοῦται or similar)"
+     },
+     {
+      "class": "O10",
+      "quote": "Ὡς αὐτὸς ὅ γ’ Ἐρατοσθένης",
+      "severity": "wrong_text",
+      "what": "lemma misread; page has καὶ αὐτὸς δ' ὑπονοήσας or similar"
+     },
+     {
+      "class": "O6",
+      "quote": "Πολλῶν γὰρ οὐσῶν ὀλίγα ) Πολλῶν μέρη",
+      "severity": "wrong_text",
+      "what": "page has Πολλοστὸν γὰρ μέρος... Πολλοστὸν μέρος, the word glossed as 'multesima'"
+     },
+     {
+      "class": "O10",
+      "quote": "Ἐπεὶ οὐδὲ πάντα πιθανόν",
+      "severity": "wrong_text",
+      "what": "page reads ἐπεὶ οὐ πάντα μυθεύουσι"
+     },
+     {
+      "class": "O10",
+      "quote": "Ὡς ἂν εἰδῇς ἵνα significaret",
+      "severity": "wrong_text",
+      "what": "page has καὶ σάφ' οἶδα: vt significaret"
+     },
+     {
+      "class": "O10",
+      "quote": "Τὸ δ’ ὅλον οὐ κελεύει ὁ Ὅμηρος",
+      "severity": "wrong_text",
+      "what": "page reads τὸ δ' ὅλον οὐκ εὖ τὸν Ὅμηρον"
+     },
+     {
+      "class": "O10",
+      "quote": "ἐκ τοῦ δ’ ἅμα καὶ ὧν αὐτὸς συκοφαντεῖ",
+      "severity": "misleads",
+      "what": "lemma misread"
+     },
+     {
+      "class": "O6",
+      "quote": "ad vtrisque sitisque cohærentium",
+      "severity": "cosmetic",
+      "what": "page: ad vtrique sitam cohærentium"
+     }
+    ],
+    "reader_note": "I read the page image myself. The Latin commentary is mostly accurate, but nearly every Greek lemma and variant reading is misread. Since the notes turn on those exact Greek words, a reader can't follow the textual criticism from this transcription."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "c5c4516e36ab001a",
+   "secs": 40,
+   "at": "2026-11-02T17:48:57.668Z"
+  },
+  {
+   "page_id": "69e8b1a22ff2a8dc09e76514",
+   "book": "69e8b1a22ff2a8dc09e764f9",
+   "stratum": "other",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "Καὶ ᾖ ζέφυρον ἀργέστην μὲν ᾖ ᾖ ᾖ ᾖ ᾖ ᾖ",
+      "severity": "wrong_text",
+      "what": "One token repeated in a loop thousands of times at the end of the page"
+     },
+     {
+      "class": "O5",
+      "quote": "Autor libri De mun-\ndo, Καὶ ᾖ ζέφυρον",
+      "severity": "wrong_text",
+      "what": "The rest of the De mundo quotation and the closing lines are lost: 'Sic alij autores passim, quorum autoritate abuti nihil est necesse.'"
+     },
+     {
+      "class": "O5",
+      "quote": "libro xv. plenius defcribit & expendit.",
+      "severity": "wrong_text",
+      "what": "A whole lemma after this is dropped: '...χθαμαλὴ περίρρυτος) Poetæ hunc locum explicat pluribus libro x.'"
+     },
+     {
+      "class": "O10",
+      "quote": "ὅταν δ' ἀνάγκη ᾖ τῇ ἐπαναλήψει",
+      "severity": "wrong_text",
+      "what": "The page has ἐξωκεανισμὸν. The Greek lemmas are badly garbled throughout, e.g. ἀνασκευάζειν read as ἀνασολῇν"
+     },
+     {
+      "class": "O10",
+      "quote": "ὅταν ἵν' Ὀλύμπου μέσσαν ὕλην",
+      "severity": "wrong_text",
+      "what": "The page has Ὄσσαν ἐπ' Οὐλύμπῳ μέμασαν θέμεν"
+     },
+     {
+      "class": "O10",
+      "quote": "In quatuor vett. li.\nlegitur ἐκνομολογίας",
+      "severity": "misleads",
+      "what": "The page reads ἀνομολογίας"
+     },
+     {
+      "class": "O7",
+      "quote": "D. Lucas lib. 5. cap. 1x.",
+      "severity": "misleads",
+      "what": "The book reference is misread (the page has a Greek abbreviation) and 'ix' is read as '1x'"
+     },
+     {
+      "class": "O6",
+      "quote": "docetque Strabo περ vehementem\nter",
+      "severity": "wrong_text",
+      "what": "The page has 'peccasse vehementer'"
+     },
+     {
+      "class": "O6",
+      "quote": "leuiora & maiora grauio-",
+      "severity": "wrong_text",
+      "what": "The page has 'minora'"
+     },
+     {
+      "class": "O6",
+      "quote": "Polium. Minus rectè",
+      "severity": "misleads",
+      "what": "The page has 'Pelium'"
+     },
+     {
+      "class": "O6",
+      "quote": "Vt fit fine",
+      "severity": "misleads",
+      "what": "The page has 'Vtut sit sine'"
+     },
+     {
+      "class": "O6",
+      "quote": "Inde rurfus ad ὓς lique fitans;",
+      "severity": "wrong_text",
+      "what": "The page has 'ad vtrumque situm'"
+     },
+     {
+      "class": "O6",
+      "quote": "hominibus inducendum",
+      "severity": "misleads",
+      "what": "The page has 'indicandum'"
+     },
+     {
+      "class": "O6",
+      "quote": "Eam dico Aïæ partem",
+      "severity": "misleads",
+      "what": "The page has 'Asiæ'"
+     },
+     {
+      "class": "O6",
+      "quote": "legi fortaffe poffe",
+      "severity": "cosmetic",
+      "what": "The page has 'fortassean'"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>C</margin>\n<margin>D</margin>",
+      "severity": "cosmetic",
+      "what": "The section letters A–G in the centre gutter are placed arbitrarily and duplicated across the columns"
+     }
+    ],
+    "reader_note": "The text ends in thousands of repeated 'ᾖ', so the end of the page is lost; one lemma is missing and most of the Greek is garbled."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "3cfc84bb516fedba",
+   "secs": 21,
+   "at": "2026-11-02T17:49:02.202Z"
+  },
+  {
+   "page_id": "699388f374305116d72d095a",
+   "book": "699388f374305116d72d08a6",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "πρὸς ἐμὲ ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν ἂν",
+      "severity": "wrong_text",
+      "what": "From about line 11 the text collapses into a repeated 'ἂν' that fills the remaining 20+ lines"
+     },
+     {
+      "class": "O1",
+      "quote": "οὐδὲ ἐξ οὗ μὲν οὐδὲν ἂν εἴη ὡς οὐδὲν οὐδὲν οὐδὲν ἂν εἴη",
+      "severity": "wrong_text",
+      "what": "Even the early lines are invented Greek filler that does not match the minuscule on the leaf"
+     },
+     {
+      "class": "O5",
+      "quote": "τοῦ πράγματος ἀπολογοῦνται μόνον ἂν ἂν ἂν ἂν",
+      "severity": "wrong_text",
+      "what": "Almost none of the page's roughly 33 lines are actually transcribed. Only stray words like 'τοῦ πράγματος' line up with the page"
+     },
+     {
+      "class": "O12",
+      "quote": "<unclear>εμὶ</unclear> <unclear>η</unclear> <unclear>κω</unclear> <unclear>φ</unclear>",
+      "severity": "misleads",
+      "what": "The marginal notes are broken into fragments. The lower note reads roughly 'Σωκράτ… μελητ… ἐρι… κωμῳδ… Ἀριστοφάν', and the 'Θρασύμαχος καλλίας' note sits beside line 11"
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>Thrasymachus, Callias, Socrates, rhetoric, philosophy, dialectic, manuscript, Greek</vocab>",
+      "severity": "cosmetic",
+      "what": "Generic vocabulary list that does not come from what was read on the page"
+     }
+    ],
+    "reader_note": "Apart from a few opening words, the transcription has nothing to do with the leaf: invented Greek degenerates into lines of 'ἂν ἂν ἂν' repeated to the bottom of the page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "301d50fb32602eab",
+   "secs": 22,
+   "at": "2026-11-02T17:49:10.367Z"
+  },
+  {
+   "page_id": "69b51ed4cf111105c42a4815",
+   "book": "69b51ed4cf111105c42a46f7",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "et et et et et\net et et et et",
+      "severity": "wrong_text",
+      "what": "Most of the right column is invented filler. The page has continuous text about Christ and the Jews, the stones and blasphemy, and 'multa bona opera'. None of that appears in the candidate."
+     },
+     {
+      "class": "O4",
+      "quote": "et et et et et",
+      "severity": "wrong_text",
+      "what": "The same filler line repeats dozens of times, which also pads the right column to more lines than the page has."
+     },
+     {
+      "class": "O1",
+      "quote": "uade et intelligitis et\net et et et et et\net et et uoluit et",
+      "severity": "wrong_text",
+      "what": "The early right-column lines keep only a few real words (uolebat, pulcherrimo, audientes) inside invented filler."
+     },
+     {
+      "class": "O1",
+      "quote": "et et ita narrat casus et\netiam mea et et et for",
+      "severity": "wrong_text",
+      "what": "The left column is padded throughout with invented 'et' tokens and guessed words. The abbreviated Gothic cursive was not actually read."
+     },
+     {
+      "class": "O6",
+      "quote": "abbatis est. et ego sum\nmeo filio et obediens sua",
+      "severity": "wrong_text",
+      "what": "Misreads of abbreviated words ('abbatis', 'cupiditas aduenit') that produce sense the page does not have."
+     },
+     {
+      "class": "O5",
+      "quote": "et genuit me et et et",
+      "severity": "wrong_text",
+      "what": "Real content is dropped: the right column's text about stoning for blasphemy and good works ('multa bona opera feci vobis') is missing entirely."
+     }
+    ],
+    "reader_note": "Only the first few lines of the left column roughly follow the manuscript. The rest is mostly invented 'et' filler, and the right column's real text is entirely missing."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "b2b3ce4dcffac3e2",
+   "secs": 17,
+   "at": "2026-11-02T17:49:14.696Z"
+  },
+  {
+   "page_id": "69dbca0b1040d1d5e20a8d77",
+   "book": "69dbca0b1040d1d5e20a8d6e",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O16",
+      "quote": "<script>handwritten</script>",
+      "severity": "misleads",
+      "what": "The page is printed in an Aldine-style Greek typeface. It is not handwritten."
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "The self-assessment claims a good read, but the output is garbled and breaks down."
+     },
+     {
+      "class": "O1",
+      "quote": "τὰ μὲν δὴ τῶν ὄντων ἁπάντων· ὅσα δὲ βλεπόμενα, οὐκ ἐς τὰ κτῆ τὴν διαφοράν.",
+      "severity": "wrong_text",
+      "what": "The first line is invented and does not match the printed words."
+     },
+     {
+      "class": "O1",
+      "quote": "ὁ ἐκ τῆς γυναικο-\nπιδίδος ἐκπαιδευθήσεσθαι ος, ἐπιτιμᾶ τινι τοῖς ἀπὸ ἀσπασμοῦ γνώσεσθαι",
+      "severity": "wrong_text",
+      "what": "Throughout the text, invented word salad stands in for the printed Greek."
+     },
+     {
+      "class": "O1",
+      "quote": "βουληθείς, ὃ πᾶσι μὲν ᾄδεις ἣ λάμπουσι μοίρας, οἵτισι φλεγομένη",
+      "severity": "wrong_text",
+      "what": "Invented words such as ᾄδεις and λάμπουσι do not match the printed text about the voice and its elements."
+     },
+     {
+      "class": "O1",
+      "quote": "ἣ χρομας, ἣ ία. τε ᾄφα, ἣ τι ἣ τοῦ, ἣ χρικοῦν ἣ ποιησε τρανώσουσιν",
+      "severity": "wrong_text",
+      "what": "This passage is filled with stray ἣ tokens and nonsense words, which grow worse toward the middle of the page."
+     },
+     {
+      "class": "O4",
+      "quote": "ἣ γράμμα ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ",
+      "severity": "wrong_text",
+      "what": "The output ends in a runaway loop that repeats ἣ hundreds of times."
+     },
+     {
+      "class": "O5",
+      "quote": "μεθόδου. μαθὰ ταῦτα ἣ ἣτε σοφιστὴν ἣν ᾄδεξαμῶν, ἣν ἣν πολιτικὴν.",
+      "severity": "wrong_text",
+      "what": "About 20 of roughly 60 printed lines are missing, from 'γράμμα … περὶ μορίων ζῴων Ἀριστοτέλους' to the end of the page."
+     },
+     {
+      "class": "O12",
+      "quote": "<note>praefer</note>",
+      "severity": "misleads",
+      "what": "Only one red marginal note is given, and it is garbled. The other red notes in the right margin, including those near the bottom, are dropped, and so are the left-margin notes."
+     },
+     {
+      "class": "O11",
+      "quote": "ἣ γράμμα ἣ ἣ ἣ",
+      "severity": "cosmetic",
+      "what": "The signature 'Α Δ' at the foot of the page is not recorded."
+     }
+    ],
+    "reader_note": "This is a printed Aldine-type Greek page about the elements of the voice and differences (διαφοραί). The transcription is mostly invented, is wrongly tagged as handwritten, drops the last third of the page and most of the marginalia, and ends in a long run of repeated ἣ."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "5491c891a82ba437",
+   "secs": 19,
+   "at": "2026-11-02T17:49:21.665Z"
+  },
+  {
+   "page_id": "69d5abdc4dc55b8478ddd346",
+   "book": "69d5abdc4dc55b8478ddd24d",
+   "stratum": "other",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "აფუცხთისხილდო ჵ\nქრისტესაჲ და ვითარ-",
+      "severity": "wrong_text",
+      "what": "The opening lines are made up. They do not match what the Nuskhuri text on the leaf says."
+     },
+     {
+      "class": "O4",
+      "quote": "ქრისტესაჲ და ოთხ-\nმან.",
+      "severity": "wrong_text",
+      "what": "The same invented phrases are repeated in both columns."
+     },
+     {
+      "class": "O18",
+      "quote": "ჵჵჵ ჵჵჵ ჵჵჵ",
+      "severity": "wrong_text",
+      "what": "Repeated placeholder letters fill most of both columns. In effect, the page text is not transcribed."
+     },
+     {
+      "class": "O5",
+      "quote": "<column-break/>",
+      "severity": "wrong_text",
+      "what": "The leaf has about 25 lines per column. The candidate gives 21 and 18 lines, so the line count and order are lost."
+     },
+     {
+      "class": "O12",
+      "quote": "Red decorative initials at the beginning of paragraphs",
+      "severity": "misleads",
+      "what": "The red marks in the gutter are section numbers in the margin, with small letters above and below. They are not decorative initials, and their numerals are not transcribed."
+     },
+     {
+      "class": "O10",
+      "quote": "ჵჵჵ",
+      "severity": "wrong_text",
+      "what": "The Nuskhuri text is not converted into real readings. A rare letter is used as filler instead."
+     },
+     {
+      "class": "O15",
+      "quote": "the transcription above represents the legible characters and structure of the manuscript page",
+      "severity": "misleads",
+      "what": "This note claims the text is faithful when it is mostly placeholder."
+     },
+     {
+      "class": "T10",
+      "quote": "Gospels, Liturgy",
+      "severity": "misleads",
+      "what": "The candidate states what the content is without showing any basis for it."
+     }
+    ],
+    "reader_note": "Apart from the page number 121, almost nothing here matches the leaf: a few invented phrases are followed by columns of placeholder 'ჵჵჵ' lines in place of the two columns of Nuskhuri text."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "39d79da3771824a9",
+   "secs": 14,
+   "at": "2026-11-02T17:49:24.384Z"
+  },
+  {
+   "page_id": "699388f374305116d72d095a",
+   "book": "699388f374305116d72d08a6",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "οὗ τίνος ἂν εἴποις; οὐ μὴν οὐδ' εἰ μὴ τοῦτό γε· ἆρ' οὖν ἔχοις",
+      "severity": "wrong_text",
+      "what": "The leaf reads roughly 'οὐκ ὠφελοῦν … ἔργον, τὸ γὰρ ὠφελοῦν'. This line is invented."
+     },
+     {
+      "class": "O6",
+      "quote": "ρασκευάζοντας ὁμολογεῖς δεῖν; δεῖν γὰρ δή",
+      "severity": "wrong_text",
+      "what": "The leaf has something like '…μὲν γὰρ ἀληθ…', not 'δεῖν γὰρ δή'."
+     },
+     {
+      "class": "O5",
+      "quote": "τοιούτων; Θρασύμαχον ἄρα καὶ Πῶλον",
+      "severity": "wrong_text",
+      "what": "Kallias's name stands in the text line (it is also glossed in the margin) but has been dropped here, and the line is rewritten."
+     },
+     {
+      "class": "O1",
+      "quote": "παιδευθέντων ἄλλους τυγχάνειν, δίκην δὲ μόνον τουτουῒ",
+      "severity": "wrong_text",
+      "what": "The leaf reads something like '…λόγον χρὴ δὲ ὁμοῦ τούτου'. These words are not on the page."
+     },
+     {
+      "class": "O1",
+      "quote": "χναις χρηστοτέρους τρέφουσιν ἵππους τε καὶ κύνας",
+      "severity": "wrong_text",
+      "what": "The leaf has 'ἀξιοχρεωτέρους … τὴν αἰτίαν … πρὸς'. Horses and dogs are invented."
+     },
+     {
+      "class": "O1",
+      "quote": "σβεννύντες, ὃ δικαιοσύνην οἴονται, τὸν σκεπτέον ἄρα τρόπον",
+      "severity": "wrong_text",
+      "what": "The closing lines are fluent Greek that does not follow the letter-forms on the leaf."
+     },
+     {
+      "class": "O12",
+      "quote": "ὅτι ὥσπερ ὁ\nμ...\nσημείωσαι· καὶ αὐτὸς μάλισθ' ὑπὲρ ὧν",
+      "severity": "misleads",
+      "what": "The lower marginal note is guessed. It reads something like 'ἐπιμελῶς … μέχρι τοῦ ἡμᾶς … καὶ τὸ ἀπὸ … συκοφαν'."
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "The tags present a reading as confident when much of it is guesswork, and nothing marks the uncertainty."
+     }
+    ],
+    "reader_note": "The line count and the marginal names match the leaf, but much of the Greek text is fluent invention that does not follow the minuscule on the page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "84cf5e5511e77d1b",
+   "secs": 25,
+   "at": "2026-11-02T17:49:46.813Z"
+  },
+  {
+   "page_id": "69dbca981040d1d5e20ad049",
+   "book": "69dbca981040d1d5e20ad021",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ ꝛ",
+      "severity": "wrong_text",
+      "what": "Column 2 breaks down into thousands of repeated 'ꝛ' symbols. The last 12 or so lines are lost: the rest of 'Jtẽ nulla suba cõposita…', the reply 'Ad oppositum arguit auctẽ arist.…', and the closing 'Primũ ostẽdẽdũ est ex rõibus adductis ad se'."
+     },
+     {
+      "class": "O4",
+      "quote": "cū dicit.ef.vt terminaret ad prez negatiua.fed ad",
+      "severity": "wrong_text",
+      "what": "Repeats the line above it in place of the page's 'cũ dicit. ex oppositis ꝛc. põt dici q̃ verũ est fm q̃ oppo-'."
+     },
+     {
+      "class": "O5",
+      "quote": "firmandū. f. vt terminaret ad prez negatiua.fed ad",
+      "severity": "wrong_text",
+      "what": "Leaves out 'Uel dicendũ q̃ nõ oportet qrere eo mõ quo antiq̃ qrebãt'."
+     },
+     {
+      "class": "O5",
+      "quote": "quodlibet.n.eft passiuū a mā ꝛ mā ꝛ mā ꝛ ꝛz ꝛ potentia\npassiuā.",
+      "severity": "wrong_text",
+      "what": "Leaves out 'vt pz p de gñatõe c. de actiuis ꝛ passiuis. sed aia bz potentiã passiuã vt sensus ꝛ itellectus passibilis q̃ sunt virtutes passiue' and puts a repeated 'mā' in its place."
+     },
+     {
+      "class": "O5",
+      "quote": "ꝛ ꝛz ꝛz. ꝛ ꝛc̃. ꝛ ꝛc̃. ꝛ buius.ꝛre ꝛc.",
+      "severity": "wrong_text",
+      "what": "Leaves out 'sz hoc ẽ falsuz q̃ aia itellectiua ẽ icorruptibilis ꝛ ꝑpetua vt pz in 3° huius'."
+     },
+     {
+      "class": "O7",
+      "quote": "Lõmen.q̃ metaph",
+      "severity": "misleads",
+      "what": "The page reads 'Cõmen. 9. metaph'. The book number is lost."
+     },
+     {
+      "class": "O6",
+      "quote": "nõ oz qrere ei vnũ ẽa corpus",
+      "severity": "misleads",
+      "what": "The page reads 'si vnũ ẽ aia ꝛ corpus'."
+     },
+     {
+      "class": "O6",
+      "quote": "Trum ois aia eft actus primus cozpozis",
+      "severity": "misleads",
+      "what": "The page has 'sit', not 'eft', in the question heading."
+     },
+     {
+      "class": "E2",
+      "quote": "ꝓozentis ꝛfidera\nfcia eft in eodē",
+      "severity": "misleads",
+      "what": "Many spurious 'ꝛ' signs are scattered through column 2 and garble the words (e.g. 'por eniz gñatiõe scia')."
+     },
+     {
+      "class": "O16",
+      "quote": "<meta>catchword: con</meta>",
+      "severity": "cosmetic",
+      "what": "There is no catchword 'con' on this page."
+     }
+    ],
+    "reader_note": "Column 1 is mostly readable but has a duplicated line and a dropped clause. Column 2 loses several passages and then turns into a long run of repeated 'ꝛ', so its last dozen or so lines are missing."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "981b3be8c342a052",
+   "secs": 26,
+   "at": "2026-11-02T17:49:50.258Z"
+  },
+  {
+   "page_id": "69b43d56ee0300187dbd1d2f",
+   "book": "69b43d56ee0300187dbd1cd0",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "in exilium pellitur . paruo tamen generis ignominiae .\nad extremum Neronis odio perpulit . Numicium Thermum\nsenatorem demerat . quia libertus alterius quondam\n<gloss>atrocissima</gloss>\nde consilio Tigellini clandestina detulerat . quae cruciatibus\n<gloss>compensata luita</gloss>\natque ipsius liberti atrocissima morte compensata sunt .",
+      "severity": "wrong_text",
+      "what": "Right col. lines 14-19 are invented. The leaf reads roughly 'agitur in exilium tamquam non siluisset quae uiderat pertulissetque, proprio odio… praetura functum Tigellini simultatibus dedit, quia libertus Thermi quaedam de Tigellino criminose detulerat… nulla merita morte luerunt'"
+     },
+     {
+      "class": "O1",
+      "quote": "petronio perquam familiaris . quasi haec ipsa Neroni prodidisset .",
+      "severity": "wrong_text",
+      "what": "'quasi haec ipsa Neroni prodidisset' is not on the leaf"
+     },
+     {
+      "class": "O1",
+      "quote": "Praescriptum ei fuisse ? & a manu eius epistole inuente quasi",
+      "severity": "wrong_text",
+      "what": "Left col. lines 2-7 do not match the leaf. Line 2 begins 'Rufri…' and the text looks made up, e.g. 'Cerialis uenas reuulsit', 'preuaricati', 'conuictosque ambos morte multatos'"
+     },
+     {
+      "class": "O6",
+      "quote": "Iniit & suas . somno indulserat .",
+      "severity": "wrong_text",
+      "what": "The leaf has 'iniit epulas, somno indulsit'"
+     },
+     {
+      "class": "O6",
+      "quote": "Trucidatis tot illustribus uiris",
+      "severity": "misleads",
+      "what": "Leaf and gloss read 'insignibus'"
+     },
+     {
+      "class": "O5",
+      "quote": "infensus . & causis in Thraseam propriis .",
+      "severity": "misleads",
+      "what": "Drops 'accedentibus'"
+     },
+     {
+      "class": "O5",
+      "quote": "Et cum honores",
+      "severity": "misleads",
+      "what": "Drops 'deum' ('dm honores' on the leaf)"
+     },
+     {
+      "class": "O6",
+      "quote": "us . insignis ad flagitia & infensus Thraseae",
+      "severity": "wrong_text",
+      "what": "The leaf reads 'praeter animum ad flagitia praecipitem iniquus Thraseae'"
+     },
+     {
+      "class": "O6",
+      "quote": "concidisset . humanae ciuili-",
+      "severity": "wrong_text",
+      "what": "The leaf has 'iuuantis Cilicum…', not 'humanae ciuilitatis'"
+     },
+     {
+      "class": "O6",
+      "quote": "& Cuman",
+      "severity": "cosmetic",
+      "what": "Should be 'Cumas'"
+     },
+     {
+      "class": "O12",
+      "quote": "<gloss>affecit iniit epulas somno indulsit</gloss>",
+      "severity": "misleads",
+      "what": "Several interlinear glosses are padded or invented, while the right-margin mark 'Ro' is dropped"
+     },
+     {
+      "class": "O16",
+      "quote": "Handwritten humanistic cursive Latin hand",
+      "severity": "misleads",
+      "what": "The script is Beneventan minuscule, not humanistic cursive"
+     }
+    ],
+    "reader_note": "The Petronius passage in the left column is mostly right, but whole stretches of the right column (Silia, Thermus, Cossutianus) and the top of the left column are fluent Latin that is not on the leaf."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "59534b76e7b77662",
+   "secs": 49,
+   "at": "2026-11-02T17:50:03.804Z"
+  },
+  {
+   "page_id": "69dbc8601040d1d5e2098c1a",
+   "book": "69dbc8601040d1d5e2098bb7",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ ꝙ",
+      "severity": "wrong_text",
+      "what": "the output degenerates into thousands of repeated ꝙ signs after 'habet et dictis auc.'"
+     },
+     {
+      "class": "O5",
+      "quote": "<column-break/>",
+      "severity": "wrong_text",
+      "what": "the second main-text column ('da. Et quandoq; accidit pulsibus eorum ut dilatentur...' through 'accidentia hec sunt fortiora') is missing entirely"
+     },
+     {
+      "class": "O12",
+      "quote": "pulfus ferinus et pulfus durus cu inequalitate ut explicat ꝙ ꝙ. ꝙ ꝙ ergo",
+      "severity": "wrong_text",
+      "what": "the full-width commentary below the text (rest of e; f 'Et qnq3. Considerandu...', g, h 'Cumq3 uides...', i) is lost to the repetition loop"
+     },
+     {
+      "class": "O11",
+      "quote": "<header>Tractatus II</header>",
+      "severity": "misleads",
+      "what": "the running head reads 'Fen I Tractatus III'"
+     },
+     {
+      "class": "O16",
+      "quote": "<page-num>1</page-num>",
+      "severity": "misleads",
+      "what": "no page number is visible; this one is invented"
+     },
+     {
+      "class": "O16",
+      "quote": "Decorative initial letter 'E' at the beginning of the text.",
+      "severity": "cosmetic",
+      "what": "there is no decorative initial; the text opens with a plain lowercase 'eas'"
+     },
+     {
+      "class": "O6",
+      "quote": "Sentis.i.fentire tibi uide ꝙ in pulfibus ꝙori uirtute ali qua",
+      "severity": "misleads",
+      "what": "the right-hand gloss column is riddled with misreads and stray ꝙ in place of real words"
+     },
+     {
+      "class": "O6",
+      "quote": "Aliabbas non theorice dicit",
+      "severity": "misleads",
+      "what": "the page reads 'nono theorice'; the left gloss has many similar misreads ('Laufa' for 'Causa', 'Nel' for 'uel')"
+     },
+     {
+      "class": "O6",
+      "quote": "Considera ꝙ ꝙm principia medicoru: ꝙi apostema",
+      "severity": "misleads",
+      "what": "abbreviations are rendered as ꝙ throughout instead of q3/qm/qn"
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "the self-assessment doesn't match the badly broken output"
+     }
+    ],
+    "reader_note": "This is a reject. The candidate has the wrong running head, leaves out the second main-text column and the lower commentary, and breaks down into an endless string of ꝙ signs."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "635180210948b31c",
+   "secs": 16,
+   "at": "2026-11-02T17:50:06.969Z"
+  },
+  {
+   "page_id": "69c7f6976c6f3cc53c841ebf",
+   "book": "69c7f5406c6f3cc53c841b77",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "I3",
+      "quote": "<page-num>502-503</page-num>",
+      "severity": "misleads",
+      "what": "Pages 502 and 503 are transcribed as one page tagged with 2 columns. The spread actually has four columns (Latin, Greek | Greek, Latin)."
+     },
+     {
+      "class": "O1",
+      "quote": "ἀδικίαν, ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ",
+      "severity": "wrong_text",
+      "what": "Almost all of the Greek column on p.503 is filler made of repeated 'ἣ', with only scattered real words. Many lines are nothing but filler."
+     },
+     {
+      "class": "O5",
+      "quote": "ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ",
+      "severity": "wrong_text",
+      "what": "The real Greek text of p.503 is lost, including the Leviticus and Deuteronomy quotations and the passages on day and night and on man and woman."
+     },
+     {
+      "class": "O10",
+      "quote": "ἣ ἣ ἣ ἣ ἣ αὐτῇ μετέδωκε πάση τέχνης ἐξ",
+      "severity": "wrong_text",
+      "what": "The p.502 Greek column is heavily garbled, with spurious 'ἣ' particles and misread words throughout."
+     },
+     {
+      "class": "O5",
+      "quote": "Deus lucem à\ntenebris, diem enim & nocte,",
+      "severity": "wrong_text",
+      "what": "Drops 'appellauitque lucem diem, & tenebras noctem.' and misreads 'noctem'."
+     },
+     {
+      "class": "O6",
+      "quote": "Mofes laudatur fuit",
+      "severity": "misleads",
+      "what": "The page has 'laudator'."
+     },
+     {
+      "class": "O5",
+      "quote": "elucentem omnia",
+      "severity": "misleads",
+      "what": "Drops 'per' (page: 'elucentem per omnia')."
+     },
+     {
+      "class": "O6",
+      "quote": "de-\natte quicquam",
+      "severity": "misleads",
+      "what": "The page has 'de arte'."
+     },
+     {
+      "class": "O6",
+      "quote": "atte ſupplentes",
+      "severity": "misleads",
+      "what": "The page has 'arte'."
+     },
+     {
+      "class": "E2",
+      "quote": "cunetis",
+      "severity": "cosmetic",
+      "what": "Misread of 'cunctis'."
+     },
+     {
+      "class": "O6",
+      "quote": "ſemper fui ſi-\nmilis",
+      "severity": "misleads",
+      "what": "The page has 'ſui'."
+     }
+    ],
+    "reader_note": "The Latin columns are mostly right apart from a few slips and one dropped clause. The Greek, especially on p.503, is largely filler made of repeated 'ἣ' rather than the printed text, and the two-page spread is treated as a single page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "300cf0dd65e8c91e",
+   "secs": 20,
+   "at": "2026-11-02T17:50:07.480Z"
+  },
+  {
+   "page_id": "69c1bb658522835be845f6d8",
+   "book": "69c1bb658522835be845f635",
+   "stratum": "other",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O18",
+      "quote": "<unclear>19 lines of shorthand text, not transcribed</unclear>",
+      "severity": "wrong_text",
+      "what": "None of the page's roughly 22 lines of handwritten Syriac-script text is transcribed; only the page number is given."
+     },
+     {
+      "class": "O16",
+      "quote": "<language>German</language>",
+      "severity": "misleads",
+      "what": "The language tag says German, but the page is Syriac-script handwriting."
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten shorthand script (Gabelsberger stenography), untranscribable without specialist shorthand decoding</warning>",
+      "severity": "misleads",
+      "what": "The warning wrongly identifies the script as Gabelsberger shorthand and calls the page untranscribable."
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>stenography, shorthand</vocab>",
+      "severity": "misleads",
+      "what": "The vocabulary tags follow from the wrong shorthand identification."
+     },
+     {
+      "class": "O16",
+      "quote": "19 lines",
+      "severity": "cosmetic",
+      "what": "The line count is low: the page has about 22 lines."
+     }
+    ],
+    "reader_note": "A reader gets only the page number 157; none of the purple-ink Syriac-script text is transcribed, and the notes wrongly call it German shorthand."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "46f3b06e5c0e16f4",
+   "secs": 13,
+   "at": "2026-11-02T17:50:20.738Z"
+  },
+  {
+   "page_id": "69dbc9cd1040d1d5e20a6f4c",
+   "book": "69dbc9cd1040d1d5e20a6e64",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "Esto tamen notatur in summa eiusdem tituli",
+      "severity": "wrong_text",
+      "what": "page reads 'Azo tamen no. in sum.'; the jurist Azo is turned into 'Esto'"
+     },
+     {
+      "class": "O6",
+      "quote": "Tertius in simonio vt videtur",
+      "severity": "wrong_text",
+      "what": "page has 'in matrimonio' (C.30 q.5 is on marriage), not 'simonio'"
+     },
+     {
+      "class": "O6",
+      "quote": "et certe vel plurimum rogatus",
+      "severity": "wrong_text",
+      "what": "page reads 'certe videtur presumi rogatus'"
+     },
+     {
+      "class": "O6",
+      "quote": "Item secundum Hostiensem perexcipi potest",
+      "severity": "wrong_text",
+      "what": "page reads 'secundum Gof.' (Goffredus); the authority is swapped for Hostiensis"
+     },
+     {
+      "class": "O6",
+      "quote": "et non aliter secundum Eberhardum",
+      "severity": "misleads",
+      "what": "page abbreviates 'Uber.'; 'Eberhardum' is an unsupported expansion"
+     },
+     {
+      "class": "O6",
+      "quote": "nam et pro ipso reo est interpretandum",
+      "severity": "cosmetic",
+      "what": "'ipso' added; page reads 'pro reo'"
+     },
+     {
+      "class": "O12",
+      "quote": "que lex de fructu dictum patet que dicit",
+      "severity": "wrong_text",
+      "what": "margin reads 'que lex destruit dictum Pylei'"
+     },
+     {
+      "class": "O12",
+      "quote": "¶ Artifex. dicit periculum eo. ti.",
+      "severity": "wrong_text",
+      "what": "margin reads 'dicit Pyle.' (Pylius); a name misread as 'periculum'"
+     },
+     {
+      "class": "O12",
+      "quote": "Testis non enim testis est per nisi qui factum habet notum per non requiritur",
+      "severity": "misleads",
+      "what": "the margin note's abbreviations are garbled"
+     }
+    ],
+    "reader_note": "The order and coverage are mostly right, but several jurists' names are misread (Azo→Esto, Goffredus→Hostiensis, Pylius→periculum/patet), and 'matrimonio' appears as 'simonio', so readers would be misled about which authorities and topics the page cites."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "4c908c3e7aee960c",
+   "secs": 24,
+   "at": "2026-11-02T17:50:31.421Z"
+  },
+  {
+   "page_id": "69dbca981040d1d5e20ad049",
+   "book": "69dbca981040d1d5e20ad021",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O5",
+      "quote": "Et ad Commentatorem ipsi dicerent ibi et in .4. celi et mundi. et in 4° physicorum. Sed qualiter exponerent ipsum ad aliam auctoritatem",
+      "severity": "wrong_text",
+      "what": "The page reads 'dicerent quod hec fuit opinio Commentatoris. Sed qualiter exponerent ipsum ibi et in 4 celi... non video. Similiter ad aliam auctoritatem'. The candidate drops clauses and runs the rest together, which changes the argument."
+     },
+     {
+      "class": "O6",
+      "quote": "sicut in .3. de anima relatiue",
+      "severity": "wrong_text",
+      "what": "The page reads 'sunt enim contraria relatiue'. The citation to De anima 3 is not on the page."
+     },
+     {
+      "class": "O6",
+      "quote": "vere est finis quod opposita sunt",
+      "severity": "misleads",
+      "what": "The page reads 'verum est secundum quod opposita sunt'."
+     },
+     {
+      "class": "O6",
+      "quote": "uel potentia secundum quod potest",
+      "severity": "misleads",
+      "what": "The page reads 'licet potentia secundum quod potentia'."
+     },
+     {
+      "class": "O6",
+      "quote": "recipere est passio ipsius actui",
+      "severity": "misleads",
+      "what": "The page reads 'contrarium ipsi actui'."
+     },
+     {
+      "class": "O6",
+      "quote": "posterior entis generatione scientia est",
+      "severity": "misleads",
+      "what": "The page reads 'quia considerare... posterior enim generatione'. The passage is garbled."
+     },
+     {
+      "class": "O6",
+      "quote": "fuit imperfectiora secundum naturam",
+      "severity": "misleads",
+      "what": "The page likely reads 'sunt perfectiora', and 'imperfectiora' inverts the sense. I could not read this word for certain."
+     },
+     {
+      "class": "O6",
+      "quote": "actus autem et perfectio sunt vnum videtur",
+      "severity": "cosmetic",
+      "what": "The page reads 'vnum et idem'."
+     },
+     {
+      "class": "O7",
+      "quote": "vt patet primo ethicorum. et etc.",
+      "severity": "cosmetic",
+      "what": "The page reads 'et 2°'. A numeral reference is lost."
+     },
+     {
+      "class": "O6",
+      "quote": "secundum subiectum eius",
+      "severity": "cosmetic",
+      "what": "The page reads 'sed subiectum eius'."
+     },
+     {
+      "class": "O11",
+      "quote": "Catchword at bottom of column 1: foz",
+      "severity": "cosmetic",
+      "what": "'for-' is a word split across the column break, not a catchword."
+     }
+    ],
+    "reader_note": "Column 1 has a garbled and partly dropped passage on the Commentator's opinion ('non video. Similiter'), an invented 'in .3. de anima' citation, and several misread words in both columns that change the arguments."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "9dafef08ba0ad385",
+   "secs": 33,
+   "at": "2026-11-02T17:50:36.467Z"
+  },
+  {
+   "page_id": "69c1bb658522835be845f6d8",
+   "book": "69c1bb658522835be845f635",
+   "stratum": "other",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O2",
+      "quote": "الدوله فخر اولان پاشا حضرتلری اول وقتده اولان مصلحتلره دایر اولان امرده ل",
+      "severity": "wrong_text",
+      "what": "The page is handwritten Syriac cursive in violet ink. The candidate gives Ottoman Turkish in Arabic script that appears nowhere on the leaf."
+     },
+     {
+      "class": "O1",
+      "quote": "دفتری ل اولان مصلحتلری مصلحتلری پاشا پاشا پاشا",
+      "severity": "wrong_text",
+      "what": "Made-up chancery wording (pasha, affairs, register) with no basis in the page."
+     },
+     {
+      "class": "O4",
+      "quote": "پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا",
+      "severity": "wrong_text",
+      "what": "One word repeated over and over, filling whole lines. This is runaway generation."
+     },
+     {
+      "class": "O5",
+      "quote": "ل پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا پاشا",
+      "severity": "wrong_text",
+      "what": "None of the page's roughly 22 Syriac lines is actually transcribed. This includes the last line with its bracketed phrase."
+     },
+     {
+      "class": "O16",
+      "quote": "<language>Ottoman Turkish</language>",
+      "severity": "misleads",
+      "what": "The language tag is wrong. The text is Syriac."
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>الدوله, پاشا, مصلحت, دفتر, امر</vocab>",
+      "severity": "misleads",
+      "what": "The vocabulary list names Ottoman words that do not occur on the page."
+     }
+    ],
+    "reader_note": "Only the page number 157 is right. The rest is Ottoman Turkish in Arabic script, mostly 'پاشا' repeated, set beside a handwritten Syriac page it has nothing to do with."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "0ed1cdd2868ef015",
+   "secs": 14,
+   "at": "2026-11-02T17:50:45.319Z"
+  },
+  {
+   "page_id": "69dbc8601040d1d5e2098c1a",
+   "book": "69dbc8601040d1d5e2098bb7",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O11",
+      "quote": "<header>Fen .I. Tractatus .II.</header>",
+      "severity": "misleads",
+      "what": "running head reads 'Fen I Tractatus III'"
+     },
+     {
+      "class": "I4",
+      "quote": "<margin>anctum ficatio eius siccitas . 4</margin>",
+      "severity": "wrong_text",
+      "what": "cropped text from the facing page read as a margin note"
+     },
+     {
+      "class": "I4",
+      "quote": "<margin>quia animata frenetici sic conuenienter in eorum beneficio enim causa apostematis scilicet bullientis fonti sicienti infra</margin>",
+      "severity": "wrong_text",
+      "what": "facing-page strip read as marginalia"
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten Latin cursive annotations in left margin</warning>",
+      "severity": "misleads",
+      "what": "left edge is printed text from the facing leaf, not handwriting"
+     },
+     {
+      "class": "O11",
+      "quote": "<sig>i</sig>",
+      "severity": "cosmetic",
+      "what": "'i' is the gloss letter before 'Soda multa', not a signature"
+     },
+     {
+      "class": "O11",
+      "quote": "catchword: § Soda mlta. H̃ec eſt cauſa",
+      "severity": "cosmetic",
+      "what": "last text line tagged as a catchword"
+     },
+     {
+      "class": "O6",
+      "quote": "et sic motus lingue sequunt eas.scilicet.cum dentibus",
+      "severity": "misleads",
+      "what": "page reads 'sic mouent linguas, stringunt eas ... cum dentibus'"
+     },
+     {
+      "class": "O5",
+      "quote": "Contra: quando uenit ueris freneticis est fortis febris.",
+      "severity": "misleads",
+      "what": "drops 'et sic fortis sitis'; page has 'cum istis ueris'"
+     },
+     {
+      "class": "O1",
+      "quote": "Alipharus auerroes tractatu.3.5.capitulo",
+      "severity": "wrong_text",
+      "what": "page reads 'Amplius Auenzoar trac. 3 c. 5'"
+     },
+     {
+      "class": "O1",
+      "quote": "et propter hoc dicitur Dinus uel consortium. Respondetur: quod frenetici non petunt bibunt: ex eo quod sunt alienati: non quia non sentiant: unde dominus dicit in ueritate.illo capitulo.",
+      "severity": "wrong_text",
+      "what": "invented; page has 'Item primo Uiatici cap. de frenesi. Dubitatur secundo ... Galienus in libro de disnia illo cap.'"
+     },
+     {
+      "class": "O6",
+      "quote": "sed tum dicit:omnino isti frenetici debent tremulum qui sit ex defectu uirtutis:nisi frequentiat peruentiones",
+      "severity": "wrong_text",
+      "what": "page: 'Sed quo cognoscas pulsum tremulum qui fit ex defectu uirtutis ... a percussione'"
+     },
+     {
+      "class": "O6",
+      "quote": "Secundus ergo Galienus presumptisset dicit",
+      "severity": "misleads",
+      "what": "page: 'Dicendum quod Galienus presumpsisset dicere'"
+     },
+     {
+      "class": "O6",
+      "quote": "Istam posuit auicenna.supra communia",
+      "severity": "misleads",
+      "what": "page: 'Iam posuit auic. signa communia'"
+     },
+     {
+      "class": "O6",
+      "quote": "karabitus ratione partis distinguitur tripertito modis",
+      "severity": "misleads",
+      "what": "page: 'ratione temporis distinguitur tribus modis'"
+     },
+     {
+      "class": "O5",
+      "quote": "aptitudinem multam ex parte corporis",
+      "severity": "misleads",
+      "what": "drops 'et capitis'"
+     },
+     {
+      "class": "O6",
+      "quote": "uel tamen humoribus",
+      "severity": "misleads",
+      "what": "page: 'uel sanguinea'"
+     },
+     {
+      "class": "O6",
+      "quote": "significat demationem ex partibus uentris",
+      "severity": "misleads",
+      "what": "page: 'deuiationem'"
+     },
+     {
+      "class": "O6",
+      "quote": "Idcirco ergo ponit signa futuri",
+      "severity": "cosmetic",
+      "what": "page: 'Primo ergo'"
+     }
+    ],
+    "reader_note": "The main text columns are mostly right, but the header is wrong (Tractatus II instead of III), the 'handwritten margins' are actually text cut off from the facing page, and several glosses contain invented or garbled phrases, worst in gloss b."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "8fb1a1dbda8db45f",
+   "secs": 31,
+   "at": "2026-11-02T17:50:52.390Z"
+  },
+  {
+   "page_id": "69b3f78da107e55a0ee1e0eb",
+   "book": "69b3f78da107e55a0ee1dd03",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "in tempore uel alleluia",
+      "severity": "wrong_text",
+      "what": "'alleluia' cannot be right in a passage on scorpion venom; the words on the page are something else"
+     },
+     {
+      "class": "O1",
+      "quote": "Et uenenum sunt qui uisi uis spondet quoniam materia sit forte",
+      "severity": "wrong_text",
+      "what": "nonsense words fill a passage the transcriber could not read; the page has numerals here (.vi.)"
+     },
+     {
+      "class": "O1",
+      "quote": "et ipse erit quasi leoparditus et mollicacio uocis",
+      "severity": "wrong_text",
+      "what": "made-up words in the list of symptoms"
+     },
+     {
+      "class": "O1",
+      "quote": "fortiter patent super morsum bombyx et aper et sicut morsusAvsectionis et actus aparatus a seollis",
+      "severity": "wrong_text",
+      "what": "garbled invented text, with a fused token 'morsusAvsectionis'"
+     },
+     {
+      "class": "O1",
+      "quote": "et aper et filius petulcus sicut balenciur color",
+      "severity": "wrong_text",
+      "what": "invented words where the page's text was not read"
+     },
+     {
+      "class": "O6",
+      "quote": "Et primum ex eis acutus et ancho aucondicionibus sunt",
+      "severity": "wrong_text",
+      "what": "misreading in the cure section that makes the passage meaningless"
+     },
+     {
+      "class": "O1",
+      "quote": "et spe opi alte cum eis sperita uicit et ponineditur de amboque eorum",
+      "severity": "wrong_text",
+      "what": "invented garble in the dosage passage"
+     },
+     {
+      "class": "O7",
+      "quote": "uelque ad .ij. scrupulos",
+      "severity": "misleads",
+      "what": "doses and numerals in column 2 do not reliably match the page"
+     },
+     {
+      "class": "O7",
+      "quote": "### Tractatus .viij. seu .c. .i.",
+      "severity": "misleads",
+      "what": "the treatise number in the red rubric does not match what the page shows"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>Punctio</margin>",
+      "severity": "misleads",
+      "what": "the same margin note is given twice; the page has different left-margin notes, and one earlier note (a 'Scorp…' note by column 1) is left out"
+     },
+     {
+      "class": "O6",
+      "quote": "Dixit quoniam ex scorpione est uenenum cuius maior est macula",
+      "severity": "misleads",
+      "what": "the opening of chapter 1 is misread"
+     },
+     {
+      "class": "O16",
+      "quote": "<header>III</header>",
+      "severity": "cosmetic",
+      "what": "the running head is a rubricated numeral; the tag is roughly right"
+     }
+    ],
+    "reader_note": "The order and outline are roughly right (scorpion chapter, symptoms, cure, two columns), but large parts of both columns are confident nonsense ('alleluia', 'leoparditus', 'morsusAvsectionis'), the doses are doubtful and the margin notes are wrong, so the page cannot be trusted as a transcription."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "aa3d3299264da20b",
+   "secs": 28,
+   "at": "2026-11-02T17:51:04.467Z"
+  },
+  {
+   "page_id": "6993892b74305116d72d121d",
+   "book": "6993892b74305116d72d1169",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "I3",
+      "quote": "<columns>2</columns>",
+      "severity": "misleads",
+      "what": "image is a two-page spread (two leaves), not one page in two columns; it was never split"
+     },
+     {
+      "class": "O16",
+      "quote": "<page-num>149</page-num>",
+      "severity": "misleads",
+      "what": "number given to the whole spread; only the right leaf carries a folio number, and the 'B' signature is a marginal 'ιβ' on that leaf only"
+     },
+     {
+      "class": "O1",
+      "quote": "πάντα δὲ μαγνωρίζειν πρόκειται τοῖς ἀγαθοῖς τῶν πεφυκότων,",
+      "severity": "wrong_text",
+      "what": "most of the left leaf is plausible invented Greek; only scattered words match the hand"
+     },
+     {
+      "class": "O1",
+      "quote": "θεῶν ὄντων. Εἶτα δὲ οὖν ἀνωτέρω. καὶ μὲν δῶδεκα",
+      "severity": "wrong_text",
+      "what": "invented wording, loosely prompted by a few real words (δώδεκα, ἄνω)"
+     },
+     {
+      "class": "O4",
+      "quote": "εἶναι ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς",
+      "severity": "wrong_text",
+      "what": "right leaf collapses into ὡς repeated over many lines; the real text is lost"
+     },
+     {
+      "class": "O5",
+      "quote": "ὁ νοῦς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς ὡς",
+      "severity": "wrong_text",
+      "what": "actual content of the lower right leaf (e.g. τὸ πλῆθος, νοῦς ... πρώτοις) not transcribed"
+     },
+     {
+      "class": "O4",
+      "quote": "<insert>+ θεοῦ δὲ ἄρδην ὡς ὄντα τῶν ὅλων καὶ τῆς δημιουργοῦ οὐσίας ἐστὶν</insert>",
+      "severity": "wrong_text",
+      "what": "insertion repeats the line just above it; the page's added line reads differently (… ἐν τοῖς νοεροῖς …)"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>ἡ κορυφα</margin>",
+      "severity": "misleads",
+      "what": "marginal note 'ἡ κορυφαῖ…' sits beside the lower left text (about line 27), not line 2"
+     },
+     {
+      "class": "O12",
+      "quote": "αὐτὸς δὲ ἄρδην τὰ ταύτην οὖσαν τῶν ὅλων δημιουργὸς, ἵστα",
+      "severity": "cosmetic",
+      "what": "right-leaf marginalia (ἰβ, a mark against the middle lines) and interlinear additions dropped"
+     },
+     {
+      "class": "O16",
+      "quote": "<script>handwritten</script>",
+      "severity": "cosmetic",
+      "what": "the warning admits the hand is hard to read, but the text gives no sign of the invention or collapse"
+     }
+    ],
+    "reader_note": "Two manuscript pages are presented as one page in two columns: the left half is largely made-up Greek, and the right half breaks down into lines of repeated 'ὡς', so almost none of what is on the leaves is reliably transcribed."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "efad454fcb221c88",
+   "secs": 20,
+   "at": "2026-11-02T17:51:05.388Z"
+  },
+  {
+   "page_id": "69c1bb3c8522835be845db6f",
+   "book": "69c1bb3c8522835be845d9af",
+   "stratum": "Hebrew print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "הקדמה . אמנם ראוי לתת לב על מלות אלו ולדעת שטעו בבריאה זו . וקראו לה בריאה",
+      "severity": "wrong_text",
+      "what": "The page opens 'בבריאה . אמנם אם...', not 'הקדמה'. The rest of the line is invented."
+     },
+     {
+      "class": "O1",
+      "quote": "ולא תהא בו הפלגה כל כך . ולכן אמ' ליה כיון דאיכא ביה תועלת",
+      "severity": "wrong_text",
+      "what": "The page reads 'ולא תהא בצאתו כי הנה בכל יום...'. The candidate's line is invented."
+     },
+     {
+      "class": "O1",
+      "quote": "השבות דאורייתא כי הבריאה היא סבה שיעלה הדבר על דעת הבעל הבית",
+      "severity": "wrong_text",
+      "what": "Fluent text that is not on the leaf. Most of the body is like this, with only scattered words matching (ויש תחנונים, בתי כנסיות)."
+     },
+     {
+      "class": "O1",
+      "quote": "ענינו ככוונת יוסף כשהיה במצרים והנה בהיותו בארץ בלעדיו בזה ראיה דארץ ישראל עולה",
+      "severity": "wrong_text",
+      "what": "Invented content not on the page."
+     },
+     {
+      "class": "O5",
+      "quote": "אלא כמבואר בבתי כנסיות שלנו וזהו על פנים אלו .",
+      "severity": "wrong_text",
+      "what": "The page has about 32 lines and the candidate about 27. The real closing lines and the scribe's flourish are missing."
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "misleads",
+      "what": "The tags present invented text as a confident reading. Only one word is marked <unclear>."
+     }
+    ],
+    "reader_note": "Almost none of this transcription matches the handwritten page. Beyond a few scattered words, it is invented text, wrong from the first word ('הקדמה' instead of 'בבריאה'), and it has fewer lines than the leaf."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "907c1c4083ab6773",
+   "secs": 16,
+   "at": "2026-11-02T17:51:08.469Z"
+  },
+  {
+   "page_id": "69d66bdb4da4f8dce52f20cf",
+   "book": "69d66bdb4da4f8dce52f2047",
+   "stratum": "Armenian MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ ըզ",
+      "severity": "wrong_text",
+      "what": "The last 8 or so lines of the right column fall into repeated 'ըզ' filler. The page has real continuous text there."
+     },
+     {
+      "class": "O1",
+      "quote": "ըզաւազանն աւետ ըզհոյն յորս յիշեալ ըզ",
+      "severity": "wrong_text",
+      "what": "The right column is invented text built around the guessed theme. It doesn't match the page's lines, and it misses the red-rubric Յոհաննէս heading at lines 2–3."
+     },
+     {
+      "class": "O1",
+      "quote": "թէ երկու ինձ հատուածական",
+      "severity": "wrong_text",
+      "what": "The left column is mostly a plausible-sounding reconstruction, not a reading of the leaf. Words and line breaks don't match the page."
+     },
+     {
+      "class": "O5",
+      "quote": "ըզերթութեց ցայս ըզԹովմասն",
+      "severity": "wrong_text",
+      "what": "Lines are missing. Each column on the page has about 35–36 lines, more than the candidate gives."
+     },
+     {
+      "class": "O12",
+      "quote": "<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Marginal symbols (manicules and crosses)",
+      "severity": "misleads",
+      "what": "The margin marks are bracketed letter numerals, not manicules or crosses. The red rubricated initials aren't marked. The catchword 'մկրտ' at the foot of the page is dropped."
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten Armenian Bolorgir script</warning>",
+      "severity": "cosmetic",
+      "what": "The hand is a cursive notrgir-type script, not bolorgir."
+     },
+     {
+      "class": "T10",
+      "quote": "Թովմաս (Thomas Aquinas)",
+      "severity": "misleads",
+      "what": "This gloss relies on the text the candidate invented, not on what the page shows."
+     }
+    ],
+    "reader_note": "Apart from the page number and the header word 'խնդիր', the text doesn't match the leaf: much of it is invented, and the right column ends in repeated 'ըզ' filler."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "9cfc169a5ab80a2c",
+   "secs": 14,
+   "at": "2026-11-02T17:51:18.791Z"
+  },
+  {
+   "page_id": "69b52c583dd6d9423027f96f",
+   "book": "69b52c583dd6d9423027f75a",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "μεθόδους τῆς τέχνης ἀσκοῦντι ταύτην ἐκείνας τε γινώσκειν ἐξ ὧν ἀφ’ ἑκάστου ἐστὶν",
+      "severity": "wrong_text",
+      "what": "From line 2 on, the text is invented Greek-sounding prose that doesn't match the cursive. Only a few words at the start of lines 1 and 6 match the page."
+     },
+     {
+      "class": "O1",
+      "quote": "τῇ δὲ ἀληθείας. γὰρ πᾶσι τε νοσοῦσι φαίνονται ἐνετῇ ἰνδῇ ἐπεὶ μαθεῖν εἴη μακρὰν",
+      "severity": "wrong_text",
+      "what": "The middle lines are also made up and are often ungrammatical."
+     },
+     {
+      "class": "O4",
+      "quote": "ᾗ τε ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν ὧν",
+      "severity": "wrong_text",
+      "what": "The last lines repeat the word 'ὧν' over and over instead of giving the page's final lines."
+     },
+     {
+      "class": "O5",
+      "quote": "πλοκαὶ ταῦτα ὧν ὧν ὧν",
+      "severity": "wrong_text",
+      "what": "The real last lines of the page (about 10 lines, from roughly 'συμπλοκὰς' to the end) are missing and replaced by the repetition."
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>Galen, De usu partium, philosophy, logic, art, knowledge, nature</vocab>",
+      "severity": "misleads",
+      "what": "Names the work as Galen's De usu partium with nothing to support it. The candidate's own text doesn't match that work either."
+     },
+     {
+      "class": "O12",
+      "quote": "ὅτι τὰς πρώτας καὶ συνθετωτέρας",
+      "severity": "cosmetic",
+      "what": "The small mark at the top of the page and the interlinear additions are left out."
+     }
+    ],
+    "reader_note": "Only the opening words and the page number 262 match the page. Nearly all the rest is invented Greek, ending in many lines of repeated 'ὧν', so it can't be read alongside the manuscript."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "7fb038b3331e5780",
+   "secs": 15,
+   "at": "2026-11-02T17:51:20.699Z"
+  },
+  {
+   "page_id": "6953ab1077f38f6761bd67e7",
+   "book": "6953ab1077f38f6761bd67aa",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O18",
+      "quote": "ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ",
+      "severity": "wrong_text",
+      "what": "The last 20 or so lines of column 2 (Sextus… Septimum… valde aut aque profunditate…) are filled with repeated ꝑ instead of the legible text on the page."
+     },
+     {
+      "class": "O5",
+      "quote": "tunu aute ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ",
+      "severity": "wrong_text",
+      "what": "The passage on the sixth and seventh causes at the foot of column 2 is lost."
+     },
+     {
+      "class": "O4",
+      "quote": "ille arcus angulis medn celi alteru",
+      "severity": "wrong_text",
+      "what": "This line appears twice in column 1; the first copy is out of place and duplicates the real line."
+     },
+     {
+      "class": "O5",
+      "quote": "et alteruz uersub ꝑutus ocidentis",
+      "severity": "wrong_text",
+      "what": "The line after this one, 'Sile autez et meridianus habet duos', is dropped; the duplicate line stands in its place."
+     },
+     {
+      "class": "O1",
+      "quote": "que huiusmodi est. feruore et",
+      "severity": "wrong_text",
+      "what": "The page reads roughly 'q[ue] regit humiditates corporum inferiorum et'; this line is invented."
+     },
+     {
+      "class": "O6",
+      "quote": "dimibus eif et is fertilis moue copra",
+      "severity": "misleads",
+      "what": "Garbled; the page has 'omnibus eis et in fortissime mouet corpora'."
+     },
+     {
+      "class": "O6",
+      "quote": "ꝑ ꝑ ꝑ ꝑ ꝑ est uariat atrellus et recessa",
+      "severity": "misleads",
+      "what": "Filler ꝑ symbols stand in for legible words inside lines in column 2, from the 'Quintum' passage onward."
+     },
+     {
+      "class": "O6",
+      "quote": "Sol aute ꝑ et ꝑtite culoue",
+      "severity": "misleads",
+      "what": "Many words throughout both columns are misread or replaced by placeholder ꝑ; the page reads 'Sol autem qui est fortis caloris'."
+     },
+     {
+      "class": "O16",
+      "quote": "Handwritten Gothic textualis (littera textualis)",
+      "severity": "cosmetic",
+      "what": "The hand is a heavily abbreviated cursive (cursiva), not textualis."
+     }
+    ],
+    "reader_note": "Column 2 breaks down into rows of meaningless ꝑ symbols for its last 20 or so lines, column 1 repeats one line and drops another, and many words throughout are garbled or invented."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "4ebb50619a4f5feb",
+   "secs": 18,
+   "at": "2026-11-02T17:51:37.204Z"
+  },
+  {
+   "page_id": "69b43d56ee0300187dbd1d2f",
+   "book": "69b43d56ee0300187dbd1cd0",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "<unclear>inquit</unclear> <unclear>et</unclear> <unclear>quid</unclear> <unclear>colunt</unclear>. <unclear>ac</unclear> <unclear>dicere</unclear> <unclear>facere</unclear> <unclear>quid</unclear>.",
+      "severity": "wrong_text",
+      "what": "From about line 4 on, column 1 is invented Latin that does not match the page (Tacitus, Annals XVI, the deaths of Mela, Crispinus and Petronius)"
+     },
+     {
+      "class": "O4",
+      "quote": "<unclear>vix</unclear> <unclear>vix</unclear> <unclear>vix</unclear> <unclear>vix</unclear> <unclear>vix</unclear> <unclear>vix</unclear> <unclear>vix</unclear>",
+      "severity": "wrong_text",
+      "what": "Dozens of lines that just repeat 'vix' fill the end of column 1 and all of column 2"
+     },
+     {
+      "class": "O5",
+      "quote": "<column-break/>",
+      "severity": "wrong_text",
+      "what": "The whole right column (Petronius's death, the Thrasea/Soranus section) is lost and replaced by filler"
+     },
+     {
+      "class": "O12",
+      "quote": "<gloss>et maiore pro</gloss> <gloss>fuisse</gloss> <gloss>in vico</gloss> <gloss>rapta</gloss> <gloss>forte</gloss>\n<unclear>et</unclear> <unclear>maiore</unclear> <unclear>pro</unclear> <unclear>fuisse</unclear>",
+      "severity": "wrong_text",
+      "what": "Interlinear glosses are repeated as the main-text line instead of the real text under them"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>exsoletay</margin>",
+      "severity": "misleads",
+      "what": "Right-margin notes (e.g. 'Sika', 'numici therm', 'Trasea pet patauii oriundus', 'Capito cossutian') are misread and attached to filler lines"
+     },
+     {
+      "class": "O6",
+      "quote": "Prudentiae est scire <gloss>et</gloss> amicu <unclear>ostende</unclear> in amicum",
+      "severity": "wrong_text",
+      "what": "Misreads even the legible opening lines (the leaf reads 'Rufrium Crispinum ... Seneca' etc.)"
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten [Medieval/Renaissance Latin minuscule",
+      "severity": "cosmetic",
+      "what": "The script is Beneventan minuscule, not generic Latin minuscule"
+     }
+    ],
+    "reader_note": "Apart from a few opening words, the transcription doesn't match the leaf. Column 1 is invented Latin and column 2 is pages of repeated 'vix', so Tacitus's text on the deaths of Petronius and Thrasea is missing."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "27c67507a4c1c55e",
+   "secs": 17,
+   "at": "2026-11-02T17:51:37.493Z"
+  },
+  {
+   "page_id": "6993881874305116d72cf0fa",
+   "book": "6993881874305116d72cf0ab",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "φορᾷ καὶ ἑκάστη τῶν <unclear>ἀπλανῶν</unclear>\nτῶν μεμερισμένων σφαίραν ἔχει",
+      "severity": "wrong_text",
+      "what": "The first column is invented, Greek-sounding filler. Only a word or two at the opening loosely matches the leaf, which is Ptolemaic astronomy (Vat.gr.1594)."
+     },
+     {
+      "class": "O1",
+      "quote": "ἐμμουτιδὸς ἐν τῷ τάρτα\nμορίου ἡμέρας",
+      "severity": "wrong_text",
+      "what": "Apart from the opening word or two, the second column is fabricated and does not follow the scribe's lines."
+     },
+     {
+      "class": "O4",
+      "quote": "<unclear>τῶν</unclear> <unclear>τῶν</unclear> <unclear>τῶν</unclear> <unclear>τῶν</unclear>",
+      "severity": "wrong_text",
+      "what": "The same word repeats over and over at the end of the second column, which does not happen on the leaf."
+     },
+     {
+      "class": "O4",
+      "quote": "ὡς ἀμφότερος ἀναμεμερισμένη οὐδὲν ἧττον καὶ αἱ ἐν τῷ οὐρανῷ ὑποστάσεις τοῦ γραφομένου",
+      "severity": "wrong_text",
+      "what": "The right-margin note copies lines from the candidate's own first column instead of reading the actual scholia."
+     },
+     {
+      "class": "O1",
+      "quote": "[Top margin, faded]: <unclear>...τῶν ἐν τῷ... ἀνατολῇ...</unclear>",
+      "severity": "wrong_text",
+      "what": "The three-line note at the top is clearly written, but here it is replaced by invented fragments."
+     },
+     {
+      "class": "O12",
+      "quote": "<column-break/>\n\n<margin>",
+      "severity": "wrong_text",
+      "what": "Several sets of notes are left out: the long scholion block at the bottom of the page, the interlinear notes between the columns, the notes in the left margin, and the notes in the right margin around the ornament."
+     },
+     {
+      "class": "O5",
+      "quote": "<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">A second geometric diagram",
+      "severity": "misleads",
+      "what": "Two blank circles and the third lettered diagram at the bottom left are not recorded."
+     },
+     {
+      "class": "O16",
+      "quote": "<columns>3</columns>",
+      "severity": "cosmetic",
+      "what": "The main text is in two columns. The third 'column' is marginal notes, and the warning about watermarks is misleading."
+     },
+     {
+      "class": "O14",
+      "quote": "A rectangular diagram with internal lines and Greek text",
+      "severity": "misleads",
+      "what": "This is a decorated frame with a text block shaped around it, and its text is not transcribed."
+     }
+    ],
+    "reader_note": "Beyond the first word or two of each column, almost nothing matches the manuscript. The Greek is invented, it ends in a run of repeated 'τῶν', the margin text is copied from the candidate's own column, and the heavy scholia at the bottom are missing."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "4cfecf2e6d97871e",
+   "secs": 17,
+   "at": "2026-11-02T17:51:54.881Z"
+  },
+  {
+   "page_id": "69dbc9c91040d1d5e20a6bd4",
+   "book": "69dbc9c91040d1d5e20a6b2e",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ ꝯ",
+      "severity": "wrong_text",
+      "what": "transcription degenerates into a repeated ꝯ sign thousands of times long, replacing the rest of column 2"
+     },
+     {
+      "class": "O5",
+      "quote": "ꝑ ff. ꝯ ꝑ ꝯ bis ꝑ ꝯ no. in fa. l. j. ꝯ non ꝑ ꝯ ꝯ ꝑ ꝯ ꝯ iwo mo.",
+      "severity": "wrong_text",
+      "what": "roughly the last 25 lines of column 2 (from 'ff. de bis q no. infa' to 'ff. de adulter. si') are missing"
+     },
+     {
+      "class": "O5",
+      "quote": "quinto in l. iur. maie. mine symonie.",
+      "severity": "wrong_text",
+      "what": "drops the passage 'ff. ꝗ accu. in qõnibus. vj. q. j. nullus. sexto in crimine suspecti tutoris ... septio in cri-'"
+     },
+     {
+      "class": "E2",
+      "quote": "ꝯ ꝯ ꝗ ꝑd re pu bere dic ꝑ admittit",
+      "severity": "misleads",
+      "what": "spurious ꝯ and ꝑ signs scattered all through column 2 where the page has none"
+     },
+     {
+      "class": "O7",
+      "quote": "ꝑre dies vtiles",
+      "severity": "misleads",
+      "what": "the page has 'xxx. dies vtiles'"
+     },
+     {
+      "class": "O7",
+      "quote": "nec mino. ꝑry. an.",
+      "severity": "misleads",
+      "what": "the page has 'minor. xxv. an.', and 'xxv' is also garbled as 'ry'/'rz' elsewhere"
+     },
+     {
+      "class": "O7",
+      "quote": "l. xxvj. distinc.",
+      "severity": "misleads",
+      "what": "the page has 'lxxxvj. distinc.'"
+     },
+     {
+      "class": "O6",
+      "quote": "ꝯ H. et ꝗbi dicat accur. ꝯ ꝑ dicit Roff. ꝑ illuo iuramẽtu baberi ꝑ vege cium",
+      "severity": "misleads",
+      "what": "garbled reading of 'Et qd ibi dicat accur. hic dicit Roff. s. illud iuramentum haberi p vegecium'"
+     },
+     {
+      "class": "O6",
+      "quote": "ꝗ ꝑ accusem non tamen videor ex odio ꝑcedẽ ꝑz uin.",
+      "severity": "misleads",
+      "what": "garbles 'qz accusem ... pcedere fz Vin.' along with many similar OCR misreads (b/h, t/d, f/s)"
+     }
+    ],
+    "reader_note": "Column 2 falls apart into thousands of repeated ꝯ signs, so its last quarter is lost. Both columns are full of misreads and wrong numerals, and column 1 drops a passage."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "c4f4bfb7a00be62c",
+   "secs": 18,
+   "at": "2026-11-02T17:51:55.693Z"
+  },
+  {
+   "page_id": "69c7f6976c6f3cc53c841ebf",
+   "book": "69c7f5406c6f3cc53c841b77",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "sua, per se ferentia vnam eandémque",
+      "severity": "misleads",
+      "what": "page reads 'præ se ferentia'"
+     },
+     {
+      "class": "O6",
+      "quote": "Non erit in tua pertica pondus iniquum",
+      "severity": "wrong_text",
+      "what": "page reads 'in pera tua' (purse), not 'pertica'"
+     },
+     {
+      "class": "O10",
+      "quote": "ἡ δὲ μέσῃ καὶ τὰ καθ' ἡμᾶς κρᾶσις τῶν τεσσάρων, ξηροῦ, ὑ-",
+      "severity": "wrong_text",
+      "what": "Greek on the elements is garbled: page has διαμένει, καὶ τὰ περὶ ἡμᾶς … ξηρόν, ὑγρόν …"
+     },
+     {
+      "class": "O10",
+      "quote": "σκοπῶν ἴσα οὐ βίᾳ",
+      "severity": "wrong_text",
+      "what": "page reads ἴσα ἂν εὕροι"
+     },
+     {
+      "class": "O6",
+      "quote": "οὕτως ἐναρ-\nγής ἐστιν, ὥς τινες",
+      "severity": "wrong_text",
+      "what": "page reads οὕτως ἐθάρρησάν τινες (matches Latin 'ausi sunt')"
+     },
+     {
+      "class": "O10",
+      "quote": "μένει δὲ ἡ αὐτὴ καὶ πλεῖ ἐν ὑπερβο-",
+      "severity": "wrong_text",
+      "what": "page reads μένουσα δὲ ἡ αὐτὴ κατὰ τὴν ἐν ὑπερβο-"
+     },
+     {
+      "class": "O10",
+      "quote": "ἔκρινε, ἴσον ἐν δημιουργίᾳ ἀνέπλασεν",
+      "severity": "wrong_text",
+      "what": "page reads ἔκρινε, δημιουργοῦσα ἕκαστα"
+     },
+     {
+      "class": "O10",
+      "quote": "θατέραν\nπροσθήκην τῇ ἐπιστήμῃ ποιοῦντες, ᾧ καὶ πρὸ ὕλης",
+      "severity": "wrong_text",
+      "what": "garbled; the page has θελήσαντες … ὅσον τῇ ὕλῃ ἐνδέον ἐπανισῶσαι"
+     },
+     {
+      "class": "O3",
+      "quote": "καὶ ἰδοὺ καλὰ σφό-",
+      "severity": "misleads",
+      "what": "page reads ἀγαθὰ σφόδρα; LXX wording substituted"
+     },
+     {
+      "class": "O6",
+      "quote": "ἐπαινοῦτ'· πρῶτον ἐστὶν ἰσότιμα",
+      "severity": "wrong_text",
+      "what": "page reads ἐπαινούμενα πάντως ἐστὶν ἰσότιμα"
+     },
+     {
+      "class": "O10",
+      "quote": "ὡς μιᾶς ἴσης καὶ ὁμαλῆς δυνάμεως, ὡς καταστη-",
+      "severity": "wrong_text",
+      "what": "lines A–A of the third column are garbled against the page (κατὰ μίαν ἴσην … κανόσιν ἴσα καὶ ὅμοια … ἐνομίσθη)"
+     },
+     {
+      "class": "O6",
+      "quote": "ὥς τε σώματα καὶ ἀσώματα",
+      "severity": "wrong_text",
+      "what": "page reads τά τε σώματα καὶ πράγματα (Latin 'res & corpora')"
+     },
+     {
+      "class": "O8",
+      "quote": "ἐκά-\nλεσε δὲ ὁ θεὸς τὸ μὲν φῶς ἡμέραν, τὸ δὲ σκότος νύκτα",
+      "severity": "misleads",
+      "what": "LXX wording filled in; page has a shorter ἐκάλεσε τὸ φῶς ἡμέραν, καὶ τὸ σκότος νύκτα"
+     },
+     {
+      "class": "O6",
+      "quote": "ἴσοις ἔταξε τοῖς οὖσι",
+      "severity": "wrong_text",
+      "what": "page reads ἰσότης ἔταξε"
+     },
+     {
+      "class": "O10",
+      "quote": "σαφῶς δὲ ὡς ἔσπευσεν ἡ φύσις, τοῦτο υἱὸς ὁμοῖα γέν-",
+      "severity": "wrong_text",
+      "what": "page reads πρὸς δὲ ὃ ἔσπευσεν ἡ φύσις, τρίτου ζῴου ὁμοίου γένεσιν"
+     },
+     {
+      "class": "O4",
+      "quote": "ψῦχος γὰρ καὶ\nκαὶ καῦμα",
+      "severity": "misleads",
+      "what": "καὶ is duplicated; page reads ψῦχος γε μὴν καὶ καῦμα"
+     },
+     {
+      "class": "O10",
+      "quote": "μὲν ὥσπερ ἡλίου τε καὶ ἡμέρας, ταῖς μεθ' ἥλιον ἰσα-",
+      "severity": "wrong_text",
+      "what": "garbled; the page has αἵ γε μὴν πρὸ ἡλίου τρεῖς ἡμέραι … ἑξάδος τμηθείσης ἰσότητι … δήλωσιν"
+     },
+     {
+      "class": "O10",
+      "quote": "ταῖς δυοῖν τε αὖ τοῦ πρώτου δυνά-\nμεσι",
+      "severity": "wrong_text",
+      "what": "page reads ὡς δύο τοῦ ὄντος πρώτας δυνάμεις"
+     },
+     {
+      "class": "O16",
+      "quote": "<language>Greek</language>",
+      "severity": "cosmetic",
+      "what": "the page is bilingual Latin and Greek"
+     },
+     {
+      "class": "O11",
+      "quote": "<sig>Tt 2</sig>",
+      "severity": "misleads",
+      "what": "no signature is visible on the leaf"
+     }
+    ],
+    "reader_note": "The Latin columns are reliable apart from two misreads ('per se', 'pertica'), but much of the Greek is garbled into plausible-looking text that is not on the page, with LXX wording substituted in places."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "a9b92c93178d9130",
+   "secs": 49,
+   "at": "2026-11-02T17:51:58.136Z"
+  },
+  {
+   "page_id": "69dbc8291040d1d5e20978d4",
+   "book": "69dbc8291040d1d5e20977ea",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O5",
+      "quote": "quod boni sperandum est in hoc . quasi diceret . nihil .",
+      "severity": "wrong_text",
+      "what": "The lemma 'Si sanguis dicat fluat ex naribus: pausat morbus: aut vena rumpatur per quam egrediatur materia. 15' that follows this in the left column is left out."
+     },
+     {
+      "class": "O6",
+      "quote": "### ¶ his moleste volentium quod des utile",
+      "severity": "wrong_text",
+      "what": "The page reads 'Lachryme in acutis morbis moleste volentium quidem utile'. The opening words are garbled and dropped."
+     },
+     {
+      "class": "O5",
+      "quote": "sed usus est serio nomine et hoc sentit acuta qualitas",
+      "severity": "wrong_text",
+      "what": "Several lines are left out between these words, from 'dixit mediocres sic. n. tepidum...' to 'multotiens n. subtilis materia est et statim nobis tangentibus'."
+     },
+     {
+      "class": "O6",
+      "quote": "ad aliud occultum",
+      "severity": "misleads",
+      "what": "The page reads 'documentum'."
+     },
+     {
+      "class": "O7",
+      "quote": "sic dicit Galenus 15 quidem remota",
+      "severity": "misleads",
+      "what": "The numeral '15' and the expansion 'Galenus' are not supported by the page (abbreviated 'ga. ß de remota')."
+     },
+     {
+      "class": "O6",
+      "quote": "caliginose: hec autem",
+      "severity": "misleads",
+      "what": "The page reads 'salfuginose'."
+     },
+     {
+      "class": "O6",
+      "quote": "omordentes",
+      "severity": "cosmetic",
+      "what": "Should read 'demordentes'."
+     },
+     {
+      "class": "O6",
+      "quote": "postea vero acura",
+      "severity": "cosmetic",
+      "what": "Should read 'acuta'."
+     },
+     {
+      "class": "O12",
+      "quote": "<insert><unclear>He aut ... Videre possitis ...</unclear></insert>",
+      "severity": "cosmetic",
+      "what": "A later handwritten note is only partly read."
+     }
+    ],
+    "reader_note": "Readers would find whole stretches of the page missing: the 'Si sanguis' lemma with its number 15, the start of the 'Lachryme in acutis' lemma, and several lines on 'mediocres'. There are also several misread words, such as 'occultum' for 'documentum' and 'caliginose' for 'salfuginose'."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "9071a8ce910475d9",
+   "secs": 19,
+   "at": "2026-11-02T17:52:15.001Z"
+  },
+  {
+   "page_id": "69b51ed4cf111105c42a4815",
+   "book": "69b51ed4cf111105c42a46f7",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "quia vitam eorum deo eis non",
+      "severity": "wrong_text",
+      "what": "page has 'vitam eternam do eis et non' (Jn 10:28); misread"
+     },
+     {
+      "class": "O6",
+      "quote": "possunt tollere quia quasi separasse",
+      "severity": "wrong_text",
+      "what": "page reads 'peribunt in eternum', not 'possunt tollere'"
+     },
+     {
+      "class": "O6",
+      "quote": "deo et non reputat eas · Christus",
+      "severity": "wrong_text",
+      "what": "page has 'non rapiet eas quisquam'; 'reputat' and 'Christus' are misreads"
+     },
+     {
+      "class": "O6",
+      "quote": "vitam ipsas · scilicet quod eas oves",
+      "severity": "misleads",
+      "what": "abbreviation 'xps' (Christus) read as 'eas'"
+     },
+     {
+      "class": "O6",
+      "quote": "eum de manu patris mei",
+      "severity": "misleads",
+      "what": "page has 'eas', not 'eum'"
+     },
+     {
+      "class": "O6",
+      "quote": "Ideo fit eis testimonium quod vident",
+      "severity": "wrong_text",
+      "what": "garbled reading of an abbreviated line ('Ego sum ... quod videt')"
+     },
+     {
+      "class": "O6",
+      "quote": "unde ego filius eius et filio etc.",
+      "severity": "wrong_text",
+      "what": "page reads roughly 'dicit ego sum dei et hoc'; garbled"
+     },
+     {
+      "class": "T6",
+      "quote": "libenter audiend-\nam et operibus",
+      "severity": "cosmetic",
+      "what": "line break moved; on the page 'audiunt' ends the line"
+     }
+    ],
+    "reader_note": "The page has the right number of lines in the right order, but several abbreviated words are misread. Most visibly, the John 10:28 quotation ('vitam aeternam do eis et non peribunt... non rapiet eas quisquam') is turned into different wording."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "0648d34dc32fbe83",
+   "secs": 34,
+   "at": "2026-11-02T17:52:28.926Z"
+  },
+  {
+   "page_id": "6993892b74305116d72d121d",
+   "book": "6993892b74305116d72d1169",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "I3",
+      "quote": "<columns>2</columns>",
+      "severity": "misleads",
+      "what": "the image is a two-page spread, not split, and is tagged as one page in two columns; only the right leaf carries 142"
+     },
+     {
+      "class": "O1",
+      "quote": "ἐλαττοῦται· ἐπεὶ χορηγεῖ δὲ καὶ τοῖς θνητοῖς",
+      "severity": "wrong_text",
+      "what": "page reads roughly ἐλαττότητος· ἐπ' ἐσχάτοις δὲ"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀφθονομένην χορηγίαν",
+      "severity": "wrong_text",
+      "what": "page reads roughly σωζομένην"
+     },
+     {
+      "class": "O1",
+      "quote": "ἔργων ἀποτελεστικοῖς",
+      "severity": "wrong_text",
+      "what": "page reads roughly ἔργων ἐπιμεληταῖς θεμένοις"
+     },
+     {
+      "class": "O1",
+      "quote": "οἰκονομεῖν, εὐνοϊκῶς τε ἅμα",
+      "severity": "wrong_text",
+      "what": "page reads roughly αὐτόθεν ὁρᾶν, ἐννοοῦσι τοιγάρ..."
+     },
+     {
+      "class": "O1",
+      "quote": "παραθέμενον· ἐν οἷς γὰρ ἡ μὲν πρόοδος",
+      "severity": "wrong_text",
+      "what": "page reads roughly μεμαθηκέναι· ἐν οἷς τὴν μὲν..."
+     },
+     {
+      "class": "O1",
+      "quote": "πεζὴ δὲ ἡ μέρισις καὶ οἷον εἰς πείρας",
+      "severity": "wrong_text",
+      "what": "page reads roughly πῇ δὲ δὴ μέρος καὶ Διὸς καὶ Ἥρας"
+     },
+     {
+      "class": "O1",
+      "quote": "τῇ νοήσει, ὥς περὶ μιᾶς πάντων μετεχούσης μονάδος",
+      "severity": "wrong_text",
+      "what": "line invented; page reads roughly τῆς νοερᾶς, ἀλλὰ πεμπτάδος..."
+     },
+     {
+      "class": "O6",
+      "quote": "πάλιν κατὰ ὄψιν",
+      "severity": "wrong_text",
+      "what": "page reads roughly καὶ κατ' Ὀρφέα; Orpheus is lost"
+     },
+     {
+      "class": "O6",
+      "quote": "ῥᾳδίαν καθιστᾶν τὸν δι' ἰατρικῆς",
+      "severity": "wrong_text",
+      "what": "page reads roughly Ῥέαν καλεῖται; the goddess Rhea is lost"
+     },
+     {
+      "class": "O1",
+      "quote": "τὴν πλάσιν τοῦ παντὸς ἀληθῆ καὶ διαφαίνων",
+      "severity": "wrong_text",
+      "what": "page reads roughly τὴν σύστασιν τοῦ παντὸς ἀληθῶς ἐκφαίνων"
+     },
+     {
+      "class": "O1",
+      "quote": "διὰ τῶν ἐν τῷ παντὶ φαινομένων καταθέσεων",
+      "severity": "wrong_text",
+      "what": "not what this line on the right leaf says"
+     },
+     {
+      "class": "O1",
+      "quote": "ἐξ ὧν τὸ πλῆθος, καὶ ταῖς διακρίσεσιν ὧν ἀρχηγὸς παρεδρεύ-",
+      "severity": "wrong_text",
+      "what": "page reads roughly ὡς εἶναι τὸ πλῆθος, καὶ τῆς διακρίσεως ἀρχηγὸς πάσης"
+     },
+     {
+      "class": "O1",
+      "quote": "μάντευσιν δὲ τῆς γεννήσεως ταύτης συνένωσεν χαράν",
+      "severity": "wrong_text",
+      "what": "words invented over the hand"
+     },
+     {
+      "class": "O1",
+      "quote": "<meta>catchword: οἷον</meta>",
+      "severity": "misleads",
+      "what": "no such catchword visible on the page"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>ἡ κορυφὴ</margin>",
+      "severity": "cosmetic",
+      "what": "right-leaf marginal marks and the folio mark ιβ are not recorded"
+     }
+    ],
+    "reader_note": "This is really two pages photographed together, and the transcription only looks plausible: on both pages many lines don't say what the handwriting says, including the names Orpheus, Rhea, Zeus and Hera, so it can't be published as this page's text."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "653fce40ab86506a",
+   "secs": 43,
+   "at": "2026-11-02T17:52:40.917Z"
+  },
+  {
+   "page_id": "69dbc9c91040d1d5e20a6bd4",
+   "book": "69dbc9c91040d1d5e20a6b2e",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O7",
+      "quote": "sub.iij.rubrica de qua.j.",
+      "severity": "misleads",
+      "what": "page reads sub.ix. rubrica"
+     },
+     {
+      "class": "O7",
+      "quote": "lapsi sunt.lxx.dies vtiles",
+      "severity": "misleads",
+      "what": "page has .xxx. dies"
+     },
+     {
+      "class": "O7",
+      "quote": "accusasti.lxxvj.distinctio",
+      "severity": "misleads",
+      "what": "page appears to read lxxxvj"
+     },
+     {
+      "class": "O6",
+      "quote": "de crimine in se omisso",
+      "severity": "misleads",
+      "what": "page reads commisso (ꝯmisso)"
+     },
+     {
+      "class": "O6",
+      "quote": "ar.contra quia non fecero priuor hereditate",
+      "severity": "wrong_text",
+      "what": "drops 'si' (q si non fecero), changing the sense"
+     },
+     {
+      "class": "O6",
+      "quote": "tes quod ipsum accusem",
+      "severity": "misleads",
+      "what": "page has q lz (quod licet) accusem"
+     },
+     {
+      "class": "O6",
+      "quote": "H.id est cum\nratoris si possunt vt Roffredus",
+      "severity": "misleads",
+      "what": "page reads H. i. curatoris si posuit vt Roff."
+     },
+     {
+      "class": "O6",
+      "quote": "defenditur dicitur supra.fallit primo casum spe-\ncialem",
+      "severity": "wrong_text",
+      "what": "page reads defenditur si dicat §. illum ponere casum specialem"
+     },
+     {
+      "class": "O6",
+      "quote": "se quod permittitur per ea ratione per eum sequitur roffredus",
+      "severity": "misleads",
+      "what": "page: q permittitur et a ratione et eum sequitur Roff."
+     },
+     {
+      "class": "O6",
+      "quote": "ff.de his qui notantur infamia.l.j.non parte sed hoc quod stat in to-\nmo propria",
+      "severity": "misleads",
+      "what": "page: l.ij. non de eo q stat in domo propria"
+     },
+     {
+      "class": "O6",
+      "quote": "de puniendo.Z.ff.de parte milites enim",
+      "severity": "misleads",
+      "what": "allegation garbled against the page"
+     },
+     {
+      "class": "O6",
+      "quote": "Z.et.l.hoc accusatore",
+      "severity": "cosmetic",
+      "what": "page reads l. hos accusare"
+     },
+     {
+      "class": "E2",
+      "quote": "que vtique.§.questione.viij",
+      "severity": "cosmetic",
+      "what": "page has que est ij.q.viij; numeral replaced by §"
+     },
+     {
+      "class": "O6",
+      "quote": "ff. de adulteriis finali",
+      "severity": "cosmetic",
+      "what": "page ends 'de adulter. si'"
+     }
+    ],
+    "reader_note": "All of the page's lines are here and in order, but there are several wrong numerals (ix→iij, xxx→lxx) and some misreads that change the sense (a missing 'si', ipsum for licet, a garbled Azo/Roffredus passage), so the text can't be relied on for close reading."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "3ee077ddb0f0889d",
+   "secs": 27,
+   "at": "2026-11-02T17:52:42.112Z"
+  },
+  {
+   "page_id": "69b52c653dd6d942302800ef",
+   "book": "69b52c653dd6d9423027fda4",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω· ςω·",
+      "severity": "wrong_text",
+      "what": "Most of the page, from about line 9 on, is replaced by the same token repeated over and over across about 15 lines."
+     },
+     {
+      "class": "O1",
+      "quote": "αβ· ςω· ςω· ςω· πα· ιν· λαμβανων· ςω· ςω· α· ςω· ςη·",
+      "severity": "wrong_text",
+      "what": "Made-up filler in place of the real lines, which can be read (e.g. 'λαβὼν', 'ῥόδα', 'κυμίνου', 'χλιαροῦ', 'τρίψον', 'ζουλά')."
+     },
+     {
+      "class": "O5",
+      "quote": "λαβων· ςω· ςω· ςω· ςω· ςω·",
+      "severity": "wrong_text",
+      "what": "The real text of about 18 of the 26 lines is lost. The candidate gives 23 lines; the page has 26."
+     },
+     {
+      "class": "O6",
+      "quote": "ὀδεως· αστερ· σελινο· ρεδ· υππο· αμακ· ςα·",
+      "severity": "misleads",
+      "what": "Even the opening lines that are partly right are badly misread (e.g. 'ὀδεως' for 'ὀξέος'), so the drug names and prescription words are wrong."
+     },
+     {
+      "class": "O7",
+      "quote": "η δδ ςτ α· μαθυδατος θ· ς·",
+      "severity": "misleads",
+      "what": "Dose numerals and abbreviations for weights are garbled or doubtful all through the text."
+     },
+     {
+      "class": "O12",
+      "quote": "ις ςρυς",
+      "severity": "misleads",
+      "what": "The three marginal notes are misread. The page has something like 'εὐχ ρυσ' / 'εὐχ ρυς', not 'ις ςρυς'."
+     }
+    ],
+    "reader_note": "Only the first few lines loosely match the page; from about line 9 on it is one token ('ςω·') repeated, and the 26 lines of real prescription text are lost."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "90616d3eca24f785",
+   "secs": 16,
+   "at": "2026-11-02T17:52:58.579Z"
+  },
+  {
+   "page_id": "6993881874305116d72cf0fa",
+   "book": "6993881874305116d72cf0ab",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "φορὰ ἅμα καὶ ἡ θεραπεία ἐκτεθείη ἐπὶ",
+      "severity": "wrong_text",
+      "what": "The first column is mostly invented. The page is Ptolemy's astronomical text on rising times (Almagest II), starting 'ἀναφερομένης τῆς ΕΗ περιφερείας…'; 'θεραπεία' is not on the page."
+     },
+     {
+      "class": "O1",
+      "quote": "ἐπὶ τῶν τοιούτων ἀγγέλων",
+      "severity": "wrong_text",
+      "what": "The second column is invented after its first words; 'angels' does not appear in this astronomical text."
+     },
+     {
+      "class": "O1",
+      "quote": "ἕνεκα στάσεως καὶ φλεγμονῆς",
+      "severity": "wrong_text",
+      "what": "Medical wording ('inflammation') made up and placed in a geometric argument."
+     },
+     {
+      "class": "O1",
+      "quote": "οἷόν τε διὰ σφιγγμάτων ἀντισ-",
+      "severity": "wrong_text",
+      "what": "Invented text."
+     },
+     {
+      "class": "O4",
+      "quote": "λωθεῖσαν ἰσοκλινῆ προειρημένου\nπλὴν διαφέρει πλεῖον",
+      "severity": "wrong_text",
+      "what": "The same lines appear twice in the second column."
+     },
+     {
+      "class": "O1",
+      "quote": "τὸ δὲ πλῆθος τῶν μοιρῶν τῶν μεταξὺ τοῦ τε μεσημβρινοῦ καὶ τοῦ ὁρίζοντος",
+      "severity": "wrong_text",
+      "what": "Invented marginal notes in the left margin. That margin is mostly cut off at the gutter."
+     },
+     {
+      "class": "O1",
+      "quote": "ἡ δὲ τοῦ τρίτου σχήματος διαγραφή· ὥστε τὴν σύνθεσιν τῶν δύο πλευρῶν",
+      "severity": "wrong_text",
+      "what": "The text inside the right-margin aedicule (decorative frame) is invented."
+     },
+     {
+      "class": "O1",
+      "quote": "ἐν ᾧ ἂν εἰς τὸ αὐτὸ σχῆμα περιφέρεται σημεῖον",
+      "severity": "wrong_text",
+      "what": "The upper-right note does not match the page."
+     },
+     {
+      "class": "O1",
+      "quote": "φ... μέρος ἄρτιον καὶ σύμμετρον",
+      "severity": "wrong_text",
+      "what": "The three-line note at the top of the page is invented."
+     },
+     {
+      "class": "O14",
+      "quote": "[12 lines of Byzantine Greek cursive scholia",
+      "severity": "wrong_text",
+      "what": "About 10 lines of notes at the bottom are described and given as invented fragments, not transcribed."
+     },
+     {
+      "class": "O12",
+      "quote": "ἐν ᾧ ἕπεται\nτῶν ὀρθῶν\nγωνιῶν",
+      "severity": "wrong_text",
+      "what": "The narrow note between the columns is invented."
+     },
+     {
+      "class": "O16",
+      "quote": "<script>handwritten</script>",
+      "severity": "cosmetic",
+      "what": "Several self-reported tags look wrong. Besides 'handwritten', the scan-quality and warning tags imply the page was read reliably."
+     }
+    ],
+    "reader_note": "Almost none of the Greek matches the leaf: the transcription is fluent but invented, with angels, inflammation and therapy in an astronomical text, plus a repeated passage and made-up marginal notes."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "82212ac1d4e3818d",
+   "secs": 20,
+   "at": "2026-11-02T17:53:00.753Z"
+  },
+  {
+   "page_id": "69938985ce15387065947812",
+   "book": "69938985ce1538706594752c",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "καὶ μὴν καὶ ὧδε οὕτως ἔχει. καὶ γὰρ ἀδοῦντος τῶν ἄλλων τῶν ταξέων χεῖρον.",
+      "severity": "wrong_text",
+      "what": "The upper block (end of Republic II, 382–383) is made-up Greek-like filler. Only the first few words roughly match the page."
+     },
+     {
+      "class": "O1",
+      "quote": "γὰρ οὐκ ἔστιν ὡς ἦν οὐκ ἔστιν ὡς ἦν, οὐκ ἔστιν ὡς ἦν, οὐκ ἔστιν ὡς ἦν",
+      "severity": "wrong_text",
+      "what": "Invented phrases repeated in place of the manuscript text"
+     },
+     {
+      "class": "O4",
+      "quote": "ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν ἦν",
+      "severity": "wrong_text",
+      "what": "A loop of 'ἦν' fills most of the upper block's last lines and nearly all of Book III, so the real text is lost"
+     },
+     {
+      "class": "O5",
+      "quote": "Τὰ δὲ αὐτῇ θεοῦ ἦν ἦν ἦν",
+      "severity": "wrong_text",
+      "what": "Book III's opening ('Τὰ μὲν δὴ περὶ θεούς...') and the rest of the lower block, about 25 lines, are missing"
+     },
+     {
+      "class": "O6",
+      "quote": "† πολιτείαν. ὡς δὲ καὶ δικαίως λόγος τεῖται.",
+      "severity": "misleads",
+      "what": "Misreads the red rubric, which reads roughly 'πολιτειῶν ἢ περὶ δικαίου λόγος τρίτος'"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>οὐκ ἔστιν ὡς ἦν ἦν ἦν</margin>",
+      "severity": "wrong_text",
+      "what": "Invented marginal note. The real marginalia are lost, including the folio number 387 and the note at the lower left."
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>ἀνθ' ὧν</margin>",
+      "severity": "misleads",
+      "what": "The marginal gloss is misread"
+     },
+     {
+      "class": "O11",
+      "quote": "<page-num>383</page-num>",
+      "severity": "cosmetic",
+      "what": "383 is a reference number in the margin, not the page number"
+     },
+     {
+      "class": "E2",
+      "quote": "<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Red decorative initial T</image-desc>",
+      "severity": "cosmetic",
+      "what": "The large red T is the first letter of 'Τὰ'. The description is fine, but the word it begins is garbled."
+     }
+    ],
+    "reader_note": "Apart from a few opening words, the transcription is invented Greek that collapses into hundreds of repeated 'ἦν'. It does not give the manuscript's text of Republic II–III."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "6af6641f0fa9beb3",
+   "secs": 19,
+   "at": "2026-11-02T17:53:17.116Z"
+  },
+  {
+   "page_id": "69938985ce15387065947812",
+   "book": "69938985ce1538706594752c",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O3",
+      "quote": "Ποιητὰς μὲν ἄρα\nἐνδίκως ἂν θεοὺς οὐκ εἴη; Οὐ μέντοι κἂν εἰ μὴ καλεῖται ὥς τι ἔχοι θεῖον λαλεῖν;",
+      "severity": "wrong_text",
+      "what": "Book II dialogue rewritten as invented Greek. The leaf reads ποιητὴς μὲν ἄρα ψευδὴς ἐν θεῷ οὐκ ἔνι … ἀλλὰ δεδιὼς τοὺς ἐχθροὺς"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀξιοῦν ἄξι' τῶν ἀνοημάτων καὶ ἑταιρικῶν θεόφιλος",
+      "severity": "wrong_text",
+      "what": "The leaf has ἀλλ' οὐδεὶς ἔφη τῶν ἀνοήτων καὶ μαινομένων θεοφιλής"
+     },
+     {
+      "class": "O1",
+      "quote": "<insert>ὡς ἂν οὐχ ὡς εἰπεῖν ὅτι ὧν ἐπιτελεῖν καὶ βιοῦν; καὶ βιοῦν, καὶ</insert>",
+      "severity": "wrong_text",
+      "what": "Invented insertions that are not on the leaf, with repeated phrasing"
+     },
+     {
+      "class": "O1",
+      "quote": "<insert>μηδὲν παρὰ τὸ δαίμονι ἀκολούθως ἕπεσθαι· οὔτε γε ὡς ἂν ἄλλως θεῷ τοῦτον</insert>",
+      "severity": "wrong_text",
+      "what": "Fabricated text in place of ἁπλοῦν καὶ ἀληθὲς … οὔτε ἄλλους ἐξαπατᾷ"
+     },
+     {
+      "class": "O1",
+      "quote": "ἀλλ' οὐχ ὥσπερ θεῷ καλὸν φαίης ἂν καὶ σοφῷ, ὡς μήτ' ἂν τοῖς θεοῖς ὀργίζοιτ' ἄν\nμηδὲ βαλεῖν ἑαυτοὺς. μήτε τοίνυν ψάλλοι",
+      "severity": "wrong_text",
+      "what": "Invented in place of ὡς μήτε αὐτοὺς γόητας ὄντας τῷ μεταβάλλειν ἑαυτοὺς μήτε ἡμᾶς ψεύδεσι παράγειν"
+     },
+     {
+      "class": "O1",
+      "quote": "μάθοιμι πείσεσθαι τοῖς διδομένοις οὐκ ἐπαινοῦμεν, πλὴν τὸ δεῖ μὴ τοιοῦτον νομίζειν τὸν θεὸν ὅ τι\nἀγαίμεθ'.",
+      "severity": "wrong_text",
+      "what": "The leaf has πολλὰ ἄρα Ὁμήρου ἐπαινοῦντες … τὴν τοῦ ἐνυπνίου πομπὴν ὑπὸ Διὸς τῷ Ἀγαμέμνονι"
+     },
+     {
+      "class": "O6",
+      "quote": "<insert>ὅτι ἧς τε γονὰς ποιήσειν τοῖς αὐτοῖς θαλάμοις ἄγοντα ἐδίδου</insert>",
+      "severity": "wrong_text",
+      "what": "Aeschylus passage garbled. The leaf has ἡ Θέτις τὸν Ἀπόλλω ἐν τοῖς αὑτῆς γάμοις ᾄδοντα"
+     },
+     {
+      "class": "O1",
+      "quote": "κἀγὼ τοῖς ὕμνοις ὡς θεοῦ θείῳ παρεῖχον ᾠδὰς, τελέειν ἅπαντας",
+      "severity": "wrong_text",
+      "what": "Invented. The leaf has μαντικῇ βρύον τέχνῃ· ὁ δ' αὐτὸς ὑμνῶν αὐτὸς ἐν θοίνῃ παρών"
+     },
+     {
+      "class": "O1",
+      "quote": "χαίρειν τε δεῖ καὶ χορεῦσαι ὅμως\nσοφόν. Καὶ τοιαῦτα πολλά τις ἂν λέγοι περὶ παιδείας ἧς δεῖ γυμνάσαι· ὅμως δ' οὐχ ἡμῖν οὔτε φιλία\nθεοῖς βαίνει",
+      "severity": "wrong_text",
+      "what": "Invented. The leaf has χαλεπανοῦμέν τε καὶ χορὸν οὐ δώσομεν … οἱ φύλακες θεοσεβεῖς τε καὶ θεῖοι"
+     },
+     {
+      "class": "O6",
+      "quote": "ἄνδρα ἔχοντα τοῦτον τὸν φόβον ἐν τῇ καρδίᾳ",
+      "severity": "wrong_text",
+      "what": "The leaf has ἀνδρεῖον ἔχοντα ἐν αὑτῷ τοῦτο τὸ δεῖμα"
+     },
+     {
+      "class": "O5",
+      "quote": "ἐν ᾅδου ἡγῇ; ἆρ' οὐκ ἐναντίον καλοῖς; ὦ ἑταῖρε, τούτων τοίνυν ἕνεκα δέοιτ' ἂν ἐπιστατεῖν",
+      "severity": "wrong_text",
+      "what": "Drops the passage on dying in battle (ἐν ταῖς μάχαις αἱρήσεσθαι πρὸ ἥττης τε καὶ δουλείας θάνατον) and replaces it with invented text"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>: ἡ ἄνω</margin>",
+      "severity": "cosmetic",
+      "what": "This marginal note sits beside line 9 on the leaf but is placed at the top of the page"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>ἐπεὶ πάλιν ἐκεῖνος ἔφη ἡμῖν</margin>",
+      "severity": "misleads",
+      "what": "Marginal gloss does not match what the margin says"
+     }
+    ],
+    "reader_note": "Most of the Book II text before the red book heading is invented pseudo-Plato rather than the manuscript's words. The Book III heading and the Homer quotations are roughly right."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "c8ffe07c86a8f44a",
+   "secs": 54,
+   "at": "2026-11-02T17:53:22.687Z"
+  },
+  {
+   "page_id": "69dbca0b1040d1d5e20a8d77",
+   "book": "69dbca0b1040d1d5e20a8d6e",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "ταὐτὸ δ᾽ ἂν εἴη τοῦτῳ καὶ καθόλου. τῶν δ᾽ οὐσιῶν ταῖς κατ᾽ εἶδος ἤδη βλεπομένων",
+      "severity": "wrong_text",
+      "what": "the opening line does not match the print; the start of the page is reconstructed"
+     },
+     {
+      "class": "O6",
+      "quote": "ἐκπαιδευσθεὶς ἄν τις, ἐπιτιμῶν τινὶ τοιούτοις",
+      "severity": "wrong_text",
+      "what": "the page names Thessalus ('ἐκπαιδευθεὶς θεσσαλός, ἐπιτιμᾷ τηλικούτοις ἀνδράσιν'); the name is dropped and the sense changed"
+     },
+     {
+      "class": "O6",
+      "quote": "κηρὶ γὰρ φωνὴν εἶναι φύσει πάντως",
+      "severity": "wrong_text",
+      "what": "the print has 'ἢ γὰρ φωνῆεν εἶναι φήσει'"
+     },
+     {
+      "class": "O1",
+      "quote": "ὥσπερ μὲν ἦθος ἢ λάγνον νόσημα ὄν",
+      "severity": "wrong_text",
+      "what": "nonsense in place of 'ὕστερον μὲν … νόσημα'"
+     },
+     {
+      "class": "O1",
+      "quote": "πᾶν τὸ ἁπλοῦν ἔχουσιν μέρος οἰκείας διαφορὰς, ῥητὴν ἑκάστην αὐτῶν",
+      "severity": "wrong_text",
+      "what": "invented text; the page gives the animal differentiae (θνητὸν / ἀθάνατον, λόγου, ἥμερον / ἄγριον)"
+     },
+     {
+      "class": "O1",
+      "quote": "κἀκείνων μὲν πρὸς τε τὴν τῶν ζῴων ἕκαστα κίνησιν",
+      "severity": "wrong_text",
+      "what": "invented in place of the printed line"
+     },
+     {
+      "class": "O1",
+      "quote": "κἀγαθὸν αὐτῶν, ἢ κλητικὸν ἢ θηρευτὴν",
+      "severity": "wrong_text",
+      "what": "the print has 'ἀθάνατον … λογικὸν … θνητὸν'"
+     },
+     {
+      "class": "O6",
+      "quote": "ὃ τολμηροτάτος θεατηλὸς",
+      "severity": "wrong_text",
+      "what": "misreads the name Thessalus (θεσσαλὸς)"
+     },
+     {
+      "class": "O4",
+      "quote": "διαφορὰς οἰκείας. Περὶ παντὸς γὰρ ὦ παῖ",
+      "severity": "wrong_text",
+      "what": "the phrase appears twice on consecutive lines; the page has it once"
+     },
+     {
+      "class": "O5",
+      "quote": "μηδ᾽ οὕτω μὴ δ᾽ ἀρχῆς αὐτῆς τετὴ",
+      "severity": "wrong_text",
+      "what": "drops 'ἐφαψάμενος, ἀφ' ἧς ἀναγκαῖόν ἐστιν ἄρξασθαι τὸν μέλλοντα'"
+     },
+     {
+      "class": "O6",
+      "quote": "ζῴων τε τῶν ἐκθήρων γεγραμ-",
+      "severity": "misleads",
+      "what": "the print reads 'ἐκείνων γεγραμ'"
+     },
+     {
+      "class": "O11",
+      "quote": "<sig>A A</sig>",
+      "severity": "misleads",
+      "what": "the signature mark is Α Δ"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>ἓν θαυμαστικῶς λίαν</margin>",
+      "severity": "misleads",
+      "what": "the red marginal notes begin with ὢ, and the other two are guessed"
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "the tag doesn't fit a candidate this garbled; the problem is the reading, not the scan"
+     }
+    ],
+    "reader_note": "Long stretches don't match the printed Galen text: phrases are invented, the name Thessalus is lost, one phrase is duplicated, a clause is dropped, and the signature mark is wrong. It can't be trusted as a transcription of this page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "a9695e573d50bc7a",
+   "secs": 42,
+   "at": "2026-11-02T17:53:43.817Z"
+  },
+  {
+   "page_id": "69b52c583dd6d9423027f96f",
+   "book": "69b52c583dd6d9423027f75a",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "πάντων οὖν ὑπὸ τὸν ὄντων μὲν τελεία σοφία τοίνυν πρὸ μὲν ἅπαντας σοφίαν ταύτην ὀνομάζομεν",
+      "severity": "wrong_text",
+      "what": "Across the middle of the page the heavily abbreviated cursive is filled out as fluent Greek that the strokes don't support; much of the wording is guessed."
+     },
+     {
+      "class": "O1",
+      "quote": "Καὶ εἷς καλὸν ὅπου γ᾽ οἷτ᾽ αὐτὴν ληπτέον σφαλεῖ, καθὼς ἄλλοις οὐδ᾽ ἴσως δὲ ὅτι ἄκαιρον τὸ τοιαῦτα λέγειν.",
+      "severity": "wrong_text",
+      "what": "The line opening roughly tracks the page (Καὶ ὡς καθ… ὅπου), but the rest is a confident reconstruction that doesn't match the abbreviations."
+     },
+     {
+      "class": "O6",
+      "quote": "τὸ δὲ ὅτι, πρὸ μὲν ἅλω καὶ ὅσα ἐστὶν ἐκεῖνο, ἵνα τι καὶ θεῖον.",
+      "severity": "wrong_text",
+      "what": "Misreading that produces garbled sense."
+     },
+     {
+      "class": "O5",
+      "quote": "ἀλλὰ καὶ διὰ συντόμου δὲ αὖ καὶ ὑπὸ μιᾷ τῶν καθόλου αὐτῆς ποσοῦ. Καὶ προσέτι γε",
+      "severity": "misleads",
+      "what": "Line breaks don't match the page, which has about 48 lines to the candidate's 45; some content looks merged or dropped."
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>fol. 161 r</margin>",
+      "severity": "misleads",
+      "what": "There is no visible 'fol. 161 r' on the leaf; the only furniture is the 'β' at the top and the stamped 262."
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "The scan is fine, but the transcription carries no uncertainty marks despite a dense abbreviated hand."
+     }
+    ],
+    "reader_note": "The beginning and end of the page roughly follow the manuscript, but most of the dense abbreviated cursive has been turned into fluent Greek the image doesn't support, with no uncertainty marked. The 'fol. 161 r' marginal label is not on the leaf."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "42bf9b302e4981a1",
+   "secs": 27,
+   "at": "2026-11-02T17:53:44.466Z"
+  },
+  {
+   "page_id": "69dbc9cd1040d1d5e20a6f4c",
+   "book": "69dbc9cd1040d1d5e20a6e64",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ꝝ ꝝ ꝝ ꝝ ꝝ ꝝ ꝝ ꝝ ꝝ ꝝ",
+      "severity": "wrong_text",
+      "what": "a runaway loop of thousands of repeated ꝝ symbols stands where the rest of the right text column should be"
+     },
+     {
+      "class": "O5",
+      "quote": "Sol.oēs doctores dicūt ꝝ ꝑ ꝝ ꝓ",
+      "severity": "wrong_text",
+      "what": "about 35 lines are missing from the right text column, from 'ubi q̃stio est de solēnitate' down to 'potes de iur. rigore'"
+     },
+     {
+      "class": "O4",
+      "quote": "<p>AC de his. aliisq̃ de his casibꝫ not. Jo.ibi.",
+      "severity": "wrong_text",
+      "what": "marginal glosses a–g are copied a second time as main-text paragraphs"
+     },
+     {
+      "class": "O6",
+      "quote": "Que possunt ꝓtestates opponi.",
+      "severity": "misleads",
+      "what": "the running head on the page reads 'Que possunt ꝯtra testes opponi'"
+     },
+     {
+      "class": "O5",
+      "quote": "alias enim non effet testamē tū.C.cōdenat̃.ii.c.q̃i.statutis.vel fi aliq̃ d",
+      "severity": "wrong_text",
+      "what": "drops 'si non eẽnt rogati' and inserts reference text that is not on the page here"
+     },
+     {
+      "class": "O6",
+      "quote": "f ¶ Rogati. ibi ꝓ pater fuit.",
+      "severity": "misleads",
+      "what": "the page reads 'ibi ꝯ patet Guil.'"
+     },
+     {
+      "class": "O6",
+      "quote": "Ad fidem qua babes",
+      "severity": "misleads",
+      "what": "systematic h→b and s→f misreads ('babes', 'bodie', 'effe', 'fine' for sine)"
+     },
+     {
+      "class": "O6",
+      "quote": "etto fuit in scriptis",
+      "severity": "misleads",
+      "what": "the page reads 'ctus fuit'"
+     },
+     {
+      "class": "O6",
+      "quote": "ꝑbare se ꝓfessisse z ꝓfoliatū effe",
+      "severity": "misleads",
+      "what": "the page reads 'possedisse et spoliatum esse'"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>h Secūdū Gof.in sum.",
+      "severity": "cosmetic",
+      "what": "column breaks put the right-hand margin in the wrong place in the reading order"
+     }
+    ],
+    "reader_note": "The left column and the glosses are present but full of misreads; the glosses appear twice, and the right column breaks off halfway into thousands of repeated ꝝ symbols."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "0c0416de8f8d2d1e",
+   "secs": 22,
+   "at": "2026-11-02T17:53:45.399Z"
+  },
+  {
+   "page_id": "69c1bbc48522835be8460768",
+   "book": "69c1bbc48522835be846073a",
+   "stratum": "Hebrew print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O18",
+      "quote": "<page-type>blank</page-type>",
+      "severity": "wrong_text",
+      "what": "The page is full of handwritten Hebrew text, but none of it was transcribed. It includes verses from 2 Kings 9–10 and 2 Chronicles 21, the line 'לישועתך קויתי ה׳' (repeated three times), Genesis 32:2–3 (repeated seven times), the Priestly Blessing, and small headings."
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>show-through from the other side only</warning>",
+      "severity": "wrong_text",
+      "what": "The warning is wrong. The ink is the page's own text, not show-through from the other side."
+     }
+    ],
+    "reader_note": "The leaf is a full handwritten page of vocalised Hebrew verses and protective formulas with instructions to repeat them, but the transcription says the page is blank."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "ebc3b169cc508000",
+   "secs": 9,
+   "at": "2026-11-02T17:53:53.189Z"
+  },
+  {
+   "page_id": "69d5abdc4dc55b8478ddd346",
+   "book": "69d5abdc4dc55b8478ddd24d",
+   "stratum": "other",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O2",
+      "quote": "այս զի մահուամբ իւր / րոյ պսակեցաւ դեւղի։-",
+      "severity": "wrong_text",
+      "what": "The page is in Georgian nuskhuri script, but the whole text is given as invented Armenian bolorgir. No line matches the leaf."
+     },
+     {
+      "class": "O16",
+      "quote": "<language>Armenian</language>",
+      "severity": "misleads",
+      "what": "Language and script are tagged as Armenian. The page is Georgian (nuskhuri/khutsuri)."
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten Armenian bolorgir script</warning>",
+      "severity": "misleads",
+      "what": "The warning names the wrong script."
+     },
+     {
+      "class": "O12",
+      "quote": "<insert>ի̅ե</insert>",
+      "severity": "wrong_text",
+      "what": "The red marginal chapter numbers are Georgian numerals. They are rendered as made-up Armenian numerals and tagged as inserts."
+     },
+     {
+      "class": "O1",
+      "quote": "<vocab>Մելքիսեդեկ, Ղեւտացի, Քրիստոս, ուխտ, յաղագս, օրինակ</vocab>",
+      "severity": "misleads",
+      "what": "The vocabulary list comes from the made-up Armenian text, not from the page."
+     }
+    ],
+    "reader_note": "This page is two columns of Georgian nuskhuri with red marginal chapter numbers, but the transcription beside it is made-up Armenian text that matches none of it."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "318696636af8ee6a",
+   "secs": 12,
+   "at": "2026-11-02T17:53:56.963Z"
+  },
+  {
+   "page_id": "69c1bb3c8522835be845db6f",
+   "book": "69c1bb3c8522835be845d9af",
+   "stratum": "Hebrew print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "וזהו בחי' זו בחי' זו, וזהו בחי' זו בחי' זו, וזהו בחי' זו בחי' זו",
+      "severity": "wrong_text",
+      "what": "Text from about line 3 onward is invented filler. It does not match the handwriting on the page."
+     },
+     {
+      "class": "O4",
+      "quote": "וזהו בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי'",
+      "severity": "wrong_text",
+      "what": "From about line 15 to the end, the lines are just \"בחי'\" repeated over and over."
+     },
+     {
+      "class": "O6",
+      "quote": "התורה, אמנם אלו בחי' למטה",
+      "severity": "wrong_text",
+      "what": "The page opens with \"בבריאה\" (or similar), not \"התורה\". Even the first lines that roughly follow the page are misread."
+     },
+     {
+      "class": "O6",
+      "quote": "היינו מה שעשה יעקב, שבשעה שבאו אליו המלאכים",
+      "severity": "wrong_text",
+      "what": "Line 2 of the page does not mention Jacob or the angels. The candidate made this up."
+     },
+     {
+      "class": "O5",
+      "quote": "וזהו בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי' בחי'",
+      "severity": "wrong_text",
+      "what": "The page has about 34 lines plus a signature or flourish at the bottom. The candidate has 28 lines of mostly filler, so the real text and the signature are missing."
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>התורה, יעקב, מלאכים, רצון העליון, עולם העליון, רחמים, תענוג</vocab>",
+      "severity": "misleads",
+      "what": "This vocabulary list comes from the invented text, not from the page."
+     }
+    ],
+    "reader_note": "Only the first line or two loosely follow this handwritten leaf. After that the text is made up and turns into endless repeats of \"בחי'\", so it has nothing to do with the page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "9460cd3333e5027e",
+   "secs": 13,
+   "at": "2026-11-02T17:54:10.338Z"
+  },
+  {
+   "page_id": "69c1bbc48522835be8460768",
+   "book": "69c1bbc48522835be846073a",
+   "stratum": "Hebrew print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 4,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "יְהִי יְהוָה:",
+      "severity": "wrong_text",
+      "what": "The page opens with a fragment ending in אליהו (the abbreviated א-ל ligature), not 'יהי יהוה'. The candidate swaps Elijah's name for the divine name."
+     },
+     {
+      "class": "O12",
+      "quote": "<gloss>וחוזר חלילה</gloss>",
+      "severity": "misleads",
+      "what": "The small rubric after והנורא reads roughly 'ו… יחזור ל' פ''. It is a repetition count, and 'חלילה' is not supported by the page."
+     },
+     {
+      "class": "O12",
+      "quote": "<gloss>וחוזר ז' פעמים זה הפסוק</gloss>",
+      "severity": "cosmetic",
+      "what": "The page reads ויחזור here, as in the earlier rubric."
+     },
+     {
+      "class": "O8",
+      "quote": "<vocab>אליהו התשבי, איזבל, אחאב, שומרון, יהושפט, אסא, יעקב, מלאכי אלהים, מחנים, ברכת כהנים</vocab>",
+      "severity": "cosmetic",
+      "what": "An editorial keyword list was added that is not on the page, along with fully spelled יהוה where the page abbreviates it as יי."
+     }
+    ],
+    "reader_note": "The body text matches the leaf, including the Elijah verses, לישועתך, the לקי lines, the Mahanaim verse and the priestly blessing. But the first line wrongly puts 'יהי יהוה' where the page has אליהו, and the small repetition rubrics are guessed."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "c9cc62a85b7b1a03",
+   "secs": 22,
+   "at": "2026-11-02T17:54:15.397Z"
+  },
+  {
+   "page_id": "69d66bdb4da4f8dce52f20cf",
+   "book": "69d66bdb4da4f8dce52f2047",
+   "stratum": "Armenian MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "ընկրթուեց ցուցայ թլփատութիւնն",
+      "severity": "wrong_text",
+      "what": "garbled non-words at the foot of the left column; not a reading of the line"
+     },
+     {
+      "class": "O6",
+      "quote": "թէ մկրտութիւն յիսուսի էր\nնախապատրաստութիւն մկրտութեանն քրիստոսի",
+      "severity": "misleads",
+      "what": "says Jesus's baptism prepared for Christ's baptism, which makes no sense; the argument needs John's baptism (յովհաննու)"
+     },
+     {
+      "class": "O6",
+      "quote": "էր ։ վասն յղի կնոջն ըզ ։ ժ ։ թէ կանանց\nին է ի կնոջ կողմն ։",
+      "severity": "wrong_text",
+      "what": "incoherent reading of the line before the first reply"
+     },
+     {
+      "class": "O6",
+      "quote": "ըզվճարհեացիփ\nաստուած իմ ի սուրբ ժողովրդենէ",
+      "severity": "wrong_text",
+      "what": "nonsense word and invented phrase in place of the manuscript line"
+     },
+     {
+      "class": "O6",
+      "quote": "պրտիսրտիւ անձկդրին ։ ի օրինակի",
+      "severity": "wrong_text",
+      "what": "non-words in the third objection"
+     },
+     {
+      "class": "O6",
+      "quote": "որ լինէր ի ստեզն ապականութեամբ\nից",
+      "severity": "wrong_text",
+      "what": "garbled line"
+     },
+     {
+      "class": "O6",
+      "quote": "զոր յո-\nսվելդ աստուած քաւութիւն ձեռն հաւատոյ ես-\nմը նոր ասէ իսկոյն յետ վերացնոյին",
+      "severity": "misleads",
+      "what": "Romans 3:25 citation garbled into non-words"
+     },
+     {
+      "class": "O6",
+      "quote": "յիսուսի տիեզերական\nեանս",
+      "severity": "misleads",
+      "what": "garbled; the sense is that baptism was given to all nations"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>[բ]</margin>",
+      "severity": "cosmetic",
+      "what": "the left-margin letter ա (at the first reply) is dropped; only բ and գ are given"
+     }
+    ],
+    "reader_note": "The text follows the page's argument (Aquinas on circumcision, end of article 1 and article 2), but several lines in both columns are nonsense words or likely misreads. One example: 'Jesus's' baptism where the sense requires John's. A margin numeral is also missing. The scan is low-resolution, so I couldn't check every word."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "c7475709dcc6dce5",
+   "secs": 34,
+   "at": "2026-11-02T17:54:19.519Z"
+  },
+  {
+   "page_id": "69dbc8291040d1d5e20978d4",
+   "book": "69dbc8291040d1d5e20977ea",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ ꝑ",
+      "severity": "wrong_text",
+      "what": "The transcription collapses into thousands of repeated 'ꝑ' tokens in place of the rest of the right column."
+     },
+     {
+      "class": "O5",
+      "quote": "ſentim? ꝑ ꝑ litate multotiens āt ꝑ ꝑ ꝑ",
+      "severity": "wrong_text",
+      "what": "The end of the right column is lost, including the paragraph beginning 'Statiz āt ⁊ p totū diuisit hy.' and its following lines."
+     },
+     {
+      "class": "O5",
+      "quote": "qd bōi ſpandū e in b.q.d.nibil.",
+      "severity": "wrong_text",
+      "what": "Three large-type text blocks in the centre are dropped: 'Solutões āt ⁊ vlcez dispō nisi rotūda…', 'Achryme i acutis morbis…' and 'Et qbus circūtēdūt palpebre…'."
+     },
+     {
+      "class": "O6",
+      "quote": "Hoc.n.rotūda mala fūt: aut ppid q capaciſſima fūt",
+      "severity": "misleads",
+      "what": "Many abbreviations are misread throughout, e.g. 'fūt' for 'sūt' and 'pſū Veda' for 'psūda'."
+     },
+     {
+      "class": "O6",
+      "quote": "ꝑ ꝑ ꝑ ꝑ litates ſut: ꝑ fūt tact? ꝑ ꝑ ꝑ ſenſus",
+      "severity": "wrong_text",
+      "what": "The right column is badly garbled even before the loop, with filler 'ꝑ' signs replacing words."
+     },
+     {
+      "class": "O12",
+      "quote": "Solutio purris et Sanginis, magis pride pferioriby apparet",
+      "severity": "misleads",
+      "what": "The handwritten note reads 'Solutionis vero puris et Sanguinis fluxus, magis quidem …'; the word 'fluxus' is dropped and other words are garbled."
+     },
+     {
+      "class": "O12",
+      "quote": "Tāc hic de lachry mis.",
+      "severity": "misleads",
+      "what": "The printed marginal note reads 'Nō hic de lachrymis'."
+     },
+     {
+      "class": "O12",
+      "quote": "Pauli q sut admo dū fenestra rũ",
+      "severity": "misleads",
+      "what": "The printed marginal note reads 'Oculi q sūt admodū fenestrarū'."
+     },
+     {
+      "class": "O11",
+      "quote": "<page-num>16</page-num>",
+      "severity": "misleads",
+      "what": "'16' is a section number printed in the right column, not a folio or page number."
+     },
+     {
+      "class": "O12",
+      "quote": "He aut Exuſkocu vidre ꝑoſts",
+      "severity": "misleads",
+      "what": "This handwritten note is merged into the printed text as if it were part of it."
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "The self-reported quality tags do not match a degenerate output."
+     }
+    ],
+    "reader_note": "The text is heavily garbled; the main lemma blocks are missing, and the right column turns into thousands of repeated 'ꝑ' signs, so this cannot serve as the transcription of this page."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "bd15d0ce2936a12e",
+   "secs": 20,
+   "at": "2026-11-02T17:54:30.126Z"
+  },
+  {
+   "page_id": "69f7474918d8b7b6c680fac3",
+   "book": "69c89d196c6f3cc53c85d762",
+   "stratum": "Latin MS",
+   "which": "new",
+   "verdict": {
+    "accept": true,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "I read the page line by line and found no defects. The transcription has all 28 lines of Latin text in order, with the page number 17 and the signature line 'Tom. III, C'. The script fragments at the edge of the facing page were correctly left out."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "95e9a6731b70bd73",
+   "secs": 8,
+   "at": "2026-11-02T18:01:17.580Z"
+  },
+  {
+   "page_id": "69f290d43d9a9c4aad8a24ec",
+   "book": "69d66beb4da4f8dce52f2434",
+   "stratum": "Armenian MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "զի ըստ իւր իւր իւր իւր իւր իւր իւր իւր իւր",
+      "severity": "wrong_text",
+      "what": "Filler of repeated 'իւր' in place of the real text in the lower half of the page"
+     },
+     {
+      "class": "O4",
+      "quote": "իւր իւր իւր իւր իւր իւր իւր իւր իւր իւր իւր",
+      "severity": "wrong_text",
+      "what": "The same token is repeated across several whole lines"
+     },
+     {
+      "class": "O1",
+      "quote": "Երեւելցելին ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ ծ",
+      "severity": "wrong_text",
+      "what": "Strings of 'ծ' replace the last five lines, which are written clearly on the leaf"
+     },
+     {
+      "class": "O6",
+      "quote": "շովիւթ ոչ յիւթիւնս յայսմ յիւթիս իւրոյս",
+      "severity": "wrong_text",
+      "what": "The upper lines are garbled guesses that do not match the cursive text"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>զայս իւր ըստ իւր իւր</margin>",
+      "severity": "wrong_text",
+      "what": "Faint lighter-ink rubric runs sit inside the text lines, not in a margin, and are invented or garbled here"
+     },
+     {
+      "class": "O16",
+      "quote": "<page-num>49</page-num>",
+      "severity": "misleads",
+      "what": "No page number is visible on the leaf"
+     },
+     {
+      "class": "O16",
+      "quote": "<warning>Handwritten Armenian (Bolorgir script)</warning>",
+      "severity": "cosmetic",
+      "what": "The hand is a cursive (notrgir-like) script, not bolorgir"
+     }
+    ],
+    "reader_note": "Apart from a few word shapes in the first lines, the text doesn't match the leaf: the second half is repeated 'իւր' and 'ծ' filler, and the faint lighter-ink rubrics are lost or invented."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "86f3b776cc8f68bd",
+   "secs": 16,
+   "at": "2026-11-02T18:01:33.497Z"
+  },
+  {
+   "page_id": "69f33e53876dd827cbc5e311",
+   "book": "69f33e53876dd827cbc5e2f2",
+   "stratum": "Korean MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O5",
+      "quote": "나여 나의  겨오난 바 몯이 아니니",
+      "severity": "wrong_text",
+      "what": "line 1 drops syllables after 나여 (쌀) and 나의 (쓴 쳐ᄒᆞᆫ); 겨오난 is not on the page"
+     },
+     {
+      "class": "O5",
+      "quote": "내  그릊 되도다",
+      "severity": "wrong_text",
+      "what": "drops 대ᄉᆞ between 내 and 그릇; a blank is left in its place"
+     },
+     {
+      "class": "O6",
+      "quote": "온부인을 뎨변으로",
+      "severity": "wrong_text",
+      "what": "page reads 순부인 and 셰번; this changes the name and the sense"
+     },
+     {
+      "class": "O6",
+      "quote": "맛치 호랑이 조흔 벼슬으로",
+      "severity": "wrong_text",
+      "what": "line 7 begins with 당이 조흔 벼슬을; 호랑이 ('tiger') is a misread"
+     },
+     {
+      "class": "O6",
+      "quote": "가다가",
+      "severity": "misleads",
+      "what": "page reads 가지고 맛ᄀᆞ치…"
+     },
+     {
+      "class": "O6",
+      "quote": "혀 말호 뉘도 미 아마 지지  열듯 호더니",
+      "severity": "wrong_text",
+      "what": "line 8 is garbled; it misreads 쌰혀 왈 … 지지를 혈듯ᄒᆞ다"
+     },
+     {
+      "class": "O6",
+      "quote": "삭방의 벼슬 잇지라",
+      "severity": "wrong_text",
+      "what": "page reads roughly 착박이 ᄯᅩ 술이ᄋᆞ 운지라"
+     },
+     {
+      "class": "O6",
+      "quote": "가 븹 심시 모",
+      "severity": "wrong_text",
+      "what": "page reads 쳐황ᄒᆞᆫ 말모ᄋᆞ 겁ᄒᆞᆫ 심시 모; the 쳐황ᄒᆞᆫ 말모ᄋᆞ span is dropped"
+     },
+     {
+      "class": "O6",
+      "quote": "운끠 얽 상으로",
+      "severity": "misleads",
+      "what": "page reads 연대상으로"
+     },
+     {
+      "class": "O5",
+      "quote": "<unclear>[illegible — 4-5 syllables]</unclear> 벋을 블너",
+      "severity": "misleads",
+      "what": "this span is legible on the page, but the candidate marks it unclear instead of reading it"
+     },
+     {
+      "class": "O7",
+      "quote": "오십필",
+      "severity": "wrong_text",
+      "what": "page reads 오십결 (a unit of land); 필 is the wrong unit"
+     },
+     {
+      "class": "O5",
+      "quote": "내 바치면 <unclear>[illegible — 4-5 syllables]</unclear>",
+      "severity": "misleads",
+      "what": "drops 게 (page has 내게 바치면) and marks a legible span as unclear"
+     },
+     {
+      "class": "O6",
+      "quote": "쟝형의 사디니",
+      "severity": "wrong_text",
+      "what": "page reads 황셩의 사더니; this changes the place"
+     },
+     {
+      "class": "O6",
+      "quote": "충효문 여옥이",
+      "severity": "misleads",
+      "what": "page reads 충슌(?) 여옥이; 충효문 is not on the page"
+     },
+     {
+      "class": "O16",
+      "quote": "충효문",
+      "severity": "misleads",
+      "what": "the vocab tag lists misread names (온부인, 충효문)"
+     }
+    ],
+    "reader_note": "Many lines differ from the leaf: names are misread (순부인 given as 온부인, 셰번 as 뎨변, 황셩 as 쟝형), the unit is wrong (오십결 given as 오십필), syllables are dropped, and legible spans are marked illegible. The transcription can't be trusted beside the image."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "e88008a45ea4c931",
+   "secs": 33,
+   "at": "2026-11-02T18:01:42.536Z"
+  },
+  {
+   "page_id": "6a271d4463b04f91e2dec007",
+   "book": "699383a750654cbbe2917f1b",
+   "stratum": "Greek MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "ἡμῖν πεφανέρωται τῆς ἀφανείας ὑπομνήματα ὀλολυγῆς τῆς ἀξίας·",
+      "severity": "wrong_text",
+      "what": "a garbled line that does not fit the faint minuscule; looks invented to fill the gap"
+     },
+     {
+      "class": "O1",
+      "quote": "τήνδε</unclear> τὴν συντομίαν, τοῦ βίου καὶ ἐκλιποῦ",
+      "severity": "wrong_text",
+      "what": "ungrammatical filler where the leaf's line 3 is not legible"
+     },
+     {
+      "class": "O1",
+      "quote": "παραληφθῆναι πληθὺν μύχων καὶ προσόντων ἀμφοτέροις ὁδὸν",
+      "severity": "wrong_text",
+      "what": "nonsense words that do not match the visible letter shapes"
+     },
+     {
+      "class": "O1",
+      "quote": "ἰδοὺ γὰρ καὶ ὁ θεὸς τοὺς οἰκείους ἅπαν-\nτας καὶ κατασκευαζομένους τῷ θεῷ",
+      "severity": "wrong_text",
+      "what": "incoherent reconstruction, not a reading of the line"
+     },
+     {
+      "class": "O3",
+      "quote": "οὐδὲ ἴδετε μορφὴν,\nπλὴν δὲ φωνῆς μόνον ἠκούσατε",
+      "severity": "misleads",
+      "what": "a Deuteronomy 4:12 paraphrase that may stand in for what the leaf actually says"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀλλὰ μι-\nνεῖν",
+      "severity": "misleads",
+      "what": "a misread split word (should be μέ-νειν)"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin><unclear>[marginal note — 3 lines]</unclear></margin>",
+      "severity": "misleads",
+      "what": "marginal notes misplaced: the page's dense left-margin notes sit beside the middle and lower text, not at the top"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin><unclear>[marginal note]</unclear></margin>",
+      "severity": "misleads",
+      "what": "several separate left-margin glosses collapsed into one placeholder"
+     },
+     {
+      "class": "O5",
+      "quote": "<unclear>[+ illegible text — 2 lines]</unclear>",
+      "severity": "cosmetic",
+      "what": "two faint top lines flagged but not attempted"
+     }
+    ],
+    "reader_note": "The line count roughly matches the leaf, but much of the Greek is ungrammatical filler that the faint minuscule does not support, and the left-margin notes are misplaced, so it should not be published as the page's text."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "49169f842333114f",
+   "secs": 36,
+   "at": "2026-11-02T18:01:45.796Z"
+  },
+  {
+   "page_id": "69f33e53876dd827cbc5e311",
+   "book": "69f33e53876dd827cbc5e2f2",
+   "stratum": "Korean MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ",
+      "severity": "wrong_text",
+      "what": "most of the page is filled with the repeated nonsense syllable ᄯᅴ instead of the legible text"
+     },
+     {
+      "class": "O4",
+      "quote": "운 ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ ᄯᅴ",
+      "severity": "wrong_text",
+      "what": "the same filler token repeats across whole lines"
+     },
+     {
+      "class": "O6",
+      "quote": "내 대 그릇 되도 아 ᄯᅴ 앋 숭상 부지 하진을",
+      "severity": "wrong_text",
+      "what": "even the early lines are garbled: the page reads roughly 내대ᄉᆞ 그ᄅᆞᆺ되도다 ... 숭샹부지 ᄒᆞ진을"
+     },
+     {
+      "class": "O5",
+      "quote": "계 항 ᄯᅴ ᄯᅴ ᄯᅴ",
+      "severity": "wrong_text",
+      "what": "the content of the lower half and the left lines is lost, e.g. the last line 계향으로 ᄒᆞᆸ을 삼어 황셩의..."
+     },
+     {
+      "class": "O16",
+      "quote": "Handwritten Korean (Hangeul mixed with Hanja), significant staining and fading throughout the page.",
+      "severity": "misleads",
+      "what": "the page is all Hangul with no Hanja; the stain covers only the upper middle and the text is largely legible"
+     },
+     {
+      "class": "O15",
+      "quote": "rendering the majority of the text illegible or obscured by dark staining",
+      "severity": "misleads",
+      "what": "the note wrongly claims the text is illegible to excuse the filler"
+     },
+     {
+      "class": "T10",
+      "quote": "Hwamun hyohaengnok",
+      "severity": "misleads",
+      "what": "the work is named without any support from the page"
+     }
+    ],
+    "reader_note": "This page of clear, readable Hangul cursive (about 15 lines) is shown as a few garbled syllables followed by hundreds of repeated 'ᄯᅴ' fillers, so it cannot be used as a transcription."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "81d2efd3aafadc84",
+   "secs": 18,
+   "at": "2026-11-02T18:01:51.614Z"
+  },
+  {
+   "page_id": "6a271d4463b04f91e2dec007",
+   "book": "699383a750654cbbe2917f1b",
+   "stratum": "Greek MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 1,
+    "defects": [
+     {
+      "class": "O1",
+      "quote": "ἣ δὲ μᾶλλον τοιαύτη ὧν οὐρανία· ἣ δὲ μᾶλλον ὡς ἣν τὸ σχῆμα",
+      "severity": "wrong_text",
+      "what": "The opening lines are invented. They are plausible-sounding Pseudo-Dionysian Greek that does not match the minuscule on the leaf."
+     },
+     {
+      "class": "O4",
+      "quote": "ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν ἣν",
+      "severity": "wrong_text",
+      "what": "Most of the body is the single word ἣν repeated for line after line in place of the actual text."
+     },
+     {
+      "class": "O12",
+      "quote": "<unclear>τὸ</unclear>\n<unclear>αὐτὸ</unclear>",
+      "severity": "wrong_text",
+      "what": "The margin is invented as a repeated 'τὸ αὐτὸ'. The real left-margin notes, beside the lower half of the text, are not transcribed."
+     },
+     {
+      "class": "O5",
+      "quote": "<margin>",
+      "severity": "wrong_text",
+      "what": "The two lines of small script at the top of the leaf, above the main text, are left out."
+     },
+     {
+      "class": "O1",
+      "quote": "μον καὶ μεμυόμεν ἣν ἣν ἣν",
+      "severity": "wrong_text",
+      "what": "These line fragments are invented and fill the line with a repeated filler word. The line count and layout do not match the page's roughly 30 lines of text."
+     },
+     {
+      "class": "O1",
+      "quote": "καὶ αὐτὴ δὲ ἀμέσως ἣν ἣν ἣν",
+      "severity": "wrong_text",
+      "what": "The second block is invented as well. The page has no break into paragraphs at this point."
+     }
+    ],
+    "reader_note": "Almost none of this transcription matches the page: most lines are 'ἣν' repeated over and over, the margin is a made-up repeated 'τὸ αὐτὸ', and none of the real minuscule text or marginal notes appears."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "6004d7faf8f89f9a",
+   "secs": 11,
+   "at": "2026-11-02T18:01:57.108Z"
+  },
+  {
+   "page_id": "69f7474918d8b7b6c680fac3",
+   "book": "69c89d196c6f3cc53c85d762",
+   "stratum": "Latin MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "I4",
+      "quote": "<margin>\n<unclear>ܘ</unclear>\n<unclear>ܘ</unclear>",
+      "severity": "wrong_text",
+      "what": "The facing page's text, visible at the left edge of the photo, is transcribed as marginalia on this page. The leaf itself has no margin text."
+     },
+     {
+      "class": "O2",
+      "quote": "<unclear>ܘ</unclear>",
+      "severity": "wrong_text",
+      "what": "The same Syriac letter is repeated 26 times as placeholder text. None of it reads the glyphs that are actually visible."
+     },
+     {
+      "class": "O11",
+      "quote": "<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Mandaic script in the left margin</image-desc>",
+      "severity": "misleads",
+      "what": "Describes the neighbouring page's script as an image in this page's margin."
+     },
+     {
+      "class": "O16",
+      "quote": "<language>Latin, Mandaic</language>\n<script>mixed</script>",
+      "severity": "misleads",
+      "what": "The page is Latin only, in roman type. The Mandaic tag comes from the neighbouring page."
+     }
+    ],
+    "reader_note": "The Latin main text, page number 17, signature C and 'Tom. III' match the leaf line for line. But the candidate adds 26 lines of made-up 'Mandaic' marginalia that are really the edge of the facing page, and these marginalia don't exist on this leaf."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "8e4321df919651bb",
+   "secs": 15,
+   "at": "2026-11-02T18:01:57.358Z"
+  },
+  {
+   "page_id": "69f328089e1cab5867a34dd9",
+   "book": "69f328089e1cab5867a34dce",
+   "stratum": "Korean MS",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "々々々 々々々 々々々 々々々 々々々 々々々 々々々 々々々 々々々 々々々 々々々",
+      "severity": "wrong_text",
+      "what": "the same filler iteration-mark block repeats line after line through the second half of the page"
+     },
+     {
+      "class": "O1",
+      "quote": "些々々々 々々々 々々々",
+      "severity": "wrong_text",
+      "what": "iteration marks and invented strings stand in for the column text the model could not read"
+     },
+     {
+      "class": "O5",
+      "quote": "越々 々々々 々々々",
+      "severity": "wrong_text",
+      "what": "the real text of the last columns (越瑶…, 回宮…, the final column) is lost"
+     },
+     {
+      "class": "O1",
+      "quote": "鳥鳴山高幽 盈盈白雲向 處處皆和風 特多岩所",
+      "severity": "wrong_text",
+      "what": "even the legible early columns are only partly right and partly made up"
+     },
+     {
+      "class": "O1",
+      "quote": "禅宗戒事理 摩 密生法福 甚々 使事 隠々 終理 隠々 甚々 々々神",
+      "severity": "wrong_text",
+      "what": "a few correct characters (禅宗戒事理, 使事, 終理) padded with invented filler"
+     },
+     {
+      "class": "O16",
+      "quote": "<language>Classical Chinese</language>",
+      "severity": "misleads",
+      "what": "the page mixes kana (や, に) into kanbun-style Japanese, so it is not pure Classical Chinese"
+     },
+     {
+      "class": "O16",
+      "quote": "<vocab>Myogye kamju, Classical Chinese, Buddhist text, Zen, poetry</vocab>",
+      "severity": "misleads",
+      "what": "invented identification that the page does not support"
+     }
+    ],
+    "reader_note": "Only the first few columns loosely match the cursive page; the remaining columns are rows of repeated 々 filler, so most of the page's text is missing or made up."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "0fd9e43abf367cb3",
+   "secs": 16,
+   "at": "2026-11-02T18:02:13.017Z"
+  },
+  {
+   "page_id": "69ef2f3455d5fee247f6cbf2",
+   "book": "69ef2f3455d5fee247f6c924",
+   "stratum": "Latin print",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "E2",
+      "quote": "Etite dyaglo ꝓ ꝫ ꝫ ꝫ ꝫ ꝫ ꝫ",
+      "severity": "wrong_text",
+      "what": "Degenerate loop: thousands of repeated ꝫ glyphs in place of the last line"
+     },
+     {
+      "class": "O5",
+      "quote": "Etite dyaglo ꝓ",
+      "severity": "wrong_text",
+      "what": "The last line of the right column ('...dyaglō ẜ hūc modū decoq̄t .ʒ. litargyrij ī duab' .ʒ') is lost"
+     },
+     {
+      "class": "O5",
+      "quote": "q abo pficiat cu aq aldargagi pfect cu co bdellio",
+      "severity": "wrong_text",
+      "what": "A line is dropped: 'z liniat aut sumat fra argenti viui z seme melonis z almabaleb z amigdale amare z admistret. Et iteru aldargagi'"
+     },
+     {
+      "class": "O5",
+      "quote": "accipiem cu facilitate fi fueit n pletiu absterfo nis",
+      "severity": "wrong_text",
+      "what": "'adhuc fiat vt currat z cu facilitate dein curet p ople-' is dropped and the passage is merged"
+     },
+     {
+      "class": "O5",
+      "quote": "<margin>Saguis mortu L.vi.</margin>",
+      "severity": "misleads",
+      "what": "Heading drops 'z lentigines magne z panus'"
+     },
+     {
+      "class": "O6",
+      "quote": "Posset ut liniae cum albuie aut aut cum gummi",
+      "severity": "misleads",
+      "what": "Page reads 'Portet vt liniat cū albuie oui aut cū aq gūmi'"
+     },
+     {
+      "class": "O7",
+      "quote": "ozobi.3. f.",
+      "severity": "misleads",
+      "what": "Page reads 'orobi.ʒ.j.'"
+     },
+     {
+      "class": "O6",
+      "quote": "et fitr pip notu pfert",
+      "severity": "misleads",
+      "what": "Throughout the page abbreviations are misread into garbled words, e.g. 'silr' read as 'fitr', 'faguis' for 'sanguis'"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>De vestigiis pcussionis et vestigiis nigris. L.iii.</margin>",
+      "severity": "cosmetic",
+      "what": "In-column rubric headings are tagged as margin; the chapter number is L.iiii, not L.iii"
+     },
+     {
+      "class": "O16",
+      "quote": "<scan-quality>good</scan-quality>",
+      "severity": "cosmetic",
+      "what": "Self-reported tags hide that the output collapsed"
+     }
+    ],
+    "reader_note": "The text is heavily garbled and has lines dropped, and it ends in thousands of repeated 'ꝫ' glyphs instead of the final line."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "efd7ada55049f7e8",
+   "secs": 19,
+   "at": "2026-11-02T18:02:16.002Z"
+  },
+  {
+   "page_id": "6a08527915c643eb1af4d079",
+   "book": "6a08527915c643eb1af4d06d",
+   "stratum": "other",
+   "which": "old",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O4",
+      "quote": "ἣς κατὰ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ ἣ",
+      "severity": "wrong_text",
+      "what": "the text breaks down into hundreds of repeated ἣ in place of the page's last lines"
+     },
+     {
+      "class": "O5",
+      "quote": "αὐτοῦ, ἣς κατὰ ἣ ἣ ἣ",
+      "severity": "wrong_text",
+      "what": "the last ~15 lines are missing (Thessalians, Byzantium, Mycale, Samian envoys, down to 'ἀπαμυ-')"
+     },
+     {
+      "class": "O6",
+      "quote": "ἐπιγινομένων εἵνεκα ἀνθρώπων· ἐπεὶ καὶ λειπόντων ἐσὶ αὐτῷ ἣ καλεόμενος",
+      "severity": "wrong_text",
+      "what": "heavy misreads throughout; e.g. Αἰγινητέων is read as λειπόντων, with many nonsense words"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀλλ’ ἣ μὲν χρημάτων χοίζοντες, πρόβλημα ἣ μέας ἐξαίτοντο",
+      "severity": "wrong_text",
+      "what": "garbled text mixed with spurious ἣ/οἳ fillers in the mid and later lines"
+     },
+     {
+      "class": "O16",
+      "quote": "<columns>2</columns>",
+      "severity": "cosmetic",
+      "what": "the page is set in a single column"
+     },
+     {
+      "class": "O12",
+      "quote": "<margin>Κοινά v.c.</margin>",
+      "severity": "misleads",
+      "what": "the right-margin manuscript notes (ποσειδώνιος, φιλοκύων, Αἰγινητῶν τάφος, etc.) are dropped, and the left-margin notes are garbled"
+     },
+     {
+      "class": "O11",
+      "quote": "<sig>SS</sig>",
+      "severity": "cosmetic",
+      "what": "the signature reads 'Σσ SS'"
+     }
+    ],
+    "reader_note": "The first ~40 lines are badly garbled, then the text collapses into endless repeated ἣ, and the last ~15 lines of the page are missing."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "1d590b1d6cb3526a",
+   "secs": 12,
+   "at": "2026-11-02T18:02:25.377Z"
+  },
+  {
+   "page_id": "6a08527915c643eb1af4d079",
+   "book": "6a08527915c643eb1af4d06d",
+   "stratum": "other",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "τῶν, ἦν ποσειδώνιος, καὶ ἀμομφάρετος ἔθεν",
+      "severity": "misleads",
+      "what": "the page reads 'τῶν καὶ Ποσειδώνιος … ἔσαν'"
+     },
+     {
+      "class": "O6",
+      "quote": "καὶ ἀθηναῖοι σὺν ἑωυτῶν ὁμοῦ",
+      "severity": "misleads",
+      "what": "the page reads 'τοὺς ἑωυτῶν'"
+     },
+     {
+      "class": "O6",
+      "quote": "ἔθαψαν τὸν νεκροὺς οἱ πλαταιεῦσι οἱ ἕλληνες",
+      "severity": "wrong_text",
+      "what": "garbled; the page reads 'τοὺς νεκροὺς ἐν Πλαταιῇσι'"
+     },
+     {
+      "class": "O6",
+      "quote": "πρόχημα",
+      "severity": "cosmetic",
+      "what": "the page reads πρόσχημα"
+     },
+     {
+      "class": "O6",
+      "quote": "τὴν στρατιὴν τῶν τῶν συμμάχων",
+      "severity": "cosmetic",
+      "what": "the page reads 'τὴν τῶν'"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀνυνθάνοντο",
+      "severity": "misleads",
+      "what": "not a real word; the page reads ἀνειρώτων"
+     },
+     {
+      "class": "O6",
+      "quote": "ποτειπεῖν τὴν ἀληθείην τῶν ἀγώνων εἴπου",
+      "severity": "wrong_text",
+      "what": "the page reads 'πᾶσαν τὴν ἀληθείην … εἰπεῖν'"
+     },
+     {
+      "class": "O6",
+      "quote": "οὔτε πρὸς τῶν φωκέας ἐξηγόρευε οὐδὲν, πρός τε τῶν θεσσαλοὺς",
+      "severity": "misleads",
+      "what": "the page reads τοὺς twice"
+     },
+     {
+      "class": "O6",
+      "quote": "ἐπείγομαί τε καὶ τάχος",
+      "severity": "misleads",
+      "what": "the page reads 'κατὰ τάχος'"
+     },
+     {
+      "class": "O6",
+      "quote": "ὄρῳ κατὰ πόδας",
+      "severity": "wrong_text",
+      "what": "the page reads οὗτος"
+     },
+     {
+      "class": "O6",
+      "quote": "τὸν ξεινίζετε",
+      "severity": "cosmetic",
+      "what": "the page reads τοῦτον"
+     },
+     {
+      "class": "O6",
+      "quote": "καταλιπὼν τοῦ στρατοῦ ἕτερα ὑπὸ θρῃίκων",
+      "severity": "wrong_text",
+      "what": "the page reads 'τοῦ ἑωυτοῦ συχνοὺς'"
+     },
+     {
+      "class": "O6",
+      "quote": "διεπλώϊσαν πλοίοισι. οὗτοι μὲν οὕτω ἀπενόστησαν",
+      "severity": "wrong_text",
+      "what": "the page has the singular: 'διέβη … οὗτος … ἀπενόστησε'"
+     },
+     {
+      "class": "O6",
+      "quote": "ἐν τῇ δήλῳ ἕζετο οἱ ἕλληνες … ἀπικομένοισι",
+      "severity": "misleads",
+      "what": "the page reads κατέατο … ἀπικόμενοι"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀθηναγόρης ὁ ἐχεστρατίδεω",
+      "severity": "misleads",
+      "what": "a name: the page reads ἀρχεστρατίδεω"
+     },
+     {
+      "class": "O1",
+      "quote": "ἄγρην τοιαύτην ἰωνίην τοιούτων εὑρεῖν",
+      "severity": "wrong_text",
+      "what": "words added that are not on the page"
+     },
+     {
+      "class": "O6",
+      "quote": "ἀνακαλέοντες, προέφερον αὐτοὺς ῥύεσθαι",
+      "severity": "misleads",
+      "what": "the page reads ἀνακαλέων προέτρεπε … ῥύσασθαι"
+     },
+     {
+      "class": "O12",
+      "quote": "μυκάλη ἰωνί[ας].\nλάμπων θρασυ κλέος.",
+      "severity": "misleads",
+      "what": "the marginal note λευτυχίδης is dropped"
+     },
+     {
+      "class": "O12",
+      "quote": "ἰσχυρότατον ἴτην v. c.",
+      "severity": "misleads",
+      "what": "doubtful readings of the left-margin variants, likely invented"
+     }
+    ],
+    "reader_note": "This is the right page (Herodotus IX, the Plataea burials through Mykale) and broadly in order. But many words are misread or garbled, some are added (e.g. 'ἰωνίην τοιούτων'), several readings are wrong in the Artabazus passage, and a marginal name is dropped."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "54f6bca52ef4ed91",
+   "secs": 44,
+   "at": "2026-11-02T18:02:35.884Z"
+  },
+  {
+   "page_id": "69f328089e1cab5867a34dd9",
+   "book": "69f328089e1cab5867a34dce",
+   "stratum": "Korean MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 2,
+    "defects": [
+     {
+      "class": "O16",
+      "quote": "<language>Japanese</language>",
+      "severity": "misleads",
+      "what": "The page is Sino-Korean/Classical Chinese in cursive notes, not Japanese kuzushiji. The language tag and the warning tag are both wrong."
+     },
+     {
+      "class": "O3",
+      "quote": "蟬鳴青樹夕",
+      "severity": "wrong_text",
+      "what": "The first line actually reads 蟬噪林逾靜, the well-known couplet line, and the candidate replaced it with a different line."
+     },
+     {
+      "class": "O1",
+      "quote": "五十一代平城\n五十二代嵯峨\n五十三代淳和\n五十四代仁明\n五十五代文徳",
+      "severity": "wrong_text",
+      "what": "A list of Japanese emperors that is not on the page."
+     },
+     {
+      "class": "O1",
+      "quote": "今日参内太宰府ニ流サレ給フ 右大臣菅原公",
+      "severity": "wrong_text",
+      "what": "A katakana marginal note about Sugawara that the page does not have. It is invented and wrongly tagged as margin."
+     },
+     {
+      "class": "O1",
+      "quote": "菅原審僕",
+      "severity": "wrong_text",
+      "what": "The Sugawara name is projected onto the page, which does not contain it."
+     },
+     {
+      "class": "O1",
+      "quote": "延喜元年寝殿入野松島平",
+      "severity": "wrong_text",
+      "what": "A Japanese era name and place names that are not what the leaf says."
+     },
+     {
+      "class": "O6",
+      "quote": "禅宗戒事理深",
+      "severity": "misleads",
+      "what": "Roughly right for 禪宗戒事理二諦, but the wording is misread."
+     },
+     {
+      "class": "O1",
+      "quote": "宗身易 宗器難\n宗祖練 宗祖松万老遠州",
+      "severity": "wrong_text",
+      "what": "The 宗/元祖 column is garbled and partly invented."
+     },
+     {
+      "class": "O1",
+      "quote": "修多羅 委儀才上夜氷 七言長 荷天子作讚云",
+      "severity": "wrong_text",
+      "what": "Mostly made up. The page has 七言 and a 千言宗 column, but in different words."
+     },
+     {
+      "class": "O1",
+      "quote": "開眼奉行長社兼\n長年反及石川房",
+      "severity": "wrong_text",
+      "what": "The left-hand columns are largely fabricated."
+     },
+     {
+      "class": "O5",
+      "quote": "四季輪廻",
+      "severity": "wrong_text",
+      "what": "Many columns and the small interlinear glosses on the leaf are missing or replaced."
+     },
+     {
+      "class": "T10",
+      "quote": "<vocab>菅原道真, 藤原時平, 和気清麻呂",
+      "severity": "misleads",
+      "what": "The vocabulary apparatus imposes a Japanese historical frame that the page does not support."
+     }
+    ],
+    "reader_note": "Only scattered words match the leaf, such as 孔雀, 越, 休洗紅, 回紋, 可汗 and 元祖. Most of the text, including the Japanese emperor list and the Sugawara katakana note, is invented and imposes the wrong language on cursive Sino-Korean notes."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "2830af1adb449db8",
+   "secs": 22,
+   "at": "2026-11-02T18:02:37.651Z"
+  },
+  {
+   "page_id": "69f290d43d9a9c4aad8a24ec",
+   "book": "69d66beb4da4f8dce52f2434",
+   "stratum": "Armenian MS",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "մարմնեան որոշ ոտնիօծն հայեց զներկայութիւնն երկրորդեան",
+      "severity": "wrong_text",
+      "what": "The page has a short abbreviated or numeral-bearing group here (roughly 'հայեց ... Է ... -րդեան'). The long 'զներկայութիւնն երկրորդեան' does not fit the space and looks filled in toward the expected wording."
+     },
+     {
+      "class": "O7",
+      "quote": "Երեւելիքն են Ժ և Ի հինգ հարկիկ",
+      "severity": "misleads",
+      "what": "The numeral letters after 'Երեւելիքն' have overlines and don't clearly read as Ժ and Ի. Numerals are uncertain but given as certain."
+     },
+     {
+      "class": "O6",
+      "quote": "և մի զորն ևս կիս խպորդել շնչերոյն",
+      "severity": "misleads",
+      "what": "The start of line 9 on the page reads more like 'նել զորն ևս ... խորդել'. 'և մի' and 'կիս խպորդել' look like misreads."
+     },
+     {
+      "class": "O6",
+      "quote": "մինչ տօմախացի",
+      "severity": "misleads",
+      "what": "The first letter of the second word looks like յ, not տ. The headword is uncertain."
+     },
+     {
+      "class": "O6",
+      "quote": "որճիճն և ելքին նայլ իյօւնման ցեն բաժնմի ույրինա",
+      "severity": "misleads",
+      "what": "Lines 19–21 contain non-words such as 'որճիճն', 'ույրինա' and 'կկրդիօձն'. These are given as plain text with no uncertainty marking, although the letterforms are ambiguous."
+     },
+     {
+      "class": "O12",
+      "quote": "<unclear>աշխատութեան և զի գիտասջիր</unclear>",
+      "severity": "cosmetic",
+      "what": "The faint rubricated phrases (lines 10–14 and the red marks in lines 16 and 18) are merged into the main text as 'unclear' and not identified as rubrics. Some faint red marks (lines 16, 18) are dropped entirely."
+     }
+    ],
+    "reader_note": "All 21 lines are there in the right order, but many words, especially in the lower third and the numerals, are uncertain or look filled in. The text reads as garbled Armenian with uncertainty marked only on the faint red rubrics."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "7bde91e106b83243",
+   "secs": 30,
+   "at": "2026-11-02T18:02:55.551Z"
+  },
+  {
+   "page_id": "69ef2f3455d5fee247f6cbf2",
+   "book": "69ef2f3455d5fee247f6c924",
+   "stratum": "Latin print",
+   "which": "new",
+   "verdict": {
+    "accept": false,
+    "fidelity": 3,
+    "defects": [
+     {
+      "class": "O6",
+      "quote": "in omnibus non diebus aut quattuor vsque ad quinque",
+      "severity": "wrong_text",
+      "what": "the page reads 'oib' trib' dieb'', i.e. in omnibus tribus diebus; 'non' changes the sense"
+     },
+     {
+      "class": "O6",
+      "quote": "nucem validam",
+      "severity": "wrong_text",
+      "what": "the page reads 'nucē rācidā' (rancidam)"
+     },
+     {
+      "class": "O6",
+      "quote": "Et vina alba iterum",
+      "severity": "wrong_text",
+      "what": "the page reads 'vit' alba' (vitis alba, a plant), not wine"
+     },
+     {
+      "class": "O6",
+      "quote": "possibile est vt continuetur et sanguis mortuus",
+      "severity": "wrong_text",
+      "what": "the page reads 'vt resoluat' sanguis mortuus' (dissolved), which reverses the sense"
+     },
+     {
+      "class": "O6",
+      "quote": "cera et mel linatur coram cum melle",
+      "severity": "misleads",
+      "what": "the page reads 'mel liquetur cera cum melle'"
+     },
+     {
+      "class": "O7",
+      "quote": "piperis pesis calidi partem .j.",
+      "severity": "misleads",
+      "what": "the page gives two ingredients with doses, piperis ps .j. and calc[is] ps .j.; one dose is merged away"
+     },
+     {
+      "class": "O5",
+      "quote": "quando quidem sanguinem mortuum et alguaf ex",
+      "severity": "misleads",
+      "what": "drops the verb 'delebit'; the line is garbled"
+     },
+     {
+      "class": "O6",
+      "quote": "sed olei adusta",
+      "severity": "misleads",
+      "what": "the page reads 'fex olei adusta'"
+     },
+     {
+      "class": "O6",
+      "quote": "vlormentum inde trocisci",
+      "severity": "misleads",
+      "what": "the page reads 'formentur' (formentur inde trocisci)"
+     },
+     {
+      "class": "E2",
+      "quote": "nasturtij albi abozi ana",
+      "severity": "misleads",
+      "what": "'āboꝝ' (amborum) is garbled to 'abozi'; this happens repeatedly"
+     },
+     {
+      "class": "E2",
+      "quote": "granorum dben partes .xv.",
+      "severity": "cosmetic",
+      "what": "the page reads 'granorum ben'"
+     },
+     {
+      "class": "O6",
+      "quote": "et liniat cum aqua rose",
+      "severity": "cosmetic",
+      "what": "the abbreviation 'aq ro.' is expanded without being marked"
+     },
+     {
+      "class": "O6",
+      "quote": "per ablationem sed verum oportet",
+      "severity": "cosmetic",
+      "what": "the page has 'et ablate sunt verum oportet'"
+     }
+    ],
+    "reader_note": "This is the right page and the text is complete, but there are many misreadings. Several change the sense (non/tribus diebus, validam/rancidam, vina/vitis, continuetur/resoluatur), and a dose is merged away in the second column."
+   },
+   "model": "claude-opus-5-5",
+   "prompt_sha": "1599d07feb54c7cf",
+   "secs": 33,
+   "at": "2026-11-02T18:03:08.746Z"
+  }
+ ],
+ "write": {
+  "pages": [
+   "69f7474918d8b7b6c680fac3"
+  ],
+  "run": "cli-ocr-20261102181126-1376126",
+  "writer": "scripts/batch/cli-ocr.mjs apply --lane=agy-reread-4850 --mark-stale=agy-reread-4850",
+  "undo": "scripts/maintenance/revert-run.mjs --run-id cli-ocr-20261102181126-1376126"
+ },
+ "reads": {
+  "reader": "scripts/batch/cli-ocr.mjs read (live OCR prompt, one page a call, --fresh)",
+  "model": "gemini-3.8-flash",
+  "cli": "agy 1.4.12",
+  "calls": 35,
+  "tokens_total": 1919717,
+  "kept": "R2 candidate-reads/ (#7075)"
+ },
+ "judge": {
+  "instrument": "scripts/eval/correction-pass-7818/lib.mjs judgeAbsolute (the #7866 judge: route-judge-6740 judgePrompt, claude -p --model opus, image in workspace), blind, one text per call",
+  "calls": 60
+ }
+}

@@ -5,7 +5,7 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-11-01';
+export const PROSE_AS_OF = '2026-11-02';
 
 export type Finding = { title: string; text: string; n: string; date: string; record: { label: string; href: string } };
 
@@ -156,7 +156,9 @@ export const WAYS: Way[] = [
 /**
  * The reader-facing page grade (#5984). The rule behind each grade, the severities, and the
  * standards it is built from are in .claude/docs/quality-rubric-and-sampling.md §5; keep the two
- * in step. Defined, not yet measured: no page has been graded under this rubric.
+ * in step. Computed once (#7933): scripts/eval/confidence-7866/regrade.mjs grades #7866's 800
+ * drawn pages on this ladder, and /quality leads with that distribution. Still not run: the
+ * standing monthly draw with its own strata, and the human calibration of §5.3.
  */
 export const GRADES: { name: string; means: string; rule: string }[] = [
   {
