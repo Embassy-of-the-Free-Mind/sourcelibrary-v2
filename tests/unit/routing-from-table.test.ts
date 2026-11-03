@@ -254,6 +254,9 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(hold).toBeGreaterThan(-1);
     expect(stop).toBeGreaterThan(hold);
     expect(stop).toBeLessThan(src.indexOf("if (phase4Lane(book) === 'chained')", hold));
+    // A book it cannot act on stays put, so the cap is on holds, not on books selected (else the refused ones starve the rest).
+    expect(src).toMatch(/if \(cliOnly && cliHolds >= TRANSLATE_SUBMIT_LIMIT\) break;/);
+    expect(src).toMatch(/if \(\(cliOnly \|\| freshBooks\.length === 0\) && gapLimit > 0\)/);
   });
 
   it('the CLI translation lane asks the OCR-first gate before a book takes budget, and refunds a refused read (#7263)', () => {
