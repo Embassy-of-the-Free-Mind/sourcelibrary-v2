@@ -1,0 +1,178 @@
+{
+ "generated_by": "scripts/eval/zh-gemini-reocr-7263/analyze.mjs",
+ "provenance": "#7263 Chinese re-read cell: 30 + 30 books, one page each, seed 20261103, books PPS on frame pages; arms on the same pages; Opus judge blind to arm against the image, 2 wrong-page controls a stratum",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "mapping": "wrong_text = a wrong_text defect; accept = the judge accepts",
+ "cells": {
+  "chinese-gemini-print-7263": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 30,
+   "frame": "one page a book, books with probability proportional to print frame pages",
+   "controls": {
+    "wrong_page": [
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     }
+    ]
+   },
+   "routes": {
+    "gemini-stored": {
+     "n": 30,
+     "books": 30,
+     "accept": "3/30",
+     "wrong_text_pages": "22/30",
+     "classes_k_of_n": {
+      "O5": "15/30",
+      "O6": "24/30",
+      "O16": "4/30",
+      "O12": "7/30",
+      "O7": "5/30",
+      "O1": "6/30",
+      "I6": "4/30",
+      "O10": "1/30",
+      "O11": "2/30",
+      "O8": "2/30",
+      "O4": "3/30",
+      "E2": "1/30",
+      "I1": "1/30"
+     },
+     "served": "gemini-stored"
+    },
+    "paddle-print-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "6/30",
+     "wrong_text_pages": "21/30",
+     "classes_k_of_n": {
+      "O5": "12/30",
+      "O6": "22/30",
+      "O16": "3/30",
+      "O12": "8/30",
+      "O1": "5/30",
+      "O7": "2/30",
+      "O11": "2/30",
+      "O4": "4/30",
+      "O8": "1/30",
+      "I6": "1/30",
+      "E2": "1/30",
+      "O10": "1/30",
+      "I1": "1/30"
+     },
+     "served": "paddle-print-read"
+    },
+    "gemini>opus": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "2/30",
+     "classes_k_of_n": {
+      "O6": "5/30",
+      "O12": "1/30",
+      "I6": "1/30",
+      "O5": "1/30",
+      "I1": "1/30"
+     },
+     "served": "gemini>opus"
+    },
+    "paddle-print-read-noguard": {
+     "n": 30,
+     "books": 30,
+     "accept": "7/30",
+     "wrong_text_pages": "20/30",
+     "classes_k_of_n": {
+      "O5": "10/30",
+      "E2": "5/30",
+      "O6": "20/30",
+      "O10": "2/30",
+      "O1": "2/30",
+      "O4": "4/30",
+      "O12": "6/30",
+      "O8": "1/30",
+      "O7": "1/30"
+     },
+     "served": "paddle-print-read-noguard"
+    }
+   }
+  },
+  "chinese-gemini-siku-7263": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 30,
+   "frame": "one page a book, books with probability proportional to print frame pages",
+   "controls": {
+    "wrong_page": [
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     }
+    ]
+   },
+   "routes": {
+    "gemini-stored": {
+     "n": 30,
+     "books": 30,
+     "accept": "8/30",
+     "wrong_text_pages": "18/30",
+     "classes_k_of_n": {
+      "O6": "22/30",
+      "O1": "4/30",
+      "O5": "15/30",
+      "O17": "5/30",
+      "O11": "1/30",
+      "O16": "2/30",
+      "O12": "4/30",
+      "O7": "2/30",
+      "O4": "2/30",
+      "E2": "3/30"
+     },
+     "served": "gemini-stored"
+    },
+    "paddle-zh-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "14/30",
+     "wrong_text_pages": "14/30",
+     "classes_k_of_n": {
+      "O6": "12/30",
+      "I4": "1/30",
+      "O5": "6/30",
+      "E2": "3/30",
+      "O11": "3/30",
+      "O1": "1/30",
+      "O7": "2/30",
+      "O17": "1/30",
+      "O8": "1/30",
+      "O12": "1/30"
+     },
+     "served": "paddle-zh-read"
+    },
+    "gemini>opus": {
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "wrong_text_pages": "1/30",
+     "classes_k_of_n": {
+      "O6": "2/30",
+      "O5": "1/30",
+      "O17": "1/30"
+     },
+     "served": "gemini>opus"
+    }
+   }
+  }
+ }
+}

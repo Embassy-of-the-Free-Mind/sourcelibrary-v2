@@ -417,7 +417,7 @@ export const judgeArmIds = (P) => (P.arms?.length ? [...P.arms.slice(1), P.arms[
 
 async function judge() {
   const P = J('plan.json');
-  const lang = LANG_NAME[frameFor(P.cell).lang];
+  const lang = P.lang_name ?? LANG_NAME[frameFor(P.cell).lang];   // a plan from another draw names its language (zh-gemini-reocr-7263)
   const { items, controls } = judgeItems(P.selected, readT, DEFAULT_SEED, judgeArmIds(P));
   const have = jsonl(VO()), done = new Set(have.filter((r) => r.verdict).map((r) => r.id));
   const cap = Number(arg('max-calls') || 80), made = have.filter((r) => r.verdict || r.usage).length;
