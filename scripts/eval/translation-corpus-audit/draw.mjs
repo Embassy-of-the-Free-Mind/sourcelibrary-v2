@@ -138,7 +138,7 @@ function toItem(kind, book, page, extra = {}) {
     ocr_at: o.updated_at || null, translation_older_than_ocr: !!(t.updated_at && o.updated_at && new Date(t.updated_at) < new Date(o.updated_at)),
     ocr_chars: o.data.length, translation_chars: t.data.length, ocr_hash: sha16(o.data), translation_hash: sha16(t.data),
     // the served image (getPageSource, as draw-wave2.mjs): display_photo was the wrong leaf for split and cropped pages
-    image: getPageSource(page) || page.display_photo || page.photo || null,
+    image: getPageSource(page),
     url: `https://sourcelibrary.org/book/${book.id}?page=${page.page_number}`,
     ...(/chinese/i.test(book.language || '') ? { zh: zhFields(book, page) } : {}),
     ...extra,
