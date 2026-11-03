@@ -5,6 +5,7 @@ import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 import { pageStatusSources } from './src/lib/page-status';
 import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
+import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
 
 const nextConfig: NextConfig = {
@@ -696,8 +697,11 @@ const withAnalytics = (config: typeof nextConfig) =>
   process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
     ? withPostHogConfig({
         ...config,
-        // The wrapper awaits this hook, then runs the upload: only the browser's maps go up (#7731).
+        // Next and then the wrapper await this hook: the upload and page data start only once Turbopack has let go
+        // of its memory, and only the browser's maps go up (#7731).
         compiler: { ...config.compiler, runAfterProductionCompile: async ({ distDir }) => {
+          const { released, waitedMs, rssBytes } = await waitForTurbopackRelease();
+          console.log(`Turbopack ${released ? 'released' : 'still holding'} memory after ${(waitedMs / 1000).toFixed(1)}s (next build RSS ${(rssBytes / 2 ** 30).toFixed(2)} GB)`);
           console.log(`Dropped ${await dropServerSourcemaps(distDir)} server source maps before the PostHog upload`);
         } },
       }, {
