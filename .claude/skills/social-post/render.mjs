@@ -13,6 +13,8 @@
 //   { "name": "s3", "kind": "quote", "quote": "…", "who": "…", "source": "…" }
 //   { "name": "s4", "kind": "end",   "kicker": "…", "title": "…", "note": "…", "link": "sourcelibrary.org" }
 // Every slide also takes "foot" (bottom-right: a page count like "2 / 6" or a /q/ shortlink) and "imageHeight".
+// Images are cropped to the printed plate by default ("crop": "auto", see crop.mjs): a whole leaf at feed size is
+// mostly beige paper. Give "crop": "WxH+X+Y" for a detail, or "crop": "none" for an image you already cropped.
 // Text is inserted as HTML: escape &, < and > yourself if a quote contains them.
 //
 // Uses the system Chrome through Playwright (no browser download). Fonts and the logo come from public/.
@@ -20,6 +22,8 @@ import { chromium } from 'playwright';
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'fs';
 import { dirname, resolve, join } from 'path';
 import { fileURLToPath } from 'url';
+import sharp from 'sharp';
+import { autoCrop } from './crop.mjs';
 
 const [specPath, outArg] = process.argv.slice(2);
 if (!specPath) { console.error('usage: render.mjs <spec.json> [outDir]'); process.exit(2); }
@@ -70,6 +74,22 @@ const kinds = {
     ${opt(s.note, `<div class="note" style="font-size:40px;margin-top:40px">${s.note}</div>`)}
     <div class="who" style="font-size:38px;margin-top:70px;letter-spacing:.08em;text-transform:none">${s.link || 'sourcelibrary.org'}</div>`,
 };
+
+// Crop each slide's image into the spec dir (<name>.crop.jpg) and point the slide at the crop.
+for (const s of spec.slides) {
+  if (!s.image || s.crop === 'none') continue;
+  const src = join(specDir, s.image), dst = join(specDir, `${s.name}.crop.jpg`);
+  if (!s.crop || s.crop === 'auto') {
+    const box = await autoCrop(src, dst);
+    console.log(`${s.name}: auto-cropped ${s.image} to ${box.width}x${box.height}+${box.left}+${box.top}`);
+  } else {
+    const m = /^(\d+)x(\d+)\+(\d+)\+(\d+)$/.exec(s.crop);
+    if (!m) throw new Error(`slide ${s.name}: crop must be auto, none or WxH+X+Y`);
+    const [, width, height, left, top] = m.map(Number);
+    await sharp(src).extract({ left, top, width, height }).jpeg({ quality: 92 }).toFile(dst);
+  }
+  s.image = `${s.name}.crop.jpg`;
+}
 
 const browser = await chromium.launch({ channel: 'chrome' });
 const page = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
