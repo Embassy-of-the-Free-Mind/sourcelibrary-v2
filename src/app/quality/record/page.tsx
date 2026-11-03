@@ -9,6 +9,7 @@ import feedback from '@/data/quality-feedback-themes.json';
 import ocrRouting from '../../../../scripts/lib/ocr-routing-table.json';
 import servedDraw from '../../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../../scripts/eval/confidence-7866/results/served-grades.json';
+import englishOn7866 from '../../../../scripts/eval/results/translation-on-7866-draw/summary.json';
 import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../../research/quality/open/issues';
@@ -721,6 +722,41 @@ export default function QualityCenterPage() {
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_era_alphabetic</code> and{' '}
             <code>by_era_route_alphabetic</code>, unweighted. The date is the catalogue&rsquo;s; a manuscript is a book whose
             pages our records mark as handwritten, whatever its date.
+          </Source>
+
+          <Sub>The English on the same pages</Sub>
+          <div className="max-w-3xl">
+            <p className="text-stone-700 leading-relaxed mb-3">
+              Readers mostly read the English. On the {n(englishOn7866.translator.fidelity_ge4_weighted.pages)} pages of
+              this draw that carry an English translation ({n(englishOn7866.translator.fidelity_ge4_weighted.books)} books),
+              Claude Opus read each translation against its transcription and the photograph. Measured against the
+              transcription it was made from, {pct(englishOn7866.translator.major_page_share_weighted.share)} of pages carry a
+              major error in the English ({pct(englishOn7866.translator.major_page_share_weighted.ci95[0])}–
+              {pct(englishOn7866.translator.major_page_share_weighted.ci95[1])}), about{' '}
+              {englishOn7866.translator.major_per_1k_english_words_weighted.value} per 1,000 English words. Counting a
+              misread transcription too, so asking whether the English tells a reader what the page says,{' '}
+              <b className="text-stone-900">{pct(englishOn7866.end_to_end.e2e_wrong_weighted.share)}</b> of pages are
+              wrong somewhere ({pct(englishOn7866.end_to_end.e2e_wrong_weighted.ci95[0])}–
+              {pct(englishOn7866.end_to_end.e2e_wrong_weighted.ci95[1])}).
+            </p>
+            <p className="text-stone-700 leading-relaxed mb-3">
+              A bad transcription makes a major English error about{' '}
+              {englishOn7866.inherited.risk_ratio_weighted.value.toFixed(1)} times as likely, but it accounts for only about{' '}
+              {pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.value)} of the pages with one
+              ({pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.ci95[0])}–
+              {pct(englishOn7866.inherited.attributable_fraction_of_major_pages_weighted.ci95[1])}). The rest are the
+              translator&rsquo;s own. So reading the page again fixes some of the English, and translating it again fixes
+              more; on manuscripts and on Sanskrit and Korean, where the transcription is poor, nearly every major English
+              error sits on a bad transcription and both are needed.
+            </p>
+          </div>
+          <Source>
+            <A href={`${BLOB}scripts/eval/experiments/2026-11-02-translation-on-7866-draw-7968.md`}>The English on the
+            draw</A> (<IssueLink num={7968} />): {n(englishOn7866.translator.fidelity_ge4_weighted.pages)} of the{' '}
+            {n(servedGrades.pages)} pages carry English; the rest had none to judge. Weighted back to the library with the
+            draw&rsquo;s book weights. The judge passed its planted controls (swap, drop and repeat, 15 of 15 each). The
+            share a bad transcription accounts for is observational: books with poor transcriptions also differ in
+            language and hand.
           </Source>
 
           <Sub>What is actually wrong</Sub>
