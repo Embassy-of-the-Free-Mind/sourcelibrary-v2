@@ -18,7 +18,7 @@ import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 import {
   stripAnchor, takeAnchors, anchorVerdicts, anchorFold, blockAbsorptions, blockNumberVotes, blockPageRefusals,
-  ocrBlockRefusals, printedPageNumber, lengthRatioK, anchorRule,
+  ocrBlockRefusals, printedPageNumber, printedPageMark, lengthRatioK, anchorRule,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/block-page-guard.mjs';
@@ -191,6 +191,13 @@ describe('multi-image OCR', () => {
     expect(printedPageNumber('no tag')).toBeNull();
     expect(printedPageNumber('<page-num>12a</page-num>')).toBeNull();
     expect(printedPageNumber('<page-num>fol. 3v</page-num>')).toBeNull();
+  });
+  it('inserted leaves and folio sides are different marks; a true repeat is the same mark', () => {
+    expect(printedPageMark('<page-num>140 a</page-num>')).toBe('140a');
+    expect(printedPageMark('<page-num>फ़ोल ३v</page-num>')).not.toBe(printedPageMark('<page-num>फ़ोल ३r</page-num>'));
+    const pages = [1, 2, 3, 4].map((n) => ({ id: `p${n}`, page_number: n }));
+    // Live re-read lane 2026-11-03 (69af0bde pp.87-90): leaves inserted as 140 a … 140 d are not a repeat.
+    expect(ocrBlockRefusals(pages, ['<page-num>140 a</page-num>\nA', '<page-num>140 b</page-num>\nB', '<page-num>140 c</page-num>\nC', '<page-num>140 d</page-num>\nD'])).toEqual([]);
   });
   it('two reads of one call that print the same page number are both refused', () => {
     const pages = [1, 2, 3].map((n) => ({ id: `p${n}`, page_number: n }));
