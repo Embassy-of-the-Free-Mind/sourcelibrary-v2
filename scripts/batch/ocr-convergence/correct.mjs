@@ -35,6 +35,7 @@
  * stored OCR. `--cli=agy` sends the same prompt through `agy -p` in a gated workspace (AGY_HOME picks the pool) and
  * reads what was opened from the gate's log. `--max-calls=N` stops the run after N calls. --draft-dir needs
  * CANDIDATE_READS=off: the reuse key names the stored draft, so a kept read would not match the draft sent.
+ * Such a read carries `draft.source: 'file'`, which `cli-ocr.mjs apply` refuses.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -184,7 +185,7 @@ async function main() {
   const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1)) });
   const writePage = (p, ans, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), ans.outcome === 'corrected' ? ans.text : '');
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(DRAFT_DIR && { draft: { source: 'file', dir: DRAFT_DIR } }), ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
   };
 
   /** One call over a group. Returns the pages left unanswered. */
