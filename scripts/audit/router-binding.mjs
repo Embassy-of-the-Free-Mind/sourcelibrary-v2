@@ -27,6 +27,9 @@ export function servedByCrontab(text) {
     const flag = (n) => line.match(new RegExp(`--${n}=([^\\s"']+)`))?.[1];
     if (/\srun\s+--cohort=/.test(line)) {
       served.push(...servedByFirstRead({ languages: codes(flag('languages')), correct: codes(flag('correct')) || [], perCall: Number(flag('per-call') || 1), perCallLanguages: FIRST_READ_PER_CALL_LANGUAGES, perCallByLanguage: FIRST_READ_PER_CALL_BY_LANGUAGE }));
+    } else if (/\slatin-first\s+--/.test(line)) {
+      // one pool's run in order (cli-ocr-lane.mjs latinFirstSteps): the Latin re-read at 4 a call, the German/French correction
+      served.push(...servedByReread({ languages: ['Latin'], perCall: 4 }), ...servedByCorrect({ languages: CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|') }));
     } else if (/\scorrect\s+--/.test(line)) {
       const languages = CORRECT_LANGUAGES.source.match(/\(([^)]*)\)/)[1].split('|');
       // --reread-per-call=N (#7853): the same frame re-read, not corrected

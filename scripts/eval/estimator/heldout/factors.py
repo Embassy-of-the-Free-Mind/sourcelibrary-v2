@@ -26,12 +26,12 @@ def factors(cell, route):
     lang, wsys = LANG[key]
     parts = [norm(p) for p in rid.split('>')]
     if '-tr' in base:  # translation cells: the engine that wrote the English
-        eng = 'tr-opus' if parts[-1].startswith('opus') else 'tr-agy' if parts[-1].startswith('agy') else 'tr-draft'
+        eng = 'tr-opus' if parts[-1].startswith('opus') else 'tr-sonnet' if parts[-1].startswith('sonnet') else 'tr-agy' if parts[-1].startswith('agy') else 'tr-draft'
         draft = 'none'
     else:
         last = parts[-1]
         if len(parts) > 1:
-            eng = 'opus-correct' if last.startswith('opus') else 'agy-correct-high' if last == 'agy-flash-high' else 'agy-correct'
+            eng = 'opus-correct' if last.startswith('opus') else 'sonnet-correct' if last.startswith('sonnet') else 'agy-correct-high' if last == 'agy-flash-high' else 'agy-correct'
             draft = DRAFT[parts[0]]
         else:
             eng = 'agy-read' if last.startswith('agy-flash-low') else DRAFT.get(last, last)

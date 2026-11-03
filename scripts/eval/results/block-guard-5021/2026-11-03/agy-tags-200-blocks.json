@@ -1,0 +1,102 @@
+{
+ "report": {
+  "Chinese": {
+   "blocks": 40,
+   "pages": 160,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {
+    "absorbed": 4
+   },
+   "blocks_refused": 1,
+   "anchor_verdicts": {
+    "own": 160
+   }
+  },
+  "French": {
+   "blocks": 40,
+   "pages": 160,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 160
+   }
+  },
+  "German": {
+   "blocks": 40,
+   "pages": 160,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 160
+   }
+  },
+  "Italian": {
+   "blocks": 40,
+   "pages": 160,
+   "unparsed": 0,
+   "anchor_missing": 2,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 160
+   }
+  },
+  "Latin": {
+   "blocks": 40,
+   "pages": 160,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 160
+   }
+  }
+ },
+ "total": {
+  "blocks": 201,
+  "pages": 804,
+  "anchor_refused": 0,
+  "refused": 4,
+  "blocks_refused": 1
+ },
+ "refusals": [
+  {
+   "lang": "Chinese",
+   "book_id": "6a3c605040c88a541d8e801a",
+   "page": 4,
+   "reason": "absorbed",
+   "detail": "p.4 absorbs (log own 0.65, two -0.08)",
+   "raw": "Chinese/raw/guard-5021-dry-6a3c605040c88a541d8e801a-4-4-0.txt"
+  },
+  {
+   "lang": "Chinese",
+   "book_id": "6a3c605040c88a541d8e801a",
+   "page": 5,
+   "reason": "absorbed",
+   "detail": "p.4 absorbs (log own 0.65, two -0.08)",
+   "raw": "Chinese/raw/guard-5021-dry-6a3c605040c88a541d8e801a-4-4-0.txt"
+  },
+  {
+   "lang": "Chinese",
+   "book_id": "6a3c605040c88a541d8e801a",
+   "page": 6,
+   "reason": "absorbed",
+   "detail": "p.4 absorbs (log own 0.65, two -0.08)",
+   "raw": "Chinese/raw/guard-5021-dry-6a3c605040c88a541d8e801a-4-4-0.txt"
+  },
+  {
+   "lang": "Chinese",
+   "book_id": "6a3c605040c88a541d8e801a",
+   "page": 7,
+   "reason": "absorbed",
+   "detail": "p.4 absorbs (log own 0.65, two -0.08)",
+   "raw": "Chinese/raw/guard-5021-dry-6a3c605040c88a541d8e801a-4-4-0.txt"
+  }
+ ]
+}

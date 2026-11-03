@@ -1,0 +1,1390 @@
+{
+ "at": "2026-11-03T12:46:04.081Z",
+ "cell": "chinese-gemini/siku",
+ "issue": 7263,
+ "rule": {
+  "within": 0.08,
+  "wrong_text_max": 0.04,
+  "source": "rules.json switch"
+ },
+ "comparator": "served",
+ "frame": {
+  "books_in_frame": 10985,
+  "print_books": 6750,
+  "print_pages": 83957,
+  "books_tried": 68,
+  "skipped": {
+   "no interior print body page of 100+ Han": 29,
+   "book in evidence": 3
+  },
+  "unit": "one page a book, books with probability proportional to print frame pages",
+  "repair_holds_left_out": "/contain|invented|wrong-leaf|scrambled|unsettled|served-audit|qa-/i"
+ },
+ "n": 30,
+ "by_stored_model": {
+  "3flash": {
+   "n": 25,
+   "served": {
+    "accepted": "7/25",
+    "wrong_text_pages": 14,
+    "severe_per_1k": 16.47
+   },
+   "P": {
+    "accepted": "13/25",
+    "wrong_text_pages": 10,
+    "severe_per_1k": 10.08
+   },
+   "O": {
+    "accepted": "22/25",
+    "wrong_text_pages": 0,
+    "severe_per_1k": 0.85
+   }
+  },
+  "lite": {
+   "n": 5,
+   "served": {
+    "accepted": "1/5",
+    "wrong_text_pages": 4,
+    "severe_per_1k": 41.61
+   },
+   "P": {
+    "accepted": "1/5",
+    "wrong_text_pages": 4,
+    "severe_per_1k": 20.13
+   },
+   "O": {
+    "accepted": "4/5",
+    "wrong_text_pages": 1,
+    "severe_per_1k": 1.34
+   }
+  }
+ },
+ "controls": [
+  {
+   "accept": false,
+   "fidelity": 1
+  },
+  {
+   "accept": false,
+   "fidelity": 1
+  }
+ ],
+ "arms": {
+  "served": {
+   "route": "gemini-stored",
+   "accepted": "8/30",
+   "wrong_text_pages": 18,
+   "fidelity_mean": 3.17,
+   "classes": {
+    "O6": 22,
+    "O1": 4,
+    "O5": 15,
+    "O17": 5,
+    "O11": 1,
+    "O16": 2,
+    "O12": 4,
+    "O7": 2,
+    "O4": 2,
+    "E2": 3
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 7790,
+    "severe": 147,
+    "severe_per_1k": 18.87,
+    "severe_per_1k_ci95": [
+     13.58,
+     25.64
+    ],
+    "wrong_text_defects": 91,
+    "wrong_text_per_1k": 11.68,
+    "wrong_text_per_1k_ci95": [
+     8.1,
+     15.57
+    ]
+   },
+   "served_outcomes": {
+    "stored text": 30
+   }
+  },
+  "P": {
+   "route": "paddle-zh-read",
+   "accepted": "14/30",
+   "wrong_text_pages": 14,
+   "fidelity_mean": 3.57,
+   "classes": {
+    "O6": 12,
+    "I4": 1,
+    "O5": 6,
+    "E2": 3,
+    "O11": 3,
+    "O1": 1,
+    "O7": 2,
+    "O17": 1,
+    "O8": 1,
+    "O12": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 7790,
+    "severe": 86,
+    "severe_per_1k": 11.04,
+    "severe_per_1k_ci95": [
+     5.7,
+     15.69
+    ],
+    "wrong_text_defects": 61,
+    "wrong_text_per_1k": 7.83,
+    "wrong_text_per_1k_ci95": [
+     2.82,
+     12.82
+    ]
+   },
+   "served_outcomes": {
+    "written": 29,
+    "textless": 1
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.200 >= -0.08; wrong text 14/30 within 0.04 of 18/30",
+    "n": 30,
+    "d": 0.2,
+    "d_ci95": [
+     -0.033,
+     0.433
+    ],
+    "gained": 10,
+    "lost": 4,
+    "sign_test_p": 0.1796,
+    "wrong": "14 vs 18",
+    "made_wrong": 3,
+    "cleared_wrong": 7,
+    "severe_delta_per_1k": -7.83
+   }
+  },
+  "O": {
+   "route": "gemini>opus",
+   "accepted": "26/30",
+   "wrong_text_pages": 1,
+   "fidelity_mean": 4.73,
+   "classes": {
+    "O6": 2,
+    "O5": 1,
+    "O17": 1
+   },
+   "per_1k_chars": {
+    "pages": 30,
+    "words": 7790,
+    "severe": 7,
+    "severe_per_1k": 0.9,
+    "severe_per_1k_ci95": [
+     0.13,
+     1.93
+    ],
+    "wrong_text_defects": 1,
+    "wrong_text_per_1k": 0.13,
+    "wrong_text_per_1k_ci95": [
+     0,
+     0.47
+    ]
+   },
+   "served_outcomes": {
+    "corrected": 28,
+    "unchanged": 2
+   },
+   "vs_stored": {
+    "verdict": "PASS",
+    "why": "d 0.600 >= -0.08; wrong text 1/30 within 0.04 of 18/30",
+    "n": 30,
+    "d": 0.6,
+    "d_ci95": [
+     0.433,
+     0.767
+    ],
+    "gained": 18,
+    "lost": 0,
+    "sign_test_p": 0,
+    "wrong": "1 vs 18",
+    "made_wrong": 0,
+    "cleared_wrong": 17,
+    "severe_delta_per_1k": -17.97
+   }
+  }
+ },
+ "between": {
+  "O_vs_P": {
+   "verdict": "PASS",
+   "why": "d 0.400 >= -0.08; wrong text 1/30 within 0.04 of 14/30",
+   "n": 30,
+   "d": 0.4,
+   "d_ci95": [
+    0.233,
+    0.567
+   ],
+   "gained": 12,
+   "lost": 0,
+   "sign_test_p": 0.0005,
+   "wrong": "1 vs 14",
+   "made_wrong": 0,
+   "cleared_wrong": 13,
+   "severe_delta_per_1k": -10.14
+  }
+ },
+ "per_page": [
+  {
+   "book_id": "6a3ced944701a906f10e1997",
+   "page_id": "6a3ced944701a906f10e19af",
+   "page_number": 24,
+   "title": "數度衍·卷十~卷十一 (vol 5)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 174,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cee384701a906f10e7421",
+   "page_id": "6a3cee384701a906f10e743a",
+   "page_number": 25,
+   "title": "御定淵鑑類函·卷二百二十~卷二百二十一 (vol 124)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 190,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cc2f3af74b230c690afa4",
+   "page_id": "6a3cc2f3af74b230c690afbd",
+   "page_number": 25,
+   "title": "毛詩注疏·毛詩譜上 (vol 48)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 329,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O6",
+     "O1",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c5f8340c88a541d8e71fd",
+   "page_id": "6a3c5f8340c88a541d8e7211",
+   "page_number": 20,
+   "title": "圖書編·卷四十六 (vol 36)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 184,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c800d01fe4f593c21f401",
+   "page_id": "6a3c800d01fe4f593c21f417",
+   "page_number": 22,
+   "title": "童溪易傳·卷十九~卷二十一 (vol 7)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 164,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cec288642f0445b15a050",
+   "page_id": "6a3cec288642f0445b15a0b2",
+   "page_number": 98,
+   "title": "欽定西清硯譜·卷十八~卷十九 (vol 10)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 157,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 1,
+    "classes": [
+     "I4"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992cd7643713c66ea636a11",
+   "page_id": "6992cd7643713c66ea636a7d",
+   "page_number": 108,
+   "title": "本草綱目·卷三下",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 244,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 11,
+    "classes": [
+     "O17",
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c62e140c88a541d8f6eb3",
+   "page_id": "6a3c62e140c88a541d8f6ecc",
+   "page_number": 25,
+   "title": "御定佩文韻府·卷三十四之八 (vol 152)",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 196,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 16,
+    "classes": [
+     "O5",
+     "O17",
+     "O6",
+     "O11",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c604c40c88a541d8e7cef",
+   "page_id": "6a3c604c40c88a541d8e7d09",
+   "page_number": 25,
+   "title": "御定駢字類編·卷一百四十九: Imperial Parallel Characters (vol 108)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 222,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O5",
+     "O6",
+     "O12"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 8,
+    "classes": [
+     "E2",
+     "O6",
+     "O11"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a0a4e9f7cd8e1e3d0f496d7",
+   "page_id": "6a0a4e9f7cd8e1e3d0f49716",
+   "page_number": 63,
+   "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 2 of 24): Shao Yong Neo-Confucian cosmic ",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 144,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 4,
+    "classes": [
+     "O1",
+     "O7",
+     "O17"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 4,
+    "classes": [
+     "O1",
+     "O7",
+     "O17"
+    ],
+    "why": "textless"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cbbcd87ee3d48c89d149c",
+   "page_id": "6a3cbbcd87ee3d48c89d14ad",
+   "page_number": 17,
+   "title": "禮記注疏·卷三十三~卷三十四 (vol 18)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 288,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a0a4eec7cd8e1e3d0f49ce0",
+   "page_id": "6a0a4eec7cd8e1e3d0f49d29",
+   "page_number": 73,
+   "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 15 of 24): Shao Yong Neo-Confucian cosmic",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 119,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 8,
+    "classes": [
+     "O4",
+     "O17",
+     "O5",
+     "O6",
+     "O12"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 3,
+    "classes": [
+     "O5"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cc320af74b230c690cac5",
+   "page_id": "6a3cc320af74b230c690cb5a",
+   "page_number": 149,
+   "title": "注解正蒙·卷上 (vol 1)",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 128,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cec278642f0445b159fb9",
+   "page_id": "6a3cec278642f0445b159fea",
+   "page_number": 49,
+   "title": "欽定西清硯譜·卷十四~卷十五 (vol 8)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 161,
+   "served": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O1"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "69c6616a01a26ccff09f521e",
+   "page_id": "69c6616a01a26ccff09f5256",
+   "page_number": 56,
+   "title": "Lülü Zhengyi (律呂正義): Lower Section Vol. 1",
+   "stored_model": "gemini-3.1-flash-lite",
+   "han": 158,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cef0d8642f0445b16034a",
+   "page_id": "6a3cef0d8642f0445b160362",
+   "page_number": 24,
+   "title": "御定淵鑑類函·卷三百二十一~卷三百二十二 (vol 323)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 166,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   }
+  },
+  {
+   "book_id": "6a3cc010f9474f825c16da50",
+   "page_id": "6a3cc010f9474f825c16da57",
+   "page_number": 7,
+   "title": "賓退錄·卷十 (vol 4)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 179,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O5",
+     "O16"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c5e9e40c88a541d8e401d",
+   "page_id": "6a3c5e9e40c88a541d8e402c",
+   "page_number": 15,
+   "title": "御定康熙字典·卷十三 (vol 48)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 369,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 4,
+    "classes": [
+     "O6",
+     "O8"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3ce7950a0011cb4bc0a12c",
+   "page_id": "6a3ce7950a0011cb4bc0a144",
+   "page_number": 24,
+   "title": "詩總聞·卷一~卷二 (vol 1)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 128,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c6ffe01fe4f593c1cfa0c",
+   "page_id": "6a3c6fff01fe4f593c1cfa25",
+   "page_number": 25,
+   "title": "儀禮集說·卷五上 (vol 36)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 127,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cc13fec254ff6cae0aae6",
+   "page_id": "6a3cc13fec254ff6cae0aafb",
+   "page_number": 21,
+   "title": "田間易學·卷六 (vol 8)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 251,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c63700339d4df9abcbb0a",
+   "page_id": "6a3c63700339d4df9abcbb23",
+   "page_number": 25,
+   "title": "御定佩文韻府·卷一百六之二 (vol 288)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 401,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 8,
+    "classes": [
+     "E2",
+     "O5",
+     "O4",
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 5,
+    "classes": [
+     "O5",
+     "E2"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O6"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cf0088642f0445b161e72",
+   "page_id": "6a3cf0098642f0445b161e87",
+   "page_number": 21,
+   "title": "御製歷象考成·上編·卷九~卷十一 (vol 7)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 204,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 4,
+    "classes": [
+     "O5",
+     "O12",
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c6b6139b4508b04e4369e",
+   "page_id": "6a3c6b6139b4508b04e436af",
+   "page_number": 17,
+   "title": "野客叢書·卷二十九~卷三十 (vol 8)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 189,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "unchanged"
+   }
+  },
+  {
+   "book_id": "6992cd9643713c66ea6376fb",
+   "page_id": "6992cd9743713c66ea637712",
+   "page_number": 23,
+   "title": "本草綱目·卷十三",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 341,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 9,
+    "classes": [
+     "E2",
+     "O6",
+     "O5"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c7a8501fe4f593c217e81",
+   "page_id": "6a3c7a8501fe4f593c217fa4",
+   "page_number": 24,
+   "title": "太玄經·卷首~卷一 (vol 1)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 205,
+   "served": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 2,
+    "classes": [
+     "O11",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c655539b4508b04e2df01",
+   "page_id": "6a3c655539b4508b04e2df19",
+   "page_number": 24,
+   "title": "御定子史精華·卷六十~卷六十二 (vol 19)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 340,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 9,
+    "classes": [
+     "O6",
+     "O5",
+     "E2"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 6,
+    "classes": [
+     "E2",
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 3,
+    "classes": [
+     "O5"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3cee024701a906f10e55d0",
+   "page_id": "6a3cee024701a906f10e55e7",
+   "page_number": 23,
+   "title": "御定淵鑑類函·卷一百三十三 (vol 76)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 256,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "severe": 3,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O11"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6992cea877d26f93217775b6",
+   "page_id": "6992cea877d26f93217775f2",
+   "page_number": 60,
+   "title": "御製數理精蘊(4)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 1466,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 16,
+    "classes": [
+     "O7",
+     "O17"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 34,
+    "classes": [
+     "O6",
+     "O12",
+     "O7"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "severe": 1,
+    "classes": [
+     "O17"
+    ],
+    "why": "corrected"
+   }
+  },
+  {
+   "book_id": "6a3c6552af3c49b59c5cb75c",
+   "page_id": "6a3c6552af3c49b59c5cb775",
+   "page_number": 25,
+   "title": "御定子史精華·卷四十八~卷五十 (vol 15)",
+   "stored_model": "gemini-3-flash-preview",
+   "han": 310,
+   "served": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 14,
+    "classes": [
+     "O5",
+     "O12",
+     "O6",
+     "O1"
+    ],
+    "why": "stored text"
+   },
+   "P": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "severe": 2,
+    "classes": [
+     "O5",
+     "O6"
+    ],
+    "why": "written"
+   },
+   "O": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "severe": 0,
+    "classes": [],
+    "why": "corrected"
+   }
+  }
+ ],
+ "study_cells": {
+  "chinese-gemini/siku gemini-stored": {
+   "route": "gemini-stored",
+   "pages": 30,
+   "words": 7790,
+   "fidelity_mean": 3.17,
+   "misleads_per_1k": 7.19,
+   "wrong_text_per_1k": 11.68,
+   "severe_per_1k": 18.87,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/siku paddle-zh-read": {
+   "route": "paddle-zh-read",
+   "pages": 30,
+   "words": 7790,
+   "fidelity_mean": 3.57,
+   "misleads_per_1k": 3.21,
+   "wrong_text_per_1k": 7.83,
+   "severe_per_1k": 11.04,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  },
+  "chinese-gemini/siku gemini>opus": {
+   "route": "gemini>opus",
+   "pages": 30,
+   "words": 7790,
+   "fidelity_mean": 4.73,
+   "misleads_per_1k": 0.77,
+   "wrong_text_per_1k": 0.13,
+   "severe_per_1k": 0.9,
+   "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+  }
+ },
+ "contain_candidates": [
+  {
+   "book_id": "6a0a4e9f7cd8e1e3d0f496d7",
+   "page_id": "6a0a4e9f7cd8e1e3d0f49716",
+   "page_number": 63,
+   "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 2 of 24): Shao Yong Neo-Confucian cosmic ",
+   "opus": null,
+   "judge": [
+    "O1: four column heads not on this leaf, which has only 辰申, 酉, 戌, 亥, 子, 丑, 寅, 卯; they extrapolate the sequence",
+    "O1: invented numbers 2645–2648 for the added columns; the leaf stops at 2644"
+   ]
+  },
+  {
+   "book_id": "6a3c6552af3c49b59c5cb75c",
+   "page_id": "6a3c6552af3c49b59c5cb775",
+   "page_number": 25,
+   "title": "御定子史精華·卷四十八~卷五十 (vol 15)",
+   "opus": null,
+   "judge": [
+    "O1: no such sequence on the page; 為主簿 is grafted onto a garbled run"
+   ]
+  }
+ ]
+}

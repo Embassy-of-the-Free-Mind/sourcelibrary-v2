@@ -38,6 +38,18 @@
  * the start (scripts/lib/agy-pools.mjs); no pool open, no agy read this run. `default` or a DIR fixes the pool. The
  * readers run with that AGY_HOME and AGY_POOL_SHARED=1. Without the flag the readers inherit the environment, as before.
  *
+ * STALE (#7263, Derek 2026-11-03): `stale --stale-lane=agy-reread-lite-7853 --row=latin-cli-agy4 --out=DIR [--per-call=1]
+ * [--concurrency=6] [--book-chunk=40] [--max-pages=N] [--deadline-min=M] [--floor-5h=0.25] [--agy-home=auto|default|DIR] [--apply]`
+ * re-translates pages whose OCR a lane rewrote and whose English therefore predates it: `ocr.pipeline` is the lane and
+ * `translation_stale` is set, whichever writer set it (the daily sweep's ocr_newer keeps its marker and has no lane). This is
+ * the decision the WHICH PAGES rule above leaves out, taken for the Latin re-read: V4 (PR #8000) measured the pair, wrong end
+ * to end 7/30 against the stored English's 15/26. Only books the row serves. Same reader and writer as `run`; the door
+ * snapshots the old English and clears the flag, and refuses a human-edited translation. A page the writer leaves goes to
+ * DIR/../cli-retranslate-ledger.jsonl and is not retried. It stops at the pool's quota floor with every reserve
+ * in LANE_RESERVES kept, including cli-translate's own: first translations keep theirs. Order: cli-ocr-lane.mjs
+ * byRereadPriority. --per-call defaults to 1 until the #5021 anchor guard is merged and its first live run is clean;
+ * then 4, the row's own number.
+ *
  * HOW IT FAILS. A usage-limit reply makes the reader exit 3; the run stops and the next resumes. A reader that exits 2
  * (claude-translate's OCR-first gate: the book's OCR is mostly flash-lite and the row has no adoption.ocr_checked) skips
  * that book and says so. Without --apply it reads and dry-runs the writer, and releases and ledgers nothing.
@@ -45,15 +57,15 @@
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { releaseBook, HOLD_STATUS } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_LANES } from '../lib/translation-routing.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
-import { agyEnv, readPools, choosePool, poolName } from '../lib/agy-pools.mjs';
-import { quotaFloor, parseAgyHome } from './cli-ocr-lane.mjs';
+import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout } from '../lib/agy-pools.mjs';
+import { quotaFloor, parseAgyHome, byRereadPriority } from './cli-ocr-lane.mjs';
 import { ocrFirstGate, NO_TEXT } from '../lib/ocr-first-gate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -113,10 +125,105 @@ async function heldBooks(db) {
   ).sort({ visible: -1, 'pipeline_auto.hold.held_at': 1 }).toArray();
 }
 
+/** The pages `stale` re-translates in one book (header: STALE). */
+export const staleLanePages = (bookId, lane) => ({
+  book_id: bookId, ...VISIBLE_PAGE_MATCH, 'ocr.pipeline': lane, 'translation_stale.reason': { $exists: true },
+  page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, 'translation.data': { $type: 'string' }, 'translation.health_blocked': { $exists: false },
+  'translation.edited_by': { $exists: false }, 'translation.source': { $ne: 'manual' }, translation_withheld: { $ne: true },
+});
+/** A row's `per_call` for this run: the reader takes it from the row (readerArgs). */
+export const laneWithPerCall = (lane, perCall) => ({ ...lane, row: { ...lane.row, per_call: perCall } });
+
+function runAsync(args, env, tag) {
+  return new Promise((resolve) => {
+    const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...env, CLI_JOB_NAME: 'cli-retranslate-7263', AGY_JOB: 'cli-retranslate-7263' } });
+    const pipe = (src, dst) => { let buf = ''; src.on('data', (d) => { buf += d; const ls = buf.split('\n'); buf = ls.pop(); for (const l of ls) dst.write(`${tag}${l}\n`); }); src.on('end', () => { if (buf) dst.write(`${tag}${buf}\n`); }); };
+    pipe(child.stdout, process.stdout); pipe(child.stderr, process.stderr);
+    child.on('close', resolve);
+  });
+}
+
+async function staleMain(arg) {
+  const LANE = arg('stale-lane'), ROW = arg('row'), APPLY = process.argv.includes('--apply');
+  const OUT = arg('out') && path.resolve(arg('out'));
+  if (!LANE || !ROW || !OUT) { console.error('stale needs --stale-lane --row --out'); process.exit(2); }
+  const PER_CALL = Number(arg('per-call') || 1), CONCURRENCY = Number(arg('concurrency') || 1), CHUNK = Number(arg('book-chunk') || 40);
+  if (![1, 2, 3, 4].includes(PER_CALL) || !(CONCURRENCY >= 1 && CONCURRENCY <= 8)) { console.error('--per-call 1 to 4, --concurrency 1 to 8'); process.exit(2); }
+  const MAX = Number(arg('max-pages') || 200), DEADLINE = arg('deadline-min') ? Date.now() + Number(arg('deadline-min')) * 60_000 : Infinity;
+  const floor5h = Number(arg('floor-5h') ?? 0.25);
+  const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
+  const want = parseAgyHome(arg('agy-home'));
+  let home = want.home ?? null;
+  if (want.auto) {
+    const pools = readPools();
+    for (const p of pools) console.log(`pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}` : 'NO READING'}${p.busy ? `, busy (pid ${p.busy})` : ''}`);
+    const pick = choosePool(pools, (r) => { const f = quotaFloor(toBuckets(r), { floor5h }); return { open: f.ok, why: f.why }; });
+    if (!pick) { console.log('stale: no agy pool has its floor open; nothing read'); return; }
+    home = pick.home;
+  } else if (home && !fs.existsSync(home)) { console.error(`--agy-home: ${home} does not exist`); process.exit(2); }
+  const ENV = agyEnv(home), POOL = poolName({ home });
+  const LEDGER = path.join(path.dirname(OUT), 'cli-retranslate-ledger.jsonl');
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
+  await client.connect();
+  const db = client.db('bookstore');
+  const ledger = readLedger(LEDGER);
+  const ids = await db.collection('pages').distinct('book_id', { 'translation_stale.reason': { $exists: true }, 'ocr.pipeline': LANE });
+  const books = (await db.collection('books').find(
+    { id: { $in: ids }, visible: true, 'pipeline_auto.held': { $ne: true } },
+    { projection: { id: 1, title: 1, publisher: 1, language: 1, year: 1, published: 1, image_source: 1, human_read_count: 1, pages_translated: 1 } },
+  ).toArray()).map((b) => ({ ...b, lane: translateLaneForBook(b) })).filter((b) => b.lane.row?.id === ROW).sort(byRereadPriority);
+  console.log(`stale (${LANE} → row ${ROW}, ${PER_CALL} a call): pool ${POOL}; ${books.length} of ${ids.length} books with stale pages on this row; up to ${MAX} pages, ${CONCURRENCY} at a time${APPLY ? '' : ', DRY RUN'}`);
+  let budget = MAX, bi = 0, stop = null;
+  const tally = { written: 0, not_written: 0, books: 0 };
+  const job = `cli-retranslate-${new Date().toISOString().slice(0, 10)}`;
+  const worker = async () => {
+    while (!stop) {
+      if (budget <= 0) { stop = 'page budget spent'; break; }
+      if (Date.now() >= DEADLINE) { stop = 'deadline'; break; }
+      if (bi >= books.length) { stop = 'queue empty'; break; }
+      const q = quotaFloor(quotaBuckets(readQuotaStdout(home)), { floor5h });
+      if (!q.ok) { stop = `quota floor: ${q.why}`; break; }
+      const book = books[bi++];
+      const open = (await db.collection('pages').find(staleLanePages(book.id, LANE), { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray()).filter((p) => !ledger.has(p.id));
+      if (!open.length) continue;
+      const take = open.slice(0, Math.min(CHUNK, budget));
+      budget -= take.length;
+      const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
+      const dir = path.join(OUT, book.id, String(Date.now()));
+      fs.mkdirSync(dir, { recursive: true });
+      const file = path.join(dir, 'page-ids.json');
+      fs.writeFileSync(file, JSON.stringify(take.map((p) => p.id)));
+      console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)}: ${take.length} of ${open.length} pages (weekly ${(100 * q.weekly).toFixed(1)}%, 5h ${(100 * q.five_h).toFixed(1)}%)`);
+      const read = await runAsync(readerArgs(laneWithPerCall(book.lane, PER_CALL), { ids: file, dir, job, ocrChecked: book.lane.row.adoption?.ocr_checked }), ENV, tag);
+      if (read === 3) { stop = 'usage limit'; break; }
+      if (read !== 0) { console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
+      const reason = `#7263 re-translation after the ${LANE} re-read: row ${book.lane.row.id}, ${book.lane.engine}, ${PER_CALL} a call (V4, PR #8000: wrong end to end 7/30 against the stored English's 15/26)`;
+      const applied = await runAsync([path.join(HERE, 'cli-translate.mjs'), 'apply', `--out=${dir}`, `--reason=${reason}`, ...(APPLY ? ['--apply'] : [])], ENV, tag);
+      if (!APPLY || applied !== 0) continue;
+      tally.books++;
+      const left = new Set((await db.collection('pages').find({ id: { $in: take.map((p) => p.id) }, 'translation_stale.reason': { $exists: true } }, { projection: { id: 1 } }).toArray()).map((p) => p.id));
+      tally.written += take.length - left.size; tally.not_written += left.size;
+      for (const p of take.filter((x) => left.has(x.id))) {
+        let meta = null;
+        try { meta = JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')); } catch { /* not read */ }
+        fs.appendFileSync(LEDGER, JSON.stringify({ page_id: p.id, book_id: book.id, page_number: p.page_number, row: ROW, exit: meta?.exit ?? null, error_class: meta?.error_class ?? (meta ? 'not_written' : 'not_read'), at: new Date().toISOString() }) + '\n');
+        ledger.add(p.id);
+      }
+      console.log(`${tag}  ${JSON.stringify(tally)}`);
+      // The rest of this book next, ahead of lower priority books; only now, so no two workers hold one book.
+      if (open.length > take.length) books.splice(bi, 0, book);
+    }
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  console.log(`\nstale run ended (pool ${POOL}): ${stop ?? 'done'}; ${MAX - budget} page(s) taken; ${JSON.stringify(tally)}`);
+  await client.close();
+}
+
 async function main() {
   const mode = process.argv[2];
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--agy-home=auto|default|DIR] [--apply]'); process.exit(2); }
+  if (mode === 'stale') return staleMain(arg);
+  if (!['count', 'run'].includes(mode)) { console.error('usage: cli-translate-lane.mjs stale --stale-lane=L --row=R --out=DIR ... | count | run --out=DIR [--max-pages=60] [--engine=E] [--max-weekly-pct=70] [--agy-home=auto|default|DIR] [--apply]'); process.exit(2); }
   const ENGINE = arg('engine') || null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));

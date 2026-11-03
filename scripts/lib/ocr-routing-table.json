@@ -1012,11 +1012,11 @@
     },
     {
       "cell": "latin-lite/print",
-      "decision": "keep",
-      "route": "lite>opus",
-      "k_of_n": "799/897",
-      "table": "2026-11-01-validated-7263",
-      "set": "2026-11-01"
+      "decision": "switch",
+      "route": "agy-flash-low@4-read",
+      "k_of_n": "20/30",
+      "table": "2026-11-03-latin-v4-7263",
+      "set": "2026-11-03"
     },
     {
       "cell": "sanskrit-lite/print",

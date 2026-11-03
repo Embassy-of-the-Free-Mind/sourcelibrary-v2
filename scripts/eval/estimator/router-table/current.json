@@ -5,6 +5,11 @@
  "set": "2026-11-01",
  "why": "#7263 validated build (V1 pooled prior, V2 judge-validity gate, V3 multiplicity-controlled gate; scripts/eval/experiments/2026-11-01-router-validated-build-7263.md). Against 2026-10-31-correction-pass-7818, the cells V1-V3 move are explained there one by one (decision_diff.py). The cells whose change came from evidence pooled since 10-31 and that nobody decided (latin-blank/print and german-blank/print go to HOLD under the defect rule; see the 2026-11-01 reread-7853 note) stay on 7818 through `cells` below; french-lite/print and german-lite/print stay on Derek's #7853 decision.",
  "cells": {
+  "latin-lite/print": {
+   "table": "2026-11-03-latin-v4-7263",
+   "set": "2026-11-03",
+   "why": "Derek took the default on 2026-11-03 (#7263): the 835K-page Latin print Flash-Lite queue is re-read at 4 a call (V4, PR #8000: 20/30 accepted against the served 9/30 and the correction's 14/30; English wrong end to end 7/30 against 15/26), then re-translated on latin-cli-agy4. rules.json script_split.planned carries it; the row's rule_alone shows the rule's own pick (agy-flash-low-read, whose pages come from other, easier frames, at four times the quota). Only this cell moves: the rebuild's other changes come from evidence pooled since 11-01 and nobody decided them. The lane: cli-ocr-lane.mjs correct --reread-per-call=4 --reread-languages=Latin."
+  },
   "german-lite/print": {
    "table": "2026-11-01-reread-7853",
    "set": "2026-11-01",

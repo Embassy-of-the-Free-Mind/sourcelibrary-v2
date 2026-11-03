@@ -25,7 +25,7 @@ export const ABSORB_LOOKAHEAD = 3;
 // 5 min later), so "same translation.updated_at" means within this many ms.
 export const ABSORB_SAME_BLOCK_MS = 2000;
 // Page types whose English legitimately runs long or short against the leaf (an index, an apparatus).
-const ABSORB_SKIP_TYPES = new Set(['index', 'errata', 'title-page', 'blank', 'bibliography', 'contents', 'toc', 'glossary', 'apparatus', 'archived-spread', 'digitizer-insert', 'illustration']);
+export const ABSORB_SKIP_TYPES = new Set(['index', 'errata', 'title-page', 'blank', 'bibliography', 'contents', 'toc', 'glossary', 'apparatus', 'archived-spread', 'digitizer-insert', 'illustration']);
 
 // Zero code point of each decimal-digit block we expect in the corpus.
 const DIGIT_ZEROS = [

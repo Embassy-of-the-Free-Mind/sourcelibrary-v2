@@ -63,6 +63,7 @@ import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { cliFolioMarkersEnabled, splitMarkedReply } from '../lib/folio-markers.mjs';
+import { blockPageRefusals, lengthRatioK } from '../lib/block-page-guard.mjs';
 import { sourceProse } from '../lib/block-drift.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
@@ -133,6 +134,15 @@ if (STAGE === 'read') {
   let reused = 0, paired = 0, pairFallbacks = 0;
   const latinScript = (...ocrs) => dominantScript(ocrs.map((o) => sourceProse(o || '')).join(' ')) === 'latin';
   /** One marked call for page p and the page after it (#7118). 'read' | 'fallback' (called, unusable) | null (no pair). */
+  // The book's median log(EN/SRC) over its stored translations (#5021): a pair is too short to measure its own.
+  const kOf = new Map();
+  const bookK = async (bookId) => {
+    if (!kOf.has(bookId)) {
+      const rows = await db.collection('pages').aggregate([{ $match: { book_id: bookId, 'translation.data': { $type: 'string' } } }, { $project: { _id: 0, page_type: 1, s: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, e: { $strLenCP: '$translation.data' } } }]).toArray();
+      kOf.set(bookId, lengthRatioK(rows.map((r) => ({ src: r.s, en: r.e, type: r.page_type })), { min: 5 }));
+    }
+    return kOf.get(bookId);
+  };
   async function readMarkedPair({ p, book, prev, previousTranslation, prevRead, nextId }) {
     const q = found.get(nextId);
     if (!q || q.book_id !== p.book_id || q.page_number !== p.page_number + 1 || INSTRUCTIONS[nextId]) return null;
@@ -156,8 +166,10 @@ if (STAGE === 'read') {
     const fail = r.cls || r.problem || cliChatterReason(r.answer || '');
     const split = fail ? null : splitMarkedReply(r.answer, [pn, qn], { sources: [p.ocr.data, q.ocr.data] });
     const cut = split?.ok && split.texts.some((t, k) => checkWrittenText(t, { kind: 'translation', source: [p, q][k].ocr.data, lang: book?.language, type: [p, q][k].page_type }).verdict === 'truncated');
-    if (fail || !split.ok || cut) {
-      console.log(`  ${p.page_number}+${q.page_number} marked pair not usable (${fail || (!split.ok ? split.why : 'a span looks cut')}): one page per call`);
+    // #5021 (block-page-guard.mjs): a span that holds both leaves, or none, or prints only the other leaf's numbers.
+    const wrongLeaf = split?.ok && !cut ? blockPageRefusals([p, q].map((pg) => ({ page_number: pg.page_number, page_type: pg.page_type, ocr: pg.ocr })), new Map([[p.page_number, split.texts[0]], [q.page_number, split.texts[1]]]), { prevOcr: prev?.ocr?.data ?? null, nextOcr: after?.ocr?.data ?? null, k: await bookK(p.book_id) }) : [];
+    if (fail || !split.ok || cut || wrongLeaf.length) {
+      console.log(`  ${p.page_number}+${q.page_number} marked pair not usable (${fail || (!split.ok ? split.why : cut ? 'a span looks cut' : `wrong leaf: ${wrongLeaf.map((w) => `p${w.page_number} ${w.reason}`).join(', ')}`)}): one page per call`);
       return 'fallback';
     }
     for (const [k, pg] of [p, q].entries()) {

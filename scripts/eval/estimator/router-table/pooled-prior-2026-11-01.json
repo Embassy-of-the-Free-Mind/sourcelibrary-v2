@@ -124,17 +124,20 @@
   "chinese-flash3/print": {
    "3flash": 0.6443,
    "3flash>opus": 0.8639,
-   "3flash>agy-flash-low": 0.697
+   "3flash>agy-flash-low": 0.697,
+   "sonnet-read": 0.519
   },
   "chinese-flash3/manuscript": {
    "3flash": 0.553,
    "3flash>opus": 0.8118,
-   "3flash>agy-flash-low": 0.6104
+   "3flash>agy-flash-low": 0.6104,
+   "sonnet-read": 0.519
   },
   "chinese-flash3/unknown": {
    "3flash": 0.5913,
    "3flash>opus": 0.8343,
-   "3flash>agy-flash-low": 0.647
+   "3flash>agy-flash-low": 0.647,
+   "sonnet-read": 0.519
   },
   "danish-lite/print": {
    "lite": 0.6837
@@ -442,17 +445,20 @@
   "latin-flash3/print": {
    "3flash": 0.7765,
    "3flash>opus": 0.9291,
-   "3flash>agy-flash-low": 0.8099
+   "3flash>agy-flash-low": 0.8099,
+   "sonnet-read": 0.752
   },
   "latin-flash3/manuscript": {
    "3flash": 0.7132,
    "3flash>opus": 0.9031,
-   "3flash>agy-flash-low": 0.7524
+   "3flash>agy-flash-low": 0.7524,
+   "sonnet-read": 0.752
   },
   "latin-flash3/unknown": {
    "3flash": 0.7381,
    "3flash>opus": 0.9136,
-   "3flash>agy-flash-low": 0.7752
+   "3flash>agy-flash-low": 0.7752,
+   "sonnet-read": 0.752
   },
   "latin-gpu-7263/print": {
    "lite": 0.61,
@@ -480,7 +486,8 @@
    "lite>agy-flash-low": 0.8746,
    "agy-flash-low-read": 0.8655,
    "lite>agy-flash-low+diffqa": 0.8746,
-   "gpu>agy-flash-low": 0.9468
+   "gpu>agy-flash-low": 0.9468,
+   "lite>sonnet": 0.771
   },
   "latin-lite/manuscript": {
    "lite": 0.627,
@@ -488,7 +495,8 @@
    "lite>agy-flash-low": 0.8321,
    "agy-flash-low-read": 0.8202,
    "lite>agy-flash-low+diffqa": 0.8321,
-   "gpu>agy-flash-low": 0.9266
+   "gpu>agy-flash-low": 0.9266,
+   "lite>sonnet": 0.771
   },
   "latin-lite/unknown": {
    "lite": 0.701,
@@ -496,7 +504,8 @@
    "lite>agy-flash-low": 0.8737,
    "agy-flash-low-read": 0.8642,
    "lite>agy-flash-low+diffqa": 0.8737,
-   "gpu>agy-flash-low": 0.9462
+   "gpu>agy-flash-low": 0.9462,
+   "lite>sonnet": 0.771
   },
   "mhg-lite/print": {
    "lite": 0.7138
@@ -1246,5 +1255,6 @@
    "stored": 0.2288,
    "agy-flash-low@1": 0.6599
   }
- }
+ },
+ "_bridged_sonnet": "#7263 2026-11-03: Sonnet has no engine level in this fit; these three means are sonnet_plan.py's predictions (a measured engine's level plus a bridge from the records that tested Sonnet), not the leave-one-base-out fit. Refit with pooled_prior.py after adding more Sonnet evidence."
 }
