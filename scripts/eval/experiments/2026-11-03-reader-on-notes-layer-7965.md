@@ -1,5 +1,5 @@
 ---
-stage: translation
+stage: pipeline
 measure: agreement
 languages: []
 scripts: []
@@ -10,6 +10,7 @@ verdict: "The reader rendered from the notes layer (translation.text + the newes
 status: informational
 decision: "The reader reads the layer where a page has one (step 1 of #7965); every other page takes today's path, unchanged"
 superseded_by: null
+defect_rates: "none — a render-equivalence gate of the reader, no translation was judged for defects"
 issue: [7965]
 ---
 ## 2026-11-03 · The reader on the notes layer: gate (#7965 step 1)
