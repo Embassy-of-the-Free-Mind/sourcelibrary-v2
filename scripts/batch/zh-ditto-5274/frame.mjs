@@ -16,6 +16,7 @@ import zlib from 'node:zlib';
 import { MongoClient } from 'mongodb';
 import { bodyHanCount } from '../../lib/paddle-zh-lane.mjs';
 import { isHeld } from '../../lib/pipeline-hold.mjs';
+import { getTranslationText } from '../../lib/translation-text.mjs';
 
 export const FAM = /佩文韻府|韻府拾遺|駢字類編/;
 export const MIN_HAN = 300;
@@ -40,7 +41,7 @@ await Promise.all(Array.from({ length: 6 }, async () => {
   while (next < books.length) {
     const b = books[next++];
     const ps = await db.collection('pages').find({ book_id: b.id, 'ocr.source': 'paddle' },
-      { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.updated_at': 1, 'ocr.qa_screen.status': 1, 'ocr.qa_screen.dice': 1, 'ocr.qa_screen.pb': 1, 'translation.data': 1, 'translation.source': 1, 'translation.model': 1, translation_withheld: 1, translation_stale: 1 } }).toArray();
+      { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.updated_at': 1, 'ocr.qa_screen.status': 1, 'ocr.qa_screen.dice': 1, 'ocr.qa_screen.pb': 1, translation: 1, translation_withheld: 1, translation_stale: 1 } }).toArray();
     for (const p of ps) {
       const t = String(p.ocr?.data || '');
       const han = bodyHanCount(t);
@@ -49,7 +50,7 @@ await Promise.all(Array.from({ length: 6 }, async () => {
       rows.push({ pid: p.id, bid: b.id, pn: p.page_number, fam: b.title.match(FAM)[0], han, marks: count(t, /丨/g), alt: count(t, /[｜|│┃〡]/g),
         pipeline: p.ocr?.pipeline ?? null, edited: Boolean(p.ocr?.edited_by), qa: p.ocr?.qa_screen?.status ?? null, dice, pb,
         leaf_marks: pb && dice >= 0.6 && leaf.has(pb) ? leaf.get(pb) : null,
-        translated: Boolean(p.translation?.data), tr_source: p.translation?.source ?? null, tr_model: p.translation?.model ?? null,
+        translated: Boolean(getTranslationText(p)), tr_source: p.translation?.source ?? null, tr_model: p.translation?.model ?? null,
         withheld: Boolean(p.translation_withheld), stale: Boolean(p.translation_stale),
         held: isHeld(b) ? b.pipeline_auto.hold.reason : null, status: b.pipeline_auto?.status ?? null });
     }
