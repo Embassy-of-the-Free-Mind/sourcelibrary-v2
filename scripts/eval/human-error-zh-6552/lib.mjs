@@ -65,3 +65,17 @@ export function diffRuns(typed, ocr) {
 }
 export const mulberry = (seed) => { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
 export const shuffled = (a, rng) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+/** Where a span sits: the locator line and offset best matching its context. Only geometry is kept. */
+export function locate(lines, left, right) {
+  const L = [...left].filter((c) => c !== '□'), R = [...right].filter((c) => c !== '□'); let best = { score: 0 };
+  for (const row of lines) {
+    const t = hanChars(row.text).map(foldCh);
+    for (let p = 0; p <= t.length; p++) {
+      let s = 0;
+      for (let q = 1; q <= L.length && p - q >= 0; q++) if (t[p - q] === foldCh(L[L.length - q])) s++;
+      for (let q = 0; q < R.length && p + q < t.length; q++) if (t[p + q] === foldCh(R[q])) s++;
+      if (s > best.score) best = { score: s, row, p, n: t.length };
+    }
+  }
+  return best;
+}

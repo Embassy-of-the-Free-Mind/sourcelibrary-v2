@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
-import { diffRuns, hanChars, foldCh, nearOf, mulberry, shuffled } from './lib.mjs';
+import { diffRuns, hanChars, foldCh, nearOf, mulberry, shuffled, locate } from './lib.mjs';
 const arg = (n, d) => process.argv.find((x) => x.startsWith(`--${n}=`))?.slice(n.length + 3) ?? d;
 const C = arg('c'), TAG = arg('tag'), ROOT = path.join(process.env.JOB_SCRATCH, C), rng = mulberry(6552 + [...TAG].reduce((a, c) => a * 31 + c.charCodeAt(0), 7));
 const N = { plants: +arg('plants', 5), decoys: +arg('decoys', 5), neither: +arg('neither', 3), wrongcrop: +arg('wrongcrop', 3), agreed: +arg('agreed', 0) };
@@ -22,22 +22,8 @@ for (const uid of uids) {
   pages[uid] = { uid, typed, ocr, ...r, changedAt: new Set(d.changed_at || []), lines: JSON.parse(fs.readFileSync(path.join(ROOT, 'lines', `${uid}.lines.json`), 'utf8')) };
 }
 
-/** Where a span sits: the locator line and offset best matching its context. Only geometry is kept. */
-function locate(pg, left, right) {
-  const L = [...left].filter((c) => c !== '□'), R = [...right].filter((c) => c !== '□'); let best = { score: 0 };
-  for (const row of pg.lines) {
-    const t = hanChars(row.text).map(foldCh);
-    for (let p = 0; p <= t.length; p++) {
-      let s = 0;
-      for (let q = 1; q <= L.length && p - q >= 0; q++) if (t[p - q] === foldCh(L[L.length - q])) s++;
-      for (let q = 0; q < R.length && p + q < t.length; q++) if (t[p + q] === foldCh(R[q])) s++;
-      if (s > best.score) best = { score: s, row, p, n: t.length };
-    }
-  }
-  return best;
-}
 async function panel(uid, it) {
-  const f = path.join(ROOT, 'img', `${uid}.jpg`), m = await sharp(f).metadata(), loc = locate(pages[uid], it.left, it.right), wide = Math.max([...(it.typed || '')].length, [...(it.ocr || '')].length) > 1 ? 2 : 1;
+  const f = path.join(ROOT, 'img', `${uid}.jpg`), m = await sharp(f).metadata(), loc = locate(pages[uid].lines, it.left, it.right), wide = Math.max([...(it.typed || '')].length, [...(it.ocr || '')].length) > 1 ? 2 : 1;
   let box, how = 'crop';
   if (loc.score >= 4) {
     const [x0, y0, x1, y1] = loc.row.box, cw = Math.min(x1 - x0, y1 - y0), vertical = (y1 - y0) >= (x1 - x0), frac = (loc.p + 0.5) / Math.max(1, loc.n);
