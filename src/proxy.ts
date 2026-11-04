@@ -694,6 +694,20 @@ function looksLikeBookId(segment: string): boolean {
     || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
 }
 
+/** Manuscript collections have a catalogue route; the rest show it on the landing page. */
+function usesDedicatedCatalogue(tenant: string): boolean {
+  return tenant === 'bhutan';
+}
+
+function rewriteToTenantCatalogue(url: NextRequest['nextUrl'], tenant: string): void {
+  if (usesDedicatedCatalogue(tenant)) {
+    url.pathname = `/embed/${tenant}/catalogue`;
+  } else {
+    url.pathname = `/embed/${tenant}`;
+    url.searchParams.set('view', 'catalog');
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -983,13 +997,7 @@ export async function proxy(request: NextRequest) {
       // Tenants still on the BPH-style `?view=catalog` query param flow
       // (BPH, kloss, etc.) render `<UnifiedCatalogue>` /
       // `<BphUnifiedCatalogue>` inside the landing page based on the param.
-      const usesDedicatedCatalogue = tenant === 'bhutan';
-      if (usesDedicatedCatalogue) {
-        url.pathname = `/embed/${tenant}/catalogue`;
-      } else {
-        url.pathname = `/embed/${tenant}`;
-        url.searchParams.set('view', 'catalog');
-      }
+      rewriteToTenantCatalogue(url, tenant);
       needsRewrite = true;
     } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
       // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
@@ -1317,10 +1325,23 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // /embed/<tenant>/catalog has no page of its own: the partner's catalogue is
+  // the landing page's view, as on the subdomain. Without this the catalogue
+  // address answered the global 404 inside the iframe (#8047).
+  const embedCatalogue = pathname.match(/^\/embed\/([^/]+)\/(catalog|catalogue)\/?$/);
+  let embedCatalogueUrl: URL | null = null;
+  if (embedCatalogue && !(embedCatalogue[2] === 'catalogue' && usesDedicatedCatalogue(embedCatalogue[1]))) {
+    const url = request.nextUrl.clone();
+    rewriteToTenantCatalogue(url, embedCatalogue[1]);
+    embedCatalogueUrl = url;
+  }
+
   // Pass the modified headers to the request
-  const response = NextResponse.next({
-    request: { headers: requestHeaders },
-  });
+  const response = embedCatalogueUrl
+    ? NextResponse.rewrite(embedCatalogueUrl, { request: { headers: requestHeaders } })
+    : NextResponse.next({
+        request: { headers: requestHeaders },
+      });
 
   // RSC cache poisoning is handled in next.config.ts headers() via
   // has/missing conditions on the 'rsc' header. Middleware can't reliably

@@ -290,7 +290,7 @@ export default async function EmbedTenantRoot({ params, searchParams }: Props) {
             <EmbedNavigationReporter />
             {showCatalogTools && catalogRole && (
                 <div className="max-w-7xl mx-auto px-6 pt-4">
-                    <CatalogEditorNav role={catalogRole} />
+                    <CatalogEditorNav tenant={tenant} role={catalogRole} />
                 </div>
             )}
             <SharedLibraryView {...viewProps} />
