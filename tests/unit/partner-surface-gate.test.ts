@@ -37,6 +37,11 @@ describe('isProtectedSurface', () => {
     expect(isProtectedSurface('kloss.sourcelibrary.org', '/')).toBe(false);
   });
 
+  it('lets the proxy log its own refusals on the subdomain', () => {
+    expect(isProtectedSurface('bph.sourcelibrary.org', '/api/analytics/bots')).toBe(false);
+    expect(isProtectedSurface('bph.sourcelibrary.org', '/api/analytics/stats')).toBe(true);
+  });
+
   it('leaves a deployment calling itself alone, and obeys the switch', () => {
     vi.stubEnv('VERCEL_URL', 'sourcelibrary-v2-abc.vercel.app');
     expect(isProtectedSurface('sourcelibrary-v2-abc.vercel.app', '/api/bph/books/x/index')).toBe(false);
