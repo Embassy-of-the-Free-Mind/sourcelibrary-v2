@@ -278,6 +278,12 @@ export function hasLocalizedEdition(
   if (lang === 'en') return true;
   // Written in the language: the pages already ARE it, no counter involved.
   if (isNativeEdition(book, lang)) return true;
+  // A book translated into Chinese has an edition to open on /zh (#7537, Flora
+  // Sinensis), so the reader must not 307 it to English. Deliberately NOT in
+  // TRANSLATED_COUNTER: that also feeds the shelf filters, and /zh's "books written
+  // in Chinese" shelf and counts must stay native. The field is sparse, so an absent
+  // value falls through to the native-only answer below.
+  if (lang === 'zh' && typeof book.pages_translated_zh === 'number' && book.pages_translated_zh > 0) return true;
   const field = TRANSLATED_COUNTER[lang];
   // A locale nothing is translated INTO (Latin): the native test above is the
   // whole answer, and it could only be given if `language` was projected.
