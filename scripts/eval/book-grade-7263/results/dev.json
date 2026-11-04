@@ -86,102 +86,102 @@
   "B+R": {
    "n": 126,
    "bad": 59,
-   "auc": 0.715,
+   "auc": 0.788,
    "auc_ci": [
-    0.624,
-    0.802
+    0.706,
+    0.86
    ],
-   "logloss": 0.6089,
+   "logloss": 0.5486,
    "logloss_ci": [
-    0.537,
-    0.685
+    0.468,
+    0.639
    ],
-   "slope": 0.91,
+   "slope": 0.998,
    "slope_ci": [
-    0.496,
-    1.396
+    0.637,
+    1.589
    ],
-   "brier": 0.21
+   "brier": 0.1844
   },
   "all": {
    "n": 126,
    "bad": 59,
-   "auc": 0.813,
+   "auc": 0.829,
    "auc_ci": [
-    0.736,
-    0.882
+    0.757,
+    0.894
    ],
-   "logloss": 0.5196,
+   "logloss": 0.4897,
    "logloss_ci": [
-    0.449,
-    0.594
+    0.413,
+    0.567
    ],
-   "slope": 1.155,
+   "slope": 1.035,
    "slope_ci": [
-    0.849,
-    1.67
+    0.783,
+    1.438
    ],
-   "brier": 0.1753
+   "brier": 0.1669
   },
   "all-T": {
    "n": 126,
    "bad": 59,
-   "auc": 0.76,
+   "auc": 0.783,
    "auc_ci": [
-    0.673,
-    0.838
+    0.701,
+    0.857
    ],
-   "logloss": 0.5602,
+   "logloss": 0.5483,
    "logloss_ci": [
-    0.494,
+    0.47,
     0.631
    ],
-   "slope": 1.073,
+   "slope": 1.005,
    "slope_ci": [
-    0.722,
-    1.57
+    0.676,
+    1.515
    ],
-   "brier": 0.1931
+   "brier": 0.1855
   },
   "all-I": {
    "n": 126,
    "bad": 59,
-   "auc": 0.802,
+   "auc": 0.826,
    "auc_ci": [
-    0.723,
-    0.874
+    0.755,
+    0.892
    ],
-   "logloss": 0.5249,
+   "logloss": 0.4861,
    "logloss_ci": [
-    0.457,
-    0.597
+    0.41,
+    0.565
    ],
-   "slope": 1.185,
+   "slope": 1.051,
    "slope_ci": [
-    0.87,
-    1.736
+    0.789,
+    1.491
    ],
-   "brier": 0.1776
+   "brier": 0.1652
   },
   "all-M": {
    "n": 126,
    "bad": 59,
-   "auc": 0.778,
+   "auc": 0.812,
    "auc_ci": [
-    0.694,
-    0.851
+    0.738,
+    0.879
    ],
-   "logloss": 0.5524,
+   "logloss": 0.5135,
    "logloss_ci": [
-    0.484,
-    0.624
+    0.435,
+    0.593
    ],
-   "slope": 1.07,
+   "slope": 0.996,
    "slope_ci": [
-    0.757,
-    1.533
+    0.732,
+    1.454
    ],
-   "brier": 0.1894
+   "brier": 0.1748
   },
   "all-R": {
    "n": 126,
@@ -208,67 +208,68 @@
   "families": [
    "B",
    "T",
-   "M"
+   "M",
+   "R"
   ],
   "kind": "logit",
   "logit": {
    "n": 126,
    "bad": 59,
-   "auc": 0.817,
+   "auc": 0.826,
    "auc_ci": [
-    0.741,
-    0.885
+    0.755,
+    0.892
    ],
-   "logloss": 0.5074,
+   "logloss": 0.4861,
    "logloss_ci": [
-    0.438,
-    0.581
+    0.41,
+    0.565
    ],
-   "slope": 1.176,
+   "slope": 1.051,
    "slope_ci": [
-    0.874,
-    1.703
+    0.789,
+    1.491
    ],
-   "brier": 0.1712
+   "brier": 0.1652
   },
   "hgb": {
    "n": 126,
    "bad": 59,
-   "auc": 0.799,
+   "auc": 0.832,
    "auc_ci": [
-    0.717,
-    0.871
+    0.758,
+    0.896
    ],
-   "logloss": 0.5467,
+   "logloss": 0.5247,
    "logloss_ci": [
-    0.446,
-    0.656
+    0.409,
+    0.654
    ],
-   "slope": 0.787,
+   "slope": 0.709,
    "slope_ci": [
-    0.534,
-    1.147
+    0.485,
+    1.115
    ],
-   "brier": 0.1837
+   "brier": 0.17
   }
  },
  "within_cell": {
   "zh Paddle manuscripts (7866 low/middle cell)": {
    "books": 46,
    "bad": 29,
-   "auc": 0.639,
+   "auc": 0.667,
    "auc_ci": [
-    0.469,
-    0.792
+    0.503,
+    0.821
    ]
   },
   "Chinese": {
    "books": 47,
    "bad": 30,
-   "auc": 0.651,
+   "auc": 0.678,
    "auc_ci": [
-    0.487,
-    0.794
+    0.518,
+    0.82
    ]
   },
   "Sanskrit": {
@@ -280,10 +281,10 @@
   "Latin": {
    "books": 25,
    "bad": 12,
-   "auc": 0.808,
+   "auc": 0.865,
    "auc_ci": [
-    0.6,
-    0.961
+    0.673,
+    0.994
    ]
   }
  },
@@ -325,91 +326,91 @@
  "false_reassurance": [
   {
    "t": 0.1,
-   "called_good": 11,
-   "share_called_good": 0.087,
-   "false_reassurance": 0.0,
+   "called_good": 17,
+   "share_called_good": 0.135,
+   "false_reassurance": 0.059,
    "fr_ci": [
     0.0,
-    0.0
+    0.176
    ],
    "D_among_called_good": 0
   },
   {
    "t": 0.15,
-   "called_good": 20,
-   "share_called_good": 0.159,
-   "false_reassurance": 0.05,
+   "called_good": 25,
+   "share_called_good": 0.198,
+   "false_reassurance": 0.08,
    "fr_ci": [
     0.0,
-    0.15
+    0.2
    ],
    "D_among_called_good": 0
   },
   {
    "t": 0.2,
-   "called_good": 28,
-   "share_called_good": 0.222,
-   "false_reassurance": 0.071,
+   "called_good": 29,
+   "share_called_good": 0.23,
+   "false_reassurance": 0.069,
    "fr_ci": [
     0.0,
-    0.179
+    0.172
    ],
-   "D_among_called_good": 1
+   "D_among_called_good": 0
   },
   {
    "t": 0.25,
-   "called_good": 34,
-   "share_called_good": 0.27,
-   "false_reassurance": 0.088,
+   "called_good": 37,
+   "share_called_good": 0.294,
+   "false_reassurance": 0.108,
    "fr_ci": [
-    0.0,
-    0.176
+    0.027,
+    0.216
    ],
    "D_among_called_good": 1
   },
   {
    "t": 0.3,
-   "called_good": 38,
-   "share_called_good": 0.302,
-   "false_reassurance": 0.079,
+   "called_good": 39,
+   "share_called_good": 0.31,
+   "false_reassurance": 0.128,
    "fr_ci": [
-    0.0,
-    0.184
+    0.026,
+    0.231
    ],
-   "D_among_called_good": 1
+   "D_among_called_good": 2
   },
   {
    "t": 0.35,
-   "called_good": 40,
-   "share_called_good": 0.317,
-   "false_reassurance": 0.125,
+   "called_good": 44,
+   "share_called_good": 0.349,
+   "false_reassurance": 0.205,
    "fr_ci": [
-    0.025,
-    0.25
+    0.091,
+    0.341
    ],
    "D_among_called_good": 3
   },
   {
    "t": 0.4,
-   "called_good": 50,
-   "share_called_good": 0.397,
-   "false_reassurance": 0.18,
+   "called_good": 52,
+   "share_called_good": 0.413,
+   "false_reassurance": 0.25,
    "fr_ci": [
-    0.08,
-    0.28
+    0.135,
+    0.365
    ],
-   "D_among_called_good": 4
+   "D_among_called_good": 3
   },
   {
    "t": 0.5,
-   "called_good": 67,
-   "share_called_good": 0.532,
-   "false_reassurance": 0.269,
+   "called_good": 70,
+   "share_called_good": 0.556,
+   "false_reassurance": 0.271,
    "fr_ci": [
-    0.164,
-    0.373
+    0.171,
+    0.386
    ],
-   "D_among_called_good": 5
+   "D_among_called_good": 3
   }
  ],
  "false_reassurance_baseline": [
@@ -501,56 +502,56 @@
  ],
  "lolo": {
   "final": {
-   "pooled_auc": 0.733,
+   "pooled_auc": 0.761,
    "books": 161,
    "by_language": {
     "English": {
      "books": 14,
      "bad": 1,
      "auc": 1.0,
-     "mean_pred": 0.28,
+     "mean_pred": 0.368,
      "observed_bad": 0.071
     },
     "Sanskrit": {
      "books": 28,
      "bad": 23,
-     "auc": 0.557,
-     "mean_pred": 0.566,
+     "auc": 0.643,
+     "mean_pred": 0.58,
      "observed_bad": 0.821
     },
     "Latin": {
      "books": 25,
      "bad": 12,
-     "auc": 0.763,
-     "mean_pred": 0.305,
+     "auc": 0.885,
+     "mean_pred": 0.391,
      "observed_bad": 0.48
     },
     "Chinese": {
      "books": 70,
      "bad": 50,
-     "auc": 0.569,
-     "mean_pred": 0.848,
+     "auc": 0.654,
+     "mean_pred": 0.725,
      "observed_bad": 0.714
     },
     "German": {
      "books": 13,
      "bad": 3,
-     "auc": 0.867,
-     "mean_pred": 0.34,
+     "auc": 0.8,
+     "mean_pred": 0.226,
      "observed_bad": 0.231
     },
     "Greek": {
      "books": 6,
      "bad": 4,
-     "auc": 0.875,
-     "mean_pred": 0.511,
+     "auc": 1.0,
+     "mean_pred": 0.45,
      "observed_bad": 0.667
     },
     "Tibetan": {
      "books": 5,
      "bad": 1,
-     "auc": 0.75,
-     "mean_pred": 0.445,
+     "auc": 1.0,
+     "mean_pred": 0.625,
      "observed_bad": 0.2
     }
    }
@@ -614,13 +615,13 @@
  "coverage": {
   "final": {
    "n": 126,
-   "coverage_90": 0.69,
+   "coverage_90": 0.921,
    "coverage_ci": [
-    0.611,
-    0.77
+    0.873,
+    0.96
    ],
-   "median_width": 9.0,
-   "whole_range_share": 0.437
+   "median_width": 16.0,
+   "lower_bound_zero_share": 0.944
   },
   "baseline": {
    "n": 126,
@@ -629,141 +630,141 @@
     0.857,
     0.96
    ],
-   "median_width": 21.0,
-   "whole_range_share": 0.913
+   "median_width": 23.0,
+   "lower_bound_zero_share": 0.976
   }
  },
  "nb_dispersion": {
-  "final": 0.167,
-  "baseline": 0.834
+  "final": 1.049,
+  "baseline": 1.143
  },
  "page_curve": {
   "final_prior": {
    "0": {
     "books": 126,
-    "mean_lpd_pair": -3.2246,
-    "auc_any_on_pair": 0.645,
-    "bad_call_agrees_with_5_page_grade": 0.667
+    "mean_lpd_pair": -2.3333,
+    "auc_any_on_pair": 0.659,
+    "bad_call_agrees_with_5_page_grade": 0.651
    },
    "1": {
     "books": 126,
-    "mean_lpd_pair": -2.9272,
-    "auc_any_on_pair": 0.674,
-    "bad_call_agrees_with_5_page_grade": 0.746
+    "mean_lpd_pair": -2.3579,
+    "auc_any_on_pair": 0.706,
+    "bad_call_agrees_with_5_page_grade": 0.794
    },
    "2": {
     "books": 126,
-    "mean_lpd_pair": -2.7945,
-    "auc_any_on_pair": 0.688,
-    "bad_call_agrees_with_5_page_grade": 0.77
+    "mean_lpd_pair": -2.4815,
+    "auc_any_on_pair": 0.703,
+    "bad_call_agrees_with_5_page_grade": 0.873
    },
    "3": {
     "books": 126,
-    "mean_lpd_pair": -2.7302,
-    "auc_any_on_pair": 0.686,
-    "bad_call_agrees_with_5_page_grade": 0.794
+    "mean_lpd_pair": -2.5557,
+    "auc_any_on_pair": 0.681,
+    "bad_call_agrees_with_5_page_grade": 0.881
    },
    "first_page_gain_by_uncertainty": [
     {
      "tercile": "most sure",
      "books": 42,
-     "mean_lpd_gain": 0.2993
+     "mean_lpd_gain": 0.0003
     },
     {
      "tercile": "middle",
      "books": 42,
-     "mean_lpd_gain": 0.3803
+     "mean_lpd_gain": 0.0443
     },
     {
      "tercile": "least sure",
      "books": 42,
-     "mean_lpd_gain": 0.2127
+     "mean_lpd_gain": -0.1183
     }
    ]
   },
   "baseline_prior": {
    "0": {
     "books": 126,
-    "mean_lpd_pair": -2.4548,
-    "auc_any_on_pair": 0.609,
-    "bad_call_agrees_with_5_page_grade": 0.619
+    "mean_lpd_pair": -2.3984,
+    "auc_any_on_pair": 0.589,
+    "bad_call_agrees_with_5_page_grade": 0.556
    },
    "1": {
     "books": 126,
-    "mean_lpd_pair": -2.4395,
-    "auc_any_on_pair": 0.696,
-    "bad_call_agrees_with_5_page_grade": 0.825
+    "mean_lpd_pair": -2.4245,
+    "auc_any_on_pair": 0.685,
+    "bad_call_agrees_with_5_page_grade": 0.833
    },
    "2": {
     "books": 126,
-    "mean_lpd_pair": -2.5363,
-    "auc_any_on_pair": 0.692,
-    "bad_call_agrees_with_5_page_grade": 0.897
+    "mean_lpd_pair": -2.5429,
+    "auc_any_on_pair": 0.693,
+    "bad_call_agrees_with_5_page_grade": 0.905
    },
    "3": {
     "books": 126,
-    "mean_lpd_pair": -2.5833,
-    "auc_any_on_pair": 0.684,
-    "bad_call_agrees_with_5_page_grade": 0.889
+    "mean_lpd_pair": -2.5897,
+    "auc_any_on_pair": 0.679,
+    "bad_call_agrees_with_5_page_grade": 0.897
    },
    "first_page_gain_by_uncertainty": [
     {
      "tercile": "most sure",
      "books": 42,
-     "mean_lpd_gain": -0.2185
+     "mean_lpd_gain": -0.37
     },
     {
      "tercile": "middle",
      "books": 42,
-     "mean_lpd_gain": 0.2019
+     "mean_lpd_gain": 0.1895
     },
     {
      "tercile": "least sure",
      "books": 42,
-     "mean_lpd_gain": 0.0624
+     "mean_lpd_gain": 0.1023
     }
    ]
   },
   "flat_prior": {
    "0": {
     "books": 126,
-    "mean_lpd_pair": -2.5702,
-    "auc_any_on_pair": 0.481,
+    "mean_lpd_pair": -2.4598,
+    "auc_any_on_pair": 0.48,
     "bad_call_agrees_with_5_page_grade": 0.468
    },
    "1": {
     "books": 126,
-    "mean_lpd_pair": -2.4751,
-    "auc_any_on_pair": 0.653,
+    "mean_lpd_pair": -2.4393,
+    "auc_any_on_pair": 0.649,
     "bad_call_agrees_with_5_page_grade": 0.817
    },
    "2": {
     "books": 126,
-    "mean_lpd_pair": -2.5521,
-    "auc_any_on_pair": 0.672,
+    "mean_lpd_pair": -2.5501,
+    "auc_any_on_pair": 0.673,
     "bad_call_agrees_with_5_page_grade": 0.897
    },
    "3": {
     "books": 126,
-    "mean_lpd_pair": -2.6064,
-    "auc_any_on_pair": 0.66,
+    "mean_lpd_pair": -2.6028,
+    "auc_any_on_pair": 0.663,
     "bad_call_agrees_with_5_page_grade": 0.889
    },
    "first_page_gain_by_uncertainty": [
     {
      "tercile": "most sure",
      "books": 42,
-     "mean_lpd_gain": 0.4668
+     "mean_lpd_gain": 0.0605
     },
     {
      "tercile": "middle",
      "books": 42,
-     "mean_lpd_gain": -0.049
+     "mean_lpd_gain": -0.1028
     },
     {
      "tercile": "least sure",
      "books": 42,
-     "mean_lpd_gain": -0.1325
+     "mean_lpd_gain": 0.1038
     }
    ]
   }
@@ -790,10 +791,10 @@
   "B+T+I+R": {
    "pages": 680,
    "many": 181,
-   "auc": 0.771,
+   "auc": 0.78,
    "auc_ci": [
-    0.727,
-    0.811
+    0.736,
+    0.817
    ]
   }
  },
@@ -801,104 +802,104 @@
   "C": 0.3,
   "top": [
    [
+    "R.agy_ned",
+    0.676
+   ],
+   [
     "T.line_count",
-    0.786
+    0.621
    ],
    [
     "M.year",
-    -0.619
+    -0.521
    ],
    [
     "T.tag_char_share",
-    0.536
-   ],
-   [
-    "route=3flash",
-    -0.47
+    0.521
    ],
    [
     "route=lite",
-    0.414
-   ],
-   [
-    "T.mixed_tok",
-    -0.412
-   ],
-   [
-    "T.max_oov",
-    -0.388
-   ],
-   [
-    "M.route_wt_per1k",
-    0.375
-   ],
-   [
-    "T.tok_len_mean",
-    0.369
-   ],
-   [
-    "T.sq_tag",
-    0.362
-   ],
-   [
-    "T.max_loop",
-    -0.358
-   ],
-   [
-    "M.route_measured",
-    0.35
-   ],
-   [
-    "T.oov",
-    0.328
-   ],
-   [
-    "T.tok_len_sd",
-    -0.327
-   ],
-   [
-    "T.near_empty",
-    0.322
-   ],
-   [
-    "T.outside_script",
-    0.308
-   ],
-   [
-    "M.p_route",
-    -0.306
-   ],
-   [
-    "lang=English",
-    -0.306
-   ],
-   [
-    "T.zlib_ratio",
-    -0.305
-   ],
-   [
-    "T.no_vowel?missing",
-    0.295
-   ],
-   [
-    "T.trigram_xent",
-    0.267
-   ],
-   [
-    "T.dup_line_share",
-    -0.261
+    0.451
    ],
    [
     "T.tag_names",
-    0.251
+    0.431
    ],
    [
-    "T.oov?missing",
-    0.243
+    "T.mixed_tok",
+    -0.409
+   ],
+   [
+    "T.sq_tag",
+    0.4
+   ],
+   [
+    "route=3flash",
+    -0.392
+   ],
+   [
+    "R.agy_dis",
+    0.379
+   ],
+   [
+    "T.oov",
+    0.378
+   ],
+   [
+    "T.tok_len_mean",
+    0.376
+   ],
+   [
+    "T.max_oov",
+    -0.367
+   ],
+   [
+    "lang=English",
+    -0.366
+   ],
+   [
+    "M.route_measured",
+    0.355
+   ],
+   [
+    "M.route_wt_per1k",
+    0.341
+   ],
+   [
+    "engine=none",
+    -0.333
+   ],
+   [
+    "T.outside_script",
+    0.322
+   ],
+   [
+    "T.max_loop",
+    -0.319
+   ],
+   [
+    "T.tok_len_sd",
+    -0.317
+   ],
+   [
+    "T.no_vowel?missing",
+    0.301
+   ],
+   [
+    "T.trigram_xent",
+    0.298
    ],
    [
     "T.max_near_empty",
-    -0.242
+    -0.285
+   ],
+   [
+    "T.oov?missing",
+    0.273
+   ],
+   [
+    "R.rev_any_share",
+    -0.27
    ]
   ]
  }

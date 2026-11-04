@@ -8,6 +8,8 @@
 
   $JOB_SCRATCH/venv/bin/python scripts/eval/book-grade-7263/model.py dev       # dev only; writes results/dev.json
   $JOB_SCRATCH/venv/bin/python scripts/eval/book-grade-7263/model.py lockbox   # ONCE, after results/final-config.json is committed
+  $JOB_SCRATCH/venv/bin/python scripts/eval/book-grade-7263/model.py expand    # judged-expand-7263, after the lockbox
+  $JOB_SCRATCH/venv/bin/python scripts/eval/book-grade-7263/model.py sens      # labelled sensitivity (test rows on stored text)
 
 Reads OUT/table-books.json.gz and OUT/table-pages.json.gz (assemble.mjs). Writes aggregates only to results/;
 per-book predictions go to OUT (never committed).
@@ -144,16 +146,18 @@ def fit_hgb(Xtr, ytr, wtr, seed=0):
     return HistGradientBoostingClassifier(max_depth=3, max_iter=200, min_samples_leaf=10, learning_rate=0.05, l2_regularization=1.0, random_state=seed).fit(Xtr, ytr, sample_weight=wtr), None
 
 
-def oof(books, fams, kind='logit', reps=5, k=5):
-    """Out-of-fold P(bad) on dev, averaged over repeats."""
+def oof(books, fams, kind='logit', reps=5, k=5, extra=()):
+    """Out-of-fold P(bad) on dev, averaged over repeats. `extra` books join every training fold and are never scored."""
     y = np.array([b['bad'] for b in books]); w = np.array([b['n_pages'] / 5 for b in books])
+    ye = np.array([b['bad'] for b in extra]); we = np.array([b['n_pages'] / 5 for b in extra])
     P = np.zeros((reps, len(books)))
     for r in range(reps):
         for f in group_folds(len(books), k, SEED_FOLDS + r):
             tr = np.setdiff1d(np.arange(len(books)), f)
-            d = Design(fams).fit([books[i] for i in tr])
-            Xtr, _ = d.transform([books[i] for i in tr]); Xte, _ = d.transform([books[i] for i in f])
-            m, _ = (fit_logit if kind == 'logit' else fit_hgb)(Xtr, y[tr], w[tr], seed=r)
+            trb = [books[i] for i in tr] + list(extra)
+            d = Design(fams).fit(trb)
+            Xtr, _ = d.transform(trb); Xte, _ = d.transform([books[i] for i in f])
+            m, _ = (fit_logit if kind == 'logit' else fit_hgb)(Xtr, np.r_[y[tr], ye].astype(int), np.r_[w[tr], we], seed=r)
             P[r, f] = m.predict_proba(Xte)[:, 1]
     return P.mean(axis=0)
 
@@ -486,9 +490,9 @@ def lockbox():
     fams, kind = cfg['families'], cfg['kind']
     y_d = np.array([b['bad'] for b in dev_b]); w_d = np.array([b['n_pages'] / 5 for b in dev_b])
     out = {'config': cfg, 'lockbox_books': len(lock)}
-    for label, fs in [('final', fams), ('baseline', ['B'])]:
+    for label, fs in [('final', fams), ('baseline', ['B'])] + [('secondary:' + '+'.join(v), v) for v in cfg.get('secondary', [])]:
         d = Design(fs).fit(dev_b); Xd, _ = d.transform(dev_b); Xl, _ = d.transform(lock)
-        m, C = (fit_logit if (kind == 'logit' or label == 'baseline') else fit_hgb)(Xd, y_d, w_d)
+        m, C = (fit_logit if (kind == 'logit' or label != 'final') else fit_hgb)(Xd, y_d, w_d)
         p = m.predict_proba(Xl)[:, 1]
         y = np.array([b['bad'] for b in lock]); main = np.array([b['n_pages'] >= 4 for b in lock])
         res = {'five_page_books': scores(y, p, main)}
@@ -496,12 +500,13 @@ def lockbox():
         if one.sum() and len(set(y[one])) == 2:
             res['one_page_books'] = {'n': int(one.sum()), 'bad': int(y[one].sum()), 'auc': round(auc(y[one], p[one]), 3)}
         res['false_reassurance'] = reassurance(y[main], p[main], [b['grade'] for b, k in zip(lock, main) if k])
-        if label == 'final':
+        if label != 'baseline':
             beta, a, lam = nb_fit_cv(Xd, np.array([b['serious'] for b in dev_b], float), np.array([b['units'] for b in dev_b], float) / 1000)
             ul = np.array([b['units'] for b in lock], float)
             rate = nb_mu(beta, Xl, ul / 1000) / np.maximum(ul / 1000, 1.0)
             res['coverage'] = coverage(lock, rate, np.full(len(lock), a), main)
             res['within_cell'] = within(lock, p, main)
+        if label == 'final':
             with open(os.path.join(OUT, 'lockbox-preds.json'), 'w') as f:
                 json.dump({b['book_id']: float(p[i]) for i, b in enumerate(lock)}, f)
         out[label] = res
@@ -510,5 +515,70 @@ def lockbox():
     print(json.dumps(out, indent=1))
 
 
+def later_test(name, test_b, train_b, cfg):
+    """Fit on train_b with the frozen config (and each secondary variant, and the baseline); score test_b, one page a book."""
+    out = {'books': len(test_b), 'bad': int(sum(b['bad'] for b in test_b))}
+    seen = {b['lang'] for b in train_b}
+    y_t = np.array([b['bad'] for b in train_b]); w_t = np.array([b['n_pages'] / 5 for b in train_b])
+    many = np.array([1 if (b['serious'] >= 3 or b['wrong_page']) else 0 for b in test_b])
+    y = np.array([b['bad'] for b in test_b]); allm = np.ones(len(test_b), bool)
+    sel_seen = np.array([b['lang'] in seen for b in test_b])
+    for label, fs in [('final', cfg['families']), ('baseline', ['B'])] + [('secondary:' + '+'.join(v), v) for v in cfg.get('secondary', [])]:
+        d = Design(fs).fit(train_b); Xd, _ = d.transform(train_b); Xl, _ = d.transform(test_b)
+        m, _ = (fit_hgb if (label == 'final' and cfg['kind'] == 'hgb') else fit_logit)(Xd, y_t, w_t)
+        p = m.predict_proba(Xl)[:, 1]
+        res = {'bad': scores(y, p, allm), 'many_auc': round(auc(many, p), 3), 'many_auc_ci': boot_ci(lambda i: auc(many, p, i), len(y), B=2000),
+               'seen_language': {'n': int(sel_seen.sum()), 'bad': int(y[sel_seen].sum()), 'auc': round(auc(y[sel_seen], p[sel_seen]) or float('nan'), 3)},
+               'unseen_language': {'n': int((~sel_seen).sum()), 'bad': int(y[~sel_seen].sum()), 'auc': round(auc(y[~sel_seen], p[~sel_seen]) or float('nan'), 3) if (~sel_seen).sum() else None},
+               'false_reassurance': reassurance(y, p, [b['grade'] for b in test_b]),
+               'agy_read_share': round(float(np.mean([b['R'].get('agy_dis') is not None for b in test_b])), 3)}
+        from collections import Counter
+        res['by_language'] = {L: {'n': n, 'bad': int(sum(b['bad'] for b in test_b if b['lang'] == L)), 'mean_pred': round(float(np.mean([pp for b, pp in zip(test_b, p) if b['lang'] == L])), 3),
+                                  'auc': (lambda a: round(a, 3) if a else None)(auc(np.array([b['bad'] for b in test_b if b['lang'] == L]), np.array([pp for b, pp in zip(test_b, p) if b['lang'] == L])))}
+                              for L, n in Counter(b['lang'] for b in test_b).most_common() if n >= 10}
+        if label != 'baseline':
+            beta, a, _ = nb_fit_cv(Xd, np.array([b['serious'] for b in train_b], float), np.array([b['units'] for b in train_b], float) / 1000)
+            ul = np.array([b['units'] for b in test_b], float)
+            res['coverage'] = coverage(test_b, nb_mu(beta, Xl, ul / 1000) / np.maximum(ul / 1000, 1.0), np.full(len(test_b), a), allm)
+        out[label] = res
+        print(name, label, res['bad']['auc'], res['many_auc'], flush=True)
+    return out
+
+
+def frozen():
+    cfg_path = os.path.join(RESULTS, 'final-config.json')
+    st = subprocess.run(['git', 'status', '--porcelain', cfg_path, os.path.abspath(__file__)], capture_output=True, text=True, cwd=HERE).stdout.strip()
+    if st or not os.path.exists(cfg_path):
+        sys.exit('commit results/final-config.json and model.py first.')
+    return json.load(open(cfg_path))
+
+
+def expand():
+    """judged-expand-7263: the second, later test. Trained on all 220 label books (the lockbox is open by now)."""
+    if not os.path.exists(os.path.join(RESULTS, 'lockbox.json')):
+        sys.exit('open the lockbox first: the expand test trains on it.')
+    cfg = frozen()
+    out = later_test('expand', load('expand/table-books.json.gz'), load('table-books.json.gz'), cfg)
+    out['config'] = cfg
+    with open(os.path.join(RESULTS, 'expand.json'), 'w') as f:
+        json.dump(out, f, indent=1)
+
+
+def sens():
+    """Labelled sensitivity: the test rows on stored text join every dev training fold; dev out-of-fold change."""
+    cfg = frozen()
+    books = [b for b in load('table-books.json.gz') if not b['lockbox']]
+    extra = load('sens/table-books.json.gz')
+    main = np.array([b['n_pages'] >= 4 for b in books]); y = np.array([b['bad'] for b in books])
+    out = {'extra_books': len(extra), 'extra_bad': int(sum(b['bad'] for b in extra)), 'extra_langs': sorted({b['lang'] for b in extra})}
+    for label, fs in [('final', cfg['families'])] + [('secondary:' + '+'.join(v), v) for v in cfg.get('secondary', [])]:
+        p0 = oof(books, fs); p1 = oof(books, fs, extra=extra)
+        out[label] = {'without': scores(y, p0, main), 'with': scores(y, p1, main),
+                      'within_without': within(books, p0, main), 'within_with': within(books, p1, main)}
+        print(label, out[label]['without']['auc'], out[label]['with']['auc'], flush=True)
+    with open(os.path.join(RESULTS, 'sensitivity.json'), 'w') as f:
+        json.dump(out, f, indent=1)
+
+
 if __name__ == '__main__':
-    {'dev': dev, 'lockbox': lockbox}[sys.argv[1]]()
+    {'dev': dev, 'lockbox': lockbox, 'expand': expand, 'sens': sens}[sys.argv[1]]()

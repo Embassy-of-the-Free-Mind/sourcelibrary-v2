@@ -24,8 +24,7 @@ const REREAD_SOURCES = ['batch_api', 'ai', 'pipeline_preview'];
 
 /* ── fetch: the book sample pages, revisions and metadata (Mongo) ── */
 
-async function fetchAll() {
-  const { rows } = J('labels.json.gz');
+export async function fetchAll(rows = J('labels.json.gz').rows, outName = 'fetch.json.gz') {
   const c = new MongoClient(process.env.MONGODB_URI);
   await c.connect();
   const db = c.db('bookstore');
@@ -61,7 +60,7 @@ async function fetchAll() {
     await new Promise((r) => setTimeout(r, 150));
   }
   await c.close();
-  W('fetch.json.gz', out);
+  W(outName, out);
 }
 
 /* ── text features ── */
@@ -133,15 +132,16 @@ export function textFeatures(text, lang, bookFamilies, lexicon) {
 
 /* ── build ── */
 
-function build() {
-  const { rows } = J('labels.json.gz');
-  const F = J('fetch.json.gz');
-  const router = routerLookup();
-  // Pages of each book: judged (as judged) + sample (as at judged_at).
+/** Pages of each book: judged (as judged) + sample (as at judged_at). */
+function pagesOfRows(rows, F) {
   const pagesOf = {};
   for (const r of rows) (pagesOf[r.book_id] ??= []).push({ page_id: r.page_id, kind: 'judged', text: r.text, lang: r.lang });
   for (const [b, x] of Object.entries(F.books)) for (const s of x.sample) pagesOf[b].push({ page_id: s.page_id, kind: 'sample', text: s.text, lang: pagesOf[b][0].lang, rewritten: s.rewritten_after_judging });
-  // Lexicon (floor 3 books) and per-language trigram counts from every label book's pages.
+  return pagesOf;
+}
+
+/** Lexicon (floor 3 books) and per-language trigram model from the label books' pages; xent leaves the book's own pages out. */
+function corpusOf(pagesOf) {
   const lexRows = {}, tri = {}, triBook = {};
   for (const [b, ps] of Object.entries(pagesOf)) {
     const seen = new Map(), tc = new Map();
@@ -157,8 +157,10 @@ function build() {
   // Bigram contexts per language, for the trigram model's denominators.
   const ctx = {}; for (const [L, m] of Object.entries(tri)) { const c = new Map(); for (const [g, n] of m) c.set(g.slice(0, -1), (c.get(g.slice(0, -1)) ?? 0) + n); ctx[L] = c; }
   const ctxBook = {}; for (const [b, m] of Object.entries(triBook)) { const c = new Map(); for (const [g, n] of m) c.set(g.slice(0, -1), (c.get(g.slice(0, -1)) ?? 0) + n); ctxBook[b] = c; }
+  const none = new Map();
   const xent = (text, L, b) => {
-    const own = triBook[b], ownC = ctxBook[b]; const T = tri[L], C = ctx[L]; const V = 4000;
+    const own = triBook[b] ?? none, ownC = ctxBook[b] ?? none; const T = tri[L], C = ctx[L]; const V = 4000;
+    if (!T) return null; // a language no label book has
     const s = ` ${garbleBody(text).replace(/\s+/g, ' ').trim()} `; const cps = Array.from(s);
     let H = 0, n = 0;
     for (let i = 0; i + 2 < cps.length; i++) {
@@ -169,6 +171,10 @@ function build() {
     }
     return n ? H / n : null;
   };
+  return { lexicon, xent };
+}
+
+function pageFeaturesOf(pagesOf, F, { lexicon, xent }) {
   const pageFeats = [];
   for (const [b, ps] of Object.entries(pagesOf)) {
     const fam = {}; for (const p of ps) for (const [f, k] of Object.entries(families(p.text))) fam[f] = (fam[f] ?? 0) + k;
@@ -189,7 +195,10 @@ function build() {
       pageFeats.push({ book_id: b, page_id: p.page_id, kind: p.kind, ...f });
     }
   }
-  // Metadata per book.
+  return pageFeats;
+}
+
+function bookMetaOf(rows, F, router) {
   const bookMeta = {};
   for (const [b, x] of Object.entries(F.books)) {
     const mine = rows.filter((r) => r.book_id === b);
@@ -208,9 +217,25 @@ function build() {
       p_route: look.measured ? look.mean : null, route_measured: look.measured ? 1 : 0, route_wt_per1k: look.wrong_text_per_1k ?? null, router_table: router.name,
       sample_rewritten_after_judging: x.sample.filter((s) => s.rewritten_after_judging).length };
   }
+  return bookMeta;
+}
+
+function build() {
+  const { rows } = J('labels.json.gz');
+  const F = J('fetch.json.gz');
+  const router = routerLookup();
+  const pagesOf = pagesOfRows(rows, F);
+  const pageFeats = pageFeaturesOf(pagesOf, F, corpusOf(pagesOf));
+  const bookMeta = bookMetaOf(rows, F, router);
   W('feat-pages.json.gz', pageFeats);
   W('feat-books.json.gz', bookMeta);
   console.log(`${pageFeats.length} page feature rows (${pageFeats.filter((p) => p.kind === 'judged').length} judged), ${Object.keys(bookMeta).length} books; router table ${router.name}`);
+}
+
+/** The judged-expand books (expand.mjs): lexicon and trigram model from the label books only, so no expand text shapes them. */
+export function buildFor(rows, F) {
+  const main = pagesOfRows(J('labels.json.gz').rows, J('fetch.json.gz'));
+  return { pageFeats: pageFeaturesOf(pagesOfRows(rows, F), F, corpusOf(main)), bookMeta: bookMetaOf(rows, F, routerLookup()) };
 }
 
 if (process.argv[2] === 'fetch') await fetchAll();
