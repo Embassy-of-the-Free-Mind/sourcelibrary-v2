@@ -58,6 +58,9 @@ n_pages: 68
 verdict: "Flash reverses fewer statements than Flash-Lite in all three languages."
 status: adopted
 decision: "Flash routes Sanskrit, Pali and Chinese translation (PR #5740)"
+feeds: route
+landed: "scripts/lib/translation-routing-table.json#flash-measured"
+supersedes: []
 superseded_by: null
 issue: [5695, 5740]
 ---
@@ -74,21 +77,29 @@ issue: [5695, 5740]
 | `verdict` | yes | one line, quoted: what the run found |
 | `status` | yes | `adopted` (a lane or prompt changed) \| `rejected` (tested, not taken) \| `undecided` (a decision is still owed) \| `superseded` (a later file answers the same question) \| `informational` (a measurement, no decision asked of it) |
 | `decision` | no | what it changed, with the PR or issue: `"v19.1 is the production OCR prompt (PR #5655)"` |
-| `superseded_by` | with `superseded` | the later file's name in this directory |
+| `feeds` | on new entries (dated 2026-11-05 on) | what the result should change if taken: `route` \| `prompt` \| `detector` \| `judge` \| `reference` \| `figure` (a published number) \| `cost` \| `guard` \| `surface` (search, the reader, the Librarian) \| `repair` \| `none` (a probe, plan, census). A list when it feeds two (#6553) |
+| `landed` | with `status: adopted` and `feeds` other than `none` | where the change is: a repo path that exists (an `#anchor` after it is allowed, `scripts/lib/ocr-routing-table.json#latin-lite/print`) or `"PR #7874"`, which CI checks is merged. A list when it landed in two places. Of 75 sampled write-ups that asked for a change, 12 claimed one the repo could not show (#6553) |
+| `supersedes` | no | on the LATER entry: the earlier files this one overturns, `[2026-10-30-read-surface-box-behnken-6740.md]`. The builder marks each of them `superseded` in `index.json` (keeping its own header's value as `status_declared`), so it leaves `/quality` without anyone editing the old file |
+| `superseded_by` | with `superseded` | the later file's name in this directory (the old way; prefer `supersedes:` on the later file) |
 | `issue` | no | the issue number, or a list |
 | `router_evidence` | for a judged `ocr` / `translation` result | the router-table cells (`scripts/eval/estimator/router-table/rules.json` `cells[].id`) this run added evidence to, `[latin-lite, german-lite]` — or `"none — <why>"` (a prompt test, no route compared). Required on NEW entries whose `measure` includes `judged` or `judged_vs_reference` (#7263): a judged result the router never reads does not change a route |
 | `defect_rates` | for an `ocr` / `translation` result dated 2026-10-30 or later | a repo path to the JSON with, per route, misleads and wrong_text per 1,000 words and the mean fidelity (`scripts/eval/route-judge-6740/defect-rate.py` writes one: run its `inventory` stage, then the `.py`) — or `"none — <why>"` (nothing was judged for defects). Required on NEW entries with a `measure` other than `none` (#6740): routes are decided on severity-weighted defect rates against the live route; accept k/n is a summary (eval-design.md §10.3, proposed in `scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/eval-design-10.3.md`) |
 
 Strings are double-quoted; lists sit on one line; nothing else of YAML is read
-(`scripts/eval/lib/experiment-header.mjs`). **Changing a result's status is
-editing the header only** — e.g. when a later run overturns this one, set
-`status: superseded` and `superseded_by:` here, in the same PR that adds the later
-file. Never rewrite the body of an entry that has already landed: add a new entry.
+(`scripts/eval/lib/experiment-header.mjs`). **When a later run or PR overturns an
+entry, the LATER entry says so:** `supersedes: [<earlier file>]`. The earlier file is
+not touched; its effective status is derived. (The old rule, editing the earlier
+header to `status: superseded` in the same PR, was followed about 25 times in 566
+files; every one of the 7 overturns #6553 found had been missed.) If production
+moved without a write-up, add a short entry that records the change and supersedes
+the stale one. Never rewrite the body of an entry that has already landed.
 
 CI (`scripts/eval/experiments-lint.mjs`, in `unit-tests.yml`) refuses a new dated
 entry without a valid header, a new judged OCR or translation entry without
 `router_evidence`, a new OCR or translation entry (from 2026-10-30) without
-`defect_rates`, and an invalid header on any file. A weekly detector
+`defect_rates`, a new entry (from 2026-11-05) without `feeds`, a new adopted entry
+that feeds something without `landed` (or whose `landed` PR is not merged), and an
+invalid header on any file. A weekly detector
 (`scripts/audit/experiments-garden.mjs`) lists entries with no header, `undecided`
 entries left over 21 days, public pages that cite a superseded entry, and live
 entries whose verdicts disagree.
@@ -140,6 +151,29 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-11 | 103 | 86.1 (78.2–92.8) | 0.6 | 16 (8.6–24.6) | 11.5 | 14.6 | 9.6 | 87.7 / 71.1 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-11-01, all model arms sampled (#5274 wave 2) |
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
+
+## 2026-11-04 · The Opus-corrected Paddle table pages were served, after Claude arbitrated the Gemini flags (#6553)
+
+Derek's steer on 2026-10-15 made Gemini's review a recorded second opinion rather than a gate.
+`scripts/eval/paddle-review-6561/README.md` (step 2b) and commit 3ec7e27d7 (PR #6744, 2026-10-16) record
+the arbitration: all 23 flagged spans are printed on the page, and the 4,379 pages were served. The
+2026-10-14 entry had already shown the 5 invented calls it opened were wrong.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
+
+## 2026-11-04 · The Flash-low correction of Neyphug rGyud Tsha was written after all (#6553)
+
+The 2026-10-26 entry failed its preregistered gate (10 of 40 pages worse, controls 84%) and wrote nothing.
+The volume's pages now carry the correction (`ocr.pipeline` tib-correct-6560), and
+`2026-10-27-opus-retranslate-flash-corrected-tibetan-6948.md` (PR #7495) records the retranslation of
+738 of the 739 corrected leaves. Leaf 128 keeps an invented line from the correction and its English is
+withheld (book held `tib-flash-invented-line-6948`).
+
+The gate result itself stands as measured. What changed is the decision, and no header recorded it.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
 
 ## 2026-11-04 · Near-blank Chinese leaves: the gate failed twice (#5274), and what #5021 left
 
@@ -235,6 +269,53 @@ node --env-file=.env.production.local scripts/maintenance/wrong-leaf-fix-5021.mj
 
 Either accept 26/30 strict (0 invented entries; misses are glosses) or gate an Opus reader on 30 fresh pages; and
 decide what the caption-only `no-body` leaves should show, since this lane will never give them English.
+
+## 2026-11-04 · The Maya translation lane is no longer Gemini 3.8 Flash Low (#6553)
+
+The 2026-10-14 entry adopted Gemini 3.8 Flash Low as the Maya translation lane. The next test,
+`2026-10-16-gemini4-opus1pp-maya-6559.md`, put Gemini 4 Argon Low ahead of it under both judges and
+adopted it for Yucatec, with a style line. PRs #6795 and #6801 (merged 2026-10-16) retranslated 15
+Yucatec books, 1,341 pages (`scripts/workers/needs/readable.md`, Yucatec Maya). Kaqchikel stays on Opus.
+
+Neither header was changed, so the 2026-10-14 entry still read `adopted` with `superseded_by: null`.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
+
+## 2026-11-04 · The latin-lite router cell no longer keeps lite>opus (#6553)
+
+`scripts/lib/ocr-routing-table.json` `router_cells`: `latin-lite/print` → decision `switch`, route
+`agy-flash-low@4-read`, k/n 20/30, set 2026-11-03, from `2026-11-03-router-v4-latin-lite-7263.md`.
+
+Diff-QA is still not a live route, so that half of the 2026-10-28 result holds. This entry supersedes it
+because its decision line names the live route of a cell that has since changed.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
+
+## 2026-11-04 · Opus is not the production translator for the five hardest languages (#6553)
+
+`scripts/lib/translation-routing-table.json` on 2026-11-04: row `greek-cli-gemini38` (adopted 2026-10-25,
+`2026-10-25-greek-cli-lane-sample-7075.md`, PR #7360), row `flash-measured` (gemini-3-flash-preview for
+Hebrew, Aramaic, Arabic, Persian, Sanskrit, Chinese) and row `pali-cli-opus`.
+
+The 2026-10-15 measurements (G4L ahead of 3.8 Flash, behind Opus under the Opus judge) are unchanged.
+Its decision line was not a description of the routing table then or now.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
+
+## 2026-11-04 · German first reads moved to 8 pages a call (#6553)
+
+PR #7874 ("German first read at 8 pages a call, under a router waiver") merged 2026-11-01. The
+`german-blank/print` cell in `scripts/lib/ocr-routing-table.json` carries the `first-read` waiver
+(set 2026-11-01, until 2026-11-15). Latin and English keep the live knobs, as the 2026-10-30 entry found.
+
+This is the case that started #6553's status check: the decision went to Derek, he took it, and the
+write-up kept saying "keep 4 a call".
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
 
 ## 2026-11-04 · What kinds of experiment do we run, and what should each one feed? (#6553)
 
@@ -512,6 +593,23 @@ A detector in `experiments-garden.mjs` could catch the rest. It would read each 
 - The status sample: no. It is one seeded draw. A second draw of 60 would narrow the rejected interval.
 
 **Inbox notes acted on:** 2026-11-04 08:30Z (part 6) and 08:37Z (part 7).
+
+## 2026-11-04 · The Antigravity-CLI arm, rejected outside Tibetan on 2026-10-08, now carries production lanes (#6553)
+
+The 2026-10-08 entry is right about what it measured: on 365 reference pages the CLI arm reversed sense
+on 26 pages against the API's 19, and the preregistered gate failed. It is no longer right as a
+statement of what production does. Per-language tests after it moved lanes to the CLI one at a time:
+
+- `scripts/lib/translation-routing-table.json` row `greek-cli-gemini38` (PR #7360, 2026-10-25) and
+  `pali-cli-opus` (2026-10-23).
+- PR #7917 (2026-11-02): Latin, German, Italian and French print first translations on agy Flash-low.
+- `scripts/lib/ocr-routing-table.json` rows `greek-print`, `persian-sanskrit-pali-arabic-print`,
+  `chinese-print`, `manuscripts`, `tibetan` name agy (#7075).
+
+The CLI was never declared equal to the API in general; it won cell by cell.
+
+Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
+against `origin/main` f193ddebc.
 
 ## 2026-11-03 · Can a cheaper corrector replace Opus on the Gemini-read Chinese? Paddle > agy Flash, Paddle > Sonnet, stored > each (#7263)
 
