@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>聊齋志異新評卷三 林四娘</header>
+<meta>Red circle punctuation in the main text. The folio number is hidden in the fold.</meta>
+
+然君每怪妾不肯獻醜今將長別當率成一章索筆構
+成曰心悲意亂不能推敲乖音錯節愼勿出以示人掩
+袂而去公送諸門外湮然而沒公悵悼良久視其詩字
+態端好珍而藏之詩曰靜鎖深宮十七年誰將故國問
+青天閒看殿宇封喬木泣望君王化杜鵑海國波濤斜
+夕照漢家蕭鼓靜烽烟紅顏力弱難爲厲蕙質心悲只
+問禪日誦菩提千百句閒看貝葉兩三篇高唱梨園歌
+代哭請君獨聽亦潸然詩中重複脫節疑傳者錯悞
+
+**不託於音** 禮檀弓孔子之故人原壤其母死夫子助
+之沐槨原壤登木曰久矣予之不托於音
+
+<vocab>林四娘, 杜鵑, 貝葉, 菩提, 梨園, 檀弓, 原壤</vocab>

@@ -1,0 +1,68 @@
+<scan-quality>fair</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<header>神峯通考 命理正宗卷之四</header>
+<page-num>五十二 / 五十三</page-num>
+<meta>Small hand-drawn triangle beside 壬寅壬戌.</meta>
+
+<image-desc size="small" type="decorative" significance="low">A row of small arched marks ending in circles stands above the columns of each verse register.</image-desc>
+
+壬寅壬戌  陽土透立
+不混官星  名崇祿顯
+癸向巳宮  財官拘印
+運至南方  財名必振
+癸日申提  卯寅歲時
+年煞月劫  林下孤恓
+煞多有制  女人必貴
+官星犯重  濁淫濫類
+壬日戊提  癸干未月
+運喜東方  逢沖即絶
+庚日申時  柱中金局
+
+---
+
+壬癸多金  生於酉申
+土旺則貴  水旺則貧
+癸日巳亥  殺財透露
+地合傷官  有勞無富
+癸日干巳  陰煞重逢
+無官混雜  名利富貴
+陽火申提  無根從煞
+有根南旺  脫根壽促
+乙日酉月  見水爲守
+有根丑絶  無根寅危
+癸日寅提  壬日亥月
+
+<column-break/>
+
+<image-desc size="small" type="decorative" significance="low">The same row of arched marks ending in circles stands above the columns of each verse register.</image-desc>
+
+支無會合  傷官劫妻
+提綱有用  最忌刑沖
+沖運則吉  沖用則凶
+十干化氣  有影無形
+無中生有  禍福難遷
+格局推詳  以殺爲重
+制煞爲權  何愁損用
+時殺無根  煞旺最貴
+時煞多根  殺旺不利
+印綬比肩  喜行財鄉
+印無比肩  畏行財鄉
+
+---
+
+莫犯提綱  禍福推別
+三奇透露  日干要強
+其根有用  富貴榮昌
+十惡大敗  格中不忌
+若會財官  反成富貴
+煞不離印  印不離煞
+殺印相生  功名顯達
+八月官星  大忌卯丁
+卯丁剋破  有情無情
+財官印綬  大忌比肩
+傷官七殺  反助爲權
+
+<vocab>命理正宗, 壬寅, 壬戌, 官星, 煞, 印綬, 提綱, 十干化氣, 傷官, 七殺, 三奇, 十惡大敗, 比肩, 財官</vocab>

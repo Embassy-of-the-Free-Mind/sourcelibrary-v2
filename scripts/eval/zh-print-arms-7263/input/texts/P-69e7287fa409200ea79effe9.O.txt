@@ -1,0 +1,14 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>聊齋志異新評卷六</header>
+<warning>The centre-fold title and leaf number at the right edge are partly cut off; the leaf number is not reliably legible and is omitted.</warning>
+<meta>Woodblock print in two colours: main text in black, commentary and punctuation circles in red. The last line of the red commentary runs on to the next page.</meta>
+
+矣。
+異史氏曰香草沉羅，血滿胸臆，東山珮玦，淚漬泥沙。古有忠臣孝子，至死不諒於君父者，公孫九娘豈以負骸骨之託而怨懟不釋於中耶？脾鬲間物，不能掬以相示，冤乎哉。
+
+生被株連，死成梓里，以慧麗女子，賫恨重泉。游魂異域，雖復陽臺雲作，畫閣春生，而露冷楓林，血腥羅裙。人鬼異類，豈能白頭相守哉？獨惜其既託收骨，欲得所依，徒嘆蓬遊，遂忘墓表，豈白楊風雨，可辨孤墳羅
+
+<vocab>異史氏, 公孫九娘, 忠臣, 孝子, 魂, 墓</vocab>
