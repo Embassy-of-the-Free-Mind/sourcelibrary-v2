@@ -15,7 +15,7 @@ const NOTE = 'Source Library · sourcelibrary.org/book/69779625b58638948b30281e 
 
 describe('decodePastedText', () => {
   it('reports no mark on clean text', () => {
-    expect(decodePastedText(SAMPLE, verify)).toEqual({ status: 'none', zeroWidth: 0, editionId: null, message: null, bookId: null });
+    expect(decodePastedText(SAMPLE, verify)).toEqual({ status: 'none', zeroWidth: 0, editionId: null, message: null, bookId: null, signedReference: false });
   });
 
   it('verifies a genuine mark and returns its note and book', () => {

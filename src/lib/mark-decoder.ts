@@ -18,6 +18,7 @@
  *   book address and wins.
  */
 import { verifyExport } from './provenance';
+import { ACCOUNT_REF_PATTERN } from './trace-ref';
 
 /** Largest paste we decode. A whole long page is ~20K characters; this is generous. */
 export const MAX_DECODE_CHARS = 200_000;
@@ -36,6 +37,11 @@ export interface DecodeResult {
   message: string | null;
   /** Full book id named by the colophon's book address, when there is one. */
   bookId: string | null;
+  /**
+   * The colophon carries a traced-copy account ref (#8150 slice 8). The ref is
+   * opaque (a keyed HMAC): the public page says one exists, never whose it is.
+   */
+  signedReference: boolean;
 }
 
 type Verifier = (text: string) => { editionId: string | null; message: string | null; authentic: boolean } | null;
@@ -49,12 +55,15 @@ export function bookIdFromColophon(message: string | null): string | null {
 
 export function decodePastedText(text: string, verify: Verifier = verifyExport): DecodeResult {
   const zeroWidth = (text.match(ZERO_WIDTH) || []).length;
-  const empty = { zeroWidth, editionId: null, message: null, bookId: null };
+  const empty = { zeroWidth, editionId: null, message: null, bookId: null, signedReference: false };
   if (zeroWidth === 0) return { status: 'none', ...empty };
   const res = verify(text);
   if (!res) return { status: 'unconfigured', ...empty };
   if (!res.editionId) return { status: 'none', ...empty };
   if (!res.authentic) return { status: 'unverified', ...empty };
   const message = res.message || null;
-  return { status: 'authentic', zeroWidth, editionId: res.editionId, message, bookId: bookIdFromColophon(message) };
+  return {
+    status: 'authentic', zeroWidth, editionId: res.editionId, message, bookId: bookIdFromColophon(message),
+    signedReference: message ? ACCOUNT_REF_PATTERN.test(message) : false,
+  };
 }

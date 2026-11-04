@@ -15,6 +15,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
 import { poolRefFor } from '@/lib/suspected-pool';
+import { traceRefFor } from '@/lib/trace-ref';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { serveEnglishOriginalPage, isEnglishOriginalBook, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
@@ -196,11 +197,20 @@ export const GET = withApiAuth(async (
     //     real browser, so a real reader sharing it must not see a notice.
     const pool = !clampedCaller && !(identity.kind === 'apikey' && identity.apiKeyId)
       ? await poolRefFor(request) : undefined;
-    const ref = clampedCaller ? extractionRef(clientKeyFor(request), new Date())
+    const baseRef = clampedCaller ? extractionRef(clientKeyFor(request), new Date())
       : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
       : pool;
     // Visible notice: unchanged for bots and key holders; never for a pool.
-    const noticeRef = pool ? undefined : ref;
+    const noticeRef = pool ? undefined : baseRef;
+    // Traced bulk copies (#8150 slice 8, dark unless TRACED_COPIES=on): a key
+    // or signed-in account gets the opaque SLA- ref in the invisible colophon
+    // instead. Never a bot (it keeps its campaign ref) and never the visible
+    // notice. This response is always private, no-store.
+    const traced = clampedCaller ? undefined : traceRefFor({
+      apiKeyId: identity.kind === 'apikey' ? identity.apiKeyId : null,
+      userId: identity.kind === 'session' ? identity.userId : null,
+    });
+    const ref = traced ?? baseRef;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,

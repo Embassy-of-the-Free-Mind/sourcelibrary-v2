@@ -8,6 +8,7 @@ interface Answer {
   zero_width: number;
   edition: string | null;
   message: string | null;
+  signed_reference?: boolean;
   books: { title: string; url: string }[];
   books_sharing_code: number;
 }
@@ -105,6 +106,12 @@ export default function MarkDecoder() {
               ) : (
                 <p className="text-muted text-sm">
                   This passage carries only the short edition code. About one passage in six also carries a written note.
+                </p>
+              )}
+              {answer.signed_reference && (
+                <p className="text-sm">
+                  The note ends with a signed reference to the account that downloaded this copy. It is a code, not a
+                  name: only Source Library can match it to an account.
                 </p>
               )}
             </>

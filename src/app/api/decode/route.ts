@@ -92,6 +92,7 @@ export async function POST(request: NextRequest) {
       zero_width: result.zeroWidth,
       edition: result.editionId,
       message: result.message,
+      signed_reference: result.signedReference,
       books,
       books_sharing_code: shared,
     },
