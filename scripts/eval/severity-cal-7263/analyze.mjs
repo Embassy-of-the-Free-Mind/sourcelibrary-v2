@@ -97,6 +97,9 @@ for (const lang of Object.keys(LANGS)) for (const arm of ['S', 'F']) {
       worst_agree: both.filter((p) => worst(p.v1) === worst(p.v2)).length, worst_kappa: kappa(both.map((p) => [worst(p.v1), worst(p.v2)])), worst_xtab: xtab(both.map((p) => [worst(p.v1), worst(p.v2)])),
       serious_page_agree: both.filter((p) => (nSer(p.v1) > 0) === (nSer(p.v2) > 0)).length },
   };
+  // the experiments-lint defect_rates shape (sitting 1, before the second reader; Chinese per 1,000 Han characters)
+  table[`${lang}/${arm}`].defect_rates = { misleads_per_1k: r2(per1k(ps, (p) => p.ser1.filter((d) => d.severity === 'misleads').length)),
+    wrong_text_per_1k: r2(per1k(ps, (p) => p.ser1.filter((d) => d.severity === 'wrong_text').length)), fidelity_mean: r2(ps.reduce((a, p) => a + p.v1.fidelity, 0) / ps.length), pages: ps.length };
 }
 
 // ── controls ──
@@ -134,12 +137,13 @@ for (const p of items) for (const d of p.ser1) {
   g.called++; if (d.span?.upheld) g.upheld++;
 }
 
-// ── examples per severity ──
+// ── examples per severity: at most 3 a language and slot, one a book, items in a seeded order so both texts appear ──
 const ex = { wrong_text_upheld: [], wrong_text_not_upheld: [], misleads_upheld: [], misleads_not_upheld: [], cosmetic: [] };
-for (const p of items) for (const d of (p.v1?.defects || [])) {
+const exRng = makeRng(SEED + 11), exOrder = items.map((p) => [exRng(), p]).sort((a, b) => a[0] - b[0]).map(([, p]) => p);
+for (const p of exOrder) for (const d of (p.v1?.defects || [])) {
   const sp = d.severity === 'cosmetic' ? null : p.ser1.find((x) => x.quote === d.quote)?.span;
   const slot = d.severity === 'cosmetic' ? 'cosmetic' : `${d.severity}_${sp?.upheld ? 'upheld' : 'not_upheld'}`;
-  if (!ex[slot] || ex[slot].length >= 5 || ex[slot].some((e) => e.book_id === p.book_id) || (slot !== 'cosmetic' && !sp?.second)) continue;
+  if (!ex[slot] || ex[slot].filter((e) => e.lang === p.lang).length >= 3 || ex[slot].some((e) => e.book_id === p.book_id) || (slot !== 'cosmetic' && !sp?.second)) continue;
   ex[slot].push({ lang: p.lang, arm: p.arm, book_id: p.book_id, page: p.url, class: d.class, quote: short(d.quote, 60), judge_said: short(d.what, 120), second_reader: sp?.second ? { different: sp.second.different, changes_sense: sp.second.changes_sense, page_prints: short(sp.second.page_prints, 60), why: short(sp.second.why, 120) } : null });
 }
 
@@ -183,7 +187,7 @@ const notRead = s.filter((x) => reads[x.page_id].F.class !== 'ok').map((x) => ({
 const loops = s.filter((x) => reads[x.page_id].S.class === 'loop').map((x) => ({ lang: x.lang, book_id: x.book_id, page_number: x.page_number, page_id: x.page_id, model: x.stored_model, stored_words: words(x.stored), fresh_words: reads[x.page_id].F.class === 'ok' ? words(reads[x.page_id].F.text) : null }));
 
 fs.mkdirSync(RESULTS, { recursive: true });
-const res = { at: new Date().toISOString(), seed: SEED, opus_calls: opusUsed(), frame, reads: readTally, fresh_not_read: notRead, stored_loops: loops, table, controls: controlRows,
+const res = { at: new Date().toISOString(), seed: SEED, opus_calls: opusUsed(), frame, reads: readTally, fresh_not_read: notRead, stored_loops: loops, table, study_cells: Object.fromEntries(Object.entries(table).map(([k, v]) => [k, v.defect_rates])), controls: controlRows,
   step_t: { by_text: stepMis, cross_tab_vs_route_judge: crossTab, vs_second_reader: tVsUpheld, controls: stepControls }, misses: missRows, kinds, examples: ex, fresh_beats_stored: beats, references: refs };
 fs.writeFileSync(path.join(RESULTS, 'results.json'), JSON.stringify(res, null, 1));
 for (const [k, r] of Object.entries(table)) console.log(`${k}: n=${r.pages} accept ${r.accepted_s1} | before ${r.sense_errors_before.per_1k} [${r.sense_errors_before.ci95}] after ${r.sense_errors_after_second_reader.per_1k} [${r.sense_errors_after_second_reader.ci95}] | upheld ${r.upheld}/${r.second_read} | retest accept ${r.retest.accept_agree}/${r.retest.pages} κ ${r.retest.accept_kappa} worst ${r.retest.worst_agree}/${r.retest.pages} κ ${r.retest.worst_kappa}`);
