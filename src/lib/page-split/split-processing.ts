@@ -5,6 +5,7 @@
 
 import sharp from 'sharp';
 import { storagePut, pagePaths } from '../storage';
+import { markDisplay } from '../../../scripts/workers/lib/display-image.mjs';
 import type { Db } from 'mongodb';
 import { ObjectId } from 'mongodb';
 
@@ -185,10 +186,10 @@ export async function cropAndUploadHalf(
     const paths = pagePaths(bookId, pageNumber);
 
     // Upload full-res crop and display-size crop in parallel
-    const displayBuffer = await sharp(fullResBuffer)
+    const displayBuffer = await markDisplay(await sharp(fullResBuffer)
       .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
       .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
-      .toBuffer();
+      .toBuffer(), { bookId, pageNumber });
 
     const [fullBlob] = await Promise.all([
       storagePut(paths.full, fullResBuffer, {
