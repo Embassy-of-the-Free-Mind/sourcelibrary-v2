@@ -138,11 +138,11 @@ const grades = servedGrades as typeof servedGrades & {
 };
 /** The reader-facing order, worst last, each row saying what a reader can do with such a page. */
 const LADDER: { key: string; can: string }[] = [
-  { key: 'fit_to_quote', can: 'Quote it without opening the scan' },
+  { key: 'fit_to_quote', can: 'Quote it; check the scan before a formal citation' },
   { key: 'fit_to_read', can: 'Read it; check the scan before quoting' },
-  { key: 'search_only', can: 'Find the page by it, but do not trust the reading' },
-  { key: 'wrong_span', can: 'Do not rely on it: a word or number is not the page’s' },
-  { key: 'from_elsewhere', can: 'Do not rely on it: part is from somewhere else' },
+  { key: 'search_only', can: 'Read it with the scan: a word changes the sense' },
+  { key: 'wrong_span', can: 'Read it with the scan: a word, number or line differs from the page' },
+  { key: 'from_elsewhere', can: 'Do not rely on that part: it is from somewhere else' },
   { key: 'mostly_wrong', can: 'Do not rely on it: most of the page is wrong or missing' },
   { key: 'not_this_page', can: 'Do not rely on it: it is another page’s text' },
 ];

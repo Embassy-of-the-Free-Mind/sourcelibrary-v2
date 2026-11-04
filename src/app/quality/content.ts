@@ -163,7 +163,7 @@ export const WAYS: Way[] = [
 export const GRADES: { name: string; means: string; rule: string }[] = [
   {
     name: 'Fit to quote',
-    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    means: 'Reviewers found no serious error. They miss some, so check the scan before a formal citation.',
     rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
   },
   {
@@ -172,8 +172,8 @@ export const GRADES: { name: string; means: string; rule: string }[] = [
     rule: 'The right page, and no serious error. Small slips are allowed.',
   },
   {
-    name: 'Fit for search only',
-    means: 'It will help you find the page, but do not trust the reading.',
+    name: 'Read with the scan',
+    means: 'Mostly right, with at least one error that changes the meaning. Read it beside the scan, and check the scan before you quote it.',
     rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
   },
   {

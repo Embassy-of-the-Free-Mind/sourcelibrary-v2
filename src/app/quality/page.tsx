@@ -74,7 +74,7 @@ const twDate = threeWay.generated_at.slice(0, 10);
 /** Five bands, each describing the page; the reader's advice is the second line. */
 const serious = ['from_elsewhere', 'mostly_wrong', 'not_this_page'].reduce((a, k) => a + g[k].share, 0);
 const BANDS = [
-  { key: 'clean', label: 'Clean', what: 'No error, or one or two slips that change nothing. Quote it.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
+  { key: 'clean', label: 'Clean', what: 'No error found, or one or two slips that change nothing. Check the scan before a formal citation.', share: g.fit_to_quote.share, color: 'bg-stone-800' },
   { key: 'slips', label: 'Small slips only', what: 'Several slips, such as a running head out of place; none changes the sense.', share: g.fit_to_read.share, color: 'bg-stone-400' },
   { key: 'word', label: 'A word that changes the sense', what: 'Usually one misread word in an otherwise sound page. Check the scan before quoting.', share: g.search_only.share, color: 'bg-amber-300' },
   { key: 'span', label: 'A word, number or line differs from the page', what: 'Something dropped or not on the page. Check the scan before quoting.', share: g.wrong_span.share, color: 'bg-amber-600' },
