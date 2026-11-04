@@ -18,6 +18,7 @@
  * extrapolated past what was read, and a stretch of more than MAX_ANCHOR_GAP frames without an agreeing
  * marker ends it, as does a competing line. A marker never decides on its own: images do (judgeRun).
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { pageMarkers, parseChineseNumeral, parseDigits, parseHebrewNumeral } from '../eval/page-marker-order.mjs';
 
 export const MAX_ANCHOR_GAP = 10;
@@ -112,9 +113,9 @@ export function frameMarker(head, tail) {
   if (mk.P !== null) return parsePrintedToken(mk.tok) ?? { value: mk.P, numbering: 'arabic' };
   // pageMarkers parses neither romans nor sided folios: look in the same places it does.
   const hm = /<header(?:\s[^>]*)?>([\s\S]*?)<\/header>/i.exec(head || '');
-  const toks = hm ? hm[1].replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean) : [];
+  const toks = hm ? stripMarkupTags(hm[1], ' ').trim().split(/\s+/).filter(Boolean) : [];
   const centred = /->\s*([^<\n]{1,12}?)\s*<-/.exec(head || '');
-  const bare = (s) => String(s || '').replace(/<(vocab|meta|sig|margin|note|gloss|header|page-num|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '').replace(/<[^>]+>/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+  const bare = (s) => stripMarkupTags(String(s || '').replace(/<(vocab|meta|sig|margin|note|gloss|header|page-num|warning)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ''), '').split('\n').map(l => l.trim()).filter(Boolean);
   for (const tok of [toks.at(-1), centred?.[1], bare(head)[0], bare(tail).at(-1)]) {
     if (!tok || tok.length > 12) continue;
     const p = parsePrintedToken(tok);

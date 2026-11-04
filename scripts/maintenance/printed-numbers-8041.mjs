@@ -50,6 +50,7 @@ async function readerPages(db, bookId) {
     { $match: { book_id: bookId, page_number: { $gte: 0 } } },
     { $sort: { page_number: 1 } },
     { $project: { _id: 0, id: 1, page_number: 1, page_type: 1, repeat_of: 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1, crop: 1,
+      // strlen-safe: `ocr` is the $type-guarded expression above
       head: { $substrCP: [ocr, 0, 700] }, tail: { $substrCP: [ocr, { $max: [0, { $subtract: [{ $strLenCP: ocr }, 800] }] }, 800] } } },
   ], { hint: { book_id: 1, page_number: 1 }, maxTimeMS: 300000 }).toArray();
   return pages.filter(p => !HIDDEN.has(p.page_type) && !p.repeat_of);
