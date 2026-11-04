@@ -15,7 +15,12 @@
  * Switch: BPH_BOT_GATE_ENFORCE=0 puts every partner book back on the site rules.
  */
 
+import type { NextRequest } from 'next/server';
+import type { Db } from 'mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { hasVerifiedCredential } from '@/lib/preview-credential';
+import { hasForgedChromeHints } from '@/lib/client-hint-gate';
+import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import type { ApiIdentity } from '@/lib/api-auth';
 
 /** Tenants whose collections the rungs below protect. */
@@ -76,4 +81,68 @@ export function partnerTextAccess(request: Request, identity: ApiIdentity, decla
   }
   if (!declaredBot && isBrowserShaped(request.headers)) return { kind: 'full' };
   return { kind: 'preview' };
+}
+
+/** The Embassy's reading surfaces: its subdomain, its embed, its tenant API. */
+export function isProtectedSurface(host: string, pathname: string): boolean {
+  if (!partnerGateEnforced()) return false;
+  const h = host.toLowerCase().split(':')[0];
+  // A deployment calling itself (pipeline/step) carries no user agent worth the name.
+  if (h === process.env.VERCEL_URL?.toLowerCase()) return false;
+  if (h === 'bph.sourcelibrary.org') return true;
+  return pathname === '/embed/bph' || pathname.startsWith('/embed/bph/') || pathname.startsWith('/api/bph/');
+}
+
+// Anchored on the start of the string: these are what plain HTTP libraries send
+// unasked. Nothing a person's browser sends, nor a social card or search crawler.
+const SCRIPT_UA = /^(?:$|curl\/|wget\/|python|pycurl|aiohttp|httpx|scrapy|node(?:-fetch|\/|$)|undici|axios|got[ /(]|deno\/|bun\/|go-http-client|java\/|apache-httpclient|okhttp|php|guzzlehttp|ruby|perl|libwww|lwp|httpie|reqwest|dart|colly|mozilla\/5\.0$|mozilla\/5\.0 \(compatible; crawler\)$)/i;
+
+/** A client that says, or by saying nothing shows, it is a plain HTTP library. */
+export function isDeclaredScript(userAgent: string): boolean {
+  return SCRIPT_UA.test(userAgent.trim());
+}
+
+export type SurfaceRefusal = 'forged-browser' | 'script' | 'forged-crawler';
+
+/**
+ * Why a request has no business on a protected surface, or null. Checks only the
+ * headers and, for a crawler's name, reverse DNS; a caller holding a credential is
+ * for the proxy to pass, after this says something, so readers pay nothing for it.
+ * An inconclusive DNS answer is never a refusal: real crawlers keep the index.
+ */
+export async function surfaceRefusal(headers: Headers, clientIp: string): Promise<SurfaceRefusal | null> {
+  if (hasForgedChromeHints(headers)) return 'forged-browser';
+  const ua = headers.get('user-agent') || '';
+  if (isDeclaredScript(ua)) return 'script';
+  const claim = provableClaimIn(ua);
+  if (claim && (await verifyCrawlerClaim(claim, clientIp)) === 'forged') return 'forged-crawler';
+  return null;
+}
+
+export const SURFACE_REFUSED_RESPONSE =
+  'This collection is open to readers in a web browser, and to search engines. Programs that copy it need an agreement.\n'
+  + 'Bulk or programmatic access: https://sourcelibrary.org/developers\n'
+  + 'A reader refused by mistake: team@sourcelibrary.org\n';
+
+/**
+ * The apex page APIs carry no tenant in their path, so the proxy cannot tell a
+ * partner's page from any other. True when a plain HTTP library is asking for
+ * pages of a protected partner's book and shows no credential. Everyone else pays
+ * one regular expression.
+ */
+export async function isScriptOnPartnerPages(
+  request: NextRequest,
+  db: Db,
+  pages: ReadonlyArray<Record<string, unknown>>,
+): Promise<boolean> {
+  if (!partnerGateEnforced() || !isDeclaredScript(request.headers.get('user-agent') || '')) return false;
+  const bookIds = [...new Set(pages.map((p) => p.book_id).filter((id): id is string => typeof id === 'string'))];
+  if (!bookIds.length) return false;
+  const owners = await db.collection('books')
+    .find({ id: { $in: bookIds } }, { projection: { _id: 0, tenantId: 1 } })
+    .toArray();
+  for (const book of owners) {
+    if (await isProtectedPartnerBook(book)) return !(await hasVerifiedCredential(request));
+  }
+  return false;
 }

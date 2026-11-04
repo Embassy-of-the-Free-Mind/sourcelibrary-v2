@@ -49,7 +49,15 @@ export function isForgedChrome(
   pathname: string,
   headers: { get(name: string): string | null },
 ): boolean {
-  if (!isReaderPath(pathname)) return false;
+  return isReaderPath(pathname) && hasForgedChromeHints(headers);
+}
+
+/**
+ * The same test on any path, for a surface that applies it wider than the
+ * reader paths (src/lib/partner-access.ts, #8098). Real Chrome in a partner's
+ * cross-site iframe still sends these hints.
+ */
+export function hasForgedChromeHints(headers: { get(name: string): string | null }): boolean {
   const ua = headers.get('user-agent') || '';
   if (!DESKTOP_CHROME_UA.test(ua)) return false;
 

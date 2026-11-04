@@ -12,6 +12,7 @@ import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo conven
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { isScriptOnPartnerPages, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
@@ -89,6 +90,10 @@ export async function GET(
 
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    if (await isScriptOnPartnerPages(request, db, [page])) {
+      return new NextResponse(SURFACE_REFUSED_RESPONSE, { status: 403, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
     // The notes layer (#7965): read while the page still carries translation.text, which goes no further.

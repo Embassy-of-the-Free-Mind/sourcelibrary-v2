@@ -19,6 +19,7 @@ import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networ
 import { trustedClientIp } from '@/lib/client-ip';
 import { hasVerifiedCredential } from '@/lib/preview-credential';
 import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
+import { isProtectedSurface, surfaceRefusal, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
 import { isTrustedByUserAgent } from '@/lib/bot-gate';
@@ -738,6 +739,24 @@ export async function proxy(request: NextRequest) {
         'Cache-Control': 'no-store',
       },
     });
+  }
+
+  // The Embassy's reading surfaces take the apex's client-hint rule, and refuse
+  // plain HTTP libraries and a crawler's name from an address that is not that
+  // crawler (#8098). Policy pages stay readable. BPH_BOT_GATE_ENFORCE=0 turns it off.
+  if (isProtectedSurface(request.headers.get('host') || '', pathname) && !isBotReadablePath(pathname)) {
+    const refusal = await surfaceRefusal(request.headers, getClientIp(request));
+    if (refusal && !(await hasVerifiedCredential(request))) {
+      logBotAccess(request, `refused-${refusal}`);
+      return new NextResponse(refusal === 'forged-browser' ? FORGED_CHROME_RESPONSE : SURFACE_REFUSED_RESPONSE, {
+        status: 403,
+        headers: {
+          'Content-Type': refusal === 'forged-browser' ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
   }
 
   // Preview deployments sit outside Cloudflare and their URLs are public
