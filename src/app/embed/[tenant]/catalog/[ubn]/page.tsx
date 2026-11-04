@@ -254,9 +254,9 @@ async function fetchWorkBy(col: 'ubn' | 'uuid' | 'id', ubn: string): Promise<Bph
   return (first.data as BphWorkRow | null) ?? null;
 }
 
-/** Look up a Source Library book by Mongo id — used for cross-provider
-    scans where the catalogue row points at a non-BPH-hosted book. */
-async function fetchExternalBook(id: string): Promise<SlBook | null> {
+/** Look up a readable Source Library book by the id a catalogue row names:
+    a cross-provider scan, or a BPH book whose dc_identifier holds no UBN. */
+async function fetchLinkedBook(id: string): Promise<SlBook | null> {
   try {
     const db = await getReadDb();
     const book = await db.collection('books').findOne(
@@ -474,21 +474,27 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   // Source Library books are matched by the UBN in their dc_identifier, which
   // keeps the OLD number after a UBN correction.
-  const slBook = slBookByUbn ?? (await fetchSlBookByAny(work.previous_ubns));
+  // 349 rows match only by sl_book_id: manuscripts have no UBN, and some books
+  // were imported with no dc_identifier. Their list row linked; their record did not.
+  const slBook = slBookByUbn
+    ?? (await fetchSlBookByAny(work.previous_ubns))
+    ?? (work.sl_book_id ? await fetchLinkedBook(work.sl_book_id) : null);
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
   const externalBook = !slBook && work.sl_external_book_id
-    ? await fetchExternalBook(work.sl_external_book_id)
+    ? await fetchLinkedBook(work.sl_external_book_id)
     : null;
+  // The row names a book, and no visitor can open it: hidden, on a rights hold, or gone.
+  const noCopyHere = !slBook && !externalBook && !!(work.sl_book_id || work.sl_external_book_id);
 
   // Manuscripts keep their title in full_title; `title` is null on all 812.
   const displayTitle = work.title || work.full_title || work.parallel_title || work.uniform_title
     || (work.shelf_mark ? `(untitled, ${work.shelf_mark})` : `(untitled, ${work.ubn || work.uuid})`);
-  const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
+  const slBookHref = slBook ? room(`/book/${encodeURIComponent(slBook.slug || slBook.id)}`) : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
-    ? `/embed/${tenant}/book/${encodeURIComponent(externalBook.slug || externalBook.id)}`
+    ? room(`/book/${encodeURIComponent(externalBook.slug || externalBook.id)}`)
     : null;
   const externalCoverUrl = externalBook ? getBookThumbnailUrl(externalBook, 'display') : null;
   const canonicalAuthor = slBook?.author ? formatAuthor(slBook.author).name : null;
@@ -636,6 +642,10 @@ export default async function CatalogEntryPage({ params }: Props) {
               </div>
             </div>
           </section>
+        )}
+
+        {noCopyHere && (
+          <p className="mb-8 text-sm text-secondary">No digitised copy is available here.</p>
         )}
 
         {/* Cross-provider scan — BPH holds the work, but the digitisation

@@ -22,6 +22,7 @@ import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-proj
 import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
+import { getPrintedNumbers } from '@/lib/printed-numbers';
 import { ocrMeasure } from '@/lib/ocr-measure';
 import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
 import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
@@ -94,6 +95,8 @@ const BOOK_NAV_PROJECTION = {
   // Gates whether this book may have a localized reader URL at all — see the
   // redirect below. Always read from Atlas here, so it can never be absent.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
@@ -204,14 +207,16 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
   // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
+  // The numbers printed on the leaves, where confirmed on the images (#8041): same shape again; no rows reads as today.
   // A chapter whose stored pageId is a hidden repeat capture (#5056) opens the
   // kept capture instead: one batched lookup per book, stored chapters untouched.
   // The reader's contents panel turns pages client-side, so no redirect would
   // catch it.
   const chapters = (book.chapters ?? []) as { pageId?: string; pageNumber?: number }[];
-  const [qualityWarnings, scanGaps, chapterKeepers] = await Promise.all([
+  const [qualityWarnings, scanGaps, printedNumbers, chapterKeepers] = await Promise.all([
     getQualityWarnings(db, [scopedBookId]),
     getScanGaps(db, scopedBookId),
+    getPrintedNumbers(db, scopedBookId),
     resolveRepeatKeepers(
       (ids) => db.collection('pages').find({ book_id: scopedBookId, id: { $in: ids } }, { projection: REPEAT_KEEPER_PROJECTION, maxTimeMS: 3000 }).toArray(),
       chapters.map((ch) => ch.pageId).filter((id): id is string => typeof id === 'string'),
@@ -300,6 +305,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
           initialPageList={serializedNavPages}
           qualityWarnings={qualityWarnings}
           scanGaps={scanGaps}
+          printedNumbers={printedNumbers}
           ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
         />
       </div>

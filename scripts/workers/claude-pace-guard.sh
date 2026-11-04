@@ -13,6 +13,11 @@
 #   burn   = week% gained over the last 3 hours, per hour         (from this box's meter, sampled here)
 #   slots  = PACE_MAX_SLOTS (12) when burn <= budget or unknown, else max(PACE_MIN_SLOTS (2), MAX * budget / burn)
 # A call takes one of `slots` flock slots per account and holds it while it runs; when all are taken it waits.
+# A job's main session (claude-job.sh sets CLAUDE_PACE_AGENT=1 on it) takes a slot from a SEPARATE pool of the same
+# size, so an over-pace account runs at most `slots` main sessions per box and the rest wait at their next stage
+# start, while the children of the running ones still get their own pool and cannot deadlock behind them (#7869).
+# Burn comes from the densest samples there are: climits' 5-min history.jsonl beside the meter (main), else the
+# meter's own burn_pct_per_h (box.sh push-limits adds it), else this box's samples, needing 30 min of them.
 # Waiting spends nothing. A caller that kills a waiting call after its own timeout gets a failure and retries, so
 # drivers should still lower their own parallelism — this is the backstop that holds when they do not.
 #
@@ -41,10 +46,16 @@ print=0; agent=0
 for a in "$@"; do
   case "$a" in -p|--print) print=1 ;; -c|--continue|-r|--resume|--resume=*) agent=1 ;; esac
 done
+# A job's main session (claude-job.sh sets CLAUDE_PACE_AGENT=1 on that one call) is an agent loop: its first and
+# fresh sessions start without --continue, so on main they held a CHILD slot for hours and their own per-call
+# children queued behind them, and on the guests they ran the real CLI and were never paced at all (#7869). It
+# takes a main-pool slot instead; the flag is dropped here so its children are paced in the child pool.
+pool=slot
+if [ -n "${CLAUDE_PACE_AGENT:-}" ]; then unset CLAUDE_PACE_AGENT; pool=main; agent=0; print=1; fi
 { [ "$print" = 1 ] && [ "$agent" = 0 ] && [ -z "${CLAUDE_PACE_OFF:-}" ] && command -v flock >/dev/null; } || exec "$REAL" "$@"
 
 # Decide the slot count for this account (cached a minute; one python start per call is cheap next to a model call).
-read -r acct slots why < <(python3 - "$METER" "$DIR" "${CLAUDE_CONFIG_DIR:-$HOME}" <<'PY'
+decide() { python3 - "$METER" "$DIR" "${CLAUDE_CONFIG_DIR:-$HOME}" <<'PY'
 import json, os, sys, time, datetime as dt
 meter, d, cfg = sys.argv[1:4]
 MAX, MIN = int(os.environ.get("PACE_MAX_SLOTS", 12)), int(os.environ.get("PACE_MIN_SLOTS", 2))
@@ -66,61 +77,87 @@ now = dt.datetime.now(dt.timezone.utc)
 out = (MAX, "no-meter")
 try:
     m = json.load(open(meter))
-    acc = next(a for a in m["accounts"] if a.get("email", "").lower() == email and a.get("ok"))
+    seen = t(m.get("checked_at") or "")
+    if seen is None or seen.tzinfo is None: raise ValueError("checked_at-unparseable")
+    # A meter that stopped arriving (box mesh down, climits token expired) reads as one frozen sample, which aged
+    # out of the 3h window and said burn-unknown forever, indistinguishable from a quiet account (#7869).
+    age_m = (now - seen).total_seconds() / 60
+    if age_m > 30: raise ValueError(f"meter-stale:{age_m:.0f}m")
+    acc = next((a for a in m.get("accounts", []) if a.get("email", "").lower() == email), None)
+    if acc is None: raise ValueError("account-not-in-meter")
+    if not acc.get("ok"): raise ValueError("account-not-ok-in-meter")  # climits could not read it: re-login there
     w = next(l for l in acc["limits"] if l["key"].startswith("weekly_all"))
-    pct, reset, seen = w.get("percent") or 0, t(w.get("resets_at") or ""), t(m["checked_at"])
+    pct, reset = w.get("percent") or 0, t(w.get("resets_at") or "")
     # Keep our own samples: a box that only receives the meter (no climits history) still gets a burn rate.
     hist = os.path.join(d, email + ".hist")
     rows = [l.split() for l in open(hist)] if os.path.exists(hist) else []
-    if not rows:  # first call: seed from the box's climits history where it has one (main), else start sampling now
-        try:
-            for line in open(os.path.join(os.path.dirname(meter), "history.jsonl")).readlines()[-2000:]:
-                r = json.loads(line)
-                v = (r.get("limits") or {}).get(w["key"])
-                if r.get("email", "").lower() == email and v is not None: rows.append([r["t"], str(v)])
-        except Exception:
-            pass
     if not rows or rows[-1][0] != m["checked_at"]:
         rows.append([m["checked_at"], str(pct)])
         rows = rows[-200:]
         with open(hist + ".tmp", "w") as f: f.write("".join(f"{a} {b}\n" for a, b in rows))
         os.replace(hist + ".tmp", hist)
+    # This box's samples exist only for minutes a paced call ran, so after any quiet gap the 3h window held one
+    # sample and said burn-unknown for the first hour of the next burst (gex45, 2026-11-04: 15:00 -> 08:55 gap,
+    # dereklomas at 4%/h read unknown until 09:55). Where climits runs (main) its 5-min history is read every time.
+    rows = [r for r in rows if len(r) == 2]
+    try:
+        with open(os.path.join(os.path.dirname(meter), "history.jsonl"), "rb") as f:
+            f.seek(0, 2); f.seek(max(0, f.tell() - 256 * 1024))
+            for line in f.read().decode(errors="replace").splitlines()[1:]:
+                try: r = json.loads(line)
+                except ValueError: continue
+                v = (r.get("limits") or {}).get(w["key"])
+                if r.get("email", "").lower() == email and v is not None: rows.append([r["t"], str(v)])
+    except OSError:
+        pass
+    rows.sort(key=lambda r: t(r[0]) or now)
     left_h = (reset - now).total_seconds() / 3600 if reset else 0
     if left_h > 0:
         budget = max(0.0, 100 - pct) / left_h
         base = None
         for ts, p in rows:                       # oldest sample in the last 3h with no reset after it
             tt, p = t(ts), float(p)
-            if tt is None or (now - tt).total_seconds() > 3 * 3600: continue
+            if tt is None or tt.tzinfo is None or (now - tt).total_seconds() > 3 * 3600: continue
             if p > pct: base = None; continue
             if base is None: base = (tt, p)
         span = (seen - base[0]).total_seconds() / 3600 if base and seen else 0
-        if span >= 1:
-            burn = (pct - base[1]) / span
+        burn, src = None, ""
+        if span >= 0.5: burn = (pct - base[1]) / span
+        elif w.get("burn_pct_per_h") is not None:   # main's 3h rate from climits history, added by box.sh push-limits
+            burn, src = float(w["burn_pct_per_h"]), ",src=meter"
+        if burn is not None:
             slots = MAX if burn <= budget else max(MIN, int(MAX * budget / burn))
-            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%")
+            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%{src}")
         else:
-            out = (MAX, "burn-unknown")
+            out = (MAX, f"burn-unknown:span={span:.2f}h,samples={len(rows)}")
 except Exception as e:
-    out = (MAX, "meter-error")
+    out = (MAX, f"meter-error:{type(e).__name__}:{str(e)[:60]}".replace(" ", "_"))
 open(cache, "w").write(f"{out[0]} {out[1]}\n")
+# Fail-open stays (a blind meter must not stop work), but it is written down where `claude-job.sh where` and a
+# person can see it: one line a minute at most, because the cache above runs this at most once a minute.
+if not out[1].startswith("burn="):
+    with open(os.path.join(d, "failopen.log"), "a") as f: f.write(f"{now:%FT%TZ} {email} {out[1]}\n")
 print(email, *out)
 PY
-)
+}
+read -r acct slots why < <(decide)
 slots=${slots:-12}
 
 # Take a slot: try each lock file without blocking; if all are held, wait and try again. The lock fd is closed for
 # the child (9>&-), so the slot frees when THIS call ends, not when some grandchild the CLI left behind does.
-mkdir -p "$DIR/$acct"; waited=0; logged=0
+mkdir -p "$DIR/$acct"; waited=0
 while :; do
   for i in $(seq 1 "$slots"); do
-    exec 9>"$DIR/$acct/slot.$i"
+    exec 9>"$DIR/$acct/$pool.$i"
     if flock -n 9; then
-      [ "$waited" -gt 0 ] && echo "$(date -u +%FT%TZ) waited=${waited}s slots=$slots $why ppid=$PPID" >> "$DIR/$acct.waits.log"
+      [ "$waited" -gt 0 ] && echo "$(date -u +%FT%TZ) waited=${waited}s pool=$pool slots=$slots $why ppid=$PPID" >> "$DIR/$acct.waits.log"
       "$REAL" "$@" 9>&-; rc=$?; exec 9>&-; exit $rc
     fi
     exec 9>&-
   done
-  [ "$logged" = 0 ] && echo "claude-pace-guard: $acct over its weekly pace ($why); waiting for one of $slots slots" >&2 && logged=1
+  # Said once, then every 10 min, so a job log that goes quiet while its main session waits says why.
+  [ $((waited % 600)) = 0 ] && echo "claude-pace-guard: $acct over its weekly pace ($why); waiting for one of $slots $pool slots (${waited}s so far)" >&2
   sleep 5; waited=$((waited + 5))
+  # Re-decide each minute: the account may have slowed, or its week reset, while this call waited.
+  [ $((waited % 60)) = 0 ] && read -r _ slots why < <(decide) && slots=${slots:-12}
 done

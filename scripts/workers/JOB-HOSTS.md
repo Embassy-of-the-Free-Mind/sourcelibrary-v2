@@ -102,6 +102,8 @@ Checks: lane-spot-check
 Checks: none — candidate text never written; the verdicts land in the experiment file
 ```
 
+**An optional line: `Skill: <name>[, <name>]` (#6553).** A job uses a repo skill only when its brief names it. Across 370 job transcripts on cloudlayer, `review` was the only skill ever invoked. The wrapper puts the named skills into the prompt as an instruction: invoke each one before the step it covers, and count its script checks as part of done. `start` prints a note when a named skill is not in `.claude/skills/`. For a test of two or more arms with a blind judge, name `Skill: paired-arm-judge`.
+
 ## A follow-up job on the same issue: the null-result stop rule (#7869)
 
 A job whose issue already had a job land in the last 48 h must say in its brief which decision it would move:
@@ -131,6 +133,10 @@ More rules:
 Measured on 45 cloudlayer job transcripts from 2026-10-24 to 11-01, cutting at the first commit, push or comment past 150K: 28.5% of main-chain cost saved, and 49% on estimator-v2-6740 (one session, 320 turns, 479K mean context). The measurement does not count what a fresh session spends re-reading files, so the real saving is lower.
 
 **Subagents on Sonnet.** Every job session runs with `CLAUDE_CODE_SUBAGENT_MODEL=sonnet`. Subagents were 11% of transcript cost, all of it Opus. A brief that needs Opus subagents says so in its first 15 lines: `Subagents: opus — <why>` (for example, a judge that must match the production reader). The job's own model stays Opus. An Agent call with an explicit `model: "opus"` stays on Opus under this default (tested 2026-11-03), so a job with one judging step passes that on the one call and needs no header. Anything that judges, reads page images or translates must name its model: a skill that says "Opus reviewer" and passes none would run on Sonnet without a word.
+
+**Main session on Sonnet, opt-in.** The job's own session is Opus unless the brief says `Model: sonnet — <why>` in its first 15 lines. Use it only for a job whose own turns are mechanical: babysitting a runner, waiting on CI, merging, copying files between boxes. A job that judges, writes prose or decides what a result means stays on Opus. The log's first `[claude-job]` line names both models. Measurement and risk: `scripts/eval/experiments/2026-11-04-pace-guard-and-sonnet-main-7869.md`.
+
+**The pace guard paces main sessions too (#7869).** `claude-pace-guard.sh` is the box's `claude`. A `claude -p` call takes one of the account's slots (12, down to 2 when the account burns faster than its weekly budget). A job's main session (`claude-job.sh` sets `CLAUDE_PACE_AGENT=1`) takes a slot from a separate pool of the same size, so an over-pace account runs at most that many main sessions per box and the rest wait at their next stage start. On the guests, main sessions ran the real CLI until 2026-11-04 and were never paced. Burn comes from climits' 5-min history on main; `box.sh push-limits` adds it to the meter it copies (`burn_pct_per_h`). When the guard cannot read the meter it fails open, and says so: `claude-job.sh where` prints `pace=<slots>/<why>/<age>`, and `/root/claude-pace/failopen.log` keeps every fail-open decision. `install-claude-job.sh` installs the guard wherever `/usr/local/bin/claude` already links to it.
 
 **Hard backstop: auto-compact at about 300K.** The fresh-session rule only fires when a job reaches a stage boundary and asks. A single long stage never asks, so every job session also runs with `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=30`: 30% of the 1M window. Compaction is blunt: it can land mid-step and keep only a short summary (measured 184K down to 7K), which is why the state file at 150K stays the first choice. A brief that cannot survive it says `Compact: off — <why>` in its first 15 lines. Tuning: `JOB_COMPACT_PCT=<percent>`.
 
