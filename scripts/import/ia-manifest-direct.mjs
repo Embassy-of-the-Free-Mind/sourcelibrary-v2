@@ -183,6 +183,11 @@ async function main() {
     const PD_LINE = 1931;
     if ((imprintYear >= PD_LINE || iaYear >= PD_LINE) && !pd) { console.log(`FAIL  ${b.id} — rights: imprint ${imprintYear}, IA date ${iaYear}`); failed++; rec({ id: b.id, outcome: 'rights-refused', imprintYear, iaYear }); return; }
 
+    // A multi-volume item names its volume in IA's `volume`, not in its title. Without it every volume carries
+    // the set's one title, keys to one edition_key, and the gate refuses volumes 2..n as duplicates of volume 1
+    // (#8049: Siete Partidas, Münster's Cosmographie, 18 volumes refused). extractVolume() reads "(vol. N)".
+    const iaVolume = firstOf(meta.volume);
+    if (iaVolume && !/\b(vol(ume)?|tom(us|o|e)?|band|teil|deel|pt|part|liber)\b\.?\s*\(?\s*[\divxlcdm]/i.test(b.title)) b.title = `${b.title} (vol. ${iaVolume})`;
     const bookId = new ObjectId(), bookIdStr = bookId.toHexString();
     const slug = await uniqueSlug(db, slugify(`${b.title} ${b.author}`));
     const now = new Date();
