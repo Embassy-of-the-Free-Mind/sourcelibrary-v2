@@ -54,7 +54,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.12.1';
+const SERVER_VERSION = '4.13.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 //
@@ -2174,8 +2174,17 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       // claude.ai was answered with an improvised menu instead of a call to
       // start_review_shift (first live try, 2026-10-10, #6418).
       instructions:
-        'Source Library: historical primary sources with transcriptions and English translations. ' +
-        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        // The first half decides whether a client reaches for us at all: on 30 history
+        // questions this wording took Claude Code from 17 to 30 calls, and 10 modern
+        // questions stayed at 0 (scripts/eval/experiments/2026-11-04-mcp-trigger-instructions-8154.md).
+        'Source Library: rare historical books and manuscripts, from Sumerian tablets to the 19th century, ' +
+        'with transcriptions, English translations and page images. It covers theology, philosophy, history, ' +
+        'literature, science, medicine, magic and more. Use it whenever an answer would be better for what ' +
+        'historical authors actually wrote: what someone said or believed, a quotation or citation, how an idea ' +
+        'looked before the modern era, primary sources for study or teaching, or an old illustration. Search first ' +
+        '(search_library for books, search_translations for words, search_concept for ideas, search_images for ' +
+        'pictures), then quote with get_quote and give the reader its short_url so they can open the page. It does ' +
+        'not hold modern scholarship or current events, so do not use it for those. ' +
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
         'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
         'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
