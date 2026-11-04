@@ -34,6 +34,16 @@ sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
 // no margin banding). Sparse pages detect far more strongly.
 const GRID = 128;           // GRID x GRID blocks. More pairs → higher detection z (∝ √pairs)
 const WM_DELTA = 5;         // luminance nudge per block (0-255), scaled per-block by texture mask
+// The weakest nudge that proves the page, found by reading each back (markImage). Fixed at 5, the
+// mark showed as a faint checker on grainy aged paper at reader size, while that same page scored
+// z 40, far more than it needed; at 2 it is clean and scores 17. Dense pages are the opposite:
+// Chinese woodblock text at ~780px read back on only 5 of 60 at 5. n=200 random pages, 2026-11-04
+// (#4406): 91.5% detected at a target of z 10, 89.5% after q70, 76% of pages at delta 4 or under.
+// 12 shows as grey tiles on white paper at 9px blocks and does not at 6px, so it is for narrow pages.
+const WM_DELTA_LADDER = [2, 3, 4, 5, 8];
+const WM_DELTA_NARROW = 12;
+const WM_NARROW_BLOCK_PX = 7;   // block width below this may take WM_DELTA_NARROW
+const WM_TARGET_Z = 10;         // margin over WM_Z_THRESHOLD, so the mark survives a recompress
 const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floor <1 → tiny FP rate)
 // Perceptual mask: only embed where there's local texture to hide the mark.
 // A block's std below STD_FLOOR is treated as flat → no mark (invisible on blank
@@ -61,8 +71,13 @@ function hmac(key, label) {
   return crypto.createHmac('sha256', key).update(label).digest();
 }
 
+let lastPlan = null;
+
 /** Deterministic block-pair plan + sign vector from (key, editionId). */
 function pairPlan(key, editionId, grid = GRID) {
+  // One entry is enough: a run works one book at a time, and the plan is 16K HMACs per read-back.
+  const id = `${grid}:${editionId}:${key}`;
+  if (lastPlan?.id === id) return lastPlan.pairs;
   // Fisher–Yates shuffle of [0..grid*grid) seeded by HMAC, then pair up.
   const n = grid * grid;
   const order = [...Array(n).keys()];
@@ -79,6 +94,7 @@ function pairPlan(key, editionId, grid = GRID) {
   }
   const pairs = [];
   for (let i = 0; i + 1 < n; i += 2) pairs.push([order[i], order[i + 1]]);
+  lastPlan = { id, pairs };
   return pairs; // each pair: block A gets +delta, block B gets -delta
 }
 
@@ -193,11 +209,34 @@ function embedWatermark(data, W, H, channels, pairs, grid = GRID, delta = WM_DEL
 
 // ---- public: mark one image ----------------------------------------------
 /**
- * Mark a display-variant JPEG buffer with all three provenance layers.
+ * Mark a display-variant JPEG buffer with all three provenance layers, at the weakest nudge that
+ * reads back at WM_TARGET_Z. A page no rung gets there takes the strongest rung that still proves
+ * it (these are dense pages, where ink hides the nudge). A page no rung can prove (near-blank) takes
+ * the weakest: invisibility wins when nothing is gained. Pass `delta` to fix the strength (tuning).
  * @returns marked JPEG Buffer.
  */
-export async function markImage(buffer, { editionId, pageNumber, key, jpegQuality = 82, grid = GRID, delta = WM_DELTA }) {
-  if (!key) throw new Error('provenance key required');
+export async function markImage(buffer, opts) {
+  if (!opts.key) throw new Error('provenance key required');
+  if (opts.delta != null) return renderMarked(buffer, opts);
+  const { width } = await sharp(buffer, { failOn: 'none' }).metadata();
+  const narrow = Math.floor(width / (opts.grid || GRID)) < WM_NARROW_BLOCK_PX;
+  const ladder = narrow ? [...WM_DELTA_LADDER, WM_DELTA_NARROW] : WM_DELTA_LADDER;
+  let weakest = null, proven = null, perDelta = null;
+  for (const delta of ladder) {
+    // z grows about linearly with delta: skip a rung that cannot reach the target. Renders cost CPU.
+    if (perDelta != null && delta !== ladder[ladder.length - 1] && perDelta * delta < WM_TARGET_Z * 0.8) continue;
+    const out = await renderMarked(buffer, { ...opts, delta });
+    weakest ||= out;
+    const d = await detectWatermark(out, { editionId: opts.editionId, key: opts.key, grid: opts.grid });
+    if (!(d.pairs >= 16)) return weakest;
+    if (d.present) proven = out;
+    if (d.z >= WM_TARGET_Z) return out;
+    perDelta = Math.max(d.z, 0.01) / delta;
+  }
+  return proven || weakest;
+}
+
+async function renderMarked(buffer, { editionId, pageNumber, key, jpegQuality = 82, grid = GRID, delta = WM_DELTA }) {
   const eid = String(editionId).slice(0, 12);
 
   const { data, info } = await sharp(buffer, { failOn: 'none' }).raw().toBuffer({ resolveWithObject: true });
@@ -255,15 +294,40 @@ export async function detectWatermark(buffer, { editionId, key, grid = GRID }) {
   const { means, stds } = blockStats(data, W, H, channels, grid);
   // Count only textured pairs — the same ones the embedder marked. Flat pairs
   // carry no signal; including them only dilutes z.
-  const diffs = [];
-  for (const [a, b] of pairPlan(key, eid, grid)) {
-    if (maskFactor(stds[a]) > 0 && maskFactor(stds[b]) > 0) diffs.push(means[a] - means[b]);
-  }
-  const n = diffs.length;
+  const plan = pairPlan(key, eid, grid).filter(([a, b]) => maskFactor(stds[a]) > 0 && maskFactor(stds[b]) > 0);
+  const n = plan.length;
   if (n < 16) return { present: false, z: 0, pairs: n }; // too few textured pairs (near-blank page)
-  const mean = diffs.reduce((s, d) => s + d, 0) / n;
-  const variance = diffs.reduce((s, d) => s + (d - mean) ** 2, 0) / n;
-  const sd = Math.sqrt(variance) || 1e-9;
-  const z = mean / (sd / Math.sqrt(n));
-  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100, pairs: n };
+  // Two reads of the same pairs. Raw block means carry the page's own content (a dark text block
+  // against a pale margin), which is noise to this test. The residual subtracts each block's
+  // neighbours first, which removes most of that. n=459 on 2026-11-04 (#4406): tagged sl-v5 objects
+  // 154/201 -> 170/201 at z>5, unmarked 0/150 on both, wrong-key z never above 2.96 on either.
+  const raw = pairZ(plan, means);
+  const hp = pairZ(plan, highPass(means, grid));
+  const z = Math.max(raw, hp);
+  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100, raw_z: Math.round(raw * 100) / 100, hp_z: Math.round(hp * 100) / 100, pairs: n };
+}
+
+/** One-sample z of (A - B) across the pairs. */
+function pairZ(plan, values) {
+  const n = plan.length;
+  let sum = 0, sumSq = 0;
+  for (const [a, b] of plan) { const d = values[a] - values[b]; sum += d; sumSq += d * d; }
+  const mean = sum / n;
+  const sd = Math.sqrt(Math.max(0, sumSq / n - mean * mean)) || 1e-9;
+  return mean / (sd / Math.sqrt(n));
+}
+
+/** Each block's mean minus the mean of its 4-neighbours (those that exist at an edge). */
+function highPass(means, grid) {
+  const out = new Float64Array(means.length);
+  for (let i = 0; i < means.length; i++) {
+    const x = i % grid, y = Math.floor(i / grid);
+    let sum = 0, cnt = 0;
+    if (x > 0) { sum += means[i - 1]; cnt++; }
+    if (x < grid - 1) { sum += means[i + 1]; cnt++; }
+    if (y > 0) { sum += means[i - grid]; cnt++; }
+    if (y < grid - 1) { sum += means[i + grid]; cnt++; }
+    out[i] = means[i] - sum / cnt;
+  }
+  return out;
 }
