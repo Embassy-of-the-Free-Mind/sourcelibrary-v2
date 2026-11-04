@@ -8,6 +8,7 @@ import { isLivePath } from '@/lib/page-status';
 import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
 import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
+import { sibuCodes } from '@/lib/sibu-catalogue';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -175,6 +176,7 @@ export default async function sitemap({
       ...blogPosts(),
       ...categoryPages(),
       ...historyPages(),
+      ...sibuPages(),
     ]);
   }
 
@@ -276,6 +278,17 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The 四部 catalogue (#8035), in both languages: empty classes included, since the page says plainly what we lack.
+function sibuPages(): MetadataRoute.Sitemap {
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/sibu', 0.6),
+    at('/zh/sibu', 0.7),
+    at('/zh/collections', 0.7),
+    ...sibuCodes().flatMap((code) => [at(`/sibu/${code}`, 0.5), at(`/zh/sibu/${code}`, 0.6)]),
+  ];
 }
 
 // The conceptual histories (#7623): index, each concept, its essays, its

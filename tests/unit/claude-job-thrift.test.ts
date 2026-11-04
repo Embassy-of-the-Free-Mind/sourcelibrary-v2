@@ -101,3 +101,17 @@ describe('claude-job.sh subagent model', () => {
     expect(lib(root, `subagent_model ${b}`)).toBe('sonnet');
   });
 });
+
+// #6553: a job uses a skill only when its brief names it; `Skill:` puts the instruction into the prompt.
+describe('claude-job Skill: header', () => {
+  it('names the brief\'s skills in the prompt, and adds nothing without the line (negative control)', () => {
+    const root = setup();
+    fs.mkdirSync(path.join(root, 'jd'), { recursive: true });
+    fs.writeFileSync(path.join(root, 'jd', 'j1.brief.txt'), 'Lands: #1\nPR: no\nSkill: paired-arm-judge, review\n\nbody\n');
+    fs.writeFileSync(path.join(root, 'jd', 'j2.brief.txt'), 'Lands: #1\nPR: no\n\nbody mentions Skill: later\n');
+    expect(lib(root, 'brief_skills "$JD/j1.brief.txt" | paste -sd,')).toBe('paired-arm-judge,review');
+    expect(lib(root, 'rules j1')).toContain('SKILLS (the brief\'s `Skill:` line): paired-arm-judge, review.');
+    expect(lib(root, 'rules j2')).not.toContain('SKILLS');
+  });
+});
+

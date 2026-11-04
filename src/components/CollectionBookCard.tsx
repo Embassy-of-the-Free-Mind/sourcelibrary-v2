@@ -17,7 +17,7 @@ import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
 import { hasBookPageForEveryBook } from '@/lib/locale-path';
 import { languageName } from '@/lib/book-i18n';
-import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
+import { localizedAuthor, localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
 import PreviewBadge from '@/components/book/PreviewBadge';
@@ -353,7 +353,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           <p className="text-[11px] text-muted italic mt-0.5 line-clamp-1" lang={languageToBcp47(book.language)}>{originalLine}</p>
         )}
         <p className="text-xs text-muted mt-0.5 line-clamp-1">
-          {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} /></> : (book.author ? <AuthorName author={book.author} /> : null)}
+          {byline.role === 'editor' ? <>{labels.editedBy} <AuthorName author={byline.editor} lang={lang} /></> : (book.author ? <AuthorName author={localizedAuthor(book, lang)} lang={lang} /> : null)}
         </p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">

@@ -6,7 +6,7 @@ import EditMode from './EditMode';
 import './ai-partners.css';
 
 const DESCRIPTION =
-  'Source Library for AI partners: 131,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, with provenance for every page and public-domain originals.';
+  'Source Library for AI partners: 131,000 historical books from more than 30 libraries, 9.6 million pages transcribed and 5.7 million translated into English, 235,000 cropped illustrations, with provenance for every page and public-domain originals.';
 
 export const metadata: Metadata = {
   title: 'Source Library for AI Partners',
