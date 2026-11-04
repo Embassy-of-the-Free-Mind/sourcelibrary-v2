@@ -138,6 +138,14 @@ The router serves three readers:
 - **Failures count.** Refusals, format failures and empty reads are outcomes of the configuration (cost per *usable* page), not missing data.
 - **Drift.** Preview models and prompts change silently. Date-weight evidence, and expire it when the engine version changes.
 
+## The goal above the router (Derek, 2026-11-04)
+
+**Count the books readable in English, by language, that clear a stated quality bar.** Written out: X books, in Y languages, at no more than Z sense errors per 1,000 words. Accuracy, cost and learning are supporting measures. The router is how we spend limited quota to make that number grow.
+
+- **Why this measure:** an error rate alone could be met by polishing a little European print while most of the corpus stays unread. A count of books alone could be met by translating everything badly. This one moves only when both coverage and quality hold.
+- **The numbers come after the first grades.** X, Y and Z are not set yet. Z will probably sit near typed-edition rates for print and start looser for hard scripts.
+- **Decision 3 below still stands** as the router's own outcome: it is the measure behind Z.
+
 ## Decisions (Derek, 2026-11-01: "defaults")
 
 What the optimum is:
