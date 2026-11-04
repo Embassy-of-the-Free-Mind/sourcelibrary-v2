@@ -1,0 +1,7071 @@
+{
+ "date": "2026-11-04",
+ "seed": 20261104,
+ "frame": 70942,
+ "n": 200,
+ "rejected": [],
+ "pages": [
+  {
+   "slot": 0,
+   "book_id": "6a42d3b31894955eb725c59b",
+   "title": "Meditations on the Hymn Ave Maris Stella",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "6a42d3b31894955eb725c59d",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 1,
+   "book_id": "6988a59f9b275a14696ffe63",
+   "title": "The Renewal of the Evangelical Spirit",
+   "frame": 72,
+   "shown_number": 72,
+   "stored_printed_label": null,
+   "page_id": "6988b4ddd4e8c7c6c56cb55e",
+   "page_type": "toc",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    71,
+    73
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": true,
+    "hold": null,
+    "trail": [
+     "hide-repeat-captures-5056 ",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 2,
+   "book_id": "6a3cf04a8642f0445b1641ee",
+   "title": "Correct Meaning of the Pitch Pipes, Later Compilation (律呂正義後編), vol. 38: chapters 71–74",
+   "frame": 82,
+   "shown_number": 82,
+   "stored_printed_label": null,
+   "page_id": "6a3cf04a8642f0445b1642b9",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": "claude-opus-5-5",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    81,
+    83
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "paddle-zh-guarded-6871",
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 3,
+   "book_id": "6a906d3f32545072610bae03",
+   "title": "On a New Method of Measuring Time and the Accurate Construction of Clocks",
+   "frame": 7,
+   "shown_number": 7,
+   "stored_printed_label": null,
+   "page_id": "6a906d3f32545072610bae0a",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    6,
+    8
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 4,
+   "book_id": "6a0b44211615109dc53b0c43",
+   "title": "On the Development of the Organization in Phaenogamous Plants",
+   "frame": 21,
+   "shown_number": 21,
+   "stored_printed_label": "15",
+   "page_id": "6a0b44211615109dc53b0c58",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    20,
+    22
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 5,
+   "book_id": "69b665f3b3f4fc04415580bb",
+   "title": "Anthologiae sacrae libri quatuor",
+   "frame": 3,
+   "shown_number": 3,
+   "stored_printed_label": null,
+   "page_id": "69b665f3b3f4fc04415580be",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    2,
+    4
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "warehouse-promotion-5470",
+    "trail": [
+     "warehouse-promotion-5470"
+    ]
+   }
+  },
+  {
+   "slot": 6,
+   "book_id": "69aea5c30fefd7831dcdb048",
+   "title": "Coptic Art",
+   "frame": 147,
+   "shown_number": 147,
+   "stored_printed_label": "109",
+   "page_id": "69aea5c30fefd7831dcdb0db",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    146,
+    148
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "title-leaf-recitation-6297",
+    "trail": [
+     "notes-layer-backfill-5942",
+     "title-leaf-recitation-6297"
+    ]
+   }
+  },
+  {
+   "slot": 7,
+   "book_id": "6a3cbcc3ec254ff6cadf2e44",
+   "title": "Compendium of the Books of Rites, juan 33–35 (vol 15)",
+   "frame": 20,
+   "shown_number": 20,
+   "stored_printed_label": null,
+   "page_id": "6a3cbcc3ec254ff6cadf2e58",
+   "page_type": "text",
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    19,
+    21
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "ai",
+     "empty",
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 8,
+   "book_id": "69b689282368e1fad3210d7e",
+   "title": "... Vota laureae Apollinari ... D. Hieronymi Vischeri, Noribergensis, ...",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "69b689282368e1fad3210d7f",
+   "page_type": "digitizer-insert",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    null,
+    2
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "shift-repair-erara-2026-07",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 9,
+   "book_id": "69b693be080b19f98fceb979",
+   "title": "De represaliis conclusiones iuridicas",
+   "frame": 9,
+   "shown_number": 9,
+   "stored_printed_label": null,
+   "page_id": "69b693be080b19f98fceb982",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    8,
+    10
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 10,
+   "book_id": "69b6a50f080b19f98fd22495",
+   "title": "Corpvs Natvrale Per Principia Et Cavsas Explicatvm",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "69b6a50f080b19f98fd224a3",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 11,
+   "book_id": "6a4ad31c33aff31aa52436ec",
+   "title": "Admirandam Hominis Microcosmi Fabricam, Deo Philanthropō Adsistente, Praeside Dn. Johanne Eberhardo ",
+   "frame": 32,
+   "shown_number": 32,
+   "stored_printed_label": null,
+   "page_id": "6a4ad31c33aff31aa524370c",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    31,
+    33
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "goettingen",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 12,
+   "book_id": "69b6b15a96dc15d4a16cfeed",
+   "title": "Petri Andreae Matthioli ... Opera quae extant omnia, hoc est, commentarii in VI. libros Pedacii Dios",
+   "frame": 669,
+   "shown_number": 669,
+   "stored_printed_label": null,
+   "page_id": "69b6b15a96dc15d4a16d018a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    668,
+    670
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "warehouse-promotion-5470",
+    "trail": [
+     "warehouse-promotion-5470"
+    ]
+   }
+  },
+  {
+   "slot": 13,
+   "book_id": "69f3290daeeee0fa38c65292",
+   "title": "Sanʾgyŏngpʻyo",
+   "frame": 55,
+   "shown_number": 55,
+   "stored_printed_label": null,
+   "page_id": "69f3290daeeee0fa38c652c9",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    54,
+    56
+   ],
+   "language": "Korean",
+   "group": "CJK",
+   "scripts": [
+    "Hangul",
+    "Han"
+   ],
+   "provider": "harvard",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 14,
+   "book_id": "69b6573218b87551bfce7328",
+   "title": "Francisci Hotomani iuriscons. observationum liber III",
+   "frame": 52,
+   "shown_number": 52,
+   "stored_printed_label": null,
+   "page_id": "69b6573218b87551bfce735c",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    51,
+    53
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 15,
+   "book_id": "6ac5103d0749a01cb819c53c",
+   "title": "Rezeptsammlung (Cod. Pal. germ. 547)",
+   "frame": 66,
+   "shown_number": 66,
+   "stored_printed_label": null,
+   "page_id": "6ac5103f0749a01cb819c580",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    65,
+    67
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 16,
+   "book_id": "6a4578e131e306b784334b4c",
+   "title": "Hymns and Epigrams",
+   "frame": 18,
+   "shown_number": 18,
+   "stored_printed_label": null,
+   "page_id": "6a4578e131e306b784334b5e",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    17,
+    19
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 17,
+   "book_id": "6a3cc32aaf74b230c690d125",
+   "title": "Resolving Doubts on the Three Commentaries, juan 5 (vol 3)",
+   "frame": 24,
+   "shown_number": 24,
+   "stored_printed_label": null,
+   "page_id": "6a3cc32aaf74b230c690d214",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    23,
+    25
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 18,
+   "book_id": "69e795ea80b52390feb18b1a",
+   "title": "bram ze chen po sa ra ha’i bde stong phyag rgya chen po’i bzhed tshul rgyud grub chen gyi dgongs pa ",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "69e795ea80b52390feb18b1b",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": true,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    null,
+    2
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "withhold-gemini-ocr-tibetan-4523",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 19,
+   "book_id": "6a4bfdca4f392afd49e42d01",
+   "title": "Kirchmaier, Georg Caspar: Amoenitates et vindiciae latinit. ad Instit. Iustinian. titulos posteriore",
+   "frame": 9,
+   "shown_number": 9,
+   "stored_printed_label": "7",
+   "page_id": "6a4bfdca4f392afd49e42d0a",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    8,
+    10
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 20,
+   "book_id": "6a4c98cadfe25276ee672edb",
+   "title": "Weigandt, Johannes Blasius: Positiones iur. inaug. ex difficilioribus ... iuris pontificii, caesarei",
+   "frame": 19,
+   "shown_number": 19,
+   "stored_printed_label": "15",
+   "page_id": "6a4c98cadfe25276ee672f63",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    18,
+    20
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 21,
+   "book_id": "6a3c631c879008ba7e165e46",
+   "title": "Imperially Commissioned Peiwen Rhyme Treasury, juan 55 part 3 (vol 205)",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "6a3c631c879008ba7e165e54",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 22,
+   "book_id": "6ab1a602c2761690f8b08536",
+   "title": "GNANI YOGA",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "6ab1a602c2761690f8b08537",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    null,
+    2
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 23,
+   "book_id": "6ab6da5251fc56c101c4a15e",
+   "title": "Electrical Transmission of Power (US Patent 511,559, 1893-12-26)",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "6ab6da5351fc56c101c4a161",
+   "page_type": "illustration",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    null,
+    2
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 24,
+   "book_id": "6a43988cc3ccb765a9840e3b",
+   "title": "René Descartes's First Principle of Knowledge Examined in Public Disputation",
+   "frame": 12,
+   "shown_number": 12,
+   "stored_printed_label": null,
+   "page_id": "6a43988cc3ccb765a9840e47",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    11,
+    13
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 25,
+   "book_id": "6aa7348438e15c149514c750",
+   "title": "Visit to the Great Oasis of the Libyan Desert",
+   "frame": 56,
+   "shown_number": 56,
+   "stored_printed_label": "33",
+   "page_id": "6aa7348438e15c149514c788",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    55,
+    57
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 26,
+   "book_id": "69ac7fdd6a7dbd267e0cfe15",
+   "title": "The Greek Grammar of Roger Bacon",
+   "frame": 22,
+   "shown_number": 22,
+   "stored_printed_label": "xviii",
+   "page_id": "69ac7fdd6a7dbd267e0cfe2b",
+   "page_type": "preface",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    21,
+    23
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "title-leaf-recitation-6297",
+    "trail": [
+     "notes-layer-backfill-5942",
+     "title-leaf-recitation-6297"
+    ]
+   }
+  },
+  {
+   "slot": 27,
+   "book_id": "69f327e352a77bb28fdb8159",
+   "title": "Chosŏn kandok",
+   "frame": 7,
+   "shown_number": 7,
+   "stored_printed_label": null,
+   "page_id": "69f327e352a77bb28fdb8160",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    6,
+    8
+   ],
+   "language": "Korean",
+   "group": "CJK",
+   "scripts": [
+    "Hangul",
+    "Han"
+   ],
+   "provider": "harvard",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 28,
+   "book_id": "6a4a5b0d0673e7922c995637",
+   "title": "Taubmann, Friedrich: Otium semestre publicum",
+   "frame": 75,
+   "shown_number": 75,
+   "stored_printed_label": null,
+   "page_id": "6a4a5b0d0673e7922c995682",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    74,
+    76
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 29,
+   "book_id": "69b51e1d768235dc6598c853",
+   "title": "The Golden Treatise of Hermes Trismegistus on the Secret of the Philosophers Stone",
+   "frame": 37,
+   "shown_number": 37,
+   "stored_printed_label": "17",
+   "page_id": "69b51e1d768235dc6598c878",
+   "page_type": null,
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    36,
+    38
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "longs-pass-5924"
+    ]
+   }
+  },
+  {
+   "slot": 30,
+   "book_id": "6a4ed6b0df0b2269c3dbd22a",
+   "title": "Wernsdorf, Gottlieb: Disputatio Theologica, Qua ... Dissensum Inter Socios A.C. Et Reformatos In Art",
+   "frame": 26,
+   "shown_number": 26,
+   "stored_printed_label": null,
+   "page_id": "6a4ed6b0df0b2269c3dbd2ec",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    25,
+    27
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "longs-pass-5924"
+    ]
+   }
+  },
+  {
+   "slot": 31,
+   "book_id": "6a9529a0d5f269de866d5673",
+   "title": "Almagest",
+   "frame": 231,
+   "shown_number": 231,
+   "stored_printed_label": null,
+   "page_id": "6a9529a0d5f269de866d575a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    230,
+    232
+   ],
+   "language": "Arabic",
+   "group": "other script",
+   "scripts": [
+    "Arabic"
+   ],
+   "provider": "gallica",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 32,
+   "book_id": "69b6b65596dc15d4a16ecdea",
+   "title": "Ioannis Commirii e Societate Iesu Carminum libri tres",
+   "frame": 186,
+   "shown_number": 186,
+   "stored_printed_label": null,
+   "page_id": "69b6b65596dc15d4a16ecea4",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    185,
+    187
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "warehouse-promotion-5470",
+    "trail": [
+     "warehouse-promotion-5470"
+    ]
+   }
+  },
+  {
+   "slot": 33,
+   "book_id": "69b680f270c69d645a71d103",
+   "title": "Disputatio iuridica de sententiis et re iudicata",
+   "frame": 5,
+   "shown_number": 5,
+   "stored_printed_label": null,
+   "page_id": "69b680f270c69d645a71d108",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    4,
+    6
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 34,
+   "book_id": "6a26c6deaad44c98627e2c69",
+   "title": "Chemia Rationalis, das ist Vernunfftmäßige Anweisung, wie vermittelst der Spagyrischen Kunst, aus de",
+   "frame": 169,
+   "shown_number": 169,
+   "stored_printed_label": null,
+   "page_id": "6a26c6deaad44c98627e2d12",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    168,
+    170
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 35,
+   "book_id": "6a49413290c9071209ba993e",
+   "title": "Eichler, Gregor: Kurtze Beschreibung Des Cometens welcher in diesem 1607. Jahre im Ende Septembris u",
+   "frame": 7,
+   "shown_number": 7,
+   "stored_printed_label": null,
+   "page_id": "6a49413290c9071209ba9945",
+   "page_type": "diagram",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    6,
+    8
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 36,
+   "book_id": "6a4a04764ef72f5607b5c3d0",
+   "title": "Locamer, Georg David: Pentas Quaestionum Iuridicarum",
+   "frame": 4,
+   "shown_number": 4,
+   "stored_printed_label": null,
+   "page_id": "6a4a04764ef72f5607b5c3d5",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    3,
+    5
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 37,
+   "book_id": "69c82cf56c6f3cc53c84d07c",
+   "title": "Le comte de Gabalis, ou entretiens sur les sciences secrètes",
+   "frame": 134,
+   "shown_number": 134,
+   "stored_printed_label": "132",
+   "page_id": "69f511c3f9ccab35eb684edc",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    133,
+    135
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 38,
+   "book_id": "698255f145774ed8d6329888",
+   "title": "On Nature and Grace and On the Spirit and the Letter",
+   "frame": 191,
+   "shown_number": 191,
+   "stored_printed_label": null,
+   "page_id": "698281413f7b3f73878f2090",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    190,
+    192
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": true,
+    "hold": null,
+    "trail": [
+     "hide-repeat-captures-5056 ",
+     "cleanup-termdef-5901",
+     "notes-layer-backfill-5942",
+     "longs-pass-5924"
+    ]
+   }
+  },
+  {
+   "slot": 39,
+   "book_id": "69b6b8278566c83814625af6",
+   "title": "Lyra prophetica Davidis Regis, sive, Analysis critico-practica psalmorum",
+   "frame": 111,
+   "shown_number": 111,
+   "stored_printed_label": null,
+   "page_id": "69b6b8278566c83814625b65",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    110,
+    112
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "warehouse-promotion-5470",
+    "trail": [
+     "warehouse-promotion-5470"
+    ]
+   }
+  },
+  {
+   "slot": 40,
+   "book_id": "6a4d6218e91798b676b43e07",
+   "title": "Wolfhard, Adrian: Adriani Vvolfhardi Transsylvani Panegyris ad invictissimvm Caesarem Maximilianvm s",
+   "frame": 23,
+   "shown_number": 23,
+   "stored_printed_label": null,
+   "page_id": "6a4d6218e91798b676b43e1e",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    22,
+    24
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 41,
+   "book_id": "69b1cafca282e3475aab4148",
+   "title": "Compendium of Music",
+   "frame": 40,
+   "shown_number": 40,
+   "stored_printed_label": "27",
+   "page_id": "69b1cafca282e3475aab4170",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    39,
+    41
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942",
+     "longs-pass-5924"
+    ]
+   }
+  },
+  {
+   "slot": 42,
+   "book_id": "6a4aaf0b0a459d47e0cfedde",
+   "title": "Coerdes, Gerhard: Exercitatio V. De Servitutibus Realibus Et Personalibus",
+   "frame": 20,
+   "shown_number": 20,
+   "stored_printed_label": null,
+   "page_id": "6a4aaf0b0a459d47e0cfef87",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    19,
+    21
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "sbb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 43,
+   "book_id": "69942e1dd607f8e57e4b76fc",
+   "title": "Treatise on the Laws",
+   "frame": 311,
+   "shown_number": 311,
+   "stored_printed_label": "201",
+   "page_id": "69942e1dd607f8e57e4b7833",
+   "page_type": "text",
+   "ocr_engine": "claude-opus-5-5",
+   "translation_engine": "claude-opus-5-5",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    310,
+    312
+   ],
+   "language": "Greek",
+   "group": "other script",
+   "scripts": [
+    "Greek"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 44,
+   "book_id": "6a3cbebeec254ff6cae02c43",
+   "title": "Imperially Commissioned Supplement to the Rhyme Repository, juan 30–33 (vol 54)",
+   "frame": 108,
+   "shown_number": 108,
+   "stored_printed_label": null,
+   "page_id": "6a3cbebeec254ff6cae02caf",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    107,
+    109
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 45,
+   "book_id": "6ac50c014ba7223afe012e5a",
+   "title": "Neüwe Zeitung und heimliche wunderbarliche Offenbarung etlicher Sachen und Handlungen, so sich uff d",
+   "frame": 3,
+   "shown_number": 3,
+   "stored_printed_label": null,
+   "page_id": "6ac50c034ba7223afe012e5f",
+   "page_type": "dedication",
+   "ocr_engine": "gemini-3.8-flash-low",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    2,
+    4
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "erara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "reocr_cli",
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 46,
+   "book_id": "69528566ab34727b1f04b7ee",
+   "title": "Unheard-of Medical Works",
+   "frame": 45,
+   "shown_number": 45,
+   "stored_printed_label": "36",
+   "page_id": "6959069295a91542b28bdf29",
+   "page_type": null,
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    44,
+    46
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "longs-pass-5924",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 47,
+   "book_id": "6ab23ec661b5fd3232b9162e",
+   "title": "The Follies And Frauds Of Spiritualism",
+   "frame": 47,
+   "shown_number": 47,
+   "stored_printed_label": "41",
+   "page_id": "6ab23ec761b5fd3232b9165d",
+   "page_type": null,
+   "ocr_engine": "ia-ocr/ABBYY FineReader 11.0",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    46,
+    48
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 48,
+   "book_id": "6ab6e003b393fe0e2d475960",
+   "title": "The doctrine of the heart, extracts from Hindu letters",
+   "frame": 4,
+   "shown_number": 4,
+   "stored_printed_label": null,
+   "page_id": "6ab6e003b393fe0e2d475966",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    3,
+    5
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 49,
+   "book_id": "6a3cb96b3d799518cd71de21",
+   "title": "Tenets of the Guqin, first juan (vol 1)",
+   "frame": 60,
+   "shown_number": 60,
+   "stored_printed_label": null,
+   "page_id": "6a3cb96b3d799518cd71de5d",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    59,
+    61
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 50,
+   "book_id": "6a3c66e8af3c49b59c5ce754",
+   "title": "Discourses on Salt and Iron, juan 1–3 (vol 1)",
+   "frame": 77,
+   "shown_number": 77,
+   "stored_printed_label": null,
+   "page_id": "6a3c66e8af3c49b59c5ce7a1",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    76,
+    78
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "zh-flash-agy-7037",
+    "trail": [
+     "zh-flash-agy-7037"
+    ]
+   }
+  },
+  {
+   "slot": 51,
+   "book_id": "6a905aa3785d9b40577f5d27",
+   "title": "History of Comets: A Short Description of the Principal Comets Seen Within 1618 Years",
+   "frame": 47,
+   "shown_number": 47,
+   "stored_printed_label": null,
+   "page_id": "6a905aa3785d9b40577f5daa",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    46,
+    48
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 52,
+   "book_id": "6a3c766f01fe4f593c1faf77",
+   "title": "Book of Music, juan 114–120 (vol 16)",
+   "frame": 52,
+   "shown_number": 52,
+   "stored_printed_label": null,
+   "page_id": "6a3c766f01fe4f593c1fb034",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    51,
+    53
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 53,
+   "book_id": "69e8b2e52ff2a8dc09e78cf9",
+   "title": "Critique of Pure Reason",
+   "frame": 113,
+   "shown_number": 113,
+   "stored_printed_label": null,
+   "page_id": "69e8b2e52ff2a8dc09e78d6a",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    112,
+    114
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "batch_api",
+     "ai"
+    ]
+   }
+  },
+  {
+   "slot": 54,
+   "book_id": "69b68bf72368e1fad321e8d8",
+   "title": "Theses theologicae de exinanitione Christi",
+   "frame": 10,
+   "shown_number": 10,
+   "stored_printed_label": null,
+   "page_id": "69b68bf72368e1fad321e8e2",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    9,
+    11
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 55,
+   "book_id": "6a4bf87f4f392afd49e424ec",
+   "title": "Rabener, Justus Gottfried: Disputationum geographicarum prima, de terris subpolaribus",
+   "frame": 3,
+   "shown_number": 3,
+   "stored_printed_label": null,
+   "page_id": "6a4bf87f4f392afd49e42516",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    2,
+    4
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 56,
+   "book_id": "6a44603a335f9b32ac49615d",
+   "title": "Scoundrel of Scoundrels, That Is, a Joco-Serious Censure of Wickedness",
+   "frame": 141,
+   "shown_number": 141,
+   "stored_printed_label": null,
+   "page_id": "6a44603a335f9b32ac4961ea",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    140,
+    142
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 57,
+   "book_id": "6a3c6895af3c49b59c5da654",
+   "title": "Xue's Medical Cases, juan 6–7 (vol 5)",
+   "frame": 41,
+   "shown_number": 41,
+   "stored_printed_label": null,
+   "page_id": "6a3c6895af3c49b59c5da67d",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    40,
+    42
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 58,
+   "book_id": "69b6f252b1a3146c05273a64",
+   "title": "Renovatio Spiritus, Sive Exercitia Spiritualia Triduana Pro Sacerdotibus ...",
+   "frame": 105,
+   "shown_number": 105,
+   "stored_printed_label": null,
+   "page_id": "69b6f252b1a3146c05273acd",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    104,
+    106
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 59,
+   "book_id": "698192084a98f5b317403e71",
+   "title": "Memoirs of the life, death, burial, and wonderful writings, of Jacob Behmen",
+   "frame": 93,
+   "shown_number": 93,
+   "stored_printed_label": "67",
+   "page_id": "6981a23627186e2fd9c4ff90",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    92,
+    94
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": true,
+    "hold": null,
+    "trail": [
+     "hide-repeat-captures-5056 ",
+     "ai",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 60,
+   "book_id": "697704f1d2171799db0a7337",
+   "title": "Albrecht Dürer's Description of Human Proportion",
+   "frame": 282,
+   "shown_number": 282,
+   "stored_printed_label": "229",
+   "page_id": "6977483912b87038361d828d",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    281,
+    283
+   ],
+   "language": "Dutch",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": true,
+    "hold": null,
+    "trail": [
+     "hide-repeat-captures-5056 ",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 61,
+   "book_id": "6ac50ea50749a01cb8186b39",
+   "title": "Alchemistisches Kunstbuch (Cod. Pal. germ. 294)",
+   "frame": 126,
+   "shown_number": 126,
+   "stored_printed_label": null,
+   "page_id": "6ac50ea60749a01cb8186bb9",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    125,
+    127
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 62,
+   "book_id": "6992545159cdabeb78f1dc13",
+   "title": "Religion and Cult of the Romans",
+   "frame": 405,
+   "shown_number": 405,
+   "stored_printed_label": "389",
+   "page_id": "6992545159cdabeb78f1dda8",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    404,
+    406
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 63,
+   "book_id": "6a5127743c7bd9ad413676be",
+   "title": "Aeolus Benefiting and Harming the Microcosm, or A Physio-Pathological Investigation into Flatulence",
+   "frame": 11,
+   "shown_number": 11,
+   "stored_printed_label": "7",
+   "page_id": "6a5127763c7bd9ad41367710",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    10,
+    12
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 64,
+   "book_id": "69b525bd6be60460830318e2",
+   "title": "\n              Vervolg der roemwaardige zee- en land-reysen des dapperen Ferdinand Cortes; aan de va",
+   "frame": 18,
+   "shown_number": 18,
+   "stored_printed_label": "6",
+   "page_id": "69b525bd6be60460830318f4",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    17,
+    19
+   ],
+   "language": "Dutch",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "allard_pierson",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942",
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 65,
+   "book_id": "6a4f225ace720e255f3c5c32",
+   "title": "Haberkorn, Peter: Hexas disputationum antiwalenburchicarum",
+   "frame": 28,
+   "shown_number": 28,
+   "stored_printed_label": null,
+   "page_id": "6a4f225ace720e255f3c5c63",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    27,
+    29
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 66,
+   "book_id": "69b64bd318b87551bfc6f7a2",
+   "title": "Ivstini Historici Clarissimi in Trogi Pompeij historias libri quadragintaquatuor",
+   "frame": 89,
+   "shown_number": 89,
+   "stored_printed_label": null,
+   "page_id": "69b64bd318b87551bfc6f7fb",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    88,
+    90
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 67,
+   "book_id": "6a3ceaa8c895e71c6023c427",
+   "title": "Daily Lectures on the Meaning of the Spring and Autumn Annals, juan 58–60 (vol 46)",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "6a3ceaa8c895e71c6023c435",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 68,
+   "book_id": "6a4dddb59d37691b80d5f793",
+   "title": "Omphalius, Jakob: De Svscipienda Christianae Reip. propugnatione, & eorum qui urbium gubernacula ten",
+   "frame": 79,
+   "shown_number": 79,
+   "stored_printed_label": null,
+   "page_id": "6a4dddb59d37691b80d5f877",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    78,
+    80
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 69,
+   "book_id": "69b67753b3f4fc04415c87bd",
+   "title": "Theses theologicae de peccato",
+   "frame": 15,
+   "shown_number": 15,
+   "stored_printed_label": null,
+   "page_id": "69b67753b3f4fc04415c87cc",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    14,
+    16
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 70,
+   "book_id": "6a1ed95409c2a0509ef9fdbb",
+   "title": "Fu shi yan ke shen yao han, Volume 6",
+   "frame": 62,
+   "shown_number": 62,
+   "stored_printed_label": null,
+   "page_id": "6a1ed95509c2a0509ef9fe37",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    61,
+    63
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "umedia",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 71,
+   "book_id": "6a3c750439b4508b04e5a3d7",
+   "title": "A New Account of the Tales of the World, first juan, part 1 (vol 6)",
+   "frame": 117,
+   "shown_number": 117,
+   "stored_printed_label": null,
+   "page_id": "6a3c750439b4508b04e5a4ac",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    116,
+    118
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 72,
+   "book_id": "69b64e8118b87551bfc89c1f",
+   "title": "Cometarum omnium fere catalogus qui ab Augusto, quo imperante Christus natus est, usque ad hunc 1556",
+   "frame": 24,
+   "shown_number": 24,
+   "stored_printed_label": null,
+   "page_id": "69b64e8118b87551bfc89c37",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    23,
+    25
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 73,
+   "book_id": "6a3cb6db57c1f37219c4d032",
+   "title": "Imperially Commissioned Exegesis of the Rites of Zhou, juan 17–18 (vol 12)",
+   "frame": 39,
+   "shown_number": 39,
+   "stored_printed_label": null,
+   "page_id": "6a3cb6db57c1f37219c4d059",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    38,
+    40
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 74,
+   "book_id": "6a0852bb15c643eb1af4dc5b",
+   "title": "Commentaries on the Gallic and Civil Wars",
+   "frame": 278,
+   "shown_number": 278,
+   "stored_printed_label": "163",
+   "page_id": "6a0852bb15c643eb1af4dd71",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    277,
+    279
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 75,
+   "book_id": "69b65eb1b3f4fc0441523385",
+   "title": "M.T. Ciceronis orationes omnes",
+   "frame": 152,
+   "shown_number": 152,
+   "stored_printed_label": null,
+   "page_id": "69b65eb1b3f4fc044152341d",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    151,
+    153
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "warehouse-promotion-5470",
+    "trail": [
+     "warehouse-promotion-5470"
+    ]
+   }
+  },
+  {
+   "slot": 76,
+   "book_id": "6ac4e637a52c373827897be8",
+   "title": "Commentaries on biblical verses, on passages from talmudic and midrashic literature, on prayers, and",
+   "frame": 269,
+   "shown_number": 269,
+   "stored_printed_label": null,
+   "page_id": "6ac4e639a52c373827897cf7",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    268,
+    270
+   ],
+   "language": "Hebrew",
+   "group": "other script",
+   "scripts": [
+    "Hebrew"
+   ],
+   "provider": "vatican",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 77,
+   "book_id": "6a3c6f2d01fe4f593c1c9a2e",
+   "title": "Examination of Doubts in the Classics, first juan (vol 1)",
+   "frame": 56,
+   "shown_number": 56,
+   "stored_printed_label": null,
+   "page_id": "6a3c6f2e01fe4f593c1c9a67",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    55,
+    57
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 78,
+   "book_id": "6a8f6176ddd2f57fe0f7d8ff",
+   "title": "Principles of Economics",
+   "frame": 506,
+   "shown_number": 506,
+   "stored_printed_label": "464",
+   "page_id": "6a8f6176ddd2f57fe0f7de41",
+   "page_type": null,
+   "ocr_engine": "ia-ocr/0.0.14",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    505,
+    507
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "ia_djvu"
+    ]
+   }
+  },
+  {
+   "slot": 79,
+   "book_id": "69b525d69658af9164709ee1",
+   "title": "\n              [Bologna] /\n              Augustino Carazzi.\n            ",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "69b525d69658af9164709ee2",
+   "page_type": "map",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    null,
+    null
+   ],
+   "language": "Italian",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "allard_pierson",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 80,
+   "book_id": "6a4eab0551c8b82b11e89c71",
+   "title": "Beuther, Johann Michael: De causis amittendi feudi et cui amissum aperiatur, disputatio quarta",
+   "frame": 48,
+   "shown_number": 48,
+   "stored_printed_label": null,
+   "page_id": "6a4eab0551c8b82b11e89ca1",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    47,
+    49
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 81,
+   "book_id": "6a3c79e001fe4f593c2131d7",
+   "title": "Imperially Commissioned Classified Brocade of Words, juan 26 (vol 24)",
+   "frame": 115,
+   "shown_number": 115,
+   "stored_printed_label": null,
+   "page_id": "6a3c79e001fe4f593c21324b",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    114,
+    116
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 82,
+   "book_id": "6acc3ad5c1411f8cc628f40a",
+   "title": "Mexican Catechism: Containing All Christian Doctrine with All Its Explanations",
+   "frame": 59,
+   "shown_number": 59,
+   "stored_printed_label": "19",
+   "page_id": "6acc3ad6c1411f8cc628f445",
+   "page_type": "text",
+   "ocr_engine": "claude-opus-5-5",
+   "translation_engine": "claude-opus-5-5",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    58,
+    60
+   ],
+   "language": "Nahuatl",
+   "group": "other Latin script",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 83,
+   "book_id": "69d8ca5aa09828f83ddcaabf",
+   "title": "European Mycology",
+   "frame": 7,
+   "shown_number": 7,
+   "stored_printed_label": null,
+   "page_id": "69d8ca5aa09828f83ddcaac6",
+   "page_type": null,
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    6,
+    8
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 84,
+   "book_id": "69b6e7f6f8a84d859cde5438",
+   "title": "Dissertatio inauguralis medica sistens diabetis observationem raram",
+   "frame": 9,
+   "shown_number": 9,
+   "stored_printed_label": null,
+   "page_id": "69b6e7f6f8a84d859cde5441",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    8,
+    10
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 85,
+   "book_id": "69b67b0e70c69d645a6fca30",
+   "title": "Qvinque Decades Philosophicarvm Thesivm",
+   "frame": 5,
+   "shown_number": 5,
+   "stored_printed_label": null,
+   "page_id": "69b67b0e70c69d645a6fca35",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    4,
+    6
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 86,
+   "book_id": "69e80657fdad300064d9ece7",
+   "title": "Commentary on the Nature of Man",
+   "frame": 31,
+   "shown_number": 31,
+   "stored_printed_label": "13r",
+   "page_id": "69e80657fdad300064d9ed06",
+   "page_type": null,
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    30,
+    32
+   ],
+   "language": "Arabic",
+   "group": "other script",
+   "scripts": [
+    "Arabic"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 87,
+   "book_id": "6a089ad2c00e102b3bb2395c",
+   "title": "Cicero: Letters to Atticus, Vol. I (Books 1-6)",
+   "frame": 175,
+   "shown_number": 175,
+   "stored_printed_label": "324–325",
+   "page_id": "6a089ad2c00e102b3bb23a0b",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    174,
+    176
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 88,
+   "book_id": "6ab23f0961b5fd3232b9196e",
+   "title": "Proofs of the spirit world (On ne meurt pas)",
+   "frame": 136,
+   "shown_number": 136,
+   "stored_printed_label": "122",
+   "page_id": "6ab23f0a61b5fd3232b919f6",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    135,
+    137
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 89,
+   "book_id": "6a3c793501fe4f593c20de2f",
+   "title": "Yiwen Leiju, juan 11–12 (vol 6)",
+   "frame": 42,
+   "shown_number": 42,
+   "stored_printed_label": null,
+   "page_id": "6a3c793501fe4f593c20de5a",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    41,
+    43
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 90,
+   "book_id": "6a3c6740af3c49b59c5d1b2c",
+   "title": "Great Compendium of Neo-Confucianism, juan 23–24 (vol 14)",
+   "frame": 66,
+   "shown_number": 66,
+   "stored_printed_label": null,
+   "page_id": "6a3c6740af3c49b59c5d1b6e",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    65,
+    67
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 91,
+   "book_id": "6a26da14863cf28d8f64c28b",
+   "title": "Remler, Johann Christian Wilhelm: Tabelle über die Menge der auflöslichen Bestandtheile welche aus d",
+   "frame": 19,
+   "shown_number": 19,
+   "stored_printed_label": "17",
+   "page_id": "6a26da14863cf28d8f64c29e",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    18,
+    20
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 92,
+   "book_id": "6a3c792901fe4f593c20d7f6",
+   "title": "Sea of Stories, Ancient and Modern, juan 122–126 (vol 16)",
+   "frame": 88,
+   "shown_number": 88,
+   "stored_printed_label": null,
+   "page_id": "6a3c792901fe4f593c20d84f",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    87,
+    89
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 93,
+   "book_id": "6a4ef2a21a64e53b6a0a1b44",
+   "title": "Disputationes Feudales Summam Iuris Feudalis Breviter Complectentes",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": "2",
+   "page_id": "6a4ef2a21a64e53b6a0a1b46",
+   "page_type": "dedication",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "goettingen",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 94,
+   "book_id": "69b64a1318b87551bfc6284a",
+   "title": "Virgilivs",
+   "frame": 73,
+   "shown_number": 73,
+   "stored_printed_label": null,
+   "page_id": "69b64a1318b87551bfc62893",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    72,
+    74
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 95,
+   "book_id": "6a3c7b4f01fe4f593c21d883",
+   "title": "Pure Words on the Great Changes, juan 60–64 (vol 18)",
+   "frame": 108,
+   "shown_number": 108,
+   "stored_printed_label": null,
+   "page_id": "6a3c7b4f01fe4f593c21d8ef",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    107,
+    109
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 96,
+   "book_id": "6a3c703901fe4f593c1d1fd6",
+   "title": "Collected Explanations on the Book of Rites, juan 103–104 (vol 52)",
+   "frame": 117,
+   "shown_number": 117,
+   "stored_printed_label": null,
+   "page_id": "6a3c703901fe4f593c1d204b",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    116,
+    118
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 97,
+   "book_id": "6ac50d620749a01cb8171df2",
+   "title": "Augsburger Chronik (Cod. Pal. germ. 100)",
+   "frame": 468,
+   "shown_number": 468,
+   "stored_printed_label": null,
+   "page_id": "6ac50d630749a01cb8171fc8",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    467,
+    469
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 98,
+   "book_id": "69905f4a40bc3a0478efc4b1",
+   "title": "Aryabhatiya with the Bhatadipika Commentary",
+   "frame": 105,
+   "shown_number": 105,
+   "stored_printed_label": null,
+   "page_id": "69905f4b40bc3a0478efc51a",
+   "page_type": null,
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    104,
+    106
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942",
+     "cleanup-termdef-5901"
+    ]
+   }
+  },
+  {
+   "slot": 99,
+   "book_id": "69b63ecd1c1c21a373868df7",
+   "title": "De libris revolutionum eruditissimi viri, et mathematici excellentiss. reverendi D. Doctoris Nicolai",
+   "frame": 50,
+   "shown_number": 50,
+   "stored_printed_label": null,
+   "page_id": "69b63ecd1c1c21a373868e29",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    49,
+    51
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 100,
+   "book_id": "6ac503554ba7223afefacc26",
+   "title": "La  somme de theologie ou lieux communs, reveuz et augmentés de nouveau",
+   "frame": 43,
+   "shown_number": 43,
+   "stored_printed_label": null,
+   "page_id": "6ac503564ba7223afefacc53",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    42,
+    44
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "erara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 101,
+   "book_id": "6a3cb7dc3dce6cfad7488dde",
+   "title": "Imperially Commissioned Subcommentary on the Book of Rites, juan 80 (vol 93)",
+   "frame": 122,
+   "shown_number": 122,
+   "stored_printed_label": null,
+   "page_id": "6a3cb7dc3dce6cfad7488e58",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    121,
+    123
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 102,
+   "book_id": "69b525aa29577f283b57a5f6",
+   "title": "\n              [Werken].\n            ",
+   "frame": 9,
+   "shown_number": 9,
+   "stored_printed_label": null,
+   "page_id": "69b525aa29577f283b57a5ff",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    8,
+    10
+   ],
+   "language": "Spanish",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "allard_pierson",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 103,
+   "book_id": "69b6350a1c1c21a373825b68",
+   "title": "[Missale Numburgense]",
+   "frame": 481,
+   "shown_number": 481,
+   "stored_printed_label": null,
+   "page_id": "69b6350a1c1c21a373825d49",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    480,
+    482
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 104,
+   "book_id": "6a0854c249638a50931c0a1b",
+   "title": "Saint John Chrysostom: Book on Virginity, Translated by Giulio Pogiano",
+   "frame": 122,
+   "shown_number": 122,
+   "stored_printed_label": "50r",
+   "page_id": "6a0854c249638a50931c0a95",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    121,
+    123
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 105,
+   "book_id": "69b6648fb3f4fc044154fd42",
+   "title": "Etymologiae pars prior",
+   "frame": 70,
+   "shown_number": 70,
+   "stored_printed_label": null,
+   "page_id": "69b6648fb3f4fc044154fd88",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    69,
+    71
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 106,
+   "book_id": "6abee4eaa43718d234bf2c6d",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
+   "frame": 537,
+   "shown_number": 537,
+   "stored_printed_label": null,
+   "page_id": "6abee503a43718d234bf2e88",
+   "page_type": null,
+   "ocr_engine": "esukhia-derge-tengyur",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    536,
+    538
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bdrc",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 107,
+   "book_id": "6a42c19597284560a2b0b0b2",
+   "title": "Treatise on Single Combat or the Duel",
+   "frame": 52,
+   "shown_number": 52,
+   "stored_printed_label": null,
+   "page_id": "6a42c19597284560a2b0b0e6",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    51,
+    53
+   ],
+   "language": "Italian",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 108,
+   "book_id": "69527367ab34727b1f048f38",
+   "title": "Mundus Subterraneus",
+   "frame": 743,
+   "shown_number": 743,
+   "stored_printed_label": "267",
+   "page_id": "69527367ab34727b1f04921f",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    742,
+    744
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "longs-pass-5924",
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 109,
+   "book_id": "69e788224a6785cfd60cf53b",
+   "title": "rgyal khams pa rang grol blo bde glu'i phreng ba",
+   "frame": 93,
+   "shown_number": 93,
+   "stored_printed_label": null,
+   "page_id": "69e788224a6785cfd60cf598",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    92,
+    94
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "batch_api",
+     "ai",
+     "bdrc",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 110,
+   "book_id": "6ac50c144ba7223afe013092",
+   "title": "Discours de la police et discipline militaire, a l'imitation des anciens Grecs &amp; Romains, &amp; ",
+   "frame": 83,
+   "shown_number": 83,
+   "stored_printed_label": null,
+   "page_id": "6ac50c184ba7223afe0130e7",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    82,
+    84
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "erara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 111,
+   "book_id": "6a504c8078825bd7fdd93914",
+   "title": "Discourse of a Famous Italian on Bringing Germany and France under the Spanish Yoke",
+   "frame": 7,
+   "shown_number": 7,
+   "stored_printed_label": "5",
+   "page_id": "6a504c8078825bd7fdd9391b",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.8-flash-low",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    6,
+    8
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "bsb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "reocr_cli",
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 112,
+   "book_id": "69e7ac1e5f1a22ab19aa3e47",
+   "title": "Kanjur Phal chen Kha",
+   "frame": 266,
+   "shown_number": 266,
+   "stored_printed_label": null,
+   "page_id": "69e7ac1e5f1a22ab19aa3f51",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    265,
+    267
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "bdrc",
+     "batch_api",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 113,
+   "book_id": "6ac4ee6101a80410b96e6283",
+   "title": "Compilation of six different manuscripts (Vat.ebr.214)",
+   "frame": 319,
+   "shown_number": 319,
+   "stored_printed_label": null,
+   "page_id": "6ac4ee6301a80410b96e63c4",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    318,
+    320
+   ],
+   "language": "Hebrew",
+   "group": "other script",
+   "scripts": [
+    "Hebrew"
+   ],
+   "provider": "vatican",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 114,
+   "book_id": "69e7533c69e8edc5cf05a188",
+   "title": "The Deipnosophists",
+   "frame": 226,
+   "shown_number": 226,
+   "stored_printed_label": "213",
+   "page_id": "69e7533c69e8edc5cf05a26a",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    225,
+    227
+   ],
+   "language": "Greek",
+   "group": "other script",
+   "scripts": [
+    "Greek"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "batch_api"
+    ]
+   }
+  },
+  {
+   "slot": 115,
+   "book_id": "6ac50136eefc6804b9d70955",
+   "title": "Traité Des Manieres De Dessiner Les O'rdres De L'Architectvre Antiqve En Tovtes Levrs Parties: Auec ",
+   "frame": 45,
+   "shown_number": 45,
+   "stored_printed_label": null,
+   "page_id": "6ac50138eefc6804b9d70984",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    44,
+    46
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 116,
+   "book_id": "6a4a718b7b720133514b3765",
+   "title": "Heiligmeier, Christoph: De Sacramentis || REPETITIO || DOCTRINAE SACRIS || LITERIS, ET ORTHO-||doxae",
+   "frame": 31,
+   "shown_number": 31,
+   "stored_printed_label": null,
+   "page_id": "6a4a718b7b720133514b3784",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    30,
+    32
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "sbb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 117,
+   "book_id": "6ac5123c0749a01cb81b02b8",
+   "title": "Augsburger Hochzeitsregister (Cod. Pal. germ. 82)",
+   "frame": 12,
+   "shown_number": 12,
+   "stored_printed_label": null,
+   "page_id": "6ac5123e0749a01cb81b02c6",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    11,
+    13
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 118,
+   "book_id": "69dbc96e1040d1d5e20a3562",
+   "title": "On Old Age",
+   "frame": 4,
+   "shown_number": 4,
+   "stored_printed_label": null,
+   "page_id": "69dbc96e1040d1d5e20a3566",
+   "page_type": "title-page",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    3,
+    5
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "bsb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 119,
+   "book_id": "6a429af339deb1e8af6941fe",
+   "title": "Surgical Disputation on Ulcers",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "6a429af339deb1e8af69420c",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 120,
+   "book_id": "6a3c6957af3c49b59c5de9fe",
+   "title": "Prescriptions for Universal Relief, juan 202–203 (vol 137)",
+   "frame": 15,
+   "shown_number": 15,
+   "stored_printed_label": null,
+   "page_id": "6a3c6957af3c49b59c5dea0d",
+   "page_type": "text",
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    14,
+    16
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "ai",
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 121,
+   "book_id": "69b6f10eb1a3146c05272582",
+   "title": "Specimen observationum subitarium",
+   "frame": 5,
+   "shown_number": 5,
+   "stored_printed_label": null,
+   "page_id": "69b6f10eb1a3146c05272587",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    4,
+    6
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 122,
+   "book_id": "6a4ee50f748a220a79987ca5",
+   "title": "Eulogy of Henri de Joyeuse of the Capuchin Order: From the Library of Papire Masson of Forez, Advoca",
+   "frame": 15,
+   "shown_number": 15,
+   "stored_printed_label": "14",
+   "page_id": "6a4ee50f748a220a79987cb4",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    14,
+    16
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "gallica",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 123,
+   "book_id": "6ac510d90749a01cb81a2c69",
+   "title": "Geistliche Lieder; Jacob Dachser / Sigmund Salminger: Bibeldichtungen; Ambrosius Blarer: Abendmahlsm",
+   "frame": 156,
+   "shown_number": 156,
+   "stored_printed_label": null,
+   "page_id": "6ac510db0749a01cb81a2d07",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    155,
+    157
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 124,
+   "book_id": "6a3c6e0501fe4f593c1befc1",
+   "title": "General Meaning of the Classic of Poetry, juan 12 (vol 9)",
+   "frame": 6,
+   "shown_number": 6,
+   "stored_printed_label": null,
+   "page_id": "6a3c6e0501fe4f593c1befc7",
+   "page_type": "text",
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": "gemini-3.8-flash-low",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    5,
+    7
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "ai",
+     "empty",
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 125,
+   "book_id": "6a4ae57d9a3f4fa983d9b6f2",
+   "title": "Amsel, Andreas: Discursus iur. publ. de bello",
+   "frame": 58,
+   "shown_number": 58,
+   "stored_printed_label": null,
+   "page_id": "6a4ae57d9a3f4fa983d9b72c",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    57,
+    59
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 126,
+   "book_id": "6abedb94896ea18127c90961",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཤེ (Derge Tengyur, vol. 196)",
+   "frame": 200,
+   "shown_number": 200,
+   "stored_printed_label": null,
+   "page_id": "6abedba5896ea18127c90a2b",
+   "page_type": null,
+   "ocr_engine": "esukhia-derge-tengyur",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    199,
+    201
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bdrc",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 127,
+   "book_id": "6a4c9465dfe25276ee6727f7",
+   "title": "Posewitz, Johann Heinrich: Concordia Discors seu Discursus Theologicus",
+   "frame": 58,
+   "shown_number": 58,
+   "stored_printed_label": null,
+   "page_id": "6a4c9465dfe25276ee672831",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    57,
+    59
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "sbb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 128,
+   "book_id": "6ab2317e4ac37d55a2134d96",
+   "title": "A manual of mental science,",
+   "frame": 116,
+   "shown_number": 116,
+   "stored_printed_label": null,
+   "page_id": "6ab2317e4ac37d55a2134e0a",
+   "page_type": null,
+   "ocr_engine": "lightonai/LightOnOCR-3-1B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    115,
+    117
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "empty",
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 129,
+   "book_id": "6a3cc1ccf9474f825c1728bb",
+   "title": "Compendium of the Five Lamps, juan 14 (vol 14)",
+   "frame": 119,
+   "shown_number": 119,
+   "stored_printed_label": null,
+   "page_id": "6a3cc1ccf9474f825c172932",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    118,
+    120
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-6388-ocr-only",
+    "trail": [
+     "cbeta-xml-p5",
+     "paddle-zh-6388-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 130,
+   "book_id": "69dbc99c1040d1d5e20a4d93",
+   "title": "On the Properties of Terms",
+   "frame": 49,
+   "shown_number": 49,
+   "stored_printed_label": null,
+   "page_id": "69dbc99c1040d1d5e20a4dc4",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    48,
+    50
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "bsb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 131,
+   "book_id": "6a14e148311a9edd4621e634",
+   "title": "Tshamdrak rNying rgyud Sha",
+   "frame": 444,
+   "shown_number": 444,
+   "stored_printed_label": null,
+   "page_id": "6a14e148311a9edd4621e7f0",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    443,
+    445
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "bdrc",
+     "batch_api",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 132,
+   "book_id": "6a4b109e7622bb5aba1289b2",
+   "title": "Erath, Augustinus: Tractatus Theologico-Canonicus, In Quo Sacrae Canonicorum Regularium Vestes Ex Su",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "6a4b109e7622bb5aba1289c0",
+   "page_type": "index",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 133,
+   "book_id": "69b51e4dcf111105c429a321",
+   "title": "Writers of the Order of Friars Minor",
+   "frame": 147,
+   "shown_number": 147,
+   "stored_printed_label": null,
+   "page_id": "69b51e4dcf111105c429a3b4",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    146,
+    148
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 134,
+   "book_id": "6a3cc213ec254ff6cae0fd49",
+   "title": "Awaiting the Changes, juan 2–3 (vol 2)",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "6a3cc213ec254ff6cae0fd4b",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 135,
+   "book_id": "6a3c6dcd39b4508b04e4a66e",
+   "title": "Imperially Commissioned Collected Commentaries on the Book of Songs (vol 23)",
+   "frame": 115,
+   "shown_number": 115,
+   "stored_printed_label": null,
+   "page_id": "6a3c6dcd39b4508b04e4a759",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    114,
+    116
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 136,
+   "book_id": "69907c715f855ec553e753c3",
+   "title": "Description of the French Part of Saint-Domingue, Vol. 1",
+   "frame": 456,
+   "shown_number": 456,
+   "stored_printed_label": "430",
+   "page_id": "69907c725f855ec553e7558c",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    455,
+    457
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 137,
+   "book_id": "6ac510cc0749a01cb81a207b",
+   "title": "Kochbuch (Konfekt) (Cod. Pal. germ. 627)",
+   "frame": 21,
+   "shown_number": 21,
+   "stored_printed_label": null,
+   "page_id": "6ac510cc0749a01cb81a2092",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    20,
+    22
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 138,
+   "book_id": "6a3c62a440c88a541d8f5398",
+   "title": "Imperially Commissioned Peiwen Rhyme Treasury, juan 22 part 2 (vol 91)",
+   "frame": 48,
+   "shown_number": 48,
+   "stored_printed_label": null,
+   "page_id": "6a3c62a440c88a541d8f5464",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    47,
+    49
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 139,
+   "book_id": "69b63a791c1c21a37384574b",
+   "title": "Opera Q. Septimii Florentis Tertvlliani",
+   "frame": 242,
+   "shown_number": 242,
+   "stored_printed_label": null,
+   "page_id": "69b63a791c1c21a37384583d",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    241,
+    243
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 140,
+   "book_id": "6ac52b97ed10b8de509e1265",
+   "title": "Kurtze Verfassungen über des Ouidii Verwandlungsbeschreibung: mit einem kurtzen Inhalt der Bücher un",
+   "frame": 179,
+   "shown_number": 179,
+   "stored_printed_label": null,
+   "page_id": "6ac52b98ed10b8de509e131a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    178,
+    180
+   ],
+   "language": "de",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 141,
+   "book_id": "6a3c776439b4508b04e5f774",
+   "title": "Reading the Book of Changes: An Exposition, juan 4 (vol 4)",
+   "frame": 147,
+   "shown_number": 147,
+   "stored_printed_label": null,
+   "page_id": "6a3c776539b4508b04e5f807",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    146,
+    148
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 142,
+   "book_id": "69b6ee81b1a3146c052609d8",
+   "title": "Fossilium metalla et res metallicas concernentium glebae suis coloribus expressae",
+   "frame": 1,
+   "shown_number": 1,
+   "stored_printed_label": null,
+   "page_id": "69b6ee81b1a3146c052609d9",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    null,
+    2
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 143,
+   "book_id": "69aebfdee997cc01b0cab898",
+   "title": "Micrographia Restaurata",
+   "frame": 57,
+   "shown_number": 57,
+   "stored_printed_label": "47",
+   "page_id": "69aebfdee997cc01b0cab92f",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    56,
+    58
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": true,
+    "#5699": false,
+    "#5056": false,
+    "hold": "wrong-leaf-clef-audit-5803",
+    "trail": [
+     "withhold-by-eye 5803",
+     "ai",
+     "wrong-leaf-clef-audit-5803"
+    ]
+   }
+  },
+  {
+   "slot": 144,
+   "book_id": "6a3cbc94f9474f825c16172e",
+   "title": "Comprehensive Examination of the Rites of Mourning, juan 86–87 (vol 42)",
+   "frame": 116,
+   "shown_number": 116,
+   "stored_printed_label": null,
+   "page_id": "6a3cbc94f9474f825c1617a2",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    115,
+    117
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 145,
+   "book_id": "69905e502fd6a039938a1e25",
+   "title": "A Treatise of Specters",
+   "frame": 174,
+   "shown_number": 174,
+   "stored_printed_label": null,
+   "page_id": "69905e502fd6a039938a1ed3",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    173,
+    175
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 146,
+   "book_id": "69e77a530fc6fc955e35f4a2",
+   "title": "bShad rgyud",
+   "frame": 296,
+   "shown_number": 296,
+   "stored_printed_label": null,
+   "page_id": "69e77a530fc6fc955e35f5ca",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    295,
+    297
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "bdrc",
+     "batch_api",
+     "ai",
+     "health-gate-refused",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 147,
+   "book_id": "695934b6b282844d7b27845f",
+   "title": "Anima Magica Abscondita",
+   "frame": 77,
+   "shown_number": 77,
+   "stored_printed_label": null,
+   "page_id": "695934b6b282844d7b2784ac",
+   "page_type": null,
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    76,
+    78
+   ],
+   "language": "English",
+   "group": "English",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 148,
+   "book_id": "69b682f470c69d645a7293cf",
+   "title": "Dispvtatio Philosophica De Physicis Ac Intrinsecis Corporvm Svblvnarivm Mvtationibvs, In Libros De O",
+   "frame": 10,
+   "shown_number": 10,
+   "stored_printed_label": null,
+   "page_id": "69b682f470c69d645a7293d9",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    9,
+    11
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 149,
+   "book_id": "6a4b4dcb6e19521562a5db7d",
+   "title": "Agerius, Nicolaus: Ex lib. 1. Aristot. de meteor. cap. 6 et 7 deprompta disputatio de cometa",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "6a4b4dcb6e19521562a5dbb2",
+   "page_type": "illustration",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 150,
+   "book_id": "6a425545dfbbb4d07aa4fe02",
+   "title": "The Anatomy of Cartesianism",
+   "frame": 53,
+   "shown_number": 53,
+   "stored_printed_label": null,
+   "page_id": "6a425545dfbbb4d07aa4fe37",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    52,
+    54
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 151,
+   "book_id": "6a3ced1e4701a906f10dda4a",
+   "title": "Yunfu Qunyu, juan 17 (vol 17)",
+   "frame": 91,
+   "shown_number": 91,
+   "stored_printed_label": null,
+   "page_id": "6a3ced1e4701a906f10ddaa5",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    90,
+    92
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 152,
+   "book_id": "69b4c04c6248be021e01ed20",
+   "title": "Manly P. Hall Collection, Box 1",
+   "frame": 155,
+   "shown_number": 155,
+   "stored_printed_label": null,
+   "page_id": "69b4c04c6248be021e01edbb",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    154,
+    156
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 153,
+   "book_id": "6ac51cabed10b8de50969015",
+   "title": "Kraichgauer Turnierbuch (Heid. Hs. 58)",
+   "frame": 73,
+   "shown_number": 73,
+   "stored_printed_label": null,
+   "page_id": "6ac51caded10b8de50969060",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    72,
+    74
+   ],
+   "language": "de",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 154,
+   "book_id": "69b6bed48566c83814646ca4",
+   "title": "Wilhelmi Ernesti Tentzelii historiographi ducalis saxonici Epistola de sceleto elephantino Tonnae nu",
+   "frame": 32,
+   "shown_number": 32,
+   "stored_printed_label": null,
+   "page_id": "69b6bed48566c83814646cc4",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.8-flash-low",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    31,
+    33
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "reocr_cli",
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 155,
+   "book_id": "69dbc8921040d1d5e209a762",
+   "title": "Prognostication for the Year 1472",
+   "frame": 11,
+   "shown_number": 11,
+   "stored_printed_label": null,
+   "page_id": "69dbc8921040d1d5e209a76d",
+   "page_type": null,
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    10,
+    12
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "bsb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 156,
+   "book_id": "6ac4f7d2e4016f24bafabc80",
+   "title": "Haftarot (Vat.ebr.635)",
+   "frame": 195,
+   "shown_number": 195,
+   "stored_printed_label": null,
+   "page_id": "6ac4f7d3e4016f24bafabd45",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    194,
+    196
+   ],
+   "language": "Hebrew",
+   "group": "other script",
+   "scripts": [
+    "Hebrew"
+   ],
+   "provider": "vatican",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 157,
+   "book_id": "6a3cbdc3ec254ff6cadfa0e6",
+   "title": "Standards for Diagnosis and Treatment, juan 31 (vol 29)",
+   "frame": 131,
+   "shown_number": 131,
+   "stored_printed_label": null,
+   "page_id": "6a3cbdc3ec254ff6cadfa169",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    130,
+    132
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 158,
+   "book_id": "69b67c1070c69d645a7019f3",
+   "title": "De iure principatus dissertatio iuridico-politica",
+   "frame": 62,
+   "shown_number": 62,
+   "stored_printed_label": null,
+   "page_id": "69b67c1070c69d645a701a31",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    61,
+    63
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 159,
+   "book_id": "6a26cba55ac5aecc53cec18b",
+   "title": "Gichtel, Johann Georg: Theosophia Practica. 2, Worinnen der erste und zweyte Theil voriger Editionen",
+   "frame": 588,
+   "shown_number": 588,
+   "stored_printed_label": null,
+   "page_id": "6a26cba55ac5aecc53cec3d7",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    587,
+    589
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 160,
+   "book_id": "69b6fc653c7947b468d8425c",
+   "title": "Andreae Bonn ... Commentatio de humero luxato",
+   "frame": 62,
+   "shown_number": 62,
+   "stored_printed_label": null,
+   "page_id": "69b6fc653c7947b468d8429a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    61,
+    63
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 161,
+   "book_id": "69b525c36be6046083031d4e",
+   "title": "\n              De roemwaardige scheeps-togt van Christoffel Kolumbus; door hem allereerst in den jar",
+   "frame": 54,
+   "shown_number": 54,
+   "stored_printed_label": "36",
+   "page_id": "69b525c36be6046083031d84",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    53,
+    55
+   ],
+   "language": "Dutch",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "allard_pierson",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 162,
+   "book_id": "69de1f5da297dce7d44bfb15",
+   "title": "Exposition of the Mass, or Mirror of the Church",
+   "frame": 13,
+   "shown_number": 13,
+   "stored_printed_label": null,
+   "page_id": "69de1f5ea297dce7d44bfb22",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    12,
+    14
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "vatican",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 163,
+   "book_id": "69c854596c6f3cc53c853821",
+   "title": "Abbildung des verborgenen Menschen des Hertzens",
+   "frame": 317,
+   "shown_number": 317,
+   "stored_printed_label": "297",
+   "page_id": "69f69c8bb16c1f69189b17c8",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    316,
+    318
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "bph",
+   "tenant": "bce03f71-c18d-4460-b8ad-224c817f9aa0",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 164,
+   "book_id": "6a243e420f0e4f405e633708",
+   "title": "Theobald, Zacharias: Husziten Krieg",
+   "frame": 432,
+   "shown_number": 432,
+   "stored_printed_label": null,
+   "page_id": "6a243e420f0e4f405e6338b8",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    431,
+    433
+   ],
+   "language": "German",
+   "group": "German",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 165,
+   "book_id": "6a3cbf44f9474f825c166e7e",
+   "title": "Liuyi zhiyilu, juan 8–9 (vol 5)",
+   "frame": 128,
+   "shown_number": 128,
+   "stored_printed_label": null,
+   "page_id": "6a3cbf45f9474f825c166efe",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    127,
+    129
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 166,
+   "book_id": "6a3cb6b23dce6cfad74859b4",
+   "title": "Xiezhai jia shu shuchao, juan 11–12 (vol 7)",
+   "frame": 162,
+   "shown_number": 162,
+   "stored_printed_label": null,
+   "page_id": "6a3cb6b33dce6cfad7485a56",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    161,
+    163
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 167,
+   "book_id": "6a09ff77fa20006dbaba9727",
+   "title": "History of the Indians of New Spain (in Collection of Documents, Vol. 1)",
+   "frame": 273,
+   "shown_number": 273,
+   "stored_printed_label": null,
+   "page_id": "6a09ff77fa20006dbaba9838",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    272,
+    274
+   ],
+   "language": "Spanish",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7270",
+    "trail": [
+     "scans-only-publish-7270"
+    ]
+   }
+  },
+  {
+   "slot": 168,
+   "book_id": "6a084e9e49638a50931b55af",
+   "title": "Arcadia",
+   "frame": 186,
+   "shown_number": 186,
+   "stored_printed_label": null,
+   "page_id": "6a084e9e49638a50931b5669",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    185,
+    187
+   ],
+   "language": "Italian",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 169,
+   "book_id": "6a3cc158ec254ff6cae0b748",
+   "title": "Jade Dew from the Crane Forest",
+   "frame": 18,
+   "shown_number": 18,
+   "stored_printed_label": null,
+   "page_id": "6a3cc158ec254ff6cae0b75b",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    17,
+    19
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 170,
+   "book_id": "6a3cc19eec254ff6cae0de45",
+   "title": "Mirror of Exemplary Words and Deeds, juan 1–3 (vol 1)",
+   "frame": 121,
+   "shown_number": 121,
+   "stored_printed_label": null,
+   "page_id": "6a3cc19eec254ff6cae0debe",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    120,
+    122
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 171,
+   "book_id": "6a3cbfedf9474f825c16c745",
+   "title": "Liuyi zhiyilu, juan 380–381 (vol 167)",
+   "frame": 100,
+   "shown_number": 100,
+   "stored_printed_label": null,
+   "page_id": "6a3cbfedf9474f825c16c7a9",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    99,
+    101
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 172,
+   "book_id": "6a4a8aec0cf770dd00721ed2",
+   "title": "Wichgreve, Albert: M. Alberti Wichgrevi[i] Hamburgi[i] Oratio Pro Mikranthrōpois Sive Homullis",
+   "frame": 16,
+   "shown_number": 16,
+   "stored_printed_label": "16",
+   "page_id": "6a4a8aec0cf770dd00721ee2",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    15,
+    17
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 173,
+   "book_id": "69c1bda08522835be846ac71",
+   "title": "Scrapbook with newspaper cuttings and photographs (Gaster Samaritan MS Add 15)",
+   "frame": 47,
+   "shown_number": 47,
+   "stored_printed_label": null,
+   "page_id": "69c1bda08522835be846aca0",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    46,
+    48
+   ],
+   "language": "English and Hebrew",
+   "group": "other script",
+   "scripts": [
+    "Hebrew"
+   ],
+   "provider": "manchester",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   }
+  },
+  {
+   "slot": 174,
+   "book_id": "69f33c9e876dd827cbc5aaa3",
+   "title": "Trattato della fortificazione, composto dal Sig. Dottore Domenico Quarteroni Lettore nella Sapienza ",
+   "frame": 79,
+   "shown_number": 79,
+   "stored_printed_label": "42r",
+   "page_id": "69f33c9e876dd827cbc5aaf2",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    78,
+    80
+   ],
+   "language": "Italian",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "harvard",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 175,
+   "book_id": "6ac52ee1ed10b8de509fd71f",
+   "title": "Ordnung der Gesundheit; Ortolf von Baierland: Arzneibuch (Inkunabel) (Cod. Sal. IX,53)",
+   "frame": 96,
+   "shown_number": 96,
+   "stored_printed_label": null,
+   "page_id": "6ac52ee3ed10b8de509fd781",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    95,
+    97
+   ],
+   "language": "de",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 176,
+   "book_id": "6a3c68bfaf3c49b59c5dc0ce",
+   "title": "Lectures on the Book of Documents, juan 16–18 (vol 7)",
+   "frame": 109,
+   "shown_number": 109,
+   "stored_printed_label": null,
+   "page_id": "6a3c68bfaf3c49b59c5dc13c",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    108,
+    110
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 177,
+   "book_id": "6a4257f8860bea81c9454118",
+   "title": "Maritime Triad",
+   "frame": 60,
+   "shown_number": 60,
+   "stored_printed_label": null,
+   "page_id": "6a4257f8860bea81c9454157",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    59,
+    61
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 178,
+   "book_id": "69b64bdd18b87551bfc6fcd6",
+   "title": "Praefatio M. Bvceri In Qvartum Tomum Postillæ Lutheranæ continens summam doctrinæ Christi",
+   "frame": 28,
+   "shown_number": 28,
+   "stored_printed_label": null,
+   "page_id": "69b64bdd18b87551bfc6fcf2",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    27,
+    29
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 179,
+   "book_id": "6a4afbfcac252ba4d6bf2c40",
+   "title": "Torbenus, Caspar Christian: De Ideis Platonicis Dissertatio Philosophica",
+   "frame": 9,
+   "shown_number": 9,
+   "stored_printed_label": null,
+   "page_id": "6a4afbfcac252ba4d6bf2c49",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    8,
+    10
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "sbb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 180,
+   "book_id": "69e4207a71f02ebac6264ac1",
+   "title": "The Wandering Whore",
+   "frame": 5,
+   "shown_number": 5,
+   "stored_printed_label": null,
+   "page_id": "69e4207a71f02ebac6264ac6",
+   "page_type": null,
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    4,
+    6
+   ],
+   "language": "French",
+   "group": "Romance + Dutch",
+   "scripts": [],
+   "provider": "gallica",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 181,
+   "book_id": "6a4f144ece720e255f3c0201",
+   "title": "Marx, Johann Reinhard: Dōron basilikon",
+   "frame": 49,
+   "shown_number": 49,
+   "stored_printed_label": null,
+   "page_id": "6a4f144ece720e255f3c0232",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    48,
+    50
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 182,
+   "book_id": "69b638f21c1c21a37383b6aa",
+   "title": "M. Plauti comoediae XX",
+   "frame": 780,
+   "shown_number": 780,
+   "stored_printed_label": null,
+   "page_id": "69b638f21c1c21a37383b9b6",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    779,
+    781
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 183,
+   "book_id": "6992cefeb2ff9ac7391f7c60",
+   "title": "Wubei Zhi (Vol. 92)",
+   "frame": 60,
+   "shown_number": 60,
+   "stored_printed_label": null,
+   "page_id": "6992cefeb2ff9ac7391f7c9c",
+   "page_type": "text",
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    59,
+    61
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-6388-ocr-only",
+    "trail": [
+     "batch_api",
+     "ai",
+     "notes-layer-backfill-5942",
+     "paddle-zh-6388-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 184,
+   "book_id": "69b6a39b080b19f98fd1b3d9",
+   "title": "Apollonii Pergaei Conicorum libri IV",
+   "frame": 449,
+   "shown_number": 449,
+   "stored_printed_label": null,
+   "page_id": "69b6a39b080b19f98fd1b59a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    448,
+    450
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 185,
+   "book_id": "69e792bd80b52390feb1690d",
+   "title": "Lha mo’i srog sgrub",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "69e792bd80b52390feb1690f",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    1,
+    null
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "ai",
+     "bdrc",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 186,
+   "book_id": "69b639e41c1c21a373841408",
+   "title": "Apologetica Ioann. Oecolampadii. De Dignitate Evcharistiæ. Sermones duo. Ad Theobaldvm Billicanvm qu",
+   "frame": 287,
+   "shown_number": 287,
+   "stored_printed_label": null,
+   "page_id": "69b639e41c1c21a373841527",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    286,
+    288
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 187,
+   "book_id": "6a3c75b839b4508b04e5cf6f",
+   "title": "Narrative Commentary on the Book of Rites, juan 23–24 (vol 14)",
+   "frame": 27,
+   "shown_number": 27,
+   "stored_printed_label": null,
+   "page_id": "6a3c75b839b4508b04e5cf8a",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    26,
+    28
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "paddle-zh-5600-ocr-only",
+    "trail": [
+     "paddle-zh-5600-ocr-only"
+    ]
+   }
+  },
+  {
+   "slot": 188,
+   "book_id": "6a3ceb6095fcd45563055ebb",
+   "title": "Critical Commentary on the Tribute of Yu",
+   "frame": 42,
+   "shown_number": 42,
+   "stored_printed_label": null,
+   "page_id": "6a3ceb6095fcd45563055ee5",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    41,
+    43
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 189,
+   "book_id": "6a3c6a89af3c49b59c5e7c4b",
+   "title": "Imperially Commissioned Compendium of Observational and Computational Astronomy, Sequel, juan 10 (vo",
+   "frame": 53,
+   "shown_number": 53,
+   "stored_printed_label": null,
+   "page_id": "6a3c6a89af3c49b59c5e7cfd",
+   "page_type": null,
+   "ocr_engine": "PaddleOCR-VL-1.6-0.9B",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    52,
+    54
+   ],
+   "language": "Chinese",
+   "group": "CJK",
+   "scripts": [
+    "Han"
+   ],
+   "provider": "internet_archive",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "gpu-backlog-5660",
+    "trail": [
+     "gpu-backlog-5660"
+    ]
+   }
+  },
+  {
+   "slot": 190,
+   "book_id": "6a4ef2e1451d36458a8388d1",
+   "title": "Badius, Joachim: Exercitationum iur. disp. VII. de servitutibus praedialibus",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "6a4ef2e1451d36458a8388d3",
+   "page_type": "dedication",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "cleanup-a2-5700"
+    ]
+   }
+  },
+  {
+   "slot": 191,
+   "book_id": "69dbcbc71040d1d5e20baaef",
+   "title": "Letters to Lucilius",
+   "frame": 197,
+   "shown_number": 197,
+   "stored_printed_label": null,
+   "page_id": "69dbcbc71040d1d5e20babb4",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    196,
+    198
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "bsb",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 192,
+   "book_id": "6a26bad361b3857ed05b0ddf",
+   "title": "Johannes, de Sacrobosco: Liber Iohannis de Sacro Busto, de Sphaera",
+   "frame": 49,
+   "shown_number": 49,
+   "stored_printed_label": null,
+   "page_id": "6a26bad361b3857ed05b0e10",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    48,
+    50
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 193,
+   "book_id": "6a4ac4d033aff31aa5240050",
+   "title": "Finckelthaus, Sigismund: Sigismundus Finckelthavs I.V.D. Et Pro Tempore Academiae Rector Feudales co",
+   "frame": 14,
+   "shown_number": 14,
+   "stored_printed_label": null,
+   "page_id": "6a4ac4d033aff31aa524005e",
+   "page_type": "text",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "human_translation": false,
+   "withheld": false,
+   "has_text": true,
+   "has_english": true,
+   "neighbours": [
+    13,
+    15
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "mdz",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   }
+  },
+  {
+   "slot": 194,
+   "book_id": "69b66f88b3f4fc044159842c",
+   "title": "Peripatetica syzētēsis de syllogismo necessario et eius potissima specie apodictico",
+   "frame": 3,
+   "shown_number": 3,
+   "stored_printed_label": null,
+   "page_id": "69b66f88b3f4fc044159842f",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    2,
+    4
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 195,
+   "book_id": "69b66b31b3f4fc044157c33c",
+   "title": "Historia archiepiscoporum Bremensium, a tempore Karoli Magni usque ad Karolum IIII",
+   "frame": 72,
+   "shown_number": 72,
+   "stored_printed_label": null,
+   "page_id": "69b66b31b3f4fc044157c384",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    71,
+    73
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 196,
+   "book_id": "69b635df1c1c21a373829ca7",
+   "title": "Vocabularius Ioannis Altenstaig Mindelhaimensis",
+   "frame": 157,
+   "shown_number": 157,
+   "stored_printed_label": null,
+   "page_id": "69b635df1c1c21a373829d44",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    156,
+    158
+   ],
+   "language": "Latin",
+   "group": "Latin",
+   "scripts": [],
+   "provider": "e-rara",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "scans-only-publish-7176",
+    "trail": [
+     "scans-only-publish-7176"
+    ]
+   }
+  },
+  {
+   "slot": 197,
+   "book_id": "69e792c180b52390feb16917",
+   "title": "Mkha’ ’gro snying thig gi bla ma’i rnal ’byor",
+   "frame": 2,
+   "shown_number": 2,
+   "stored_printed_label": null,
+   "page_id": "69e792c180b52390feb16919",
+   "page_type": "text",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    1,
+    3
+   ],
+   "language": "Tibetan",
+   "group": "other script",
+   "scripts": [
+    "Tibetan"
+   ],
+   "provider": "bl",
+   "tenant": "fd1907e5-5965-4bea-a978-77be3dff08a8",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   }
+  },
+  {
+   "slot": 198,
+   "book_id": "6ac525a5ed10b8de5099381c",
+   "title": "Revidirte und nach denen neuern königlichen Edicten, Mandaten und Rescripten eingerichtete und verme",
+   "frame": 108,
+   "shown_number": 108,
+   "stored_printed_label": null,
+   "page_id": "6ac525a6ed10b8de5099388a",
+   "page_type": null,
+   "ocr_engine": null,
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": false,
+   "has_text": false,
+   "has_english": false,
+   "neighbours": [
+    107,
+    109
+   ],
+   "language": "de",
+   "group": "German",
+   "scripts": [],
+   "provider": "heidelberg",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   }
+  },
+  {
+   "slot": 199,
+   "book_id": "69c1bb538522835be845ee95",
+   "title": "Hasidic Discourses: Anonymous",
+   "frame": 274,
+   "shown_number": 274,
+   "stored_printed_label": null,
+   "page_id": "69c1bb538522835be845efa7",
+   "page_type": "text",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": null,
+   "human_translation": false,
+   "withheld": true,
+   "has_text": true,
+   "has_english": false,
+   "neighbours": [
+    273,
+    275
+   ],
+   "language": "Hebrew",
+   "group": "other script",
+   "scripts": [
+    "Hebrew"
+   ],
+   "provider": "manchester",
+   "tenant": null,
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942",
+     "ai",
+     "batch_api"
+    ]
+   }
+  }
+ ]
+}

@@ -23,7 +23,8 @@
  *            prompt, in a seeded order. Gives the judge's over-flag rate; the controls give its miss rate.
  *   report   result.json + report.md: a rate per defect with Wilson intervals, by language group and by repair coverage.
  *   --land   Branch from origin/main in a temporary worktree, append one row to the series file, add the compact
- *            results, open a PR, comment on #8040. The checkout it runs from is never touched.
+ *            results, open a PR, comment on #8040. The checkout it runs from is never touched. --land-dry: commit
+ *            on a throwaway branch from --land-base (default HEAD), print it, delete it.
  *
  * READ-ONLY on the corpus: this writes files under --out only, plus a branch with --land. It contains nothing: a
  * monthly row's positives are the judge's until someone opens the images (.claude/docs/invariants/containment-on-finding.md).
@@ -74,7 +75,7 @@ export const CAUGHT = {
 export function languageGroup(language) {
   const l = String(language ?? '').trim();
   if (/^latin$/i.test(l)) return 'Latin';
-  if (/^(german|middle high german|early new high german)$/i.test(l)) return 'German';
+  if (/^(german|de|deu|middle high german|early new high german)$/i.test(l)) return 'German'; // `de` is a real stored value
   if (/^english$/i.test(l)) return 'English';
   if (/^(french|italian|spanish|dutch|portuguese)$/i.test(l)) return 'Romance + Dutch';
   const s = scriptsOfLanguage(l);
@@ -275,7 +276,7 @@ async function coverageOf(db, book, ids) {
   ]);
   const names = [...sweeps.map((s) => `${s.sweep} ${s.detail?.issue ?? ''}`), ...events.map((e) => e.type), ...revs.map((r) => r.source), hold].filter(Boolean).join(' | ');
   return {
-    '#5021': /5021|leaf-shift|wrong-leaf/.test(names), '#5803': /5803|text-permutation|text_permutation|reseat|clef/.test(names),
+    '#5021': /5021|leaf-shift/.test(names), '#5803': /5803|text-permutation|text_permutation|reseat|clef/.test(names),
     '#5699': /5699|renumber|page_order|leaf-order/.test(names), '#5056': repeats > 0 || /5056|hide-repeat/.test(names),
     hold, trail: [...new Set(names.split(' | '))].filter(Boolean).slice(0, 12),
   };
@@ -310,7 +311,7 @@ async function draw(db, { seed, n, out }) {
       sample.push({ slot: sample.length, book: b, page: full, prev: prev ?? null, next, coverage: await coverageOf(db, b, [prev?.id, full.id, next?.id].filter(Boolean)) });
       if (sample.length % 25 === 0) console.error(`  drawn ${sample.length}`);
     } else {
-      const ok = (p, min = 200) => String(p?.ocr?.data ?? '').length >= min && String(p?.translation?.data ?? '').length >= min && p.translation_withheld !== true;
+      const ok = (p, min = 200) => String(p?.ocr?.data ?? '').length >= min && String(p?.translation?.data ?? '').length >= min && !p.translation_withheld;
       if (prev && next && next2 && ok(full, 300) && ok(next, 300) && ok(prev, 100) && String(next2?.ocr?.data ?? '').length >= 100) bases.push({ book: b, prev, cur: full, next, next2 });
     }
   }
@@ -334,7 +335,7 @@ async function draw(db, { seed, n, out }) {
   const order = shuffled(items.map((i) => i.item), makeRng(seed ^ 0x2545f491));
   fs.writeFileSync(path.join(out, 'items.json'), JSON.stringify({ seed, order, items }));
   const row = (s) => ({ slot: s.slot, book_id: s.book.id, title: String(s.book.display_title || s.book.title || '').slice(0, 100), frame: s.page.page_number, shown_number: s.page.page_number, stored_printed_label: s.page.printed_page?.label ?? null, page_id: s.page.id, page_type: s.page.page_type ?? null,
-    ocr_engine: s.page.ocr?.model ?? s.page.ocr?.source ?? null, translation_engine: s.page.translation?.model ?? s.page.translation?.source ?? null, human_translation: !!(s.page.translation?.edited_by || ['human', 'manual'].includes(s.page.translation?.source)), withheld: s.page.translation_withheld === true,
+    ocr_engine: s.page.ocr?.model ?? s.page.ocr?.source ?? null, translation_engine: s.page.translation?.model ?? s.page.translation?.source ?? null, human_translation: !!(s.page.translation?.edited_by || ['human', 'manual'].includes(s.page.translation?.source)), withheld: !!s.page.translation_withheld,
     has_text: !!String(s.page.ocr?.data ?? '').trim(), has_english: !!String(s.page.translation?.data ?? '').trim(), neighbours: [s.prev?.page_number ?? null, s.next?.page_number ?? null],
     language: s.book.language ?? null, group: languageGroup(s.book.language), scripts: [...scriptsOfLanguage(s.book.language)], provider: s.book.image_source?.provider ?? null, tenant: s.book.tenantId ?? null, coverage: s.coverage });
   fs.writeFileSync(path.join(out, 'sample.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), seed, frame: frameIds.length, n, rejected, pages: sample.map(row) }, null, 1));
@@ -391,6 +392,7 @@ export function computeReport(pages, verdicts, controls, rejudged) {
     'english: renders a neighbour': rate(enRows.filter((p) => ['prev_text', 'next_text', 'mixed'].includes(v.get(p.slot).english.label)).length, enRows.length),
     'english: invents': rate(enRows.filter((p) => v.get(p.slot).english.label === 'invents').length, enRows.length),
     'number: stored printed number differs from the print': rate(judged.filter((p) => v.get(p.slot).number.label_agrees === 'disagrees').length, judged.filter((p) => ['agrees', 'disagrees'].includes(v.get(p.slot).number.label_agrees)).length),
+    'number: the leaf has a number and none is stored': rate(judged.filter((p) => ['agrees', 'disagrees'].includes(v.get(p.slot).number.label) && !p.stored_printed_label).length, judged.filter((p) => ['agrees', 'disagrees'].includes(v.get(p.slot).number.label)).length),
     'number: frame differs from the print': rate(judged.filter((p) => v.get(p.slot).number.label === 'disagrees').length, judged.filter((p) => ['agrees', 'disagrees'].includes(v.get(p.slot).number.label)).length),
     'order: backward': rate(judged.filter((p) => v.get(p.slot).order.label === 'backward').length, judged.filter((p) => v.get(p.slot).order.label !== 'cannot_tell').length),
     'order: jumbled': rate(judged.filter((p) => v.get(p.slot).order.label === 'jumbled').length, judged.filter((p) => v.get(p.slot).order.label !== 'cannot_tell').length),
@@ -419,6 +421,8 @@ export function computeReport(pages, verdicts, controls, rejudged) {
     ctl[k].planted++;
     if (CAUGHT[k](r.verdict, r.control)) ctl[k].caught++; else ctl[k].missed_items.push(r.item);
   }
+  // The registered bar: a class under 4 of 5 (3 of 4) prints its defect as not settled.
+  const notSettled = Object.entries(ctl).filter(([, c]) => c.planted && c.caught < c.planted - 1).map(([k]) => k);
   const miss = { planted: Object.values(ctl).reduce((a, c) => a + c.planted, 0), caught: Object.values(ctl).reduce((a, c) => a + c.caught, 0) };
   const reMap = new Map(rejudged.filter((r) => r.verdict).map((r) => [r.slot, r.verdict]));
   let flagsAsked = 0, flagsHeld = 0, cleanAsked = 0, cleanStill = 0;
@@ -429,13 +433,13 @@ export function computeReport(pages, verdicts, controls, rejudged) {
     if (a.length) { flagsAsked += a.length; flagsHeld += a.filter((f) => b.includes(f)).length; } else { cleanAsked++; if (!b.length) cleanStill++; }
   }
   return {
-    n_drawn: pages.length, n_judged: judged.length, n_with_text: textRows.length, n_with_english: enRows.length,
+    n_drawn: pages.length, n_judged: judged.length, n_withheld: pages.filter((p) => p.withheld).length, n_stored_label: pages.filter((p) => p.stored_printed_label).length, n_claude_made: pages.filter((p) => /claude|opus|sonnet/i.test(`${p.ocr_engine} ${p.translation_engine}`)).length, n_with_text: textRows.length, n_with_english: enRows.length,
     counts: Object.fromEntries(['text_leaf', 'english', 'number', 'order', 'split'].map((k) => [k, count(judged, k, LABELS[k])])),
     defects,
     by_language: Object.fromEntries(groups.map((g) => [g, cut(judged.filter((p) => p.group === g))])),
     by_repair: Object.fromEntries(['#5021', '#5803', '#5699', '#5056'].flatMap((i) => [[`${i} touched this book`, cut(judged.filter((p) => p.coverage?.[i]))], [`${i} not touched`, cut(judged.filter((p) => !p.coverage?.[i]))]])),
     judge: {
-      controls: ctl, miss_rate: rate(miss.planted - miss.caught, miss.planted),
+      controls: ctl, not_settled: notSettled, miss_rate: rate(miss.planted - miss.caught, miss.planted),
       over_flag: { flags_reasked: flagsAsked, flags_repeated: flagsHeld, not_repeated: rate(flagsAsked - flagsHeld, flagsAsked), clean_reasked: cleanAsked, clean_stayed_clean: cleanStill, new_flags: rate(cleanAsked - cleanStill, cleanAsked) },
     },
     positives: judged.filter(ANY).map((p) => ({ slot: p.slot, book_id: p.book_id, frame: p.frame, group: p.group, provider: p.provider, ocr_engine: p.ocr_engine, translation_engine: p.translation_engine, flags: flagsOf(v.get(p.slot)), repeated_on_rejudge: reMap.has(p.slot) ? flagsOf(reMap.get(p.slot)) : null, evidence: { text: v.get(p.slot).text_leaf.evidence, english: v.get(p.slot).english.evidence, order: v.get(p.slot).order.evidence }, url: `https://sourcelibrary.org/book/${p.book_id}/page-number/${p.frame}`, coverage: p.coverage, verdict_number: v.get(p.slot).number })),
@@ -444,9 +448,9 @@ export function computeReport(pages, verdicts, controls, rejudged) {
 
 const pct = (r) => (r.n ? `${r.k}/${r.n} (${r.pct}%, ${r.lo}–${r.hi})` : '—');
 function renderReport(rep, meta) {
-  const L = [`# Page integrity draw ${meta.date} (#${ISSUE})`, '', `n = ${rep.n_judged} pages judged of ${rep.n_drawn} drawn, one per book, seed ${meta.seed}, frame ${meta.frame} visible books. Opus via claude -p, sealed, images opened (AI reviewers). ${rep.n_with_text} pages carry a transcription and ${rep.n_with_english} carry English.`, '', '| defect | k/n (%, 95% Wilson) |', '|---|---|'];
+  const L = [`# Page integrity draw ${meta.date} (#${ISSUE})`, '', `n = ${rep.n_judged} pages judged of ${rep.n_drawn} drawn, one per book, seed ${meta.seed}, frame ${meta.frame} visible books. Opus via claude -p, sealed, images opened (AI reviewers). ${rep.n_with_text} pages carry a transcription, ${rep.n_with_english} carry English (${rep.n_withheld} more have it withheld), ${rep.n_stored_label} a stored printed number; ${rep.n_claude_made} hold Claude-made text.`, '', '| defect | k/n (%, 95% Wilson) |', '|---|---|'];
   for (const [k, r] of Object.entries(rep.defects)) L.push(`| ${k} | ${pct(r)} |`);
-  L.push('', `Judge: planted controls missed ${pct(rep.judge.miss_rate)}. Flags asked again blind: ${rep.judge.over_flag.flags_repeated} of ${rep.judge.over_flag.flags_reasked} repeated; clean pages asked again: ${rep.judge.over_flag.clean_stayed_clean} of ${rep.judge.over_flag.clean_reasked} stayed clean.`, '', '| control | caught |', '|---|---|');
+  L.push('', `Judge: planted controls missed ${pct(rep.judge.miss_rate)}. Flags asked again blind: ${rep.judge.over_flag.flags_repeated} of ${rep.judge.over_flag.flags_reasked} repeated; clean pages asked again: ${rep.judge.over_flag.clean_stayed_clean} of ${rep.judge.over_flag.clean_reasked} stayed clean. Control classes under the registered bar: ${rep.judge.not_settled.join(', ') || 'none'}.`, '', '| control | caught |', '|---|---|');
   for (const [k, c] of Object.entries(rep.judge.controls)) L.push(`| ${k} | ${c.caught}/${c.planted} |`);
   const cutTable = (title, obj) => {
     L.push('', `### ${title}`, '| | n | text not this leaf | English not this text | stored number wrong | order wrong | split |', '|---|---:|---|---|---|---|---|');
@@ -462,7 +466,7 @@ function renderReport(rep, meta) {
 export function seriesRow(rep, meta) {
   const d = rep.defects, m = rep.judge.miss_rate, o = rep.judge.over_flag;
   const c = (r) => (r.n ? `${r.k}/${r.n} (${r.lo}–${r.hi})` : '—');
-  return `| ${meta.date} | ${rep.n_judged} | ${c(d["text: a neighbour's leaf"])} | ${c(d['text: other book or elsewhere'])} | ${c(d['english: renders a neighbour'])} | ${c(d['english: invents'])} | ${c(d['number: stored printed number differs from the print'])} | ${c(d['order: backward'])} / ${c(d['order: jumbled'])} | ${c(d['split: two leaves in a frame'])} | ${m.n - m.k}/${m.n} | ${o.flags_repeated}/${o.flags_reasked} | ${meta.read_by ?? 'positives not yet read by eye'} |`;
+  return `| ${meta.date} | ${rep.n_judged} | ${c(d["text: a neighbour's leaf"])} | ${c(d['text: other book or elsewhere'])} | ${c(d['english: renders a neighbour'])} | ${c(d['english: invents'])} | ${c(d['number: stored printed number differs from the print'])} | ${c(d['order: backward'])} / ${c(d['order: jumbled'])} | ${c(d['split: two leaves in a frame'])} | ${m.k}/${m.n} | ${o.flags_repeated}/${o.flags_reasked} | ${meta.read_by ?? 'positives not yet read by eye'} |`;
 }
 
 function pageOnce(out, title, msg) {
@@ -474,11 +478,11 @@ function pageOnce(out, title, msg) {
   return ntfyPost(NTFY, { method: 'POST', headers: { Title: title, Tags: 'books' }, body: msg }).catch((e) => console.error(`ntfy failed: ${e.message}`));
 }
 
-function land(out, meta, rep, root) {
+function land(out, meta, rep, root, { base = 'origin/main', dry = false } = {}) {
   const git = (cwd, ...a) => { const r = spawnSync('git', a, { cwd, encoding: 'utf8' }); if (r.status !== 0) throw new Error(`git ${a.join(' ')}: ${r.stderr}`); return r.stdout.trim(); };
   const branch = `eval/page-integrity-${meta.date}`, wt = path.join(out, 'land');
   git(root, 'fetch', '--quiet', 'origin', 'main');
-  git(root, 'worktree', 'add', '-q', '-b', branch, wt, 'origin/main');
+  git(root, 'worktree', 'add', '-q', '-b', branch, wt, base);
   try {
     const dest = path.join(wt, 'scripts/eval/results/page-integrity', meta.date);
     fs.mkdirSync(dest, { recursive: true });
@@ -489,13 +493,18 @@ function land(out, meta, rep, root) {
     lines.splice(at + 1, 0, seriesRow(rep, meta));
     fs.writeFileSync(sf, lines.join('\n'));
     git(wt, 'add', dest, SERIES);
-    git(wt, 'commit', '-q', '-s', '-m', `eval(page-integrity): monthly draw ${meta.date}, ${rep.n_judged} pages, seed ${meta.seed} (#${ISSUE})`);
+    // --no-verify: a results row and JSON; the checkout's pre-commit hooks need a vendored file a bare worktree lacks.
+    git(wt, 'commit', '-q', '-s', '--no-verify', '-m', `eval(page-integrity): monthly draw ${meta.date}, ${rep.n_judged} pages, seed ${meta.seed} (#${ISSUE})`);
+    if (dry) { console.error(git(wt, 'show', '--stat', '--format=%s', 'HEAD')); console.error(git(wt, 'diff', 'HEAD~1', '--', SERIES).split('\n').filter((l) => l.startsWith('+|')).join('\n')); return; }
     git(wt, 'push', '-q', 'origin', branch);
     const pr = spawnSync('gh', ['pr', 'create', '--base', 'main', '--head', branch, '--title', `eval(page-integrity): monthly draw ${meta.date} (#${ISSUE})`, '--body', `Part of #${ISSUE}. One row on the series and the run's files. No corpus write.\n\n${fs.readFileSync(path.join(out, 'report.md'), 'utf8').slice(0, 6000)}`], { cwd: wt, encoding: 'utf8' });
     const comment = `**Page integrity draw ${meta.date}:** ${pr.stdout.trim() || 'PR not opened: ' + pr.stderr.trim()}\n\n${fs.readFileSync(path.join(out, 'report.md'), 'utf8').slice(0, 12000)}\n\nThese positives are the judge's; a session owes the by-eye read before a rate is quoted or a page is contained.`;
     spawnSync('gh', ['issue', 'comment', String(ISSUE), '--body', comment], { cwd: wt });
+    // The verdicts and transcripts stay; the page images are the bulk and can be fetched again from items.json.
+    for (const d of fs.readdirSync(path.join(out, 'calls'))) for (const f of fs.readdirSync(path.join(out, 'calls', d))) if (f.endsWith('.jpg')) fs.rmSync(path.join(out, 'calls', d, f));
   } finally {
     spawnSync('git', ['worktree', 'remove', '--force', wt], { cwd: root });
+    if (dry) spawnSync('git', ['branch', '-D', branch], { cwd: root });
   }
 }
 
@@ -554,8 +563,12 @@ async function main() {
   fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify({ ...meta, ...rep }, null, 1));
   fs.writeFileSync(path.join(out, 'report.md'), renderReport(rep, meta));
   console.error(fs.readFileSync(path.join(out, 'report.md'), 'utf8'));
+  if (has('land-dry')) land(out, meta, rep, root, { base: arg('land-base', 'HEAD'), dry: true });
   if (has('land')) {
-    land(out, meta, rep, root);
+    try { land(out, meta, rep, root); } catch (e) {
+      await pageOnce(out, 'page integrity draw not landed', `${meta.date}: the run finished but did not land: ${e.message}`.slice(0, 500));
+      throw e;
+    }
     const t = rep.defects;
     await pageOnce(out, 'page integrity draw done', `${meta.date}, n=${rep.n_judged}: text off-leaf ${t["text: a neighbour's leaf"].k + t['text: other book or elsewhere'].k}, English off-text ${t['english: renders a neighbour'].k + t['english: invents'].k}. Judge missed ${rep.judge.miss_rate.k}/${rep.judge.miss_rate.n} controls. #${ISSUE}`);
   }
