@@ -56,13 +56,13 @@ export const PARTNERS_HTML = `
               <thead><tr><th>Tier</th><th>Books</th><th>Text pages</th><th>English pages</th><th>Original words</th><th>English words</th><th>Page images</th><th>Illustrations</th></tr></thead>
               <tbody>
                 <tr><td><b>A</b></td><td>11,929</td><td>2,594,799</td><td>2,169,624</td><td>976M</td><td>1.09B</td><td>Licensable</td><td>107,017</td></tr>
-                <tr><td><b>B</b></td><td>8,428</td><td>849,762</td><td>679,357</td><td>263M</td><td>297M</td><td>Excluded</td><td>Excluded</td></tr>
-                <tr><td><b>U</b></td><td>8,343</td><td>1,417,881</td><td>1,045,615</td><td>426M</td><td>451M</td><td>Unstated</td><td>Unstated</td></tr>
+                <tr><td><b>B</b></td><td>8,428</td><td>849,762</td><td>679,357</td><td>263M</td><td>297M</td><td>Library terms</td><td>Library terms</td></tr>
+                <tr><td><b>U</b></td><td>8,343</td><td>1,417,881</td><td>1,045,615</td><td>426M</td><td>451M</td><td>No terms stated</td><td>No terms stated</td></tr>
                 <tr class="ds-total"><td>All</td><td>28,700</td><td>4,862,442</td><td>3,894,596</td><td>1.67B</td><td>1.84B</td><td></td><td>107,017</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library states non-commercial, no-derivatives or its own terms; the text is under legal review. <b>U</b>: the library has not stated its terms. Tiers count books by what the library says about its images, not by our importer's default. Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</p>
+          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library has stated no terms for its scans. Tiers record what the library says about its scans, not the age of the work: about 60,000 of the illustrations in B and U come from books dated before 1900. Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</p>
 
           <h3>Page record</h3>
           <div class="ds-scroll">
@@ -291,7 +291,7 @@ export const PARTNERS_HTML = `
     <h2 class="pword">Rights</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
-      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. For a further 8,343 the library has not stated its terms, and their images are treated as non-commercial until it does. Pages read or translated by Claude are excluded.</p>
+      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. For a further 8,343 the library has stated no terms for its scans. Pages read or translated by Claude are excluded.</p>
       <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Search, retrieval for a user and individual use are free; training at scale is licensed directly. The terms and the rate card are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
     </div>
   </div>
