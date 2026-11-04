@@ -6,6 +6,8 @@
 
 You are probably working with someone who has a question about the past. You can do the whole job from these addresses, with an ordinary web fetch.
 
+**Quickest start.** `https://sourcelibrary.org/search/text?q=YOUR+WORDS` returns books and passages as a readable page, with a link for each. The two addresses below return the same search as JSON.
+
 **1. Find books.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&limit=10`
 
 **2. Find passages.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&pages_only=true&limit=10` returns `book_id`, `slug`, `page_number` and a `snippet`. Try the author's name, the period's own vocabulary and the original language. A modern word often is not in the old books.

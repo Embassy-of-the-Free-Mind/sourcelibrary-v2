@@ -84,7 +84,7 @@ describe('robots.txt content signals', () => {
       expect(group).toMatch(/^Disallow: \/api\/$/m);
       expect(group).toMatch(/^Disallow: \/admin\/$/m);
       expect(group).not.toMatch(/^Allow: \/api\/books\/$/m);
-      expect(group).not.toMatch(/^Allow: .*\/text$/m);
+      expect(group).not.toMatch(/^Allow: \/api\/.*\/text$/m);
     }
     // The default group does not get the same door: unnamed crawlers stay off the API.
     const star = text.split(/\n\n/).find((b) => b.startsWith('User-agent: *\n'))!;

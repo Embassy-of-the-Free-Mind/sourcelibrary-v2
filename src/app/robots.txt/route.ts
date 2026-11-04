@@ -34,6 +34,7 @@ import { pageStatusRobotsDisallow } from '@/lib/page-status';
 import { huntDoorRobotsBlock } from '@/lib/hunt-doors';
 
 const BASE_URL = 'https://sourcelibrary.org';
+const SEARCH_TEXT_PATH = '/search/text';
 
 // Our content signals: discovery and assistant reading are welcome; training
 // is reserved (license available — see /licensing).
@@ -109,6 +110,9 @@ const DEFAULT_DISALLOW = [
   '/reading-history',
   '/highlights',
   '/favorites',
+  // Results pages for assistants (#8161): endless, thin and noindex. Each fetch is
+  // a function call, so no crawler should walk them.
+  SEARCH_TEXT_PATH,
   // Internal and draft pages from src/lib/page-status.ts (admins only).
   // Archived pages stay crawlable so search engines follow their redirect.
   ...pageStatusRobotsDisallow(),
@@ -127,7 +131,7 @@ const USER_FETCHERS = ['Claude-User', 'ChatGPT-User', 'Perplexity-User'];
 // One passage at a time. /api/books/*/text stays out on purpose: it returns a
 // whole book, and that is the bulk path /licensing prices. robots.txt only
 // declares this; the page budget in src/lib/api-budget.ts is what holds it.
-const USER_FETCH_API = ['/api/search', '/api/books/*/quote', '/api/books/*/search'];
+const USER_FETCH_API = ['/api/search', '/api/books/*/quote', '/api/books/*/search', SEARCH_TEXT_PATH];
 
 type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 
@@ -154,8 +158,8 @@ const GROUPS: Group[] = [
     allow: ['/', ...USER_FETCH_API],
     disallow: DEFAULT_DISALLOW,
   })),
-  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
-  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
+  { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH] },
+  { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH] },
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'Claude-Web', allow: AI_ALLOW_LIST, disallow: ['/'] },
   { userAgent: 'ClaudeBot', allow: DOCS_ONLY, disallow: ['/'] },
