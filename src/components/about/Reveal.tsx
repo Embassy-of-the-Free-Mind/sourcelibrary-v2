@@ -4,8 +4,9 @@ import { useEffect, useRef, useState, type CSSProperties, type ElementType, type
 import { useReducedMotion } from './useReducedMotion';
 
 /**
- * Fades and lifts its children in when they come into view and back out when
- * they leave. Nothing is tied to scroll position, so nothing scrubs or jumps.
+ * Fades and lifts its children in the first time they come into view, then
+ * leaves them shown. (Fading back out on leaving made items flicker at the
+ * screen edge: the lift moved them back across the trigger line. 2026-11-04)
  * Reduced motion: always shown.
  */
 export default function Reveal({
@@ -28,9 +29,14 @@ export default function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), {
-      rootMargin: '-6% 0px -10% 0px',
-    });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        setInView(true);
+        io.disconnect();
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);

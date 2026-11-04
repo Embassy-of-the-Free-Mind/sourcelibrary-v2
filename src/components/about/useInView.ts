@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
-/** True while the element is on screen; flips back when it leaves, so scenes replay. */
-export function useInView<T extends Element>(threshold = 0.35) {
+/**
+ * True once the element has come on screen. With replay, flips back when it
+ * leaves so scenes replay; without it, stays true (no flicker at the edge).
+ */
+export function useInView<T extends Element>(threshold = 0.35, replay = false) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold });
+    const io = new IntersectionObserver(([e]) => {
+      if (replay) return setInView(e.isIntersecting);
+      if (e.isIntersecting) { setInView(true); io.disconnect(); }
+    }, { threshold });
     io.observe(el);
     return () => io.disconnect();
-  }, [threshold]);
+  }, [threshold, replay]);
   return [ref, inView] as const;
 }
