@@ -34,6 +34,9 @@ const F = (X, Y) => { const m = Math.max(size(X), size(Y)); return m ? 1 - inter
 const minus = (X, Y) => size(X) - inter(X, Y);   // |X − Y| as multisets
 
 // ---- reads ----
+// Yigdzin's worker records each read's finish reason; 'length' = hit the token limit (a loop or a runaway)
+const YFIN = {};
+try { for (const l of fs.readFileSync(path.join(READS, 'yig', 'pages.jsonl'), 'utf8').split('\n')) if (l) { const r = JSON.parse(l); YFIN[r.id] = (r.leaf || []).some((x) => x.fin === 'length'); } } catch { /* no yig reads */ }
 function readOf(engine, stem, im) {
   const id = `${stem}__${im}`;
   const tryF = (f, j) => { try { const s = fs.readFileSync(f, 'utf8'); return j ? JSON.parse(s) : { text: s }; } catch { return null; } };
@@ -84,6 +87,11 @@ for (const r of todo) {
     if (cls.N) { p.outcome = `N_${cls.N}`; pages.push(p); continue; }
     if (T.N.length === 0) { p.outcome = 'empty_N'; pages.push(p); continue; }
     p.outcome = 'ok';
+    // read failures (NOT preregistered; a robustness pass): a read whose token count is under 0.5x or over 2x the
+    // page's reference (median of the N, N2 and W counts, which show the same glyphs), or that hit the length limit
+    const cnt = ['N', 'N2', 'W'].filter((k) => T[k]).map((k) => T[k].length).sort((a, b) => a - b);
+    const ref = cnt[Math.floor(cnt.length / 2)];
+    p.fail = Object.keys(T).filter((k) => T[k].length < 0.5 * ref || T[k].length > 2 * ref || (eng === 'yig' && YFIN[`${r.stem}__${k}`]));
     p.F_rep = Bg.N__r2 ? F(Bg.N, Bg.N__r2) : null;
     p.F_N2 = Bg.N2 ? F(Bg.N, Bg.N2) : null;
     p.F_S = Bg.S ? F(Bg.N, Bg.S) : null;
@@ -181,7 +189,14 @@ for (const eng of Object.keys(ENGINES)) {
       }),
     };
   }
+  // robustness: the same measures on pages where none of N, N2/N_r2, S, W failed (B judged separately)
+  const clean = ok.filter((p) => !p.fail.some((k) => ['N', 'N2', 'N__r2', 'S', 'W'].includes(k)));
+  const pickC = (g, k, extra = () => true) => clean.filter((p) => (g === '*' || p.group === g) && p[k] != null && extra(p)).map((p) => p[k]);
+  e.read_failures = {}; for (const p of ok) for (const k of p.fail) { const key = `${p.group}:${k}`; e.read_failures[key] = (e.read_failures[key] || 0) + 1; }
+  e.clean = {};
+  for (const g of [...ENGINES[eng], '*']) e.clean[g] = { n: pickC(g, 'nN').length, F_N2: ci(pickC(g, 'F_N2')), F_S: ci(pickC(g, 'F_S')), E: ci(pickC(g, 'E')), blur: ci(pickC(g, 'blur', (p) => !p.fail.includes('B'))), W_C: ci(pickC(g, 'W_C')), W_rev: ci(pickC(g, 'W_rev')) };
   const [inn, outg] = INSIDE[eng] || [];
+  if (inn) e.clean.inside_minus_outside = { E: diff(pickC(inn, 'E'), pickC(outg, 'E')), W_rev: diff(pickC(inn, 'W_rev'), pickC(outg, 'W_rev')) };
   if (inn) {
     e.inside_minus_outside = { inside: inn, outside: outg, E: diff(pick(inn, 'E'), pick(outg, 'E')), W_rev: diff(pick(inn, 'W_rev'), pick(outg, 'W_rev')) };
     // legibility: within tertiles of line-box height (Tibetan), pooled over inside and outside
@@ -198,6 +213,6 @@ for (const eng of Object.keys(ENGINES)) {
   // controls: pooled E over all groups (the instrument check), and inside vs outside for interest
   if (!inn) e.pooled = { E: ci(pick('*', 'E')), blur: ci(pick('*', 'blur')) };
 }
-out.per_page = pages.map(({ engine, group, stem, outcome, cls, units, nN, box_h, F_rep, F_N2, F_S, F_B, E, blur, W_C, W_rev, glyph_flip, align, W_sharp, floor_kind }) =>
-  ({ engine, group, stem, outcome, cls, units, nN, box_h, F_rep: r4(F_rep), F_N2: r4(F_N2), F_S: r4(F_S), F_B: r4(F_B), E: r4(E), blur: r4(blur), W_C: r4(W_C), W_rev: r4(W_rev), glyph_flip: r4(glyph_flip), align, W_sharp, floor_kind }));
+out.per_page = pages.map(({ fail, engine, group, stem, outcome, cls, units, nN, box_h, F_rep, F_N2, F_S, F_B, E, blur, W_C, W_rev, glyph_flip, align, W_sharp, floor_kind }) =>
+  ({ engine, group, stem, outcome, cls, fail, units, nN, box_h, F_rep: r4(F_rep), F_N2: r4(F_N2), F_S: r4(F_S), F_B: r4(F_B), E: r4(E), blur: r4(blur), W_C: r4(W_C), W_rev: r4(W_rev), glyph_flip: r4(glyph_flip), align, W_sharp, floor_kind }));
 console.log(JSON.stringify(out, null, 1));
