@@ -14,6 +14,7 @@
  *   ... --apply
  */
 import { MongoClient } from 'mongodb';
+import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const SWEEP = 'fix-histories-juan-labels-8053';
@@ -41,7 +42,7 @@ for (const f of FIXES) {
   console.log(`${f.before}\n  -> ${f.after}`);
   if (!APPLY) continue;
   await recordSweepAction(db, { sweep: SWEEP, book_id: f.id, action: 'correct-juan-label', detail: { before: f.before, after: f.after, evidence: f.evidence }, script: 'scripts/maintenance/fix-histories-juan-labels-8053.mjs' });
-  written += (await books.updateOne({ id: f.id, title: f.before }, { $set: { title: f.after } })).modifiedCount;
+  written += (await setCatalogueFields(db, f.id, { title: f.after }, { source: 'ocr_running_headers', script: 'scripts/maintenance/fix-histories-juan-labels-8053.mjs', issue: 8053, evidence: f.evidence })).modified;
 }
 console.log({ apply: APPLY, written, of: FIXES.length });
 await client.close();
