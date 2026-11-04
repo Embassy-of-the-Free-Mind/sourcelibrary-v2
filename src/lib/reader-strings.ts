@@ -357,6 +357,8 @@ export interface ReaderStrings {
     machineTranslation: string;
     /** A machine translation a person has since edited (`translation.edited_by` / `edited_at`). */
     machineTranslationEdited: string;
+    /** The drawer's quiet notice (Derek, 2026-11-04): every text carries errors, the scan is the source. The
+     *  machine-made kind is said by machineTranscript / machineTranslation, so this need not repeat it. */
     machineNotice: string;
     /** Corpus editions (#4350): no scan exists, and the text (for ETCSL, the
      *  translation too) is the corpus editors' scholarly work, not AI's. */
@@ -975,7 +977,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       machineTranscript: 'Machine transcription of the scan',
       machineTranslation: 'AI translation of the transcript',
       machineTranslationEdited: 'AI translation of the transcript, corrected by hand',
-      machineNotice: 'Machine transcription and translation carry errors. The scan is the source.',
+      machineNotice: 'All transcription and translation carry errors. The scan is the source.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None. This is a digital text edition; no page images exist.',
@@ -1474,7 +1476,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       machineTranscript: 'Transcripción automática del escaneo',
       machineTranslation: 'Traducción por IA de la transcripción',
       machineTranslationEdited: 'Traducción por IA de la transcripción, corregida a mano',
-      machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente.',
+      machineNotice: 'Toda transcripción y toda traducción contienen errores. El escaneo es la fuente.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
@@ -1998,7 +2000,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       machineTranscript: 'Transcriptio ex imagine machina facta',
       machineTranslation: 'Conversio ex transcriptione ab intellegentia artificiali facta',
       machineTranslationEdited: 'Conversio ex transcriptione ab intellegentia artificiali facta, manu emendata',
-      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est.',
+      machineNotice: 'Omnis transcriptio omnisque conversio menda habent. Imago fons est.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
         : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
@@ -2505,7 +2507,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       machineTranscript: 'Machinale transcriptie van de scan',
       machineTranslation: 'AI-vertaling van de transcriptie',
       machineTranslationEdited: 'AI-vertaling van de transcriptie, met de hand gecorrigeerd',
-      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron.',
+      machineNotice: 'Elke transcriptie en elke vertaling bevat fouten. De scan is de bron.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Geen. Dit is een digitale tekstuitgave. De tekst is bewaard gebleven op ${witnessCount} ${witnessCount === 1 ? 'kleitablet' : 'kleitabletten'}, gecatalogiseerd bij CDLI.`
         : 'Geen. Dit is een digitale tekstuitgave; er bestaan geen pagina-afbeeldingen.',
@@ -3007,7 +3009,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       machineTranscript: '扫描图的机器转录',
       machineTranslation: '根据转录文本的 AI 译文',
       machineTranslationEdited: '根据转录文本的 AI 译文，经人工校正',
-      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据。',
+      machineNotice: '任何转录和翻译都会有错误。扫描图才是依据。',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `无。这是数字文本版。该作品保存在 CDLI 著录的 ${witnessCount} 块泥板上。`
         : '无。这是数字文本版，没有页面图像。',
