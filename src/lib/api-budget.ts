@@ -39,6 +39,8 @@ export interface BudgetCheck {
 // data): 100/200 with heaviest observed legit caller at 65 pages/day.
 const ANON_DAILY_PAGES = Number(process.env.API_ANON_PAGES_PER_DAY || API_LIMITS.anon.pagesPerDay);
 const SESSION_DAILY_PAGES = Number(process.env.API_SESSION_PAGES_PER_DAY || API_LIMITS.session.pagesPerDay);
+// Env override for instant rollback: set it to the anon figure to undo #8161.
+const ASSISTANT_DAILY_PAGES = Number(process.env.API_ASSISTANT_PAGES_PER_DAY || API_LIMITS.assistantFetcher.pagesPerDay);
 
 /**
  * Map a caller identity to its daily /text page limit. Exported for unit tests
@@ -68,6 +70,11 @@ export function pickLimit(identity: ApiIdentity): { limit: number; tier: BudgetC
   }
   if (identity.kind === 'session') {
     return { limit: SESSION_DAILY_PAGES, tier: 'session' };
+  }
+  // Set only after name AND published address both matched (api-auth.ts). Still
+  // counted per IP, so it stays a ceiling, not a pass.
+  if (identity.assistantFetcher) {
+    return { limit: ASSISTANT_DAILY_PAGES, tier: 'anon' };
   }
   // 'anon' includes same-origin browser fetches. The api-auth gate already lets
   // them through the rate limiter; here we still apply the (more generous than
