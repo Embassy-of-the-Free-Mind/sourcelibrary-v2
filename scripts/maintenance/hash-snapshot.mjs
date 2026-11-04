@@ -166,7 +166,7 @@ async function upload(dir) {
       await s3.send(new sdk.PutObjectCommand({ Bucket: SNAPSHOT_BUCKET, Key: key, Body: body, IfNoneMatch: '*' }));
       written++; bytes += body.length;
     } catch (e) {
-      if (e?.$metadata?.httpStatus === 412) { existed++; continue; }
+      if (e?.$metadata?.httpStatusCode === 412) { existed++; continue; }
       throw e;
     }
   }
@@ -175,7 +175,7 @@ async function upload(dir) {
     const body = fs.readFileSync(path.join(dir, 'root.ots'));
     const key = `${SNAPSHOT_PREFIX}/${id}/root.${createHash('sha256').update(body).digest('hex').slice(0, 12)}.ots`;
     try { await s3.send(new sdk.PutObjectCommand({ Bucket: SNAPSHOT_BUCKET, Key: key, Body: body, IfNoneMatch: '*' })); written++; bytes += body.length; }
-    catch (e) { if (e?.$metadata?.httpStatus !== 412) throw e; existed++; }
+    catch (e) { if (e?.$metadata?.httpStatusCode !== 412) throw e; existed++; }
   }
   log(`upload ${id}: ${written} written (${(bytes / 1e6).toFixed(1)} MB), ${existed} already present`);
 }

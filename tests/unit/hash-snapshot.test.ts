@@ -209,3 +209,15 @@ describe('site snapshots (Embassy of the Free Mind public pages)', () => {
     expect(a.root).not.toBe(b.root);
   });
 });
+
+describe('append-only upload', () => {
+  // The AWS SDK v3 reports the status as $metadata.httpStatusCode. Reading `httpStatus` made every
+  // re-upload (each weekly proof upgrade) throw on the first object already in R2 instead of skipping it.
+  it('reads the SDK status field that exists', () => {
+    for (const f of ['scripts/maintenance/hash-snapshot.mjs', 'scripts/maintenance/hash-site.mjs']) {
+      const src = fs.readFileSync(path.join(process.cwd(), f), 'utf8');
+      expect(src, f).not.toMatch(/\$metadata\?\.httpStatus(?!Code)/);
+      expect(src, f).toMatch(/\$metadata\?\.httpStatusCode/);
+    }
+  });
+});
