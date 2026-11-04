@@ -16,6 +16,7 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { verifiedAssistantFetcher } from '@/lib/assistant-fetchers';
 import { trustedClientIp } from '@/lib/client-ip';
 import { hasVerifiedCredential } from '@/lib/preview-credential';
 import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
@@ -1268,7 +1269,14 @@ export async function proxy(request: NextRequest) {
           { status: 429, headers: { 'Retry-After': '60' } },
         );
       }
-    } else if (!hasDatasetKey && looksLikeBot(request)) {
+    } else if (
+      !hasDatasetKey
+      && looksLikeBot(request)
+      // A proven assistant shares its address with everyone using that assistant,
+      // so 10 a minute would throttle strangers against each other (#8161). The
+      // route's own limit and page budget still apply.
+      && !verifiedAssistantFetcher(request.headers.get('user-agent'), getClientIp(request))
+    ) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {

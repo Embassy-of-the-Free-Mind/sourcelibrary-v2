@@ -19,6 +19,7 @@ import { API_LIMITS } from '@/lib/api-limits';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import { logApiUsage } from '@/lib/api-usage';
+import { verifiedAssistantFetcher, type AssistantOperator } from '@/lib/assistant-fetchers';
 import type { ApiKeyDoc } from '@/lib/dataset/types';
 
 export type ApiIdentityKind = 'session' | 'apikey' | 'bot' | 'anon';
@@ -29,6 +30,8 @@ export interface ApiIdentity {
   apiKeyId?: string;
   apiKeyTier?: string;
   bot?: string;
+  /** An assistant reading for a person, proven by name and published address (#8161). */
+  assistantFetcher?: AssistantOperator;
 }
 
 export interface ApiAuthDecision {
@@ -46,6 +49,7 @@ export interface ApiAuthDecision {
 // did 13 hits in 16h. Anyone hitting 1,000/hr is using a key anyway.
 const ANON_LIMIT_PER_HOUR = Number(process.env.API_ANON_LIMIT_PER_HOUR || API_LIMITS.anon.requestsPerHour);
 const SESSION_LIMIT_PER_HOUR = Number(process.env.API_SESSION_LIMIT_PER_HOUR || API_LIMITS.session.requestsPerHour);
+const ASSISTANT_LIMIT_PER_HOUR = Number(process.env.API_ASSISTANT_LIMIT_PER_HOUR || API_LIMITS.assistantFetcher.requestsPerHour);
 
 // User-Agent substrings that get the verified-bot bypass (kind:'bot' → unlimited
 // budget + rate-limit exempt). Once API_AUTH_ENFORCE is on, this is a real
@@ -169,9 +173,26 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
     return { allowed: true, status: 200, identity: { kind: 'anon' } };
   }
 
+  const ip = getClientIp(request);
+
+  // 3b) An assistant reading for a person, proven by name and published address.
+  // Many people share each of these addresses, and none of them can sign in on
+  // the assistant's behalf, so the anonymous bucket is the wrong size (#8161).
+  const assistantFetcher = verifiedAssistantFetcher(ua, ip);
+  if (assistantFetcher) {
+    const rl = checkRateLimit(
+      { name: 'api:assistant', limit: ASSISTANT_LIMIT_PER_HOUR, windowSeconds: 3600 },
+      ip,
+    );
+    const identity: ApiIdentity = { kind: 'anon', assistantFetcher };
+    if (!rl.allowed) {
+      return { allowed: false, status: 429, retryAfter: rl.retryAfter, identity, reason: 'assistant_rate_limit' };
+    }
+    return { allowed: true, status: 200, identity };
+  }
+
   // 4) Anonymous — token bucket per IP. Past the limit, return 401 with a
   // signup CTA in the body so MCP/SDK clients surface the message verbatim.
-  const ip = getClientIp(request);
   const rl = checkRateLimit(
     { name: 'api:anon', limit: ANON_LIMIT_PER_HOUR, windowSeconds: 3600 },
     ip,
@@ -220,6 +241,15 @@ function buildSessionRateLimitBody(retryAfter?: number) {
   };
 }
 
+/** Body returned to an assistant's shared address. Signing in is not something it can do. */
+function buildAssistantRateLimitBody(retryAfter?: number) {
+  return {
+    error: `Source Library is getting a lot of requests from this assistant's address. Wait ${retryAfter ?? '?'}s and try again.`,
+    next_steps: {},
+    retry_after_seconds: retryAfter,
+  };
+}
+
 /** Body returned to a keyed caller who blew their tier's requests/minute. */
 function buildKeyRateLimitBody(retryAfter?: number) {
   return {
@@ -252,7 +282,8 @@ export interface WithApiAuthOptions {
 
 type RateLimitBody = ReturnType<typeof buildAnonRateLimitBody>
   | ReturnType<typeof buildSessionRateLimitBody>
-  | ReturnType<typeof buildKeyRateLimitBody>;
+  | ReturnType<typeof buildKeyRateLimitBody>
+  | ReturnType<typeof buildAssistantRateLimitBody>;
 
 /** JSON-RPC error envelope for MCP-style clients. */
 function buildJsonRpcError(httpStatus: number, body: RateLimitBody) {
@@ -285,6 +316,7 @@ export function withApiAuth<C = unknown>(
       const httpBody =
         decision.status === 401 ? buildAnonRateLimitBody(decision.retryAfter)
         : decision.reason === 'key_rate_limit' ? buildKeyRateLimitBody(decision.retryAfter)
+        : decision.reason === 'assistant_rate_limit' ? buildAssistantRateLimitBody(decision.retryAfter)
         : buildSessionRateLimitBody(decision.retryAfter);
 
       const headers: Record<string, string> = {};
