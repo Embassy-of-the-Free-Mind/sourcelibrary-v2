@@ -1,0 +1,8 @@
+Written 2026-11-04 before any new text was judged. Job zh-print-arms-7263, #7263.
+Pages: the pilot's 60 judged pages (sets one and ten; plan per set, 2 wrong-page controls per set).
+Arms: PFL Paddle>agy-flash-low, PFM Paddle>agy-flash-medium, F Opus fresh read (image only, live auto-detect prompt + claude-ocr callInstruction(1)), O the pilot's served text, S the stored text. One page a call for the new arms.
+Paddle draft: the print lane's read with the coverage guard off (Pu, as #8010's print arms). A page Paddle refuses drafts from S. correct.mjs's prompt byte for byte, CANDIDATE_READS=off. UNCHANGED serves the draft; contain or no answer serves S. F: refusal or no answer serves nothing and counts not accepted.
+Pools: PFL on .agy-milo. PFM can run only on root's pool (james and milo are held to flash-low), which sits under its weekly reserve until 2026-11-05 09:59Z (36 h before its reset). So PFM runs after that, and its texts are judged in a second sitting with O and the controls judged again in it.
+Judge: confirm.mjs judge (judgeAbsolute, Opus, image attached, one text a call, shuffled, arm names hidden, identical texts once). O's pilot verdicts are seeded under the plain id, and --retest=O gives its same-sitting row. A control accepted voids that sitting.
+Primary comparator: O's row in the arm's own sitting. Sensitivity: the pilot's verdicts of O.
+Non-inferior to O: margin 0.08 (rules.json within). STRICT: CI lower bound of d >= -0.08 and wrong-text rate <= O's + 0.04. RULE PASS (point estimate) reported beside it. Overall and per set; in set ten O came from a 10-page call, in set one from a 1-page call.

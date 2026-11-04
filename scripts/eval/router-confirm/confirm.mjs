@@ -421,9 +421,10 @@ async function judge() {
   let { items, controls } = judgeItems(P.selected, readT, DEFAULT_SEED, judgeArmIds(P));
   // --retest=ARM,...: those arms' texts and the controls judged again under a `#retest` id, mixed into the queue (the
   // earlier verdicts stay, zh-reocr-cheap-arms-7263): a same-sitting row for the comparator and a test-retest figure.
+  // --retest-tag=NAME: a later sitting's ids (`#NAME`), so its comparator and controls are judged again in that sitting too.
   const retest = String(arg('retest') || '').split(',').filter(Boolean);
   if (retest.length) {
-    const again = (it) => ({ ...it, id: `${it.id}#retest` });
+    const again = (it) => ({ ...it, id: `${it.id}#${arg('retest-tag') || 'retest'}` });
     items = shuffle([...items, ...items.filter((it) => it.arms.some((x) => retest.includes(x))).map(again)], makeRng(DEFAULT_SEED + 3));
     controls = [...controls, ...controls.map(again)];
   }

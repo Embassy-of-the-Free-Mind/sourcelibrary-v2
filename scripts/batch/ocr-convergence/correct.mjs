@@ -82,7 +82,7 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 
 /** One sealed call with a stream-json transcript, so the files the model opened can be checked. */
-function claudeCall(prompt, cwd, transcript) {
+export function claudeCall(prompt, cwd, transcript) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const fd = fs.openSync(transcript, 'w');

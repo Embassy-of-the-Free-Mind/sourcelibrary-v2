@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<warning>Handwritten brush note in the top margin; rest of the page is woodblock print in black with red commentary. The text on the fold is cut through and its red overprint is obscured at the bottom edge.</warning>
+<page-num>二十六</page-num>
+<header><unclear>加昏三莫斤平</unclear>卷二 珠兒</header>
+
+<margin>爬</margin>
+
+何物妖僧。敢於光天化日之下。謂能生死禍福人。以攫人財。戕人命。而斬人祀乎。宰執而殺之。人皆以為快。吾獨以為惜。惜之何以。<unclear>曰</unclear>。殺之已晚。
+
+三十金僧厲色曰。必百緡缺一文不可。李亦怒。收金遽去。僧忽然而起。曰。勿悔勿悔。無何。珠兒心暴痛。爬刮牀席。色如土灰。李懼。將八十金詣僧乞救。僧笑曰。多金大不易。然山僧何能為。李歸。而兒已死。李慟甚。以狀愬邑宰。宰拘僧。訊鞫。亦辯給。無情詞。笞之。似擊鞔革。令搜其身。得木人二。小棺一。小旗幟五。宰怒。以手疊訣。舉視之。僧乃懼。自投無數。宰不聽。杖殺之。李叩謝而歸。時已曛暮。與妻坐牀上。忽一小兒。<unclear>俇儴</unclear>入室。曰。阿翁。行何疾。極力不能得。追視其體貌。當得七八歲。李驚。方將詰問。則
+
+<vocab>妖僧, 李, 珠兒, 邑宰, 木人, 杖殺</vocab>
