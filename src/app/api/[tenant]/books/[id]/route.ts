@@ -116,7 +116,7 @@ export async function GET(
     const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
     // Repeat captures (#5056) stay out, as in /api/books/[id]: these are the EFM/BPH books
     // the hide was written for (PR #7777 review S4).
-    const pageFilter = { book_id: bookId, tenantId, ...NOT_REPEAT_CAPTURE };
+    const pageFilter = { book_id: bookId, tenantId, page_number: { $gte: 0 }, ...NOT_REPEAT_CAPTURE };
     let cursor = db.collection('pages')
       .find(pageFilter)
       .project(projection)
