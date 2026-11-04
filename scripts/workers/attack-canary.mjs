@@ -23,7 +23,7 @@ import { ntfyPost } from '../lib/ntfy-send.mjs';
  * residential proxy. That passes, by design; the levers against it are the
  * breadth cap (#5995) and the edge detector, not a header rule.
  *
- * Cost: ~27 requests a week, from the Hetzner box. HTML page loads only, so no
+ * Cost: ~42 requests a week, from the Hetzner box. HTML page loads only, so no
  * analytics pageview is written (that needs our JavaScript). Each URL carries
  * ?_canary=attack so the edge logs can be filtered.
  *
@@ -43,6 +43,10 @@ const NO_PUSH = process.argv.includes('--no-push');
 
 // A public book that resolves directly (no redirect) on the canonical host.
 const BOOK_PATH = '/book/the-cabinet-of-minerals-vreeswyk';
+
+// Translated URLs are the same reader pages, and were outside every /book rule
+// until 2026-11-04. tests/unit/edge-locale-paths.test.ts pins this to locale-path.ts.
+const LOCALE_BOOK_PATHS = ['/es/book', '/la/book', '/nl/book', '/zh/book'].map((p) => `${p}/the-cabinet-of-minerals-vreeswyk`);
 
 const UA = {
   // Fleet strings, as observed (#4476, crawl register).
@@ -165,7 +169,7 @@ function classify(res) {
 }
 
 async function probe(host, c) {
-  const url = `https://${host}${BOOK_PATH}?_canary=attack`;
+  const url = `https://${host}${c.path || BOOK_PATH}?_canary=attack`;
   const headers = { ...(c.headers || {}) };
   // fetch() sends its own UA when none is given; '' must reach the edge as empty.
   headers['user-agent'] = c.ua;
@@ -182,6 +186,12 @@ async function probe(host, c) {
 async function main() {
   const rows = [];
   for (const c of CANONICAL_CASES) rows.push(await probe('sourcelibrary.org', c));
+  for (const path of LOCALE_BOOK_PATHS) {
+    const at = path.slice(0, 3);
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: fake Chrome, no client hints`, rule: 'CF cb7dfe4b', ua: UA.linux149, expect: 'block' }));
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: fake Chrome, unquoted platform hint`, rule: 'CF cb7dfe4b', ua: UA.mac155, headers: hints(155, 'Mac OS X'), expect: 'block' }));
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: real Chrome with hints`, rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
+  }
   for (const { host, layer } of OTHER_HOSTS) {
     rows.push(await probe(host, { name: 'fake Chrome, no client hints', rule: layer, ua: UA.linux149, expect: 'block' }));
     rows.push(await probe(host, { name: 'real Chrome with hints', rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
