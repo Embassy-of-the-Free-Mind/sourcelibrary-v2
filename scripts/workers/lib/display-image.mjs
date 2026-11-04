@@ -36,10 +36,9 @@ let _provenanceMark = null;
 
 async function getProvenanceMark() {
   if (_provenanceMark) return _provenanceMark;
-  // Try repo root first, then cwd
+  // From this file, not process.cwd(): src/ imports this module, and a cwd-relative read traces the whole repo.
   const candidates = [
     path.resolve(__dirname, '../../../public/brand/png/icon-only--black-on-transparent--48h.png'),
-    path.join(process.cwd(), 'public/brand/png/icon-only--black-on-transparent--48h.png'),
   ];
   for (const p of candidates) {
     try {

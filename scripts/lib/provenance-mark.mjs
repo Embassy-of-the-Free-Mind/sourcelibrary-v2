@@ -22,8 +22,8 @@
  */
 
 import fs from 'fs';
-import path from 'path';
 import crypto from 'crypto';
+import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
 sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
@@ -44,7 +44,8 @@ const STD_FLOOR = 5;
 const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
 const LOGO_HEIGHT_FRAC = 0.035;  // discreet but visible corner stamp (Derek, 2026-06-21)
-const LOGO_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--512h.png');
+// From this file, not process.cwd(): src/ imports this module, and a cwd-relative read traces the whole repo into each function.
+const LOGO_PATH = fileURLToPath(new URL('../../public/brand/png/icon-only--black-on-transparent--512h.png', import.meta.url));
 // Period-sympathetic palette (not stark black/white): warm dark-grey mark, cream
 // plate. Some pages get a cream-plate stamp, some a bare dark-grey mark.
 const MARK_RGB = { r: 58, g: 54, b: 48 };       // warm dark grey
