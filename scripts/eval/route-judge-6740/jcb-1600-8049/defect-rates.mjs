@@ -19,7 +19,8 @@ for (const dir of process.argv.slice(2)) {
     for (const d of v.defects || []) { if (d.severity === 'misleads') c.misleads++; if (d.severity === 'wrong_text') c.wrong_text++; }
   }
 }
-const out = Object.values(cells).map((c) => ({ cell: c.cell, route: c.route, draws: [...c.dirs], pages: c.pages, words: c.words,
-  misleads_per_1k_words: +(1000 * c.misleads / c.words).toFixed(2), wrong_text_per_1k_words: +(1000 * c.wrong_text / c.words).toFixed(2),
-  mean_fidelity: +(c.fid / c.pages).toFixed(2) }));
-console.log(JSON.stringify({ issue: 8049, measured: new Date().toISOString().slice(0, 10), note: 'written pages judged; one page a book; blind Opus', routes: out }, null, 1));
+// study_cells: the shape experiment-header.mjs defectRatesShapeOk() reads (misleads_per_1k, wrong_text_per_1k, fidelity_mean)
+const study_cells = Object.fromEntries(Object.values(cells).map((c) => [c.cell, { route: c.route, draws: [...c.dirs], pages: c.pages, words: c.words,
+  misleads_per_1k: +(1000 * c.misleads / c.words).toFixed(2), wrong_text_per_1k: +(1000 * c.wrong_text / c.words).toFixed(2),
+  fidelity_mean: +(c.fid / c.pages).toFixed(2) }]));
+console.log(JSON.stringify({ issue: 8049, measured: new Date().toISOString().slice(0, 10), note: 'written pages judged; one page a book; blind Opus', study_cells }, null, 1));

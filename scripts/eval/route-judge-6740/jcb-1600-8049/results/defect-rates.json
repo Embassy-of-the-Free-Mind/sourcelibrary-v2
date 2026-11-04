@@ -2,9 +2,8 @@
  "issue": 8049,
  "measured": "2026-11-04",
  "note": "written pages judged; one page a book; blind Opus",
- "routes": [
-  {
-   "cell": "la",
+ "study_cells": {
+  "la": {
    "route": "pero>agy-flash-low",
    "draws": [
     "cell",
@@ -12,36 +11,33 @@
    ],
    "pages": 30,
    "words": 8400,
-   "misleads_per_1k_words": 0.95,
-   "wrong_text_per_1k_words": 0,
-   "mean_fidelity": 4.37
+   "misleads_per_1k": 0.95,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.37
   },
-  {
-   "cell": "es",
+  "es": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 18,
    "words": 7051,
-   "misleads_per_1k_words": 1.42,
-   "wrong_text_per_1k_words": 0.14,
-   "mean_fidelity": 4.11
+   "misleads_per_1k": 1.42,
+   "wrong_text_per_1k": 0.14,
+   "fidelity_mean": 4.11
   },
-  {
-   "cell": "it",
+  "it": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 27,
    "words": 9880,
-   "misleads_per_1k_words": 0.71,
-   "wrong_text_per_1k_words": 0.4,
-   "mean_fidelity": 4.26
+   "misleads_per_1k": 0.71,
+   "wrong_text_per_1k": 0.4,
+   "fidelity_mean": 4.26
   },
-  {
-   "cell": "fr",
+  "fr": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell",
@@ -49,69 +45,64 @@
    ],
    "pages": 55,
    "words": 16596,
-   "misleads_per_1k_words": 0.3,
-   "wrong_text_per_1k_words": 0.12,
-   "mean_fidelity": 4.51
+   "misleads_per_1k": 0.3,
+   "wrong_text_per_1k": 0.12,
+   "fidelity_mean": 4.51
   },
-  {
-   "cell": "de",
+  "de": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 19,
    "words": 7997,
-   "misleads_per_1k_words": 2.13,
-   "wrong_text_per_1k_words": 0.63,
-   "mean_fidelity": 3.89
+   "misleads_per_1k": 2.13,
+   "wrong_text_per_1k": 0.63,
+   "fidelity_mean": 3.89
   },
-  {
-   "cell": "en",
+  "en": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 25,
    "words": 8467,
-   "misleads_per_1k_words": 0.94,
-   "wrong_text_per_1k_words": 0.59,
-   "mean_fidelity": 4.28
+   "misleads_per_1k": 0.94,
+   "wrong_text_per_1k": 0.59,
+   "fidelity_mean": 4.28
   },
-  {
-   "cell": "nl",
+  "nl": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 22,
    "words": 10678,
-   "misleads_per_1k_words": 1.4,
-   "wrong_text_per_1k_words": 0.75,
-   "mean_fidelity": 3.91
+   "misleads_per_1k": 1.4,
+   "wrong_text_per_1k": 0.75,
+   "fidelity_mean": 3.91
   },
-  {
-   "cell": "pt",
+  "pt": {
    "route": "lighton>agy-flash-low",
    "draws": [
     "cell"
    ],
    "pages": 29,
    "words": 14178,
-   "misleads_per_1k_words": 1.2,
-   "wrong_text_per_1k_words": 0.14,
-   "mean_fidelity": 4.31
+   "misleads_per_1k": 1.2,
+   "wrong_text_per_1k": 0.14,
+   "fidelity_mean": 4.31
   },
-  {
-   "cell": "la4",
+  "la4": {
    "route": "agy-flash-low@4",
    "draws": [
     "cell-la4"
    ],
    "pages": 24,
    "words": 9297,
-   "misleads_per_1k_words": 2.04,
-   "wrong_text_per_1k_words": 0.97,
-   "mean_fidelity": 4.17
+   "misleads_per_1k": 2.04,
+   "wrong_text_per_1k": 0.97,
+   "fidelity_mean": 4.17
   }
- ]
+ }
 }
