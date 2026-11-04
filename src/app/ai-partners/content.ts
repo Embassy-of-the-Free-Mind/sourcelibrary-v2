@@ -15,6 +15,15 @@ export const PARTNERS_HTML = `
   </div>
 </section>
 
+<section class="hook">
+  <div class="wrap">
+    <p class="hook-lead">The last time the world translated its ancient wisdom, it ignited the Renaissance.</p>
+    <p>Now a new kind of mind is learning what humans have thought, and it knows only what was typed. Most of what humans wrote is still unread by AI or people, because it is in languages few speak, like Latin and Sanskrit, and in libraries few can access.</p>
+    <p class="hook-q">What if all of human writing could be available to all people, and machines?</p>
+    <p>Precious, human source material from a philanthropic organization devoted to making it free for humans to read, in all languages. By purchasing this dataset, you are generating enormous value for the future of AI and people.</p>
+  </div>
+</section>
+
 <nav class="pillars" aria-label="What the corpus is">
   <div class="wrap">
     <ol>
