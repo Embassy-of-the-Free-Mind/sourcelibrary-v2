@@ -51,12 +51,13 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine, PrintedPageBox,
 } from './ReaderV2Bits';
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
+import { printedDisplay, type PrintedNumbers } from '@/lib/printed-numbers';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -187,6 +188,8 @@ interface Reader2CProps {
   qualityWarnings?: QualityWarnings;
   /** Printed pages missing between scans of this book (#6675); the whole book's, like qualityWarnings. */
   scanGaps?: ScanGaps;
+  /** Numbers printed on the leaves, by page id, where confirmed on the images (#8041). Absent or empty: as before. */
+  printedNumbers?: PrintedNumbers;
   /** The measured accuracy of the engine we use on this book's script, for the line beside the page-report
    *  control (#6278); the server passes it on `/la` Latin books only. */
   ocrMeasure?: OcrMeasure | null;
@@ -2568,7 +2571,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, ocrMeasure }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, printedNumbers, ocrMeasure }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
@@ -2638,6 +2641,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const [jumpValue, setJumpValue] = useState('');
   const jumpRef = useRef<HTMLInputElement>(null);
   useEffect(() => { if (jumpOpen) jumpRef.current?.focus(); }, [jumpOpen]);
+  const [phoneJumpOpen, setPhoneJumpOpen] = useState(false);
+  const hasPrintedNumbers = !!printedNumbers && Object.keys(printedNumbers).length > 0;
 
   // Scan zoom + lens — controlled from the pane header, never from buttons
   // over the scan itself. The lens is off until asked for.
@@ -3381,6 +3386,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   }, [citation]);
 
   const pageNum = r.currentPage?.page_number ?? '–';
+  const printedHere = r.currentPage ? printedNumbers?.[r.currentPage.id] : undefined;
+  const printedHereShown = printedHere ? printedDisplay(printedHere) : null;
   const scan = resolveScanUrls(r.currentPage);
   // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
   // photograph stands in — clearly captioned as a witness, not the source of
@@ -3773,13 +3780,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           {/* Right end: what you are looking at, then where you are, set apart
               from each other so they read as two controls rather than one. */}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
-          <div className="flex items-stretch ml-2 shrink-0">
+          {/* A partner room's search and settings float over this corner (EmbedUserMenu, fixed top-3 right-3):
+              clear them, or they sit on the next-page button and the page box. */}
+          <div className={`flex items-stretch ml-2 shrink-0${isEmbedded ? ' mr-20' : ''}`}>
             <div className="flex items-stretch">
               <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
                 className={`${BAR_CONTROL} w-8`} style={barControlStyle()}>
                 <ChevronLeft size={15} />
               </button>
-              {jumpOpen ? (
+              {jumpOpen && hasPrintedNumbers ? (
+                <PrintedPageBox
+                  pages={r.pageList}
+                  printed={printedNumbers}
+                  placeholder={String(pageNum)}
+                  className={`${BAR_CONTROL} w-16 text-center tabular-nums -mx-px text-[16px] lg:text-[13px]`}
+                  style={{ ...barControlStyle(true), color: '#fdfcf9' }}
+                  opens="down"
+                  onGo={(id) => r.goToPage(id)}
+                  onClose={() => setJumpOpen(false)}
+                />
+              ) : jumpOpen ? (
                 <input
                   ref={jumpRef}
                   value={jumpValue}
@@ -3810,6 +3830,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ ...barControlStyle(), color: '#fdfcf9' }}
                 >
                   p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
+                  {printedHereShown && <span data-printed-number="" title={printedHereShown.title} className="ml-1" style={{ color: onInk(0.55) }}>· {t.toolbar.printedPage(printedHereShown.text)}</span>}
                 </button>
               )}
               <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
@@ -4544,7 +4565,29 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             >
               <ChevronLeft size={16} /> {t.toolbar.previous}
             </button>
-            {r.currentPage?.page_number != null && (
+            {phoneJumpOpen && hasPrintedNumbers ? (
+              <PrintedPageBox
+                pages={r.pageList}
+                printed={printedNumbers}
+                placeholder={String(pageNum)}
+                className="w-20 h-9 self-center border text-center font-sans text-[16px] tabular-nums"
+                style={{ borderColor: 'var(--text-faint)', background: 'transparent', color: 'var(--text-secondary)' }}
+                opens="up"
+                onGo={(id) => { keepPaneOnTurn.current = true; r.goToPage(id); }}
+                onClose={() => setPhoneJumpOpen(false)}
+              />
+            ) : hasPrintedNumbers && r.currentPage?.page_number != null ? (
+              <button
+                type="button"
+                onClick={() => setPhoneJumpOpen(true)}
+                title={t.toolbar.jumpToPage}
+                className="min-h-[56px] font-sans text-[12.5px] tabular-nums"
+                style={{ color: 'var(--text-faint)' }}
+              >
+                p. {r.currentPage.page_number}
+                {printedHereShown && <span data-printed-number="" title={printedHereShown.title}> · {t.toolbar.printedPage(printedHereShown.text)}</span>}
+              </button>
+            ) : r.currentPage?.page_number != null && (
               <span className="font-sans text-[12.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
                 p. {r.currentPage.page_number}
               </span>
