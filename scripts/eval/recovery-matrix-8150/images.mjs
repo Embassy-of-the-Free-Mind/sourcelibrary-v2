@@ -114,7 +114,7 @@ async function main() {
       { $sample: { size: 1500 } },
       { $match: { display_photo: { $regex: `^${R2_BASE.replace(/\./g, '\\.')}/` } } },
       { $project: { book_id: 1, page_number: 1, display_photo: 1 } },
-    ]);
+    ]).batchSize(1000);
     for await (const p of cur) {
       if (marked.length >= N && unmarked.length >= N) break;
       const key = p.display_photo.slice(R2_BASE.length + 1).split('?')[0];
