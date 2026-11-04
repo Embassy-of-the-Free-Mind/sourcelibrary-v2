@@ -68,7 +68,10 @@ redact() { node "$HERE/lib/pg-env-from-url.mjs" redact; }
 eval "$(node "$HERE/lib/pg-env-from-url.mjs" env "$WORK/pgpass")" || die "could not derive libpq settings from SUPABASE_DB_URL"
 
 # Expected row counts (planner estimates — the rehearsal only fails on gross gaps).
-psql -X -At -c "select coalesce(json_object_agg(schemaname||'.'||relname, n_live_tup), '{}') from pg_stat_user_tables" \
+# Materialized views are left out: pg_stat_user_tables lists them, but pg_dump
+# writes only their definition and a REFRESH, never a COPY, so they have no rows
+# to count in the dump. Counting them failed every rehearsal until 2026-11-05.
+psql -X -At -c "select coalesce(json_object_agg(s.schemaname||'.'||s.relname, s.n_live_tup), '{}') from pg_stat_user_tables s join pg_class c on c.oid = s.relid where c.relkind <> 'm'" \
   > "$WORK/expect.json" 2> >(redact | grep -v -i -E 'collation|^DETAIL|^HINT' >> "$LOG") \
   || die "could not read table statistics"
 n=$(node -e 'console.log(Object.keys(JSON.parse(require("fs").readFileSync(process.argv[1]))).length)' "$WORK/expect.json")
