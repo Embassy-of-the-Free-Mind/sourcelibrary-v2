@@ -1548,6 +1548,315 @@ because its decision line names the live route of a cell that has since changed.
 Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
 against `origin/main` f193ddebc.
 
+## 2026-11-04 · Pre-registration: the judged pages by language and script, brought up to 30 books (#7263)
+
+PRIOR ART: `scripts/eval/confidence-7866/` (the live frame `FRAME`, `eligiblePage`, `imageUrl`, `regrade.mjs`
+`bandOf` / `gradeOf`, the 800 verdicts of #7866 in `lane_judge_verdicts` lane `confidence-7866`) is extended, not
+rebuilt: `expand-draw.mjs`, `expand-judge.mjs`, `expand-analyze.mjs` sit beside it. `scripts/eval/route-judge-6740/judge.mjs`
+(`judgePrompt`, `parseVerdict`, `opusCall`) is the instrument, imported unchanged. `scripts/eval/severity-cal-7263/`
+(#8136): the second reader's prompt and crop, restated because the branch is not merged; its 30 Sanskrit stored reads
+are reused. `scripts/eval/latin-strata-7947/lib.mjs` `kindOf()` names the error kinds. `scripts/eval/lib/judge-rows.mjs`
+`testRow` is the store shape (#8109).
+
+**Who reads this.** Derek, then `/quality`'s by-language table. **The decision it changes:** which language figures can
+be stated, and where "unacceptable" sits. Today those rows rest on 59 Chinese books but 2 to 4 books for French,
+Sanskrit, Russian, Korean and most others: #7866 drew by confidence stratum, not by language.
+
+### Frame
+
+- **Live books** (`visible: true`, `pages_count > 0`), counted by `books.language`. An ISO code stored as the
+  language (`fr`, `it`, `ar`, `de`, `la`, `el`, `grc` …) is counted under the language's name (`LANG_ALIAS`).
+  Languages with at least **100 live books** are drawn: Latin, Chinese, German, English, French, Tibetan, Greek,
+  Hebrew, Italian, Dutch, Sanskrit, Arabic, Sumerian, Spanish, Japanese, Russian, Korean, Persian, Syriac, Egyptian
+  hieroglyphs. Too few to draw (live books): Classical Chinese 89 (kept apart from Chinese, as `books.language` has
+  it), Armenian 69, Latin-German 61, Nahuatl 50, Pali 50, Javanese 43, Yucatec Maya 35, Middle English 29, Malay 26,
+  Ge'ez 22, Ottoman Turkish 20, Portuguese 19, and smaller.
+- **Drawable**: the #7866 frame, live with at least one OCR'd page.
+- **Script of a book**: `book_class.class` printed → print, handwritten → manuscript; mixed → unclassified; no
+  class → print or manuscript when two thirds of its pages' `script_type` say so, else unclassified. Unclassified
+  books (930, 381 of them Sumerian) enter no cell and are counted.
+- **Already judged** (excluded from the draw): #7866's 160 books and severity-cal-7263's 60. A cell's books from
+  #7866 count toward its 30. Sanskrit print counts severity-cal's 30 stored reads.
+- **Chinese print and Sanskrit print are not topped up** (the brief). severity-cal's Sanskrit frame **matches at the
+  book level** (live Sanskrit, not `book_class` handwritten, one page a book, seeded uniform) and **is narrower at the
+  page level**: it skipped pages under 40 words, under 80% Devanagari, or human-edited. Its Chinese frame **does not
+  match**: it drew from the Gemini-read pages still owed a correction (`zh-print-correct-7263`'s frame), not from all
+  live Chinese print. Chinese print therefore stays at #7866's 2 books here and is reported as too few; Chinese
+  manuscript (the `book_class` most Chinese books carry) has 57 books from #7866 and is not drawn.
+
+### Draw
+
+Seed `72631`, a seed per cell from its name. Within each language × script cell, the books not judged before, sorted
+by id, in a seeded shuffle; the first `30 − (books judged before)` that have a body page. **One body page a book**,
+uniform among its pages that are served (`page_number > 0`, not a repeat capture), not a plate, blank or front matter
+by `page_type` or by the OCR's own `<page-type>` tag, not hidden or split, with an image. **The page's text may be
+missing or empty: that page is drawn and judged as served** (an empty candidate against the image). The stored text
+is frozen at draw time.
+
+| Language × script | Frame books | Judged before (#7866 / severity-cal) | New draw |
+|---|---:|---:|---:|
+| Latin · print | 15,138 | 24 / 0 | 6 |
+| Chinese · manuscript | 12,196 | 57 / 0 | 0 |
+| German · print | 6,074 | 14 / 0 | 16 |
+| English · print | 5,032 | 19 / 0 | 11 |
+| French · print | 1,695 | 3 / 0 | 27 |
+| Tibetan · manuscript | 1,319 | 7 / 0 | 23 |
+| Greek · print | 859 | 4 / 0 | 26 |
+| Chinese · print | 801 | 2 / 0 | 0 (no top-up) |
+| Italian · print | 589 | 2 / 0 | 28 |
+| Latin · manuscript | 572 | 3 / 0 | 27 |
+| Dutch · print | 571 | 1 / 0 | 29 |
+| Tibetan · print | 351 | 3 / 0 | 27 |
+| Greek · manuscript | 326 | 2 / 0 | 28 |
+| Sanskrit · print | 324 | 3 / 30 | 0 (no top-up) |
+| Russian · print | 308 | 3 / 0 | 27 |
+| Arabic · manuscript | 183 | 2 / 0 | 28 |
+| Spanish · print | 153 | 0 / 0 | 30 |
+| Hebrew · print | 146 | 0 / 0 | 30 |
+| Korean · print | 135 | 0 / 0 | 30 |
+| Persian · manuscript | 134 | 0 / 0 | 30 |
+| Japanese · print | 130 | 0 / 0 | 30 |
+| German · manuscript | 105 | 0 / 0 | 30 |
+| Korean · manuscript | 104 | 3 / 0 | 27 |
+| Arabic · print | 102 | 0 / 0 | 30 |
+| Hebrew · manuscript | 95 | 0 / 0 | 30 |
+| Sanskrit · manuscript | 88 | 0 / 0 | 30 |
+| French · manuscript | 86 | 0 / 0 | 30 |
+| English · manuscript | 69 | 0 / 0 | 30 |
+| Syriac · print | 69 | 0 / 0 | 30 |
+| Italian · manuscript | 57 | 0 / 0 | 30 |
+| Persian · print | 55 | 0 / 0 | 30 |
+| Egyptian hieroglyphs · manuscript | 31 | 0 / 0 | 30 |
+| Japanese · manuscript | 24 | 0 / 0 | 24 (every book) |
+| Syriac · manuscript | 24 | 0 / 0 | 24 (every book) |
+| Egyptian hieroglyphs · print | 14 | 0 / 0 | 14 (every book) |
+| Spanish · manuscript | 12 | 0 / 0 | 12 (every book) |
+| Dutch · manuscript | 12 | 0 / 0 | 12 (every book) |
+| Sumerian · print | 2 | 0 / 0 | 2 (every book) |
+
+868 pages to draw. The frame fits the limits (1,000 pages, 1,300 Opus calls), so no language is cut. If books have
+no body page, the cell comes up short and says so; nothing is redrawn from another cell.
+
+**The draw as made** (`expand-draw.mjs draw`, before any judging): 864 pages. Egyptian hieroglyphs manuscript came
+up 27 of 30 and Japanese manuscript 23 of 24 (books with no body page). **126 drawn pages serve no text**: 120 never
+OCR'd (Persian manuscript 18, Persian print 16, Spanish print 13, French print 12, the rest 0–6 a cell), 2 marked
+unreadable (not served), 4 empty. As registered above they are judged as served. They are also reported in their own
+column, **no text served**, and the sense-error rate is computed over the pages that serve text (an empty page has no
+units to divide by).
+
+### Judge
+
+- **The route judge** (`route-judge-6740/judge.mjs` `judgePrompt`, task `ocr`, unchanged), Opus 5.5 via `claude -p`,
+  the page image in the workspace, one call a page, **blind**: the call sees the language, the image and the text; never
+  the cell, the route, the engine or the study. The text is the stored text as served at draw time.
+- **Wrong-page controls**: 2 a cell (cells with at least 3 judged texts of 200+ characters): a drawn page's image
+  with another drawn book's text from the same cell. A control passes when the judge rejects it with fidelity ≤ 2.
+  Any control accepted is reported beside the cell's figures.
+- **Second reader**, blind to severity (severity-cal-7263's `SECOND_PROMPT` and crop; "printed" becomes
+  "handwritten" for a manuscript cell): a **seeded random 20% of the serious spans** (misleads or wrong_text) of the new
+  draw, drawn within each language (at least one where a language has any), one call a page with its sampled spans.
+  A span is **upheld** when the reader says the text differs from the page **and** the difference changes the sense.
+  Reported: the upheld share by language with a Wilson interval. It does not re-weight the main figures; it says how far
+  to trust them.
+- **Stops**: the study's Opus ledger at 1,300 calls; the pace guard `claudeBlocked` (weekly 85%, 5-hour 95%); a
+  quota reply. An unparsed reply is retried, at most 3 tries a page; a page never parsed is reported as unjudged.
+
+### Outcomes, by language × script
+
+For each cell: **books** (new draw + judged before), and
+
+1. **Bands** (`regrade.mjs` `bandOf`): fit to quote · fit to read · some errors that may change the meaning (1–2) ·
+   many errors that may change the meaning (3+) · from elsewhere · mostly wrong · not this page. Shares are
+   **book-weighted**: each book counts once; a #7866 book's five pages share its weight.
+2. **Sense errors per 1,000 words** (per 1,000 characters for Han; Tibetan per 1,000 syllables; the unit is
+   `defect-rate.mjs` `words()`'s), **body text only**: misleads + wrong_text spans, over the body units. 95% interval by
+   book bootstrap (4,000 resamples).
+3. **Page furniture apart**: a span is furniture when it is class O11, or when its quote sits inside `<header>`,
+   `<page-num>`, `<sig>` or `<catchword>`. Furniture spans and furniture units are counted in their own columns and
+   never enter the body rate.
+4. **Named error kinds** (`kindOf`) of the serious body spans.
+5. **Sensitivity**: the same figures on the new draw alone, because the #7866 books were drawn by confidence stratum
+   (low-confidence books oversampled), not uniformly.
+
+Not done: **no pooling into the 800-page weighted library figure.** This draw is oversampled by language and enters a
+library-wide figure only with frame weights, which this file does not compute.
+
+### Store, and what reads it
+
+Every judged item and control is written to `lane_judge_verdicts` as `origin: 'test'`, `selection: 'random'`,
+`test.id: 'judged-expand-7263'` (`testRow`, #8109), cell `study:<language>/<script>`, route the served route
+(`confidence-7866/lib.mjs` `routeOf`), **no `router` hint**. Readers: every live reader of the store (book_checks via
+`judge-verdicts-to-book-checks.mjs`, `defect-rate.mjs`, the sampler's export, `regrade.mjs`) reads live rows only
+(`verdictQuery`). `router-table/test-evidence.mjs` (#8132, open) reads test rows and, with no router hint and no
+`test.evidence`, lists them as unmapped: it proposes nothing from them. No page, book, `book_checks`, `rules.json` or
+`current.json` write. Second-reader verdicts stay in the results file.
+
+Invented or wrong-leaf text (`from_elsewhere`, `not_this_page`, or a wrong_text span of class I1, O1, O2, O3, T17) is
+listed for containment on #7263 and not written.
+
+## 2026-11-04 · Results
+
+Judged 2026-11-04, Opus 5.5 (`claude -p`), one sitting. **864 new pages** (one a book) and **68 wrong-page controls**,
+every reply parsed. With the #7866 books (five pages each) and severity-cal-7263's 30 Sanskrit reads, the table covers
+**1,046 books and 1,654 pages in 38 cells**. Opus calls: 1,303 (934 route judge, 369 second reader), list price $104 on
+the subscription, not paid. Weekly meter 10% → 15%.
+
+**Controls.** 68 of 68 wrong-page controls rejected with fidelity ≤ 2 (two a cell, 34 cells). None accepted.
+
+### By language × script
+
+Read from `results/judged-expand-7263.json` (`expand-analyze.mjs`). Book-weighted shares; intervals are 95% by book
+bootstrap. Books (new) = all books in the cell (books drawn here).
+
+| Language · script | Books (new) | Fit to quote | Fit to read | Some errors that may change the meaning (1–2) | Many (3+) | Not on the page¹ | No text served | Sense errors per 1,000² |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Chinese · manuscript | 57 (0) | 52% (44%–59%) | 3% | 25% | 13% | 8% (5%–12%) | 0% | 7.06 (5.23–9.21) chars |
+| Sanskrit · print | 33 (0) | 6% (0%–15%) | 3% | 24% | 66% | 2% (0%–6%) | 0% | 31.89 (23.98–40.22) words |
+| Arabic · manuscript | 30 (28) | 10% (0%–23%) | 3% | 7% | 52% | 21% (7%–37%) | 7% | 24.06 (18.3–31.01) words |
+| Arabic · print | 30 (30) | 20% (7%–37%) | 7% | 17% | 13% | 23% (10%–40%) | 20% | 19.01 (11.56–28.23) words |
+| Dutch · print | 30 (29) | 27% (13%–43%) | 13% | 28% | 25% | 4% (0%–11%) | 3% | 4.29 (2.73–5.61) words |
+| English · print | 30 (11) | 61% (47%–75%) | 11% | 20% | 1% | 1% (0%–2%) | 7% | 0.89 (0.48–1.33) words |
+| English · manuscript | 30 (30) | 17% (3%–30%) | 3% | 20% | 20% | 33% (17%–50%) | 7% | 22.31 (13.8–34.65) words |
+| French · print | 30 (27) | 36% (20%–53%) | 4% | 15% | 5% | 0% (0%–0%) | 40% | 2.7 (0.89–5.06) words |
+| French · manuscript | 30 (30) | 10% (0%–23%) | 10% | 20% | 20% | 37% (20%–53%) | 3% | 17.05 (13.18–20.78) words |
+| German · print | 30 (16) | 34% (20%–49%) | 16% | 27% | 5% | 1% (0%–2%) | 17% | 3.08 (1.68–4.69) words |
+| German · manuscript | 30 (30) | 7% (0%–17%) | 7% | 3% | 27% | 37% (20%–53%) | 20% | 28.92 (18.85–45.44) words |
+| Greek · print | 30 (26) | 24% (11%–39%) | 7% | 16% | 29% | 11% (1%–23%) | 13% | 7.6 (5.09–9.9) words |
+| Greek · manuscript | 30 (28) | 7% (0%–17%) | 0% | 3% | 23% | 61% (44%–77%) | 7% | 29.88 (23.79–36.6) words |
+| Hebrew · print | 30 (30) | 3% (0%–10%) | 0% | 3% | 17% | 73% (57%–90%) | 3% | 15.78 (8.01–30.29) words |
+| Hebrew · manuscript | 30 (30) | 7% (0%–17%) | 0% | 0% | 0% | 90% (80%–100%) | 3% | 27.48 (20.76–37.12) words |
+| Italian · print | 30 (28) | 38% (21%–55%) | 11% | 19% | 13% | 0% (0%–0%) | 20% | 2.4 (1.1–3.66) words |
+| Italian · manuscript | 30 (30) | 7% (0%–17%) | 0% | 17% | 43% | 23% (10%–40%) | 10% | 28.46 (23.13–33.84) words |
+| Japanese · print | 30 (30) | 3% (0%–10%) | 0% | 0% | 27% | 57% (40%–73%) | 13% | 23.68 (18.44–30.67) chars |
+| Korean · print | 30 (30) | 3% (0%–10%) | 0% | 17% | 27% | 47% (30%–63%) | 7% | 20.43 (12.5–32.56) chars |
+| Korean · manuscript | 30 (27) | 7% (0%–17%) | 0% | 8% | 40% | 45% (29%–63%) | 0% | 20.13 (9.69–41.07) chars |
+| Latin · print | 30 (6) | 29% (21%–39%) | 10% | 31% | 16% | 7% (2%–14%) | 7% | 5.43 (3.59–7.83) words |
+| Latin · manuscript | 30 (27) | 4% (0%–11%) | 4% | 15% | 39% | 25% (10%–41%) | 13% | 21.57 (17.64–26.06) words |
+| Persian · manuscript | 30 (30) | 0% (0%–0%) | 0% | 3% | 13% | 23% (10%–40%) | 60% | 38.79 (26.89–59.85) words |
+| Persian · print | 30 (30) | 10% (0%–23%) | 0% | 7% | 23% | 7% (0%–17%) | 53% | 9.26 (3.78–25.66) words |
+| Russian · print | 30 (27) | 66% (49%–83%) | 0% | 11% | 0% | 7% (0%–17%) | 17% | 1.18 (0.31–2.5) words |
+| Sanskrit · manuscript | 30 (30) | 17% (3%–30%) | 0% | 10% | 47% | 27% (13%–43%) | 0% | 28.51 (21.22–38.18) words |
+| Spanish · print | 30 (30) | 33% (17%–50%) | 3% | 17% | 3% | 0% (0%–0%) | 43% | 2.45 (0.41–5.5) words |
+| Syriac · print | 30 (30) | 0% (0%–0%) | 7% | 17% | 23% | 50% (33%–67%) | 3% | 22.16 (16.51–29.38) words |
+| Tibetan · manuscript | 30 (23) | 17% (7%–29%) | 6% | 30% | 33% | 8% (0%–18%) | 7% | 6.61 (4.66–8.94) syll. |
+| Tibetan · print | 30 (27) | 40% (23%–57%) | 11% | 25% | 17% | 3% (0%–10%) | 3% | 3.05 (1.36–4.92) syll. |
+| Egyptian hieroglyphs · manuscript | 27 (27) | 4% (0%–11%) | 4% | 7% | 4% | 78% (59%–93%) | 4% | 20.91 (13.47–35.18) words |
+| Syriac · manuscript | 24 (24) | 4% (0%–13%) | 0% | 0% | 4% | 92% (79%–100%) | 0% | 27.97 (20.89–39.06) words |
+| Japanese · manuscript | 23 (23) | 9% (0%–22%) | 4% | 9% | 35% | 44% (22%–65%) | 0% | 26.43 (19.19–34.87) chars |
+| Egyptian hieroglyphs · print | 14 (14) | 36% (14%–64%) | 0% | 7% | 0% | 50% (21%–79%) | 7% | 2.93 (1.65–8.51) words |
+| Dutch · manuscript | 12 (12) | 17% (0%–42%) | 0% | 25% | 33% | 17% (0%–42%) | 8% | 32.69 (18.62–51.78) words |
+| Spanish · manuscript | 12 (12) | 17% (0%–42%) | 8% | 25% | 25% | 17% (0%–42%) | 8% | 15.7 (6.09–28.83) words |
+| Chinese · print | 2 (0) | 10% (0%–20%) | 10% | 40% | 20% | 20% (0%–40%) | 0% | 20.64 (6.96–22.5) chars |
+| Sumerian · print | 2 (2) | 0% (0%–0%) | 50% | 50% | 0% | 0% (0%–0%) | 0% | 9.01 (0–83.33) words |
+
+¹ **Not on the page**: the bands from elsewhere (a span invented, recited or from another leaf), mostly wrong
+(fidelity 2) and not this page (fidelity 1), together. ² Misleads + wrong_text spans over the body units of the pages
+that serve text; furniture excluded. Units: words (`words()`); Han characters for Chinese; Han + kana characters for
+Japanese; Hangul + Han characters for Korean; syllables for Tibetan. Rates in different units are not comparable
+across rows. Cells under 30 books (the last eight rows; six of them are every book in their frame) carry wide
+intervals; Chinese print (2 books) and Sumerian print (2 books) are too few to state.
+
+### Second reader
+
+3,803 serious spans in the new draw; a seeded 20% (763 spans on 408 pages) was sampled. The study's 1,300-call cap
+stopped it after **369 of 408 pages**: 692 spans read. **630 upheld = 91% (88.7%–92.9%)**. By language (upheld / read,
+Wilson 95%):
+
+| Language | Upheld / read | Share | Different, same sense | Not different | Cannot tell |
+|---|---:|---:|---:|---:|---:|
+| Greek | 51 / 52 | 98% (90–100) | 0 | 1 | 0 |
+| Persian | 44 / 45 | 98% (88–100) | 1 | 0 | 0 |
+| German | 38 / 39 | 97% (87–100) | 0 | 0 | 1 |
+| French | 30 / 31 | 97% (84–99) | 1 | 0 | 0 |
+| Korean | 58 / 60 | 97% (89–99) | 2 | 0 | 0 |
+| Sanskrit | 27 / 28 | 96% (82–99) | 0 | 0 | 1 |
+| Hebrew | 74 / 77 | 96% (89–99) | 2 | 1 | 0 |
+| Dutch | 18 / 19 | 95% (75–99) | 1 | 0 | 0 |
+| English | 21 / 23 | 91% (73–98) | 2 | 0 | 0 |
+| Syriac | 60 / 66 | 91% (82–96) | 4 | 1 | 1 |
+| Italian | 37 / 41 | 90% (78–96) | 2 | 0 | 2 |
+| Japanese | 59 / 66 | 89% (80–95) | 3 | 2 | 2 |
+| Latin | 25 / 28 | 89% (73–96) | 0 | 1 | 2 |
+| Arabic | 41 / 48 | 85% (73–93) | 4 | 2 | 1 |
+| Spanish | 11 / 14 | 79% (52–92) | 3 | 0 | 0 |
+| Egyptian hieroglyphs | 21 / 27 | 78% (59–89) | 0 | 3 | 3 |
+| Tibetan | 11 / 24 | 46% (28–65) | 4 | 1 | 8 |
+| Russian | 3 / 3 | — | 0 | 0 | 0 |
+| Sumerian | 1 / 1 | — | 0 | 0 | 0 |
+
+Tibetan is the exception: the second reader could not tell on 8 of 24 spans and found the sense unchanged on 4. The
+Tibetan rates above rest on calls the second reader upheld at 46%; the rate the second reader would give is lower.
+
+### Page furniture, apart from body text
+
+393 furniture spans (116 serious) over 3,134 furniture units on 795 pages, in the results file per cell
+(`cells[].furniture`). They are not in the body rate. The largest: Chinese manuscript 174 spans (35 serious, 119
+pages), Latin print 22, Syriac print 16, Hebrew print 14, Dutch print 13.
+
+### Named error kinds (serious body spans, all cells)
+
+other misread word 2,627 · numerals / citations 959 · dropped line or phrase 523 · invented text 487 · margin
+mishandled 318 · abbreviation expanded wrongly 70 · long s / f 52 · facing page read into this one 51 · invented margin
+47 · normalised toward the expected 38 · strip of several openings described or invented 36 · wrong leaf 18. Per cell
+in `cells[].kinds`. Invented text is concentrated in manuscripts: Hebrew 52, Syriac 43, Greek 66, Egyptian 30, German
+25, Japanese 23.
+
+### Sensitivity: the new draw alone
+
+Where #7866 books (drawn by confidence stratum, low confidence oversampled) make up much of a cell:
+
+| Cell | All books: fit to quote · rate | New draw only: books · fit to quote · rate |
+|---|---|---|
+| Latin · print | 29% · 5.43 | 6 · 17% (0–50%) · 6.59 (1.11–18.02) |
+| English · print | 61% · 0.89 | 11 · 36% (9–64%) · 0.87 (0–1.68) |
+| German · print | 34% · 3.08 | 16 · 38% (13–63%) · 1.45 (0–4.04) |
+| Tibetan · manuscript | 17% · 6.61 | 23 · 9% (0–22%) · 7.10 (4.78–9.98) |
+
+The new-draw-only figures for the other cells (all books new, or one to three from #7866) are in `cells[].new_draw_only`
+and move by less than their intervals.
+
+### What the frames do and do not cover
+
+- **Chinese print: 2 books.** severity-cal-7263's Chinese frame does not match (it drew from Gemini-read pages owed a
+  correction), and the brief excludes a top-up. Too few to state.
+- **Sanskrit print: 33 books** = 3 from #7866 + severity-cal-7263's 30, whose frame matches at the book level and is
+  narrower at the page level (pages of 40+ words, 80%+ Devanagari, not human-edited). The rate may sit below what an
+  unfiltered draw gives.
+- **Not pooled.** This draw is oversampled by language. It enters the 800-page weighted library figure
+  (`served-grades.json`) only with frame weights, not computed here.
+- Too few live books to draw (under 100): listed under Frame above.
+
+### Amendments to the pre-registration
+
+1. **Japanese unit**: changed from `words()` to Han + kana characters after the first 35 verdicts, which showed
+   `words()` counting an unspaced page as a few words. No verdict changed; only the denominator.
+2. **No text served**: the 126 pages with no served text (120 never OCR'd, 2 unreadable, 4 empty) are their own band,
+   not the judge's band for the empty candidate. The pre-registration said "their own column"; the bands now exclude
+   them, so each row sums to 100% with them.
+3. **Second reader** cut by the 1,300-call cap at 369 of 408 pages.
+4. **Language labels**: ISO codes merged into names (`LANG_ALIAS`), before the draw (as registered).
+
+### Containment
+
+197 drawn pages serve text that is not on the page (mostly wrong with invented spans 107, not this page 60, from
+elsewhere 30; spans O1 363, O3 32, O2 7, I1 5), concentrated in manuscripts and in Hebrew, Syriac, Egyptian, Japanese
+and Korean. Per cell in `containment.by_cell`. **Listed for containment on #7263; nothing written** (no hold, no page
+or book write), as the brief requires.
+
+### Where the evidence lives
+
+Page-level evidence stays out of this public repo (Derek, 2026-11-04 15:57Z). In the repo: this record and the
+aggregate results file (no page ids, no quotes). In Mongo: 932 rows in `lane_judge_verdicts`, `origin: 'test'`,
+`selection: 'random'`, `test.id: 'judged-expand-7263'`, cell `study:<language>/<script>`, no router hint. On the job
+box: the draw, frame, verdicts, second-reader reads and containment list in
+`/mnt/HC_Volume_105839809/jobs/judged-expand-7263/judged-expand-7263/` (archived to R2 by the scratch reaper).
+
+**What reads the Mongo rows.** Every live reader on main (`judge-verdicts-to-book-checks.mjs`, `defect-rate.mjs`, the
+sampler export, `regrade.mjs`, the router table build since #8135) filters to live rows (`verdictQuery`), so the rows
+reach no `book_checks` and no defect rate. `correction-pass-7818/frame.mjs` and `fraktur-paired-7835/frame.mjs` read
+test rows only to exclude judged pages from their own draws. `router-table/test-evidence.mjs` (#8132) was closed and
+is not on main.
+
 ## 2026-11-04 · Opus is not the production translator for the five hardest languages (#6553)
 
 `scripts/lib/translation-routing-table.json` on 2026-11-04: row `greek-cli-gemini38` (adopted 2026-10-25,
