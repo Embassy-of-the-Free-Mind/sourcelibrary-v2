@@ -47,6 +47,7 @@ import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { bboxToJoined, bboxUnion } from '../lib/plate-spread.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
 
 const SWEEP = 'restore-plate-spreads-8042';
 const argv = process.argv.slice(2);
@@ -57,7 +58,7 @@ const REVERT = opt('revert');
 const RUN = REVERT || opt('run') || `plate8042-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
 const OUT = opt('out') || path.join(process.env.JOB_SCRATCH || '/tmp', `restore-plate-spreads-${RUN}`);
 const WRITTEN = ['cropped_photo', 'detected_images', 'repeat_of', 'repeat_of_meta'];
-const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, 'ocr.data': 1, 'translation.data': 1 };
+const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, enhanced_photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, 'ocr.data': 1, 'translation.data': 1 };
 
 fs.mkdirSync(OUT, { recursive: true });
 const log = (file, row) => fs.appendFileSync(path.join(OUT, file), JSON.stringify(row) + '\n');
@@ -74,8 +75,8 @@ const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
 const R2_PUBLIC = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 
 const usable = (u) => typeof u === 'string' && /^https?:\/\//.test(u);
-/** The image a page shows today, before this repair: getPageSource() order. */
-const shownImage = (p) => (usable(p.cropped_photo) && p.cropped_photo) || (p.split_from_spread && usable(p.photo) && p.photo) || (usable(p.archived_photo) && p.archived_photo) || (usable(p.photo) && p.photo) || null;
+/** The image a page shows today, before this repair. */
+const shownImage = (p) => getPageSource(p);
 
 async function fetchBuf(url) {
   for (let t = 1; t <= 3; t++) {

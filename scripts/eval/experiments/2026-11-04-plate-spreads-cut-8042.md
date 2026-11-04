@@ -7,11 +7,11 @@ canons: []
 n_books: 4
 n_pages: 34
 verdict: "Plates that cross a fold were cut into two pages by three paths: the source's own two-leaf photography (IA Piranesi Carceri, 16 plates), split-book.mjs gutter-only (BPH Khunrath, its own read said 'illustration, split-position null'), and the Dec-2025 in-app crop split. A model-free per-frame rule over each frame's stored read and detections flags 74 split-book frames in 35 books; 19 of 20 sampled flags were one image cut in two (8 plates or maps across a fold, 11 single leaves or covers), 1 was a real two-leaf spread and the rule was tightened to exclude it. The old-era crop signal is 6/12 by eye, too weak to act on blind. 72% of flagged books (BPH 21 + Kloss 4 of 35; BPH 29 of 30 old-era) are partner reading-room books."
-status: decided
+status: adopted
 decision: "Guard in split-book.mjs (both lanes) keeps such a frame whole and flags it; repaired Piranesi (16 plates) and the BIUSante Khunrath Emerald Table by eye; BPH/Kloss repairs wait for Derek because they remove pages from a partner reading room (#8042)"
 superseded_by: null
 issue: [8042, 7605]
-router_evidence: "none: image-splitting rule, not a router lane"
+router_evidence: "none — an image-splitting rule, not an OCR/translation router lane"
 ---
 ## 2026-11-04 · How many plates spanning a fold did our splitters cut into two pages, and what keeps them whole? (#8042)
 
