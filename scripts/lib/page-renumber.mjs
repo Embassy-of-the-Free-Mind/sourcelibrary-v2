@@ -103,7 +103,11 @@ export function makeMapper(moves) {
 
 const isSorted = (a) => a.every((v, i) => i === 0 || a[i - 1] <= v);
 
-/** Map an array of page numbers; keep it ascending if it was ascending. */
+/**
+ * Map an array of page numbers; keep it ascending if it was ascending. (Undo is exact for ascending
+ * arrays — what every index writer produces; an unsorted array that happens to sort under f comes back
+ * as the same SET, ascending.)
+ */
 export function mapNumberArray(arr, f) {
   if (!Array.isArray(arr)) return arr;
   const out = arr.map((v) => (typeof v === 'number' ? f(v) : v));
@@ -193,7 +197,11 @@ export function remapBookIndex(doc, f, pageNumberOf, { restore, record, key = ''
   return set;
 }
 
-/** A quote carrying { page, page_id }: the page follows its id when the id is in this book, else f(page). */
+/**
+ * A quote carrying { page, page_id }. pageNumberOf(id) answers only for MOVED pages (their new number):
+ * a quote on a moved page follows its id; anything else goes through f. So nothing outside the
+ * permutation is rewritten — a stale number on an unmoved page is left as found, and undo is exact.
+ */
 export function remapQuote(q, f, pageNumberOf) {
   if (!q || typeof q.page !== 'number') return q;
   const byId = q.page_id ? pageNumberOf(String(q.page_id)) : undefined;

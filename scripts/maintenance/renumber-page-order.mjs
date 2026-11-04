@@ -76,7 +76,7 @@ const OUT_DIR = opt('--out-dir', path.join(process.env.JOB_SCRATCH || '.', 'renu
 class Refused extends Error {}
 
 /** 07:00, 13:00, 19:00 UTC releases: no writes from 20 min before until 40 min after (build ≈ 6 min + waits). */
-export function inReleaseWindow(now = new Date(), leadMin = 10) {
+export function inReleaseWindow(now = new Date(), leadMin = 15) {
   const min = now.getUTCHours() * 60 + now.getUTCMinutes();
   // leadMin: a book must be able to finish before the window opens.
   return [7, 13, 19].some((h) => min >= h * 60 - 20 - leadMin && min < h * 60 + 40);
@@ -86,7 +86,7 @@ function load(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 
 async function main() {
   if (!MAP && !UNDO) { console.error('need --map <file> or --undo <applied-map.json>'); process.exit(2); }
-  if (APPLY && inReleaseWindow()) throw new Refused('inside (or within 10 min of) a release window, 07/13/19 UTC −20/+40 min: entities writes paused');
+  if (APPLY && inReleaseWindow()) throw new Refused('inside (or within 15 min of) a release window, 07/13/19 UTC −20/+40 min: entities writes paused');
   const spec = UNDO ? load(UNDO) : load(MAP);
   const bookId = spec.book_id;
   if (!bookId) throw new Error('map has no book_id');
@@ -107,7 +107,8 @@ async function main() {
     let moves, restore = null, undoOf = null, storesToRun = null;
     if (UNDO) {
       if (!spec.moves?.length) throw new Error('applied map has no moves');
-      const done = spec.stores_done || [];
+      // A store is listed once its write COMMITTED (even if its read-back then failed), so undo covers it.
+      const done = spec.stores_written || spec.stores_done || [];
       moves = invertMoves(spec.moves.map(([page_id, o, n]) => ({ page_id, old: o, new: n })));
       restore = spec.restore || {};
       undoOf = UNDO;
@@ -121,9 +122,12 @@ async function main() {
     const f = makeMapper(moves);
     const curNum = new Map(pageDocs.map((p) => [pageKey(p), p.page_number]));
     const newById = new Map(moves.map((m) => [m.page_id, m.new]));
-    const pageNumberOf = (pid) => (curNum.has(pid) ? (newById.get(pid) ?? curNum.get(pid)) : undefined);
+    // Answers only for MOVED pages (by `id` or `_id`): a reference to an unmoved page goes through f
+    // (the identity there), so nothing outside the permutation is rewritten.
+    const idOfUnderscore = new Map(pageDocs.map((p) => [String(p._id), pageKey(p)]));
+    const pageNumberOf = (pid) => newById.get(pid) ?? newById.get(idOfUnderscore.get(pid));
     // Every move must name a page of this book at its stated old number.
-    const wrong = storesToRun && !storesToRun.has('mongo.pages') ? [] : moves.filter((m) => curNum.get(m.page_id) !== m.old);
+    const wrong = UNDO ? [] : moves.filter((m) => curNum.get(m.page_id) !== m.old);
     if (wrong.length) throw new Refused(`${wrong.length} moves do not match the book's current numbers (e.g. ${JSON.stringify(wrong[0])})`);
     console.log(`moves: ${moves.length} pages change number (${moves[0]?.old}→${moves[0]?.new} … ${moves.at(-1)?.old}→${moves.at(-1)?.new})`);
 
@@ -142,7 +146,7 @@ async function main() {
     const applied = {
       sweep: SWEEP, book_id: bookId, title: book.title, created_at: new Date().toISOString(), undo_of: undoOf,
       source_map: MAP || null, segments: spec.segments || null,
-      moves: moves.map((m) => [m.page_id, m.old, m.new]), restore: {}, stores_done: [], report: [], status: APPLY ? 'in-progress' : 'dry-run',
+      moves: moves.map((m) => [m.page_id, m.old, m.new]), restore: {}, stores_written: [], stores_done: [], report: [], status: APPLY ? 'in-progress' : 'dry-run',
     };
     fs.mkdirSync(OUT_DIR, { recursive: true });
     const outFile = path.join(OUT_DIR, `${bookId}.${UNDO ? 'undo' : 'apply'}.${applied.created_at.replace(/[:.]/g, '')}.json`);
@@ -150,18 +154,23 @@ async function main() {
     const ctx = { restore, record };
 
     // ---- stores
+    // Each Mongo store commits in ONE transaction: all of its rows move or none do, so a failure leaves
+    // the store either untouched or fully written (and then listed in stores_written for undo).
+    const inTxn = async (fn) => { const session = client.startSession(); try { let out; await session.withTransaction(async () => { out = await fn(session); }); return out; } finally { await session.endSession(); } };
     const ids = pageDocs.map(pageKey);
     const stores = [];
 
     stores.push({
       name: 'mongo.pages',
       read: async () => new Map((await db.collection('pages').find({ book_id: bookId }).project({ _id: 1, id: 1, page_number: 1 }).toArray()).map((p) => [pageKey(p), p.page_number])),
-      plan(state) { const p = planPageNumberCopy(state, moves); if (p.stale) throw new Refused(`mongo.pages: ${p.stale} pages are not at their map's old number`); return p; },
+      plan(state) { const p = planPageNumberCopy(state, moves); if (p.stale && !UNDO) throw new Refused(`mongo.pages: ${p.stale} pages are not at their map's old number`); this.prior = state; return p; },
       async write(writes) {
-        const ops = writes.map(([k, n]) => ({ updateOne: { filter: { _id: underscore.get(k), page_number: curNum.get(k) }, update: { $set: { page_number: n } } } }));
-        const r = await db.collection('pages').bulkWrite(ops, { ordered: true });
-        if (r.matchedCount !== ops.length) throw new RenumberMismatch('mongo.pages', [`matched ${r.matchedCount} of ${ops.length}: a page changed under us`]);
-        return r.modifiedCount;
+        const ops = writes.map(([k, n]) => ({ updateOne: { filter: { _id: underscore.get(k), page_number: this.prior.get(k) }, update: { $set: { page_number: n } } } }));
+        return inTxn(async (session) => {
+          const r = await db.collection('pages').bulkWrite(ops, { ordered: true, session });
+          if (r.matchedCount !== ops.length) throw new RenumberMismatch('mongo.pages', [`matched ${r.matchedCount} of ${ops.length}: a page changed under us`]);
+          return r.modifiedCount;
+        });
       },
       verify: verifyKeyed,
     });
@@ -197,17 +206,30 @@ async function main() {
     const galleryId = new Map();
     stores.push({
       name: 'mongo.gallery_images',
-      read: async () => new Map((await db.collection('gallery_images').find({ book_id: bookId, page_id: { $exists: true } }).project({ _id: 1, page_id: 1, page_number: 1 }).toArray()).map((g) => {
-        const k = `${g.page_id}|${g._id}`;
+      read: async () => new Map((await db.collection('gallery_images').find({ book_id: bookId }).project({ _id: 1, page_id: 1, page_number: 1 }).toArray()).map((g) => {
+        const k = String(g._id);
         galleryId.set(k, g._id);
-        return [k, g.page_number];
+        return [k, { page_id: g.page_id == null ? null : String(g.page_id), page_number: g.page_number }];
       })),
-      plan: (state) => planPageNumberCopy(state, moves),
+      plan(state) {
+        // An image follows its page id when the id is a moved page of this book (by `id` or `_id`),
+        // else its number goes through f.
+        const byUnderscore = new Map([...underscore].map(([k, u]) => [String(u), k]));
+        const target = (pid) => (newById.has(pid) ? newById.get(pid) : newById.get(byUnderscore.get(pid)));
+        const expected = new Map(), writes = [];
+        for (const [k, g] of state) {
+          const t = g.page_id != null && target(g.page_id) !== undefined ? target(g.page_id) : f(g.page_number);
+          if (typeof g.page_number === 'number' && t !== g.page_number) { expected.set(k, { ...g, page_number: t }); writes.push([k, t, g.page_number]); }
+        }
+        return { writes, expected, count: writes.length };
+      },
       async write(writes) {
-        const ops = writes.map(([k, n]) => ({ updateOne: { filter: { _id: galleryId.get(k) }, update: { $set: { page_number: n } } } }));
-        const r = await db.collection('gallery_images').bulkWrite(ops, { ordered: true });
-        if (r.matchedCount !== ops.length) throw new RenumberMismatch('mongo.gallery_images', [`matched ${r.matchedCount} of ${ops.length}`]);
-        return r.modifiedCount;
+        const ops = writes.map(([k, n, o]) => ({ updateOne: { filter: { _id: galleryId.get(k), page_number: o }, update: { $set: { page_number: n } } } }));
+        return inTxn(async (session) => {
+          const r = await db.collection('gallery_images').bulkWrite(ops, { ordered: true, session });
+          if (r.matchedCount !== ops.length) throw new RenumberMismatch('mongo.gallery_images', [`matched ${r.matchedCount} of ${ops.length}`]);
+          return r.modifiedCount;
+        });
       },
       verify: verifyKeyed,
     });
@@ -230,19 +252,33 @@ async function main() {
       },
       async write(writes) {
         const oid = new Map([...(await readEntities())].map(([k, v]) => [k, v._id]));
-        let n = 0;
-        for (let i = 0; i < writes.length; i += 200) {
-          const ops = writes.slice(i, i + 200).flatMap(({ k, before, after }) => before.map((b, j) => ({
-            // exact element match on the prior entry, then positional replace: one entry at a time, so a
-            // duplicated entry (legacy $addToSet) is replaced in turn, and a concurrent edit fails the match.
-            updateOne: { filter: { _id: oid.get(k), books: b }, update: { $set: { 'books.$': after[j], updated_at: new Date() } } },
-          })));
-          const r = await db.collection('entities').bulkWrite(ops, { ordered: true });
-          if (r.matchedCount !== ops.length) throw new RenumberMismatch('mongo.entities', [`matched ${r.matchedCount} of ${ops.length}: an entity changed under us`]);
-          n += r.modifiedCount;
-          await beat(db, SWEEP, { book_id: bookId, entities_done: i + ops.length });
-        }
-        return n;
+        await beat(db, SWEEP, { book_id: bookId, entities: writes.length });
+        const now = new Date();
+        return inTxn(async (session) => {
+          const ops = [];
+          for (const { k, before, after } of writes) {
+            if (before.length === 1) {
+              // One entry for this book: exact element match on the prior entry, positional replace. A
+              // concurrent edit of that entry fails the match.
+              ops.push({ updateOne: { filter: { _id: oid.get(k), books: before[0] }, update: { $set: { 'books.$': after[0], updated_at: now } } } });
+            } else {
+              // Several entries for this book (legacy $addToSet duplicates): positional $ could bind to an
+              // entry an earlier op just rewrote, so replace the whole array, guarded by the whole prior array.
+              const doc = await db.collection('entities').findOne({ _id: oid.get(k) }, { projection: { books: 1 }, session });
+              let j = 0;
+              const full = doc.books.map((e) => (e?.book_id === bookId ? after[j++] : e));
+              if (j !== after.length) throw new RenumberMismatch('mongo.entities', [`${k}: entry count changed under us`]);
+              ops.push({ updateOne: { filter: { _id: oid.get(k), books: doc.books }, update: { $set: { books: full, updated_at: now } } } });
+            }
+          }
+          let n = 0;
+          for (let i = 0; i < ops.length; i += 500) {
+            const r = await db.collection('entities').bulkWrite(ops.slice(i, i + 500), { ordered: true, session });
+            if (r.matchedCount !== Math.min(500, ops.length - i)) throw new RenumberMismatch('mongo.entities', [`matched ${r.matchedCount}: an entity changed under us`]);
+            n += r.modifiedCount;
+          }
+          return n;
+        });
       },
       verify: verifyKeyed,
     });
@@ -259,13 +295,15 @@ async function main() {
         return { writes, expected, count: writes.length };
       },
       async write(writes) {
-        let n = 0;
-        for (const w of writes) {
-          const r = await db.collection('book_indexes').updateOne({ _id: w._id, generatedAt: w.generatedAt }, { $set: w.set });
-          if (r.matchedCount !== 1) throw new RenumberMismatch('mongo.book_indexes', [`${w._id} changed under us`]);
-          n += r.modifiedCount;
-        }
-        return n;
+        return inTxn(async (session) => {
+          let n = 0;
+          for (const w of writes) {
+            const r = await db.collection('book_indexes').updateOne({ _id: w._id, generatedAt: w.generatedAt }, { $set: w.set }, { session });
+            if (r.matchedCount !== 1) throw new RenumberMismatch('mongo.book_indexes', [`${w._id} changed under us`]);
+            n += r.modifiedCount;
+          }
+          return n;
+        });
       },
       verify: verifyKeyed,
     });
@@ -293,7 +331,10 @@ async function main() {
 
     const run = storesToRun ? stores.filter((s) => storesToRun.has(s.name)) : stores;
     // Persist the record before each store writes (the restore entries are made while planning).
-    for (const s of run) { const w = s.write.bind(s); s.write = async (x) => { save(); return w(x); }; }
+    for (const s of run) {
+      const w = s.write.bind(s);
+      s.write = async (x) => { save(); const n = await w(x); applied.stores_written.push(s.name); save(); return n; };
+    }
 
     if (APPLY) { save(); await beat(db, SWEEP, { book_id: bookId }, { force: true }); }
     const report = await runStores(run, {
