@@ -6,7 +6,7 @@ scripts: []
 canons: []
 n_books: null
 n_pages: null
-verdict: "Seven analyses of evidence already on file, no model calls. A same-page test needs 0.70 of the pages per arm a different-pages test needs for a correction against its own draft (median phi 0.33, 57 pairs), 0.88 for a read against a correction (phi 0.13, 38 pairs). Repeats on file: 4 read repeats (236 pages) and 6 judge repeats (195 pages). The stop rule Derek took (start 20, batches of 10, win at P >= 0.99 within 8 points, stop as worse at P >= 0.90, cap 100, paired) gives a false pass of at most 3.2% at a gap of 9 points, against a 5% bar, and a tie passes 24-79% of the time at a mean of 67-86 pages. On split halves of books, gaps of 10 points or more reproduce (median 0.97); gaps of 5-10 points reproduce at a median of 0.61. Of the 3,425 judged pages behind the best agy route of each cell, 1,589 were drawn at random; 46 of 110 cells (1.07M pages waiting) have no agy evidence."
+verdict: "Seven analyses of evidence already on file, no model calls. A same-page test needs 0.70 of the pages per arm a different-pages test needs for a correction against its own draft (median phi 0.33, 57 pairs), 0.88 for a read against a correction (phi 0.13, 38 pairs). Repeats on file: 4 read repeats (236 pages) and 6 judge repeats (195 pages). The stop rule Derek took (start 20, batches of 10, win at P >= 0.99 within 8 points, stop as worse at P >= 0.90, cap 100, paired) gives a false pass of at most 3.2% at a gap of 9 points, against a 5% bar, and a tie passes 24-79% of the time at a mean of 67-86 pages. On split halves of books, gaps of 10 points or more reproduce (median 0.97); gaps of 5-10 points reproduce at a median of 0.61. Of the 3,425 judged pages behind the best agy route of each cell, 1,589 were drawn at random; 46 of 110 cells (1.07M pages waiting) have no agy evidence. On the rubric ladder, 46/60 human-typed print pages say what the page says (49/60 counting only flags both adjudicators confirm) against 40/60 of our reads of the same pages."
 status: informational
 decision: "Nothing wired. The stop rule passes its simulation bar as taken; the first panel's size and arms follow from sections 1, 3, 4 and 6 (below, and the #7263 comment)."
 feeds: route
@@ -211,6 +211,45 @@ For every paired test with 20 books or more (161 route pairs), the books were sp
 A gap of exactly 0 splits evenly by construction and is left out. By kind of book: 54 pairs span more than one cell; 11 of them can be split by a recorded kind. #7568 by language (its book clustering is not in this interval); correction-pass #7818, German against French (agy correction against the Flash-Lite draft); Chinese print against Siku (paddle>agy-flash-medium; gemini>opus against paddle); the ditto pilot, Opus correction at 1 against 10 a call. These are too few, with too few books each, to say whether the gap differs by kind of book.
 
 **What the data cannot answer.** Whether a winner holds on books outside the frame it was drawn from (no test draws a second frame); whether a gap under 10 points holds at all at 30 books (median 0.61 says it often does not); and whether the gap differs by century, face (Fraktur / Antiqua) or scan source, none of which is recorded per page in most score files.
+
+### 8. Human-typed pages on the rubric ladder (inbox note, Derek 2026-11-04)
+
+Derek asked for comparison to human work. The human arm already on file is the #7866-bar study (`2026-11-01-judge-calibration-7866-bar-7263.md`): 60 print pages (German, Latin, English, 20 each) with a same-edition typed edition (DTA, EEBO-TCP, CAMENA), each judged blind with #7866's prompt as the typed text and as our stored read. `gradeOf()` from `scripts/eval/confidence-7866/regrade.mjs` runs on the stored verdict fields unchanged (fidelity and the severity of each defect are all it reads), so the ladder applies without a model call (`scripts/eval/route-free-7263/human_grades.mjs`). No grade was changed.
+
+"False flags removed": each misleads / wrong-text flag on a human page was adjudicated by Opus and by agy Gemini against a crop of the line. "Either says right" drops a flag when one adjudicator says the typed text is right; "confirmed only" keeps a flag only when both say the page prints something else. Our reads' flags in this study were not adjudicated, so they appear raw only.
+
+| grade | human raw | human, either says right dropped | human, confirmed only | our read, raw |
+|---|---|---|---|---|
+| fit to quote | 32 | 32 | 35 | 32 |
+| fit to read | 14 | 14 | 14 | 8 |
+| search only (a reading that changes the sense) | 9 | 9 | 7 | 14 |
+| wrong span | 4 | 4 | 3 | 5 |
+| from elsewhere | 0 | 0 | 0 | 0 |
+| mostly wrong (fidelity 2) | 1 | 1 | 1 | 0 |
+| not this page (fidelity 1) | 0 | 0 | 0 | 1 |
+| **says what the page says** | **46/60** | 46/60 | **49/60** | **40/60** |
+
+By language, raw (human / ours, says what the page says): German 18 / 16, Latin 12 / 10, English 16 / 14 of 20. Latin is where the two differ most in kind: the human Latin pages carry 3 wrong spans and ours none, ours 10 search-only and the human 5.
+
+The #7941 three-way study (`2026-11-02-three-way-ocr-archive-ours-human-7941.md`) judged the Internet Archive's OCR, ours and the human edition on the same pages, and adjudicated every arm's flags (Opus and Sonnet) on 45 pages before the cap. On those adjudicated pages, raw → confirmed only: ours 26 → 27 of 45 say what the page says; the Archive 1 → 3 of 45; the human edition 13 → 13 of the 19 of those pages that have one. Of 716 adjudicator verdicts across arms, 2 said the flagged text was right, 23 could not tell.
+
+**What this cannot answer.** The 60 pages are those with a same-edition typed reference, not a random draw of the corpus (#7941's random stratum has no human arm). The adjudicators were shown the checker's claim, which can pull them toward agreeing, so "confirmed only" removes at most what an unanchored check would. Typed editions follow their own transcription conventions, and the ladder grades a deliberate normalisation and a typing error alike when the judge flags it. With 20 pages a language, the per-language rows above carry intervals of about ±20 points. No human comparison exists for manuscripts, for Greek, Hebrew or Chinese OCR, or for any agy route by name.
+
+**Human comparison held for translation:**
+
+| reference | record | language | pages / books | texts covered | draw |
+|---|---|---|---|---|---|
+| 84000 (Tibetan) | `2026-10-03-tengyur-84000-reference-ab-5497.md` | Tibetan (Tengyur) | 113 sides judged of 864 kept | Tengyur texts 84000 published (Toh 3808 is 582 of the 864) | stratified sample of covered sides |
+| 84000 (Tibetan) | `2026-09-25-which-engine-should-retranslate-the-re-ocr-d-kanjur-4742.md` | Tibetan (Kangyur) | 21 / 21 | Kangyur texts with an 84000 translation | chosen by coverage |
+| Getty Digital Florentine Codex | `2026-10-18-florentine-vs-published-6865.md` | Nahuatl | 60 leaves drawn (38 in the English table) / 3 volumes | Books 1–12 of the Florentine Codex | seeded, 5 a Book, one from each fifth |
+| xlref T1 (EEBO-TCP, Gutenberg, Wikisource, archive.org PD translations) | `2026-10-03-xlref-t1-latin-vs-reference-5695.md` | Latin | 71 / 71 | books with a public-domain English translation | seeded draw among covered books |
+| xlref T2 | `2026-10-03-greek-served-english-vs-published-translations-5695-t2.md` | Greek | 75 / 75 | from 85 candidate books chosen from the Greek census | candidates chosen, pages seeded |
+| xlref T3 | `2026-10-03-translation-vs-reference-vernaculars-t3-5695.md` | German, French, Italian, Dutch, Spanish | 59 / 59 | books with a published translation | seeded |
+| xlref T4 | `2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md` | Hebrew, Aramaic, Arabic, Persian | 52 / 52 | first page a published translation covers | seeded order within chosen books |
+| xlref (5606) | `2026-10-02-translation-flash-vs-lite-sanskrit-pali-chinese-5606.md` | Sanskrit, Pali, Chinese | 57 books | books with a published translation | seeded within books |
+| published translations (6690) | `2026-10-13-opus-translation-10-pages-per-call-6690.md` | Persian, Sanskrit, Chinese, Greek, Hebrew | 50 / 5 | 10 consecutive pages a book | hand-picked |
+
+None is a random draw of the pages waiting for translation: every set is limited to texts a published translation covers, which leans to the canonical and the edited. The xlref tiers score fidelity 1–5 against the reference, 84000 and Getty score meaning errors; neither scale is the route judge's accept, and none has been run on an agy translation route at 4 a call.
 
 ### What the first panel needs to test
 
