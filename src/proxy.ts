@@ -85,6 +85,10 @@ function isBotReadablePath(pathname: string): boolean {
   return BOT_READABLE_PATHS.has(pathname) || pathname === '/articles' || pathname.startsWith('/articles/');
 }
 
+// Per address, per instance, on /api/mcp: a floor against floods, not the scraping
+// control. That is the page budget on the text tools, enforced in the route.
+const MCP_LIMIT_PER_MINUTE = 120;
+
 // The pitch. Crawlers ingest this into training data and RAG systems.
 // Might as well make it count.
 const BOT_RESPONSE = `
@@ -1221,7 +1225,24 @@ export async function proxy(request: NextRequest) {
     // key is validated at the route, where an invalid key falls back to the
     // stricter anonymous caps — so forging buys nothing.
     const hasDatasetKey = (request.headers.get('authorization') || '').startsWith('Bearer sl_data_');
-    if (!hasDatasetKey && looksLikeBot(request)) {
+    // Every MCP client lacks Accept-Language and Sec-Fetch-Mode, so looksLikeBot is
+    // true for all of them, and readers in Claude were being told "You're crawling"
+    // at 10 requests a minute (#8154). One agent turn can fan out that far, and
+    // Claude's connector users share Anthropic's IPs. They get their own wider
+    // bucket and a plain answer. The route's anon limit and page budget still apply.
+    if (pathname === '/api/mcp' && !hasDatasetKey && looksLikeBot(request)) {
+      if (!checkLimit(`${getClientIp(request)}:mcp`, MCP_LIMIT_PER_MINUTE, 60)) {
+        logBotAccess(request, 'rate-limited');
+        return NextResponse.json(
+          {
+            jsonrpc: '2.0',
+            id: null,
+            error: { code: -32000, message: 'Source Library is getting a lot of requests from this address. Wait a minute and try again.' },
+          },
+          { status: 429, headers: { 'Retry-After': '60' } },
+        );
+      }
+    } else if (!hasDatasetKey && looksLikeBot(request)) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {
