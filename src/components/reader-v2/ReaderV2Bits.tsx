@@ -15,7 +15,9 @@ import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
+import { printedDisplay, printedInputMode, resolvePageBox, type PageBoxMatch, type PrintedNumbers } from '@/lib/printed-numbers';
 import { issueUrl } from '@/lib/check-methods';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
 import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -186,9 +188,10 @@ export function MachineDraftLine({ page, book }: { page: Pick<Page, 'translation
 }
 
 /**
- * One line under MachineDraftLine when a stored check says something a reader of this page should know (#6199):
- * what was found, by whom, when, and a link that lands on the record itself. A finding on this page wins; otherwise
- * the book's line. Nothing here withholds text: the warning sits above the page it describes.
+ * One line under MachineDraftLine when a stored check found something on THIS page (#6199): what was found, by whom,
+ * when, and a link that lands on the record itself. Nothing here withholds text: the warning sits above the page it
+ * describes. The book-wide verdict is not repeated above every page of the book ("too much", Derek, 2026-11-04); its
+ * one line is on the book page, and the record on /book/<id>/checks.
  */
 export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
   warnings: QualityWarnings | undefined;
@@ -197,33 +200,29 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
 }) {
   const locale = useLocale();
   const t = getReaderStrings(locale).info;
+  // The checks record has no embed route: inside a partner frame the warning is shown without that link.
+  const isEmbedded = useIsEmbedded();
   if (!warnings) return null;
   const page = pageNumber != null ? warnings.pages[pageNumber] : undefined;
-  const book = warnings.book;
-  if (!page && !book) return null;
+  if (!page) return null;
   const checks = `/book/${bookPath}/checks`;
   let text: string, href: string, link: string;
-  if (page?.level === 'review') {
+  if (page.level === 'review') {
     const clauses = page.kinds.map((k) => t.qualityKinds[k]);
     text = t.qualityPageReview({
       ai: page.reader !== 'human', image: page.imageOpened, date: qualityDate(page.date, locale),
       findings: t.qualityFindings(clauses.slice(0, 2), clauses.length > 2),
     });
     href = `${checks}#${page.anchor}`; link = t.qualitySeeReview;
-  } else if (page) {
+  } else {
     text = t.qualityPageDetector(qualityDate(page.date, locale));
     href = page.issue ? issueUrl(page.issue) : `${checks}#${page.anchor}`; link = t.qualityDetectorLink;
-  } else {
-    text = t.qualityBook({ ai: book!.reader !== 'human', image: book!.imageOpened, read: book!.pagesRead, serious: book!.pagesSerious, date: qualityDate(book!.date, locale) });
-    if (book!.commonKinds.length) text += ' ' + t.qualityBookKinds(book!.commonKinds.map((k) => t.qualityKinds[k]));
-    text += ' ' + t.qualitySeriousMeans;
-    href = `${checks}#${book!.anchor}`; link = t.qualitySeeReview;
   }
   const external = href.startsWith('http');
   return (
-    <p role="note" data-quality-warning={page ? page.level : 'book'} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
-      {text}{' '}
-      <a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a>
+    <p role="note" data-quality-warning={page.level} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
+      {text}
+      {(external || !isEmbedded) && <>{' '}<a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a></>}
     </p>
   );
 }
@@ -241,6 +240,82 @@ export function MissingPagesLine({ gaps, pageNumber }: { gaps: ScanGaps | undefi
     <p role="note" data-missing-pages="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
       {here.map((g) => t.missingPages(g.first, g.last)).join(' ')}
     </p>
+  );
+}
+
+/**
+ * The page box on a book with confirmed printed numbers (#8041): takes a frame or a printed number, and where the text
+ * could mean more than one page it lists them and lets the reader say which. A book with no rows never mounts this.
+ */
+export function PrintedPageBox({ pages, printed, placeholder, className, style, opens, onGo, onClose }: {
+  pages: { id: string; page_number: number }[];
+  printed: PrintedNumbers;
+  placeholder: string;
+  className: string;
+  style: React.CSSProperties;
+  /** Which way the choices open: below the desktop toolbar, above the phone's foot-of-page pager. */
+  opens: 'down' | 'up';
+  onGo: (pageId: string) => void;
+  onClose: () => void;
+}) {
+  const t = getReaderStrings(useLocale()).toolbar;
+  const [value, setValue] = useState('');
+  const [choices, setChoices] = useState<PageBoxMatch[] | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => { inputRef.current?.focus(); }, []);
+  const go = (pageId: string) => { onGo(pageId); onClose(); };
+  const choiceLabel = (m: PageBoxMatch) => {
+    const scan = t.scanPage(m.pageNumber);
+    const label = m.printed ? t.printedPage(printedDisplay(m.printed).text) : null;
+    if (!label) return scan;
+    return m.via === 'printed' ? `${label} · ${scan}` : `${scan} · ${label}`;
+  };
+  return (
+    <div
+      className="relative flex items-stretch"
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) onClose(); }}
+      onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}
+    >
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={(e) => { setValue(e.target.value); setChoices(null); }}
+        onKeyDown={(e) => {
+          if (e.key !== 'Enter') return;
+          const matches = resolvePageBox(value, pages, printed);
+          if (matches.length === 1) go(matches[0].pageId);
+          else if (matches.length > 1) setChoices(matches);
+          else onClose();
+        }}
+        placeholder={placeholder}
+        className={className}
+        style={style}
+        inputMode={printedInputMode(printed)}
+        aria-label={t.jumpToPage}
+      />
+      {choices && (
+        <div
+          role="group"
+          aria-label={t.whichPage}
+          // Keeps focus in the input on a press, so its blur cannot close the list before the click lands.
+          onMouseDown={(e) => e.preventDefault()}
+          className={`absolute z-[70] right-0 flex flex-col border font-sans text-[13px] tabular-nums ${opens === 'down' ? 'top-full mt-1' : 'bottom-full mb-1'}`}
+          style={{ background: 'var(--bg-dark)', borderColor: onInk(0.32), color: '#fdfcf9' }}
+        >
+          <p className="px-3 pt-2 pb-1 text-[11.5px] whitespace-nowrap" style={{ color: onInk(0.62) }}>{t.whichPage}</p>
+          {choices.map((m) => (
+            <button
+              key={m.pageId}
+              type="button"
+              onClick={() => go(m.pageId)}
+              className="min-h-[44px] lg:min-h-[32px] px-3 text-left whitespace-nowrap hover:bg-[rgba(253,252,249,0.13)] focus-visible:outline-none focus-visible:bg-[rgba(253,252,249,0.13)]"
+            >
+              {choiceLabel(m)}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -732,7 +807,14 @@ export function ScanViewer({
    * Wheel, depending on what is on:
    * lens up        → dial the lens's magnification (what a loupe's focus does)
    * ctrl/⌘         → zoom the scan, which is what a trackpad pinch sends
-   * vertical wheel → zoom the scan at the cursor (when wheelZooms)
+   * zoomed         → nothing: the wheel or two-finger scroll PANS the enlarged
+   *                  page natively, the way it does in any document viewer.
+   *                  Zooming here left no way down a page short of dragging it
+   *                  (EFM, 2026-10-29: "you should be able to pan").
+   * vertical wheel → zoom the scan at the cursor, on a fitted page (when
+   *                  wheelZooms, and never inside a partner's iframe: there the
+   *                  wheel has to scroll the host page, or the part of the
+   *                  frame below the host's header stays out of reach)
    * otherwise      → nothing, so a sideways or shift-scroll pans natively;
    *                  a zoomed page also pans by dragging
    */
@@ -754,7 +836,9 @@ export function ScanViewer({
       queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
       return;
     }
-    if (wheelZooms && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+    if (zoomed) return;
+    const framed = typeof window !== 'undefined' && window.self !== window.top;
+    if (wheelZooms && !framed && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
       // Scroll deltas run larger than pinch deltas (a mouse notch is ~100px,
       // in line mode ~3 lines), so normalise to pixels and cap each event:

@@ -1,52 +1,39 @@
 import { getDb } from './mongodb';
 import { toUserId } from './user-id';
+import { imageAccessFor, type ImageAccess } from './types/image-source';
 
 export const PRICES = {
   book: { amount: 500, label: '$5' },   // cents
   image: { amount: 200, label: '$2' },
 } as const;
 
-/** Licenses that prohibit commercial use of page images. */
-const NC_LICENSE_PATTERNS = [
-  /\bnc\b/i,        // NoC-NC, CC-BY-NC, CC-BY-NC-ND, CC-BY-NC-SA
-  /non.?commercial/i,
-];
-
-export type ImageAccess =
-  | 'open'      // No license concern — flows through the normal member-or-pay gate
-  | 'nc-free'   // NC-licensed — free for any signed-in user, never enters the paid flow
-  | 'blocked';  // Unknown license + no public-domain signal — withheld entirely
+export type { ImageAccess };
 
 /**
- * Classify how a book's page images can be downloaded.
+ * Classify how a book's page images can be downloaded. The rule itself is
+ * `imageAccessFor()` in `src/lib/types/image-source.ts`, shared with the book page.
  *
- *  - 'open': public domain, CC-BY, BPH provider, or year_published < 1930.
+ *  - 'open': public domain, CC-BY, BPH provider, or year < 1930.
  *           Flows through the normal canDownload() / Stripe gate.
- *  - 'nc-free': any NoC-NC / CC-BY-NC variant. We're a non-commercial scholarly
- *              platform, so redistribution is fine — but charging for an NC scan
- *              would cross the commercial line. So: free for any signed-in user.
+ *  - 'nc-free': the library restricts reuse (NoC-NC, CC-BY-NC, its own terms,
+ *              in copyright). We're a non-commercial scholarly platform, so
+ *              redistribution is fine — but charging for such a scan would cross
+ *              the commercial line. So: free for any signed-in user.
  *  - 'blocked': unknown license, non-BPH, not pre-1930. Conservative default.
  */
 export async function classifyImageAccess(bookId: string): Promise<ImageAccess> {
   const db = await getDb();
-  const book = await db.collection('books').findOne(
-    { $or: [{ id: bookId }, { _id: bookId as any }] },
-    { projection: { 'image_source.license': 1, 'image_source.provider': 1, year: 1 } },
-  );
-  if (!book) return 'blocked';
-  const license = book.image_source?.license;
-  const provider = book.image_source?.provider;
   // `year` — NOT `year_published`, which no book has ever had (#4131). This
-  // projected and read a nonexistent field, so the pre-1930 release below never
+  // projected and read a nonexistent field, so the pre-1930 release never
   // fired once and 4,840 public-domain library scans stayed blocked on an
   // `unknown` license. `books.published` is the free-text twin and must never be
   // parsed for this (#3718); `year` is the numeric one, on 49,959 books.
-  const year = (book as { year?: number }).year;
-  if (provider === 'bph') return 'open';
-  if (typeof year === 'number' && year < 1930) return 'open';
-  if (license && NC_LICENSE_PATTERNS.some(p => p.test(license))) return 'nc-free';
-  if (!license || license === 'unknown') return 'blocked';
-  return 'open';
+  const book = await db.collection('books').findOne(
+    { $or: [{ id: bookId }, { _id: bookId as any }] },
+    { projection: { 'image_source.license': 1, 'image_source.provider': 1, 'image_source.rights_normalized': 1, year: 1 } },
+  );
+  if (!book) return 'blocked';
+  return imageAccessFor(book as Parameters<typeof imageAccessFor>[0]);
 }
 
 export type PurchaseType = keyof typeof PRICES;

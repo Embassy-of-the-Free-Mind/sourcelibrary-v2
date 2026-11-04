@@ -29,7 +29,7 @@ const GENERATE = process.argv.includes('--generate');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const ONLY_COLLECTION = process.argv.find((_, i, a) => a[i - 1] === '--collection') || null;
 const CONCURRENCY = 20;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const s3 = new S3Client({

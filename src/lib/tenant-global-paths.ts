@@ -31,6 +31,8 @@
 export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Corpus-wide aggregations (#3364).
   '/encyclopedia',
+  // Every Chinese book in the library, by class (#8035). Same reasoning as /works.
+  '/sibu',
   '/explore',
   '/ngrams',
   '/libraries',
@@ -84,6 +86,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // leak as /encyclopedia, in a surface that also invites people to act on it.
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
+  // Personal reader-check links (#7573) serve pages drawn from the whole corpus,
+  // the same leak as /review. The links are minted for sourcelibrary.org only.
+  '/check',
   '/volunteers',
   // The public Quality Center (#5918): the whole library's quality figures, experiments and
   // feedback themes, with doors into /review. Corpus-wide by construction, like /research.
@@ -97,6 +102,10 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
+  '/admin/pipeline/now',
+  // Router board (#7913): our router table, cron lanes and pages waiting. Same reasoning as /admin/work.
+  '/admin/router',
   // Inner-circle curation surfaces (#3846): identity adjudication over the
   // whole corpus (work merges, edition keeper choices). Corpus-wide by
   // construction and actuating, so a partner host must refuse it outright —
@@ -154,6 +163,8 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // they were served on, so blocking only the page would leave the unscoped
   // corpus reachable from a tenant subdomain.
   '/api/review',
+  // The answer endpoint behind /check (#7573).
+  '/api/check',
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',

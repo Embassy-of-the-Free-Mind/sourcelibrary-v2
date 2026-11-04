@@ -91,7 +91,7 @@ async function embed(image) {
 async function loadImage(source) {
   if (source.url) {
     const res = await fetch(source.url, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) identify-bench' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) identify-bench' },
       signal: AbortSignal.timeout(60000),
     });
     if (!res.ok) throw new Error(`fetch ${res.status} for ${source.url}`);

@@ -153,6 +153,121 @@ export function licenseDisplay(value?: string | null): { name: string; url?: str
   return { name: url ? 'See the source’s rights statement' : raw, url };
 }
 
+/**
+ * What the holding library itself stated about its page images, read from its manifest or record
+ * (scripts/maintenance/backfill-rights-provenance.mjs, scripts/lib/rights-normalize.mjs). Only the
+ * fields the reader page uses are typed here.
+ */
+export interface LibraryRightsStatement {
+  class?: string;                 // public-domain | noc-nc | cc-by-nc | terms-of-use | in-copyright | unknown | …
+  status?: string;                // stated | stated-from-import | assumed-by-importer | manifest-silent | …
+  statement_uri?: string | null;  // rightsstatements.org / Creative Commons URI the library gave
+  attribution_required?: string | null;
+  terms_text?: string | null;     // the library's own sentence, when it is terms rather than a licence
+}
+
+const RIGHTS_CLASS_NAMES: Record<string, string> = {
+  'public-domain': 'Public Domain',
+  'noc-nc': 'No Copyright – Non-Commercial Use Only',
+  'cc-by': 'CC BY', 'cc-by-sa': 'CC BY-SA', 'cc-by-nd': 'CC BY-ND',
+  'cc-by-nc': 'CC BY-NC', 'cc-by-nc-sa': 'CC BY-NC-SA', 'cc-by-nc-nd': 'CC BY-NC-ND',
+  'in-copyright': 'In Copyright',
+  'terms-of-use': 'The library’s terms of use',
+};
+
+const STANDARD_RIGHTS_URI = /^https?:\/\/(creativecommons\.org|rightsstatements\.org)\//i;
+const CLASS_RIGHTS_URIS: Record<string, string> = {
+  'noc-nc': 'http://rightsstatements.org/vocab/NoC-NC/1.0/',
+  'in-copyright': 'http://rightsstatements.org/vocab/InC/1.0/',
+  'public-domain': 'http://creativecommons.org/publicdomain/mark/1.0/',
+};
+
+/**
+ * The rights URI the holding library stated, for machine-readable surfaces (IIIF `rights`,
+ * schema.org `license`) that take one Creative Commons or rightsstatements.org URI (#7771).
+ *  - `undefined`: the library has not spoken (no statement, or an importer assumption). The
+ *    caller keeps its old path, the stored licence.
+ *  - a URI: the library's own, or the standard one for its class.
+ *  - `null`: the library spoke but gave no standard URI (its own terms of use). The caller must
+ *    NOT fall back to a public-domain default, which would contradict the library.
+ */
+export function libraryRightsUri(src?: { rights_normalized?: LibraryRightsStatement | null } | null): string | null | undefined {
+  const rn = src?.rights_normalized;
+  const stated = !!rn && (rn.status === 'stated' || rn.status === 'stated-from-import') && !!rn.class && rn.class !== 'unknown';
+  if (!stated) return undefined;
+  if (rn.statement_uri && STANDARD_RIGHTS_URI.test(rn.statement_uri)) return rn.statement_uri;
+  return CLASS_RIGHTS_URIS[rn.class!] ?? null;
+}
+
+/**
+ * The licence, credit and terms a book page shows for its images (#7771). The holding library's
+ * own statement wins when we have read one (status `stated`, or `stated-from-import`, which is the
+ * library's field captured at import). Otherwise the importer's stored values are shown, as before:
+ * for 32% of books that value is an importer default (`publicdomain`), not a library statement.
+ */
+export function displayedImageRights(src?: { license?: string | null; attribution?: string | null; rights_normalized?: LibraryRightsStatement | null } | null): {
+  license: { name: string; url?: string } | null;
+  credit: string | null;
+  terms: string | null;
+  fromLibrary: boolean;
+} {
+  const rn = src?.rights_normalized;
+  const stated = !!rn && (rn.status === 'stated' || rn.status === 'stated-from-import') && !!rn.class && rn.class !== 'unknown';
+  if (!stated) {
+    return { license: licenseDisplay(src?.license), credit: src?.attribution || null, terms: null, fromLibrary: false };
+  }
+  const byUri = rn.statement_uri ? licenseDisplay(rn.statement_uri) : null;
+  // A URI we have no name for gets the class name, still linked to the library's statement.
+  const license = byUri && byUri.name !== 'See the source’s rights statement'
+    ? byUri
+    : { name: RIGHTS_CLASS_NAMES[rn.class!] ?? 'See the source’s rights statement', url: rn.statement_uri || undefined };
+  return {
+    license,
+    credit: rn.attribution_required || src?.attribution || null,
+    terms: rn.class === 'terms-of-use' ? rn.terms_text || null : null,
+    fromLibrary: true,
+  };
+}
+
+/** How a book's page images can be downloaded. */
+export type ImageAccess =
+  | 'open'      // No license concern — flows through the normal member-or-pay gate
+  | 'nc-free'   // Reuse restricted by the library — free for any signed-in user, never enters the paid flow
+  | 'blocked';  // Unknown license + no public-domain signal — withheld entirely
+
+/** Licenses that prohibit commercial use of page images. */
+const NC_LICENSE_PATTERNS = [
+  /\bnc\b/i,        // NoC-NC, CC-BY-NC, CC-BY-NC-ND, CC-BY-NC-SA
+  /non.?commercial/i,
+];
+
+/** Library statements under which we must not charge for the scans. */
+const NO_CHARGE_CLASSES = new Set(['noc-nc', 'cc-by-nc', 'cc-by-nc-sa', 'cc-by-nc-nd', 'terms-of-use', 'in-copyright']);
+
+/**
+ * The one rule for image downloads, shared by the download routes (`classifyImageAccess`) and the
+ * book page. Order matters (#7771): a reuse restriction is tested BEFORE the pre-1930 release.
+ * The year test used to come first, so a 1650 Gallica scan that BnF marks "No Copyright –
+ * Non-Commercial Use Only" was 'open' and offered for $5 — 4,554 public books on 2026-10-30.
+ * The holding library's own statement (`rights_normalized`, when stated) wins over the stored
+ * licence, which for many books is an importer default.
+ */
+export function imageAccessFor(book: {
+  year?: number | null;
+  image_source?: { provider?: string | null; license?: string | null; rights_normalized?: LibraryRightsStatement | null } | null;
+}): ImageAccess {
+  const src = book.image_source;
+  if (src?.provider === 'bph') return 'open';
+  const rn = src?.rights_normalized;
+  const stated = !!rn && (rn.status === 'stated' || rn.status === 'stated-from-import');
+  if (stated && rn!.class && NO_CHARGE_CLASSES.has(rn!.class)) return 'nc-free';
+  const license = src?.license;
+  if (license && NC_LICENSE_PATTERNS.some(p => p.test(license))) return 'nc-free';
+  if (typeof book.year === 'number' && book.year < 1930) return 'open';
+  if (!license || license === 'unknown') return 'blocked';
+  return 'open';
+}
+
 // Image source and licensing info
 export interface ImageSource {
   provider: ImageSourceProvider;
@@ -170,4 +285,5 @@ export interface ImageSource {
   digitized_by?: string;        // Who actually digitized the scans (e.g., "Allard Pierson (University of Amsterdam)")
   digital_host?: string;        // Host serving the digital images (e.g., "uvaerfgoed.nl")
   sponsor?: string;             // Funding entity for digitization (e.g., "Google", "Sloan Foundation")
+  rights_normalized?: LibraryRightsStatement | null; // what the holding library stated (see displayedImageRights)
 }

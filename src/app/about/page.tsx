@@ -269,12 +269,25 @@ export default async function AboutPage() {
         <p className="text-secondary mb-8 leading-relaxed">
           Source Library and the Embassy of the Free Mind are made possible by the
           generosity of those who believe in this work. We gratefully acknowledge the{' '}
-          <strong>Wisdom Frontiers Society</strong> of La Jolla, California, and the{' '}
+          <a href="https://wisdomfrontiers.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Wisdom Frontiers Society</strong></a> of La Jolla, California, and the{' '}
           <a href="https://gambrellfoundation.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Gambrell Foundation</strong></a>{' '}
           of Charlotte, North Carolina, for their support.
         </p>
 
         <div className="flex flex-wrap items-center gap-10 mb-8">
+          <a
+            href="https://wisdomfrontiers.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Wisdom Frontiers"
+            className="inline-block hover:opacity-80 transition-opacity"
+          >
+            <img
+              src="/ai-partners/wisdom-frontiers.svg"
+              alt="Wisdom Frontiers"
+              className="h-8 w-auto object-contain"
+            />
+          </a>
           <a
             href="https://gambrellfoundation.org"
             target="_blank"

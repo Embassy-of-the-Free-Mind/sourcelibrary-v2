@@ -72,7 +72,7 @@ const LOAD = process.argv.includes('--load');
 const LOAD_ONLY = process.argv.includes('--load-only');
 
 const ENDPOINT = 'https://datb.cerl.org/estc/_search';
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; reference-set ingest)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) reference-set-ingest';
 const PAGE = 100;      // server caps size at 100 regardless of what is asked
 const FROM_CAP = 10000; // `from` beyond this returns HTTP 200 with no rows
 const SNAPSHOT = new Date().toISOString().slice(0, 10);

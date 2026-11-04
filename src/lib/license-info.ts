@@ -22,3 +22,11 @@ export const CONTENT_LICENSE = {
 } as const;
 
 export type ContentLicense = typeof CONTENT_LICENSE;
+
+/**
+ * One-line form of the reservation for plain-text exports (.txt, downloads, PDF
+ * colophon). A file saved to disk loses our headers, so it carries the
+ * reservation next to its licence line, as the JSON payloads do.
+ */
+export const AI_TRAINING_NOTICE =
+  'AI training and bulk text-and-data-mining are reserved (EU Directive 2019/790, Art. 4); license terms: https://sourcelibrary.org/licensing';

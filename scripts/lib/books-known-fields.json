@@ -15,7 +15,7 @@
   ],
   "generated_from": "full-scan enumeration of bookstore.books; language family consolidated 2026-09-10",
   "generated_at": "2026-09-10",
-  "count": 428,
+  "count": 429,
   "retired": [
     "_language_backfill",
     "acquisition_priority",
@@ -168,6 +168,7 @@
     "contents_works",
     "contents_works_meta",
     "contributing_library",
+    "contributors",
     "cover",
     "cover_image",
     "cover_page",

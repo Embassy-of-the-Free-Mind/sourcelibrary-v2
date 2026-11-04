@@ -73,7 +73,7 @@ try {
     const ids = [...new Set(file.pages.map((p) => p.book_id))];
     const tally = {};
     for (const id of ids) {
-      const r = await holdBook(db, id, { reason: REASON, issue: ISSUE, release: 'the lite batch re-read of its ia_djvu pages has been collected', source: 'tingley-reread-5224' }, { dryRun });
+      const r = await holdBook(db, id, { reason: REASON, issue: ISSUE, release: 'the lite batch re-read of its ia_djvu pages has been collected', release_when: { kind: 'test', ref: 'scripts/batch/tingley-reread-5224.mjs collect' }, source: 'tingley-reread-5224' }, { dryRun });
       tally[r.outcome] = (tally[r.outcome] || 0) + 1;
       if (r.outcome === 'held' || r.outcome === 'dry_run') console.log(`  ${r.outcome} ${id} (from ${r.from})`);
     }

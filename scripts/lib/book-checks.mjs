@@ -23,7 +23,8 @@
  *     no_english | hidden at check time (scripts/lib/review-vocabulary.mjs; pageExposure() reads it live). A rate
  *     quoted from rows that mix hidden books with served ones is the #6203 "invented" problem; 'unrecorded' is for a
  *     backfill of a run that kept no record. Rows written before 2026-10-12 have no exposure field.
- * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq, and page_findings (#6199): the serious
+ * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq, page_notes (#7896: the reader's own
+ * words for every page read — see pageNoteProblems), and page_findings (#6199): the serious
  * findings per page — [{ page_number, wrong_page?, errors: [{ stage: ocr | translation | other, class?, problem? }] }],
  * one entry per page WITH a serious finding, so `[]` says every page read was free of them and an absent field says
  * the run kept no per-page record. The reader's page-level warning is built from it (src/lib/book-warnings.ts).
@@ -78,7 +79,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   const p = [];
   const {
     book_id, checked_at, method_id, method_version, run_id, frame, pages_read, reader, verdict, verdict_source,
-    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq, page_findings, exposure,
+    classes, note, evidence_path, text_provenance, api_usd, subscription_usd_eq, page_findings, page_notes, exposure,
   } = input;
   if (!nonEmpty(book_id)) p.push('book_id');
   const at = checked_at instanceof Date ? checked_at : (nonEmpty(checked_at) ? new Date(checked_at) : null);
@@ -119,6 +120,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   for (const [k, v] of [['api_usd', api_usd], ['subscription_usd_eq', subscription_usd_eq]]) if (v !== undefined && v !== null && !(isNum(v) && v >= 0)) p.push(`${k} must be a number ≥ 0`);
   if (classes !== undefined && !(Array.isArray(classes) && classes.every(nonEmpty))) p.push('classes must be a list of strings');
   if (page_findings !== undefined) p.push(...pageFindingProblems(page_findings, pages_read));
+  if (page_notes !== undefined) p.push(...pageNoteProblems(page_notes, pages_read));
   if (p.length) throw new TypeError(`book_checks row refused (${book_id ?? '?'}, ${method_id ?? '?'}): missing or bad ${p.join('; ')}`);
 
   return {
@@ -132,6 +134,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
     ...(classes ? { classes: [...new Set(classes)] } : {}),
     ...(nonEmpty(note) ? { note } : {}),
     ...(page_findings !== undefined ? { page_findings } : {}),
+    ...(page_notes !== undefined ? { page_notes } : {}),
     exposure: exposure.map((e) => ({ page_number: e.page_number, exposure: e.exposure })),
     evidence_path,
     text_provenance,
@@ -161,6 +164,37 @@ export function pageFindingProblems(findings, pagesRead) {
       if (!e || !FINDING_STAGES.includes(e.stage)) p.push(`${at}: errors[].stage (${FINDING_STAGES.join(' | ')})`);
       else for (const k of ['class', 'problem']) if (e[k] !== undefined && !nonEmpty(e[k])) p.push(`${at}: errors[].${k}, when given, is a non-empty string`);
       if (e) p.push(...kindProblems(e.kind, `${at}: errors[].kind`));
+    }
+  }
+  return p;
+}
+
+export const NOTE_SEVERITIES = ['cosmetic', 'misleads', 'wrong_text'];
+
+/**
+ * What is wrong with a page_notes value (#7896), as a list of strings (empty = valid). page_notes is the qualitative
+ * record: one entry per page read, clean pages included — the reader's own note on the page and every defect it named,
+ * minor ones too — { page_number, note?, fidelity?, accepted?, defects: [{ severity, what, class?, quote? }] }.
+ */
+export function pageNoteProblems(notes, pagesRead) {
+  if (!Array.isArray(notes)) return ['page_notes must be a list'];
+  const p = [];
+  const read = new Set(Array.isArray(pagesRead) ? pagesRead : []);
+  const seen = new Set();
+  for (const n of notes) {
+    if (!n || !isNum(n.page_number)) { p.push('page_notes[].page_number'); continue; }
+    const at = `page_notes p.${n.page_number}`;
+    if (!read.has(n.page_number)) p.push(`${at}: not in pages_read`);
+    if (seen.has(n.page_number)) p.push(`${at}: listed twice`);
+    seen.add(n.page_number);
+    if (n.note !== undefined && !nonEmpty(n.note)) p.push(`${at}: note, when given, is a non-empty string`);
+    if (n.fidelity !== undefined && !(isNum(n.fidelity) && n.fidelity >= 1 && n.fidelity <= 5)) p.push(`${at}: fidelity is 1–5`);
+    if (n.accepted !== undefined && typeof n.accepted !== 'boolean') p.push(`${at}: accepted is a boolean`);
+    if (!Array.isArray(n.defects)) { p.push(`${at}: defects must be a list ([] for none)`); continue; }
+    for (const d of n.defects) {
+      if (!d || !NOTE_SEVERITIES.includes(d.severity)) p.push(`${at}: defects[].severity (${NOTE_SEVERITIES.join(' | ')})`);
+      if (!d || !nonEmpty(d.what)) p.push(`${at}: defects[].what`);
+      else for (const k of ['class', 'quote']) if (d[k] !== undefined && !nonEmpty(d[k])) p.push(`${at}: defects[].${k}, when given, is a non-empty string`);
     }
   }
   return p;

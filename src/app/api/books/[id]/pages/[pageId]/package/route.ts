@@ -8,6 +8,8 @@ import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { classifyImageAccess, hasPurchased, type ImageAccess } from '@/lib/purchases';
 import { checkAndRecordDownload } from '@/lib/download-cap';
+import { ANON_EMBED_DAILY_BOOK_CAP } from '@/lib/partner-embed-download';
+import { anonymousDownloadCapKey, ANON_EMBED_LIMIT_MESSAGE, isPartnerEmbedDownload } from '@/lib/partner-embed-download-server';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { generateCitations, type Citation } from '@/lib/citation';
@@ -15,6 +17,7 @@ import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/package
@@ -27,7 +30,8 @@ import type { Book, Page, TranslationEdition } from '@/lib/types';
  *
  * Conventions deliberately mirror the whole-book route
  * (`src/app/api/books/[id]/download/route.ts`) rather than inventing a new
- * scheme: sign-in required, image licence via `classifyImageAccess()`, the
+ * scheme: sign-in required (bar the partner-embed exception, #7702), image
+ * licence via `classifyImageAccess()`, the
  * same free-tier daily cap (`checkAndRecordDownload`), the same streamed-ZIP
  * shape (never buffer the whole archive before responding).
  *
@@ -135,6 +139,7 @@ function buildReadme(opts: {
   lines.push('-'.repeat(60));
   lines.push(`Downloaded: ${now}`);
   lines.push('License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)');
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('='.repeat(60));
@@ -146,15 +151,16 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
   try {
     const { id: bookIdParam, pageId } = await params;
 
-    // All downloads require sign-in — same rule as the whole-book route.
+    // All downloads require sign-in — same rule as the whole-book route,
+    // including its one exception (#7702): a partner's own book requested from
+    // inside that partner's embed, where signing in is impossible. Decided
+    // after the book lookup below, since it turns on who owns the book.
     const session = await auth();
     const userId = session?.user?.id || null;
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Sign in required', requires_signin: true },
-        { status: 401 },
-      );
-    }
+    const signInRequired = () => NextResponse.json(
+      { error: 'Sign in required', requires_signin: true },
+      { status: 401 },
+    );
 
     const db = await getDb();
 
@@ -165,6 +171,13 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     }
     if (!book && ObjectId.isValid(bookIdParam)) {
       book = await db.collection('books').findOne({ _id: new ObjectId(bookIdParam) }) as unknown as Book | null;
+    }
+    // Anonymous and not the partner embed → 401 before anything else, so an
+    // anonymous caller learns no more than it did when sign-in came first.
+    let anonCapKey: string | null = null;
+    if (!userId) {
+      if (!book || !(await isPartnerEmbedDownload(request, book))) return signInRequired();
+      anonCapKey = anonymousDownloadCapKey(request.headers);
     }
     if (!book || !(await isBookReadable(book, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -179,10 +192,16 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     // Daily free-tier cap (#3290) — a page package rides the same free/capped
     // tier as the plain-text book formats. Members, per-book purchasers, and
     // editor/admin sessions are exempt, same as the whole-book route.
+    if (anonCapKey) {
+      const cap = await checkAndRecordDownload(anonCapKey, bookId, ANON_EMBED_DAILY_BOOK_CAP);
+      if (!cap.allowed) {
+        return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
+      }
+    }
     const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
-    const isExemptEditor = await isInnerCircle();
-    const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', bookId);
-    if (!isMember && !isExemptEditor && !isPurchased) {
+    const isExemptEditor = userId ? await isInnerCircle() : false;
+    const isPurchased = !userId || isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', bookId);
+    if (userId && !isMember && !isExemptEditor && !isPurchased) {
       const cap = await checkAndRecordDownload(userId, bookId);
       if (!cap.allowed) {
         return NextResponse.json(

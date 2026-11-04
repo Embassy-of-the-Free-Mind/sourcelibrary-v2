@@ -40,7 +40,7 @@ export interface Collection {
   parent?: string;
   sample_books: CollectionBookRef[];
   highlighted_books?: CuratedHighlight[];
-  mentioned_books?: { text: string; book_id: string }[];
+  mentioned_books?: { text: string; book_id?: string; author_id?: string }[];
   curated_gallery_images?: CollectionImageRef[];
   featured_images?: CollectionImageRef[];
   languages: { lang: string; count: number }[];

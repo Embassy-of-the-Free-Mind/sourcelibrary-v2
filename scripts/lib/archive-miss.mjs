@@ -165,3 +165,19 @@ export const isBookScopedFailure = (code) => BOOK_SCOPED_FAILURES.includes(Strin
  * was only stamped on completion, so a failing head stayed the head forever.
  */
 export const ROTATION_SORT = Object.freeze({ 'archive_metadata.last_attempt_at': 1, updated_at: 1 });
+
+/**
+ * A book a run could not advance AT ALL — abandoned with nothing served (the source answers 500 for
+ * the whole document), or with no page left that any archiver will ask for (every remaining page
+ * carries a `failed:` marker) — sits out the lane draw for a day.
+ *
+ * Rotation alone does not move it: lane tiers are drawn in order (live → tier A → rest), so a dead
+ * book is the head of its TIER however recently it was tried. lane-gallica, 2026-10-27: 51 visible
+ * Gallica books filled the whole 40-book batch every run (37 with every remaining page under
+ * `failed:source-not-found`, 13 of the other 14 answering 500 at openapi.bnf.fr), five dead ones tripped the host breaker, and the
+ * lane archived 0 pages for nine hours while 147,785 hidden-book pages waited behind them.
+ */
+export const NO_PROGRESS_COOLDOWN_MS = 24 * 3600 * 1000;
+export const cooldownUntil = (now = new Date()) => new Date(now.getTime() + NO_PROGRESS_COOLDOWN_MS);
+/** Draw filter: books whose cooldown has passed, or that never had one. */
+export const notCoolingDown = (now = new Date()) => ({ 'archive_metadata.cooldown_until': { $not: { $gt: now } } });

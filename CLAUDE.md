@@ -173,12 +173,13 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Deploy verification, purges, the `/explore` build interlock → `deploy-and-caching.md` (also routed above)
 
 **Handing something to a model**
+- **The router: its purpose, how we validate it (V1–V7), the paper** → `../router-optimization-paper.md`
 - Choosing a Gemini model, a `generateContent` call site, `thinkingConfig`, grounding, or metering a model's cost → `ai-models.md` (**thinking is ON by default in 3.x and billed at the output rate — go through `getGeminiClient()` / `gemini-script-client.mjs`, never around them**; the OCR/translation routing split is deliberate, do not "fix" it)
 - **Which OCR engine or lane** for a book, a script, or a page that came back empty or refused; picking `--model` by hand → `../ocr-lane-decision-tree.md` (**a lane without provenance does not run**; the ladder is lite → flash → MinerU (GAP) → the Archive's leaf under a by-eye verdict → by eye; `OCR_LITE_ONLY` collapses tier 2)
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
-- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
+- A BULK import/sweep, choosing `/api/import/*` vs a `*-direct.mjs` script, **or a recurring Hetzner job that reads Mongo** → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
 - **Renting a GPU (Scaleway)** → lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease … --progress mongo:<ocr.source>`) and run the job under `scripts/gpu/idle-poweroff.sh run --`; the Hetzner watchdog stops expired leases AND idle ones (no new output for 30 min) via the provider API (a guest `poweroff` still bills).
 - Anything that calls Gemini from a worker or cron, a new `hetzner-crontab`/`vercel.json` line, or "why didn't the daily budget hold?" → `spend-controls.md` (**a queue is stored spend**; the dial has failed four distinct ways, and they look identical from outside)
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)
@@ -188,7 +189,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 
 Detect the work domain from the user's prompt and load the right context automatically:
 - **System overview / "where does X live?":** read `.claude/docs/system-map.md`
-- **Pipeline/cron/Lambda/OCR/translation:** read `memory/pipeline-ops.md`
+- **Pipeline/cron/Lambda/OCR/translation:** read `.claude/docs/book-process.md`, then `memory/pipeline-ops.md`
 - **UI/frontend/navigation:** read `memory/ui-navigation.md`
 - **Collection page layout / design:** governed by `.claude/docs/collection-page-redesign-spec.md` — read before changing structure or styling; hard rule: no new design primitives, every value maps to an existing token.
 - **Writing or editing an article (/articles):** follow `.claude/docs/article-rules.md` (hero, pictures in every section, `SourceQuote` for library quotes, no red text, book grid instead of a "The books" list).
@@ -203,7 +204,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Quality auditing:** `/qa-audit`
 - **Anything reading `page_revisions` as a double-OCR corpus** (agreement, calibration, repeat-instability, disagreement typologies): read **`.claude/docs/data-provenance.md`** FIRST — it carries the row schema, the per-source counts, and critically the `source` label that says which mechanism wrote each row. Most of the collection is not what the name suggests: the largest source by far is bulk *text relocation*, not double OCR, and it reads as catastrophic disagreement in any metric that doesn't exclude it. The measurement stack built on top is `.claude/docs/ocr-quality-measurement-loop.md`. **`page_revisions` is a mixed record of pipeline output AND bulk maintenance — always segment by `source` before quoting a number over it.**
 - **Batch processing:** `/batch-translate`
-- **Dispatching a headless job to a box (`claude-job.sh`), or writing its brief:** read `scripts/workers/JOB-HOSTS.md` — ask `scripts/workers/job-where.sh` which box is emptiest, and give the brief `Lands: #NNNN` and `PR: yes|no` header lines.
+- **Dispatching a headless job to a box (`claude-job.sh`), or writing its brief:** read `scripts/workers/JOB-HOSTS.md` — ask `scripts/workers/job-where.sh` which box is emptiest, and give the brief `Lands: #NNNN` and `PR: yes|no` header lines (and `Route:` for OCR/translation writes — `start` refuses without it).
 - **Music notation / `music_transcriptions` / any OMR model:** read `.claude/docs/music-notation.md` — **never batch a vision model over score pages** (measured: it reads the printed answer key, not the staff); score against `scripts/music/ground-truth/` first.
 - **Handoffs:** `.claude/handoffs/` (read by date/topic). **This repo is PUBLIC (AGPL).** New handoffs and all operational/business material (fundraising, contacts, outreach, budgets, donors, sponsors) go in the **private** repo `Embassy-of-the-Free-Mind/sourcelibrary-ops` (clone at `~/sourcelibrary-ops`), which is gitignored here — never commit them to this repo. Only genuinely public-worthy *technical* postmortems (no PII/secrets/business strategy) belong in `.claude/handoffs/` here, and only by deliberate `git add -f`.
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)

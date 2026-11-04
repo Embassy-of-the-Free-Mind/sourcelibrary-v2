@@ -46,13 +46,28 @@ const DIR = arg('--dir');
 if (!DIR) { console.error('--dir D required'); process.exit(1); }
 fs.mkdirSync(DIR, { recursive: true });
 
-const LANGUAGE_NAMES = { es: 'Spanish' };
-// The `books.language` values whose books are already in <lang> — mirrors
-// NATIVE_EDITION_LANGUAGE in src/lib/localized.ts (anchored: "Spanish-Latin" is glossed).
-const NATIVE = { es: /^(spanish|español|castilian|castellano)$/i };
+// Everything language-specific lives here (#7496, Chinese added after Spanish).
+//   native: the `books.language` values already in <lang>, mirroring NATIVE_EDITION_LANGUAGE in
+//           src/lib/localized.ts (anchored: "Spanish-Latin" is glossed); those books are skipped.
+//   works:  how "Works of <author>" reads, and the test that a gloss used it.
+//   volume: how the volume number is written after the gloss, and what a model-written one looks like.
+const LANGS = {
+  es: {
+    name: 'Spanish', native: /^(spanish|español|castilian|castellano)$/i, example: 'Iamblichus → Jámblico',
+    works: '"Obras de <author>"', isWorksGloss: (g) => /^obras de\b/i.test(g),
+    volume: (n) => `, volumen ${n}`, modelVolume: /[,(]?\s*vol(?:umen|úmenes|\.)?\s*[\dIVXLC-]+\)?\s*$/i,
+  },
+  zh: {
+    name: 'Simplified Chinese', native: /^\s*(chinese|zho|chi|mandarin|cmn|traditional chinese|simplified chinese)\s*$/i,
+    example: 'Iamblichus → 扬布里柯, Paracelsus → 帕拉塞尔苏斯',
+    works: '"<author>全集"', isWorksGloss: (g) => /(全集|文集|著作集)$/.test(g),
+    volume: (n) => `（第${n}册）`, modelVolume: /[,，(（]?\s*(?:第\s*[\d一二三四五六七八九十]+\s*[册卷]|vol\.?\s*\d+)\s*[)）]?\s*$/i,
+  },
+};
 const LANG = arg('--lang', 'es');
-if (!LANGUAGE_NAMES[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGUAGE_NAMES).join(', ')}`); process.exit(2); }
-const LANGUAGE = LANGUAGE_NAMES[LANG];
+if (!LANGS[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGS).join(', ')}`); process.exit(2); }
+const L = LANGS[LANG];
+const LANGUAGE = L.name;
 
 const MODEL = 'gemini-3.1-flash-lite';
 // v3 after reading two 200-title tests side by side (#7496). v1 translated well but
@@ -77,8 +92,8 @@ const HEAD = `You write catalogue title glosses for a digital library of histori
 For each book below give the ${LANGUAGE} gloss of its title: the short, natural title a ${LANGUAGE}-speaking reader would expect on a catalogue card, as a published ${LANGUAGE} translation would be titled.
 Rules:
 - Translate the MEANING of the title into ${LANGUAGE}, whatever its language (Latin, German, Chinese, English…). Keep the original wording only for a proper name or a work customarily cited by its original title (Picatrix, Syntagma musicum, Enchiridion).
-- Proper names in their customary ${LANGUAGE} form (Iamblichus → Jámblico).
-- The author is context only. Do not add the author's name, except when the whole title is just "Opera" / "Works" / "Œuvres" / "Werke": then "Obras de <author>".
+- Proper names in their customary ${LANGUAGE} form (${L.example}).
+- The author is context only. Do not add the author's name, except when the whole title is just "Opera" / "Works" / "Œuvres" / "Werke": then ${L.works}.
 - Keep a manuscript shelfmark exactly as written, in parentheses at the end: (Cod. Pal. germ. 109), (Vat.ebr.339).
 - Leave out volume numbers and Chinese 卷 section numbers; they are added separately.
 - Shorten long baroque titles to their main title. Do not add subtitles, dates, publishers or explanations.
@@ -122,17 +137,20 @@ export function acceptGloss(book, raw) {
   // "Obras de <author>" only for a title that IS "works" (v2 replaced Chinese titles with it).
   // The full run rejected 354, mostly real collected works in words this list lacked
   // (Opere, Opuscula, Wercken, omnia): widened after reading them.
-  if (/^obras de\b/i.test(g) && !/\b(opera|opere|opuscula|omnia|works|œuvres|oeuvres|werke|wercken|werken|obras|schriften)\b/i.test(book.title)) return null;
-  g = g.replace(/[,(]?\s*vol(?:umen|úmenes|\.)?\s*[\dIVXLC-]+\)?\s*$/i, '').trim();
+  if (L.isWorksGloss(g) && !/\b(opera|opere|opuscula|omnia|works|œuvres|oeuvres|werke|wercken|werken|obras|schriften)\b/i.test(book.title)) return null;
+  // A card shows the title bare: no 《》 book-title marks around it.
+  g = g.replace(/[《》]/g, '').replace(L.modelVolume, '').trim();
   // "Tengyur (Derge Tengyur, vol. 173)" loses its ")" with the volume: drop the open bracket too.
-  if ((g.match(/\(/g) || []).length > (g.match(/\)/g) || []).length) g = g.slice(0, g.lastIndexOf('(')).replace(/[\s,:]+$/, '');
+  for (const [open, close] of [['(', ')'], ['（', '）']]) {
+    if (g.split(open).length > g.split(close).length) g = g.slice(0, g.lastIndexOf(open)).replace(/[\s,，:：]+$/, '');
+  }
   if (!g) return null;
   const vol = volumeOf(book.title);
-  return vol ? `${g}, volumen ${vol}` : g;
+  return vol ? `${g}${L.volume(vol)}` : g;
 }
 
 function cleanGloss(t) {
-  return String(t || '').replace(/^["'«»\s]+|["'«»\s.]+$/g, '').replace(/\s+/g, ' ').trim();
+  return String(t || '').replace(/^["'«»《「\s]+|["'«»》」\s.。]+$/g, '').replace(/\s+/g, ' ').trim();
 }
 
 /** Parsed glosses, or null when the response is not an array of the right length. */
@@ -172,7 +190,7 @@ async function select() {
   let n = 0; let native = 0;
   for await (const b of cursor) {
     if (!b.id) continue;
-    if (NATIVE[LANG].test(String(b.language || '').trim())) { native++; continue; }
+    if (L.native.test(String(b.language || '').trim())) { native++; continue; }
     out.write(JSON.stringify({ id: b.id, title: String(b.title).slice(0, 300), display_title: b.display_title ? String(b.display_title).slice(0, 300) : null, author: b.author ? String(b.author).slice(0, 120) : null, language: b.language || null }) + '\n');
     n++;
   }

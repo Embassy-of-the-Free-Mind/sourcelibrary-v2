@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, Home, BookOpen } from 'lucide-react';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 const QUOTES = [
   {
@@ -61,8 +63,12 @@ const QUOTES = [
 
 export default function NotFoundContent() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [quote, setQuote] = useState(QUOTES[0]);
+  // Set after mount: each quote links to a book, and the server cannot know
+  // whether a partner's subdomain is asking (its HTML would carry foreign books).
+  const [quote, setQuote] = useState<(typeof QUOTES)[number] | null>(null);
   const router = useRouter();
+  const isEmbedded = useIsEmbedded();
+  const embedHref = useEmbedHref();
 
   useEffect(() => {
     setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
@@ -84,6 +90,27 @@ export default function NotFoundContent() {
     }
   };
 
+  // Inside a partner's room there is no library to wander into (tenant-lockdown.md).
+  if (isEmbedded) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
+        <div className="max-w-xl w-full text-center">
+          <h1 className="text-2xl font-serif font-semibold text-primary mb-3">Page not found</h1>
+          <p className="text-muted mb-6">This page is not in the collection.</p>
+          <div className="flex gap-3 justify-center">
+            <Link
+              href={embedHref('/catalog')}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-warm hover:bg-accent-rust/10 text-secondary rounded-xl transition-colors text-sm"
+            >
+              <Search className="w-4 h-4" />
+              Search the catalogue
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
       <div className="max-w-xl w-full text-center">
@@ -91,10 +118,14 @@ export default function NotFoundContent() {
         <h2 className="text-2xl font-serif font-semibold text-primary mb-3">
           Lost in the Stacks
         </h2>
-        <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
-          <span>&ldquo;{quote.text}&rdquo;</span>
-          <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">{quote.source}</span>
-        </Link>
+        {quote ? (
+          <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
+            <span>&ldquo;{quote.text}&rdquo;</span>
+            <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">{quote.source}</span>
+          </Link>
+        ) : (
+          <div className="mb-8 min-h-12" />
+        )}
 
         <div className="bg-white rounded-xl border border-light p-6 mb-6">
           <form onSubmit={handleSearch} className="mb-5">

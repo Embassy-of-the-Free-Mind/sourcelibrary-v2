@@ -1,0 +1,40 @@
+{
+ "seed": 75221,
+ "controls": [
+  {
+   "page_id": "69bd9d236120d54bd0373b66",
+   "book_id": "69bd9d236120d54bd0373aaa",
+   "page_number": 188,
+   "kind": "drop",
+   "neighbour_id": "69bd9d236120d54bd0373b67"
+  },
+  {
+   "page_id": "69b51e63768235dc65992909",
+   "book_id": "69b51e63768235dc659928d8",
+   "page_number": 49,
+   "kind": "drop",
+   "neighbour_id": "69b51e63768235dc6599290a"
+  },
+  {
+   "page_id": "69b51e0ecf111105c42963b9",
+   "book_id": "69b51e0ecf111105c4296303",
+   "page_number": 182,
+   "kind": "drop",
+   "neighbour_id": "69b51e0ecf111105c42963ba"
+  },
+  {
+   "page_id": "69af0da8be5fc7f363545f4d",
+   "book_id": "69af0da8be5fc7f363545d1a",
+   "page_number": 563,
+   "kind": "bleed",
+   "neighbour_id": "69af0da8be5fc7f363545f4e"
+  },
+  {
+   "page_id": "6a21991c4b61907ea5ffb27a",
+   "book_id": "6a21991c4b61907ea5ffb24f",
+   "page_number": 43,
+   "kind": "bleed",
+   "neighbour_id": "6a21991c4b61907ea5ffb27b"
+  }
+ ]
+}

@@ -36,7 +36,7 @@ import { ensureIndexes, insertCandidates } from '../lib/candidate-store.mjs';
 
 const SOURCE = 'wikidata';
 const ENDPOINT = 'https://query.wikidata.org/sparql';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const args = Object.fromEntries(

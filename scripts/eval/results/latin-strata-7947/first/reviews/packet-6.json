@@ -1,0 +1,653 @@
+[
+  {
+    "book_id": "6a0c53fc99c52ea845a06630",
+    "slot": 1,
+    "title": "Origenes Adamantius: Tractatus super Leviticum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Rufinus' Latin of Origen's Homilies on Leviticus in a 12th/13th-c. textualis manuscript (HAB Wolfenbüttel); patristic exegesis, a reasonable neighbour to the library's theological sources. No tradition or collection set.",
+    "rights_flag": null,
+    "structure_note": "189 pages, 184 with OCR, 173 translated. The pages run in order (p.47 carries folio number 22). Each of the three pages read sits on the right leaf. Page 136 holds the homily break, and the OCR numbers it VI/VII where the red rubric reads xi/xii.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 47,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur.",
+            "image": "licet concedant[ur] sacerdotib[us] ad edendu[m] · n[on] tam[en] om[n]ia conceduntur",
+            "problem": "'non tamen omnia' (but not all) read as 'etiam omnia' (even all): sense reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "delictum in legum quod est dicat ad morte",
+            "image": "delictu[m] n[on] legim[us] quod e[ss]e dicat[ur] ad morte[m]",
+            "problem": "'we never read that a delictum is said to be unto death' becomes a garble that the translation renders as the opposite",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "debemus committe mus. idcirco generalem",
+            "image": "debem[us] co[m]mittere. S[ed] hec q[uonia]m n[on] semp[er] in scriptis diuinis sub ista distinctio[n]e inuenim[us]. idcirco ge[n]eralem",
+            "problem": "a full line, the reason Origen cannot affirm a general rule, is silently dropped",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "et altari signum traditur",
+            "image": "et altaris ignib[us] traditur",
+            "problem": "'given to the altar fires' misread as 'a sign is delivered to the altar'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "nisi si alteri iam fuerunt in ecclesia domini",
+            "image": "nisi si asscripti iam fuerint in ecclesia d[omi]ni",
+            "problem": "'unless already enrolled' becomes 'alteri', which the translation turns into 'unless they have been strangers'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nam cum lupi in hostia peccato uui sacrificii atque ordine tradidisset ne separatim",
+            "image": "Nam cu[m] sup[er]i[us] in hostia p[ro] peccato ritu[m] sacrificij atq[ue] ordine[m] tradidisset n[un]c separatim",
+            "problem": "a garbled line, which the translation smooths into fluent English",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "ocr": "accedere etiam filii mist.",
+            "image": "accedere etia[m] filij isti",
+            "problem": "'isti' read as 'mist.' (rendered 'sons of the mystery')",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<margin><image-desc ...>manicula pointing to the text</image-desc></margin>",
+            "image": "the right-margin marks are 'Nota' signs, not maniculae; the left-margin gloss beside the last five lines (adipe / ipom / in te / taris / dice) is not transcribed",
+            "problem": "marginal apparatus misdescribed or dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur.",
+            "english": "it is permitted for the priests of the church to eat; in fact, all things are granted.",
+            "problem": "carries the OCR reversal: the image says NOT all is granted, and that a part goes to God",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "delictum in legum quod est dicat ad morte",
+            "english": "a transgression, according to the laws, which is said to be unto death",
+            "problem": "the opposite of the source's point (a delictum is never said to be unto death), so the sin/delictum distinction collapses",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "nisi si alteri iam fuerunt in ecclesia domini",
+            "english": "unless they have already been strangers in the church of the Lord",
+            "problem": "nonsense built on a misread; the source says 'enrolled'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "et altari signum traditur",
+            "english": "and a sign is delivered to the altar",
+            "problem": "should be 'handed to the fires of the altar'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 92,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Sed et uero spe lepre",
+            "image": "Secu[n]da uero sp[eci]es lepre",
+            "problem": "'the second kind of leprosy' read as 'Sed et vero spe', translated as 'the true sign of leprosy'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et simul cum eos",
+            "image": "et simul cura[bo] eos (superscript 'bo')",
+            "problem": "the verb 'I will heal them' is lost, and the translation becomes 'and together with it'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "rursum in uita cicatrice ascendat aliquod peccati prius initium",
+            "image": "rursum in ista cicatrice ascendat aliquod peccati prioris indicium",
+            "problem": "'in this scar ... a sign of earlier sin' becomes 'in the life ... an earlier beginning'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "quam prius suscepimus",
+            "image": "quam p[er] p[ro]p[he]ta[m] suscepimus",
+            "problem": "'through the prophet' read as 'prius'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "et pontificem sedem ea que",
+            "image": "p[er] pontificem sec[un]d[u]m ea que",
+            "problem": "'per ... secundum' misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<meta>catchword: qua</meta>",
+            "image": "catchword 'equa' at the foot",
+            "problem": "catchword misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Memento diligentius que audieris appheta",
+            "english": "Remember carefully what you have heard, prophet",
+            "problem": "'a propheta' (from the prophet) taken as a vocative; repeated at 'appha didici' → 'I have learned sufficiently, prophet'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Sed et uero spe lepre",
+            "english": "But concerning the true sign of leprosy",
+            "problem": "the source introduces the SECOND species of leprosy",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "the stored translation carries <summary> and <keywords> blocks after the text (may be stripped by the reader)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 136,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>et de magno sacerdote et de eius officio et de eius vestibus ... et de eius sacerdotio et de eius filiis et de eius morte (twice)</margin>",
+            "image": "the margin beside the initial O is blank; the only red text is the rubric 'Explicit lib. xi. Incip. xii. De magno sacerdote'",
+            "problem": "a 30-line marginal list, not on the page, invented and looped",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "<margin>deponere non potest.</margin>",
+            "image": "these words belong to the neighbouring leaf's text strip at the right edge of the photograph",
+            "problem": "neighbour strip read as this page's margin",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "Explicit liber VI. Incipit VII.",
+            "image": "Explicit lib. xi. Incip. xii.",
+            "problem": "homily numbers wrong (this is Homily 12, on the high priest, Lev 21:10)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "ut neque ipsi enti utta sed in legem obnoxii simul mori. nec sed in spirituale legem humana nos pena maneat",
+            "image": "ut neq[ue] i[n] p[re]senti uita sec[undu]m legem obnoxij simus morti · neq[ue] sec[undu]m sp[irit]uale legem futura nos pena maneat",
+            "problem": "a garble that the translation turns into its opposite (see tr_errors)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "nec altare poterat ad patre luminum et qua non umbra implebat",
+            "image": "nec astare poterat ap[ud] patre[m] luminu[m] · s[ed] quia hoc umbra[m] implebat et imagine[m]",
+            "problem": "'he could not stand before the Father; but because he fulfilled shadow' is misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Vii et uidet ... pluerat ueritatis. dii typol ueritate putant ueritate ipsam tamque mendatio respuere",
+            "image": "Vn[de] et iudei ... p[re]exerat ueritatis · du[m] typos ueritate[m] putant, ueritate[m] ipsam tamq[uam] mendaciu[m] respuer[un]t",
+            "problem": "the sentence about the Jews rejecting the truth is garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "magnus ex filiis suis",
+            "image": "magnus ex fr[atr]ib[us] suis",
+            "problem": "'from among his brothers' (Lev 21:10) read as 'from his sons'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "cum gloria et impii uita sanctorum amen",
+            "image": "cu[m] gloria et imp[er]io i[n] s[ecu]la s[ecu]lor[um] a[men]",
+            "problem": "doxology garbled",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "nec sed in spirituale legem humana nos pena maneat ignis eterni",
+            "english": "nor should the human penalty remain for us in the spiritual law, but rather the eternal fire",
+            "problem": "the source prays that the future punishment of eternal fire NOT await us, but the English says eternal fire should await us instead",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "mundi. aut qui celestem Iherusalem ... ad conclusione terrene alicuius urbis adducunt.",
+            "english": "(nothing)",
+            "problem": "the first three lines of the page are not translated",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "dii typol ueritate putant ueritate ipsam tamque mendatio respuere",
+            "english": "They think the truth itself is a lie, like the truth they reject.",
+            "problem": "fluent nonsense over the garble",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Explicit liber VI. Incipit VII.",
+            "english": "Explicit Book VI. Here begins VII.",
+            "problem": "carries the wrong homily numbers",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the invented marginal list is translated and shown as a margin note: 'And of the great priest, and of his office, and of his garments ... and of his death, and of his priesthood, and of his sons, and of his death.'",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A real manuscript of Rufinus' Origen, read poorly by flash-lite. All three pages carry meaning-changing misreads that a fluent translation carries forward, two of them reversing the sense (p.47: 'not all is granted' → 'all things are granted'; p.136: 'that eternal fire not await us' → 'but rather the eternal fire'). Page 136 also has an invented, looping marginal list and the wrong homily numbers. Not showable as is; it needs a re-read on a stronger lane."
+  },
+  {
+    "book_id": "6a4a54cc0deff67032eaf004",
+    "slot": 105,
+    "title": "Disputatio theologica de baptismo et confirmatione. In alma academia Ingolstadiensi di martii M. D. XCV. Publicè proposita. Respondente M. Christophoro grentzing societatis Jesu, ss. Theologiae studioso.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1595 Jesuit theses print from Ingolstadt on baptism and confirmation; early modern Catholic theology. No tradition or collection set.",
+    "rights_flag": null,
+    "structure_note": "9 pages, 9 with OCR, 8 translated. The pages read are printed pp. 1, 3 and 4 (signatures A2, A3) and run in order; the catchwords match the next page. 'published: Unknown' although the title gives March 1595: a catalogue gap.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "à Divo Thoma",
+            "image": "à D.Thoma",
+            "problem": "abbreviation silently expanded",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "saluo Sacramentum",
+            "image": "saluo Sacramento",
+            "problem": "case ending",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quorum nullum, excepto primo, saluo Sacramento penitus omitti potest",
+            "english": "of which none, except the first, can be omitted while saving the Sacrament entirely",
+            "problem": "'penitus' misplaced; the sense is 'none except the first can be omitted at all with the sacrament intact'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>A</sig>",
+            "image": "no signature printed at the foot of p.4 (only show-through of 'A 3')",
+            "problem": "self-reported tag invented",
+            "severity": "minor",
+            "class": "O16"
+          },
+          {
+            "ocr": "Sanctissimae Trinitatis",
+            "image": "SS. Trinitatis",
+            "problem": "abbreviation expanded",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean: the transcription is accurate and the translation faithful on all three pages. Showable."
+  },
+  {
+    "book_id": "69d8ca5fa09828f83ddcabf9",
+    "slot": 82,
+    "title": "Icones Fungorum Niskiensium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Schweinitz's manuscript watercolour plates of fungi from Niesky (c.1805), Farlow Library, Harvard; early modern natural history, in the botany/biodiversity collections it carries.",
+    "rights_flag": null,
+    "structure_note": "110 pages, all with OCR, 67 translated. The book is mostly plates with captions, so 'translation' means translating species labels. Page 3 is the pastedown/flyleaf with a modern Farlow bookplate (a provenance mark, not a rights issue). It is tagged title-page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<page-type>title-page</page-type>",
+            "image": "a pastedown/flyleaf with a pencilled label and a bookplate",
+            "problem": "page type wrong",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "broken markup in the translation: '<margin></margin> <note>…</note> </margin>' three times, so stray closing tags reach the reader",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "the stored summary says the fungi were 'found in the Nisko region'; Niskiensium is Niesky (Saxony), not Nisko",
+            "severity": "minor",
+            "class": "E1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 38,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "A. Pleuropus variabilis",
+            "english": "<gloss>variable oyster mushroom</gloss>",
+            "problem": "invented common name (Agaricus/Crepidotus variabilis is not an oyster mushroom); every label gets an invented vernacular gloss",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The captions are transcribed accurately and the plates come through intact. The flaws are cosmetic but visible: stray closing tags on the flyleaf, invented vernacular glosses on the species names, and a summary that places Niesky in 'Nisko'. Showable after a markup fix."
+  },
+  {
+    "book_id": "69f33618876dd827cbc4fc2c",
+    "slot": 21,
+    "title": "Epistolae familiares, Historica Bohemica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A humanist manuscript (Harvard) of Pius II's letters and Historia Bohemica; Renaissance Latin source, fits a primary-source library. No tradition or collection set.",
+    "rights_flag": null,
+    "structure_note": "665 pages, 664 with OCR, 660 translated. The pages read are on their right leaves (folio 81, letter XXXVII, Historia Bohemica). Nothing structural stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 166,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "et rapina periculosa",
+            "image": "& rei p[ublice] periculosa",
+            "problem": "'dangerous to the commonwealth' read as 'the rapine dangerous'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "et rapina periculosa",
+            "english": "and the rapine dangerous",
+            "problem": "carries the misread",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 331,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "copiam misericordiam ducit salutem",
+            "image": "copiar[um] n[ost]rar[um] duci · salut[em]",
+            "problem": "Federico's title 'captain of our troops' becomes a garble, then glossed 'an abundance of mercy'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Neque arbitreris quoque Rex Francie",
+            "image": "Neq[ue] arbitreris q[uam]q[uam] Rex Francie",
+            "problem": "concessive 'although' read as 'quoque', which flips the sentence (see tr_errors)",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Neque arbitreris quoque Rex Francie noster amicus indutias in Regno Sicilie quaerat ... Nos unquam passuros",
+            "english": "Nor should you think that the King of France, our friend, seeks a truce in the Kingdom of Sicily, or wishes to include Sigismund as a friend. We will never allow ...",
+            "problem": "the source says: do not think, ALTHOUGH the King of France seeks a truce and wants to include Sigismund, that we will ever allow ... The English denies what the Pope affirms about the French king",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "copiam misericordiam",
+            "english": "<term>copiam misericordiam</term> <gloss>an abundance of mercy</gloss>",
+            "problem": "a gloss invented over a misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with '<meta>continues from previous page</meta>' although the page begins a new letter under an illuminated initial",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 497,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "domino Cardinali firmano",
+            "image": "dominico Cardinali firmano",
+            "problem": "the cardinal's name (Domenico [Capranica]) read as 'domino', so the name is lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "nobilitas ... periculorum belli contemptrix ac promissi tenax",
+            "english": "contemptuous of what is promised, and tenacious of their own",
+            "problem": "'keeping its promises' turned into 'contemptuous of what is promised', which reverses the praise",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good transcription overall of a clean humanist hand, with faithful translation on most lines. On p.331 a misread concessive makes the Pope deny that the French king seeks a truce, and p.497 reverses the praise of the Bohemian nobility. Showable with caveats."
+  },
+  {
+    "book_id": "69f337ce876dd827cbc52e83",
+    "slot": 19,
+    "title": "Ad praetantissimum patrem et meritissimum Rhavenatem antistitem Philiam Roverellam Angeli Callimachi Siculi, in libellum de oratione",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Angelus Callimachus's 1492 humanist dialogue on prayer and the Lord's Prayer, in a microfilm of a manuscript; devotional theology. No tradition or collection set.",
+    "rights_flag": null,
+    "structure_note": "32 pages, 32 with OCR, 31 translated. Each page record is an unsplit two-page opening (folios numbered 7, 13, 21 at the gutter foot); the OCR handles it as two columns. On p.25 the translation drops the left-hand page entirely.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Dico igitur orationem esse qualissima diui Basilij",
+            "image": "Dico igitur orationem e[ss]e [ut]ilissima[m] diui Basilij",
+            "problem": "the answer to 'is it useful?' ('most useful') becomes 'qualissima'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Psallendi ualitas",
+            "image": "Psallendi utilitas",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "paucas ostendit",
+            "image": "paucis ostendit",
+            "problem": "'in few words' read as 'few things'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Dico igitur orationem esse qualissima diui Basilij ita scribentis sententia",
+            "english": "I say, therefore, that prayer is as powerful as the sentiment of divine Basil",
+            "problem": "the source says prayer is most useful, by Basil's sentence; the English invents a comparison",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "marginal names are injected inline and doubled in the reader text ('from <margin>Paul</margin> Paul')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "et ab iste supra allatum est",
+            "image": "& abs te supra allatum est",
+            "problem": "word division",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Non eo dicitur: quod deus alibi non sit.",
+            "english": "It is not said so that God might not be elsewhere.",
+            "problem": "awkward ('not said because God is not elsewhere')",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "marginal names doubled inline in the translation ('As <margin>David</margin> David sang', 'by <margin>Bede</margin> Bede and <margin>Basil</margin> Basil')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "nihil est hac re difficilius in lege divina",
+            "image": "Nihil est hac re difficilius in lege diuino (later marginal hand)",
+            "problem": "normalised ending",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "utrumque eorum ad patrandum nos posse inducere. Ut igitur pro commisso peccato deus nobis ignoscat, oramus dicentes. Dimitte nobis debita nostra ... paternam misericordiam promisit et veniam",
+            "english": "(nothing; the translation starts at 'secuturam' → 'to follow')",
+            "problem": "the whole left-hand page, half the page record (the 'Forgive us our debts' petition with the Cyprian quotation), is not translated",
+            "severity": "serious",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of a clear humanist hand is accurate, but the page records are unsplit openings, and on p.25 the translation silently drops the left page, the whole 'Dimitte nobis debita' passage. Not showable until that page is re-translated; elsewhere the slips are moderate and the markup is cosmetic."
+  }
+]

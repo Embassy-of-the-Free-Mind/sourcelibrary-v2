@@ -49,6 +49,7 @@
  * filter or dataset change). Either failure pages ntfy; a pass is logged only.
  */
 import { MongoClient } from 'mongodb';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const ZONE = process.env.CF_ZONE_ID || '2a9b9c5c8eaf11ed3f9279ad50a0d06c';
 const TOKEN = process.env.CLOUDFLARE_API_TOKEN_READ;
@@ -94,7 +95,7 @@ async function gql(query) {
 async function pushNtfy(title, message, priority) {
   if (NO_PUSH) { console.log('[edge-crawl] --no-push: skipping ntfy'); return; }
   try {
-    await fetch(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'spider' }, body: message });
+    await ntfyPost(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'spider' }, body: message });
     console.log('[edge-crawl] ntfy push sent');
   } catch (err) {
     console.error(`[edge-crawl] ntfy push failed: ${err.message}`);

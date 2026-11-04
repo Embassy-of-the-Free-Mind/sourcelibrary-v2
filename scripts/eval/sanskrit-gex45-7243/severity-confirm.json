@@ -1,0 +1,1611 @@
+{
+ "n_pages": 50,
+ "arms": {
+  "F": {
+   "n": 50,
+   "grades": {
+    "DNR": 0,
+    "0": 2,
+    "1": 10,
+    "2": 35,
+    "3": 2,
+    "4": 1
+   },
+   "ge2_or_dnr": 38,
+   "misleading_4": 1,
+   "reviewer": {
+    "serious": 17,
+    "moderate": 31,
+    "minor": 2,
+    "none": 0
+   },
+   "mean_ocr_score": 3.44,
+   "n_ge2_errors": 118
+  },
+  "K0": {
+   "n": 50,
+   "grades": {
+    "DNR": 0,
+    "0": 50,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0
+   },
+   "ge2_or_dnr": 0,
+   "misleading_4": 0,
+   "reviewer": {
+    "serious": 0,
+    "moderate": 0,
+    "minor": 0,
+    "none": 50
+   },
+   "mean_ocr_score": 5.0,
+   "n_ge2_errors": 0
+  },
+  "K1": {
+   "n": 50,
+   "grades": {
+    "DNR": 0,
+    "0": 0,
+    "1": 0,
+    "2": 25,
+    "3": 25,
+    "4": 0
+   },
+   "ge2_or_dnr": 50,
+   "misleading_4": 0,
+   "reviewer": {
+    "serious": 41,
+    "moderate": 9,
+    "minor": 0,
+    "none": 0
+   },
+   "mean_ocr_score": 3.34,
+   "n_ge2_errors": 50
+  },
+  "S": {
+   "n": 50,
+   "grades": {
+    "DNR": 0,
+    "0": 0,
+    "1": 14,
+    "2": 33,
+    "3": 3,
+    "4": 0
+   },
+   "ge2_or_dnr": 36,
+   "misleading_4": 0,
+   "reviewer": {
+    "serious": 18,
+    "moderate": 30,
+    "minor": 2,
+    "none": 0
+   },
+   "mean_ocr_score": 3.38,
+   "n_ge2_errors": 98
+  }
+ },
+ "controls": {
+  "K1_caught_at_expected_grade": 50,
+  "K1_flagged_any_error": 50,
+  "K1_n": 50,
+  "K1_by_kind": {
+   "word": [
+    25,
+    25
+   ],
+   "line": [
+    25,
+    25
+   ]
+  },
+  "K0_false_alarm_grade_ge1": 0,
+  "K0_n": 50,
+  "K0_false_alarm_pages": [],
+  "K1_missed_pages": []
+ },
+ "reliable": true,
+ "per_page": {
+  "sa-2380f8b8-p481": {
+   "K1": {
+    "grade": 2,
+    "worst": "जो अविच्युति द्वारा → जो होता द्वारा (technical term replaced by unrelated word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "मू० ३२ → सू० ३३ (sūtra number changed from what the page prints)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 2,
+    "worst": "उपलप्रक्षेपप्रतिष्ठा → उपलब्धक्षेपप्रतिष्ठा; also मू० ३२ → सू० ३३",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-a4805caa-p543": {
+   "S": {
+    "grade": 1,
+    "worst": "ज्ञातिष्वग्र्योऽर्थपरो → ज्ञातिष्वप्रयोऽर्थपरो (garbled conjunct; also परिभ्रमण → परिम्रमण)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole verse line 'ईर्षुर्लुब्धो द्युतिमान् वचनपटुः कलहकृद्विशाखासु' dropped",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "प्राज्ञोऽनुपसाधुकृत् → प्राज्ञो नृपसाधुकृत्; also स्यादिन्द्रदैवत्ये → स्यादैन्द्रदैवत्ये, लब्धो → लुब्धो (one-word normalisations of what the page prints)",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-f09f57d7-p188": {
+   "K1": {
+    "grade": 2,
+    "worst": "गाथायाः कला मुनिजनैः → गाथायाः स्तोभाक्षरैरपि मुनिजनैः (word replaced by a word from elsewhere on the page)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "॥ २२९ ॥ → ॥ २२६ ॥ (verse number wrong, twice from one cause)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(सु०) → (मु०) (commentator siglum misread); also वर्णांश्च → वर्णाश्च",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-9ba75a76-p245": {
+   "K1": {
+    "grade": 3,
+    "worst": "whole last line 'चेटि–तह । ( निष्क्रान्ता । ) [ तथा । ]' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 1,
+    "worst": "द्यूतो- → व्रूतो- (also वेसमग्गे → वेसमग्गो)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "ज्ञातोऽन्यमुपतिष्ठतामिति → ज्ञातोऽन्यमुपतिष्ठामीति (also विसर्जय → विसर्ज्य)",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-f502c7c1-p213": {
+   "S": {
+    "grade": 2,
+    "worst": "मूलभूतभचक्रचलन → मूलभूतभक्तचलन",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "प्रवहादनु → प्रवाहादनु",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "क्ष्मावायुरत्राम्बुदस्तस्मादावहसंज्ञकः → वायुगोलश्चकारादुद्वह- (phrase from line 22 replaces the quoted words)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-f09f595b-p573": {
+   "K1": {
+    "grade": 3,
+    "worst": "last line of column 2 lost: हस्तमन्तरितं कृत्वा ११ → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 3,
+    "worst": "two index columns interleaved row by row (सानुलोमविलोमाख्या ३१६ / स्यात्स्वस्तिकत्रिकोणं च ११२ / सा मध्यलुठिता …); also उदाहृत → चदाहृत",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 3,
+    "worst": "two index columns interleaved on each line (सानुलोमविलोमाख्या ३१६ स्यात्स्वस्तिकत्रिकोणं च ११२ …); also मध्यलुठिता → मध्यष्ठिठिता",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-1052a93c-p345": {
+   "K0": {
+    "grade": 0,
+    "worst": "no differences from the reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "सिद्धमर्थमपनुदति → सिद्धमर्थमुपसंहरति (also गुर्वादीनामग्रे ग्रहण → गुर्वादीनामेव ग्रहणं; वीर्याख्याऽन्वर्था–अनुगतार्थेति → वीर्याख्याऽन्वर्थेति)",
+    "n_ge2": 6,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "सत्यपि वीर्यत्वे → सत्यपि विवर्त",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 1,
+    "worst": "गुर्वादीनामग्रे → गुर्वादीनामग्ने; बह्वग्रग्रहणात् → बहुप्रग्रहणात् (recurring)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-05c7c071-p209": {
+   "K0": {
+    "grade": 0,
+    "worst": "none: identical to reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line lost: 'कुशलाः, स पुनरुदकादनन्य इति । द्वौ रसाविति' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "तिल्वकः → तिलकः; संहर्षणानां → संघर्षणानां; तत्रोपविष्टानामियमर्थवती → ...नामित्यर्थवती",
+    "n_ge2": 5,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 3,
+    "worst": "whole line lost: 'शतपत्रं त्वरुणम् । इक्षुशब्दप्राप्तस्यापि पुण्ड्रकस्य पुनरभिधा-' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-06eb90f6-p1312": {
+   "F": {
+    "grade": 2,
+    "worst": "अमान्त → समान्त; स्थित्यर्ध → स्थित्यर्थ (×2)",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "लिये तिथि होती है → लिये श्रीपति होती है",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 2,
+    "worst": "श्रीपति ने → श्री नति ने; स्थित्यर्ध विमर्दार्ध → स्थित्यर्थं विमर्दार्थं",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-487f30a6-p240": {
+   "F": {
+    "grade": 2,
+    "worst": "सख्यमवगाहपानाभ्या → सङ्ख्यमवगाहनाभ्यां (पान dropped; also पुनरग्न्यातपकृतम् → पुनरन्यथातपकृतम्, उदरामयादयः → उदरप्रमादयः)",
+    "n_ge2": 7,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "मध्यदोषे → गन्धदोषे (also ज्ञेयाः → हेयाः, शवो → शब्दो)",
+    "n_ge2": 7,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'इदानीं नवस्य सलिलस्य वाह्याभ्यन्तरप्रयोगे वाह्याभ्यन्त-' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-3c8397bb-p157": {
+   "F": {
+    "grade": 2,
+    "worst": "प्रतिग्रासे त्विदं → अतिग्रासे स्विन्नं (also ग्रासक्रमेणैव → मासक्रमेणैव, जलूकाभो → जलकामो)",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "running-head page ८१ → ८२; जीर्णाभ्रकरसलक्षणम् चतुष्षष्ट्यंशके → जीर्णोन्नकरसत्कक्षणम् चतुष्पष्टशङ्के",
+    "n_ge2": 5,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "॥ ३७० ॥ → ॥ ब्रह्मायुर्लक्षवेधकः ॥ (verse number replaced by a phrase repeated from v. 372)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   }
+  },
+  "sa-ee26b1c8-p54": {
+   "S": {
+    "grade": 2,
+    "worst": "द्युगणं → द्युम्नं (verse 1); also षष्ट्यधिकैः → षष्ठाधिकेः (sixty → sixth)",
+    "n_ge2": 3,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 18 'बुधाधिपतिः । अथ त्रिंशतः शेषम् ४ । एतावन्ति दिनानि प्रवृत्तस्य ।' → missing",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "चाधिकं → साधिकं (verse 1); also मङ्गारकाधिपत्यं → मङ्गलार्क - ऽधिपत्यं, तदिदम् → तथेsub-",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-9ba757c7-p165": {
+   "K1": {
+    "grade": 2,
+    "worst": "verse number ॥ ११५ ॥ → ॥ ११४ ॥ (duplicates previous verse number)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "fn.1 ‘पेशल°’ → 'पेलव०' (variant reading replaced by text word); also fn.12 ‘थङ्गुल्यः’ → 'अङ्गुल्यः', सदोष → मंदोप",
+    "n_ge2": 4,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "ह्यङ्गुल्यः → द्व्यङ्गुल्यः; fn.12/13 ‘थङ्गुल्यः’/‘गृहादिषु’ → 'शृङ्खलाः'/'शृङ्खलादिषु'",
+    "n_ge2": 6,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-0c10b7a9-p485": {
+   "S": {
+    "grade": 2,
+    "worst": "शुक्रस्य=९ / शुक्र के=९ / ९+२=११ → २ (Venus kālāṃśa number misread as २ throughout)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 1,
+    "worst": "उदयास्तयोर्गतैष्य → उदयास्तयोस्तैष्य (also ग्रहार्क → ग्रहाह, ऽनेना → इतेना)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'शुक्र, गुरु, बुध, शनि,और मङ्गल, ये ग्रह नौ ९ में दो दो की वृद्धि से अर्थात् शुक्र ९, गुरु' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-1697c362-p109": {
+   "S": {
+    "grade": 1,
+    "worst": "महदवाप्य → महद्वाप्य (spurious virāma garbles word)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 1,
+    "worst": "भिन्ध्यनीकानि → भिन्द्ध्यनीकानि (garbled conjunct)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "यशो → चापदण्डां (word replaced by one from v.16; changes sense)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-57449355-p286": {
+   "K1": {
+    "grade": 3,
+    "worst": "line 7 'तैजसः सप्तधा भिन्नो बुद्धिगर्वख7वायुभिः ।' → (whole line dropped)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "footnote 9 'C मथा' → 'C मया' (variant reading becomes another real word); also 'B हि' → 'B द्वि', 'B तश्चै' → 'तथै'",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "'शुक्रशोणितरूपिणीम्' → 'शुक्लशोणितरूपिणीम्'; also 'विश्वाख्ये' → 'विश्वारूपे', footnotes 'प्राक्छ'/'नाद' → 'श्राव्य', 'तश्चै' → 'सत्त्वे'",
+    "n_ge2": 6,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-c9e1f67c-p238": {
+   "F": {
+    "grade": 2,
+    "worst": "दर्शपौर्णमासादियागविधानाद्देशमात्रमाक्षिप्तम् → ...देशमात्रप्राप्तिसम्; also page no. २२८ → ३२८, निर्वृत्ते → निवृत्ते",
+    "n_ge2": 3,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "कस्तर्ह्यनयोर्विशेषः → कस्तत्र नयोर्विशेषः; also व्रतम् → वृत्तम्, शास्त्रतो → शास्त्रो, एतत्सामर्थ्यात्तन्निवृत्तिः → एतत्सामर्थ्यात् निवृत्तिः",
+    "n_ge2": 5,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "अतः परि-[संख्या] → अतः पाक्षिकी [संख्या]",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   }
+  },
+  "sa-b109159e-p449": {
+   "F": {
+    "grade": 0,
+    "worst": "index entries with wrapped continuation lines joined onto one line (उभयोः …, उवाच …); printed watermark lines also transcribed",
+    "n_ge2": 0,
+    "reviewer_severity": "minor",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 3,
+    "worst": "two columns interleaved row by row (उपेताः / ऊष्मपाः / उपेत्य / ऋक् …) instead of column 1 then column 2",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole entry line dropped: 'ऋते xi, 32' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none: matches reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-9d20bde5-p73": {
+   "F": {
+    "grade": 2,
+    "worst": "page number ९९ → ५५",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 2,
+    "worst": "page number ९९ → ५६",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "वीर्य सामर्थ्यम्, → वीर्य पदं (gloss replaced by another word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-f502b85a-p295": {
+   "F": {
+    "grade": 2,
+    "worst": "तथत्ता ; यथत्ता → तण्हत्ता ; सब्बत्ता (wrong example forms in last line)",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line '= तथा ; तस्मिं पकारे = तथा ; एवं सब्बथा ; अञ्ञथा ;' → dropped",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "तु था / थापच्चयो → तु या / यापञ्चयो (sūtra suffix wrong); also ण → च, वसिट्ठ → भसिट्ठ, अञ्ञथा → अज्जया",
+    "n_ge2": 7,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-1697d02c-p555": {
+   "S": {
+    "grade": 1,
+    "worst": "यथाकालमहिंसिता → यथाकालमहिसिता (anusvāra dropped)",
+    "n_ge2": 0,
+    "reviewer_severity": "minor",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "सुखं दुःखं च देहिनाम् → सुखं दुःखं च बान्धवा (different word, sense changed)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 1,
+    "worst": "प्रवर्तेते → प्रवर्तते (dropped mātrā; also कस्मिंश्चिदहं → कस्मिंश्चिद्दहं)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-5d8bcdfd-p204": {
+   "F": {
+    "grade": 3,
+    "worst": "line 'गुरूणं निद्देसकरणं, खुहा-पिवासाइ… किं बहुणा ?' lost; header + first 3 lines repeated with junk 'गुरूgather / गुरूfore...'",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line dropped: 'थिउल्लिया, गहियव्वा अगहियपुव्वा तिहुयणजयपडागा । एओवमं दुक्करं समणत्तणं ति ॥' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "क्षुत-पिपासादि → श्रुत-पिपासादि (also विंधेयव्वा → विधेयव्वा)",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-574474fa-p103": {
+   "S": {
+    "grade": 2,
+    "worst": "विषयास्स्वसंसर्गेण → विषयास्त्वसंसर्गेण (own contact → non-contact); also एकत्र → एकत्वं",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "सर्वं बिभर्तीति सर्व- → सर्वं बिभर्तीति लोकतश्च (word substituted from elsewhere on page)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "विषयास्स्वसंसर्गेण → विषयास्त्वसंसर्गेण; also मरुभूम्य → मरुमरीच्य, अस्यास्तित्वं → अस्त्यास्तित्वं",
+    "n_ge2": 3,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-be36eddd-p717": {
+   "F": {
+    "grade": 2,
+    "worst": "न तु तदजनकः → न तु तज्जनकः (sense reversed); also पुमानेष → पुमानेव, स्वस्वभावादपि → स्वभावादपि",
+    "n_ge2": 5,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'स्वरूपेणैव जनको न पररूपेण, येन चात्मीयेन स्वभावेनासौ जनक इष्यते तस्माच्च' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "अन्यथा ह्यात्मना → अन्यथा स्यात्मना; ततश्च → तत्र; ह्यन्यस्मात्स्वभावाद्व्यावृत्तस्तत्स्वभावो → हन्यस्मात्स्वभावाद्भावाद्वावृत्तस्त्वस्मात्तो",
+    "n_ge2": 4,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-ee26c1e2-p56": {
+   "F": {
+    "grade": 2,
+    "worst": "८१९१ → ८१६१ (total wrong; also enumeration ९ → ६ twice)",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "जातीनां निजभेदानपास्य एषा → जातीनां रूपगण- एषा (word replaced by fragment from line 2)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 1,
+    "worst": "भागापवाहो → भागापवाहौ; footnote भागप्रभागभानुबन्धा → भागप्रभागभागनुबन्धा",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-5d8be97b-p119": {
+   "K1": {
+    "grade": 3,
+    "worst": "whole line dropped: निजलीलाविलासात्तु भासयेत् तदिदन्तया → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "verse numbers 993–1002 → ११३–१२०, १२०१, १२०२ (also गुणसन्दृब्धाः → गुणसन्दृष्टाः)",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "अपरिच्छिन्नपूर्णाहम्रूपेणैव → अपरिच्छिन्नपूर्णाहम्भावेनैव (also 993 → ११93)",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-91d255ef-p66": {
+   "F": {
+    "grade": 1,
+    "worst": "दूजि् → दूनि़ (also ब्यन-अभीद → व्यन-अभ्योद, धुनिये → धुनिंये)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "छः विशेषणों से → छः उसी से (word replaced by another real word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 1,
+    "worst": "शैशव → शंशव (also ब्यन → व्यन, ज़ → ज nukta dropped)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-a0ef5a44-p67": {
+   "S": {
+    "grade": 2,
+    "worst": "मूकप्रश्न → मुक्तप्रश्न (also running head प्रश्नप्रकरणम् → श्रवणरत्नम्, जो → मो, अवध्यङ्कश्च → अवध्यद्भुःश्च)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "page number ( ५९ ) → ( ५१ ) with running head प्रश्नप्रकरणम् → प्रथमतन्त्र and invented <page-num>51",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole verse line 'कियन्मेस्यादितिप्रश्नेकृतेसति ॥ २५ ॥ प्रस्ता' dropped",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-f502c5b5-p135": {
+   "K1": {
+    "grade": 2,
+    "worst": "यच्छति मूलं गणक → यच्छति पुनः गणक (v. 280½; 'root' replaced by another real word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "राशिर्द्व्यंशोन → राशिर्द्वित्र्यंशोन ('less a half' becomes 'less two-thirds'); also verse numbers २७८१/२ → २७८३/२ throughout",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "॥ २८३ ॥ → ॥ २८१ ॥ (wrong verse number); also ½ dropped/misread in all verse numbers: २७८१/२ → २७८३",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none: identical to reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-e5a9d403-p143": {
+   "S": {
+    "grade": 2,
+    "worst": "द॒त्तं → दुस्रं; ताम॒द्य → तामस्य; इन्द्र॑श्चा॒ग्निश्च॑ → इन्द्रेष्वामिष्वं",
+    "n_ge2": 3,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line '॥९०॥ यां ते॑ रु॒द्र इषु॒मास्य॒दङ्गे॑भ्यो हृ॒दया॑य च ।' → missing",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 4,
+    "worst": "printed gaps filled from the standard text: 'इन्द्रे॑ ... राष्ट्र॒मु' → 'इन्द्र॑ इवे॒ह ध्रु॒वस्ति॑ष्ठे॒ह रा॒ष्ट्रमु॑', 'तस्मै॒ ... ावद॒यं' → 'तस्मै॒ सोमो॒ अधि॑ ब्रव॒दुभयं॑', 'मृ॑णी ... ऽधरा॑न्' → 'मृ॑णीहि शत्रून्त्सहा॑यन्त्स॒धरा॑न्'",
+    "n_ge2": 8,
+    "reviewer_severity": "serious",
+    "ocr_score": 2
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-1697d5dc-p122": {
+   "F": {
+    "grade": 1,
+    "worst": "मान्धाता → मान्याता (non-word; also निर्ऋतिश्च → निरृतिश्च, सर्वरत्न → सर्व्ररत्न)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "चन्द्रवक्त्रो → चन्द्रवक्रो (vaktra 'face' → vakra 'crooked'; also हिमवद्गिरि → हिमवद्विरि)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "स्कन्दो वैश्रवणस्तथा → स्कन्दो मान्धाता (name replaced by one from v.102)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-a5ffb864-p176": {
+   "K1": {
+    "grade": 3,
+    "worst": "last line 'व्यतीत होंते चले गये । अकस्मात् अपनी युवास्था को फूटते हुये घड़े के' → missing",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 1,
+    "worst": "वर्षेष्वावृत्तिशालिषु → वर्षेष्ववृत्तिशालिषु (also <page-num>/<header> tags and '>' markers leaked)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 2,
+    "worst": "verse numbers ।२१।…२८ → ११…१८ throughout; also दृढ़ प्रेम → हृद् प्रेम",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-f502ba19-p262": {
+   "K1": {
+    "grade": 2,
+    "worst": "जो शेषरहे वह गुणलब्धि → जो कही वह गुणलब्धि",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "vallī column वल्ली बनाई १ ७ … रीतिके १ ० → वल्ली बनाई १७ १५ … रीतिके १; also page number (२५०) → (३५०)",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "vallī digits dropped: वल्ली बनाई १ ७ … रीतिके १ ० → बली बनाई १ … रीतिके",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   }
+  },
+  "sa-be36f107-p107": {
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "स्यादविशेषात् → स्याद्विशेषात् (sense reversed); also चेदप्राप्तिपक्षेऽपि → चेत्प्रतिपक्षेऽपि",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 22 'क्रमव्यवसायो न स्यादाशूत्पत्तेस्तुल्यत्वात्, ततश्च प्रतीतिभेदो न स्यात्, सर्वासां' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 1,
+    "worst": "नैष / नैवम् → तैष / तैवम्; also ग्रामाद्ग्रामान्तरं → ग्रामाद्भामान्तरं, कुड्यादे → कुट्ट्यादे",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-a99c0f2f-p78": {
+   "K1": {
+    "grade": 2,
+    "worst": "घटमुखेन अद्वयोक्तौ → संभावितः, अद्वयोक्तौ (word replaced by a duplicate of a later word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "७४ → ७५ (page number); also लोट् → लोङ्, प्रमात्रन्तराणि → प्रमाणान्तराणि, (उ० स्तो० १३।७) → १२",
+    "n_ge2": 6,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(शि०दृ० ७।९१) → (शि० ८० ७।१३); also (भ.गी.४।१८) → ४।१२, दशायां → दृष्ट्या, सूच- → सूत्र-",
+    "n_ge2": 5,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-c1af74df-p268": {
+   "K1": {
+    "grade": 3,
+    "worst": "verse line 'अभिजिद् ब्रह्महृदयं त्रयोदशभिरंशकैः ॥ १२ ॥' → omitted entirely",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 1,
+    "worst": "गृहीतस्तेनास्वात्मकोदयेन → गृहीतस्तेनास्वात्मकतयोदयेन (also कालांशान्तरस्य → कालांशास्तरस्य, रौद्रर्क्षमेव → रौद्रक्षमेव)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (matches reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 1,
+    "worst": "रौद्रर्क्षमेव → रौद्रक्षमेव (also कालांशां → कालांशों, हैं → है; formula in LaTeX markup)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-1697bdac-p195": {
+   "K1": {
+    "grade": 2,
+    "worst": "सर्वं → सभां (v.15, another real word)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "S": {
+    "grade": 2,
+    "worst": "सभामग्र्यां → सभामध्यां (v.17, another real word); also युत्र, वैङ्ग्य, चकु, उपजहुः, माचस्यु slips",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": ";माचख्युस्ते → ;माचख्युरस्मै (word replaced); also तदेवैतदवशस्य → तदैवैतद्वशस्य",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   }
+  },
+  "sa-09173f3c-p64": {
+   "K1": {
+    "grade": 3,
+    "worst": "last line 'मानस्योत्कर्षापकर्षावाह—गर्भः स्यादित्यादिना । गर्भिण्या राजदर्शने' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 1,
+    "worst": "चकारान्मातुर्हृदयं → चकारान्मातृदयं (also printed मूयते → सूयते, विषयानभि° → विषयान्भि°)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 1,
+    "worst": "चतुर्थे → चतुर्थं (also कुर्याद्गर्भ° → कुर्याद्वर्भ°, तदार्तो → तदातो)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-c27da5ea-p674": {
+   "K0": {
+    "grade": 0,
+    "worst": "no differences from reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "ग्रहण → प्रहरण (×4, another real word); कई जातियों → यही जातियों",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "लेकर वह पचा गया → दिनों वह पचा गया",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 1,
+    "worst": "भारत पर → भरत पर (ā-mātrā damaged in image)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-09e780a7-p626": {
+   "F": {
+    "grade": 2,
+    "worst": "पृथिवीधातुवर्जम् → पृथिवीधातुप्रचुरम् (sense reversed); also द्रवभूयस्त्व → बहुभूतत्व, उपादाननिमित्तयोः → उपादानविभिन्नयोः, उपलक्ष्यन्त → उपसृष्ट्यन्त, दृष्टेरग्न्यादि → द्वैरूप्याद्",
+    "n_ge2": 14,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line lost: 'श्रुतिविरोधोत्थापनार्था । अत्र हि लोमकेशयोरोषधिवनस्पतिगमनं … एवं च तन्मध्यपति-' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (no diffs against reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 1,
+    "worst": "अग्न्यादि → अभ्यादि (systematic misread, recoverable); also भामती → भासती, विभजते → विभवते, अनुपपत्त्या → अनुपस्था",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-5744c41d-p150": {
+   "K1": {
+    "grade": 2,
+    "worst": "किं परस्परसहकारित्वमनयोरे- → किं स्यादिति (phrase replaced by words not on that line)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "संस्कारनिष्ठान्यथासिद्ध्यनिरूपकत्वे → संस्कारनिष्ठानन्यथासिद्धयन्निरूपकत्वे (anyathāsiddhi → ananyathāsiddhi, repeated)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 1,
+    "worst": "व्याप्तेश्चावच्छिन्नत्व → व्यासेश्वावच्छिन्नत्व; स्वस्वकार्ये → स्वस्वकार्यं",
+    "n_ge2": 0,
+    "reviewer_severity": "minor",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-05c7c3a0-p171": {
+   "F": {
+    "grade": 2,
+    "worst": "निमिताः → निर्मिताः (also नाभिधानइति → नाभिधानमिति, the footnote variant)",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'शब्दो व्यक्तौ प्रयुज्यतइति । यदि गौरित्यस्य पदस्य न व्यक्तिरर्थो ऽस्तु तर्हि ।' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "sūtra number ॥ ५९ ॥ → ॥ ५६ ॥",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-7ec56c99-p579": {
+   "S": {
+    "grade": 2,
+    "worst": "पुष्यकालो → पुष्पकालो (verse and notes); also (प्राणादि) → (प्रागादि), तद्द्विगुणम् → तद्विगुणम् in apparatus",
+    "n_ge2": 4,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "॥ २९ ॥ → ॥ २६ ॥ (verse no., also in notes); page ( १९० ) → ( १६० ); पुष्यकालो → पुण्यकालो, विपर्यस्वम् → विपर्य्यस्तम् (variant readings put in the verse)",
+    "n_ge2": 5,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "(वि० इसकी क्रमसख्या २९ …) → (वि० तद्वि४गुणम् क्रमसख्या २९ …)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-574472af-p408": {
+   "K1": {
+    "grade": 3,
+    "worst": "whole commentary line dropped: 'अस्मात्कर्मण इदं फलमनुभवत्विति … अचिन्त्यरूपं चिन्त-' → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "शास्त्रैकगम्यत्वाद्दृष्टविलक्षणत्वाच्च → शास्त्रैकगम्यत्वाददृष्टविलक्षणत्वाच्च (दृष्ट reversed to अदृष्ट); also दृष्टसरूपम् → दृष्टस्वरूपम्, केनचिच्चिन्तयितुं → केन विचिन्तयितुं",
+    "n_ge2": 3,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "न चाणोर्जीवा-(त्सूक्ष्मतरम्) → न चाणोर्वाक् (जीव lost, another word); also नञा सह → नगा स",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none: identical to reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-5d8bd37f-p150": {
+   "F": {
+    "grade": 1,
+    "worst": "स्वरगमन् → स्वर्गमगमन् (normalised spelling, same sense); also ऋषिकुलमणीणां → ऋषिकुलगणीणां, कर्मार्थं → कर्मार्थे",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "व्यतीतानां → तरलतरसंसारमतरन् (opening word of verse 4 replaced by a phrase from verse 6)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "घ्राणं → ब्राह्मणं (another real word); also the heading विवेचनम् dropped, सुहृदयान् → सुदृश्यान्",
+    "n_ge2": 3,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-18cd7735-p100": {
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 22 dropped: विशिष्टम् । तदवगतिसमकालं विगतस्वातिरिक्तवत्स्वरूपो भूत्वा कृतकृत्यो → (missing)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "सत्तायास्तत्पदं → सत्तायास्तत्त्वपदं",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "F": {
+    "grade": 2,
+    "worst": "स्वतिरिक्तविभ्रमशान्त्यर्थं → स्वतिरिक्तविभ्रमाशान्त्यर्थं (reads as 'non-pacification')",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-05c7c4d9-p190": {
+   "S": {
+    "grade": 2,
+    "worst": "तनुश्छाद्यतेऽनेनेति → तनुरुद्यतेऽनेनेति; स्वार्थेऽण्प्रत्ययः → स्वार्थेऽप्यल्पयः (suffix अण् lost); also running head द्वादश → श्राद्ध",
+    "n_ge2": 2,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 2,
+    "worst": "आसेर्लङ् → आसेर्लट् (wrong lakāra); also जेतैव → जैत्रं, प्राक्पराक्रम → प्राप्तपराक्रम, रक्षःपरिचार → वक्षःपरिवार",
+    "n_ge2": 4,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "चिरादन्योन्यदर्शनेन → द्वादश (word replaced by running-head word)",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 4
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  },
+  "sa-5d8bf7ad-p264": {
+   "K0": {
+    "grade": 0,
+    "worst": "no differences from reference",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 1,
+    "worst": "नावाच्या → नावा आ (garbled conjunct; also running head नवनाथ → नेवनोय, नाथांची → नाथाची)",
+    "n_ge2": 0,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'पडतोस हे योग्य नाही.’' dropped",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "F": {
+    "grade": 0,
+    "worst": "नावाच्या → नावा च्या (spacing); curly → straight quotes",
+    "n_ge2": 0,
+    "reviewer_severity": "minor",
+    "ocr_score": 5
+   }
+  },
+  "sa-1697ba6d-p651": {
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   },
+   "S": {
+    "grade": 2,
+    "worst": "वीर्यवान्प्रथितो → वीर्यवान्मथितो (another real word; also गृहेणेव → गृहेणैव)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "K1": {
+    "grade": 2,
+    "worst": "verse number ॥ ००२ ॥ → ॥ कृताञ्जलिः ॥",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   },
+   "F": {
+    "grade": 2,
+    "worst": "नृपस्तद्वनं → नृपस्तद्धनं (forest → wealth; also हुङ्करेणैव → हुङ्कारेणैव)",
+    "n_ge2": 1,
+    "reviewer_severity": "moderate",
+    "ocr_score": 4
+   }
+  },
+  "sa-0cf222e4-p520": {
+   "F": {
+    "grade": 2,
+    "worst": "५०० त्प्रकृति ५ गुणा → स्वकृति ५ गुण्वा (also प्रकृतिवर्णमानं → प्रकृतिवर्गामानं)",
+    "n_ge2": 2,
+    "reviewer_severity": "moderate",
+    "ocr_score": 3
+   },
+   "K1": {
+    "grade": 3,
+    "worst": "whole line 'एव राशिः १० वा १७० ॥' → omitted",
+    "n_ge2": 1,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "S": {
+    "grade": 2,
+    "worst": "ज्ये २० → ज्ये ६० (also कालकवर्गेण/कालकपक्षे → कालक्रमेण; क्षेपः → क्षेत्रः; या२ → या ४)",
+    "n_ge2": 5,
+    "reviewer_severity": "serious",
+    "ocr_score": 3
+   },
+   "K0": {
+    "grade": 0,
+    "worst": "none (identical to reference)",
+    "n_ge2": 0,
+    "reviewer_severity": "none",
+    "ocr_score": 5
+   }
+  }
+ }
+}

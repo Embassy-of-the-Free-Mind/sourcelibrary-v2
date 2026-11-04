@@ -1,0 +1,795 @@
+{
+  "dir": "scripts/eval/results/zh-translation-strata-5274",
+  "primary_judge": "opus",
+  "second_judge": null,
+  "seed": 20261103,
+  "drawn_at": "2026-11-03T12:11:59.835Z",
+  "n_main_drawn": 0,
+  "n_main_judged": 0,
+  "n_books": 0,
+  "controls": {
+    "swap": {
+      "n": 15,
+      "caught_fidelity_le2": 15,
+      "flagged_wrong_page": 15,
+      "missed": []
+    },
+    "drop": {
+      "n": 15,
+      "flagged_omission": 15,
+      "fidelity_le3": 15,
+      "missed": [],
+      "original_fidelity": [
+        {
+          "id": "aa036c7a46",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "72e23710ae",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "f2a0754af5",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "8e510923b7",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "51360d7692",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "aebb72ff76",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "2935067ff4",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "e0d9c5f572",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "43eebc3e62",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "3a7e59fc0e",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "45f14b338b",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "8c50f34ea6",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "0723ab5cdf",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "6708999158",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        },
+        {
+          "id": "76482bfae7",
+          "language": "Chinese",
+          "drop_fidelity": 2
+        }
+      ]
+    },
+    "repeat": {
+      "n": 15,
+      "exact": 11,
+      "within1": 15,
+      "flags_identical": 12,
+      "pairs": [
+        {
+          "id": "57e176a63e",
+          "language": "Chinese",
+          "a": 5,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "31ff152c29",
+          "language": "Chinese",
+          "a": 4,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "b4995eabb7",
+          "language": "Classical Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "b1b832b8f0",
+          "language": "Classical Chinese",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "38054155b0",
+          "language": "Chinese",
+          "a": 3,
+          "b": 4,
+          "flags_same": false
+        },
+        {
+          "id": "6db9ac3dce",
+          "language": "Chinese",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "effca7186e",
+          "language": "Chinese",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "3ed338ed28",
+          "language": "Chinese",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "f9047653f8",
+          "language": "Chinese",
+          "a": 5,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "ef49554d84",
+          "language": "Chinese",
+          "a": 4,
+          "b": 4,
+          "flags_same": true
+        },
+        {
+          "id": "850068a264",
+          "language": "Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "9508a63c09",
+          "language": "Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "5782c8a4eb",
+          "language": "Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        },
+        {
+          "id": "4cfd8a4243",
+          "language": "Chinese",
+          "a": 1,
+          "b": 1,
+          "flags_same": false
+        },
+        {
+          "id": "ce5bb38a73",
+          "language": "Chinese",
+          "a": 5,
+          "b": 5,
+          "flags_same": true
+        }
+      ]
+    }
+  },
+  "controls_gate": {
+    "pass": true,
+    "checks": {
+      "swap": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      },
+      "drop": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.8666666666666667,
+        "pass": true
+      },
+      "repeat": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      }
+    }
+  },
+  "overall_unweighted": {
+    "n": 0,
+    "n_drawn": 0,
+    "fidelity_mean": null,
+    "fidelity_median": null,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "pct_ge4": null,
+    "pct_le2": null,
+    "pct_5": null,
+    "flags": {
+      "omission": null,
+      "invention": null,
+      "inversion": null,
+      "untranslated": null,
+      "wrong_language": null,
+      "wrong_page": null,
+      "garble_passthrough": null,
+      "truncated": null,
+      "repetition": null
+    },
+    "any_major": null,
+    "confidence_mean": null
+  },
+  "by_language": {},
+  "by_arm": {},
+  "by_language_arm": {},
+  "by_period": {},
+  "by_prompt": {},
+  "by_script_class": {},
+  "modernization": {
+    "n": 0,
+    "n_drawn": 0,
+    "fidelity_mean": null,
+    "fidelity_median": null,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "pct_ge4": null,
+    "pct_le2": null,
+    "pct_5": null,
+    "flags": {
+      "omission": null,
+      "invention": null,
+      "inversion": null,
+      "untranslated": null,
+      "wrong_language": null,
+      "wrong_page": null,
+      "garble_passthrough": null,
+      "truncated": null,
+      "repetition": null
+    },
+    "any_major": null,
+    "confidence_mean": null
+  },
+  "stale_translation": {
+    "n": 0,
+    "n_drawn": 0,
+    "fidelity_mean": null,
+    "fidelity_median": null,
+    "dist": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "pct_ge4": null,
+    "pct_le2": null,
+    "pct_5": null,
+    "flags": {
+      "omission": null,
+      "invention": null,
+      "inversion": null,
+      "untranslated": null,
+      "wrong_language": null,
+      "wrong_page": null,
+      "garble_passthrough": null,
+      "truncated": null,
+      "repetition": null
+    },
+    "any_major": null,
+    "confidence_mean": null
+  },
+  "corpus_estimate": {
+    "note": "post-stratified by language (weights = live translated pages per language at draw time); languages outside the 15 sampled are not represented; CI = 95% bootstrap over pages-as-books within language",
+    "weights": {
+      "Chinese": 100
+    },
+    "pct_fidelity_ge4": {
+      "est": 0,
+      "ci": [
+        0,
+        0
+      ]
+    },
+    "pct_fidelity_5": {
+      "est": 0,
+      "ci": [
+        0,
+        0
+      ]
+    },
+    "pct_fidelity_le2": {
+      "est": 0,
+      "ci": [
+        0,
+        0
+      ]
+    },
+    "flags": {
+      "omission": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "invention": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "inversion": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "untranslated": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "wrong_language": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "wrong_page": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "garble_passthrough": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "truncated": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "repetition": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      }
+    },
+    "any_major_defect": {
+      "est": 0,
+      "ci": [
+        0,
+        0
+      ]
+    }
+  },
+  "sensitivity": {
+    "note": "corrected estimates; see comment in score.mjs. \"language\" = the headline weighting; \"language_x_arm\" re-weights the quota-sampled arm to its true share; \"page_weighted\" weights each book by its translated pages (random page rather than random book)",
+    "pct_fidelity_ge4": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "pct_fidelity_5": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "pct_fidelity_le2": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "any_major_defect": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "omission": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "invention": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "garble_passthrough": {
+      "language": 0,
+      "language_x_arm": null,
+      "page_weighted": 0
+    },
+    "by_language_arm_weighted": null
+  },
+  "zh_strata": {
+    "note": "Chinese headline cell = strata-weighted (w_books) over main + zh books; main_only = the cell without the oversample",
+    "n_main": 0,
+    "n_pool": 110,
+    "pct_ge4": {
+      "main_only": null,
+      "strata_weighted": 66.3
+    },
+    "any_major": {
+      "main_only": null,
+      "strata_weighted": 30.4
+    },
+    "by_stratum": {
+      "3-flash|gemini": {
+        "w_books": 5,
+        "w_pages": 5.5,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 2.83,
+        "fidelity_median": 3,
+        "dist": [
+          4,
+          2,
+          0,
+          4,
+          2
+        ],
+        "pct_ge4": 50,
+        "pct_le2": 50,
+        "pct_5": 16.7,
+        "flags": {
+          "omission": 0,
+          "invention": 58.3,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 8.3,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 50,
+        "confidence_mean": 0.83
+      },
+      "3-flash|other": {
+        "w_books": 1.9,
+        "w_pages": 0.8,
+        "n": 3,
+        "n_drawn": 3,
+        "fidelity_mean": 3.33,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          0,
+          2,
+          1,
+          0
+        ],
+        "pct_ge4": 33.3,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 66.7,
+          "invention": 33.3,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 66.7,
+        "confidence_mean": 0.78
+      },
+      "3-flash|paddle": {
+        "w_books": 39.8,
+        "w_pages": 44.1,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 3.42,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          0,
+          7,
+          5,
+          0
+        ],
+        "pct_ge4": 41.7,
+        "pct_le2": 0,
+        "pct_5": 0,
+        "flags": {
+          "omission": 50,
+          "invention": 25,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 33.3,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 50,
+        "confidence_mean": 0.7
+      },
+      "3.8-flash|gemini": {
+        "w_books": 3.1,
+        "w_pages": 1.9,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 4.67,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          4,
+          8
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 66.7,
+        "flags": {
+          "omission": 8.3,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.81
+      },
+      "3.8-flash|other": {
+        "w_books": 0.4,
+        "w_pages": 0.4,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 4.42,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          0,
+          7,
+          5
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 41.7,
+        "flags": {
+          "omission": 0,
+          "invention": 41.7,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.79
+      },
+      "3.8-flash|paddle": {
+        "w_books": 33.3,
+        "w_pages": 26.9,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 4.42,
+        "fidelity_median": 4.5,
+        "dist": [
+          0,
+          0,
+          1,
+          5,
+          6
+        ],
+        "pct_ge4": 91.7,
+        "pct_le2": 0,
+        "pct_5": 50,
+        "flags": {
+          "omission": 8.3,
+          "invention": 16.7,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 8.3,
+        "confidence_mean": 0.77
+      },
+      "flash-lite|gemini": {
+        "w_books": 5.3,
+        "w_pages": 7,
+        "n": 11,
+        "n_drawn": 11,
+        "fidelity_mean": 4.27,
+        "fidelity_median": 4,
+        "dist": [
+          0,
+          0,
+          2,
+          4,
+          5
+        ],
+        "pct_ge4": 81.8,
+        "pct_le2": 0,
+        "pct_5": 45.5,
+        "flags": {
+          "omission": 18.2,
+          "invention": 9.1,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 9.1,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 18.2,
+        "confidence_mean": 0.77
+      },
+      "flash-lite|paddle": {
+        "w_books": 5.2,
+        "w_pages": 7.1,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 3.08,
+        "fidelity_median": 3,
+        "dist": [
+          0,
+          4,
+          3,
+          5,
+          0
+        ],
+        "pct_ge4": 41.7,
+        "pct_le2": 33.3,
+        "pct_5": 0,
+        "flags": {
+          "omission": 50,
+          "invention": 50,
+          "inversion": 33.3,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 8.3,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 58.3,
+        "confidence_mean": 0.76
+      },
+      "opus|gemini": {
+        "w_books": 1.1,
+        "w_pages": 1,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 4.92,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          1,
+          11
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 91.7,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.77
+      },
+      "opus|paddle": {
+        "w_books": 4.9,
+        "w_pages": 5.2,
+        "n": 12,
+        "n_drawn": 12,
+        "fidelity_mean": 5,
+        "fidelity_median": 5,
+        "dist": [
+          0,
+          0,
+          0,
+          0,
+          12
+        ],
+        "pct_ge4": 100,
+        "pct_le2": 0,
+        "pct_5": 100,
+        "flags": {
+          "omission": 0,
+          "invention": 0,
+          "inversion": 0,
+          "untranslated": 0,
+          "wrong_language": 0,
+          "wrong_page": 0,
+          "garble_passthrough": 0,
+          "truncated": 0,
+          "repetition": 0
+        },
+        "any_major": 0,
+        "confidence_mean": 0.76
+      }
+    }
+  },
+  "defect_types": {},
+  "worst": []
+}

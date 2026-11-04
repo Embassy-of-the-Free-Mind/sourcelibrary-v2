@@ -11,7 +11,9 @@
 #     AGY_HEAVY_BOX_CAP (default 40) such calls per UTC day on this box, counted in $AGY_GUARD_DIR/<date>.log.
 #   - no --model: gemini-3.8-flash-low is added, so a bare `agy -p` can never land on a heavy default.
 # A refusal prints "quota reached" on stderr and exits 75, so agy-cli.mjs and the scripts that copy its QUOTA regex
-# stop as they would on a real lockout instead of retrying.
+# stop as they would on a real lockout instead of retrying. A refusal that is a setup mistake rather than spent quota
+# (an AGY_HOME with no login, a model that account may not run) says "refused (config)": it still stops the run
+# once, and agy-cli.mjs does not record it as the account's pool running out (#7514 review).
 #
 # Install (per box as root, or on the Mac): scripts/workers/agy-guard.sh --install. Undo: --uninstall.
 # The real CLI updates itself in place (Linux ~/.local/bin/agy, Mac /opt/homebrew/bin/agy), so the guard is a
@@ -25,6 +27,7 @@ else
   REAL="${AGY_REAL:-/root/.local/bin/agy}"; SELF_DIR=/root/bin/agy-guard; RCS="/root/.bashrc /root/.profile"
   GUARD_DIR="${AGY_GUARD_DIR:-/root/agy-quota/heavy}"
 fi
+QUOTA_DIR="${AGY_QUOTA_CACHE:-$(dirname "$GUARD_DIR")/quota}"
 CAP="${AGY_HEAVY_BOX_CAP:-40}"
 HEAVY='argon|-pro'
 MARK='# agy-guard PATH (#7075)'
@@ -42,6 +45,16 @@ if [ "$1" = "--uninstall" ]; then
   for rc in $RCS; do sed -i.bak "\|$MARK|d" "$rc" && rm -f "$rc.bak"; done
   [ -L /usr/local/bin/agy ] && ln -sfn "$REAL" /usr/local/bin/agy
   rm -f "$SELF_DIR/agy"; echo "agy-guard removed"; exit 0
+fi
+
+# A second Google account: AGY_HOME=<dir> runs the CLI with that HOME, so it reads the login in
+# <dir>/.gemini/antigravity-cli/antigravity-oauth-token instead of root's. Quota is per account, so the heavy-call cap
+# is counted per account too. Linux only: the Mac keeps its login in the Keychain, which HOME does not change.
+# Log an account in once with `HOME=<dir> agy` and finish the browser sign-in.
+if [ -n "$AGY_HOME" ]; then
+  [ -f "$AGY_HOME/.gemini/antigravity-cli/antigravity-oauth-token" ] || {
+    echo "agy-guard: quota reached (refused (config)): AGY_HOME=$AGY_HOME has no login (run: HOME=$AGY_HOME agy)" >&2; exit 75; }
+  export HOME="$AGY_HOME"; GUARD_DIR="$GUARD_DIR/$(basename "$AGY_HOME")"
 fi
 
 print=0; model=''; prev=''
@@ -77,6 +90,63 @@ PY
   rmdir "$DRAIN"
 fi
 n=0; while [ -d "$DRAIN" ] && [ "$n" -lt 45 ]; do sleep 3; n=$((n + 1)); done
+
+# A second account may be held to one model: AGY_HOME/allowed-model names it (jamesdereklomas@: 3.8 Flash low only,
+# Derek 2026-10-27, so its pool goes to bulk OCR and translation). A call with no --model gets it; any other is refused.
+if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
+  only=$(tr -d '[:space:]' < "$AGY_HOME/allowed-model")
+  [ -z "$model" ] && exec "$REAL" "$@" --model "$only"
+  if [ "$model" != "$only" ]; then
+    echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
+    exit 75
+  fi
+fi
+
+# Claude (and GPT, the same agy pool) only once this account's Gemini pool is empty (#7545; Derek 2026-10-27/28): the
+# Gemini WEEKLY bucket must be empty (remaining_fraction under 0.005, AGY_GEMINI_EMPTY in agy-cli.mjs; a spent pool
+# keeps a residue such as 0.00028 and never reads exactly 0) and both Claude buckets at least 10%. Read from `/quota` (free),
+# cached 10 min in $QUOTA_DIR/<account>.json, the file agy-cli.mjs agyQuota() reads and writes too, so a reset is seen
+# within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked after
+# the one-model rule above: an account held to one model (allowed-model) runs that model only, Claude included.
+if echo "$model" | grep -qiE '^(claude|gpt)'; then
+  acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
+  qf="$QUOTA_DIR/$acct.json"
+  # Prints nothing when Claude may run, "stale" when the cache is missing, older than 10 min or dated in the future
+  # (a minute of clock skew allowed), else the reason it may not.
+  qcheck() { python3 - "$qf" "$acct" <<'PY' 2>/dev/null || echo "quota for $acct unreadable"
+import json, os, sys, time
+try:
+    age = time.time() - os.path.getmtime(sys.argv[1])
+except OSError:
+    age = None
+if age is None or not -60 <= age < 600:
+    print('stale'); sys.exit()
+try:
+    g = {x['name']: {b['window']: b['remaining_fraction'] for b in x['buckets']} for x in json.load(open(sys.argv[1]))['command']['data']['groups']}
+except Exception:
+    print('quota for %s unreadable' % sys.argv[2]); sys.exit()
+gem = next((v for k, v in g.items() if k.lower().startswith('gemini')), {}).get('weekly')
+cl = next((v for k, v in g.items() if 'claude' in k.lower()), {})
+if not isinstance(gem, (int, float)): print('quota for %s unreadable' % sys.argv[2])
+elif gem >= 0.005: print('%s Gemini weekly %.1f%% left' % (sys.argv[2], gem * 100))
+else:
+    low = [w for w in ('weekly', '5h') if not (isinstance(cl.get(w), (int, float)) and cl[w] >= 0.10)]
+    print('%s Claude %s under 10%%' % (sys.argv[2], low[0]) if low else '')
+PY
+  }
+  why=$(qcheck)
+  if [ "$why" = stale ]; then
+    mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
+      && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
+    rm -f "$qf.tmp$$"
+    why=$(qcheck); [ "$why" = stale ] && why="quota for $acct unreadable"
+  fi
+  if [ -n "$why" ]; then
+    echo "agy-guard: quota reached (refused (config)): $model runs on agy only once the Gemini pool is empty ($why); use claude -p (#7545)" >&2
+    exit 75
+  fi
+  exec "$REAL" "$@"
+fi
 
 if [ -z "$model" ]; then
   echo "agy-guard: no --model given; using gemini-3.8-flash-low" >&2

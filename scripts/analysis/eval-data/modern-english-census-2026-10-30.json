@@ -1,0 +1,3034 @@
+{
+ "latin": {
+  "all_print": {
+   "n": 846,
+   "a_any": {
+    "p": 0.15083864708776332,
+    "lo": 0.12754304634111824,
+    "hi": 0.17752339415982626,
+    "neff": 787.7077310441605,
+    "cells": {
+     "translated": [
+      170,
+      216,
+      [
+       0.7870370370370371,
+       0.727670176065112,
+       0.8363722981526885
+      ]
+     ],
+     "gap": [
+      78,
+      630,
+      [
+       0.12380952380952381,
+       0.10034696167168514,
+       0.1518321316538397
+      ]
+     ]
+    }
+   },
+   "a_confirmed": {
+    "p": 0.11925433726002975,
+    "lo": 0.09903031956837283,
+    "hi": 0.14295319777847704,
+    "neff": 838.0223983972506,
+    "cells": {
+     "translated": [
+      164,
+      216,
+      [
+       0.7592592592592593,
+       0.6980316254440095,
+       0.8114260932043265
+      ]
+     ],
+     "gap": [
+      58,
+      630,
+      [
+       0.09206349206349207,
+       0.07189252170192137,
+       0.11717932211520898
+      ]
+     ]
+    }
+   },
+   "b_modern": {
+    "p": 0.09491894863871103,
+    "lo": 0.0774341453959094,
+    "hi": 0.11585605519610473,
+    "neff": 897.6778929900995,
+    "cells": {
+     "translated": [
+      148,
+      216,
+      [
+       0.6851851851851852,
+       0.6204690064546781,
+       0.7434293640084191
+      ]
+     ],
+     "gap": [
+      44,
+      630,
+      [
+       0.06984126984126984,
+       0.052435165391783285,
+       0.09246160376947091
+      ]
+     ]
+    }
+   }
+  },
+  "renaissance_composed": {
+   "n": 635,
+   "a_any": {
+    "p": 0.06716379567911006,
+    "lo": 0.050314376936853006,
+    "hi": 0.08912624893594001,
+    "neff": 646.5680765941868,
+    "cells": {
+     "translated": [
+      47,
+      82,
+      [
+       0.573170731707317,
+       0.4652101259866271,
+       0.6745822357587272
+      ]
+     ],
+     "gap": [
+      32,
+      553,
+      [
+       0.05786618444846293,
+       0.04128439596208938,
+       0.08054845560647159
+      ]
+     ]
+    }
+   },
+   "a_confirmed": {
+    "p": 0.04164401566490091,
+    "lo": 0.029234780327228913,
+    "hi": 0.05900044349788873,
+    "neff": 708.0047051878095,
+    "cells": {
+     "translated": [
+      44,
+      82,
+      [
+       0.5365853658536586,
+       0.42944534622716574,
+       0.6404508346455114
+      ]
+     ],
+     "gap": [
+      18,
+      553,
+      [
+       0.0325497287522604,
+       0.020686607064404616,
+       0.050862645002969664
+      ]
+     ]
+    }
+   },
+   "b_modern": {
+    "p": 0.0216867478235602,
+    "lo": 0.013701740998640384,
+    "hi": 0.03416401324894558,
+    "neff": 814.2271502587591,
+    "cells": {
+     "translated": [
+      34,
+      82,
+      [
+       0.4146341463414634,
+       0.3141639024666607,
+       0.522745008830426
+      ]
+     ],
+     "gap": [
+      8,
+      553,
+      [
+       0.014466546112115732,
+       0.007348162848718073,
+       0.028284232432094283
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "five": {
+  "german": {
+   "n": 299,
+   "translated_raw": 4,
+   "a_any": [
+    0.013377926421404682,
+    0.005214298641134945,
+    0.033887330725504254
+   ],
+   "a_k": 4,
+   "a_confirmed_k": 3,
+   "b_modern": [
+    0.0033444816053511705,
+    0.0005906120949380513,
+    0.01869867973286896
+   ],
+   "b_k": 1,
+   "N_any": [
+    0.0033444816053511705,
+    0.0005906120949380513,
+    0.01869867973286896
+   ],
+   "N_any_k": 1,
+   "N_modern": [
+    0.0,
+    0,
+    0.012685179314862951
+   ],
+   "N_modern_k": 0,
+   "detail": [
+    {
+     "key": "GE097",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1610,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Richard Gibbons (S.J.)",
+        "english_title": "Meditations vppon the mysteries of our holy faith, with the practise of mental praier touching the same (Part 2)",
+        "tr_year": 1610,
+        "edition_year": 1610,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://ems.kcl.ac.uk/apps/texts/showTextTitlePage.jsp-textKey=340.html",
+        "quote": "Meditations upon the Mysteries of Our Holy Faith. (Part 2), 1610"
+       },
+       {
+        "translator": "John Heigham (with Gibbons's earlier part)",
+        "english_title": "Meditations upon the Mysteries of our Holie Faith, with the Practise of Mental Prayer touching the same (2 tomes)",
+        "tr_year": 1619,
+        "edition_year": 1619,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://ems.kcl.ac.uk/apps/texts/showTextTitlePage.jsp-textKey=342.html",
+        "quote": "Meditations upon the Mysteries of Our Holy Faith. (Tome 2), 1619"
+       },
+       {
+        "translator": "John Heigham (reissued text)",
+        "english_title": "Meditations on the Mysteries of our Holy Faith (London edition, 1854)",
+        "tr_year": 1619,
+        "edition_year": 1854,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://web.marshlibrary.ie/catalogue/Record/BI24731/Digitised",
+        "quote": "1854 London edition, Richardson and Son (as reported in the search summary, which I did not verify against the catalogue record)"
+       }
+      ],
+      "work_identified": "Luis de la Puente (Ludovicus de Ponte), Meditaciones de los misterios de nuestra santa fe (Spanish, 1605). This 1627 German edition is a translation of the Latin version by Melchior Trevinnius, which was itself made from the Spanish. English translations of the same underlying work count."
+     },
+     "title": "Betrachtungen Ludovici De Ponte, der Societet Jesu Priestern, 3. Von den den fürnehmbsten Geheimnussen deß Lebens und Le",
+     "author": "Puente, Luis de la"
+    },
+    {
+     "key": "GE157",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "German translation (1678) of Edward Pearse's English 'The Great Concern: or, A serious warning to a timely and thorough preparation for death' (London, 1673). The study's cited title 'The One Thing Necessary' does not match what I found. The German is a translation into German of an English original, so the English is the original text and not a translation."
+     },
+     "title": "Das Einige Nothwendige Daran einem Menschen am meisten gelegen. Oder Eine seelige Vorbereitung zum Tode: Benebenst denen",
+     "author": "Pearse, Edward"
+    },
+    {
+     "key": "GE171",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1600,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Edward Fairfax",
+        "english_title": "Godfrey of Bulloigne, or The recouerie of Ierusalem",
+        "tr_year": 1600,
+        "edition_year": 1600,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/godfrey-of-bulloigne-or-the-recouerie-of-ierusalem-done-into-english-heroicall-verse-by-edward-fairefax-gent/oclc/55182991",
+        "quote": "Godfrey of Bulloigne, or The recouerie of Ierusalem. Done into English heroicall verse, by Edward Fairefax Gent."
+       },
+       {
+        "translator": "Anthony M. Esolen",
+        "english_title": "Jerusalem Delivered (Gerusalemme liberata)",
+        "tr_year": 2000,
+        "edition_year": 2000,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://press.jhu.edu/books/title/1827/jerusalem-delivered-gerusalemme-liberata",
+        "quote": "the first major verse translation into English since Fairfax's"
+       },
+       {
+        "translator": "Max Wickert",
+        "english_title": "The Liberation of Jerusalem (Gerusalemme liberata)",
+        "tr_year": 2009,
+        "edition_year": 2009,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://openlibrary.org/books/OL502893W",
+        "quote": "the first modern translation that faithfully reflects the sense and verse form of Tasso's hugely influential masterpiece"
+       }
+      ],
+      "work_identified": "German translation (Gottfried, oder Erlösetes Jerusalem, 2nd printing, 1651) of Tasso's Italian epic Gerusalemme liberata (c.1575). An English translation of the same underlying Italian work counts. This is a translation from a third language."
+     },
+     "title": "Gottfried. Oder Erlösetes Jerusalem : Verbessert. Zum zweyten mahl gedruckt",
+     "author": "Tasso, Torquato"
+    },
+    {
+     "key": "GE193",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1548,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Thomas Cranmer (attributed; the translation from Latin is usually credited to Cranmer or his circle)",
+        "english_title": "Catechismus, that is to say a shorte Instruction into Christian Religion for the synguler commoditie and profyte of chyldren and yong people",
+        "tr_year": 1548,
+        "edition_year": 1548,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.earlyenglishprintedsermons.org/segment/A19564/0",
+        "quote": "CATECHISMUS. That is to say a shorte Instruction into Christian Religion for the synguler commoditie and profyte of chyldren and yong people."
+       }
+      ],
+      "work_identified": "Andreas Osiander (with Johannes Brenz), Catechismus oder Kinderpredigt (Brandenburg-Nuremberg Church Order, 1533). The edition is the German original. The 1548 English version translates Justus Jonas's 1539 Latin translation of it, so it is a translation via a third language."
+     },
+     "title": "Catechismus odder kinderpredigt, wie die inn meiner gnedigen Herrn Marggraven zu Brandenburg und eins erbarn Raths der s",
+     "author": "Osiander, Andreas"
+    }
+   ]
+  },
+  "french": {
+   "n": 299,
+   "translated_raw": 22,
+   "a_any": [
+    0.07023411371237458,
+    0.046392784650872945,
+    0.10497875743581529
+   ],
+   "a_k": 21,
+   "a_confirmed_k": 13,
+   "b_modern": [
+    0.016722408026755852,
+    0.0071633186851657385,
+    0.038542423194417516
+   ],
+   "b_k": 5,
+   "N_any": [
+    0.013377926421404682,
+    0.005214298641134945,
+    0.033887330725504254
+   ],
+   "N_any_k": 4,
+   "N_modern": [
+    0.0,
+    0,
+    0.012685179314862951
+   ],
+   "N_modern_k": 0,
+   "detail": [
+    {
+     "key": "FR033",
+     "tag": "X",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1990,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Cyril Mango",
+        "english_title": "Nikephoros, Patriarch of Constantinople: Short History. Text, Translation, and Commentary",
+        "tr_year": 1990,
+        "edition_year": 1990,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.doaks.org/research/publications/books/short-history",
+        "quote": "Nikephoros, Patriarch of Constantinople: Short History. Text, Translation, and Commentary by Cyril Mango."
+       }
+      ],
+      "work_identified": "Bernardin's 1618 French translation of the Greek Breviarium (Historia syntomos) of Nikephoros I, Patriarch of Constantinople. It covers events from Maurice's death (602) to Constantine V (c. 769). The French edition is a translation from Greek, so the English translation of the same Greek work counts. I did not run searches in this session. This identification and the Mango details come from my own knowledge, not from fresh verification."
+     },
+     "title": "L'Histoire de S. Nicéphore, patriarche de Constantinople contenant les plus mémorables advenues depuis la mort de l'Empe",
+     "author": ""
+    },
+    {
+     "key": "FR044",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1612,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Unknown (the 1612 edition names none; the translation is sometimes attributed to Hatfield's circle, but this is unconfirmed)",
+        "english_title": "Child-birth, or, The happy deliverie of women: wherein is set downe the government of women in the time of their breeding, bearing, and of their travaile and delivery... Written in French by Iames Guillimeau the French Kings chirurgien",
+        "tr_year": 1612,
+        "edition_year": 1612,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://wellcomecollection.org/works/mcv8j67d",
+        "quote": "Child-birth, or, The happy deliverie of women : wherein is set downe the government of women in the time of their breeding, bearing, and of their travaile and delivery... Written in French by Iames Guillimeau the French Kings chirurgien."
+       }
+      ],
+      "work_identified": "Jacques Guillemeau's De l'heureux accouchement des femmes (Paris, 1609), which later French editions retitled De la grossesse et accouchement des femmes. It was published together with his work on the nourishing and government of children. The 1620 edition is a revised, augmented reprint."
+     },
+     "title": "De la grossesse et accouchement des femmes, du gouvernement d'icelles et moyen de survenir aux accidents qui leur arrive",
+     "author": "Guillemeau, Jacques"
+    },
+    {
+     "key": "FR045",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1534,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Robert Whittinton",
+        "english_title": "The thre bookes of Tullyes offyces, bothe in latyne tonge and in englysshe",
+        "tr_year": 1534,
+        "edition_year": 1534,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/thre-bookes-of-tullyes-offyces-bothe-in-latyne-tonge-in-englysshe-lately-translated-out-of-latyn-in-to-our-filthy-maternon-tonge-by-roberte-whyttinton-poete-laureat/oclc/54160472",
+        "quote": "The thre bookes of Tullyes offyces, bothe in Latyne tonge [and] in Englysshe, lately translated out of Latyn in to our filthy materno[n] tonge by Roberte Whyttinton."
+       },
+       {
+        "translator": "Nicholas Grimald",
+        "english_title": "Marcus Tullius Ciceroes thre bokes of duties",
+        "tr_year": 1556,
+        "edition_year": 1556,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/search?q=Marcus+Tullius+Ciceroes+thre+bokes+of+duties",
+        "quote": "Marcus Tullius Ciceroes thre bokes of duties, to Marcus his sonne, turned out of latine into english, by Nicholas Grimalde"
+       },
+       {
+        "translator": "Sir Roger L'Estrange",
+        "english_title": "Tully's Offices",
+        "tr_year": 1680,
+        "edition_year": 1680,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/search?query=L%27Estrange+Tully%27s+Offices",
+        "quote": "Tully's Offices, in three books, translated by Roger L'Estrange"
+       },
+       {
+        "translator": "Thomas Cockman",
+        "english_title": "Tully's Three Books of Offices",
+        "tr_year": 1699,
+        "edition_year": 1699,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/search?query=Cockman+Tully%27s+Offices",
+        "quote": "Tully's Three Books of Offices, translated into English by Thomas Cockman"
+       },
+       {
+        "translator": "Andrew P. Peabody",
+        "english_title": "Cicero: De Officiis (Cicero on Moral Duties)",
+        "tr_year": 1883,
+        "edition_year": 1883,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/search?query=Peabody+Cicero+De+Officiis",
+        "quote": "Cicero's Treatise on Moral Duties (Peabody)"
+       },
+       {
+        "translator": "Walter Miller",
+        "english_title": "Cicero: De Officiis (Loeb Classical Library 30)",
+        "tr_year": 1913,
+        "edition_year": 1913,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.loebclassics.com/view/cicero-de_officiis/1913/pb_LCL030.1.xml",
+        "quote": "Cicero, On Duties, with an English translation by Walter Miller"
+       },
+       {
+        "translator": "Harry G. Edinger",
+        "english_title": "On Moral Duties (De officiis)",
+        "tr_year": 1974,
+        "edition_year": 1974,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/search?q=Edinger+Cicero+De+officiis",
+        "quote": "Cicero, De officiis, trans. Harry G. Edinger (1974)"
+       },
+       {
+        "translator": "M. T. Griffin and E. M. Atkins",
+        "english_title": "Cicero: On Duties",
+        "tr_year": 1991,
+        "edition_year": 1991,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.cambridge.org/core/books/cicero-on-duties/",
+        "quote": "Cicero: On Duties, edited by M. T. Griffin and E. M. Atkins"
+       },
+       {
+        "translator": "P. G. Walsh",
+        "english_title": "Cicero: On Obligations (De Officiis)",
+        "tr_year": 2000,
+        "edition_year": 2000,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://global.oup.com/academic/product/on-obligations-9780192838599",
+        "quote": "Cicero: On Obligations, translated with an introduction and notes by P. G. Walsh"
+       }
+      ],
+      "work_identified": "Cicero, De officiis (On Duties / Offices). The 1563 French 'Les offices' is a vernacular translation of the Latin original, so English translations of De officiis count, and I treat them as the same underlying work. Answered from memory, since no searches were run, so the URLs and quotes are unverified."
+     },
+     "title": "Les offices",
+     "author": "Cicero, Marcus Tullius"
+    },
+    {
+     "key": "FR065",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1590,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "unknown",
+        "english_title": "A recital of that which hath happened in the Kings army, since the taking of the suburbs of Paris, until the taking of the town of Phalesey",
+        "tr_year": 1590,
+        "edition_year": 1590,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://distantreader.org/stacks/earlyprint/txt/B13970.txt",
+        "quote": "A recital OF that which happened in the Kings army, since the taking of the suburbs of Paris, until the taking of the town of Phalesey."
+       }
+      ],
+      "work_identified": "Anonymous French 1590 'Memoire de ce qui est arrivé depuis la prise de Paris [faubourgs], jusqu'à celle de Falaize', an account of Henri IV's campaign after the 1589 capture of the Paris suburbs, up to the taking of Falaise. The 1590 London pamphlet appears to be its contemporary English version. The EarlyPrint text itself does not say 'translated'."
+     },
+     "title": "Memoire de ce qui est arrivé depuis la prise de Paris, jusqu'à celle de Falaize",
+     "author": ""
+    },
+    {
+     "key": "FR074",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres no. 2209 (1688), the French-language edition of the official newspaper. It is a contemporary French counterpart of the English London Gazette, not a work that was later translated into English."
+     },
+     "title": "Gazette de Londres. No. 2209",
+     "author": ""
+    },
+    {
+     "key": "FR083",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1638,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Sir Thomas Hawkins",
+        "english_title": "The Holy Court, fourth tome: The Command of Reason over the Passions",
+        "tr_year": 1638,
+        "edition_year": 1638,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://vufind.catholicresearch.org/vufind/Record/usfmarc_usfmarc_15312768/Similar",
+        "quote": "The holy court fourth tome : by the commaund of reason over the passions"
+       }
+      ],
+      "work_identified": "Nicolas Caussin SJ, La Cour Sainte, tome 4 ('The Command of Reason over the Passions'). The USTC 1638 entry is the English translation by Sir Thomas Hawkins, printed at Rouen. The 'French' language tag on the USTC entry is probably wrong, or it reflects the place of printing."
+     },
+     "title": "The holy court fourth tome. The commaund of reason, over the passions.",
+     "author": "Hawkins, Thomas"
+    },
+    {
+     "key": "FR087",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1764,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Christopher Smart",
+        "english_title": "A Poetical Translation of the Fables of Phaedrus (later The Fables of Phaedrus, in Verse)",
+        "tr_year": 1764,
+        "edition_year": 1765,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/fables-of-phaedrus-in-verse-by-christopher-smart/oclc/1008177579",
+        "quote": "The Fables of Phaedrus, in Verse. By Christopher Smart, A.M."
+       },
+       {
+        "translator": "Henry Thomas Riley",
+        "english_title": "The Fables of Phaedrus, literally translated into English prose with notes",
+        "tr_year": 1853,
+        "edition_year": 1887,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.everand.com/book/184337170/The-Fables-of-Phædrus-Literally-translated-into-English-prose-with-notes",
+        "quote": "The Fables of Phædrus Literally translated into English prose with notes"
+       },
+       {
+        "translator": "Ben Edwin Perry",
+        "english_title": "Babrius and Phaedrus (Loeb Classical Library 436)",
+        "tr_year": 1965,
+        "edition_year": 1965,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://booksinbelgium.be/nl/b/edited-and-translated-into-english-by-b-e-perry-together-with-an-historical-introduction-and-a-comprehensive-survey-of-gre-babrius-and-phaedrus-9780674994805",
+        "quote": "Babrius and Phaedrus, edited and translated into English by B. E. Perry"
+       }
+      ],
+      "work_identified": "Anonymous 1676 French translation ('Les fables de Phedre affranchy d'Auguste') of the Latin Fables of Phaedrus. The English translations below are of Phaedrus's Latin text, so they come from a third language."
+     },
+     "title": "Les fables de Phedre affranchy d'Auguste",
+     "author": ""
+    },
+    {
+     "key": "FR108",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1591,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Sir John Harington",
+        "english_title": "Orlando Furioso in English heroical verse",
+        "tr_year": 1591,
+        "edition_year": 1591,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.gutenberg.org/ebooks/41584",
+        "quote": "Orlando Furioso in English heroical verse, by Sr John Harington of Bathe Knight."
+       },
+       {
+        "translator": "John Hoole",
+        "english_title": "Orlando Furioso, translated from the Italian of Ludovico Ariosto",
+        "tr_year": 1783,
+        "edition_year": 1783,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "",
+        "quote": "Hoole's 5-volume verse translation, 1783 (from memory, not checked)"
+       },
+       {
+        "translator": "William Stewart Rose",
+        "english_title": "Orlando Furioso",
+        "tr_year": 1823,
+        "edition_year": 1823,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "",
+        "quote": "Rose's verse translation, 1823–31 (from memory, not checked)"
+       },
+       {
+        "translator": "Guido Waldman",
+        "english_title": "Orlando Furioso: The Frenzy of Orlando",
+        "tr_year": 1974,
+        "edition_year": 1974,
+        "register": "modern",
+        "scope": "complete",
+        "url": "",
+        "quote": "Waldman's prose translation, OUP 1974 (from memory, not checked)"
+       },
+       {
+        "translator": "Barbara Reynolds",
+        "english_title": "Orlando Furioso (The Frenzy of Orlando)",
+        "tr_year": 1975,
+        "edition_year": 1975,
+        "register": "modern",
+        "scope": "complete",
+        "url": "",
+        "quote": "Reynolds's verse translation, 2 vols, 1975–77 (from memory, not checked)"
+       },
+       {
+        "translator": "David R. Slavitt",
+        "english_title": "Orlando Furioso: A Romance of Chivalry",
+        "tr_year": 2009,
+        "edition_year": 2009,
+        "register": "modern",
+        "scope": "complete",
+        "url": "",
+        "quote": "Slavitt's verse translation, 2009 (from memory, not checked)"
+       }
+      ],
+      "work_identified": "Ludovico Ariosto's Orlando Furioso (Italian epic, 1516/1532). The 1543 USTC item is a French translation, Roland furieux, so any English translation of the Italian original counts (different_source_language). I did not run any searches. This answer comes from memory, and only the Harington URL comes from the study's own citation."
+     },
+     "title": "Roland furieux || Le Roland furieux || Le premier volume de Roland furieux",
+     "author": "Ariosto, Ludovico"
+    },
+    {
+     "key": "FR126",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1632,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Henry Hawkins (signed H.H.)",
+        "english_title": "The sweete thoughts of death, and eternity. Written by Sieur de la Serre",
+        "tr_year": 1632,
+        "edition_year": 1632,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://wellcomecollection.org/works/ffbfrkpd",
+        "quote": "A translation of: Les douces pensées de la mort."
+       }
+      ],
+      "work_identified": "Jean Puget de la Serre, Les douces pensées de la mort (Fr., 1621). It is a French original, not a translation. The 1632 English version also includes a second part, 'Thoughts of eternity'."
+     },
+     "title": "Les douces pensées de la mort || Les Douces pensées de la mort || Les douces pensees de la mort",
+     "author": "Puget de la Serre, Jean"
+    },
+    {
+     "key": "FR131",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "unclear",
+      "first_full_tr_year": 1625,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Sir Thomas Roe (original English, not a translation); ed. William Foster",
+        "english_title": "The Embassy of Sir Thomas Roe to the Court of the Great Mogul, 1615–1619",
+        "tr_year": 1625,
+        "edition_year": 1899,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://en.wikipedia.org/wiki/Thomas_Roe",
+        "quote": "Roe's journal first published in English in Purchas His Pilgrimes (1625)"
+       }
+      ],
+      "work_identified": "Melchisédech Thévenot's compilation 'Relation de divers voyages curieux' (1696 issue of the Paris collection first published 1663–72). It includes Sir Thomas Roe's Mogul embassy journal, which Thévenot translated into French from the English text in Purchas His Pilgrimes (1625). The USTC entry is a French edition of a work originally written in English."
+     },
+     "title": "Relation de divers voyages curieux … Mémoires",
+     "author": "Roe, Thomas"
+    },
+    {
+     "key": "FR161",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres No. 852 (1674) is a French-language news periodical issue. It is a French rendering of the London Gazette, which was first printed in English. The English issue is the original, not a translation. I found no separate English translation of the French issue."
+     },
+     "title": "Gazette de Londres. No. 852",
+     "author": ""
+    },
+    {
+     "key": "FR184",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres No. 1034 (1676 per USTC) is the French-language edition of the official newspaper The London Gazette. The English London Gazette issue is the source text, not a translation of it. No separate English translation of the French edition is known."
+     },
+     "title": "Gazette de Londres. No. 1034",
+     "author": ""
+    },
+    {
+     "key": "FR215",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1665,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "T.W., Esq.",
+        "english_title": "Pax animi: a short treatise declaring how necessary the tranquility and peace of the mind is, and how it may be obtained (attributed to Pedro de Alcántara; with a short treatise of the three principal virtues and vows of religious persons)",
+        "tr_year": 1665,
+        "edition_year": 1665,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://collections.library.yale.edu/catalog/2057411",
+        "quote": "Pax animi : a short treatise declaring how neccesary the tranquility and peace of the mind is, and how it may be obtained / written in Spanish, by the V.R.F. Fray Pedro de Alcantara ... ; and translated into English by T.W."
+       },
+       {
+        "translator": "Unknown (introduction and sketch of Bonilla added by the translator or editor)",
+        "english_title": "Pax Animae, by St. Peter Alcantara [really by J. de Bonilla], followed by A Short Treatise of the Three Principal Virtues and Vows of Religious Persons",
+        "tr_year": 1926,
+        "edition_year": 1926,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://bookscloud.io/products/pax-animae-by-st-peter-alcantara-really-by-j-de-bonilla-followed-by-a-short-treatise-of-the-three-principal-virtues-and-vows-of-religious-persons-paperback-1.oembed",
+        "quote": "Pax Animae, by St. Peter Alcantara [really by J. de Bonilla]"
+       }
+      ],
+      "work_identified": "Juan de Bonilla, Breve tratado donde se declara cuán necesaria sea la paz del alma (Spanish, 1599; Latin 'Pax animae'). The USTC French edition, 'L'abregé chemin de la paix de l'ame devote' (1604), is a translation from this Spanish original. The text was often misattributed to St Peter of Alcántara."
+     },
+     "title": "L'abregé chemin de la paix de l'ame devote",
+     "author": "Bonilla, Juan de"
+    },
+    {
+     "key": "FR221",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres No. 2134, the French-language edition of The London Gazette (translated by M. de Moranville and printed by Newcomb). It is a single newspaper issue. The French edition is a translation of the English London Gazette No. 2134 (29 Apr–3 May 1686). The USTC date of 1687 may be off."
+     },
+     "title": "Gazette de Londres. No. 2134",
+     "author": ""
+    },
+    {
+     "key": "FR238",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres no. 1899, a French-language news-sheet printed in London and catalogued by USTC under 1677. It is the French edition of the English London Gazette. The English issue numbered 1899 is dated Jan 1684, which does not match the 1677 date, so the catalogue date or number is probably wrong."
+     },
+     "title": "Gazette de Londres. No. 1899",
+     "author": ""
+    },
+    {
+     "key": "FR239",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres No. 384 (1670), the French-language edition of the English government newspaper The London Gazette. English is the source language, so the work is itself a translation into French."
+     },
+     "title": "Gazette de Londres. No. 384",
+     "author": ""
+    },
+    {
+     "key": "FR241",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1720,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "T. M. (possibly Thomas Meighan; the study's 'F. M.' is probably a misreading)",
+        "english_title": "The Paradise of the Christian Soul, delightful for its choicest pleasures of piety of every kind",
+        "tr_year": 1720,
+        "edition_year": 1720,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://search.worldcat.org/title/41225676",
+        "quote": "The paradise of the Christian soul : delightful for its choicest pleasures of piety of every kind"
+       },
+       {
+        "translator": "E. B. Pusey (editor/adapter)",
+        "english_title": "A Paradise for the Christian Soul",
+        "tr_year": 1847,
+        "edition_year": 1847,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "",
+        "quote": "Search results did not confirm the Pusey edition."
+       },
+       {
+        "translator": "Unknown (probably a reissue of the 1720 translation)",
+        "english_title": "The Paradise of the Christian Soul",
+        "tr_year": 1720,
+        "edition_year": 1857,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://search.worldcat.org/title/41225676",
+        "quote": "The paradise of the Christian soul, Burns and Lambert, London, 1857 (as reported in search results)"
+       }
+      ],
+      "work_identified": "Le Paradis des ames chrétiennes (French, 1690) is almost certainly a French rendering of Jacob Merlo Horstius's Latin 'Paradisus animae christianae' (Cologne, 1644). English translations of that Latin work therefore count, and I'm noting that the edition is a translation from a third language."
+     },
+     "title": "Le Paradis des ames chretiennes",
+     "author": ""
+    },
+    {
+     "key": "FR253",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1543,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Thomas Chaloner",
+        "english_title": "Of the office of servauntes",
+        "tr_year": 1543,
+        "edition_year": 1543,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://lib.ecu.edu/catalog-preview/catalog/5376723",
+        "quote": "Of the office of servauntes ... made in Latin by Gilbertus Cognatus"
+       }
+      ],
+      "work_identified": "Probably not Aristotle's work. The title matches the French version of Gilbertus Cognatus (Gilbert Cousin)'s 'De officio famulorum' / 'Of the office of servauntes'. USTC probably misattributes it to Aristotle. I could not open the 1561 French record, so this identification is unverified. The English translation below, which the search results credit to Thomas Chaloner, is the 1543 one."
+     },
+     "title": "De l'office d'un serviteur",
+     "author": "Aristoteles"
+    },
+    {
+     "key": "FR257",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres No. 273 (1669), the French-language edition of the English London Gazette. Its underlying text is the English original, so any English version is the source text, not a translation. I found no separate English translation."
+     },
+     "title": "Gazette de Londres. No. 273",
+     "author": ""
+    },
+    {
+     "key": "FR264",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1382,
+      "registers_full": [
+       "early_modern",
+       "middle_english",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "John Wycliffe circle (attributed)",
+        "english_title": "Wycliffite New Testament (Early/Later Version)",
+        "tr_year": 1382,
+        "edition_year": 1382,
+        "register": "middle_english",
+        "scope": "complete",
+        "url": "https://www.bl.uk/collection-items/william-tyndales-new-testament",
+        "quote": "Not verified in this session. It comes from general knowledge of the Wycliffite Bible, made around 1382 to 1395."
+       },
+       {
+        "translator": "William Tyndale",
+        "english_title": "The Newe Testamente",
+        "tr_year": 1526,
+        "edition_year": 1526,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.bl.uk/collection-items/william-tyndales-new-testament",
+        "quote": "The Newe Testamente as it was written and caused to be writen by them which herde yt."
+       },
+       {
+        "translator": "Gregory Martin and the English College at Rheims",
+        "english_title": "The New Testament of Jesus Christ (Douay-Rheims)",
+        "tr_year": 1582,
+        "edition_year": 1582,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Douay%E2%80%93Rheims_Bible",
+        "quote": "Not verified in this session. It comes from general knowledge that the Rheims New Testament was published in 1582."
+       },
+       {
+        "translator": "King James Version translators",
+        "english_title": "The Holy Bible (Authorized Version), including the New Testament",
+        "tr_year": 1611,
+        "edition_year": 1611,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/King_James_Version",
+        "quote": "Not verified in this session. It comes from general knowledge of the 1611 King James Version."
+       },
+       {
+        "translator": "Revised Standard Version committee",
+        "english_title": "Revised Standard Version New Testament",
+        "tr_year": 1946,
+        "edition_year": 1946,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Revised_Standard_Version",
+        "quote": "Not verified in this session. It comes from general knowledge that the RSV New Testament appeared in 1946."
+       },
+       {
+        "translator": "Committee on Bible Translation",
+        "english_title": "New International Version New Testament",
+        "tr_year": 1973,
+        "edition_year": 1973,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/New_International_Version",
+        "quote": "Not verified in this session. It comes from general knowledge that the NIV New Testament appeared in 1973."
+       }
+      ],
+      "work_identified": "A French-language edition of the New Testament (Nouveau Testament), printed in 1647. The text is the New Testament, originally in Greek, so the edition is a translation from a third language. Any English New Testament translation counts as the same underlying work. I could not tell which French version this edition used (Protestant or Catholic)."
+     },
+     "title": "Nouveau Testament",
+     "author": ""
+    },
+    {
+     "key": "FR281",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Gazette de Londres, No. 2326 (USTC, 1689). This is the French-language edition of the London Gazette, a newspaper. It was printed in London for Thomas Newcomb and the translator is thought to be M. de Moranville. The underlying text is the English-language London Gazette issue, so the French is a translation of English, not the other way round."
+     },
+     "title": "Gazette de Londres. No. 2326",
+     "author": ""
+    },
+    {
+     "key": "FR288",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1587,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "George Gilpin",
+        "english_title": "Liste of the armes and interteynements, accordinge to the which from hence fourth the companies in the paye of these Prouinces, shalbe armed and treated",
+        "tr_year": 1587,
+        "edition_year": 1587,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.grubstreetproject.net/publications/S91782/",
+        "quote": "Liste of the armes and interteynements, accordinge to the which from hence fourth the companies in the paye of these Prouinces, shalbe armed and treated"
+       }
+      ],
+      "work_identified": "Anonymous 1587 States-General ordinance (dated 28 Sept 1587) listing the arms and pay for the infantry companies of the United Provinces. The French original was printed in 1587, and a contemporary English version was issued alongside it in Leiden."
+     },
+     "title": "Lyste des armes et traictemens selon laquelle d'oresnavant seront armées et traictées les compaignies d'infanterie à la ",
+     "author": ""
+    }
+   ]
+  },
+  "italian": {
+   "n": 295,
+   "translated_raw": 12,
+   "a_any": [
+    0.04067796610169491,
+    0.023419917869188955,
+    0.06974515687274792
+   ],
+   "a_k": 12,
+   "a_confirmed_k": 12,
+   "b_modern": [
+    0.02711864406779661,
+    0.013804008397806804,
+    0.0525910316501651
+   ],
+   "b_k": 8,
+   "N_any": [
+    0.01694915254237288,
+    0.007260733538282677,
+    0.0390567804892155
+   ],
+   "N_any_k": 5,
+   "N_modern": [
+    0.010169491525423728,
+    0.0034643938938835397,
+    0.029468102786632158
+   ],
+   "N_modern_k": 3,
+   "detail": [
+    {
+     "key": "IT016",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1995,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Ursulines of the Roman Union (team translation)",
+        "english_title": "Rule, Counsels, Testament (the Rule, Counsels and Legacies of St. Angela Merici)",
+        "tr_year": 1995,
+        "edition_year": 1995,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://ursulines-roman-union.org/en/writings-angela-merici",
+        "quote": "Translation by a team of Ursulines of the Roman Union (Rome, 1995), available with and without the Italian original text"
+       },
+       {
+        "translator": "Nettina Gullo Eckert and Mary-Cabrini Durkin",
+        "english_title": "Rule of St. Angela Merici (with Counsels and Legacies)",
+        "tr_year": 1997,
+        "edition_year": 2004,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.istitutosecolareangelamerici.org/wp-content/uploads/2018/06/Costitutions_EN.pdf",
+        "quote": "Translation by Nettina Gullo Eckert and Mary-Cabrini Durkin (1997, revised 2004)"
+       }
+      ],
+      "work_identified": "Angela Merici's Rule (Regola) of the Company of St. Ursula, composed c.1535–36 and first printed at Brescia in 1569. The USTC edition is the Italian original, not a translation."
+     },
+     "title": "Regola della nova Compagnia di santa Orsola di Brescia",
+     "author": "Merici, Angela"
+    },
+    {
+     "key": "IT080",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1614,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "R. H. (attributed to Richard Hadock; the translator is not firmly confirmed)",
+        "english_title": "A shorte catechisme of Cardinall Bellarmine illustrated with the images",
+        "tr_year": 1614,
+        "edition_year": 1614,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://catalog.hathitrust.org/Record/002526061",
+        "quote": "A shorte catechisme of Cardinall Bellarmine: illustrated with the images (Augusta, 1614; EEBO/Oxford Text Archive A08064)"
+       },
+       {
+        "translator": "Melvin H. Waller (editor; modernised the spelling and wording of the 1614 text)",
+        "english_title": "A Short Catechism of Cardinal Bellarmine",
+        "tr_year": 1614,
+        "edition_year": 2013,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://blackwells.co.uk/bookshop/product/A-Short-Catechism-of-Cardinal-Bellarmine-by-Cardinal-Robert-Bellarmine-author-Melvin-H-Waller-editor/9781484824412",
+        "quote": "taken from the 1614 edition, edited and translated from Old English by Melvin H. Waller (search-result summary; I could not open the page)"
+       },
+       {
+        "translator": "Richard Gibbons",
+        "english_title": "Dottrina christiana / A short catechism (an abridgement of the Dichiarazione piu copiosa)",
+        "tr_year": 1633,
+        "edition_year": 1633,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.grubstreetproject.net/publications/S113740",
+        "quote": "translated by Richard Gibbons ... published by the Widow of C. Boscard in Saint-Omer in 1633 (search-result summary; unverified, and it may be a different or longer text)"
+       }
+      ],
+      "work_identified": "Bellarmine's Dottrina christiana breve (Short Christian Doctrine, 1597). The 1677 Italian edition is one of many editions of this catechism. The English 'Short Catechisme' translates this text."
+     },
+     "title": "Dottrina christiana breue composta per ordine di papa Clemente 8. di fel. mem. dal R. P. Roberto Bellarmino della Compag",
+     "author": "Bellarmino, Roberto"
+    },
+    {
+     "key": "IT084",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1621,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Edward Coffin (C.E.)",
+        "english_title": "The Art of Dying Well. Divided into Two Bookes",
+        "tr_year": 1621,
+        "edition_year": 1621,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://catalog.folger.edu/record/67775",
+        "quote": "The Art of Dying Well ... Translated into English, by C.E. of the same Society."
+       },
+       {
+        "translator": "John Patrick Donnelly and Roland J. Teske",
+        "english_title": "Robert Bellarmine: Spiritual Writings (includes The Art of Dying Well)",
+        "tr_year": 1989,
+        "edition_year": 1989,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://epublications.marquette.edu/marq_fac-book/105",
+        "quote": "for the first time in modern English translations"
+       },
+       {
+        "translator": "John Dalton",
+        "english_title": "The Art of Dying Well",
+        "tr_year": 1847,
+        "edition_year": 2005,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://tanbooks.com/content/3418_Preview.pdf",
+        "quote": "translated from the Latin by the Reverend John Dalton"
+       }
+      ],
+      "work_identified": "Bellarmine's De arte bene moriendi (Latin, 1619/20), here in Marcello Cervini's 1622 Italian translation 'Dell'arte di ben morire'. This is a translation from a third language (Latin). English translations of the Latin work count."
+     },
+     "title": "Dell'arte di ben morire libri due. Composti dall'illustriss. e reurendiss. sig. cardinale Bellarmino della Compagnia di ",
+     "author": "Bellarmino, Roberto"
+    },
+    {
+     "key": "IT093",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1632,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Henry More, SJ",
+        "english_title": "The happines of a religious state, diuided into three bookes",
+        "tr_year": 1632,
+        "edition_year": 1632,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://vufind.catholicresearch.org/vufind/Record/lmumarc_11508409/Details?lng=fr",
+        "quote": "The happines of a religiovs state : diuided into three bookes"
+       }
+      ],
+      "work_identified": "Girolamo Piatti (Hieronymus Platus, SJ), De bono status religiosi (1590). The USTC edition is Bartolomeo Zucchi's Italian translation, 'Del bene de lo stato de' religiosi', 3rd impression, 1612. The English translation, made from the Latin, is of the same underlying work."
+     },
+     "title": "Del bene de lo stato de' religiosi libri tre. Dal signor Bartolomio Zucchi gentilhuomo di Monza fatti in lingua toscana.",
+     "author": "Piatti, Girolamo"
+    },
+    {
+     "key": "IT095",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1623,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "John Bulteel",
+        "english_title": "The Christian Combate, or A Treatise of Afflictions",
+        "tr_year": 1623,
+        "edition_year": 1623,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://earlyenglishprintedsermons.org/B01212",
+        "quote": "faithfully translated into English by John Bulteel, minister of the Word of God in the French church of Canterbury"
+       }
+      ],
+      "work_identified": "Pierre Du Moulin, 'Du combat chrestien, ou Des afflictions' (French, 1622). The USTC 1627 edition is an Italian translation, so the English version translates the same underlying work from the French source."
+     },
+     "title": "Del combattimento christiano, overo delle afflittioni",
+     "author": "Du Moulin, Pierre"
+    },
+    {
+     "key": "IT104",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1908,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Foster Watson",
+        "english_title": "Tudor School-boy Life: The Dialogues of Juan Luis Vives",
+        "tr_year": 1908,
+        "edition_year": 1908,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/tudorschoolboyli00viveiala",
+        "quote": "Tudor school-boy life: the dialogues of Juan Luis Vives, translated for the first time into English, with an introduction, by Foster Watson."
+       }
+      ],
+      "work_identified": "Juan Luis Vives, Linguae latinae exercitatio (Paris/Basel, 1538–39), a set of 25 Latin school dialogues. This 1567 Italian-language USTC edition adds Pedro de Motta's annotations and a Latin-Italian glossary. The English translation of the same work counts."
+     },
+     "title": "Linguae latinae exercitatio. Adiectis præterea annotationibus in singula colloquia doctissimi viri Petri Mottæ Compluten",
+     "author": "Vives, Juan Luis"
+    },
+    {
+     "key": "IT129",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1450,
+      "registers_full": [
+       "early_modern",
+       "middle_english",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Anonymous (Middle English prose, 'Three Prose Versions' / Manzalaoui 'Nine English Versions')",
+        "english_title": "Secretum Secretorum (Middle English versions)",
+        "tr_year": 1450,
+        "edition_year": 1977,
+        "register": "middle_english",
+        "scope": "complete",
+        "url": "https://arlima.net/qt/secret_of_secrets.html",
+        "quote": "Secretum Secretorum: Nine English Versions, ed. M. Manzalaoui, EETS 276, OUP 1977. The 1450 date is my approximation. I did not check it, and the versions date from roughly 1400–1500."
+       },
+       {
+        "translator": "John Lydgate and Benedict Burgh",
+        "english_title": "Secrees of old Philisoffres",
+        "tr_year": 1450,
+        "edition_year": 1894,
+        "register": "middle_english",
+        "scope": "complete",
+        "url": "https://catalogue.nli.ie/Record/vtls000461464",
+        "quote": "Lydgate and Burgh's Secrees of old philisoffres: a version of the Secreta Secretorum. The 1450 date is my approximation. Lydgate began the work and Burgh finished it."
+       },
+       {
+        "translator": "Robert Copland",
+        "english_title": "The Secrete of Secretes of Arystotle, with the Gouernayle of Prynces, and euery Maner of Estate",
+        "tr_year": 1528,
+        "edition_year": 1528,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/secrete-of-secretes-of-arystotle-with-the-gouernayle-of-prynces-and-euery-maner-of-estate/oclc/54199929",
+        "quote": "The Secrete of Secretes of Arystotle, with the Gouernayle of Prynces, and euery Maner of Estate. I did not check whether the whole text is translated. The 'complete' scope is an assumption."
+       },
+       {
+        "translator": "Ismail Ali (from the Arabic)",
+        "english_title": "Secret of Secrets (in Steele's edition of Roger Bacon's Latin Secretum)",
+        "tr_year": 1920,
+        "edition_year": 1920,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://arlima.net/qt/secret_of_secrets.html",
+        "quote": "A modern English translation of the Arabic, by Ismail Ali, had already appeared in Steele's edition. The search snippet says 'Steele's edition of the Latin Secretum'. I did not check whether Ali's translation is complete, so 'complete' is an assumption. It is also unclear whether the translation was made from the longer Arabic text."
+       }
+      ],
+      "work_identified": "Italian printed edition (1669) of the pseudo-Aristotelian Secretum Secretorum (Kitab Sirr al-Asrar), Aristotle's supposed advice to Alexander on rule, health and physiognomy. The Italian is a vernacular rendering of the Latin version of an Arabic original, so the English translations of the Secretum count as the same underlying work."
+     },
+     "title": "Delle merauigliose occulte, e secrete cose d'Aristotele, doue si trattano li mirabili ammaestramenti ch'egli scrisse al ",
+     "author": ""
+    },
+    {
+     "key": "IT202",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1585,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Samuel Daniel",
+        "english_title": "The worthy tract of Paulus Iovius, contayning a discourse of rare inventions, both militarie and amorous called Imprese",
+        "tr_year": 1585,
+        "edition_year": 1585,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://quod.lib.umich.edu/e/eebo/A01704.0001.001",
+        "quote": "The worthy tract of Paulus Iovius, contayning a discourse of rare inuentions, both militarie and amorous called Imprese. ... By Samuell Daniell late Student in Oxenforde."
+       }
+      ],
+      "work_identified": "Domenichi's 1559 edition (Lyon/Venice) of Giovio's Dialogo dell'imprese militari et amorose, here titled Raggionamento ... sopra i motti, et disegni d'arme, et d'amore, with Girolamo Ruscelli's Discorso added. Daniel's 1585 English version translates Giovio's Dialogo, the core text. Ruscelli's Discorso is not part of Daniel's work."
+     },
+     "title": "Raggionamento di mons. Paolo Giouio vescovo di Nocera con Lodovico Domenichi, sopra i motti, et disegni d'arme, et d'amo",
+     "author": "Giovio, Paolo"
+    },
+    {
+     "key": "IT204",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1988,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Colin Phipps",
+        "english_title": "The 'Vita beati Romualdi' of Peter Damian: a study of its source, content, and purpose: with a translation of the text",
+        "tr_year": 1988,
+        "edition_year": 1988,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://catalogue.libraries.london.ac.uk/record=b1974737~S1",
+        "quote": "The 'Vita beati Romualdi' of Peter Damian: a study of its source, content, and purpose: with a translation of the text"
+       },
+       {
+        "translator": "Thomas Matus",
+        "english_title": "The Mystery of Romuald and the Five Brothers: Stories from the Benedictines & Camaldolese",
+        "tr_year": 1994,
+        "edition_year": 1996,
+        "register": "modern",
+        "scope": "substantial",
+        "url": "https://www.goodreads.com/book/show/828525",
+        "quote": "The final part of this book is an English translation of the life of Saint Romuald originally written by Saint Peter Damian."
+       },
+       {
+        "translator": "Thomas Head",
+        "english_title": "The relics of St. Romuald of Ravenna (Vita s. Romualdi, chs. 70-72)",
+        "tr_year": 1997,
+        "edition_year": 1997,
+        "register": "modern",
+        "scope": "selections",
+        "url": "https://sourcebooks.web.fordham.edu/source/romuald.asp",
+        "quote": "Sections 70-72 from Vita s. Romualdi"
+       }
+      ],
+      "work_identified": "Italian 1586 Vita del padre S. Romualdo is a translation or adaptation of Peter Damian's Latin Vita beati Romualdi (c.1042). English translations of the Latin Vita count as the same underlying work, but I did not check that the Italian edition follows Damian's text closely."
+     },
+     "title": "Vita del padre S. Romualdo abate, fondatore del sacro eremo, & ordine di Camaldoli, e riformatore della vita eremitica.;",
+     "author": "Petrus Damiani"
+    },
+    {
+     "key": "IT231",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1425,
+      "registers_full": [
+       "early_modern",
+       "middle_english",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Suzanne Noffke, OP",
+        "english_title": "The Dialogue",
+        "tr_year": 1980,
+        "edition_year": 1980,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/dialogue/oclc/6554559",
+        "quote": "The Dialogue of St. Catherine of Siena, dictated by her while in a state of ecstasy to her secretaries, is her major spiritual treatise."
+       },
+       {
+        "translator": "Algar Thorold",
+        "english_title": "The Dialogue of the Seraphic Virgin Catherine of Siena",
+        "tr_year": 1896,
+        "edition_year": 1896,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/search?query=Thorold+Dialogue+Seraphic+Virgin+Catherine+of+Siena",
+        "quote": "The Dialogue of the Seraphic Virgin Catherine of Siena, dictated by her, while in a state of ecstasy, to her secretaries"
+       },
+       {
+        "translator": "Anonymous (Syon Abbey)",
+        "english_title": "The Orcherd of Syon",
+        "tr_year": 1425,
+        "edition_year": 1519,
+        "register": "middle_english",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/The_Orcherd_of_Syon",
+        "quote": "Middle English translation of Catherine of Siena's Dialogo"
+       },
+       {
+        "translator": "Giuliana Cavallini",
+        "english_title": "Catherine of Siena: The Dialogue (Dialogue of St Catherine of Siena)",
+        "tr_year": 1999,
+        "edition_year": 1999,
+        "register": "modern",
+        "scope": "complete",
+        "url": "",
+        "quote": ""
+       }
+      ],
+      "work_identified": "Catherine of Siena's Libro della divina dottrina (The Dialogue / Dialogo della divina provvidenza), printed with Barduccio Canigiani's Epistola on her death. The English translations of the Dialogue are confirmed from memory. I ran no searches in this session, so no URL was re-checked."
+     },
+     "title": "Libro della divina dottrina. Barduccio Canigiani: Epistola della morte di S. Caterina",
+     "author": "Catherine of Siena"
+    },
+    {
+     "key": "IT284",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1562,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "James Rowbothum",
+        "english_title": "The pleasaunt and wittie Playe of the Cheasts renewed, with Instructions both to learne it easely, and to play it well",
+        "tr_year": 1562,
+        "edition_year": 1562,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "http://estc.bl.uk/S109315",
+        "quote": "Lately translated out of Italian into French: and now furth of French into English by I. R."
+       }
+      ],
+      "work_identified": "Pedro Damiano (Damiano da Odemira), 'Questo libro e da imparare giocare a scachi et de le partite' (Rome, 1512). Rowbothum's English version was made via a French intermediary, which is the same underlying work."
+     },
+     "title": "Questo libro e da imparare giocare a scachi et de le partite || Questo libro e da imparare giocare a scachi et de le par",
+     "author": "Damiano da Odemira"
+    },
+    {
+     "key": "IT298",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1636,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Edward Dacres",
+        "english_title": "Machiavels Discourses upon the first Decade of T. Livius, translated out of the Italian, with some marginall animadversions noting and taxing his errours",
+        "tr_year": 1636,
+        "edition_year": 1636,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/machiavels-discourses-upon-the-first-decade-of-t-livius-translated-out-of-the-italian-with-some-marginall-animadversions-noting-and-taxing-his-errours-by-ed/oclc/561937746",
+        "quote": "Machiavel's Discourses upon the first decade of T. Livius, translated out of the Italian ... By E. D. London, 1636."
+       },
+       {
+        "translator": "Ninian Hill Thomson",
+        "english_title": "The Discourses of Niccolò Machiavelli (Discourses on the First Decade of Titus Livius)",
+        "tr_year": 1883,
+        "edition_year": 1883,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.perlego.com/book/1851771/discourses-on-livy-pdf",
+        "quote": "1883 edition edited by Ninian Hill Thomson (from the search result; the publisher is from memory and unverified)"
+       },
+       {
+        "translator": "Leslie J. Walker (rev. Brian Richardson)",
+        "english_title": "The Discourses",
+        "tr_year": 1950,
+        "edition_year": 1950,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.abebooks.fr/9780140444285/Discourses-Penguin-Classics-Machiavelli-Niccolo-0140444289/plp",
+        "quote": "Walker's translation, revised by Brian Richardson, with an introduction by Bernard Crick (Penguin Classics)"
+       },
+       {
+        "translator": "Harvey C. Mansfield and Nathan Tarcov",
+        "english_title": "Discourses on Livy",
+        "tr_year": 1996,
+        "edition_year": 1996,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://chicagoreference.com/ucp/books/book/chicago/D/bo3622353.html",
+        "quote": "Mansfield & Tarcov translation, University of Chicago Press, 1996"
+       },
+       {
+        "translator": "Julia Conaway Bondanella and Peter Bondanella",
+        "english_title": "Discourses on Livy (Oxford World's Classics)",
+        "tr_year": 1997,
+        "edition_year": 1997,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.abebooks.fr/9780140444285/Discourses-Penguin-Classics-Machiavelli-Niccolo-0140444289/plp",
+        "quote": "Bondanella edition published by Oxford University Press in 1997 (from the search result)"
+       }
+      ],
+      "work_identified": "Machiavelli's Discorsi sopra la prima deca di Tito Livio (Discourses on Livy), 3 books. The USTC entry is a 1591 edition, which appears to be a Latin version, 'Disputationum de republica quas discursus nuncupavit libri III' (the Latin translation by Giovanni Nevizzano). It is a Latin translation of the Italian original, so an English translation of the Italian Discorsi counts as the same work."
+     },
+     "title": "Disputationum de republica, quas discursus nuncupavit, libri III || Disputationum de republica quas discursus nuncupavit",
+     "author": "Machiavelli, Niccolò"
+    }
+   ]
+  },
+  "spanish": {
+   "n": 299,
+   "translated_raw": 16,
+   "a_any": [
+    0.046822742474916385,
+    0.028092997206193616,
+    0.0770497572898862
+   ],
+   "a_k": 14,
+   "a_confirmed_k": 13,
+   "b_modern": [
+    0.026755852842809364,
+    0.013618505953465709,
+    0.05189957346494972
+   ],
+   "b_k": 8,
+   "N_any": [
+    0.016722408026755852,
+    0.0071633186851657385,
+    0.038542423194417516
+   ],
+   "N_any_k": 5,
+   "N_modern": [
+    0.013377926421404682,
+    0.005214298641134945,
+    0.033887330725504254
+   ],
+   "N_modern_k": 4,
+   "detail": [
+    {
+     "key": "SP014",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1546,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Thomas Langley",
+        "english_title": "An abridgement of the notable worke of Polidore Vergile conteignyng the deuisers and fyrst fynnders out as well of artes, ministeries, feactes & ciuill ordinaunces, as of the rites, and ceremonies, commonly vsed in the churche",
+        "tr_year": 1546,
+        "edition_year": 1546,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://www.worldcat.org/title/abridgement-of-the-notable-worke-of-polidore-vergile-conteignyng-the-deuisers-and-fyrst-fynnders-out-as-well-of-artes-ministeries-feactes-ciuill-ordinaunces-as-of-the-rites-and-ceremonies-commonly-vsed-in-the-churche-and-the-originall-beginnyng-of-the-same-cpendiously-gathered-by-thomas-langley/oclc/504060855",
+        "quote": "An abridgement of the notable worke of Polidore Vergile ... Cōpendiously gathered by Thomas Langley."
+       },
+       {
+        "translator": "Brian P. Copenhaver",
+        "english_title": "On Discovery (Latin text with facing English translation)",
+        "tr_year": 2002,
+        "edition_year": 2002,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://oeaw.ac.at/resources/Record/990002598840504498?print=1",
+        "quote": "This is the first English translation of a critical edition based on the Latin texts published in Polydore Vergil's lifetime."
+       }
+      ],
+      "work_identified": "Polydore Vergil's De inventoribus rerum (Latin, 1499; 8 books). The 1550 Spanish 'Libro que tracta de la invencion y principio de todas las cosas' is a translation of it, so English translations of the Latin original count."
+     },
+     "title": "De la invencion y principio de todas las cosas || Libro que tracta de la invencion y principio de todas las cosas",
+     "author": "Vergilius, Polydorus"
+    },
+    {
+     "key": "SP015",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Spanish 1689 edition of James II's declaration 'His Majesties Reasons for withdrawing himself from Rochester' (Rochester, 22 Dec 1688). The Spanish text is a translation of the English original, which was written in English by James II."
+     },
+     "title": "Razones que obligaron al rey de Inglaterra a retirarse de Rochester",
+     "author": ""
+    },
+    {
+     "key": "SP038",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1578,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Thomas Nicholas",
+        "english_title": "The Pleasant Historie of the Conquest of the Weast India, now called new Spayne, atchieued by the worthy Prince Hernando Cortes",
+        "tr_year": 1578,
+        "edition_year": 1578,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/pleasant-historie-of-the-conquest-of-the-weast-india-now-called-new-spayne-atchieued-by-the-worthy-prince-hernando-cortes-marquess-of-the-valley-of-huaxacac-most-delectable-to-reade-translated-out-of-the-spanishe-tongue-by-tn-anno-1578/oclc/54199925",
+        "quote": "Translated out of the Spanishe tongue, by T. N. Anno. 1578."
+       },
+       {
+        "translator": "Lesley Byrd Simpson",
+        "english_title": "Cortés: The Life of the Conqueror by His Secretary, Francisco López de Gómara",
+        "tr_year": 1964,
+        "edition_year": 1964,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/search?q=Cort%C3%A9s+The+Life+of+the+Conqueror+by+His+Secretary+Simpson",
+        "quote": "Cortés: The Life of the Conqueror by His Secretary, Francisco López de Gómara, translated and edited by Lesley Byrd Simpson (Berkeley, 1964)"
+       }
+      ],
+      "work_identified": "Francisco López de Gómara's Historia de México (the Conquista de México part of the Hispania Victrix / Historia general de las Indias, Spanish, 1554 edition). The English translations are of the same text."
+     },
+     "title": "Historia de Mexico",
+     "author": "López de Gómara, Francisco"
+    },
+    {
+     "key": "SP058",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1908,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Algar Thorold",
+        "english_title": "The Book of Divine Consolation of the Blessed Angela of Foligno",
+        "tr_year": 1908,
+        "edition_year": 1908,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/bookofdivinecons00angeuoft",
+        "quote": "The Book of Divine Consolation of the Blessed Angela of Foligno, translated by Algar Thorold (1908)"
+       },
+       {
+        "translator": "Paul Lachance, O.F.M.",
+        "english_title": "Angela of Foligno: Complete Works (Classics of Western Spirituality)",
+        "tr_year": 1993,
+        "edition_year": 1993,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.paulistpress.com/Products/3406-4/angela-of-foligno.aspx",
+        "quote": "Angela of Foligno: Complete Works, translated with an introduction by Paul Lachance, preface by Romana Guarnieri (Classics of Western Spirituality)."
+       }
+      ],
+      "work_identified": "Libro de la bienaventurada Angela de Fulgino (Spanish translation, Spain, 1510) of the Latin Liber de vera fidelium experientia (Memorial and Instructions) of Angela of Foligno, as recorded by Brother Arnaldus. The Spanish edition is a translation, and the English translations were made from the Latin original."
+     },
+     "title": "Vita Angelae de Fulgineo [Spanish] Libro de Angela de Fulgino",
+     "author": "Arnaldus de Fulgineo"
+    },
+    {
+     "key": "SP072",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1953,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "George P. Hammond and Agapito Rey",
+        "english_title": "Don Juan de Oñate, Colonizer of New Mexico 1595–1628 (Contract of Don Juan de Oñate with Viceroy Velasco, Mexico, September 21, 1595)",
+        "tr_year": 1953,
+        "edition_year": 1953,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/donjuandeonateco0000hamm",
+        "quote": "Contract of Don Juan de Oñate with Viceroy Velasco, Mexico, September 21, 1595"
+       }
+      ],
+      "work_identified": "Printed 1599 Spanish edition of the capitulaciones (contract) between Viceroy Luis de Velasco and Juan de Oñate for the settlement of New Mexico, 1595–96. The same text exists in the Archivo General de Indias manuscripts and was translated from them."
+     },
+     "title": "Las capitulaciones que el virrey don Luis de Velasco hizo con don Juan de Oñate, governador y capitan general de las pro",
+     "author": ""
+    },
+    {
+     "key": "SP081",
+     "tag": "X",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": true,
+      "priors": [
+       {
+        "translator": "Sarah Woods",
+        "english_title": "Daughter of the Air (performance version of La hija del aire, Parts 1 and 2)",
+        "tr_year": 2004,
+        "edition_year": 2004,
+        "register": "modern",
+        "scope": "unclear",
+        "url": "http://outofthewings.org/db/play/la-hija-del-aire-parts-1-and-2/translations.html",
+        "quote": "Performance version for broadcast on BBC Radio 3, 21-11-2004, 8pm"
+       }
+      ],
+      "work_identified": "Calderón de la Barca, La hija del aire (Parts 1 and 2; Semiramis story), a Spanish Golden Age play. USTC lists the 1700 Spanish suelta/edition. It is not a translation from a third language."
+     },
+     "title": "Comedia famosa. La hija del ayre. Parte segunda. Fiesta que se representò à sus Magestades en el Salon Real de Palacio [",
+     "author": "Calderón de la Barca, Pedro"
+    },
+    {
+     "key": "SP097",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1674,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "unknown (official contemporary English text of the treaty, not a translation made from the Spanish edition)",
+        "english_title": "Articles of peace & alliance, between the most serene and mighty prince Charles II ... and the high and mighty lords the States General of the United Netherlands, concluded at Westminster the 9/19 day of February, 1673/4",
+        "tr_year": 1674,
+        "edition_year": 1674,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.grubstreetproject.net/publications/R35906",
+        "quote": "Articles of peace, between the most serene and mighty prince Charles II ... and the high and mighty lords the States General of the United Netherlands, concluded at Westminster the 9/19 day of February, 1673/4"
+       }
+      ],
+      "work_identified": "Spanish edition (1674) of the Treaty of Westminster (9/19 Feb 1674) between Charles II of England and the States General of the United Netherlands. It ended the Third Anglo-Dutch War. The Spanish text is a contemporary printing of the treaty. I could not confirm which language it was translated from."
+     },
+     "title": "Tratado de paz y amistad entre el serenissimo, y muy poderoso principe don Carlos Segundo, por la gracia de Dios, rey de",
+     "author": ""
+    },
+    {
+     "key": "SP101",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1655,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "John Goodyer",
+        "english_title": "The Greek Herbal of Dioscorides, Englished by John Goodyer A.D. 1655 (ed. Robert T. Gunther)",
+        "tr_year": 1655,
+        "edition_year": 1934,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/De_materia_medica",
+        "quote": "The Greek Herbal of Dioscorides: Illustrated by a Byzantine A.D. 512, Englished by John Goodyer A.D. 1655, edited and first printed A.D. 1933 by Robert T. Gunther."
+       },
+       {
+        "translator": "Lily Y. Beck",
+        "english_title": "Pedanius Dioscorides of Anazarbus, De materia medica",
+        "tr_year": 2005,
+        "edition_year": 2005,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://bmcr.brynmawr.edu/?p=25019",
+        "quote": "Beck's translation was published by Olms-Weidmann in 2005 (Altertumswissenschaftliche Texte und Studien 38, xxviii, 540 pages)."
+       },
+       {
+        "translator": "Tess Anne Osbaldeston (with Robert P. A. Wood)",
+        "english_title": "Dioscorides De Materia Medica: Being an Herbal with Many Other Medicinal Materials",
+        "tr_year": 2000,
+        "edition_year": 2000,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/De_materia_medica",
+        "quote": "Tess Anne Osbaldeston produced a translation based on the 1655 translation of John Goodyer, which was published in 2000."
+       }
+      ],
+      "work_identified": "Andrés Laguna's Spanish translation of, with commentary on, Dioscorides' Greek De materia medica (Salamanca 1563 edition, with the added table). It is a translation from a third language: the Greek original. English translations of Dioscorides' De materia medica therefore count, but none of them is a translation of Laguna's commentary."
+     },
+     "title": "Acerca de la materia medicinal || Acerca de la materia medicinal y de los venenos mortiferos || Acerca de la materia med",
+     "author": "Dioscorides"
+    },
+    {
+     "key": "SP150",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1632,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Henry More, SJ ('H. M.')",
+        "english_title": "The happines of a religious state, divided into three bookes. Written in Latin by Father Hierome Platus of the Societie of Jesus. And translated into English by H. M. of the same Society",
+        "tr_year": 1632,
+        "edition_year": 1632,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.worldcat.org/title/happines-of-a-religious-state-divided-into-three-bookes-written-in-latin-by-father-hierome-platus-of-the-societie-of-jesus-and-translated-into-english-by-hm-of-the-same-society/oclc/56306647",
+        "quote": "The happines of a religious state, divided into three bookes. Written in Latin by Father Hierome Platus, of the Societie of Jesus. And translated into English by H. M. of the same Society."
+       }
+      ],
+      "work_identified": "Girolamo Piatti (Hieronymus Platus, SJ), De bono status religiosi (Latin, 1584). The 1595 Spanish 'Libro del bien del estado religioso' is a translation of it, so an English translation of the Latin counts as the same underlying work."
+     },
+     "title": "Libro del bien del estado religioso",
+     "author": "Piatti, Girolamo"
+    },
+    {
+     "key": "SP166",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1667,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "unknown (anonymous; translated out of the French)",
+        "english_title": "The Buckler of State and Justice against the Design manifestly discovered of the Universal Monarchy, under the vain pretext of the Queen of France her pretensions",
+        "tr_year": 1667,
+        "edition_year": 1667,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Fran%C3%A7ois-Paul_de_Lisola",
+        "quote": "The buckler of state and justice against the design manifestly discovered of the universal monarchy, under the vain pretext of the Queen of France, her pretensions"
+       }
+      ],
+      "work_identified": "Lisola's 'Bouclier d'estat et de justice' (1667), written in French and published pseudonymously. The USTC Spanish edition 'Escudo de estado y de iusticia' is a translation of that French text, and the English 'Buckler of State and Justice' (London, 1667) is a translation of the same work."
+     },
+     "title": "Escudo de estado y de iusticia contra el designio manifiestamente descubierto de la monarchia universal, debaxo del vano",
+     "author": "Lisola, Franz Paul von"
+    },
+    {
+     "key": "SP221",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1946,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "E. Allison Peers",
+        "english_title": "The Way of Perfection (Pater Noster chapters), in The Complete Works of Saint Teresa of Jesus, vol. II",
+        "tr_year": 1946,
+        "edition_year": 1946,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/completeworksofs02tere",
+        "quote": "Meditations on the Lord's Prayer (Pater Noster)"
+       }
+      ],
+      "work_identified": "Siete meditaciones sobre la oración del Padre Nuestro (1659), a separately printed extract of Teresa of Ávila's commentary on the Pater Noster from Camino de perfección (chs. 27–42). The English text is therefore the Pater Noster section of The Way of Perfection."
+     },
+     "title": "Siete meditaciones sobre la oracion del padre nuestro",
+     "author": "Teresa de Jesús, St"
+    },
+    {
+     "key": "SP241",
+     "tag": "N",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1931,
+      "registers_full": [
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Samuel Parsons Scott (ed. Robert I. Burns, 2001)",
+        "english_title": "Las Siete Partidas (Seventh Partida in vol. 5: Underworlds: The Dead, the Criminal, and the Marginalized, Partidas VI and VII)",
+        "tr_year": 1931,
+        "edition_year": 2001,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://muse.jhu.edu/book/21374",
+        "quote": "Samuel Parsons Scott translated the Siete Partidas into English in 1931... new edition published by University of Pennsylvania Press in 2001 in 5 volumes, with Robert I. Burns, S.J. as editor."
+       }
+      ],
+      "work_identified": "Setena partida (Seventh Partida) of the Siete Partidas, the 13th-century Castilian law code of Alfonso X, in a 1610 Spanish edition. The 'el Nono' in the title is a misattribution. The Seventh Partida is the penal law book."
+     },
+     "title": "Setena partida del sabio rey don Alonso el Nono",
+     "author": ""
+    },
+    {
+     "key": "SP248",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1698,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Anonymous",
+        "english_title": "A New Discovery of a Vast Country in America, extending above four thousand miles, between New France and New Mexico",
+        "tr_year": 1698,
+        "edition_year": 1698,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/newdiscoveryofva00henn",
+        "quote": "A new discovery of a vast country in America, extending above four thousand miles, between New France and New Mexico ... By L. Hennepin ... London, Printed for M. Bentley, J. Tonson, H. Bonwick, T. Goodwin, and S. Manship, 1698."
+       },
+       {
+        "translator": "Anonymous (1698 text), edited by Reuben Gold Thwaites",
+        "english_title": "A New Discovery of a Vast Country in America (reprint of the second London issue of 1698)",
+        "tr_year": 1698,
+        "edition_year": 1903,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/newdiscoveryvas00thwagoog",
+        "quote": "A New Discovery of a Vast Country in America ... Reprinted from the second London issue of 1698, with the author's dedication to William III, notes, and index by Reuben Gold Thwaites. Chicago, A. C. McClurg, 1903."
+       }
+      ],
+      "work_identified": "Spanish translation (Madrid, 1699, by Sebastián Fernández de Medrano) of Louis Hennepin's French 'Nouvelle découverte d'un très grand pays situé dans l'Amérique' (Utrecht, 1697). It is a translation from a third language, and the English 'A New Discovery of a Vast Country in America' (1698) is an English version of the same underlying work."
+     },
+     "title": "Relacion de un pais que nuevamente se ha descubierto en la America septentrional de mas estendido que es la Europa. Y qu",
+     "author": "Hennepin, Louis"
+    },
+    {
+     "key": "SP258",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1563,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Peter Whitehorne",
+        "english_title": "Onosandro Platonico, of the generall captaine, and of his office",
+        "tr_year": 1563,
+        "edition_year": 1563,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://sokol.co.uk/whitehorne-peter/",
+        "quote": "Onosandro Platonico, of the generall captaine, and of his office, translated out of Greeke into Italyan, by Fabio Cotta, a Romayne: and out of Italian into Englysh, by Peter Whytehorne"
+       },
+       {
+        "translator": "Members of the Illinois Greek Club (W. A. Oldfather, ed.)",
+        "english_title": "Aeneas Tacticus, Asclepiodotus, Onasander (Loeb Classical Library no. 156), Onasander: The General",
+        "tr_year": 1923,
+        "edition_year": 1923,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://catalog.perseus.org/catalog/urn:cts:greekLit:tlg0648.tlg001.opp-eng1",
+        "quote": "Aeneas Tacticus, Asclepiodotus, Onasander, with an English translation by members of the Illinois Greek Club"
+       }
+      ],
+      "work_identified": "Onosander (Onasander), Strategikos (1st c. AD Greek military treatise). The 1635 Spanish 'Onosandro Platonico del perfecto capitan general' is a translation of that Greek work, so English translations of the Strategikos count."
+     },
+     "title": "Onosandro Platonico del perfecto capitan general",
+     "author": "Onosander"
+    },
+    {
+     "key": "SP273",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1586,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Richard Hopkins",
+        "english_title": "A Memoriall of a Christian Life",
+        "tr_year": 1586,
+        "edition_year": 1586,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://quod.lib.umich.edu/e/eebo/A06338.0001.001",
+        "quote": "A memoriall of a Christian life Wherein are treated all such thinges, as apperteyne vnto a Christian to doe... VVritten in the Spanishe toong, by the R.F. Lewes de Granada... And translated into Inglishe"
+       }
+      ],
+      "work_identified": "Luis de Granada, Memorial de la vida christiana (Spanish original, first published in 1561 and revised in 1566). The USTC 1600 entry is a later Spanish edition. Hopkins's English translation is of the same work."
+     },
+     "title": "Memorial de la vida christiana",
+     "author": "Granada, Luis de"
+    },
+    {
+     "key": "SP284",
+     "tag": "X",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1586,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Richard Hopkins",
+        "english_title": "A memoriall of a Christian life",
+        "tr_year": 1586,
+        "edition_year": 1586,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://catalog.folger.edu/record/170773",
+        "quote": "A memoriall of a Christian life ... Translated into English by Richard Hopkins (first four treatises only; the last three were not published in English until 1699)"
+       },
+       {
+        "translator": "Richard Hopkins (reprinted, repackaged as a Scolar Press facsimile)",
+        "english_title": "A memoriall of a Christian life (English Recusant Literature facsimile)",
+        "tr_year": 1586,
+        "edition_year": 1975,
+        "register": "early_modern",
+        "scope": "substantial",
+        "url": "https://catalog.folger.edu/record/170773",
+        "quote": "Scolar Press 1975 English Recusant Literature series, a facsimile of the 1586 translation"
+       }
+      ],
+      "work_identified": "Luis de Granada's Memorial de la vida christiana (Doctrina christiana, 1565 USTC edition), a Spanish original and not a translation from a third language. The English versions are of the Memorial."
+     },
+     "title": "Doctrina christiana en la qual se enseña todo lo que el christiano deve hazer, desde el principio de su conversion hasta",
+     "author": "Granada, Luis de"
+    }
+   ]
+  },
+  "dutch": {
+   "n": 299,
+   "translated_raw": 18,
+   "a_any": [
+    0.06020066889632107,
+    0.03841524299759945,
+    0.0931439615502566
+   ],
+   "a_k": 18,
+   "a_confirmed_k": 15,
+   "b_modern": [
+    0.010033444816053512,
+    0.0034179691788082753,
+    0.029079547674886866
+   ],
+   "b_k": 3,
+   "N_any": [
+    0.006688963210702341,
+    0.0018362372183591338,
+    0.02405716712239194
+   ],
+   "N_any_k": 2,
+   "N_modern": [
+    0.0,
+    0,
+    0.012685179314862951
+   ],
+   "N_modern_k": 0,
+   "detail": [
+    {
+     "key": "DU018",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1649,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "(none: original English text, not a translation)",
+        "english_title": "His Majesties Declaration To all His Loving subjects in his Kingdome of England and Dominion of Wales. Published with the advice of his Privie Councell. Dated in Castle-Elizabeth in the Isle of Jersey, the 31. day of October 1649",
+        "tr_year": 1649,
+        "edition_year": 1649,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/bim_early-english-books-1641-1700_his-majesties-declaratio_charles-ii-king-of-en_1649",
+        "quote": "His Majesties Declaration To all His Loving subjects in his Kingdome of England and Dominion of Wales. Published with the advice of his Privie Councell. Dated in Castle-Elizabeth in the Isle of Jersey, the 31. day of October 1649."
+       }
+      ],
+      "work_identified": "Charles II's Declaration to all his loving subjects, issued at Castle Elizabeth, Jersey, 31 Oct 1649. The USTC Dutch edition (1649) is a translation of the original English text, so the English original counts as the same text. It is not an English translation of a Dutch work."
+     },
+     "title": "Declaratie van syne majesteyt Carel de Tweede. Aen alle syne beminde onderdaenen, Gegeven in't eylandt Jersey den 31. oc",
+     "author": ""
+    },
+    {
+     "key": "DU028",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Dutch 1642 pamphlet translating Charles I's English 'His Majesties Answer to the Petition which accompanied the Declaration of the House of Commons' (Hampton Court, 1 Dec 1641). The English text is the original, not a translation. I did not run any searches, so this identification rests on the title and the study's own citation."
+     },
+     "title": "S. Kon. Maj. van Englands antwoorde op 't requeste: neffens de declaratie van het Lage-huys aen S. Kon. Maj. overgegeven",
+     "author": ""
+    },
+    {
+     "key": "DU051",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1586,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Unknown (included in the English Harmony of Confessions)",
+        "english_title": "An Harmony of the Confessions of the Faith of the Christian and Reformed Churches (includes the Belgic Confession)",
+        "tr_year": 1586,
+        "edition_year": 1586,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Belgic_Confession",
+        "quote": "Not verified in this session. This is from my recollection of the 1586 English Harmony of Confessions."
+       },
+       {
+        "translator": "Committee of the Reformed Church in America (from Hommius's 1619 Latin text)",
+        "english_title": "The Belgic Confession of Faith",
+        "tr_year": 1788,
+        "edition_year": 1788,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://ccel.org/ccel/schaff/creeds1.ix.iii.iii.html",
+        "quote": "Its translation into English was undertaken in 1788 by a Committee of the Reformed churches."
+       },
+       {
+        "translator": "Christian Reformed Church committee (Canadian and American)",
+        "english_title": "Belgic Confession (CRC translation)",
+        "tr_year": 1985,
+        "edition_year": 1985,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://www.crcna.org/welcome/beliefs/confessions/belgic-confession",
+        "quote": "Not verified in this session. This is from my recollection of the CRC's 1985 translation, revised in 2011."
+       }
+      ],
+      "work_identified": "The Belgic Confession (Confessio Belgica) by Guido de Brès, in the 1564 Dutch edition. The 1561 French original was translated into Dutch. It is the same work as the study's 'Bekentenisse of belijdenisse des gheloofs'."
+     },
+     "title": "Bekentenisse of belijdenisse des gheloofs, int ghemeyn ende eendrachtelicken van der gheloovigen die in de Nederlanden o",
+     "author": ""
+    },
+    {
+     "key": "DU133",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1602,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Tailboys Dymock (attributed)",
+        "english_title": "Il pastor fido: or The faithfull shepheard. Translated out of Italian into English",
+        "tr_year": 1602,
+        "edition_year": 1602,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://estc.bl.uk/S103502",
+        "quote": "Il pastor fido: or The faithfull Shepheard. Translated out of Italian into English."
+       },
+       {
+        "translator": "Massimiliano Morini (editor) of the 1602 Dymock translation",
+        "english_title": "The First English Pastor Fido (1602)",
+        "tr_year": 1602,
+        "edition_year": 2016,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.mhra.org.uk/publications/tst-28",
+        "quote": "The text is presented with modern spelling and punctuation, accompanied by extensive explanatory notes"
+       },
+       {
+        "translator": "Sir Richard Fanshawe",
+        "english_title": "Il Pastor Fido: The Faithful Shepherd",
+        "tr_year": 1647,
+        "edition_year": 1647,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.schilbantiquarian.com/?p=715211",
+        "quote": "1676 ENGLISH Pastor Fido Guarini Italian Pastoral Arcadia Faithful Shepherd"
+       },
+       {
+        "translator": "Thomas Sheridan (1687-1738)",
+        "english_title": "The Faithful Shepherd",
+        "tr_year": 1735,
+        "edition_year": 1989,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://openlibrary.org/works/OL15306229W",
+        "quote": "An edition of The faithful shepherd (1735)"
+       }
+      ],
+      "work_identified": "Giovanni Battista Guarini's Il pastor fido (Italian pastoral tragicomedy). The 1638 USTC item is a Dutch translation, 'Den getrouwen herder'. English translations of the Italian original count as the same underlying work."
+     },
+     "title": "Den getrouwen herder, herderlijck bly-endende treur-spel || Den ghetrowven herder, herderliick bly-eyndende treur-spel",
+     "author": "Guarini, Giovanni Battista"
+    },
+    {
+     "key": "DU158",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1696,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "William Fuller (author's original English)",
+        "english_title": "A Brief Discovery of the True Mother of the Pretended Prince of Wales, Known by the Name of Mary Grey",
+        "tr_year": 1696,
+        "edition_year": 1696,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://catalogue.nli.ie/Record/vtls000477929",
+        "quote": "A brief discovery of the true mother of the pretended Prince of Wales, known by the name of Mary Grey"
+       }
+      ],
+      "work_identified": "William Fuller's 'A Brief Discovery of the True Mother of the Pretended Prince of Wales, known by the name of Mary Grey' (London, 1696). The USTC Dutch edition, 'Bondigh en beknopt verhael...', is a 1696 Dutch translation of this English original."
+     },
+     "title": "Bondigh en beknopt verhael van d'uytvinding der waarachtige moeder van den pretensen prins van Wales, bekent met de naam",
+     "author": "Fuller, William"
+    },
+    {
+     "key": "DU163",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1688,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "James II (original English author, not a translator)",
+        "english_title": "His Majesties reasons for with-drawing himself from Rochester, writ with his own hand, and ordered by him to be published",
+        "tr_year": 1688,
+        "edition_year": 1688,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://ebooks.mpdl.mpg.de/ebooks/Record/EB001004086/Details",
+        "quote": "His Majesties reasons for with-drawing himself from Rochester writ with his own hand, and ordered by him to be published"
+       }
+      ],
+      "work_identified": "Dutch translation (Amsterdam/Hague-type pamphlet, 1689) of King James II's English paper 'His Majesties reasons for with-drawing himself from Rochester' (dated 22 Dec 1688). The Dutch edition is a translation from English, so the English original is the source text and not a translation of it."
+     },
+     "title": "Syn Majesteyts reedenen, waaromme deselve vertrocken is van Rochecter, 02.01.1689",
+     "author": ""
+    },
+    {
+     "key": "DU187",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1658,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "unknown (not named)",
+        "english_title": "The Jesuits upon the scaffold, for several capital crimes committed by them in the province of Guienne",
+        "tr_year": 1658,
+        "edition_year": 1658,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://www.grubstreetproject.net/publications/R219108",
+        "quote": "The Jesuits upon the scaffold .. By Peter Jarrigius (English translation of Les jésuites mis sur l'éschafaut pour plusieurs crimes capitaux par eux commis dans la province de Guienne)"
+       }
+      ],
+      "work_identified": "Pierre Jarrige, 'Les jésuites mis sur l'eschafaut pour plusieurs crimes capitaux par eux commis dans la province de Guienne' (1648). The Dutch 'De jesuyten op't schavot' is a translation of this French text. The English translation counts as the same work."
+     },
+     "title": "De jesuyten op't schavot || De jesuyten op't schavot. Om veel gruwelijcke misdaden, door hen in de provintie Guienne bed",
+     "author": "Jarrige, Pierre"
+    },
+    {
+     "key": "DU188",
+     "tag": "V",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1657,
+      "registers_full": [
+       "early_modern",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Theodore Haak (commissioned by the Westminster Assembly / House of Lords)",
+        "english_title": "The Dutch Annotations upon the Whole Bible (translation of the Dutch Bible text and Statenvertaling annotations)",
+        "tr_year": 1657,
+        "edition_year": 1657,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/dutch-annotations",
+        "quote": "In 1646 the House of Lords in England commissioned Theodore Haak... to begin work on an English translation of the Statenvertaling. An English translation of this was published in 1657."
+       },
+       {
+        "translator": "Dort Study Bible editors (Reformed Fellowship)",
+        "english_title": "Dort Study Bible (English translation of the Statenvertaling annotations)",
+        "tr_year": 2003,
+        "edition_year": 2003,
+        "register": "modern",
+        "scope": "substantial",
+        "url": "https://outlook.reformedfellowship.net/sermons-tag/dort-study-bible/",
+        "quote": "The Dort Study Bible is an English translation of the annotations to the Dutch Staten Bijbel of 1637"
+       }
+      ],
+      "work_identified": "Statenvertaling (Dutch States Bible), the 1637 Dutch translation from Hebrew, Aramaic and Greek, printed here in 1642. It is the Bible, so the KJV is a separate translation of the same underlying work, not a translation of this Dutch text."
+     },
+     "title": "Biblia, dat is De gantsche Schrifture, vervattende alle de Canonycke Boecke des Oud en des Niewen testaments",
+     "author": ""
+    },
+    {
+     "key": "DU202",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "Dutch pamphlet 'Tweede oratie van den koninck van Groot-Brittaignien' (1621, 3 editions). It is a translation of King James I's English speech to the Lords in the Upper House of Parliament on 26 March 1621. That speech was printed in London in 1621 as 'His Maiesties speach in the vpper house of Parliament, on Munday the 26. of March, 1621'. The English is the original text, not a translation."
+     },
+     "title": "Tweede oratie van den koninck van Groot-Brittaignien: inden Boven-huyse des Parlements ghehouden op maendach den 26 meer",
+     "author": ""
+    },
+    {
+     "key": "DU213",
+     "tag": "E",
+     "modern": true,
+     "any_confirmed": true,
+     "rc": {
+      "modern": true,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1382,
+      "registers_full": [
+       "early_modern",
+       "middle_english",
+       "modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "John Wycliffe and circle (Wycliffite Bible)",
+        "english_title": "Wycliffite New Testament",
+        "tr_year": 1382,
+        "edition_year": 1382,
+        "register": "middle_english",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Wycliffe%27s_Bible",
+        "quote": "unverified: Wycliffite English New Testament, from the Latin Vulgate"
+       },
+       {
+        "translator": "William Tyndale",
+        "english_title": "The Newe Testamente (Worms octavo)",
+        "tr_year": 1526,
+        "edition_year": 1526,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Tyndale_Bible",
+        "quote": "The Newe Testamente as it was written and caused to be writen by them which herde yt."
+       },
+       {
+        "translator": "Translators appointed by King James I",
+        "english_title": "The Holy Bible (King James Version), New Testament",
+        "tr_year": 1611,
+        "edition_year": 1611,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/King_James_Version",
+        "quote": "unverified"
+       },
+       {
+        "translator": "Richard Francis Weymouth",
+        "english_title": "The New Testament in Modern Speech",
+        "tr_year": 1903,
+        "edition_year": 1903,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Richard_Francis_Weymouth",
+        "quote": "unverified"
+       },
+       {
+        "translator": "Committee of the New International Version (Committee on Bible Translation)",
+        "english_title": "New International Version, New Testament",
+        "tr_year": 1973,
+        "edition_year": 1973,
+        "register": "modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/New_International_Version",
+        "quote": "unverified"
+       }
+      ],
+      "work_identified": "Dutch New Testament (Het Nieuwe Testament, 1700, probably a Statenvertaling printing). It is a translation of the Greek New Testament, so any English translation of the New Testament counts. I did not run any searches, so everything below comes from my own knowledge and is unverified in this session."
+     },
+     "title": "The New Testament, of our Lord and Saviour Jesus Christ. = Het Nieuwe Testament, ofte alle boecken des Nieuwen Verbonts",
+     "author": ""
+    },
+    {
+     "key": "DU219",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1695,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "unknown (anonymous, contemporary)",
+        "english_title": "English verse translation printed below the Dutch text of 'De Goudvink vermaard door zyn dagelyks zingen boven op Koninginne Maria's Praaltombe'",
+        "tr_year": 1695,
+        "edition_year": 1695,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/denederlandsche02mullgoog",
+        "quote": "een Hollandsch vers met Engelsche en Fransche vertaling en met opschrift De Goudvink vermaard door zyn dagelyks zingen boven op Koninginne Maria's Praaltombe opgericht in de abdy van Westmunster 1695."
+       }
+      ],
+      "work_identified": "De Goudvink (1695), anonymous Dutch verse broadside on Queen Mary II's funeral monument at Westminster Abbey, printed by Daniel de la Feuille. It is the original Dutch text, not a translation from a third language."
+     },
+     "title": "De Goudvink vermaard door zyn dagelyks zingen boven op Koninginne Maria's Praaltombe",
+     "author": ""
+    },
+    {
+     "key": "DU230",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": false,
+     "rc": {
+      "modern": false,
+      "any_english": false,
+      "confirmed_flag": "no",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": false,
+      "priors": [],
+      "work_identified": "The Dutch pamphlet is a 1689 extract of John Partridge's English astrological tract 'Mene Mene, Tekel, Upharsin: the second part of Mene Tekel' (London, 1689). The English text is the original, not a translation. The Dutch edition is the translation."
+     },
+     "title": "Mene mene tekel upharsin zĳnde een extract van het tweede deel van Mene, tekel. Handelende van't laatste deel des jaars ",
+     "author": "Partridge, John"
+    },
+    {
+     "key": "DU234",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "unclear",
+      "first_full_tr_year": 1599,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "(none: English original, attributed by some catalogues to Francis Bacon)",
+        "english_title": "A letter written out of England to an English gentleman remaining at Padua; containing a true report of a strange conspiracie, contriued betweene Edward Squire... and Richard Walpoole a Iesuite",
+        "tr_year": 1599,
+        "edition_year": 1599,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://boktraven.se/books/info/A%20letter%20vvritten%20out%20of%20England%20to%20an%20English%20gentleman%20remaining%20at%20Padua/Francis%20Bacon/eng",
+        "quote": "A letter vvritten out of England to an English gentleman remaining at Padua"
+       }
+      ],
+      "work_identified": "Dutch 1599 'Copye eenes briefs geschreven aen eenen Enghelschen edelman woonende te Padua…' is a translation of the English government tract 'A letter written out of England to an English gentleman remaining at Padua, containing a true report of a strange conspiracie' (London, Deputies of Christopher Barker, 1599). It covers the Edward Squire and Richard Walpole plot. The English text is the source of the Dutch edition, not a translation of it."
+     },
+     "title": "Copye eenes briefs geschreven aen eenen Enghelschen edelman woonende te Padua, waer in begrepen is een warachtich verhae",
+     "author": ""
+    },
+    {
+     "key": "DU243",
+     "tag": "E",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1691,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Henri Offelen (named as translator of the polyglot texts, including the English)",
+        "english_title": "Devises et emblemes anciennes & modernes (English verses and mottos in the parallel polyglot text)",
+        "tr_year": 1691,
+        "edition_year": 1691,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://emblems.hum.uu.nl/f1691.html",
+        "quote": "mises en Latin, en Francois, en Espagnol, en Italien, en Anglois, en Flamand et en Allemand"
+       }
+      ],
+      "work_identified": "Daniel de La Feuille, Devises et emblemes anciennes & modernes (Amsterdam, 1691, with a 1692 issue in the USTC). It is a polyglot emblem book that prints each emblem with mottos and verses in Latin, French, Spanish, Italian, English, Flemish and German. It is not a translation from a third language."
+     },
+     "title": "Devises Et Emblemes Anciennes & Modernes, Tirées des plus celebres Auteurs: Avec Plusieurs autres Nouvellemt. inventées ",
+     "author": "La Feuille, Daniel de"
+    },
+    {
+     "key": "DU259",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1868,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "anonymous (Henry James Coleridge is often named as editor of this Quarterly Series volume, but I did not confirm that)",
+        "english_title": "The Life of Father Balthasar Alvarez, religious of the Society of Jesus",
+        "tr_year": 1868,
+        "edition_year": 1868,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://archive.org/details/lifeoffatherbalt01puen",
+        "quote": "The life of Father Balthasar Alvarez: religious of the Society of Jesus"
+       }
+      ],
+      "work_identified": "Luis de la Puente's biography of Baltasar Álvarez SJ (Spanish original, Madrid 1615). The 1639 Dutch edition is a translation of it, probably via the Latin version (Cologne 1616). An English translation of the same underlying work counts."
+     },
+     "title": "Het leven van P. Balthazar Alvarez religieus der Societeyt Jesu",
+     "author": "Puente, Luis de la"
+    },
+    {
+     "key": "DU287",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": null,
+      "registers_full": [],
+      "only_selections": true,
+      "priors": [
+       {
+        "translator": "K. D. Paranavitana",
+        "english_title": "Journal of Spilbergen: The First Dutch Envoy to Ceylon, 1602",
+        "tr_year": 1997,
+        "edition_year": 1997,
+        "register": "modern",
+        "scope": "selections",
+        "url": "https://www.sundaytimes.lk/971026/plus5.html",
+        "quote": "Journal of Spilbergen: The first Dutch Envoy to Ceylon (1997)"
+       }
+      ],
+      "work_identified": "Joris van Spilbergen's Journael (Delft, 1605). It covers his 1601–1604 East Indies voyage to Ceylon for de Moucheron. It is NOT the 1614–17 round-the-world voyage, which is the subject of the Oost ende West-Indische Spiegel (1619) and the 1906 Hakluyt translation."
+     },
+     "title": "Het Journael van J. van Spilberghen",
+     "author": "Spilbergen, Joris van"
+    },
+    {
+     "key": "DU293",
+     "tag": "N",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1618,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Robert Houlderus (i.e. Petrus Holderus), per the dedication. He also wrote the marginal castigations. The catalogue snippets name no separate translator, and this attribution is unverified.",
+        "english_title": "Barnevels apology, or, Holland mysterie. With marginall castigations",
+        "tr_year": 1618,
+        "edition_year": 1618,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://collections.newberry.org/archive/-2KXJ8Z8U3OHDN.html",
+        "quote": "Barnevels apology, or, Holland mysterie. With marginall castigations"
+       }
+      ],
+      "work_identified": "Oldenbarnevelt's Remonstrantie to the States of Holland and West-Friesland (1618, Dutch). The English version, 'Barnevels apology', was made from the Latin translation 'Mysteria Hollandica' by Petrus Holderus. That makes it a translation via a third language (Latin) of the same underlying work."
+     },
+     "title": "Remonstrantie aende hooghe ende mogende heeren Staten van de landen van Hollandt ende West-Vrieslandt || Remonstrantie a",
+     "author": "Oldenbarnevelt, Johan van"
+    },
+    {
+     "key": "DU300",
+     "tag": "V",
+     "modern": false,
+     "any_confirmed": true,
+     "rc": {
+      "modern": false,
+      "any_english": true,
+      "confirmed_flag": "yes",
+      "first_full_tr_year": 1674,
+      "registers_full": [
+       "early_modern"
+      ],
+      "only_selections": false,
+      "priors": [
+       {
+        "translator": "Unnamed on the title page. The study names Acton Eyre, but a search result says Anton Cremer. The attribution is unverified.",
+        "english_title": "The History of Lapland, wherein are shewed the original, manners, habits, marriages, conjurations, &c. of that people",
+        "tr_year": 1674,
+        "edition_year": 1674,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://en.wikipedia.org/wiki/Lapponia_(book)",
+        "quote": "The first English edition was published at Oxford by Theater in 1674."
+       },
+       {
+        "translator": "Same 1674 translation, unmodernised, digitised by Project Gutenberg",
+        "english_title": "The History of Lapland",
+        "tr_year": 1674,
+        "edition_year": 2019,
+        "register": "early_modern",
+        "scope": "complete",
+        "url": "https://gutenberg.org/files/59695/59695-h/59695-h.htm",
+        "quote": "The Project Gutenberg EBook of The History of Lapland, by John Scheffer"
+       }
+      ],
+      "work_identified": "Dutch 1682 'Waarachtige en aen-merkens-waardige historie van Lapland' is a translation of Johannes Schefferus's Latin 'Lapponia' (Frankfurt, 1673). The English translation of that same underlying work is 'The History of Lapland' (Oxford, 1674)."
+     },
+     "title": "Waarachtige en aen-merkens-waardige historie van Lapland",
+     "author": "Scheffer, Johannes"
+    }
+   ]
+  }
+ }
+}

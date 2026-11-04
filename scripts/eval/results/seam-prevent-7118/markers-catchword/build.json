@@ -1,0 +1,23 @@
+{
+ "at": "2026-10-29T22:10:25.708Z",
+ "frameBooks": 17914,
+ "scanned": 165,
+ "kept": 120,
+ "catchword": 40,
+ "plain": 80,
+ "languages": {
+  "Latin": 66,
+  "Latin-German": 3,
+  "German": 23,
+  "Spanish": 2,
+  "Greek": 6,
+  "Middle Dutch": 1,
+  "Dutch": 2,
+  "French": 10,
+  "Arabic": 1,
+  "Sanskrit": 1,
+  "Italian": 3,
+  "Maori": 1,
+  "Marathi": 1
+ }
+}

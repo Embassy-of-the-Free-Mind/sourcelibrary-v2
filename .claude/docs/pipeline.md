@@ -1,5 +1,7 @@
 # Processing Pipeline
 
+> **SUPERSEDED (2026-10-29, #7759).** This describes the orchestrator era (March 2026), when one scheduler drove every book through numbered phases on the paid Gemini API. The scheduler still runs these phases under the spend dial, but most translation and OCR now runs in subscription lanes (agy Flash, Opus via `claude -p`, the GPU box) that this doc does not mention. For the process today read `book-process.md`; for live numbers read https://sourcelibrary.org/admin/pipeline/now. Kept for its per-phase detail and prompt history, which some code comments still cite.
+
 Single source of truth for the full processing pipeline — from import to complete. Last updated: March 16, 2026.
 
 > **See also:** `pipeline-architecture.md` for Hetzner infrastructure, emergency controls, and operational details.

@@ -28,6 +28,7 @@ export function supa() {
 export const SL_ORIGIN_SOURCES = new Set([
   'sl_ft_llm_claim',        // unverified LLM claims — the 2,565-row quarantine bulk
   'sl_ft_catalog_verified', // SL verified, but still SL-origin evidence
+  'sl_prior_credit_linked', // linked credits from the fresh prior-translation search (#7598)
 ]);
 // `validated_additions` is ambiguous (issue flags it TBD). Treat as SL-origin
 // (conservative: keep it OUT of the external baseline) unless reclassified.

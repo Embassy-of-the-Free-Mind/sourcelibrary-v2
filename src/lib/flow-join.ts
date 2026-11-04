@@ -20,6 +20,10 @@ export interface FlowPage {
   html: string | null;
   /** Reader URL for this page. */
   href: string;
+  /** The number printed on the page ("274", "xii", "12v"), where the book's own numbering vouches for one
+   *  (`pages.printed_page`, #4291). The marker shows it, so a reference in the book ("see p. 279", an index entry)
+   *  can be found; the scan number stays in the marker's id and link. */
+  label?: string;
   block?: boolean;
   /** The page's illustrations as ready HTML (<figure>s). They are set at the first paragraph break at or after the
    *  page's start — never inside a sentence that runs over the page. */
@@ -132,8 +136,12 @@ function trimEndBreaks(s: string): string {
   }
 }
 
-export function pageMarker(n: number, href: string): string {
-  return `<a class="page-marker" id="p${n}" href="${escapeAttr(href)}" aria-label="Page ${n}, open with the scan">${n}</a>`;
+/** A page boundary: the printed number when there is one. In a run that shows printed numbers, a page without one
+ *  says "scan N" — a bare scan number between printed ones would read as a printed page (scan 316 among 274, 275). */
+export function pageMarker(n: number, href: string, label?: string, printedRun = false): string {
+  const text = label || (printedRun ? `scan ${n}` : String(n));
+  const name = label ? `Printed page ${label}, scan ${n}, open with the scan` : `Page ${n}, open with the scan`;
+  return `<a class="page-marker" id="p${n}" href="${escapeAttr(href)}" title="${escapeAttr(label ? `p. ${label} · scan ${n}` : `scan ${n}`)}" aria-label="${escapeAttr(name)}">${escapeAttr(text)}</a>`;
 }
 
 /** A paragraph that is the translation's own account of a plate: "[An elaborate architectural engraving titled …". */
@@ -149,7 +157,7 @@ function seatFigures(html: string, figures: string): { html: string; rest: strin
   let lastEnd = -1;
   let out = '';
   let pos = 0;
-  for (const m of html.matchAll(/<p>((?:<a class="page-marker"[^>]*>\d+<\/a>)*)([\s\S]*?)<\/p>/g)) {
+  for (const m of html.matchAll(/<p>((?:<a class="page-marker"[^>]*>[^<]*<\/a>)*)([\s\S]*?)<\/p>/g)) {
     if (i >= figs.length) break;
     if (!IMAGE_ACCOUNT.test(textOf(m[2]))) continue;
     const at = m.index as number;
@@ -226,9 +234,10 @@ export function joinPagesHtml(pages: FlowPage[]): string {
   const heads = furniture(raw.map(h => { const b = firstBlock(h); return b === null ? '' : textOf(linesOf(b)[0]); }));
   const foots = furniture(raw.map(h => { const b = lastBlock(h); return b === null ? '' : textOf(linesOf(b).slice(-1)[0]); }));
   const bodies = raw.map(h => (h ? cleanPage(h, heads, foots) : h));
+  const printedRun = pages.some(p => p.label);
 
   pages.forEach((p, idx) => {
-    const marker = pending + pageMarker(p.n, p.href);
+    const marker = pending + pageMarker(p.n, p.href, p.label, printedRun);
     pending = '';
     // Figures go where the page describes them, if it does; the rest follow the page's first paragraph.
     const seated = seatFigures(bodies[idx], p.figures || '');

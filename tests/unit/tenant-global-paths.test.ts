@@ -50,6 +50,10 @@ describe('isGlobalOnlyTenantPath', () => {
     expect(isGlobalOnlyTenantPath('/ngrams')).toBe(true);
     expect(isGlobalOnlyTenantPath('/libraries')).toBe(true);
     expect(isGlobalOnlyTenantPath('/libraries/internet-archive')).toBe(true);
+    // Personal reader-check links and their answer endpoint (#7573).
+    expect(isGlobalOnlyTenantPath('/check/abc')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/api/check/abc')).toBe(true);
+    expect(isGlobalOnlyTenantPath('/checkout')).toBe(false);
   });
 
   it('blocks the unscoped APIs behind them — the pages render client-side', () => {
@@ -382,10 +386,21 @@ describe('wiring', () => {
 
   it('every blocked page path is a real route in the app tree', () => {
     // A typo here would silently block nothing. Each entry must correspond to a
-    // directory under src/app.
+    // directory under src/app holding a page, directly or in a child segment
+    // (/check has only /check/[token]).
+    const hasPage = (dir: string): boolean => {
+      let entries: Dirent[];
+      try {
+        entries = readdirSync(dir, { withFileTypes: true });
+      } catch {
+        return false;
+      }
+      if (entries.some(e => e.isFile() && e.name === 'page.tsx')) return true;
+      return entries.some(e => e.isDirectory() && hasPage(path.join(dir, e.name)));
+    };
     for (const p of GLOBAL_ONLY_TENANT_PAGE_PATHS) {
       const dir = path.join(repoRoot, 'src/app', p.replace(/^\//, ''));
-      expect(() => readFileSync(path.join(dir, 'page.tsx')), `${p} should exist`).not.toThrow();
+      expect(hasPage(dir), `${p} should exist`).toBe(true);
     }
   });
 

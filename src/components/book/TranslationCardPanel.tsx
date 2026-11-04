@@ -67,6 +67,11 @@ export default function TranslationCardPanel({
                   {e.completeness && e.completeness !== 'complete' && (
                     <span className="text-stone-500"> ({e.completeness})</span>
                   )}
+                  {e.register && e.register !== 'modern' && (
+                    <span className="text-stone-500">
+                      {' '}({e.register === 'middle_english' ? 'Middle English' : 'early modern English'})
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

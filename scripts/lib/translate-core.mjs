@@ -22,13 +22,15 @@
  * routing here or in ai-models.ts, change both or the suite fails.
  */
 
+import { isStagedLeaf } from './split-stage.mjs';
 import { createHash, randomBytes } from 'crypto';
 import { existsSync } from 'fs';
-import { recountBook } from './page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { stripAnchor } from './block-page-guard.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
 import { guardTranslationText } from './translation-write-guard.mjs';
@@ -36,7 +38,7 @@ import { checkWrittenText, writeGuardReason } from './write-text-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { createRequire } from 'node:module';
-import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
+import { translateEngineFor, tableRowFor, validateTranslationTable, translateLaneForBook as laneFromTable, cliBookFilter, CLI_TRANSLATE_HOLD } from './translation-routing.mjs';
 
 export { CLI_TRANSLATE_HOLD };
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
@@ -154,6 +156,9 @@ export function getTranslateModelForBook(book) {
 export function translateLaneForBook(book) {
   return laneFromTable(TRANSLATION_ROUTING_TABLE, book);
 }
+
+/** The Mongo filter for the books translateLaneForBook sends to a cli lane (cliBookFilter over the table, #7263). */
+export const CLI_TRANSLATE_BOOK_FILTER = cliBookFilter(TRANSLATION_ROUTING_TABLE);
 
 /**
  * Languages where flash measurably beats lite at TRANSLATION, judged blind
@@ -486,8 +491,8 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * page (which makes the model END each page, so a sentence that runs over the turn is completed
  * on one side and dropped or repeated on the other — vol 96 p35 showed 7 of ~21 verses), the
  * block comes back as ONE continuous English text with `<pb n="N"/>` where each source page
- * begins. scripts/lib/folio-markers.mjs splits it into page spans. Measured on the Tengyur pilot
- * only (scripts/eval/folio-markers-5678.mjs); not adopted by any lane.
+ * begins. scripts/lib/folio-markers.mjs splits it into page spans. Adopted by the CLI lane
+ * (scripts/batch/cli-translate.mjs, Latin-script page pairs, #7118); the chained Batch lane's flag stays off.
  */
 export const FOLIO_MARKER_RULE = `**IMPORTANT: The pages below are consecutive pages of ONE continuous text. Translate them as one continuous English text inside a single <translation> wrapper, and mark every page turn inside it:**
 - Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order; the first page's marker opens the text, before its first word.
@@ -663,6 +668,7 @@ export function validateTranslationTags(text) {
 // The content hash now lives with the rest of the provenance vocabulary (#4613);
 // re-exported so the many importers of translate-core keep working.
 import { contentHash, geminiEngine, translationInput, translationProvenance, isNotRecorded, codeVersion, host } from './write-provenance.mjs';
+import { translationLayers, writePageAnnotations } from './translation-text.mjs'; // #5942: text + annotations beside data
 export { contentHash };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -979,10 +985,16 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
   };
   const entries = []; // in order, for the positional fallback
   const raws = [];
+  // #5021: a block prompt that carried block-page-guard.mjs anchorRule gets an anchor at the head of each section;
+  // it is taken off here, before sanitizeTranslationTags would unwrap it into the English, and returned.
+  const anchors = new Map();
+  const anchorList = [];
   let match;
   while ((match = regex.exec(responseText || '')) !== null) {
     const pageNum = parseInt(match[1], 10);
-    const raw = match[2].trim();
+    const { text: raw, anchor } = stripAnchor(match[2]);
+    anchors.set(pageNum, anchor);
+    anchorList.push(anchor);
     const text = sanitizeTranslationTags(raw);
     entries.push(text);
     raws.push(raw);
@@ -999,8 +1011,10 @@ export function parseBlockTranslations(responseText, pages, { lang } = {}) {
     translations.clear();
     truncated.length = 0;
     pages.forEach((p, i) => { if (!tooShort(p, entries[i]) && !cut(p, raws[i])) translations.set(p.page_number, entries[i]); });
+    anchors.clear();
+    pages.forEach((p, i) => anchors.set(p.page_number, anchorList[i]));
   }
-  return { translations, returned: entries.length, discarded: null, truncated };
+  return { translations, returned: entries.length, discarded: null, truncated, anchors };
 }
 
 // Refused output is stored truncated — a 350K-char loop is evidence of a loop,
@@ -1211,7 +1225,7 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * THE translatability check. Returns { ok, reason } so callers can count and
  * log why pages were excluded rather than silently dropping them.
  *
- * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
+ * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293; a staged split leaf is not, #7605),
  * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
  * 'illegible-source' (only with the #5305 gate on), 'recitation-blocked', 'safety-blocked'.
  *
@@ -1223,7 +1237,8 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  * the contract's `<warning>Illegible: …</warning>`.
  */
 export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = illegibleGateEnabled() } = {}) {
-  if ((page?.page_number ?? 0) <= 0) return { ok: false, reason: 'soft-hidden' };
+  // A staged split leaf (#7605) is hidden only until its book's swap, which waits for this English: it is read.
+  if ((page?.page_number ?? 0) <= 0 && !isStagedLeaf(page)) return { ok: false, reason: 'soft-hidden' };
   const skip = new Set([...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes]);
   if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
   const ocr = page?.ocr?.data;
@@ -1260,7 +1275,7 @@ export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = 
  */
 export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
   return {
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $nin: [null, ''] },
     'ocr.unreadable': { $ne: true },
     page_type: { $nin: [...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes] },
@@ -1377,7 +1392,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // a caller that REALLY means it passes { overwriteHuman: true }.
   const current = await db.collection('pages').findOne(
     { id: page.id },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation;
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
@@ -1420,12 +1435,16 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   // page-revisions.mjs): marker-text skip, reason field, never throws.
   await saveRevisionBeforeOverwrite(db, page.id, 'translation', { jobId, reason: note });
 
+  // #5942: the book's words and the notes, stored beside `data` (which is never rewritten for them).
+  const layers = translationLayers(clean, { promptVersion: promptRef?.version });
   await db.collection('pages').updateOne(
     { id: page.id },
     {
       $set: {
         translation: {
           data: clean,
+          text: layers.text,
+          text_from: layers.text_from,
           language: 'English',
           model: resolvedModel,
           updated_at: new Date(),
@@ -1444,6 +1463,7 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  await writePageAnnotations(db, [{ page_id: page.id, book_id: page.book_id ?? current?.book_id ?? book?.id, run_id: jobId, layers }]);
   // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply (or the box's SEAM_GUARD_FILE says so). It runs
   // after the commit, is bounded and fail-open, and skips its own writes; loaded only when on, so this door does not
   // depend on it otherwise.

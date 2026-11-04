@@ -96,6 +96,8 @@ export interface HomeStrings {
   /** The shelf of books WRITTEN in the page's language. Rendered on `/la` only (#6254). */
   nativeShelfHeading: string;
   nativeShelfSubtitle: string;
+  /** The subtitle with the live count of books in the page's language, when the count loaded. */
+  nativeShelfTotal?: (n: number) => string;
   nativeShelfAll: string;
   /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
   beginnerShelfHeading: string;
@@ -714,8 +716,8 @@ const zh: HomeStrings = {
   collectionsWord: '个专题',
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
-  showcaseEyebrow: '策展',
-  showcaseSubtitle: '每个专题一个主题，各收几十部书，附一篇简短导读。',
+  showcaseEyebrow: '专题精选',
+  showcaseSubtitle: '中西典籍，对照而读：每部书都附原书影像。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -729,6 +731,7 @@ const zh: HomeStrings = {
   spanishHeading: '西班牙文阅读',
   nativeShelfHeading: '中文书籍',
   nativeShelfSubtitle: '以中文写成的书，在这里阅读原文。',
+  nativeShelfTotal: (n) => `馆藏以中文写成的书 ${n.toLocaleString('zh-CN')} 部，均可对照原书影像阅读原文。`,
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
@@ -1051,6 +1054,13 @@ export const ZH_COLLECTION_NAMES: Record<string, string> = {
   // collections query times out (FALLBACK_COLLECTIONS in home-data.ts).
   'indic-traditions': '印度传统',
   'chinese-classics': '中国经典',
+  // The /zh showcase (NATIVE_SHOWCASE_SLUGS).
+  'harmony-east-west': '律吕与和谐',
+  'china-through-european-eyes': '中学西传',
+  'chinese-natural-knowledge': '中国自然知识',
+  'chinese-divination-cosmology': '术数与宇宙论',
+  'confucian-classics': '儒家经典',
+  'chinese-astrology': '天文与星占',
   'leonardo-da-vinci': '达·芬奇',
   'kabbalah': '卡巴拉',
   'herbalism': '本草与植物学',
@@ -1185,6 +1195,21 @@ export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelv
       { slug: 'chinese-history-statecraft', heading: '史地与治术' },
     ],
   },
+};
+
+/**
+ * The collections the showcase shows on a native-first homepage, in place of the
+ * random draw of curated exhibitions. Only six curated exhibitions hold any Chinese
+ * book (ten at most), so the draw put Hogwarts and Indonesian manuscripts on /zh
+ * (#7537). Decided 2026-10-27 (Derek): four cards, each proving one message, "we
+ * read the traditions side by side": harmony in Chinese and European theory, how
+ * Europe read China, Chinese natural knowledge, and the Hogwarts library as the
+ * friendly door into the Western books. In this order; the first is the lead card.
+ * A collection not yet published simply drops out. Each needs a name in
+ * COLLECTION_NAMES for the language.
+ */
+export const NATIVE_SHOWCASE_SLUGS: Partial<Record<HomeLang, string[]>> = {
+  zh: ['harmony-east-west', 'china-through-european-eyes', 'chinese-natural-knowledge', 'hogwarts-library'],
 };
 
 /** Hand-written collection names per locale. English is the stored name. */

@@ -629,7 +629,10 @@ export default function BphCatalogBrowser({
   const detailUrl = (w: { ubn?: string | null; uuid?: string | null } | null | undefined): string | null => {
     const key = w?.ubn || w?.uuid;
     if (!key) return null;
-    return `${basePath.replace(/\/$/, '')}/catalog/${encodeURIComponent(key)}`;
+    // /libraries/{slug} has no catalog/[ubn] route: link straight to the
+    // embed record (next.config.ts redirects the old form for indexed links).
+    const base = basePath.startsWith('/libraries/') ? '/embed/bph' : basePath.replace(/\/$/, '');
+    return `${base}/catalog/${encodeURIComponent(key)}`;
   };
 
   // When the parent supplies a results-header slot (the unified shell does

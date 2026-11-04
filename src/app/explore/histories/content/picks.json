@@ -1,0 +1,54 @@
+{
+ "_about": "Hand-chosen, by eye (#7623): for each history the picture on its card and hero (a gallery image from a book the history cites), the concept's word in its original language, the one quote on its card (claim id # source index, a verified claim with a Source Library page), and the excerpt the concept page opens with (an essay and one of its ## sections, or \"\" for the text before the first ##). scripts/maintenance/concept-history-figures.mjs reads this file and resolves each quote to its printed page; a re-import keeps these choices.",
+ "hero": "harmony",
+ "concepts": {
+  "aliveness": {
+   "word": "ζωή", "translit": "zōē",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/6a1d81af5afc14a085e6d7e6/6a23f362cf679bf73b474d86-0.jpg?v=1781148688775", "book": "xingming-guizhi-principles-of-joint-cultivation-of-nature-and-life", "page": 41, "alt": "Woodcut of a seated Daoist adept with the points of inner alchemy labelled on his body (the Puzhao tu), from the Xingming guizhi, 1615.", "caption": "The Puzhao tu, from the Xingming guizhi (1615)" },
+   "quote": "asia-neidan-zhenren#0",
+   "opening": { "essay": "01-lexicon", "section": "Opening" }
+  },
+  "consciousness": {
+   "word": "συναίσθησις", "translit": "synaisthēsis",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/69942bf5b2f6748db4abc741/69942bf6b2f6748db4abc83c-0.jpg", "book": "claudiani-mamerti-opera-csel-xi-engelbrecht", "page": 251, "alt": "A circular diagram of the soul's states, in concentric rings and radial sections, from Engelbrecht's 1885 edition of Claudianus Mamertus.", "caption": "Diagram of the soul's states, in Claudianus Mamertus, ed. Engelbrecht (1885)" },
+   "quote": "lat-claudianus-sentire-per-corpus#0",
+   "opening": { "essay": "01-the-arc", "section": "" }
+  },
+  "harmony": {
+   "word": "ἁρμονία", "translit": "harmonia",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/695688febe7c607c5f03c1da/69569e3b1479a63c110927ca-0.jpg?v=1780516010514", "book": "theorica-musicae-gaffurius", "page": 46, "alt": "Woodcut of six smiths striking an anvil with hammers of different weights, the story of Pythagoras finding the musical ratios, from Gaffurius's Theorica musicae.", "caption": "Pythagoras's smiths, from Gaffurius, Theorica musicae (1480)" },
+   "quote": "mus-gaffurius-human-and-world-music#1",
+   "opening": { "essay": "01-diversity-in-wholeness", "section": "Grounding" }
+  },
+  "magic": {
+   "word": "μαγεία", "translit": "mageia",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/6953b56577f38f6761bd979d/6953b56577f38f6761bd97da-0.jpg", "book": "book-of-wonders-al-isfahani", "page": 61, "alt": "A horned, winged jinn hovering upside down over a sleeping man, a painted page from the Kitab al-Bulhan.", "caption": "A jinn over a sleeper, from the Kitab al-Bulhan (c. 1400)" },
+   "quote": "ara-bulhan-amulet-nativity#0",
+   "opening": { "essay": "01-what-counts-as-magic", "section": "The Greek pairs" }
+  },
+  "markets": {
+   "word": "ἀγορά", "translit": "agora",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/6991e18e339ebc8509949bf0/6991e18f339ebc8509949bf9-0.jpg?v=1791084791513", "book": "summa-de-tratos-y-contratos-mercado", "page": 9, "alt": "Woodcut of a Dominican friar holding a quill and a model church, in Tomás de Mercado's Summa de tratos y contratos.", "caption": "A Dominican friar, in Mercado, Summa de tratos y contratos (1571)" },
+   "quote": "emod-mercado-just-price-at-place-of-delivery#0",
+   "opening": { "essay": "01-the-arc", "section": "" }
+  },
+  "nous": {
+   "word": "νοῦς", "translit": "nous",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/6985ca74c1f3606329aff17c/6985d7f0eee23a915a37694c-0.jpg?v=1781135687025", "book": "forerunner-of-the-cosmographic-dissertations-kepler", "page": 54, "alt": "Kepler's engraving of the planetary spheres nested between the five regular solids, from the Mysterium cosmographicum.", "caption": "Kepler's nested solids, from the Mysterium cosmographicum" },
+   "quote": "em-kepler-anima-to-vis-1621#2",
+   "opening": { "essay": "01-what-intelligence-was-taken-to-be", "section": "Cosmic principle" }
+  },
+  "soul": {
+   "word": "ψυχή", "translit": "psychē",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/69a5527c1e2c2347112f07cf/69a5527c1e2c2347112f0954-0.jpg?v=1780716706979", "book": "the-book-of-the-dead-the-papyrus-of-ani-budge", "page": 389, "alt": "Ani and his wife before the door of the tomb, with the ba, a human-headed bird, flying above, from the Papyrus of Ani.", "caption": "The ba over the tomb door, from the Papyrus of Ani, ed. Budge (1913)" },
+   "quote": "egy-budge-1913-ba-heart-soul#1",
+   "opening": { "essay": "01-made-of", "section": "A. Breath and wind" }
+  },
+  "sympathy": {
+   "word": "συμπάθεια", "translit": "sympatheia",
+   "image": { "src": "https://images.sourcelibrary.org/gallery/695575b757e3b773024f22ad/695575b757e3b773024f239d-0.jpg?v=1771876500578", "book": "phonurgia-nova-kircher", "page": 240, "alt": "Engraving of people dancing to a fiddler to cure a tarantula bite, from Kircher's Phonurgia nova.", "caption": "Dancing out the tarantula's bite, from Kircher, Phonurgia nova (1673)" },
+   "quote": "res-kircher-1673-sympathetic-sounds#1",
+   "opening": { "essay": "02-like-and-unlike", "section": "2. Hume is resonance; Smith is harmony" }
+  }
+ }
+}

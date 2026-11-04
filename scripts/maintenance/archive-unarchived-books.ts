@@ -120,8 +120,8 @@ async function archivePage(db, page) {
         continue;
       }
       if (attempt === MAX_RETRIES - 1) {
-        // Mark as failed
-        const failUpdate = { $set: { archived_photo: `failed:${msg.slice(0, 80)}` } };
+        // Record the failure; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
+        const failUpdate = { $set: { 'archive_metadata.last_failure_reason': msg.slice(0, 80), 'archive_metadata.last_failure_at': new Date() } };
         await db.collection('pages').updateOne({ _id: page._id }, failUpdate).catch(() => {});
         return 'fail';
       }

@@ -51,12 +51,13 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine, PrintedPageBox,
 } from './ReaderV2Bits';
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
+import { printedDisplay, type PrintedNumbers } from '@/lib/printed-numbers';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -187,6 +188,8 @@ interface Reader2CProps {
   qualityWarnings?: QualityWarnings;
   /** Printed pages missing between scans of this book (#6675); the whole book's, like qualityWarnings. */
   scanGaps?: ScanGaps;
+  /** Numbers printed on the leaves, by page id, where confirmed on the images (#8041). Absent or empty: as before. */
+  printedNumbers?: PrintedNumbers;
   /** The measured accuracy of the engine we use on this book's script, for the line beside the page-report
    *  control (#6278); the server passes it on `/la` Latin books only. */
   ocrMeasure?: OcrMeasure | null;
@@ -813,6 +816,7 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
             hasImages={pagesCount > 0}
             imageRestricted={imageAccess === 'blocked'}
             imageAccess={imageAccess}
+            bookTenantId={(full.tenantId as string | undefined) ?? book.tenantId}
           />
         </div>
       ) : (
@@ -2181,7 +2185,7 @@ function BookSearchPanel({
 }
 
 function Filmstrip({
-  pageList, currentPageId, compact, innerRef, onPrev, onNext, onGoTo,
+  pageList, currentPageId, compact, innerRef, onPrev, onNext, onGoTo, onPageShape,
 }: {
   pageList: Page[];
   currentPageId: string;
@@ -2190,6 +2194,8 @@ function Filmstrip({
   onPrev: () => void;
   onNext: () => void;
   onGoTo: (pageId: string) => void;
+  /** Each loaded thumbnail's shape, so the reader can arrange its panes by the book's shape. */
+  onPageShape?: (pageId: string, ratio: number) => void;
 }) {
   const strings = getReaderStrings(useLocale());
   // Arrows match the thumbnail image exactly and share its top edge; the row
@@ -2278,7 +2284,7 @@ function Filmstrip({
                 {thumb && (
                   <FramedImg frame={frame} fit="cover" wrapperClassName="relative w-full h-full"
                     src={thumb} alt="" loading="lazy" decoding="async"
-                    onShownSize={onThumbLoad}
+                    onShownSize={(w, h) => { onThumbLoad(w, h); if (w && h) onPageShape?.(p.id, w / h); }}
                     onError={e => swapToFallback(e.currentTarget, fallback)}
                     className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
                     style={{ opacity: isCurrent ? 1 : 0.72 }} />
@@ -2565,15 +2571,22 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, ocrMeasure }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, printedNumbers, ocrMeasure }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
   // for (#6254). An English edition opens the same way: its transcription is
-  // the English (#4958), so the English pane starts off (#5154). Everywhere
-  // else all three panes start on.
+  // the English (#4958), so the English pane starts off (#5154). On a
+  // translated book in another language the reader came for the English
+  // beside the scan, so the transcription starts off and is one switch away
+  // ("By default we shouldn't show the ocr", Derek 2026-10-23, #7189). It
+  // stays on where it IS the reading text: an English book, or a book with
+  // nothing translated yet.
+  const ocrByDefault = readsOriginal(siteLocale)
+    || isEnglishBookFn(initialBook.language)
+    || !(initialPage.translation?.data || (initialBook.pages_translated ?? 0) > 0);
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, {
-    scan: true, ocr: true, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
+    scan: true, ocr: ocrByDefault, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
   });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
@@ -2628,6 +2641,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const [jumpValue, setJumpValue] = useState('');
   const jumpRef = useRef<HTMLInputElement>(null);
   useEffect(() => { if (jumpOpen) jumpRef.current?.focus(); }, [jumpOpen]);
+  const [phoneJumpOpen, setPhoneJumpOpen] = useState(false);
+  const hasPrintedNumbers = !!printedNumbers && Object.keys(printedNumbers).length > 0;
 
   // Scan zoom + lens — controlled from the pane header, never from buttons
   // over the scan itself. The lens is off until asked for.
@@ -2717,18 +2732,39 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
+  // A page read from the notes layer (#7965) carries COMPOSED markup in translation.data (text + annotations,
+  // put back inline). An editor edits the STORED text, so it is loaded first (`?full=true`, the whole stored
+  // document); until it arrives the translation cannot be edited or saved.
+  const fromLayer = !!r.currentPage.translation?.layer;
+  const [storedTr, setStoredTr] = useState<{ id: string; data: string } | null>(null);
+  useEffect(() => {
+    if (!editing || !fromLayer || storedTr?.id === r.currentPageId) return;
+    let live = true;
+    const id = r.currentPageId;
+    fetch(`/api/pages/${encodeURIComponent(id)}?full=true`)
+      .then(res => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((p: { translation?: { data?: unknown } }) => {
+        if (live) setStoredTr({ id, data: typeof p?.translation?.data === 'string' ? p.translation.data : '' });
+      })
+      .catch(() => { if (live) setSaveError('Could not load the stored translation to edit. Reload and try again.'); });
+    return () => { live = false; };
+  }, [editing, fromLayer, r.currentPageId, storedTr?.id]);
+  const storedReady = !fromLayer || storedTr?.id === r.currentPageId;
+
   const originalOcr = r.currentPage.ocr?.data || '';
-  const originalTr = r.currentPage.translation?.data || '';
+  const originalTr = fromLayer ? (storedReady ? storedTr!.data : '') : (r.currentPage.translation?.data || '');
 
   useEffect(() => {
     if (!editing) return;
     const stored = draftsRef.current.get(r.currentPageId);
     setDraft({
       ocr: stored?.ocr ?? (r.currentPage.ocr?.data || ''),
-      translation: stored?.translation ?? (r.currentPage.translation?.data || ''),
+      translation: stored?.translation ?? originalTr,
     });
     setSaveError(null);
-  }, [editing, r.currentPageId, r.currentPage]);
+    // originalTr changes once, when a layer page's stored text arrives (storedReady).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing, r.currentPageId, r.currentPage, storedReady]);
 
   const setDraftField = (field: 'ocr' | 'translation', value: string) => {
     setDraft(prev => {
@@ -2738,7 +2774,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     });
   };
 
-  const dirty = editing && (draft.ocr !== originalOcr || draft.translation !== originalTr);
+  const trDirty = storedReady && draft.translation !== originalTr; // a layer page's translation only once its stored text is in
+  const dirty = editing && (draft.ocr !== originalOcr || trDirty);
 
   const saveEdits = async () => {
     if (!dirty) { setEditing(false); return; }
@@ -2749,11 +2786,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
         ocr: draft.ocr !== originalOcr
           ? { data: draft.ocr, language: r.book.language || 'Latin' }
           : undefined,
-        translation: draft.translation !== originalTr
+        translation: trDirty
           ? { data: draft.translation, language: 'English' }
           : undefined,
       });
       if (updated) r.applyPageUpdate(updated as unknown as Page);
+      setStoredTr(null);
       draftsRef.current.delete(r.currentPageId);
       setEditing(false);
     } catch {
@@ -2825,9 +2863,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
    * time. Turning a page from inside a pane now keeps you in that pane.
    */
   const mobileAnchor = useRef<string | null>(null);
-  // A swipe is "carry on reading" and keeps your pane. Every other way of
-  // changing page — the pager, the filmstrip, Contents, a typed page number —
-  // is a deliberate move, and lands at the top of the reader.
+  // A swipe is "carry on reading" and keeps your pane, and so does the
+  // Previous / Next pager at the foot of the column: it is what you reach for
+  // when you finish the English, and "if you next page, it keeps you on the
+  // mode that you were on — English to top of English" (Derek, 2026-10-03,
+  // #7189). Every other way of changing page — the filmstrip, Contents, a
+  // typed page number — is a deliberate move, and lands at the top.
   const keepPaneOnTurn = useRef(false);
   // Which way the last turn went, so the new page can arrive from that side.
   // Taken from the index rather than from the swipe, so the pager, the
@@ -3345,6 +3386,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   }, [citation]);
 
   const pageNum = r.currentPage?.page_number ?? '–';
+  const printedHere = r.currentPage ? printedNumbers?.[r.currentPage.id] : undefined;
+  const printedHereShown = printedHere ? printedDisplay(printedHere) : null;
   const scan = resolveScanUrls(r.currentPage);
   // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
   // photograph stands in — clearly captioned as a witness, not the source of
@@ -3379,6 +3422,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     const ratio = size.w / size.h;
     setScanRatio(prev => (Math.abs(prev - ratio) > 0.005 ? ratio : prev));
   }, []);
+  // The BOOK's shape, for the desktop arrangement: the median of the page
+  // shapes seen so far (filmstrip thumbnails, mostly). Deciding the stacked
+  // layout from the current page alone flipped the whole reader to the stacked
+  // arrangement and back at a single unsplit spread in a book of single pages
+  // (EFM, 2026-10-29: "a horizontal viewer in the middle of the book"). Null
+  // until a shape is known; the current page's shape stands in until then.
+  const pageShapes = useRef<{ bookId: string; byPage: Map<string, number> }>({ bookId: '', byPage: new Map() });
+  const [bookRatio, setBookRatio] = useState<number | null>(null);
+  const bookId = r.book.id;
+  const notePageShape = useCallback((pageId: string, ratio: number) => {
+    if (!ratio || !Number.isFinite(ratio)) return;
+    const s = pageShapes.current;
+    if (s.bookId !== bookId) { s.bookId = bookId; s.byPage = new Map(); }
+    s.byPage.set(pageId, ratio);
+    const sorted = [...s.byPage.values()].sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    setBookRatio(prev => (prev != null && Math.abs(prev - median) < 0.005 ? prev : median));
+  }, [bookId]);
+  useEffect(() => { setBookRatio(null); }, [bookId]);
+  const layoutRatio = bookRatio ?? scanRatio;
   // Take over from WIDE_LEAF_PREPAINT_SCRIPT: start from the shape it measured
   // and remove its mark from <html>, in one commit before the next paint, so
   // the layout it set up does not flicker as the reader's own takes its place.
@@ -3466,8 +3529,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // A wide leaf in one of three side-by-side columns is a strip a few lines
   // tall floating in an empty pane. On the desktop it gets the full width
   // instead, with the text panes in a row beneath it: the scan row is as tall
-  // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H. Decided
-  // per page from the loaded image, like the phone pane (#5352).
+  // as the leaf's own shape asks at that width, up to WIDE_LEAF_MAX_H (#5352).
+  // Whether to stack is decided by the BOOK's shape (layoutRatio, above), so
+  // one unsplit spread does not rearrange the reader mid-book; the row height
+  // still follows the page on screen.
   //
   // The rule itself is in globals.css (`main.rv2-panes[data-wide-leaf]`), fed
   // by these variables, because it has to work before this component is
@@ -3479,7 +3544,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // which readers took for a scan that failed to load. With a text pane
   // beside it, drop the column; the phone layout already shrinks it to a line.
   const scanPaneShown = r.views.scan && (!!scan.display || !!witness || textPaneCount === 0);
-  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  const stackWideLeaf = scanPaneShown && textPaneCount > 0 && layoutRatio >= WIDE_LEAF_RATIO;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3509,7 +3574,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const scanPaneWidth = scanPaneShown && textPaneCount > 0 && !stackWideLeaf && panesBox
     ? Math.round(Math.min(
         panesBox.w * SCAN_PANE_MAX_SHARE,
-        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
+        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * layoutRatio + SCAN_PANE_CHROME_X),
       ))
     : null;
 
@@ -3589,6 +3654,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     <textarea
       value={field === 'ocr' ? draft.ocr : draft.translation}
       onChange={e => setDraftField(field, e.target.value)}
+      readOnly={field === 'translation' && !storedReady}
       spellCheck={false}
       className={`w-full h-full resize-none outline-none p-6 ${r.settings.typeface === 'sans' ? 'font-sans' : 'font-body'}`}
       style={{
@@ -3652,8 +3718,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
         style={{ gridTemplateColumns: `${DESKTOP_RAIL_W}px minmax(0, 1fr)`, gridTemplateRows: '58px minmax(0, 1fr) auto' }}
       >
         {/* Top bar — full width, single identity lockup top-left */}
+        {/* Framed, EmbedUserMenu floats over this bar's top-right corner (92px
+            with its margin), so the page controls end short of it. */}
         <header
-          className="col-span-2 flex items-center gap-3 px-4"
+          className={`col-span-2 flex items-center gap-3 pl-4 ${isEmbedded ? 'pr-24' : 'pr-4'}`}
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           {!isEmbedded && <Logo white compact lang={siteLocale} />}
@@ -3718,13 +3786,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           {/* Right end: what you are looking at, then where you are, set apart
               from each other so they read as two controls rather than one. */}
           <ViewToggleGroup views={r.views} onToggle={r.toggleView} compact showTranslit={translitEligible} />
-          <div className="flex items-stretch ml-2 shrink-0">
+          {/* A partner room's search and settings float over this corner (EmbedUserMenu, fixed top-3 right-3):
+              clear them, or they sit on the next-page button and the page box. */}
+          <div className={`flex items-stretch ml-2 shrink-0${isEmbedded ? ' mr-20' : ''}`}>
             <div className="flex items-stretch">
               <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
                 className={`${BAR_CONTROL} w-8`} style={barControlStyle()}>
                 <ChevronLeft size={15} />
               </button>
-              {jumpOpen ? (
+              {jumpOpen && hasPrintedNumbers ? (
+                <PrintedPageBox
+                  pages={r.pageList}
+                  printed={printedNumbers}
+                  placeholder={String(pageNum)}
+                  className={`${BAR_CONTROL} w-16 text-center tabular-nums -mx-px text-[16px] lg:text-[13px]`}
+                  style={{ ...barControlStyle(true), color: '#fdfcf9' }}
+                  opens="down"
+                  onGo={(id) => r.goToPage(id)}
+                  onClose={() => setJumpOpen(false)}
+                />
+              ) : jumpOpen ? (
                 <input
                   ref={jumpRef}
                   value={jumpValue}
@@ -3755,6 +3836,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ ...barControlStyle(), color: '#fdfcf9' }}
                 >
                   p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
+                  {printedHereShown && <span data-printed-number="" title={printedHereShown.title} className="ml-1" style={{ color: onInk(0.55) }}>· {t.toolbar.printedPage(printedHereShown.text)}</span>}
                 </button>
               )}
               <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
@@ -4145,6 +4227,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
               onPrev={r.goPrev}
               onNext={r.goNext}
               onGoTo={r.goToPage}
+              onPageShape={notePageShape}
             />
             )}
           </div>
@@ -4480,7 +4563,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           >
             <button
               type="button"
-              onClick={r.goPrev}
+              onClick={() => { keepPaneOnTurn.current = true; r.goPrev(); }}
               disabled={!prevPage}
               aria-label={t.toolbar.previousPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"
@@ -4488,14 +4571,36 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             >
               <ChevronLeft size={16} /> {t.toolbar.previous}
             </button>
-            {r.currentPage?.page_number != null && (
+            {phoneJumpOpen && hasPrintedNumbers ? (
+              <PrintedPageBox
+                pages={r.pageList}
+                printed={printedNumbers}
+                placeholder={String(pageNum)}
+                className="w-20 h-9 self-center border text-center font-sans text-[16px] tabular-nums"
+                style={{ borderColor: 'var(--text-faint)', background: 'transparent', color: 'var(--text-secondary)' }}
+                opens="up"
+                onGo={(id) => { keepPaneOnTurn.current = true; r.goToPage(id); }}
+                onClose={() => setPhoneJumpOpen(false)}
+              />
+            ) : hasPrintedNumbers && r.currentPage?.page_number != null ? (
+              <button
+                type="button"
+                onClick={() => setPhoneJumpOpen(true)}
+                title={t.toolbar.jumpToPage}
+                className="min-h-[56px] font-sans text-[12.5px] tabular-nums"
+                style={{ color: 'var(--text-faint)' }}
+              >
+                p. {r.currentPage.page_number}
+                {printedHereShown && <span data-printed-number="" title={printedHereShown.title}> · {t.toolbar.printedPage(printedHereShown.text)}</span>}
+              </button>
+            ) : r.currentPage?.page_number != null && (
               <span className="font-sans text-[12.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>
                 p. {r.currentPage.page_number}
               </span>
             )}
             <button
               type="button"
-              onClick={r.goNext}
+              onClick={() => { keepPaneOnTurn.current = true; r.goNext(); }}
               disabled={!nextPage}
               aria-label={t.toolbar.nextPage}
               className="min-h-[56px] px-4 flex items-center gap-1.5 font-sans text-[13px] disabled:opacity-30"

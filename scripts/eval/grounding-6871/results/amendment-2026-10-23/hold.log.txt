@@ -1,0 +1,8 @@
+2026-10-23T02:50:06Z lock taken for /root/jobs/grounding-6871a/main.jsonl ; GPU 2 MiB
+2026-10-23T02:50:51Z server up
+2026-10-23T02:53:05Z scored for 134 s: 121 rows in /root/jobs/grounding-6871a/main.jsonl
+2026-10-23T02:53:14Z released; GPU 2 MiB
+2026-10-23T02:53:14Z lock taken for /root/jobs/grounding-6871a/rerun.jsonl ; GPU 2 MiB
+2026-10-23T02:53:54Z server up
+2026-10-23T02:56:13Z scored for 139 s: 121 rows in /root/jobs/grounding-6871a/rerun.jsonl
+2026-10-23T02:56:21Z released; GPU 2 MiB

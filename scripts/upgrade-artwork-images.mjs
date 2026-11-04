@@ -21,7 +21,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const FLAG_ONLY = process.argv.includes('--flag-only');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0') || 999999;
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const MIN_UPGRADE_PX = 2000; // Only upgrade if current max dimension < this
 
 const client = new MongoClient(process.env.MONGODB_URI);

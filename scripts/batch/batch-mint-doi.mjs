@@ -94,7 +94,7 @@ const LICENSE_MAP = {
  *
  * Identifying ourselves is also just correct behaviour toward a public repository.
  */
-const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 function zenodoHeaders(extra = {}) {
   return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };

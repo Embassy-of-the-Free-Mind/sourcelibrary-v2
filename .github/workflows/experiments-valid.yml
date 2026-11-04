@@ -1,0 +1,40 @@
+name: Experiment write-ups build
+
+# The PR-time half of eval-ledgers-regenerate.yml (#6553). That job rebuilds
+# EXPERIMENTS.md and experiments/index.json on main and FAILS on a source file
+# it cannot read (a note or PRIOR ART paragraph above the `## YYYY-MM-DD`
+# heading, a date that disagrees with the file name, a bad header). Each time,
+# the failure was found only when someone noticed the ledger had stopped:
+# #7016, #7428, #7724, #8031 (the last for 37 hours). This runs the same build
+# on the PR, so the file is fixed before it reaches main.
+#
+# Filtered to the write-ups and the code that reads them, so it adds nothing to
+# any other PR. auto-merge.mjs gates on the job name `experiments-valid` the way
+# it gates on next-build: absent passes, failed holds the PR.
+on:
+  pull_request:
+    paths:
+      - 'scripts/eval/experiments/**'
+      - 'scripts/eval/build-experiments.mjs'
+      - 'scripts/eval/experiments-lint.mjs'
+      - 'scripts/eval/lib/experiment-header.mjs'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  experiments-valid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: The main build would accept every write-up
+        run: node scripts/eval/build-experiments.mjs --validate
+      - name: New write-ups carry a valid header
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/eval/experiments-lint.mjs --pr ${{ github.event.pull_request.number }}

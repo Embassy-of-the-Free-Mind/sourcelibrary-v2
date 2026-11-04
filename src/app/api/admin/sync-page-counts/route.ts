@@ -2,14 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
+import {
+  PAGE_COUNTERS, buildVisiblePageCountPipeline, initialPageCounters, pageCountersFromStats, recountBook,
+  type PageCountStats,
+} from '@/lib/page-counts';
+import { isLazyPagesBook } from '../../../../../scripts/lib/pages-state.mjs';
 
 export const maxDuration = 300;
 
 /**
  * POST /api/admin/sync-page-counts
  *
- * Sync pages_count, pages_ocr, and pages_translated fields on books
- * based on actual page data in the pages collection.
+ * Sync the page counters on books from the pages collection, through
+ * recountBook() (src/lib/page-counts.ts), the counters' one writer.
  *
  * Requires authentication.
  */
@@ -23,7 +28,12 @@ export const POST = withAdminAuth(async (request, session) => {
     const books = db.collection('books');
     const pages = db.collection('pages');
 
-    const query = books.find({});
+    // The shared rule (#3293, #5056): recountBook writes, buildVisiblePageCountPipeline
+    // previews. An inline `page_number > 0` aggregate here counted hidden repeat
+    // captures back into pages_count, and the reconciler then flipped it again
+    // (PR #7777 review S5).
+    const projection = { _id: 1, id: 1, language: 1, content_type: 1, pages_state: 1, ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])) };
+    const query = books.find({}, { projection });
     if (limit > 0) query.limit(limit);
     const allBooks = await query.toArray();
 
@@ -34,63 +44,14 @@ export const POST = withAdminAuth(async (request, session) => {
       const bookId = book.id || book._id?.toString();
       if (!bookId) continue;
 
-      const pageStats = await pages.aggregate([
-        // Only visible pages — dedup-hidden (page_number<0) and archived-spread
-        // layers must not be counted, or they'll re-inflate pages_count.
-        { $match: { book_id: bookId, page_number: { $gt: 0 } } },
-        {
-          $group: {
-            _id: null,
-            total: { $sum: 1 },
-            withOcr: {
-              $sum: {
-                $cond: [
-                  { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] },
-                  1, 0
-                ]
-              }
-            },
-            withTranslation: {
-              $sum: {
-                $cond: [
-                  { $or: [
-                    { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
-                    { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
-                  ] },
-                  1, 0
-                ]
-              }
-            }
-          }
-        }
-      ]).toArray();
-
-      const stats = pageStats[0] || { total: 0, withOcr: 0, withTranslation: 0 };
-      const currentCount = book.pages_count || 0;
-      const currentOcr = book.pages_ocr || 0;
-      const currentTranslated = book.pages_translated || 0;
-
-      if (
-        currentCount !== stats.total ||
-        currentOcr !== stats.withOcr ||
-        currentTranslated !== stats.withTranslation
-      ) {
-        mismatchCount++;
-        if (!dryRun) {
-          await books.updateOne(
-            { _id: book._id },
-            {
-              $set: {
-                pages_count: stats.total,
-                pages_ocr: stats.withOcr,
-                pages_translated: stats.withTranslation,
-                updated_at: new Date()
-              }
-            }
-          );
-          updatedCount++;
-        }
+      if (dryRun) {
+        const [row] = await pages.aggregate<PageCountStats>(buildVisiblePageCountPipeline(bookId)).toArray();
+        const after = isLazyPagesBook(book) ? initialPageCounters(Number(book.pages_count ?? 0)) : pageCountersFromStats(row);
+        if (PAGE_COUNTERS.some(c => (book[c] ?? null) !== after[c])) mismatchCount++;
+        continue;
       }
+      const r = await recountBook(db, bookId, { reason: 'admin-sync-page-counts' });
+      if (r.changed.length) { mismatchCount++; updatedCount++; }
     }
 
     const totalStats = await pages.aggregate([
