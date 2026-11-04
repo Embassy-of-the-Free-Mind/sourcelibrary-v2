@@ -23,6 +23,7 @@
  *   ... --check     exit 1 if any book's author_id neither names a doc nor resolves through one (report only)
  */
 import { MongoClient } from 'mongodb';
+import { setCatalogueFields } from '../lib/catalogue-fields.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const SWEEP = 'repair-author-links-8035';
@@ -107,7 +108,7 @@ for (const f of BYLINE) {
     console.log(`byline ${f.author} -> ${f.to}: ${String(b.title).slice(0, 24)}`);
     if (!APPLY) continue;
     await recordSweepAction(db, { sweep: SWEEP, book_id: String(b.id ?? b._id), action: 'correct-byline', detail: { before: f.author, after: f.to, why: f.why }, script: SCRIPT });
-    bylines += (await books.updateOne({ _id: b._id, author: f.author }, { $set: { author: f.to } })).modifiedCount;
+    bylines += (await setCatalogueFields(db, String(b.id ?? b._id), { author: f.to }, { source: 'title_read_by_hand', script: SCRIPT, issue: 8035, evidence: f.why })).modified;
   }
 }
 
