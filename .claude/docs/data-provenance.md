@@ -774,11 +774,11 @@ distinguish a disputed stamp from a live one (open on #3471).
 ### Auditing
 
 ```bash
-npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history
+npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history / new writes (titles and authors, last 7 days; --days N)
 npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts --strict   # exit 1 on unmarked contradictions; 2 = could not measure
 ```
 
-Read-only, about 35 seconds. Run `--strict` after any sweep that touches a citation field, before
+Read-only, about 3 minutes. Run `--strict` after any sweep that touches a citation field, before
 calling the sweep done. It is a manual gate, not a PR check: a contradicted stamp is written by a
 sweep against production, so a red check would land on an unrelated PR whose author cannot act on
 it. The "contradicted" detector covers one field (`contributing_library`, using the same
