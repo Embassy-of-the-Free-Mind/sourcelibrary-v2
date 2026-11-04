@@ -16,7 +16,7 @@
  *
  * Another set of arms (zh-siku-route-matrix-7263): --arms=tS=S,tF=F,... names the arms and sample.json's text fields. Then a
  * source text a page already has from another arm is translated once; the packet carries one wrong-page swap and one repeat per
- * arm with paired-arm.mjs's kind names and key fields; --floor=0.20 --max-calls=N --what=TEXT apply. Without --arms nothing changes.
+ * arm with paired-arm.mjs's kind names and key fields; --floor=0.20 --max-calls=N --what=TEXT --shard=i/n apply. Without --arms nothing changes.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -68,7 +68,9 @@ async function translate() {
   const books = new Map();
   const bySource = new Map(CUSTOM ? jsonl(file).filter((r) => r.text && !r.same_as).map((r) => [`${r.page_id}:${h(s.pages.find((p) => p.page_id === r.page_id)?.[SOURCES[r.arm]] ?? '')}`, r]) : []);
   let n = 0;
-  for (const p of s.pages) for (const [arm, src] of Object.entries(SOURCES)) {
+  const [shard, shards] = String(arg('shard', '0/1')).split('/').map(Number);   // --shard=i/n: two pools share the pages, each page wholly in one
+  for (const [pi, p] of s.pages.entries()) for (const [arm, src] of Object.entries(SOURCES)) {
+    if (pi % shards !== shard) continue;
     if (done.has(`${arm}:${p.page_id}`)) continue;
     if (CUSTOM && p[src] == null) continue;   // an arm that served no text there: no English, counted not accepted
     const twin = CUSTOM ? bySource.get(`${p.page_id}:${h(p[src])}`) : null;
@@ -206,7 +208,9 @@ async function trace() {
   }
   console.log(`${todo.length} major defects to trace; ${done.size} done`);
   let traced = 0;
+  const seen = new Set(done);   // arms with one identical English share a judged_as, so the defect is traced once and matrix.mjs joins by tid
   for (const t of todo.filter((x) => !done.has(x.tid))) {
+    if (CUSTOM) { if (seen.has(t.tid)) continue; seen.add(t.tid); }
     if (traced >= MAX_CALLS) { console.log(`--max-calls ${MAX_CALLS}: stopping`); break; }
     const p = byPage.get(t.k.page_id), leaf = p.leaf ?? (kr && p.pb ? kanripoLeaf(kr, p.pb) : null), src = p[SOURCES[t.k.arm]];
     if (!leaf) { fs.appendFileSync(file, JSON.stringify({ tid: t.tid, arm: t.k.arm, page_id: p.page_id, cause: 'no-leaf' }) + '\n'); continue; }
