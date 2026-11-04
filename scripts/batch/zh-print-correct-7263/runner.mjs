@@ -54,6 +54,7 @@ const JOB = 'zh-print-correct-7263';
 const ISSUE = 7263;
 const STOP_PCT = 92;
 export const CEILING_POINTS = 350;
+const ENV_FILE = ['/data/scratch/sl/sourcelibrary', '/root/sourcelibrary'].map((d) => `${d}/.env.production.local`).find((f) => fs.existsSync(f));
 const LEDGER = path.join(DIR, 'ledger.jsonl');
 const STATE = path.join(DIR, 'state.json');
 const REASON = '#7263: Opus corrected the stored Gemini read of this Chinese print page against its image (gemini>opus, print 26/30 accepted; job zh-print-correct-7263)';
@@ -136,7 +137,7 @@ function report(s, why, deferred = {}) {
   const contain = rows.filter((r) => r.state === 'contain');
   const gates = {}; for (const g of Object.values(deferred)) { const k = g.replace(/^\d+% translated/, 'under 92% translated').slice(0, 60); gates[k] = (gates[k] ?? 0) + 1; }
   const contains = contain.slice(0, 60).map((r) => `- \`${r.book_id}\` p.${r.page_number}: ${String(r.reason ?? '').slice(0, 160)}`).join('\n');
-  return `${why}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n\nProgress: \`node --env-file=/data/scratch/sl/sourcelibrary/.env.production.local ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
+  return `${why}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n\nProgress: \`node --env-file=${ENV_FILE} ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
 }
 
 async function run() {
