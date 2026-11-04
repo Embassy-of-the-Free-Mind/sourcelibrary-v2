@@ -54,7 +54,7 @@ function WeekMeter({ w, now }: { w: AccountWeek; now: Date }) {
     <div className="rounded border border-stone-200 bg-white px-4 py-3 grid gap-1.5 content-start min-w-0">
       <div className="flex justify-between gap-2 items-baseline">
         <span className="text-xs text-stone-700 truncate" title={w.account}>{w.account}</span>
-        <span className="text-lg font-semibold text-stone-900 tabular-nums">{w.percent ?? '—'}%</span>
+        <span className="text-lg font-semibold text-stone-900 tabular-nums">{w.percent ?? '–'}%</span>
       </div>
       <div className="relative h-2 rounded bg-stone-100" role="img" aria-label={`${w.percent ?? 'unknown'} percent used; even pace would be ${w.pace_percent == null ? 'unknown' : Math.round(w.pace_percent)} percent`}>
         <div className="absolute inset-y-0 left-0 rounded bg-[#2a78d6]" style={{ width: `${Math.min(100, w.percent ?? 0)}%` }} />
@@ -140,7 +140,7 @@ export default async function TokensPage() {
                   <td className="px-2 py-1 text-stone-800">{w.account}</td>
                   <td className="px-2 py-1 text-right tabular-nums">{w.points_7d}</td>
                   <td className="px-2 py-1 text-right tabular-nums">{usd(w.transcript_7d)}</td>
-                  <td className="px-2 py-1 text-right tabular-nums">{w.per_point ? usd(w.per_point) : '—'}</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{w.per_point ? usd(w.per_point) : '–'}</td>
                 </tr>
               ))}
             </tbody>

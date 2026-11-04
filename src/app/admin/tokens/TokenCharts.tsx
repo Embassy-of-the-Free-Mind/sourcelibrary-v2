@@ -12,7 +12,7 @@ const SERIES = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300'
 const usd = (v: number) => `$${Math.round(v).toLocaleString('en-US')}`;
 const kTok = (v: number) => `${Math.round(v / 1000)}K`;
 const dayName = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-const pts = (cost: number, perPoint: number | null) => (perPoint ? (cost / perPoint).toFixed(cost / perPoint < 10 ? 1 : 0) : '—');
+const pts = (cost: number, perPoint: number | null) => (perPoint ? (cost / perPoint).toFixed(cost / perPoint < 10 ? 1 : 0) : '–');
 
 const DIMS: { id: Dimension; label: string }[] = [
   { id: 'account', label: 'Account' }, { id: 'machine', label: 'Machine' }, { id: 'model', label: 'Model' }, { id: 'part', label: 'Cost type' },
@@ -115,7 +115,7 @@ function Trend({ title, note, rows, value, format }: { title: string; note: stri
         <h3 className="text-sm font-medium text-stone-900">{title}</h3>
         <p className="text-[11px] text-stone-500 leading-snug">{note}</p>
       </div>
-      <div className="text-lg font-semibold text-stone-900">{rows[i] ? format(vals[i]) : '—'}<span className="text-xs font-normal text-stone-500"> {rows[i] && dayName(rows[i].day)}</span></div>
+      <div className="text-lg font-semibold text-stone-900">{rows[i] ? format(vals[i]) : '–'}<span className="text-xs font-normal text-stone-500"> {rows[i] && dayName(rows[i].day)}</span></div>
       <div className="flex gap-[2px] items-end h-14" onMouseLeave={() => setHover(null)}>
         {rows.map((s, n) => (
           <button key={s.day} type="button" aria-label={`${dayName(s.day)}: ${format(vals[n])}`} onMouseEnter={() => setHover(n)} onFocus={() => setHover(n)} className="flex-1 h-full flex items-end">
@@ -195,8 +195,8 @@ export function JobTable({ jobs, perPoint }: { jobs: BoardJob[]; perPoint: numbe
                   </td>
                   <td className="px-2 py-1 text-right tabular-nums">{kTok(j.avg_ctx)}</td>
                   <td className="px-2 py-1 text-right tabular-nums">{kTok(j.max_ctx)}</td>
-                  <td className="px-2 py-1 text-right tabular-nums">{j.sub_opus ? usd(j.sub_opus) : '—'}</td>
-                  <td className="px-2 py-1 text-right tabular-nums">{j.polls ? `${usd(j.poll_cost)} · ${j.polls}` : '—'}</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{j.sub_opus ? usd(j.sub_opus) : '–'}</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{j.polls ? `${usd(j.poll_cost)} · ${j.polls}` : '–'}</td>
                   <td className="px-2 py-1 text-right text-stone-500 whitespace-nowrap">{dayName(j.last.slice(0, 10))}</td>
                 </tr>
               );
