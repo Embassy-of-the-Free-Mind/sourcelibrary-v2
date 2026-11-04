@@ -1320,8 +1320,13 @@ export const FIRST_READ_MODEL = 'gemini-3.8-flash-low';
 export const FIRST_READ_CORRECT_LANE = 'agy-first-read-correct-7701';
 export const FIRST_READ_REASON = '#7701 first-read lane';
 export const FIRST_READ_CORRECT_REASON = '#7701 first-read lane correction';
-/** The holds that mean "published as scans, OCR not read yet" (the brief's four; GPU_LANE_HOLDS less the wave-b hold). */
-export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270']);
+/**
+ * #8181: a book the pipeline marked `complete` on its 25-page sample before the #4719 guard. Nothing revisits those, and
+ * without a hold this lane skips them as "the pipeline owns it". Holding one here is how a wave reaches this lane.
+ */
+export const PREVIEW_STUB_FIRST_READ_HOLD = 'preview-stub-first-read-8181';
+/** The holds that mean "published as scans, OCR not read yet" (the brief's four, less the wave-b hold, plus the stubs above). */
+export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270', PREVIEW_STUB_FIRST_READ_HOLD]);
 /** The routed models that mean a print route: flash-lite (Latin-script print) and Flash (print in the flash families). */
 export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH]);
 /** Languages read 4 pages a call (#7522 held quality on German and Latin print; French by the #7701 cheap-routes cell test,

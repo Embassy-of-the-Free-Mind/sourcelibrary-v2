@@ -88,6 +88,7 @@ export const LANE_HOLDS = Object.freeze([
   'scans-only-publish-7270',
   'acquisition-wave-2026-10-images-only',
   'acquisition-wave-2026-10b',
+  'preview-stub-first-read-8181',  // marked complete on a 25-page sample, waiting for the first-read lane
 ]);
 // RFC 2606 / 6761 reserved names (notify-addressed-feedback.mjs): mail there cannot be delivered.
 const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/i;
