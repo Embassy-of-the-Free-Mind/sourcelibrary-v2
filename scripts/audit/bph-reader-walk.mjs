@@ -84,7 +84,7 @@ async function startFor(slug) {
   const pages = await db.collection('pages').aggregate([
     { $match: { book_id: book.id, page_number: { $gt: 0 } } },
     { $sort: { page_number: 1 } },
-    { $project: { id: 1, hasEn: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 20] } } },
+    { $project: { id: 1, hasEn: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 20] } } },
   ]).toArray();
   const translated = pages.filter(p => p.hasEn);
   const pick = translated[Math.floor(translated.length * 0.4)] ?? pages[Math.floor(pages.length * 0.4)];
