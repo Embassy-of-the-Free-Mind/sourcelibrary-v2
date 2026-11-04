@@ -205,6 +205,7 @@ try {
         const mp = (meta.width * meta.height) / 1e6;
         const at = new Date();
         const display = { url, of: whole, width: out.info.width, height: out.info.height, bytes: out.data.length, quality: DISPLAY_Q, at, by: `system:${SWEEP}`,
+          // image-pick-ok: a revert snapshot of the stored fields, never read to fetch or crop an image
           before: { display_photo: p.display_photo ?? null, fullres_master: p.fullres_master ?? null, deepzoom: p.deepzoom ?? null } };
         const $set = { display_photo: url, 'plate_whole.display': display };
         // Deep zoom: the whole image IS the master (on R2 already); the tiler reads fullres_master.url.
