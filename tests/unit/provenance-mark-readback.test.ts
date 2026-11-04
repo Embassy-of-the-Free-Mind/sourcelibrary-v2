@@ -1,6 +1,6 @@
 /**
- * markImage reads its own mark back and strengthens only when it has to (#4406). The hard case is
- * few textured blocks with wildly different means: the nudge is small against that spread.
+ * markImage takes the weakest nudge that reads back (#4406). A fixed nudge showed as a checker on
+ * grainy paper. The hard case the other way is few textured blocks with wildly different means.
  */
 import { describe, it, expect } from 'vitest';
 import sharp from 'sharp';
@@ -35,11 +35,12 @@ function thinDensePage(width: number, height: number) {
 }
 
 describe('markImage read-back', () => {
-  it('leaves a page proven at the weakest nudge at that nudge', async () => {
+  it('a page that proves easily gets the weakest nudge, not the old fixed one', async () => {
     const page = await noiseScan(1200, 1600, 20);
     const marked = await markImage(page, { editionId: ID, pageNumber: 2, key });
-    const weakest = await markImage(page, { editionId: ID, pageNumber: 2, key, delta: 5 });
-    expect((await detectWatermark(weakest, { editionId: ID, key })).present).toBe(true);
+    const weakest = await markImage(page, { editionId: ID, pageNumber: 2, key, delta: 2 });
+    const d = await detectWatermark(marked, { editionId: ID, key });
+    expect(d.z).toBeGreaterThanOrEqual(10);
     expect(marked.equals(weakest)).toBe(true);
   });
 

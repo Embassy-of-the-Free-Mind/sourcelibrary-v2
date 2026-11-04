@@ -35,13 +35,16 @@ sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
 // no margin banding). Sparse pages detect far more strongly.
 const GRID = 128;           // GRID x GRID blocks. More pairs → higher detection z (∝ √pairs)
 const WM_DELTA = 5;         // luminance nudge per block (0-255), scaled per-block by texture mask
-// A page the first nudge cannot prove gets a stronger one, only then (markImage reads each back).
-// Measured 2026-11-04 (#4406): random pages 80% (n=150) -> 92% (n=300) detected with 8; dense Chinese woodblock pages
-// at ~780px (n=60) 8% -> 58% with 8, 95% with 12. By eye: 12 shows as grey tiles on white paper at 9px blocks
-// (a 1200px page), and does not at 6px blocks; 8 barely shows at 9px. So 12 is for narrow pages only.
-const WM_DELTA_LADDER = [WM_DELTA, 8];
+// The weakest nudge that proves the page, found by reading each back (markImage). Fixed at 5, the
+// mark showed as a faint checker on grainy aged paper at reader size, while that same page scored
+// z 40, far more than it needed; at 2 it is clean and scores 17. Dense pages are the opposite:
+// Chinese woodblock text at ~780px could not be proven at 5 at all. n=200 random pages, 2026-11-04
+// (#4406): 91.5% detected at a target of z 10, 89.5% after q70, 76% of pages at delta 4 or under.
+// 12 shows as grey tiles on white paper at 9px blocks and does not at 6px, so it is for narrow pages.
+const WM_DELTA_LADDER = [2, 3, 4, 5, 8];
 const WM_DELTA_NARROW = 12;
 const WM_NARROW_BLOCK_PX = 7;   // block width below this may take WM_DELTA_NARROW
+const WM_TARGET_Z = 10;         // margin over WM_Z_THRESHOLD, so the mark survives a recompress
 const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floor <1 → tiny FP rate)
 // Perceptual mask: only embed where there's local texture to hide the mark.
 // A block's std below STD_FLOOR is treated as flat → no mark (invisible on blank
@@ -70,8 +73,13 @@ function hmac(key, label) {
   return crypto.createHmac('sha256', key).update(label).digest();
 }
 
+let lastPlan = null;
+
 /** Deterministic block-pair plan + sign vector from (key, editionId). */
 function pairPlan(key, editionId, grid = GRID) {
+  // One entry is enough: a run works one book at a time, and the plan is 16K HMACs per read-back.
+  const id = `${grid}:${editionId}:${key}`;
+  if (lastPlan?.id === id) return lastPlan.pairs;
   // Fisher–Yates shuffle of [0..grid*grid) seeded by HMAC, then pair up.
   const n = grid * grid;
   const order = [...Array(n).keys()];
@@ -88,6 +96,7 @@ function pairPlan(key, editionId, grid = GRID) {
   }
   const pairs = [];
   for (let i = 0; i + 1 < n; i += 2) pairs.push([order[i], order[i + 1]]);
+  lastPlan = { id, pairs };
   return pairs; // each pair: block A gets +delta, block B gets -delta
 }
 
@@ -204,10 +213,10 @@ function embedWatermark(data, W, H, channels, pairs, grid = GRID, delta = WM_DEL
 
 // ---- public: mark one image ----------------------------------------------
 /**
- * Mark a display-variant JPEG buffer with all three provenance layers, and read the mark back.
- * A page the weakest nudge cannot prove is redone stronger. A page no rung can prove (near-blank,
- * too few textured blocks) keeps the weakest render: invisibility wins when nothing is gained.
- * Pass `delta` to fix the strength and skip the read-back (tuning).
+ * Mark a display-variant JPEG buffer with all three provenance layers, at the weakest nudge that
+ * reads back at WM_TARGET_Z. A page no rung gets there takes the strongest rung that still proves
+ * it (these are dense pages, where ink hides the nudge). A page no rung can prove (near-blank) takes
+ * the weakest: invisibility wins when nothing is gained. Pass `delta` to fix the strength (tuning).
  * @returns marked JPEG Buffer.
  */
 export async function markImage(buffer, opts) {
@@ -215,15 +224,20 @@ export async function markImage(buffer, opts) {
   if (opts.delta != null) return renderMarked(buffer, opts);
   const { width } = await sharp(buffer, { failOn: 'none' }).metadata();
   const narrow = Math.floor(width / (opts.grid || GRID)) < WM_NARROW_BLOCK_PX;
-  let first = null;
-  for (const delta of narrow ? [...WM_DELTA_LADDER, WM_DELTA_NARROW] : WM_DELTA_LADDER) {
+  const ladder = narrow ? [...WM_DELTA_LADDER, WM_DELTA_NARROW] : WM_DELTA_LADDER;
+  let weakest = null, proven = null, perDelta = null;
+  for (const delta of ladder) {
+    // z grows about linearly with delta: skip a rung that cannot reach the target. Renders cost CPU.
+    if (perDelta != null && delta !== ladder[ladder.length - 1] && perDelta * delta < WM_TARGET_Z * 0.8) continue;
     const out = await renderMarked(buffer, { ...opts, delta });
-    first ||= out;
+    weakest ||= out;
     const d = await detectWatermark(out, { editionId: opts.editionId, key: opts.key, grid: opts.grid });
-    if (d.present) return out;
-    if (!(d.pairs >= 16)) return first;
+    if (!(d.pairs >= 16)) return weakest;
+    if (d.present) proven = out;
+    if (d.z >= WM_TARGET_Z) return out;
+    perDelta = Math.max(d.z, 0.01) / delta;
   }
-  return first;
+  return proven || weakest;
 }
 
 async function renderMarked(buffer, { editionId, pageNumber, key, jpegQuality = 82, grid = GRID, delta = WM_DELTA }) {
