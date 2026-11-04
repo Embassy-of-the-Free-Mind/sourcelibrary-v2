@@ -101,9 +101,10 @@ async function route() {
 }
 
 // ── Step T: T-TASK.md on one page, three texts (S, F, a wrong page) in a seeded order ──
-const LANG_NOTE = (lang) => fs.readFileSync(path.join(ROOT, 'scripts/eval/flash-reread-5924/T-TASK.md'), 'utf8').split('\n').find((l) => l.startsWith(`- **${lang}**`)).replace(/^- \*\*\w+\*\* — /, '');
+const T_TASK = () => fs.readFileSync(path.join(ROOT, 'scripts/eval/flash-reread-5924/T-TASK.md'), 'utf8');
+const LANG_NOTE = (lang) => { const t = T_TASK(), a = t.indexOf(`- **${lang}** — `); const b = t.indexOf('\n- **', a + 1); return t.slice(a, b < 0 ? undefined : b).replace(/^- \*\*\w+\*\* — /, '').replace(/\s+/g, ' ').trim(); };
 export function stepTPrompt(it) {
-  const task = fs.readFileSync(path.join(ROOT, 'scripts/eval/flash-reread-5924/T-TASK.md'), 'utf8').split('\n').slice(4).join('\n')
+  const t0 = T_TASK(), task = t0.slice(t0.indexOf('You are a careful reader'))
     .replace(/<LANGUAGE>/g, LANGS[it.lang]).replace(/`<IN>`/g, '`./in.json`').replace(/`<OUT>`/g, 'your reply')
     .replace(/To zoom: `node [^`]+` \(fractions 0–1 of\nwidth and height\), writing the crop under `\$JOB_SCRATCH\/crops\/`\./, 'To zoom: open `./tile-1.jpg` and `./tile-2.jpg`, two overlapping halves of the page at full resolution.')
     .replace('Write `your reply`: a JSON array', 'Reply with a JSON array').replace('Write the file even if a page is hard', 'Answer even if a page is hard');
