@@ -86,6 +86,10 @@ apiClient.interceptors.request.use(
       const slug = getTenantSlugFromPathname(window.location.pathname);
       if (slug) {
         config.headers['X-Tenant-Slug'] = slug;
+        // Also in the URL: /api/search answers with a shared cache and the CDN key
+        // ignores the header, so on the apex (/embed/<tenant>) a room and the main
+        // site would otherwise be served each other's results (#8047).
+        config.params = { ...config.params, tenant: slug };
       }
     }
 
