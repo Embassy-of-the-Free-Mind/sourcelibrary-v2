@@ -38,8 +38,11 @@ export const day = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateStr
 export const claimsHref = (c: string, d: string) => `/explore/histories/${c}/claims/${d}`;
 export const domainLabel = (d: string) => d.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
-/** The quality statement for one concept (quality-statements.md: what was measured, by whom, when, on how much). */
-export function qualityStatement(c: Concept): string {
+/** An essay's title without the number it carries in the private repository ("2. Like and unlike"). */
+export const plainTitle = (t: string) => t.replace(/^\d+\.\s*/, '').replace(/^./, (x) => x.toUpperCase());
+
+/** The quality statement for one concept (quality-statements.md: what was measured, by whom, when, on how much): the result first, then how it was reached. */
+export function qualityStatement(c: Concept): { lead: string; paragraphs: string[] } {
   const { all, kinds, judge } = HISTORIES.audit;
   const made = `The claims were drafted by AI (Claude) from the library’s pages, and each quote was matched against its page when the claim was written.`;
   const audited = HISTORIES.concepts.filter((x) => x.audit).length;
@@ -47,12 +50,20 @@ export function qualityStatement(c: Concept): string {
   const allLine = `Across the ${audited} audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%): ${byKind}. In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
   const notChecked = `Partly verified claims and the essays themselves were not audited, and no scholar has reviewed them yet.`;
   const a = c.audit;
-  if (!a) return `${made} This history has not been audited yet. ${allLine} ${notChecked}`;
+  if (!a) return { lead: 'This history has not been audited yet.', paragraphs: [made, allLine, notChecked] };
   const outside = 'Claims outside the sample were not individually reviewed, so expect errors of these kinds at about this rate.';
   const fixed = a.corrected === false
     ? `The rejected claims have not yet been corrected. ${outside}`
     : `The rejected claims in the sample were corrected or withdrawn before publication. ${outside}`;
-  return `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked a random sample of ${a.n} verified claims against the pages they cite: ${a.n - a.rejected} held and ${a.rejected} were rejected as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). ${fixed} A sample of ${a.n} gives a wide interval. ${allLine} ${notChecked}`;
+  return {
+    lead: `Of ${a.n} verified claims sampled at random, AI reviewers upheld ${a.n - a.rejected} and rejected ${a.rejected}.`,
+    paragraphs: [
+      `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked the sample against the pages it cites, and rejected claims as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). A sample of ${a.n} gives a wide interval.`,
+      fixed,
+      allLine,
+      notChecked,
+    ],
+  };
 }
 
 // ---- the senses over time (#7623) ------------------------------------------------------------------------------
