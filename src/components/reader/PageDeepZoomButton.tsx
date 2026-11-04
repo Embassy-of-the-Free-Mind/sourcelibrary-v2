@@ -19,7 +19,6 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Search, X, Maximize2 } from 'lucide-react';
 import type { DeepZoomManifest } from '@/lib/types/book';
-import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import {
   useFloatingOverlayTop,
   LENS_AVOID_ATTR,
@@ -70,7 +69,6 @@ export default function PageDeepZoomButton({
   // page turn never flashes an empty box.
   const [drawn, setDrawn] = useState(false);
   const [openedAutomatically, setOpenedAutomatically] = useState(false);
-  const isEmbedded = useIsEmbedded();
   const setInline = (next: boolean) => {
     setInlineState(next);
     onInlineChange?.(next);
@@ -134,7 +132,9 @@ export default function PageDeepZoomButton({
             <DeepZoomInline
               manifest={manifest}
               quiet={openedAutomatically}
-              wheelScrollsPage={isEmbedded}
+              // A real iframe, not useIsEmbedded(): that is also true on a partner's
+              // own subdomain, where there is no host page and the wheel should zoom.
+              wheelScrollsPage={window.self !== window.top}
               onDrawn={() => setDrawn(true)}
               onFailed={() => setInline(false)}
             />
