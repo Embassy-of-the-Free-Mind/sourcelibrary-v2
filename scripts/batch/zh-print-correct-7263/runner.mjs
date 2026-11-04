@@ -96,12 +96,24 @@ function countPoints(s, m) {
   s.last_pct = m.pct;
 }
 
-async function nextWave(db, frameBooks, done, limit) {
+/**
+ * Books whose corrections apply mostly refuses: 20+ corrections and over 40% refused by the shared-words guard. Their reads
+ * are spent for nothing (the stored text stays), so they are set aside, listed in the report, and not read again.
+ */
+export function setAsideBooks(rows) {
+  const last = new Map(); for (const r of rows) last.set(r.page_id, r);
+  const by = new Map();
+  for (const r of last.values()) { const b = by.get(r.book_id) ?? by.set(r.book_id, { written: 0, refused: 0 }).get(r.book_id); if (r.state === 'written') b.written++; else if (String(r.state).startsWith('refused')) b.refused++; }
+  return new Map([...by].filter(([, b]) => b.written + b.refused >= 20 && b.refused / (b.written + b.refused) > 0.4));
+}
+
+async function nextWave(db, frameBooks, done, limit, aside = new Map()) {
   const ids = frameBooks.map((b) => b.book_id);
   const docs = new Map((await db.collection('books').find({ id: { $in: ids } }, { projection: { id: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray()).map((b) => [b.id, b]));
   const out = []; const deferred = {};
   for (const b of frameBooks) {
     if (out.length >= limit) break;
+    if (aside.has(b.book_id)) { deferred[b.book_id] = 'set aside: apply refuses over 40% of its corrections'; continue; }
     const d = docs.get(b.book_id);
     const gate = d ? writeGate(d) : 'book gone';
     if (gate) { deferred[b.book_id] = gate; continue; }
@@ -145,8 +157,9 @@ function report(s, why, deferred = {}) {
   const rows = jsonl(LEDGER), t = tallyLedger(rows);
   const contain = rows.filter((r) => r.state === 'contain');
   const gates = {}; for (const g of Object.values(deferred)) { const k = g.replace(/^\d+% translated/, 'under 92% translated').slice(0, 60); gates[k] = (gates[k] ?? 0) + 1; }
+  const aside = setAsideBooks(rows);
   const contains = contain.slice(0, 60).map((r) => `- \`${r.book_id}\` p.${r.page_number}: ${String(r.reason ?? '').slice(0, 160)}`).join('\n');
-  return `${why}\n\n${DECIDED}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n\nProgress: \`node --env-file=${ENV_FILE} ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
+  return `${why}\n\n${DECIDED}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n| books set aside (apply refused over 40%) | ${[...aside].map(([id, b]) => `\`${id}\` ${b.refused}/${b.written + b.refused}`).join(', ') || 'none'} |\n\nProgress: \`node --env-file=${ENV_FILE} ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
 }
 
 async function run() {
@@ -184,7 +197,7 @@ async function run() {
     }
     const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
     await client.connect();
-    const { pages, deferred } = await nextWave(client.db('bookstore'), frameBooks, final, Math.min(WAVE, MAX_PAGES - written));
+    const { pages, deferred } = await nextWave(client.db('bookstore'), frameBooks, final, Math.min(WAVE, MAX_PAGES - written), setAsideBooks(rows));
     await client.close();
     lastDeferred = deferred;
     if (!pages.length) return stopAll(s, 'Done: no owed page is left in a book that may be written.', deferred);
@@ -239,7 +252,11 @@ async function run() {
       continue;
     }
     if (metas.length >= 10 && answered < metas.length / 2) return stopAll(s, `Stopped by the breaker: wave ${s.wave} answered ${answered} of ${metas.length} pages.`, deferred);
-    if (corrected.length >= 10 && refused / corrected.length > 0.15) return stopAll(s, `Stopped by the breaker: apply refused ${refused} of ${corrected.length} corrections in wave ${s.wave}. ${JSON.stringify(tally)}`, deferred);
+    // Refusals that sit in one book are that book's stored text (#7263 wave 3: 17 of 100, all in 道藏, whose stored read the
+    // corrections fix by eye); that book is set aside at 40%. The breaker is for a fault across books.
+    const refusedBy = {}; for (const x of corrected) if (!writtenIds.has(x.p.page_id)) refusedBy[x.p.book_id] = (refusedBy[x.p.book_id] ?? 0) + 1;
+    const top = Math.max(0, ...Object.values(refusedBy));
+    if (corrected.length >= 10 && refused / corrected.length > 0.15 && top < 0.8 * refused) return stopAll(s, `Stopped by the breaker: apply refused ${refused} of ${corrected.length} corrections in wave ${s.wave}. ${JSON.stringify(tally)}`, deferred);
   }
 }
 
