@@ -72,6 +72,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'cookieSettings', href: '#cookie-settings' },
       { key: 'terms', href: '/terms' },
       { key: 'copyright', href: '/dmca' },
+      { key: 'hiddenMarks', href: '/decode' },
     ],
   },
 ];
