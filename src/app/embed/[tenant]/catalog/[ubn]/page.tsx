@@ -9,6 +9,7 @@ import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import { getPartnerBySlug } from '@/lib/library-partners';
 import { buildSignInHref } from '@/lib/tenant-signin-url';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { findRenamedWorkKey, type BphContributor } from '@/lib/bph-catalog';
@@ -405,6 +406,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CatalogEntryPage({ params }: Props) {
   const { tenant, ubn: rawUbn } = await params;
   const ubn = normalizeUbn(rawUbn);
+  const room = await getRoomHref(tenant);
 
   // Generic unified-catalogue tenants (kloss-collection, …) — render via the
   // shared component that reads library_catalog_records. BPH falls through.
@@ -426,9 +428,10 @@ export default async function CatalogEntryPage({ params }: Props) {
     // A UBN that was corrected (#6799) still has links pointing at it: send
     // them to the record's current address.
     const renamedTo = catalogKeyColumn(ubn) === 'ubn' ? await findRenamedWorkKey(ubn) : null;
-    if (renamedTo) redirect(`/catalog/${encodeURIComponent(renamedTo)}`);
+    if (renamedTo) redirect(room(`/catalog/${encodeURIComponent(renamedTo)}`));
     return (
       <CatalogueUnavailable
+        newSearchHref={room('/catalog')}
         heading="Catalogue entry unavailable"
         detail={`We couldn't find a catalogue record for reference “${ubn}”. It may have been re-catalogued, or the reference may be incomplete. Try a new search.`}
       />
@@ -459,6 +462,7 @@ export default async function CatalogEntryPage({ params }: Props) {
   if (work.deleted_at && !isAdmin) {
     return (
       <CatalogueUnavailable
+        newSearchHref={room('/catalog')}
         heading="Catalogue entry unavailable"
         detail={`We couldn't find a catalogue record for reference “${ubn}”. It may have been re-catalogued, or the reference may be incomplete. Try a new search.`}
       />
@@ -497,11 +501,10 @@ export default async function CatalogEntryPage({ params }: Props) {
       <div className="max-w-2xl mx-auto px-6 py-8">
         {/* Back to the catalogue search start screen — visible to everyone, not
             just editors (Paul D., 2026-06-24: no way to start a new search from
-            a record). `/catalog` is rewritten by the proxy to the tenant's
-            catalogue search view. */}
+            a record). `room` keeps it in the partner's room on either surface. */}
         <div className="mb-3">
           <a
-            href="/catalog"
+            href={room('/catalog')}
             className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
           >
             <Search className="w-3.5 h-3.5" />
@@ -509,7 +512,7 @@ export default async function CatalogEntryPage({ params }: Props) {
           </a>
         </div>
         {!work.deleted_at && (
-          <CatalogEditorNav role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
+          <CatalogEditorNav tenant={tenant} role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
         )}
         {isAdmin && work.deleted_at && (
           <CatalogAdminActions
@@ -745,13 +748,8 @@ export default async function CatalogEntryPage({ params }: Props) {
                 {work.contributors.map((c, i) => (
                   <li key={i} className="flex flex-wrap items-baseline gap-x-2">
                     <span className="text-muted text-xs uppercase tracking-wide">{c.role}</span>
-                    {c.author_id ? (
-                      <a href={`/author/${c.author_id}`} className="text-accent-rust hover:underline">
-                        {c.name || c.canonical_name}
-                      </a>
-                    ) : (
-                      <span>{c.name}</span>
-                    )}
+                    {/* Not a link: /author is the whole library's page, outside the room. */}
+                    <span>{c.name || c.canonical_name}</span>
                     {c.variant_name && <span className="text-secondary text-xs">(&ldquo;{c.variant_name}&rdquo;)</span>}
                   </li>
                 ))}
@@ -871,7 +869,7 @@ export default async function CatalogEntryPage({ params }: Props) {
             <>
               {' '}
               <a
-                href={`/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}/edit`}
+                href={room(`/catalog/${encodeURIComponent(work.ubn || work.uuid || ubn)}/edit`)}
                 className="text-accent-rust hover:underline"
               >
                 {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit this entry' : 'Propose a change'}

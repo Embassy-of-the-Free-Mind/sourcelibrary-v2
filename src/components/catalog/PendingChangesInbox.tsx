@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface FieldChange {
   from?: unknown;
@@ -48,6 +49,7 @@ function timeAgo(iso: string): string {
 
 export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props) {
   const router = useRouter();
+  const embedHref = useEmbedHref();
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set(rows.slice(0, 1).map(r => r.id)));
   const [busyId, setBusyId] = useState<string | null>(null);
   const [rejectNotes, setRejectNotes] = useState<Record<string, string>>({});
@@ -114,7 +116,7 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
               </div>
               {row.ubn && (
                 <a
-                  href={`/catalog/${encodeURIComponent(row.ubn)}`}
+                  href={embedHref(`/catalog/${encodeURIComponent(row.ubn)}`)}
                   className="shrink-0 text-xs text-muted hover:text-accent-rust underline"
                   onClick={(e) => e.stopPropagation()}
                 >
