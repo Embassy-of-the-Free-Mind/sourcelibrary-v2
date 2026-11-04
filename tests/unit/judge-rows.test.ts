@@ -86,6 +86,12 @@ describe('testRow', () => {
     expect(r._id).not.toBe(testRow({ ...ok, rep: 1 })._id);
     expect(r.outcome).toEqual({ accept: false, wrong_text: true, mapped_by: expect.any(String) });
   });
+  it('a stale sampler (before origin) would still drop it: judged_at is null, so validRecord fails', () => {
+    const r = testRow({ ...ok, judged_at: '2026-11-03T10:00:00Z' });
+    expect(r.judged_at).toBeNull();
+    expect(r.test.judged_at).toBe('2026-11-03T10:00:00Z');
+    expect(exportScore([{ ...r, origin: undefined }]).calls.malformed_not_counted).toBe(1);
+  });
   it('another instrument keeps its own words and an unmapped (null) outcome', () => {
     const r = testRow({ ...ok, judge: { instrument: 'step-t-7568' }, verdict: { rating: 'misleading' } });
     expect(r.verdict).toEqual({ rating: 'misleading' });
