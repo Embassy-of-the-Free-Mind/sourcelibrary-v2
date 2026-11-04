@@ -260,6 +260,7 @@ async function processPage(p, ctx) {
   // A repoint the reader rejects serves the unmarked master through the proxy (the pilot's first 70, #4406).
   if (cls.cls === 'sibling' && !readerServesDisplay({ ...p, display_photo: `${R2_BASE}/${cls.targetKey}` })) throw new Error(`reader would not serve ${cls.targetKey}`);
   spend.puts++;
+  const phashAfter = await computeDHash(regen.out);
   // If-Match: a writer that replaced this object since the read wins; its bytes are newer than ours.
   const conditional = cls.cls === 'overwrite' && cur.etag ? { IfMatch: cur.etag } : {};
   try {
@@ -273,6 +274,15 @@ async function processPage(p, ctx) {
     if (e?.$metadata?.httpStatusCode === 412) { ctx.tally('refused:changed-since-read'); return; }
     throw e;
   }
+  // Recorded before anything else can fail or be killed: a repeat read skips this page by tag, so a row missed here is missed for good.
+  ctx.ledger?.add({
+    v: 1, page_id: p.id || String(p._id), book_id: p.book_id, page_number: p.page_number,
+    key: cls.displayKey, target_key: cls.targetKey, source_key: regen.sourceKey, class: cls.cls,
+    sha256_before: sha256(cur.buf), sha256_after: sha256(regen.out),
+    phash_after: phashAfter, phash_distance: regen.distance,
+    z_after: after.z, width: om.width, height: om.height,
+    mark: MARK, writer: WRITER, at: new Date().toISOString(),
+  });
 
   const set = {};
   if (cls.cls === 'sibling') Object.assign(set, { display_photo: `${R2_BASE}/${cls.targetKey}`, display_width: om.width, display_height: om.height });
@@ -282,14 +292,6 @@ async function processPage(p, ctx) {
   ctx.tally(`wrote:${cls.cls}`);
   ctx.bytes.written += regen.out.length;
   if (cls.cls === 'sibling') ctx.bytes.added += regen.out.length;
-  ctx.ledger?.add({
-    v: 1, page_id: p.id || String(p._id), book_id: p.book_id, page_number: p.page_number,
-    key: cls.displayKey, target_key: cls.targetKey, source_key: regen.sourceKey, class: cls.cls,
-    sha256_before: sha256(cur.buf), sha256_after: sha256(regen.out),
-    phash_after: await computeDHash(regen.out), phash_distance: regen.distance,
-    z_after: after.z, width: om.width, height: om.height,
-    mark: MARK, writer: WRITER, at: new Date().toISOString(),
-  });
 }
 
 async function pool(items, n, fn) {
@@ -468,6 +470,8 @@ async function run(db) {
     fs.renameSync(`${progressFile}.tmp`, progressFile);
   };
 
+  let lastSave = Date.now();
+  let budgetStop = false;
   const rows = BOOKS ? [] : null;
   const ctx = { pages, ledger, bytes, rows, tally: (k) => { tallyO[k] = (tallyO[k] || 0) + 1; } };
   for (const id of order) {
@@ -475,10 +479,15 @@ async function run(db) {
     if (BUDGET && spent() >= shardBudget) {
       console.log(`[${tag}] budget reached: $${spent().toFixed(2)} of $${shardBudget.toFixed(2)}`);
       fs.writeFileSync(path.join(OUT, `stopped-${tag}.txt`), `budget ${new Date().toISOString()}\n`);
+      budgetStop = true;
       break;
     }
     const docs = await pages.find({ book_id: id }, { projection: PAGE_PROJECTION }).toArray();
-    await pool(docs, CONCURRENCY, (p) => processPage(p, ctx).catch((e) => { ctx.tally(`error:${e.name}`); console.warn(`[${tag}] ${id} p${p.page_number}: ${e.message}`); }));
+    await pool(docs, CONCURRENCY, async (p) => {
+      await processPage(p, ctx).catch((e) => { ctx.tally(`error:${e.name}`); console.warn(`[${tag}] ${id} p${p.page_number}: ${e.message}`); });
+      // A heartbeat per page, not per book: the watchdog restarts a shard whose file stops moving, and one large book can outlast its window.
+      if (Date.now() - lastSave > 60000) { lastSave = Date.now(); save(); }
+    });
     state.books++;
     state.pagesSeen += docs.length;
     if (doneFile && !BOOKS) fs.appendFileSync(doneFile, `${id}\n`);
@@ -491,7 +500,7 @@ async function run(db) {
   save();
   if (BOOKS) for (const r of rows) console.log(JSON.stringify(r));
   console.log(`[${tag}] done. ${JSON.stringify(tallyO)}`);
-  if (!BOOKS && OUT) fs.writeFileSync(path.join(OUT, `finished-${tag}.txt`), `${new Date().toISOString()}\n`);
+  if (!BOOKS && OUT && !budgetStop) fs.writeFileSync(path.join(OUT, `finished-${tag}.txt`), `${new Date().toISOString()}\n`);
 }
 
 async function main() {
