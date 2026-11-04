@@ -98,3 +98,14 @@ At most 500 Opus calls in total (planned ≈ 128 + 60 + 128 + ≤ 100 + 20 + 40)
 (`claudeBlocked`, weekly 85%, session 95%) stops any stage. If the second reader's items would pass the cap, the
 reference arm is cut first, then the miss sample to 5 a language. agy only for reads; no Gemini judge on
 transcriptions; no paid API. No writes to pages, books, rules.json, current.json or lane_judge_verdicts.
+
+### Amendment 1 (2026-11-04, after the draw and before any judging)
+- **Two stored Chinese reads are repetition loops** (`6992f3d9…` p323, 13,116 Han; `69ea51f3…` p21, 6,327 Han; both
+  Flash-Lite). The stored text is judged as served (a reader sees it); the loop is reported by name. No page is written
+  (the brief forbids page and book writes); they are listed on #7263 for containment, and both books are in the
+  `zh-print-bulk-7263` frame.
+- **Words, one denominator a page.** A loop would swamp any per-1,000 rate. A page's words are `words()` of the
+  stored text, except where the stored text is a loop (`loopVerdict().refuse`); there they are the fresh read's words.
+  Both texts of a page use the page's words, so S and F rates share a denominator.
+- **A page the lane refuses to read** (an unsplit spread book, `unsplitReadRefusal`, #7605) is a failed fresh read,
+  counted apart. Its stored text is still judged.
