@@ -349,6 +349,7 @@
     "src/lib/pdf-export.ts",
     "src/lib/provenance.ts",
     "src/lib/quote-text.ts",
+    "src/lib/reader-panes.ts",
     "src/lib/reader-strings.ts",
     "src/lib/reader-text-layer.ts",
     "src/lib/search/librarian-search.ts",

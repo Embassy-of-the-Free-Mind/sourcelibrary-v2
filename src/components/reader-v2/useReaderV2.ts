@@ -6,6 +6,7 @@ import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
+import { pageHasNoTextToShow } from '@/lib/reader-panes';
 import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
 import { isEnglishBook } from '@/lib/translation-pane-state';
 
@@ -361,7 +362,20 @@ export function useReaderV2(
   // to OCR" (#4385). The ref is resolved client-side in the effect below;
   // toggleView only runs on interaction, well after that.
   const viewsKeyRef = useRef(viewsKeyBase);
-  const [views, setViews] = useState<ViewState>(defaultViews);
+  const [storedViews, setViews] = useState<ViewState>(defaultViews);
+  // A page with a scan and no text opens on the image alone: the text panes
+  // could only say "not transcribed yet". The reader's stored choice is left
+  // alone and returns on the next page that has text. Tapping OCR or English
+  // here is an explicit ask, and it holds for the rest of the visit, so someone
+  // working through untranscribed pages taps once. Computed from the page, so
+  // the server render is already right and nothing jumps on load.
+  const [textPanesAsked, setTextPanesAsked] = useState(false);
+  const imageOnly = !textPanesAsked
+    && !!getPageDisplayUrl(currentPage as unknown as Record<string, unknown>)
+    && pageHasNoTextToShow(currentPage);
+  const views: ViewState = imageOnly
+    ? { scan: true, ocr: false, en: false, translit: false }
+    : storedViews;
   useEffect(() => {
     // <lg — the same line where the stacked mobile layout begins.
     const isPhone = window.matchMedia('(max-width: 1023px)').matches;
@@ -414,6 +428,7 @@ export function useReaderV2(
       const qs = sp.toString();
       window.history.replaceState(window.history.state, '', `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`);
       if (next.scan || next.ocr || next.en) {
+        setTextPanesAsked(true);
         setViews(next);
         return;
       }
@@ -439,6 +454,15 @@ export function useReaderV2(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const toggleView = useCallback((key: keyof ViewState) => {
+    if (imageOnly) {
+      // The scan is the only pane up, and the last pane stays on.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+      // Just the pane they tapped. Not persisted: their stored choice was not
+      // what was on screen here, so this tap says nothing about it.
+      setViews({ scan: true, ocr: false, en: false, translit: false, [key]: true });
+      return;
+    }
     setViews(prev => {
       const next = { ...prev, [key]: !prev[key] };
       // At least one pane must stay on — clicking the last active pane is a no-op
@@ -446,7 +470,7 @@ export function useReaderV2(
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
   /**
    * The phone's pane picker is a jump, not a filter (#5219). It used to show
    * the tapped pane and nothing else (#5062), so a reader on the translation
@@ -458,12 +482,17 @@ export function useReaderV2(
    * transcription stored as their choice (#7189).
    */
   const revealView = useCallback((key: keyof ViewState, hasScan: boolean) => {
+    if (imageOnly) {
+      // Tapping Scan while the scan is all there is asks for nothing new.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+    }
     setViews(prev => {
       const next: ViewState = { scan: hasScan, ocr: prev.ocr, en: true, translit: prev.translit, [key]: true };
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
 
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
