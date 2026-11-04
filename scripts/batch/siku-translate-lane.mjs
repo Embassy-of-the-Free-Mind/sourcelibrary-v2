@@ -465,14 +465,15 @@ export function spotVerdict(v, item) {
   const stage = fromOcr ? 'ocr' : 'translation';
   const note = String(v.note ?? '').trim();
   const errors = [];
-  if (v.invented) errors.push({ stage, kind: 'confabulation', problem: String(v.invented_quote || note || 'A passage that is not on this leaf.').slice(0, 600) });
+  const invented = v.invented === true || v.verdict === 'invented';
+  if (invented) errors.push({ stage, kind: 'confabulation', problem: String(v.invented_quote || note || 'A passage that is not on this leaf.').slice(0, 600) });
   if ((v.sense_errors || 0) > 0 || v.verdict === 'sense-error') errors.push({ stage, kind: fromOcr ? 'misread' : 'mistranslation', problem: (note || 'A clause whose meaning changes.').slice(0, 600) });
   if (v.verdict === 'omission') errors.push({ stage: 'translation', kind: 'omission', problem: (note || 'Text on the leaf is missing from the English.').slice(0, 600) });
   const wrong = v.wrong_leaf === true || v.verdict === 'wrong-leaf';
   return {
     page_id: v.page_id, verdict: v.verdict, note,
     outcome: wrong || errors.length ? 'serious' : v.verdict === 'minor' ? 'minor' : 'clean',
-    page_verdict: wrong || v.invented || v.verdict === 'invented' ? 'fix' : errors.length ? 'caveat' : 'show',
+    page_verdict: wrong || invented ? 'fix' : errors.length ? 'caveat' : 'show',
     ...(wrong ? { wrong_page: true } : {}), errors,
     ...(item ? { judged: { ocr: item.ocr, translation: item.english } } : {}),
   };

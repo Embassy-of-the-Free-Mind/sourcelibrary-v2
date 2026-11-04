@@ -164,6 +164,7 @@ describe('siku lane: the spot check is recorded (#8069)', () => {
     expect(sense).toMatchObject({ outcome: 'serious', page_verdict: 'caveat', errors: [{ stage: 'translation', kind: 'mistranslation' }] });
     expect(sense.errors[0].class).toBeUndefined();
     expect(spotVerdict(v({ verdict: 'sense-error', sense_errors: 1, from_ocr: true })).errors[0]).toMatchObject({ stage: 'ocr', kind: 'misread' });
+    expect(spotVerdict(v({ verdict: 'invented' }))).toMatchObject({ outcome: 'serious', page_verdict: 'fix' });
     expect(spotVerdict(v({ verdict: 'sense-error', sense_errors: 1, from_ocr: 'no' })).errors[0].stage).toBe('translation');
     expect(spotVerdict(v({ verdict: 'invented', invented: true, invented_quote: 'q' }))).toMatchObject({ outcome: 'serious', page_verdict: 'fix', errors: [{ kind: 'confabulation', problem: 'q' }] });
     expect(spotVerdict(v({ verdict: 'wrong-leaf', wrong_leaf: true }))).toMatchObject({ outcome: 'serious', page_verdict: 'fix', wrong_page: true, errors: [] });
