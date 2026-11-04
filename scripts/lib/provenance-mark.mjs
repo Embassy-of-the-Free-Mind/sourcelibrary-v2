@@ -44,8 +44,6 @@ const STD_FLOOR = 5;
 const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
 const LOGO_HEIGHT_FRAC = 0.035;  // discreet but visible corner stamp (Derek, 2026-06-21)
-// From this file, not process.cwd(): src/ imports this module, and a cwd-relative read traces the whole repo into each function.
-const LOGO_PATH = fileURLToPath(new URL('../../public/brand/png/icon-only--black-on-transparent--512h.png', import.meta.url));
 // Period-sympathetic palette (not stark black/white): warm dark-grey mark, cream
 // plate. Some pages get a cream-plate stamp, some a bare dark-grey mark.
 const MARK_RGB = { r: 58, g: 54, b: 48 };       // warm dark grey
@@ -99,7 +97,10 @@ async function applyOpacity(pngBuf, opacity) {
 }
 
 async function visibleLogoComposite(W, H, editionId, pageNumber) {
-  if (!rawLogo) rawLogo = fs.readFileSync(LOGO_PATH);
+  // From this file, not process.cwd(): src/ imports this module, and a cwd-relative read traces the
+  // whole repo into each function. Resolved here, inside markImage's try, because a bundler rewrites
+  // the URL and a bad one must cost the logo, never the import.
+  if (!rawLogo) rawLogo = fs.readFileSync(fileURLToPath(new URL('../../public/brand/png/icon-only--black-on-transparent--512h.png', import.meta.url)));
   const h = Math.max(24, Math.min(200, Math.round(H * LOGO_HEIGHT_FRAC)));
 
   // Dark-grey mark: recolor the black-on-transparent icon by masking a warm-grey
