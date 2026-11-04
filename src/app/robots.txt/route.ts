@@ -31,6 +31,7 @@
 import { PARTNER_TERMS_URL } from '@/lib/partner-terms-version';
 import { TRIPWIRE_PATH } from '@/lib/tripwire';
 import { pageStatusRobotsDisallow } from '@/lib/page-status';
+import { huntDoorRobotsBlock } from '@/lib/hunt-doors';
 
 const BASE_URL = 'https://sourcelibrary.org';
 
@@ -171,6 +172,8 @@ export function GET(): Response {
   const body = [
     POLICY_PREAMBLE,
     PARTNER_TERMS_NOTE,
+    // A comment block of its own, for people who read robots.txt (#8150 slice 4). It changes no group.
+    huntDoorRobotsBlock(),
     ...GROUPS.map(renderGroup),
     // RSL (Really Simple Licensing, rslstandard.org): machine-readable license
     // terms for automated agents — same policy as the Content-Signal lines and
