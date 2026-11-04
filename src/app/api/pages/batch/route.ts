@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
@@ -46,6 +47,13 @@ export async function POST(request: NextRequest) {
       filter,
       { projection: PAGE_API_LAYER_PROJECTION }
     ).toArray();
+
+    // A tenant's book can have untagged page rows; the reader's Referer brings the tenant here.
+    if (tenantId) {
+      const found = new Set(pages.map(p => p.id));
+      const missing = limitedIds.filter(id => !found.has(id));
+      pages = pages.concat(await findUntaggedPagesOfTenantBooks(db, missing, tenantId, PAGE_API_LAYER_PROJECTION));
+    }
 
     // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
     const taken = await takeReaderTextLayers(db, pages);
