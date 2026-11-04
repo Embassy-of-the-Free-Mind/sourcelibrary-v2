@@ -36,6 +36,12 @@
  * new entry reaches them, and a superseded one leaves them, with no page edit.
  * Like EXPERIMENTS.md it is GENERATED on main; a PR never hand-edits it.
  *
+ * `supersedes:` on a LATER entry (#6553) is read here: the earlier entry's index
+ * record gets `status: superseded` and `superseded_by: <later file>`, and keeps what
+ * its own header says in `status_declared`. The earlier file is never edited. The
+ * old rule (edit the earlier header in the same PR) was followed ~25 times in 566
+ * files; all 7 overturns found by #6553 still read `superseded_by: null`.
+ *
  *   node scripts/eval/build-experiments.mjs           # write EXPERIMENTS.md (on main, or with --force)
  *   node scripts/eval/build-experiments.mjs --check   # exit 1 if EXPERIMENTS.md is stale or a file is malformed
  *   node scripts/eval/build-experiments.mjs --print   # the generated text on stdout, write nothing
@@ -151,9 +157,25 @@ export function buildIndex(srcDir = SRC) {
       status: h.status ?? null,
       decision: h.decision ?? null,
       superseded_by: h.superseded_by ?? null,
+      status_declared: h.status ?? null,
+      feeds: list(h.feeds),
+      landed: list(h.landed),
+      supersedes: list(h.supersedes),
       issues: header ? list(h.issue) : [...new Set(headingIssues)],
     };
   });
+  // Effective status from the later entry's `supersedes:` (newest first, so the newest successor wins).
+  const byFile = new Map(entries.map((e) => [e.file, e]));
+  for (const later of entries) {
+    for (const f of later.supersedes) {
+      const e = byFile.get(f);
+      if (!e) { problems.push(`${later.file}: supersedes ${f}, which is not a dated entry`); continue; }
+      if (e.date > later.date) problems.push(`${later.file}: supersedes ${f}, which is dated after it`);
+      if (e.status === 'superseded' && e.superseded_by && e.superseded_by !== later.file) continue; // its own header names a successor
+      e.status = 'superseded';
+      e.superseded_by = later.file;
+    }
+  }
   // One entry per line: a new write-up is a one-line diff.
   const text = `{"generated_by": ${JSON.stringify('scripts/eval/build-experiments.mjs — do not edit; schema in scripts/eval/experiments/README.md (#5939)')},\n` +
     `"count": ${entries.length},\n"entries": [\n${entries.map((e) => JSON.stringify(e)).join(',\n')}\n]}\n`;
