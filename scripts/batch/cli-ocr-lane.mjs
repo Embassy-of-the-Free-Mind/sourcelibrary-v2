@@ -200,6 +200,10 @@
  *   `--frame=translate-held` (#7263): the Latin books the CLI translation lane waits on (ARMC_TRANSLATE_LANGS and the
  *        comment above it): idle or held for that lane, routed to a cli translation row; untranslated Flash-Lite pages
  *        anywhere in the book. Same read, guards, stamp and ledger shape; its own lane dir (/root/jobs/armc-translate-7263).
+ *   `--frame=campaign --campaign=ID` (#8049): the hidden books an acquisition campaign holds under its own reason
+ *        (ARMC_CAMPAIGNS: the languages whose cell test passed, their draft engines, the tiers file); UNREAD pages of
+ *        tier A books (whole) then tier B (the content screen's hit pages); written as the first-read frame writes
+ *        (unread only, --diff-guard=gpu-draft, printed only), stamped ARMC_CAMPAIGN_LANE; the campaign hold stays.
  *
  * CLAUDE FALLBACK (#7545). When the run's pool (--agy-home; `auto` never picks an empty pool, so name it) has an EMPTY Gemini weekly bucket, the lane does not
  * stop on the floor: if agyClaudeGate opens (the Claude group's weekly and 5-hour buckets both at 10% or more, the
@@ -1019,7 +1023,7 @@ export const ARMC_FIRST_READ_LANGS = Object.freeze(['la']);
  * corrected page carries the corrector's model and the gate no longer counts it.
  */
 export const ARMC_TRANSLATE_LANGS = Object.freeze(['la']);
-const ARMC_FRAMES = ['correct', 'first-read', 'translate-held'];
+const ARMC_FRAMES = ['correct', 'first-read', 'translate-held', 'campaign'];
 /** Is this book in the translate-held frame's book rule (its query, plus the routing table's cli row)? */
 export function armcTranslateBookOk(book) {
   const st = book.pipeline_auto?.status, hold = book.pipeline_auto?.hold;
@@ -1030,6 +1034,61 @@ export function armcTranslateBookOk(book) {
 const armcTranslateBookFilter = (langs) => ({ visible: true, pages_count: { $gt: 0 }, year: { $gte: ARMC_YEARS[0], $lte: ARMC_YEARS[1] }, $or: langs.map((l) => ({ language: { $regex: ARMC_ENGINES[l].language } })), 'pipeline_auto.held': { $ne: true }, needs_splitting: { $ne: true },
   $and: [{ $or: [{ 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.status': HOLD_STATUS, 'pipeline_auto.hold.reason': CLI_TRANSLATE_HOLD.reason }] }] });
 const ARMC_TRANSLATE_PROJECTION = { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1, visible: 1, needs_splitting: 1, publisher: 1, image_source: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1 };
+/**
+ * `--frame=campaign --campaign=ID` (#8049, Derek 2026-11-04: "these are print, so use the GPU"; GPU draft then agy Flash
+ * low with the image, never a bare GPU read): the books an acquisition campaign imported hidden and holds under its own
+ * reason (`acquisition_campaign: ID`, pipeline_auto.hold.reason ID), read for the first time by the first-read frame's
+ * plan / GPU draft / agy correction. ARMC_CAMPAIGNS fixes, per campaign, the languages whose cell test passed (each with
+ * its draft engine and its evidence) and the tiers file (default `<lane-dir>/tiers.jsonl`, one row a book: {book_id,
+ * tier, ocr_idx}: tier A every page, tier B the pages at ocr_idx in page order (the content screen's hit pages and two
+ * either side), tier C none). Books: tier A before B, then processing_priority, not needs_splitting; planned only once
+ * archive_status is archive_complete (the images come from R2, not a second box on archive.org beside the archive lane,
+ * and a page's failed fetch would ledger it); a possible unsplit spread waits (spreadReason, so run
+ * backfill-split-check.mjs --campaign=ID first). Pages: UNREAD only. The read and the
+ * write are the first-read frame's (no --over-stored; apply --diff-guard=gpu-draft --print-only), stamped
+ * ARMC_CAMPAIGN_LANE. The book keeps its campaign hold: nothing here releases it, so translation does not start. A
+ * page the route does not write is ledgered like every page tried; what reads it next is the campaign's business.
+ */
+export const ARMC_CAMPAIGN_LANE = 'gpu-agy-campaign-first-read';
+export const ARMC_CAMPAIGN_REASON = 'campaign first-read arm-c lane';
+const LO_ROUTE = 'lighton>agy-flash-low';
+export const ARMC_CAMPAIGNS = Object.freeze({
+  'jcb-1600-8049': {
+    issue: 8049,
+    // filled from the #8049 cell test (scripts/eval/route-judge-6740/jcb-1600-8049, RULE.md): a language is here only if it passed
+    // 2026-11-04, two draws pooled a language, one page a book, blind Opus judge: Latin 60 pages, 30 written, 29/30
+    // accepted, 0 wrong text, P(acc>=0.8) 0.99 (unwritten half ledgered, waits); French 60 pages, 55 written, 51/55
+    // accepted, 2 wrong text (3.6%), P 0.99. HELD (one draw): es 15/18, it 23/27, de 13/19, en 19/25, nl 15/22, pt 26/29
+    // (wrong text over 4% or P under 0.9; Portuguese has no unsampled A/B book left for a second draw).
+    langs: {
+      la: { language: /^Latin/, engine: 'pero', route: 'pero>agy-flash-low', evidence: '#8049 cell test, two draws pooled: 29/30 written accepted, 0 wrong text' },
+      fr: { language: /^French/, engine: 'lightonocr', route: LO_ROUTE, evidence: '#8049 cell test, two draws pooled: 51/55 written accepted, 2 wrong text' },
+    },
+  },
+});
+/** The campaign's language key for a book's language, or null (not a language the campaign's cell test passed). */
+export const campaignLang = (campaign, language) => Object.entries(ARMC_CAMPAIGNS[campaign]?.langs ?? {}).find(([, v]) => v.language.test(String(language || '')))?.[0] ?? null;
+/** The campaign's tiers file: book id → {tier, ocr_idx}. */
+export function campaignTiers(file) {
+  const m = new Map();
+  for (const l of fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); m.set(r.book_id, { tier: r.tier, ocr_idx: r.ocr_idx ?? null }); }
+  return m;
+}
+/** Is this book in the campaign frame's book rule? */
+export const armcCampaignBookOk = (book, campaign, tier) => !!(book && book.acquisition_campaign === campaign && book.pipeline_auto?.status === HOLD_STATUS
+  && book.pipeline_auto?.hold?.reason === campaign && !book.needs_splitting && (tier?.tier === 'A' || tier?.tier === 'B') && campaignLang(campaign, book.language));
+/** The campaign frame's pages of a book: tier A all, tier B the ocr_idx pages, in page order; UNREAD only; [] for a possible unsplit spread. */
+async function armcCampaignPages(db, book, tier, ids = null) {
+  const all = await db.collection('pages').find({ book_id: book.id }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
+  if (!ids && spreadReason(book, all)) return [];
+  const pick = tier.tier === 'A' ? all : (tier.ocr_idx ?? []).map((i) => all[i]).filter(Boolean);
+  const want = new Set(pick.map((p) => p.id).filter((id) => !ids || ids.includes(id)));
+  if (!want.size) return [];
+  const unread = new Set((await db.collection('pages').find({ book_id: book.id, id: { $in: [...want] }, ...UNREAD }, { projection: { _id: 0, id: 1 } }).toArray()).map((p) => p.id));
+  return pick.filter((p) => want.has(p.id) && unread.has(p.id));
+}
+const ARMC_CAMPAIGN_PROJECTION = { id: 1, title: 1, language: 1, year: 1, pages_count: 1, processing_priority: 1, acquisition_campaign: 1, needs_splitting: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.split_checked': 1 };
+const byCampaignOrder = (tiers) => (a, b) => String(tiers.get(a.id)?.tier).localeCompare(String(tiers.get(b.id)?.tier)) || (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || String(a.id).localeCompare(String(b.id));
 /** The unread pages of a first-read book, in page order (the frame's own page rule), or [] when it may be an unsplit spread. */
 async function armcFirstReadPages(db, book, ids = null) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD, ...(ids && { id: { $in: ids } }) }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
@@ -1044,7 +1103,11 @@ async function armcMain(mode, arg) {
   const FRAME = arg('frame') || 'correct';
   if (!ARMC_FRAMES.includes(FRAME)) { console.error(`--frame must be ${ARMC_FRAMES.join(' or ')}`); process.exit(2); }
   // first-read: only the languages the router picked arm c for on unread pages (Latin, #7701)
-  const LANGS = (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l] && (FRAME !== 'first-read' || ARMC_FIRST_READ_LANGS.includes(l)) && (FRAME !== 'translate-held' || ARMC_TRANSLATE_LANGS.includes(l)));
+  const CAMPAIGN = FRAME === 'campaign' ? arg('campaign') : null;
+  if (FRAME === 'campaign' && !ARMC_CAMPAIGNS[CAMPAIGN]) { console.error(`--frame=campaign needs --campaign=${Object.keys(ARMC_CAMPAIGNS).join('|')}`); process.exit(2); }
+  const LANGS = CAMPAIGN ? (arg('langs')?.split(',') ?? Object.keys(ARMC_CAMPAIGNS[CAMPAIGN].langs)).filter((l) => ARMC_CAMPAIGNS[CAMPAIGN].langs[l])
+    : (arg('langs') || 'la,it').split(',').filter((l) => ARMC_ENGINES[l] && (FRAME !== 'first-read' || ARMC_FIRST_READ_LANGS.includes(l)) && (FRAME !== 'translate-held' || ARMC_TRANSLATE_LANGS.includes(l)));
+  if (CAMPAIGN && !LANGS.length) { console.log(`armc campaign ${CAMPAIGN}: no language has passed its cell test; nothing to do`); return; }
   if (mode === 'armc' && FRAME === 'first-read') await routeCheck(servedByArmcFirstRead({ langs: LANGS }), arg);
   const ledger = new Set(), tailState = { offset: 0 };
   ledgerTail(P.ledger, ledger, tailState);
@@ -1083,7 +1146,7 @@ async function armcMain(mode, arg) {
   const db = client.db('bookstore');
   const { SKIP_TRANSLATION_PAGE_TYPES: SKIP } = await import('../lib/translate-core.mjs');
   try {
-    if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME);
+    if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME, CAMPAIGN);
     if (mode === 'armc-fetch') return await armcFetch(db, P, arg, LANGS, ledger);
     if (mode === 'armc-count') {
       const u = armcUndrafted(L).filter((p) => !ledger.has(p.id));
@@ -1094,7 +1157,7 @@ async function armcMain(mode, arg) {
       console.log(`arm-c lane (${ARMC_LANE}): ${JSON.stringify(t)}; drafted, waiting for a correction: ${drafted.length}; planned, no draft yet: ${u.length}`);
       return;
     }
-    return await armcRun(db, P, arg, ledger, tailState, SKIP, FRAME);
+    return await armcRun(db, P, arg, ledger, tailState, SKIP, FRAME, CAMPAIGN);
   } finally { await client.close(); }
 }
 
@@ -1104,7 +1167,7 @@ async function armcMain(mode, arg) {
  * correction. Books most-read first; a book is planned whole (every page in frame), unless --per-book=N (a pilot: N
  * pages spread evenly) with --books-per-lang=M.
  */
-async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
+async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMPAIGN = null) {
   const planned = new Map(fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => { const pl = readJson(path.join(P.plan, f)); return [pl.bid, pl]; }));
   const open = [...planned.values()].reduce((n, pl) => n + pl.pages.filter((pg) => !ledger.has(pg.id)).length, 0);
   const since = Date.now() - 48 * 3600_000;
@@ -1116,29 +1179,33 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
   console.log(`armc-plan: ${open} pages planned and not ledgered, horizon ${AHEAD} (${recent} ledgered in 48 h): room for ${Math.max(0, room)}`);
   if (room <= 0) return;
   const FR = FRAME === 'first-read', TH = FRAME === 'translate-held', frLangs = LANGS.map((l) => toLanguageCodes(l).codes[0] ?? l);
-  const books = (FR
+  const tiers = CAMPAIGN ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
+  const books = (CAMPAIGN
+    ? (await db.collection('books').find({ acquisition_campaign: CAMPAIGN, pages_count: { $gt: 0 }, 'pipeline_auto.hold.reason': CAMPAIGN, archive_status: 'archive_complete' }, { projection: ARMC_CAMPAIGN_PROJECTION }).toArray())
+      .filter((b) => armcCampaignBookOk(b, CAMPAIGN, tiers.get(b.id)) && LANGS.includes(campaignLang(CAMPAIGN, b.language)))
+    : FR
     ? (await db.collection('books').find(FIRST_READ_BOOKS, { projection: { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 } }).toArray()).filter((b) => !firstReadSkip(b, { languages: frLangs }))
     : TH ? (await db.collection('books').find(armcTranslateBookFilter(LANGS), { projection: ARMC_TRANSLATE_PROJECTION }).toArray()).filter(armcTranslateBookOk)
     : await db.collection('books').find(armcBookFilter(LANGS), { projection: { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1 } }).toArray())
-    .filter((b) => (!ONLY || ONLY.has(b.id)) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(FR ? byFirstReadOrder : byReaders);
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(CAMPAIGN ? byCampaignOrder(tiers) : FR ? byFirstReadOrder : byReaders);
   const perLang = {};
   let added = 0;
   for (const b of books) {
     if (room <= 0) break;
-    const lang = armcLang(b.language);
+    const lang = CAMPAIGN ? campaignLang(CAMPAIGN, b.language) : armcLang(b.language);
     if (!lang || (perLang[lang] ?? 0) >= PER_LANG) continue;
     const prev = planned.get(b.id);
     const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
-    let rows = (FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP, null, { whole: TH })).filter((p) => !ledger.has(p.id) && !have.has(p.id));
+    let rows = (CAMPAIGN ? await armcCampaignPages(db, b, tiers.get(b.id)) : FR ? await armcFirstReadPages(db, b) : await armcPages(db, b.id, SKIP, null, { whole: TH })).filter((p) => !ledger.has(p.id) && !have.has(p.id));
     if (PER_BOOK) { if (rows.length < PER_BOOK) continue; rows = Array.from({ length: PER_BOOK }, (_, i) => rows[Math.floor((i + 0.5) * rows.length / PER_BOOK)]); }
     const whole = !PER_BOOK && rows.length <= room;
     rows = rows.slice(0, room);
     if (!rows.length) { if (!PER_BOOK) fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ ...(prev ?? { bid: b.id, lang, title: b.title, year: b.year, pages: [] }), whole: true })); continue; }
     fs.mkdirSync(path.join(P.drafts, b.id), { recursive: true });
-    fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ bid: b.id, lang, title: b.title, year: b.year, language: b.language, whole, planned_at: new Date().toISOString(), pages: [...(prev?.pages ?? []), ...rows.map((p) => ({ id: p.id, pn: p.page_number }))] }));
+    fs.writeFileSync(path.join(P.plan, `${b.id}.json`), JSON.stringify({ bid: b.id, lang, title: b.title, year: b.year, language: b.language, ...(CAMPAIGN && { campaign: CAMPAIGN, tier: tiers.get(b.id).tier }), whole, planned_at: new Date().toISOString(), pages: [...(prev?.pages ?? []), ...rows.map((p) => ({ id: p.id, pn: p.page_number }))] }));
     perLang[lang] = (perLang[lang] ?? 0) + 1;
     room -= rows.length; added += rows.length;
-    console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${lang}, ${b.year}, ${b.human_read_count ?? 0} readers): ${rows.length} pages${whole ? '' : ' (part)'}`);
+    console.log(`  ${b.id} ${String(b.title || '').slice(0, 50)} (${lang}, ${b.year}, ${CAMPAIGN ? `tier ${tiers.get(b.id).tier}` : `${b.human_read_count ?? 0} readers`}): ${rows.length} pages${whole ? '' : ' (part)'}`);
   }
   console.log(`armc-plan: ${added} pages added (${JSON.stringify(perLang)} books)`);
 }
@@ -1147,7 +1214,8 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct') {
 async function armcFetch(db, P, arg, LANGS, ledger) {
   const { getPageSource } = await import('../lib/page-image-url.mjs');
   const MAX = Number(arg('max-pages') || 2000);
-  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && LANGS.includes(p.lang)).slice(0, MAX);
+  // A planned page is in frame by its plan. The draft task passes no --frame, so LANGS is the `correct` default (la,it) there: narrow only on an explicit --langs, or a campaign's French would never be staged (#8049).
+  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && (!arg('langs') || LANGS.includes(p.lang))).slice(0, MAX);
   const docs = new Map();
   for (let i = 0; i < todo.length; i += 500) for (const d of await db.collection('pages').find({ id: { $in: todo.slice(i, i + 500).map((p) => p.id) } }, { projection: GPU_PAGE_PROJECTION }).toArray()) docs.set(d.id, d);
   const t = {}; let failed = 0;
@@ -1170,8 +1238,10 @@ async function armcFetch(db, P, arg, LANGS, ledger) {
 }
 
 /** armc: the agy correction of drafted pages, guarded, written; every page tried ledgered. */
-async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
-  const FR = FRAME === 'first-read', LANE_ID = FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
+async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', CAMPAIGN = null) {
+  // the campaign frame reads and writes as the first-read frame does (unread pages, no --over-stored, the draft put-back)
+  const CF = FRAME === 'campaign', FR = FRAME === 'first-read', FIRST = FR || CF, LANE_ID = CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
+  const tiers = CF ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
   if (!OUT) { console.error('armc needs --out=DIR'); process.exit(2); }
@@ -1209,8 +1279,8 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
   const plans = fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => readJson(path.join(P.plan, f))).filter((pl) => pl && (!ONLY || ONLY.has(pl.bid)));
   const TH = FRAME === 'translate-held';
-  const books = new Map((await db.collection('books').find({ id: { $in: plans.map((pl) => pl.bid) } }, { projection: { ...(FR && FIRST_READ_PROJECTION), ...ARMC_TRANSLATE_PROJECTION } }).toArray()).map((b) => [b.id, b]));
-  const order = plans.filter((pl) => books.has(pl.bid)).sort((a, b) => byReaders(books.get(a.bid), books.get(b.bid)));
+  const books = new Map((await db.collection('books').find({ id: { $in: plans.map((pl) => pl.bid) } }, { projection: { ...(FR && FIRST_READ_PROJECTION), ...ARMC_TRANSLATE_PROJECTION, ...(CF && ARMC_CAMPAIGN_PROJECTION) } }).toArray()).map((b) => [b.id, b]));
+  const order = plans.filter((pl) => books.has(pl.bid)).sort((a, b) => (CF ? byCampaignOrder(tiers) : byReaders)(books.get(a.bid), books.get(b.bid)));
   const job = `cli-ocr-armc-${new Date().toISOString().slice(0, 10)}`;
   fs.mkdirSync(OUT, { recursive: true });
   const TPL = path.join(OUT, `gpu-correct-prompt-${GPU_TEMPLATE.hash}.txt`);
@@ -1259,10 +1329,11 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
       fs.mkdirSync(dir, { recursive: true });
       console.log(`\n${tag}${book.id} ${String(book.title || '').slice(0, 40)} (${book.language}, ${plan.lang}): ${take.length} of ${c.drafted.length} drafted pages; pool ${pool} weekly ${(100 * q.weekly).toFixed(1)}% (line ${(100 * q.line).toFixed(1)}%), 5h ${(100 * q.five_h).toFixed(1)}%`);
       // The book and the page must still be in frame now: a page re-read, edited or withheld since the plan is not this lane's.
-      const bookOk = FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
+      const bookOk = CF ? armcCampaignBookOk(book, CAMPAIGN, tiers.get(book.id)) && plan.campaign === CAMPAIGN
+        : FR ? !firstReadSkip(book, { languages: ARMC_FIRST_READ_LANGS.map((l) => toLanguageCodes(l).codes[0]) })
         : TH ? armcTranslateBookOk(book)
         : book.visible && !book.needs_splitting && IDLE_STATUSES.includes(book.pipeline_auto?.status) && !book.pipeline_auto?.hold && !book.pipeline_auto?.held;
-      const inFrame = new Set(bookOk ? (FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id), { whole: TH })).map((p) => p.id) : []);
+      const inFrame = new Set(bookOk ? (CF ? await armcCampaignPages(db, book, tiers.get(book.id), take.map((p) => p.id)) : FR ? await armcFirstReadPages(db, book, take.map((p) => p.id)) : await armcPages(db, book.id, SKIP, take.map((p) => p.id), { whole: TH })).map((p) => p.id) : []);
       const drafts = { _engine: null };
       const unsent = new Map();
       for (const p of take) {
@@ -1280,12 +1351,13 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct') {
         const draftFile = path.join(dir, `drafts-${t0}.json`), ids = path.join(dir, `page-ids-${t0}.json`);
         fs.writeFileSync(draftFile, JSON.stringify(drafts));
         fs.writeFileSync(ids, JSON.stringify(send.map((p) => p.id)));
-        const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${LANE_ID}`, `--gpu-draft=${draftFile}`, `--image-dir=${imgDir}`, ...(FR ? [] : ['--over-stored']), `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
+        const read = await run([path.join(HERE, 'cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${dir}`, `--model=${CORRECT_MODEL}`, `--correct-prompt=${TPL}`, `--lane=${LANE_ID}`, `--gpu-draft=${draftFile}`, `--image-dir=${imgDir}`, ...(FIRST ? [] : ['--over-stored']), `--job=${job}`, '--stop-on-quota', `--concurrency=${arg('read-concurrency') || 2}`], tag, env);
         if (read === 3) { release(); budget += take.length; stop ??= 'quota'; console.log(`${tag}quota reached: stopping; the next run resumes`); break; }
         if (read !== 0) { release(); console.log(`${tag}  reader exited ${read}: chunk skipped this run`); continue; }
-        const reason = FR ? `${ARMC_FIRST_READ_REASON}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a book published as scans; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route pero>agy-flash-low: #7701 cheap-routes cell test 18/18 written, 0 wrong text)`
+        const reason = CF ? `#${ARMC_CAMPAIGNS[CAMPAIGN].issue} ${ARMC_CAMPAIGN_REASON} (${CAMPAIGN}, tier ${plan.tier}): ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a hidden book the campaign holds; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route ${ARMC_CAMPAIGNS[CAMPAIGN].langs[plan.lang].route}: ${ARMC_CAMPAIGNS[CAMPAIGN].langs[plan.lang].evidence})`
+          : FR ? `${ARMC_FIRST_READ_REASON}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print, a page with no OCR in a book published as scans; the hold stays) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}; #7695 put-back against the draft (route pero>agy-flash-low: #7701 cheap-routes cell test 18/18 written, 0 wrong text)`
           : `${ARMC_REASON}${TH ? ' (translate-held frame, #7263: a book the CLI translation lane waits on)' : ''}: ${drafts._engine?.name ?? 'GPU'} draft (${book.language} print) corrected by ${CORRECT_MODEL} through agy with the page image, template ${GPU_TEMPLATE.hash}, replacing the stored Flash-Lite draft; E3 diff guard put back every flagged number, negation and expansion (route ${ARMC_ENGINES[plan.lang].route}: #7567 E5 misleading la 23→4, it 8→2 against lite→Flash; Derek 2026-10-29)`;
-        const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(FR ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`]), ...(APPLY ? ['--apply'] : [])], tag, env);
+        const applied = await run([path.join(HERE, 'cli-ocr.mjs'), 'apply', `--out=${dir}`, `--only=${ids}`, `--reason=${reason}`, ...(FIRST ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`]), ...(APPLY ? ['--apply'] : [])], tag, env);
         for (const p of send) { try { tally.agy_calls += JSON.parse(fs.readFileSync(path.join(dir, `${p.id}.meta.json`), 'utf8')).calls ?? 0; } catch { /* not read */ } }
         if (!APPLY || applied !== 0) { release(); continue; }
         const summaryFile = fs.readdirSync(dir).filter((f) => /^apply-summary-(?!dry|refused).*\.json$/.test(f)).map((f) => path.join(dir, f)).filter((f) => fs.statSync(f).mtimeMs >= t0).sort().pop();
