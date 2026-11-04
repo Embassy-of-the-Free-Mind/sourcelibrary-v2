@@ -30,6 +30,7 @@ import { homedir, tmpdir } from 'node:os';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { chromium } from 'playwright-core';
+import { getTranslationText } from '../lib/translation-text.mjs';
 
 const args = process.argv.slice(2);
 const opt = (name, dflt) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : dflt; };
@@ -84,9 +85,9 @@ async function startFor(slug) {
   const pages = await db.collection('pages').aggregate([
     { $match: { book_id: book.id, page_number: { $gt: 0 } } },
     { $sort: { page_number: 1 } },
-    { $project: { id: 1, hasEn: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 20] } } },
+    { $project: { id: 1, translation: 1 } },
   ]).toArray();
-  const translated = pages.filter(p => p.hasEn);
+  const translated = pages.filter(p => (getTranslationText(p) || '').length > 20);
   const pick = translated[Math.floor(translated.length * 0.4)] ?? pages[Math.floor(pages.length * 0.4)];
   // An English book has no translation pane: its English is the transcription.
   const section = /^en(glish)?\b/i.test(book.language || '') ? 'ocr' : 'translation';
