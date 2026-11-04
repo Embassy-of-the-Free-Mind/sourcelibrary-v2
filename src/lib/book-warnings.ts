@@ -9,7 +9,8 @@
  *   page, detector  only an automated detector flagged the page; no reviewer has read its current text
  *   book            the newest check with serious findings: N of the M pages it read
  * A finding describes the text the check read. Once a page's text has been rewritten it is dropped from every count
- * and no warning is shown for it (stalePages), so a warning never outlives the error it describes.
+ * and no warning is shown for it (stalePages), so a warning never outlives the error it describes. A row written with
+ * reader_warning: false (#8069) is kept and listed on the checks page, and derives nothing here.
  */
 import type { Db } from 'mongodb';
 import { stalePages, type BookCheck, type PageFinding, type PageTextStamp } from './book-checks';
@@ -156,7 +157,7 @@ export function commonKinds(perPage: WarningKind[][]): WarningKind[] {
 }
 
 export function deriveWarnings(rows: BookCheck[], stamps: Map<number, PageTextStamp>): QualityWarnings {
-  const checks = ownChecks(rows).sort((a, b) => new Date(b.checked_at).getTime() - new Date(a.checked_at).getTime());
+  const checks = ownChecks(rows.filter((r) => r.reader_warning !== false)).sort((a, b) => new Date(b.checked_at).getTime() - new Date(a.checked_at).getTime());
   const live = new Map(checks.map((r) => [r, livePages(r, stamps)]));
   const reviews = checks.filter((r) => r.reader.kind !== 'detector');
 

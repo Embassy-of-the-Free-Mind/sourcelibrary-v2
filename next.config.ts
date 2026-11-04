@@ -281,6 +281,13 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
         ],
       },
+      {
+        // A hit at Cloudflare never reaches the proxy, so the Embassy's room would
+        // be served past the gate that guards it (#8098). Only Cloudflare reads this
+        // header; Vercel's own page cache still holds these pages.
+        source: '/embed/bph/:path*',
+        headers: [{ key: 'Cloudflare-CDN-Cache-Control', value: 'no-store' }],
+      },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —
       // it only controls Cloudflare's edge cache behavior.

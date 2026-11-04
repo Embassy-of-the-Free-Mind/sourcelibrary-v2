@@ -129,23 +129,19 @@ const servedWeakBooks = Math.round(servedDraw.corpus.bad_books_est / 100) * 100;
 /** "8/8 rejected at fidelity <= 2" → "8 of 8". */
 const kOfN = (v: string) => v.match(/^(\d+)\/(\d+)/)?.slice(1).join(' of ') ?? v;
 
-/* The grade ladder (#7933): the SAME 800 verdicts as the record above, re-graded on the rubric's four grades
+/* The grade ladder (#7933, bands #7263): the SAME 800 verdicts as the record above, re-graded on the rubric's five grades
    (.claude/docs/quality-rubric-and-sampling.md §5) and cut by language, writing system and reading method, by
    scripts/eval/confidence-7866/regrade.mjs. A distribution, not one pass/fail share at an unstated bar. */
 const grades = servedGrades as typeof servedGrades & {
-  grade_label: Record<string, string>;
-  grades: Record<string, { pages: number; share: number; ci95: [number, number] }>;
+  band_label: Record<string, string>;
+  bands: Record<string, { pages: number; share: number; ci95: [number, number] }>;
 };
-/** The reader-facing order, worst last, each row saying what a reader can do with such a page. */
-const LADDER: { key: string; can: string }[] = [
-  { key: 'fit_to_quote', can: 'Quote it without opening the scan' },
-  { key: 'fit_to_read', can: 'Read it; check the scan before quoting' },
-  { key: 'search_only', can: 'Find the page by it, but do not trust the reading' },
-  { key: 'wrong_span', can: 'Do not rely on it: a word or number is not the page’s' },
-  { key: 'from_elsewhere', can: 'Do not rely on it: part is from somewhere else' },
-  { key: 'mostly_wrong', can: 'Do not rely on it: most of the page is wrong or missing' },
-  { key: 'not_this_page', can: 'Do not rely on it: it is another page’s text' },
-];
+/**
+ * The bands in reader-facing order, worst last. The table states what was found, never what a reader may do with
+ * the page. The middle two count errors rather than sort them by kind (#7263): a second reading moved 17 of 40
+ * "changes the sense" flags to "not on the page", so the kind is the unstable part and the count is not.
+ */
+const LADDER = ['fit_to_quote', 'fit_to_read', 'some_errors', 'many_errors', 'from_elsewhere', 'mostly_wrong', 'not_this_page'];
 /** Plain names for the reading methods the draw happened to catch; a route not here shows its own id. */
 const READER_NAME: Record<string, string> = {
   lite: 'Gemini Flash-Lite', '3flash': 'Gemini 3 Flash', paddle: 'PaddleOCR-VL', yigdzin: 'Yig-dzin (Tibetan)',
@@ -191,7 +187,7 @@ const eraRoute = (era: string, route: string) =>
   (grades.by_era_route_alphabetic as Record<string, Cut>)[`${era} · ${route}`];
 
 /** Invented or recited text, another leaf, another page entirely, or a page never read: the failures readers fear most. */
-const notFromThisPage = grades.grades.from_elsewhere.share + grades.grades.not_this_page.share;
+const notFromThisPage = grades.bands.from_elsewhere.share + grades.bands.not_this_page.share;
 const topClasses = grades.defect_classes.filter(c => c.total >= 25);
 /**
  * Three worked examples from served-grades.json: a misread that changes a name, a dropped unit, and
@@ -398,9 +394,10 @@ export default function QualityCenterPage() {
         <Section id="stands" title="Where quality stands">
           <div className="max-w-3xl mb-6">
             <p className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-3">
-              About half the pages you read here say exactly what the scan says. Most of the rest have a word or a phrase
-              wrong: a misread that changes the sense, or a word garbled or dropped. Text that is invented, belongs to
-              another page, or was never read at all is rare: {pct(notFromThisPage, 1)} of pages.
+              About half the pages you read here say exactly what the scan says. Most of the rest have errors that may
+              change the meaning, such as a misread word or a word garbled or dropped: 1 or 2 on{' '}
+              {pct(grades.bands.some_errors.share)} of pages, 3 or more on {pct(grades.bands.many_errors.share)}. Text that
+              is invented, belongs to another page, or was never read at all is rare: {pct(notFromThisPage, 1)} of pages.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
               On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books from the {n(servedFrame)} live books that
@@ -417,19 +414,17 @@ export default function QualityCenterPage() {
               <caption className="sr-only">Share of pages in each grade, weighted back to the library, with 95% intervals</caption>
               <thead>
                 <tr>
-                  <th className={th}>What a reader can do with the page</th>
                   <th className={th}>What the reviewer found</th>
                   <th className={th}>Pages</th>
                   <th className={th}>Share of the library (95% interval)</th>
                 </tr>
               </thead>
               <tbody>
-                {LADDER.map(({ key, can }) => {
-                  const g = grades.grades[key];
+                {LADDER.map((key) => {
+                  const g = grades.bands[key];
                   return (
                     <tr key={key}>
-                      <td className={`${td} font-semibold text-stone-900 w-[26%]`}>{can}</td>
-                      <td className={`${td} w-[36%]`}>{grades.grade_label[key]}</td>
+                      <td className={`${td} font-semibold text-stone-900 w-[50%]`}>{grades.band_label[key]}</td>
                       <td className={td}>{g.pages}</td>
                       <td className={td}>
                         <b className="text-stone-900">{pct(g.share, g.share < 0.05 ? 1 : 0)}</b>{' '}
@@ -446,10 +441,12 @@ export default function QualityCenterPage() {
           <Source>
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, re-graded from the same{' '}
             {n(servedDraw.books.pages_judged)} verdicts as <A href={`${BLOB}${SERVED_RECORD}`}>the record</A> (
-            <IssueLink num={7866} />, <IssueLink num={7933} />). The four grades are{' '}
+            <IssueLink num={7866} />, <IssueLink num={7933} />, <IssueLink num={7263} />). The five grades are{' '}
             <a href="#the-grades" className={LINK}>our own published rubric</a>; the last three rows split what it calls{' '}
-            <i>not usable</i>, because
-            a wrong word and another book&rsquo;s page are not the same failure. Books were drawn in four groups and
+            <i>not the page&rsquo;s text</i>, because
+            a wrong word and another book&rsquo;s page are not the same failure. An error that may change the meaning is
+            one the reviewer weighed as changing the sense or as not on the page; the two middle rows count them, because
+            a second reading often moved an error from one kind to the other. Books were drawn in four groups and
             weighted back to the library; the interval is a bootstrap over books. The reviewer turned down{' '}
             {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text, and caught{' '}
             {kOfN(servedDraw.instrument.planted)} errors we planted.
@@ -523,10 +520,10 @@ export default function QualityCenterPage() {
               of books (95% interval {pct(servedDraw.corpus.bad_share_ci95[0])}–{pct(servedDraw.corpus.bad_share_ci95[1])}),
               about {n(servedWeakBooks)} books, had two or more of five pages with an error. Of the{' '}
               {n(grades.pages)} pages, {n(grades.bad_7866.pages)} counted against their book under that rule, and the rule
-              weighed them all the same: {n(grades.bad_7866.by_grade.search_only.counted_bad)} whose worst fault changes
-              the sense of a word, {n(grades.bad_7866.by_grade.wrong_span.counted_bad + grades.bad_7866.by_grade.from_elsewhere.counted_bad)}{' '}
-              carrying a span the page does not have, and{' '}
-              {n(grades.bad_7866.by_grade.not_this_page.counted_bad + grades.bad_7866.by_grade.mostly_wrong.counted_bad)}{' '}
+              weighed them all the same: {n(grades.bad_7866.by_band.some_errors.counted_bad)} with 1 or 2 errors that may
+              change the meaning, {n(grades.bad_7866.by_band.many_errors.counted_bad)} with 3 or more,{' '}
+              {n(grades.bad_7866.by_band.from_elsewhere.counted_bad)} carrying text from somewhere else, and{' '}
+              {n(grades.bad_7866.by_band.not_this_page.counted_bad + grades.bad_7866.by_band.mostly_wrong.counted_bad)}{' '}
               substantially wrong or not this page at all.
             </Source>
           </div>
@@ -556,8 +553,9 @@ export default function QualityCenterPage() {
                   <th className={th}>Pages</th>
                   <th className={th}>One meaning-changing error in about</th>
                   <th className={th}>Pages with no such error</th>
-                  <th className={th}>Pages whose worst error changes the sense of a word</th>
-                  <th className={th}>Pages with a word or phrase garbled, dropped or added</th>
+                  <th className={th}>Some errors that may change the meaning (1 or 2)</th>
+                  <th className={th}>Many errors that may change the meaning (3 or more)</th>
+                  <th className={th}>Mostly wrong, or another page&rsquo;s text</th>
                 </tr>
               </thead>
               <tbody>
@@ -580,8 +578,9 @@ export default function QualityCenterPage() {
                       )}
                     </td>
                     <td className={td}>{pct(r.says_what_the_page_says)}</td>
-                    <td className={td}>{pct(r.misleads_somewhere)}</td>
-                    <td className={td}>{pct(r.text_not_on_the_page)}</td>
+                    <td className={td}>{pct(r.bands.some_errors.share)}</td>
+                    <td className={td}>{pct(r.bands.many_errors.share)}</td>
+                    <td className={td}>{pct(Math.max(0, 1 - r.says_what_the_page_says - r.bands.some_errors.share - r.bands.many_errors.share))}</td>
                   </tr>
                 ))}
               </tbody>

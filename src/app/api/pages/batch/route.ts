@@ -5,6 +5,7 @@ import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { isScriptOnPartnerPages, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { poolRefFor } from '@/lib/suspected-pool';
 import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
@@ -53,6 +54,10 @@ export async function POST(request: NextRequest) {
       const found = new Set(pages.map(p => p.id));
       const missing = limitedIds.filter(id => !found.has(id));
       pages = pages.concat(await findUntaggedPagesOfTenantBooks(db, missing, tenantId, PAGE_API_LAYER_PROJECTION));
+    }
+
+    if (await isScriptOnPartnerPages(request, db, pages)) {
+      return new NextResponse(SURFACE_REFUSED_RESPONSE, { status: 403, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
     // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.

@@ -9,6 +9,7 @@ import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
+import { PARTNER_TERMS_URL } from '@/lib/partner-terms-version';
 import { CONTENT_LICENSE, AI_TRAINING_NOTICE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
@@ -421,6 +422,11 @@ export const GET = withApiAuth(async (
       ? `Served up to p.${windowMaxPage}: this collection is served ${partnerWindow} pages per call. Ask again with from=${windowMaxPage! + 1} to continue.`
       : undefined;
 
+    // A program reading a protected partner's book is told the terms in the response itself.
+    const partnerTermsNote = partnerAccess.kind !== 'full'
+      ? `This book is from the Embassy of the Free Mind's collection. Terms of use: ${PARTNER_TERMS_URL}`
+      : undefined;
+
     // Plain text format — concatenated text with page markers
     if (format === 'plain') {
       const lines: string[] = [];
@@ -435,6 +441,7 @@ export const GET = withApiAuth(async (
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
       lines.push(`# ${AI_TRAINING_NOTICE}`);
       if (windowNote) lines.push(`# ${windowNote}`);
+      if (partnerTermsNote) lines.push(`# ${partnerTermsNote}`);
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.
@@ -544,6 +551,7 @@ export const GET = withApiAuth(async (
           partnership: 'https://sourcelibrary.org/llms.txt',
         },
       } : {}),
+      ...(partnerTermsNote ? { terms_of_use: partnerTermsNote } : {}),
       ...(windowTruncated ? {
         reading_window: {
           truncated: true,

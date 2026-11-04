@@ -1,0 +1,30 @@
+<scan-quality>good</scan-quality>
+<language>Chinese, English</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>376</page-num>
+<header>THE WORKS OF MENCIUS. [BK. V.</header>
+
+倍上士，上士倍中士，中士倍下士，下士與庶人在官者同祿，祿足以代其耕也。<margin>九節</margin>耕者之所獲，一夫百畝。百畝之糞，上農夫食九人，上次食八人，中食七人，中次食六人，下食五人。庶人在官者，其祿以是為差。
+
+<image-desc size="small" type="symbol" significance="low">A small rectangular frame containing the characters 第三章 (Chapter 3).</image-desc> <insert>第三章</insert> <margin>一節</margin>
+
+萬章問曰：「敢問友。」孟子曰：「不挾長，不挾貴，不挾兄弟而友。友也者，友其德也，不可以有挾也。」
+
+the middle class twice as much as one of the lowest; scholars of the lowest class, and such of the common people as were employed about the government offices, had the same emolument;—as much, namely, as was equal to what they would have made by tilling the fields.
+
+9. 'As to those who tilled the fields, each husbandman received a hundred mâu. When those mâu were manured, the best husbandmen of the highest class supported nine individuals, and those ranking next to them supported eight. The best husbandmen of the second class supported seven individuals, and those ranking next to them supported six; while husbandmen of the lowest class only supported five. The salaries of the common people who were employed about the government offices were regulated according to these differences.'
+
+Chap. III. 1. Wan Chang asked *Mencius*, saying, 'I venture to ask *the principles of* friendship.' Mencius replied, 'Friendship should be maintained without any presumption on the ground of one's superior age, or station, or *the circumstances of his* relatives. Friendship *with a man* is friendship with his virtue, and does not admit of assumptions of superiority.
+
+---
+
+from the land. 9. 食, —read *tsze*. 差, —read *ts'ze*, 'uneven,' 'different.'
+3. FRIENDSHIP MUST HAVE REFERENCE TO THE VIRTUE OF THE FRIEND. THERE MAY BE NO ASSUMPTION ON THE GROUND OF ONE'S OWN ADVAN-
+
+<column-break/>
+
+TAGES. 1. 問友 = 問交友之道. 長, 3rd tone, having reference to age. 兄弟, 'one's brethren,' in the widest acceptation of that term. Observe how 也者 takes up
+
+<vocab>Mencius, Wan Chang, friendship, emolument, mâu, virtue, 友, 祿, 耕</vocab>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, localeFromPathname, localePath, useLocale, type Locale } from '@/lib/i18n';
 import { LOCALE_NATIVE_NAME, ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
+import { displayPublished } from '@/lib/publication-date';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
@@ -28,6 +29,7 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import { imageAccessFor } from '@/lib/types/image-source';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
@@ -721,17 +723,9 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   const hasTranslations = verdict !== null
     ? verdict === 'complete' || verdict === 'translated'
     : Number(full?.pages_translated) > pagesCount / 2;
-  const imgLicense = full?.image_license as string | undefined;
-  const imgProvider = (full?.image_provider as string | undefined)?.toLowerCase();
-  const year = Number(full?.year_published) || undefined;
-  const imageAccess: 'open' | 'nc-free' | 'blocked' =
-    imgProvider === 'bph' || (year && year < 1930)
-      ? 'open'
-      : imgLicense && /\bnc\b/i.test(imgLicense)
-        ? 'nc-free'
-        : (!imgLicense || imgLicense === 'unknown')
-          ? 'blocked'
-          : 'open';
+  // The book page's rule (src/app/book/[id]/page.tsx). This panel used to keep
+  // its own copy, which read fields no book has and so blocked every scan.
+  const imageAccess = imageAccessFor((full ?? {}) as Parameters<typeof imageAccessFor>[0]);
 
   const rowCls = PANEL_ROW;
 
@@ -1567,7 +1561,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
     { label: t.fieldLanguage, value: b.language as string },
     { label: t.fieldPlace, value: (fullBook?.place_published as string) || undefined },
     { label: t.fieldPublisher, value: (fullBook?.publisher as string) || undefined },
-    { label: t.fieldPublished, value: b.published as string },
+    { label: t.fieldPublished, value: displayPublished(b.published as string) ?? undefined },
     { label: t.fieldFormat, value: (fullBook?.format as string) || undefined },
     { label: t.fieldPages, value: fullBook?.pages_count ? String(fullBook.pages_count) : undefined },
     // A catalogue identifier, not a word — the same in every language.
@@ -3369,7 +3363,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const citationParts = {
     author: r.book.author ? `${r.book.author}.` : '',
     title: r.book.display_title || r.book.title,
-    year: r.book.published ? `(${r.book.published})` : '',
+    year: displayPublished(r.book.published) ? `(${displayPublished(r.book.published)})` : '',
     locator: r.currentPage?.page_number != null ? `p. ${r.currentPage.page_number}` : '',
     copy: holdingCopy ? `${holdingCopy.statement}.` : '',
     source: 'Source Library',

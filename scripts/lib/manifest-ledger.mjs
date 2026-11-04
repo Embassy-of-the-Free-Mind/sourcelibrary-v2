@@ -40,6 +40,7 @@ import { assertBookScopedKey } from './r2-key.mjs';
 
 export const LEDGER_FIELD = 'archive_metadata.manifest_ledger';
 export const LEDGER_VERSION = 1;
+export const LEDGER_LAYOUT = 'archived';
 
 /** Fingerprint of an ordered list of canvas image URLs ('' for a canvas with no image). */
 export function manifestFingerprint(photos) {
@@ -47,10 +48,16 @@ export function manifestFingerprint(photos) {
   return createHash('sha1').update(photos.map(p => p || '').join('\n')).digest('hex').slice(0, 16);
 }
 
-/** The R2 key of page `n` of a book. Book-scoped by construction, and checked anyway (#3362). */
-export function ledgerKey(bookId, n) {
+/**
+ * The R2 key of page `n` of a book. Book-scoped by construction, and checked anyway (#3362).
+ *
+ * New ledgers hold masters under archived/ (`layout: 'archived'`). A ledger with no layout predates
+ * #4406 and its masters are at the display-shaped key: those bytes are the only clean copy, so the
+ * key is kept for that ledger rather than moved. display-backfill gives such a page a sibling key.
+ */
+export function ledgerKey(bookId, n, layout) {
   if (!Number.isInteger(n) || n < 1) throw new Error(`ledgerKey: page number must be a positive integer (got ${n})`);
-  const key = `pages/${bookId}/${String(n).padStart(4, '0')}.jpg`;
+  const key = layout === LEDGER_LAYOUT ? `archived/${bookId}/${n}.jpg` : `pages/${bookId}/${String(n).padStart(4, '0')}.jpg`;
   assertBookScopedKey(key, bookId, 'manifest-ledger');
   return key;
 }
@@ -67,6 +74,7 @@ export function newLedger({ photos, base = null, host = null, now = new Date() }
   const n = photos.length;
   return {
     v: LEDGER_VERSION,
+    layout: LEDGER_LAYOUT,
     fp: manifestFingerprint(photos),
     canvases: n,
     base,
@@ -152,7 +160,7 @@ export function openLedger(stored) {
 export function ledgerPageFields(stored, view, bookId, p) {
   if (!view.isDone(p) || typeof stored.base !== 'string' || !/^https?:\/\//.test(stored.base)) return null;
   const { width, height, nativeWidth, nativeHeight } = view.dimsOf(p);
-  const out = { archived_photo: `${stored.base.replace(/\/+$/, '')}/${ledgerKey(bookId, p)}` };
+  const out = { archived_photo: `${stored.base.replace(/\/+$/, '')}/${ledgerKey(bookId, p, stored.layout)}` };
   if (width) out.image_width = width;
   if (height) out.image_height = height;
   if (nativeWidth) out['iiif_info.width'] = nativeWidth;

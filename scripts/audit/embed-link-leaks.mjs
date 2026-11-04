@@ -18,7 +18,8 @@
  * hidden, one with neither) and its 404 page. Extract every root-relative href and every absolute
  * link to our own site, and report each one that is not under /embed/<tenant>/ and not an asset or
  * API path. Search results only exist after hydration, so a real browser runs real queries, waits
- * for the results, and reads the links then; it does the same for the typeahead on the landing page.
+ * for the results, and reads the links then; it does the same for the landing page's box, which is a
+ * typeahead in some rooms and in others (BPH) a filter over the catalogue with no dropdown at all.
  * A search arm that shows no result is NOT RUN, never a pass. Exit 1 on a leak, 2 if a part could not run.
  *
  * READS ONLY (Mongo and Supabase for the sample, public HTTP for the pages).
@@ -109,14 +110,18 @@ async function auditSearch(report, { base, tenantSlug, queries, chrome, timeout 
     await page.goto(`${base}${prefix}`, { waitUntil: 'domcontentloaded', timeout: 90000 });
     const box = page.locator('input[type="text"], input[type="search"]').first();
     if (await box.waitFor({ timeout: 15000 }).then(() => true, () => false)) {
+      const answered = page.waitForResponse(r => r.url().includes('/api/') && new URL(r.url()).searchParams.get('q') === queries[0], { timeout }).catch(() => null);
       await box.click();
       await box.pressSequentially(queries[0], { delay: 40 });
-      const hit = await page.waitForSelector('[role="option"]', { timeout }).catch(() => null);
-      if (hit) {
+      await page.waitForFunction(() => document.querySelector('[role="option"]'), null, { timeout: 3000 }).catch(() => {});
+      if (await page.locator('[role="option"]').count() || await answered) {
         await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
-        report.fetched++;
-        for (const href of await anchorsOf(page)) record(report, tenantSlug, `typeahead "${queries[0]}"`, href);
-      } else report.notRun.push(`typeahead "${queries[0]}": no option appeared`);
+        // A filter has no dropdown: its answer is the rows it leaves on the page.
+        if (await page.locator(`[role="option"], ${RESULT}`).count()) {
+          report.fetched++;
+          for (const href of await anchorsOf(page)) record(report, tenantSlug, `landing box "${queries[0]}"`, href);
+        } else report.notRun.push(`landing box "${queries[0]}": it answered, but no result to read`);
+      } else report.notRun.push(`landing box "${queries[0]}": no option appeared and no search was asked`);
     } else report.notRun.push('typeahead: no search box on the landing page');
     await page.close();
   } finally {
@@ -152,6 +157,10 @@ async function selfTest() {
     document.querySelector('input').addEventListener('input', () => {
       document.getElementById('d').innerHTML = '<a role="option" href="${late}">hit</a>';
     })</script>`;
+  const filter = (row) => `<!doctype html><input type=text><div id=d></div><script>
+    document.querySelector('input').addEventListener('input', async e => {
+      if (e.target.value === 'q') { await fetch('/api/filter?q=q'); document.getElementById('d').innerHTML = '<a href="${row}">row</a>'; }
+    })</script>`;
   const pages = {
     clean: {
       [`${room}/catalog/1`]: `<a href="${room}/catalog">New search</a><a href="/auth/signin">Sign in</a><link rel="canonical" href="https://sourcelibrary.org/x">`,
@@ -163,11 +172,12 @@ async function selfTest() {
     notFound: { [`${room}/nope`]: `<a href="https://sourcelibrary.org/">Home</a>` },
     search: { [`${room}/search`]: lateResults('<a href="/catalog/planted">x</a>') },
     typeahead: { [room]: typeahead('/book/planted') },
+    filter: { [room]: filter('/catalog/planted'), '/api/filter': '{}' },
   };
   const chrome = findChrome();
   if (!chrome) { console.error('self-test needs a browser: pass --chrome PATH'); return 2; }
   let failed = 0;
-  for (const name of ['clean', 'record', 'notFound', 'search', 'typeahead']) {
+  for (const name of ['clean', 'record', 'notFound', 'search', 'typeahead', 'filter']) {
     const served = { ...pages.clean, ...pages[name] };
     const server = createServer((req, res) => {
       const body = served[req.url.split('?')[0]];

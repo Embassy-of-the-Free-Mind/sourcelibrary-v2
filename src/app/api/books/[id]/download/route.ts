@@ -9,6 +9,7 @@ import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
 import { ANON_EMBED_DAILY_BOOK_CAP } from '@/lib/partner-embed-download';
 import { anonymousDownloadCapKey, ANON_EMBED_LIMIT_MESSAGE, isPartnerEmbedDownload } from '@/lib/partner-embed-download-server';
+import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
@@ -2425,6 +2426,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
       anonCapKey = anonymousDownloadCapKey(request.headers);
     }
+
+    // A protected partner's book: agree to its terms first. Ahead of the cap, so being asked costs nothing.
+    const termsRefusal = await partnerTermsRefusal(
+      request,
+      await (await getDb()).collection('books').findOne({ id }, { projection: { id: 1, tenantId: 1 } }) as { id?: string; tenantId?: string | null } | null,
+      { userId, format },
+    );
+    if (termsRefusal) return termsRefusal;
 
     // Get optional edition_id for scholarly format
     const editionId = searchParams.get('edition_id');

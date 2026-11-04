@@ -95,6 +95,13 @@ Route: none — eval only, no production writes
 
 `start` refuses such a brief with exit 8 when the line is missing, or when it is a bare model name. The check is `scripts/workers/brief-route-check.sh <brief>`, and you can run it on a draft brief. Why it is a check: on 10-28 and again on 10-29 an OCR job was dispatched on a model picked by habit. Both times Derek asked "is the router being used?"
 
+**A fourth line for a job that reads pages against their images: `Checks:` (#8069).** It says where the verdicts go, so they outlive the job's scratch folder: a method id whose rows reach `book_checks` (`recordPageVerdicts()` in `scripts/lib/book-checks.mjs`, one method file in `scripts/eval/methods/`), or `none` with a reason. `start` prints a warning when it is missing and never refuses.
+
+```
+Checks: lane-spot-check
+Checks: none — candidate text never written; the verdicts land in the experiment file
+```
+
 **An optional line: `Skill: <name>[, <name>]` (#6553).** A job uses a repo skill only when its brief names it. Across 370 job transcripts on cloudlayer, `review` was the only skill ever invoked. The wrapper puts the named skills into the prompt as an instruction: invoke each one before the step it covers, and count its script checks as part of done. `start` prints a note when a named skill is not in `.claude/skills/`. For a test of two or more arms with a blind judge, name `Skill: paired-arm-judge`.
 
 ## A follow-up job on the same issue: the null-result stop rule (#7869)

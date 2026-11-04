@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: splitPagePaths is defined here and never written to; this file writes no display image (#4406).
 /**
  * Pipeline Orchestrator Worker
  *

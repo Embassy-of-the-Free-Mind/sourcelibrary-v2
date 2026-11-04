@@ -21,10 +21,9 @@
  * NEVER apply to OCR/original images — only to display variants.
  */
 
-import fs from 'fs';
-import path from 'path';
 import crypto from 'crypto';
 import sharp from 'sharp';
+import { LOGO_PNG } from './provenance-logo.mjs';
 
 sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
 
@@ -44,7 +43,6 @@ const STD_FLOOR = 5;
 const STD_SCALE = 12;
 const VISIBLE_RATE = 10;    // ~1 in N pages gets the visible logo
 const LOGO_HEIGHT_FRAC = 0.035;  // discreet but visible corner stamp (Derek, 2026-06-21)
-const LOGO_PATH = path.join(process.cwd(), 'public', 'brand', 'png', 'icon-only--black-on-transparent--512h.png');
 // Period-sympathetic palette (not stark black/white): warm dark-grey mark, cream
 // plate. Some pages get a cream-plate stamp, some a bare dark-grey mark.
 const MARK_RGB = { r: 58, g: 54, b: 48 };       // warm dark grey
@@ -91,19 +89,17 @@ export function shouldShowVisibleLogo(editionId, pageNumber) {
 }
 
 // ---- visible logo ---------------------------------------------------------
-let rawLogo = null;
 /** Multiply a PNG buffer's alpha by `opacity` (via a dest-in tile). */
 async function applyOpacity(pngBuf, opacity) {
   return sharp(pngBuf).composite([{ input: Buffer.from([0, 0, 0, Math.round(255 * opacity)]), raw: { width: 1, height: 1, channels: 4 }, tile: true, blend: 'dest-in' }]).png().toBuffer();
 }
 
 async function visibleLogoComposite(W, H, editionId, pageNumber) {
-  if (!rawLogo) rawLogo = fs.readFileSync(LOGO_PATH);
   const h = Math.max(24, Math.min(200, Math.round(H * LOGO_HEIGHT_FRAC)));
 
   // Dark-grey mark: recolor the black-on-transparent icon by masking a warm-grey
   // fill with the icon's own alpha.
-  const icon = await sharp(rawLogo).resize({ height: h }).ensureAlpha().png().toBuffer();
+  const icon = await sharp(LOGO_PNG).resize({ height: h }).ensureAlpha().png().toBuffer();
   const { width: lw, height: lh } = await sharp(icon).metadata();
   const greyMark = await sharp({ create: { width: lw, height: lh, channels: 4, background: { ...MARK_RGB, alpha: 1 } } })
     .composite([{ input: icon, blend: 'dest-in' }]).png().toBuffer();
@@ -225,7 +221,9 @@ export async function markImage(buffer, { editionId, pageNumber, key, jpegQualit
   // so callers can predict which pages get the logo from the same id they pass.
   const fullEid = String(editionId);
   if (W > 100 && H > 100 && shouldShowVisibleLogo(fullEid, pageNumber)) {
-    composites.push(await visibleLogoComposite(W, H, fullEid, pageNumber));
+    // The logo is the optional layer: a page whose stamp fails keeps its watermark.
+    try { composites.push(await visibleLogoComposite(W, H, fullEid, pageNumber)); }
+    catch (e) { console.warn(`[provenance] visible logo skipped: ${e.message}`); }
   }
 
   let img = sharp(data, { raw: { width: W, height: H, channels } });

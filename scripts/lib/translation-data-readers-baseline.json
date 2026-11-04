@@ -1,6 +1,6 @@
 {
   "_comment": "Files that read pages.translation.data directly (#5942). A list to SHRINK: new readers use getTranslationText() (src/lib/translation-text.ts, scripts/lib/translation-text.mjs). Regenerate with node scripts/audit/translation-data-readers.mjs --write-baseline.",
-  "count": 359,
+  "count": 360,
   "files": [
     "scripts/analysis/build-marcianus-overlay.mjs",
     "scripts/analysis/collect-postmortem-stats.mjs",
@@ -102,6 +102,7 @@
     "scripts/ingest-index-from-ocr.mjs",
     "scripts/kdp/test-bundle.ts",
     "scripts/learn/build-maya-items.mjs",
+    "scripts/lib/book-checks.mjs",
     "scripts/lib/embed-book-pages.mjs",
     "scripts/lib/english-original-text.mjs",
     "scripts/lib/english-translation-check.mjs",
@@ -189,6 +190,7 @@
     "scripts/maintenance/seam-repair-6742/lean.mjs",
     "scripts/maintenance/seam-repair-6742/score-rules.mjs",
     "scripts/maintenance/seam-repair-6742/seam-repair.mjs",
+    "scripts/maintenance/strip-prompt-mismatch-warnings.mjs",
     "scripts/maintenance/strip-proquest-stamp.mjs",
     "scripts/maintenance/tengyur-cli-6361/apply.mjs",
     "scripts/maintenance/tengyur-cli-6361/convergent/draw.mjs",
@@ -347,6 +349,7 @@
     "src/lib/pdf-export.ts",
     "src/lib/provenance.ts",
     "src/lib/quote-text.ts",
+    "src/lib/reader-panes.ts",
     "src/lib/reader-strings.ts",
     "src/lib/reader-text-layer.ts",
     "src/lib/search/librarian-search.ts",
