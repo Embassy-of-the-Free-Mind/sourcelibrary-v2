@@ -38,6 +38,7 @@ import { pathToFileURL } from 'node:url';
 import { MongoClient, ObjectId } from 'mongodb';
 import { words } from '../route-judge-6740/defect-rate.mjs';
 import { HERE, RESULTS, SEED } from './lib.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 export const LANE = 'confidence-7866';
 export const RUN = 'confidence-validation-7866';
@@ -122,7 +123,7 @@ async function load() {
   await c.connect();
   const db = c.db('bookstore');
   const recs = (await db.collection('lane_judge_verdicts')
-    .find({ lane: LANE, run_id: RUN, kind: 'item' }).toArray()).filter((r) => r.verdict);
+    .find(verdictQuery({ lane: LANE, run_id: RUN, kind: 'item' })).toArray()).filter((r) => r.verdict);
   // Word counts from the stored text. A page whose _id was re-minted is found by (book, page number).
   const texts = new Map();
   for (let i = 0; i < recs.length; i += 100) {

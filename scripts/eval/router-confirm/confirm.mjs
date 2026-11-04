@@ -57,6 +57,7 @@ import { scriptClass } from '../lane-judge-sampler.mjs';
 import { judgeAbsolute, paceCheck, wrongText, stripFurniture } from '../correction-pass-7818/lib.mjs';
 import { makeRng, resetSeed, bootstrapCI, binomTwoSided } from '../lib/paired-stats.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../../..');
@@ -175,7 +176,8 @@ async function exclusions(db, base) {
   // an id may be a page's or a book's: resolve pages to their books, and keep every id as a possible book id
   for (let i = 0; i < all.length; i += 1000) for (const p of await db.collection('pages').find({ id: { $in: all.slice(i, i + 1000) } }, { projection: { book_id: 1 } }).toArray()) books.add(p.book_id);
   for (const x of all) books.add(x);
-  for (const b of await db.collection('lane_judge_verdicts').distinct('book_id')) books.add(b);
+  // all origins: books to keep out of a fresh confirmation draw; a test's books count as seen.
+  for (const b of await db.collection('lane_judge_verdicts').distinct('book_id', verdictQuery({}, { tests: true }))) books.add(b);
   return { books, files: Object.fromEntries(Object.entries(per).filter(([, n]) => n)), dirs: src.dirs.map((d) => path.relative(ROOT, d)), ids: ids.size, with_lane_judge: books.size };
 }
 
