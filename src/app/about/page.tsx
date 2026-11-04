@@ -275,7 +275,7 @@ export default async function AboutPage() {
                   {GOALS.map(([t, d], i) => (
                     <li key={t}>
                       <Reveal delay={(i % 2) * 120} className="grid grid-cols-[3rem_minmax(0,1fr)] md:grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4">
-                        <span className="font-serif text-4xl md:text-5xl text-accent-rust leading-none tabular-nums">{i + 1}</span>
+                        <span className="font-serif text-4xl md:text-5xl text-muted leading-none tabular-nums">{i + 1}</span>
                         <div>
                           <h3 className="font-serif text-2xl md:text-3xl text-primary leading-snug">{t}</h3>
                           <p className={`mt-3 ${body}`}>{d}</p>
@@ -301,7 +301,7 @@ export default async function AboutPage() {
                     <p className={`mt-5 ${body}`}>Ficino spent much of his life putting Plato and Plotinus into Latin, and his translations helped shape the Renaissance.</p>
                   </Reveal>
                   <Reveal delay={150} className="pt-8 md:pl-12 pb-10 border-t md:border-t-0 border-border-medium">
-                    <p className="text-sm font-semibold text-accent-rust">Now</p>
+                    <p className="text-sm font-semibold text-muted">Now</p>
                     <p className="mt-4 font-serif text-3xl md:text-4xl text-primary leading-tight">Machines that can read and translate whole libraries.</p>
                     <p className={`mt-5 ${body}`}>A careful first pass at every page, from every tradition, with the original always beside the English so people can check and improve it.</p>
                   </Reveal>
@@ -579,7 +579,7 @@ export default async function AboutPage() {
             <ul className="divide-y divide-border-light border-y border-border-light">
               {[['/', 'Browse the library'] as [string, string], ...MORE_LINKS].map(([href, label]) => (
                 <li key={href}>
-                  <Link href={href} className="flex justify-between py-3.5 text-primary hover:text-accent-rust transition-colors">
+                  <Link href={href} className="flex justify-between py-3.5 text-primary hover:underline underline-offset-4 transition-colors">
                     {label} <span aria-hidden="true">→</span>
                   </Link>
                 </li>
