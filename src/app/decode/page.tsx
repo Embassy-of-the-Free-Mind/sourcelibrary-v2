@@ -31,7 +31,9 @@ export default function DecodePage() {
           <h2 className="text-2xl text-primary">What a mark says</h2>
           <p>
             Every mark carries a short edition code: the first eight characters of the book&rsquo;s id. About one
-            passage in six also carries a written note with the book&rsquo;s address and licence.
+            passage in six also carries a written note with the book&rsquo;s address and licence. In a few books the
+            note is a riddle instead, part of{' '}
+            <Link href="/hunt" className="text-accent-rust hover:underline">a hunt through the library</Link>.
           </p>
           <p>
             Each mark is signed with a key only we hold, and this page checks the signature. A mark that verifies was
