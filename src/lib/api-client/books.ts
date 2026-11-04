@@ -292,9 +292,11 @@ export const books = {
       params.append('terms', terms);
     }
 
-
+    // DownloadButton reads 401/402/403/429 and the body itself: the terms
+    // agreement arrives as a 403, and a throw here would hide it (#8098).
     return await streamRequest(getBookUrl(`/${id}/download?${params.toString()}`),
-      { method: 'GET' }
+      { method: 'GET' },
+      { passErrors: true },
     );
   },
 
