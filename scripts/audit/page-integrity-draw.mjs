@@ -28,7 +28,8 @@
  *
  * READ-ONLY on the corpus: this writes files under --out only, plus a branch with --land. It contains nothing: a
  * monthly row's positives are the judge's until someone opens the images (.claude/docs/invariants/containment-on-finding.md).
- * Stops on a usage limit (exit 3) and pages ntfy once per run directory. Exit 0 finished, 2 could not run.
+ * Stops on a usage limit or the cron's timeout (exit 3) and pages ntfy once per run directory. Exit 0 finished, 2 could
+ * not run, or judged too few pages to land: a dead login fails every call, and its n=0 must not become a clean-looking row.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,6 +50,8 @@ const NTFY = process.env.PAGE_INTEGRITY_TOPIC || 'https://ntfy.sh/sourcelibrary-
 const SERIES = 'scripts/eval/experiments/_series-monthly-page-integrity.md';
 const TEXT_HEAD = 4500, TEXT_TAIL = 1500;
 const WEEKLY_HEADROOM = 90; // a run this size stops short of the wall so the box's other jobs keep their week
+const MIN_JUDGED_SHARE = 0.9;
+let runDir = null; // for the page when main() throws
 
 // Labels are the pre-registration (scripts/eval/experiments/2026-11-04-page-integrity-draw-8040.md).
 export const LABELS = {
@@ -377,7 +380,6 @@ async function judgeItems(items, { out, file, conc, tag, onStop }) {
 
 // ── report ──
 function rate(k, n) { const [lo, hi] = wilson(k, n); return { k, n, pct: n ? +(100 * k / n).toFixed(1) : null, lo: +(100 * lo).toFixed(1), hi: +(100 * hi).toFixed(1) }; }
-const num = (x) => { const m = String(x ?? '').match(/^\s*(\d+)\s*$/); return m ? +m[1] : null; };
 
 /** Every rate of the report, from the sample rows and the verdicts. Pure, so a test can pin the denominators. */
 export function computeReport(pages, verdicts, controls, rejudged) {
@@ -445,6 +447,8 @@ export function computeReport(pages, verdicts, controls, rejudged) {
     positives: judged.filter(ANY).map((p) => ({ slot: p.slot, book_id: p.book_id, frame: p.frame, group: p.group, provider: p.provider, ocr_engine: p.ocr_engine, translation_engine: p.translation_engine, flags: flagsOf(v.get(p.slot)), repeated_on_rejudge: reMap.has(p.slot) ? flagsOf(reMap.get(p.slot)) : null, evidence: { text: v.get(p.slot).text_leaf.evidence, english: v.get(p.slot).english.evidence, order: v.get(p.slot).order.evidence }, url: `https://sourcelibrary.org/book/${p.book_id}/page-number/${p.frame}`, coverage: p.coverage, verdict_number: v.get(p.slot).number })),
   };
 }
+
+export const tooThinToLand = (rep) => rep.n_judged < rep.n_drawn * MIN_JUDGED_SHARE;
 
 const pct = (r) => (r.n ? `${r.k}/${r.n} (${r.pct}%, ${r.lo}–${r.hi})` : '—');
 function renderReport(rep, meta) {
@@ -518,6 +522,8 @@ async function main() {
   const out = path.resolve(arg('out', `${process.env.JOB_SCRATCH || '/tmp'}/page-integrity-${seed}`));
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   fs.mkdirSync(out, { recursive: true });
+  runDir = out;
+  process.once('SIGTERM', () => { pageOnce(out, 'page integrity draw stopped', `Killed, probably the cron's timeout. Re-run with --out ${out} --seed ${seed} to resume. #${ISSUE}`).finally(() => process.exit(3)); });
   if (!spawnSync('claude', ['--version'], { encoding: 'utf8' }).stdout) { console.error('claude CLI not on PATH'); process.exit(2); }
   if (!process.env.MONGODB_URI) { console.error('MONGODB_URI unset: run with node --env-file=.env.production.local'); process.exit(2); }
 
@@ -563,15 +569,23 @@ async function main() {
   fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify({ ...meta, ...rep }, null, 1));
   fs.writeFileSync(path.join(out, 'report.md'), renderReport(rep, meta));
   console.error(fs.readFileSync(path.join(out, 'report.md'), 'utf8'));
+  if (tooThinToLand(rep)) {
+    await pageOnce(out, 'page integrity draw too thin', `${meta.date}: judged ${rep.n_judged} of ${rep.n_drawn}, not landed. Failed calls: ${JSON.stringify(rep.not_judged.slice(0, 3))}. Re-run with --out ${out} --seed ${seed} to resume. #${ISSUE}`);
+    console.error(`NOT LANDED: judged ${rep.n_judged} of ${rep.n_drawn}`);
+    process.exit(2);
+  }
   if (has('land-dry')) land(out, meta, rep, root, { base: arg('land-base', 'HEAD'), dry: true });
   if (has('land')) {
-    try { land(out, meta, rep, root); } catch (e) {
-      await pageOnce(out, 'page integrity draw not landed', `${meta.date}: the run finished but did not land: ${e.message}`.slice(0, 500));
-      throw e;
-    }
+    land(out, meta, rep, root);
     const t = rep.defects;
     await pageOnce(out, 'page integrity draw done', `${meta.date}, n=${rep.n_judged}: text off-leaf ${t["text: a neighbour's leaf"].k + t['text: other book or elsewhere'].k}, English off-text ${t['english: renders a neighbour'].k + t['english: invents'].k}. Judge missed ${rep.judge.miss_rate.k}/${rep.judge.miss_rate.n} controls. #${ISSUE}`);
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) await main();
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await main().catch(async (e) => {
+    console.error(e);
+    if (runDir) await pageOnce(runDir, 'page integrity draw failed', `${e.message} #${ISSUE}`.slice(0, 500));
+    process.exit(2);
+  });
+}

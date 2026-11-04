@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error untyped script
-import { flagsOf, computeReport, plantControl, parseStream, parseVerdict, languageGroup, CAUGHT } from '../../scripts/audit/page-integrity-draw.mjs';
+import { flagsOf, computeReport, plantControl, parseStream, parseVerdict, languageGroup, CAUGHT, tooThinToLand } from '../../scripts/audit/page-integrity-draw.mjs';
 
 const clean = { text_leaf: { label: 'this_leaf' }, english: { label: 'this_text' }, number: { label: 'disagrees', label_agrees: 'agrees' }, order: { label: 'forward' }, split: { label: 'single_leaf' }, repeat: 'none' };
 const page = (slot: number, over = {}) => ({ slot, book_id: `b${slot}`, frame: 5, group: 'Latin', has_text: true, has_english: true, stored_printed_label: '3', coverage: {}, ...over });
@@ -23,6 +23,12 @@ describe('page-integrity-draw', () => {
     expect(rep.defects['text: empty where the leaf has text']).toMatchObject({ k: 1, n: 3 });
     expect(rep.defects['english: invents'].n).toBe(1);
     expect(rep.positives.map((p: { slot: number }) => p.slot)).toEqual([0]);
+  });
+
+  it('a run that judged too few pages does not land', () => {
+    expect(tooThinToLand({ n_judged: 0, n_drawn: 200 })).toBe(true);
+    expect(tooThinToLand({ n_judged: 179, n_drawn: 200 })).toBe(true);
+    expect(tooThinToLand({ n_judged: 180, n_drawn: 200 })).toBe(false);
   });
 
   it('counts a control only by its own label, and marks a class under the bar', () => {
