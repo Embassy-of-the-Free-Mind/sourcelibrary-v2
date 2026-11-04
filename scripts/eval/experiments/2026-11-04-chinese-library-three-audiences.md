@@ -1,3 +1,20 @@
+---
+stage: metadata
+measure: none
+languages: [zh, lzh]
+scripts: [Hani]
+canons: []
+n_books: 5
+n_pages: 13
+verdict: "A walkthrough of the Chinese library as a Chinese reader, an English reader and an MCP user, on live production, 2026-11-04. Not a quality rate: the 13 pages opened by eye are hand-chosen showcase books. Findings: simplified queries reached the top 5 for 13 of 18 title pairs against 18 of 18 traditional; Julien's French 道德經 led the Chinese results, labelled Chinese; `check_duplicate` fails its positive controls on Han titles. 性命圭旨 p.173-178 were contained, each pair holding the other's text."
+status: informational
+decision: "Fixes shipped or filed under #7537 and #8035; `check_duplicate` filed as #8084."
+feeds: [surface]
+supersedes: []
+superseded_by: null
+issue: [8035, 7537, 8084]
+---
+
 ## 2026-11-04 · The Chinese library as a Chinese reader, an English reader and an MCP user meet it (#8035, #7537)
 
 PRIOR ART: `2026-11-03-chinese-translation-strata-5274.md` measures translation quality on a stratified
