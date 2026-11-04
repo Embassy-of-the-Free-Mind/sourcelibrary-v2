@@ -1,0 +1,95 @@
+{
+ "_about": "Hand-placed: for a history that has an arc, the senses of the concept as lanes, and in each lane the claims that attest it. Sense assignments follow the history's own arc essay (sympathy: ideas/01-the-arc.md, its 'Where sympathy was located' table). `date` is the date of the text or thinker the claim cites, not of the edition quoted; negative is BCE; `approx` prints as c. Claim text, status and link are resolved from <c>-claims.json at build time, so nothing here restates a claim; tests/unit/history-lanes.test.ts fails if a re-import drops one. `label` prints a name beside the dot: true for `who`, or a shorter string.",
+ "concepts": {
+  "sympathy": {
+   "title": "Where sympathy was located",
+   "finding": "New senses appear in date order, but this is not a story of one sense replacing the last.",
+   "lanes": [
+    { "key": "body", "label": "The body", "gloss": "organ suffering with organ, then the nerves, then the brain", "dots": [
+     { "c": "harmony", "id": "anc-problemata-vii-things-from-sympathy", "who": "Problemata VII, a composite text, this date or later", "date": -300, "approx": true, "label": "Problemata VII" },
+     { "c": "sympathy", "id": "anc-cicero-div-video-sympathian-dream-body", "who": "Cicero", "date": -44 },
+     { "c": "sympathy", "id": "anc-galen-frenzy-brain-by-sympathy-not-idiopathy", "who": "Galen", "date": 180, "approx": true, "label": true },
+     { "c": "aliveness", "id": "vit-whytt-1765-sentient-sympathetic-power", "who": "Whytt", "date": 1765, "label": true },
+     { "c": "sympathy", "id": "feel-gallese-goldman-1998-mirror-simulation", "who": "Gallese and Goldman", "date": 1998 },
+     { "c": "sympathy", "id": "emp-rizzolatti-1999-resonance-behaviors", "who": "Rizzolatti", "date": 1999, "label": true },
+     { "c": "sympathy", "id": "emp-lamm-2011-pain-empathy-meta", "who": "Lamm, Decety and Singer", "date": 2011 }
+    ] },
+    { "key": "cosmos", "label": "The cosmos", "gloss": "one body or one living being, held together", "dots": [
+     { "c": "harmony", "id": "anc-chrysippus-krasis-pneuma-whole-sympathetic-with-itself", "who": "Chrysippus, as reported by Alexander of Aphrodisias", "date": -240, "approx": true, "label": "Chrysippus" },
+     { "c": "harmony", "id": "anc-sextus-cosmos-unified-body-finger-cut", "who": "Sextus Empiricus, reporting the Stoics", "date": 200, "approx": true },
+     { "c": "aliveness", "id": "anc-cleomedes-sympathy-needs-one-pneuma", "who": "Cleomedes", "date": 200, "approx": true },
+     { "c": "sympathy", "id": "anc-plotinus-iv4-32-sympathy-by-likeness-at-distance", "who": "Plotinus", "date": 265, "approx": true, "label": true },
+     { "c": "magic", "id": "lat-iamblichus-sacrifice-sympathy-subordinate", "who": "Iamblichus", "date": 300, "approx": true },
+     { "c": "harmony", "id": "nm-porta-chain-cord-touched-trembles-consent-dissent", "who": "Della Porta", "date": 1589, "label": true },
+     { "c": "sympathy", "id": "em-mersenne-world-soul-does-not-exist", "who": "Mersenne, attacking the world soul", "date": 1623 },
+     { "c": "aliveness", "id": "vit-edge-animal-magnetism-descends-sympathy", "who": "Mesmer, as read by Manly P. Hall", "date": 1779, "approx": true, "label": "Mesmer" },
+     { "c": "harmony", "id": "soc-townshend-mesmeric-sympathetic-vibration", "who": "Townshend", "date": 1840 },
+     { "c": "magic", "id": "mod-evans-sympathy-proclus-magic", "who": "Evans", "date": 1886, "label": true }
+    ] },
+    { "key": "things", "label": "Things", "gloss": "hidden powers of stones, plants and animals; a cure at a distance", "dots": [
+     { "c": "harmony", "id": "fic-proclus-sacrifice-heliotrope-sings-to-sun-sympathy", "who": "Proclus", "date": 460, "approx": true, "label": true },
+     { "c": "harmony", "id": "mus-barocci50-wolf-string-drum", "who": "A Byzantine list on the wolf", "date": 950, "approx": true, "label": true },
+     { "c": "magic", "id": "ren-agrippa-sympathy-ladder", "who": "Agrippa, De vanitate", "date": 1526, "approx": true, "label": "Agrippa" },
+     { "c": "sympathy", "id": "em-fracastoro-sympathy-hidden-agreement", "who": "Fracastoro", "date": 1546 },
+     { "c": "magic", "id": "nat-porta-sympathy", "who": "Della Porta", "date": 1589 },
+     { "c": "magic", "id": "nat-libavius-god-demons-nature", "who": "Libavius", "date": 1594 },
+     { "c": "magic", "id": "nat-goclenius-question", "who": "Goclenius", "date": 1613 },
+     { "c": "sympathy", "id": "em-helmont-dispute-natural-or-satanic", "who": "Van Helmont", "date": 1621, "label": true },
+     { "c": "magic", "id": "nat-foster-no-sympathy", "who": "Foster", "date": 1631 },
+     { "c": "magic", "id": "nat-fludd-question", "who": "Fludd", "date": 1638 },
+     { "c": "sympathy", "id": "em-descartes-occult-effects-by-particles", "who": "Descartes", "date": 1644 },
+     { "c": "sympathy", "id": "em-digby-atoms-carried-by-light", "who": "Digby", "date": 1658 },
+     { "c": "sympathy", "id": "em-alberti-occult-quality-asylum", "who": "Alberti", "date": 1661 },
+     { "c": "sympathy", "id": "em-boyle-amity-enmity-only-in-minds", "who": "Boyle", "date": 1675, "label": true },
+     { "c": "magic", "id": "anth-frazer-sympathetic-earliest", "who": "Frazer", "date": 1890, "label": true },
+     { "c": "magic", "id": "cog-rozin-laws-modern-abundant", "who": "Rozin and Nemeroff", "date": 2002, "label": true }
+    ] },
+    { "key": "physics", "label": "The string, the clock, the circuit", "gloss": "a mechanism first, and only later the word resonance", "dots": [
+     { "c": "sympathy", "id": "res-galileo-1638-no-sympathy-word", "who": "Galileo", "date": 1638, "label": true },
+     { "c": "harmony", "id": "phys-huygens-1665-sympathie-consonance", "who": "Huygens", "date": 1665, "label": true },
+     { "c": "sympathy", "id": "res-kircher-1673-sympathetic-sounds", "who": "Kircher", "date": 1673 },
+     { "c": "sympathy", "id": "res-helmholtz-mitschwingen-term", "who": "Helmholtz", "date": 1865 },
+     { "c": "sympathy", "id": "res-tyndall-sympathetic-vibrations", "who": "Tyndall", "date": 1867, "label": true },
+     { "c": "sympathy", "id": "res-rayleigh-resonance-general-term", "who": "Rayleigh", "date": 1894, "label": true },
+     { "c": "sympathy", "id": "res-tesla-1894-electrical-resonanz", "who": "Tesla, in the German edition", "date": 1894 }
+    ] },
+    { "key": "feelings", "label": "The feelings", "gloss": "a moral sentiment between people", "dots": [
+     { "c": "sympathy", "id": "mor-butler-1726-so-much-one-body", "who": "Butler", "date": 1726, "label": true },
+     { "c": "sympathy", "id": "mor-hutcheson-1728-publick-sense", "who": "Hutcheson", "date": 1728 },
+     { "c": "sympathy", "id": "feel-hume-1739-sympathy-communication", "who": "Hume", "date": 1739 },
+     { "c": "sympathy", "id": "mor-rousseau-1755-pitie-precedes-reflection", "who": "Rousseau", "date": 1755 },
+     { "c": "sympathy", "id": "feel-smith-1759-changing-places-in-fancy", "who": "Smith", "date": 1759, "label": true },
+     { "c": "sympathy", "id": "mor-schopenhauer-1840-tat-tvam-asi", "who": "Schopenhauer", "date": 1840, "label": true },
+     { "c": "sympathy", "id": "mor-crit-nietzsche-1887-overvaluation-is-new", "who": "Nietzsche", "date": 1887, "label": true }
+    ] },
+    { "key": "society", "label": "Society", "gloss": "people, voices and the world answering each other", "dots": [
+     { "c": "sympathy", "id": "res-herder-1785-human-string-instrument", "who": "Herder", "date": 1785, "label": true },
+     { "c": "harmony", "id": "mus-spencer-1858-cadences-chief-media-of-sympathy", "who": "Spencer", "date": 1857, "label": true },
+     { "c": "sympathy", "id": "res-rosa-resonance-own-voice", "who": "Rosa, in a 2019 interview on his 2016 book", "date": 2019, "label": "Rosa" }
+    ] },
+    { "key": "empathy", "label": "Projection and empathy", "gloss": "feeling into forms, then knowing other minds", "dots": [
+     { "c": "sympathy", "id": "feel-vischer-1873-objective-einfuehlung", "who": "Vischer", "date": 1873, "label": true },
+     { "c": "sympathy", "id": "emp-lipps-1903-einfuehlung-third-knowledge", "who": "Lipps", "date": 1903 },
+     { "c": "sympathy", "id": "feel-titchener-1909-coins-empathy", "who": "Titchener", "date": 1909, "label": true },
+     { "c": "sympathy", "id": "emp-lee-1912-empathy-analogous-sympathy", "who": "Vernon Lee", "date": 1912 },
+     { "c": "sympathy", "id": "feel-scheler-1913-four-forms", "who": "Scheler", "date": 1913 },
+     { "c": "sympathy", "id": "mor-stein-1917-einfuehlung-foreign-consciousness", "who": "Stein", "date": 1917 },
+     { "c": "sympathy", "id": "emp-southard-1918-empathic-index", "who": "Southard", "date": 1918 },
+     { "c": "sympathy", "id": "emp-crit-batson-2009-eight-phenomena", "who": "Batson", "date": 2009 },
+     { "c": "sympathy", "id": "emp-crit-prinz-2011-against-empathy", "who": "Prinz", "date": 2011 },
+     { "c": "sympathy", "id": "emp-crit-cuff-2016-43-definitions", "who": "Cuff and colleagues", "date": 2016 },
+     { "c": "sympathy", "id": "feel-crit-bloom-2017-against-empathy", "who": "Bloom", "date": 2017, "label": true }
+    ] },
+    { "key": "ganying", "apart": true, "label": "Ganying 感應", "gloss": "a separate history, which does not pass through these stages", "dots": [
+     { "c": "sympathy", "id": "ch-huainanzi-wulei-xiangying-beyond-knowing", "who": "Huainanzi", "date": -139, "label": true },
+     { "c": "sympathy", "id": "ch-cfl-body-answers-weather", "who": "Chunqiu fanlu, attributed to Dong Zhongshu", "date": -130, "approx": true },
+     { "c": "sympathy", "id": "ch-cfl-fine-things-summon-fine-kinds", "who": "Chunqiu fanlu, attributed to Dong Zhongshu", "date": -130, "approx": true },
+     { "c": "sympathy", "id": "ch-crit-wangchong-punishment-cold", "who": "Wang Chong", "date": 80, "approx": true, "label": true },
+     { "c": "sympathy", "id": "ch-chenghao-only-ganying", "who": "Cheng Hao, in the Jinsilu", "date": 1080, "approx": true },
+     { "c": "magic", "id": "w4mus-shenkuo-rejects-ganzhao", "who": "Shen Kuo", "date": 1088, "label": true },
+     { "c": "sympathy", "id": "ch-zhuxi-ganying-pattern-of-all-change", "who": "Zhu Xi, in the Zhuzi yulei", "date": 1190, "approx": true, "label": "Zhu Xi" }
+    ] }
+   ]
+  }
+ }
+}

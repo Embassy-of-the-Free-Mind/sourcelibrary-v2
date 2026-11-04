@@ -4,11 +4,12 @@ import { notFound } from 'next/navigation';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PageFigure from '@/components/articles/PageFigure';
 import {
-  HISTORIES, conceptBySlug, fmt, qualityStatement, loadEssays, pickFor, keyQuotes, sections, essayLine, isStub,
+  HISTORIES, conceptBySlug, fmt, qualityStatement, loadEssays, loadLanes, pickFor, keyQuotes, sections, essayLine, isStub,
   claimsHref, domainLabel, readerHref,
 } from '../histories';
 import Markdown from '../Markdown';
 import Quote from '../Quote';
+import SenseLanes from '../SenseLanes';
 
 // Static (#7623). dynamicParams=false makes an unknown concept a routing-level
 // 404, not a notFound() under /explore's loading.tsx (a soft 200, rendering-and-seo.md).
@@ -52,8 +53,9 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
   const essays = await loadEssays(c.slug);
   const opening = essays.find((e) => e.slug === pick.opening.essay) ?? essays[0];
   const sec = sections(opening.md).find((s) => s.heading === pick.opening.section) ?? sections(opening.md)[0];
-  const others = essays.filter((e) => e !== opening);
+  const others = essays.filter((e) => e !== opening && !isStub(e.md));
   const key = keyQuotes(c.slug);
+  const chart = await loadLanes(c.slug);
   const essayHref = (slug: string) => `/explore/histories/${c.slug}/${slug}`;
   return (
     <ContentPageLayout
@@ -77,6 +79,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
             <PageFigure src={pick.image.src} alt={pick.image.alt} href={readerHref(pick.image.book, pick.image.page)} source={pick.image.caption} linkToPage />
           </div>
           <p className="text-lg leading-relaxed mb-8 font-body" style={{ color: 'var(--text-secondary)' }}>{c.question}</p>
+          {chart && <div className="mb-12"><SenseLanes data={chart} /></div>}
           <H2><Link href={essayHref(opening.slug)}>{opening.title}</Link></H2>
           {sec.heading && <h3 className="font-serif text-xl mb-3" style={{ color: 'var(--text-primary)' }}>{sec.heading}</h3>}
           <Markdown md={excerpt(sec.md)} />
@@ -92,9 +95,7 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
               {others.map((e) => (
                 <li key={e.slug}>
                   <Link href={essayHref(e.slug)} className="font-serif text-lg">{e.title}</Link>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                    {isStub(e.md) ? <>Not yet written. {essayLine(e.md)}</> : essayLine(e.md)}
-                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{essayLine(e.md)}</p>
                 </li>
               ))}
             </ul>
