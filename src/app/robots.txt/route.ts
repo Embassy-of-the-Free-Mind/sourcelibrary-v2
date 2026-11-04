@@ -54,9 +54,10 @@ const POLICY_PREAMBLE = `# As a condition of accessing this website, you agree t
 #
 # ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
 #
-# AI training is licensable: a standing rate card and standard terms are at ${BASE_URL}/licensing (see also ${BASE_URL}/llms.txt).
-#
-# Books from the Embassy of the Free Mind's collection carry further terms: ${PARTNER_TERMS_URL}`;
+# AI training is licensable: a standing rate card and standard terms are at ${BASE_URL}/licensing (see also ${BASE_URL}/llms.txt).`;
+
+// Our own notice, outside the verbatim preamble above (#8098).
+const PARTNER_TERMS_NOTE = `# Books from the Embassy of the Free Mind's collection carry further terms: ${PARTNER_TERMS_URL}`;
 
 // Endpoints a reserved AI crawler MAY still reach: the structured API, the
 // partnership/licensing docs, and the articles. Everything else (full text) is reserved.
@@ -169,6 +170,7 @@ export const dynamic = 'force-static';
 export function GET(): Response {
   const body = [
     POLICY_PREAMBLE,
+    PARTNER_TERMS_NOTE,
     ...GROUPS.map(renderGroup),
     // RSL (Really Simple Licensing, rslstandard.org): machine-readable license
     // terms for automated agents — same policy as the Content-Signal lines and
