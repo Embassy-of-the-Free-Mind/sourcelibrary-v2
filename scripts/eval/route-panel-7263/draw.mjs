@@ -47,7 +47,7 @@ async function evidenceBooks(db) {
 async function pageOf(db, b) {
   const rows0 = await db.collection('pages').aggregate([
     { $match: { book_id: b.id, ...pageMatch } },
-    { $project: { _id: 0, id: 1, page_number: 1, n: { $strLenCP: '$ocr.data' }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } },
+    { $project: { _id: 0, id: 1, page_number: 1, n: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] }, hw: { $regexMatch: { input: '$ocr.data', regex: '<script>\\s*handwritten', options: 'i' } },
       fresh: cell.task === 'ocr' ? { $literal: true } : { $gte: [toDate('$translation.updated_at'), toDate('$ocr.updated_at')] } } },
     { $match: { n: { $gte: 300 }, hw: false, fresh: true } }, { $sort: { page_number: 1 } }]).toArray();
   if (!rows0.length) return { skip: 'no page waiting' };
