@@ -1112,6 +1112,18 @@ export const posts: BlogPost[] = [
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
   },
   {
+    slug: 'alchemical-process',
+    title: 'Is Source Library an Alchemical Process? Testing the Frame',
+    subtitle: 'Which alchemy the comparison borrows, which steps hold up against our measurements, and three places it breaks.',
+    summary:
+      'We set the steps of alchemy against what happens to a page here. Where the comparison holds, with measurements, and three places it fails.',
+    date: '4 November 2026',
+    readTime: '20 min read',
+    kind: 'research',
+    image: '/articles/alchemical-process/emblem-iii.jpg',
+    imageAlt: 'Engraving from Atalanta fugiens (1618): a woman pours steaming water from a jug into a large wooden tub, with a fire behind her and laundry on the ground.',
+  },
+  {
     slug: 'how-many-translated-into-english',
     title: 'How Many Old Books Have Been Translated into English?',
     subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
