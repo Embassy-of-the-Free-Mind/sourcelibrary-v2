@@ -26,6 +26,8 @@ export interface LocalizedBookFields {
   summary?: string;
   /** Chapter titles in this language, aligned by index with books.chapters[]. */
   chapters?: string[];
+  /** The byline in this language, where the catalogue's differs (a romanised Chinese author on /zh). Display only. */
+  author?: string;
 }
 
 export interface LocalizedCollectionFields {
@@ -53,6 +55,15 @@ export function localizedTitle(book: BookLike, lang: Locale): string {
     return lang === 'zh' ? chineseShownTitle(original) : original;
   }
   return book.display_title || book.title || '';
+}
+
+/** The byline to SHOW for `lang`: its own form if one was written, else the catalogue's. */
+export function localizedAuthor(book: { author?: string | null; localized?: LocalizedBookMap | null }, lang: Locale): string | undefined {
+  if (lang !== 'en') {
+    const own = book.localized?.[lang]?.author;
+    if (own) return own;
+  }
+  return book.author || undefined;
 }
 
 const HAN = /[\u3400-\u9fff\uf900-\ufaff]/;
