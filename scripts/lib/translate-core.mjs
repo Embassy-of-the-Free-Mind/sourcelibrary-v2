@@ -480,9 +480,14 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
   if (applied && r.notes.length) prompt += `\n\n**At the page break:** ${r.notes.join(' ')}`;
   if (applied && r.lookahead) prompt += `\n\n**The next page opens (source, for context only; do NOT translate it, the next page carries it):**\n${r.lookahead}`;
 
-  prompt += continuityContext(previousTranslation, { english });
+  // #5274: a nearly empty leaf (a plate, a caption, a title) does not get the leaf before's English. With it, the
+  // model rendered that English as this leaf's: on 695 Feb-Mar 2026 leaves written 0-10 min after n-1, 470 carried
+  // n-1's text (2/22 written before n-1); the own-leaf repair passed 28/30 by blind Opus. The same line as isRecited.
+  // A short page whose break device fired (a word split across the leaves) is running text: it keeps the context.
+  const nearlyEmpty = sourceWeight(ocrText) < RECITED_SOURCE_MAX && !(applied && r.fired);
+  if (!nearlyEmpty) prompt += continuityContext(previousTranslation, { english });
 
-  return { prompt, promptRef, isEnglish: english, pageBreak: r ? { ...r.meta, fired: r.fired, applied } : null };
+  return { prompt, promptRef, isEnglish: english, context_dropped: nearlyEmpty && !!previousTranslation, pageBreak: r ? { ...r.meta, fired: r.fired, applied } : null };
 }
 
 /**
@@ -535,7 +540,9 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   const applied = !!pageBreak && (!pageBreak.scoped || per.some((r) => r.fired));
 
   let prompt = header;
-  prompt += continuityContext(previousTranslation, { english: isEnglish });
+  // #5274: a one-page call on a nearly empty leaf gets no previous English, as in buildTranslationPrompt
+  const oneEmpty = pages.length === 1 && sourceWeight(ocrOf(pages[0])) < RECITED_SOURCE_MAX && !(applied && per[0]?.fired);
+  if (!oneEmpty) prompt += continuityContext(previousTranslation, { english: isEnglish });
   if (applied && pageBreak.rule && (!pageBreak.scoped || per.some((r) => r.deviceFired))) prompt += `\n\n${PAGE_BREAK_RULE}`;
   if (applied && per.some((r) => r.meta.leafSeams)) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
@@ -799,8 +806,17 @@ export const COLLAPSE_ABS_CAP = 800;
  * marker clause never fired on anything the current prompt produces (#5363).
  */
 export const CONTINUITY_MARKER_RE = /continue[sd]?\s+from\s+(?:the\s+)?previous\s+page/i;
+/**
+ * The `<detected-images>` block is the picture detector's JSON (bboxes, gallery scores, a museum
+ * rationale), not words printed on the leaf. Counted as source it made a marbled endpaper's OCR
+ * "446 characters", so a correct one-note English read as a collapse, and it lifted picture leaves
+ * over RECITED_SOURCE_MAX so a plate carrying its neighbour's English was not seen as recited
+ * (#5274: the context-bleed pages are mostly such leaves).
+ */
+const DETECTED_IMAGES_RE = /<detected-images\b[^>]*>[\s\S]*?<\/detected-images>/gi;
+export const withoutDetectedImages = (ocr) => String(ocr || '').replace(DETECTED_IMAGES_RE, ' ');
 export const isCollapsed = (ocr, tr) => {
-  const ob = bodyLen(ocr), tb = bodyLen(tr);
+  const ob = bodyLen(withoutDetectedImages(ocr)), tb = bodyLen(tr);
   if (ob < 400) return false;
   if (tb >= COLLAPSE_ABS_CAP) return false;
   return tb / ob < 0.3 || (CONTINUITY_MARKER_RE.test(tr || '') && tb < 60);
@@ -845,8 +861,8 @@ export const isExcess = (ocr, tr) => {
  * flags every heading.
  *
  * So the source is measured generously and the English strictly. `sourceWeight` keeps everything
- * the transcription holds — metadata blocks, picture descriptions, vocab — and only removes the
- * tags themselves, so a page whose `bodyLen` is 0 because of a mis-closed tag, or whose words are
+ * the transcription holds — metadata blocks, picture descriptions, vocab — except the picture
+ * detector's `<detected-images>` JSON (#5274), and only removes the tags themselves, so a page whose `bodyLen` is 0 because of a mis-closed tag, or whose words are
  * a described picture, is not read as empty; a Han, kana or Hangul character counts 16, the
  * CJK_EXCESS_RATIO over the alphabetic one. The English is `bodyLen`: notes, summaries and keywords
  * are not counted, so a title with a paragraph of apparatus is not a recitation (11 of the 14
@@ -860,7 +876,7 @@ export const RECITED_SOURCE_MAX = 300;
 export const RECITED_BODY_FLOOR = 600;
 export const RECITED_RATIO = 3;
 export function sourceWeight(ocr) {
-  const t = String(ocr || '').replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
+  const t = withoutDetectedImages(ocr).replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
     .replace(WS_ENTITY, ' ').replace(LEADER_RUN, ' ').replace(/\s+/g, ' ').trim();
   return t.length + (CJK_EXCESS_RATIO - 1) * (t.match(HAN_CHAR) || []).length;
 }
