@@ -81,7 +81,8 @@ const ROWS = [
   { name: 'text export, search crawler name from another address', url: TEXT, ua: GOOGLEBOT, expect: 'part', total: BPH.pages },
   { name: 'text export, hidden rows', url: `${TEXT}&from=-50&to=0`, ua: FIREFOX, headers: FETCHED, expect: 'absent' },
   // The image host.
-  { name: 'image host publishes its robots.txt', url: `${IMG}/robots.txt`, ua: SCRIPT, expect: 'robots' },
+  // plain: a crawler asks for the bare URL, and a query string would step around a 404 cached at the edge.
+  { name: 'image host publishes its robots.txt', url: `${IMG}/robots.txt`, ua: SCRIPT, expect: 'robots', plain: true, knownOpen: 'cached 404 not purged yet' },
   { name: 'image master, plain HTTP library', url: IMAGE_MASTER, ua: SCRIPT, expect: 'refuse', method: 'HEAD', knownOpen: 'edge rule not applied yet' },
   // Must pass: the people this is for.
   { name: 'must pass: Chrome in the Embassy frame, embed home', url: `${APEX}/embed/bph`, ua: CHROME, headers: FRAME, expect: 'pass' },
@@ -110,7 +111,7 @@ function isRefused(res) {
 
 async function probe(row) {
   const sep = row.url.includes('?') ? '&' : '?';
-  const url = `${row.url}${sep}_canary=bph-access`;
+  const url = row.plain ? row.url : `${row.url}${sep}_canary=bph-access`;
   const headers = { 'user-agent': row.ua, ...(row.headers || {}), ...(row.body ? { 'content-type': 'application/json' } : {}) };
   let res;
   try {
