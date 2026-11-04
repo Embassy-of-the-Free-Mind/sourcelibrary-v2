@@ -41,8 +41,8 @@ export const PARTNERS_HTML = `
       <dl class="ds-specs">
         <div><dt>Books</dt><dd>131,547, from 30+ libraries</dd></div>
         <div><dt>Page images</dt><dd>29.8M</dd></div>
-        <div><dt>Transcribed</dt><dd>9.6M pages, original script</dd></div>
-        <div><dt>Translated</dt><dd>5.7M pages, aligned to the original</dd></div>
+        <div><dt>Transcribed</dt><dd>9.6M pages, original script, February to November 2026</dd></div>
+        <div><dt>Translated</dt><dd>5.7M pages, aligned to the original, February to November 2026</dd></div>
         <div><dt>Tokens</dt><dd>~21B: 15B original, 6B English</dd></div>
         <div><dt>Illustrations</dt><dd>235,714 crops, with boxes, types and descriptions</dd></div>
         <div><dt>First English translations</dt><dd>11,357 works</dd></div>
@@ -53,10 +53,10 @@ export const PARTNERS_HTML = `
       <div class="ds-block">
         <h3>Embeddings</h3>
         <table class="ds-mini">
-          <tr><td>Translated pages</td><td>768-d vectors, Gemini Embedding 2</td></tr>
-          <tr><td>Books</td><td>67,916 vectors, 768-d, Gemini Embedding 2</td></tr>
-          <tr><td>Illustration descriptions</td><td>246,497 vectors, 768-d, Gemini Embedding 2</td></tr>
-          <tr><td>Images</td><td>509,062 vectors, 512-d, CLIP</td></tr>
+          <tr><td>Translated pages</td><td>768-d vectors</td></tr>
+          <tr><td>Books</td><td>67,916 vectors, 768-d</td></tr>
+          <tr><td>Illustration descriptions</td><td>246,497 vectors, 768-d</td></tr>
+          <tr><td>Images</td><td>509,062 vectors, 512-d</td></tr>
           <tr><td>Page concepts</td><td>325,308 vectors, 768-d, experimental</td></tr>
         </table>
       </div>
@@ -156,7 +156,7 @@ export const PARTNERS_HTML = `
               <p class="ds-text">&lt;page-num&gt;109&lt;/page-num&gt;<br>&lt;header&gt;BOOK SECOND.&lt;/header&gt;<br>&lt;sig&gt;Q&lt;/sig&gt;<br><br>sang that kings were born of Jove. Homer imagined that the heroes whom he wished to adorn with immortal praise were dear to certain gods …</p>
             </div>
           </div>
-          <p class="ds-note">Juan de Mariana, <i>De rege</i>, 1599. Tier A, public domain, scan from the Internet Archive; transcription and translation by <code>gemini-3-flash-preview</code>. Text shortened here.</p>
+          <p class="ds-note">Juan de Mariana, <i>De rege</i>, 1599. Tier A, public domain, scan from the Internet Archive; transcribed in February 2026 and translated in March 2026. Text shortened here.</p>
         </details>
         <details class="ds-more"><summary>Known limits</summary>
           <ul class="ds-limits">
@@ -271,7 +271,7 @@ export const PARTNERS_HTML = `
       <div class="bar"><span>Symbol</span><i style="width:6.7%"></i><span>5,574</span></div>
       <div class="bar"><span>Bookplate</span><i style="width:1.7%"></i><span>1,425</span></div>
       <p class="note" style="margin-top:14px">Counted 4 November 2026, against the rights tiers of 30 October. Offered: 107,017 from Tier A books, and about 39,000 from books dated before 1900 whose library states no terms for its scans. Illustrations under a library's non-commercial or own terms are held back. Types are the labels the extraction model gave, counted over all 236,918 records, including the 1,204 with no crop file. The other books in the library have not all been processed.</p>
-      <p class="note">Box accuracy of the current model, Gemini 3 Flash, which drew about three in five of the crops: 81.6% of boxes were tight (95% CI 68–92) and it found 95% of the pictures, on 38 pictures across 48 pages, graded by model readers with each page image open (September 2026). On 10 of those 48 pages it boxed something that was not an illustration, such as a cover label or a bookplate. About two in five crops have no model recorded, and those have not been graded.</p>
+      <p class="note">Box accuracy of the current detector, which drew about three in five of the crops: 81.6% of boxes were tight (95% CI 68–92) and it found 95% of the pictures, on 38 pictures across 48 pages, graded by model readers with each page image open (September 2026). On 10 of those 48 pages it boxed something that was not an illustration, such as a cover label or a bookplate. The other crops have not been graded.</p>
       <p>The public illustrations can be browsed in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
     </div>
   </div>
@@ -304,7 +304,7 @@ export const PARTNERS_HTML = `
     <h2 class="pword">Rights</h2>
     <div>
       <p class="lede">The original texts are in the public domain. A book whose status is uncertain is withheld from the public site; about 300 have been withheld so far.</p>
-      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. For a further 8,343 the library has stated no terms for its scans. Pages read or translated by Claude are excluded.</p>
+      <p>For a training licence (counted 30 October 2026): <strong>text</strong> from 28,700 books, 4.9 million pages; <strong>images</strong> from 11,929 of them, 2.6 million pages, where the holding library permits commercial use of its scans. For 8,428 of the text books the library's scans carry non-commercial terms; that text is under legal review. For a further 8,343 the library has stated no terms for its scans. A small share of pages is excluded because of the terms of the model that wrote them.</p>
       <p>Translations, notes and indexes are original to Source Library and published under a Creative Commons share-alike licence. Search, retrieval for a user and individual use are free; training at scale is licensed directly. The terms and the rate card are on the <a href="https://sourcelibrary.org/licensing">licensing page</a>.</p>
     </div>
   </div>
