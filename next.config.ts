@@ -267,6 +267,15 @@ const nextConfig: NextConfig = {
         source: '/admin/work',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Token use (#8201): same belt and braces as the spend page.
+      {
+        source: '/admin/tokens/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/tokens',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       // Self-hosted Google Fonts (#7537). File names carry Google's version id, so a
       // changed face is a new URL and the old one can be cached for good.
       {

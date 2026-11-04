@@ -102,6 +102,8 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Token use (#8201): our accounts, machines and job names. Same reasoning as /admin/work.
+  '/admin/tokens',
   // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
   '/admin/pipeline/now',
   // Router board (#7913): our router table, cron lanes and pages waiting. Same reasoning as /admin/work.
