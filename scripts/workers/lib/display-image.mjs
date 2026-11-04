@@ -18,13 +18,9 @@
 
 import sharp from 'sharp';
 import crypto from 'crypto';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { assertBookScopedKey } from '../../lib/r2-key.mjs';
 import { markImage } from '../../lib/provenance-mark.mjs';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { LOGO_PNG } from '../../lib/provenance-logo.mjs';
 
 const DISPLAY_WIDTH = 1200;
 const THUMB_WIDTH = 150;
@@ -36,24 +32,12 @@ let _provenanceMark = null;
 
 async function getProvenanceMark() {
   if (_provenanceMark) return _provenanceMark;
-  // From this file, not process.cwd(): src/ imports this module, and a cwd-relative read traces the whole repo.
-  const candidates = [
-    path.resolve(__dirname, '../../../public/brand/png/icon-only--black-on-transparent--48h.png'),
-  ];
-  for (const p of candidates) {
-    try {
-      if (fs.existsSync(p)) {
-        const raw = fs.readFileSync(p);
-        _provenanceMark = await sharp(raw)
-          .resize(16, 16)
-          .ensureAlpha()
-          .modulate({ brightness: 0.3 })
-          .toBuffer();
-        return _provenanceMark;
-      }
-    } catch {}
-  }
-  return null;
+  _provenanceMark = await sharp(LOGO_PNG)
+    .resize(16, 16)
+    .ensureAlpha()
+    .modulate({ brightness: 0.3 })
+    .toBuffer();
+  return _provenanceMark;
 }
 
 /**
