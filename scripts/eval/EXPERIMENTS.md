@@ -160,6 +160,83 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-04 · Which lane should read printed Chinese: Opus correction, Paddle > Flash, or an Opus fresh read? (#7263)
+
+Derek's notes of 2026-11-04 to job zh-print-correct-7263, after its pilot failed the bar (51/60 accepted, 6 wrong-text pages against a limit of 4). Same 60 pages as that pilot. Derek has since released print bulk on Opus at one page a call, as a decision and not a pass; that job does not wait for this one.
+
+PRIOR ART:
+- `2026-11-03-zh-reocr-cheap-arms-7263.md`: the method, followed. `scripts/eval/zh-gemini-reocr-7263/arms.mjs` and `router-confirm/confirm.mjs judge` were extended, not rewritten.
+- `scripts/eval/confidence-7866/analyze.mjs` writeback: the shape of `writeback.mjs`. `lane-judge-sampler.mjs validRecord` is imported.
+
+### Read this first: what the judge cannot see
+
+The judge is Opus and F is Opus, so they share a prior about what a Chinese text should say. Three checks say this is a real limit on the F number:
+
+- **Paddle saw neither text.** At characters where F and O differ it sides with F 125 times and with O 142 (`results/crosscheck-F-vs-O.json`). Excluding variant forms, 56 and 67 (`pairs.py`; the variant list in it is by hand).
+- **Daozang book 6a05f0bf, p.22, by eye.** The leaf prints 官 in 青華官君. F wrote 宫 about ten times; O and Paddle have 官. The judge accepted F with no defect.
+- **The same leaf** prints 復住. F and O both write 復位 and the judge flagged neither.
+
+So F's accepted rate measures "no error this reader can notice", and an error the reader's own prior produces is the kind it notices least. Neither check shows F is worse than O at the character level; 56 against 67 on 60 pages cannot carry that either. They show the character-level gain is unproven.
+
+### Design
+
+Written before any new text was judged: `scripts/eval/zh-print-arms-7263/results/prereg.md`.
+
+- **Arms, one page a call.** PFL Paddle > agy Flash-low (`correct.mjs --draft-dir --cli=agy`, `CANDIDATE_READS=off`, on `.agy-milo`). PFM the same at medium. F Opus fresh read: image only, live first-read prompt, no stored text, no draft. O the pilot's text. S the stored text.
+- **O's calls differ by set.** In set `one` O came from a 1-page call, in set `ten` from a 10-page call. 8 of the 60 O texts equal S (2 contain, 2 refused, 4 unchanged).
+- **Judge.** `judgeAbsolute` through `confirm.mjs judge`: Opus, image attached, one text a call, arm names hidden, shuffled, identical texts once. O has a row from this sitting (`--retest=O`). Wrong-page controls: 8 of 8 rejected, so the sitting stands.
+- **Non-inferior to O.** Margin 0.08. Strict: CI lower bound of d >= -0.08, wrong-text rate within 0.04. The point-estimate rule is beside it.
+
+### Result
+
+| arm | accepted | wrong-text pages | severe / 1,000 chars (95% CI) | d vs O, same sitting (95% CI) | gained / lost | strict / rule | $ per 1K pages | $ per 1K accepted |
+|---|---|---|---|---|---|---|---|---|
+| S stored | 6/60 | 45 | 7.81 (3.94–20.21) | | | | 0 | |
+| O Opus correction, same sitting | 49/60 | 7 | 1.45 (0.44–4.42) | | | | 5.72 at 1 a call, 2.77 at 10 | 6.86 (set one), 3.46 (set ten) |
+| O, pilot's verdicts | 51/60 | 6 | capped rows, not comparable | | | | | |
+| F Opus fresh read | **58/60** | 1 | 0.13 (0.03–0.44) | +0.15 (+0.03, +0.27) | 11 / 2 | pass / pass | 5.05 | 5.22 |
+| PFL Paddle > Flash-low | 29/60 | 21 | 2.58 (1.21–7.09) | −0.33 (−0.48, −0.18) | 4 / 24 | fail / fail | 1.81 | 3.74 |
+| PFM Paddle > Flash-medium | not yet run | | | | | | | |
+
+Sensitivity, against the pilot's O verdicts: F +0.12 (+0.03, +0.22), PFL −0.37 (−0.52, −0.22). O judged twice agrees with itself on 54 of 60 accept verdicts (51 and 49 accepted).
+
+**Per set.**
+
+| set | O | F | PFL | F − O (95% CI) | wrong-text O / F / PFL |
+|---|---|---|---|---|---|
+| `one` (O at 1 page a call) | 25/30 | 29/30 | 14/30 | +0.13 (0.00, +0.30) | 3 / 0 / 11 |
+| `ten` (O at 10 pages a call) | 24/30 | 29/30 | 15/30 | +0.17 (0.00, +0.33) | 4 / 1 / 10 |
+
+F's lead does not depend on the batched set. With n=30 a set, neither interval excludes zero alone.
+
+**Price.** F $5.05 per 1,000 pages against O's $5.72 at one page a call, the subscription priced at the fee as in the 2026-11-03 record. O at ten a call is $2.77. F was measured at one page a call only, so a batched F's price and its quality are both unmeasured.
+
+### By eye, with the image open
+
+Six judge disagreements, and the judge was right on the point checked each time:
+
+| page | arm the judge marked down | what the leaf shows |
+|---|---|---|
+| P-69e75e3a p.15 (笠翁) | F | 兩, F has 雨 |
+| P-69f33c10 p.766 (六藝流別) | F | 期, F has 欺, the standard text |
+| P-6a23f362 p.270 (book 6a1d81af) | O | the O text belongs to another passage |
+| P-69e72c83 p.16 | O | the O text belongs to another passage |
+| P-699df07e p.235 | O | 壬日戌提, O has 戊 |
+| P-6a05f0bf p.22 | O | 倏欻, O has 修齋 |
+
+These six are all cases the judge caught. Its misses (官, 住) are above, and they are found only by looking outside the judge's verdicts. Every page, with its scan link, the text differences and the verdicts: `results/side-by-side.md`.
+
+### Not done here
+
+- **Two pages are owed a containment.** P-6a23f362 and P-69e72c83 serve text from another passage. This job may not write pages, so they are not held; a session with write access owes that (`containment-on-finding.md`).
+- **No batched F, and no second judge.** Either could change the routing answer.
+
+### Writes
+
+`lane_judge_verdicts`: 240 rows, cell `study-zh-print-arms-7263/<set>`, `called: false`, insert only, the only Mongo write. The nightly lane-judge sampler reads this store. It will skip these 60 pages in its draw, and its export will show a study cell that `rules.json` does not name.
+
+`confirm.mjs` gains `--retest-tag` and a one-line guard: a worker could take an item past the end of the queue during an await. `arms.mjs cheap-setup` gains `--arms`, and `correct.mjs` exports `claudeCall`. Without the new flags, all three behave as before.
+
 ## 2026-11-04 · Can the held Chinese histories be released? (#8053)
 <!-- PRIOR ART: .claude/skills/shelf-overview/SKILL.md (the procedure, followed as is); 2026-10-30-siku-translation-error-types-5600.md (the Siku lane diagnosis behind the #7914 stop; its arm B is the same encyclopaedias that dominate this run's control); scripts/lib/paddle-zh-lane.mjs (the Dice screen, whose stored ocr.qa_screen is read here, not recomputed). -->
 
