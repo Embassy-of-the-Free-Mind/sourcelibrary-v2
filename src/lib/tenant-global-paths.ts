@@ -31,6 +31,8 @@
 export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Corpus-wide aggregations (#3364).
   '/encyclopedia',
+  // Every Chinese book in the library, by class (#8035). Same reasoning as /works.
+  '/sibu',
   '/explore',
   '/ngrams',
   '/libraries',
