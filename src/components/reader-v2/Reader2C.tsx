@@ -3531,6 +3531,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
   const deepzoomManifest = (r.currentPage as unknown as { deepzoom?: DeepZoomManifest }).deepzoom;
+  const [deepzoomInline, setDeepzoomInline] = useState(false);
 
   // A wide leaf in one of three side-by-side columns is a strip a few lines
   // tall floating in an empty pane. On the desktop it gets the full width
@@ -3952,15 +3953,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             >
               <PaneHeader
                 right={
-                  <ScanControls
-                    zoom={scanZoom}
-                    maxZoom={scanZoomMax}
-                    onZoomStep={zoomStep}
-                    onZoomReset={() => changeZoom(1)}
-                    lensOn={lensOn}
-                    onToggleLens={() => setLensOn(v => !v)}
-                    onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
-                  />
+                  // These work on the plain scan, which the tiled viewer covers; it has its own.
+                  deepzoomInline && deepzoomManifest ? null : (
+                    <ScanControls
+                      zoom={scanZoom}
+                      maxZoom={scanZoomMax}
+                      onZoomStep={zoomStep}
+                      onZoomReset={() => changeZoom(1)}
+                      lensOn={lensOn}
+                      onToggleLens={() => setLensOn(v => !v)}
+                      onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
+                    />
+                  )
                 }
               >
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
@@ -4013,6 +4017,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
                     title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    openByDefault={!witness}
+                    bed={SURFACE.scanBed}
+                    onInlineChange={setDeepzoomInline}
                   />
                 )}
               </div>
