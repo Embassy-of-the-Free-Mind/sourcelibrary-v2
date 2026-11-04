@@ -6,7 +6,7 @@ const GB = 2 ** 30;
  *
  * Next starts Turbopack's shutdown when the compile ends but awaits it only when the whole build ends, so the next
  * step starts while the compiler still holds ~4.5 GB of the builder's 8 GB (#7731). Turbopack is native memory inside
- * this process, measured falling to ~0.5 GB about 14 s after the compile ended, and 6 of the 19 OOMs in 18 days came
+ * this process, measured falling under 1.5 GB 10-16 s after the compile ended, and 6 of the 19 OOMs in 18 days came
  * 10-14 s after it. Never throws: a slow release costs the timeout, not the build.
  */
 export async function waitForTurbopackRelease({
