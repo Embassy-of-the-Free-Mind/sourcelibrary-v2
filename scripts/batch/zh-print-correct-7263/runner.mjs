@@ -9,6 +9,7 @@
  * readers open first, on this box's subscription login. Resumes from its ledger; no state outside DIR.
  *
  *   node --env-file=... runner.mjs run    --dir=DIR --frame-dir=FRAME --per-call=N [--wave=200] [--concurrency=3] [--max-pages=N]
+ *        [--ceiling-points=350] [--check-at=1000] [--no-notify]
  *   node --env-file=... runner.mjs status --dir=DIR       pages by state, quota used, what it is doing now
  *
  * ONE WAVE. Re-read the books and pages from Mongo; a page still owed (frame.mjs pageState) in a book writeGate lets through
@@ -26,11 +27,12 @@
  * CEILING_POINTS (3.5 account-weeks) it stops.
  *
  * STOPS (paged on ntfy, commented on the issue, exit 0 so systemd does not restart it): the queue is empty, the ceiling, DIR/STOP
- * exists, or a wave trips the breaker: under half its reads answered, or over 15% of its corrections refused by apply, or an
+ * exists, the --check-at check fails (check.mjs: 30 written pages, blind Opus judge, under 24/30 accepted), or a wave trips the breaker: under half its reads answered, or over 15% of its corrections refused by apply, or an
  * apply that failed.
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import zlib from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -49,15 +51,20 @@ const PER_CALL = Number(arg('per-call', 1));
 const WAVE = Number(arg('wave', 200));
 const CONCURRENCY = Number(arg('concurrency', 3));
 const MAX_PAGES = Number(arg('max-pages', Infinity));
+// Job zh-print-bulk-7263 counts what the pilot's login used against the same 3.5 account-weeks: --ceiling-points=344.
+export const CEILING_POINTS = Number(arg('ceiling-points', 350));
+const CHECK_AT = Number(arg('check-at', 0));
+const NOTIFY = !process.argv.includes('--no-notify');
 export const LANE = 'opus-correct-zh-print-7263';
-const JOB = 'zh-print-correct-7263';
+const JOB = 'zh-print-bulk-7263';
 const ISSUE = 7263;
 const STOP_PCT = 92;
-export const CEILING_POINTS = 350;
 const ENV_FILE = ['/data/scratch/sl/sourcelibrary', '/root/sourcelibrary'].map((d) => `${d}/.env.production.local`).find((f) => fs.existsSync(f));
 const LEDGER = path.join(DIR, 'ledger.jsonl');
 const STATE = path.join(DIR, 'state.json');
-const REASON = '#7263: Opus corrected the stored Gemini read of this Chinese print page against its image (gemini>opus, print 26/30 accepted; job zh-print-correct-7263)';
+const REASON = '#7263: Opus corrected the stored Gemini read of this Chinese print page against its image (gemini>opus, print 26/30 accepted; job zh-print-bulk-7263)';
+// Every report says so: the pilot missed its bar and bulk runs on Derek's decision, not on a pass.
+const DECIDED = 'Bulk runs on Derek\'s decision of 2026-11-04. The pilot missed its bar (PILOT-RESULT fail: 51/60 accepted, 6 wrong-text against a limit of 4); this is not a pass.';
 
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const now = () => new Date().toISOString();
@@ -77,7 +84,8 @@ export function tallyLedger(rows) {
 const isFinal = (r) => r.state !== 'no-answer' || (r.tries ?? 1) >= 2;
 
 function meter() {
-  const m = weeklyMeter();
+  // The account a `claude` child uses: CLAUDE_CONFIG_DIR's login when set (team@ on main), not the box's default.
+  const m = weeklyMeter(undefined, process.env.CLAUDE_CONFIG_DIR ? path.join(process.env.CLAUDE_CONFIG_DIR, '.claude.json') : undefined);
   if (!m) return null;
   return { pct: m.pct, hoursLeft: m.hoursLeft };
 }
@@ -128,6 +136,7 @@ function pack(setDir) {
 }
 
 async function notify(title, body) {
+  if (!NOTIFY) return;
   spawnSync('curl', ['-s', '-m', '20', '-H', `Title: ${title}`, '-H', 'Priority: high', '-d', body.slice(0, 1500), 'https://ntfy.sh/sourcelibrary-uptime'], { stdio: 'ignore' });
   spawnSync('gh', ['issue', 'comment', String(ISSUE), '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', `**${title}**\n\n${body}`], { stdio: 'ignore', cwd: ROOT });
 }
@@ -137,7 +146,7 @@ function report(s, why, deferred = {}) {
   const contain = rows.filter((r) => r.state === 'contain');
   const gates = {}; for (const g of Object.values(deferred)) { const k = g.replace(/^\d+% translated/, 'under 92% translated').slice(0, 60); gates[k] = (gates[k] ?? 0) + 1; }
   const contains = contain.slice(0, 60).map((r) => `- \`${r.book_id}\` p.${r.page_number}: ${String(r.reason ?? '').slice(0, 160)}`).join('\n');
-  return `${why}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n\nProgress: \`node --env-file=${ENV_FILE} ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
+  return `${why}\n\n${DECIDED}\n\n| | |\n|---|---|\n| pages with a final state | ${t.pages} |\n${Object.entries(t.states).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}\n| weekly meter rises while running (upper bound, login shared) | ${s.points} points = ${(s.points / 100).toFixed(2)} account-weeks |\n| list value of the calls | $${s.list_usd.toFixed(2)} in ${s.calls} calls; cash $0 |\n| books deferred at the last wave | ${JSON.stringify(gates)} |\n\nProgress: \`node --env-file=${ENV_FILE} ${path.join(ROOT, 'scripts/batch/zh-print-correct-7263/runner.mjs')} status --dir=${DIR}\`\n\n${contain.length ? `**CONTAIN answers, not written (${contain.length}${contain.length > 60 ? ', first 60; all in the ledger' : ''}). A model's claim, unchecked by eye:**\n${contains}` : 'No CONTAIN answers.'}`;
 }
 
 async function run() {
@@ -150,7 +159,7 @@ async function run() {
     const m = meter();
     if (!m) { log('meter stale or absent: waiting 10 min'); s.doing = 'waiting: the meter is stale'; writeState(s); await sleep(600e3); continue; }
     countPoints(s, m);
-    if (s.points >= CEILING_POINTS) return stopAll(s, `Stopped at the ceiling: ${s.points} points of the weekly meter, 3.5 account-weeks.`, lastDeferred);
+    if (s.points >= CEILING_POINTS) return stopAll(s, `Stopped at the ceiling: ${s.points} points of the weekly meter, ${(CEILING_POINTS / 100).toFixed(2)} account-weeks on this login.`, lastDeferred);
     if (m.pct >= STOP_PCT) {
       const ms = Math.max(600e3, (m.hoursLeft ?? 1) * 3.6e6 + 300e3);
       s.doing = `sleeping: weekly ${m.pct}%, reset in ${(ms / 3.6e6).toFixed(1)} h`; writeState(s); log(s.doing);
@@ -162,6 +171,17 @@ async function run() {
     for (const r of rows) { tries.set(r.page_id, r.tries ?? 1); if (isFinal(r)) final.add(r.page_id); else final.delete(r.page_id); }
     const written = rows.filter((r) => r.state === 'written').length;
     if (written >= MAX_PAGES) return stopAll(s, `Stopped: --max-pages=${MAX_PAGES} reached.`, lastDeferred);
+    if (CHECK_AT && written >= CHECK_AT && !fs.existsSync(path.join(DIR, `check-${CHECK_AT}`, 'result.json'))) {
+      s.doing = `checking: 30 of the first ${written} written pages, blind Opus judge`; writeState(s); log(s.doing);
+      const ck = spawnSync('node', [path.join(HERE, 'check.mjs'), `--dir=${DIR}`, `--out=${path.join(DIR, `check-${CHECK_AT}`)}`], { encoding: 'utf8', env: process.env, cwd: ROOT, maxBuffer: 64 * 1024 * 1024 });
+      fs.appendFileSync(path.join(DIR, 'check.log'), (ck.stdout ?? '') + (ck.stderr ?? ''));
+      const resFile = path.join(DIR, `check-${CHECK_AT}`, 'result.json');
+      if (!fs.existsSync(resFile)) { s.doing = `check not finished (exit ${ck.status}): again in 30 min`; writeState(s); log(s.doing); await sleep(1800e3); continue; }
+      const res = JSON.parse(fs.readFileSync(resFile, 'utf8'));
+      if (!res.pass) return stopAll(s, `Stopped by the ${CHECK_AT}-page check: ${res.summary}`, lastDeferred);
+      spawnSync('gh', ['issue', 'comment', String(ISSUE), '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', `**zh-print-bulk-7263: the ${CHECK_AT}-page check held; bulk continues.**\n\n${DECIDED}\n\n${res.summary}\n\n${res.table}`], { stdio: 'ignore', cwd: ROOT });
+      continue;
+    }
     const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
     await client.connect();
     const { pages, deferred } = await nextWave(client.db('bookstore'), frameBooks, final, Math.min(WAVE, MAX_PAGES - written));
@@ -172,8 +192,10 @@ async function run() {
     const set = path.join(DIR, 'waves', String(s.wave).padStart(4, '0'));
     fs.mkdirSync(set, { recursive: true });
     fs.writeFileSync(path.join(set, 'manifest.jsonl'), pages.map((p) => JSON.stringify(p)).join('\n') + '\n');
-    s.doing = `wave ${s.wave}: reading ${pages.length} pages, ${PER_CALL} a call`; writeState(s); log(s.doing);
-    const read = spawnSync('node', [path.join(ROOT, 'scripts/batch/ocr-convergence/correct.mjs'), `--set-dir=${set}`, '--model=opus', `--per-call=${PER_CALL}`, `--concurrency=${CONCURRENCY}`, `--job=${JOB}-w${s.wave}`], { encoding: 'utf8', env: process.env, cwd: ROOT, maxBuffer: 256 * 1024 * 1024 });
+    // A shared box: when its 15-minute load is over 1.25 a core, one call at a time, so the other jobs are not crowded.
+    const conc = Number(fs.readFileSync('/proc/loadavg', 'utf8').split(' ')[2]) > 1.25 * os.cpus().length ? 1 : CONCURRENCY;
+    s.doing = `wave ${s.wave}: reading ${pages.length} pages, ${PER_CALL} a call, ${conc} at once`; writeState(s); log(s.doing);
+    const read = spawnSync('node', [path.join(ROOT, 'scripts/batch/ocr-convergence/correct.mjs'), `--set-dir=${set}`, '--model=opus', `--per-call=${PER_CALL}`, `--concurrency=${conc}`, `--job=${JOB}-w${s.wave}`], { encoding: 'utf8', env: process.env, cwd: ROOT, maxBuffer: 256 * 1024 * 1024 });
     fs.writeFileSync(path.join(set, 'read.log'), (read.stdout ?? '') + (read.stderr ?? ''));
     if (read.status === 3) log('correct.mjs stopped on a usage limit');
     else if (read.status !== 0) { if (fs.existsSync(path.join(set, 'calls.jsonl'))) pack(set); return stopAll(s, `Stopped: correct.mjs exit ${read.status} in wave ${s.wave}. ${(read.stderr ?? '').slice(-300)}`, deferred); }
