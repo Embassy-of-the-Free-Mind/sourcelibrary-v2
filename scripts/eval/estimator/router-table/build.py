@@ -26,6 +26,13 @@ V3: the gate is multiplicity-controlled (rules.json switch.multiplicity; v3_sim.
 and --annotate writes it into the table). --off v1,v2,v3 turns steps off for attribution builds (decision_diff.py);
 --out-dir writes them outside the repo.
 
+AUTOMATIC PICKUP (#7263 step 4): --auto-evidence <auto-evidence.json> (test-evidence.mjs) adds what rules.json does not
+name: test rows of lane_judge_verdicts and unnamed score files, on the route judge's scale only, one k/n per test (never
+pooled across instruments), each book-scaled like any source. A random-draw entry joins the route's `evidence`; any other
+draw kind only moves the route's PRIOR (`prior_from`: its book-scaled pages added to the prior, worth at most
+prior.pooled.pages). A proposal: build to --out-dir and diff with decision_diff.py; rules.json and current.json are not
+changed by it.
+
 The pick is ONE unit: expected dollars per ACCEPTED page (Derek, 2026-10-26). A subscription stage costs its Claude
 points (or agy calls) per page x the plan's dollars per point (or call); a paid API stage its list dollars per page; a
 draft already made costs 0; each divided by the acceptance draw, and the median over draws decides. Fees come from
@@ -184,6 +191,21 @@ def pool_sources(xs, cluster, inv_classes=()):
 
 POLICY_1102 = ('no_absolute_gate', 'hard_floor', 'no_served_privilege')   # rules.json sections, each with in_force
 UNSPLIT = set()  # evidence sources with no by-script file (expand_by_script): they enter /unknown only
+AUTO_BY_SCRIPT = {}  # --auto-evidence: a proposal score file -> its by-script cut (written beside it, not in evidence_dir)
+
+
+def add_auto_evidence(P, A):
+    """--auto-evidence (#7263 step 4): test-evidence.mjs's proposals into P['cells'] (in memory only). random -> the
+    route's evidence; any other draw kind -> its prior_from. Returns what entered, for the table's note."""
+    AUTO_BY_SCRIPT.update(A.get('by_script') or {})
+    cells, added = {c['id']: c for c in P['cells']}, []
+    for kind, key in (('evidence', 'evidence'), ('prior', 'prior_from')):
+        for e in A.get(kind, []):
+            r = next((r for r in cells.get(e['router_cell'], {}).get('routes', []) if r['id'] == e['router_route']), None)
+            if r is None: continue
+            r.setdefault(key, []).append(dict(e['evidence'], auto=e['source']))
+            added.append(f"{e['router_cell']} / {e['router_route']} {e['accept']} ({kind}, {e.get('test') or os.path.basename(e['evidence']['score'])})")
+    return added
 
 
 def expand_by_script(P):
@@ -194,7 +216,7 @@ def expand_by_script(P):
     variant with neither evidence nor pages waiting is dropped. `planned` names a route the router takes as decided."""
     X = P['script_split']; W = json.load(open(X['waiting']))['cells']
     v2 = {c['id']: c for c in json.load(open(P['inputs']['v2']))['cells']}
-    bs = lambda f: X['evidence_dir'] + (os.path.basename(os.path.dirname(f)) + '--score.json' if os.path.basename(f) == 'score.json' else os.path.basename(f))
+    bs = lambda f: AUTO_BY_SCRIPT.get(f) or X['evidence_dir'] + (os.path.basename(os.path.dirname(f)) + '--score.json' if os.path.basename(f) == 'score.json' else os.path.basename(f))
     files = {}
     has = lambda f, c, r: r in files.setdefault(f, json.load(open(f)) if os.path.exists(f) else {'cells': {}})['cells'].get(c, {}).get('routes', {})
     out = []
@@ -214,7 +236,7 @@ def expand_by_script(P):
                     if not os.path.exists(bs(e0['score'])):
                         UNSPLIT.add(e0['score'])
                         if s == 'unknown': ev.append(e0)
-                r2 = {k: v for k, v in r.items() if k not in ('pilot', 'evidence') and not (s == 'manuscript' and k == 'v2')}
+                r2 = {k: v for k, v in r.items() if k not in ('pilot', 'evidence') and not (s == 'manuscript' and k in ('v2', 'prior_from'))}
                 routes.append(dict(r2, evidence=ev))
             pl = X.get('planned', {}).get(f"{cell['id']}/{s}")
             if pl and not any(r['id'] == pl['route'] for r in routes): routes.append(dict(id=pl['route'], stage=pl['stage'], evidence=[]))
@@ -518,6 +540,7 @@ def main():
     for cid, c in CUR.get('cells', {}).items():
         live_rows[cid] = next(r for r in json.load(open(D + c['table'] + '.json'))['rows'] if r['id'] == cid)
     LIVE = {r['id']: (r['route'] if r['decision'].startswith('switch') else r['current']) for r in live_rows.values()}
+    AUTO = add_auto_evidence(P, json.load(open(arg('--auto-evidence')))) if arg('--auto-evidence') else []
     if P.get('script_split', {}).get('on') and '--no-script-split' not in sys.argv: P['cells'] = expand_by_script(P)
     L = lambda k: json.load(open(arg('--' + k) or P['inputs'][k]))  # --pilot <path> until #7376 is on main
     pilot, v1, v2, cap = L('pilot')['cells'], L('v1')['cells'], {c['id']: c for c in L('v2')['cells']}, L('capacity')['channels']
@@ -599,7 +622,14 @@ def main():
         for r in cell['routes']:
             st0 = S[r['stage']]; sp = size_points(st0, sizes[cell['id']], Z, K) if st0.get('size') and cell['id'] in sizes else None
             st = dict(st0, points=sp['central'], draw=sp['central'] / 100) if sp else st0
-            (a0, b0), (ao, bo) = prior(cell, r); a, b = a0, b0; x = evidence(cell, r)
+            (a0, b0), (ao, bo) = prior(cell, r)
+            # prior_from (--auto-evidence): judged pages NOT drawn at random move the prior, worth at most prior.pooled.pages
+            xp = pool_sources([dict(_scores.setdefault(e['score'], json.load(open(e['score'])))['cells'][e['cell']]['routes'][e['route']]) for e in r.get('prior_from', [])
+                               if e['route'] in _scores.setdefault(e['score'], json.load(open(e['score'])))['cells'].get(e['cell'], {}).get('routes', {})], P['cluster_by_book']) if r.get('prior_from') else None
+            if xp:
+                ke, ne = xp['eff'][:2]; sc = min(1.0, P['prior']['pooled']['pages'] / ne)
+                a0, b0, ao, bo = a0 + ke * sc, b0 + (ne - ke) * sc, ao + ke * sc, bo + (ne - ke) * sc
+            a, b = a0, b0; x = evidence(cell, r)
             k = n = w = None; wrate = None; top = []
             if x:
                 (k, n), w = map(int, x['accept'].split('/')), int(x['wrong_text_pages'].split('/')[0])
@@ -790,6 +820,7 @@ def main():
     split_txt = ('' if not UNSPLIT else "**Not split by script type** (no by-script file; their pages enter the `/unknown` cells only until "
                  "scripts/eval/router-next-7263/ evidence_pages.py, classify-evidence.mjs and split_evidence.py are rerun): " + ', '.join(f'`{u}`' for u in sorted(UNSPLIT)) + '.')
     if UNSPLIT: print('WARNING: evidence not split by script type, in /unknown only:', ', '.join(sorted(UNSPLIT)))
+    if AUTO: split_txt += ('\n\n' if split_txt else '') + f"**Automatic pickup** (--auto-evidence `{arg('--auto-evidence')}`, #7263: a PROPOSAL, not rules.json): " + '; '.join(AUTO) + '.'
     cal_txt = (f"**Prior calibration** (#7263 router-next): the {'calibrated' if C['in_force'] else 'uncalibrated'} prior is in force; the {OP} one is a sensitivity "
                f"(calibrated mean = logistic({C['alpha']:+.2f} + {C['beta']:.2f} x logit(v1/v2 mean)), worth {C['pages']:g} pages). {C['why']} "
                f"Cells whose decision differs under the {OP} prior: " + (', '.join(f"{r['id']} ({r['decision_other_prior']})" for r in rows if r['decision_other_prior'] != f"{r['decision_kn']} {r['route_kn']}") or 'none') + '.') if C and not PPM else ''
