@@ -31,7 +31,7 @@ const idsFile = arg('--ids-file');
 const [shardI, shardN] = (arg('--shard', '0/1')).split('/').map(Number);
 if ((!campaign && !idsFile) || !out) { console.error('need --campaign or --ids-file, and --out'); process.exit(1); }
 fs.mkdirSync(out, { recursive: true });
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; locator screen #8049)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) locator-screen-8049';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function get(url, binary) {

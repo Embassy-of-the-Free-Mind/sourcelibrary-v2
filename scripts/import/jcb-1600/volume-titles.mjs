@@ -14,7 +14,7 @@ import { computeIdentityFields } from '../../lib/identity-fields.mjs';
 import { setCatalogueFields } from '../../lib/catalogue-fields.mjs';
 
 const APPLY = process.argv.includes('--apply');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; #8049)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) volume-titles-8049';
 const HAS_VOL = /\b(vol(ume)?|tom(us|o|e)?|band|teil|deel|pt|part|liber)\b\.?\s*\(?\s*[\divxlcdm]/i;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const mc = new MongoClient(process.env.MONGODB_URI); await mc.connect();
