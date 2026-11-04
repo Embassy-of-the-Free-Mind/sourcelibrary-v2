@@ -845,6 +845,426 @@ approval under containment-on-finding.md.
 is junk (non-Latin scripts, plates). Isolated stranded pages. Text-side shifts that no image repair
 produced (#7949's canvas-label detector covers e-rara). Shifts by more than 8 leaves.
 
+## 2026-11-04 · Pre-registration: how much of "misleading" is a real sense error? (#7263)
+
+PRIOR ART: `scripts/eval/route-judge-6740/judge.mjs` (the route judge: `judgePrompt`, `parseVerdict`, `opusCall`,
+the wrong-page control rule, imported unchanged). `scripts/eval/flash-reread-5924/T-TASK.md` (Step T, the
+misleading/flawed/sound scale of #7568's re-read rows, used verbatim). `scripts/eval/sa-gr-served-7991/` (draw shape,
+sense errors per 1,000 words, the book-cluster bootstrap, `kindOf()` error kinds; its second reader saw the first
+severity, which this one does not). `scripts/eval/judge-cal-7866bar-7263/meaning.mjs` (the crop-to-the-span
+adjudication, adapted to vertical Chinese columns). `scripts/batch/zh-print-correct-7263/frame.mjs` on #8067's
+branch (the Chinese true-print frame, Siku excluded). `scripts/eval/sanskrit-gex45-7243/` (its model references).
+
+**Who reads this.** Derek, and whoever sets the floor for "agy is unacceptable here". **The decision it changes:**
+whether the router rows that call agy Flash-low bad at Sanskrit (125/250 misleading, #7568) and Chinese print (37/71
+in 3 books) count as agy failures, and which severity label can be trusted. n = 30 books a language is a
+calibration of the labels, **not** a route decision.
+
+### Frames (read-only on Mongo; `scripts/eval/severity-cal-7263/draw.mjs`, seed 72630)
+- **Sanskrit printed Devanagari.** Live books (`visible`, `pages_count > 0`), `language` /^Sanskrit/, catalogue form
+  not handwritten (`book_class.class`). A page is eligible when it is served (`isVisiblePage`), passes #7866's
+  `eligiblePage()` (text, not plate/blank/front matter, has an image), has ≥ 40 words of OCR, is not tagged
+  handwritten or mixed (`scriptClass`), is not human-edited, and ≥ 80% of its letters are Devanagari.
+- **Chinese true print.** The #8067 frame (`frame.mjs` over `frame-all.json`, Siku excluded by `isSiku`), pages in
+  state `owed` (a Gemini read, not human-edited, reading text, ≥ 30 Han, not handwritten or mixed). At draw time each
+  page is re-read from Mongo; a page whose OCR is no longer a Gemini read (the running `zh-print-bulk-7263` job may
+  have written a correction) is not eligible.
+- **Draw.** Books uniformly at random without replacement (seeded keys), 30 a language; one page uniformly from the
+  book's eligible pages. A book with no eligible page is logged and the next key taken. No hand picking. The frame
+  size and every exclusion (by reason, books and pages) are reported.
+
+### Texts on each page
+- **S, stored:** `ocr.data` as stored when drawn (frozen in the sample, hash kept).
+- **F, fresh:** agy `gemini-3.8-flash-low`, 1 page a call, the live OCR prompt (`scripts/batch/cli-ocr.mjs read`,
+  through the keep-read path: no `--fresh`, `CANDIDATE_READS` on).
+- A read that exits non-zero, comes back empty, is a refusal, a repetition loop, or is cut by Gemini's filter (the
+  reply wrapper is cut before its end marker) is **counted apart** and not judged as a misread.
+
+### Judges (Opus 5.5 through `claude -p`, image in the workspace, blind to S/F and the engine)
+1. **Route judge, sitting 1** (`judgePrompt` task `ocr`): every S and F text, one call each. Plus the wrong-page
+   controls of `judge.mjs packet`: per language × text, 2 items (this page's image, another book's text). A text
+   whose controls are not both rejected at fidelity ≤ 2 is reported as a failed control.
+2. **Step T** (T-TASK.md verbatim, one page a call): X/Y/Z are S, F and a wrong-page text (another book's stored read
+   in the same language), in a seeded order. The wrong-page arm is the Step T control (expected `misleading` and
+   `not_this_leaf`). This gives the first measured cross-table of Step T verdicts against route-judge accept/severity.
+3. **Route judge, sitting 2:** the same items and controls again, fresh calls, a different seeded order, after
+   sitting 1 is complete. Test–retest on accept and on severity.
+
+### Second reader (a fresh Opus, image open, never shown a severity)
+- **Serious spans.** Every `misleads` or `wrong_text` defect from either sitting, deduplicated by quote within an
+  item. One call per item; for each span the reader gets the full page and a crop around the span (a horizontal band
+  for Devanagari; a vertical band for vertical Chinese columns; the whole page when the span cannot be placed). It is
+  told only the quoted span and what the first reader said is wrong, with no severity, and answers two questions:
+  `different` (does the text differ from what the page prints there: yes / no / cannot_tell, with what the page
+  prints) and `changes_sense` (does the difference change what the sentence says: yes / no).
+  A serious call is **upheld** when both are yes.
+- **Misses.** 10 seeded items a language among those accepted in sitting 1 with no serious defect: the reader looks
+  for any place where the text says something the page does not (wrong word, number, name, negation; a dropped or
+  added line). What it finds, and the first reader did not flag as serious, is a miss.
+
+### References
+- **Chinese:** Kanripo, through `paddle-table-6388/align.mjs`, where the page aligns. On true print that is another
+  edition (Wenyuange), so it is used to check spans (does the flagged span differ from it) and for CER, not as a human
+  baseline. The translation test is NOT used on Classical Chinese (#7263's calibration: same-reference noise 12.6 per
+  1,000 against 11.2).
+- **Sanskrit:** #7243 used model references (two Opus reads + adjudicator, R1–R2 CER 0.30% on print), not typed
+  text; only 4 BORI pages matched GRETIL. No served Sanskrit book in the frame has a typed reference. A **reference
+  arm**: 20 seeded pages of #7243's 30 print pages, its pass-1 agy Flash-low read (F, its `arms/F.jsonl`) and its
+  frozen reference. The route judge reads F (serious spans checked against the reference: present in it = false
+  alarm) and reads the reference itself (the floor: flags on a near-clean text). Characters (CER, #7243's `deva-n@1`
+  normaliser) are reported for F against the reference.
+- `meaning.mjs` on Sanskrit: only if its A-vs-A floor is usable; with no typed reference in the frame it is not run.
+  Everything without a reference is named in the results.
+
+### Outputs (per language × text)
+Sense errors per 1,000 words (Han characters for Chinese) with a book-cluster bootstrap interval, before and after
+the second reader; share of first-reader serious calls upheld; test–retest agreement on accept (κ and raw) and on
+the page's worst severity; the Step T × route-judge cross-table (cells that do not map are reported, not forced);
+misses on accepted pages; error kinds (`kindOf`); words per serious error in plain terms; 3–5 opened examples per
+severity; the pages where F beats S (by both judges), for a lane to apply later.
+
+### Limits
+At most 500 Opus calls in total (planned ≈ 128 + 60 + 128 + ≤ 100 + 20 + 40); the route judge's pace guard
+(`claudeBlocked`, weekly 85%, session 95%) stops any stage. If the second reader's items would pass the cap, the
+reference arm is cut first, then the miss sample to 5 a language. agy only for reads; no Gemini judge on
+transcriptions; no paid API. No writes to pages, books, rules.json, current.json or lane_judge_verdicts.
+
+### Amendment 1 (2026-11-04, after the draw and before any judging)
+- **Two stored Chinese reads are repetition loops** (`6992f3d9…` p323, 13,116 Han; `69ea51f3…` p21, 6,327 Han; both
+  Flash-Lite). The stored text is judged as served (a reader sees it); the loop is reported by name. No page is written
+  (the brief forbids page and book writes); they are listed on #7263 for containment, and both books are in the
+  `zh-print-bulk-7263` frame.
+- **Words, one denominator a page.** A loop would swamp any per-1,000 rate. A page's words are `words()` of the
+  stored text, except where the stored text is a loop (`loopVerdict().refuse`); there they are the fresh read's words.
+  Both texts of a page use the page's words, so S and F rates share a denominator.
+- **A page the lane refuses to read** (an unsplit spread book, `unsplitReadRefusal`, #7605) is a failed fresh read,
+  counted apart. Its stored text is still judged.
+
+## 2026-11-04 · Severity calibration: how much of "misleading" is a real sense error? (#7263)
+
+Pre-registered in `2026-11-04-severity-calibration-prereg-7263.md` (+ Amendment 1) before any judging. Code
+`scripts/eval/severity-cal-7263/`, every number in `results/results.json`. 464 Opus calls of the 500 cap. No writes
+to pages, books, rules.json, current.json or lane_judge_verdicts.
+
+PRIOR ART: the pre-registration lists it. `scripts/eval/route-judge-6740/judge.mjs` (route judge, unchanged),
+`scripts/eval/flash-reread-5924/T-TASK.md` (Step T, verbatim), `scripts/eval/sa-gr-served-7991/` (rate, bootstrap,
+error kinds), `scripts/eval/sanskrit-gex45-7243/` (references, CER).
+
+**Who reads this.** Derek, and whoever sets the floor for "agy is unacceptable here". **The decision it changes:**
+whether the router rows calling agy Flash-low bad at Sanskrit (125/250 misleading) and Chinese print (37/71, 3 books)
+count as agy failures, and which severity label can be trusted.
+
+### Frame and draw (seed 72630, uniform over books, one body page each)
+- **Sanskrit printed Devanagari:** 511 live books; 87 handwritten excluded → frame 424 books (121,576 pages); 13 books
+  skipped for having no eligible body page (listed in results.json). 30 books drawn.
+- **Chinese true print:** 204 books with owed pages from `frame.mjs` (#8067's branch, Siku excluded). 30 books drawn.
+- **Fresh agy gemini-3.8-flash-low reads (1 page a call, kept):** Sanskrit 27/30 ok, 2 filter cuts (reply cut
+  before its end marker), 1 CLI exit. Chinese 27/30 ok, 1 CLI exit (timeout, 78K chars, likely a loop), 1 not read
+  (unsplit spread), 1 filter cut. These are failed reads, reported apart and not counted as misreads.
+- **Stored reads:** Sanskrit 30/30 served; Chinese 28 ok + **2 stored loops served to readers**
+  (`6992f3d9dc69844b023ff452` p323, 13,116 words; `69ea51f3e0662c881fb5c7a8` p21, 6,327 words; both 3.1 Flash Lite
+  preview). They were judged as served. They were not contained, because this brief forbids writes; they are listed
+  for containment.
+
+### The table (route judge sitting 1; second reader blind to severity)
+Sense error = a misleads or wrong_text span. "After" = upheld by the second reader: the span differs from the print
+AND changes what the sentence says. Intervals: book-cluster bootstrap (rates), Wilson (shares). Chinese is per 1,000
+Han characters.
+
+| Language / text | pages | accepted | per 1k before | per 1k after 2nd reader | one sense error every | serious calls upheld |
+|---|---|---|---|---|---|---|
+| Sanskrit, stored as served | 30 | 7 (23%) | 32.4 [24.5–41.0] | 28.8 [21.6–36.1] | 35 words (≈4 a page) | 121/136 = 89% [83–93] |
+| Sanskrit, fresh agy | 27 | 11 (41%) | 15.8 [10.3–21.3] | 13.4 [9.2–18.1] | 75 words (≈2 a page) | 51/60 = 85% [74–92] |
+| Chinese, stored as served | 30 | 4 (13%) | 18.4 [14.3–23.4] | 17.8 [13.7–22.8] | 56 characters (≈6 a page) | 186/193 = 96% [93–98] |
+| Chinese, fresh agy | 27 | 5 (19%) | 14.8 [10.7–20.1] | 14.2 [9.8–19.5] | 71 characters (≈5 a page) | 141/147 = 96% [91–98] |
+
+**By first severity.** wrong_text upheld 27/27, 18/18, 93/93, 65/65. misleads upheld 94/109 (86%), 33/42 (79%),
+93/100 (93%), 76/82 (93%). Of the 37 calls not upheld, 32 were "different but the same sense", 2 "not different" and
+3 "cannot tell". The judge does not invent differences. Its excess is calling a real but harmless Sanskrit
+variant "misleads" (e.g. a dropped initial ए in एतस्मिन्, व्यापार for व्यापारण).
+
+**Against #7991**, which cut Sanskrit from 26.7 to 11.3 with a second reader: a second reader who is *not* shown the
+first severity cuts far less here (32.4 → 28.8). One likely reason is that #7991's reader saw the first severity and
+re-graded it. That is not tested here.
+
+### Test-retest (route judge, fresh sitting, same packets)
+| | accept agrees | κ | worst severity agrees | κ | "has a serious error" agrees |
+|---|---|---|---|---|---|
+| Sanskrit stored | 26/30 | 0.66 | 19/30 | 0.37 | 28/30 |
+| Sanskrit fresh | 25/27 | 0.85 | 19/27 | 0.54 | 24/27 |
+| Chinese stored | 29/30 | 0.87 | 28/30 | 0.83 | 30/30 |
+| Chinese fresh | 25/27 | 0.71 | 24/27 | 0.78 | 26/27 |
+
+In Sanskrit, 9/30 stored pages swap misleads ↔ wrong_text between sittings. Whether a page has a serious error at all
+is stable; which of the two serious labels it gets is not. This reproduces #6740's 17/40.
+
+### Step T vs route judge (pages; no forced mapping)
+| Step T → route (s1) | Sanskrit | Chinese |
+|---|---|---|
+| misleading (28 sa / 42 zh) | reject 26 (21 wrong_text, 5 misleads), accept 2 | reject 40 (35 wt, 5 ml), accept 2 |
+| flawed (29 / 10) | accept 16 (9 cosmetic, 6 misleads, 1 none), reject 13 (7 ml, 6 wt) | reject 8, accept 2 |
+| sound (0 / 5) | — | accept 5 (3 none, 2 cosmetic) |
+
+**What does not map.** Step T "flawed" covers both sides of the route judge's accept line in Sanskrit: 13/29 flawed
+pages are route rejects, and 6 of those carry a wrong_text call. Step T never said "sound" on a Sanskrit page (0/57),
+while the route judge accepted 18. The route judge also accepts some pages that carry a misleads call (7 Sanskrit).
+Against the second reader: Step T "misleading" pages had an upheld serious span 27/28 (sa) and 41/42 (zh); its
+"flawed" pages had one 19/29 (sa) and 8/10 (zh). In Sanskrit, Step T "flawed" therefore does not mean "no sense
+error".
+
+### Misses on accepted pages (fresh reader on pages the route judge accepted with no serious call)
+Sanskrit 2/10 pages [6–51%], 4 errors, 2.9 per 1k (e.g. फालफलकात् where the page prints फालफल्यात्;
+सामान्य for साम-आदि, "sāma and the other means"). Chinese 1/8 [2–47%], 1 error, 0.9 per 1k (樗 for 梣, beside 秦皮). The judge's
+misses are small next to its calls.
+
+### Controls
+Wrong-page controls (another book's text on this image): the route judge rejected 8/8 at fidelity 1 in both sittings.
+Step T called 66/66 misleading + not_this_leaf (30 wrong-page texts a language + 3 stand-ins for failed fresh reads).
+
+### References
+- **Chinese: effectively none.** Kanripo aligned 1/30 pages (29 have no Kanripo work). No translation test, as
+  the brief directs: it is noise on Classical Chinese (#7263).
+- **Sanskrit: no typed reference exists in the frame.** The reference arm uses #7243's 20 printed-Devanagari pages and
+  their Opus *model* references, which are not human-typed. That makes the REF row a judge floor, not a human
+  baseline. agy fresh on those pages: median CER 1.7% vs the reference, 6/20 accepted, 46 serious calls = 11.7 per 1k
+  words, and 44/46 serious spans are absent from the reference (the reference agrees the text differs there). The
+  reference text itself, judged the same way: 18/19 accepted, 1.6 per 1k (the judge's floor on near-clean text). One
+  page (`sa-8eaa58d0-p117`) had CER 1.0, a whole-page mismatch. `meaning.mjs` was not run: there is no typed Sanskrit
+  reference, so its A-vs-A floor cannot be set.
+- **"Is it really a big deal?"** A 1.7% CER and ~12 serious errors per 1,000 words are the same pages. At ~6–7
+  characters a Devanagari word, 1.7% is roughly one wrong character every 9–10 words. About one in seven of those
+  changes the sense: a number, a name, an instrument, "fire" lost from a list of injuries.
+
+### Error kinds (serious calls upheld / called, sitting 1)
+| | misread word | numerals / citations | dropped line or phrase | margin mishandled | invented text | other |
+|---|---|---|---|---|---|---|
+| Sanskrit stored | 78/82 | 28/33 | 12/16 | 3/4 | — | normalised 0/1 |
+| Sanskrit fresh | 24/29 | 18/21 | 4/4 | 2/3 | 2/2 | normalised 1/1 |
+| Chinese stored | 103/104 | 22/22 | 31/31 | 26/31 | 3/3 | facing page 0/1, normalised 1/1 |
+| Chinese fresh | 77/77 | 17/18 | 17/17 | 20/23 | 5/5 | invented margin 2/2, wrong leaf 1/1, normalised 2/4 |
+
+"Numerals / citations" includes running heads and folio numbers. In both languages a real share of serious calls fall
+in page furniture rather than body text (e.g. [१अ०। read as page "18.0"; folio १९ read as ९३ and १२).
+
+### Opened examples (each opened by the second reader with the page and a crop; one checked by eye here)
+- **wrong_text, upheld.** sa stored 69e72c8c… p384: चातिष्ठच्चूर्णिरक्ते क्षवलपि where the page prints चातिष्ठत्तूष्णीं
+  रक्ते स्रवत्यपि ("stayed silent though blood flowed"). sa stored 69af0be8… p184: पञ्चसप्तमिर्यतम् for
+  पञ्चसप्ततिभिर्युतम्, which loses the problem's number 75. sa stored 6a91e0b1… p23: प्रहाराभिक्षार for
+  प्रहाराग्निक्षार, which drops "fire" (the Hindi gloss confirms). zh stored 69e787e6… p4: label 栴檀 where the boxed label prints 莢蒾
+  (checked by eye here). zh stored 6992cc36… p1: 鄙校其首越能無疑感者其慈則大長之興 for 鄙投其旨趣能無疑惑者哉然則大教之興.
+- **misleads, upheld.** sa stored 69ef2513… p527: उद्यतान् ("raised") for उत्पातान् ("omens"). sa stored
+  69906d23… p22: folios ९३, १२ where both margins print १९. zh stored 69e787e6… p4: 棟 (ridgepole) for 楝
+  (Chinaberry). zh stored 6992cc36… p1: 痴抱 for 寂挹. zh stored 69b99f78… p72: 願 for 福.
+- **misleads, not upheld (different, same sense).** sa: तस्मिन्नन्तरे for एतस्मिन्नन्तरे; व्यापारं for व्यापारणं;
+  verse number ५२ for ५२½. zh fresh 6992ca1b… p6: two columns of main text tagged `<margin>` (markup only, words
+  right). zh fresh 69b99f78… p72: 三藐三菩提 normalised from the page's 三耶三菩意.
+- **cosmetic (as called; not second-read).** sa: नियमस्तथा for नियमास्तथा; मुनिभिदैवतैः (repha dropped). zh:
+  固 for 因 (固慈悲教主). That last one is a character error the judge chose to call cosmetic, which shows the line
+  is soft.
+
+### Pages where the fresh read beats the stored one (for a lane to apply later; nothing written)
+30 pages (20 Sanskrit, 10 Chinese) with fewer upheld serious spans in the fresh read than the stored one. Eight of them
+are accepted fresh but rejected stored. The list, with page ids and stored models, is `fresh_beats_stored` in
+results.json. Add the 2 stored loops above.
+
+### What this does and does not say
+- n = 30 books a language is a calibration of the labels, not a route decision.
+- Stored and fresh differ in more than the engine: stored reads come from older models, mostly 3 Flash preview and 3.1
+  Flash Lite. The Sanskrit intervals do not overlap, so on these pages agy Flash-low is about half the stored error
+  rate. The Chinese intervals overlap.
+- The router's "misleading" share is a page-level threshold. With 2–6 expected sense errors a page, most pages fail
+  at any plausible engine quality, so the share says little about how far apart two engines are. Use the
+  per-1,000 rate.
+
+## 2026-11-04 · First route panel: pre-registration (#7263)
+
+PRIOR ART:
+- `scripts/eval/experiments/2026-11-04-route-free-analyses-7263.md`: the design source, the stop rule and its simulation.
+- `scripts/eval/queue-routes-7853/` and `scripts/eval/router-confirm/confirm.mjs`: the arms, the page rule, the books-weighted draw; restated in `scripts/eval/route-panel-7263/` because each fixes its OUT and frames at module level.
+- `.claude/skills/paired-arm-judge/SKILL.md` and `scripts/eval/route-judge-6740/paired-arm.mjs`: the recipe and its checks.
+
+**Who it is for.** Derek deciding three routes, and later rounds that join the same pages. Derek approved this panel on 2026-11-04.
+
+**Cells and arms** (agy is `gemini-3.8-flash-low`).
+
+| cell | arm | what it is |
+|---|---|---|
+| latin-flash3/print | read4 | fresh read, 4 pages a call, the reread lane's argv under this panel's lane name |
+| | pero4 | PERO draft (GPU) of all 4 block pages, corrected by agy 4 a call, template `agy-0601ef30e816f7a7`, `--over-stored` |
+| | corr | the stored Flash 3 draft corrected by agy, 1 a call, fc template (the table's best agy route, 47/60) |
+| | stored | the stored Flash 3 text; judged last, needed to decide a write, first thing cut if the budget binds |
+| greek-flash3/print | read4 | as above. Measure only: Greek is held (Derek 2026-10-14, #6694), nothing written |
+| | stored | the stored Flash 3 text |
+| german-tr-lite/print | tr1 | `cli-translate.mjs read`, 1 a call, production's previous-page context |
+| | tr4 | `claude-translate.mjs read --cli=agy --per-call=4` |
+| | stored | the stored Flash-Lite English. "The Flash-Lite lane" in the brief is this stored text, because the brief forbids paid API and Flash-Lite is paid |
+
+**Pairs under the stop rule (candidate vs reference).** Latin: read4 vs corr; pero4 vs corr; pero4 vs read4 (the missing same-page GPU + correction against a fresh read). Greek: read4 vs stored. German: tr1 vs stored; tr4 vs stored; tr4 vs tr1. The other direction is reported, not gated.
+
+**Stop rule, as simulated.** d = accept(candidate) - accept(reference), paired, exact posterior (`stop_sim.py` p_within, Dirichlet over the four cells). First look at 20 pages, then every 10. PASS at P(d >= -0.08) >= 0.99. WORSE at P(d < -0.08) >= 0.90. Cap 100 books a cell. "Can't tell" at the cap is a result. An arm stops being read only when every pair touching it is decided. A decided pair stays decided. `look.py` applies it.
+
+**Frame.** The cell's waiting queue. Book: visible, pages_count > 0, language `^Latin`, `^Greek`, or `^German` with year 1500-1800 for translation (`drawGerman`'s frame); not held (`pipeline_auto.hold` absent, status not `held`; for translation a hold of `translate-cli-7075` stays in, because those books wait for exactly this read). Books in the cell's `rules.json` evidence are left out. Page (OCR): `ocr.model` `^gemini-3-flash`, no `ocr.edited_by`, source not manual, not withheld, page type translatable, 300+ characters, not tagged handwritten, interior (15-95% by last page number), `scriptClass` print, image fetchable and 2 KB or more. Page (translation): `translation.model` flash-lite, not stale, not edited, not withheld, English newer than the OCR, OCR 300+ characters, same interior and print rule.
+
+**Draw.** Seed 72631. Books by sequential Poisson PPS on the pages the census counts by stored model (`-ln(U)/w`, U from a hash of seed + book), one page a book, page uniform within the book's eligible interior pages, 130 a cell in a fixed order. Later arms take the first N. The list is frozen by sha256 before the first read. Derek, 2026-11-04: page-level evidence stays out of the public repo, so the list is kept privately (see the results record) with these hashes: latin 76d8eaf6d06cb027..., greek c239242535c1461d..., german 6c0c44373628456e....
+
+**Blocks.** 4 consecutive page numbers holding the drawn page at a seeded position 0-3 (a window that leaves the book or skips a number slides to the nearest that fits; both positions are recorded). Only the drawn page is judged. A page re-read alone after a refused block is recorded by `call_pages`.
+
+**Failures.** A failed, refused or filter-cut read counts as not accepted, costs no judge call, and is reported apart from misreads. This differs from earlier tests, which fell back to the stored text. A correction that answers UNCHANGED serves the stored text and is judged as such. Every text goes through the lane's dry apply with `--emit-written`, so what is judged is what the lane would write. Reads stay on the keep-read path; only repeats use `--fresh`.
+
+**Judge.** Blind Opus, `judgePrompt` unchanged, image attached, one text a call, the same text on a page judged once. No Gemini judging of transcriptions. Ids are opaque.
+
+**Noise floor.** In each cell the repeat arm (Latin read4, Greek read4, German tr4) is read a second time with `--fresh` on the first 30 pages and judged; and 30 same texts are judged again, so judge noise and route noise are separate. Two wrong-page controls per arm per cell (pass: accept false and fidelity <= 2).
+
+**Second reader.** A random 20% of serious spans (misleads, wrong_text), severity not shown. Whole page, no crops (#8136's crops are not merged).
+
+**Reported per arm.** Accept k/n with Wilson and book intervals; sense errors (misleads + wrong_text) per 1,000 words of the stored text, with book intervals; the bands of `regrade.mjs bandOf` (some / many); cost per usable page in tokens with GPU seconds; accept by position in the block; failed reads by kind. If the accept result and the per-1,000 result point different ways, the record says so and does not pick.
+
+**Limits.** 1,300 Opus calls counted from the verdict files; pace guard at weekly 85, session 95. No paid API. agy accounts: james for Latin, milo for Greek and German.
+
+**Writes.** Latin only as far as OCR: each page's best judged read through `cli-ocr.mjs apply` with its guards, lane `route-panel-1-7263`, only where that read is accepted and at least as good as the stored text, after the readers are stated on #7263. Greek: nothing. German: `cli-translate.mjs apply` only where the judged best read beats the stored English or none exists. No `rules.json`, `current.json` or routing-table change: proposals on #7263.
+
+Verdicts go to `lane_judge_verdicts` as `origin: 'test'`, `selection: 'random'`.
+
+### Amendment 1 (2026-11-04 16:35 UTC, before any look at Latin or Greek; German had 28 verdicts and no look)
+
+The first batch ran 9 agy processes a cell beside another job's 26 GB in the 44 GB slice, and reads came back `cli exit -9` (`memory.events`: max 2,036, oom 58). A read the box killed is not a route outcome, so it is re-opened once (#7835 Amendment 1's rule), and a second kill counts as failed, kind `killed`, reported apart. agy now runs one at a time per arm. Other refusals stand as registered. Category `guard` names the lane's own diff and overlap guards ("only 30% of its words are in the stored read", "correction changes 50% of the draft's words", "a diff-guard flag spans a tag"): these count against the arm.
+
+### Amendment 2 (same time)
+
+Because a re-read whose words differ from a bad stored read is refused by the overlap guard, the guard can count against a good read. If budget remains after every pair, each guard-refused text is judged once, as read, descriptively. It does not enter the stop rule or any k/n.
+
+## 2026-11-04 · First route panel: results (#7263)
+
+PRIOR ART:
+- `scripts/eval/experiments/2026-11-04-route-panel-1-prereg-7263.md`: the design, written before any read. This file is its result.
+- `scripts/eval/route-judge-6740/paired-arm.mjs`: the recipe's checks. R1-R5 pass on all three cells; scores are `<cell>-paired-score.json` in the results directory.
+- `scripts/eval/route-judge-6740/defect-rate.py`: not run, because `route-panel-7263/analyze.mjs` applies the per-1,000 rule to these reads and that tool inventories the corpus. `defect-rates.json` carries the same fields.
+
+**Who it is for.** Derek deciding three routes, and later rounds that join the same pages. Readers meet the outcome as better text on the pages written, and as whichever route the queue moves to if a proposal is taken.
+
+**Where the evidence is.** This record holds method and aggregates only (Derek, 2026-11-04). Draws, reads, per-page verdicts and the fixed page order are under private R2 keys `eval-private/route-panel-1-7263/{latin,greek,german,shared}.tar.gz` in bucket `sl-corpus-snapshots`, and in `lane_judge_verdicts` (875 rows, `origin: 'test'`). A later arm joins by the private `panel-list` for its cell, in `shared.tar.gz`. Page images are not archived, because they can be fetched again.
+
+**Reading the tables.** Accept is the decision measure. Sense errors are misleads plus wrong text found by the blind Opus judge against the image. A failed, refused or filter-cut read counts as not accepted and costs no judge call. Fidelity and per-1,000 figures here cover judged reads only; `paired-score.json` counts a failed read at fidelity 1, so its fidelity means are lower. Tokens are subscription agy tokens: `corr` does not include the Flash 3 read it starts from, which was already paid. Stability (two reads agree) and accuracy (the read matches the image) are kept apart throughout.
+
+### (a) Latin print, `latin-flash3/print`
+
+Frame: 13,987 books and 1,201,364 waiting pages in the census. Each page is one book. Reaching the 130 drawn books took 382 tries: 217 were skipped as script unknown, 16 as mixed script, 19 for having no page to draw. Books of unknown script are outside this result, and the same holds in Greek (229 of 370 tried) and German (36 of 173).
+
+| arm | route | accept [Wilson] | wrong-text pages | failed (kinds) | fidelity | sense errors /1k [book] | misleads /1k | wrong text /1k | fit to quote / read / some / many / other | tokens per page read | tokens per usable page | GPU s per usable page |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| read4 | `agy-flash-low@4-read` | 65/100 [0.553, 0.736] | 15 | 10 (failed 5, refused 1, killed 1, guard 3) | 4.06 | 4.91 [3.03, 7.01] | 3.69 | 1.23 | 41 / 11 / 25 / 13 / 0 | 21208 | 32628 | - |
+| pero4 | `pero>agy-flash-low@4` | 43/60 [0.592, 0.815] | 2 | 14 (guard 7, killed 3, failed 4) | 4.39 | 1.82 [0.59, 3.4] | 1.36 | 0.45 | 31 / 4 / 9 / 2 / 0 | 18445 | 25737 | 1.07 |
+| corr | `3flash>agy-flash-low` | 62/100 [0.522, 0.709] | 12 | 17 (guard 13, failed 4) | 4.19 | 4.17 [2.4, 6.28] | 2.86 | 1.31 | 39 / 10 / 24 / 10 / 0 | 32548 | 52498 | - |
+| stored | `3flash` | 59/100 [0.492, 0.681] | 31 | 0 | 3.85 | 7.06 [5.33, 8.8] | 4.93 | 2.13 | 31 / 12 / 28 / 24 / 5 | not read | not read | - |
+
+pero4 stopped at 60 pages because both of its pairs had passed. read4 and corr ran to the cap of 100 because their pair stayed open.
+
+| pair (candidate v reference) | under the rule | stop at n | k v k | only cand / only ref | P(within 8) | end accept d [book] | end /1k cand v ref, d [book], both judged n | point different ways |
+|---|---|---|---|---|---|---|---|---|
+| read4 v corr | CANT_TELL | 100 | 65 v 62 | 16 / 13 | 0.9793 | 0.03 [-0.07, 0.14] (n 100) | 4.58 v 4.28, 0.3 [-0.58, 1.18], n 79 | yes |
+| pero4 v corr | PASS | 60 | 43 v 38 | 11 / 6 | 0.9905 | 0.08 [-0.05, 0.22] (n 60) | 1.89 v 4.03, -2.14 [-4.22, -0.17], n 41 | no |
+| pero4 v read4 | PASS | 30 | 21 v 17 | 5 / 1 | 0.9931 | 0.03 [-0.08, 0.15] (n 60) | 1.82 v 4.25, -2.43 [-4.3, -0.76], n 46 | no |
+| read4 v stored | not under the rule | - | - | - | - | 0.06 [-0.05, 0.17] (n 100) | 4.91 v 6.53, -1.61 [-2.95, -0.3], n 90 | no |
+| pero4 v stored | not under the rule | - | - | - | - | 0.08 [-0.03, 0.22] (n 60) | 1.82 v 5, -3.18 [-5.18, -1.38], n 46 | no |
+| corr v stored | not under the rule | - | - | - | - | 0.03 [-0.06, 0.12] (n 100) | 4.17 v 6.18, -2 [-3, -1.07], n 83 | no |
+
+Controls 8/8 rejected. Route noise (read4 read twice, 30 pages): accept agrees on 23, first only 3, second only 4. Judge noise (same text twice, 28 pages): accept agrees on 26, serious spans 55 v 54. Second reader, blind to severity, 97 spans: 96 different, 0 not, 1 cannot tell, 83 change the sense.
+
+- **Same 60 pages, wrong-text pages:** pero4 2, corr 6, read4 9, stored 18. This count was made after the rule, from the verdicts, and is descriptive.
+- **Accept against noise.** The accept gaps are inside this cell's route noise: 7 of 30 pages flip on a second read of the same arm.
+- **Per-1,000 against noise.** pero4's gap of 2.43 is larger than the route noise of 6.25 v 5.29 (0.96, on 27 pages). It is measured on the 46 pages both arms read, so page mix does not explain it, but pero4's failed pages have no say in it.
+- **read4 v corr: the two measures point different ways.** Accept is 65 v 62 (read4 ahead). Per-1,000 is 4.58 v 4.28 (corr ahead). Both are inside noise. This record does not pick.
+- **Failed reads.** pero4 lost 14 of 60: guard 7, killed 3, failed 4. The 3 killed were slice memory, not the route. Judged as read, guard-refused texts were accepted 4 of 5 on pero4, 3 of 3 on read4, and 8 of 12 on corr with 4 wrong-text pages. So the guard costs pero4 good text, and it catches real faults on corr. Guard-refused judging is descriptive (Amendment 2).
+- **Position in block.** read4 against stored on the same pages, positions 0 to 3: 13 v 14 of 24, 13 v 10 of 20, 21 v 18 of 31, 18 v 17 of 25. No effect.
+
+| comparison | pages | many-error pages | median disagreement | rank correlation [book] | AUC for many errors [book] |
+|---|---|---|---|---|---|
+| two reads vs first read errors | 27 | 4 | 0.111 | 0.09 [-0.29, 0.45] | 0.59 [0.35, 0.82] |
+| two reads vs second read errors | 27 | 5 | 0.111 | 0.22 [-0.19, 0.56] | 0.47 [0.21, 0.75] |
+| stored vs read4: errors of read4 | 90 | 13 | 0.253 | 0.05 [-0.16, 0.26] | 0.5 [0.33, 0.69] |
+| stored vs read4: errors of stored | 90 | 24 | 0.253 | 0.05 [-0.16, 0.27] | 0.54 [0.4, 0.68] |
+| stored vs pero4: errors of pero4 | 46 | 2 | 0.24 | 0.16 [-0.14, 0.43] | 0.59 [0.42, 0.75] |
+| stored vs pero4: errors of stored | 46 | 6 | 0.24 | -0.06 [-0.36, 0.23] | 0.47 [0.17, 0.77] |
+| stored vs corr: errors of corr | 83 | 10 | 0.019 | 0.3 [0.11, 0.49] | 0.65 [0.49, 0.81] |
+| stored vs corr: errors of stored | 83 | 19 | 0.019 | 0.41 [0.22, 0.57] | 0.67 [0.53, 0.79] |
+
+### (b) Greek print, `greek-flash3/print`
+
+Measure only: Greek is held (Derek 2026-10-14, #6694) and nothing was written. Frame: 1,013 books, 370,947 waiting pages.
+
+| arm | route | accept [Wilson] | wrong-text pages | failed (kinds) | fidelity | sense errors /1k [book] | misleads /1k | wrong text /1k | fit to quote / read / some / many / other | tokens per page read | tokens per usable page | GPU s per usable page |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| read4 | `agy-flash-low@4-read` | 16/40 [0.263, 0.554] | 17 | 6 (guard 4, failed 2) | 3.85 | 12.2 [7.94, 16.42] | 6.92 | 5.28 | 12 / 1 / 4 / 15 / 2 | 26945 | 67362 | - |
+| stored | `3flash` | 12/40 [0.181, 0.454] | 23 | 0 | 3.58 | 12.83 [8.61, 16.97] | 6.44 | 6.39 | 5 / 5 / 8 / 16 / 6 | not read | not read | - |
+
+| pair (candidate v reference) | under the rule | stop at n | k v k | only cand / only ref | P(within 8) | end accept d [book] | end /1k cand v ref, d [book], both judged n | point different ways |
+|---|---|---|---|---|---|---|---|---|
+| read4 v stored | PASS | 40 | 16 v 12 | 5 / 1 | 0.9966 | 0.1 [0, 0.22] (n 40) | 12.2 v 12.6, -0.4 [-2.28, 1.39], n 34 | no |
+
+Controls 4/4 rejected. Route noise (read4 read twice, 30 pages): accept agrees on 26, first only 2, second only 2. Judge noise (same text twice, 26 pages): accept agrees on 26, serious spans 179 v 178. Second reader, blind to severity, 104 spans: 104 different, 0 not, 0 cannot tell, 87 change the sense.
+
+- **The measures do not agree in strength.** The rule passes read4 against stored (16 v 12, d +0.10), while per-1,000 shows no measurable change (12.2 v 12.6). Neither is usable: 40% and 30% accepted, with wrong text on 17 and 23 of 40 pages.
+- **Cost.** read4 takes 67,362 tokens per usable page, and 6 of 40 reads failed.
+- **Position.** Position 0 reads worst (1 of 12 v stored 2 of 12), but the stored text is equally bad on those pages, so these are hard pages and not a position effect.
+
+| comparison | pages | many-error pages | median disagreement | rank correlation [book] | AUC for many errors [book] |
+|---|---|---|---|---|---|
+| two reads vs first read errors | 23 | 11 | 0.148 | 0.33 [-0.05, 0.67] | 0.73 [0.5, 0.94] |
+| two reads vs second read errors | 23 | 11 | 0.148 | 0.42 [0.07, 0.69] | 0.73 [0.49, 0.94] |
+| stored vs read4: errors of read4 | 34 | 17 | 0.192 | 0.46 [0.16, 0.69] | 0.73 [0.54, 0.88] |
+| stored vs read4: errors of stored | 34 | 17 | 0.192 | 0.48 [0.19, 0.68] | 0.74 [0.55, 0.91] |
+
+### (c) German translation, `german-tr-lite/print`
+
+Frame: 804 books, 113,952 waiting pages, year 1500-1800. `stored` is the Flash-Lite lane's stored English, because this panel used no paid API. A translation arm can only be as good as the OCR it reads, so a page whose OCR is another leaf's fails on all arms.
+
+| arm | route | accept [Wilson] | wrong-text pages | failed (kinds) | fidelity | sense errors /1k [book] | misleads /1k | wrong text /1k | fit to quote / read / some / many / other | tokens per page read | tokens per usable page | GPU s per usable page |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| tr1 | `agy-flash-low-tr@1` | 54/100 [0.443, 0.634] | 30 | 1 (filter_cut 1) | 3.64 | 5.99 [4.68, 7.44] | 4.22 | 1.77 | 32 / 5 / 37 / 21 / 4 | 9628 | 17830 | - |
+| tr4 | `agy-flash-low-tr@4` | 54/100 [0.443, 0.634] | 31 | 0 | 3.6 | 6.03 [4.85, 7.33] | 4.24 | 1.79 | 25 / 10 / 41 / 20 / 4 | 3495 | 6472 | - |
+| stored | `flash-lite` | 40/100 [0.309, 0.498] | 39 | 0 | 3.32 | 10.12 [8.31, 12] | 7.14 | 2.98 | 20 / 10 / 24 / 38 / 8 | not read | not read | - |
+
+| pair (candidate v reference) | under the rule | stop at n | k v k | only cand / only ref | P(within 8) | end accept d [book] | end /1k cand v ref, d [book], both judged n | point different ways |
+|---|---|---|---|---|---|---|---|---|
+| tr1 v stored | PASS | 20 | 14 v 8 | 6 / 0 | 0.9989 | 0.14 [0.02, 0.25] (n 100) | 5.99 v 10.26, -4.26 [-5.54, -2.9], n 99 | no |
+| tr4 v stored | PASS | 20 | 12 v 8 | 4 / 0 | 0.9954 | 0.14 [0.04, 0.25] (n 100) | 6.03 v 10.12, -4.09 [-5.46, -2.77], n 100 | no |
+| tr4 v tr1 | CANT_TELL | 100 | 54 v 54 | 8 / 8 | 0.9747 | 0 [-0.08, 0.08] (n 100) | 6.07 v 5.99, 0.08 [-0.91, 1.05], n 99 | no |
+
+Controls 6/6 rejected. Route noise (tr4 read twice, 30 pages): accept agrees on 22, first only 5, second only 3. Judge noise (same text twice, 30 pages): accept agrees on 28, serious spans 45 v 50. Second reader, blind to severity, 116 spans: 108 different, 3 not, 5 cannot tell, 97 change the sense.
+
+- **Block size is can't tell by the rule** (54 v 54 at the cap), and per-1,000 agrees (6.07 v 5.99). The rule does not weigh cost: tr4 uses 36% of tr1's tokens per usable page.
+- **A lead, not a finding (post hoc, n = 21).** tr4 against tr1 on the same pages, by position in the block: first 7 v 11 of 21, then 14 v 11 of 21, 16 v 15 of 33, 17 v 17 of 25. The first page of a block may lose context.
+
+| comparison | pages | many-error pages | median disagreement | rank correlation [book] | AUC for many errors [book] |
+|---|---|---|---|---|---|
+| two reads vs first read errors | 30 | 7 | 0.317 | 0.53 [0.2, 0.79] | 0.86 [0.7, 0.98] |
+| two reads vs second read errors | 30 | 5 | 0.317 | 0.44 [0.09, 0.7] | 0.82 [0.61, 0.97] |
+| stored vs tr1: errors of tr1 | 99 | 21 | 0.483 | 0.08 [-0.12, 0.3] | 0.61 [0.47, 0.75] |
+| stored vs tr1: errors of stored | 99 | 42 | 0.483 | 0.22 [0.02, 0.41] | 0.62 [0.5, 0.74] |
+| stored vs tr4: errors of tr4 | 100 | 20 | 0.47 | 0.21 [0.01, 0.4] | 0.57 [0.44, 0.71] |
+| stored vs tr4: errors of stored | 100 | 42 | 0.47 | 0.32 [0.14, 0.49] | 0.68 [0.57, 0.78] |
+
+### Does disagreement predict errors? (Derek, 2026-11-04)
+
+Stability against judged accuracy, with many errors at 3 or more on a page. Two reads of the same arm predict errors usefully in German translation (AUC 0.86 [0.70, 0.98], first read's errors, 7 many-error pages of 30), more weakly in Greek (0.73 [0.50, 0.94], 11 of 23), and not in Latin print (0.59 [0.35, 0.82], 4 of 27). Stored against fresh reaches 0.73 to 0.74 in Greek, 0.65 to 0.67 on Latin corr, 0.57 to 0.68 in German, and 0.47 to 0.59 on Latin read4 and pero4. Intervals are wide and few pages carry many errors, so this does not license stability as a stand-in for accuracy.
+
+### What was written, and what reads it
+
+- **Latin: 73 pages** (read4 42, corr 18, pero4 13) through `cli-ocr.mjs apply` with every guard, lane `route-panel-1-7263`, and the stored hash matched the judged text on all 73. 21 of them are ties at equal fidelity and serious count, written under the pre-registered "at least as good". Skipped: stored better 4, best read not accepted 13, best read is stored 4, no judged read 6. 58 of those pages carry a translation and are stamped stale, 54 newly and 4 already. Nothing re-translates them automatically: `withhold-stale-translations` only takes down its listed lanes and this lane is not one, and the one `--stale` cron drains another lane. So those 58 show new Latin beside the older English until someone runs a lane on them. Readers see the new text at once, within page caching. Undo is `revert-run` per run; the run ids are in `page_revisions` and the private archive.
+- **German: 30 pages** (tr4 18, tr1 12) replacing stored English, hash verified on all 30. Skipped: not better 32, not accepted 38.
+- **Greek: nothing.**
+- **Contained: 5 pages in 5 books** (1 Latin, 4 German). Stored OCR and English belong to another leaf, as found by the judge and an independent Opus reader with the image. Held with reason `wrong-leaf-found-route-panel-7263`, release on #7263, withholding verified.
+- **Not contained:** 1 German page where the OCR is this leaf but the English is margin notes plus an invented summary. This is reported as a finding.
+- **Lead, not swept:** 3 of the 4 contained German pages have the image's OCR on the page before, and all 4 are from one import batch, so this may be a whole-book offset. It needs an alignment check for that batch (`paired-artifacts.md`).
+
+### Proposals (not applied)
+
+- **Latin print: switch the Flash 3 queue to PERO>agy@4, with read@4 where no GPU is available or the read fails.** The rule passes both pairs, per-1,000 and same-page wrong-text counts agree, and it costs least per usable page. The caveats are 14 of 60 failed and a guard that refuses mostly good PERO text. read@4 v correction is can't tell.
+- **Greek print: keep, held.** read@4 is not worse by the rule, but neither arm is usable, 6 of 40 reads failed, and it takes 67,362 tokens per usable page.
+- **German translation: switch Flash-Lite to agy.** The rule passes and per-1,000 agrees. 4 a call v 1 a call is can't tell. @4 is the cheaper at 36% of the tokens, with the first-in-block lead open: Derek's call.
+
+**Limits.** 1,064 of 1,300 Opus calls. The weekly meter went from 38 to 48. No paid API. Judge is one family (Opus), and no Gemini judged transcriptions.
+
 ## 2026-11-04 · Route-free analyses before the first paid panel (#7263)
 
 PRIOR ART:
@@ -2327,6 +2747,34 @@ sampler export, `regrade.mjs`, the router table build since #8135) filters to li
 reach no `book_checks` and no defect rate. `correction-pass-7818/frame.mjs` and `fraktur-paired-7835/frame.mjs` read
 test rows only to exclude judged pages from their own draws. `router-table/test-evidence.mjs` (#8132) was closed and
 is not on main.
+
+## 2026-11-04 · JCB pre-1600 first reads: which languages may the GPU-draft route read? (#8049)
+
+Part of #8049.
+
+PRIOR ART: `scripts/eval/route-judge-6740/cheap-routes-7701/run.mjs` (the cell-test shape and the Beta rule),
+`en-pre1800-gpu-6871` (a bare GPU read fails on pre-1800 print; never served), `gpu-latin-route-pilot-7263`,
+`euro-print-gpu-correct-e3-e5-7567` (the per-language draft engines).
+
+**Rule** (per cell): at least 10 judged, wrong text ≤ 4%, P(acc ≥ 0.8) ≥ 0.9 under Beta(1+k, 1+n−k) over written
+pages, wrong-page controls rejected, planted errors not both missed. A second draw is taken from books not already
+sampled, and pooled only for a language whose first draw came close (Latin: 14/15, half of its pages written; French: 25/28).
+
+| cell | draft | drawn | written | accepted | wrong text | P | decision |
+|---|---|---:|---:|---:|---:|---:|---|
+| Latin (2 draws) | PERO | 60 | 30 | 29 | 0 | 0.99 | PASS |
+| French (2 draws) | LightOnOCR | 60 | 55 | 51 | 2 | 0.99 | PASS |
+| Portuguese | LightOnOCR | 30 | 29 | 26 | 1 | 0.877 | HOLD |
+| Italian | LightOnOCR | 30 | 27 | 23 | 3 | 0.686 | HOLD |
+| Spanish | LightOnOCR | 30 | 18 | 15 | 1 | 0.548 | HOLD |
+| English | LightOnOCR | 30 | 25 | 19 | 5 | 0.253 | HOLD |
+| German | LightOnOCR | 30 | 19 | 13 | 5 | 0.086 | HOLD |
+| Dutch | LightOnOCR | 30 | 22 | 15 | 3 | 0.071 | HOLD |
+| Latin fallback | agy-flash-low@4 | 30 | 24 | 18 | 5 | 0.221 | HOLD |
+
+Why a page goes unwritten: the apply guards decline it. Most often a diff-guard flag that is not a like-for-like
+substitution, or one that spans a tag. Also: a corrector `<script>handwritten|mixed</script>` tag, under N% of the
+words in the GPU draft, or no draft. These refusals are guards working, not reads lost to quota.
 
 ## 2026-11-04 · Opus is not the production translator for the five hardest languages (#6553)
 
