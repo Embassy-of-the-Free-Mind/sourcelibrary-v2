@@ -254,7 +254,7 @@ function rates() {
   for (const [cell, x] of Object.entries(score.cells)) {
     const rows = x.rows.filter((r) => r.judged), n = (s) => rows.reduce((a, r) => a + r.defects.filter((d) => d.severity === s).length, 0);
     const w = rows.reduce((a, r) => a + words(written[cell][ROUTE][r.page_id].text), 0), per1k = (s) => Math.round((n(s) / w) * 1e6) / 1e3;
-    study_cells[cell] = { [ROUTE]: { pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size, words: w, fidelity_mean: Math.round((rows.reduce((a, r) => a + r.fidelity, 0) / rows.length) * 100) / 100, cosmetic_per_1k: per1k('cosmetic'), misleads_per_1k: per1k('misleads'), wrong_text_per_1k: per1k('wrong_text') } };
+    study_cells[cell] = { route: ROUTE, pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size, words: w, fidelity_mean: Math.round((rows.reduce((a, r) => a + r.fidelity, 0) / rows.length) * 100) / 100, cosmetic_per_1k: per1k('cosmetic'), misleads_per_1k: per1k('misleads'), wrong_text_per_1k: per1k('wrong_text') };
   }
   W('defect-rates.json', { _about: 'Defects per 1,000 words of the kept reads arm c refused (#7701), from the stored Opus verdicts, without the recheck calibration or by-book intervals of defect-rate.py (n = 15 a stratum). The decision is the k/n rule of RULE.md.', study_cells, router_table_latin_blank: { 'pero>agy-flash-low-written': pick(live['pero>agy-flash-low-written']), 'agy-flash-low@4-written': pick(live['agy-flash-low@4-written']) } });
   console.log(JSON.stringify(study_cells));

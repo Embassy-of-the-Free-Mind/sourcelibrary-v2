@@ -2,26 +2,24 @@
  "_about": "Defects per 1,000 words of the kept reads arm c refused (#7701), from the stored Opus verdicts, without the recheck calibration or by-book intervals of defect-rate.py (n = 15 a stratum). The decision is the k/n rule of RULE.md.",
  "study_cells": {
   "la-armc-refused-share": {
-   "pero>agy-flash-low-kept": {
-    "pages": 15,
-    "books": 15,
-    "words": 10334,
-    "fidelity_mean": 3.6,
-    "cosmetic_per_1k": 4.161,
-    "misleads_per_1k": 4.935,
-    "wrong_text_per_1k": 2.806
-   }
+   "route": "pero>agy-flash-low-kept",
+   "pages": 15,
+   "books": 15,
+   "words": 10334,
+   "fidelity_mean": 3.6,
+   "cosmetic_per_1k": 4.161,
+   "misleads_per_1k": 4.935,
+   "wrong_text_per_1k": 2.806
   },
   "la-armc-refused-putback": {
-   "pero>agy-flash-low-kept": {
-    "pages": 15,
-    "books": 15,
-    "words": 7020,
-    "fidelity_mean": 3.53,
-    "cosmetic_per_1k": 4.416,
-    "misleads_per_1k": 3.846,
-    "wrong_text_per_1k": 0.855
-   }
+   "route": "pero>agy-flash-low-kept",
+   "pages": 15,
+   "books": 15,
+   "words": 7020,
+   "fidelity_mean": 3.53,
+   "cosmetic_per_1k": 4.416,
+   "misleads_per_1k": 3.846,
+   "wrong_text_per_1k": 0.855
   }
  },
  "router_table_latin_blank": {
