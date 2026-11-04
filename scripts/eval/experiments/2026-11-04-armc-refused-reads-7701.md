@@ -12,6 +12,7 @@ decision: "Do not apply the kept reads. Keep arm C off. Pending Derek's decision
 superseded_by: null
 issue: [7701, 6740, 8110, 8111]
 router_evidence: [latin-blank]
+defect_rates: scripts/eval/route-judge-6740/results/armc-refused-7701-2026-11-04/defect-rates.json
 ---
 PRIOR ART: `2026-10-29-cheap-routes-7701.md` (the 18/18 written row this corrects; its harness, `cheap-routes-7701/run.mjs`, is the source of `armc-refused-7701/run.mjs`, and `judge.mjs judge` runs unchanged) and `2026-10-29-euro-armc-production-pilot-7567.md` (arm C on other languages).
 
@@ -34,6 +35,17 @@ Arm C (PERO GPU draft, agy Flash-low with the image, #7695 put-back) never retri
 | put_back_unsafe | 9,615 pages, 95 books | 8/15 | **3/15** | 0.007 | 7 / 8 / 0 | re-read with read@4 |
 
 Defects, pages with the class (`page-error-taxonomy.md`). Share: O6 12, O8 7, O5 4, O16 3, E2 3, O7 3, T6 2, O1, O12, O4, T5 1. Defects by severity: wrong text 29, misleads 51, cosmetic 43. Put-back: O6 13, O7 6, O8 6, E2 4, O12 3, O11, O2, O16, O14 1. By severity: wrong text 6, misleads 27, cosmetic 31.
+
+**Defects per 1,000 words** (`defect-rates.json`, n = 15 a stratum, no recheck calibration or by-book interval; beside the k/n rule, it does not move the decision).
+
+| route | pages | words | misleads | wrong text | fidelity |
+|---|---:|---:|---:|---:|---:|
+| kept, share stratum | 15 | 10,334 | 4.94 | 2.81 | 3.60 |
+| kept, put-back stratum | 15 | 7,020 | 3.85 | 0.86 | 3.53 |
+| `pero>agy-flash-low-written` (router table, pooled with the sampler) | 90 | 23,507 | 4.21 | 2.34 | 3.83 |
+| `agy-flash-low@4-written` (router table) | 26 | 5,896 | 1.53 | 0.17 | 4.46 |
+
+The refused reads are not clearly worse than what arm C wrote once the sampler's pages are pooled in, though those 90 pages come from only 22 books. Read@4's written pages are far cleaner than both, on other pages. Its rate on these refused pages is not measured.
 
 **By eye: 10 pages, images in the job's scratch.** Too few to estimate a false-alarm rate; they only bound it.
 - **Five rejects, five confirmed, no false alarm.** "Idem laborem" where a blue initial gives "Quem"; "si per te" for "non per te"; "proportionem" for ꝓ pctō; "hominis" for "domini"; "c. finali" for "c.j". One read has literal Chinese inside a Latin word ("vel跳转tesum").

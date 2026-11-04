@@ -13,6 +13,7 @@
  *   node run.mjs plant --out=DIR                                 2 planted items a stratum, then judge again
  *   node run.mjs score --out=DIR                                 RULE.md's measures and decision -> DIR/score.json
  *   node --env-file=… run.mjs apply --out=DIR [--apply]          the accepted pages, through cli-ocr.mjs apply
+ *   node run.mjs rates --out=DIR                                 defects per 1,000 words and fidelity -> DIR/defect-rates.json
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,6 +22,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from '../../lib/paired-stats.mjs';
 import { plantError, scorePlant } from '../../lib/plant-ocr-errors.mjs';
+import { words } from '../defect-rate.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const STAGE = process.argv[2];
@@ -66,7 +68,7 @@ async function census() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const pages = c.db('bookstore').collection('pages'), idx = localIndex();
   const refused = ledger.filter((r) => r.outcome !== 'written'), ids = refused.map((r) => r.page_id), read = new Set();
-  for (let i = 0; i < ids.length; i += 2000) for await (const p of pages.find({ id: { $in: ids.slice(i, i + 2000) } }, { projection: { id: 1, has: { $gt: [{ $strLenCP: { $trim: { input: { $ifNull: ['$ocr.data', ''] } } } }, 0] } } })) if (p.has) read.add(p.id);
+  for (let i = 0; i < ids.length; i += 2000) for await (const p of pages.find({ id: { $in: ids.slice(i, i + 2000) } }, { projection: { id: 1, has: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: { $trim: { input: '$ocr.data' } } }, 0] }] } } }).batchSize(1000)) if (p.has) read.add(p.id);
   await c.close();
   const rows = {};
   const usableRows = [];
@@ -243,6 +245,20 @@ function apply() {
   W(`apply-${APPLY ? 'done' : 'dry'}.json`, res);
 }
 
-const stages = { census, draw, written, packet, plant, score, apply };
+const stages = { census, draw, written, packet, plant, score, apply, rates };
+/** The per-1,000-words reading eval-design.md 10.3 asks for. Beside the k/n rule of RULE.md: it does not move that decision. */
+function rates() {
+  const score = J('score.json'), written = J('written.json'), live = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/eval/estimator/router-table/defect-rates.json'), 'utf8')).cells['latin-blank'];
+  const pick = (x) => Object.fromEntries(['pages', 'books', 'words', 'fidelity_mean', 'cosmetic_per_1k', 'misleads_per_1k', 'wrong_text_per_1k'].map((k) => [k, x[k]]));
+  const study_cells = {};
+  for (const [cell, x] of Object.entries(score.cells)) {
+    const rows = x.rows.filter((r) => r.judged), n = (s) => rows.reduce((a, r) => a + r.defects.filter((d) => d.severity === s).length, 0);
+    const w = rows.reduce((a, r) => a + words(written[cell][ROUTE][r.page_id].text), 0), per1k = (s) => Math.round((n(s) / w) * 1e6) / 1e3;
+    study_cells[cell] = { [ROUTE]: { pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size, words: w, fidelity_mean: Math.round((rows.reduce((a, r) => a + r.fidelity, 0) / rows.length) * 100) / 100, cosmetic_per_1k: per1k('cosmetic'), misleads_per_1k: per1k('misleads'), wrong_text_per_1k: per1k('wrong_text') } };
+  }
+  W('defect-rates.json', { _about: 'Defects per 1,000 words of the kept reads arm c refused (#7701), from the stored Opus verdicts, without the recheck calibration or by-book intervals of defect-rate.py (n = 15 a stratum). The decision is the k/n rule of RULE.md.', study_cells, router_table_latin_blank: { 'pero>agy-flash-low-written': pick(live['pero>agy-flash-low-written']), 'agy-flash-low@4-written': pick(live['agy-flash-low@4-written']) } });
+  console.log(JSON.stringify(study_cells));
+}
+
 if (!stages[STAGE]) { console.error(`usage: run.mjs ${Object.keys(stages).join('|')} --out=DIR`); process.exit(2); }
 await stages[STAGE]();
