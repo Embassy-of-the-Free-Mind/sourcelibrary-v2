@@ -24,7 +24,7 @@ export const PARTNERS_HTML = `
       <li><a href="#v2-illustrated"><strong>Illustrated</strong><span>235,000 pictures cropped from the page</span></a></li>
       <li><a href="#v2-reviewed"><strong>Checked</strong><span>Language by language, with scholars</span></a></li>
       <li><a href="#v2-rights"><strong>Rights</strong><span>Stated book by book</span></a></li>
-      <li><a href="#v2-card"><strong>Dataset card</strong><span>Size, schema, files and limits</span></a></li>
+      <li><a href="#v2-card"><strong>Dataset card</strong><span>Size, embeddings, quality and format</span></a></li>
       <li><a href="#v2-available"><strong>Available now</strong><span>Streaming API and MCP</span></a></li>
     </ol>
   </div>
@@ -36,23 +36,55 @@ export const PARTNERS_HTML = `
       <header class="ds-head">
         <p class="ds-kicker">Dataset card</p>
         <h2 id="ds-title">Source Library historical corpus</h2>
-        <p class="ds-ver"><code>v0</code> · snapshot 30 October 2026 · quarterly refresh planned</p>
-        <p class="ds-sum">Page images, original-language transcriptions and aligned English translations, with rights and provenance on every record. This is the part of the public library offered for licence.</p>
+        <p class="ds-sum">Page scans, transcriptions in the original script and aligned English translations of historical books and manuscripts. Figures describe the whole corpus; a licence covers the part cleared book by book, listed under What a licence covers.</p>
+      </header>
+      <dl class="ds-specs">
+        <div><dt>Books</dt><dd>131,547, from 30+ libraries</dd></div>
+        <div><dt>Page images</dt><dd>29.8M</dd></div>
+        <div><dt>Transcribed</dt><dd>9.6M pages, original script</dd></div>
+        <div><dt>Translated</dt><dd>5.7M pages, aligned to the original</dd></div>
+        <div><dt>Tokens</dt><dd>~21B: 15B original, 6B English</dd></div>
+        <div><dt>Illustrations</dt><dd>235,714 crops, with boxes, types and descriptions</dd></div>
+        <div><dt>First English translations</dt><dd>11,357 works</dd></div>
+        <div><dt>Storage</dt><dd>32 TB of images</dd></div>
+        <div><dt>Languages</dt><dd>50+, led by Latin and classical Chinese</dd></div>
+        <div><dt>Period</dt><dd>Mostly the 1400s to the 1800s</dd></div>
+      </dl>
+      <div class="ds-block">
+        <h3>Embeddings</h3>
+        <table class="ds-mini">
+          <tr><td>Translated pages</td><td>768-d vectors, Gemini Embedding 2</td></tr>
+          <tr><td>Books</td><td>67,916 vectors, 768-d, Gemini Embedding 2</td></tr>
+          <tr><td>Illustration descriptions</td><td>246,497 vectors, 768-d, Gemini Embedding 2</td></tr>
+          <tr><td>Images</td><td>509,062 vectors, 512-d, CLIP</td></tr>
+          <tr><td>Page concepts</td><td>325,308 vectors, 768-d, experimental</td></tr>
+        </table>
+      </div>
+      <div class="ds-block">
+        <h3>Quality</h3>
+        <div class="ds-bands" role="img" aria-label="800 pages: 43% clean, 8% small slips, 24% a word that changes the sense, 18% a word, number or line differs, 7% mostly wrong or another page's text">
+          <i class="q1" style="flex:43"></i><i class="q2" style="flex:8"></i><i class="q3" style="flex:24"></i><i class="q4" style="flex:18"></i><i class="q5" style="flex:7"></i>
+        </div>
+        <p class="ds-bandkey"><span><i class="q1"></i>Clean 43%</span><span><i class="q2"></i>Small slips 8%</span><span><i class="q3"></i>A word changes the sense 24%</span><span><i class="q4"></i>A word, number or line differs 18%</span><span><i class="q5"></i>Mostly wrong or another page 7%</span></p>
+        <p class="ds-note">Transcriptions, strictest reading: one misread word moves a page down a band. 800 pages from 160 random books, AI reviewer against each photograph, 31 October 2026.</p>
+        <table class="ds-mini">
+          <tr><td>Beside the Internet Archive's OCR</td><td>1.1 meaning-changing errors per 1,000 words, against 10.9 (60 random English pages, 1800–1930)</td></tr>
+          <tr><td>Beside typed editions</td><td>2.2 errors per 1,000 words, against 3.6 (65 printed pages)</td></tr>
+          <tr><td>By language, per 1,000 words</td><td>English 0.9, German 4.0, French 4.5, Latin 6.2, Greek 19.3, Sanskrit 30.9</td></tr>
+          <tr><td>Translation</td><td>15% of translated pages carry a major error in the English; about a third are wrong somewhere once a misread transcription is counted</td></tr>
+        </table>
+        <p class="ds-note">Reviewed by AI, not by people; samples for some languages are small. Methods and intervals are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</p>
+      </div>
+      <div class="ds-block ds-tagblock">
         <dl class="ds-tags">
           <div><dt>Modalities</dt><dd><span>Text</span><span>Image</span></dd></div>
-          <div><dt>Tasks</dt><dd><span>Image-to-text</span><span>Translation</span><span>Text-image retrieval</span><span>Object detection</span><span>Image classification</span></dd></div>
+          <div><dt>Tasks</dt><dd><span>Image-to-text</span><span>Translation</span><span>Text-image retrieval</span><span>Object detection</span></dd></div>
           <div><dt>Formats</dt><dd><span>JSONL (gzip)</span><span>JPEG</span></dd></div>
-          <div><dt>Size</dt><dd><span>1M–10M pages</span><span>100K–1M illustrations</span></dd></div>
-          <div><dt>Languages</dt><dd><span>Latin</span><span>German</span><span>Greek</span><span>French</span><span>Chinese</span><span>+ 203 labels</span></dd></div>
-          <div><dt>Licence</dt><dd><span>By rights tier</span><span>Translations: CC share-alike</span></dd></div>
-          <div><dt>Sources</dt><dd><span>59 libraries and aggregators</span></dd></div>
-          <div><dt>Period</dt><dd><span>79% of pages dated 1400–1899</span></dd></div>
+          <div><dt>Access</dt><dd><span>Streaming API</span><span>MCP</span><span>Licence for training</span></dd></div>
         </dl>
-      </header>
-
-      <div class="ds-body">
-        <div class="ds-main">
-          <h3>Subsets</h3>
+      </div>
+      <div class="ds-main">
+        <details class="ds-more"><summary>What a licence covers</summary>
           <div class="ds-scroll">
             <table class="ds-t ds-num">
               <thead><tr><th>Tier</th><th>Books</th><th>Text pages</th><th>English pages</th><th>Original words</th><th>English words</th><th>Page images</th><th>Illustrations</th></tr></thead>
@@ -64,10 +96,10 @@ export const PARTNERS_HTML = `
               </tbody>
             </table>
           </div>
-          <p class="ds-note"><b>A</b>: cleared by the library. <b>B</b>: library terms on the scans, under legal review. <b>U</b>: no terms stated; illustrations from before 1900 are offered.</p>
-
-          <details class="ds-more"><summary>What the tiers mean</summary><p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library's manifest or record states no terms for its scans; most of these books come from the Internet Archive. Illustrations from U books dated before 1900 are offered. Tiers record what the library says about its scans, not the age of the work: about 20,600 illustrations held back in B also come from books dated before 1900.</p></details>
-          <details class="ds-more"><summary>Page record</summary>
+          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library's manifest or record states no terms for its scans; most of these books come from the Internet Archive. Illustrations from U books dated before 1900 are offered. Tiers record what the library says about its scans, not the age of the work: about 20,600 illustrations held back in B also come from books dated before 1900.</p>
+        </details>
+        <details class="ds-more"><summary>Record format</summary>
+          <h3>Page record</h3>
           <div class="ds-scroll">
             <table class="ds-t ds-schema">
               <thead><tr><th>Field</th><th>Type</th><th>Contents</th></tr></thead>
@@ -86,24 +118,7 @@ export const PARTNERS_HTML = `
               </tbody>
             </table>
           </div>
-
-          </details>
-          <details class="ds-more"><summary>Example row</summary>
-          <div class="ds-row">
-            <a href="https://sourcelibrary.org/book/de-rege-et-regis-institutione-with-de-ponderibus-et-mensuris-mariana/page/6991e1a2339ebc850994a63e"><img src="/ai-partners/img/row-mariana.jpg" alt="Printed Latin page numbered 109, headed Liber Secundus" width="360" height="655" loading="lazy"></a>
-            <div>
-              <p class="ds-lab"><code>original</code></p>
-              <p class="ds-text">&lt;page-num&gt;109&lt;/page-num&gt;<br>&lt;header&gt;LIBER SECVNDVS.&lt;/header&gt;<br>&lt;sig&gt;Q&lt;/sig&gt;<br><br>ges à Ioue prognatos cecinit. Heroes Homerus, quos immortali laude ornare volebat, certis Dijs caros esse finxit …</p>
-            </div>
-            <div>
-              <p class="ds-lab"><code>english</code></p>
-              <p class="ds-text">&lt;page-num&gt;109&lt;/page-num&gt;<br>&lt;header&gt;BOOK SECOND.&lt;/header&gt;<br>&lt;sig&gt;Q&lt;/sig&gt;<br><br>sang that kings were born of Jove. Homer imagined that the heroes whom he wished to adorn with immortal praise were dear to certain gods …</p>
-            </div>
-          </div>
-          <p class="ds-note">Juan de Mariana, <i>De rege</i>, 1599. Tier A, public domain, scan from the Internet Archive; transcription and translation by <code>gemini-3-flash-preview</code>. Text shortened here.</p>
-
-          </details>
-          <details class="ds-more"><summary>Illustration record</summary>
+          <h3>Illustration record</h3>
           <div class="ds-scroll">
             <table class="ds-t ds-schema">
               <thead><tr><th>Field</th><th>Type</th><th>Contents</th></tr></thead>
@@ -120,24 +135,21 @@ export const PARTNERS_HTML = `
               </tbody>
             </table>
           </div>
-
-          </details>
-          <details class="ds-more"><summary>Files</summary>
-          <div class="ds-scroll">
-            <table class="ds-t ds-schema">
-              <thead><tr><th>File</th><th>Rows</th><th>Contents</th></tr></thead>
-              <tbody>
-                <tr><td><code>manifest.jsonl.gz</code></td><td>28,700</td><td>One row per book: rights, engines, page and word counts</td></tr>
-                <tr><td><code>excluded.jsonl.gz</code></td><td>187,555</td><td>Every excluded book and page, with the reason</td></tr>
-                <tr><td><code>sample-5000.jsonl.gz</code></td><td>5,000</td><td>Tier A page records from 2,256 books in 111 languages</td></tr>
-                <tr><td><code>DATASHEET.md</code>, <code>release.json</code></td><td></td><td>How the set was built; counts, commit and SHA-256 of every file</td></tr>
-              </tbody>
-            </table>
+          <h3>Example row</h3>
+          <div class="ds-row">
+            <a href="https://sourcelibrary.org/book/de-rege-et-regis-institutione-with-de-ponderibus-et-mensuris-mariana/page/6991e1a2339ebc850994a63e"><img src="/ai-partners/img/row-mariana.jpg" alt="Printed Latin page numbered 109, headed Liber Secundus" width="360" height="655" loading="lazy"></a>
+            <div>
+              <p class="ds-lab"><code>original</code></p>
+              <p class="ds-text">&lt;page-num&gt;109&lt;/page-num&gt;<br>&lt;header&gt;LIBER SECVNDVS.&lt;/header&gt;<br>&lt;sig&gt;Q&lt;/sig&gt;<br><br>ges à Ioue prognatos cecinit. Heroes Homerus, quos immortali laude ornare volebat, certis Dijs caros esse finxit …</p>
+            </div>
+            <div>
+              <p class="ds-lab"><code>english</code></p>
+              <p class="ds-text">&lt;page-num&gt;109&lt;/page-num&gt;<br>&lt;header&gt;BOOK SECOND.&lt;/header&gt;<br>&lt;sig&gt;Q&lt;/sig&gt;<br><br>sang that kings were born of Jove. Homer imagined that the heroes whom he wished to adorn with immortal praise were dear to certain gods …</p>
+            </div>
           </div>
-          <p class="ds-note">The full page text ships under a licence. The illustrations are not yet in the v0 files; we export them as a separate table on request. A second sample of ten complete books with notes is also available.</p>
-
-          </details>
-          <details class="ds-more"><summary>Known limits</summary>
+          <p class="ds-note">Juan de Mariana, <i>De rege</i>, 1599. Tier A, public domain, scan from the Internet Archive; transcription and translation by <code>gemini-3-flash-preview</code>. Text shortened here.</p>
+        </details>
+        <details class="ds-more"><summary>Known limits</summary>
           <ul class="ds-limits">
             <li>Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</li>
             <li>The text is machine-written. Scholars check hard cases by language; most pages have had no human reader. Error rates are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</li>
@@ -146,8 +158,8 @@ export const PARTNERS_HTML = `
             <li>The 208 languages are catalogue labels, including mixed ones such as Greek-Latin. Latin is 41% of the pages.</li>
             <li>Illustration types and scores are model output. One graded sample is on this page under <a href="#v2-illustrated">Illustrated</a>.</li>
           </ul>
-          </details>
-        </div>
+        </details>
+        <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request the datasheet and a sample</a></p>
       </div>
     </article>
   </div>
