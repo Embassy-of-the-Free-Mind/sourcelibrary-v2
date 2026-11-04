@@ -29,7 +29,7 @@ export default function TermsPage() {
         </p>
 
         <p className="text-sm text-muted">
-          <strong>Effective date:</strong> April 30, 2026
+          <strong>Effective date:</strong> November 5, 2026
           &middot; Operated by the Embassy of the Free Mind, Amsterdam, the Netherlands.
         </p>
 
@@ -73,33 +73,34 @@ export default function TermsPage() {
           </h2>
           <p className="text-secondary mb-4">
             Our AI-generated translations, OCR transcriptions, summaries, indexes, image
-            descriptions, and other derived content are licensed
-            under{' '}
+            descriptions, and other derived content that we serve from November 5, 2026
+            are licensed under{' '}
             <a
-              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
               className="text-accent-rust hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
-            </a>.
+              Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+            </a>. Copies obtained earlier under CC BY-SA 4.0 keep that license. Text from
+            other projects keeps its own license.
           </p>
           <div className="bg-cream rounded-lg p-6 mb-4">
             <p className="text-secondary font-medium mb-2">You are free to:</p>
             <ul className="text-secondary space-y-1 list-disc list-inside">
-              <li>Share, copy, and redistribute the material</li>
-              <li>Adapt, remix, and build upon it</li>
-              <li>Use it for commercial purposes</li>
+              <li>Read, quote, teach with, and research from the material</li>
+              <li>Read and quote it through an AI assistant acting for you</li>
+              <li>Share, copy, and redistribute it for non-commercial purposes</li>
+              <li>Adapt and build upon it for non-commercial purposes</li>
             </ul>
             <p className="text-secondary font-medium mt-4 mb-2">Under these conditions:</p>
             <ul className="text-secondary space-y-1 list-disc list-inside">
               <li><strong>Attribution:</strong> credit Source Library with a link</li>
-              <li><strong>ShareAlike:</strong> distribute derivatives under the same or compatible license</li>
+              <li><strong>NonCommercial:</strong> for commercial use, ask us first</li>
+              <li><strong>ShareAlike:</strong> distribute derivatives under the same license</li>
             </ul>
           </div>
           <p className="text-secondary">
-            This applies to individuals, researchers, educators, independent developers,
-            small organizations, and anyone using the content directly.
             AI-generated content may contain errors. Verify against original sources for academic citation.
           </p>
         </section>
