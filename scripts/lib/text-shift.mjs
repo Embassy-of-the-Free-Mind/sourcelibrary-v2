@@ -20,6 +20,7 @@
  * that verdict in. Anything other than 'shift+1' produces zero moves — fail
  * closed, so a miswired caller cannot shift an aligned book.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 /**
  * The fields that travel with a page's text. Mirrors
@@ -169,7 +170,7 @@ export function repointChapters(chapters, segments, headingOn, idOf) {
 
 /** Heading test for repointChapters: the title's first four long words all occur in the text. */
 export function headingInText(title, text) {
-  const norm = (s) => String(s || '').toLowerCase().replace(/<[^>]+>/g, ' ').replace(/[^\p{L}\p{N} ]/gu, ' ').replace(/\s+/g, ' ');
+  const norm = (s) => stripMarkupTags(String(s || '')).toLowerCase().replace(/[^\p{L}\p{N} ]/gu, ' ').replace(/\s+/g, ' ');
   const words = norm(title).split(' ').filter((w) => w.length > 3).slice(0, 4);
   const t = norm(text);
   return words.length > 0 && words.every((w) => t.includes(w));
