@@ -1563,6 +1563,9 @@ async function firstReadMain(mode, arg) {
       }
       // Ledgered: the page images are not needed again (apply checked the image hash; provenance keeps the prompt). #6223.
       for (const p of take) fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true });
+      // A block read (--per-call > 1) keeps its images in one ws-call-<id> folder a call; this run holds the book's claim, so all
+      // are this chunk's. Left behind, they took 50 GB of gex45's root in six days (2026-11-04).
+      for (const w of fs.readdirSync(dir).filter((f) => f.startsWith('ws-call-'))) fs.rmSync(path.join(dir, w), { recursive: true, force: true });
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
