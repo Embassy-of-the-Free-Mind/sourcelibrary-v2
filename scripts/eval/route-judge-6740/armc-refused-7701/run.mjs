@@ -102,7 +102,7 @@ function draw() {
     for (const r of rows) { if (take.length >= ORDER_LEN) break; if (used.has(r.book_id)) continue; used.add(r.book_id); take.push(r); }
     cells[cell] = { frame_pages: rows.length, frame_books: new Set(rows.map((r) => r.book_id)).size, ordered: take };
     const d = dirOf(cell); fs.mkdirSync(d, { recursive: true });
-    for (const r of take) for (const f of fs.readdirSync(r.dir).filter((x) => x.startsWith(`${r.page_id}.`))) fs.copyFileSync(path.join(r.dir, f), path.join(d, f));
+    for (const r of take) for (const f of [...fs.readdirSync(r.dir).filter((x) => x.startsWith(`${r.page_id}.`)), 'prompt-ref.json', 'correct-prompt-template.txt']) fs.copyFileSync(path.join(r.dir, f), path.join(d, f));
   }
   W('draw-order.json', cells);
   for (const [c, x] of Object.entries(cells)) console.log(`${c}: ${x.frame_pages} pages, ${x.frame_books} books, ${x.ordered.length} in order`);
