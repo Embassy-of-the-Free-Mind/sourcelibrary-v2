@@ -114,8 +114,14 @@ const INCLUDE_HIDDEN = process.argv.includes('--include-hidden');
 // normalization — split a fusion that an earlier mint made). Only ever overwrites
 // work_id_source:'local-mint'; wikidata / work-merge / hand ids are untouched.
 const REMINT = process.argv.includes('--remint-local');
+// --campaign <tag>: mint only one acquisition campaign's books (hidden included),
+// so an import job keys its own books without sweeping the whole backlog (#8049).
+const CAMPAIGN = (() => { const i = process.argv.indexOf('--campaign'); return i > -1 ? process.argv[i + 1] : null; })();
+if (process.argv.includes('--campaign') && (!CAMPAIGN || CAMPAIGN.startsWith('--'))) {
+  console.error('--campaign needs a tag'); process.exit(1);
+}
 const TEXT = { pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] },
-  ...(INCLUDE_HIDDEN ? {} : { visible: true }) };
+  ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : INCLUDE_HIDDEN ? {} : { visible: true }) };
 const total = await b.countDocuments(TEXT);
 const already = await b.countDocuments({ ...TEXT, work_id: { $exists: true, $ne: null } });
 
