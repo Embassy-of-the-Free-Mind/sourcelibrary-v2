@@ -95,6 +95,8 @@ const ROWS = [
   { name: 'must pass: reader gets the whole text', url: TEXT, ua: CHROME, headers: { ...HINTS, ...FETCHED }, expect: 'whole', total: BPH.pages },
   { name: 'must pass: assistant reads a book outside the collection whole', url: `${APEX}/api/books/${OTHER.id}/text?format=json`, ua: CLAUDE_USER, expect: 'whole', total: OTHER.pages },
   { name: 'must pass: reader in the frame calls the tenant API', url: `${APEX}/api/bph/books/${BPH.id}`, ua: CHROME, headers: { ...HINTS, ...FETCHED }, expect: 'pass' },
+  // Straight after the reader above: refused only while the edge has not kept the reader's copy.
+  { name: 'plain HTTP library, tenant API after a reader', url: `${APEX}/api/bph/books/${BPH.id}`, ua: SCRIPT, expect: 'refuse' },
   { name: 'must pass: image host answers a reader', url: IMAGE_MASTER, method: 'HEAD', ua: CHROME, headers: { ...HINTS, referer: `${APEX}/`, 'sec-fetch-dest': 'image', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'no-cors' }, expect: 'pass' },
 ];
 
