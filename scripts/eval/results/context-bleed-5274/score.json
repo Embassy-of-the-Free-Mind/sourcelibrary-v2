@@ -107,6 +107,43 @@
   "fix-judge-cb": {
    "calls": 35,
    "usd_api_equivalent": 0.0
+  },
+  "post-run-opus": {
+   "calls": 35,
+   "usd_api_equivalent": 0.0
   }
+ },
+ "post_run": {
+  "judge": "opus",
+  "n": 30,
+  "pass": 28,
+  "pass_rule": "leaf=own and added in (none, minor)",
+  "wilson95": [
+   0.787,
+   0.982
+  ],
+  "fails": [
+   {
+    "book": "69e8b25c2ff2a8dc09e777d1",
+    "page": 150,
+    "why": "OCR re-read with no image (agy tool gate denied read) invented Latin text; fixed by fresh read"
+   },
+   {
+    "book": "695258ceab34727b1f045940",
+    "page": 382,
+    "why": "blank plate back: English describes show-through"
+   }
+  ],
+  "controls": {
+   "good": [
+    2,
+    3
+   ],
+   "swap_caught": [
+    1,
+    2
+   ]
+  },
+  "file": "post-run-opus.jsonl"
  }
 }
