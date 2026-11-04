@@ -66,7 +66,9 @@ function pointsUsed() {
   let used = 0, prev = null;
   for (const r of readJsonl(F('meter.jsonl'))) {
     if (r.weekly == null) continue;
-    if (prev) used += prev.weekly_reset === r.weekly_reset ? Math.max(0, r.weekly - prev.weekly) : r.weekly;
+    // the endpoint's reset time jitters by a second between reads: same week when the resets are within an hour
+    const sameWeek = (a, b) => Math.abs(Date.parse(a) - Date.parse(b)) < 3600e3;
+    if (prev) used += sameWeek(prev.weekly_reset, r.weekly_reset) ? Math.max(0, r.weekly - prev.weekly) : r.weekly;
     prev = r;
   }
   return used;

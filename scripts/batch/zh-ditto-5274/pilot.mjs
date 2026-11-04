@@ -192,6 +192,68 @@ if (STEP === 'score-arms') {
   console.log(JSON.stringify({ judges, swaps: swaps.map((s) => `${s.arm}:${s.caught ? 'caught' : 'MISSED'}`), arms: Object.fromEntries(Object.entries(out.arms).map(([a, v]) => [a, { zero: `${v.zero_60.usable}/${v.zero_60.n}`, keep: `${v.keep_10.usable}/${v.keep_10.n}`, rec: v.zero_60.marks_rec.toFixed(3), prec: v.zero_60.marks_prec.toFixed(3), mis: `${v.zero_60.misleading}/${v.zero_60.judged}`, keep_mis: `${v.keep_10.misleading}/${v.keep_10.judged}` }])), paired: Object.fromEntries(Object.entries(out.paired_vs_OC).map(([a, v]) => [a, { gained: v.usable_gained.length, lost: v.usable_lost.length, mis_added: v.misleading_added.length, mis_removed: v.misleading_removed.length, diff: v.usable_diff.toFixed(3) }])) }, null, 1));
 }
 
+// evidence: arms.json → the router evidence file, in zh-ditto-5274.score.json's shape (one cell, every arm a route,
+// k/n strings). wrong_text_pages = misleading by the blind judge; accept = not misleading. → argv[3].
+if (STEP === 'evidence') {
+  const o = JSON.parse(fs.readFileSync(path.join(P, 'arms.json'), 'utf8'));
+  const ROUTE = { P0: ['P0', 'paddle (stored)'], OC: ['P2-r2', 'paddle>opus correct, ditto instruction, stored image (correct.mjs)'], SC: ['P2-r2-sonnet', 'paddle>sonnet correct, ditto instruction, stored image'],
+    FL: ['P2-flash-low', 'paddle>agy gemini-3.8-flash-low correct, ditto instruction'], FM: ['P2-flash-medium', 'paddle>agy gemini-3.8-flash-medium correct, ditto instruction'], FR: ['opus-fresh', 'opus fresh read, live first-read prompt, no draft'] };
+  const routes = {};
+  for (const [arm, v] of Object.entries(o.arms)) {
+    const R = o.rows.filter((r) => r.arm === arm && r.kind === 'zero'); const J = R.filter((r) => r.judge?.v);
+    const books = new Set(R.map((r) => r.slug.split('-').slice(2, 3)[0])).size;
+    const run = R.filter((r) => r.run_rec != null);
+    routes[ROUTE[arm][0]] = { n: R.length, books, usable: `${v.zero_60.usable}/${R.length}`, usable_per_call_1: `${v.zero_s1.usable}/${v.zero_s1.n}`, usable_per_call_10: `${v.zero_s10.usable}/${v.zero_s10.n}`,
+      ditto_count_recall: +v.zero_60.marks_rec.toFixed(3), ditto_count_precision: +v.zero_60.marks_prec.toFixed(3), ditto_run_recall: run.length ? +(run.reduce((a, r) => a + r.run_rec, 0) / run.length).toFixed(3) : null,
+      cer_marks_removed_median: +v.zero_60.median_cer.toFixed(3), served: ROUTE[arm][1],
+      ...(J.length && { wrong_text_pages: `${v.zero_60.misleading}/${J.length}`, accept: `${J.length - v.zero_60.misleading}/${J.length}`, judges: [...new Set(J.map((r) => r.judge.judge))] }),
+      keep_pages: { usable: `${v.keep_10.usable}/${v.keep_10.n}`, ...(v.keep_10.judged && { wrong_text_pages: `${v.keep_10.misleading}/${v.keep_10.judged}` }) },
+      ...(o.paired_vs_OC[arm] && { paired_vs_P2_r2: { usable_gained: o.paired_vs_OC[arm].usable_gained.length, usable_lost: o.paired_vs_OC[arm].usable_lost.length, misleading_added: o.paired_vs_OC[arm].misleading_added.length, misleading_removed: o.paired_vs_OC[arm].misleading_removed.length } }) };
+  }
+  const file = { generated_by: 'scripts/batch/zh-ditto-5274/pilot.mjs score-arms + evidence (job zh-ditto-correct-5274, #5274; no model calls in this step)',
+    provenance: '#5274 production pilot: 60 zero-丨 Paddle pages of 佩文韻府 / 駢字類編 / 韻府拾遺, one per book (30 at --per-call=1, 30 scored inside runs of 10 at --per-call=10; seed 52740), 10 keep pages; books not in the test draw. Marks scored against the Kanripo WYG leaf; Experiment: scripts/eval/experiments/2026-11-04-zh-ditto-pilot-5274.md',
+    judge: 'claude-opus-5-5 (claude -p), blind, up to six labelled texts with the Archive image, zh-ditto-restore-5274 verdict words (scripts/batch/zh-ditto-5274/judge-multi.mjs)',
+    mapping: 'wrong_text_pages = misleading; accept = not misleading; an arm judged in more than one pass takes its first pass',
+    cells: { 'zh-ditto-5274': { task: 'ocr', lang: 'Chinese', pages: 60, controls: { wrong_page: o.swaps.map((s) => ({ id: s.uid, judge: s.judge, arm: ROUTE[s.arm]?.[0] ?? s.arm, accept: !s.caught, passed: s.caught })) }, routes } } };
+  fs.writeFileSync(process.argv[3], JSON.stringify(file, null, 1) + '\n');
+  console.log(`evidence → ${process.argv[3]}: ${Object.entries(routes).map(([k, v]) => `${k} ${v.usable} usable, ${v.wrong_text_pages ?? '-'} misleading`).join('; ')}`);
+}
+
+// side-by-side: per page, the scan link, each arm's marks / CER / verdict and its text differences from the Opus
+// correction (OC), as runs of the folded Han text (- in OC only, + in the arm only). Reads $P/arms.json. → argv[3].
+if (STEP === 'side-by-side') {
+  const { armText } = await import('./judge-multi.mjs');
+  const o = JSON.parse(fs.readFileSync(path.join(P, 'arms.json'), 'utf8'));
+  const pages = JSON.parse(fs.readFileSync(path.join(P, 'w', 'pages.json'), 'utf8'));
+  const NAMES = { P0: 'P0 stored Paddle', OC: 'Opus correct', SC: 'Sonnet correct', FL: 'Flash-low correct', FM: 'Flash-medium correct', FR: 'Opus fresh read' };
+  const diff = (a, b) => {   // LCS over characters; returns [{op:'-'|'+', s}] runs
+    const A = [...a], B = [...b], n = A.length, m = B.length, L = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = A[i] === B[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+    const out = []; let i = 0, j = 0; const push = (op, ch) => { const t = out[out.length - 1]; if (t?.op === op) t.s += ch; else out.push({ op, s: ch }); };
+    while (i < n || j < m) { if (i < n && j < m && A[i] === B[j]) { push('=', A[i]); i++; j++; } else if (j < m && (i >= n || L[i][j + 1] >= L[i + 1][j])) { push('+', B[j]); j++; } else { push('-', A[i]); i++; } }
+    // a changed span: the runs between two equal runs, shown as -x +y with a few characters of context
+    const spans = []; for (let k = 0; k < out.length; k++) { if (out[k].op === '=') continue; let e = k; while (e + 1 < out.length && out[e + 1].op !== '=') e++;
+      const del = out.slice(k, e + 1).filter((x) => x.op === '-').map((x) => x.s).join(''), ins = out.slice(k, e + 1).filter((x) => x.op === '+').map((x) => x.s).join('');
+      spans.push(`${(out[k - 1]?.s ?? '').slice(-3)}[${del ? `-${del}` : ''}${ins ? `${del ? ' ' : ''}+${ins}` : ''}]`); k = e; }
+    return spans;
+  };
+  const md = ['# #5274 pilot, side by side', '', `Generated ${o.at} by \`scripts/batch/zh-ditto-5274/pilot.mjs side-by-side\`. Per page: each arm's marks (found/leaf), CER with marks removed against the Kanripo leaf, usable by the marks bar, the blind judge's verdict (arm names hidden from the judge), and its differences from the Opus correction over the folded Han text (\`[-x +y]\`: x in Opus only, y in the arm only; up to 12 spans). Judges: ${o.judges.join(', ')}.`, ''];
+  for (const p of pages) {
+    const R = Object.fromEntries(o.rows.filter((r) => r.slug === p.slug).map((r) => [r.arm, r]));
+    md.push(`## ${p.slug} — ${p.fam}, ${p.set === 'keep' ? 'keep page' : 'zero-丨 page'}, ${p.per_call === 's10' ? 'per-call 10' : 'per-call 1'}`, '', `Scan: https://sourcelibrary.org/book/${p.bid}?page=${p.pn}`, '', '| arm | marks | CER | usable | judge | differences from Opus correct |', '|---|---:|---:|---|---|---|');
+    const oc = hanOf(armText('OC', p) ?? '');
+    for (const arm of Object.keys(NAMES)) {
+      const r = R[arm]; if (!r?.answered) continue;
+      const d = arm === 'OC' ? '—' : diff(oc, hanOf(armText(arm, p))); const ds = Array.isArray(d) ? (d.length ? `${d.length} spans: ${d.slice(0, 12).join(' ')}${d.length > 12 ? ' …' : ''}` : 'identical') : d;
+      md.push(`| ${NAMES[arm]} | ${r.marks}/${r.truth} | ${(r.cer * 100).toFixed(1)}% | ${r.usable ? 'yes' : 'no'} | ${r.judge?.v ?? '—'} | ${ds.replace(/\|/g, '\\|')} |`);
+    }
+    md.push('');
+  }
+  fs.mkdirSync(path.dirname(process.argv[3]), { recursive: true });
+  fs.writeFileSync(process.argv[3], md.join('\n') + '\n');
+  console.log(`${pages.length} pages → ${process.argv[3]}`);
+}
+
 // judge-prep: the 70 scored pages in judge.mjs's layout ($P/w: pages.json, p0/, C/, img/ia/), so the eval's blind judge
 // runs unchanged with JOB_SCRATCH=$P: `judge.mjs P0,C`. C is the served correction (UNCHANGED = the draft).
 if (STEP === 'judge-prep') {
