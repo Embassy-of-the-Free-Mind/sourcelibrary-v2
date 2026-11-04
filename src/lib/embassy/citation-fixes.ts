@@ -17,6 +17,9 @@
  * fabricated image — a different picture is not the picture the caption
  * describes — so we drop the embed and leave the prose.
  *
+ * A "link removal" unlinks a dead author, artwork or collection link and keeps
+ * its words (#8216).
+ *
  * A "grounding edit" replaces an exact span of the streamed text — a dropped
  * sentence, an unsupported quote's quotation marks, an attached page citation,
  * a rewritten image caption. The checks that produce them live in
@@ -70,9 +73,21 @@ export function findCitedArtworkSlugs(text: string): string[] {
 }
 
 /**
+ * `/author/<slug>` links in a response, split by locale: `/author` has no
+ * localized twin, so a link under `/es` 404s whatever the slug (locale-path.ts).
+ */
+export function findCitedAuthorSlugs(text: string): { english: string[]; spanish: string[] } {
+  const slugs = (pattern: RegExp) => [...text.matchAll(pattern)].map(m => m[1]);
+  return {
+    english: slugs(/(?<![\w.-])sourcelibrary\.org\/author\/([a-z0-9-]+)/g),
+    spanish: slugs(/(?<![\w.-])sourcelibrary\.org\/es\/author\/([a-z0-9-]+)/g),
+  };
+}
+
+/**
  * Collection links, split by route shape. `/collections/<slug>` (plural) is the
- * real route; `/collection/<slug>` (singular) is not a route at all and always
- * 404s, so it needs no lookup.
+ * real route; `/collection/<slug>` (singular) is what the model often writes,
+ * and the proxy 308s it to the plural, so both need the same lookup.
  */
 export function findCitedCollectionSlugs(text: string): { plural: string[]; singular: string[]; spanish: string[] } {
   const plural = [...text.matchAll(new RegExp(`${SITE_HOST_PATTERN}\\/collections\\/([a-z0-9-]+)`, 'g'))].map(m => m[1]);
@@ -177,6 +192,30 @@ export function applyGroundingEdits(text: string, edits: Array<{ find: string; r
     out = out.slice(0, at) + edit.replace + out.slice(at + edit.find.length);
     cursor = at + edit.replace.length;
     shift = at - (edit.at ?? at) + edit.replace.length - edit.find.length;
+  }
+  return out;
+}
+
+/**
+ * Unlink dead site links, keeping their words: `[Lynn Thorndike](…/author/x)`
+ * reads as `Lynn Thorndike`. There is no safe substitute for a person or a
+ * curated set, and a name without a link is true while a dead link is not.
+ *
+ * `paths` are site paths such as `/author/x`; a plain path also matches its
+ * `/es` form. The lookahead stops `/author/x` touching `/author/x-y`, and any
+ * tail on the URL (`.jpg`, a query) goes with the link. A bare URL has no words
+ * to keep and is left for the caller to disclose.
+ */
+export function applyLinkRemovals(text: string, paths: string[]): string {
+  let out = text;
+  for (const path of paths) {
+    if (!path) continue;
+    const prefix = path.startsWith('/es/') ? '' : '(?:/es)?';
+    const link = new RegExp(
+      `\\[([^\\]]*)\\]\\(\\s*https?://sourcelibrary\\.org${prefix}${escapeRegex(path)}(?![a-z0-9-])[^)\\s]*\\s*\\)`,
+      'g',
+    );
+    out = out.replace(link, (_m, words: string) => words);
   }
   return out;
 }
