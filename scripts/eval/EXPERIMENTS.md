@@ -689,6 +689,87 @@ every overwrite snapshots to `page_revisions`.
 Detached systemd unit `zh-ditto-5274` (`runner.mjs run --per-call=10`, ledger in the job's scratch), waves of 120
 pages, sleeps at 92% of the week to the reset. It pages ntfy and comments on #5274 when the frame is done or it stops.
 
+## 2026-11-04 · Can a keyed choice of wording mark a translation so a paraphrased copy is still recognisably ours? (#8150 slice 6)
+
+PRIOR ART: `scripts/eval/recovery-matrix-8150/text.mts` (slice 9: the draw window, the paraphrase prompt word for word,
+and the Gutenberg not-ours paragraphs are reused so the two results compare); `scripts/eval/route-judge-6740/judge.mjs`
+and `paired-arm.mjs` (the quality packet is in their format and passed `check`). New: `scripts/eval/textmark-8150/run.mjs`.
+
+**Why this was the one to test.** Slice 9 found that paraphrase and translation defeat every layer we have. A mark
+carried by the wording itself was the only proposed candidate for that gap.
+
+**Mechanism (the scheme is public, the key is private).** For each prose sentence of a served translation, agy
+(gemini-3.8-flash-low, on the subscription; no paid API) wrote three alternative renderings that keep the same claims,
+names, numbers, negations and qualifiers. A rendering more than 40% shorter or longer than the original was not
+eligible. The keyed choice took the eligible rendering with the most "green" content words. A word is green when
+HMAC-SHA256(key, its lowercase form) has a first byte below 128. Content words are four letters or longer and not on a
+function-word list. Detection counts green content words in any text and takes z against one half. It needs no
+position, no alignment and no reference. Nothing was written to production. The marked text stayed in job scratch
+and is not committed.
+
+**Pre-registered (before any marking ran).** Pass needed all three: (1) pooled z ≥ 4 over about 10 paraphrased marked
+pages; (2) at most 1 in 2,000 unmarked ten-text pools at z ≥ 4, and the unmarked twins pooled below z 3; (3) blind Opus
+judges not reading the marked translation as worse against the page image.
+
+### Result
+
+| | pooled z (tokens) | pooled z (distinct words) | green fraction |
+|---|---|---|---|
+| unmarked, served | 2.28 | 0.23 | 0.530 |
+| marked | **7.54** | 4.24 | 0.597 |
+| unmarked, paraphrased | 0.20 | −1.51 | 0.502 |
+| marked, paraphrased | **0.65** | −1.26 | 0.507 |
+
+Per page (z by tokens; sentences changed by the keyed choice):
+
+| source | changed | unmarked | marked | unmarked → paraphrase | marked → paraphrase |
+|---|---|---|---|---|---|
+| Chinese | 7/9 | −2.24 | −0.28 | −2.18 | −1.88 |
+| Latin | 9/12 | 0.43 | 2.95 | −0.27 | −0.76 |
+| Latin | 5/12 | 1.45 | 1.96 | 2.99 | 2.10 |
+| French (Maya study) | 7/13 | 0.67 | 1.97 | −0.87 | −0.59 |
+| Greek | 7/7 | 0.64 | 1.70 | 1.24 | −0.23 |
+| Latin | 3/10 | 0.70 | 1.38 | 2.09 | 4.53 |
+| Latin | 2/6 | 1.67 | 2.22 | 0.65 | 0.98 |
+| French | 5/12 | 1.66 | 2.70 | −1.00 | −0.68 |
+| Dutch | 14/16 | −0.07 | 2.65 | −1.13 | 0.32 |
+| German | 8/16 | 0.82 | 2.55 | −0.64 | −0.83 |
+| Latin | 9/16 | 1.87 | 4.59 | 1.10 | 0.14 |
+
+The twelfth drawn page (Latin) was dropped: agy's alternatives did not parse.
+
+False positives on 118 unmarked texts (40 other books' translations, 56 Gutenberg paragraphs, and the 11 unmarked and
+11 paraphrased-unmarked twins): 8 at z ≥ 2, none at z ≥ 3, max 2.99, mean −0.08. Over 2,000 random ten-text pools,
+13 reached z ≥ 3 and 1 reached z ≥ 4 (max 4.20) by token count. By distinct words, none passed 2.51.
+
+### What it means
+
+- **Criterion 1 fails, and not narrowly.** The paraphrase rewrites almost every content word, so the chosen words do
+  not survive. The paraphrased marked pages are indistinguishable from the paraphrased unmarked ones. One page reads
+  z 4.53 after paraphrase and 1.38 before it: paraphrase noise, not signal.
+- **Criterion 2 sits on its limit by tokens and passes by distinct words.** The token z overstates evidence on any
+  text. Its unmarked served pool reads 2.28 because frequent words repeat. A future text mark should count each word
+  once per text.
+- **Verbatim copies do not need it.** The mark reaches z 7.5 over 11 untouched pages. But slice 9's passage matcher
+  already traces verbatim and ZWC-stripped copies without changing a word of the translation, so the wording mark buys
+  nothing there and costs a model-rewritten sentence in 59% of cases.
+- **Fidelity was not measured.** The packet (`scripts/eval/route-judge-6740/results/textmark-8150/`: recipe, key) passed
+  R1–R5. The packet holds marked text, so it is not committed; `run.mjs packet` rebuilds it after a rerun.
+
+### Reproduce
+
+```
+D=$JOB_SCRATCH/s6
+node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/textmark-8150/run.mjs draw --out=$D --n=12
+node scripts/eval/textmark-8150/run.mjs mark --out=$D
+node scripts/eval/textmark-8150/run.mjs paraphrase --out=$D
+node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/textmark-8150/run.mjs fpset --out=$D --m=40
+node scripts/eval/textmark-8150/run.mjs detect --out=$D
+```
+
+The key is a local file (`TEXTMARK_KEY_FILE`) and is not in the repo. A rerun with another key draws a different
+green list, and its z values will differ, but not their sizes.
+
 ## 2026-11-04 · Stranded text runs re-pointed to their own leaf (#5803)
 
 PRIOR ART: `scripts/maintenance/repair-text-offset-segments.mjs` (#7949, commit 333bc84bf) is the
