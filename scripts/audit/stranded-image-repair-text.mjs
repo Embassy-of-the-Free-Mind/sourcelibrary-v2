@@ -62,7 +62,7 @@ for (const b of books) {
   tot.books++;
   const repairedAt = b.archive_metadata?.jp2_offset_repaired_at;
   const pages = await db.collection('pages').find({ book_id: b.id }, {
-    projection: { page_number: 1, hidden: 1, needs_reocr: 1, needs_reocr_reason: 1, archive_metadata: 1,
+    projection: { page_number: 1, hidden: 1, text_shift_repaired_at: 1, needs_reocr: 1, needs_reocr_reason: 1, archive_metadata: 1,
       'ocr.data': 1, 'ocr.updated_at': 1, 'ocr.created_at': 1, 'ocr.model': 1, 'ocr.source': 1, 'translation.data': 1 },
   }).sort({ page_number: 1 }).toArray();
 
