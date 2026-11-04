@@ -49,8 +49,8 @@ export function diffRuns(typed, ocr) {
   const out = [];
   for (const r of runs) {
     if (r.t.length === r.o.length && r.t.length <= 4) {
-      r.t.forEach((c, x) => out.push({ t: c, o: r.o[x], k: r.k0 + x, kind: 'sub' }));
-    } else out.push({ t: r.t.join(''), o: r.o.join(''), k: r.k0, kind: 'run', len: Math.max(r.t.length, r.o.length) });
+      r.t.forEach((c, x) => out.push({ t: c, o: r.o[x], k: r.k0 + x, ti: r.ti + x, kind: 'sub' }));
+    } else out.push({ t: r.t.join(''), o: r.o.join(''), k: r.k0, ti: r.ti, kind: 'run', len: Math.max(r.t.length, r.o.length) });
   }
   const pool = (side, self) => runs.filter((r) => r !== self).flatMap((r) => r[side]);
   for (const d of out) {

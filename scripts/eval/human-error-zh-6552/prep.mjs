@@ -19,7 +19,7 @@ const pages = {};
 for (const uid of uids) {
   const d = JSON.parse(fs.readFileSync(path.join(ROOT, 'pages', `${uid}.json`), 'utf8'));
   const typed = hanChars(d.typed), ocr = hanChars(d.ocr), r = diffRuns(typed, ocr);
-  pages[uid] = { uid, typed, ocr, ...r, lines: JSON.parse(fs.readFileSync(path.join(ROOT, 'lines', `${uid}.lines.json`), 'utf8')) };
+  pages[uid] = { uid, typed, ocr, ...r, changedAt: new Set(d.changed_at || []), lines: JSON.parse(fs.readFileSync(path.join(ROOT, 'lines', `${uid}.lines.json`), 'utf8')) };
 }
 
 /** Where a span sits: the locator line and offset best matching its context. Only geometry is kept. */
@@ -53,10 +53,10 @@ const items = []; let seq = 0;
 const add = (o) => items.push({ id: `${TAG}-${String(++seq).padStart(4, '0')}`, ...o });
 const counts = {};
 for (const uid of uids) {
-  const pg = pages[uid], judged = pg.diffs.filter((d) => !d.structure);
-  counts[uid] = { typed_chars: pg.typedChars, ocr_chars: pg.ocrChars, edits: pg.edits, diffs: pg.diffs.length, judged_pool: judged.length, structure_long: pg.diffs.filter((d) => d.structure === 'long').length, structure_reorder: pg.diffs.filter((d) => d.structure === 'reorder').length, structure_chars: pg.diffs.filter((d) => d.structure).reduce((a, d) => a + d.len, 0) };
+  const pg = pages[uid], gaiji = pg.diffs.filter((d) => !d.structure && d.t === '〇'), judged = pg.diffs.filter((d) => !d.structure && d.t !== '〇'); // a CBETA <g> has no typed character to compare
+  counts[uid] = { typed_chars: pg.typedChars, ocr_chars: pg.ocrChars, edits: pg.edits, diffs: pg.diffs.length, judged_pool: judged.length, structure_long: pg.diffs.filter((d) => d.structure === 'long').length, structure_reorder: pg.diffs.filter((d) => d.structure === 'reorder').length, structure_chars: pg.diffs.filter((d) => d.structure).reduce((a, d) => a + d.len, 0), structure_typed: pg.diffs.filter((d) => d.structure).reduce((a, d) => a + [...d.t].length, 0), gaiji: gaiji.length };
   const take = shuffled(judged, rng).slice(0, CAP); counts[uid].judged = take.length;
-  for (const d of take) add({ kind: 'real', uid, typed: d.t, ocr: d.o, left: d.left, right: d.right });
+  for (const d of take) add({ kind: 'real', uid, typed: d.t, ocr: d.o, left: d.left, right: d.right, ...(pg.changedAt.has(d.ti) ? { declared_change: true } : {}) });
 }
 /** An agreed site with clean context; near = only characters that have a lookalike. A site is dealt once, and no two control sites
  * share a neighbourhood: a plant and a decoy on one passage would expose each other, and a real difference nearby would expose both. */

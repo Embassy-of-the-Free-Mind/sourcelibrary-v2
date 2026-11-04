@@ -37,7 +37,9 @@ async function gemini(prompt) {
   const r = await agyCall(['-p', prompt, '--model', 'gemini-3.8-flash-high', ...CLI_SAFE_ARGS], dir);
   return { text: r.text, usage: r.usage, err: r.cls && r.cls !== 'ok' ? `${r.cls} ${String(r.err || '').slice(0, 200)}` : null };
 }
-const todo = packs.filter((p) => !done.has(p.packet)).slice(0, LIMIT); let next = 0, fails = 0;
+// --limit on a scarce reader takes the packets richest in controls, so a subset still measures that reader; the items stay blind.
+const key = JSON.parse(fs.readFileSync(path.join(OUT, 'key.json'), 'utf8')), ctl = {}; for (const it of key) if (it.kind !== 'real' && it.kind !== 'agreed') ctl[it.packet] = (ctl[it.packet] || 0) + 1;
+const todo = packs.filter((p) => !done.has(p.packet)).sort((a, b) => LIMIT < 1e9 ? (ctl[b.packet] || 0) - (ctl[a.packet] || 0) : 0).slice(0, LIMIT); let next = 0, fails = 0;
 async function worker() {
   while (next < todo.length && fails < 8) {
     const p = todo[next++];
