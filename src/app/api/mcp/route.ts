@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
-import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
+import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, readMcpSessionId } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
@@ -2155,7 +2155,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest; sessionId: string | null }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
     {
@@ -2287,9 +2287,12 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
               route: `mcp:${name}`, status: 429, ms: Date.now() - started,
               wouldBlock: true, blocked: true, reason: 'page_budget',
             });
+            // Logged as a failure: the reader got no text, and a refusal that reads
+            // ok:true is invisible in the failure table.
             logMcpToolCall({
               tool: name, args: argsObj, ms: Date.now() - started,
-              ip: reqContext.ip, userAgent: reqContext.userAgent,
+              error: `page_budget ${usedPages24h}/${limit}`,
+              ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
             });
             return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
           }
@@ -2323,6 +2326,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
+        sessionId: reqContext.sessionId, resultCount: countToolResults(result),
       });
 
       const upgradeHint = buildUpgradeHint(reqContext.identity, reqContext.ip);
@@ -2368,7 +2372,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       const message = error instanceof Error ? error.message : 'Unknown error';
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started, error: message,
-        ip: reqContext.ip, userAgent: reqContext.userAgent,
+        ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
       });
       // Structured, not prose. Ten separate AI-client reports (#3083) describe
       // the same failure: an opaque string reads as a NON-DETERMINISTIC error,
@@ -2426,7 +2430,12 @@ export async function GET(req: Request) {
  * Batched JSON-RPC arrives as an array, hence the normalisation. Never throws:
  * a malformed body is the client's problem, not a reason to fail the request.
  */
-function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) {
+function isInitialize(body: unknown): boolean {
+  const messages = Array.isArray(body) ? body : [body];
+  return messages.some((m) => (m as { method?: unknown } | null)?.method === 'initialize');
+}
+
+function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, sessionId: string | null) {
   const messages = Array.isArray(body) ? body : [body];
   for (const msg of messages) {
     const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
@@ -2440,6 +2449,7 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
       protocolVersion: s(m.params?.protocolVersion),
       ip,
       userAgent,
+      sessionId,
     });
   }
 }
@@ -2447,7 +2457,11 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
-    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'));
+    // Measurement only (see mintMcpSessionId). The transport stays stateless: with
+    // no sessionIdGenerator it neither issues nor validates a session id.
+    const initializing = isInitialize(body);
+    const sessionId = initializing ? mintMcpSessionId() : readMcpSessionId(req.headers);
+    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'), sessionId);
 
     // Always set the Accept header the SDK requires — clients send varying
     // combinations (just application/json, just text/event-stream, or neither)
@@ -2464,10 +2478,16 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       userAgent: req.headers.get('user-agent'),
       identity,
       request: req,
+      sessionId,
     });
     await server.connect(transport);
     try {
-      return await transport.handleRequest(fixedReq, { parsedBody: body });
+      const res = await transport.handleRequest(fixedReq, { parsedBody: body });
+      if (!initializing || !sessionId || !res.ok) return res;
+      const headers = new Headers(res.headers);
+      headers.set('Mcp-Session-Id', sessionId);
+      headers.set('Access-Control-Expose-Headers', 'Mcp-Session-Id');
+      return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
     } finally {
       await transport.close();
       await server.close();
