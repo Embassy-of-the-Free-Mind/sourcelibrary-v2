@@ -117,6 +117,18 @@ const DEFAULT_DISALLOW = [
   TRIPWIRE_PATH,
 ];
 
+// ── ASSISTANTS FETCHING FOR A PERSON ──
+// Someone asked their assistant a question and it is reading on their behalf.
+// /llms.txt sends these fetchers to the search and quote routes, so the default
+// `Disallow: /api/` would close the door it just opened (#8161). Same names as
+// USER_FETCH_AGENTS in src/lib/bot-gate.ts and the Cloudflare skip rule; see
+// .claude/docs/invariants/crawler-access-gate.md, the layers must agree.
+const USER_FETCHERS = ['Claude-User', 'ChatGPT-User', 'Perplexity-User'];
+// One passage at a time. /api/books/*/text stays out on purpose: it returns a
+// whole book, and that is the bulk path /licensing prices. robots.txt only
+// declares this; the page budget in src/lib/api-budget.ts is what holds it.
+const USER_FETCH_API = ['/api/search', '/api/books/*/quote', '/api/books/*/search'];
+
 type Group = { userAgent: string; allow?: string[]; disallow?: string[] };
 
 // ── SEARCH-INDEX crawlers: explicitly welcome on content ──
@@ -136,6 +148,12 @@ const GROUPS: Group[] = [
   // search traffic (5x the landing pages). A named group replaces '*' for this
   // crawler, so it repeats the defaults.
   { userAgent: 'Sogou web spider', allow: ['/'], disallow: [...DEFAULT_DISALLOW, '/book/*/page/'] },
+  // A named group replaces '*' for this fetcher, so it repeats the defaults.
+  ...USER_FETCHERS.map((userAgent) => ({
+    userAgent,
+    allow: ['/', ...USER_FETCH_API],
+    disallow: DEFAULT_DISALLOW,
+  })),
   { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH] },
   { userAgent: 'GPTBot', allow: AI_ALLOW_LIST, disallow: ['/'] },
