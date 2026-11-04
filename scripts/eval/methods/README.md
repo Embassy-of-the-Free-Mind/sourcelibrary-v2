@@ -40,11 +40,27 @@ Never edit a method's meaning under the same version: rows written under v1 must
 `version:`, add a line to the file's *Versions* list, and say what changed. A frozen brief (REVIEWER.md) is part of the
 method: a change to it is a new version.
 
+## Which check answers which question
+
+| question | method | what it cannot tell you |
+|---|---|---|
+| What share of the pages readers are served carries a serious error, by lane? | [served-audit](served-audit.md) | one page a book, so nothing about a single book |
+| Does the served translation defect rate move, month to month? | [monthly-corpus-audit](monthly-corpus-audit.md) | no image: it judges the text alone |
+| What does a reader meet on a book drawn at random? | [fortnightly-spot-check](fortnightly-spot-check.md) | 3 consecutive pages are one observation of a book |
+| What is this shelf like to read, and which books can a scholar be shown? | [shelf-overview](shelf-overview.md) | few books per shelf; the rest of the library |
+| Of the books chosen for a reader, which can be shown today? | [curation-check](curation-check.md) | any rate: books are picked by hand, so it gives a worklist |
+| What did the route judge say about the stored text? | [judged-pages](judged-pages.md) | the English: transcription only, in the frames of the runs that judged |
+| Where does a second machine reading differ from the stored OCR? | [ocr-convergence](ocr-convergence.md) | the corpus: books are ranked by page views |
+| Is a new English worse than the old, before it is written? | [retranslation-gate](retranslation-gate.md) | anything beyond the run it gates |
+| May this running lane keep running? | [lane-spot-check](lane-spot-check.md) | the corpus: new output of one lane, on few pages |
+| Which pages hold a refusal, or the model's own reasoning? | [refusal-empty](refusal-empty.md), [reasoning-leak](reasoning-leak.md) | any other error: these are detectors |
+
 ## The verdict scale, across methods
 
 `show` — the pages read are sound for a reader of this tradition. `caveat` — usable, with a named weakness.
 `fix` — fix before showing, or do not show. A verdict covers the **pages read**, not the book; `pages_read` says
-which. Rates are never pooled across methods: they sample different frames with different readers (#6174 *Why*).
+which. Counts are never added across methods: they sample different frames with different readers (#6174 *Why*). A
+model with a method effect may pool them, because it estimates that difference instead of ignoring it (#6557).
 
 | method | reader | image | unit |
 |---|---|---|---|

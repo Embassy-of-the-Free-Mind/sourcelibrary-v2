@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>聊齋志異新評卷八 狐夢</header>
+<meta>Red circle and tick punctuation throughout the text block.</meta>
+
+郎來。言已而去。至夜焚香坐伺。婦果攜女至。態度嫺婉。
+曠世無匹。婦謂女曰。畢郎與有宿分。郎須留止。明旦早
+歸。勿貪睡也。畢與握手入幃。款戀備至。事已。笑曰。肥郎
+癡重。使人不堪。未明即去。既夕自來。曰。姊妹輩將爲我
+賀新郎。明日即屈同去。問何所。曰。大姊作筵主。去此不
+遠也。畢果候之。良久不至。身漸倦惰。纔伏案頭。女忽入。
+曰。勞君久伺矣。乃握手而行。奄至一處。有大院落。直上
+中堂。則見燈燭熒熒。燦若星點。俄而主人出。年近二旬。
+淡妝絕美。斂衽稱賀已。將踐席。婢入曰。二娘子至。見一
+
+<vocab>畢郎, 宿分, 嫺婉, 倦惰, 熒熒, 斂衽, 踐席</vocab>

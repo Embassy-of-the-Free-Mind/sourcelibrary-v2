@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
+import { PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
 import {
   ANON_EMBED_DAILY_BOOK_CAP,
   isPartnerEmbedDownloadFor,
@@ -77,7 +78,7 @@ let events: { user_id: string; book_id: string; ts: Date }[] = [];
 
 vi.mock('@/lib/auth', () => ({ auth: vi.fn(async () => null) }));
 vi.mock('@/lib/auth-helpers', () => ({ isInnerCircle: vi.fn(async () => false) }));
-vi.mock('@/lib/book-access', () => ({ isBookReadable: vi.fn(async () => true) }));
+vi.mock('@/lib/book-access', () => ({ isBookReadable: vi.fn(async () => true), hasCronAuth: () => false }));
 vi.mock('@/lib/tenant-context', () => ({
   resolveTenantId: vi.fn(async (slug: string) => (slug === 'bph' ? BPH_ID : null)),
 }));
@@ -117,13 +118,16 @@ function req(url: string, referer?: string, browser = true): NextRequest {
   return new NextRequest(url, { headers });
 }
 
-const download = async (bookId: string, format: string, referer?: string) => {
+// A reader who has agreed to the Embassy's terms sends their version (#8098);
+// pass agreed=false for one who has not.
+const terms = (agreed: boolean) => (agreed ? `&terms=${PARTNER_TERMS_VERSION}` : '');
+const download = async (bookId: string, format: string, referer?: string, agreed = true) => {
   const { GET } = await import('@/app/api/books/[id]/download/route');
-  return GET(req(`https://sourcelibrary.org/api/books/${bookId}/download?format=${format}`, referer), { params: Promise.resolve({ id: bookId }) });
+  return GET(req(`https://sourcelibrary.org/api/books/${bookId}/download?format=${format}${terms(agreed)}`, referer), { params: Promise.resolve({ id: bookId }) });
 };
-const tenantDownload = async (bookId: string, format: string, referer?: string) => {
+const tenantDownload = async (bookId: string, format: string, referer?: string, agreed = true) => {
   const { GET } = await import('@/app/api/[tenant]/books/[id]/download/route');
-  return GET(req(`https://sourcelibrary.org/api/bph/books/${bookId}/download?format=${format}`, referer), { params: Promise.resolve({ tenant: 'bph', id: bookId }) });
+  return GET(req(`https://sourcelibrary.org/api/bph/books/${bookId}/download?format=${format}${terms(agreed)}`, referer), { params: Promise.resolve({ tenant: 'bph', id: bookId }) });
 };
 const pagePackage = async (bookId: string, referer?: string) => {
   const { GET } = await import('@/app/api/books/[id]/pages/[pageId]/package/route');
@@ -149,6 +153,12 @@ describe('download routes: anonymous outside the embed is still 401', () => {
       expect(events).toHaveLength(1);
       expect(events[0].user_id).toMatch(/^anon-ip:[0-9a-f]{32}$/);
       expect(events[0].user_id).not.toContain('203.0.113.7');
+    });
+    it(`${name}: EFM book from the embed, not yet agreed → 403 terms_required, and not counted`, async () => {
+      const res = await call('efm-book', 'translation', EMBED_REF, false);
+      expect(res.status).toBe(403);
+      expect((await res.json()).terms_required).toBe(true);
+      expect(events).toHaveLength(0);
     });
     it(`${name}: the anonymous cap is ${ANON_EMBED_DAILY_BOOK_CAP} books → 429`, async () => {
       await call('efm-book', 'translation', EMBED_REF);

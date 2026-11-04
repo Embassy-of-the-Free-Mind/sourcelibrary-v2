@@ -27,6 +27,7 @@ import { getToFile, PREFIX } from '../typed-refs-6012/lib.mjs';
 import { workInfo, pbPages } from '../zh-skqs-5568-kanripo.mjs';
 import { bodyText, foldHan, isInterior } from '../ground-truth-5935/lib.mjs';
 import { SEED, N, CALL_CAP, MIN_REF_LETTERS, MIN_HAN, truthLatin, truthHan } from './lib.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const RESULTS = path.join(HERE, 'results');
@@ -275,7 +276,7 @@ function exportVerdicts() {
  *  and human_read_count (books-known-fields: the reader-view field, #5048). The input of analyze.py's correction. */
 async function frame7866() {
   const { c, db } = await mongo();
-  const v = await db.collection('lane_judge_verdicts').find({ lane: 'confidence-7866', kind: 'item' }, { projection: { _id: 0, usage: 0 } }).toArray();
+  const v = await db.collection('lane_judge_verdicts').find(verdictQuery({ lane: 'confidence-7866', kind: 'item' }), { projection: { _id: 0, usage: 0 } }).toArray();
   const pages = new Map((await db.collection('pages').find({ id: { $in: v.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(v.map((r) => r.book_id))] } }, { projection: { _id: 0, id: 1, human_read_count: 1, read_count: 1 } }).toArray()).map((b) => [b.id, b]));
   const { words } = await import('../confidence-7866/lib.mjs');

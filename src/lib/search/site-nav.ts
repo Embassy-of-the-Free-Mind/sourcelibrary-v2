@@ -28,6 +28,26 @@ import { navTokens } from '../../../scripts/lib/site-nav-names.mjs';
 
 export type NavPageType = 'blog' | 'collection' | 'page' | 'feature' | 'author';
 
+/**
+ * A site page's stored text as a plain snippet. The text is the page's authored
+ * source, so it carries markdown links and emphasis that a result card would
+ * otherwise print literally ("[Lülü zhengyi](/book/…)", "**For the emperors"). Cut at
+ * a word, never inside one.
+ */
+export function sitePageSnippet(text: unknown, max = 220): string {
+  const plain = String(text || '')
+    .replace(/!?\[([^\]]*)\]\([^)\s]*\)/g, '$1')
+    .replace(/<\/?(?:em|i|strong|b)>/gi, '')
+    .replace(/\*+/g, '')
+    .replace(/^#+\s+/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (plain.length <= max) return plain;
+  const cut = plain.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${lastSpace > 0 ? cut.slice(0, lastSpace) : cut}…`;
+}
+
 export interface NavCandidate {
   url: string;
   page_type: NavPageType;

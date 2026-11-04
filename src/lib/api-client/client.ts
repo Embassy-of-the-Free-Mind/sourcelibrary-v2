@@ -164,7 +164,9 @@ export interface ApiClientError extends Error {
  */
 export async function streamRequest(
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  /** Return a failed response as it came, for a caller that reads the status and body itself. */
+  { passErrors = false }: { passErrors?: boolean } = {},
 ): Promise<Response> {
   // Build headers by applying request interceptor logic
   const headers = new Headers(options.headers);
@@ -196,7 +198,7 @@ export async function streamRequest(
   });
 
   // Apply error handling (similar to response interceptor)
-  if (!response.ok) {
+  if (!response.ok && !passErrors) {
     if (response.status === 401) {
       console.error('Unauthorized - redirect to login');
       // window.location.href = '/auth/login';

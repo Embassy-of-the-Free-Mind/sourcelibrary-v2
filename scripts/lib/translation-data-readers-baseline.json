@@ -190,6 +190,7 @@
     "scripts/maintenance/seam-repair-6742/lean.mjs",
     "scripts/maintenance/seam-repair-6742/score-rules.mjs",
     "scripts/maintenance/seam-repair-6742/seam-repair.mjs",
+    "scripts/maintenance/strip-prompt-mismatch-warnings.mjs",
     "scripts/maintenance/strip-proquest-stamp.mjs",
     "scripts/maintenance/tengyur-cli-6361/apply.mjs",
     "scripts/maintenance/tengyur-cli-6361/convergent/draw.mjs",

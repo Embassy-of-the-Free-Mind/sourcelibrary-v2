@@ -25,6 +25,7 @@ import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { asksForOneVolume, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence, ROLLUP_BUCKETS, type BookPageCount } from '@/lib/search/page-rollup';
@@ -389,6 +390,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return filters;
     }
 
+    const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
+
     // Helper: convert book document to search result
     function bookToResult(typedBook: Book): SearchResult {
       const summaryText = (typedBook as any).reading_summary?.overview
@@ -527,7 +530,6 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -1441,6 +1443,49 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
     const collapsed = collapseByWork(results, { getIdentity: identityOf, betterRepresentative });
     let dedupedResults: SearchResult[] = collapsed.results;
+
+    // A work in many volumes opens at its first (#8035). The row shows whichever volume the
+    // lanes ranked highest, which for 佩文韻府 can be volume 412 of 728. Only for a work the
+    // 四部 catalogue names, only when the reader did not ask for a volume, and only through the
+    // same filters as every other row, so a volume this search may not show is never swapped in.
+    // English search keeps a volume that has more English than the first (#5975).
+    if (!pagesOnly && sortBy === 'relevance' && !asksForOneVolume(query)) {
+      const groupsByPrimary = new Map([...collapsed.byKey.values()].map(g => [g.primary, g]));
+      const leadBySlot = new Map<number, { group: (typeof collapsed.groups)[number] | undefined; first: string; workId: string }>();
+      dedupedResults.slice(offset, offset + limit).forEach((r, i) => {
+        if (r.type !== 'book') return;
+        const workId = (r as any)._work_id as string | undefined;
+        const first = sibuRowForWork(workId)?.first;
+        if (workId && first && first !== r.slug && first !== r.id) {
+          leadBySlot.set(offset + i, { group: groupsByPrimary.get(r), first, workId });
+        }
+      });
+      if (leadBySlot.size > 0) {
+        const firsts = [...leadBySlot.values()].map(s => s.first);
+        const docs = await db.collection('books')
+          .find({ $and: [buildBookFilters(), { $or: [{ slug: { $in: firsts } }, { id: { $in: firsts } }] }] })
+          .project(bookProjection)
+          .maxTimeMS(2000)
+          .toArray()
+          .catch(() => []);
+        const docByKey = new Map<string, Book>();
+        for (const d of docs as unknown as Book[]) {
+          docByKey.set(d.id, d);
+          const slug = (d as any).slug as string | undefined;
+          if (slug) docByKey.set(slug, d);
+        }
+        dedupedResults = [...dedupedResults];
+        for (const [slot, { group, first, workId }] of leadBySlot) {
+          const doc = docByKey.get(first);
+          const current = dedupedResults[slot];
+          if (!doc || doc.work_id !== workId) continue;
+          if (!isLocalizedSearch && (doc.pages_translated ?? 0) < (current.translated_count ?? 0)) continue;
+          const lead = bookToResult(doc);
+          dedupedResults[slot] = lead;
+          if (group) group.primary = lead;
+        }
+      }
+    }
 
     // Asked-for diversity on a passage list (MCP search_translations, #3895):
     // re-order, never drop. No score is passed: the list is fused from lanes

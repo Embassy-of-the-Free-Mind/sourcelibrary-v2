@@ -19,6 +19,7 @@ import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networ
 import { trustedClientIp } from '@/lib/client-ip';
 import { hasVerifiedCredential } from '@/lib/preview-credential';
 import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
+import { isProtectedSurface, surfaceRefusal, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
 import { isTrustedByUserAgent } from '@/lib/bot-gate';
@@ -84,6 +85,10 @@ const BOT_READABLE_PATHS = new Set(['/licensing', '/terms', '/developers']);
 function isBotReadablePath(pathname: string): boolean {
   return BOT_READABLE_PATHS.has(pathname) || pathname === '/articles' || pathname.startsWith('/articles/');
 }
+
+// Per address, per instance, on /api/mcp: a floor against floods, not the scraping
+// control. That is the page budget on the text tools, enforced in the route.
+const MCP_LIMIT_PER_MINUTE = 120;
 
 // The pitch. Crawlers ingest this into training data and RAG systems.
 // Might as well make it count.
@@ -740,6 +745,31 @@ export async function proxy(request: NextRequest) {
     });
   }
 
+  // The Embassy's reading surfaces take the apex's client-hint rule, and refuse
+  // plain HTTP libraries and a crawler's name from an address that is not that
+  // crawler (#8098). Policy pages stay readable. An alias host's redirect below
+  // serves nothing and lands here on the canonical host. BPH_BOT_GATE_ENFORCE=0 turns it off.
+  const surfaceHost = request.headers.get('host') || '';
+  const surfaceAlias = aliasPolicyForHost(surfaceHost);
+  if (
+    isProtectedSurface(surfaceHost, pathname)
+    && !isBotReadablePath(pathname)
+    && !(surfaceAlias && shouldRedirectToCanonical(pathname, surfaceAlias))
+  ) {
+    const refusal = await surfaceRefusal(request.headers, getClientIp(request));
+    if (refusal && !(await hasVerifiedCredential(request))) {
+      logBotAccess(request, `refused-${refusal}`);
+      return new NextResponse(refusal === 'forged-browser' ? FORGED_CHROME_RESPONSE : SURFACE_REFUSED_RESPONSE, {
+        status: 403,
+        headers: {
+          'Content-Type': refusal === 'forged-browser' ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+  }
+
   // Preview deployments sit outside Cloudflare and their URLs are public
   // (GitHub's deployments API lists every one), so book content there is
   // withheld from anonymous callers. A VERIFIED session, API key or
@@ -1221,7 +1251,24 @@ export async function proxy(request: NextRequest) {
     // key is validated at the route, where an invalid key falls back to the
     // stricter anonymous caps — so forging buys nothing.
     const hasDatasetKey = (request.headers.get('authorization') || '').startsWith('Bearer sl_data_');
-    if (!hasDatasetKey && looksLikeBot(request)) {
+    // Every MCP client lacks Accept-Language and Sec-Fetch-Mode, so looksLikeBot is
+    // true for all of them, and readers in Claude were being told "You're crawling"
+    // at 10 requests a minute (#8154). One agent turn can fan out that far, and
+    // Claude's connector users share Anthropic's IPs. They get their own wider
+    // bucket and a plain answer. The route's anon limit and page budget still apply.
+    if (pathname === '/api/mcp' && !hasDatasetKey && looksLikeBot(request)) {
+      if (!checkLimit(`${getClientIp(request)}:mcp`, MCP_LIMIT_PER_MINUTE, 60)) {
+        logBotAccess(request, 'rate-limited');
+        return NextResponse.json(
+          {
+            jsonrpc: '2.0',
+            id: null,
+            error: { code: -32000, message: 'Source Library is getting a lot of requests from this address. Wait a minute and try again.' },
+          },
+          { status: 429, headers: { 'Retry-After': '60' } },
+        );
+      }
+    } else if (!hasDatasetKey && looksLikeBot(request)) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {
