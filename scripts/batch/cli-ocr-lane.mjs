@@ -1041,8 +1041,10 @@ const ARMC_TRANSLATE_PROJECTION = { id: 1, title: 1, language: 1, year: 1, pages
  * plan / GPU draft / agy correction. ARMC_CAMPAIGNS fixes, per campaign, the languages whose cell test passed (each with
  * its draft engine and its evidence) and the tiers file (default `<lane-dir>/tiers.jsonl`, one row a book: {book_id,
  * tier, ocr_idx}: tier A every page, tier B the pages at ocr_idx in page order (the content screen's hit pages and two
- * either side), tier C none). Books: tier A before B, then processing_priority, not needs_splitting; a possible unsplit
- * spread waits (spreadReason, so run backfill-split-check.mjs --campaign=ID first). Pages: UNREAD only. The read and the
+ * either side), tier C none). Books: tier A before B, then processing_priority, not needs_splitting; planned only once
+ * archive_status is archive_complete (the images come from R2, not a second box on archive.org beside the archive lane,
+ * and a page's failed fetch would ledger it); a possible unsplit spread waits (spreadReason, so run
+ * backfill-split-check.mjs --campaign=ID first). Pages: UNREAD only. The read and the
  * write are the first-read frame's (no --over-stored; apply --diff-guard=gpu-draft --print-only), stamped
  * ARMC_CAMPAIGN_LANE. The book keeps its campaign hold: nothing here releases it, so translation does not start. A
  * page the route does not write is ledgered like every page tried; what reads it next is the campaign's business.
@@ -1179,7 +1181,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMP
   const FR = FRAME === 'first-read', TH = FRAME === 'translate-held', frLangs = LANGS.map((l) => toLanguageCodes(l).codes[0] ?? l);
   const tiers = CAMPAIGN ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
   const books = (CAMPAIGN
-    ? (await db.collection('books').find({ acquisition_campaign: CAMPAIGN, pages_count: { $gt: 0 }, 'pipeline_auto.hold.reason': CAMPAIGN }, { projection: ARMC_CAMPAIGN_PROJECTION }).toArray())
+    ? (await db.collection('books').find({ acquisition_campaign: CAMPAIGN, pages_count: { $gt: 0 }, 'pipeline_auto.hold.reason': CAMPAIGN, archive_status: 'archive_complete' }, { projection: ARMC_CAMPAIGN_PROJECTION }).toArray())
       .filter((b) => armcCampaignBookOk(b, CAMPAIGN, tiers.get(b.id)) && LANGS.includes(campaignLang(CAMPAIGN, b.language)))
     : FR
     ? (await db.collection('books').find(FIRST_READ_BOOKS, { projection: { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 } }).toArray()).filter((b) => !firstReadSkip(b, { languages: frLangs }))
@@ -1212,7 +1214,8 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMP
 async function armcFetch(db, P, arg, LANGS, ledger) {
   const { getPageSource } = await import('../lib/page-image-url.mjs');
   const MAX = Number(arg('max-pages') || 2000);
-  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && LANGS.includes(p.lang)).slice(0, MAX);
+  // A planned page is in frame by its plan. The draft task passes no --frame, so LANGS is the `correct` default (la,it) there: narrow only on an explicit --langs, or a campaign's French would never be staged (#8049).
+  const todo = armcUndrafted(path.dirname(P.plan)).filter((p) => !ledger.has(p.id) && (!arg('langs') || LANGS.includes(p.lang))).slice(0, MAX);
   const docs = new Map();
   for (let i = 0; i < todo.length; i += 500) for (const d of await db.collection('pages').find({ id: { $in: todo.slice(i, i + 500).map((p) => p.id) } }, { projection: GPU_PAGE_PROJECTION }).toArray()) docs.set(d.id, d);
   const t = {}; let failed = 0;
