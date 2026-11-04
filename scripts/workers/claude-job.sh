@@ -44,7 +44,8 @@ if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/
   \`sl-tsc\` (one at a time, box-wide), never a bare \`npx tsc\`.
 - The box is ARM64: Python ML tools (kraken, CLIP, onnx venvs) are NOT installed here; if the brief needs
   them, say so on the issue and stop."
-  CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
+  # Through the pace guard when it is installed (#7869): the real CLI here ran every main session unpaced.
+  CLAUDE_BIN=${CLAUDE_BIN:-$([ -L /usr/local/bin/claude ] && echo /usr/local/bin/claude || echo /root/.local/bin/claude)}
   claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=$SL/.claude/worktrees; DATA=/data/scratch/sl/jobs
 elif [ "$(hostname)" = gex45-1 ]; then
@@ -59,7 +60,8 @@ elif [ "$(hostname)" = gex45-1 ]; then
   the 24 GB card is shared by every job AND by other tenants of this box. Keep vLLM to
   --gpu-memory-utilization 0.6 unless the brief says the card is free, never hold VRAM idle, and stop any
   model you start before the done file. Jobs run in sourcelibrary.slice (44 GB RAM cap, CPU weight 50)."
-  CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
+  # Through the pace guard when it is installed (#7869): the real CLI here ran every main session unpaced.
+  CLAUDE_BIN=${CLAUDE_BIN:-$([ -L /usr/local/bin/claude ] && echo /usr/local/bin/claude || echo /root/.local/bin/claude)}
   # The slice (infrastructure/systemd/gex45-sourcelibrary.slice) leaves room for the box's other tenants.
   claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=/root/worktrees; DATA=/root/jobs
@@ -398,7 +400,8 @@ LIMIT_RE="hit your (session|usage|weekly|monthly) limit|usage limit reached|rate
 preflight_auth() {
   [ -n "${JOB_SKIP_PREFLIGHT:-}" ] && return 0
   local out rc
-  out=$(cd "$SL" && export -f claude_capped && export CLAUDE_BIN && timeout 120 bash -c 'claude_capped -p "Reply with exactly: OK" --model sonnet' < /dev/null 2>&1); rc=$?
+  # Unpaced: one Sonnet call that a full pace queue would hold past its 120 s and misreport as a login failure.
+  out=$(cd "$SL" && export -f claude_capped && export CLAUDE_BIN CLAUDE_PACE_OFF=1 && timeout 120 bash -c 'claude_capped -p "Reply with exactly: OK" --model sonnet' < /dev/null 2>&1); rc=$?
   echo "$out" | grep -qE '(^|[^A-Za-z])OK([^A-Za-z]|$)' && ! echo "$out" | grep -qiE "$AUTH_FAIL_RE" && return 0
   echo "$out" | grep -qiE "$LIMIT_RE" && return 0
   # A timeout is a busy box, not a logout: on 2026-10-27 l7a ran out of memory and two jobs paged
@@ -433,9 +436,9 @@ pr_fix_once() {
   if [ -z "$bad" ]; then echo "[claude-job] PR checks not failing: $url" >> "$log"; return 0; fi
   touch "$JD/$name.prfix"; rm -f "$JD/$name.done"
   echo "[claude-job] PR $url has failing checks ($bad): one fix resume $(date -u +%FT%TZ)" >> "$log"
-  claude_capped -p --continue "$(rules $name)
+  claude_main -p --continue "$(rules $name)
 
-Your PR $url has failing checks: $bad. A job owns its PR until it is green. Read the failing logs (gh run view --log-failed), fix the cause, push, then wait for the checks in ONE bash call (timeout 1200 gh pr checks $url --watch). If a failure is not yours to fix (a flaky test, main is broken, a check that wants a PR-description line you can add), fix what you can and say the rest in a PR comment. Then touch $JD/$name.done." --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+Your PR $url has failing checks: $bad. A job owns its PR until it is green. Read the failing logs (gh run view --log-failed), fix the cause, push, then wait for the checks in ONE bash call (timeout 1200 gh pr checks $url --watch). If a failure is not yours to fix (a flaky test, main is broken, a check that wants a PR-description line you can add), fix what you can and say the rest in a PR comment. Then touch $JD/$name.done." --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
   touch "$JD/$name.done"
 }
@@ -515,6 +518,18 @@ subagent_model() { case "$(brief_header Subagents "$1" | tr 'A-Z' 'a-z')" in opu
 # compact and a 60K one did, so the percentage is of about 1M. Off: `Compact: off — <why>` in the brief's first 15
 # lines, for a job that cannot survive a mid-step summary. Tuning: JOB_COMPACT_PCT.
 compact_pct() { case "$(brief_header Compact "$1" | tr 'A-Z' 'a-z')" in off*) ;; *) echo "${JOB_COMPACT_PCT:-30}" ;; esac; }
+# The main session's model (#7869): Opus unless the brief says `Model: sonnet — <why>` in its first 15 lines, for a
+# job whose own turns are mechanical (babysitting a runner, waiting on CI, merging). Judging still goes to Opus
+# subagents named in the brief. Nothing else changes.
+main_model() { case "$(brief_header Model "$1" | tr 'A-Z' 'a-z')" in sonnet*) echo sonnet ;; *) echo opus ;; esac; }
+# A main session takes a slot from the pace guard's main pool, not its child pool (claude-pace-guard.sh, #7869), so an
+# over-pace account waits at a stage start instead of running every job at full width. Only through the guard: the
+# real CLI would pass the flag on to the session's own children, which would then be paced as main sessions.
+claude_main() {
+  if [ -L /usr/local/bin/claude ] && { [ "$CLAUDE_BIN" = claude ] || [ "$CLAUDE_BIN" = /usr/local/bin/claude ]; }; then
+    CLAUDE_PACE_AGENT=1 claude_capped "$@"
+  else claude_capped "$@"; fi
+}
 
 run() {  # inside tmux
   name="$1"; d="$(wt_dir "$name")"; log="$LOGD/$name.log"; cd "$d" || exit 3
@@ -528,23 +543,24 @@ run() {  # inside tmux
   trap 'kill $hb 2>/dev/null' EXIT
   rm -f "$JD/$name.stopped"
   export CLAUDE_CODE_SUBAGENT_MODEL="$(subagent_model "$JD/$name.brief.txt")"
+  MAIN_MODEL="$(main_model "$JD/$name.brief.txt")"
   pct="$(compact_pct "$JD/$name.brief.txt")"
   if [ -n "$pct" ]; then export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE="$pct"; else unset CLAUDE_AUTOCOMPACT_PCT_OVERRIDE; fi
-  echo "[claude-job] subagents: $CLAUDE_CODE_SUBAGENT_MODEL; fresh session at ${FRESH_CTX} context tokens; auto-compact at ${pct:-default}%" >> "$log"
+  echo "[claude-job] main: $MAIN_MODEL; subagents: $CLAUDE_CODE_SUBAGENT_MODEL; fresh session at ${FRESH_CTX} context tokens; auto-compact at ${pct:-default}%" >> "$log"
   f=0
   if [ "${2:-fresh}" = manual ] && fresh_due "$name"; then  # `resume` or a sweep after the job wrote its state file
     f=1; echo "[claude-job] manual resume as fresh session 1/$MAX_FRESH (state file) $(date -u +%FT%TZ)" >> "$log"
     session_mark "$name"
-    claude_capped -p "$(fresh_prompt "$name" 1)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+    claude_main -p "$(fresh_prompt "$name" 1)" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   elif [ "${2:-fresh}" = manual ]; then  # `resume`: re-enter the session, then the same loop
     echo "[claude-job] manual resume $(date -u +%FT%TZ)" >> "$log"
     session_mark "$name"
-    claude_capped -p --continue "$(rules $name)
+    claude_main -p --continue "$(rules $name)
 
-Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, establish the current state from data, and continue to done." --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, establish the current state from data, and continue to done." --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   else
     session_mark "$name"
-    claude_capped -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+    claude_main -p "$(rules $name; echo; cat $JD/$name.brief.txt)" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
   fi
   echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
   i=0; capped=""; authfail=""
@@ -567,7 +583,7 @@ Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, 
     if fresh_due "$name" && [ $f -lt $MAX_FRESH ]; then
       f=$((f+1)); echo "[claude-job] fresh session $f/$MAX_FRESH (state file, resume not counted) $(date -u +%FT%TZ)" >> "$log"
       session_mark "$name"
-      claude_capped -p "$(fresh_prompt "$name" $f)" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+      claude_main -p "$(fresh_prompt "$name" $f)" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
       echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
       continue
     fi
@@ -584,9 +600,9 @@ Resumed by hand. Re-read your brief ($JD/$name.brief.txt) and the issue thread, 
     next="Re-read your brief ($JD/$name.brief.txt) and the issue thread, establish the current state from data, and continue to done."
     case "$(ctx_verdict "$name")" in *FRESH*) [ $f -lt $MAX_FRESH ] && next="Your session is past ${FRESH_CTX} context tokens. Do not continue the work here: check what is still running (ps, its output files), write $JD/$name.state.md as the HEADLESS RULES describe, and end your turn without the done file. A fresh session continues from that file." ;; esac
     session_mark "$name"
-    claude_capped -p --continue "$(rules $name)
+    claude_main -p --continue "$(rules $name)
 
-You exited before writing $JD/$name.done. Any background task or watcher you started is GONE (detached nohup processes may still run — check with ps and their output files). $next" --model opus --permission-mode acceptEdits --verbose >> "$log" 2>&1
+You exited before writing $JD/$name.done. Any background task or watcher you started is GONE (detached nohup processes may still run — check with ps and their output files). $next" --model "${MAIN_MODEL:-opus}" --permission-mode acceptEdits --verbose >> "$log" 2>&1
     echo "[claude-job] exit $? $(date -u +%FT%TZ)" >> "$log"
   done
   if [ -f "$JD/$name.done" ]; then
@@ -789,5 +805,9 @@ case "${1:-status}" in
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
     # account= lets job-where.sh look up this box's 5-hour and weekly headroom (#6751); logins change.
     acct=$(python3 -c 'import json;print(json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"])' 2>/dev/null)
-    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) root_free_pct=$(root_free_pct) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready" ;;
+    # pace= is the pace guard's last decision for that login: slots/why/age in min. Anything but burn= is fail-open
+    # (meter-error:..., burn-unknown:..., no-account), shown here so a blind guard is visible from the mesh (#7869).
+    pf=/root/claude-pace/${acct:-?}.slots; pace="-"
+    [ -s "$pf" ] && pace="$(tr ' ' '/' < "$pf" | tr -d '\n')/$(( ($(date +%s) - $(stat -c %Y "$pf")) / 60 ))m"
+    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) root_free_pct=$(root_free_pct) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready pace=$pace" ;;
 esac
