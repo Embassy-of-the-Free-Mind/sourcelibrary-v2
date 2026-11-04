@@ -187,7 +187,7 @@ async function main() {
     // the set's one title, keys to one edition_key, and the gate refuses volumes 2..n as duplicates of volume 1
     // (#8049: Siete Partidas, Münster's Cosmographie, 18 volumes refused). extractVolume() reads "(vol. N)".
     const iaVolume = firstOf(meta.volume);
-    if (iaVolume && !/\b(vol(ume)?|tom(us|o|e)?|band|teil|deel|pt|part|liber)\b\.?\s*\(?\s*[\divxlcdm]/i.test(b.title)) b.title = `${b.title} (vol. ${iaVolume})`;
+    if (iaVolume && !/\b(vol(ume)?|tom(us|o|e)?|band|teil|deel|pt|part|liber)\b\.?\s*\(?\s*[\divxlcdm]/i.test(b.title)) b.title = `${b.title} (vol. ${iaVolume})`; // imprint-write-ok: the manifest input row before insert, not a books write
     const bookId = new ObjectId(), bookIdStr = bookId.toHexString();
     const slug = await uniqueSlug(db, slugify(`${b.title} ${b.author}`));
     const now = new Date();
