@@ -10,6 +10,7 @@
  *   node --env-file=.env.production.local scripts/batch/zh-retranslate-8169/runner.mjs --frame=FRAME_DIR --dir=RUN_DIR
  *        [--apply] [--concurrency=2] [--chunk=40] [--floor-5h=0.25] [--first-check=1000] [--check-every=10000]
  *        [--max-pages=N] [--notify] [--report-hours=6]
+ *        [--kind=prose|reference] [--spread] [--job=NAME] [--min-accept=10] [--max-worse=3]
  *
  * PAGES: frame.mjs's frame.jsonl.gz, in its order (reference works first, by readers; whole books, leaf order). A page with
  * a final ledger row is never taken again. Before each write every page is read back: English or OCR changed since the
@@ -27,6 +28,10 @@
  * run stops until RUN_DIR/gate1-by-eye.json exists (a person or session opened >= 5 written pages with the image).
  * STOP FILE: RUN_DIR/STOP stops the run at the next book. Reports: a comment on #8169 every --report-hours, ntfy
  * sourcelibrary-uptime + a final comment when it ends (done or stopped).
+ * WAVES (the prose wave, 2026-11-04): --kind keeps one kind of the frame; --spread orders books round-robin by work family
+ * (title before its volume mark) and sends a book with pages left to the back of the queue, so the first check's 30 pages
+ * come from 30 families, not the first work in the frame; --job names the run (ledger tags, check run_id, reports);
+ * --min-accept / --max-worse go to check.mjs. Give each wave its own --dir: its own ledger, checks and STOP file.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -37,6 +42,7 @@ import { MongoClient } from 'mongodb';
 import { agyEnv, readPools, choosePool, poolName, quotaBuckets, readQuotaStdout } from '../../lib/agy-pools.mjs';
 import { quotaFloor } from '../cli-ocr-lane.mjs';
 import { contentHash } from '../../lib/write-provenance.mjs';
+import { familyOf } from './check.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../../..');
@@ -46,9 +52,11 @@ const APPLY = process.argv.includes('--apply'), NOTIFY = process.argv.includes('
 const CONC = Number(arg('concurrency', 2)), CHUNK = Number(arg('chunk', 40)), FLOOR5H = Number(arg('floor-5h', 0.25));
 const FIRST = Number(arg('first-check', 1000)), EVERY = Number(arg('check-every', 10000)), MAXP = Number(arg('max-pages', Infinity));
 const REPORT_MS = Number(arg('report-hours', 6)) * 3600e3;
-const ISSUE = 8169, JOB = 'zh-retranslate-8169', MODEL = 'gemini-3.8-flash-low';
+const KIND = arg('kind', null), SPREAD = process.argv.includes('--spread');
+const MIN_ACCEPT = arg('min-accept', null), MAX_WORSE = arg('max-worse', null);
+const ISSUE = 8169, JOB = arg('job', 'zh-retranslate-8169'), MODEL = 'gemini-3.8-flash-low';
 const ENV_FILE = process.env.SL_ENV_FILE || path.join(ROOT, '.env.production.local');
-const REASON = '#8169 re-translation of 3 Flash English on Paddle-read Chinese: agy 3.8 Flash low, 4 pages a call (#8134 paired test, F4 33/58 vs stored 13/60; Derek 2026-11-04, reference works first)';
+const REASON = `#8169 re-translation of 3 Flash English on Paddle-read Chinese: agy 3.8 Flash low, 4 pages a call (#8134 paired test, F4 33/58 vs stored 13/60; Derek 2026-11-04, ${KIND === 'prose' ? 'the prose wave' : 'reference works first'})`;
 const LEDGER = path.join(DIR, 'ledger.jsonl'), PROGRESS = path.join(DIR, 'progress.json'), STOPF = path.join(DIR, 'STOP'), GATE1 = path.join(DIR, 'gate1-by-eye.json');
 const FINAL = new Set(['written', 'refused', 'skip-changed', 'not-read', 'read-failed']);
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean) : []);
@@ -67,10 +75,16 @@ function ledger(row) { const r = { seq: seq++, ...row, at: new Date().toISOStrin
 const countBy = () => { const o = {}; for (const r of last.values()) { const k = r.state === 'written' ? 'written' : `${r.state}${r.reason ? `: ${r.reason}` : ''}`; o[k] = (o[k] || 0) + 1; } return o; };
 const written = () => [...last.values()].filter((r) => r.state === 'written').length;
 
-const frame = zlib.gunzipSync(fs.readFileSync(path.join(FRAME, 'frame.jsonl.gz'))).toString('utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+const frame = zlib.gunzipSync(fs.readFileSync(path.join(FRAME, 'frame.jsonl.gz'))).toString('utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => !KIND || r.kind === KIND);
 const byBook = new Map(); for (const r of frame) { if (!byBook.has(r.book_id)) byBook.set(r.book_id, []); byBook.get(r.book_id).push(r); }
-const queue = [...byBook.keys()];
 const titles = new Map(JSON.parse(fs.readFileSync(path.join(FRAME, 'books.json'), 'utf8')).map((b) => [b.book_id, b.title]));
+function spreadOrder(ids) {
+  const fam = new Map(); for (const id of ids) { const f = familyOf(titles.get(id)); if (!fam.has(f)) fam.set(f, []); fam.get(f).push(id); }
+  const out = [], lists = [...fam.values()];
+  for (let i = 0; out.length < ids.length; i++) for (const l of lists) if (i < l.length) out.push(l[i]);
+  return out;
+}
+const queue = SPREAD ? spreadOrder([...byBook.keys()]) : [...byBook.keys()];
 
 // ── pools ──
 const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
@@ -161,7 +175,8 @@ function runCheck(t) {
   const since = prev != null ? (JSON.parse(fs.readFileSync(path.join(DIR, 'checks', String(prev), 'result.json'), 'utf8')).seq_at_check ?? 0) : 0;
   const out = path.join(DIR, 'checks', String(t));
   log(`check at ${t} written (since seq ${since})`);
-  const r = spawnSync(process.execPath, [`--env-file=${ENV_FILE}`, path.join(HERE, 'check.mjs'), `--dir=${DIR}`, `--out=${out}`, `--since=${since}`, `--seed=${8169 + t}`, '--record'], { cwd: ROOT, encoding: 'utf8', env: process.env, maxBuffer: 64 << 20 });
+  const extra = [`--job=${JOB}`, ...(SPREAD ? ['--per=family'] : []), ...(MIN_ACCEPT ? [`--min-accept=${MIN_ACCEPT}`] : []), ...(MAX_WORSE ? [`--max-worse=${MAX_WORSE}`] : [])];
+  const r = spawnSync(process.execPath, [`--env-file=${ENV_FILE}`, path.join(HERE, 'check.mjs'), `--dir=${DIR}`, `--out=${out}`, `--since=${since}`, `--seed=${8169 + t}`, '--record', ...extra], { cwd: ROOT, encoding: 'utf8', env: process.env, maxBuffer: 64 << 20 });
   fs.writeFileSync(path.join(out, 'check.log'), (r.stdout || '') + (r.stderr || ''));
   if (r.status !== 0 || !fs.existsSync(path.join(out, 'result.json'))) return { ran: false, why: `check exited ${r.status}: ${(r.stderr || '').trim().split('\n').pop()}` };
   const res = JSON.parse(fs.readFileSync(path.join(out, 'result.json'), 'utf8'));
@@ -194,7 +209,7 @@ async function maybeReport() { if (!NOTIFY || Date.now() - lastReport < REPORT_M
 async function main() {
   const c = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 }); await c.connect();
   const db = c.db('bookstore');
-  log(`frame ${frame.length} pages in ${queue.length} books; ledger ${last.size} rows, written ${written()}; ${APPLY ? 'APPLY' : 'DRY RUN'}, ${CONC} at a time`);
+  log(`${JOB}: frame ${frame.length} pages${KIND ? ` (${KIND})` : ''} in ${queue.length} books${SPREAD ? `, spread over ${new Set(queue.map((b) => familyOf(titles.get(b)))).size} families` : ''}; ledger ${last.size} rows, written ${written()}; ${APPLY ? 'APPLY' : 'DRY RUN'}, ${CONC} at a time`);
   let qi = 0, taken = 0, checking = null, active = 0;
   const worker = async (wid) => {
     for (;;) {
@@ -226,7 +241,7 @@ async function main() {
       try { r = await doChunk(db, bookId, take, p); } catch (e) { log(`[w${wid}] ${bookId}: ${e.stack || e}`); r = 'error'; }
       active--;
       if (r === 'usage-limit') { taken -= take.length; queue.splice(qi, 0, bookId); continue; }
-      if (open.length > take.length) queue.splice(qi, 0, bookId);
+      if (open.length > take.length) { if (SPREAD) queue.push(bookId); else queue.splice(qi, 0, bookId); }
       progress(); await maybeReport();
     }
   };

@@ -8,6 +8,9 @@
 /**
  * #8169: the lane's stop check (scripts/eval/methods/lane-paired-retranslation-check.md).
  *   node --env-file=... check.mjs --dir=RUN_DIR --out=CHECK_DIR [--n=30] [--seed=8169] [--since=LEDGER_SEQ] [--record]
+ *        [--per=book|family] [--min-accept=10] [--max-worse=3] [--job=zh-retranslate-8169]
+ * --per=family draws one page per work family first (familyOf: the title before its volume mark), then one per book from
+ * the families left over, so 30 volumes of one work cannot fill a check. --job names the book_checks run_id.
  * Exit 0 with CHECK_DIR/result.json (pass true|false). Exit 3: no check ran (meter unreadable, quota, or verdicts
  * missing after retries); the runner treats that as a stop, never as a pass.
  */
@@ -27,7 +30,10 @@ const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('
 export const METHOD = 'lane-paired-retranslation-check';
 export const NEW_MODEL = 'gemini-3.8-flash-low';
 export const OLD_MODEL = 'gemini-3-flash-preview';
-export const RULE = { min_accept: 10, max_worse: 3 };
+export const RULE = { min_accept: Number(arg('min-accept', 10)), max_worse: Number(arg('max-worse', 3)) };
+const JOB = arg('job', 'zh-retranslate-8169'), PER = arg('per', 'book');
+/** A work family: the title before its volume or gloss mark (武備志(五) and 武備志(五十) → 武備志; 本草綱目·卷四十九 → 本草綱目). */
+export const familyOf = (title) => String(title || '').trim().split(/[\s(（·:：,，[［]/)[0] || String(title || '');
 const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const wilson = (k, n) => { if (!n) return null; const z = 1.96, p = k / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d, w = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; return [+(c - w).toFixed(3), +(c + w).toFixed(3)]; };
@@ -65,13 +71,16 @@ async function plan(db, { DIR, OUT, N, SEED, SINCE }) {
   const written = [...last.values()].filter((r) => r.state === 'written').sort((a, b) => a.page_id.localeCompare(b.page_id));
   const rnd = makeRng(SEED);
   const shuffled = written.map((r) => ({ r, k: rnd() })).sort((a, b) => a.k - b.k).map((x) => x.r);
-  const order = [...shuffled.filter((r) => (r.seq ?? 0) >= SINCE), ...shuffled.filter((r) => (r.seq ?? 0) < SINCE)];
+  const fresh = [...shuffled.filter((r) => (r.seq ?? 0) >= SINCE), ...shuffled.filter((r) => (r.seq ?? 0) < SINCE)];
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(written.map((r) => r.book_id))] } }, { projection: { id: 1, title: 1, language: 1 } }).toArray()).map((b) => [b.id, b]));
-  const seen = new Set(), sel = [], skipped = {};
+  const fam = (r) => familyOf(books.get(r.book_id)?.title);
+  // --per=family: pass 1 takes a page only from a family not yet drawn; pass 2 (families exhausted) one per book.
+  const order = PER === 'family' ? [...fresh.map((r) => ({ r, pass: 1 })), ...fresh.map((r) => ({ r, pass: 2 }))] : fresh.map((r) => ({ r, pass: 2 }));
+  const seen = new Set(), seenFam = new Set(), sel = [], skipped = {};
   const bump = (k) => { skipped[k] = (skipped[k] || 0) + 1; };
-  for (const r of order) {
+  for (const { r, pass } of order) {
     if (sel.length >= N) break;
-    if (seen.has(r.book_id)) continue;
+    if (seen.has(r.book_id) || (pass === 1 && seenFam.has(fam(r)))) continue;
     const p = await db.collection('pages').findOne({ id: r.page_id }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.model': 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, crop: 1 } });
     if (!p?.translation?.data || p.translation.model !== NEW_MODEL || (r.new_hash && contentHash(p.translation.data) !== r.new_hash)) { bump('rewritten since'); continue; }
     const old = await db.collection('page_revisions').find({ page_id: p.id, field: 'translation', model: OLD_MODEL }).sort({ created_at: -1 }).limit(1).next();
@@ -79,8 +88,8 @@ async function plan(db, { DIR, OUT, N, SEED, SINCE }) {
     const image = getPageSource(p)?.replace(/\s+/g, '');
     if (!image) { bump('no image'); continue; }
     const b = books.get(p.book_id);
-    seen.add(p.book_id);
-    sel.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, kind: r.kind, title: b?.title ?? '', lang: b?.language || 'Chinese', image_url: image, ocr: p.ocr.data, new_text: p.translation.data, old_text: old.data, old_revision: old.id ?? String(old._id) });
+    seen.add(p.book_id); seenFam.add(fam(r));
+    sel.push({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, kind: r.kind, title: b?.title ?? '', family: fam(r), lang: b?.language || 'Chinese', image_url: image, ocr: p.ocr.data, new_text: p.translation.data, old_text: old.data, old_revision: old.id ?? String(old._id) });
   }
   // Items: N (new) and S (old) per page; 2 wrong-page controls (a page's new English against another book's page).
   const items = [];
@@ -88,7 +97,7 @@ async function plan(db, { DIR, OUT, N, SEED, SINCE }) {
   const ctl = sel.slice(0, 4);
   if (ctl.length >= 4) for (const [a, b] of [[ctl[0], ctl[1]], [ctl[2], ctl[3]]]) items.push({ id: `j${h(`${SEED}:W:${a.page_id}:${b.page_id}`).slice(0, 12)}`, arm: 'W', kind: 'wrong_page', page_id: b.page_id, text_of: a.page_id, task: 'translation', lang: b.lang, source: b.ocr, text: a.new_text, image_url: b.image_url });
   items.sort((x, y) => h(`order:${x.id}`).localeCompare(h(`order:${y.id}`)));
-  fs.writeFileSync(path.join(OUT, 'plan.json'), JSON.stringify({ at: new Date().toISOString(), seed: SEED, since: SINCE, written: written.length, skipped, selected: sel.map(({ ocr, new_text, old_text, ...x }) => ({ ...x, ocr_hash: contentHash(ocr), new_hash: contentHash(new_text), old_hash: contentHash(old_text) })) }, null, 1));
+  fs.writeFileSync(path.join(OUT, 'plan.json'), JSON.stringify({ at: new Date().toISOString(), seed: SEED, since: SINCE, per: PER, rule: RULE, written: written.length, families: new Set(sel.map((s) => s.family)).size, skipped, selected: sel.map(({ ocr, new_text, old_text, ...x }) => ({ ...x, ocr_hash: contentHash(ocr), new_hash: contentHash(new_text), old_hash: contentHash(old_text) })) }, null, 1));
   fs.writeFileSync(path.join(OUT, 'packet.json'), JSON.stringify({ items }, null, 1));
   return sel.length;
 }
@@ -135,7 +144,7 @@ export function score(OUT, N) {
   const ctlFail = ctl.filter((c) => c.v.accept || Number(c.v.fidelity) >= 4);
   const kinds = {}; for (const r of rows) { const k = (kinds[r.kind] ??= { n: 0, new_accepted: 0, old_accepted: 0 }); k.n++; if (r.n.accept) k.new_accepted++; if (r.s.accept) k.old_accepted++; }
   const why = [acc < RULE.min_accept && `new accepted ${acc}/${rows.length} < ${RULE.min_accept}`, wrs.length > RULE.max_worse && `new worse than old on ${wrs.length}/${rows.length} > ${RULE.max_worse}`, ctlFail.length && `${ctlFail.length} wrong-page control(s) accepted or fidelity >= 4`].filter(Boolean);
-  const res = { at: new Date().toISOString(), n: rows.length, books: new Set(rows.map((r) => r.book_id)).size, new_accepted: acc, new_wilson: wilson(acc, rows.length), old_accepted: accOld, old_wilson: wilson(accOld, rows.length),
+  const res = { at: new Date().toISOString(), n: rows.length, books: new Set(rows.map((r) => r.book_id)).size, families: new Set(rows.map((r) => r.family)).size, new_accepted: acc, new_wilson: wilson(acc, rows.length), old_accepted: accOld, old_wilson: wilson(accOld, rows.length),
     new_wrong_text: rows.filter((r) => wt(r.n)).length, old_wrong_text: rows.filter((r) => wt(r.s)).length, worse: wrs.length, better: bet.length, by_kind: kinds,
     controls: { n: ctl.length, failed: ctlFail.length }, rule: RULE, pass: why.length === 0, stop_reasons: why, written_at_check: P.written,
     rows: rows.map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, kind: r.kind, title: r.title, new: { accept: r.n.accept, fidelity: r.n.fidelity, wrong: wt(r.n), note: r.n.reader_note }, old: { accept: r.s.accept, fidelity: r.s.fidelity, wrong: wt(r.s) }, worse: worse(r.n, r.s) })) };
@@ -160,11 +169,11 @@ export async function record(db, OUT, { apply = true } = {}) {
       errors: bad.map((d) => ({ stage: d.origin === 'transcription' ? 'ocr' : 'translation', ...(d.class ? { class: d.class } : {}), problem: `${d.severity}: ${d.what ?? ''} «${String(d.quote ?? '').slice(0, 200)}»`.slice(0, 600) })),
       defects: v.defects || [], judged: { ocr: it.source, translation: it.text } });
   }
-  return recordPageVerdicts(db, { method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `zh-retranslate-8169-${path.basename(OUT)}`, checked_at: new Date(),
+  return recordPageVerdicts(db, { method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${JOB}-${path.basename(OUT)}`, checked_at: new Date(),
     selection: 'random', stages: ['translation'], reader: { kind: 'model', model: 'claude -p --model opus', image_opened: true },
     evidence_path: `box:${os.hostname()}:${path.join(OUT, 'verdicts.jsonl')}`, reader_warning: false, exposure: 'live',
     note: 'One page per book drawn from the pages the #8169 lane had just re-translated; the new English judged blind against the page image.',
-    frame: { lane: 'zh-retranslate-8169', seed: P.seed, since_seq: P.since, written_at_check: P.written, pages_drawn: P.selected.length },
+    frame: { lane: JOB, seed: P.seed, since_seq: P.since, written_at_check: P.written, pages_drawn: P.selected.length },
     verdicts }, { apply });
 }
 
