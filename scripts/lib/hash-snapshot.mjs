@@ -104,7 +104,7 @@ export async function snapshotBooks(db, bookIds, { label, phase, runId = null, p
   if (!ids.length) throw new Error('snapshotBooks: no books');
   const rows = [];
   const drift = { no_book_id: 0, ocr_no_stored_hash: 0, ocr_stored_hash_mismatch: 0, translation_no_stored_hash: 0, translation_stored_hash_mismatch: 0 };
-  const cur = db.collection('pages').find({ book_id: { $in: ids } }, { projection: { book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'translation.data': 1, 'translation.content_hash': 1 } });
+  const cur = db.collection('pages').find({ book_id: { $in: ids } }, { batchSize: 1000, projection: { book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'translation.data': 1, 'translation.content_hash': 1 } });
   for await (const doc of cur) rows.push(...pageRows(doc, drift));
   const books = booksFromRows(rows);
   const root = corpusRoot(books);
