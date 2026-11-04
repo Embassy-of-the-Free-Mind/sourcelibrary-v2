@@ -160,6 +160,91 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-04 · Does Opus correction restore the 丨 marks at scale? The pilot before the bulk (#5274)
+
+PRIOR ART:
+- `scripts/eval/experiments/2026-11-03-zh-ditto-restore-5274.md` and `scripts/eval/zh-ditto-restore-5274/` (the arms test:
+  which route restores the marks; this pilot does not re-run it).
+- `scripts/batch/ocr-convergence/correct.mjs` (the correction runner and its guards: own-leaf check, CONTAIN, keep every
+  read #7075). This job only adds `--instruction-file` and `--language`.
+- `scripts/batch/siku-translate-lane.mjs` (the detached wave lane with a ledger; the runner copies its shape).
+- `scripts/eval/flash-reread-5924/C-TASK.md` (the judge's words, as in the test).
+
+Code: `scripts/batch/zh-ditto-5274/` — `frame.mjs` (the zero-丨 frame from Mongo and the census), `pilot.mjs` (draw,
+score against the Kanripo leaf, per-arm scores, evidence export, side-by-side), `judge-multi.mjs` (blind multi-arm
+Opus judge, arm names hidden, swap controls), `runner.mjs` + `meter.mjs` (the bulk lane), `ditto-instruction.txt`.
+
+### Frame
+
+Built from Mongo and `results/zh-ditto-restore-5274/partial-census.json` on 2026-11-04: **20,265 zero-丨 body pages in
+756 books** (佩文韻府 18,788, 駢字類編 1,018, 韻府拾遺 459), the same number the census recorded. Of these 20,018 have
+a Kanripo leaf with marks, 237 have no own leaf, 10 have a leaf with no marks (left out of the bulk). None is
+human-edited. 18,987 carry English. 2,923 pages are in held books (below). The 8,808 partial-loss pages are out of scope.
+
+### Pilot
+
+60 new zero-丨 pages, one per book, not in the arms test (seed 5274): 30 corrected one page per call (s1) and 30 at
+ten pages per call (s10; each call carried nine more pages of the same book, so own leaf was checked on 300 pages).
+Plus 10 keep pages that kept their marks. Every arm read the same pages. Marks scored against the Kanripo leaf as in
+the test; a blind Opus judge saw the image and each arm's text with names hidden (5 swap controls, all caught).
+
+| arm | usable zero (s1 / s10) | marks recall / precision | keep usable | misleading, blind | list $ / 1,000 pages | $ / usable page |
+|---|---:|---:|---:|---:|---:|---:|
+| P0 stored Paddle | 0/60 | 0 / 0 | 10/10 | 57/60 | — | — |
+| **OC Opus correction** | **56/60** (27/30, 29/30) | 0.981 / 0.998 | 10/10 | **12/60** (10/30, 2/30) | 93 (s1), **99 (s10)** | 0.11 |
+| SC Sonnet correction | 40/60 (19/30, 21/30) | 0.971 / 0.969 | 9/10 | 39/60 (21/30, 18/30) | 62 (s1), 73 (s10) | 0.11 |
+| FL Flash 3.8 low, agy | 36/60 (18/30, 18/30) | 0.932 / 0.993 | 9/10 | 46/60 | ~27 | 0.045 |
+| FR Opus fresh read, image only | 43/60 (23/30, 20/30) | 0.964 / 0.993 | 5/10 | 47/60 | 104 | 0.15 |
+
+Usable = every mark recalled within the test's tolerance and no mark invented (`pilot.mjs score`). Wilson CIs are in
+`router-table/evidence/zh-ditto-5274-pilot.score.json`. Prices are list-equivalent from the CLI's own usage report;
+Claude arms ran on the subscription, cash $0. Flash's price assumes 10% cache.
+
+**Bar.** At least 54/60 usable, keep pages undamaged, misleading no worse than the test's 7/30. OC passes on all three.
+The judge rates every keep page the same as P0 or better.
+
+**Per call.** Ten pages a call is no worse than one: usable 29/30 vs 27/30, misleading 2/30 vs 10/30, own leaf 300/300
+(no page took its neighbour's text, the #5021 failure). The bulk runs at ten per call. Cost: about 120 pages per point
+of the box account's week, so the frame is about 170 points, 1.7 account-weeks, under the 2.5 ceiling.
+
+**Paired against OC.** Sonnet: gained 2, lost 18. Flash-low: gained 1, lost 21; −0.33 usable — not
+non-inferior within 0.08. Fresh read: gained 1, lost 14.
+
+**What the misleading verdicts are.** OC's 12 are Paddle glyph misreads the correction left in place (王/玉, 傳/傅,
+南/甫), not damage to the marks. Flash's are wrong mark counts (丨丨丨 read as 丨丨). Five disagreements checked with
+the image open and the Kanripo leaf: p35 (玉輿 / 誾誾 / 昔), p118 (黜: FL right, OC wrong), p100 (丨丨丨: OC right, FL
+drops one), p11 (甫), p76 (翬 / 汞). The judge was right every time.
+
+**Sonnet** (inbox, Derek 07:37). Sonnet had never been tested on ditto restoration. Same instruction, same pages, one and ten per call, same scoring and judge (its own pass, `judge-sc`, P0 / OC / SC blind, 5/5 swaps caught). It fails every part of the bar: 40/60 usable against 54, a keep page damaged (9/10), and misleading 39/60 against OC's 12/60 on the same pages (30 pages misleading under Sonnet that were not under Opus, 3 the other way). Its precision (0.969) is the tell: it invents marks where the page has the character. It is not cheaper per usable page (about $0.11, the same as Opus), so the bulk stays on Opus and its cost is unchanged.
+
+**Flash-medium** is scheduled after the agy quota resets (2026-11-05 10:15Z, one-shot timer `zh-ditto-5274-fm`); it
+comments its line on #5274. Eval only, as for every non-Opus arm: no production write from them.
+
+**lane_judge_verdicts.** Not written: its writer expects the route-judge-6740 shape (accept / fidelity / severity) and
+this judge returns misleading / flawed / sound. Mapping one onto the other would invent a verdict. The per-page
+verdicts are in `results/zh-ditto-correct-5274/side-by-side.md`.
+
+### Held books (TAKEN)
+
+paddle-zh-5600-ocr-only (2,544 pages / 126 books), paddle-zh-6388-ocr-only (9 / 2) and gpu-backlog-5660 (370 / 52)
+all allow OCR work under `pipeline-status-truth.md`: they keep the book out of translation, not out of OCR. They are
+corrected with the rest. No phase selects them for translation, and the runner re-checks the hold before each apply.
+
+### What reads a corrected page
+
+Posted before the first write (issuecomment-6626805056). In short: `mark-stale-translations` (07:30 daily) sets
+`translation_stale`; no reader hides English on it, and the English stays served. Orchestrator Phase 4 gap-fill (paid
+realtime) only selects books under 90% translated; a stale page still counts as translated, and the runner writes a
+book only while it is ≥90% translated, so **no paid re-translation is queued**. cli-translate, translate-worker and
+siku-translate-lane take untranslated pages only; embeddings skip translated pages; nothing re-derives metadata from
+an OCR change. Writes go only through `cli-ocr.mjs apply --lane=zh-ditto-opus-5274 --mark-stale=zh-ditto-5274`;
+every overwrite snapshots to `page_revisions`.
+
+### Bulk
+
+Detached systemd unit `zh-ditto-5274` (`runner.mjs run --per-call=10`, ledger in the job's scratch), waves of 120
+pages, sleeps at 92% of the week to the reset. It pages ntfy and comments on #5274 when the frame is done or it stops.
+
 ## 2026-11-04 · Stranded text runs re-pointed to their own leaf (#5803)
 
 PRIOR ART: `scripts/maintenance/repair-text-offset-segments.mjs` (#7949, commit 333bc84bf) is the
