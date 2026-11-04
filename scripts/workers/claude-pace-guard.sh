@@ -41,6 +41,10 @@ print=0; agent=0
 for a in "$@"; do
   case "$a" in -p|--print) print=1 ;; -c|--continue|-r|--resume|--resume=*) agent=1 ;; esac
 done
+# A job's main session (claude-job.sh sets CLAUDE_PACE_AGENT=1 on that one call) is an agent loop too, but its
+# first and fresh sessions start without --continue, so they held a slot for hours and their own per-call
+# children queued behind them (#7869). The flag is dropped here so those children are paced as usual.
+if [ -n "${CLAUDE_PACE_AGENT:-}" ]; then agent=1; unset CLAUDE_PACE_AGENT; fi
 { [ "$print" = 1 ] && [ "$agent" = 0 ] && [ -z "${CLAUDE_PACE_OFF:-}" ] && command -v flock >/dev/null; } || exec "$REAL" "$@"
 
 # Decide the slot count for this account (cached a minute; one python start per call is cheap next to a model call).
@@ -66,9 +70,17 @@ now = dt.datetime.now(dt.timezone.utc)
 out = (MAX, "no-meter")
 try:
     m = json.load(open(meter))
-    acc = next(a for a in m["accounts"] if a.get("email", "").lower() == email and a.get("ok"))
+    seen = t(m.get("checked_at") or "")
+    if seen is None or seen.tzinfo is None: raise ValueError("checked_at-unparseable")
+    # A meter that stopped arriving (box mesh down, climits token expired) reads as one frozen sample, which aged
+    # out of the 3h window and said burn-unknown forever, indistinguishable from a quiet account (#7869).
+    age_m = (now - seen).total_seconds() / 60
+    if age_m > 30: raise ValueError(f"meter-stale:{age_m:.0f}m")
+    acc = next((a for a in m.get("accounts", []) if a.get("email", "").lower() == email), None)
+    if acc is None: raise ValueError("account-not-in-meter")
+    if not acc.get("ok"): raise ValueError("account-not-ok-in-meter")  # climits could not read it: re-login there
     w = next(l for l in acc["limits"] if l["key"].startswith("weekly_all"))
-    pct, reset, seen = w.get("percent") or 0, t(w.get("resets_at") or ""), t(m["checked_at"])
+    pct, reset = w.get("percent") or 0, t(w.get("resets_at") or "")
     # Keep our own samples: a box that only receives the meter (no climits history) still gets a burn rate.
     hist = os.path.join(d, email + ".hist")
     rows = [l.split() for l in open(hist)] if os.path.exists(hist) else []
@@ -91,19 +103,26 @@ try:
         base = None
         for ts, p in rows:                       # oldest sample in the last 3h with no reset after it
             tt, p = t(ts), float(p)
-            if tt is None or (now - tt).total_seconds() > 3 * 3600: continue
+            if tt is None or tt.tzinfo is None or (now - tt).total_seconds() > 3 * 3600: continue
             if p > pct: base = None; continue
             if base is None: base = (tt, p)
         span = (seen - base[0]).total_seconds() / 3600 if base and seen else 0
-        if span >= 1:
-            burn = (pct - base[1]) / span
+        burn, src = None, ""
+        if span >= 1: burn = (pct - base[1]) / span
+        elif w.get("burn_pct_per_h") is not None:   # climits' own 3h rate from its 5-min history (job-where.sh reads it)
+            burn, src = float(w["burn_pct_per_h"]), ",src=meter"
+        if burn is not None:
             slots = MAX if burn <= budget else max(MIN, int(MAX * budget / burn))
-            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%")
+            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%{src}")
         else:
-            out = (MAX, "burn-unknown")
+            out = (MAX, f"burn-unknown:span={span:.2f}h,samples={len(rows)}")
 except Exception as e:
-    out = (MAX, "meter-error")
+    out = (MAX, f"meter-error:{type(e).__name__}:{str(e)[:60]}".replace(" ", "_"))
 open(cache, "w").write(f"{out[0]} {out[1]}\n")
+# Fail-open stays (a blind meter must not stop work), but it is written down where `claude-job.sh where` and a
+# person can see it: one line a minute at most, because the cache above runs this at most once a minute.
+if not out[1].startswith("burn="):
+    with open(os.path.join(d, "failopen.log"), "a") as f: f.write(f"{now:%FT%TZ} {email} {out[1]}\n")
 print(email, *out)
 PY
 )
