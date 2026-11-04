@@ -43,6 +43,7 @@ import { wilson } from '../eval/lib/agreement-stats.mjs';
 import { scriptsOfLanguage } from '../lib/stray-script.mjs';
 import { getPageSource, isUsableImageUrl } from '../lib/page-image-url.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { getTranslationText } from '../lib/translation-text.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 export const ISSUE = 8040;
@@ -141,15 +142,15 @@ export function buildPrompt(item) {
 /** Plant a defect in a clean copy of a window. Pure: returns the frames and the key. */
 export function plantControl(kind, base, donor) {
   const { prev, cur, next, next2 } = base;
-  const f = (p, role, over = {}) => ({ role, frame: p.page_number, source: p, ocr: p.ocr?.data ?? '', tr: role === 'cur' ? (p.translation?.data ?? '') : '', ...over });
+  const f = (p, role, over = {}) => ({ role, frame: p.page_number, source: p, ocr: p.ocr?.data ?? '', tr: role === 'cur' ? getTranslationText(p) : '', ...over });
   const frames = (a, b, c) => [a, b, c];
   const key = { kind };
   switch (kind) {
     case 'wrong_image_other_book': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { source: donor.cur }), f(next, 'next')) };
-    case 'neighbour_text': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { ocr: next.ocr.data, tr: next.translation.data }), f(next, 'next')) };
-    case 'shift_run': return { key, frames: frames(f(prev, 'prev', { ocr: cur.ocr.data }), f(cur, 'cur', { ocr: next.ocr.data, tr: next.translation.data }), f(next, 'next', { ocr: next2.ocr.data })) };
-    case 'english_neighbour': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { tr: next.translation.data }), f(next, 'next')) };
-    case 'english_other_book': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { tr: donor.cur.translation.data }), f(next, 'next')) };
+    case 'neighbour_text': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { ocr: next.ocr.data, tr: getTranslationText(next) }), f(next, 'next')) };
+    case 'shift_run': return { key, frames: frames(f(prev, 'prev', { ocr: cur.ocr.data }), f(cur, 'cur', { ocr: next.ocr.data, tr: getTranslationText(next) }), f(next, 'next', { ocr: next2.ocr.data })) };
+    case 'english_neighbour': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { tr: getTranslationText(next) }), f(next, 'next')) };
+    case 'english_other_book': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { tr: getTranslationText(donor.cur) }), f(next, 'next')) };
     case 'order_backward': return { key, frames: frames({ ...f(next, 'prev'), frame: prev.page_number }, f(cur, 'cur'), { ...f(prev, 'next'), frame: next.page_number }) };
     case 'two_leaves': return { key, frames: frames(f(prev, 'prev'), f(cur, 'cur', { compose: next }), f(next, 'next')) };
     case 'number_stamp': {
@@ -267,7 +268,7 @@ const sha = (s) => crypto.createHash('sha1').update(String(s)).digest('hex').sli
 function shuffled(xs, rnd) { const a = [...xs]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 // ── draw ──
-const PAGE_FIELDS = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, repeat_of: 1, translation_withheld: 1, printed_page: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, 'translation.data': 1, 'translation.model': 1, 'translation.source': 1, 'translation.edited_by': 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, crop: 1 };
+const PAGE_FIELDS = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, repeat_of: 1, translation_withheld: 1, printed_page: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, translation: 1, photo: 1, display_photo: 1, archived_photo: 1, photo_original: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1, crop: 1 };
 
 async function coverageOf(db, book, ids) {
   const hold = book.pipeline_auto?.hold?.reason ?? null;
@@ -314,7 +315,7 @@ async function draw(db, { seed, n, out }) {
       sample.push({ slot: sample.length, book: b, page: full, prev: prev ?? null, next, coverage: await coverageOf(db, b, [prev?.id, full.id, next?.id].filter(Boolean)) });
       if (sample.length % 25 === 0) console.error(`  drawn ${sample.length}`);
     } else {
-      const ok = (p, min = 200) => String(p?.ocr?.data ?? '').length >= min && String(p?.translation?.data ?? '').length >= min && !p.translation_withheld;
+      const ok = (p, min = 200) => String(p?.ocr?.data ?? '').length >= min && getTranslationText(p).length >= min && !p.translation_withheld;
       if (prev && next && next2 && ok(full, 300) && ok(next, 300) && ok(prev, 100) && String(next2?.ocr?.data ?? '').length >= 100) bases.push({ book: b, prev, cur: full, next, next2 });
     }
   }
@@ -327,7 +328,7 @@ async function draw(db, { seed, n, out }) {
   const items = [];
   for (const s of sample) {
     const frames = [s.prev && { role: 'prev', frame: s.prev.page_number, source: s.prev, ocr: s.prev.ocr?.data ?? '', tr: '' },
-      { role: 'cur', frame: s.page.page_number, source: s.page, ocr: s.page.ocr?.data ?? '', tr: s.page.translation?.data ?? '' },
+      { role: 'cur', frame: s.page.page_number, source: s.page, ocr: s.page.ocr?.data ?? '', tr: getTranslationText(s.page) },
       s.next && { role: 'next', frame: s.next.page_number, source: s.next, ocr: s.next.ocr?.data ?? '', tr: '' }].filter(Boolean);
     items.push({ item: sha(`${seed}:${s.slot}`), kind: 'main', slot: s.slot, title: s.book.display_title || s.book.title, language: s.book.language, label: s.page.printed_page?.label ?? null, frames });
   }
@@ -339,7 +340,7 @@ async function draw(db, { seed, n, out }) {
   fs.writeFileSync(path.join(out, 'items.json'), JSON.stringify({ seed, order, items }));
   const row = (s) => ({ slot: s.slot, book_id: s.book.id, title: String(s.book.display_title || s.book.title || '').slice(0, 100), frame: s.page.page_number, shown_number: s.page.page_number, stored_printed_label: s.page.printed_page?.label ?? null, page_id: s.page.id, page_type: s.page.page_type ?? null,
     ocr_engine: s.page.ocr?.model ?? s.page.ocr?.source ?? null, translation_engine: s.page.translation?.model ?? s.page.translation?.source ?? null, human_translation: !!(s.page.translation?.edited_by || ['human', 'manual'].includes(s.page.translation?.source)), withheld: !!s.page.translation_withheld,
-    has_text: !!String(s.page.ocr?.data ?? '').trim(), has_english: !!String(s.page.translation?.data ?? '').trim(), neighbours: [s.prev?.page_number ?? null, s.next?.page_number ?? null],
+    has_text: !!String(s.page.ocr?.data ?? '').trim(), has_english: !!getTranslationText(s.page).trim(), neighbours: [s.prev?.page_number ?? null, s.next?.page_number ?? null],
     language: s.book.language ?? null, group: languageGroup(s.book.language), scripts: [...scriptsOfLanguage(s.book.language)], provider: s.book.image_source?.provider ?? null, tenant: s.book.tenantId ?? null, coverage: s.coverage });
   fs.writeFileSync(path.join(out, 'sample.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), seed, frame: frameIds.length, n, rejected, pages: sample.map(row) }, null, 1));
   fs.writeFileSync(path.join(out, 'key.json'), JSON.stringify(items.filter((i) => i.kind === 'control').map(({ item, slot, control, base_book, base_page }) => ({ item, slot, control, base_book, base_page })), null, 1));
