@@ -31,6 +31,19 @@ export const RULE = { min_accept: 10, max_worse: 3 };
 const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const wilson = (k, n) => { if (!n) return null; const z = 1.96, p = k / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d, w = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d; return [+(c - w).toFixed(3), +(c + w).toFixed(3)]; };
+// The oauth usage endpoint answers 429 (retry-after ~4 min) when read before every judge call, two at a time:
+// the 1,000-page check died that way at 23/62 (2026-11-04). Read it at most every 3 min; a missing reading is
+// retried after 4 min, three times, then still fails closed (no reading, no check).
+let meterAt = 0, meterLast = null;
+async function meter() {
+  if (meterLast && Date.now() - meterAt < 180e3) return meterLast;
+  for (let i = 0; i < 4; i++) {
+    if (i) await new Promise((r) => setTimeout(r, 240e3));
+    const m = await claudeMeter(limits);
+    if (m) { meterAt = Date.now(); return (meterLast = m); }
+  }
+  return null;
+}
 export const wt = (v) => (v?.defects || []).some((d) => d.severity === 'wrong_text');
 const major = (v) => (v?.defects || []).some((d) => d.severity === 'wrong_text' || d.severity === 'misleads');
 /** Is the new English worse than the old on this page (the lane's rule)? */
@@ -88,7 +101,7 @@ async function judge(OUT) {
   console.log(`check: ${todo.length} texts to judge`);
   let stop = null, i = 0;
   const one = async (it) => {
-    const m = await claudeMeter(limits);
+    const m = await meter();
     fs.appendFileSync(path.join(OUT, 'meter.jsonl'), JSON.stringify(m ?? { unreadable: true, at: new Date().toISOString() }) + '\n');
     const b = paceBlock(m, { weeklyMax: 85, sessionMax: 95 }) || (limits.claudeBlocked({ weeklyMax: 85, sessionMax: 95 })?.reason ?? null);
     if (b) { stop = b; return; }
