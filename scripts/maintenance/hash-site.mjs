@@ -121,7 +121,7 @@ if (isMain) {
       const key = `hash-snapshots/site/${m.host}/${m.id}/${name}`;
       validateR2Key(key, 'hash-site upload');
       try { await s3.send(new sdk.PutObjectCommand({ Bucket: SNAPSHOT_BUCKET, Key: key, Body: body, IfNoneMatch: '*' })); log(`wrote ${key}`); }
-      catch (e) { if (e?.$metadata?.httpStatus !== 412) throw e; log(`exists ${key}`); }
+      catch (e) { if (e?.$metadata?.httpStatusCode !== 412) throw e; log(`exists ${key}`); }
     }
   } else {
     if (fs.existsSync(path.join(dir, 'manifest.json'))) { log(`${dir} already holds a snapshot`); process.exit(1); }
