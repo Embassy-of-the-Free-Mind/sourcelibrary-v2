@@ -103,7 +103,7 @@ async function resolveAccountRef(ref: string): Promise<void> {
   const db = client.db('bookstore');
   let checked = 0;
   for (const [coll, kind] of [['users', 'user'], ['api_keys', 'key']] as const) {
-    for await (const d of db.collection(coll).find({}, { projection: { _id: 1 } })) {
+    for await (const d of db.collection(coll).find({}, { projection: { _id: 1 }, batchSize: 1000 })) {
       checked++;
       if (accountRefFor(kind, String(d._id), secret) === ref) {
         console.log(`MATCH: ${coll}._id ${String(d._id)} (${kind}). Personal data: handle under the privacy terms.`);
