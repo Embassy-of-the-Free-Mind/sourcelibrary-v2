@@ -1,0 +1,413 @@
+[
+ {
+  "page_id": "69776cfc83fa548866dab9d1-good",
+  "book_id": "6977549361ed34486ac0e43b",
+  "page": 140,
+  "control": "good"
+ },
+ {
+  "page_id": "69af434690e0b4696e62cfbd",
+  "book_id": "69af434690e0b4696e62cf15",
+  "page": 168,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6992ce0100f13b15f3ca3ca3",
+  "book_id": "6992ce0100f13b15f3ca3c46",
+  "page": 93,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69b51d36261c58d636649103",
+  "book_id": "69b51d36261c58d63664908a",
+  "page": 121,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6992ce193ea667fbac82820f",
+  "book_id": "6992ce183ea667fbac8281b4",
+  "page": 91,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69afd0c2775a23a98ee9367d",
+  "book_id": "69afd0c2775a23a98ee9366e",
+  "page": 15,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "69e8b25c2ff2a8dc09e777d1",
+  "book_id": "69e8b25c2ff2a8dc09e7773b",
+  "page": 150,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "near-blank-5274",
+   "ocr-dropped"
+  ]
+ },
+ {
+  "page_id": "69f6e6ec95c134937c1b9e42",
+  "book_id": "69c7dcca25ec2ba5ccd80881",
+  "page": 278,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6992ce9c77d26f93217774e4",
+  "book_id": "6992ce9c77d26f9321777495",
+  "page": 79,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev",
+   "near-blank-5274"
+  ]
+ },
+ {
+  "page_id": "69b4cc37d2bf9b45ea47929c",
+  "book_id": "69b4cc36d2bf9b45ea47926f",
+  "page": 45,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "69f7110722b6018672a4813e",
+  "book_id": "69c816de6c6f3cc53c848bf2",
+  "page": 252,
+  "band": "post-run",
+  "language": "Dutch",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "69a682b2b3d8052782b3ccef",
+  "book_id": "69a682b2b3d8052782b3ccd3",
+  "page": 28,
+  "band": "post-run",
+  "language": "Latin",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69f68ef572ffd456014ca32d",
+  "book_id": "6909aba7cf28baa1b4caef69",
+  "page": 69,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6991eab22f801130a473e090",
+  "book_id": "6991eab12f801130a473dfd8",
+  "page": 184,
+  "band": "post-run",
+  "language": "Italian",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6990648bef12272ffdc93cab",
+  "book_id": "6990648aef12272ffdc93ca5",
+  "page": 6,
+  "band": "post-run",
+  "language": "Latin",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "6abea10d6a920ffd924dab04-good",
+  "book_id": "6abea1016a920ffd924daaec",
+  "page": 22,
+  "control": "good"
+ },
+ {
+  "page_id": "69af131693903bf8119f3906",
+  "book_id": "69af131693903bf8119f36db",
+  "page": 555,
+  "band": "post-run",
+  "language": "Latin",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69942af7d607f8e57e4b60f0",
+  "book_id": "69942af7d607f8e57e4b5faa",
+  "page": 326,
+  "band": "post-run",
+  "language": "Greek",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "6992cb00d4d545ae73feee32",
+  "book_id": "6992caffd4d545ae73feee14",
+  "page": 30,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev",
+   "near-blank-5274"
+  ]
+ },
+ {
+  "page_id": "69af3cf74b4d9535c7f4ff84",
+  "book_id": "69af3cf74b4d9535c7f4fdaf",
+  "page": 469,
+  "band": "post-run",
+  "language": "Russian",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-next"
+  ]
+ },
+ {
+  "page_id": "69a68281b3d8052782b3c667",
+  "book_id": "69a68281b3d8052782b3c617",
+  "page": 80,
+  "band": "post-run",
+  "language": "French",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "6976380d547a4ec73b75d003",
+  "book_id": "6974b648457dd8909910b9fb",
+  "page": 155,
+  "band": "post-run",
+  "language": "Latin",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "697690acb084a0526bb6e56f",
+  "book_id": "6975158da88d83c830d99e3a",
+  "page": 295,
+  "band": "post-run",
+  "language": "German",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69a6827ed5bf106c72bb8fb1",
+  "book_id": "69a6827ed5bf106c72bb8f01",
+  "page": 176,
+  "band": "post-run",
+  "language": "French",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69850e6854385eaa3fe55eee-swap",
+  "book_id": "6984e84f5905f8d14dbe659b",
+  "page": 141,
+  "control": "swap"
+ },
+ {
+  "page_id": "695004b9f426a210d1097a72",
+  "book_id": "f20894c1-495f-4afe-815b-e8bf3c8938a5",
+  "page": 36,
+  "band": "post-run",
+  "language": "Italian",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69d5ac2ed0bd3547a565596c",
+  "book_id": "69d5ac2ed0bd3547a565582f",
+  "page": 316,
+  "band": "post-run",
+  "language": "Arabic",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69af0a0d724769085e857a74-good",
+  "book_id": "69af0a0d724769085e857a0a",
+  "page": 106,
+  "control": "good"
+ },
+ {
+  "page_id": "694c8114c38387390a89597e",
+  "book_id": "69099eb5cf28baa1b4caeb37",
+  "page": 22,
+  "band": "post-run",
+  "language": "French",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "6992c9022b03ab4dc6e12bee",
+  "book_id": "6992c9022b03ab4dc6e12b7a",
+  "page": 116,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "near-blank-5274",
+   "near-blank-invented"
+  ]
+ },
+ {
+  "page_id": "6974601a5da9d1378f1e250b",
+  "book_id": "6970e3639b09d309d780a270",
+  "page": 238,
+  "band": "post-run",
+  "language": "German",
+  "src": [
+   "confirmed",
+   "cb-TXT-alpha-B",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "6992cdb643713c66ea6381ca",
+  "book_id": "6992cdb543713c66ea63818d",
+  "page": 61,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "near-blank-5274",
+   "near-blank-invented"
+  ]
+ },
+ {
+  "page_id": "695258ceab34727b1f045940",
+  "book_id": "695258ceab34727b1f0457c2",
+  "page": 382,
+  "band": "post-run",
+  "language": "German",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev"
+  ]
+ },
+ {
+  "page_id": "69bd0a12b01b17638a097a30",
+  "book_id": "69bd0a11b01b17638a0978c6",
+  "page": 362,
+  "band": "post-run",
+  "language": "Chinese",
+  "near_blank": true,
+  "src": [
+   "confirmed",
+   "cb-NB-A",
+   "cb-prev",
+   "near-blank-5274"
+  ]
+ },
+ {
+  "page_id": "69504445618fd88f7039b905-swap",
+  "book_id": "93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2",
+  "page": 25,
+  "control": "swap"
+ }
+]
