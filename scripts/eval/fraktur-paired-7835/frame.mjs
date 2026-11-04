@@ -22,6 +22,7 @@ import { OUT, ROOT, J, W, jsonl, SEED, makeRng, shuffle, arg, imageFor, agyFace 
 import { FIRST_READ_BOOKS, firstReadSkip, UNREAD, spreadReason, isInterior, lastPageNumber, LITE_MODELS, IDLE_STATUSES } from '../../batch/cli-ocr-lane.mjs';
 import { VISIBLE_PAGE_MATCH } from '../../lib/page-counts.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 export const T4_N = 300, T1_STRATA = { fraktur: 40, antiqua: 20 }, T2_STRATA = { fraktur: 40 }, T3_N = 40;
 export const T1_CAP = 450, T2_CAP = 120;   // candidates drawn; tagging stops when the strata are full
@@ -90,7 +91,8 @@ async function t2Draw() {
   const processed = new Set(jsonl(ledgerFile).map((r) => r.page_id));
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
   await withDb(async (db) => {
-    const judged = new Set((await db.collection('lane_judge_verdicts').find({}, { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
+    // all origins: an exclusion set, not evidence.
+    const judged = new Set((await db.collection('lane_judge_verdicts').find(verdictQuery({}, { tests: true }), { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
     const books = await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: /^German/ }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } }, { projection: { id: 1, title: 1, language: 1, year: 1, published: 1 } }).toArray();
     const rnd = makeRng(SEED.t2), order = shuffle(books.sort((a, b) => (a.id < b.id ? -1 : 1)), rnd);
     const out = [], log = { frame_books: books.length, ledger_rows: processed.size, tried: 0, no_correctable: 0, short_block: 0 };
