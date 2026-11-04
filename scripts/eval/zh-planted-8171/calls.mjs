@@ -19,6 +19,9 @@ function book(kind, what) {
 }
 const QUOTA = /usage limit|rate limit|limit reached|resets? at|out of extra usage/i;
 
+/** The subscription, never an API key: an --env-file run carries ANTHROPIC_API_KEY, which `claude -p` prefers and
+ * which is rejected here ("Invalid API key"); 60 calls failed that way on 2026-11-04 before this (calls-authfail.jsonl). */
+const claudeEnv = () => { const e = { ...process.env, PATH: '/usr/local/bin:/usr/bin:/bin:/root/.local/bin' }; for (const k of Object.keys(e)) if (/^ANTHROPIC_/.test(k)) delete e[k]; return e; };
 /** One `claude -p --model opus` call. `files` = {name: srcPath} copied into a fresh cwd the model may Read. */
 export function claudeCall(prompt, { what = '', files = {}, model = 'opus', timeoutMs = 600_000 } = {}) {
   book('claude', what);
@@ -27,7 +30,7 @@ export function claudeCall(prompt, { what = '', files = {}, model = 'opus', time
     for (const [n, src] of Object.entries(files)) fs.copyFileSync(src, path.join(cwd, n));
     const tools = Object.keys(files).length ? ['--tools', 'Read', '--allowedTools', 'Read'] : ['--tools', ''];
     const t0 = Date.now();
-    const p = spawn('/root/.local/bin/claude', ['-p', '--model', model, ...tools, '--strict-mcp-config', '--setting-sources', '', '--no-session-persistence', '--output-format', 'json'], { cwd, env: { ...process.env, PATH: `/usr/local/bin:/usr/bin:/bin:/root/.local/bin` } });
+    const p = spawn('/root/.local/bin/claude', ['-p', '--model', model, ...tools, '--strict-mcp-config', '--setting-sources', '', '--no-session-persistence', '--output-format', 'json'], { cwd, env: claudeEnv() });
     let out = '', err = ''; p.stdout.on('data', (d) => (out += d)); p.stderr.on('data', (d) => (err += d));
     const killer = setTimeout(() => p.kill('SIGKILL'), timeoutMs);
     p.on('close', (code) => {
