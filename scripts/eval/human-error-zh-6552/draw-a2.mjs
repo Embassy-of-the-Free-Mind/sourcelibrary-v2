@@ -23,7 +23,7 @@ const iaOf = async (id) => (await db.collection('books').findOne({ id }, { proje
 const picked = [], dropped = [], skipped = [];
 for (const p of prev.picked) { const copy = await copyOf(await iaOf(p.book_id)); if (copy === 'wenyuange') picked.push({ ...p, copy }); else dropped.push({ uid: p.uid, copy }); }
 const works = {};
-for await (const b of db.collection('books').find({ work_id: /^kr:KR[1-3]/ }, { projection: { id: 1, work_id: 1, ia_identifier: 1 } })) (works[b.work_id.slice(3)] ||= []).push(b);
+for await (const b of db.collection('books').find({ work_id: /^kr:KR[1-3]/ }, { projection: { id: 1, work_id: 1, ia_identifier: 1 } }).batchSize(1000)) (works[b.work_id.slice(3)] ||= []).push(b);
 const save = () => fs.writeFileSync(new URL('./draw-a2.json', import.meta.url), JSON.stringify({ seed: SEED, drawn_at: new Date().toISOString(), dice_min: DICE, quota: QUOTA, dropped_not_wenyuange: dropped, picked, skipped_count: skipped.length }, null, 1) + '\n');
 const have = new Set(prev.picked.map((p) => p.kr)), got = { KR1: 0, KR2: 0, KR3: 0 };
 for (const p of picked) got[p.cls]++;

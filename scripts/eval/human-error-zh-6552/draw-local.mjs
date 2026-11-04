@@ -39,7 +39,7 @@ if (STAGE === 'stored') {
   save();
 } else if (STAGE === 'candidates') {
   const works = {};
-  for await (const b of db.collection('books').find({ work_id: /^kr:KR[24]/ }, { projection: { id: 1, work_id: 1, ia_identifier: 1 } })) (works[b.work_id.slice(3)] ||= []).push(b);
+  for await (const b of db.collection('books').find({ work_id: /^kr:KR[24]/ }, { projection: { id: 1, work_id: 1, ia_identifier: 1 } }).batchSize(1000)) (works[b.work_id.slice(3)] ||= []).push(b);
   const PADDLE = new Set(['KR2a0001', 'KR2a0007', 'KR2a0009', 'KR2a0012']), cand = [], rows = [], got = { KR2: 0, KR4: 0 };
   for (const kr of shuffle(Object.keys(works).filter((k) => !PADDLE.has(k)))) {
     const cls = kr.slice(0, 3); if (got[cls] >= OVER[cls]) continue;

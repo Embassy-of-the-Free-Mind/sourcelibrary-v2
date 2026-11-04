@@ -26,7 +26,7 @@ const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math
 const c = await MongoClient.connect(process.env.MONGODB_URI, { compressors: ['zlib'] });
 const db = c.db('bookstore');
 const works = {};
-for await (const b of db.collection('books').find({ work_id: /^kr:KR[1-4]/ }, { projection: { id: 1, work_id: 1 } })) (works[b.work_id.slice(3)] ||= []).push(b.id);
+for await (const b of db.collection('books').find({ work_id: /^kr:KR[1-4]/ }, { projection: { id: 1, work_id: 1 } }).batchSize(1000)) (works[b.work_id.slice(3)] ||= []).push(b.id);
 const ids = Object.keys(works).sort();
 const order = [...FORCED, ...shuffle(ids.filter((k) => !FORCED.includes(k)))];
 const got = { KR1: 0, KR2: 0, KR3: 0, KR4: 0 }, picked = [], skipped = [];
