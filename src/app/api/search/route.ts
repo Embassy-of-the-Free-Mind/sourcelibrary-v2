@@ -34,6 +34,7 @@ import { phraseMatch } from '@/lib/passage-score';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
+import { foldSimplifiedHan } from '@/lib/search/han-fold';
 import { locateQuery } from '@/lib/search/original-snippet';
 
 export const preferredRegion = 'fra1';
@@ -176,7 +177,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
   const _searchStart = Date.now();
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q') || '';
+    const typedQuery = searchParams.get('q') || '';
+    // Every lane below matches the corpus's traditional characters. The log keeps what was typed.
+    const query = foldSimplifiedHan(typedQuery);
     let language = searchParams.get('language');
     const languagesParam = searchParams.get('languages');
     const excludeLanguagesParam = searchParams.get('exclude_languages');
@@ -1550,7 +1553,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     });
 
     logSearchQuery({
-      request, identity, route: 'search', query,
+      request, identity, route: 'search', query: typedQuery,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
       vector_shadow: vectorShadow.result,

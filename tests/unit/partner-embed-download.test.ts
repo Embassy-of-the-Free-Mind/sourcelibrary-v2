@@ -106,8 +106,13 @@ vi.mock('@/lib/mongodb', () => {
   return { getDb: vi.fn(async () => db), getReadDb: vi.fn(async () => db) };
 });
 
-function req(url: string, referer?: string): NextRequest {
-  const headers: Record<string, string> = { host: 'sourcelibrary.org', 'x-forwarded-for': '203.0.113.7' };
+function req(url: string, referer?: string, browser = true): NextRequest {
+  const headers: Record<string, string> = {
+    host: 'sourcelibrary.org',
+    'x-forwarded-for': '203.0.113.7',
+    'user-agent': browser ? 'Mozilla/5.0 (X11; Linux x86_64) Chrome/151.0.0.0 Safari/537.36' : 'python-requests/2.32',
+    ...(browser ? { 'sec-fetch-mode': 'navigate', 'sec-fetch-site': 'same-origin' } : {}),
+  };
   if (referer) headers.referer = referer;
   return new NextRequest(url, { headers });
 }
@@ -165,6 +170,12 @@ describe('download routes: anonymous outside the embed is still 401', () => {
   it('page package: non-EFM book from the embed → 401', async () => {
     expect((await pagePackage('other-book', EMBED_REF)).status).toBe(401);
   });
+  it('a script naming the embed as its Referer is not the embed (#8098)', async () => {
+    const { GET } = await import('@/app/api/books/[id]/download/route');
+    const res = await GET(req('https://sourcelibrary.org/api/books/efm-book/download?format=translation', EMBED_REF, false), { params: Promise.resolve({ id: 'efm-book' }) });
+    expect(res.status).toBe(401);
+  });
+
   it('page package: EFM book from the embed passes the gate', async () => {
     // No page exists in the fake db, so a passed gate surfaces as the 404.
     expect((await pagePackage('efm-book', EMBED_REF)).status).toBe(404);

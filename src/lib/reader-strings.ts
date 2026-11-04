@@ -2853,18 +2853,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: '扫描图',
       // The transcription IS the reading text on `/zh`, so the pane is named for
-      // what it holds rather than for how it was made.
-      viewOcr: '中文',
-      ocrPaneHeader: () => '中文原文',
+      // what it holds rather than for how it was made. 原文, never 中文: /zh also
+      // opens Latin and French books (中学西传), and the pane holds their own language.
+      viewOcr: '原文',
+      ocrPaneHeader: () => '原文',
       viewRoman: '罗马字',
       viewEnglish: '英文',
       visiblePanesAria: '当前显示的窗格',
       showPane: (label) => `显示${label}`,
       lastPaneShowing: '这是最后一个显示的窗格',
       pickPaneAria: '扫描图、原文或译文',
-      translatedFrom: () => '译自中文',
+      translatedFrom: () => '译自原文',
       viewTheScan: '查看扫描图',
-      viewTheText: () => '查看中文原文',
+      viewTheText: () => '查看原文',
 
       originalFallback: '原文',
       romanisedHeader: '罗马字转写',
@@ -2885,7 +2886,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
 
       originalScan: '原书扫描图',
       originalScanHint: '页面拍摄时的原貌',
-      transcriptionOf: () => '中文原文',
+      transcriptionOf: () => '原文',
       transcriptionHint: '印刷文字，由机器识读',
       englishTranslation: '英文译文',
       englishTranslationHint: '借助 AI 翻译',
@@ -2905,7 +2906,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       trace: '对照',
       turnTracingOff: '关闭对照',
       traceFallbackLanguage: '原文',
-      traceHint: () => '对照：点击任意短语，查看它在中文原文中的位置',
+      traceHint: () => '对照：点击任意短语，查看它在原文中的位置',
       traceAligning: '正在将本页与译文对齐…',
       traceUnavailable: '本页无法使用对照功能。',
       traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',

@@ -135,6 +135,23 @@ $HOST_RULES
 - When the brief's definition of done is met (or you hit a STOP condition it names), run:
   touch $JD/$1.done   — and only then end. Exiting without it makes the wrapper resume you.
 R
+skill_note "$1"
+}
+
+# `Skill: <name>[, <name>]` brief header line (#6553): a job uses a repo skill only when its brief names one (370
+# job transcripts on cloudlayer: `review` was the only skill ever invoked, in 6 sessions). The named skills are put
+# into the prompt as an instruction, and one that is not in .claude/skills/ is said so at start.
+brief_skills() {  # $1 brief file -> skill names, one per line
+  brief_header Skill "$1" | tr ',' '\n' | sed -E 's/^[[:space:]/]+//; s/[[:space:]]+$//' | grep -E '^[A-Za-z0-9:_-]+$'
+}
+skill_note() {  # $1 job name -> the SKILLS block for the prompt, or nothing
+  local sk; sk=$(brief_skills "$JD/$1.brief.txt" | paste -sd, | sed 's/,/, /g')
+  [ -n "$sk" ] || return 0
+  cat <<S
+- SKILLS (the brief's \`Skill:\` line): $sk. Invoke each with the Skill tool BEFORE the step it covers and follow
+  it; where it runs a script (a check, a score), that script's pass is part of the definition of done. Say in your
+  final message which skill steps ran, and any rule it waived and why.
+S
 }
 
 
@@ -172,6 +189,7 @@ reap_if_clean() {
 # The landing contract (#6358). A brief declares it in two header lines (first 15 lines of the brief):
 #   Lands: #NNNN      the issue the job reports on (`Lands: none` = no comment is expected)
 #   PR: yes|no        whether a pull request is expected
+#   Skill: <name>     optional (#6553): repo skills the job must use; put into the prompt by skill_note()
 # Without them the wrapper guesses: the issue is the number the job NAME ends in, else the first #NNNN
 # in the brief; a PR is expected only if the worktree holds commits beyond main. Why headers: by
 # 2026-10-09, 58 of 113 finished jobs on the main box had paged "did NOT land" at high priority. The
@@ -708,6 +726,9 @@ case "${1:-status}" in
     mkdir -p "$d/src/lib/vendor"; cp "$SL/src/lib/vendor/lamejs-bundle.js" "$d/src/lib/vendor/" 2>/dev/null || true
     [ "$(realpath "$brief")" = "$JD/$name.brief.txt" ] || cp "$brief" "$JD/$name.brief.txt"
     landing_contract "$name" "$JD/$name.brief.txt"
+    for sk in $(brief_skills "$JD/$name.brief.txt"); do
+      [ -f "$d/.claude/skills/${sk#*:}/SKILL.md" ] || [ "${sk#*:}" != "$sk" ] || echo "note: brief names Skill: $sk, but .claude/skills/$sk/SKILL.md is not on main; the job is told to use it anyway"
+    done
     [ "$LC_ISSUE_SRC" = "Lands header" ] && [ "$LC_PR" != auto ] || echo "note: brief has no 'Lands: #NNNN' / 'PR: yes|no' header lines; the landing check will guess (issue: ${LC_ISSUE:-none found}${LC_ISSUE_SRC:+ from $LC_ISSUE_SRC}; PR: only if it commits)"
     rm -f "$JD/$name.done" "$JD/$name.state.md" "$JD/$name.session"
     if [ -n "${JOB_CLAUDE_HOME:-}" ]; then echo "$JOB_CLAUDE_HOME" > "$JD/$name.claude-home"; else rm -f "$JD/$name.claude-home"; fi
