@@ -176,17 +176,17 @@ A page gets the **lowest** grade any lane earns. The lanes are leaf, transcripti
 
 | Grade | Plain meaning | Rule (severities from §3.4) |
 |---|---|---|
-| **Fit to quote** | You can cite these words, in the original and in English, without opening the scan. | Leaf right. No critical and no major error in any lane. Transcription minors ≤ 2 on the page, none of them in a sentence the reader would quote. Where a reference exists, Level 2 CER ≤ 1%. |
-| **Fit to read** | The page says what the leaf says. Check the scan before you quote it. | Leaf right. No critical and no major error. Any number of minors. |
-| **Fit for search only** | It will help you find the page, but do not trust the reading. | Leaf right. No critical error. One or more majors. The transcription is in the right script and mostly the right words (Level 1 CER ≤ 10% where a reference exists; by eye: a reader searching a word on the page would find it). |
-| **Not usable** | Do not rely on this page. | Any critical: wrong leaf, invented or recited text, wrong script, echoed source, fluent prose over unreadable text, most of the page missing. Also a refusal or empty output on a leaf that has text. |
+| **No serious error found** (`fit_to_quote`) | Reviewers found no error that changes the sense. They miss some. | Leaf right. No critical and no major error in any lane. Transcription minors ≤ 2 on the page, none of them in a sentence the reader would quote. Where a reference exists, Level 2 CER ≤ 1%. |
+| **Small slips only** (`fit_to_read`) | The page says what the leaf says, with slips that do not change the sense. | Leaf right. No critical and no major error. Any number of minors. |
+| **A reading that changes the sense** (`search_only`) | Mostly right, with at least one error that changes the meaning. | Leaf right. No critical error. One or more majors. The transcription is in the right script and mostly the right words (Level 1 CER ≤ 10% where a reference exists; by eye: a reader searching a word on the page would find it). |
+| **Not the page’s text** | Another page’s text, words that are not on the page, or most of the page wrong or missing. | Any critical: wrong leaf, invented or recited text, wrong script, echoed source, fluent prose over unreadable text, most of the page missing. Also a refusal or empty output on a leaf that has text. |
 
-A page with no ink that is served as blank is **fit to quote**: there is nothing to quote, and nothing false. A blank page served with text is **not usable** (O1).
+A page with no ink that is served as blank is **no serious error found**: there is nothing to read, and nothing false. A blank page served with text is **not usable** (O1).
 
 The 1% and 10% lines and the "≤ 2 minors" line are **judgement calls**, chosen here:
 - 1% is about one wrong letter in a printed line of 80–100 characters;
 - 10% is about where the #5660 by-eye pages stop being searchable;
-- the minors cap keeps "fit to quote" meaning what it says.
+- the minors cap keeps "no serious error found" meaning what it says.
 
 They are tested in §5.3 and changed only by a later commit to this doc, never after looking at a month's data.
 
@@ -298,7 +298,7 @@ It **extends the existing monthly audit** (`translation-corpus-audit/MONTHLY.md`
 | "Rated 4 or 5 of 5 by a model judge" | `/quality`, #5274 | Kept for comparison. The judge's defects are re-read as MQM severities: fidelity ≤ 3 with a major defect ≈ "fit for search only" or worse in the translation lane. The page grade replaces it as the headline once §5.3 is done |
 | "Pages at 4 or 5 against a published translation" | `/quality`, #5695 | Unchanged as `judged_vs_reference`; a diagnostic per language, not the page grade |
 | "Serious errors per 100 pages" | #5914 | "Serious" = major + critical in §3.4 terms; reported as the MQM penalty diagnostic |
-| "Major-defect rate ≤ 10% on n ≥ 20" ship rule | #5438 | Restated as "share of pages graded *fit for search only* or *not usable* ≤ 10%", with the interval printed (at 2 of 20 it is about 3–30%, eval-design §2.1) |
+| "Major-defect rate ≤ 10% on n ≥ 20" ship rule | #5438 | Restated as "share of pages graded *a reading that changes the sense* or *not the page’s text* ≤ 10%", with the interval printed (at 2 of 20 it is about 3–30%, eval-design §2.1) |
 
 ## 8. Inventory: what is measured today, per stratum, and what it costs to fill
 

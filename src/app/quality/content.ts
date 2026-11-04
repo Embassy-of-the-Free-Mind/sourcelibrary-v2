@@ -162,23 +162,23 @@ export const WAYS: Way[] = [
  */
 export const GRADES: { name: string; means: string; rule: string }[] = [
   {
-    name: 'Fit to quote',
-    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    name: 'No serious error found',
+    means: 'Reviewers found no error that changes the sense. They miss some.',
     rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
   },
   {
-    name: 'Fit to read',
-    means: 'The page says what the scan says. Check the scan before you quote it.',
+    name: 'Small slips only',
+    means: 'The page says what the scan says, with slips that do not change the sense.',
     rule: 'The right page, and no serious error. Small slips are allowed.',
   },
   {
-    name: 'Fit for search only',
-    means: 'It will help you find the page, but do not trust the reading.',
+    name: 'A reading that changes the sense',
+    means: 'Mostly right, with at least one error that changes the meaning.',
     rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
   },
   {
-    name: 'Not usable',
-    means: 'Do not rely on this page.',
+    name: 'Not the page’s text',
+    means: 'Another page’s text, words that are not on the page, or most of the page wrong or missing.',
     rule: 'The text belongs to another page, contains words that are not on the page, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
   },
 ];

@@ -401,7 +401,7 @@ export interface ReaderStrings {
     /** `serious` is null when the check kept no per-page record. */
     qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
     /** Follows qualityBook: the kinds of serious error that check found most often, commonest first (at most two). */
-    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means, and to check the scan. */
+    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means. */
     qualitySeeReview: string;
     /** The book line when the newest review found no serious error on the pages it read (#7896). */
     qualityChecked: (o: { ai: boolean; image: boolean; read: number; date: string }) => string;
@@ -968,7 +968,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       scannedFrom: (pageNumber) => `Photographed from the printed edition${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
       transcribedBy: (model) => `Read from the scan by ${model}`,
       translatedBy: (model) => `Translated from the transcript by ${model}`,
-      machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
+      machineNotice: 'Machine transcription and translation carry errors. The scan is the source.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None. This is a digital text edition; no page images exist.',
@@ -980,8 +980,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machine transcription, not checked by a person. ' +
         (route === 'print'
           ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
-          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
-        ' Check the scan wherever a reading matters.',
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.'),
       krakenEvidenceLink: 'How we checked',
       iaTranscript: (engine, year, agreement) =>
         `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
@@ -1466,7 +1465,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       scannedFrom: (pageNumber) => `Fotografiada a partir de la edición impresa${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
       transcribedBy: (model) => `Leída del escaneo por ${model}`,
       translatedBy: (model) => `Traducida de la transcripción por ${model}`,
-      machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
+      machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
@@ -1478,8 +1477,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcripción automática, no revisada por una persona. ' +
         (route === 'print'
           ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
-          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
-        ' Consulta el escaneo siempre que una lectura sea importante.',
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.'),
       krakenEvidenceLink: 'Cómo lo comprobamos',
       iaTranscript: (engine, year, agreement) =>
         `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
@@ -1989,7 +1987,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       scannedFrom: (pageNumber) => `Ex editione impressa photographice descripta${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
       transcribedBy: (model) => `Ex imagine lecta a ${model}`,
       translatedBy: (model) => `Ex transcriptione conversa a ${model}`,
-      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est: eam iuxta textum lege, ubicumque lectio alicuius momenti est.',
+      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
         : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
@@ -2001,8 +1999,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcriptio machina facta, ab homine non recognita. ' +
         (route === 'print'
           ? 'Quinque paginas typis impressas cum imaginibus contulimus (mense Septembri 2026): verba in omnibus quinque recte lecta sunt, in duabus autem versus e columnis diversis confusi sunt.'
-          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.') +
-        ' Imaginem inspice, ubicumque lectio alicuius momenti est.',
+          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.'),
       krakenEvidenceLink: 'Quomodo exploraverimus',
       iaTranscript: (engine, year, agreement) =>
         `Ex imagine lecta ab OCR Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
@@ -2495,7 +2492,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       scannedFrom: (pageNumber) => `Gefotografeerd uit de gedrukte editie${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
       transcribedBy: (model) => `Van de scan gelezen door ${model}`,
       translatedBy: (model) => `Uit de transcriptie vertaald door ${model}`,
-      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron: lees die naast de tekst waar het op een lezing aankomt.',
+      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Geen. Dit is een digitale tekstuitgave. De tekst is bewaard gebleven op ${witnessCount} ${witnessCount === 1 ? 'kleitablet' : 'kleitabletten'}, gecatalogiseerd bij CDLI.`
         : 'Geen. Dit is een digitale tekstuitgave; er bestaan geen pagina-afbeeldingen.',
@@ -2507,8 +2504,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machinale transcriptie, niet door een mens gecontroleerd. ' +
         (route === 'print'
           ? 'We hebben vijf gedrukte pagina’s naast hun scans gelezen (september 2026): op alle vijf klopten de woorden, en op twee ervan liepen regels uit verschillende kolommen door elkaar.'
-          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.') +
-        ' Bekijk de scan waar het op een lezing aankomt.',
+          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.'),
       krakenEvidenceLink: 'Hoe we het hebben gecontroleerd',
       iaTranscript: (engine, year, agreement) =>
         `Van de scan gelezen door de OCR van het Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
@@ -2996,7 +2992,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       scannedFrom: (pageNumber) => `拍摄自印本${pageNumber != null ? `，第 ${pageNumber} 页` : ''}`,
       transcribedBy: (model) => `由 ${model} 从扫描图识读`,
       translatedBy: (model) => `由 ${model} 根据转录文本翻译`,
-      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据，凡是关键的读法，请对照扫描图阅读。',
+      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据。',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `无。这是数字文本版。该作品保存在 CDLI 著录的 ${witnessCount} 块泥板上。`
         : '无。这是数字文本版，没有页面图像。',
@@ -3008,8 +3004,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         '机器转录，未经人工核对。' +
         (route === 'print'
           ? '我们对照扫描图审读了五页印本（2026 年 9 月）：五页的字词全部正确，其中两页把不同栏的行混在了一起。'
-          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。') +
-        '凡是关键的读法，请核对扫描图。',
+          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。'),
       krakenEvidenceLink: '我们如何核对',
       iaTranscript: (engine, year, agreement) =>
         `由 Internet Archive 的 OCR 从扫描图识读${engine ? `（${engine}${year ? `，${year}` : ''}）` : year ? `（${year}）` : ''}` +
