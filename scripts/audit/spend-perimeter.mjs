@@ -76,6 +76,8 @@ const UNATTENDED = [
     note: 'copies the Internet Archive\'s own OCR text into empty pages through ia-ocr-ingest gates; archive.org only, no model call (#4763)' },
   { match: 'climits check', spends: false, gated: false,
     note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
+  { match: 'embed-frame-height.mjs', spends: false, gated: false,
+    note: 'loads a few partner book pages in a local headless browser, pushes ntfy on a failure; no model call (#8054)' },
   { match: 'edge-crawl-alert.mjs', spends: false, gated: false,
     note: 'reads Cloudflare GraphQL analytics (free) and pushes ntfy; no model call (#6398)' },
   { match: 'edge-stops-daily.mjs', spends: false, gated: false,
