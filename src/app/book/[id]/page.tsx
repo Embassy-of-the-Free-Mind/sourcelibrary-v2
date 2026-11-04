@@ -98,7 +98,7 @@ import AuthorName from '@/components/AuthorName';
 import { localePath, PREFIXED_LOCALES, hasBookPageForEveryBook, type Locale } from '@/lib/locale-path';
 import { OG_LOCALE } from '@/lib/og-locale';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
-import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
+import { localizedAuthor, localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
@@ -1860,9 +1860,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
-                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
+                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />}
                     </Link>
-                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />)}
+                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />)}
                   {/* The name stays clickable and searchable — a byline is how a
                       reader REACHES a book, and for the Bhutanese manuscript
                       volumes the monastery is the only handle they have. What
@@ -2221,12 +2221,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                         <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
-                          <AuthorName author={book.author} lang={lang} />
+                          <AuthorName author={localizedAuthor(book, lang)} lang={lang} />
                         </Link>
-                      ) : <AuthorName author={book.author} lang={lang} />
+                      ) : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />
                     ) : heroByline.role === 'editor' ? (
                       <span>edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
-                    ) : <AuthorName author={book.author} lang={lang} />}
+                    ) : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />}
                     {heroByline.role === 'author' && heroByline.editor && (
                       <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
                     )}
