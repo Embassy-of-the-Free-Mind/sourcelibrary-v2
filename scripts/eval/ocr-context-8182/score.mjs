@@ -138,14 +138,15 @@ for (const r of todo) {
   }
 }
 
-// controls read no N2 and N twice on only 10 pages per group: a page without its own floor takes the arm's mean
-// same-image floor (floor_kind 'arm_rep'), stated in the record
-for (const eng of Object.keys(ENGINES)) {
-  const P = pages.filter((p) => p.engine === eng && p.outcome === 'ok');
+// controls read no N2 and N twice on only 10 pages per group: a page without its own floor takes its GROUP's mean
+// same-image floor (floor_kind 'group_rep'), stated in the record. (Was the arm's mean over all groups, which put
+// Flash's Tibetan floor, 0.45, under its Chinese pages: fixed before the record was written.)
+for (const eng of Object.keys(ENGINES)) for (const g of ENGINES[eng]) {
+  const P = pages.filter((p) => p.engine === eng && p.group === g && p.outcome === 'ok');
   const fr = P.filter((p) => p.F_rep != null), fl = fr.length ? mean(fr.map((p) => p.F_rep)) : null;
   const wb = P.filter((p) => p.W_base != null && p.floor_kind), wbm = wb.length ? mean(wb.map((p) => p.W_base)) : null;
   for (const p of P) {
-    if (p.E == null && p.F_S != null && fl != null) { p.E = p.F_S - fl; p.floor_kind = 'arm_rep'; }
+    if (p.E == null && p.F_S != null && fl != null) { p.E = p.F_S - fl; p.floor_kind = 'group_rep'; }
     if (p.blur == null && p.F_B != null && fl != null) p.blur = p.F_B - fl;
     if (p.W_C == null && p.W_raw != null && wbm != null) p.W_C = (p.W_raw - wbm) / p.W_k;
   }
