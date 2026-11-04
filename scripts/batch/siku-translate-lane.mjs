@@ -35,6 +35,13 @@
  * that is NOT a different volume of the same Siku set and carries English, or is an English book). Volumes of one
  * set share a work_id (kr:KR…), so a translated sibling VOLUME is not a dupe. Visible first, then fewest pages.
  *
+ * READER REQUESTS GO FIRST (#7690). A book with an open request the reader-request lane judged `siku` leads the wave,
+ * oldest request first, its requested pages first, and its rung need not be on RUNGS (a `readable` book can still lack
+ * the page a reader asked for). The list is read from `feedback` at the start of each wave and each `count`, so an
+ * answered request drops off by itself; a request that arrives mid-wave waits for the next wave. Every other filter
+ * above still applies, and a request reorders only: it never unlocks a book this lane would not translate, and it
+ * releases nothing. reader-request-lane.mjs marks the row and emails the reader once the page has English.
+ *
  * PAGES. Untranslated translatable pages (cli-translate-lane UNTRANSLATED), minus the ledger, minus a page whose OCR
  * holds a chat-model reply (#5600 2026-10-27: 詩總聞 p.118 ended in "作为一个人工智能语言模型…"; ledgered as
  * `ocr-chat-reply`, never sent). A page read or applied and not written is ledgered and never retried in-lane.
@@ -82,6 +89,8 @@ import { ntfyPost } from '../lib/ntfy-send.mjs';
 import { writeLaneStop } from '../lib/lane-stop.mjs';
 import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
 import { AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
+import { SIKU_LANE_HOLDS } from '../lib/hold-reasons.mjs';
+import { judgeRequests, requestedFirst } from './reader-request-lane.mjs';
 
 export { POOL_HOMES, parseQuota, poolName };
 
@@ -89,9 +98,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 export const ISSUE = 5600;
 export const JOB = 'siku-lane-5600';
-// zh-histories-7546: the Four Histories (Shiji, Hanshu, Hou Hanshu, Sanguozhi), Siku copies OCR'd by the Paddle lane on
-// 2026-10-28 (#7546). Derek 2026-10-29: "get more chinese translated". They go first, his 10-27 priority volumes first.
-export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']);
+export const HOLD_REASONS = SIKU_LANE_HOLDS;
 export const FIRST_HOLD = 'zh-histories-7546';
 // Derek's 10-27 translation priority list (#7546 comment, section 3): the 21 volumes holding those chapters.
 export const PRIORITY_IDS = Object.freeze(new Set(['6ae0bab64adf2ffb52f71058', '6ae0baf94adf2ffb52f7121a', '6ae0bb854adf2ffb52f7166f', '6ae0bb894adf2ffb52f7170c', '6ae0bbc74adf2ffb52f7176e', '6ae0bd3d4adf2ffb52f72384', '6ae0bdca4adf2ffb52f72677', '6ae0bdce4adf2ffb52f72711', '6ae0beb34adf2ffb52f72f36', '6ae0bef64adf2ffb52f7304b', '6ae0befa4adf2ffb52f730c0', '6ae0befe4adf2ffb52f7311a', '6ae0bf3b4adf2ffb52f731bb', '6ae0bf3f4adf2ffb52f7321e', '6ae0bf424adf2ffb52f732bf', '6ae0bf884adf2ffb52f73494', '6ae0bf9a4adf2ffb52f73668', '6ae0bfa24adf2ffb52f736b3', '6ae0c5d74adf2ffb52f75eba', '6ae0c5db4adf2ffb52f75f31', '6ae0c61d4adf2ffb52f76087']));
@@ -144,18 +151,27 @@ export function isDupeSibling(book, sib) {
   return sib.title === book.title;                 // the same volume twice
 }
 
-/** Book-level filter and order. books: candidate rows; ctx: { exclude: Set, sealRe: RegExp|null }. */
-export function rankBooks(books, { exclude = new Set(), sealRe = null } = {}) {
+/** Book-level filter and order. books: candidate rows; ctx: { exclude: Set, sealRe: RegExp|null, requested: Map book id → page ids, oldest request first (#7690) }. */
+export function rankBooks(books, { exclude = new Set(), sealRe = null, requested = new Map() } = {}) {
+  const order = [...requested.keys()];
+  const requestRank = (b) => (requested.has(b.id) ? order.indexOf(b.id) : order.length);
   return books.filter((b) => {
     if (!b.id || exclude.has(b.id)) return false;
     if (!HOLD_REASONS.includes(b.pipeline_auto?.hold?.reason) || b.pipeline_auto?.status !== 'held') return false;
     const ts = b.translation_state || {};
-    if (!RUNGS.includes(ts.rung)) return false;
+    if (!RUNGS.includes(ts.rung) && !requested.has(b.id)) return false;
     if (!(ts.whole > 0) || (ts.ocr ?? 0) / ts.whole < MIN_OCR_SHARE) return false;
     if (sealRe && sealRe.test(b.title || '')) return false;
     return true;
-  }).sort((a, b) => rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+  }).sort((a, b) => requestRank(a) - requestRank(b) || rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
 }
+/** The `siku` verdicts as rankBooks' `requested`: judgeRequests sorts by date, and a Map keeps the first request's place. */
+export function requestedBooks(reqs) {
+  const requested = new Map();
+  for (const r of reqs) if (r.verdict?.verdict === 'siku') (requested.get(r.book.id) ?? requested.set(r.book.id, new Set()).get(r.book.id)).add(r.page.id);
+  return requested;
+}
+
 /** 2 = a priority Four Histories volume, 1 = another Four Histories volume, 0 = the Siku cohort. */
 function rankKey(b) {
   if (b.pipeline_auto?.hold?.reason !== FIRST_HOLD) return 0;
@@ -209,12 +225,22 @@ async function exclusions(db) {
 }
 
 const BOOK_PROJ = { id: 1, title: 1, language: 1, visible: 1, pages_count: 1, work_id: 1, translation_state: 1, pipeline_auto: 1 };
-async function candidates(db) {
+async function candidates(db, requested = new Map()) {
   const rows = await db.collection('books').find(
-    { 'pipeline_auto.status': 'held', 'pipeline_auto.hold.reason': { $in: [...HOLD_REASONS] }, 'translation_state.rung': { $in: [...RUNGS] }, pages_count: { $gt: 0 } },
+    { 'pipeline_auto.status': 'held', 'pipeline_auto.hold.reason': { $in: [...HOLD_REASONS] }, $or: [{ 'translation_state.rung': { $in: [...RUNGS] } }, { id: { $in: [...requested.keys()] } }], pages_count: { $gt: 0 } },
     { projection: BOOK_PROJ },
   ).toArray();
-  return rankBooks(rows, await exclusions(db));
+  return rankBooks(rows, { ...(await exclusions(db)), requested });
+}
+
+/** This wave's reader requests. A failure here costs the order, never the wave. */
+async function readRequests(db) {
+  try {
+    return requestedBooks(await judgeRequests(db));
+  } catch (e) {
+    log(`reader requests not read (${e.message}); the wave keeps its usual order`);
+    return new Map();
+  }
 }
 
 async function hasDupe(db, book) {
@@ -224,7 +250,7 @@ async function hasDupe(db, book) {
 }
 
 /** The pages to read for one book, after ledgering any whose OCR is a chat reply. */
-async function bookPages(db, book, done) {
+async function bookPages(db, book, done, wanted) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNTRANSLATED }, { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).sort({ page_number: 1 }).toArray();
   const out = [];
   for (const p of pages) {
@@ -232,7 +258,7 @@ async function bookPages(db, book, done) {
     if (CHAT_REPLY_RE.test(p.ocr?.data || '')) { ledger({ page_id: p.id, book_id: book.id, page_number: p.page_number, error_class: 'ocr-chat-reply' }); done.add(p.id); continue; }
     out.push({ id: p.id, page_number: p.page_number });
   }
-  return out;
+  return wanted ? requestedFirst(out, wanted) : out;
 }
 
 const stillHeld = async (db, id) => {
@@ -246,6 +272,12 @@ function runNode(args, env, logFile) {
     const child = spawn(process.execPath, ['--no-warnings', ...args], { stdio: ['ignore', fd, fd], env, cwd: ROOT });
     child.on('close', (code) => { fs.closeSync(fd); resolve(code); });
   });
+}
+
+/** A requested book the lane's filters leave out would otherwise look queued for ever: say so on every wave. */
+function logRequested(requested, books) {
+  const eligible = new Set(books.map((b) => b.id));
+  for (const [id, pages] of requested) log(`  reader request: ${id} (${pages.size} page(s)) ${eligible.has(id) ? 'goes first' : 'NOT eligible: a filter leaves it out (OCR share, residue, another job, or refused earlier); the request stays open'}`);
 }
 
 // ── run ──
@@ -274,8 +306,10 @@ async function runWave(db) {
 
   const done = readLedger();
   const skipped = readSkips();
-  const books = (await candidates(db)).filter((b) => !skipped.has(b.id));
+  const requested = await readRequests(db);
+  const books = (await candidates(db, requested)).filter((b) => !skipped.has(b.id));
   log(`cohort: ${books.length} books eligible before the per-book checks (${skipped.size} refused by the reader earlier, left out)`);
+  logRequested(requested, books);
   const env = { ...process.env, CLI_JOB_NAME: JOB, JOB_NAME: process.env.JOB_NAME || JOB, JOB_LANDS: `#${ISSUE}`, SIKU_LANE_CHILD: '1' };
   if (pool.home) env.AGY_HOME = pool.home; else delete env.AGY_HOME;
   const day = new Date().toISOString().slice(0, 10);
@@ -304,7 +338,7 @@ async function runWave(db) {
     while (cursor < books.length && budget > 0) {
       const b = books[cursor++];
       if (await hasDupe(db, b)) { log(`  ${b.id} skipped: a work_id sibling is another edition with English`); continue; }
-      const pages = await bookPages(db, b, done);
+      const pages = await bookPages(db, b, done, requested.get(b.id));
       if (!pages.length) continue;
       budget -= pages.length;
       return { book: b, pages };
@@ -536,7 +570,9 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
 // ── count ──
 
 async function count(db) {
-  const books = await candidates(db);
+  const requested = await readRequests(db);
+  const books = (await candidates(db, requested)).filter((b) => !readSkips().has(b.id));
+  logRequested(requested, books);
   const done = readLedger();
   let pages = 0, dupes = 0;
   for (const b of books) { if (await hasDupe(db, b)) { dupes++; continue; } pages += (b.translation_state?.translatable ?? b.pages_count) - (b.translation_state?.translated ?? 0); }

@@ -23,6 +23,9 @@
  * a tail over --max-book-pages → a person) with two lane options: a page with no OCR is not refused (this lane OCRs
  * first), and a hold in LANE_HOLDS — holds that mean "waiting for a lane", never a containment — does not refuse.
  * The book stays held either way: the lane translates, it never releases (Derek's held books stay held).
+ * A book held for the Siku lane (SIKU_LANE_HOLDS) is judged the same way but not worked here: its verdict is `siku`, and
+ * siku-translate-lane.mjs reads these verdicts and takes the book first, in its own reader with its own leaf lines and
+ * pool (#7690). A page with no OCR is refused for such a book: that lane does not OCR. NOTIFY below answers the reader.
  * The pipeline pause and the spend dial govern paid Batch work; this lane spends subscription quota only, like
  * cli-translate-lane, so the brake is not read. Its gate is laneQuota('agy-flash-translate') and the readers' exit 3.
  *
@@ -54,6 +57,7 @@ import { requestVerdict, repeatReasons } from '../lib/translation-request-eligib
 import { translateLaneForBook, isTranslatablePage, SKIP_TRANSLATION_PAGE_TYPES } from '../lib/translate-core.mjs';
 import { CLI_TRANSLATE_LANES, CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { CLI_FLASH_OCR_HOLD } from '../lib/ocr-routing.mjs';
+import { SIKU_LANE_HOLDS } from '../lib/hold-reasons.mjs';
 import { laneQuota } from '../lib/lane-quota.mjs';
 import { isReadableInEnglish, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { UNTRANSLATED, readerArgs } from './cli-translate-lane.mjs';
@@ -67,12 +71,15 @@ export const REQUEST_MESSAGE = /Translation requested for/;
 export const OCR_MODEL = 'gemini-3.8-flash-low';
 /** Translation lane for a book with no cli row. */
 export const DEFAULT_TRANSLATE_ENGINE = 'gemini-3.8-flash+agy-cli';
+/** A tail over this many pages goes to a person (--max-book-pages). */
+export const BOOK_CEILING = 800;
 /** `translation.data` longer than this counts as English (translation-request-eligibility's own test). */
 const TRANSLATED_MIN_CHARS = 30;
 /**
  * Holds that mean "this book waits for a lane or for demand", which a reader's request is. Anything else — every
- * containment, wrong-leaf, invented-text or awaits-Derek hold, and the Paddle/Siku lanes that own their books — stays
- * refused. An allowlist, so a new hold reason is refused until someone adds it here (#6122).
+ * containment, wrong-leaf, invented-text or awaits-Derek hold, and the Paddle lanes that own their books — stays
+ * refused (the Siku lane's own holds become a `siku` verdict, judgeRequest). An allowlist, so a new hold reason is
+ * refused until someone adds it here (#6122).
  */
 export const LANE_HOLDS = Object.freeze([
   CLI_FLASH_OCR_HOLD.reason,       // waiting for the agy OCR lane
@@ -88,7 +95,9 @@ const RESERVED_DOMAIN = /(^|\.)(example\.(com|net|org)|test|invalid|localhost)$/
 /** { bookRef, pageId } from a request's page URL, or null. */
 export function parseRequestUrl(url) {
   const m = String(url || '').match(/\/book\/([^/?#]+)\/page\/([^/?#]+)/);
-  return m ? { bookRef: decodeURIComponent(m[1]), pageId: decodeURIComponent(m[2]) } : null;
+  if (!m) return null;
+  // `page` is a public write and a bad escape throws: one such row must not stop this lane or the Siku lane.
+  try { return { bookRef: decodeURIComponent(m[1]), pageId: decodeURIComponent(m[2]) }; } catch { return null; }
 }
 
 /** The title as the request message quotes it, shortened the way the hand run did. */
@@ -132,8 +141,16 @@ async function translatablePages(db, bookId) {
   return pages.filter((p) => isTranslatablePage(p).ok).map(({ id, page_number }) => ({ id, page_number }));
 }
 
+/** One request's verdict with this lane's options. A Siku-held book the gates would pass becomes `siku`, never `auto`. */
+export function judgeRequest({ book, page, tail, repeat, ceiling }) {
+  const hold = book?.pipeline_auto?.hold?.reason;
+  const siku = SIKU_LANE_HOLDS.includes(hold);
+  const verdict = requestVerdict({ book, page, tail, repeat, ceiling, holdAllowed: siku || LANE_HOLDS.includes(hold), ocrPending: !siku });
+  return siku && verdict.verdict === 'auto' ? { ...verdict, verdict: 'siku', reason: 'waits at the front of the Siku lane (#7690)' } : verdict;
+}
+
 /** Every open request, resolved and judged. */
-async function judgeRequests(db, { ceiling, since = null }) {
+export async function judgeRequests(db, { ceiling = BOOK_CEILING, since = null } = {}) {
   const filter = since ? { message: REQUEST_MESSAGE, created_at: { $gte: since } } : { addressed: { $ne: true }, message: REQUEST_MESSAGE };
   const rows = await db.collection('feedback').find(filter).sort({ created_at: 1 }).toArray();
   const reqs = rows.map((row) => ({ row, ...(parseRequestUrl(row.page) ?? {}), at: row.created_at, email: row.email, ip_hash: row.ip_hash }));
@@ -148,8 +165,7 @@ async function judgeRequests(db, { ceiling, since = null }) {
     if (r.book && !tails.has(r.book.id)) {
       tails.set(r.book.id, await db.collection('pages').countDocuments({ book_id: r.book.id, ...VISIBLE_PAGE_MATCH, page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES }, $or: [{ 'translation.data': { $exists: false } }, { 'translation.data': null }, { 'translation.data': '' }] }));
     }
-    const holdAllowed = LANE_HOLDS.includes(r.book?.pipeline_auto?.hold?.reason);
-    r.verdict = requestVerdict({ book: r.book, page: r.page, tail: r.book ? tails.get(r.book.id) : 0, repeat: r.repeat, ceiling, holdAllowed, ocrPending: true });
+    r.verdict = judgeRequest({ book: r.book, page: r.page, tail: r.book ? tails.get(r.book.id) : 0, repeat: r.repeat, ceiling });
   }
   return reqs;
 }
@@ -163,7 +179,7 @@ async function englishEditions(db, book) {
 }
 
 /** Requested pages first, then the rest in page order. */
-const requestedFirst = (pages, wanted) => [...pages.filter((p) => wanted.has(p.id)), ...pages.filter((p) => !wanted.has(p.id))];
+export const requestedFirst = (pages, wanted) => [...pages.filter((p) => wanted.has(p.id)), ...pages.filter((p) => !wanted.has(p.id))];
 
 export async function workBook(db, w, { OUT, LEDGER, APPLY, budget, job }) {
   const { book } = w;
@@ -280,7 +296,7 @@ async function main() {
   if (!['count', 'run'].includes(mode)) { console.error('usage: reader-request-lane.mjs count | run --out=DIR [--max-pages=200] [--max-book-pages=800] [--apply]'); process.exit(2); }
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
-  const CEILING = Number(arg('max-book-pages') || 800);
+  const CEILING = Number(arg('max-book-pages') || BOOK_CEILING);
   if (mode === 'run' && !OUT) { console.error('run needs --out=DIR'); process.exit(2); }
   const LEDGER = OUT ? path.join(path.dirname(OUT), 'reader-request-ledger.jsonl') : null;
 

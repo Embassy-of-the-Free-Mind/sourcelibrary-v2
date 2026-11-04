@@ -11,7 +11,7 @@ import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { claudeQuota, LANE_RESERVES } from '../../scripts/lib/agy-pools.mjs';
-import { parseQuota, poolGate, choosePool, rankBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
+import { parseQuota, poolGate, choosePool, rankBooks, requestedBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
 
 const fx = (f: string) => fs.readFileSync(path.join(__dirname, '../fixtures/siku-lane', f), 'utf8');
 const NOW = Date.parse('2026-10-27T15:00:00Z');
@@ -99,6 +99,36 @@ describe('siku lane: book picker', () => {
   it('flags a chat-model reply inside stored OCR (詩總聞 p.118, 2026-10-27)', () => {
     expect(CHAT_REPLY_RE.test('…詩曰…\n作为一个人工智能语言模型，我还没学习如何回答这个问题')).toBe(true);
     expect(CHAT_REPLY_RE.test('人之為道也，智能者必')).toBe(false);
+  });
+});
+
+describe('siku lane: reader requests go first (#7690)', () => {
+  const ids = (rows: { id: string }[]) => rows.map((b) => b.id);
+  const hist = book({ id: '6ae0bab64adf2ffb52f71058', visible: false, pipeline_auto: { status: 'held', hold: { reason: 'zh-histories-7546' } } });
+
+  it('leads the wave ahead of the priority volumes, oldest request first', () => {
+    const rows = [hist, book({ id: 'small', pages_count: 10 }), book({ id: 'newer', pages_count: 200 }), book({ id: 'older', pages_count: 250 })];
+    expect(ids(rankBooks(rows))).toEqual(['6ae0bab64adf2ffb52f71058', 'small', 'newer', 'older']);
+    expect(ids(rankBooks(rows, { requested: new Map([['older', new Set(['p'])], ['newer', new Set(['q'])]]) }))).toEqual(['older', 'newer', '6ae0bab64adf2ffb52f71058', 'small']);
+  });
+  it('brings in a requested book past the rung filter only', () => {
+    const readable = book({ id: 'readable', translation_state: { rung: 'readable', whole: 120, ocr: 120 } });
+    expect(ids(rankBooks([readable]))).toEqual([]);
+    expect(ids(rankBooks([readable], { requested: new Map([['readable', new Set(['p'])]]) }))).toEqual(['readable']);
+  });
+  it('never unlocks what the other filters leave out', () => {
+    const rq = (id: string) => ({ requested: new Map([[id, new Set(['p'])]]) });
+    expect(rankBooks([book({ id: 'lowocr', translation_state: { rung: 'transcribed', whole: 100, ocr: 79 } })], rq('lowocr'))).toEqual([]);
+    expect(rankBooks([book({ id: 'otherhold', pipeline_auto: { status: 'held', hold: { reason: 'zh-guarded-6871' } } })], rq('otherhold'))).toEqual([]);
+    expect(rankBooks([book({ id: 'released', pipeline_auto: { status: 'ocr_complete', hold: { reason: 'paddle-zh-5600-ocr-only' } } })], rq('released'))).toEqual([]);
+    expect(rankBooks([book({ id: 'seal', title: '六書統 (vol 1)' })], { ...rq('seal'), sealRe: /六書/ })).toEqual([]);
+    expect(rankBooks([book({ id: 'excluded' })], { ...rq('excluded'), exclude: new Set(['excluded']) })).toEqual([]);
+  });
+  it('takes only `siku` verdicts, grouping a book\'s pages under its oldest request', () => {
+    const r = (verdict: string, bid: string, pid: string) => ({ verdict: { verdict }, book: { id: bid }, page: { id: pid } });
+    const got = requestedBooks([r('siku', 'a', 'p1'), r('refuse', 'x', 'p9'), r('siku', 'b', 'p2'), r('siku', 'a', 'p3'), r('auto', 'y', 'p8'), { verdict: { verdict: 'refuse' } }]);
+    expect([...got.keys()]).toEqual(['a', 'b']);
+    expect([...got.get('a')]).toEqual(['p1', 'p3']);
   });
 });
 
