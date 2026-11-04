@@ -67,6 +67,7 @@ async function scanBook(b) {
     { $project: { _id: 0, id: 1, page_number: 1, page_type: 1, tr: strExpr('$translation.data'), wt: strExpr('$translation_withheld.text'), ocr: strExpr('$ocr.data'),
       model: { $ifNull: ['$translation.model', '$translation_withheld.model'] }, at: { $ifNull: ['$translation.updated_at', '$translation_withheld.updated_at'] },
       src: '$translation.source', edited: '$translation.edited_by', wr: '$translation_withheld.reason', pv: { $ifNull: ['$translation.prompt_version', '$translation_withheld.prompt_version'] } } },
+    // strlen-safe: tr/wt/en/ocr come from strExpr, which yields a string or ''
     { $project: { id: 1, page_number: 1, page_type: 1, model: 1, at: 1, src: 1, edited: 1, wr: 1, pv: 1, en: { $cond: [{ $gt: [{ $strLenCP: '$tr' }, 0] }, '$tr', '$wt'] }, ocr: 1 } },
     { $project: { id: 1, page_number: 1, page_type: 1, model: 1, at: 1, src: 1, edited: 1, wr: 1, pv: 1, en_len: { $strLenCP: '$en' }, ocr_len: { $strLenCP: '$ocr' }, en: 1, ocr: 1 } },
     { $match: { en_len: { $gt: 0 } } },

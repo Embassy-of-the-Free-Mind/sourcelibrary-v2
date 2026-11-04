@@ -88,7 +88,7 @@ await c.close();
 
 // book family: the title with volume/juan/part numbers taken off
 const family = (t) => String(t || '').replace(/[\s,.:;·]*(卷|巻|第|vol\.?|volume|tome|tom\.?|t\.|band|bd\.?|part|pars|tomus|liber|book)\s*[\dIVXLCDMivxlcdm一二三四五六七八九十百千〇零上中下]+.*$/i, '').replace(/[\s\d]+$/, '').slice(0, 40) || '?';
-for (const r of rows) { r.title = titles.get(r.book_id) ?? null; r.family = r.title ? family(r.title) : null; r.month = String(r.at || '').slice(0, 7); }
+for (const r of rows) { r.title = titles.get(r.book_id) ?? null; r.family = r.title ? family(r.title) : null; r.month = String(r.at || '').slice(0, 7); } // imprint-write-ok: in-memory report row, not a books write
 
 const tab = (key, filter = () => true) => {
   const t = {};
