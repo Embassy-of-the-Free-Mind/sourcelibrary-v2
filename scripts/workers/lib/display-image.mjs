@@ -2,7 +2,8 @@
  * Shared utility: generate display (1200px) and thumbnail (150px) variants
  * from a full-res image buffer, with provenance marks baked into the display version.
  *
- * Used by all 3 archive workers (archive-ocr, archive-bulk, archive-erara).
+ * Every writer of a page's display image goes through this file, or scripts/audit/provenance-writers.mjs
+ * fails CI (tests/unit/provenance-writers.test.ts).
  *
  * WIDTH DISAGREEMENT — deliberate, and open (#4406). This forward path writes
  * display variants at DISPLAY_WIDTH (1200). The backfill,
@@ -177,6 +178,47 @@ async function applyCanonicalMarks(displayBuffer, bookId, pageNumber) {
 
   // Legacy path: cosmetic marks on ~1 in 10, exactly as before #4406.
   return Math.random() < 0.1 ? applyProvenanceMarks(displayBuffer) : displayBuffer;
+}
+
+/**
+ * Mark a display image that already has its final size: a split crop kept at full resolution,
+ * a plate's sharp copy, an importer's own resize. The same mark as generateDisplayVariants, for a
+ * writer that decides the size itself. The input buffer is not modified. Never pass a master here
+ * and store the result as the master: originals are never marked (#2651).
+ *
+ * @param {Buffer} buffer - The display image JPEG
+ * @param {{ bookId: string, pageNumber: number|string }} ids - pageNumber only varies the logo gate
+ * @returns {Promise<Buffer>}
+ */
+export function markDisplay(buffer, { bookId, pageNumber }) {
+  return applyCanonicalMarks(buffer, bookId, pageNumber);
+}
+
+/** Sibling key for a page whose master already sits at the canonical display key (#4406). */
+const displaySiblingKey = (bookId, num) => `pages/${bookId}/${num}-marked.jpg`;
+
+/**
+ * Where a page's display image goes, given what the page already holds.
+ *
+ * Archive lanes wrote the MASTER to `pages/<book>/NNNN.jpg` until #4406, the key every other writer
+ * uses for the display variant, so on those pages the canonical key must never be overwritten: it
+ * is the only clean copy we hold. They get a sibling key, and display_photo moves to it.
+ *
+ * @param {{ book_id: string, page_number: number, archived_photo?: string, photo?: string, photo_original?: string }} page
+ * @returns {{ key: string, canonicalHoldsMaster: boolean }}
+ */
+export function displayKeyFor(page) {
+  const num = String(page.page_number).padStart(4, '0');
+  const canonical = `pages/${page.book_id}/${num}.jpg`;
+  const isCanonical = (u) => typeof u === 'string' && u.split('?')[0].endsWith(`/${canonical}`);
+  // `photo` at this key is often just the display variant (importers set photo = display). It is
+  // the clean copy only when the page has no archived_photo to say otherwise.
+  const holdsMaster = page.archived_photo
+    ? isCanonical(page.archived_photo)
+    : isCanonical(page.photo) || isCanonical(page.photo_original);
+  return holdsMaster
+    ? { key: displaySiblingKey(page.book_id, num), canonicalHoldsMaster: true }
+    : { key: canonical, canonicalHoldsMaster: false };
 }
 
 /**

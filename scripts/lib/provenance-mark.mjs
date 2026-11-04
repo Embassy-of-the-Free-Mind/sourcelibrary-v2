@@ -225,7 +225,9 @@ export async function markImage(buffer, { editionId, pageNumber, key, jpegQualit
   // so callers can predict which pages get the logo from the same id they pass.
   const fullEid = String(editionId);
   if (W > 100 && H > 100 && shouldShowVisibleLogo(fullEid, pageNumber)) {
-    composites.push(await visibleLogoComposite(W, H, fullEid, pageNumber));
+    // The logo is the optional layer: a page that cannot read the file keeps its watermark.
+    try { composites.push(await visibleLogoComposite(W, H, fullEid, pageNumber)); }
+    catch (e) { console.warn(`[provenance] visible logo skipped: ${e.message}`); }
   }
 
   let img = sharp(data, { raw: { width: W, height: H, channels } });

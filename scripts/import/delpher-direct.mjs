@@ -62,6 +62,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { holdBook, makeHoldMarker, parseReleaseWhen } from '../lib/pipeline-hold.mjs';
@@ -211,7 +212,7 @@ try {
         const n = k + 1, nn = String(n).padStart(4, '0');
         const master = await src.master(k);
         const meta = await sharp(master).metadata();
-        const display = meta.width > 1200 ? await sharp(master).resize(1200).jpeg({ quality: 80 }).toBuffer() : master;
+        const display = await markDisplay(meta.width > 1200 ? await sharp(master).resize(1200).jpeg({ quality: 80 }).toBuffer() : master, { bookId: id, pageNumber: n });
         const thumb = await sharp(master).resize(150).jpeg({ quality: 60 }).toBuffer();
         const [a, d, t] = await Promise.all([put(`archived/${id}/${n}.jpg`, id, master), put(`pages/${id}/${nn}.jpg`, id, display), put(`pages/${id}/${nn}-thumb.jpg`, id, thumb)]);
         const pid = new ObjectId();
