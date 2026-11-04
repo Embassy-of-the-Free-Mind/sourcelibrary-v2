@@ -30,7 +30,7 @@ import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { testRow, ROUTE_JUDGE, COLLECTION } from './lib/judge-rows.mjs';
+import { testRow, verdictQuery, ROUTE_JUDGE, COLLECTION } from './lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -43,16 +43,19 @@ const EVID = 'scripts/eval/estimator/router-table/evidence/';
 const sha = (t) => crypto.createHash('sha256').update(String(t)).digest('hex');
 const NOW = new Date().toISOString();
 
-/** rules.json evidence entries read backwards: (score basename, cell, route) -> {cell, route} of rules.json. */
+/** rules.json evidence entries read backwards: (score PATH, cell, route) -> {cell, route} of rules.json. The full path,
+ * never the basename: every route-judge folder's file is called score.json. The pilot (inputs.pilot, cell.pilot) too. */
 export function routerIndex(rules) {
   const ix = new Map();
-  for (const c of rules.cells) for (const r of c.routes) for (const e of r.evidence || [])
-    ix.set(`${path.basename(e.score)}|${e.cell}|${e.route}`, { cell: c.id, route: r.id, basis: 'rules.json evidence entry' });
+  for (const c of rules.cells) for (const r of c.routes) {
+    if (r.pilot && c.pilot) ix.set(`${rules.inputs.pilot}|${c.pilot}|${r.pilot}`, { cell: c.id, route: r.id, basis: 'rules.json pilot entry' });
+    for (const e of r.evidence || []) ix.set(`${e.score}|${e.cell}|${e.route}`, { cell: c.id, route: r.id, basis: 'rules.json evidence entry' });
+  }
   return ix;
 }
 const RULES = readJson('scripts/eval/estimator/router-table/rules.json');
 const RIX = routerIndex(RULES);
-const routerOf = (score, cell, route) => RIX.get(`${path.basename(score)}|${cell}|${route}`) ?? null;
+const routerOf = (score, cell, route) => RIX.get(`${score.includes('/') ? score : EVID + score}|${cell}|${route}`) ?? null;
 const ruleRoutes = new Map(RULES.cells.map((c) => [c.id, new Set(c.routes.map((r) => r.id))]));
 
 const routeJudgeVerdict = (v) => (v && typeof v.accept === 'boolean' ? { accept: v.accept, fidelity: v.fidelity ?? null, defects: v.defects ?? [], reader_note: v.reader_note ?? null } : null);
@@ -291,9 +294,10 @@ async function main() {
   const { MongoClient } = await import('mongodb');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   try {
+    // all origins: an insert handle; its one read below is verdictQuery({ tests: 'only' })
     const col = c.db('bookstore').collection(COLLECTION);
     // Another session may have exported the same test (zh-print-arms-7263 and others): never a second copy.
-    const held = new Set((await col.distinct('test.id', { origin: 'test' })).filter(Boolean));
+    const held = new Set((await col.distinct('test.id', verdictQuery({}, { tests: 'only' }))).filter(Boolean));
     const todo = rows.filter((r) => !held.has(r.test.id));
     if (held.size) console.log(`already in the store, skipped: ${[...held].join(', ')}`);
     let inserted = 0, dup = 0;
