@@ -282,12 +282,17 @@ export const books = {
   /**
    * Download book as file
    */
-  download: async (id: string, format: BookDownloadFormats, edition_id?: string): Promise<Response> => {
+  download: async (id: string, format: BookDownloadFormats, edition_id?: string, terms?: string): Promise<Response> => {
     const params = new URLSearchParams({format});
     if (edition_id) {
       params.append('edition_id', edition_id);
     }
-    
+    // The terms version this browser agreed to; the route ignores it on a book that has none.
+    if (terms) {
+      params.append('terms', terms);
+    }
+
+
     return await streamRequest(getBookUrl(`/${id}/download?${params.toString()}`),
       { method: 'GET' }
     );

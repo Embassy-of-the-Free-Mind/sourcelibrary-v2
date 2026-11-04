@@ -9,6 +9,7 @@ import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Image, Gr
 import { BookDownloadFormats, books } from '@/lib/api-client';
 import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
 import { partnerEmbedTenantFromLocation } from '@/lib/partner-embed-download';
+import { PARTNER_TERMS_VERSION, partnerTermsStorageKey } from '@/lib/partner-terms-version';
 
 type ImageAccess = 'open' | 'nc-free' | 'blocked';
 
@@ -49,6 +50,15 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const [accessChecked, setAccessChecked] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [termsAsk, setTermsAsk] = useState<{ format: BookDownloadFormats; version: string; url: string } | null>(null);
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  // Private mode cannot store the agreement; it must still reach the retry a moment later.
+  const agreedThisVisit = useRef<string | null>(null);
+  // The list is long enough that the row clicked can be far below where the agreement appears.
+  const termsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (termsAsk) termsRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [termsAsk]);
   // Inside a partner embed that allows anonymous downloads (#7702). Read from
   // the browser location after mount, so SSR and hydration render the same.
   const [inPartnerEmbed, setInPartnerEmbed] = useState(false);
@@ -98,6 +108,26 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
 
+  // Terms of a partner's collection (src/lib/partner-terms.ts). The server says
+  // which books have them; this remembers that the reader agreed, once per
+  // version per browser. Private mode remembers nothing and asks each time.
+  const agreedTermsVersion = () => {
+    if (agreedThisVisit.current) return agreedThisVisit.current;
+    try {
+      return window.localStorage.getItem(partnerTermsStorageKey(PARTNER_TERMS_VERSION)) ? PARTNER_TERMS_VERSION : undefined;
+    } catch {
+      return undefined;
+    }
+  };
+  const agreeAndDownload = () => {
+    if (!termsAsk) return;
+    try { window.localStorage.setItem(partnerTermsStorageKey(termsAsk.version), '1'); } catch { /* private mode */ }
+    agreedThisVisit.current = termsAsk.version;
+    const { format } = termsAsk;
+    setTermsAsk(null);
+    void handleDownload(format);
+  };
+
   const goToSignIn = () => {
     window.location.href = `/auth/signin?callbackUrl=${encodeURIComponent(window.location.pathname)}`;
   };
@@ -125,8 +155,17 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
     setDownloading(format);
     try {
-      const response = await books.download(bookId, format);
+      const response = await books.download(bookId, format, undefined, agreedTermsVersion());
 
+      if (response.status === 403) {
+        const data = await response.clone().json().catch(() => null);
+        if (data?.terms_required) {
+          setDownloading(null);
+          setTermsAgreed(false);
+          setTermsAsk({ format, version: data.terms_version, url: data.terms_url });
+          return;
+        }
+      }
       if (response.status === 401) {
         setDownloading(null);
         // In the embed the sign-in page cannot load in the frame; say so
@@ -258,6 +297,36 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
             <span className="text-[15px] font-semibold text-stone-900">{chrome.download}</span>
             <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">{chrome.close}</button>
           </div>
+
+          {/* The agreement for a partner's collection, asked at the moment of the download. */}
+          {termsAsk && (
+            <div ref={termsRef} data-partner-terms className="px-3 py-3 border-b border-stone-100 bg-stone-50">
+              <p className="text-sm font-semibold text-stone-900">Terms of use: the Embassy of the Free Mind&rsquo;s collection</p>
+              <p className="mt-1 text-xs leading-relaxed text-stone-600">
+                You may read, study, teach from and quote this book, with credit to the Embassy. You may not bulk download or scrape the collection, or use it to train AI models, without written permission.
+              </p>
+              <label className="mt-2 flex items-start gap-2 text-xs text-stone-800 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={termsAgreed}
+                  onChange={e => setTermsAgreed(e.target.checked)}
+                  className="mt-0.5"
+                />
+                <span>
+                  I agree to the{' '}
+                  <a href={termsAsk.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">terms of use</a>.
+                </span>
+              </label>
+              <button
+                type="button"
+                onClick={agreeAndDownload}
+                disabled={!termsAgreed}
+                className="mt-2 w-full min-h-[40px] px-3 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Agree and download
+              </button>
+            </div>
+          )}
 
           {/* Sign-in wall — all downloads require an account */}
           {isAnonymous && (

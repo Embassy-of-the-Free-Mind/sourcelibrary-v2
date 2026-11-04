@@ -219,6 +219,36 @@ export default function TermsPage() {
           </p>
         </section>
 
+        {/* ── The Embassy's collection. Asked for by src/lib/partner-terms.ts; a change of substance here needs a new PARTNER_TERMS_VERSION. ── */}
+        <section id="embassy-collection" className="bg-white rounded-xl p-8 border border-border-light scroll-mt-24">
+          <h2 className="text-2xl text-primary mb-4">
+            The Embassy of the Free Mind&rsquo;s Collection
+          </h2>
+          <p className="text-secondary mb-4">
+            Books from the Bibliotheca Philosophica Hermetica, held by the Embassy of the Free
+            Mind in Amsterdam, are shown here in partnership with the Embassy. You are asked to
+            agree to these terms before downloading one. You also agree to them when you create an
+            API key, or when you run a program that downloads from this collection.
+          </p>
+          <div className="bg-cream rounded-lg p-6 mb-4">
+            <ul className="text-secondary space-y-2 list-disc list-inside">
+              <li><strong>What you may do:</strong> read, study, teach from and quote these books,
+                with credit to the Embassy of the Free Mind and Source Library.</li>
+              <li><strong>Bulk copying:</strong> you may not download or scrape the collection, or a
+                substantial part of it, by automated means without written permission.</li>
+              <li><strong>AI training:</strong> you may not use the collection to train AI models
+                without a licence. See{' '}
+                <Link href="/licensing" className="text-accent-rust hover:underline">licensing</Link>.</li>
+              <li><strong>What a file allows:</strong> a licence stated on a file you have downloaded
+                continues to apply to that file. These terms govern how you get it.</li>
+              <li><strong>What we keep:</strong> when you agree, we record the date, these terms&rsquo;
+                version, the book and format, your account if you are signed in, your browser&rsquo;s
+                description of itself, and a hash of your network address, not the address.</li>
+            </ul>
+          </div>
+          <p className="text-secondary text-sm">Version 2026-11-04.</p>
+        </section>
+
         {/* ── Database Rights ── */}
         <section className="bg-white rounded-xl p-8 border border-border-light">
           <h2 className="text-2xl text-primary mb-4">
