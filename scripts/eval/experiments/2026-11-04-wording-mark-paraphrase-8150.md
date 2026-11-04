@@ -13,6 +13,7 @@ feeds: [none]
 superseded_by: null
 issue: [8150]
 router_evidence: "none — a provenance-mark test, not a routing cell"
+defect_rates: "none — fidelity was not judged: the pre-registered decision failed on detection first, and no output is routed"
 ---
 ## 2026-11-04 · Can a keyed choice of wording mark a translation so a paraphrased copy is still recognisably ours? (#8150 slice 6)
 
