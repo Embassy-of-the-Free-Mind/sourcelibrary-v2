@@ -152,11 +152,8 @@ describe('kindsOfFinding — named classes', () => {
   });
 });
 
-describe('the book line says what "serious" means and how many pages were clean (#7082)', () => {
+describe('the book line says how many pages were clean (#7082)', () => {
   const langs = Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[];
-  it('every locale has the closing sentence', () => {
-    for (const lang of langs) expect(READER_UI_STRINGS[lang].info.qualitySeriousMeans, lang).toBeTruthy();
-  });
   it('names the clean pages when some were clean, and only then', () => {
     const book = READER_UI_STRINGS.en.info.qualityBook;
     const base = { ai: true, image: true, date: '22 October 2026' };
