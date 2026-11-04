@@ -7,7 +7,7 @@ canons: []
 n_books: 2993
 n_pages: 3040
 verdict: "Notes can be a separate, anchored layer. A tolerant parser splits 3,000 stored pages into text + annotations byte-exactly, and its anchors re-find their words in the page's next stored version with 0 misplaced after a by-eye read. Asked to return text + annotations as JSON, Opus is not less faithful than today's inline prompt (S−T +0.13 [−0.05, +0.30], 40 pages); 40 of 40 replies were valid JSON and 367 of 367 anchors resolved. It costs 2.6× the output tokens."
-status: undecided
+status: informational
 decision: "Preregistered rule met: adopt S for new translations on the Opus CLI lane once the notes-layer storage (step 2) exists; not yet for Gemini lanes (not measured). Default prompt unchanged (#5942)"
 superseded_by: null
 issue: 5942

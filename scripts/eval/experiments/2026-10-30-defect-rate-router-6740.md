@@ -7,7 +7,8 @@ canons: []
 n_books: 1005
 n_pages: 1502
 verdict: "Re-scored 2,848 stored Opus verdicts (1,005 books, 896K words) as defects per 1,000 words. With the live route as the bar (Derek's steer), the defect rule runs the same route as the k/n router in every comparable cell but three. German first read: read@4 > agy@4 at the $0.01 weight, read@4 at $0.001. Latin first read: read@4 > agy instead of arm c. Tibetan: agy instead of Opus, but the judge's Tibetan severities are a floor. English pre-1800: scans only, as k/n. The judge quotes 158 of 160 planted Latin/German/French errors; 57 of 80 re-checked defects hold up."
-status: undecided
+status: adopted
+landed: "scripts/eval/route-judge-6740/defect-rate.mjs"
 decision: "Nothing switched. Proposed rule and table posted on #6740 for Derek; router-table defect fields shown beside k/n (build.py, defect-rates.json); experiments-lint requires defect_rates on new ocr/translation records from 2026-10-30."
 superseded_by: null
 issue: [6740]
