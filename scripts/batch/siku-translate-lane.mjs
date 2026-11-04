@@ -19,6 +19,7 @@
  *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs run [--apply] [--max-pages=1500]
  *        [--parallel=3] [--per-call=1] [--state=DIR]
  *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs spot-check [--force] [--n=10]
+ *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs record-spot --dir=<state>/spot/<stamp> [--evidence=PATH] [--apply]
  *
  * POOL GATE. Every agy pool on the box is read with `agy -p /quota --output-format json` (0 tokens): the default HOME,
  * and each AGY_HOME in POOL_HOMES that exists. A non-default pool that another process is using (AGY_HOME in its
@@ -54,6 +55,8 @@
  * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. A check
  * deferred for 6 h pages ntfy once, so a box whose account is spent does not leave the lane unchecked silently (it was
  * deferred 19 h on 2026-10-29); run `spot-check --force` on a box whose account has room, with --state pointing at a copy. The tally is
+ * recorded in book_checks (#8069, method lane-spot-check: every page, clean ones too; `record-spot` writes a folder's
+ * verdicts again, and is how a failed write or an older run gets in; write-once) and
  * posted on #5600 against the bar: 0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3. An invented or wrong-leaf
  * page is CONTAINED (containment-on-finding.md: the book is already held; withhold-stale-translations --by-eye-pages
  * --apply) and the lane PAUSES: the stop file is written and ntfy is pinged.
@@ -78,6 +81,7 @@
  * margin furniture out of the English; stop where the leaf stops. Measured in scripts/eval/siku-percall-5600 (arm C).
  */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -87,6 +91,7 @@ import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 import { writeLaneStop } from '../lib/lane-stop.mjs';
+import { readMethod, recordPageVerdicts } from '../lib/book-checks.mjs';
 import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
 import { AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
 import { SIKU_LANE_HOLDS } from '../lib/hold-reasons.mjs';
@@ -106,6 +111,9 @@ export const RUNGS = Object.freeze(['transcribed', 'translating']);
 export const MIN_OCR_SHARE = 0.8;
 export const SPOT_EVERY = 5000;
 export const SPOT_N = 10;
+export const SPOT_METHOD = 'lane-spot-check';
+/** scripts/eval/methods/lane-spot-check.md, "Readers": whether these rows warn readers is decided there, not by accident. */
+export const SPOT_READER_WARNING = true;
 export const MODEL = 'gemini-3.8-flash-low';
 export const REASON = 'Siku lane #5600, Derek 2026-10-27';
 /** #7090: reader requests, translated by their own job. */
@@ -451,6 +459,58 @@ For each item decide:
 Write OUTPUT_FILE as a JSON array, one object per item: {"page_id", "wrong_leaf", "invented", "invented_quote",
 "sense_errors", "from_ocr", "verdict", "note"}. No prose outside the file.`;
 
+/** One spot-check verdict as a recordPageVerdicts() page: the draft bar's severity, in lane-spot-check.md's words. */
+export function spotVerdict(v, item) {
+  const fromOcr = v.from_ocr === true || (typeof v.from_ocr === 'string' && !/^(false|no|none|)$/i.test(v.from_ocr.trim()));
+  const stage = fromOcr ? 'ocr' : 'translation';
+  const note = String(v.note ?? '').trim();
+  const errors = [];
+  if (v.invented) errors.push({ stage, kind: 'confabulation', problem: String(v.invented_quote || note || 'A passage that is not on this leaf.').slice(0, 600) });
+  if ((v.sense_errors || 0) > 0 || v.verdict === 'sense-error') errors.push({ stage, kind: fromOcr ? 'misread' : 'mistranslation', problem: (note || 'A clause whose meaning changes.').slice(0, 600) });
+  if (v.verdict === 'omission') errors.push({ stage: 'translation', kind: 'omission', problem: (note || 'Text on the leaf is missing from the English.').slice(0, 600) });
+  const wrong = v.wrong_leaf === true || v.verdict === 'wrong-leaf';
+  return {
+    page_id: v.page_id, verdict: v.verdict, note,
+    outcome: wrong || errors.length ? 'serious' : v.verdict === 'minor' ? 'minor' : 'clean',
+    page_verdict: wrong || v.invented || v.verdict === 'invented' ? 'fix' : errors.length ? 'caveat' : 'show',
+    ...(wrong ? { wrong_page: true } : {}), errors,
+    ...(item ? { judged: { ocr: item.ocr, translation: item.english } } : {}),
+  };
+}
+
+/** The Opus id a sealed judge's stream-json transcript reports. */
+export function transcriptModel(text) {
+  return String(text ?? '').match(/"model":"(claude-[^"]+)"/)?.[1] ?? null;
+}
+
+/**
+ * Record one spot-check folder in book_checks, from what the folder holds: verdicts.json and c<k>/items.json (the text the
+ * judge was given), so a live run and a later backfill cannot differ. Selection is `random`: spotCheck draws at random
+ * from the pages written since the last check and picks nothing itself.
+ */
+export async function recordSpot(db, dir, { apply = true, evidence, exposure = 'live', frame = {} } = {}) {
+  const chunks = fs.readdirSync(dir).filter((d) => /^c\d+$/.test(d));
+  const read = (f) => { try { return fs.readFileSync(f, 'utf8'); } catch { return null; } };
+  const items = chunks.flatMap((c) => JSON.parse(read(path.join(dir, c, 'items.json')) ?? '[]'));
+  const verdicts = JSON.parse(fs.readFileSync(path.join(dir, 'verdicts.json'), 'utf8'));
+  const stamp = path.basename(dir);
+  const m = stamp.match(/^(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)?$/);
+  if (!m) throw new Error(`record-spot: ${dir} is not a spot folder (<yyyymmdd>T<hh>[mm])`);
+  const model = chunks.map((c) => transcriptModel(read(path.join(dir, c, 'transcript.jsonl')))).find(Boolean);
+  const byId = new Map(items.map((i) => [i.page_id, i]));
+  return recordPageVerdicts(db, {
+    method_id: SPOT_METHOD, method_version: readMethod(SPOT_METHOD).version, run_id: `siku-translate-5600-${stamp}`,
+    checked_at: new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +(m[5] ?? 0))),
+    selection: 'random', stages: ['ocr', 'translation'],
+    reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },   // judgeSealed keeps a verdict only if the transcript shows its image opened
+    evidence_path: evidence ?? `box:${os.hostname()}:${path.join(dir, 'verdicts.json')}`,
+    reader_warning: SPOT_READER_WARNING, exposure,
+    note: 'One page drawn at random from the books this lane had just translated, read against the page image.',
+    frame: { lane: 'siku-translate-5600', draft_bar: '0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3', pages_drawn: items.length || null, verdicts_kept: verdicts.length, ...frame },
+    verdicts: verdicts.map((v) => spotVerdict(v, byId.get(v.page_id))),
+  }, { apply });
+}
+
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** The judge's claude binary: /usr/bin/claude first (an older ~/.local/bin/claude lacks --restricted), else the first
  *  one on this box that has it. l7a has no /usr/bin/claude (2026-10-29: the spot check died with ENOENT there). */
@@ -532,6 +592,11 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'verdicts.json'), JSON.stringify(verdicts, null, 1));
   if (!verdicts.length) { log(`spot check: no usable verdicts (${dir}); the next run tries again`); return; }
+  // The record first, while the pages are as the judge read them and before anything below can fail or withhold them.
+  // A failed write does not hold up containment; it is logged, paged and said in the comment (retry: record-spot).
+  const rec = await recordSpot(db, dir, { frame: { pool_books: byBook.size, written_total: s.written_total } }).catch((e) => ({ inserted: 0, already: 0, failed: [{ error: e.message }] }));
+  log(`spot check: book_checks ${rec.inserted} inserted, ${rec.already} already held, ${rec.failed.length} failed${rec.failed.length ? `: ${JSON.stringify(rec.failed).slice(0, 500)}` : ''}`);
+  if (rec.failed.length) await ntfy('Siku lane: spot check not fully recorded', `siku-translate-lane: ${rec.failed.length} book_checks write(s) failed for ${dir}. Retry: siku-translate-lane.mjs record-spot --dir=${dir} --apply (#8069)`);
   const t = tallyBar(verdicts);
   const books = new Map((await db.collection('books').find({ id: { $in: items.map((i) => i.book_id) } }, { projection: { id: 1, title: 1 } }).toArray()).map((b) => [b.id, b.title]));
   const table = verdicts.map((v) => { const it = items.find((i) => i.page_id === v.page_id); return `| [${books.get(it?.book_id) ?? it?.book_id} p.${it?.page_number}](https://sourcelibrary.org/book/${it?.book_id}?page=${it?.page_number}) | ${v.verdict} | ${String(v.note || '').replace(/\|/g, '/').slice(0, 160)} |`; });
@@ -562,6 +627,7 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
     '| page | verdict | note |', '|---|---|---|', ...table,
     ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.${ticket?.url ? ` Ticket (paged daily while the STOP stands): ${ticket.url}` : ''}`] : []),
     ...(!t.pass && !bad.length ? ['', 'The sense-error rate is over the bar; the lane keeps running (the bar\'s stop is invented or wrong-leaf text). Raising it here for a look.'] : []),
+    '', `Recorded in \`book_checks\` (method \`${SPOT_METHOD}\`): ${rec.inserted} book rows${rec.failed.length ? `. **${rec.failed.length} write(s) FAILED** (\`${JSON.stringify(rec.failed).slice(0, 300)}\`); retry with \`record-spot --dir=${dir} --apply\`` : ''}.`,
   ].join('\n'));
   delete s.spot_deferred_since; delete s.spot_deferred_paged;
   s.spot_at = s.written_total; s.spot_written_rows = rows.length; s.spots = [...(s.spots || []), { at: new Date().toISOString(), dir, ...t }]; saveState(s);
@@ -581,7 +647,7 @@ async function count(db) {
 
 async function main() {
   const mode = process.argv[2];
-  if (!['pools', 'count', 'run', 'spot-check'].includes(mode)) { console.error('usage: siku-translate-lane.mjs pools | count | run [--apply] [--max-pages=1500] [--parallel=3] [--per-call=1] | spot-check [--force]'); process.exit(2); }
+  if (!['pools', 'count', 'run', 'spot-check', 'record-spot'].includes(mode)) { console.error('usage: siku-translate-lane.mjs pools | count | run [--apply] [--max-pages=1500] [--parallel=3] [--per-call=1] | spot-check [--force] | record-spot --dir=D [--evidence=PATH] [--apply]'); process.exit(2); }
   fs.mkdirSync(STATE_DIR, { recursive: true });
   if (mode === 'pools') { for (const p of readPools()) console.log(JSON.stringify({ pool: poolName(p), busy: p.busy, ...p.reading, gate: p.reading ? poolGate(p.reading) : null })); return; }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -590,6 +656,13 @@ async function main() {
   try {
     if (mode === 'count') await count(db);
     else if (mode === 'run') await runWave(db);
+    else if (mode === 'record-spot') {
+      const apply = process.argv.includes('--apply');
+      const r = await recordSpot(db, path.resolve(arg('dir', '')), { apply, evidence: arg('evidence', undefined), exposure: arg('evidence', undefined) ? 'unrecorded' : 'live' });
+      for (const row of r.rows) console.log(JSON.stringify({ book_id: row.book_id, run_id: row.run_id, pages_read: row.pages_read, verdict: row.verdict, findings: row.page_findings.length, changed: row.text_provenance.filter((e) => e.changed_since_check).map((e) => e.page_number) }));
+      log(`record-spot ${apply ? 'applied' : 'DRY RUN'}: ${r.rows.length} book rows, ${r.inserted} inserted, ${r.already} already held, ${r.failed.length} failed ${JSON.stringify(r.failed).slice(0, 800)}`);
+      if (r.failed.length) process.exitCode = 1;
+    }
     else await spotCheck(db, { force: process.argv.includes('--force'), n: Number(arg('n', SPOT_N)) });
   } finally { await client.close(); }
 }

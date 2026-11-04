@@ -6,12 +6,13 @@
  * spent second login.
  */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { claudeQuota, LANE_RESERVES } from '../../scripts/lib/agy-pools.mjs';
-import { parseQuota, poolGate, choosePool, rankBooks, requestedBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES } from '../../scripts/batch/siku-translate-lane.mjs';
+import { parseQuota, poolGate, choosePool, rankBooks, requestedBooks, isDupeSibling, tallyBar, CHAT_REPLY_RE, leafInstructions, LEAF_LINES, spotVerdict, transcriptModel, recordSpot, SPOT_METHOD } from '../../scripts/batch/siku-translate-lane.mjs';
 
 const fx = (f: string) => fs.readFileSync(path.join(__dirname, '../fixtures/siku-lane', f), 'utf8');
 const NOW = Date.parse('2026-10-27T15:00:00Z');
@@ -151,5 +152,49 @@ describe('siku lane: leaf instructions (#5600)', () => {
     expect(LEAF_LINES.split('\n')).toHaveLength(2);
     expect(LEAF_LINES).toContain('欽定四庫全書');
     expect(LEAF_LINES).toContain('stop where the leaf stops; do not complete it.');
+  });
+});
+
+describe('siku lane: the spot check is recorded (#8069)', () => {
+  const v = (o = {}) => ({ page_id: 'p1', wrong_leaf: false, invented: false, invented_quote: '', sense_errors: 0, from_ocr: false, verdict: 'fine', note: 'matches', ...o });
+  it('maps a verdict onto outcome and stage, with no taxonomy class', () => {
+    expect(spotVerdict(v())).toMatchObject({ outcome: 'clean', page_verdict: 'show', errors: [] });
+    expect(spotVerdict(v({ verdict: 'minor' }))).toMatchObject({ outcome: 'minor', page_verdict: 'show', errors: [] });
+    const sense = spotVerdict(v({ verdict: 'sense-error', sense_errors: 2 }));
+    expect(sense).toMatchObject({ outcome: 'serious', page_verdict: 'caveat', errors: [{ stage: 'translation', kind: 'mistranslation' }] });
+    expect(sense.errors[0].class).toBeUndefined();
+    expect(spotVerdict(v({ verdict: 'sense-error', sense_errors: 1, from_ocr: true })).errors[0]).toMatchObject({ stage: 'ocr', kind: 'misread' });
+    expect(spotVerdict(v({ verdict: 'sense-error', sense_errors: 1, from_ocr: 'no' })).errors[0].stage).toBe('translation');
+    expect(spotVerdict(v({ verdict: 'invented', invented: true, invented_quote: 'q' }))).toMatchObject({ outcome: 'serious', page_verdict: 'fix', errors: [{ kind: 'confabulation', problem: 'q' }] });
+    expect(spotVerdict(v({ verdict: 'wrong-leaf', wrong_leaf: true }))).toMatchObject({ outcome: 'serious', page_verdict: 'fix', wrong_page: true, errors: [] });
+    expect(spotVerdict(v({ verdict: 'omission' }))).toMatchObject({ outcome: 'serious', page_verdict: 'caveat', errors: [{ kind: 'omission' }] });
+  });
+  it('carries the judged text when the folder kept it', () => {
+    expect(spotVerdict(v(), { ocr: 'a', english: 'b' }).judged).toEqual({ ocr: 'a', translation: 'b' });
+    expect(spotVerdict(v()).judged).toBeUndefined();
+  });
+  it('reads the model id from a transcript', () => {
+    expect(transcriptModel('{"type":"system","model":"claude-opus-5-5","x":1}')).toBe('claude-opus-5-5');
+    expect(transcriptModel('nothing')).toBeNull();
+  });
+  it('records a folder as a random draw, write-once, without touching anything but book_checks', async () => {
+    const dir = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'spot-')), '20261030T1404');
+    fs.mkdirSync(path.join(dir, 'c0'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'verdicts.json'), JSON.stringify([v()]));
+    fs.writeFileSync(path.join(dir, 'c0', 'items.json'), JSON.stringify([{ page_id: 'p1', ocr: 'a', english: 'b' }, { page_id: 'p2', ocr: 'c', english: 'd' }]));
+    fs.writeFileSync(path.join(dir, 'c0', 'transcript.jsonl'), '{"model":"claude-opus-5-5"}');
+    const touched = new Set<string>();
+    const inserted: Record<string, any>[] = [];
+    const db = { collection: (c: string) => { touched.add(c); return {
+      find: () => ({ toArray: async () => [{ id: 'p1', book_id: 'b1', page_number: 4, ocr: { data: 'a', model: 'm' }, translation: { data: 'b', model: 'm' } }] }),
+      findOne: async () => ({ visible: true, pages_count: 9 }),
+      insertOne: async (r: Record<string, any>) => { inserted.push(r); },
+    }; } };
+    const r = await recordSpot(db, dir, { evidence: 'scripts/eval/results/x.json', exposure: 'unrecorded' });
+    expect(r).toMatchObject({ inserted: 1, failed: [] });
+    expect(inserted[0]).toMatchObject({ method_id: SPOT_METHOD, run_id: 'siku-translate-5600-20261030T1404', pages_read: [4], reader: { model: 'claude-opus-5-5', image_opened: true },
+      frame: { selection: 'random', pages_drawn: 2, verdicts_kept: 1 }, exposure: [{ page_number: 4, exposure: 'unrecorded' }] });
+    expect(inserted[0].checked_at.toISOString()).toBe('2026-10-30T14:04:00.000Z');
+    expect([...touched].sort()).toEqual(['book_checks', 'pages']);
   });
 });
