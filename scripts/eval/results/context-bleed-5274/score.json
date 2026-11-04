@@ -1,0 +1,112 @@
+{
+ "at": "2026-11-04",
+ "precision_by_group": {
+  "A": {
+   "positive": 18,
+   "n": 20,
+   "precision": 0.9,
+   "wilson95": [
+    0.699,
+    0.972
+   ]
+  },
+  "B": {
+   "positive": 12,
+   "n": 20,
+   "precision": 0.6,
+   "wilson95": [
+    0.387,
+    0.781
+   ]
+  },
+  "C": {
+   "positive": 10,
+   "n": 15,
+   "precision": 0.667,
+   "wilson95": [
+    0.417,
+    0.848
+   ]
+  },
+  "D": {
+   "positive": 6,
+   "n": 15,
+   "precision": 0.4,
+   "wilson95": [
+    0.198,
+    0.643
+   ]
+  },
+  "NB-B": {
+   "positive": 13,
+   "n": 15,
+   "precision": 0.867,
+   "wilson95": [
+    0.621,
+    0.963
+   ]
+  },
+  "NB-C": {
+   "positive": 6,
+   "n": 15,
+   "precision": 0.4,
+   "wilson95": [
+    0.198,
+    0.643
+   ]
+  },
+  "NB-D": {
+   "positive": 8,
+   "n": 15,
+   "precision": 0.533,
+   "wilson95": [
+    0.301,
+    0.752
+   ]
+  },
+  "TXT-alpha-B": {
+   "positive": 18,
+   "n": 20,
+   "precision": 0.9,
+   "wilson95": [
+    0.699,
+    0.972
+   ]
+  },
+  "TXT-alpha-D": {
+   "positive": 8,
+   "n": 20,
+   "precision": 0.4,
+   "wilson95": [
+    0.219,
+    0.613
+   ]
+  }
+ },
+ "judge_calls_and_api_equiv_usd": {
+  "judge-s1-sonnet": {
+   "calls": 77,
+   "usd_api_equivalent": 0.0
+  },
+  "judge-s1-opus": {
+   "calls": 24,
+   "usd_api_equivalent": 0.0
+  },
+  "judge-s2-sonnet": {
+   "calls": 85,
+   "usd_api_equivalent": 0.0
+  },
+  "judge-cal-sonnet": {
+   "calls": 22,
+   "usd_api_equivalent": 0.0
+  },
+  "judge-miss-sonnet": {
+   "calls": 30,
+   "usd_api_equivalent": 0.0
+  },
+  "fix-judge-cb": {
+   "calls": 35,
+   "usd_api_equivalent": 0.0
+  }
+ }
+}

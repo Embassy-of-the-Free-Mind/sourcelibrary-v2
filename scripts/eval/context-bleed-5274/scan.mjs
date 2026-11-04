@@ -12,7 +12,7 @@
  *
  * Stage A (per book, server side): every page with English (served `translation.data` or withheld
  * `translation_withheld.text`) projects its lengths only; the OCR and English TEXT come back only where the English
- * is at least 400 characters and over twice the raw OCR (a cheap superset of the near-blank shape: the OCR's raw length
+ * is at least 400 characters and over twice the OCR less its <detected-images>/<image-desc> block (a cheap superset of the near-blank shape: the OCR's raw length
  * includes its markup, so this keeps far more than it needs).
  * Stage A' (here): srcW = the OCR with metadata blocks and tags stripped (bodyLen's strip) and every Han/kana/Hangul
  * character counted 8 (Han to English runs about 7-8 English characters a character); enBody = translate-core bodyLen of the English. A page survives when enBody ≥ 200 and
@@ -57,6 +57,10 @@ const todo = books.filter((b) => !done.has(b.id)).slice(0, Number(arg('limit-boo
 console.log(`books with English: ${books.length}; to scan: ${todo.length}`);
 
 const strExpr = (f) => ({ $cond: [{ $eq: [{ $type: f }, 'string'] }, f, ''] });
+// the length of one <tag>…</tag> block in the OCR (0 when absent): picture leaves carry a long <detected-images> JSON
+// that made the raw OCR look long and kept half the 518 near-blank pages out of stage A (first run, 2026-11-04)
+const blockLen = (tag) => ({ $let: { vars: { a: { $indexOfCP: ['$ocr', `<${tag}`] }, z: { $indexOfCP: ['$ocr', `</${tag}>`] } },
+  in: { $cond: [{ $and: [{ $gte: ['$$a', 0] }, { $gt: ['$$z', '$$a'] }] }, { $subtract: ['$$z', '$$a'] }, 0] } } });
 async function scanBook(b) {
   const rows = await pages.aggregate([
     { $match: { book_id: b.id } },
@@ -67,7 +71,7 @@ async function scanBook(b) {
     { $project: { id: 1, page_number: 1, page_type: 1, model: 1, at: 1, src: 1, edited: 1, wr: 1, pv: 1, en_len: { $strLenCP: '$en' }, ocr_len: { $strLenCP: '$ocr' }, en: 1, ocr: 1 } },
     { $match: { en_len: { $gt: 0 } } },
     { $project: { id: 1, page_number: 1, page_type: 1, model: 1, at: 1, src: 1, edited: 1, wr: 1, pv: 1, en_len: 1, ocr_len: 1,
-      keep: { $and: [{ $gte: ['$en_len', 400] }, { $gt: ['$en_len', { $multiply: [2, '$ocr_len'] }] }] }, en: 1, ocr: 1 } },
+      keep: { $and: [{ $gte: ['$en_len', 400] }, { $gt: ['$en_len', { $multiply: [2, { $subtract: ['$ocr_len', { $add: [blockLen('detected-images'), blockLen('image-desc')] }] }] }] }] }, en: 1, ocr: 1 } },
     { $project: { id: 1, page_number: 1, page_type: 1, model: 1, at: 1, src: 1, edited: 1, wr: 1, pv: 1, en_len: 1, ocr_len: 1, keep: 1,
       en: { $cond: ['$keep', '$en', '$$REMOVE'] }, ocr: { $cond: ['$keep', '$ocr', '$$REMOVE'] } } },
   ], { allowDiskUse: false, maxTimeMS: 120000 }).toArray();
