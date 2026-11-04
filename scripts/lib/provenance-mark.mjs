@@ -38,7 +38,7 @@ const WM_DELTA = 5;         // luminance nudge per block (0-255), scaled per-blo
 // The weakest nudge that proves the page, found by reading each back (markImage). Fixed at 5, the
 // mark showed as a faint checker on grainy aged paper at reader size, while that same page scored
 // z 40, far more than it needed; at 2 it is clean and scores 17. Dense pages are the opposite:
-// Chinese woodblock text at ~780px could not be proven at 5 at all. n=200 random pages, 2026-11-04
+// Chinese woodblock text at ~780px read back on only 5 of 60 at 5. n=200 random pages, 2026-11-04
 // (#4406): 91.5% detected at a target of z 10, 89.5% after q70, 76% of pages at delta 4 or under.
 // 12 shows as grey tiles on white paper at 9px blocks and does not at 6px, so it is for narrow pages.
 const WM_DELTA_LADDER = [2, 3, 4, 5, 8];
