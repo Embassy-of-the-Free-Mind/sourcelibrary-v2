@@ -43,5 +43,5 @@ install_one box.sh "$bin/box.sh" || rc=1
 # the link): it was hand-copied once on 2026-10-27 and never updated, so a fix to it reached no box.
 [ "$(readlink /usr/local/bin/claude 2>/dev/null)" = /root/claude-pace/claude-pace-guard.sh ] && \
   { install_one claude-pace-guard.sh /root/claude-pace/claude-pace-guard.sh || rc=1; }
-[ "$(hostname)" = gex45-1 ] &&{ install_one gpu-queue.sh "$bin/gpu-queue.sh" || rc=1; }  # GPU task queue, gex45 only (#6871)
+[ "$(hostname)" = gex45-1 ] && { install_one gpu-queue.sh "$bin/gpu-queue.sh" || rc=1; }  # GPU task queue, gex45 only (#6871)
 exit $rc
