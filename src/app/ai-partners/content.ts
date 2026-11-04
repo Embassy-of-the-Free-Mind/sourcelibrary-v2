@@ -57,12 +57,12 @@ export const PARTNERS_HTML = `
               <tbody>
                 <tr><td><b>A</b></td><td>11,929</td><td>2,594,799</td><td>2,169,624</td><td>976M</td><td>1.09B</td><td>Licensable</td><td>107,017</td></tr>
                 <tr><td><b>B</b></td><td>8,428</td><td>849,762</td><td>679,357</td><td>263M</td><td>297M</td><td>Library terms</td><td>Library terms</td></tr>
-                <tr><td><b>U</b></td><td>8,343</td><td>1,417,881</td><td>1,045,615</td><td>426M</td><td>451M</td><td>No terms stated</td><td>No terms stated</td></tr>
-                <tr class="ds-total"><td>All</td><td>28,700</td><td>4,862,442</td><td>3,894,596</td><td>1.67B</td><td>1.84B</td><td></td><td>107,017</td></tr>
+                <tr><td><b>U</b></td><td>8,343</td><td>1,417,881</td><td>1,045,615</td><td>426M</td><td>451M</td><td>No terms stated</td><td>~39,000</td></tr>
+                <tr class="ds-total"><td>All</td><td>28,700</td><td>4,862,442</td><td>3,894,596</td><td>1.67B</td><td>1.84B</td><td></td><td>~146,000</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library has stated no terms for its scans. Tiers record what the library says about its scans, not the age of the work: about 60,000 of the illustrations in B and U come from books dated before 1900. Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</p>
+          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library's manifest or record states no terms for its scans; most of these books come from the Internet Archive. Illustrations from U books dated before 1900 are offered. Tiers record what the library says about its scans, not the age of the work: about 20,600 illustrations held back in B also come from books dated before 1900. Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</p>
 
           <h3>Page record</h3>
           <div class="ds-scroll">
@@ -145,7 +145,7 @@ export const PARTNERS_HTML = `
             <div><dt>Books</dt><dd>28,700</dd></div>
             <div><dt>Pages with text</dt><dd>4.86M</dd></div>
             <div><dt>Pages with English</dt><dd>3.89M</dd></div>
-            <div><dt>Licensable illustrations</dt><dd>107,017</dd></div>
+            <div><dt>Illustrations offered</dt><dd>~146,000</dd></div>
             <div><dt>Sources</dt><dd>59 libraries and aggregators</dd></div>
             <div><dt>Period</dt><dd>79% of pages dated 1400–1899; 9% undated</dd></div>
             <div><dt>Tokens</dt><dd>Not measured for this subset. Whole corpus: about 21B</dd></div>
@@ -243,7 +243,7 @@ export const PARTNERS_HTML = `
       <table class="ledger">
         <tr><td>Cropped illustrations</td><td class="n">235,714</td></tr>
         <tr><td>On the public site</td><td class="n">208,422</td></tr>
-        <tr><td>From Tier A books, images licensable</td><td class="n">107,017</td></tr>
+        <tr><td>Offered for licence</td><td class="n">~146,000</td></tr>
       </table>
       <h3 style="margin-top:28px">By type</h3>
       <div class="bar"><span>Diagram</span><i style="width:100%"></i><span>82,981</span></div>
@@ -257,7 +257,7 @@ export const PARTNERS_HTML = `
       <div class="bar"><span>Frontispiece</span><i style="width:7.2%"></i><span>5,968</span></div>
       <div class="bar"><span>Symbol</span><i style="width:6.7%"></i><span>5,574</span></div>
       <div class="bar"><span>Bookplate</span><i style="width:1.7%"></i><span>1,425</span></div>
-      <p class="note" style="margin-top:14px">Counted 4 November 2026, against the rights tiers of 30 October. Types are the labels the extraction model gave, counted over all 236,918 records, including the 1,204 with no crop file. The other books in the library have not all been processed.</p>
+      <p class="note" style="margin-top:14px">Counted 4 November 2026, against the rights tiers of 30 October. Offered: 107,017 from Tier A books, and about 39,000 from books dated before 1900 whose library states no terms for its scans. Illustrations under a library's non-commercial or own terms are held back. Types are the labels the extraction model gave, counted over all 236,918 records, including the 1,204 with no crop file. The other books in the library have not all been processed.</p>
       <p class="note">Box accuracy of the current model, Gemini 3 Flash, which drew about three in five of the crops: 81.6% of boxes were tight (95% CI 68–92) and it found 95% of the pictures, on 38 pictures across 48 pages, graded by model readers with each page image open (September 2026). On 10 of those 48 pages it boxed something that was not an illustration, such as a cover label or a bookplate. About two in five crops have no model recorded, and those have not been graded.</p>
       <p>The public illustrations can be browsed in the <a href="https://sourcelibrary.org/gallery">gallery</a> and searched through the <code>search_images</code> tool on our <a href="https://sourcelibrary.org/developers">MCP server</a>.</p>
     </div>
