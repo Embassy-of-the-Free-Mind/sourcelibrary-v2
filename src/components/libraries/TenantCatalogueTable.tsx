@@ -30,6 +30,8 @@ interface Props {
   sort: CatalogueSort;
   /** basePath used to construct column-header links (e.g. "/catalogue"). */
   basePath: string;
+  /** The room's book route, so a row stays in the room on the embed too (e.g. "/embed/bhutan/book"). */
+  bookBasePath: string;
 }
 
 // Extract an EAP shelfmark like "EAP039-1-2-1" from a source_url like
@@ -68,7 +70,7 @@ function arrowFor(column: 'title' | 'author' | 'pages' | 'translation' | 'ocr', 
   return null;
 }
 
-export default function TenantCatalogueTable({ rows, total, page, pageSize, sort, basePath }: Props) {
+export default function TenantCatalogueTable({ rows, total, page, pageSize, sort, basePath, bookBasePath }: Props) {
   const start = (page - 1) * pageSize + 1;
   const end = Math.min(start + rows.length - 1, total);
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -129,7 +131,7 @@ export default function TenantCatalogueTable({ rows, total, page, pageSize, sort
           <tbody>
             {rows.map((row) => {
               const titleText = row.display_title || row.title;
-              const href = `/book/${row.slug || row.id}`;
+              const href = `${bookBasePath}/${row.slug || row.id}`;
               const shelfmark = eapShelfmark(row.source_url);
               return (
                 <tr key={row.id} className="border-t border-stone-100 hover:bg-stone-50">
