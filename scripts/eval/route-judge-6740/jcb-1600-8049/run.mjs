@@ -31,7 +31,7 @@ import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from '../../lib/paired-stats.mjs';
-import { plantError } from '../../lib/plant-ocr-errors.mjs';
+import { plantError, langCode } from '../../lib/plant-ocr-errors.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const STAGE = process.argv[2];
@@ -219,6 +219,8 @@ function plant() {
   if (key.some((k) => k.kind === 'planted')) { console.log('planted items already in the packet'); return; }
   const kinds = ['B', 'C', 'D', 'E']; let slot = 0;
   for (const cell of Object.keys(CELLS)) {
+    // the planter knows Latin, German and French only: the other cells carry no plants (the judge's sensitivity is measured on those three)
+    if (!langCode(CELLS[cell].lang)) { console.log(`${cell}: no planter for ${CELLS[cell].lang}, none planted`); continue; }
     const acc = shuffled(key.filter((k) => k.cell === cell && k.kind === 'item' && V.get(k.judged_as)?.accept), `plant-8049-${cell}`);
     let got = 0;
     for (const k of acc) {
