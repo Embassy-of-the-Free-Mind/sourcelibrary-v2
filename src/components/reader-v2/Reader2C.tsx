@@ -3707,8 +3707,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
         style={{ gridTemplateColumns: `${DESKTOP_RAIL_W}px minmax(0, 1fr)`, gridTemplateRows: '58px minmax(0, 1fr) auto' }}
       >
         {/* Top bar — full width, single identity lockup top-left */}
+        {/* Framed, EmbedUserMenu floats over this bar's top-right corner (92px
+            with its margin), so the page controls end short of it. */}
         <header
-          className="col-span-2 flex items-center gap-3 px-4"
+          className={`col-span-2 flex items-center gap-3 pl-4 ${isEmbedded ? 'pr-24' : 'pr-4'}`}
           style={{ background: INK, color: '#fdfcf9', borderBottom: `1px solid ${onInk(0.12)}` }}
         >
           {!isEmbedded && <Logo white compact lang={siteLocale} />}
