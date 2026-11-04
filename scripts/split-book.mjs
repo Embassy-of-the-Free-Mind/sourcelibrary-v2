@@ -33,6 +33,7 @@ import { gatedImageCall } from './lib/agy-cli.mjs';
 import { leavesForFrame, cutSpreadText, stagedPageNumber, stagedLeavesQuery, frameOcrHash } from './lib/split-stage.mjs';
 import { contentHash } from './lib/write-provenance.mjs';
 import { recordSweepAction } from './lib/sweep-log.mjs';
+import { voteSpreadOrder } from './lib/split-page-order.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -340,21 +341,23 @@ if (!book) { console.log('Book not found:', targetSlug); process.exit(1); }
 console.log(`\n=== ${book.title} ===`);
 console.log(`Current: ${book.pages_count} pages | needs_splitting: ${book.needs_splitting} | split_completed: ${book.split_completed}`);
 
-// --- Reading order (#4796) ---
-// A spread's two halves become consecutive pages. In a left-to-right book the
-// left leaf is read first; in a right-to-left book (Hebrew, Arabic, Persian,
-// Syriac, Urdu) and a vertically-set CJK book (Chinese, Japanese, Korean) the
-// RIGHT leaf is read first. Emitting left-then-right for every book put 41
-// books' pages in reversed reading order (Pardes Rimmonim: page 101 is ch.
-// 17–18, page 100 is ch. 18–19). `--page-order ltr|rtl` overrides the language
-// default (a modern horizontally-set Japanese book is ltr); the decision is
-// recorded on the book as `split_page_order` so it can be audited and undone.
+// --- Reading order (#4796, #5699) ---
+// A spread's two halves become consecutive pages, and one of them is read first.
+// The language only gives a PROVISIONAL order: right leaf first for Hebrew,
+// Arabic, Persian, Syriac, Urdu and vertically-set CJK. It is wrong for a book
+// bound the other way — both Maqrizi volumes are Arabic, bound left to right,
+// and every spread of both was stored backwards (#5699). So after the cut
+// (Step 4b) the printed numbers on the two halves decide the order; when they
+// cannot be read the book is FLAGGED (sweep_log `split-order-unverified`), not
+// refused, so the split lanes keep running. `--page-order ltr|rtl` is a
+// person's decision and is kept (a disagreement with the numbers is flagged).
+// The order is recorded on the book as `split_page_order`.
 const RIGHT_FIRST = /arabic|hebrew|aramaic|syriac|persian|urdu|ottoman|chinese|japanese|korean|manchu/i;
 const orderArg = args.find(a => a.startsWith('--page-order='))?.split('=')[1];
 if (orderArg && orderArg !== 'ltr' && orderArg !== 'rtl') { console.log(`--page-order must be ltr or rtl, got "${orderArg}"`); process.exit(1); }
-const PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
-const SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
-console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `language "${book.language || 'unknown'}"`}) — ${SIDE_ORDER[0]} leaf first`);
+let PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
+let SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `provisional, from language "${book.language || 'unknown'}"; checked against the printed numbers after the cut`}) — ${SIDE_ORDER[0]} leaf first`);
 
 // --- Step 1: Get original image URLs ---
 const manifestUrl = book.image_source?.iiif_manifest;
@@ -874,6 +877,37 @@ for (let idx = 0; idx < existingPages.length; idx++) {
   }
 }
 
+// --- Step 4b: set the order from the printed numbers on the two halves (#5699) ---
+// Each cut spread contributes its two halves' text; a pair votes when both carry
+// a printed number one apart. A clear vote that disagrees with the provisional
+// order swaps every cut pair; no clear vote flags the book (recorded below).
+const ORDER_CHECK = (() => {
+  const bySource = new Map();
+  for (const p of newPages) if (p.side === 'left' || p.side === 'right') (bySource.get(p.sourceIdx) || bySource.set(p.sourceIdx, {}).get(p.sourceIdx))[p.side] = p.ocr || null;
+  const pairs = [...bySource.values()].filter(x => 'left' in x && 'right' in x);
+  return { ...voteSpreadOrder(pairs), provisional: PAGE_ORDER, decided_by: orderArg ? '--page-order' : null };
+})();
+if (ORDER_CHECK.pairs) {
+  const v = ORDER_CHECK.verdict;
+  console.log(`  printed-number check: ${v} (ltr ${ORDER_CHECK.ltr}, rtl ${ORDER_CHECK.rtl}, ${ORDER_CHECK.readable} of ${ORDER_CHECK.pairs} pairs readable)`);
+  if (v !== 'unreadable' && v !== PAGE_ORDER) {
+    if (orderArg) {
+      console.log(`  WARNING: the printed numbers say ${v}, --page-order says ${orderArg}; keeping --page-order and flagging the book`);
+    } else {
+      PAGE_ORDER = v;
+      SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+      for (let i = 0; i + 1 < newPages.length; i++) {
+        const a = newPages[i], b = newPages[i + 1];
+        if (a.sourceIdx === b.sourceIdx && (a.side === 'left' || a.side === 'right') && (b.side === 'left' || b.side === 'right')) { newPages[i] = b; newPages[i + 1] = a; i++; }
+      }
+      console.log(`  order set from the printed numbers: ${PAGE_ORDER} — ${SIDE_ORDER[0]} leaf first`);
+    }
+  }
+  ORDER_CHECK.final = PAGE_ORDER;
+  ORDER_CHECK.flag = v === 'unreadable' || (orderArg && v !== orderArg);
+  if (ORDER_CHECK.flag && !orderArg) console.log(`  FLAG: the printed numbers do not settle the order (kept the provisional ${PAGE_ORDER}); recorded as split-order-unverified for a check after OCR`);
+}
+
 const spreads = newPages.filter(p => p.side === 'left').length;
 if (TEXT_CUT) {
   const t = newPages.reduce((m, p) => ({ ...m, [p.textFrom || 'fresh-read']: (m[p.textFrom || 'fresh-read'] || 0) + 1 }), {});
@@ -1078,7 +1112,7 @@ if (STAGE) {
   await db.collection('pages').insertMany(newDocs);
   const unread = newDocs.filter(d => !d.ocr?.data).length;
   await db.collection('book_events').insertOne({ book_id: book.id, type: 'spread_split_staged', at: new Date(), source: 'split-book', details: { issue: 7605, run: RUN_ID, frames: existingPages.length, leaves: newDocs.length, leaves_with_cut_text: newDocs.length - unread, leaves_to_read: unread, by: APPROVED_BY, page_order: PAGE_ORDER } });
-  await recordSweepAction(db, { sweep: 'split-stage-7605', book_id: book.id, action: 'staged-leaves', detail: { run: RUN_ID, frames: existingPages.length, leaves: newDocs.length, leaves_to_read: unread, page_order: PAGE_ORDER, by: APPROVED_BY } });
+  await recordSweepAction(db, { sweep: 'split-stage-7605', book_id: book.id, action: 'staged-leaves', detail: { run: RUN_ID, frames: existingPages.length, leaves: newDocs.length, leaves_to_read: unread, page_order: PAGE_ORDER, order_check: ORDER_CHECK, by: APPROVED_BY } });
   console.log(`  staged: ${newDocs.length} leaves, ${newDocs.length - unread} with cut text, ${unread} to read. Swap: scripts/maintenance/split-swap.mjs ${book.id}`);
   await client.close();
   process.exit(0);
@@ -1151,6 +1185,10 @@ await db.collection('books').updateOne({ id: book.id }, {
     updated_at: new Date(),
   }
 });
+if (ORDER_CHECK.pairs) {
+  // A row, not a column (#3969): what decided the order, and whether it is unverified.
+  await recordSweepAction(db, { sweep: 'split-page-order-5699', book_id: book.id, action: ORDER_CHECK.flag ? 'split-order-unverified' : 'split-order-verified', detail: ORDER_CHECK });
+}
 
 if (GUTTER_ONLY) {
   // #2454: pages were created without OCR — requeue the book so the normal
