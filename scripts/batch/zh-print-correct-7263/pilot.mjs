@@ -29,6 +29,10 @@ const SEED = Number(arg('seed', 7263));
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const rj = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const SETS = { one: 30, ten: 30 };
+// The verdict has no leaf field (accept, fidelity, defects[class, quote, severity, what], reader_note): only a wrong_text defect
+// or the note that says the text belongs to another leaf counts. A hand read of the flagged rows settles it.
+const LEAF_WORDS = /wrong (page|leaf)|another (page|leaf)|(next|previous|neighbou?ring|adjacent|following|preceding|other) (page|leaf)|not (on )?this (page|leaf)/i;
+const notLeaf = (v) => (v.defects || []).some((d) => d.severity === 'wrong_text' && LEAF_WORDS.test(d.what || '')) || (!v.accept && LEAF_WORDS.test(v.reader_note || ''));
 
 async function draw() {
   const books = rj(arg('books')).books.filter((b) => !b.gate && b.owed > 0);
@@ -97,7 +101,7 @@ function score() {
     const dir = path.join(OUT, set), P = rj(path.join(dir, 'judge', 'plan.json'));
     const vs = jsonl(path.join(dir, 'judge', 'verdicts.jsonl'));
     const abs = new Map(vs.filter((v) => v.set === 'abs' && v.verdict).map((v) => [v.key, v]));
-    const rows = P.selected.map((s) => { const v = abs.get(s.key)?.verdict; return { key: s.key, page_id: s.page_id, page_number: s.page_number, title: s.title, served: s.served, position: s.position, accept: v?.accept ?? null, fidelity: v?.fidelity ?? null, wrong: v ? wrongText(v) : null, not_leaf: v ? (v.defects || []).some((d) => /not_this_leaf|wrong.?leaf|I4|neighbou?r/i.test(`${d.class} ${d.kind} ${d.severity}`)) : null, summary: v?.summary ?? v?.why ?? null, defects: (v?.defects || []).filter((d) => d.severity === 'wrong_text' || d.severity === 'misleads').slice(0, 4) }; });
+    const rows = P.selected.map((s) => { const v = abs.get(s.key)?.verdict; return { key: s.key, page_id: s.page_id, page_number: s.page_number, title: s.title, served: s.served, position: s.position, accept: v?.accept ?? null, fidelity: v?.fidelity ?? null, wrong: v ? wrongText(v) : null, not_leaf: v ? notLeaf(v) : null, summary: v?.reader_note ?? null, defects: (v?.defects || []).filter((d) => d.severity === 'wrong_text' || d.severity === 'misleads').slice(0, 4) }; });
     const ctl = vs.filter((v) => v.set === 'wrong_page' && v.verdict);
     // Own leaf on every corrected page of the set, by Han bigrams with the stored text of this page and of its neighbours in the call.
     const man = jsonl(path.join(dir, 'manifest.jsonl')); const leaf = []; const byBook = new Map();
