@@ -37,6 +37,16 @@
  *   node --env-file=.env.production.local scripts/maintenance/restore-plate-spreads.mjs --plan plan.json \
  *     --out $JOB_SCRATCH/run1 [--skip-file skip.txt] [--allow-tenant] [--apply] [--recount] [--revalidate]
  *   ... --revert <run id> --books a,b [--apply] [--recount] [--revalidate]
+ *   ... --sharpen <run id> --books a,b [--apply] [--revalidate]
+ *
+ * SHARPEN (#8042, Derek 2026-11-04: "image quality looks poor"): a kept page shows its whole image through the
+ * display tier, a 1200px proxy resize of a 5000px plate. --sharpen writes, per kept page of the run, a display copy
+ * made from that whole image (long side up to 3200px, JPEG q85, never enlarged) to pages/<book>/plate-<page id>-
+ * display.jpg, and sets display_photo to it with `plate_whole.display = { url, of: <the whole image>, ... }`;
+ * page-image-url.ts serves it only while `of` is still the page's source. A whole image of 4 MP or more also gets
+ * `fullres_master` = that image, the input of scripts/workers/deepzoom-tile-pages.mjs. The archived master is never
+ * re-encoded and no old file is removed. The fields it replaced are kept in `plate_whole.display.before`, and
+ * --revert restores them (display_photo, fullres_master, deepzoom) along with the rest.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -55,10 +65,12 @@ const flag = (n) => argv.includes(`--${n}`);
 const opt = (n) => { const i = argv.indexOf(`--${n}`); return i >= 0 ? argv[i + 1] : undefined; };
 const APPLY = flag('apply');
 const REVERT = opt('revert');
-const RUN = REVERT || opt('run') || `plate8042-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
+const SHARPEN = opt('sharpen');
+const DISPLAY_LONG = 3200, DISPLAY_Q = 85, DEEPZOOM_MIN_MP = 4;
+const RUN = REVERT || SHARPEN || opt('run') || `plate8042-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
 const OUT = opt('out') || path.join(process.env.JOB_SCRATCH || '/tmp', `restore-plate-spreads-${RUN}`);
 const WRITTEN = ['cropped_photo', 'detected_images', 'repeat_of', 'repeat_of_meta'];
-const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, enhanced_photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, ocr: 1, translation: 1 };
+const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, enhanced_photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, ocr: 1, translation: 1, display_photo: 1, fullres_master: 1, deepzoom: 1 };
 
 fs.mkdirSync(OUT, { recursive: true });
 const log = (file, row) => fs.appendFileSync(path.join(OUT, file), JSON.stringify(row) + '\n');
@@ -159,6 +171,9 @@ try {
         const b = p.plate_whole.before || {};
         const $set = {}, $unset = { plate_whole: '' };
         for (const f of WRITTEN) { if (b[f] == null) $unset[f] = ''; else $set[f] = b[f]; }
+        // --sharpen's fields: back to what they were before it ran (the tiles and the copy stay on R2, unreferenced).
+        const db4 = p.plate_whole.display?.before;
+        if (db4) for (const f of ['display_photo', 'fullres_master', 'deepzoom']) { if (db4[f] == null) $unset[f] = ''; else $set[f] = db4[f]; }
         console.log(`  p.${p.page_number} ${p.id}: restore ${JSON.stringify(Object.keys($set))} unset ${JSON.stringify(Object.keys($unset))}`);
         if (!APPLY) continue;
         await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'revert-plate-whole', detail: { page_id: p.id, page_number: p.page_number, run: RUN, restored: b } });
@@ -166,6 +181,48 @@ try {
       }
       await afterBook(bookId);
     }
+  } else if (SHARPEN) {
+    const books = (opt('books') || '').split(',').filter(Boolean);
+    if (!books.length) throw new Error('--sharpen needs --books (per-book, so the query uses the book_id index)');
+    const tally = { pages: 0, written: 0, skipped: 0, fullres: 0 };
+    for (const bookId of books) {
+      const kept = await pages.find({ book_id: bookId, 'plate_whole.run': RUN, 'plate_whole.role': 'kept' }, { projection: PROJ }).toArray();
+      console.log(`${bookId}: ${kept.length} kept page(s) from run ${RUN}`);
+      for (const p of kept) {
+        tally.pages++;
+        const whole = p.cropped_photo;
+        const skip = (why) => { console.log(`  SKIP p.${p.page_number} ${p.id}: ${why}`); tally.skipped++; };
+        if (!usable(whole) || !whole.includes(bookId)) { skip(`whole image not usable/book-scoped (${whole})`); continue; }
+        if (p.plate_whole.display?.of === whole && p.display_photo === p.plate_whole.display.url) { skip('already sharpened'); continue; }
+        const buf = await fetchBuf(whole);
+        const meta = await sharp(buf, { limitInputPixels: false }).metadata();
+        const out = await sharp(buf, { limitInputPixels: false })
+          .resize({ width: DISPLAY_LONG, height: DISPLAY_LONG, fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: DISPLAY_Q, mozjpeg: true }).toBuffer({ resolveWithObject: true });
+        const key = `pages/${bookId}/plate-${p.id}-display.jpg`;
+        assertBookScopedKey(key, bookId, SWEEP);
+        const url = `${R2_PUBLIC}/${key}`;
+        const mp = (meta.width * meta.height) / 1e6;
+        const at = new Date();
+        const display = { url, of: whole, width: out.info.width, height: out.info.height, bytes: out.data.length, quality: DISPLAY_Q, at, by: `system:${SWEEP}`,
+          // image-pick-ok: a revert snapshot of the stored fields, never read to fetch or crop an image
+          before: { display_photo: p.display_photo ?? null, fullres_master: p.fullres_master ?? null, deepzoom: p.deepzoom ?? null } };
+        const $set = { display_photo: url, 'plate_whole.display': display };
+        // Deep zoom: the whole image IS the master (on R2 already); the tiler reads fullres_master.url.
+        if (mp >= DEEPZOOM_MIN_MP && !p.fullres_master) { $set.fullres_master = { url: whole, width: meta.width, height: meta.height, source_url: whole, harvested_at: at, by: `system:${SWEEP}`, issue: 8042 }; tally.fullres++; }
+        console.log(`  p.${p.page_number} ${p.id}: ${meta.width}x${meta.height} (${mp.toFixed(1)} MP) → ${out.info.width}x${out.info.height} ${(out.data.length / 1024).toFixed(0)} KB${$set.fullres_master ? ' + fullres_master' : ''}`);
+        log('sharpen.jsonl', { run: RUN, apply: APPLY, book: bookId, page_id: p.id, page_number: p.page_number, whole, master: { w: meta.width, h: meta.height }, display: { ...display, at: at.toISOString() }, fullres_master: !!$set.fullres_master });
+        if (!APPLY) continue;
+        await r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, Body: out.data, ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable' }));
+        const head = await fetch(url, { method: 'HEAD' });
+        if (!head.ok) throw new Error(`display copy not served after upload: ${head.status} ${url}`);
+        await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'plate-sharpen', detail: { run: RUN, page_id: p.id, page_number: p.page_number, url, of: whole, before: display.before, fullres_master: !!$set.fullres_master } });
+        await pages.updateOne({ id: p.id, book_id: bookId, 'plate_whole.run': RUN, cropped_photo: whole }, { $set });
+        tally.written++;
+      }
+      if (APPLY && flag('revalidate')) console.log(`  revalidate ${bookId}: ${await revalidate(bookId)}`);
+    }
+    console.log(JSON.stringify({ run: RUN, apply: APPLY, ...tally }));
   } else {
     const plan = JSON.parse(fs.readFileSync(opt('plan'), 'utf8'));
     const skip = new Set(opt('skip-file') ? fs.readFileSync(opt('skip-file'), 'utf8').split(/\s+/).filter(Boolean) : []);
