@@ -134,7 +134,7 @@ const CARD_STRINGS: Record<Locale, {
     unknownTitle: '书名不详',
     unknownAuthor: '作者不详',
     englishExcerpt: '英文译文',
-    ownExcerpt: '中文原文',
+    ownExcerpt: '原文',
   },
 };
 
