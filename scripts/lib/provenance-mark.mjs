@@ -35,6 +35,13 @@ sharp.concurrency(1); // JS-level concurrency drives parallelism in the backfill
 // no margin banding). Sparse pages detect far more strongly.
 const GRID = 128;           // GRID x GRID blocks. More pairs → higher detection z (∝ √pairs)
 const WM_DELTA = 5;         // luminance nudge per block (0-255), scaled per-block by texture mask
+// A page the first nudge cannot prove gets a stronger one, only then (markImage reads each back).
+// Measured 2026-11-04 (#4406): random pages 80% (n=150) -> 92% (n=300) detected with 8; dense Chinese woodblock pages
+// at ~780px (n=60) 8% -> 58% with 8, 95% with 12. By eye: 12 shows as grey tiles on white paper at 9px blocks
+// (a 1200px page), and does not at 6px blocks; 8 barely shows at 9px. So 12 is for narrow pages only.
+const WM_DELTA_LADDER = [WM_DELTA, 8];
+const WM_DELTA_NARROW = 12;
+const WM_NARROW_BLOCK_PX = 7;   // block width below this may take WM_DELTA_NARROW
 const WM_Z_THRESHOLD = 5;   // z-score above which we call it "ours" (noise floor <1 → tiny FP rate)
 // Perceptual mask: only embed where there's local texture to hide the mark.
 // A block's std below STD_FLOOR is treated as flat → no mark (invisible on blank
@@ -197,11 +204,29 @@ function embedWatermark(data, W, H, channels, pairs, grid = GRID, delta = WM_DEL
 
 // ---- public: mark one image ----------------------------------------------
 /**
- * Mark a display-variant JPEG buffer with all three provenance layers.
+ * Mark a display-variant JPEG buffer with all three provenance layers, and read the mark back.
+ * A page the weakest nudge cannot prove is redone stronger. A page no rung can prove (near-blank,
+ * too few textured blocks) keeps the weakest render: invisibility wins when nothing is gained.
+ * Pass `delta` to fix the strength and skip the read-back (tuning).
  * @returns marked JPEG Buffer.
  */
-export async function markImage(buffer, { editionId, pageNumber, key, jpegQuality = 82, grid = GRID, delta = WM_DELTA }) {
-  if (!key) throw new Error('provenance key required');
+export async function markImage(buffer, opts) {
+  if (!opts.key) throw new Error('provenance key required');
+  if (opts.delta != null) return renderMarked(buffer, opts);
+  const { width } = await sharp(buffer, { failOn: 'none' }).metadata();
+  const narrow = Math.floor(width / (opts.grid || GRID)) < WM_NARROW_BLOCK_PX;
+  let first = null;
+  for (const delta of narrow ? [...WM_DELTA_LADDER, WM_DELTA_NARROW] : WM_DELTA_LADDER) {
+    const out = await renderMarked(buffer, { ...opts, delta });
+    first ||= out;
+    const d = await detectWatermark(out, { editionId: opts.editionId, key: opts.key, grid: opts.grid });
+    if (d.present) return out;
+    if (!(d.pairs >= 16)) return first;
+  }
+  return first;
+}
+
+async function renderMarked(buffer, { editionId, pageNumber, key, jpegQuality = 82, grid = GRID, delta = WM_DELTA }) {
   const eid = String(editionId).slice(0, 12);
 
   const { data, info } = await sharp(buffer, { failOn: 'none' }).raw().toBuffer({ resolveWithObject: true });
@@ -257,15 +282,40 @@ export async function detectWatermark(buffer, { editionId, key, grid = GRID }) {
   const { means, stds } = blockStats(data, W, H, channels, grid);
   // Count only textured pairs — the same ones the embedder marked. Flat pairs
   // carry no signal; including them only dilutes z.
-  const diffs = [];
-  for (const [a, b] of pairPlan(key, eid, grid)) {
-    if (maskFactor(stds[a]) > 0 && maskFactor(stds[b]) > 0) diffs.push(means[a] - means[b]);
-  }
-  const n = diffs.length;
+  const plan = pairPlan(key, eid, grid).filter(([a, b]) => maskFactor(stds[a]) > 0 && maskFactor(stds[b]) > 0);
+  const n = plan.length;
   if (n < 16) return { present: false, z: 0, pairs: n }; // too few textured pairs (near-blank page)
-  const mean = diffs.reduce((s, d) => s + d, 0) / n;
-  const variance = diffs.reduce((s, d) => s + (d - mean) ** 2, 0) / n;
-  const sd = Math.sqrt(variance) || 1e-9;
-  const z = mean / (sd / Math.sqrt(n));
-  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100, pairs: n };
+  // Two reads of the same pairs. Raw block means carry the page's own content (a dark text block
+  // against a pale margin), which is noise to this test. The residual subtracts each block's
+  // neighbours first, which removes most of that. n=459 on 2026-11-04 (#4406): tagged sl-v5 objects
+  // 154/201 -> 170/201 at z>5, unmarked 0/150 on both, wrong-key z never above 2.96 on either.
+  const raw = pairZ(plan, means);
+  const hp = pairZ(plan, highPass(means, grid));
+  const z = Math.max(raw, hp);
+  return { present: z > WM_Z_THRESHOLD, z: Math.round(z * 100) / 100, raw_z: Math.round(raw * 100) / 100, hp_z: Math.round(hp * 100) / 100, pairs: n };
+}
+
+/** One-sample z of (A - B) across the pairs. */
+function pairZ(plan, values) {
+  const n = plan.length;
+  let sum = 0, sumSq = 0;
+  for (const [a, b] of plan) { const d = values[a] - values[b]; sum += d; sumSq += d * d; }
+  const mean = sum / n;
+  const sd = Math.sqrt(Math.max(0, sumSq / n - mean * mean)) || 1e-9;
+  return mean / (sd / Math.sqrt(n));
+}
+
+/** Each block's mean minus the mean of its 4-neighbours (those that exist at an edge). */
+function highPass(means, grid) {
+  const out = new Float64Array(means.length);
+  for (let i = 0; i < means.length; i++) {
+    const x = i % grid, y = Math.floor(i / grid);
+    let sum = 0, cnt = 0;
+    if (x > 0) { sum += means[i - 1]; cnt++; }
+    if (x < grid - 1) { sum += means[i + 1]; cnt++; }
+    if (y > 0) { sum += means[i - grid]; cnt++; }
+    if (y < grid - 1) { sum += means[i + grid]; cnt++; }
+    out[i] = means[i] - sum / cnt;
+  }
+  return out;
 }
