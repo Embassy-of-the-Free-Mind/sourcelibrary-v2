@@ -19,10 +19,13 @@ const parsed = parseCbeta(path.join(C, 'b', 'xml', 'T09n0262.xml')), ALL = Objec
 const idx = new Map(); for (let i = 0; i + 3 < FOLDED.length; i++) { const k = FOLDED.slice(i, i + 4).join(''); if (!idx.has(k)) idx.set(k, []); idx.get(k).push(i); }
 /** Where a read sits in T262: the modal 4-gram offset, to 40 characters. */
 function fit(q) { const v = {}; for (let i = 0; i + 3 < q.length; i++) for (const j of idx.get(q.slice(i, i + 4).join('')) || []) { const b = Math.round((j - i) / 40); v[b] = (v[b] || 0) + 1; } const t = Object.entries(v).sort((a, b) => b[1] - a[1])[0]; return t ? { at: +t[0] * 40, hits: t[1] } : null; }
+// The locator reads this woodblock at 15-40%: 3-grams, and every coarse leaf then falls on one straight line (about 128 characters a canvas).
+const idx3 = new Map(); for (let i = 0; i + 2 < FOLDED.length; i++) { const k = FOLDED.slice(i, i + 3).join(''); if (!idx3.has(k)) idx3.set(k, []); idx3.get(k).push(i); }
+function fit3(q) { const v = {}; for (let i = 0; i + 2 < q.length; i++) for (const j of idx3.get(q.slice(i, i + 3).join('')) || []) { const b = Math.round((j - i) / 40); v[b] = (v[b] || 0) + 1; } const t = Object.entries(v).sort((a, b) => b[1] - a[1])[0]; return t ? { at: +t[0] * 40, hits: t[1] } : null; }
 const window = (at, n, pad = 120) => { const a = Math.max(0, at - pad), b = Math.min(ALL.length, at + n + pad), s = ALL.slice(a, b); return { typed: s.map((x) => x.c).join(''), changed_at: s.flatMap((x, i) => x.changed ? [i] : []), a, b }; };
 const STATE = path.join(C, 'c', 'passages.json');
 /** Berlin leaves whose locator text places them in T262. Locator text is geometry and placement only, never a witness. */
-function placed(list) { const L = []; for (const l of list) { const f = path.join(C, 'c', 'old', 'lines', `${l.ppn}-${l.n}.lines.json`); if (!fs.existsSync(f)) continue; const q = JSON.parse(fs.readFileSync(f)).flatMap((r) => hanChars(r.text)).map(foldCh); if (q.length < 30) continue; const t = fit(q); if (t && t.hits / q.length > 0.25) L.push({ ...l, han: q.length, at: t.at, hits: t.hits }); } console.log('placed', L.length); return L; }
+function placed(list) { const L = []; for (const l of list) { const f = path.join(C, 'c', 'old', 'lines', `${l.ppn}-${l.n}.lines.json`); if (!fs.existsSync(f)) continue; const q = JSON.parse(fs.readFileSync(f)).flatMap((r) => hanChars(r.text)).map(foldCh); if (q.length < 30) continue; const t = fit3(q); if (t && t.hits >= 15 && t.hits / q.length > 0.12) L.push({ ...l, han: q.length, at: t.at, hits: t.hits }); } console.log('placed', L.length); return L; }
 if (STAGE === 'fz') {
   const { MongoClient } = await import('mongodb'); const { bodyText } = await import('../ground-truth-5935/lib.mjs');
   const c = await MongoClient.connect(process.env.MONGODB_URI, { compressors: ['zlib'] }), pages = c.db('bookstore').collection('pages');

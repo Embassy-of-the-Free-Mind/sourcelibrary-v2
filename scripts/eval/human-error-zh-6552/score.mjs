@@ -16,7 +16,8 @@ export const classOf = (it, v) => {
   if (s === 'ocr') return v.variant ? 'EDITORIAL_NORM' : v.slip ? 'EDITORIAL_CORR' : 'KEYING';
   return 'NEITHER';
 };
-const ref = {}, eye = fs.existsSync(path.join(ROOT, 'eye.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'eye.json'))) : {};
+// eye.json: opened by eye. eye-text.json: settled from the alignment itself, without the image: STRUCTURE (a running head or page edge aligned against text), DUP (the second half of one displaced character), a hand that does not separate a pair.
+const readJ = (f) => fs.existsSync(path.join(ROOT, f)) ? JSON.parse(fs.readFileSync(path.join(ROOT, f))) : {}, ref = {}, opened = readJ('eye.json'), eye = { ...readJ('eye-text.json'), ...opened };
 if (fs.existsSync(path.join(ROOT, 'referee.jsonl'))) for (const l of fs.readFileSync(path.join(ROOT, 'referee.jsonl'), 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (r.item) ref[r.id] = r.item; }
 const items = [], usage = {}, counts = {}, T = {}, right = { plant_typed: 'ocr', decoy_ocr: 'typed', neither: 'neither', wrong_crop: 'cannot_tell' };
 for (const t of TAGS) {
@@ -31,8 +32,9 @@ for (const it of real) { const v = ref[it.id] || it.a.opus; it.cls = eye[it.id] 
 for (const it of agreed) { const v = ref[it.id] || it.a.opus; it.final = v; const seen = [...(v?.seen || '')][0]; it.bothWrong = eye[it.id] ? eye[it.id] === 'BOTH_WRONG' : !!(seen && v.choice !== 'cannot_tell' && foldCh(seen) !== foldCh(it.ocr)); it.unread = !seen || v?.choice === 'cannot_tell'; }
 if (LIST) for (const it of real.filter((i) => i.cls === LIST)) console.log(it.id, it.uid, `${it.left}[${it.typed}|${it.ocr}]${it.right}`, it.how, 'op=', said(it, it.a.opus), it.a.opus?.seen, 'ge=', said(it, it.a.gemini), it.a.gemini?.seen, 'ni=', said(it, it.a['opus-noimage']), it.declared_change ? 'DECLARED' : '');
 if (LIST === 'AGREED') for (const it of agreed.filter((i) => i.bothWrong)) console.log(it.id, it.uid, `${it.left}[${it.typed}]${it.right}`, 'seen', it.final?.seen);
+if (process.argv.includes('--items')) { console.log(JSON.stringify(real.map((i) => ({ id: i.id, uid: i.uid, typed: i.typed, ocr: i.ocr, left: i.left, right: i.right, cls: i.cls, declared_change: i.declared_change })))); process.exit(0); }
 const pagesBy = Object.keys(counts), compared = (u) => counts[u].typed_chars - (counts[u].structure_typed ?? counts[u].structure_chars), W = (u) => workOf[u] || u, works = [...new Set(pagesBy.map(W))];
-const CL = ['KEYING', 'OCR_ERROR', 'OCR_VARIANT', 'EDITORIAL_NORM', 'EDITORIAL_CORR', 'NEITHER', 'CANNOT_TELL'], n = {}; for (const c of CL) n[c] = real.filter((i) => i.cls === c).length;
+const CL = ['KEYING', 'OCR_ERROR', 'OCR_VARIANT', 'EDITORIAL_NORM', 'EDITORIAL_CORR', 'NEITHER', 'CANNOT_TELL', 'STRUCTURE', 'DUP'], n = {}; for (const c of CL) n[c] = real.filter((i) => i.cls === c).length;
 const chars = pagesBy.reduce((a, u) => a + compared(u), 0), byWork = {}; for (const w of works) { byWork[w] = { chars: 0 }; for (const c of CL) byWork[w][c] = 0; } for (const u of pagesBy) byWork[W(u)].chars += compared(u); for (const it of real) byWork[W(it.uid)][it.cls]++;
 const rng = mulberry(6552), boot = (f) => { const v = []; for (let b = 0; b < 4000; b++) { let x = 0, y = 0; for (let i = 0; i < works.length; i++) { const w = byWork[works[Math.floor(rng() * works.length)]]; x += f(w); y += w.chars; } v.push(1000 * x / Math.max(1, y)); } v.sort((a, b) => a - b); return [v[100], v[3899]].map((x) => +x.toFixed(2)); };
 const rate = (name, f) => { const tot = works.reduce((a, w) => a + f(byWork[w]), 0); return { n: tot, per_1000: +(1000 * tot / chars).toFixed(2), ci95: boot(f) }; };
@@ -48,6 +50,9 @@ const out = { collection: arg('c'), pages: pagesBy.length, works: works.length, 
   capture_recapture: { n1_typed: n1, n2_ocr: n2, m_seen: mSeen, m_with_agreed_est: +mEst.toFixed(1), chapman_positions_seen_m: +chap(n1, n2, mSeen).toFixed(1), chapman_positions_est_m: +chap(n1, n2, mEst).toFixed(1) },
   controls: Object.fromEntries(Object.entries(T).map(([r, t]) => [r, Object.fromEntries(Object.entries(t).map(([k, c]) => [k, { right: c.right, n: c.n, ans: c.ans }]))])), usage };
 const pair = (a, b) => { let n2 = 0, same = 0, spl = {}; for (const it of real) { const x = it.a[a], y = it.a[b]; if (!x || !y) continue; n2++; const s = classOf(it, x), t = classOf(it, y); if (s === t) same++; else { const k = `${s}/${t}`; spl[k] = (spl[k] || 0) + 1; } } return { n: n2, same, pct: n2 ? +(100 * same / n2).toFixed(1) : null, splits: spl }; };
+// By-eye check of the machine's answer. "machine" is the referee where there was one, else Opus; each reader is judged on what it said alone. DUP counts as KEYING: a displaced character read from either end.
+const eyeSame = (a, b) => a === b || (a === 'DUP' && b === 'KEYING') || (a === 'STRUCTURE' && b === 'CANNOT_TELL'), byEye = { opened: 0, machine: 0, opus: 0, gemini: 0, gemini_n: 0, disagreements: {} };
+for (const it of real) { const e = opened[it.id]; if (!e) continue; byEye.opened++; const m = classOf(it, it.final); if (eyeSame(e, m)) byEye.machine++; else { const k = `${m}->${e}`; byEye.disagreements[k] = (byEye.disagreements[k] || 0) + 1; } if (eyeSame(e, classOf(it, it.a.opus))) byEye.opus++; if (it.a.gemini) { byEye.gemini_n++; if (eyeSame(e, classOf(it, it.a.gemini))) byEye.gemini++; } } out.by_eye = byEye;
 out.agreement_opus_gemini = pair('opus', 'gemini'); out.agreement_opus_noimage = pair('opus', 'opus-noimage');
 // What Gemini adds: on items both read, where it split from Opus on a non-variant and the final answer is settled, who was right.
 const g = { split: 0, gemini_right: 0, opus_right: 0, neither_right: 0, keying_only_gemini: 0 }; for (const it of real) { const x = it.a.opus, y = it.a.gemini; if (!x || !y) continue; const s = classOf(it, x), t = classOf(it, y); if (s === t || x.variant || y.variant) continue; g.split++; if (t === it.cls) g.gemini_right++; else if (s === it.cls) g.opus_right++; else g.neither_right++; if (t === 'KEYING' && s !== 'KEYING' && it.cls === 'KEYING') g.keying_only_gemini++; } out.gemini_value = g;

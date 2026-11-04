@@ -12,7 +12,8 @@ const arg = (n, d) => process.argv.find((x) => x.startsWith(`--${n}=`))?.slice(n
 const C = arg('c'), TAG = arg('tag'), ROOT = path.join(process.env.JOB_SCRATCH, C), rng = mulberry(6552 + [...TAG].reduce((a, c) => a * 31 + c.charCodeAt(0), 7));
 const N = { plants: +arg('plants', 5), decoys: +arg('decoys', 5), neither: +arg('neither', 3), wrongcrop: +arg('wrongcrop', 3), agreed: +arg('agreed', 0) };
 const CAP = +arg('cap', 40), PANEL = { w: 500, h: 640, per: 6 };
-const uids = arg('uids').split(',');
+const ONLY = arg('only') ? JSON.parse(fs.readFileSync(arg('only'), 'utf8')) : null; // named items {uid,typed,ocr,left,right,from} replace this page's own differences
+const uids = arg('uids')?.split(',') ?? [...new Set(ONLY.map((x) => x.uid))];
 const OUT = path.join(ROOT, 'tags', TAG); fs.mkdirSync(path.join(OUT, 'sheets'), { recursive: true });
 
 const pages = {};
@@ -41,7 +42,8 @@ const counts = {};
 for (const uid of uids) {
   const pg = pages[uid], gaiji = pg.diffs.filter((d) => !d.structure && d.t === '〇'), judged = pg.diffs.filter((d) => !d.structure && d.t !== '〇'); // a CBETA <g> has no typed character to compare
   counts[uid] = { typed_chars: pg.typedChars, ocr_chars: pg.ocrChars, edits: pg.edits, diffs: pg.diffs.length, judged_pool: judged.length, structure_long: pg.diffs.filter((d) => d.structure === 'long').length, structure_reorder: pg.diffs.filter((d) => d.structure === 'reorder').length, structure_chars: pg.diffs.filter((d) => d.structure).reduce((a, d) => a + d.len, 0), structure_typed: pg.diffs.filter((d) => d.structure).reduce((a, d) => a + [...d.t].length, 0), gaiji: gaiji.length };
-  const take = shuffled(judged, rng).slice(0, CAP); counts[uid].judged = take.length;
+  const take = ONLY ? [] : shuffled(judged, rng).slice(0, CAP); counts[uid].judged = take.length;
+  for (const it of (ONLY || []).filter((x) => x.uid === uid)) add({ kind: 'real', ...it });
   for (const d of take) add({ kind: 'real', uid, typed: d.t, ocr: d.o, left: d.left, right: d.right, ...(pg.changedAt.has(d.ti) ? { declared_change: true } : {}) });
 }
 /** An agreed site with clean context; near = only characters that have a lookalike. A site is dealt once, and no two control sites
