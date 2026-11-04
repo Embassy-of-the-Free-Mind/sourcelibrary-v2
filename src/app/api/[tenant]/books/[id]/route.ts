@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { isProtectedSurface } from '@/lib/partner-access';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
@@ -136,9 +137,11 @@ export async function GET(
     // an admin, so neither answer may be stored by a shared cache. An uncapped
     // (signed-in) answer is private; the capped one varies on Cookie — see
     // /api/books/[id].
+    // A protected surface's answer stays out of the shared cache too: the edge
+    // would hand a reader's copy to whoever the proxy refuses (#8098).
     const cacheControl = wantsFull
       ? 'private, no-cache'
-      : windowed
+      : windowed && !isProtectedSurface(request.headers.get('host') || '', request.nextUrl.pathname)
         ? 'public, max-age=60, stale-while-revalidate=300'
         : 'private, max-age=60, stale-while-revalidate=300';
 
