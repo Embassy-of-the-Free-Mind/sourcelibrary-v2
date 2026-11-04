@@ -1,4 +1,16 @@
 {
+ "/articles/alchemical-process/emblem-iii.jpg": {
+  "srcset": [
+   {
+    "src": "/articles/heroes/306a2d17ff18-1280.avif",
+    "w": 1280
+   },
+   {
+    "src": "/articles/heroes/306a2d17ff18-1920.avif",
+    "w": 1300
+   }
+  ]
+ },
  "/articles/aliveness/fludd-microcosm.jpg": {
   "srcset": [
    {

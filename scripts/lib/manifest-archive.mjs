@@ -145,7 +145,7 @@ export async function archiveFromManifest(db, bookId, deps) {
 
   /** Put one page's JPEG at its book-scoped key and mark it in the ledger. */
   const storePage = async (p, jpg, native, h) => {
-    const key = ledgerKey(bookId, p);
+    const key = ledgerKey(bookId, p, stored.layout);
     const blob = await put(key, jpg, { contentType: 'image/jpeg', access: 'public' });
     // The URL base comes from the store's own answer, never assumed: the page docs will carry it.
     const b = typeof blob?.url === 'string' && blob.url.endsWith(`/${key}`) ? blob.url.slice(0, -(key.length + 1)) : null;

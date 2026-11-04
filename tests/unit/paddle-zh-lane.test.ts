@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, PADDLE, MIN_HAN, convertPaddle, flattenHtml, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields, isHumanEdited } from '../../scripts/lib/paddle-zh-lane.mjs';
+import { LANE, HOLD_REASON, PADDLE, MIN_HAN, convertPaddle, flattenHtml, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields, isHumanEdited, isGarbledSkqsMargin } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import * as mjs from '../../scripts/lib/write-provenance.mjs';
 import * as ts from '../../src/lib/write-provenance';
@@ -48,6 +48,17 @@ describe('paddle-zh-lane conversion 2: the 版心 margin', () => {
   it('a title-shaped line in the middle of a page is text even next to kana', () => {
     const lines = ['甲乙丙丁', '戊己庚辛', '壬癸子丑', '寅卯辰巳', 'こんにち', '大易', '午未申酉', '戌亥甲乙', '丙丁戊己', '庚辛壬癸'];
     expect(convertPaddle(lines.join('\n'), { workTitle: '大易通解' }).body).toContain('\n大易\n');
+  });
+  it('a margin title garbled past 全書/四庫 (次定曰事全焉, 欠巳曰三二三) is a header at the page edge, text inside the page (#8053)', () => {
+    // 6ae0baaf4adf2ffb52f70e01 p121: 次定四人 was kept as body text and translated as "Ciding Siren"
+    const tail = convertPaddle(['張蒼周昌之屬也其後漢興而定天下張蒼為計相', '周昌', '次定四人'].join('\n'));
+    expect(tail.body.split('\n').slice(-1)[0]).toBe('<header>次定四人</header>');
+    expect(convertPaddle('欠巳曰三二三\n太史公曰').body.split('\n')[0]).toBe('<header>欠巳曰三二三</header>');
+    const mid = ['甲乙丙丁', '戊己庚辛', '壬癸子丑', '寅卯辰巳', '次定曰事全焉', '午未申酉', '戌亥甲乙', '丙丁戊己', '庚辛壬癸'];
+    expect(convertPaddle(mid.join('\n')).body).toContain('\n次定曰事全焉\n');
+    // a full body column that happens to open with 次定 is not the margin
+    expect(isGarbledSkqsMargin('次定其位而後天下之事皆可得而理也')).toBe(false);
+    expect(isGarbledSkqsMargin('欠')).toBe(false);
   });
   it('a body juan heading (work title + 卷) is text, not margin', () => {
     expect(convertPaddle('周官集傳卷十').body).toBe('周官集傳卷十');

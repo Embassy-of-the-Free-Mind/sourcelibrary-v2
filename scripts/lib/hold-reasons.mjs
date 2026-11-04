@@ -18,3 +18,9 @@ export const SIKU_LANE_HOLDS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-ba
 // Paddle SKQS lane (#5600). Deliberately NOT in SIKU_LANE_HOLDS: translating them is out of scope, and the Siku
 // translation lane is stopped (#7914). Release only by decision ("release zh-shi-ji-8053"), with --to ocr_complete.
 export const ZH_SHI_JI_HOLD = 'zh-shi-ji-8053';
+
+// zh-complete-sets-8053: the missing volumes of Siku 經部/子部 works we already hold in part, imported hidden from IA's
+// CADAL mirror (#8053) so each set is whole. For OCR only, by the Paddle SKQS lane (#5600). Deliberately NOT in
+// SIKU_LANE_HOLDS: the Siku translation lane is stopped (#7914). Release only by decision ("release
+// zh-complete-sets-8053"), with --to ocr_complete.
+export const ZH_COMPLETE_SETS_HOLD = 'zh-complete-sets-8053';

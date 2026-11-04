@@ -1,4 +1,5 @@
 import { Suspense, cache } from 'react';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
@@ -955,6 +956,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Text-only works serve their whole translation in one server render, so
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
       // English edition, English leaf: the transcription is the text (#7100).
       .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));

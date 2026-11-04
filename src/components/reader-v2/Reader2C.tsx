@@ -29,6 +29,7 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import { imageAccessFor } from '@/lib/types/image-source';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
@@ -722,17 +723,9 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   const hasTranslations = verdict !== null
     ? verdict === 'complete' || verdict === 'translated'
     : Number(full?.pages_translated) > pagesCount / 2;
-  const imgLicense = full?.image_license as string | undefined;
-  const imgProvider = (full?.image_provider as string | undefined)?.toLowerCase();
-  const year = Number(full?.year_published) || undefined;
-  const imageAccess: 'open' | 'nc-free' | 'blocked' =
-    imgProvider === 'bph' || (year && year < 1930)
-      ? 'open'
-      : imgLicense && /\bnc\b/i.test(imgLicense)
-        ? 'nc-free'
-        : (!imgLicense || imgLicense === 'unknown')
-          ? 'blocked'
-          : 'open';
+  // The book page's rule (src/app/book/[id]/page.tsx). This panel used to keep
+  // its own copy, which read fields no book has and so blocked every scan.
+  const imageAccess = imageAccessFor((full ?? {}) as Parameters<typeof imageAccessFor>[0]);
 
   const rowCls = PANEL_ROW;
 
@@ -1633,7 +1626,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model)}
+                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.machineTranscript}
                   {/* An open e-text's licence is the reader's to check (#5571). */}
                   {prov?.kind === 'text_source' && (prov.source.licenseUrl || prov.source.url) && (
                     <>
@@ -1650,7 +1643,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
+                  {trCorpus
+                    ? t.corpusTranslation(trCorpus.name)
+                    : page.translation.edited_by || page.translation.edited_at ? t.machineTranslationEdited : t.machineTranslation}
                   {isUnreviewedMachineTranslation(page) && (
                     <span className="block mt-0.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.machineDraftNotice}</span>
                   )}
@@ -3532,6 +3527,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
 
   const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
   const deepzoomManifest = (r.currentPage as unknown as { deepzoom?: DeepZoomManifest }).deepzoom;
+  const [deepzoomInline, setDeepzoomInline] = useState(false);
 
   // A wide leaf in one of three side-by-side columns is a strip a few lines
   // tall floating in an empty pane. On the desktop it gets the full width
@@ -3953,15 +3949,18 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             >
               <PaneHeader
                 right={
-                  <ScanControls
-                    zoom={scanZoom}
-                    maxZoom={scanZoomMax}
-                    onZoomStep={zoomStep}
-                    onZoomReset={() => changeZoom(1)}
-                    lensOn={lensOn}
-                    onToggleLens={() => setLensOn(v => !v)}
-                    onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
-                  />
+                  // These work on the plain scan, which the tiled viewer covers; it has its own.
+                  deepzoomInline && deepzoomManifest ? null : (
+                    <ScanControls
+                      zoom={scanZoom}
+                      maxZoom={scanZoomMax}
+                      onZoomStep={zoomStep}
+                      onZoomReset={() => changeZoom(1)}
+                      lensOn={lensOn}
+                      onToggleLens={() => setLensOn(v => !v)}
+                      onExpand={scan.native || witness ? () => setLightbox(true) : undefined}
+                    />
+                  )
                 }
               >
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
@@ -4014,6 +4013,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
                     title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    openByDefault={!witness}
+                    bed={SURFACE.scanBed}
+                    onInlineChange={setDeepzoomInline}
                   />
                 )}
               </div>

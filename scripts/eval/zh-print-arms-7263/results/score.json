@@ -1,0 +1,883 @@
+{
+ "at": "2026-11-04T12:28:49.434Z",
+ "issue": 7263,
+ "comparator": "O judged in the arm's own sitting; sensitivity the pilot's verdicts",
+ "rule": {
+  "within": 0.08,
+  "wrong_text_max": 0.04
+ },
+ "controls": {
+  "retest": [
+   {
+    "set": "one",
+    "id": "wp-P-699249f2a2d53df4853c179d-P-6a0acab24d80f9c159497451",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "one",
+    "id": "wp-P-699249f2a2d53df4853c179d-P-6a0acab24d80f9c159497451#retest",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "one",
+    "id": "wp-P-69e787fd4a6785cfd60ce526-P-69de984e1b234a773e43842a",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "one",
+    "id": "wp-P-69e787fd4a6785cfd60ce526-P-69de984e1b234a773e43842a#retest",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "ten",
+    "id": "wp-P-69e75e3fcc48e59ad74ec3f1-P-6a087ebab2a99026ccf70380",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "ten",
+    "id": "wp-P-69e75e3fcc48e59ad74ec3f1-P-6a087ebab2a99026ccf70380#retest",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "ten",
+    "id": "wp-P-69e72c60a409200ea79f478f-P-69bd0b0bb01b17638a098a07",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "set": "ten",
+    "id": "wp-P-69e72c60a409200ea79f478f-P-69bd0b0bb01b17638a098a07#retest",
+    "accept": false,
+    "fidelity": 1
+   }
+  ],
+  "sitting2": []
+ },
+ "void": false,
+ "price": {
+  "method": "the 2026-11-03 cheap-arms record: subscription priced at the fee",
+  "pilot_list_usd_per_page": {
+   "one": 0.105,
+   "ten": 0.0988
+  },
+  "per_1k_pages": {
+   "O@1": 5.72,
+   "O@10": 2.77,
+   "F": 5.05,
+   "PFL": 1.81
+  },
+  "F_list_usd": 5.56,
+  "F_calls": 60,
+  "F_list_usd_per_page": 0.0926,
+  "PFL_mean_list_usd_a_call": 0.0258,
+  "PFL_calls": 61,
+  "usd_per_accepted_page": {
+   "F": 5.22,
+   "PFL": 3.74,
+   "O (set one, 1 a call)": 6.86,
+   "O (set ten, 10 a call)": 3.46
+  }
+ },
+ "overall": {
+  "n": 60,
+  "arms": {
+   "S": {
+    "accepted": "6/60",
+    "k": 6,
+    "n": 60,
+    "wrong_text_pages": 45,
+    "refused": 0,
+    "fidelity_mean": 3.17,
+    "per_1k_chars": {
+     "pages": 60,
+     "words": 46088,
+     "severe": 360,
+     "severe_per_1k": 7.81,
+     "severe_per_1k_ci95": [
+      3.94,
+      20.21
+     ],
+     "wrong_text_defects": 194,
+     "wrong_text_per_1k": 4.21,
+     "wrong_text_per_1k_ci95": [
+      2.12,
+      10.95
+     ]
+    }
+   },
+   "O": {
+    "accepted": "49/60",
+    "k": 49,
+    "n": 60,
+    "wrong_text_pages": 7,
+    "refused": 0,
+    "fidelity_mean": 4.32,
+    "per_1k_chars": {
+     "pages": 60,
+     "words": 46088,
+     "severe": 67,
+     "severe_per_1k": 1.45,
+     "severe_per_1k_ci95": [
+      0.44,
+      4.42
+     ],
+     "wrong_text_defects": 38,
+     "wrong_text_per_1k": 0.82,
+     "wrong_text_per_1k_ci95": [
+      0.16,
+      2.71
+     ]
+    }
+   },
+   "O_pilot": {
+    "accepted": "51/60",
+    "k": 51,
+    "n": 60,
+    "wrong_text_pages": 6,
+    "refused": 0,
+    "fidelity_mean": 4.4,
+    "per_1k_chars": {
+     "pages": 60,
+     "words": 46088,
+     "severe": 27,
+     "severe_per_1k": 0.59,
+     "severe_per_1k_ci95": [
+      0.23,
+      1.53
+     ],
+     "wrong_text_defects": 13,
+     "wrong_text_per_1k": 0.28,
+     "wrong_text_per_1k_ci95": [
+      0.09,
+      0.72
+     ]
+    }
+   },
+   "PFL": {
+    "accepted": "29/60",
+    "k": 29,
+    "n": 60,
+    "wrong_text_pages": 21,
+    "refused": 0,
+    "fidelity_mean": 3.9,
+    "per_1k_chars": {
+     "pages": 60,
+     "words": 46088,
+     "severe": 119,
+     "severe_per_1k": 2.58,
+     "severe_per_1k_ci95": [
+      1.21,
+      7.09
+     ],
+     "wrong_text_defects": 51,
+     "wrong_text_per_1k": 1.11,
+     "wrong_text_per_1k_ci95": [
+      0.47,
+      3.21
+     ]
+    }
+   },
+   "F": {
+    "accepted": "58/60",
+    "k": 58,
+    "n": 60,
+    "wrong_text_pages": 1,
+    "refused": 0,
+    "fidelity_mean": 4.73,
+    "per_1k_chars": {
+     "pages": 60,
+     "words": 46088,
+     "severe": 6,
+     "severe_per_1k": 0.13,
+     "severe_per_1k_ci95": [
+      0.03,
+      0.44
+     ],
+     "wrong_text_defects": 1,
+     "wrong_text_per_1k": 0.02,
+     "wrong_text_per_1k_ci95": [
+      0,
+      0.11
+     ]
+    }
+   }
+  },
+  "vs": {
+   "PFL_vs_O_own_sitting": {
+    "n": 60,
+    "d": -0.333,
+    "d_ci95": [
+     -0.483,
+     -0.183
+    ],
+    "gained": 4,
+    "lost": 24,
+    "sign_test_p": 0.0002,
+    "wrong": "21 vs 7",
+    "made_wrong": 17,
+    "cleared_wrong": 3,
+    "severe_delta_per_1k": 1.13,
+    "rule_pass": false,
+    "strict_pass": false
+   },
+   "PFL_vs_O_pilot": {
+    "n": 60,
+    "d": -0.367,
+    "d_ci95": [
+     -0.517,
+     -0.217
+    ],
+    "gained": 4,
+    "lost": 26,
+    "sign_test_p": 0.0001,
+    "wrong": "21 vs 6",
+    "made_wrong": 17,
+    "cleared_wrong": 2,
+    "severe_delta_per_1k": 2,
+    "rule_pass": false,
+    "strict_pass": false
+   },
+   "PFM_vs_O_own_sitting": null,
+   "PFM_vs_O_pilot": null,
+   "F_vs_O_own_sitting": {
+    "n": 60,
+    "d": 0.15,
+    "d_ci95": [
+     0.033,
+     0.267
+    ],
+    "gained": 11,
+    "lost": 2,
+    "sign_test_p": 0.0225,
+    "wrong": "1 vs 7",
+    "made_wrong": 1,
+    "cleared_wrong": 7,
+    "severe_delta_per_1k": -1.32,
+    "rule_pass": true,
+    "strict_pass": true
+   },
+   "F_vs_O_pilot": {
+    "n": 60,
+    "d": 0.117,
+    "d_ci95": [
+     0.033,
+     0.217
+    ],
+    "gained": 8,
+    "lost": 1,
+    "sign_test_p": 0.0391,
+    "wrong": "1 vs 6",
+    "made_wrong": 1,
+    "cleared_wrong": 6,
+    "severe_delta_per_1k": -0.46,
+    "rule_pass": true,
+    "strict_pass": true
+   },
+   "O_vs_S": {
+    "n": 60,
+    "d": 0.717,
+    "d_ci95": [
+     0.6,
+     0.833
+    ],
+    "gained": 43,
+    "lost": 0,
+    "sign_test_p": 0,
+    "wrong": "7 vs 45",
+    "made_wrong": 0,
+    "cleared_wrong": 38,
+    "severe_delta_per_1k": -6.36,
+    "rule_pass": true,
+    "strict_pass": true
+   }
+  },
+  "retest_O": {
+   "n": 60,
+   "accepted_pilot": 51,
+   "accepted_retest": 49,
+   "accept_agree": 54,
+   "wrong_pilot": 6,
+   "wrong_retest": 7
+  }
+ },
+ "sets": {
+  "one": {
+   "n": 30,
+   "arms": {
+    "S": {
+     "accepted": "3/30",
+     "k": 3,
+     "n": 30,
+     "wrong_text_pages": 24,
+     "refused": 0,
+     "fidelity_mean": 3.1,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 22664,
+      "severe": 156,
+      "severe_per_1k": 6.88,
+      "severe_per_1k_ci95": [
+       2.77,
+       22.46
+      ],
+      "wrong_text_defects": 80,
+      "wrong_text_per_1k": 3.53,
+      "wrong_text_per_1k_ci95": [
+       1.46,
+       11.65
+      ]
+     }
+    },
+    "O": {
+     "accepted": "25/30",
+     "k": 25,
+     "n": 30,
+     "wrong_text_pages": 3,
+     "refused": 0,
+     "fidelity_mean": 4.2,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 22664,
+      "severe": 27,
+      "severe_per_1k": 1.19,
+      "severe_per_1k_ci95": [
+       0.22,
+       5.86
+      ],
+      "wrong_text_defects": 11,
+      "wrong_text_per_1k": 0.49,
+      "wrong_text_per_1k_ci95": [
+       0,
+       2.61
+      ]
+     }
+    },
+    "O_pilot": {
+     "accepted": "24/30",
+     "k": 24,
+     "n": 30,
+     "wrong_text_pages": 3,
+     "refused": 0,
+     "fidelity_mean": 4.3,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 22664,
+      "severe": 13,
+      "severe_per_1k": 0.57,
+      "severe_per_1k_ci95": [
+       0.1,
+       2.7
+      ],
+      "wrong_text_defects": 5,
+      "wrong_text_per_1k": 0.22,
+      "wrong_text_per_1k_ci95": [
+       0,
+       1.18
+      ]
+     }
+    },
+    "PFL": {
+     "accepted": "14/30",
+     "k": 14,
+     "n": 30,
+     "wrong_text_pages": 11,
+     "refused": 0,
+     "fidelity_mean": 3.93,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 22664,
+      "severe": 59,
+      "severe_per_1k": 2.6,
+      "severe_per_1k_ci95": [
+       0.94,
+       9.81
+      ],
+      "wrong_text_defects": 26,
+      "wrong_text_per_1k": 1.15,
+      "wrong_text_per_1k_ci95": [
+       0.36,
+       4.49
+      ]
+     }
+    },
+    "F": {
+     "accepted": "29/30",
+     "k": 29,
+     "n": 30,
+     "wrong_text_pages": 0,
+     "refused": 0,
+     "fidelity_mean": 4.67,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 22664,
+      "severe": 5,
+      "severe_per_1k": 0.22,
+      "severe_per_1k_ci95": [
+       0.04,
+       1.02
+      ],
+      "wrong_text_defects": 0,
+      "wrong_text_per_1k": 0,
+      "wrong_text_per_1k_ci95": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "vs": {
+    "PFL_vs_O_own_sitting": {
+     "n": 30,
+     "d": -0.367,
+     "d_ci95": [
+      -0.567,
+      -0.133
+     ],
+     "gained": 2,
+     "lost": 13,
+     "sign_test_p": 0.0074,
+     "wrong": "11 vs 3",
+     "made_wrong": 9,
+     "cleared_wrong": 1,
+     "severe_delta_per_1k": 1.41,
+     "rule_pass": false,
+     "strict_pass": false
+    },
+    "PFL_vs_O_pilot": {
+     "n": 30,
+     "d": -0.333,
+     "d_ci95": [
+      -0.567,
+      -0.067
+     ],
+     "gained": 4,
+     "lost": 14,
+     "sign_test_p": 0.0309,
+     "wrong": "11 vs 3",
+     "made_wrong": 9,
+     "cleared_wrong": 1,
+     "severe_delta_per_1k": 2.03,
+     "rule_pass": false,
+     "strict_pass": false
+    },
+    "PFM_vs_O_own_sitting": null,
+    "PFM_vs_O_pilot": null,
+    "F_vs_O_own_sitting": {
+     "n": 30,
+     "d": 0.133,
+     "d_ci95": [
+      0,
+      0.3
+     ],
+     "gained": 5,
+     "lost": 1,
+     "sign_test_p": 0.2188,
+     "wrong": "0 vs 3",
+     "made_wrong": 0,
+     "cleared_wrong": 3,
+     "severe_delta_per_1k": -0.97,
+     "rule_pass": true,
+     "strict_pass": true
+    },
+    "F_vs_O_pilot": {
+     "n": 30,
+     "d": 0.167,
+     "d_ci95": [
+      0.033,
+      0.3
+     ],
+     "gained": 5,
+     "lost": 0,
+     "sign_test_p": 0.0625,
+     "wrong": "0 vs 3",
+     "made_wrong": 0,
+     "cleared_wrong": 3,
+     "severe_delta_per_1k": -0.35,
+     "rule_pass": true,
+     "strict_pass": true
+    },
+    "O_vs_S": {
+     "n": 30,
+     "d": 0.733,
+     "d_ci95": [
+      0.567,
+      0.867
+     ],
+     "gained": 22,
+     "lost": 0,
+     "sign_test_p": 0,
+     "wrong": "3 vs 24",
+     "made_wrong": 0,
+     "cleared_wrong": 21,
+     "severe_delta_per_1k": -5.69,
+     "rule_pass": true,
+     "strict_pass": true
+    }
+   },
+   "retest_O": {
+    "n": 30,
+    "accepted_pilot": 24,
+    "accepted_retest": 25,
+    "accept_agree": 27,
+    "wrong_pilot": 3,
+    "wrong_retest": 3
+   }
+  },
+  "ten": {
+   "n": 30,
+   "arms": {
+    "S": {
+     "accepted": "3/30",
+     "k": 3,
+     "n": 30,
+     "wrong_text_pages": 21,
+     "refused": 0,
+     "fidelity_mean": 3.23,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 23424,
+      "severe": 204,
+      "severe_per_1k": 8.71,
+      "severe_per_1k_ci95": [
+       3.65,
+       22.51
+      ],
+      "wrong_text_defects": 114,
+      "wrong_text_per_1k": 4.87,
+      "wrong_text_per_1k_ci95": [
+       2.03,
+       13.09
+      ]
+     }
+    },
+    "O": {
+     "accepted": "24/30",
+     "k": 24,
+     "n": 30,
+     "wrong_text_pages": 4,
+     "refused": 0,
+     "fidelity_mean": 4.43,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 23424,
+      "severe": 40,
+      "severe_per_1k": 1.71,
+      "severe_per_1k_ci95": [
+       0.4,
+       6.43
+      ],
+      "wrong_text_defects": 27,
+      "wrong_text_per_1k": 1.15,
+      "wrong_text_per_1k_ci95": [
+       0.11,
+       4.64
+      ]
+     }
+    },
+    "O_pilot": {
+     "accepted": "27/30",
+     "k": 27,
+     "n": 30,
+     "wrong_text_pages": 3,
+     "refused": 0,
+     "fidelity_mean": 4.5,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 23424,
+      "severe": 14,
+      "severe_per_1k": 0.6,
+      "severe_per_1k_ci95": [
+       0.22,
+       1.56
+      ],
+      "wrong_text_defects": 8,
+      "wrong_text_per_1k": 0.34,
+      "wrong_text_per_1k_ci95": [
+       0,
+       0.86
+      ]
+     }
+    },
+    "PFL": {
+     "accepted": "15/30",
+     "k": 15,
+     "n": 30,
+     "wrong_text_pages": 10,
+     "refused": 0,
+     "fidelity_mean": 3.87,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 23424,
+      "severe": 60,
+      "severe_per_1k": 2.56,
+      "severe_per_1k_ci95": [
+       0.96,
+       8.14
+      ],
+      "wrong_text_defects": 25,
+      "wrong_text_per_1k": 1.07,
+      "wrong_text_per_1k_ci95": [
+       0.3,
+       3.82
+      ]
+     }
+    },
+    "F": {
+     "accepted": "29/30",
+     "k": 29,
+     "n": 30,
+     "wrong_text_pages": 1,
+     "refused": 0,
+     "fidelity_mean": 4.8,
+     "per_1k_chars": {
+      "pages": 30,
+      "words": 23424,
+      "severe": 1,
+      "severe_per_1k": 0.04,
+      "severe_per_1k_ci95": [
+       0,
+       0.27
+      ],
+      "wrong_text_defects": 1,
+      "wrong_text_per_1k": 0.04,
+      "wrong_text_per_1k_ci95": [
+       0,
+       0.27
+      ]
+     }
+    }
+   },
+   "vs": {
+    "PFL_vs_O_own_sitting": {
+     "n": 30,
+     "d": -0.3,
+     "d_ci95": [
+      -0.5,
+      -0.1
+     ],
+     "gained": 2,
+     "lost": 11,
+     "sign_test_p": 0.0225,
+     "wrong": "10 vs 4",
+     "made_wrong": 8,
+     "cleared_wrong": 2,
+     "severe_delta_per_1k": 0.85,
+     "rule_pass": false,
+     "strict_pass": false
+    },
+    "PFL_vs_O_pilot": {
+     "n": 30,
+     "d": -0.4,
+     "d_ci95": [
+      -0.567,
+      -0.233
+     ],
+     "gained": 0,
+     "lost": 12,
+     "sign_test_p": 0.0005,
+     "wrong": "10 vs 3",
+     "made_wrong": 8,
+     "cleared_wrong": 1,
+     "severe_delta_per_1k": 1.96,
+     "rule_pass": false,
+     "strict_pass": false
+    },
+    "PFM_vs_O_own_sitting": null,
+    "PFM_vs_O_pilot": null,
+    "F_vs_O_own_sitting": {
+     "n": 30,
+     "d": 0.167,
+     "d_ci95": [
+      0,
+      0.333
+     ],
+     "gained": 6,
+     "lost": 1,
+     "sign_test_p": 0.125,
+     "wrong": "1 vs 4",
+     "made_wrong": 1,
+     "cleared_wrong": 4,
+     "severe_delta_per_1k": -1.66,
+     "rule_pass": true,
+     "strict_pass": true
+    },
+    "F_vs_O_pilot": {
+     "n": 30,
+     "d": 0.067,
+     "d_ci95": [
+      -0.067,
+      0.2
+     ],
+     "gained": 3,
+     "lost": 1,
+     "sign_test_p": 0.625,
+     "wrong": "1 vs 3",
+     "made_wrong": 1,
+     "cleared_wrong": 3,
+     "severe_delta_per_1k": -0.55,
+     "rule_pass": true,
+     "strict_pass": true
+    },
+    "O_vs_S": {
+     "n": 30,
+     "d": 0.7,
+     "d_ci95": [
+      0.533,
+      0.867
+     ],
+     "gained": 21,
+     "lost": 0,
+     "sign_test_p": 0,
+     "wrong": "4 vs 21",
+     "made_wrong": 0,
+     "cleared_wrong": 17,
+     "severe_delta_per_1k": -7,
+     "rule_pass": true,
+     "strict_pass": true
+    }
+   },
+   "retest_O": {
+    "n": 30,
+    "accepted_pilot": 27,
+    "accepted_retest": 24,
+    "accept_agree": 27,
+    "wrong_pilot": 3,
+    "wrong_retest": 4
+   }
+  }
+ },
+ "cells": {
+  "all": {
+   "zh-print-arms S": {
+    "route": "S",
+    "pages": 60,
+    "words": 46088,
+    "fidelity_mean": 3.17,
+    "misleads_per_1k": 3.6,
+    "wrong_text_per_1k": 4.21,
+    "severe_per_1k": 7.81,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms O": {
+    "route": "O",
+    "pages": 60,
+    "words": 46088,
+    "fidelity_mean": 4.32,
+    "misleads_per_1k": 0.63,
+    "wrong_text_per_1k": 0.82,
+    "severe_per_1k": 1.45,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms PFL": {
+    "route": "PFL",
+    "pages": 60,
+    "words": 46088,
+    "fidelity_mean": 3.9,
+    "misleads_per_1k": 1.48,
+    "wrong_text_per_1k": 1.11,
+    "severe_per_1k": 2.58,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms F": {
+    "route": "F",
+    "pages": 60,
+    "words": 46088,
+    "fidelity_mean": 4.73,
+    "misleads_per_1k": 0.11,
+    "wrong_text_per_1k": 0.02,
+    "severe_per_1k": 0.13,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   }
+  },
+  "one": {
+   "zh-print-arms S": {
+    "route": "S",
+    "pages": 30,
+    "words": 22664,
+    "fidelity_mean": 3.1,
+    "misleads_per_1k": 3.35,
+    "wrong_text_per_1k": 3.53,
+    "severe_per_1k": 6.88,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms O": {
+    "route": "O",
+    "pages": 30,
+    "words": 22664,
+    "fidelity_mean": 4.2,
+    "misleads_per_1k": 0.71,
+    "wrong_text_per_1k": 0.49,
+    "severe_per_1k": 1.19,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms PFL": {
+    "route": "PFL",
+    "pages": 30,
+    "words": 22664,
+    "fidelity_mean": 3.93,
+    "misleads_per_1k": 1.46,
+    "wrong_text_per_1k": 1.15,
+    "severe_per_1k": 2.6,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms F": {
+    "route": "F",
+    "pages": 30,
+    "words": 22664,
+    "fidelity_mean": 4.67,
+    "misleads_per_1k": 0.22,
+    "wrong_text_per_1k": 0,
+    "severe_per_1k": 0.22,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   }
+  },
+  "ten": {
+   "zh-print-arms S": {
+    "route": "S",
+    "pages": 30,
+    "words": 23424,
+    "fidelity_mean": 3.23,
+    "misleads_per_1k": 3.84,
+    "wrong_text_per_1k": 4.87,
+    "severe_per_1k": 8.71,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms O": {
+    "route": "O",
+    "pages": 30,
+    "words": 23424,
+    "fidelity_mean": 4.43,
+    "misleads_per_1k": 0.55,
+    "wrong_text_per_1k": 1.15,
+    "severe_per_1k": 1.71,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms PFL": {
+    "route": "PFL",
+    "pages": 30,
+    "words": 23424,
+    "fidelity_mean": 3.87,
+    "misleads_per_1k": 1.49,
+    "wrong_text_per_1k": 1.07,
+    "severe_per_1k": 2.56,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   },
+   "zh-print-arms F": {
+    "route": "F",
+    "pages": 30,
+    "words": 23424,
+    "fidelity_mean": 4.8,
+    "misleads_per_1k": 0,
+    "wrong_text_per_1k": 0.04,
+    "severe_per_1k": 0.04,
+    "unit": "defects in the judge verdict per 1,000 Han and kana characters of the stored page"
+   }
+  }
+ }
+}

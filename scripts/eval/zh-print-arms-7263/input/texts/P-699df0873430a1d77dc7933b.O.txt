@@ -1,0 +1,46 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<header>軍營雜氣占</header>
+<warning>Handwritten Chinese regular script (kaishu)</warning>
+
+<image-desc size="large" type="diagram" significance="high">A hand-colored illustration of a military camp set against blue and green mountains, with grey-roofed buildings, a red vapor shape and several weapons with red tassels. In the sky above the camp, a long, horizontal grey and white cloud stretches across the scene.</image-desc>
+
+朱文公曰
+
+新出軍行師占雲逆可屯而
+順可擊
+
+宋志曰
+
+新出軍行師有雲從後来謂
+如東行日雲從西来因隨而擊
+之勝若赤雲從東来則我軍者
+敵軍已行我軍當敗宜屯兵固
+守餘方倣此以類而推之
+
+<column-break/>
+
+<header>吉凶氣占</header>
+
+<image-desc size="large" type="diagram" significance="high">A hand-colored illustration of a two-storey building with grey roofs and red pillars set into a hillside, with trees and rocky slopes before it. In the sky, a long red-tipped streak and a long dark grey streak run across the scene above a patch of yellow haze.</image-desc>
+
+朱文公曰
+
+五色氤氳兮蕭索輪囷是謂
+慶世太平之應
+
+宋志曰
+
+凡雲紫赤色及若烟非烟若雲
+非雲郁郁紛紛蕭索輪囷是謂
+慶亦曰景雲喜氣太平之應見
+則國有慶又曰雲含五色潤澤和
+緩見於城上為景雲非氣非烟
+五色氤氳為慶<unclear>西</unclear>卿雲又五色
+為慶雲三色為矞雲外赤内青
+亦為矞太平之應
+
+<vocab>軍營 (military camp), 雜氣 (miscellaneous qi/vapors), 占 (divination/augury), 屯 (to garrison), 朱文公 (Zhu Xi), 宋志 (Song Annals/Treatises), 太平 (Great Peace), 慶雲 (Auspicious cloud), 景雲 (Propitious cloud), 卿雲 (Auspicious cloud), 氤氳 (Enshrouding mist/Atmosphere), 矞雲 (Propitious multicolored cloud)</vocab>

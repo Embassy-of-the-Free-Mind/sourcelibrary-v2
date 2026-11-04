@@ -36,6 +36,7 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
+import { uploadPageVariants, displayKeyFor } from '../workers/lib/display-image.mjs';
 import {
   upgradeToFullRes, rateLimitedFetch, capDomainLimit,
   fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS, gallicaOpenApiUrl,
@@ -296,6 +297,9 @@ async function main() {
         currentHost = host;
         // A paused host is skipped without a request, and cheaply: the point is
         // to hand this worker back to the pool, not to fail faster.
+        // A page whose only copy sits at the display key is not a page to fetch: writing the variant
+        // would overwrite that copy (#4406). display-backfill gives it a sibling key instead.
+        if (displayKeyFor({ book_id: bookId, page_number: p.page_number, photo: p.photo, photo_original: p.photo_original }).canonicalHoldsMaster) { pagesSkipped++; continue; }
         if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; pausedSkips++; continue; }
         requested++;
         // Did the bytes arrive? Everything after that point is OUR machinery —
@@ -346,25 +350,26 @@ async function main() {
 
           // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
           const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
-          const padded = String(p.page_number).padStart(4, '0');
-          const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
-          const upd: any = { $set: { archived_photo: blob.url } };
+          // The master goes under archived/, the marked 1200px variant and the thumb under pages/,
+          // through the path every other archiver uses. This lane wrote the master to the display
+          // key until #4406, and display-backfill then pointed display_photo at it: readers were
+          // served an unmarked master.
+          const urls = await uploadPageVariants(jpg, bookId, p.page_number, async (key: string, body: Buffer, contentType: string) => (await storagePut(key, body, { contentType, access: 'public' })).url);
+          const upd: any = { $set: { archived_photo: urls.archived, display_photo: urls.display, image_thumb: urls.thumb, thumbnail_blob: urls.thumb } };
+          if (urls.displayWidth) upd.$set.display_width = urls.displayWidth;
+          if (urls.displayHeight) upd.$set.display_height = urls.displayHeight;
           // Record what we actually stored, and (when we know it) what the source
           // says native is. Without this, "did we get the master?" can only be
           // answered by re-fetching from the institution — which is why the
           // MASTER tier is sampled rather than known, and why this debt went
           // uncounted for months. Stored dims are free: sharp already decoded it.
-          try {
-            const dims = await sharp(jpg).metadata();
-            if (dims.width) upd.$set.image_width = dims.width;
-            if (dims.height) upd.$set.image_height = dims.height;
-          } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
+          if (urls.width) upd.$set.image_width = urls.width;
+          if (urls.height) upd.$set.image_height = urls.height;
           if (info?.width) {
             upd.$set['iiif_info.width'] = info.width;
             upd.$set['iiif_info.height'] = info.height;
           }
           if (stitchedTiles) upd.$set.stitched_tiles = stitchedTiles;
-          try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
           pagesDone++;
           hostFailures.clear(); // a success clears the streak

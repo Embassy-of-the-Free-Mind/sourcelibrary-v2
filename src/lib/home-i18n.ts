@@ -676,9 +676,9 @@ const nl: HomeStrings = {
 const zh: HomeStrings = {
   locale: 'zh-CN',
 
-  heroTitle: '古代智慧的新文艺复兴',
-  heroSubtitleLine1: '欢迎来到全球最大的',
-  heroSubtitleLine2: 'AI 翻译古代文献图书馆。',
+  heroTitle: '对照原书，阅读古籍原文',
+  heroSubtitleLine1: '一万多册中文古籍，原文可检索，每页附书影。',
+  heroSubtitleLine2: '中文与欧洲典籍同在一库，可对照研读。',
   emailPlaceholder: '您的邮箱地址',
   join: '加入我们',
   sending: '正在发送…',
@@ -731,7 +731,7 @@ const zh: HomeStrings = {
   spanishHeading: '西班牙文阅读',
   nativeShelfHeading: '中文书籍',
   nativeShelfSubtitle: '以中文写成的书，在这里阅读原文。',
-  nativeShelfTotal: (n) => `馆藏以中文写成的书 ${n.toLocaleString('zh-CN')} 部，均可对照原书影像阅读原文。`,
+  nativeShelfTotal: (n) => `馆藏中文书籍 ${n.toLocaleString('zh-CN')} 册，均可对照原书影像阅读原文。`,
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
@@ -1171,6 +1171,17 @@ export const NATIVE_SHELF_LANGUAGE: Partial<Record<HomeLang, string>> = {
   la: 'Latin',
   nl: 'Dutch',
   zh: 'Chinese',
+};
+
+/**
+ * Books that open the native shelf ahead of the read-count order, because
+ * read count alone put a book with a known misread first on /zh (#8035). Add
+ * only a book whose pages someone has opened against the scans. These three
+ * were opened by eye on 2026-10-27 (#7537): 天工開物 (woodblock with plates),
+ * 三才圖會 卷二十八, and P.3847 《景教三威蒙度赞》.
+ */
+export const NATIVE_SHELF_LEAD_IDS: Partial<Record<HomeLang, string[]>> = {
+  zh: ['69af0e7f067c0c26ee26e3ad', '6992cd7243713c66ea636785', '6992ca18d4d545ae73fed7ce'],
 };
 
 /**

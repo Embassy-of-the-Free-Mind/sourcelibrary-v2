@@ -1,0 +1,231 @@
+{
+ "extra_books": 50,
+ "extra_bad": 40,
+ "extra_langs": [
+  "Chinese"
+ ],
+ "final": {
+  "without": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.826,
+   "auc_ci": [
+    0.755,
+    0.892
+   ],
+   "logloss": 0.4861,
+   "logloss_ci": [
+    0.41,
+    0.565
+   ],
+   "slope": 1.051,
+   "slope_ci": [
+    0.789,
+    1.491
+   ],
+   "brier": 0.1652
+  },
+  "with": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.831,
+   "auc_ci": [
+    0.758,
+    0.893
+   ],
+   "logloss": 0.4935,
+   "logloss_ci": [
+    0.422,
+    0.572
+   ],
+   "slope": 1.162,
+   "slope_ci": [
+    0.802,
+    1.682
+   ],
+   "brier": 0.1654
+  },
+  "within_without": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 46,
+    "bad": 29,
+    "auc": 0.667,
+    "auc_ci": [
+     0.503,
+     0.821
+    ]
+   },
+   "Chinese": {
+    "books": 47,
+    "bad": 30,
+    "auc": 0.678,
+    "auc_ci": [
+     0.518,
+     0.82
+    ]
+   },
+   "Sanskrit": {
+    "books": 2,
+    "bad": 2,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 25,
+    "bad": 12,
+    "auc": 0.865,
+    "auc_ci": [
+     0.673,
+     0.994
+    ]
+   }
+  },
+  "within_with": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 46,
+    "bad": 29,
+    "auc": 0.696,
+    "auc_ci": [
+     0.542,
+     0.846
+    ]
+   },
+   "Chinese": {
+    "books": 47,
+    "bad": 30,
+    "auc": 0.706,
+    "auc_ci": [
+     0.552,
+     0.845
+    ]
+   },
+   "Sanskrit": {
+    "books": 2,
+    "bad": 2,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 25,
+    "bad": 12,
+    "auc": 0.885,
+    "auc_ci": [
+     0.72,
+     1.0
+    ]
+   }
+  }
+ },
+ "secondary:B+T+M": {
+  "without": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.817,
+   "auc_ci": [
+    0.741,
+    0.885
+   ],
+   "logloss": 0.5074,
+   "logloss_ci": [
+    0.438,
+    0.581
+   ],
+   "slope": 1.176,
+   "slope_ci": [
+    0.874,
+    1.703
+   ],
+   "brier": 0.1712
+  },
+  "with": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.822,
+   "auc_ci": [
+    0.746,
+    0.889
+   ],
+   "logloss": 0.5094,
+   "logloss_ci": [
+    0.443,
+    0.579
+   ],
+   "slope": 1.244,
+   "slope_ci": [
+    0.93,
+    1.824
+   ],
+   "brier": 0.1719
+  },
+  "within_without": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 46,
+    "bad": 29,
+    "auc": 0.639,
+    "auc_ci": [
+     0.469,
+     0.792
+    ]
+   },
+   "Chinese": {
+    "books": 47,
+    "bad": 30,
+    "auc": 0.651,
+    "auc_ci": [
+     0.487,
+     0.794
+    ]
+   },
+   "Sanskrit": {
+    "books": 2,
+    "bad": 2,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 25,
+    "bad": 12,
+    "auc": 0.808,
+    "auc_ci": [
+     0.6,
+     0.961
+    ]
+   }
+  },
+  "within_with": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 46,
+    "bad": 29,
+    "auc": 0.675,
+    "auc_ci": [
+     0.506,
+     0.828
+    ]
+   },
+   "Chinese": {
+    "books": 47,
+    "bad": 30,
+    "auc": 0.686,
+    "auc_ci": [
+     0.519,
+     0.827
+    ]
+   },
+   "Sanskrit": {
+    "books": 2,
+    "bad": 2,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 25,
+    "bad": 12,
+    "auc": 0.756,
+    "auc_ci": [
+     0.538,
+     0.931
+    ]
+   }
+  }
+ }
+}
