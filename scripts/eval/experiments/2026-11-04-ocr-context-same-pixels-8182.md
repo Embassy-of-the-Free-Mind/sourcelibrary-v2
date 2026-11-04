@@ -6,7 +6,7 @@ scripts: [Tibt, Hani]
 canons: [derge-kangyur, derge-tengyur, cbeta]
 n_books: 200
 n_pages: 200
-verdict: "Same pixels, different context. PaddleOCR-VL-1.6 reads glyphs: 0 of 175 single swapped characters reverted to the original (20 alignable pages, faithful 95%), excess flip under scrambling 5.1 points [2.9, 8.9] and equal inside CBETA/Siku and outside (+0.3 [−5.0, +7.2]; clean pages −0.5 [−1.5, +0.5], could see 1.4); Flash shows the same excess on the same pages (−0.3 [−4.8, +3.8]), so the 5 points is most likely the recomposition, not language-model recall. Yigdzin: its stated training corpus (BoCorpus) holds the Derge Kangyur, which triggers the rule's provenance clause on its own; in behaviour no inside/outside gap in excess flip (clean +1.8 [−2.2, +5.9], could see 5.9), but no positive control can read the Tibetan print, so the behavioural half is not validated for Tibetan."
+verdict: "Same pixels, different context. PaddleOCR-VL-1.6 reads glyphs: 0 of 175 single swapped characters reverted to the original (20 alignable pages, faithful 95%), excess flip under scrambling 5.1 points [2.9, 8.4] and equal inside CBETA/Siku and outside (+0.3 [−5.0, +6.7]; clean pages −0.5 [−1.5, +0.5], could see 1.4); Flash shows the same excess on the same pages (−0.3 [−5.6, +3.7]), so the 5 points is most likely the recomposition, not language-model recall. Yigdzin: its stated training corpus (BoCorpus) holds the Derge Kangyur, which triggers the rule's provenance clause on its own; in behaviour no inside/outside gap in excess flip (clean +1.8 [−2.4, +5.7], could see 5.9), but no positive control can read the Tibetan print, so the behavioural half is not validated for Tibetan."
 status: informational
 decision: "Yigdzin: quote ~0.95 only for the Derge Kangyur (provenance clause; DECISION on #8182 for the wording and an image-grounded non-Kangyur check). PaddleOCR-VL: rule branch 3 at the instrument's floor — no corpus-specific claim; keep the CBETA/Kanripo scores (#8182)"
 feeds: [reference]
@@ -82,16 +82,16 @@ both leaves. These pages stay in (same units in N, S and W, so the comparison st
 | check | Yigdzin | PaddleOCR-VL |
 |---|---|---|
 | 3. same-image floor F(N, N again) | 0.005 TK, 0.000 TO, TT (deterministic) | 0.000 (deterministic) |
-| 1. blur responds: F(N, B) − floor | TK 0.171 [0.067, 0.289], TO 0.078 [0.045, 0.114]: **passes** | 0.100 [0.072, 0.141]: **passes** |
-| 2. a control fires (E > 0) | **no control can read the Tibetan print** (below) | Flash on Chinese E 0.057 [0.029, 0.086], n 35: **passes** |
+| 1. blur responds: F(N, B) − floor | TK 0.171 [0.056, 0.283], TO 0.078 [0.046, 0.111]: **passes** | 0.100 [0.074, 0.136]: **passes** |
+| 2. a control fires (E > 0) | **no control can read the Tibetan print** (below) | Flash on Chinese E 0.057 [0.029, 0.087], n 35: **passes** |
 
 **Controls, honestly.** Flash on Tibetan is not a reader: two reads of the same image differ by 0.45, as much as two
 different pages (0.40); it composes sutra text, and Gemini's filters blocked 32 of 81 N reads (TK 9, TO 20 of 20, ZC 3).
 Opus could not read the red Derge print at all in a test read (nearly every syllable "?"), so Opus was moved to
-Chinese only (TAKEN). Check 2 as preregistered (Flash or Opus pooled over their pages) passes, E 0.045 [0.015, 0.079],
+Chinese only (TAKEN). Check 2 as preregistered (Flash or Opus pooled over their pages) passes, E 0.045 [0.014, 0.080],
 n 43, but the Tibetan pages in it are not a control. **For Tibetan the instrument is validated by the blur check
 only.** On Chinese the control fires, but weakly, and no more than PaddleOCR-VL: Flash minus Paddle on the same 35
-pages, E −0.003 [−0.048, +0.038]. The positive control was expected to depend on context more; it does not. Opus read
+pages, E −0.003 [−0.056, +0.037]. The positive control was expected to depend on context more; it does not. Opus read
 N and S only (no floor; prereg), so it has no E: its raw F(N, S) exceeds Paddle's on the same 29 pages by 0.038
 [0.017, 0.058], and its per-glyph flip is 0.19 (8 alignable pages) against Paddle's 0.09 (16): suggestive, not a
 measured excess. The sharp W read does not fire for Flash either (1 reversion in 71 swapped characters, 8 pages).
@@ -102,13 +102,13 @@ measured excess. The sharp W read does not fire for Flash either (1 reversion in
 
 | | ZB inside | ZC outside | inside − outside |
 |---|---|---|---|
-| E, all ok pages (n 40 / 40) | 0.052 [0.025, 0.107] | 0.050 [0.027, 0.086] | **+0.003 [−0.050, +0.072]**, MDE 0.083 |
+| E, all ok pages (n 40 / 40) | 0.052 [0.024, 0.104] | 0.050 [0.027, 0.087] | **+0.003 [−0.050, +0.067]**, MDE 0.083 |
 | E, clean pages (no read failure on N, N2, S, W; n 39 / 39) | 0.028 [0.023, 0.034] | 0.033 [0.025, 0.042] | **−0.005 [−0.015, +0.005]**, MDE 0.014 |
-| W, sharp (pages with N and W alignable: 9 / 11) | faithful 0.964 [0.902, 1.000], reverted 0 | faithful 0.946 [0.870, 1.000], reverted 0 | — |
-| per-glyph flip N→S (alignable: 9 / 7 pages) | 0.125 [0.013, 0.331] | 0.040 [0.021, 0.061] | too few pages |
+| W, sharp (pages with N and W alignable: 9 / 11) | faithful 0.964 [0.903, 1.000], reverted 0 | faithful 0.946 [0.867, 1.000], reverted 0 | — |
+| per-glyph flip N→S (alignable: 9 / 7 pages) | 0.125 [0.012, 0.333] | 0.040 [0.021, 0.061] | too few pages |
 | flipped reads that land on a character of the page's own N read | 0.37 (7 pages) | 0.17 (7) | exploratory |
 
-**0 of 175 swapped characters were read as the original** (167 as the donor, 8 as neither) across 20 pages. Where a
+**0 of 175 swapped characters were read as the original** (167 as the donor, faithful 0.954 [0.905, 0.994]; 8 as neither) across 20 pages. Where a
 single glyph contradicts its context, PaddleOCR-VL reads the glyph. Alignment (a read's character count equal to the
 unit count) held on only 20–29 % of pages per image: an outcome, reported; the bag measures cover every page.
 
@@ -116,9 +116,9 @@ unit count) held on only 20–29 % of pages per image: an outcome, reported; the
 
 | | TK inside | TO outside | TT (exploratory) | TK − TO |
 |---|---|---|---|---|
-| E, all ok pages (n 38 / 38 / 36) | 0.179 [0.044, 0.310] | 0.138 [0.099, 0.183] | 0.058 [−0.006, 0.095] | +0.041 [−0.099, +0.188], MDE 0.197 |
-| E, clean pages (n 20 / 36 / 35) | 0.134 [0.107, 0.164] | 0.117 [0.089, 0.145] | 0.085 | **+0.018 [−0.022, +0.059]**, MDE 0.059 |
-| W, bag-form reversion (all ok) | 0.80 [0.72, 0.88] | 0.48 [0.38, 0.58] | 0.62 | +0.32 [+0.18, +0.45] |
+| E, all ok pages (n 38 / 38 / 36) | 0.179 [0.054, 0.307] | 0.138 [0.100, 0.183] | 0.058 [−0.001, 0.095] | +0.041 [−0.100, +0.176], MDE 0.197 |
+| E, clean pages (n 20 / 36 / 35) | 0.134 [0.108, 0.163] | 0.117 [0.089, 0.149] | 0.085 | **+0.018 [−0.024, +0.057]**, MDE 0.059 |
+| W, bag-form reversion (all ok) | 0.80 [0.71, 0.89] | 0.48 [0.37, 0.59] | 0.62 | +0.32 [+0.18, +0.46] |
 | read failures on S (under 0.5× / over 2× the page's count, or hit the length limit) | 12 / 38 | 1 / 38 | 0 / 36 | +0.29 [+0.13, +0.45] |
 
 Three things qualify these numbers.
@@ -131,7 +131,7 @@ Three things qualify these numbers.
    TK failures are a property of those images (the largest and most crowded leaves: median 459 units, red print), not
    evidence of context use. The design cannot separate Kangyur text from Kangyur print.
 3. **Legibility.** Line-box heights barely overlap between TK (69–86 px) and TO (43–124). Within tertiles the
-   difference is +0.15 [−0.17, +0.44] (11 vs 13 pages), +0.06 [−0.10, +0.20] (23 vs 3), −0.14 [−0.50, +0.08]
+   difference is +0.15 [−0.18, +0.44] (11 vs 13 pages), +0.06 [−0.09, +0.21] (23 vs 3), −0.14 [−0.49, +0.08]
    (4 vs 22): no tertile has both groups in numbers.
 
 Yigdzin does use context in general: excess flip 12–13 points on clean pages, inside and outside alike, against a
@@ -145,7 +145,7 @@ deterministic floor (TT 8.5).
   +1.8 points, could see 5.9), but with no Tibetan positive control the behavioural half is "instrument not
   validated: no conclusion". DECISION on #8182: the wording, and an image-grounded check of non-Kangyur Tibetan.
 - **PaddleOCR-VL-1.6: branch 3 ("context dependence equal inside and outside"), at the instrument's floor.** Excess
-  flip 5.1 points [2.9, 8.9], the same inside and outside, and the same as Flash on the same pages, so most likely an
+  flip 5.1 points [2.9, 8.4], the same inside and outside, and the same as Flash on the same pages, so most likely an
   effect of the recomposition on any reader rather than language-model recall. No corpus-specific claim; keep the
   CBETA/Kanripo scores. The gap this could have seen: 8.3 points on all pages, 1.4 on clean pages.
 
@@ -177,4 +177,7 @@ PaddleOCR-VL ~15 min (480 reads). No rented GPU, no Gemini API, no writes to pag
 
 Not preregistered (stated): the clean-page robustness pass (read failures inflate the layout floor); the control floor
 for pages without their own repeat read is the group's mean same-image floor (first written as the arm's mean, which
-put Flash's Tibetan floor under its Chinese pages; fixed before this record); Opus on Chinese only, 16 pages per group.
+put Flash's Tibetan floor under its Chinese pages; fixed before this record); Opus on Chinese only, 16 pages per group;
+the bootstrap uses `paired-stats` `makeRng(8182)` (first run used a hand-rolled LCG, caught by CI; intervals moved by
+at most 0.012, no conclusion changed). Every number here is in `scores.json` (`cross` holds the same-page and sharp-W
+contrasts).

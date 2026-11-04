@@ -8,6 +8,7 @@
  * Output: numbers only (ids, counts, rates); no page text.
  */
 import fs from 'fs'; import path from 'path';
+import { makeRng } from '../lib/paired-stats.mjs';
 const argOf = (n, d) => { const a = process.argv.find((x) => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
 const BUILD = argOf('build'), READS = argOf('reads'), B = +argOf('boot', 10000);
 
@@ -49,7 +50,7 @@ function readOf(engine, stem, im) {
 }
 
 // ---- bootstrap ----
-let seed = 8182; const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+const rnd = makeRng(8182);   // mulberry32 (paired-stats), not a hand-rolled LCG (#5373)
 const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length;
 const sd = (a) => { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, a.length - 1)); };
 const q = (a, p) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.max(0, Math.floor(p * s.length)))]; };
@@ -213,6 +214,29 @@ for (const eng of Object.keys(ENGINES)) {
   }
   // controls: pooled E over all groups (the instrument check), and inside vs outside for interest
   if (!inn) e.pooled = { E: ci(pick('*', 'E')), blur: ci(pick('*', 'blur')) };
+}
+// cross-engine and outcome contrasts quoted in the record (not preregistered as tests; descriptive)
+{
+  const ok = (e, g) => pages.filter((p) => p.engine === e && p.group === g && p.outcome === 'ok');
+  const ratioCI = (P, k) => {   // pooled share over swapped glyphs, pages resampled (book = page = cluster)
+    const tot = (A) => A.reduce((s, p) => s + p.W_sharp.rev + p.W_sharp.faith + p.W_sharp.neither, 0);
+    const r = (A) => { const t = tot(A); return t ? A.reduce((s, p) => s + p.W_sharp[k], 0) / t : null; };
+    if (!P.length) return null; const bs = Array.from({ length: B }, () => r(res(P))).filter((x) => x != null);
+    return { pages: P.length, glyphs: tot(P), share: r4(r(P)), lo: r4(q(bs, 0.025)), hi: r4(q(bs, 0.975)) };
+  };
+  const X = (out.cross = { W_sharp: {}, same_pages: {}, yig_S_failures: {} });
+  for (const e of ['pad', 'F']) for (const g of ['ZB', 'ZC', '*']) {
+    const P = (g === '*' ? ['ZB', 'ZC'].flatMap((x) => ok(e, x)) : ok(e, g)).filter((p) => p.W_sharp && p.W_sharp.rev + p.W_sharp.faith + p.W_sharp.neither > 0);
+    X.W_sharp[`${e}:${g}`] = { faithful: ratioCI(P, 'faith'), reverted: ratioCI(P, 'rev'), neither: ratioCI(P, 'neither') };
+  }
+  const pad = Object.fromEntries(pages.filter((p) => p.engine === 'pad').map((p) => [p.stem, p]));
+  const pairs = (e, k) => ['ZB', 'ZC'].flatMap((g) => ok(e, g)).filter((p) => p[k] != null && pad[p.stem]?.[k] != null).map((p) => p[k] - pad[p.stem][k]);
+  X.F_chinese_E = ci(['ZB', 'ZC'].flatMap((g) => ok('F', g)).filter((p) => p.E != null).map((p) => p.E));   // check 2 on Chinese only
+  X.same_pages.F_minus_pad_E = ci(pairs('F', 'E'));
+  X.same_pages.O_minus_pad_F_S = ci(pairs('O', 'F_S'));
+  const sf = (g) => ok('yig', g).map((p) => +p.fail.includes('S'));
+  for (const g of ['TK', 'TO', 'TT']) X.yig_S_failures[g] = { failed: sf(g).reduce((a, b) => a + b, 0), ...ci(sf(g)) };
+  X.yig_S_failures.TK_minus_TO = diff(sf('TK'), sf('TO'));
 }
 out.per_page = pages.map(({ fail, engine, group, stem, outcome, cls, units, nN, box_h, F_rep, F_N2, F_S, F_B, E, blur, W_C, W_rev, glyph_flip, align, W_sharp, floor_kind }) =>
   ({ engine, group, stem, outcome, cls, fail, units, nN, box_h, F_rep: r4(F_rep), F_N2: r4(F_N2), F_S: r4(F_S), F_B: r4(F_B), E: r4(E), blur: r4(blur), W_C: r4(W_C), W_rev: r4(W_rev), glyph_flip: r4(glyph_flip), align, W_sharp, floor_kind }));
