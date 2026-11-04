@@ -405,8 +405,6 @@ export interface ReaderStrings {
     qualitySeeReview: string;
     /** The book line when the newest review found no serious error on the pages it read (#7896). */
     qualityChecked: (o: { ai: boolean; image: boolean; read: number; date: string }) => string;
-    /** The book line when no check of the book is recorded (#7896). */
-    qualityNotChecked: string;
     qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
@@ -1028,7 +1026,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       },
       qualitySeeReview: 'See the review',
       qualityChecked: ({ ai, image, read, date }) => `${ai ? 'An AI reviewer' : 'A reviewer'} checked ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date} and found no serious errors.`,
-      qualityNotChecked: 'This book has not been reviewed yet.',
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
@@ -1526,7 +1523,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       },
       qualitySeeReview: 'Ver la revisión',
       qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Un revisor de IA' : 'Un revisor'} revisó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date} y no encontró errores graves.`,
-      qualityNotChecked: 'Este libro aún no se ha revisado.',
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
@@ -2051,7 +2047,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       },
       qualitySeeReview: 'Recensionem vide',
       qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date}) nec menda gravia invenit.`,
-      qualityNotChecked: 'Hic liber nondum recensitus est.',
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
       sourceLink: 'fons',
@@ -2556,7 +2551,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       },
       qualitySeeReview: 'Bekijk de beoordeling',
       qualityChecked: ({ ai, image, read, date }) => `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''} en vond geen ernstige fouten.`,
-      qualityNotChecked: 'Dit boek is nog niet nagekeken.',
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
       sourceLink: 'bron',
@@ -3056,7 +3050,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       },
       qualitySeeReview: '查看审校记录',
       qualityChecked: ({ ai, image, read, date }) => `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页，未发现严重错误。`,
-      qualityNotChecked: '这本书尚未经过审校或核对。',
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
       sourceLink: '来源',

@@ -1978,14 +1978,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </p>
               )}
 
-              {/* No serious finding standing (#7896): say the book was checked, or that it was not. One quiet line,
-                  so the absence of a warning is not read as a clean bill. Only where there is a transcription. */}
-              {!bookWarning && hasOcr && (
-                <p role="note" data-quality-check={bookChecked ? 'checked' : 'unchecked'} className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
-                  {bookChecked
-                    ? qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })
-                    : qualityStrings.qualityNotChecked}
-                  {bookChecked && !isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
+              {/* A completed check with no serious finding (#7896). A book with no check says nothing here:
+                  the notice beside the text in the reader already says it is an unreviewed AI translation. */}
+              {!bookWarning && hasOcr && bookChecked && (
+                <p role="note" data-quality-check="checked" className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                  {qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })}
+                  {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
                 </p>
               )}
 
