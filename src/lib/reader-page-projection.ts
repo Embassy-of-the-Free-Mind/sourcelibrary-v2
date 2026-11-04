@@ -63,6 +63,8 @@ export const READER_PAGE_PROJECTION = {
   ocr: 1, translation: 1, translations: 1, translation_es: 1, translation_withheld: 1,
   summary: 1, modernized: 1, transliteration: 1,
   read_count: 1, edit_count: 1, created_at: 1, updated_at: 1,
+  // The page part of the citation the reader prints in its HTML (#8161, #4291).
+  printed_page: 1,
 } as const;
 
 /**

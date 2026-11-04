@@ -32,6 +32,8 @@ export const BOOK_META_PROJECTION = {
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
+  // citation_firstpage in the metadata (#8161).
+  printed_page: 1,
   // An archived split parent (negative page_number) names its leaves here;
   // the reader redirects to the first one (#5842).
   split_into: 1,
