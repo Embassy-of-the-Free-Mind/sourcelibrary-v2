@@ -18,6 +18,7 @@
 
 import crypto from 'crypto';
 import { imprimatur, verifyProvenance } from './steganographia';
+import { currentTraceRef } from './trace-ref';
 
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
@@ -130,14 +131,18 @@ export function markForExport(text: string, bookId: string, opts?: { ref?: strin
   if (!PROVENANCE_KEY || !text) return text;
 
   try {
+    // An explicit ref (bot campaign, key, pool) wins; otherwise the traced-copy
+    // scope of a download or bulk-text request (#8150 slice 8, dark by default:
+    // trace-ref.ts). Reader pages and quotes never run inside that scope.
+    const ref = opts?.ref || currentTraceRef();
     // Use first 8 chars of bookId as the structured edition identifier.
     const editionId = bookId.slice(0, 8);
     // Every export gets the light id-only mark (always attributable). Only the
     // ~1-in-COLOPHON_RATE subset also carries the heavier readable colophon
     // with the full, resolvable book link — unless a ref pins this export to a
     // campaign, in which case every passage carries it.
-    const message = opts?.ref || wantsReadableColophon(text)
-      ? colophon(bookId, wantsFullColophon(text), opts?.ref)
+    const message = ref || wantsReadableColophon(text)
+      ? colophon(bookId, wantsFullColophon(text), ref)
       : undefined;
     return imprimatur(text, editionId, PROVENANCE_KEY, { message });
   } catch {

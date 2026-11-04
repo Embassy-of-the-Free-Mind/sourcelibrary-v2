@@ -20,6 +20,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { runWithTraceRef, traceRefFor, tracedCopiesEnabled } from '@/lib/trace-ref';
 import { exportableTranslation } from '../../../../../../scripts/lib/model-only-translation.mjs';
 import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
@@ -2392,7 +2393,7 @@ async function generateScholarlyEpubDownload(
   });
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+async function downloadGET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -2776,4 +2777,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Traced bulk copies (#8150 slice 8): a signed-in download carries an opaque
+ * account ref in every marked passage. DARK unless TRACED_COPIES=on, which
+ * waits on terms, sign-up disclosure and a GDPR check. Anonymous downloads are
+ * never traced. A traced response is never shared-cacheable.
+ */
+export async function GET(request: NextRequest, ctx: RouteParams) {
+  const ref = tracedCopiesEnabled() ? traceRefFor({ userId: (await auth())?.user?.id ?? null }) : undefined;
+  const res = await runWithTraceRef(ref, () => downloadGET(request, ctx));
+  if (ref) {
+    try { res.headers.set('Cache-Control', 'private, no-store'); } catch { /* immutable headers: route already no-cache */ }
+  }
+  return res;
 }
