@@ -51,6 +51,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
@@ -199,12 +200,13 @@ try {
         const out = await sharp(buf, { limitInputPixels: false })
           .resize({ width: DISPLAY_LONG, height: DISPLAY_LONG, fit: 'inside', withoutEnlargement: true })
           .jpeg({ quality: DISPLAY_Q, mozjpeg: true }).toBuffer({ resolveWithObject: true });
+        const marked = await markDisplay(out.data, { bookId, pageNumber: p.page_number });
         const key = `pages/${bookId}/plate-${p.id}-display.jpg`;
         assertBookScopedKey(key, bookId, SWEEP);
         const url = `${R2_PUBLIC}/${key}`;
         const mp = (meta.width * meta.height) / 1e6;
         const at = new Date();
-        const display = { url, of: whole, width: out.info.width, height: out.info.height, bytes: out.data.length, quality: DISPLAY_Q, at, by: `system:${SWEEP}`,
+        const display = { url, of: whole, width: out.info.width, height: out.info.height, bytes: marked.length, quality: DISPLAY_Q, at, by: `system:${SWEEP}`,
           // image-pick-ok: a revert snapshot of the stored fields, never read to fetch or crop an image
           before: { display_photo: p.display_photo ?? null, fullres_master: p.fullres_master ?? null, deepzoom: p.deepzoom ?? null } };
         const $set = { display_photo: url, 'plate_whole.display': display };
@@ -213,7 +215,7 @@ try {
         console.log(`  p.${p.page_number} ${p.id}: ${meta.width}x${meta.height} (${mp.toFixed(1)} MP) → ${out.info.width}x${out.info.height} ${(out.data.length / 1024).toFixed(0)} KB${$set.fullres_master ? ' + fullres_master' : ''}`);
         log('sharpen.jsonl', { run: RUN, apply: APPLY, book: bookId, page_id: p.id, page_number: p.page_number, whole, master: { w: meta.width, h: meta.height }, display: { ...display, at: at.toISOString() }, fullres_master: !!$set.fullres_master });
         if (!APPLY) continue;
-        await r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, Body: out.data, ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable' }));
+        await r2.send(new PutObjectCommand({ Bucket: R2_BUCKET, Key: key, Body: marked, ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable' }));
         const head = await fetch(url, { method: 'HEAD' });
         if (!head.ok) throw new Error(`display copy not served after upload: ${head.status} ${url}`);
         await recordSweepAction(db, { sweep: SWEEP, book_id: bookId, action: 'plate-sharpen', detail: { run: RUN, page_id: p.id, page_number: p.page_number, url, of: whole, before: display.before, fullres_master: !!$set.fullres_master } });

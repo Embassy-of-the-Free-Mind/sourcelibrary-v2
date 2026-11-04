@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>三十九</page-num>
+<header>聊齋志異新評卷九 細柳</header>
+<warning>The block-centre title is heavily worn and is read partly from damaged strokes; the lowest block-centre mark reads 九之三十九.</warning>
+<meta>Commentary printed in red; a column of small red circles runs beside the second line of black text.</meta>
+
+白於天下而乃不引嫌不辭謗卒使二子一貴一富表
+表於世此無論閨閣當亦丈夫之錚錚者矣
+
+細柳誠智矣誠細心矣顧其理家政於高之在生與
+其備衣棺於高之將死亦奚足異所難者其教子耳
+福非前失之遺孤而女撫養周至者乎十歲兒有何
+知識譙訶不改夏楚不改便自以爲繼母也者而隱
+忍之姑聽之博慈愛之名避殘忍之謗雖曰生之實
+死之耳不令其到山窮水盡時必不知悔令其知我
+之所以處之者只此欲其知悔之心則且有所恃而
+
+<vocab>細柳, 繼母, 教子, 閨閣</vocab>

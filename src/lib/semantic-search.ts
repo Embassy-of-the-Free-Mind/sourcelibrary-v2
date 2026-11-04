@@ -1,5 +1,5 @@
 import { supabase, supabaseAdmin } from '@/lib/supabase';
-import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
+import { parseNavQuery, rankNavMatches, sitePageSnippet, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 import {
@@ -194,7 +194,7 @@ export async function semanticSiteSearch(query: string, limit: number = 3): Prom
     url: row.url,
     page_type: row.page_type,
     title: row.title,
-    snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    snippet: sitePageSnippet(row.text),
     similarity: Number(row.similarity) || 0,
   }));
 }
@@ -237,7 +237,7 @@ export async function navSiteSearch(query: string, limit = 3): Promise<NavSiteRe
     url: c.url,
     page_type: c.page_type,
     title: c.title,
-    snippet: String(c.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    snippet: sitePageSnippet(c.text),
     match: 'name' as const,
     coverage,
   }));

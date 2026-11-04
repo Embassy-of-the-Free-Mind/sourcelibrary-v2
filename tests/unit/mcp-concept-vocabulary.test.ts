@@ -2,7 +2,11 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 
 // The route's POST is wrapped in withApiAuth, which pulls in next-auth.
 vi.mock('@/lib/api-auth', () => ({ withApiAuth: (h: (...a: unknown[]) => unknown) => (req: unknown) => h(req, {}, { tier: 'anonymous' }) }));
-vi.mock('@/lib/mcp-usage', () => ({ logMcpToolCall: vi.fn(), logMcpInitialize: vi.fn() }));
+vi.mock('@/lib/mcp-usage', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/mcp-usage')>()),
+  logMcpToolCall: vi.fn(),
+  logMcpInitialize: vi.fn(),
+}));
 vi.mock('@/lib/api-usage', () => ({ getPagesServedLast24h: vi.fn(async () => 0), logApiUsage: vi.fn() }));
 
 // The search tools run the search routes in-process (#6853): stand the routes in for the backend.

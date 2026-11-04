@@ -1,0 +1,16 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>盜跖 莊子<unclear>旁</unclear>注卷<unclear>三</unclear></header>
+<page-num>十七</page-num>
+<meta>Lower part of the block centre, at the leaf edge: <unclear>[illegible — 1-2 characters]</unclear>堂</meta>
+
+下之主。使天下學士不反其本。妄作孝悌。而
+徼倖於封侯富貴者也。子之罪大極重。疾走
+歸。不然。我將以子肝益晝餔之膳。孔子復通。
+曰。丘得幸於季。願望履幕下<gloss>言不敢望跖面但<unclear>望其</unclear>履結</gloss>。謁者復通。盜跖
+曰。使來前。孔子趨而進。避席反走<gloss>小却行</gloss>。再拜盜跖。
+盜跖大怒。兩展其足。案劍瞋<gloss>張</gloss><gloss>句</gloss>目。聲如乳虎。
+
+<vocab>孔子, 盜跖, 孝悌, 封侯, 季, 謁者, 履幕, 乳虎</vocab>

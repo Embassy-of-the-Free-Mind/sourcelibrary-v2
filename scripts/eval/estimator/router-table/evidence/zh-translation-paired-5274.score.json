@@ -1,0 +1,342 @@
+{
+ "generated_by": "scripts/eval/zh-translation-paired-5274/run.mjs score + f4.mjs score (2026-11-04, #5274; this file copied from their score.json, no model calls)",
+ "provenance": "#5274 paired test (job zh-translation-paired-5274): 60 live Chinese pages whose English is gemini-3-flash-preview and whose OCR is PaddleOCR, one page per book, 30 reference-work and 30 running-prose books, seed 20261104, 佩文韻府/駢字類編/韻府拾遺 and every earlier sample's books excluded. Preregistered: scripts/eval/zh-translation-paired-5274/PREREGISTRATION.md (F4: amendment 1).",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt with the page image and the Paddle transcription, one candidate a call, arm names hidden, order seeded; swap 10/10, retest within one 10/10, accept agreement 9/10",
+ "mapping": "accept = judge accept; wrong_text = >= 1 wrong_text defect; major = wrong_text or misleads; weights cosmetic 1, misleads 5, wrong_text 25 per 1,000 English words (#7824)",
+ "rules_json": "NOT named in rules.json: no existing cell is this frame (zh-siku-tr is stale English on Paddle CER < 0.1). build.py reads nothing here until a cell zh-paddle-3flash-tr (and, if the strata are to route apart, -reference / -prose) is added to rules.json; that is a route change left to the DECISION on #5274.",
+ "f4": {
+  "calls_per_page": 0.346,
+  "tokens_per_page": 4245,
+  "guard_refusals_by_kind": {
+   "moved": 10,
+   "number-prev": 1,
+   "number-next": 1
+  },
+  "judged_read_alone": 7,
+  "screen": {
+   "screened": 224,
+   "sonnet_flags": 17,
+   "sonnet_wrong_leaf": 2,
+   "opus_looked": 17,
+   "confirmed_wrong_leaf_pages": 1,
+   "confirmed_pages": [
+    "6a3c661739b4508b04e31c78"
+   ],
+   "page_rate_ci95": [
+    0.001,
+    0.025
+   ],
+   "blocks_with_confirmed_slip": 1,
+   "blocks": 58,
+   "block_rate_ci95": [
+    0.003,
+    0.091
+   ],
+   "wrong_side_sentences_opus": 11,
+   "wrong_side_sentences_sonnet": 17,
+   "missing_confirmed": 0,
+   "would_still_miss_rate_rule_of_three": 0.0134
+  }
+ },
+ "tokens_per_page": {
+  "F": 7739,
+  "N": 8556,
+  "F4": 4105
+ },
+ "cells": {
+  "zh-paddle-3flash-tr": {
+   "task": "translation",
+   "lang": "Chinese / Classical Chinese",
+   "pages": 60,
+   "stratum": "all",
+   "routes": {
+    "stored": {
+     "served": "the stored English, gemini-3-flash-preview on the PaddleOCR reading (as served)",
+     "n": 60,
+     "books": 60,
+     "accept": "13/60",
+     "wrong_text_pages": "37/60",
+     "major_pages": "57/60",
+     "weighted_defects_per_1k_words": 142.84,
+     "weighted_per_1k_translator_only": 118.11,
+     "fidelity_mean": 3.1,
+     "transcription_defect_share": 0.155
+    },
+    "agy-text@1": {
+     "served": "agy gemini-3.8-flash-low, translate-core single-page prompt with the previous page's stored English and the neighbours' OCR, one page a call (cli-translate.mjs read --fresh)",
+     "n": 60,
+     "books": 60,
+     "accept": "27/60",
+     "wrong_text_pages": "25/60",
+     "major_pages": "46/60",
+     "weighted_defects_per_1k_words": 80.84,
+     "weighted_per_1k_translator_only": 43.87,
+     "fidelity_mean": 3.57,
+     "transcription_defect_share": 0.407
+    },
+    "agy-text@1-noprev": {
+     "served": "the same as F with --no-previous-translation (neighbours' OCR kept), one page a call",
+     "n": 60,
+     "books": 60,
+     "accept": "30/60",
+     "wrong_text_pages": "20/60",
+     "major_pages": "44/60",
+     "weighted_defects_per_1k_words": 78.36,
+     "weighted_per_1k_translator_only": 35.23,
+     "fidelity_mean": 3.63,
+     "transcription_defect_share": 0.452
+    },
+    "agy-text@4": {
+     "served": "agy gemini-3.8-flash-low, 4 pages a call, claude-translate.mjs --cli=agy --per-call=4 --fresh, #5021 anchor guard and block guards on; a refused page re-read alone and scored as served",
+     "n": 58,
+     "books": 58,
+     "accept": "33/58",
+     "wrong_text_pages": "17/58",
+     "major_pages": "38/58",
+     "weighted_defects_per_1k_words": 61.49,
+     "weighted_per_1k_translator_only": 27.53,
+     "fidelity_mean": 3.64,
+     "transcription_defect_share": 0.422
+    }
+   },
+   "paired": {
+    "F_vs_S": {
+     "n": 60,
+     "gained": 17,
+     "lost": 3,
+     "mcnemar_p": 0.0026,
+     "wrong_text_added": 4,
+     "wrong_text_removed": 16
+    },
+    "N_vs_S": {
+     "n": 60,
+     "gained": 22,
+     "lost": 5,
+     "mcnemar_p": 0.0015,
+     "wrong_text_added": 4,
+     "wrong_text_removed": 21
+    },
+    "F4_vs_S": {
+     "n": 58,
+     "gained": 23,
+     "lost": 3,
+     "mcnemar_p": 0.0001,
+     "wrong_text_added": 4,
+     "wrong_text_removed": 22
+    },
+    "N_vs_F": {
+     "n": 60,
+     "gained": 9,
+     "lost": 6,
+     "mcnemar_p": 0.6072,
+     "wrong_text_added": 2,
+     "wrong_text_removed": 7
+    },
+    "F4_vs_F": {
+     "n": 58,
+     "gained": 10,
+     "lost": 4,
+     "mcnemar_p": 0.1796,
+     "wrong_text_added": 5,
+     "wrong_text_removed": 12
+    }
+   }
+  },
+  "zh-paddle-3flash-tr-reference": {
+   "task": "translation",
+   "lang": "Chinese / Classical Chinese",
+   "pages": 30,
+   "stratum": "reference",
+   "routes": {
+    "stored": {
+     "served": "the stored English, gemini-3-flash-preview on the PaddleOCR reading (as served)",
+     "n": 30,
+     "books": 30,
+     "accept": "4/30",
+     "wrong_text_pages": "19/30",
+     "major_pages": "29/30",
+     "weighted_defects_per_1k_words": 115.13,
+     "weighted_per_1k_translator_only": 86.94,
+     "fidelity_mean": 3.07,
+     "transcription_defect_share": 0.205
+    },
+    "agy-text@1": {
+     "served": "agy gemini-3.8-flash-low, translate-core single-page prompt with the previous page's stored English and the neighbours' OCR, one page a call (cli-translate.mjs read --fresh)",
+     "n": 30,
+     "books": 30,
+     "accept": "12/30",
+     "wrong_text_pages": "15/30",
+     "major_pages": "26/30",
+     "weighted_defects_per_1k_words": 78.56,
+     "weighted_per_1k_translator_only": 45.5,
+     "fidelity_mean": 3.37,
+     "transcription_defect_share": 0.349
+    },
+    "agy-text@1-noprev": {
+     "served": "the same as F with --no-previous-translation (neighbours' OCR kept), one page a call",
+     "n": 30,
+     "books": 30,
+     "accept": "12/30",
+     "wrong_text_pages": "12/30",
+     "major_pages": "25/30",
+     "weighted_defects_per_1k_words": 69.05,
+     "weighted_per_1k_translator_only": 31.67,
+     "fidelity_mean": 3.53,
+     "transcription_defect_share": 0.461
+    },
+    "agy-text@4": {
+     "served": "agy gemini-3.8-flash-low, 4 pages a call, claude-translate.mjs --cli=agy --per-call=4 --fresh, #5021 anchor guard and block guards on; a refused page re-read alone and scored as served",
+     "n": 30,
+     "books": 30,
+     "accept": "15/30",
+     "wrong_text_pages": "10/30",
+     "major_pages": "21/30",
+     "weighted_defects_per_1k_words": 55.47,
+     "weighted_per_1k_translator_only": 30.76,
+     "fidelity_mean": 3.47,
+     "transcription_defect_share": 0.407
+    }
+   },
+   "paired": {
+    "F_vs_S": {
+     "n": 30,
+     "gained": 8,
+     "lost": 0,
+     "mcnemar_p": 0.0078,
+     "wrong_text_added": 3,
+     "wrong_text_removed": 7
+    },
+    "N_vs_S": {
+     "n": 30,
+     "gained": 10,
+     "lost": 2,
+     "mcnemar_p": 0.0386,
+     "wrong_text_added": 4,
+     "wrong_text_removed": 11
+    },
+    "F4_vs_S": {
+     "n": 30,
+     "gained": 12,
+     "lost": 1,
+     "mcnemar_p": 0.0034,
+     "wrong_text_added": 3,
+     "wrong_text_removed": 12
+    },
+    "N_vs_F": {
+     "n": 30,
+     "gained": 3,
+     "lost": 3,
+     "mcnemar_p": 1,
+     "wrong_text_added": 1,
+     "wrong_text_removed": 4
+    },
+    "F4_vs_F": {
+     "n": 30,
+     "gained": 5,
+     "lost": 2,
+     "mcnemar_p": 0.4531,
+     "wrong_text_added": 2,
+     "wrong_text_removed": 7
+    }
+   }
+  },
+  "zh-paddle-3flash-tr-prose": {
+   "task": "translation",
+   "lang": "Chinese / Classical Chinese",
+   "pages": 30,
+   "stratum": "prose",
+   "routes": {
+    "stored": {
+     "served": "the stored English, gemini-3-flash-preview on the PaddleOCR reading (as served)",
+     "n": 30,
+     "books": 30,
+     "accept": "9/30",
+     "wrong_text_pages": "18/30",
+     "major_pages": "28/30",
+     "weighted_defects_per_1k_words": 187.11,
+     "weighted_per_1k_translator_only": 167.92,
+     "fidelity_mean": 3.13,
+     "transcription_defect_share": 0.099
+    },
+    "agy-text@1": {
+     "served": "agy gemini-3.8-flash-low, translate-core single-page prompt with the previous page's stored English and the neighbours' OCR, one page a call (cli-translate.mjs read --fresh)",
+     "n": 30,
+     "books": 30,
+     "accept": "15/30",
+     "wrong_text_pages": "10/30",
+     "major_pages": "20/30",
+     "weighted_defects_per_1k_words": 84.19,
+     "weighted_per_1k_translator_only": 41.47,
+     "fidelity_mean": 3.77,
+     "transcription_defect_share": 0.484
+    },
+    "agy-text@1-noprev": {
+     "served": "the same as F with --no-previous-translation (neighbours' OCR kept), one page a call",
+     "n": 30,
+     "books": 30,
+     "accept": "18/30",
+     "wrong_text_pages": "8/30",
+     "major_pages": "19/30",
+     "weighted_defects_per_1k_words": 91.81,
+     "weighted_per_1k_translator_only": 40.37,
+     "fidelity_mean": 3.73,
+     "transcription_defect_share": 0.441
+    },
+    "agy-text@4": {
+     "served": "agy gemini-3.8-flash-low, 4 pages a call, claude-translate.mjs --cli=agy --per-call=4 --fresh, #5021 anchor guard and block guards on; a refused page re-read alone and scored as served",
+     "n": 28,
+     "books": 28,
+     "accept": "18/28",
+     "wrong_text_pages": "7/28",
+     "major_pages": "17/28",
+     "weighted_defects_per_1k_words": 71.05,
+     "weighted_per_1k_translator_only": 22.4,
+     "fidelity_mean": 3.82,
+     "transcription_defect_share": 0.442
+    }
+   },
+   "paired": {
+    "F_vs_S": {
+     "n": 30,
+     "gained": 9,
+     "lost": 3,
+     "mcnemar_p": 0.146,
+     "wrong_text_added": 1,
+     "wrong_text_removed": 9
+    },
+    "N_vs_S": {
+     "n": 30,
+     "gained": 12,
+     "lost": 3,
+     "mcnemar_p": 0.0352,
+     "wrong_text_added": 0,
+     "wrong_text_removed": 10
+    },
+    "F4_vs_S": {
+     "n": 28,
+     "gained": 11,
+     "lost": 2,
+     "mcnemar_p": 0.0225,
+     "wrong_text_added": 1,
+     "wrong_text_removed": 10
+    },
+    "N_vs_F": {
+     "n": 30,
+     "gained": 6,
+     "lost": 3,
+     "mcnemar_p": 0.5078,
+     "wrong_text_added": 1,
+     "wrong_text_removed": 3
+    },
+    "F4_vs_F": {
+     "n": 28,
+     "gained": 5,
+     "lost": 2,
+     "mcnemar_p": 0.4531,
+     "wrong_text_added": 3,
+     "wrong_text_removed": 5
+    }
+   }
+  }
+ }
+}

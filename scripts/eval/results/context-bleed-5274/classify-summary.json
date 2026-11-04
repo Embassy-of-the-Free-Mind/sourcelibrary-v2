@@ -1,0 +1,645 @@
+{
+ "at": "2026-11-04T09:32:36.946Z",
+ "scanned_rows": 52991,
+ "in_5021_queue": 67,
+ "fixed_in_5021": 20,
+ "human_edited": 3,
+ "by_class": {
+  "prev": {
+   "A": 3345,
+   "B": 3045,
+   "C": 0,
+   "D": 0
+  },
+  "composed": {
+   "A": 0,
+   "B": 0,
+   "C": 5329,
+   "D": 0
+  },
+  "next": {
+   "A": 1074,
+   "B": 3584,
+   "C": 0,
+   "D": 0
+  },
+  "pm2": {
+   "A": 167,
+   "B": 764,
+   "C": 0,
+   "D": 0
+  },
+  "padding": {
+   "A": 0,
+   "B": 0,
+   "C": 0,
+   "D": 35660
+  }
+ },
+ "by_band_state": {
+  "served": {
+   "A": 4264,
+   "B": 7240,
+   "C": 5253,
+   "D": 35484
+  },
+  "withheld": {
+   "A": 322,
+   "B": 153,
+   "C": 76,
+   "D": 176
+  }
+ },
+ "by_language": {
+  "Latin": {
+   "A": 897,
+   "B": 2904,
+   "C": 1132,
+   "D": 6729
+  },
+  "English": {
+   "A": 757,
+   "B": 715,
+   "C": 1106,
+   "D": 1346
+  },
+  "Chinese": {
+   "A": 762,
+   "B": 527,
+   "C": 887,
+   "D": 1716
+  },
+  "Sanskrit": {
+   "A": 866,
+   "B": 604,
+   "C": 164,
+   "D": 6560
+  },
+  "German": {
+   "A": 241,
+   "B": 321,
+   "C": 501,
+   "D": 751
+  },
+  "French": {
+   "A": 225,
+   "B": 342,
+   "C": 443,
+   "D": 703
+  },
+  "Italian": {
+   "A": 299,
+   "B": 288,
+   "C": 213,
+   "D": 394
+  },
+  "Greek": {
+   "A": 146,
+   "B": 294,
+   "C": 208,
+   "D": 960
+  },
+  "Hebrew": {
+   "A": 16,
+   "B": 482,
+   "C": 38,
+   "D": 10103
+  },
+  "Dutch": {
+   "A": 89,
+   "B": 198,
+   "C": 136,
+   "D": 198
+  },
+  "Arabic": {
+   "A": 21,
+   "B": 109,
+   "C": 134,
+   "D": 1941
+  },
+  "Russian": {
+   "A": 50,
+   "B": 147,
+   "C": 40,
+   "D": 471
+  },
+  "Latin-German": {
+   "A": 18,
+   "B": 26,
+   "C": 50,
+   "D": 52
+  },
+  "Ge'ez": {
+   "A": 4,
+   "B": 71,
+   "C": 2,
+   "D": 258
+  },
+  "Latin/English": {
+   "A": 10,
+   "B": 19,
+   "C": 32,
+   "D": 17
+  },
+  "Akkadian": {
+   "A": 23,
+   "B": 16,
+   "C": 10,
+   "D": 22
+  },
+  "Egyptian": {
+   "A": 10,
+   "B": 19,
+   "C": 8,
+   "D": 59
+  },
+  "Arabic-Latin": {
+   "A": 0,
+   "B": 35,
+   "C": 1,
+   "D": 5
+  },
+  "Syriac": {
+   "A": 3,
+   "B": 9,
+   "C": 23,
+   "D": 35
+  },
+  "Greek-Latin": {
+   "A": 9,
+   "B": 3,
+   "C": 18,
+   "D": 10
+  },
+  "Persian": {
+   "A": 5,
+   "B": 9,
+   "C": 15,
+   "D": 289
+  },
+  "Pali": {
+   "A": 0,
+   "B": 25,
+   "C": 0,
+   "D": 59
+  },
+  "Armenian": {
+   "A": 8,
+   "B": 12,
+   "C": 3,
+   "D": 63
+  },
+  "Telugu": {
+   "A": 17,
+   "B": 0,
+   "C": 6,
+   "D": 217
+  },
+  "Japanese": {
+   "A": 4,
+   "B": 4,
+   "C": 14,
+   "D": 6
+  },
+  "Spanish": {
+   "A": 4,
+   "B": 11,
+   "C": 6,
+   "D": 23
+  },
+  "Mixtec": {
+   "A": 9,
+   "B": 5,
+   "C": 2,
+   "D": 7
+  },
+  "German-English": {
+   "A": 7,
+   "B": 7,
+   "C": 2,
+   "D": 11
+  },
+  "Egyptian hieroglyphs": {
+   "A": 0,
+   "B": 6,
+   "C": 9,
+   "D": 47
+  },
+  "Middle Dutch": {
+   "A": 0,
+   "B": 0,
+   "C": 15,
+   "D": 4
+  }
+ },
+ "by_model": {
+  "gemini-3-flash-preview": {
+   "A": 3828,
+   "B": 3916,
+   "C": 3897,
+   "D": 17305
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "A": 591,
+   "B": 2478,
+   "C": 971,
+   "D": 14988
+  },
+  "gemini-3.1-flash-lite": {
+   "A": 157,
+   "B": 912,
+   "C": 414,
+   "D": 2601
+  },
+  "gemini-3.8-flash-low": {
+   "A": 1,
+   "B": 35,
+   "C": 38,
+   "D": 587
+  },
+  "gemini-2.5-flash": {
+   "A": 7,
+   "B": 32,
+   "C": 1,
+   "D": 30
+  },
+  "claude-opus-5-5": {
+   "A": 1,
+   "B": 6,
+   "C": 3,
+   "D": 47
+  },
+  "gemini-4-argon-low": {
+   "A": 0,
+   "B": 10,
+   "C": 0,
+   "D": 82
+  },
+  "etcsl-corpus": {
+   "A": 1,
+   "B": 4,
+   "C": 5,
+   "D": 18
+  },
+  "gemini": {
+   "A": 0,
+   "B": 0,
+   "C": 0,
+   "D": 2
+  }
+ },
+ "by_month": {
+  "2026-03": {
+   "A": 1753,
+   "B": 2572,
+   "C": 1808,
+   "D": 8121
+  },
+  "2026-02": {
+   "A": 2016,
+   "B": 1323,
+   "C": 1703,
+   "D": 7355
+  },
+  "2026-04": {
+   "A": 473,
+   "B": 1684,
+   "C": 771,
+   "D": 12876
+  },
+  "2026-05": {
+   "A": 159,
+   "B": 1034,
+   "C": 426,
+   "D": 3609
+  },
+  "2026-06": {
+   "A": 81,
+   "B": 351,
+   "C": 359,
+   "D": 1370
+  },
+  "2026-10": {
+   "A": 24,
+   "B": 259,
+   "C": 107,
+   "D": 1378
+  },
+  "2026-09": {
+   "A": 45,
+   "B": 77,
+   "C": 64,
+   "D": 369
+  },
+  "2026-08": {
+   "A": 12,
+   "B": 22,
+   "C": 70,
+   "D": 119
+  },
+  "2026-01": {
+   "A": 7,
+   "B": 33,
+   "C": 4,
+   "D": 76
+  },
+  "2026-11": {
+   "A": 16,
+   "B": 16,
+   "C": 6,
+   "D": 32
+  },
+  "2026-07": {
+   "A": 0,
+   "B": 22,
+   "C": 11,
+   "D": 353
+  },
+  "": {
+   "A": 0,
+   "B": 0,
+   "C": 0,
+   "D": 2
+  }
+ },
+ "by_lane": {
+  "after-prev": {
+   "A": 2310,
+   "B": 3512,
+   "C": 2193,
+   "D": 0
+  },
+  "unknown": {
+   "A": 1233,
+   "B": 605,
+   "C": 1613,
+   "D": 0
+  },
+  "same-stamp": {
+   "A": 257,
+   "B": 2303,
+   "C": 772,
+   "D": 0
+  },
+  "apart": {
+   "A": 771,
+   "B": 969,
+   "C": 751,
+   "D": 0
+  },
+  "before-prev": {
+   "A": 15,
+   "B": 4,
+   "C": 0,
+   "D": 0
+  },
+  "(D: not looked up)": {
+   "A": 0,
+   "B": 0,
+   "C": 0,
+   "D": 35660
+  }
+ },
+ "by_family": {
+  "Brihat Parashara Hora Shastram Uttara Kh": {
+   "A": 601,
+   "B": 16,
+   "C": 2,
+   "D": 0
+  },
+  "De Historia Stirpium Commentarii Insigne": {
+   "A": 104,
+   "B": 47,
+   "C": 6,
+   "D": 0
+  },
+  "Abhidharmakosa with Bhashya": {
+   "A": 99,
+   "B": 44,
+   "C": 4,
+   "D": 0
+  },
+  "Herbarium Amboinense": {
+   "A": 97,
+   "B": 28,
+   "C": 3,
+   "D": 0
+  },
+  "Le diverse et artificiose machine": {
+   "A": 46,
+   "B": 73,
+   "C": 6,
+   "D": 0
+  },
+  "Ben cao gang mu (Compendium of Materia M": {
+   "A": 107,
+   "B": 2,
+   "C": 1,
+   "D": 0
+  },
+  "The Natural History of Carolina Florida ": {
+   "A": 73,
+   "B": 21,
+   "C": 11,
+   "D": 0
+  },
+  "Al-ṭibb al-rūḥānī": {
+   "A": 0,
+   "B": 1,
+   "C": 94,
+   "D": 0
+  },
+  "Siddhanta Shiromani with Surya Siddhanta": {
+   "A": 0,
+   "B": 88,
+   "C": 0,
+   "D": 0
+  },
+  "天工開物 (Tiangong Kaiwu) - Exploitation of ": {
+   "A": 12,
+   "B": 72,
+   "C": 1,
+   "D": 0
+  },
+  "Rariorum Stirpium per Pannoniam Historia": {
+   "A": 66,
+   "B": 13,
+   "C": 6,
+   "D": 0
+  },
+  "Illustrations of British Fungi (Hymenomy": {
+   "A": 23,
+   "B": 17,
+   "C": 33,
+   "D": 0
+  },
+  "Specimens of Japanese Art": {
+   "A": 5,
+   "B": 5,
+   "C": 58,
+   "D": 0
+  },
+  "Oeuvres complètes": {
+   "A": 28,
+   "B": 20,
+   "C": 16,
+   "D": 0
+  },
+  "Orbis Sensualium Pictus": {
+   "A": 10,
+   "B": 19,
+   "C": 32,
+   "D": 0
+  },
+  "Herculanensium Voluminum quae Supersunt:": {
+   "A": 0,
+   "B": 1,
+   "C": 53,
+   "D": 0
+  },
+  "Opera Varia": {
+   "A": 18,
+   "B": 29,
+   "C": 4,
+   "D": 0
+  },
+  "Viridarium chymicum figuris cupro incisi": {
+   "A": 4,
+   "B": 0,
+   "C": 46,
+   "D": 0
+  },
+  "Micrographia: or some Physiological Desc": {
+   "A": 0,
+   "B": 7,
+   "C": 43,
+   "D": 0
+  },
+  "論語 (Analects): Chinese Classics": {
+   "A": 5,
+   "B": 43,
+   "C": 0,
+   "D": 0
+  },
+  "Siddhanta Tattva Viveka": {
+   "A": 0,
+   "B": 48,
+   "C": 0,
+   "D": 0
+  },
+  "Les manuscrits de Leonard de Vinci": {
+   "A": 13,
+   "B": 24,
+   "C": 8,
+   "D": 0
+  },
+  "Herodoti Historiae": {
+   "A": 35,
+   "B": 7,
+   "C": 3,
+   "D": 0
+  },
+  "L'Ame amante de son Dieu, representees d": {
+   "A": 2,
+   "B": 29,
+   "C": 11,
+   "D": 0
+  },
+  "The Code of Hammurabi": {
+   "A": 9,
+   "B": 17,
+   "C": 16,
+   "D": 0
+  },
+  "Ekphrasis": {
+   "A": 30,
+   "B": 6,
+   "C": 6,
+   "D": 0
+  },
+  "Muhurta Chintamani": {
+   "A": 0,
+   "B": 14,
+   "C": 27,
+   "D": 0
+  },
+  "Le premier": {
+   "A": 17,
+   "B": 21,
+   "C": 3,
+   "D": 0
+  },
+  "The Literary Works of Leonardo da Vinci": {
+   "A": 13,
+   "B": 6,
+   "C": 22,
+   "D": 0
+  },
+  "Recherches sur les superstitions en Chin": {
+   "A": 0,
+   "B": 0,
+   "C": 41,
+   "D": 0
+  },
+  "Coloured Figures of English Fungi or Mus": {
+   "A": 0,
+   "B": 3,
+   "C": 38,
+   "D": 0
+  },
+  "名山圖 (Mingshan Tu: Famous Mountains of Ch": {
+   "A": 9,
+   "B": 6,
+   "C": 25,
+   "D": 0
+  },
+  "Krestos Gospels (Illuminated)": {
+   "A": 1,
+   "B": 38,
+   "C": 1,
+   "D": 0
+  },
+  "Hieroglyphica of merkbeelden der oude vo": {
+   "A": 0,
+   "B": 4,
+   "C": 36,
+   "D": 0
+  },
+  "Novi Testamenti ... Das New Testament": {
+   "A": 15,
+   "B": 14,
+   "C": 11,
+   "D": 0
+  },
+  "Dionysiaca (Graefe Critical Edition)": {
+   "A": 22,
+   "B": 9,
+   "C": 9,
+   "D": 0
+  },
+  "M. Tullii Ciceronis Epistolae ad Atticum": {
+   "A": 0,
+   "B": 39,
+   "C": 0,
+   "D": 0
+  },
+  "YuddhaJayarnava5455Alm25Shlf1GhaDevanaga": {
+   "A": 37,
+   "B": 0,
+   "C": 2,
+   "D": 0
+  },
+  "Notes et dessins sur le corps humain": {
+   "A": 15,
+   "B": 12,
+   "C": 12,
+   "D": 0
+  },
+  "Utriusque Cosmi Historia": {
+   "A": 13,
+   "B": 13,
+   "C": 12,
+   "D": 0
+  }
+ }
+}

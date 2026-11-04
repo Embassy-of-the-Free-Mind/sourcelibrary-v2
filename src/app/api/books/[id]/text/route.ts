@@ -9,11 +9,13 @@ import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
 import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
+import { PARTNER_TERMS_URL } from '@/lib/partner-terms-version';
 import { CONTENT_LICENSE, AI_TRAINING_NOTICE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
 import { poolRefFor } from '@/lib/suspected-pool';
+import { traceRefFor } from '@/lib/trace-ref';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { serveEnglishOriginalPage, isEnglishOriginalBook, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
@@ -195,11 +197,20 @@ export const GET = withApiAuth(async (
     //     real browser, so a real reader sharing it must not see a notice.
     const pool = !clampedCaller && !(identity.kind === 'apikey' && identity.apiKeyId)
       ? await poolRefFor(request) : undefined;
-    const ref = clampedCaller ? extractionRef(clientKeyFor(request), new Date())
+    const baseRef = clampedCaller ? extractionRef(clientKeyFor(request), new Date())
       : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
       : pool;
     // Visible notice: unchanged for bots and key holders; never for a pool.
-    const noticeRef = pool ? undefined : ref;
+    const noticeRef = pool ? undefined : baseRef;
+    // Traced bulk copies (#8150 slice 8, dark unless TRACED_COPIES=on): a key
+    // or signed-in account gets the opaque SLA- ref in the invisible colophon
+    // instead. Never a bot (it keeps its campaign ref) and never the visible
+    // notice. This response is always private, no-store.
+    const traced = clampedCaller ? undefined : traceRefFor({
+      apiKeyId: identity.kind === 'apikey' ? identity.apiKeyId : null,
+      userId: identity.kind === 'session' ? identity.userId : null,
+    });
+    const ref = traced ?? baseRef;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
@@ -421,6 +432,11 @@ export const GET = withApiAuth(async (
       ? `Served up to p.${windowMaxPage}: this collection is served ${partnerWindow} pages per call. Ask again with from=${windowMaxPage! + 1} to continue.`
       : undefined;
 
+    // A program reading a protected partner's book is told the terms in the response itself.
+    const partnerTermsNote = partnerAccess.kind !== 'full'
+      ? `This book is from the Embassy of the Free Mind's collection. Terms of use: ${PARTNER_TERMS_URL}`
+      : undefined;
+
     // Plain text format — concatenated text with page markers
     if (format === 'plain') {
       const lines: string[] = [];
@@ -435,6 +451,7 @@ export const GET = withApiAuth(async (
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
       lines.push(`# ${AI_TRAINING_NOTICE}`);
       if (windowNote) lines.push(`# ${windowNote}`);
+      if (partnerTermsNote) lines.push(`# ${partnerTermsNote}`);
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.
@@ -544,6 +561,7 @@ export const GET = withApiAuth(async (
           partnership: 'https://sourcelibrary.org/llms.txt',
         },
       } : {}),
+      ...(partnerTermsNote ? { terms_of_use: partnerTermsNote } : {}),
       ...(windowTruncated ? {
         reading_window: {
           truncated: true,

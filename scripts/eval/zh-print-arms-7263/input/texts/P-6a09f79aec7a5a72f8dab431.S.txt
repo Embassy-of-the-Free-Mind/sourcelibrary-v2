@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>Photolithographic reproduction of a woodblock print. Ghosting/bleed-through from the reverse side is visible but does not impede reading.</meta>
+<header>史記卷十四考證</header>
+<sig>六</sig>
+
+二十六年滅六英 ○ 世家云滅英無六字徐廣曰一本作黃春秋楚成二十四年滅黃二十九年齊人徐人伐英楚穆四年秋楚人滅六據此則楚成二十六年六英俱未滅當從滅黃其編年亦當從春秋
+
+莊王侶 ○ 春秋侶作旅穀梁作呂
+
+六年伐宋陳 ○ 世家云伐宋無陳左傳楚子侵陳遂侵宋與表同
+
+康王招 ○ 春秋招作昭
+
+靈王圍 ○ 春秋圍作虔
+
+七年就章華臺內亡人實之 ○ 世家同左傳昭七年為
+
+<vocab>史記, 司馬遷, 考證, 春秋, 左傳, 楚成王, 莊王, 康王, 靈王, 章華臺</vocab>

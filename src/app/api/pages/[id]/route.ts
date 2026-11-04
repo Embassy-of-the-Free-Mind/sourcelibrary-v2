@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getDb } from '@/lib/mongodb';
 import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -118,6 +119,7 @@ export async function GET(
     // Deterministic for readers; a flagged proxy pool also gets its extraction
     // ref (#6950), and that response is never cached.
     const ref = await poolRefFor(request);
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     return NextResponse.json(markPageForReader(applyReaderTextLayer(page, layers), undefined, { ref }), {
       headers: { 'Cache-Control': ref ? 'private, no-store' : 'private, max-age=30, stale-while-revalidate=60' }
     });

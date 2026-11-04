@@ -19,6 +19,14 @@ describe('robots.txt content signals', () => {
     expect(text).toContain('https://sourcelibrary.org/licensing');
   });
 
+  it('names the Embassy collection terms in a block of its own, after the preamble', async () => {
+    const blocks = (await body()).split('\n\n');
+    const note = blocks.findIndex(b => b.includes('https://sourcelibrary.org/terms#embassy-collection'));
+    expect(note).toBeGreaterThan(0);
+    expect(blocks[0]).toContain('# As a condition of accessing this website');
+    expect(blocks[0]).not.toContain('Embassy');
+  });
+
   it('declares search=yes, ai-input=yes, ai-train=no on every group', async () => {
     const text = await body();
     const groups = text.split(/\n\n/).filter((b) => b.startsWith('User-agent:'));
