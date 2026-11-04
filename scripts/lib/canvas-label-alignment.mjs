@@ -46,6 +46,23 @@ export function labelNumber(label) {
 }
 
 /**
+ * True when a manifest's labels are canvas ORDINALS, not printed page numbers: nearly every
+ * canvas, front matter included, is labelled with its own index (0-based or 1-based). The
+ * Internet Archive's IIIF v3 manifests label every canvas this way ("0", "1", … or "1", "2", …;
+ * #5803, 2026-11-04). Read as printed numbers they make every book look shifted by its count of
+ * unnumbered front leaves, the same trap as e-rara's bracketed ordinals above. A book whose
+ * printed numbers really equal the slot on 95% of ALL canvases would score aligned anyway.
+ *
+ * @param {Array<number|null>} labels  labelNumber() of each canvas, in order
+ */
+export function ordinalLabels(labels, { min = 0.95 } = {}) {
+  if (!labels?.length) return false;
+  let zero = 0, one = 0;
+  labels.forEach((l, i) => { if (l === i) zero++; if (l === i + 1) one++; });
+  return Math.max(zero, one) / labels.length >= min;
+}
+
+/**
  * Per slot: where does the text sitting here belong? offset k means the text on slot s
  * is the text of the leaf at slot s+k (k = −3: the text is three leaves late).
  * Null when the page has no usable printed number, or the label match is absent or

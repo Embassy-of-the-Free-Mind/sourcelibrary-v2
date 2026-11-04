@@ -249,10 +249,9 @@ export default async function BookChecksPage({ params }: PageProps) {
                 {method?.issue && (
                   <>{' · '}<a href={issueUrl(method.issue)} target="_blank" rel="noreferrer" className="underline underline-offset-2">What the check looks for</a></>
                 )}
-                {' · '}
                 {evidence
-                  ? <a href={evidence} target="_blank" rel="noreferrer" className="underline underline-offset-2">Full review file</a>
-                  : <>The reviewer’s full notes are not public.</>}
+                  ? <>{' · '}<a href={evidence} target="_blank" rel="noreferrer" className="underline underline-offset-2">Full review file</a></>
+                  : isPublic ? null : <>{' · '}The reviewer’s full notes are not public.</>}
                 {' · '}<span className="font-mono text-[12px]">{row.run_id}</span>
               </p>
             </section>

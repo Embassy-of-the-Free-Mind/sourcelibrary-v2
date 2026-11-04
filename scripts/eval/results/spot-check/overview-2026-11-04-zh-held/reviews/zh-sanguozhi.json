@@ -1,0 +1,918 @@
+[
+  {
+    "book_id": "6ae0c7164adf2ffb52f76a64",
+    "slot": 25,
+    "title": "三國志·蜀志·卷五~卷八 (Sanguozhi, Siku Quanshu, vol. 15 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 蜀志 juan 5 (Zhuge Liang) and juan 7 (Fa Zheng), plus a 考證 collation leaf.",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers were read on only 17 of 169 pages, so the 5 backsteps / 10 repeats most likely come from misread or per-juan-restarting folio numerals (each juan restarts its foliation, and 考證 leaves carry their own), not from scan disorder; the four sampled leaves are in order. 6 pages lack OCR and 8 lack translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "亮顏色慠然有戚容",
+            "image": "亮顏色愀然有戚容",
+            "problem": "愀 (sorrowful) read as 慠 (proud); translation happens to give the right sense",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Source attributions are wrapped as <note>Weilüe states</note>, <note>Pei Songzhi's commentary</note> inside the running English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 68,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "以校尉使吳值孫權病篤○臣\\n以校尉使吳值孫權病篤○臣明",
+            "image": "以校尉使吳值孫權病篤○臣明 (once)",
+            "problem": "half a line duplicated",
+            "severity": "minor",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "內移河東注位至廣州刺史",
+            "english": "Within: relocated Hedong. Commentary note: He reached the rank...",
+            "problem": "lemma fragment rendered as if a sentence; clumsy but recoverable",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Every lemma is followed by <note>original: \"…\"</note> repeating the Chinese, cluttering the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 115,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\\n八\\n口\\n人\\n<page-num>三</page-num>",
+            "image": "欽定四庫全書 (running header)",
+            "problem": "header misread as four stray characters plus an invented page number 三",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 138,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欠定曰事人書",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "running header misread and appended as text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Translation adds a note: 'The original text breaks off with fragmented or corrupt characters: \"欠定曰事人書\"' — the source is not corrupt; this is the OCR's misread of the running header, presented to the reader as a fact about the manuscript",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right text, accurate transcription of the main text and Pei commentary, and a faithful English; the defects are header garble and one invented remark that the manuscript is corrupt.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      27,
+      115
+    ],
+    "reader_summary": "Juan 5–8 of the Shu section of the Sanguozhi in the Siku Quanshu copy, with Pei Songzhi's commentary and the Qing collation notes. The transcription is of the right text and largely exact; the English follows it closely. Warn that the running header is sometimes read as text, and once the translation calls that garble a corruption in the original."
+  },
+  {
+    "book_id": "6ae0c71d4adf2ffb52f76b10",
+    "slot": 26,
+    "title": "三國志·蜀志·卷九~卷十二 (Sanguozhi, Siku Quanshu, vol. 16 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 蜀志 juan 10–12 (Liu Feng, Li Yan, Yang Hong/He Zhi, Xi Zheng).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 21 of 164 pages; 7 backsteps / 14 repeats are consistent with per-juan foliation and misread numerals, not scan disorder. Sampled leaves are in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 38,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "無使狐突閉門不出",
+            "english": "note: Hu Tu ... summoned by Duke Hui of Jin under threat of executing his sons",
+            "problem": "Hu Tu was killed by Duke Huai (懷公), not Duke Hui; the gloss names the wrong ruler",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "陛下大軍金鼓以震",
+            "english": "His Majesty's grand armies have shaken heaven and earth with gongs and drums",
+            "problem": "'heaven and earth' added",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 53,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欠巳曰阜之書\\n蜀志\\n十二",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "running header misread as text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<unclear>欠巳曰阜之書 蜀志 十二</unclear> shown at the end of the English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 92,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "閽誦",
+            "image": "闇誦",
+            "problem": "闇 read as 閽",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "以問占夢趙直直曰…祗笑言得此足矣",
+            "english": "consulted Zhao Zhi ... Zhi said ... Zhi laughed and said: 'To reach that is quite enough for me!'",
+            "problem": "both 趙直 (the dream interpreter) and 何祗 (the subject) are romanised 'Zhi' with no surname, so the reader cannot tell who laughs, and reads the interpreter as answering his own prophecy",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 145,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Accurate transcription and a fluent, mostly faithful English; one wrong allusion note and one ambiguous name rendering.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      145,
+      53
+    ],
+    "reader_summary": "Juan 9–12 of the Shu section (Liu Feng, Li Yan, Yang Hong, Xi Zheng and others) in the Siku Quanshu copy. The transcription matches the manuscript almost character for character and the English is close. Warn that explanatory notes are model-written and occasionally wrong (a misnamed Jin duke), and that two men both called 'Zhi' are not distinguished."
+  },
+  {
+    "book_id": "6ae0c6cf4adf2ffb52f76830",
+    "slot": 27,
+    "title": "三國志·魏志·卷二十五~卷二十七 (Sanguozhi, Siku Quanshu, vol. 12 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 魏志 juan 25 (Yang Fu), 27 (Hu Zhi, Wang Ji) and a 考證 leaf.",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 12 of 162 pages; the 4 backsteps / 6 repeats fit per-juan foliation and 考證 leaves. Sampled leaves are in order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "魏志\\n1日",
+            "image": "魏志 / 十四",
+            "problem": "folio numeral 十四 read as '1日'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 68,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欠宅勾事公書",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "running header misread as text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "士郎宋本作十郎",
+            "english": "note: a homophonous scribal error",
+            "problem": "士/十 is a graphic confusion, not homophony; small invented explanation",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<unclear>欠宅勾事公書</unclear> and empty <note>Variant reading:</note> shown in the English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "胡通達長者也",
+            "english": "Hu Tongda is a senior man of broad understanding",
+            "problem": "'of broad understanding' double-reads the name 通達",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 146,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金定四庫全書",
+            "image": "欽定四庫全書",
+            "problem": "欽 read as 金 in header",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean transcription and faithful English on all four leaves; only header garble and a small note slip.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      28,
+      121,
+      146
+    ],
+    "reader_summary": "Juan 25–27 of the Wei section (Xin Pi, Yang Fu, Gao Tang Long, Xu Miao, Hu Zhi, Wang Chang, Wang Ji) in the Siku Quanshu copy, with Qing collation notes. The transcription is of the right text and exact on the sampled pages; the English is faithful and readable. Stray header characters appear at a page foot."
+  },
+  {
+    "book_id": "6ae0c6694adf2ffb52f76286",
+    "slot": 28,
+    "title": "三國志·魏志·卷四~卷五 (Sanguozhi, Siku Quanshu, vol. 3 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 魏志 juan 4 (Qi Wang, Gaogui Xianggong annals) and juan 5 (Empresses).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 15 of 136 pages; 4 backsteps / 7 repeats fit per-juan foliation and misread numerals. Sampled leaves are in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金穴四尾全書",
+            "image": "欽定四庫全書",
+            "problem": "header garbled",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "癸巳驃騎將軍…三月甲午司徒衛臻",
+            "english": "on the guisi <gloss>thirtieth</gloss> day ... in the third month, on the jiawu <gloss>second</gloss> day",
+            "problem": "sexagenary day names glossed as 'thirtieth' and 'second' day: jiawu is the 31st of the cycle, and neither is a day of the month; a reader takes these as calendar dates in an annal",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "孫盛魏世籍曰",
+            "english": "Sun Sheng's Weishi Chunqiu states",
+            "problem": "source title 魏世籍 silently replaced by the better-known 魏氏春秋",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "source": "晏乂咸因闕以進規諫",
+            "english": "He Yan and Deng Yang all took advantage of the emperor's flaws",
+            "problem": "乂 identified as Deng Yang without support (Deng Yang is 鄧颺); low confidence on who 乂 is",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 46,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金人口厄人三",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "header misread as stray characters",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "夏有連山",
+            "english": "Lianshan <gloss>Mountain Cascades</gloss>",
+            "problem": "usual rendering is 'Linked Mountains'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 85,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "魏志\\n星",
+            "image": "魏志 / 四十 (folio)",
+            "problem": "folio numeral read as 星",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "'魏志 星' copied untranslated at the end of the English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 120,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "又於其後園為像母起觀廟",
+            "english": "in its rear garden, a scenic tower and ancestral temple were erected for his mother's maternal lineage",
+            "problem": "像 is the personal name Zhen Xiang; it is a shrine for Xiang's mother, not for a 'maternal lineage'",
+            "severity": "moderate"
+          },
+          {
+            "source": "夫人郭氏從弟惠",
+            "english": "Lady Guo's maternal younger cousin",
+            "problem": "從弟 is a paternal cousin; 'maternal' added",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription is accurate; the English is good except that the annal page glosses sexagenary days as wrong day-of-month numbers and renames a cited source.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      46,
+      85
+    ],
+    "reader_summary": "Juan 4–5 of the Wei section: the annals of the three young Wei emperors and the biographies of the empresses, Siku Quanshu copy with Pei's notes. The transcription is of the right text and nearly exact. The English is mostly faithful, but date glosses in the annals are wrong and a cited source title is normalised, so dates and source names should be checked against the Chinese."
+  },
+  {
+    "book_id": "6ae0c6c74adf2ffb52f766d0",
+    "slot": 29,
+    "title": "三國志·魏志·卷十九~卷二十一 (Sanguozhi, Siku Quanshu, vol. 10 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 魏志 juan 19 (Cao Zhang), 20 (sons of Cao Cao), 21 (Wei Ji, Liu Yi).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 26 of 182 pages; 9 backsteps / 16 repeats fit per-juan foliation and misread numerals. Sampled leaves are in order. Page 3 is already body text, so front matter is short or absent.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "者\\n只",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "header fragment read as two stray characters",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 83,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "剛殤公子勤",
+            "english": "Qin, Prince Shang of Gang",
+            "problem": "公 is Duke; these sons of Cao Cao are dukes, not princes",
+            "severity": "moderate"
+          },
+          {
+            "source": "郿戴公子整奉從叔父郎中紹後…封郿",
+            "english": "served as successor to his paternal cousin, Court Gentleman Shao ... enfeoffed as Prince of Mei",
+            "problem": "從叔父 is the father's cousin (an uncle), not a cousin; and the fief rank is invented as 'Prince' where the page breaks off after 封郿",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 134,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "項之",
+            "image": "頃之",
+            "problem": "頃 read as 項",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "中服從",
+            "english": "zhong submitted and complied",
+            "problem": "page-seam fragment of 關中 left as a stray 'zhong'",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 142,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "考匊之愛已衰",
+            "english": "the affection shown to Kaoju <note>Liu Yi referring to himself</note>",
+            "problem": "考 (late father) and 匊/鞠 (nurture) read as a personal name 'Kaoju' with an invented note saying it is Liu Yi's self-reference",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The first sentence of the translation is wrapped in an <insert>…</insert> tag visible to the reader",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Accurate transcription; the English is readable but has rank and kinship slips, an invented name gloss, and a leaked <insert> tag.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      3,
+      134
+    ],
+    "reader_summary": "Juan 19–21 of the Wei section (Cao Zhang and Cao Zhi, Cao Cao's other sons, Wang Can's circle, Wei Ji, Liu Yi) in the Siku Quanshu copy. The transcription is of the right text and accurate. The English carries the narrative well but gets noble ranks and kin terms wrong on the genealogical page and invents a gloss in Liu Yi's letter."
+  },
+  {
+    "book_id": "6ae0c66d4adf2ffb52f76311",
+    "slot": 30,
+    "title": "三國志·魏志·卷六~卷七 (Sanguozhi, Siku Quanshu, vol. 4 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 魏志 juan 6 (Yuan Shao) and juan 7 (Lü Bu, Chen Deng/Xu Shang notes).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 24 of 154 pages; 7 backsteps / 17 repeats fit per-juan foliation and misread numerals. Sampled leaves are in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次巳曰事合焉\\n魏志",
+            "image": "(nothing: the column ends 故京師為作諺曰事不)",
+            "problem": "running-header garble appended as if it completed the proverb",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "故京師為作諺曰事不 [次巳曰事合焉]",
+            "english": "the people of the capital made a proverb about him, saying: 'When a matter does not proceed smoothly, speak to Cheng and it is resolved.'",
+            "problem": "the proverb breaks off at 事不 on this leaf; the rest is the translator smoothing header garble into a plausible proverb — close to the real 事不諧問文開, but not text on this page",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<header>欠宅四庫公寫</header>\\n魏志\\n干",
+            "image": "欽定四庫全書 / 魏志 / 二十",
+            "problem": "header and folio garbled",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "人有少智大或癡",
+            "english": "A person may possess little intelligence when young, yet grow up foolish",
+            "problem": "少智 is 'clever when young'; the contrast is reversed (clever as a child, foolish grown)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "A stray 卓 sits inside the English ('states:卓 Zhuo') and the page ends with 'Book of Wei / Chapter'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 108,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The header note in the English says the header was 'transcribed in OCR with error \"鈞定匹庫全書\"' — pipeline commentary shown to the reader",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 116,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "馬日暉",
+            "image": "馬日磾",
+            "problem": "磾 read as 暉; carried into English as 'Ma Ridi' (Ma Midi)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "金寶巴瓦三",
+            "image": "the running header 欽定四庫全書 on the fold",
+            "problem": "header misread, shown as <unclear> in the English",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "司馬章誑",
+            "english": "Master of Records Zhang Kuang",
+            "problem": "司馬 here is a military Major",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription accurate apart from header garble and one misread name; the English is fluent, with one reversed contrast, one smoothed-over garble, and pipeline remarks visible.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      116
+    ],
+    "reader_summary": "Juan 6–7 of the Wei section (Dong Zhuo, Yuan Shao, Yuan Shu, Lü Bu, Zhang Miao, Chen Deng) in the Siku Quanshu copy with Pei's notes. The transcription is of the right text. The English reads well and is mostly faithful, but header garble sometimes surfaces as text or as notes about the OCR, and one name (Ma Midi) is misread."
+  },
+  {
+    "book_id": "6ae0c7ef4adf2ffb52f76f4d",
+    "slot": 31,
+    "title": "三國志·吳志·卷十六~卷二十 (Sanguozhi, Siku Quanshu, vol. 23 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 吳志 juan 16 (Lu Kai), 19 (Zhuge Ke), 19 (Sun Chen) and 20 (Hua He).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 31 of 192 pages; 8 backsteps / 22 repeats fit per-juan foliation and misread numerals. Sampled leaves are in order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "平民屯居略無所入",
+            "english": "The settled civilians resided in farming garrisons and harvested almost nothing",
+            "problem": "the lowland people were gathered into garrisons so the mountain people had nothing to take; the English makes the civilians the ones who went hungry",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Bare <note>Zhuge</note> Ke and <note>Sun</note> Quan markup in the running English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 127,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欽等災圍入城",
+            "image": "欽等突圍入城",
+            "problem": "突 read as 災; English correct ('broke through')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 184,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金定正星全書",
+            "image": "欽定四庫全書",
+            "problem": "header garbled",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "黼黻",
+            "english": "fu and fu <gloss>black and blue axe-head emblems, and black and white square patterns</gloss>",
+            "problem": "colours of the two emblems swapped/garbled",
+            "severity": "minor"
+          },
+          {
+            "source": "擔石之儲",
+            "english": "a single dan ... or shi",
+            "problem": "擔石 split into two measures",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Accurate transcription and faithful English on all four leaves; one moderate misreading of who lacked supplies.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      22,
+      127,
+      184
+    ],
+    "reader_summary": "Juan 16–20 of the Wu section (Lu Kai, Zhuge Ke, Sun Chen, Hua He and others), the last volume of the Siku Quanshu Sanguozhi. The transcription is of the right text and exact on the sampled pages; the English is faithful and readable, with occasional small slips in glosses."
+  },
+  {
+    "book_id": "6ae0c67d4adf2ffb52f76459",
+    "slot": 32,
+    "title": "三國志·魏志·卷十~卷十一 (Sanguozhi, Siku Quanshu, vol. 6 of 23)",
+    "tradition": "zh-sanguozhi",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Chen Shou's Sanguozhi with Pei Songzhi's commentary; the title's juan range matches the juan headers seen on the pages (zh-sanguozhi shelf). Pages are 魏志 juan 10 (Xun Yu, Xun You, Jia Xu) and juan 11 (Tian Chou, Guan Ning).",
+    "rights_flag": null,
+    "structure_note": "Printed folio numbers read on 16 of 152 pages; 4 backsteps / 10 repeats fit per-juan foliation and misread numerals. Sampled leaves are in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "或",
+            "image": "彧",
+            "problem": "Xun Yu's name 彧 transcribed as 或 at every occurrence on the page (about ten times); English correctly gives 'Yu'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "鬼上",
+            "image": "魏志 / 十三 (folio)",
+            "problem": "folio and section label garbled",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "泥志\\n王",
+            "image": "魏志 / 十五 (folio)",
+            "problem": "folio garbled",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "或封户刻石南向",
+            "english": "Some seal their doors and carve stones, turning south to declare themselves king.",
+            "problem": "the page breaks off at 南向; the continuation (以報德) is that people face south to repay Huangfu Song's virtue. 'to declare themselves king' is invented at the page seam and gives a false sense",
+            "severity": "serious",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 91,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "大行軍之守",
+            "image": "(nothing: the column ends 持臣露布)",
+            "problem": "header garble appended as text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "又使部曲持臣露布 [大行軍之守]",
+            "english": "to lead and guide the grand army's march",
+            "problem": "clause translated from the garble; not on the page",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "猶廣武之建燕策",
+            "english": "<note>referring to Kuang Si advising Han Xin</note>",
+            "problem": "廣武 is Li Zuoche, Lord of Guangwu; 'Kuang Si' is an invented name",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 126,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "受詔之曰 / 日侵→曰侵",
+            "image": "受詔之日 / 日侵",
+            "problem": "日/曰 confusion twice",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<meta>continues from previous page: Moreover, I specially received an imperial rescript sealed with the imperial signet...</meta> — invented text for the previous page shown to the reader",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right text, but Xun Yu's name is mistranscribed throughout one page, and the English invents a clause at one page break and a person in one gloss.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      126
+    ],
+    "reader_summary": "Juan 10–11 of the Wei section (Xun Yu, Xun You, Jia Xu; Yuan Huan, Tian Chou, Wang Xiu, Guan Ning) in the Siku Quanshu copy. The transcription is of the right text, but 彧 is written 或 throughout Xun Yu's biography. The English is mostly faithful; at page breaks it sometimes completes a sentence the page does not contain, once giving a false sense."
+  }
+]
