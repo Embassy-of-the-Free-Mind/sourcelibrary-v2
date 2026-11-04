@@ -10,7 +10,7 @@
  * #8049 cell test: first reads of pre-1600 print (the JCB scans) by GPU draft > agy Flash-low, per language, before the
  * language's pages are queued. RULE.md beside the results fixes the decision.
  *
- *   node --env-file=… run.mjs draw    --out=DIR [--tiers=FILE]  30 pages a language (one a book; a language with fewer
+ *   node --env-file=… run.mjs draw    --out=DIR [--tiers=FILE] [--cells=la,..] [--exclude-from=<DIR0>/sample.json]  30 pages a language (one a book; a language with fewer
  *                                                               books takes a second page of a book), images to DIR/img,
  *                                                               engine stage dirs DIR/stage/{pero,lo} (hard links)
  *   (gex45) DIR/gpu-task.sh through /root/gpu-queue: PERO on stage/pero, LightOnOCR on stage/lo
@@ -78,8 +78,10 @@ async function draw() {
   const c = await mongo(), db = c.db('bookstore');
   const sample = { drawn_at: new Date().toISOString(), cells: {} };
   fs.mkdirSync(path.join(OUT, 'img'), { recursive: true });
-  for (const [cell, C] of Object.entries(CELLS)) {
-    const books = tiers.filter((t) => t.language === C.lang).sort((a, b) => h(`8049-${a.book_id}`).localeCompare(h(`8049-${b.book_id}`)));
+  // --exclude-from=<an earlier sample.json>: a second draw for a cell whose written n was too small, from NEW books
+  const EX = arg('exclude-from') ? new Set(Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id))) : new Set();
+  for (const [cell, C] of Object.entries(CELLS).filter(([c]) => !arg('cells') || arg('cells').split(',').includes(c))) {
+    const books = tiers.filter((t) => t.language === C.lang && !EX.has(t.book_id)).sort((a, b) => h(`8049-${a.book_id}`).localeCompare(h(`8049-${b.book_id}`)));
     const picks = [];
     for (let round = 0; picks.length < N && round < 3; round++) {
       for (const t of books) {
