@@ -43,6 +43,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -211,7 +212,8 @@ async function inventory() {
   const { MongoClient } = await import('mongodb');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
-  const lane = await db.collection('lane_judge_verdicts').find({ verdict: { $ne: null } }).toArray();
+  // Live rows only (#7263): a test's rows reach the defect rates through its own score file, never twice.
+  const lane = await db.collection('lane_judge_verdicts').find(verdictQuery({ verdict: { $ne: null } })).toArray();
   for (const r of lane) {
     rows.push({ source: 'lane-judge-sampler', run: `lane:${r.run_id ?? '?'}`, at: r.judged_at ?? null, cell: r.cell, route: r.route, kind: r.kind, task: /-tr$/.test(r.cell) ? 'translation' : 'ocr', lang: r.lang ?? null, page_id: r.page_id, book_id: r.book_id, page_number: r.page_number,
       verdict_id: r._id, prompt: `lane:${r.judge?.prompt_template_sha ?? '?'}`, script: r.script_type ?? null, lane: r.lane, plant: r.plant ?? null, ...summarise(r.verdict) });

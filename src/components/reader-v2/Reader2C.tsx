@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, localeFromPathname, localePath, useLocale, type Locale } from '@/lib/i18n';
 import { LOCALE_NATIVE_NAME, ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
+import { displayPublished } from '@/lib/publication-date';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
@@ -1567,7 +1568,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
     { label: t.fieldLanguage, value: b.language as string },
     { label: t.fieldPlace, value: (fullBook?.place_published as string) || undefined },
     { label: t.fieldPublisher, value: (fullBook?.publisher as string) || undefined },
-    { label: t.fieldPublished, value: b.published as string },
+    { label: t.fieldPublished, value: displayPublished(b.published as string) ?? undefined },
     { label: t.fieldFormat, value: (fullBook?.format as string) || undefined },
     { label: t.fieldPages, value: fullBook?.pages_count ? String(fullBook.pages_count) : undefined },
     // A catalogue identifier, not a word — the same in every language.
@@ -3369,7 +3370,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const citationParts = {
     author: r.book.author ? `${r.book.author}.` : '',
     title: r.book.display_title || r.book.title,
-    year: r.book.published ? `(${r.book.published})` : '',
+    year: displayPublished(r.book.published) ? `(${displayPublished(r.book.published)})` : '',
     locator: r.currentPage?.page_number != null ? `p. ${r.currentPage.page_number}` : '',
     copy: holdingCopy ? `${holdingCopy.statement}.` : '',
     source: 'Source Library',

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { displayPublished } from '@/lib/publication-date';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
 // serves the whole request.
@@ -35,7 +36,8 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
 
   const bookTitle = localizedTitle(book as Parameters<typeof localizedTitle>[0], lang);
   const pageNum = page.page_number;
-  const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
+  const publishedDate = displayPublished(book.published);
+  const ogBookTitle = publishedDate ? `${bookTitle} (${publishedDate})` : bookTitle;
   const title = rs.metaTitle(ogBookTitle, pageNum);
 
   // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
@@ -56,7 +58,7 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // around it follows the locale. An untranslated book keeps its English frame.
   const description = excerpt
     ? `${rs.metaPageOf(pageNum, bookTitle)}, ${book.author}. ${excerpt}`
-    : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
+    : `Page ${pageNum} of "${bookTitle}" by ${book.author}${publishedDate ? ` (${publishedDate})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
   const bookPath = (book as unknown as { slug?: string }).slug || id;

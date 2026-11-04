@@ -11,7 +11,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { BookCheck, PageTextStamp } from '@/lib/book-checks';
 import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, commonKinds, WARNING_KINDS } from '@/lib/book-warnings';
-import { CHECK_METHODS } from '@/lib/check-methods';
+import { CHECK_METHODS, evidenceUrl } from '@/lib/check-methods';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 
 const row = (over: Partial<BookCheck> = {}): BookCheck => ({
@@ -40,6 +40,14 @@ describe('deriveWarnings', () => {
     expect(Object.keys(w.pages).map(Number)).toEqual([7, 9]);
     expect(w.pages[7]).toMatchObject({ level: 'review', kinds: ['invented_transcription'], reader: 'model', imageOpened: true, anchor: pageAnchor(row(), 7) });
     expect(w.book).toMatchObject({ pagesRead: 4, pagesSerious: 2, anchor: checkAnchor(row()) });
+  });
+
+  it('derives nothing from a row written with reader_warning: false: no warning, no "checked", and no clearing (#8069)', () => {
+    const quiet = row({ reader_warning: false, run_id: 'r2', checked_at: new Date('2026-10-08T10:00:00Z') });
+    expect(deriveWarnings([quiet], untouched([7, 8, 9, 10]))).toEqual({ book: null, checked: null, pages: {} });
+    const clean = row({ reader_warning: false, run_id: 'r3', checked_at: new Date('2026-10-08T10:00:00Z'), verdict: 'show', page_findings: [] });
+    expect(deriveWarnings([clean], untouched([7, 8, 9, 10])).checked).toBeNull();
+    expect(Object.keys(deriveWarnings([row(), clean], untouched([7, 8, 9, 10])).pages).map(Number)).toEqual([7, 9]);
   });
 
   it('drops a page whose text was rewritten after the check, from the warning and from both counts', () => {
@@ -166,5 +174,13 @@ describe('the book line says how many pages were clean (#7082)', () => {
       const l = READER_UI_STRINGS[lang].info.qualityBook({ ...base, read: 10, serious: 3 });
       expect(l, lang).toContain('7');
     }
+  });
+});
+
+describe('evidence with no public URL (#8069)', () => {
+  it('a file on a box or in the ops repo has no link; a repo path does', () => {
+    expect(evidenceUrl('box:clawdbot:/mnt/x/verdicts.json')).toBeNull();
+    expect(evidenceUrl('ops:quality-sprint/x.json')).toBeNull();
+    expect(evidenceUrl('scripts/eval/results/x.json')).toMatch(/blob\/main\/scripts\/eval\/results\/x\.json$/);
   });
 });
