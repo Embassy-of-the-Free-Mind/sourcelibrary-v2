@@ -89,6 +89,8 @@ export function isProtectedSurface(host: string, pathname: string): boolean {
   const h = host.toLowerCase().split(':')[0];
   // A deployment calling itself (pipeline/step) carries no user agent worth the name.
   if (h === process.env.VERCEL_URL?.toLowerCase()) return false;
+  // The proxy logs each refusal by posting to its own host as `node`; refusing that loses the log.
+  if (pathname === '/api/analytics/bots') return false;
   if (h === 'bph.sourcelibrary.org') return true;
   return pathname === '/embed/bph' || pathname.startsWith('/embed/bph/') || pathname.startsWith('/api/bph/');
 }
