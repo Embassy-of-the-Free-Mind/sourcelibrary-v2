@@ -230,7 +230,7 @@ export function score() {
   for (const a of arms.filter((x) => x !== 'S')) {
     const ms = J('sample.json').pages.map((p) => readArm(a, p.page_id)?.meta).filter(Boolean);
     const sum = (f) => ms.reduce((s, m) => s + (Number(m.call_usage?.[f]) || 0), 0);
-    out.tokens[a] = { reads: ms.length, input: sum('input_tokens'), output: sum('output_tokens'), thinking: sum('thinking_tokens'), total: sum('total_tokens'), attempts: ms.reduce((s, m) => s + (m.attempts || 1), 0), prompt_chars: ms.reduce((s, m) => s + (m.prompt_sent_chars || 0), 0) };
+    out.tokens[a] = { reads: ms.length, input: sum('input'), output: sum('output'), thinking: sum('thinking'), cache_read: sum('cache_read'), total: sum('total'), attempts: ms.reduce((s, m) => s + (m.attempts || 1), 0), prompt_chars: ms.reduce((s, m) => s + (m.prompt_sent_chars || 0), 0) };
   }
   out.verdict_calls = jsonl(path.join(OUT, 'verdicts-opus.jsonl')).length;
   out.list_usd_judge = +jsonl(path.join(OUT, 'verdicts-opus.jsonl')).reduce((s, r) => s + (r.list_usd || 0), 0).toFixed(2);
