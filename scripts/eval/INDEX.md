@@ -102,6 +102,7 @@ Read these for the house conventions before designing a new study.
 - `PREREGISTRATION-translation-restraint.md`
 - `PREREGISTRATION-translation-seam-confirm.md`
 - `PREREGISTRATION-translation-student-5793.md`
+- `PREREGISTRATION-wisdom-counsel.md`
 - `PREREGISTRATION-zh-manuscript-engines-5660.md`
 
 ## Scripts
