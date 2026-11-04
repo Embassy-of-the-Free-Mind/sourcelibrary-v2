@@ -743,8 +743,15 @@ export async function proxy(request: NextRequest) {
 
   // The Embassy's reading surfaces take the apex's client-hint rule, and refuse
   // plain HTTP libraries and a crawler's name from an address that is not that
-  // crawler (#8098). Policy pages stay readable. BPH_BOT_GATE_ENFORCE=0 turns it off.
-  if (isProtectedSurface(request.headers.get('host') || '', pathname) && !isBotReadablePath(pathname)) {
+  // crawler (#8098). Policy pages stay readable. An alias host's redirect below
+  // serves nothing and lands here on the canonical host. BPH_BOT_GATE_ENFORCE=0 turns it off.
+  const surfaceHost = request.headers.get('host') || '';
+  const surfaceAlias = aliasPolicyForHost(surfaceHost);
+  if (
+    isProtectedSurface(surfaceHost, pathname)
+    && !isBotReadablePath(pathname)
+    && !(surfaceAlias && shouldRedirectToCanonical(pathname, surfaceAlias))
+  ) {
     const refusal = await surfaceRefusal(request.headers, getClientIp(request));
     if (refusal && !(await hasVerifiedCredential(request))) {
       logBotAccess(request, `refused-${refusal}`);
