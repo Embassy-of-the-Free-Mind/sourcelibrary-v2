@@ -11,8 +11,8 @@
  *
  *  2. TRAINING / BULK crawlers (ClaudeBot, GPTBot, Google-Extended, CCBot,
  *     Applebot-Extended, Meta-ExternalAgent, anthropic-ai, …) are RESERVED.
- *     Our translations are CC-BY-SA 4.0 — whose ShareAlike term is incompatible
- *     with proprietary model training — so AI training / text-and-data-mining
+ *     Our translations are CC BY-NC-SA 4.0, non-commercial only, and the terms apply
+ *     to site and API use, so commercial AI training / text-and-data-mining
  *     requires a SEPARATE license. See https://sourcelibrary.org/licensing and
  *     the machine-readable reservation at /.well-known/tdmrep.json (TDMRep) plus
  *     the TDM-Reservation HTTP header. A standing rate card is published at

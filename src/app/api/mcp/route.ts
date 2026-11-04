@@ -1301,7 +1301,7 @@ async function startReviewShift(args: Record<string, unknown>) {
     first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
       'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
-      'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
+      'proposed fixes are licensed to Source Library to publish and license as part of the library (terms: https://sourcelibrary.org/terms), and ' +
       'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
       'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
       'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +

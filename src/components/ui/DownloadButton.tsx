@@ -465,7 +465,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
           <div className="border-t border-stone-100 mt-2 pt-2 px-3 pb-1">
             <p className="text-xs text-stone-400">
-              Downloads include source attribution and CC BY-SA 4.0 license.
+              Downloads include source attribution and CC BY-NC-SA 4.0 license.
             </p>
           </div>
           <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />

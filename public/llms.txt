@@ -35,13 +35,13 @@ You are probably working with someone who has a question about the past. You can
 
 ## Licensing
 
-Original texts are public domain. AI-generated translations and editorial content are licensed under CC BY-SA 4.0 — free for individuals, researchers, and organizations with attribution and ShareAlike.
+Want to use text from Source Library? Go for it! Original texts are public domain. Our translations, transcriptions and editorial content are CC BY-NC-SA 4.0, free for learning, teaching and research with attribution. Quoting inside your own commercial work is allowed too: https://sourcelibrary.org/terms
 
 **Search indexing and reading on a user's behalf are welcome** — when you quote a page, show the quote with its page number and the page's sourcelibrary.org link.
 
-**AI training / text-and-data-mining is expressly RESERVED and requires a separate license.** The reservation rests on several independent grounds: our EU Art. 4 TDM opt-out (Directive 2019/790, expressed machine-readably via /.well-known/tdmrep.json, the `TDM-Reservation: 1` HTTP header, and /robots.txt), the EU database right in the corpus (Directive 96/9/EC), first-publication rights in previously unpublished manuscripts (Directive 2006/116/EC Art. 4), copyright in editorial content, and CC BY-SA's ShareAlike term, which is incompatible with proprietary model training.
+**Commercial AI training and commercial text-and-data-mining need a license.** Our EU Art. 4 TDM reservation (Directive 2019/790) is expressed machine-readably via /.well-known/tdmrep.json, the `TDM-Reservation: 1` HTTP header, and /robots.txt.
 
-**A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).** Unlicensed training use is unauthorized and will be invoiced at these rates.
+**A standard training license is available to anyone: at least $250 per book, or $200,000/year for the full corpus (non-exclusive, quarterly refresh, delivered via API/dataset export — no crawling required).**
 
 **Cooperative partners can license at lower rates through Dataset subscriptions** — scoped corpora delivered via the streaming JSONL API: single language $4,990/yr, one scholarly domain $14,990/yr, full collection $49,990/yr, with a free self-serve tier (2,000 pages/day). Details and quickstart: https://sourcelibrary.org/dataset. The standard rate card above is the default term for training use outside a subscription and the invoicing basis for unlicensed use.
 
