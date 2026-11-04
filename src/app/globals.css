@@ -1083,6 +1083,14 @@ mark {
   a[href]::after { content: none !important; }
 }
 
+/* The book hero's height unit. Inside a partner iframe `vh` is a share of the
+   FRAME's height, and the host (public/embed/v1.js) sizes the frame to fit the
+   page, so a hero sized in vh grows the frame that grows the hero: at 75vh it
+   settled at 4x the page's other content and showed a blown-up crop. Framed,
+   the unit is a fixed length: 1% of a typical 850px window. */
+:root { --hero-vh: 1vh; }
+.embed-mode { --hero-vh: 8.5px; }
+
 /* Embed mode — hide all chrome when rendered inside an iframe */
 .embed-mode ~ header,
 .embed-mode ~ footer,

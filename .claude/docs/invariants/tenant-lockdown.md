@@ -38,6 +38,8 @@ Tenant subdomains (e.g. `bph.sourcelibrary.org`) MUST be a closed system. Visito
 
 **Never branch on `usePathname()` in a component that can render on a tenant host.** The proxy *rewrites* `/` → `/embed/<tenant>` internally, but `usePathname()` returns the **browser** path (`/`). So a check like `pathname.startsWith('/embed/')` fires on the apex — where it is not needed — and is silently inert on the subdomain, where it is. That inverted guard is exactly what #3383 shipped. Gate on the host (`useEmbedContext`) or on the `x-tenant-*` headers the proxy stamps, never on the public path.
 
+**Inside a partner frame, `vh` is not the visitor's window.** `embed/v1.js` sizes the iframe to fit its page, so `vh` there is a share of a height the page itself sets: anything sized in `vh` grows the frame that grows it. A `75vh` book hero settled at 4x the page's other content and showed a blown-up crop on every book page on the Embassy's site, from 2026-07-22 until it was reported on 2026-11-04 (#8054). The page looked right on sourcelibrary.org and at `/embed/bph` opened directly, because neither resizes a frame. Size such elements from a variable with a fixed length under `.embed-mode` (`--hero-vh`). `min-h-screen` in the frame cannot run away on its own but cannot shrink either. **Check:** `node scripts/audit/embed-frame-height.mjs` loads a page in a real resizing frame; a plain request or a direct visit cannot see this.
+
 ## Self-serve reading rooms (`/rooms/<slug>`, #5266)
 
 A reading room is the partner-room machinery opened to any signed-in reader: a
