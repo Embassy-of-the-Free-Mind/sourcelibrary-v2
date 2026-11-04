@@ -2582,11 +2582,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // ("By default we shouldn't show the ocr", Derek 2026-10-23, #7189). It
   // stays on where it IS the reading text: an English book, or a book with
   // nothing translated yet.
-  const ocrByDefault = readsOriginal(siteLocale)
+  // A book we translated into the site's own language opens in that edition:
+  // on /zh, Flora Sinensis reads in 中文 beside the scan, with the Latin one switch away (#7537).
+  const opensInSiteEdition = siteLocale === 'zh' && (initialBook.pages_translated_zh ?? 0) > 0;
+  const ocrByDefault = !opensInSiteEdition && (readsOriginal(siteLocale)
     || isEnglishBookFn(initialBook.language)
-    || !(initialPage.translation?.data || (initialBook.pages_translated ?? 0) > 0);
+    || !(initialPage.translation?.data || (initialBook.pages_translated ?? 0) > 0));
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, {
-    scan: true, ocr: ocrByDefault, en: !readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language), translit: false,
+    scan: true,
+    ocr: ocrByDefault,
+    en: opensInSiteEdition || (!readsOriginal(siteLocale) && !isEnglishBookFn(initialBook.language)),
+    translit: false,
   });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
