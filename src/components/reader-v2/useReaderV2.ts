@@ -458,7 +458,9 @@ export function useReaderV2(
       // The scan is the only pane up, and the last pane stays on.
       if (key === 'scan') return;
       setTextPanesAsked(true);
-      setViews(prev => ({ ...prev, scan: true, [key]: true }));
+      // Just the pane they tapped. Not persisted: their stored choice was not
+      // what was on screen here, so this tap says nothing about it.
+      setViews({ scan: true, ocr: false, en: false, translit: false, [key]: true });
       return;
     }
     setViews(prev => {
