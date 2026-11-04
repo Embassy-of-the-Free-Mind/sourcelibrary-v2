@@ -11,6 +11,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { computeIdentityFields } from '../../lib/identity-fields.mjs';
+import { setCatalogueFields } from '../../lib/catalogue-fields.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; #8049)';
@@ -30,7 +31,11 @@ for (const b of docs) {
   const ident = computeIdentityFields({ ...b, title });
   n++;
   console.log(`${APPLY ? 'SET ' : 'DRY '} ${b.ia_identifier.padEnd(28)} vol ${String(vol).padEnd(8)} ${ident.edition_key}`);
-  if (APPLY) await books.updateOne({ _id: b._id }, { $set: { title, ...ident, updated_at: new Date() } });
+  if (APPLY) {
+    // the title through the catalogue gate (its provenance stamp); the identity keys it derives are not catalogue fields
+    await setCatalogueFields(mc.db('bookstore'), b.id, { title }, { source: `archive.org metadata volume (${b.ia_identifier})`, script: 'scripts/import/jcb-1600/volume-titles.mjs', issue: 8049 });
+    await books.updateOne({ _id: b._id }, { $set: { ...ident, updated_at: new Date() } });
+  }
 }
 console.log(`${n} of ${docs.length} books ${APPLY ? 'retitled' : 'would be retitled'}`);
 await mc.close();

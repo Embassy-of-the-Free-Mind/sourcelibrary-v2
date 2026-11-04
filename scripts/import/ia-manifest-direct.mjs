@@ -44,7 +44,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
-import { makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const COMMIT = process.argv.includes('--commit');
@@ -251,7 +251,9 @@ async function main() {
         details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, release_when: fields.pipeline_auto.hold.release_when, at_insert: true } });
       const back = await db.collection('books').findOne({ id: realId }, { projection: { 'pipeline_auto.hold.reason': 1 } });
       h = { outcome: back?.pipeline_auto?.hold?.reason === HOLD.reason ? 'held' : 'MISSING' };
-      if (h.outcome === 'held') heldOk++; else console.log(`WARN  ${b.id} — hold not found after insert`);
+      // Not there (the gate built its own document): hold it now, before any page exists, as the importer did before.
+      if (h.outcome !== 'held') { h = await holdBook(db, realId, HOLD); console.log(`WARN  ${b.id} — hold not found after insert; holdBook: ${h.outcome}`); }
+      if (h.outcome === 'held') heldOk++;
     }
     const CHUNK = 500;
     for (let s = 0; s < pageCount; s += CHUNK) {
