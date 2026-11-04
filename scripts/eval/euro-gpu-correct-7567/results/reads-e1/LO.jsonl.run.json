@@ -1,0 +1,12 @@
+{
+ "mode": "lighton",
+ "model": "m",
+ "pages_this_pass": 252,
+ "clients": 8,
+ "wall_secs": 354.9,
+ "pages_per_hour": 2556,
+ "errors": 252,
+ "hit_cap": 2,
+ "out_tok": 180885,
+ "in_tok": 604620
+}

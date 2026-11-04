@@ -126,6 +126,21 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'agrippa-against-himself',
+    title: 'Agrippa Against Himself',
+    subtitle:
+      'He wrote the textbook of Renaissance magic, then a book declaring all learning vain, magic included. Read through his own pages.',
+    summary:
+      'Cornelius Agrippa wrote the textbook of Renaissance magic, then recanted it in a book on the vanity of learning. His books, and the accused woman he saved.',
+    date: '28 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Title page of the 1533 Cologne De occulta philosophia (the C. G. Jung copy, e-rara), reader page 6, opened by eye.
+    image: 'https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg',
+    imageAlt:
+      'Title page of De occulta philosophia libri tres (Cologne, 1533), with a woodcut portrait of Agrippa in a cap and fur collar.',
+  },
+  {
     slug: 'aldine-roman',
     title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
     subtitle: 'Francesco Griffo’s roman type for Aldus, traced letter by letter from our copy of De Aetna (1496).',
@@ -146,8 +161,8 @@ export const posts: BlogPost[] = [
     date: '6 October 2026',
     readTime: '',
     kind: 'tours',
-    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
-    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
+    image: '/articles/beeckman-on-drebbel/drebbel-submarine.jpg',
+    imageAlt: 'Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving.',
   },
   {
     slug: 'search-by-meaning',
@@ -1095,6 +1110,30 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
+  },
+  {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 815,000 works printed in Europe before 1700, about 18,000 to 39,000 have ever been put into English. Three estimates, and why catalogues miss most.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
+  },
+  {
+    slug: 'how-much-in-english',
+    title: 'How Much of the Written Past Can You Read in English?',
+    subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
+    summary:
+      'How many old books and manuscripts survive in Latin, Arabic, Sanskrit, Tibetan, Chinese and more, how many are scanned, and how few are in English.',
+    date: '30 October 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: 'Engraved frontispiece of Athanasius Kircher, Turris Babel (Amsterdam, 1679): robed figures in the foreground, the tower rising in the background under a sky of angels.',
   },
   {
     slug: 'counting-the-gap',

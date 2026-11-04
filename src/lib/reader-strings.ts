@@ -399,6 +399,10 @@ export interface ReaderStrings {
     /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means, and to check the scan. */
     qualitySeriousMeans: string;
     qualitySeeReview: string;
+    /** The book line when the newest review found no serious error on the pages it read (#7896). */
+    qualityChecked: (o: { ai: boolean; image: boolean; read: number; date: string }) => string;
+    /** The book line when no check of the book is recorded (#7896). */
+    qualityNotChecked: string;
     qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
@@ -1018,6 +1022,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBookKinds: (clauses) => `Most often, ${clauses.join('; next, ')}.`,
       qualitySeriousMeans: 'Serious means an error that changes what the text says, such as a wrong word, name or number, or a missing or invented passage, not a spelling slip. Before you quote a passage, compare it with the scan, which is the original.',
       qualitySeeReview: 'See the review',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'An AI reviewer' : 'A reviewer'} checked ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date} and found no serious errors.`,
+      qualityNotChecked: 'This transcription has not yet been checked against the scans.',
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
@@ -1513,6 +1519,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBookKinds: (clauses) => `Lo más frecuente: ${clauses.join('; después, ')}.`,
       qualitySeriousMeans: 'Grave significa un error que cambia lo que dice el texto, como una palabra, un nombre o un número equivocados, o un pasaje que falta o que se ha inventado, no una simple errata. Antes de citar un pasaje, compárelo con la imagen, que es el original.',
       qualitySeeReview: 'Ver la revisión',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Un revisor de IA' : 'Un revisor'} revisó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date} y no encontró errores graves.`,
+      qualityNotChecked: 'Esta transcripción aún no se ha cotejado con las imágenes.',
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
@@ -2035,6 +2043,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBookKinds: (clauses) => `Saepissime: ${clauses.join('; deinde: ')}.`,
       qualitySeriousMeans: 'Grave dicitur mendum quod sensum textus mutat, ut verbum, nomen vel numerus falsus, aut locus omissus vel fictus, non levis error scribendi. Antequam locum citas, cum imagine confer, quae archetypum est.',
       qualitySeeReview: 'Recensionem vide',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date}) nec menda gravia invenit.`,
+      qualityNotChecked: 'Haec transcriptio cum imaginibus nondum collata est.',
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
       sourceLink: 'fons',
@@ -2537,6 +2547,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBookKinds: (clauses) => `Het vaakst: ${clauses.join('; daarna: ')}.`,
       qualitySeriousMeans: 'Ernstig betekent een fout die verandert wat de tekst zegt, zoals een verkeerd woord, een verkeerde naam of een verkeerd getal, of een ontbrekende of verzonnen passage, geen spelfout. Vergelijk een passage met de scan voordat u haar citeert: de scan is het origineel.',
       qualitySeeReview: 'Bekijk de beoordeling',
+      qualityChecked: ({ ai, image, read, date }) => `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''} en vond geen ernstige fouten.`,
+      qualityNotChecked: 'Deze transcriptie is nog niet met de scans vergeleken.',
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
       sourceLink: 'bron',
@@ -3033,6 +3045,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityBookKinds: (clauses) => `最常见的是：${clauses.join('；其次是：')}。`,
       qualitySeriousMeans: '“严重错误”指改变文本意思的错误，例如字词、人名或数字有误，或段落缺失、凭空捏造，而不是一般的笔误。引用某段文字前，请对照扫描图核对，扫描图才是原件。',
       qualitySeeReview: '查看审校记录',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页，未发现严重错误。`,
+      qualityNotChecked: '此转录尚未对照扫描图核对。',
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
       sourceLink: '来源',

@@ -1,0 +1,3298 @@
+{
+ "scored_at": "2026-10-31T12:45:12.499Z",
+ "rule": "scripts/eval/experiments/2026-10-31-fraktur-open-models-7845.md",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind",
+ "rounds": {
+  "1": [
+   "6a2679fa6c1f37c9c4f2cc01",
+   "6a26b88661b3857ed05a64d8",
+   "6a495080b9cd91959af3b84f",
+   "6a26d8fd774aa3596e88c658",
+   "6a26d1b1f5273a8d907a00b3",
+   "69b6ba938566c8381463223d"
+  ],
+  "2": [
+   "6a26c948aad44c98627f0a34",
+   "6a26da7a05d7c1d9b10872b5",
+   "6a493adbf36483abc5bba182",
+   "6a453286d202169083a37578",
+   "6a4940bbf36483abc5bbc93d",
+   "6a26db4c05d7c1d9b108c6c5",
+   "6a26cba55ac5aecc53cec42b",
+   "6a26d210f5273a8d907a260b",
+   "6a26cbab5ac5aecc53cec6f0"
+  ],
+  "3": [
+   "6a26d2def5273a8d907a680a",
+   "6a26d2bff5273a8d907a62ed",
+   "6a26c938aad44c98627f0993"
+  ]
+ },
+ "arms": {
+  "a": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_lsh4 (calamari_models_experimental v0.0.3), 5 checkpoints voting",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.245,
+    "median_l1_cer": 0.221
+   },
+   "lines_mean": 35.667,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 7.709,
+    "pages_per_hour": 161,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 260,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 164,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 188,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 198,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 190,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 332,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 166,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 423,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 260,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 387,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 309,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 276,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 359,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 93,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 216,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 350,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 433,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 235,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "a2": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_fraktur-hist (calamari_models_experimental v0.0.3), 5 voting",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.433,
+    "median_l1_cer": 0.456
+   },
+   "lines_mean": 35.444,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 7.673,
+    "pages_per_hour": 161,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 220,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 80,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 96,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 175,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 185,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 311,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 123,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 319,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 247,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 305,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 304,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 258,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 303,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 83,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 127,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 304,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 386,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 188,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "b": {
+   "engine": "calamari 2.3.1",
+   "model": "fraktur_historical (calamari_models 2.2, GT4HistOCR Fraktur), 5 voting",
+   "seg": "S1",
+   "judge": false,
+   "written": "10/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 6,
+    "wt": 0,
+    "pending": 9,
+    "alive": false,
+    "passed": false,
+    "stopped_after_round": 1
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 7,
+    "mean_l1_cer": 0.974,
+    "median_l1_cer": 0.979
+   },
+   "lines_mean": 15.111,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 2.601,
+    "pages_per_hour": 208,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 49,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 29,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 35,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 43,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 27,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 36,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 43,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 33,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 48,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 63,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": false,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 0,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "b2": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_fraktur19 (calamari_models_experimental v0.0.3), 5 voting",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.249,
+    "median_l1_cer": 0.22
+   },
+   "lines_mean": 35.778,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 10.242,
+    "pages_per_hour": 144,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 253,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 148,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 179,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 190,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 191,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 277,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 138,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 405,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 197,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 351,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 304,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 277,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 341,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 102,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 212,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 293,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 381,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 216,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "c1": {
+   "engine": "kraken 7.1.1",
+   "model": "austriannewspapers.mlmodel (zenodo 7933402)",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.157,
+    "median_l1_cer": 0.102
+   },
+   "lines_mean": 35.778,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 6.356,
+    "pages_per_hour": 171,
+    "threads": 6
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 233,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 144,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 110,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 193,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 190,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 300,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 143,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 407,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 199,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 381,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 295,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 279,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 355,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 95,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 220,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 274,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 353,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 229,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "c2": {
+   "engine": "kraken 7.1.1",
+   "model": "austriannewspapers.mlmodel (zenodo 7933402)",
+   "seg": "S2",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.692,
+    "median_l1_cer": 0.669
+   },
+   "lines_mean": 35,
+   "secs_per_page": {
+    "segment": 4.428,
+    "recognise": 3.407,
+    "pages_per_hour": 459,
+    "threads": 6
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 161,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 104,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 22,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 177,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 169,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 173,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 36,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 200,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 131,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 293,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 186,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 254,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 336,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 76,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 152,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 157,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 248,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 52,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "d": {
+   "engine": "kraken 7.1.1",
+   "model": "McCATMuS_nfd_nofix_V1.mlmodel (zenodo 13788177)",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.304,
+    "median_l1_cer": 0.265
+   },
+   "lines_mean": 35.833,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 4.817,
+    "pages_per_hour": 184,
+    "threads": 6
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 248,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 158,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 101,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 202,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 191,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 350,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 164,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 432,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 252,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 403,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 312,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 279,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 356,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 95,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 243,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 331,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 427,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 240,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "e": {
+   "engine": "kraken 7.1.1",
+   "model": "CATMuS-Gothic-Print-1.0.0.mlmodel (zenodo 10599911)",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.195,
+    "median_l1_cer": 0.138
+   },
+   "lines_mean": 35.833,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 4.156,
+    "pages_per_hour": 191,
+    "threads": 6
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 267,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 163,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 216,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 203,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 192,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 347,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 170,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 432,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 259,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 420,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 315,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 284,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 379,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 127,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 246,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 359,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 449,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 248,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "aw": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_lsh4, 5 voting, paper-filled S1 crops",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "6",
+   "accepted": "0/6",
+   "wrong_text_pages": "4/6",
+   "wrong_text_per_1000_words": 4.642,
+   "misleads_per_1000_words": 24.536,
+   "words_judged": 1508,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 6,
+    "wt": 4,
+    "pending": 9,
+    "alive": false,
+    "passed": false,
+    "stopped_after_round": 1
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.115,
+    "median_l1_cer": 0.056
+   },
+   "lines_mean": 35.778,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 9.127,
+    "pages_per_hour": 151,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 266,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 160,
+     "wt_defects": 3,
+     "misleads": 3,
+     "examples": [
+      "O6: den ri Ʒeit — leaf reads 'dinari Zeit' (end of ordinari split from the previous page)",
+      "O6: gelig geſagt — leaf reads 'genug gesagt'"
+     ]
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 209,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 201,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 191,
+     "wt_defects": 1,
+     "misleads": 2,
+     "examples": [
+      "O7: 17 — the section heading '§. 9.' is given as '17', so the section number is wrong and"
+     ]
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 343,
+     "wt_defects": 1,
+     "misleads": 3,
+     "examples": [
+      "O6: ohn eingemachten Lab. — page reads 'Leib', not 'Lab'"
+     ]
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": false,
+     "words": 168,
+     "wt_defects": 0,
+     "misleads": 7,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 426,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 274,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 405,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 313,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 283,
+     "wt_defects": 2,
+     "misleads": 8,
+     "examples": [
+      "O6: Sandarnea. Sandarapu. Es ia — page has 'Sandaraca. Sandaraque. Es iſt'",
+      "O6: welche nan deſilien will .ſ. D. 4 — page has 'welche man deſtilliren will, u. ſ. w. L.'; the signature 'L.' is misre"
+     ]
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 361,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 95,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 243,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": false,
+     "words": 363,
+     "wt_defects": 0,
+     "misleads": 14,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 459,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 242,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "a2w": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_fraktur-hist, 5 voting, paper-filled S1 crops",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "6",
+   "accepted": "1/6",
+   "wrong_text_pages": "4/6",
+   "wrong_text_per_1000_words": 8.005,
+   "misleads_per_1000_words": 22.015,
+   "words_judged": 1499,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 1,
+    "fail": 5,
+    "wt": 4,
+    "pending": 9,
+    "alive": false,
+    "passed": false,
+    "stopped_after_round": 1
+   },
+   "wrong_page_controls": [
+    {
+     "accept": false,
+     "fidelity": 1
+    }
+   ],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.119,
+    "median_l1_cer": 0.07
+   },
+   "lines_mean": 35.833,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 6.784,
+    "pages_per_hour": 167,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 266,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 161,
+     "wt_defects": 3,
+     "misleads": 7,
+     "examples": [
+      "O6: dmnrl Ʒeit — '(or)dinari Zeit' garbled into a non-word",
+      "O6: §Axionihus, oder Küſſen foriert — page reads 'Fluxionibus, oder Flüſſen foviert'"
+     ]
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 199,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 203,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 191,
+     "wt_defects": 2,
+     "misleads": 1,
+     "examples": [
+      "O7: 6 — a stray numeral '6' appears at the top that the page does not have; the page's s",
+      "O5: ſen, und GOtt gab ein groß Heyl.\nUnd dieſe drey — the centred section heading '§. 9.' between the paragraphs is left out"
+     ]
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": true,
+     "wt": false,
+     "words": 342,
+     "wt_defects": 0,
+     "misleads": 1,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": false,
+     "words": 166,
+     "wt_defects": 0,
+     "misleads": 5,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 427,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 264,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 409,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 312,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 284,
+     "wt_defects": 4,
+     "misleads": 9,
+     "examples": [
+      "O6: weniger ſeine Sandarten. Den ſein- — page has 'feine' and 'fein-' (fine), not 'ſeine' (his)",
+      "O10: Sanda. Sanlaragte. Es in — page reads 'Sandaraca. Sandaraque. Es iſt'"
+     ]
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 361,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 98,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 240,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 355,
+     "wt_defects": 3,
+     "misleads": 10,
+     "examples": [
+      "O6: Couar. er e ſol. Jul. Clar. 5. Menochae arbit. — citation 'Couar. 1. var. resol. Iul. Clar. §. fin. q. 55. Menoch. de arbit.' gar",
+      "O6: bekantnuß mit rechtmäſſig — page reads 'nit rechtmäſſig'; the negation is lost and the sense flips"
+     ]
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 458,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 241,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "b2w": {
+   "engine": "calamari 2.3.1",
+   "model": "deep3_fraktur19, 5 voting, paper-filled S1 crops",
+   "seg": "S1",
+   "written": "18/18",
+   "judged": "6",
+   "accepted": "0/6",
+   "wrong_text_pages": "6/6",
+   "wrong_text_per_1000_words": 20.675,
+   "misleads_per_1000_words": 25.5,
+   "words_judged": 1451,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 6,
+    "wt": 6,
+    "pending": 9,
+    "alive": false,
+    "passed": false,
+    "stopped_after_round": 1
+   },
+   "wrong_page_controls": [
+    {
+     "accept": false,
+     "fidelity": 1
+    },
+    {
+     "accept": false,
+     "fidelity": 1
+    },
+    {
+     "accept": false,
+     "fidelity": 1
+    }
+   ],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.144,
+    "median_l1_cer": 0.082
+   },
+   "lines_mean": 35.833,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 6.794,
+    "pages_per_hour": 167,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 262,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 158,
+     "wt_defects": 6,
+     "misleads": 7,
+     "examples": [
+      "O6: den ri Ʒeit — 'dinari Zeit' (end of ordinari) misread",
+      "O6: gelig geſagt — 'genug' misread"
+     ]
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 204,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 201,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 191,
+     "wt_defects": 1,
+     "misleads": 1,
+     "examples": [
+      "O11: 6\nV7 — the running-head ornament ')o(' is turned into two invented lines, '6' and 'V7'"
+     ]
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 329,
+     "wt_defects": 5,
+     "misleads": 8,
+     "examples": [
+      "O6: der Eurus und Vorcas — page reads 'Boreas'; the name of this wind is misread throughout",
+      "O6: Nabelgegen dem Vorens über, da wächſt der Kuſter — page reads 'Boreas' and 'Auster'"
+     ]
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 160,
+     "wt_defects": 2,
+     "misleads": 7,
+     "examples": [
+      "O6: wershhbbſhee v reffliehen werden — garbled; the page reads 'wers hübſcher vñ trefflicher werden'",
+      "O6: Darund muß ein ſanfftes Frider — page has 'Darumb ... ſanfftes Fewer'; 'Frider' is not a word"
+     ]
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 427,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 238,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 397,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 311,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 282,
+     "wt_defects": 5,
+     "misleads": 7,
+     "examples": [
+      "O6: eder weniger ſchmei-\nbare — page has oder weniger ſchmelʒ-bare; ſchmeibare is not a word",
+      "O10: (Glaren Kablon) — the Latin/French gloss Glarea. Sablon is garbled"
+     ]
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 359,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 93,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 238,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": true,
+     "accept": false,
+     "wt": true,
+     "words": 331,
+     "wt_defects": 11,
+     "misleads": 7,
+     "examples": [
+      "O6: Reioder Ker Bekamnuß — 'Rei oder Reæ Bekantnuß' is misread; 'Ker' is not a word on the page",
+      "O6: lucker allein durch betrug — 'Iudex' is read as 'lucker' here and again further down the page"
+     ]
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 431,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 237,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  },
+  "bw": {
+   "engine": "calamari 2.3.1",
+   "model": "fraktur_historical, paper-filled S1 crops",
+   "seg": "S1",
+   "judge": false,
+   "written": "18/18",
+   "judged": "0",
+   "accepted": "0/0",
+   "wrong_text_pages": "0/0",
+   "wrong_text_per_1000_words": null,
+   "misleads_per_1000_words": null,
+   "words_judged": 0,
+   "gate": {
+    "judged_pages": 15,
+    "ok": 0,
+    "fail": 0,
+    "wt": 0,
+    "pending": 15,
+    "alive": true,
+    "passed": false,
+    "stopped_after_round": null
+   },
+   "wrong_page_controls": [],
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.805,
+    "median_l1_cer": 0.82
+   },
+   "lines_mean": 33,
+   "secs_per_page": {
+    "segment": 14.714,
+    "recognise": 2.698,
+    "pages_per_hour": 207,
+    "threads": 8
+   },
+   "rows": [
+    {
+     "page_id": "6a453286d202169083a37578",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 196,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "69b6ba938566c8381463223d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 80,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2def5273a8d907a680a",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 87,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d2bff5273a8d907a62ed",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 143,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d1b1f5273a8d907a00b3",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 157,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 230,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 119,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c938aad44c98627f0993",
+     "gate": false,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 328,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a4940bbf36483abc5bbc93d",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 184,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a493adbf36483abc5bba182",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 238,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d210f5273a8d907a260b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 203,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26d8fd774aa3596e88c658",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 158,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26db4c05d7c1d9b108c6c5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 273,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26da7a05d7c1d9b10872b5",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 52,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cbab5ac5aecc53cec6f0",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 139,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a495080b9cd91959af3b84f",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 219,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26c948aad44c98627f0a34",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 286,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    },
+    {
+     "page_id": "6a26cba55ac5aecc53cec42b",
+     "gate": true,
+     "written": true,
+     "judged": false,
+     "accept": false,
+     "wt": false,
+     "words": 154,
+     "wt_defects": 0,
+     "misleads": 0,
+     "examples": []
+    }
+   ]
+  }
+ },
+ "context": {
+  "c0": {
+   "accepted_7701": "0/18",
+   "wrong_text_7701": "17/18",
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.157,
+    "median_l1_cer": 0.102
+   }
+  },
+  "lighton": {
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.057,
+    "median_l1_cer": 0.034
+   }
+  },
+  "pero": {
+   "agreement_with_accepted_read4": {
+    "n": 13,
+    "mean_l1_cer": 0.121,
+    "median_l1_cer": 0.046
+   }
+  }
+ },
+ "line_coverage": [
+  {
+   "page_id": "6a453286d202169083a37578",
+   "read4_lines": 35,
+   "S1": 34,
+   "S2": 34,
+   "S1_ratio": 0.971,
+   "S2_ratio": 0.971
+  },
+  {
+   "page_id": "69b6ba938566c8381463223d",
+   "read4_lines": 28,
+   "S1": 29,
+   "S2": 29,
+   "S1_ratio": 1.036,
+   "S2_ratio": 1.036
+  },
+  {
+   "page_id": "6a26d1b1f5273a8d907a00b3",
+   "read4_lines": 27,
+   "S1": 30,
+   "S2": 29,
+   "S1_ratio": 1.111,
+   "S2_ratio": 1.074
+  },
+  {
+   "page_id": "6a2679fa6c1f37c9c4f2cc01",
+   "read4_lines": 35,
+   "S1": 35,
+   "S2": 36,
+   "S1_ratio": 1,
+   "S2_ratio": 1.029
+  },
+  {
+   "page_id": "6a26b88661b3857ed05a64d8",
+   "read4_lines": 28,
+   "S1": 28,
+   "S2": 30,
+   "S1_ratio": 1,
+   "S2_ratio": 1.071
+  },
+  {
+   "page_id": "6a4940bbf36483abc5bbc93d",
+   "read4_lines": 33,
+   "S1": 34,
+   "S2": 35,
+   "S1_ratio": 1.03,
+   "S2_ratio": 1.061
+  },
+  {
+   "page_id": "6a493adbf36483abc5bba182",
+   "read4_lines": 36,
+   "S1": 36,
+   "S2": 38,
+   "S1_ratio": 1,
+   "S2_ratio": 1.056
+  },
+  {
+   "page_id": "6a26d8fd774aa3596e88c658",
+   "read4_lines": 36,
+   "S1": 37,
+   "S2": 37,
+   "S1_ratio": 1.028,
+   "S2_ratio": 1.028
+  },
+  {
+   "page_id": "6a26da7a05d7c1d9b10872b5",
+   "read4_lines": 6,
+   "S1": 23,
+   "S2": 24,
+   "S1_ratio": 3.833,
+   "S2_ratio": 4
+  },
+  {
+   "page_id": "6a26cbab5ac5aecc53cec6f0",
+   "read4_lines": 7,
+   "S1": 33,
+   "S2": 34,
+   "S1_ratio": 4.714,
+   "S2_ratio": 4.857
+  },
+  {
+   "page_id": "6a495080b9cd91959af3b84f",
+   "read4_lines": 36,
+   "S1": 37,
+   "S2": 38,
+   "S1_ratio": 1.028,
+   "S2_ratio": 1.056
+  },
+  {
+   "page_id": "6a26c948aad44c98627f0a34",
+   "read4_lines": 52,
+   "S1": 64,
+   "S2": 50,
+   "S1_ratio": 1.231,
+   "S2_ratio": 0.962
+  },
+  {
+   "page_id": "6a26cba55ac5aecc53cec42b",
+   "read4_lines": 8,
+   "S1": 35,
+   "S2": 35,
+   "S1_ratio": 4.375,
+   "S2_ratio": 4.375
+  }
+ ],
+ "line_coverage_summary": {
+  "pages": 13,
+  "S1_in_window": 9,
+  "S2_in_window": 10
+ },
+ "controls": {
+  "wrong_page": {
+   "n": 4,
+   "refused": 4
+  },
+  "planted": {
+   "n": 2,
+   "caught": 2,
+   "detail": [
+    {
+     "kind": "B",
+     "page_id": "6a2679fa6c1f37c9c4f2cc01",
+     "accepted": false,
+     "named": true,
+     "caught": true
+    },
+    {
+     "kind": "C",
+     "page_id": "6a26b88661b3857ed05a64d8",
+     "accepted": false,
+     "named": true,
+     "caught": true
+    }
+   ]
+  },
+  "judge_valid": true
+ },
+ "opus_calls": 23,
+ "segmentation": {
+  "S1_secs_per_page": 14.714,
+  "S2_secs_per_page": 4.428,
+  "spreads": 0,
+  "note": "all 18 pages are single pages (stored image width/height 0.57–0.80)"
+ }
+}

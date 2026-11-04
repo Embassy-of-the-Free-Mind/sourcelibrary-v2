@@ -25,7 +25,7 @@
  * mapping" and fall back to verification rather than assuming identity.
  */
 
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 function isExcluded(pageType, addToAccessFormats) {
   if (addToAccessFormats === false || addToAccessFormats === 'false') return true;

@@ -1,0 +1,729 @@
+[
+  {
+    "book_id": "69f33432876dd827cbc4c619",
+    "slot": 11,
+    "title": "[Collection of musical treatises]",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 15th-century music-theory manuscript (chant notation, mensural/plainchant treatise). No tradition or collection is assigned; it is outside the core esoteric shelves, though defensible as early modern science. The fit cannot be judged properly because the scan unit is wrong (see structure).",
+    "rights_flag": null,
+    "structure_note": "Each 'page' is a microfilm strip of about six openings (12 leaves) at 2000x220 px. The whole manuscript is 9 such strips, so one record = ~12 leaves, and at this resolution no word is legible. This is a page-unit and catalogue-format defect (I5/I7 shape): the text on each record cannot be a reading of its image. pages 9 / OCR 9 / translated 8.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Tenor</margin> O quam gloriosa est regnum ... <margin>Bassus</margin> O quam gloriosa ...",
+            "image": "Strip of six openings, script illegible at 220 px height; the notation visible is single-line chant/neumes on staves with text, not four-part Tenor/Bassus/Cantus/Altus polyphony",
+            "problem": "Polyphonic voice-part texts invented (and duplicated per voice); not readable from this image",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "In hoc tractatu de musica mensurabili videndum est quid sit musica ... musicam mundanam, humanam, et instrumentalem",
+            "image": "illegible at this resolution",
+            "problem": "Generic Boethian definition of music supplied from the model's expectation (canonical-text substitution), not transcribed",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "<warning>... likely 16th-century Italian humanist hand</warning>",
+            "image": "Gothic-influenced 15th-c. book hand; catalogue says 1440",
+            "problem": "Wrong dating in self-report",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(the whole invented OCR)",
+            "english": "O how glorious is the kingdom ... In this treatise on mensural music ...",
+            "problem": "A faithful translation of text that is not on the page; a reader is told this strip says things it does not",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR opens with model narration: 'This transcription covers the provided manuscript images ... the following represents the transcription of the primary text blocks'",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Invented headings '**[Transcription of the first visible section]**', '[central treatise section]', '[final section]' in the OCR pane",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Translation carries <summary> and <keywords> tags at the end",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 6,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Quia omnis cantus aut est gravis ... <margin>Regula de Tonis</margin> Sciendum est quod octo sunt toni ... Omnis cantus regularis debet terminari in una istarum quatuor litterarum: scilicet D. E. F. G. ...",
+            "image": "Strip of six openings; body text illegible at 223 px. Only a large 'FINIS' and a short line under it in the second opening are readable as shapes",
+            "problem": "A textbook exposition of the eight modes produced from expectation; no line of it can be read off this image. Only 'FINIS' matches something visible",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<page-num>35</page-num> ... transcribing the central visible page (folio 35r)",
+            "image": "No folio number legible; the strip holds about 12 leaves",
+            "problem": "Invented folio number; the record claims to be one page",
+            "severity": "moderate",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Plagales ... non habent auctoritatem ascendendi nisi usque ad quintam vocem: vel sextam.",
+            "english": "do not have the authority to ascend except up to the sixth note",
+            "problem": "Drops 'the fifth' (minor in itself); the main problem is that the whole passage is not on this image",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation carries <summary> and <keywords> tags",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 7,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "[Panel 2] ... [Panel 3] ... [Panel 4] ... [Panel 5] Omnis musica instrumentalis debet esse proportionata ... Diatessaron in sesquitertia. (identical four times)",
+            "image": "Six openings with different text in each, all illegible at this resolution",
+            "problem": "The same invented paragraph repeated verbatim for four different openings",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "Prima autem pars est de musica instrumentali ... organica, pneumatica, rhythmica ...",
+            "image": "illegible",
+            "problem": "A generic treatise on instruments made up from expectation; not readable from the image",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "[Panel 2]...[Panel 5] (four identical blocks)",
+            "english": "[Panel 2-5] ... (repeated across panels)",
+            "problem": "The translator quietly merged the four repeats, which hides the loop, and still translates invented text",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "'[Panel N]' labels and '[Panel 2-5]' with a meta note '(repeated across panels)' are shown in the reader text",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Translation carries <summary>/<keywords> tags",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Not readable as published. Each record is a microfilm strip of about 12 leaves at a resolution where no word is legible, and the OCR fills each one with plausible generic music theory, including one paragraph repeated four times. Hold the text and re-source the images leaf by leaf."
+  },
+  {
+    "book_id": "6a4d9f49167a618b2ad92368",
+    "slot": 100,
+    "title": "Epithalamium in nuptiis gabrielis salamancae atque Elisabetae eberstaniae",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Neo-Latin wedding poem (Riccardo Sbruglio for Gabriel Salamanca, 1520s). A genuine early-modern Latin source, but it has no tradition or collection and nothing esoteric about it.",
+    "rights_flag": null,
+    "structure_note": "8 pages, all OCR'd and translated. 'published: Unknown' could be filled in (c. 1520s). OCR self-tags the printed italic as 'handwritten'.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> <warning>Handwritten [Humanist hand]</warning>",
+            "image": "Printed italic type, signature A ij",
+            "problem": "Wrong script self-tag",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Quam pariunt uestri candida nympha lares",
+            "english": "Which you, bright nymph, bring forth to your homes",
+            "problem": "Subject reversed: 'which your household gods bring forth, a bright nymph' (i.e. her house produced her)",
+            "severity": "moderate"
+          },
+          {
+            "source": "Nec uestras Athesis fortunas dignaque nescit / Nominat er geminis",
+            "english": "Nor does the Adige remain unaware of your fortunes and dignity, / And it names you, ennobled in two ways",
+            "problem": "Loose; the couplet is about names ennobled 'ter geminis modis', and the translation smooths it",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "quid Nogarola?",
+            "image": "quid Nogarolae?",
+            "problem": "Ending dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Pan animos tum addes tum adimes.",
+            "image": "Pan animos tum addēs tū adimēs.",
+            "problem": "Abbreviation marks dropped silently; reading fine",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Et conuiua datis defit ubique cibis.",
+            "english": "And the guest is never lacking in provided foods.",
+            "problem": "Reversed: the guest 'gives out' (is overcome) before the food served; the point is excess, not sufficiency",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "admittunt ignea Fauni, / Spicula Pan blandum datque capitque melos.",
+            "english": "the Fauns admit the fiery ones, / Pan gives bland darts and takes back the melody",
+            "problem": "Line division misparsed: the Fauns take in fiery darts; Pan gives and takes up a sweet song",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Horrida discutiunt apices tormenta niuales",
+            "english": "The bristling storms scatter the snowy peaks",
+            "problem": "'tormenta' = artillery (the mock battle at the wedding), not storms",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Quartum uirtutis precium Dipolde reportas, / Halle",
+            "english": "Dipoldus, you report the fourth prize ... / Halle, with trumpets",
+            "problem": "'reportas' = carry off; 'Halle' is the vocative of Hallus (the marginal name), rendered as if a separate word",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Hic ipsos dicas",
+            "image": "Hic ipsos dicas (type reads 'dtcas')",
+            "problem": "Correctly normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Cui praefert Mauors Mercuriusque facem.",
+            "english": "To which Mars and Mercury prefer the torch.",
+            "problem": "'praefert facem' = carry the torch before (lead the dance), not 'prefer'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Pugnaces inter tam sanguine clarus Iberos, / Quam meritis rectam quaeris ad astra uiam.",
+            "english": "Famous for such blood among the pugnacious Iberians, / As you seek the straight path to the stars by your merits.",
+            "problem": "The tam...quam construction (as famous by blood as by merit) is garbled",
+            "severity": "minor"
+          },
+          {
+            "source": "Quae nunc Augustas edit et auget opes",
+            "english": "Which now edits and increases the Augustan riches",
+            "problem": "'edit' = brings forth, not 'edits'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is excellent, close to letter-perfect against clear printed italic. The translation is readable, but several couplets of the elegiacs are misparsed (a reversed sense, artillery read as 'storms'). Showable with a draft-translation caveat."
+  },
+  {
+    "book_id": "69f33b4e876dd827cbc58b00",
+    "slot": 62,
+    "title": "Argumenta in librum Psalmorum, Estheræ Inglis manu exarata Londini 1606",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Esther Inglis's calligraphic manuscript of Latin verse arguments to the Psalms, with painted flowers. A fine primary source, but devotional/calligraphic rather than part of any esoteric tradition, and no collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "214 pages, 214 OCR'd, 108 translated. That is probably the text leaves (versos and blanks may be skipped), but half the book untranslated is worth checking. The pages sampled are single leaves photographed with a colour bar, and include mirror-written pages, which the OCR handles.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Splendida describit sua sint quae insignia David",
+            "english": "David describes what his distinctions are",
+            "problem": "'splendida' (splendid) dropped",
+            "severity": "minor"
+          },
+          {
+            "source": "Ille suis etenim munera laeta dabit.",
+            "english": "For he will surely give joyful gifts to his own.",
+            "problem": "Fine",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation carries <summary>/<keywords> tags",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "### PSAL. LVIII.",
+            "image": "Mirror-written 'PSAL. LXVIII.' (reads IIIVXL reversed)",
+            "problem": "Psalm number wrong (58 for 68); the page's one identifier misnames which psalm the argument belongs to, and the translation's keywords repeat 'Psalm 58'",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Adnotet hic etenim propriam defendere gentem",
+            "image": "Assolet hic etenim propriam defendere gentem",
+            "problem": "'Assolet' (he is wont) misread as 'Adnotet'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Adnotet hic etenim propriam defendere gentem",
+            "english": "Let him note here that he defends his own people",
+            "problem": "Follows the misread; the source says God is wont to defend his own people",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR stores a <meta> 'The text is written from right to left in mirror image' and the translation <summary>/<keywords> tags",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 157,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Laudibus et meritis discant",
+            "image": "Laudibus ut meritis discant",
+            "problem": "'ut' read as 'et'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Ilius in populum",
+            "image": "Illius in populum",
+            "problem": "letter dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Promissos dederit ditque fidelis agros",
+            "image": "Promissos dederit utq; fidelis agros",
+            "problem": "'utque' misread as 'ditque'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Laudibus et meritis discant celebrare Tonantem",
+            "english": "Let them learn to celebrate the Thunderer ... with praises and merits",
+            "problem": "Should be 'with deserved praises' (laudibus ut meritis); follows the misread",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clear, short verse texts, mostly read well, including the mirror-written leaves. But page 111 gives the wrong psalm number (LVIII for LXVIII) and a misread verb that skews the translation. Showable after correcting that leaf."
+  },
+  {
+    "book_id": "69c86e2d6c6f3cc53c856e3d",
+    "slot": 10,
+    "title": "[Blockbook] Calendarium magistri Johannis de Gamundia de 1439",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Johannes of Gmunden's woodcut calendar with zodiac signs and labours of the months: early astronomy and astrology, a reasonable fit for early modern science and the BPH holdings.",
+    "rights_flag": null,
+    "structure_note": "The catalogue says 'published: 1439' but 'place_published: z.p|[18e eeuw]', which implies an 18th-century impression or copy of the blocks. Dating the object 1439 overstates it (I7). 18 pages, 8 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "| | d | Hic incipit iohannes | | / | | e | De Gamundia | |",
+            "image": "'Hec Magister Johannes / De Gamundia' spanning the foot of the February column",
+            "problem": "The maker's line is misread as 'Here begins John'; the translation says 'Here begins John Of Gmunden'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Gregorii (March row 9), Vitalis (row 10), Alexandri (row 11), Agripini (row 12)",
+            "image": "Gorgonii (9), Attali (10), ... Gregorii on row 12",
+            "problem": "Saints shifted or misread against their days: Gregory is put on 9 March instead of 12 March",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Sixti m'r regis (March row 28)",
+            "image": "Guntrami regis",
+            "problem": "Wrong saint; the translation then invents 'Sixtus, Martyr and King'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Golden-number column, January rows 4-5: 'v' on row 4, blank on row 5",
+            "image": "row 4 blank, row 5 'v'",
+            "problem": "Golden numbers shifted by a row in places, which breaks the computus column",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "(no mention)",
+            "image": "Hour numbers in the roundel corners (8/16, 10/14, 12/12) and the January zodiac roundel (Aquarius)",
+            "problem": "Day/night hour figures and one zodiac roundel omitted",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Hic incipit iohannes / De Gamundia",
+            "english": "Here begins John / Of Gmunden",
+            "problem": "Faithful to the misread; it reads as an incipit, where the source names Master John as the calendar's author",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Proti & iacinti (July 3)",
+            "image": "Processi & martiani",
+            "problem": "Wrong saints on 2 July's octave row",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Kiliani epi (July 4)",
+            "image": "Udalrici epi",
+            "problem": "Wrong saint (Ulrich, 4 July)",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Mansueti epi (Sept 2)",
+            "image": "Iusti epi",
+            "problem": "Wrong saint",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Vigilia (Sept 20)",
+            "image": "Fauste v'g",
+            "problem": "Saint replaced by 'Vigil'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Right-hand letter column (e.g. 'f g y A z 3 c d' in August)",
+            "image": "different sequence",
+            "problem": "Letter column garbled",
+            "severity": "minor",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Oswaldi. Dña",
+            "english": "Oswald [and] Afra",
+            "problem": "Invented saint for an abbreviation (Afra is on 7 August, two rows below)",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Sēte rōe",
+            "english": "Saint Zoe <note>original: \"Sēte rōe\"</note>",
+            "problem": "Correct guess with a visible note; fine",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Eligij epi (Dec 1)",
+            "image": "Crisanti & darie",
+            "problem": "Wrong saints on 1 December",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Colmāni cōfess (Oct 13)",
+            "image": "Edwardi confess",
+            "problem": "Wrong saint (Edward the Confessor, 13 Oct)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Vigilia (Dec 24)",
+            "image": "a saint's name ('Iuliani ...'), vigil not written",
+            "problem": "Supplied from expectation",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Right-hand letter column in December 'q r s t u...'",
+            "image": "'g h i k l ...'",
+            "problem": "Letter column wrong",
+            "severity": "minor",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Stationis mār",
+            "english": "Stationis Martyr <note>Likely refers to a feast associated with a station church or St. Anastasia.</note>",
+            "problem": "Speculative gloss on a misread name",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "Incolōr",
+            "english": "Incolarum <note>This name likely refers to a local or specific minor feast.</note>",
+            "problem": "Speculative gloss on a misread",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The layout and the woodcut descriptions are right, and most saints are right. But each month has several saints misread or put on the wrong day, and the golden-number and letter columns are unreliable, which matters in a calendar. The 1439 date also overstates what looks catalogued as an 18th-century impression."
+  },
+  {
+    "book_id": "69d665f8bf5afe33937f8a3f",
+    "slot": 85,
+    "title": "Liber Piccatriciae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century manuscript copy of the Latin Picatrix: core astrological magic.",
+    "rights_flag": null,
+    "structure_note": "Printed page numbers sit a constant 10 below the record numbers (117->107, 233->223, 347->337), which is consistent. 467 pages, 464 OCR'd, 451 translated. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 117,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin> naturalis / quemadmodum / finibus, qui / annulis, ... dam </margin>",
+            "image": "Line-ends of the facing left page visible in the gutter",
+            "problem": "The neighbour page's strip is read as a marginal note on this page (the translation drops it)",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "quam habet in Res",
+            "image": "quam habuerit in Res",
+            "problem": "verb form",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Cum istud opus",
+            "image": "Tum istud opus",
+            "problem": "Tum/Cum",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "propter convenientiam",
+            "english": "on account of the convenience",
+            "problem": "'convenientia' = agreement/affinity",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 233,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "breviter compleatur, 223.",
+            "image": "'breviter compleatur,' with folio number 223 in the top corner",
+            "problem": "Page number merged into the text",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "Dico tibi charissime Lector",
+            "image": "Et dico tibi",
+            "problem": "'Et' dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(none)",
+            "image": "marginal 'N3.' at left",
+            "problem": "Marginal note dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "in tantum quod 224 praecesserunt antiquorum sapientum Indi de verbo ad verbum",
+            "english": "writing so much that the 224 [pages/chapters] which preceded [were based on] the ancient sages of India, word for word",
+            "problem": "The famous Picatrix claim is that the compiler drew on 224 books of the ancient sages. The bracketed '[pages/chapters]' and '[were based on]' invent a different sense",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 347,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Recipe sudorem tuum et pilum bene mundum",
+            "image": "℞ sudorem tuum et pelvim bene mundam",
+            "problem": "'pelvim' (basin) read as 'pilum' (hair); the translation says 'a clean hair'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ibidem ponas seraphis quos sunt sub suis pedibus",
+            "image": "ibidem ponas de rasuris quae sunt sub suis pedibus",
+            "problem": "'de rasuris' (scrapings) read as 'seraphis'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quando D est cum O ... cum Q ... quando D est O O",
+            "image": "astronomical symbols: Moon with Sun, Moon with Venus, Moon in conjunction with Sun",
+            "problem": "Planetary symbols flattened to letters",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "seraphis",
+            "english": "the <term>seraphis</term> <gloss>possibly meaning burning ones or a specific plant</gloss>",
+            "problem": "Speculative gloss stacked on a misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "quando D est cum Q ... quando D est O O",
+            "english": "when the moon is with the dragon's tail ... given when the moon is the moon",
+            "problem": "Venus rendered as 'the dragon's tail'; 'when the moon is the moon' is nonsense covering the conjunction symbol",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Recipe ... pilum bene mundum",
+            "english": "Take your sweat and a clean hair",
+            "problem": "Follows the misread (basin)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good transcription of a clear 18th-century hand, and a readable translation of the core Picatrix. The weak spots are the astrological symbols (flattened, then mistranslated), a few misread nouns in the recipes, and one invented gloss on the '224 books' passage. Showable as a draft."
+  }
+]

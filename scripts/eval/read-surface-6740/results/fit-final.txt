@@ -1,0 +1,64 @@
+
+de: 35 books; c1 1.13; live CER 0.94% calls 0.418; noise band 0.12 pp; a0 cer 1 calls 0.009
+  B10  [/root/.agy-james] 4 2400 low    CER 0.89% ±0.58  calls/page 0.650  s/page 15.6  wrong 0  imputed 10
+  L1   [live] 4 srv  low    CER 0.96% ±0.59  calls/page 0.461  s/page 12.4  wrong 0  imputed 5
+  B09  [/root/.agy-james] 4 1024 low    CER 0.90% ±0.58  calls/page 0.521  s/page 12.2  wrong 0  imputed 6
+  B05  [/root/.agy-james] 1 1600 low    CER 0.92% ±0.59  calls/page 1.000  s/page 18.7  wrong 0  imputed 0
+  B06  [/root/.agy-james] 8 1600 low    CER 0.94% ±0.59  calls/page 0.486  s/page 14.7  wrong 0  imputed 10
+  L2   [live] 4 srv  low    CER 0.92% ±0.59  calls/page 0.375  s/page 19.1  wrong 0  imputed 3
+  B08  [default] 8 1600 high   CER 0.50% ±0.20  calls/page 0.446  s/page 37.4  wrong 0  imputed 9
+  C1   [default] 4 1600 medium CER 0.86% ±0.57  calls/page 0.343  s/page 42.3  wrong 0  imputed 2
+  X01  [/root/.agy-james] 8 1024 low    CER 0.88% ±0.58  calls/page 0.486  s/page 18.2  wrong 0  imputed 10
+  X02  [/root/.agy-james] 8 2400 low    CER 0.88% ±0.58  calls/page 0.604  s/page 21.7  wrong 0  imputed 13
+   4/1024/low    B09 CER 0.87% δ -0.07 [-0.26, 0.12] measured -0.04 [-0.13, 0.05] calls 0.522 NI
+   4/1024/medium   -  CER 0.84% δ -0.10 [-7.04, 6.84] calls 0.367
+   4/1024/high     -  CER 0.66% δ -0.28 [-17.26, 16.70] calls 0.348
+   4/1600/low      -  CER 0.90% δ -0.04 [-0.30, 0.23] calls 0.534 NI
+   4/1600/medium C1 CER 0.86% δ -0.08 [-0.27, 0.12] measured -0.08 [-0.15, -0.01] calls 0.343 NI
+   4/1600/high     -  CER 0.67% δ -0.27 [-10.08, 9.54] calls 0.290
+   4/2400/low    B10 CER 0.93% δ -0.01 [-0.20, 0.18] measured -0.05 [-0.13, 0.02] calls 0.662 NI
+   4/2400/medium   -  CER 0.87% δ -0.07 [-7.00, 6.87] calls 0.436
+   4/2400/high     -  CER 0.66% δ -0.28 [-17.26, 16.70] calls 0.348
+   8/1024/low    X01 CER 0.92% δ -0.02 [-0.21, 0.17] measured -0.06 [-0.15, 0.03] calls 0.485 NI
+   8/1024/medium   -  CER 0.81% δ -0.13 [-8.63, 8.37] calls 0.431
+   8/1024/high     -  CER 0.55% δ -0.39 [-14.28, 13.49] calls 0.514
+   8/1600/low    B06 CER 0.91% δ -0.03 [-0.22, 0.16] measured 0.00 [-0.07, 0.08] calls 0.487 NI
+   8/1600/medium   -  CER 0.78% δ -0.16 [-5.07, 4.75] calls 0.398
+   8/1600/high   B08 CER 0.50% δ -0.44 [-1.21, 0.33] measured -0.44 [-1.28, 0.01] calls 0.447 NI
+   8/2400/low    X02 CER 0.88% δ -0.06 [-0.25, 0.14] measured -0.06 [-0.14, 0.00] calls 0.606 NI
+   8/2400/medium   -  CER 0.74% δ -0.20 [-8.70, 8.30] calls 0.482
+   8/2400/high     -  CER 0.44% δ -0.50 [-14.38, 13.39] calls 0.496
+  optimum: no setting that is non-inferior to live is at least 10 % cheaper (the cheapest saves 9 %): nothing switches 4/1600/medium
+  sequential: 4 cheap settings open; next: (8, 1024, high) (249.031), (8, 2400, high) (249.018), (4, 2400, medium) (248.956), (4, 1024, medium) (248.902)
+
+la: 34 books; c1 1.15; live CER 1.96% calls 0.306; noise band 0.90 pp; a0 cer 1 calls 0.017
+  B09  [/root/.agy-james] 4 1024 low    CER 1.91% ±0.41  calls/page 0.388  s/page 10.0  wrong 0  imputed 3
+  B06  [/root/.agy-james] 8 1600 low    CER 2.17% ±0.46  calls/page 0.174  s/page 7.7  wrong 0  imputed 1
+  B05  [/root/.agy-james] 1 1600 low    CER 2.35% ±0.44  calls/page 1.059  s/page 18.8  wrong 0  imputed 0
+  B10  [/root/.agy-james] 4 2400 low    CER 2.33% ±0.42  calls/page 0.422  s/page 12.5  wrong 0  imputed 4
+  L1   [live] 4 srv  low    CER 2.15% ±0.41  calls/page 0.362  s/page 11.6  wrong 0  imputed 2
+  C1   [default] 4 1600 medium CER 1.72% ±0.39  calls/page 0.306  s/page 46.5  wrong 0  imputed 1
+  L2   [live] 4 srv  low    CER 1.77% ±0.40  calls/page 0.250  s/page 16.7  wrong 0  imputed 0
+  B08  [default] 8 1600 high   CER 1.58% ±0.39  calls/page 0.166  s/page 29.6  wrong 0  imputed 1
+  X01  [/root/.agy-james] 8 1024 low    CER 3.73% ±1.56  calls/page 0.241  s/page 11.5  wrong 1  imputed 3
+  X02  [/root/.agy-james] 8 2400 low    CER 2.42% ±0.48  calls/page 0.275  s/page 12.1  wrong 0  imputed 4
+   4/1024/low    B09 CER 1.93% δ -0.03 [-0.38, 0.31] measured -0.05 [-0.40, 0.31] calls 0.389 NI
+   4/1024/medium   -  CER 1.55% δ -0.41 [-7.40, 6.59] calls 0.377
+   4/1024/high     -  CER 1.53% δ -0.43 [-17.41, 16.55] calls 0.175
+   4/1600/low      -  CER 2.18% δ 0.22 [-0.67, 1.11] calls 0.329
+   4/1600/medium C1 CER 1.72% δ -0.24 [-0.63, 0.15] measured -0.24 [-0.63, 0.18] calls 0.306 NI
+   4/1600/high     -  CER 1.61% δ -0.35 [-10.16, 9.46] calls 0.092
+   4/2400/low    B10 CER 2.28% δ 0.32 [-0.15, 0.80] measured 0.37 [-0.09, 0.88] calls 0.435 NI
+   4/2400/medium   -  CER 1.73% δ -0.23 [-7.21, 6.75] calls 0.400
+   4/2400/high     -  CER 1.53% δ -0.43 [-17.41, 16.55] calls 0.175
+   8/1024/low    X01 CER 1.91% δ -0.05 [-1.46, 1.35] measured 1.77 [-0.17, 5.16] calls 0.240
+   8/1024/medium   -  CER 1.49% δ -0.47 [-9.15, 8.21] calls 0.343
+   8/1024/high     -  CER 1.43% δ -0.53 [-14.45, 13.39] calls 0.255
+   8/1600/low    B06 CER 2.24% δ 0.28 [-0.31, 0.87] measured 0.21 [-0.36, 0.84] calls 0.174 NI
+   8/1600/medium   -  CER 1.73% δ -0.23 [-5.17, 4.72] calls 0.265
+   8/1600/high   B08 CER 1.58% δ -0.38 [-0.63, -0.12] measured -0.38 [-0.65, -0.15] calls 0.166 NI
+   8/2400/low    X02 CER 2.42% δ 0.46 [-0.19, 1.11] measured 0.46 [-0.18, 1.12] calls 0.274
+   8/2400/medium   -  CER 1.83% δ -0.13 [-8.71, 8.44] calls 0.354
+   8/2400/high     -  CER 1.59% δ -0.37 [-14.27, 13.52] calls 0.243
+  optimum: optimum found: confirm on queue pages 8/1600/low
+  sequential: 8 cheap settings open; next: (8, 2400, high) (247.581), (8, 1024, high) (247.317), (4, 1024, medium) (239.316), (4, 2400, medium) (238.805)

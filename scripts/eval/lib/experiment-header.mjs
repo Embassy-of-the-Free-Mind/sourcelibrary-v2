@@ -43,7 +43,7 @@ export const STAGES = ['ocr', 'translation', 'metadata', 'image', 'pipeline'];
 // `none` is for an entry that measured nothing: a plan, a census, a repair log.
 export const MEASURES = ['accuracy', 'agreement', 'stability', 'preference', 'judged', 'judged_vs_reference', 'none'];
 export const STATUSES = ['adopted', 'rejected', 'undecided', 'superseded', 'informational'];
-export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'superseded_by', 'issue'];
+export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'superseded_by', 'issue', 'router_evidence', 'defect_rates'];
 const REQUIRED = ['stage', 'measure', 'verdict', 'status'];
 const LISTS = ['languages', 'scripts', 'canons'];
 
@@ -54,6 +54,41 @@ export function canonIds() {
   if (!files.length) return null;
   const j = JSON.parse(fs.readFileSync(path.join(dir, files[files.length - 1]), 'utf8'));
   return new Set([...(j.corpora || []).map((c) => c.id), ...(j.traditions || []).map((t) => t.id)]);
+}
+
+/** The router table's cell ids (scripts/eval/estimator/router-table/rules.json), or null when the file is absent. */
+export function routerCellIds() {
+  const f = path.join(HERE, '..', 'estimator', 'router-table', 'rules.json');
+  if (!fs.existsSync(f)) return null;
+  return new Set((JSON.parse(fs.readFileSync(f, 'utf8')).cells || []).map((c) => c.id));
+}
+
+/**
+ * A judged OCR or translation result is evidence the router must see (#7263): before 2026-10-28 hundreds of judged
+ * tests lived only in write-ups, and the router table decided from four test sets. A NEW entry like that names the
+ * router-table cells it added evidence to, or says why it added none.
+ */
+export function needsRouterEvidence(h) {
+  return ['ocr', 'translation'].includes(h.stage) && asList(h.measure).some((m) => m === 'judged' || m === 'judged_vs_reference');
+}
+
+/**
+ * From 2026-10-30 (#6740, Derek's steer): an OCR or translation result is decided on severity-weighted defect rates
+ * against the live route, so a NEW entry dated 2026-10-30 or later with stage ocr|translation and a measure names the
+ * file that carries, per route, misleads and wrong_text per 1,000 words and the mean fidelity
+ * (scripts/eval/route-judge-6740/defect-rate.py writes one), or says why it has none.
+ */
+export const DEFECT_RATES_FROM = '2026-10-30';
+export function needsDefectRates(h, name = '') {
+  const d = String(name).slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= DEFECT_RATES_FROM && ['ocr', 'translation'].includes(h.stage) && asList(h.measure).some((m) => m && m !== 'none');
+}
+
+/** The shape a defect_rates file must have: some route entry with misleads, wrong_text per 1,000 words and fidelity. */
+export function defectRatesShapeOk(j) {
+  const ok = (e) => e && typeof e === 'object' && 'fidelity_mean' in e && (('misleads_per_1k' in e && 'wrong_text_per_1k' in e) || (e.misleads && 'per_1k_words' in e.misleads && e.wrong_text && 'per_1k_words' in e.wrong_text));
+  const groups = [j?.router_cells, j?.study_cells, ...Object.values(j?.cells || {})].filter((g) => g && typeof g === 'object');
+  return groups.some((g) => Object.values(g).some(ok));
 }
 
 /** Split a file into { header (raw text or null), body }. The body is everything after the closing `---`. */
@@ -136,6 +171,21 @@ export function validateHeader(h, ctx = {}) {
   for (const k of ['n_books', 'n_pages']) if (h[k] != null && !(Number.isInteger(h[k]) && h[k] >= 0)) p.push(`'${k}' must be a whole number or null`);
   if (typeof h.verdict === 'string' && /\n/.test(h.verdict)) p.push('verdict must be one line');
   for (const i of asList(h.issue)) if (!(Number.isInteger(i) && i > 0)) p.push(`issue '${i}' must be an issue number`);
+  if (h.router_evidence != null) {
+    if (typeof h.router_evidence === 'string') {
+      if (!/^none\s+[—-]+\s*\S/.test(h.router_evidence)) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
+    } else if (!Array.isArray(h.router_evidence) || !h.router_evidence.length) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
+    else if (ctx.routerCells) for (const c of h.router_evidence) if (!ctx.routerCells.has(c)) p.push(`router_evidence cell '${c}' is not a cell in scripts/eval/estimator/router-table/rules.json`);
+  }
+  if (h.defect_rates != null) {
+    if (typeof h.defect_rates !== 'string') p.push('defect_rates must be a repo path to a defect-rates JSON, or "none — <why>"');
+    else if (!/^none\s+[—-]+\s*\S/.test(h.defect_rates)) {
+      const f = path.join(ctx.repoRoot ?? path.join(HERE, '..', '..', '..'), h.defect_rates);
+      let j = null; try { j = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* reported below */ }
+      if (!j) p.push(`defect_rates ${h.defect_rates} is not a readable JSON file in the repo`);
+      else if (!defectRatesShapeOk(j)) p.push(`defect_rates ${h.defect_rates} carries no route with misleads / wrong_text per 1,000 words and fidelity_mean (defect-rate.py's score.json or router-table defect-rates.json shape)`);
+    }
+  }
   if (h.status === 'superseded' && !h.superseded_by) p.push("status 'superseded' needs superseded_by: <file>");
   if (h.superseded_by != null) {
     if (h.status !== 'superseded') p.push("superseded_by is set but status is not 'superseded'");

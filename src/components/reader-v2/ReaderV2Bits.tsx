@@ -16,6 +16,7 @@ import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
 import { issueUrl } from '@/lib/check-methods';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
 import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -197,6 +198,8 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
 }) {
   const locale = useLocale();
   const t = getReaderStrings(locale).info;
+  // The checks record has no embed route: inside a partner frame the warning is shown without that link.
+  const isEmbedded = useIsEmbedded();
   if (!warnings) return null;
   const page = pageNumber != null ? warnings.pages[pageNumber] : undefined;
   const book = warnings.book;
@@ -222,8 +225,8 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
   const external = href.startsWith('http');
   return (
     <p role="note" data-quality-warning={page ? page.level : 'book'} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
-      {text}{' '}
-      <a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a>
+      {text}
+      {(external || !isEmbedded) && <>{' '}<a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a></>}
     </p>
   );
 }
@@ -732,7 +735,14 @@ export function ScanViewer({
    * Wheel, depending on what is on:
    * lens up        → dial the lens's magnification (what a loupe's focus does)
    * ctrl/⌘         → zoom the scan, which is what a trackpad pinch sends
-   * vertical wheel → zoom the scan at the cursor (when wheelZooms)
+   * zoomed         → nothing: the wheel or two-finger scroll PANS the enlarged
+   *                  page natively, the way it does in any document viewer.
+   *                  Zooming here left no way down a page short of dragging it
+   *                  (EFM, 2026-10-29: "you should be able to pan").
+   * vertical wheel → zoom the scan at the cursor, on a fitted page (when
+   *                  wheelZooms, and never inside a partner's iframe: there the
+   *                  wheel has to scroll the host page, or the part of the
+   *                  frame below the host's header stays out of reach)
    * otherwise      → nothing, so a sideways or shift-scroll pans natively;
    *                  a zoomed page also pans by dragging
    */
@@ -754,7 +764,9 @@ export function ScanViewer({
       queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
       return;
     }
-    if (wheelZooms && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+    if (zoomed) return;
+    const framed = typeof window !== 'undefined' && window.self !== window.top;
+    if (wheelZooms && !framed && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
       e.preventDefault();
       // Scroll deltas run larger than pinch deltas (a mouse notch is ~100px,
       // in line mode ~3 lines), so normalise to pixels and cap each event:

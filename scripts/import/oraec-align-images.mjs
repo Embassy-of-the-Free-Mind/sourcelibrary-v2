@@ -63,7 +63,7 @@ const r2 = DRY_RUN ? null : new S3Client({
   },
 });
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // ── Hardcoded image mappings for key texts ──
 const HARDCODED_IMAGES = {

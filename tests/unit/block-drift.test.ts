@@ -153,7 +153,7 @@ describe('the parser reject', () => {
 describe('the realtime worker applies the reject', () => {
   it('translateBatch drops drifted pages before returning', () => {
     const src = fs.readFileSync(path.join(__dirname, '../../scripts/workers/translate-worker.mjs'), 'utf8');
-    expect(src).toMatch(/dropDriftedPages\(pages, translations\)/);
+    expect(src).toMatch(/dropDriftedPages\(pages, translations(?:, \{[^)]*anchors: anchored \? parsed\.anchors : null[^)]*\})?\)/);
   });
 });
 
@@ -190,7 +190,7 @@ describe('detectBlockDrift, caseless (Han) branch (#7503)', () => {
   });
   it('the agy/claude block reader opts in', () => {
     const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/claude-translate.mjs'), 'utf8');
-    expect(src).toMatch(/dropDriftedPages\(group, texts, \{ caseless: true \}\)/);
+    expect(src).toMatch(/dropDriftedPages\(group, texts, \{ caseless: true[,}]/);
   });
   it('the cased fixtures are unchanged by the option', () => {
     for (const c of CASES) expect(detectBlockDrift({ ...c, caseless: true }).drift).toBe(c.expectDrift);

@@ -80,7 +80,7 @@ const CODEX_FILTER = strArg('codex') ? new Set(strArg('codex').split(',').map((s
 const PAGE_LIMIT = Number(strArg('limit-pages')) || 0; // testing aid: archive at most N pages per book
 
 // ── Constants ────────────────────────────────────────────────────────────────
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const CDM = 'https://ccdl.claremont.edu/digital/bl/dmwebservices/index.php?q=';
 const COLLECTION_URL = 'https://ccdl.claremont.edu/digital/collection/nha';
 const IIIF_HOST = 'ccdl.claremont.edu';

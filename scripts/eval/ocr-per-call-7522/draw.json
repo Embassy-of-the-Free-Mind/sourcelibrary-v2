@@ -1,0 +1,1015 @@
+{
+ "seed": 7522,
+ "strata": {
+  "German": 8,
+  "Latin": 7
+ },
+ "idle_statuses": [
+  "complete",
+  "archive_complete",
+  "failed",
+  "parked",
+  "ocr_complete"
+ ],
+ "frame_books": 2393,
+ "drawn_at": "2026-10-27T10:46:40.917Z",
+ "skipped": [
+  {
+   "id": "e532b010-6d2e-40ca-9f95-c67e74c5ee61",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "ec135ab7-b367-4579-81ca-2a0901d34630",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69906f5e4b3bd4d1fffd0865",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "699062eeef12272ffdc8e15e",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69b2ff09a1a4246ddb45ab68",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69a0278feb6b73741de5d616",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697d9c99f2b56306a9ec961a",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c7414f6a0f3d112faf7cf0",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6958eac3538549809db830c2",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69520176ab34727b1f04136b",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c7fdea6c6f3cc53c84359c",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6970e3859b09d309d780a2de",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6a26ba6f61b3857ed05afe52",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69d13ead1c2a66dc094b180b",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6979446ddcf302c58a41a4d5",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697e23cb096732be4a8355c0",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69dbc7fd1040d1d5e209643c",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69b6362a8ab57a1de53a73e8",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697929a0f35c6bbfbfd252f5",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "694f397b53410e29f94e13ea",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69af0bdafd75e3c62284c4ce",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69b418ab2b0edf3eaa2dd947",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "699051d18d19cbc90d9d5136",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69aea8981cbf28a363a50678",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "697d9c999788c62e1238c86c",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6978ee3aa5bfdfb63c9a9f63",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6990507e7d19f3f2aac1e3e2",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69af0df8067c0c26ee26dee7",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c6eb51da9771c71631482d",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "695592ca7bd6d2cd1d61b2d0",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69a5d82d4d84314297c091ec",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69b52bd2c5a537bf2d862907",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6988a5a269667c9410a93b5f",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697a873ce680cef7cedae3b0",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6974b648457dd8909910b9fb",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6a492adc1bbf4176e1e8b886",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69b3f783a107e55a0ee1db02",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69bd9e336120d54bd037bf37",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6988a5a216091789ea4967ef",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6a7c1ddf7fbf2dd065f998f5",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "697b0799093f320f0a302167",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69906b04e0c258ddff203b34",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6975158ba88d83c830d99e26",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6974b646457dd8909910b9f5",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697d9ca14ac45ee328347502",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c829f36c6f3cc53c84c6ec",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69b4cc90d5b6c3815e1a1286",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6984e84fc81b55263f750a02",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c1137237989a445aea166c",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6978ee3a9ff927bc5394751b",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "698255ee089a910e1e2ae850",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6978ee37a87012956d883ad6",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697b07997f21d8314d7852fb",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6992545ed5d1c6dbb2bcc97f",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c87c636c6f3cc53c8589e4",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "697c8e0f127f6cd8290b33a1",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c8406f6c6f3cc53c85071a",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69b5259a6be604608303024e",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69aff82f57090f8072b7a520",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c730376a0f3d112faf724b",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "697d9c989788c62e1238c864",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c807e46c6f3cc53c845a7f",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "697c8e11483a1e6963dab86d",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69819208ec2318ad2e395ce7",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c80e106c6f3cc53c846ec1",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6970c9313932a3984e9117f6",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69c85de26c6f3cc53c855057",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6970e35c9b09d309d780a25c",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6953ae9477f38f6761bd8256",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697c8e0fbaa544415f85b6c6",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6a26bab861b3857ed05b0b7b",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69dbcc171040d1d5e20bce51",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6a267b666c1f37c9c4f319f3",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6a267bb56c1f37c9c4f33829",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "69c868636c6f3cc53c8566cb",
+   "why": "handwritten pages"
+  },
+  {
+   "id": "6988a5a0b35a40d0f7621798",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69906eca7d027b8182c0a9dc",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "6974b63919126e775cf6d7c3",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "69804b901fb2ba7cf1d43a10",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  },
+  {
+   "id": "697b0799f4d9463650506f0d",
+   "why": "no run of 4 pages without OCR or with only a Flash-Lite read"
+  }
+ ],
+ "books": [
+  {
+   "book_id": "69b51e0147b06ecd58188993",
+   "title": "Christoph Gottlieb von Murr über den wahren Ursprung der Rosen-Kreuzer und des Freymaurerordens : Nebst einem Anhange zur Geschichte der Tempelherren",
+   "author": "Murr, Christoph Gottlieb von",
+   "published": "1803",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 190,
+   "start": 32,
+   "pages": [
+    {
+     "page_id": "69b51e0147b06ecd581889b3",
+     "page_number": 32,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1371,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0147b06ecd58188993/32.jpg"
+    },
+    {
+     "page_id": "69b51e0147b06ecd581889b4",
+     "page_number": 33,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1355,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0147b06ecd58188993/33.jpg"
+    },
+    {
+     "page_id": "69b51e0147b06ecd581889b5",
+     "page_number": 34,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1227,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0147b06ecd58188993/34.jpg"
+    },
+    {
+     "page_id": "69b51e0147b06ecd581889b6",
+     "page_number": 35,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1455,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0147b06ecd58188993/35.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e63768235dc659928d8",
+   "title": "Elucidarius Chymicus : Oder Erleuchterung und deutliche Erklerung, was die Fama fraternitatis vom Rosencreutz für Chymische Secreta de lapide Philosophorum, in ihrer Reformation der Welt mit verblümbten Worten versteckt haben",
+   "author": "Barbarossa, Christoph",
+   "published": "1617",
+   "language": "German",
+   "human_read_count": 3,
+   "status": "complete",
+   "pages_count": 84,
+   "start": 47,
+   "pages": [
+    {
+     "page_id": "69b51e63768235dc65992907",
+     "page_number": 47,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1191,
+     "image": "https://images.sourcelibrary.org/archived/69b51e63768235dc659928d8-0047.jpg"
+    },
+    {
+     "page_id": "69b51e63768235dc65992908",
+     "page_number": 48,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1306,
+     "image": "https://images.sourcelibrary.org/archived/69b51e63768235dc659928d8-0048.jpg"
+    },
+    {
+     "page_id": "69b51e63768235dc65992909",
+     "page_number": 49,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1375,
+     "image": "https://images.sourcelibrary.org/archived/69b51e63768235dc659928d8-0049.jpg"
+    },
+    {
+     "page_id": "69b51e63768235dc6599290a",
+     "page_number": 50,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1296,
+     "image": "https://images.sourcelibrary.org/archived/69b51e63768235dc659928d8-0050.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e6f9a81ef7feb3d4ec7",
+   "title": "Chymische Hochzeit Christiani Rosencreutz anno 1459",
+   "author": "Andreä, Johann Valentin",
+   "published": "1781",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 174,
+   "start": 132,
+   "pages": [
+    {
+     "page_id": "69b51e6f9a81ef7feb3d4f4b",
+     "page_number": 132,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1578,
+     "image": "https://images.sourcelibrary.org/pages/69b51e6f9a81ef7feb3d4ec7/0132.jpg"
+    },
+    {
+     "page_id": "69b51e6f9a81ef7feb3d4f4c",
+     "page_number": 133,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1586,
+     "image": "https://images.sourcelibrary.org/pages/69b51e6f9a81ef7feb3d4ec7/0133.jpg"
+    },
+    {
+     "page_id": "69b51e6f9a81ef7feb3d4f4d",
+     "page_number": 134,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1629,
+     "image": "https://images.sourcelibrary.org/pages/69b51e6f9a81ef7feb3d4ec7/0134.jpg"
+    },
+    {
+     "page_id": "69b51e6f9a81ef7feb3d4f4e",
+     "page_number": 135,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1590,
+     "image": "https://images.sourcelibrary.org/pages/69b51e6f9a81ef7feb3d4ec7/0135.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51edaff09e4fe943b611b",
+   "title": "Der teutsche Merkur. 1783, 2 = Bd. 42",
+   "author": null,
+   "published": "1783",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 330,
+   "start": 41,
+   "pages": [
+    {
+     "page_id": "69b51edaff09e4fe943b6144",
+     "page_number": 41,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1719,
+     "image": "https://images.sourcelibrary.org/archived/69b51edaff09e4fe943b611b/41.jpg"
+    },
+    {
+     "page_id": "69b51edaff09e4fe943b6145",
+     "page_number": 42,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1768,
+     "image": "https://images.sourcelibrary.org/archived/69b51edaff09e4fe943b611b/42.jpg"
+    },
+    {
+     "page_id": "69b51edaff09e4fe943b6146",
+     "page_number": 43,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1779,
+     "image": "https://images.sourcelibrary.org/archived/69b51edaff09e4fe943b611b/43.jpg"
+    },
+    {
+     "page_id": "69b51edaff09e4fe943b6147",
+     "page_number": 44,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1673,
+     "image": "https://images.sourcelibrary.org/archived/69b51edaff09e4fe943b611b/44.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9abd46b01553e33bce57",
+   "title": "Zur Psychologie und Pathologie sogenannter occulter Phänomene",
+   "author": "Carl Gustav Jung",
+   "published": "1902",
+   "language": "German",
+   "human_read_count": 2,
+   "status": "complete",
+   "pages_count": 134,
+   "start": 73,
+   "pages": [
+    {
+     "page_id": "69bd9abd46b01553e33bcea0",
+     "page_number": 73,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2345,
+     "image": "https://images.sourcelibrary.org/archived/69bd9abd46b01553e33bce57/73.jpg"
+    },
+    {
+     "page_id": "69bd9abd46b01553e33bcea1",
+     "page_number": 74,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2289,
+     "image": "https://images.sourcelibrary.org/archived/69bd9abd46b01553e33bce57/74.jpg"
+    },
+    {
+     "page_id": "69bd9abd46b01553e33bcea2",
+     "page_number": 75,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2070,
+     "image": "https://images.sourcelibrary.org/archived/69bd9abd46b01553e33bce57/75.jpg"
+    },
+    {
+     "page_id": "69bd9abd46b01553e33bcea3",
+     "page_number": 76,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1004,
+     "image": "https://images.sourcelibrary.org/archived/69bd9abd46b01553e33bce57/76.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69bd9d236120d54bd0373aaa",
+   "title": "Traumbuch Artemidori ... darinnen Ursprung, Unterscheid und Bedeutung, allerhand Träumen ... : sambt eyner Erinnerung Philippi Melanchtonis von Unterscheid der Träume unnd angehencktem Bericht, was von Träumen zu halten seie",
+   "author": "Artemidorus",
+   "published": "1570",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 471,
+   "start": 186,
+   "pages": [
+    {
+     "page_id": "69bd9d236120d54bd0373b64",
+     "page_number": 186,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 3054,
+     "image": "https://images.sourcelibrary.org/archived/69bd9d236120d54bd0373aaa/186.jpg"
+    },
+    {
+     "page_id": "69bd9d236120d54bd0373b65",
+     "page_number": 187,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1634,
+     "image": "https://images.sourcelibrary.org/archived/69bd9d236120d54bd0373aaa/187.jpg"
+    },
+    {
+     "page_id": "69bd9d236120d54bd0373b66",
+     "page_number": 188,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2285,
+     "image": "https://images.sourcelibrary.org/archived/69bd9d236120d54bd0373aaa/188.jpg"
+    },
+    {
+     "page_id": "69bd9d236120d54bd0373b67",
+     "page_number": 189,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2129,
+     "image": "https://images.sourcelibrary.org/archived/69bd9d236120d54bd0373aaa/189.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69c70242da9771c71631580e",
+   "title": "Zwei schöne chymische Tractetlein: De Mercurio alchimistarum. De lumine naturae",
+   "author": "anonymous",
+   "published": "1612",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 41,
+   "start": 18,
+   "pages": [
+    {
+     "page_id": "69d3705ccaec08931f8ffe00",
+     "page_number": 18,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1539,
+     "image": "https://images.sourcelibrary.org/pages/69c70242da9771c71631580e/spucp2-0018.jpg"
+    },
+    {
+     "page_id": "69d3705ccaec08931f8ffe01",
+     "page_number": 19,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1535,
+     "image": "https://images.sourcelibrary.org/pages/69c70242da9771c71631580e/spucp2-0019.jpg"
+    },
+    {
+     "page_id": "69d3705ccaec08931f8ffe02",
+     "page_number": 20,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1330,
+     "image": "https://images.sourcelibrary.org/pages/69c70242da9771c71631580e/spucp2-0020.jpg"
+    },
+    {
+     "page_id": "69d3705ccaec08931f8ffe03",
+     "page_number": 21,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1426,
+     "image": "https://images.sourcelibrary.org/pages/69c70242da9771c71631580e/spucp2-0021.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a21991c4b61907ea5ffb24f",
+   "title": "Diagnostische Assoziationsstudien: Beiträge zur experimentellen Psychopathologie",
+   "author": "Carl Gustav Jung",
+   "published": "1906",
+   "language": "German",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 297,
+   "start": 43,
+   "pages": [
+    {
+     "page_id": "6a21991c4b61907ea5ffb27a",
+     "page_number": 43,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 3087,
+     "image": "https://images.sourcelibrary.org/archived/6a21991c4b61907ea5ffb24f/43.jpg"
+    },
+    {
+     "page_id": "6a21991c4b61907ea5ffb27b",
+     "page_number": 44,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 2647,
+     "image": "https://images.sourcelibrary.org/archived/6a21991c4b61907ea5ffb24f/44.jpg"
+    },
+    {
+     "page_id": "6a21991c4b61907ea5ffb27c",
+     "page_number": 45,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 2501,
+     "image": "https://images.sourcelibrary.org/archived/6a21991c4b61907ea5ffb24f/45.jpg"
+    },
+    {
+     "page_id": "6a21991c4b61907ea5ffb27d",
+     "page_number": 46,
+     "page_type": null,
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 2087,
+     "image": "https://images.sourcelibrary.org/archived/6a21991c4b61907ea5ffb24f/46.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69920bf777b798aa12121afc",
+   "title": "Sancti Irenaei Adversus Haereses",
+   "author": "Irenaeus of Lyon / W. Wigan Harvey (ed.)",
+   "published": "1857",
+   "language": "Latin",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 620,
+   "start": 527,
+   "pages": [
+    {
+     "page_id": "69920bf777b798aa12121d0b",
+     "page_number": 527,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2959,
+     "image": "https://images.sourcelibrary.org/archived/69920bf777b798aa12121afc/527.jpg"
+    },
+    {
+     "page_id": "69920bf777b798aa12121d0c",
+     "page_number": 528,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2635,
+     "image": "https://images.sourcelibrary.org/archived/69920bf777b798aa12121afc/528.jpg"
+    },
+    {
+     "page_id": "69920bf777b798aa12121d0d",
+     "page_number": 529,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2866,
+     "image": "https://images.sourcelibrary.org/archived/69920bf777b798aa12121afc/529.jpg"
+    },
+    {
+     "page_id": "69920bf777b798aa12121d0e",
+     "page_number": 530,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2688,
+     "image": "https://images.sourcelibrary.org/archived/69920bf777b798aa12121afc/530.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69af0da8be5fc7f363545d1a",
+   "title": "Universae Geometriae Synopsis",
+   "author": "Marin Mersenne",
+   "published": "1644",
+   "language": "Latin",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 658,
+   "start": 561,
+   "pages": [
+    {
+     "page_id": "69af0da8be5fc7f363545f4b",
+     "page_number": 561,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2408,
+     "image": "https://images.sourcelibrary.org/archived/69af0da8be5fc7f363545d1a/561.jpg"
+    },
+    {
+     "page_id": "69af0da8be5fc7f363545f4c",
+     "page_number": 562,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 2305,
+     "image": "https://images.sourcelibrary.org/archived/69af0da8be5fc7f363545d1a/562.jpg"
+    },
+    {
+     "page_id": "69af0da8be5fc7f363545f4d",
+     "page_number": 563,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1234,
+     "image": "https://images.sourcelibrary.org/archived/69af0da8be5fc7f363545d1a/563.jpg"
+    },
+    {
+     "page_id": "69af0da8be5fc7f363545f4e",
+     "page_number": 564,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1845,
+     "image": "https://images.sourcelibrary.org/archived/69af0da8be5fc7f363545d1a/564.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51ddccf111105c42922b3",
+   "title": "Catalogi librorum manuscriptorum Angliae et Hiberniae in unum collecti. : cum indice alphabetico",
+   "author": "Bernard, Eduard",
+   "published": "1697",
+   "language": "Latin",
+   "human_read_count": 1,
+   "status": "complete",
+   "pages_count": 650,
+   "start": 233,
+   "pages": [
+    {
+     "page_id": "69b51ddccf111105c429239c",
+     "page_number": 233,
+     "page_type": "index",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 5571,
+     "image": "https://images.sourcelibrary.org/archived/69b51ddccf111105c42922b3/233.jpg"
+    },
+    {
+     "page_id": "69b51ddccf111105c429239d",
+     "page_number": 234,
+     "page_type": "index",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 5902,
+     "image": "https://images.sourcelibrary.org/archived/69b51ddccf111105c42922b3/234.jpg"
+    },
+    {
+     "page_id": "69b51ddccf111105c429239e",
+     "page_number": 235,
+     "page_type": "index",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 5992,
+     "image": "https://images.sourcelibrary.org/archived/69b51ddccf111105c42922b3/235.jpg"
+    },
+    {
+     "page_id": "69b51ddccf111105c429239f",
+     "page_number": 236,
+     "page_type": "index",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 5867,
+     "image": "https://images.sourcelibrary.org/archived/69b51ddccf111105c42922b3/236.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e0cefd8df28f2daf7cd",
+   "title": "Theophrasti[i] Paracelsi[i] Philosophiae Et Medicinae Vtrivsqve Vniversae, Compendivm : Ex optimis quibusque eius libris",
+   "author": "Paracelsus, 1493-1541; Dorn, Gerhard, 1530-1584; Gohory, Jacques",
+   "published": "1568",
+   "language": "Latin",
+   "human_read_count": 4,
+   "status": "complete",
+   "pages_count": 408,
+   "start": 192,
+   "pages": [
+    {
+     "page_id": "69b51e0cefd8df28f2daf88d",
+     "page_number": 192,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1791,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0cefd8df28f2daf7cd/192.jpg"
+    },
+    {
+     "page_id": "69b51e0cefd8df28f2daf88e",
+     "page_number": 193,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1851,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0cefd8df28f2daf7cd/193.jpg"
+    },
+    {
+     "page_id": "69b51e0cefd8df28f2daf88f",
+     "page_number": 194,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1776,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0cefd8df28f2daf7cd/194.jpg"
+    },
+    {
+     "page_id": "69b51e0cefd8df28f2daf890",
+     "page_number": 195,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite-preview",
+     "ocr_chars": 1657,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0cefd8df28f2daf7cd/195.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e0ecf111105c4296303",
+   "title": "Opusculum de mirabilibus novae et veteris urbis Romae",
+   "author": "Albertini, Francesco degli, -1520",
+   "published": "1515",
+   "language": "Latin",
+   "human_read_count": 1,
+   "status": "ocr_complete",
+   "pages_count": 210,
+   "start": 180,
+   "pages": [
+    {
+     "page_id": "69b51e0ecf111105c42963b7",
+     "page_number": 180,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 1801,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0ecf111105c4296303/180.jpg"
+    },
+    {
+     "page_id": "69b51e0ecf111105c42963b8",
+     "page_number": 181,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 1914,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0ecf111105c4296303/181.jpg"
+    },
+    {
+     "page_id": "69b51e0ecf111105c42963b9",
+     "page_number": 182,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 1482,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0ecf111105c4296303/182.jpg"
+    },
+    {
+     "page_id": "69b51e0ecf111105c42963ba",
+     "page_number": 183,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 1596,
+     "image": "https://images.sourcelibrary.org/archived/69b51e0ecf111105c4296303/183.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "69b51e3bcf111105c4298b05",
+   "title": "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca veteris testamenti, ex Talmud, aliisque Hebraicis libris ... contra obstinatam Iudaeorum perdidiiam, absolutissimus commentarius",
+   "author": "Galatino, Pietro",
+   "published": "1550",
+   "language": "Latin",
+   "human_read_count": 2,
+   "status": "ocr_complete",
+   "pages_count": 956,
+   "start": 495,
+   "pages": [
+    {
+     "page_id": "69b51e3bcf111105c4298cf4",
+     "page_number": 495,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 3197,
+     "image": "https://images.sourcelibrary.org/archived/69b51e3bcf111105c4298b05/495.jpg"
+    },
+    {
+     "page_id": "69b51e3bcf111105c4298cf5",
+     "page_number": 496,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 3433,
+     "image": "https://images.sourcelibrary.org/archived/69b51e3bcf111105c4298b05/496.jpg"
+    },
+    {
+     "page_id": "69b51e3bcf111105c4298cf6",
+     "page_number": 497,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 3503,
+     "image": "https://images.sourcelibrary.org/archived/69b51e3bcf111105c4298b05/497.jpg"
+    },
+    {
+     "page_id": "69b51e3bcf111105c4298cf7",
+     "page_number": 498,
+     "page_type": "text",
+     "ocr_model": "gemini-3.1-flash-lite",
+     "ocr_chars": 3356,
+     "image": "https://images.sourcelibrary.org/archived/69b51e3bcf111105c4298b05/498.jpg"
+    }
+   ]
+  },
+  {
+   "book_id": "6a4e43f4dc886f1f5abb52bb",
+   "title": "Tomus I. (III.) operum omnium, quae quidem extant, l. Gavrici geophonensis civitatensis episcopi astronomi ac astrologi praestantissimi, vatisque celeberrimi, omnium bonarum ac humanitatis artium: inprimis verò mathematicae & judiciariae seu praenotionis scientie, ad miraculum usque doctissimi: ingenio planè admirando & divino, philosophi, omni tàm poëticarum, logicarum, quàm physicarum, philosophicarum, theologicarumque scientiarum ac dogmatum facultate genereque praeclarissimi iampridem summa cura ac singulari studio à suo interitu vindicata, & quasi postliminio revocata, pristinoque nitori restituta: & plaeraque antè non aedita, in unum corpus redacta: adiecimus singulis tomis, indicem rerum ac verborum omnium",
+   "author": "Gaurico, Luca",
+   "published": "Unknown",
+   "language": "Latin",
+   "human_read_count": 2,
+   "status": "complete",
+   "pages_count": 236,
+   "start": 106,
+   "pages": [
+    {
+     "page_id": "6a4e43f4dc886f1f5abb5335",
+     "page_number": 106,
+     "page_type": null,
+     "ocr_model": null,
+     "ocr_chars": 0,
+     "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10497662_00106/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a4e43f4dc886f1f5abb5336",
+     "page_number": 107,
+     "page_type": null,
+     "ocr_model": null,
+     "ocr_chars": 0,
+     "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10497662_00107/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a4e43f4dc886f1f5abb5337",
+     "page_number": 108,
+     "page_type": null,
+     "ocr_model": null,
+     "ocr_chars": 0,
+     "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10497662_00108/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a4e43f4dc886f1f5abb5338",
+     "page_number": 109,
+     "page_type": null,
+     "ocr_model": null,
+     "ocr_chars": 0,
+     "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10497662_00109/full/full/0/default.jpg"
+    }
+   ]
+  }
+ ]
+}

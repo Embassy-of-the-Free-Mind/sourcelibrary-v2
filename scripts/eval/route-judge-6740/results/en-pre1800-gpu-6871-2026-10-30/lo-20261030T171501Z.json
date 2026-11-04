@@ -1,0 +1,9 @@
+{
+ "run": "lo-20261030T171501Z",
+ "host": "gex45-1",
+ "gpu": "NVIDIA RTX PRO 4000 Blackwell SFF Edition",
+ "vllm_version": "0.31.0",
+ "weights_revision": "hf:lightonai/LightOnOCR-3-1B@23d544085c886bbdace647bcfab91203299417e2",
+ "util": 0.85,
+ "quantization": "fp8"
+}

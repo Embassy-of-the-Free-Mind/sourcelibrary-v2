@@ -1,0 +1,1943 @@
+{
+ "generated_at": "2026-10-31T18:23:18.322Z",
+ "source": "queue-routes-7853 (#7853)",
+ "file": "scripts/eval/queue-routes-7853/results/router-evidence.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  null
+ ],
+ "frame": "One page per book from the #7558 correction queue (German and French, stored Flash-Lite print), books drawn by sequential Poisson PPS on pages owed inside century x scan strata; every arm on the same page; a refused arm serves the stored text. Preregistered: 2026-10-31-queue-routes-7853.md.",
+ "calls": {
+  "records": 1120,
+  "malformed_not_counted": 0,
+  "judged": 1120,
+  "unparsed": 0,
+  "list_usd_equiv": 0
+ },
+ "cells": {
+  "french-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "controls": {
+    "agy-flash-low-read": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "56/60",
+     "accept_rate": 0.933,
+     "accept_ci": {
+      "ci95": [
+       0.867,
+       0.983
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_pages": "2/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.083
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_classes": {
+      "O7": "1/60",
+      "O12": "1/60"
+     },
+     "classes_k_of_n": {
+      "O8": "25/60",
+      "E2": "13/60",
+      "O6": "10/60",
+      "O11": "8/60",
+      "O16": "7/60",
+      "O7": "3/60",
+      "O5": "2/60",
+      "D1": "2/60",
+      "O10": "1/60",
+      "O12": "1/60",
+      "O2": "1/60",
+      "T6": "1/60",
+      "O15": "1/60"
+     },
+     "fidelity_mean": 4.58,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "56/60",
+       "wrong_text_pages": "2/60",
+       "books": 60
+      }
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "55/60",
+     "accept_rate": 0.917,
+     "accept_ci": {
+      "ci95": [
+       0.85,
+       0.983
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_pages": "2/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.083
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_classes": {
+      "O5": "1/60",
+      "O6": "1/60",
+      "O10": "1/60",
+      "I4": "1/60",
+      "O12": "1/60"
+     },
+     "classes_k_of_n": {
+      "O8": "20/60",
+      "E2": "14/60",
+      "O6": "10/60",
+      "O11": "5/60",
+      "O16": "5/60",
+      "O12": "4/60",
+      "T6": "2/60",
+      "O9": "2/60",
+      "O5": "1/60",
+      "O10": "1/60",
+      "I4": "1/60",
+      "O7": "1/60",
+      "O14": "1/60",
+      "O13": "1/60",
+      "D1": "1/60",
+      "T5": "1/60"
+     },
+     "fidelity_mean": 4.6,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "55/60",
+       "wrong_text_pages": "2/60",
+       "books": 60
+      }
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "54/60",
+     "accept_rate": 0.9,
+     "accept_ci": {
+      "ci95": [
+       0.817,
+       0.967
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_pages": "2/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.083
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_classes": {
+      "O5": "1/60",
+      "O6": "1/60",
+      "O10": "1/60",
+      "I4": "1/60",
+      "O12": "1/60"
+     },
+     "classes_k_of_n": {
+      "O8": "22/60",
+      "O6": "13/60",
+      "E2": "10/60",
+      "O16": "7/60",
+      "O12": "4/60",
+      "O11": "3/60",
+      "O5": "3/60",
+      "T6": "3/60",
+      "D1": "2/60",
+      "O10": "2/60",
+      "O7": "2/60",
+      "I4": "1/60",
+      "O14": "1/60"
+     },
+     "fidelity_mean": 4.55,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "54/60",
+       "wrong_text_pages": "2/60",
+       "books": 60
+      }
+     }
+    },
+    "lite": {
+     "n": 60,
+     "books": 60,
+     "accept": "42/60",
+     "accept_rate": 0.7,
+     "accept_ci": {
+      "ci95": [
+       0.583,
+       0.8
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_pages": "13/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0.117,
+       0.317
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_classes": {
+      "I4": "7/60",
+      "O6": "4/60",
+      "O5": "3/60",
+      "O10": "1/60",
+      "O12": "1/60"
+     },
+     "classes_k_of_n": {
+      "O6": "23/60",
+      "O8": "23/60",
+      "O16": "18/60",
+      "E2": "16/60",
+      "O11": "7/60",
+      "I4": "7/60",
+      "O5": "7/60",
+      "O12": "5/60",
+      "T6": "5/60",
+      "O10": "2/60",
+      "O7": "2/60",
+      "O9": "1/60",
+      "O1": "1/60",
+      "D1": "1/60"
+     },
+     "fidelity_mean": 4.25,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "42/60",
+       "wrong_text_pages": "13/60",
+       "books": 60
+      }
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "47/60",
+     "accept_rate": 0.783,
+     "accept_ci": {
+      "ci95": [
+       0.667,
+       0.883
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_pages": "8/60",
+     "wrong_text_ci": {
+      "ci95": [
+       0.05,
+       0.217
+      ],
+      "unit": "book",
+      "units": 60
+     },
+     "wrong_text_classes": {
+      "I4": "3/60",
+      "O5": "2/60",
+      "O6": "2/60",
+      "O8": "2/60",
+      "O10": "1/60",
+      "O7": "1/60",
+      "O12": "1/60"
+     },
+     "classes_k_of_n": {
+      "O8": "19/60",
+      "O6": "16/60",
+      "O16": "14/60",
+      "E2": "12/60",
+      "O5": "4/60",
+      "O11": "3/60",
+      "O12": "3/60",
+      "I4": "3/60",
+      "T6": "2/60",
+      "O7": "2/60",
+      "O10": "1/60",
+      "O14": "1/60"
+     },
+     "fidelity_mean": 4.45,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "47/60",
+       "wrong_text_pages": "8/60",
+       "books": 60
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "german-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "agy-flash-low-read": {
+     "n": 4,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 4,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 1,
+      "caught": "1/1",
+      "rate": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "named": "1/1",
+      "by_kind": {
+       "C": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 1,
+       "caught": "1/1",
+       "rate": 1,
+       "ci95": [
+        0.207,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite": {
+     "n": 4,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 4,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 3,
+      "caught": "3/3",
+      "rate": 1,
+      "ci95": [
+       0.439,
+       1
+      ],
+      "named": "3/3",
+      "by_kind": {
+       "B": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 3,
+       "caught": "3/3",
+       "rate": 1,
+       "ci95": [
+        0.439,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 150,
+     "books": 150,
+     "accept": "123/150",
+     "accept_rate": 0.82,
+     "accept_ci": {
+      "ci95": [
+       0.76,
+       0.88
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_pages": "13/150",
+     "wrong_text_ci": {
+      "ci95": [
+       0.04,
+       0.133
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_classes": {
+      "O6": "4/150",
+      "O5": "4/150",
+      "I4": "3/150",
+      "I1": "2/150",
+      "O17": "1/150",
+      "O7": "1/150",
+      "O1": "1/150",
+      "O12": "1/150"
+     },
+     "classes_k_of_n": {
+      "O8": "81/150",
+      "O6": "57/150",
+      "E2": "41/150",
+      "O11": "16/150",
+      "O16": "14/150",
+      "O7": "14/150",
+      "T6": "9/150",
+      "O12": "8/150",
+      "D1": "5/150",
+      "O5": "5/150",
+      "O10": "3/150",
+      "I4": "3/150",
+      "I1": "2/150",
+      "O1": "2/150",
+      "O17": "1/150"
+     },
+     "fidelity_mean": 4.21,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "123/150",
+       "wrong_text_pages": "13/150",
+       "books": 150
+      }
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 150,
+     "books": 150,
+     "accept": "123/150",
+     "accept_rate": 0.82,
+     "accept_ci": {
+      "ci95": [
+       0.753,
+       0.88
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_pages": "14/150",
+     "wrong_text_ci": {
+      "ci95": [
+       0.047,
+       0.14
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_classes": {
+      "O6": "6/150",
+      "O5": "3/150",
+      "I1": "2/150",
+      "I4": "2/150",
+      "O7": "1/150",
+      "O8": "1/150",
+      "T6": "1/150",
+      "O12": "1/150"
+     },
+     "classes_k_of_n": {
+      "O8": "84/150",
+      "O6": "54/150",
+      "E2": "36/150",
+      "O16": "17/150",
+      "O7": "12/150",
+      "O11": "12/150",
+      "O12": "9/150",
+      "T6": "9/150",
+      "O5": "8/150",
+      "D1": "7/150",
+      "O10": "3/150",
+      "I4": "3/150",
+      "I1": "2/150",
+      "O9": "1/150",
+      "O14": "1/150"
+     },
+     "fidelity_mean": 4.24,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "123/150",
+       "wrong_text_pages": "14/150",
+       "books": 150
+      }
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 13,
+     "books": 13,
+     "accept": "9/13",
+     "accept_rate": 0.692,
+     "accept_ci": {
+      "ci95": [
+       0.462,
+       0.923
+      ],
+      "unit": "book",
+      "units": 13
+     },
+     "wrong_text_pages": "2/13",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.385
+      ],
+      "unit": "book",
+      "units": 13
+     },
+     "wrong_text_classes": {
+      "O5": "1/13",
+      "O12": "1/13"
+     },
+     "classes_k_of_n": {
+      "O8": "5/13",
+      "O12": "4/13",
+      "O6": "3/13",
+      "E2": "3/13",
+      "O16": "2/13",
+      "O7": "2/13",
+      "O11": "1/13",
+      "I3": "1/13",
+      "O5": "1/13"
+     },
+     "fidelity_mean": 4.31,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "1/1",
+      "rate": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "validated": null,
+      "all": "1/1"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "9/13",
+       "wrong_text_pages": "2/13",
+       "books": 13
+      }
+     }
+    },
+    "lite": {
+     "n": 150,
+     "books": 150,
+     "accept": "83/150",
+     "accept_rate": 0.553,
+     "accept_ci": {
+      "ci95": [
+       0.473,
+       0.633
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_pages": "42/150",
+     "wrong_text_ci": {
+      "ci95": [
+       0.213,
+       0.347
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_classes": {
+      "O6": "19/150",
+      "I4": "13/150",
+      "O5": "13/150",
+      "O12": "3/150",
+      "I1": "2/150",
+      "O7": "1/150",
+      "T6": "1/150",
+      "O1": "1/150",
+      "O10": "1/150"
+     },
+     "classes_k_of_n": {
+      "O8": "105/150",
+      "O6": "89/150",
+      "E2": "46/150",
+      "O11": "34/150",
+      "O16": "32/150",
+      "O5": "30/150",
+      "O12": "22/150",
+      "O7": "20/150",
+      "T6": "18/150",
+      "I4": "13/150",
+      "O10": "4/150",
+      "T10": "2/150",
+      "I1": "2/150",
+      "O4": "1/150",
+      "O1": "1/150",
+      "D1": "1/150",
+      "O14": "1/150"
+     },
+     "fidelity_mean": 3.77,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "83/150",
+       "wrong_text_pages": "42/150",
+       "books": 150
+      }
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 150,
+     "books": 150,
+     "accept": "108/150",
+     "accept_rate": 0.72,
+     "accept_ci": {
+      "ci95": [
+       0.647,
+       0.787
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_pages": "22/150",
+     "wrong_text_ci": {
+      "ci95": [
+       0.093,
+       0.207
+      ],
+      "unit": "book",
+      "units": 150
+     },
+     "wrong_text_classes": {
+      "O6": "10/150",
+      "O5": "8/150",
+      "I4": "4/150",
+      "O1": "2/150",
+      "O8": "2/150",
+      "I1": "2/150",
+      "O12": "1/150"
+     },
+     "classes_k_of_n": {
+      "O8": "99/150",
+      "O6": "61/150",
+      "E2": "38/150",
+      "O11": "19/150",
+      "O5": "17/150",
+      "O16": "16/150",
+      "T6": "14/150",
+      "O7": "13/150",
+      "O12": "11/150",
+      "I4": "4/150",
+      "O10": "3/150",
+      "D1": "2/150",
+      "O1": "2/150",
+      "I1": "2/150"
+     },
+     "fidelity_mean": 4.08,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "108/150",
+       "wrong_text_pages": "22/150",
+       "books": 150
+      }
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 137,
+     "books": 137,
+     "accept": "104/137",
+     "accept_rate": 0.759,
+     "accept_ci": {
+      "ci95": [
+       0.686,
+       0.832
+      ],
+      "unit": "book",
+      "units": 137
+     },
+     "wrong_text_pages": "18/137",
+     "wrong_text_ci": {
+      "ci95": [
+       0.08,
+       0.19
+      ],
+      "unit": "book",
+      "units": 137
+     },
+     "wrong_text_classes": {
+      "O6": "8/137",
+      "I4": "7/137",
+      "O5": "5/137",
+      "O12": "2/137",
+      "I1": "2/137",
+      "O7": "1/137"
+     },
+     "classes_k_of_n": {
+      "O8": "73/137",
+      "O6": "48/137",
+      "E2": "41/137",
+      "O11": "22/137",
+      "O7": "16/137",
+      "O12": "15/137",
+      "O16": "14/137",
+      "O5": "13/137",
+      "T6": "11/137",
+      "I4": "7/137",
+      "O10": "3/137",
+      "T10": "2/137",
+      "I1": "2/137",
+      "I3": "1/137",
+      "D1": "1/137"
+     },
+     "fidelity_mean": 4.13,
+     "lane": [
+      "queue-routes-7853"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "3/3",
+      "rate": 1,
+      "ci95": [
+       0.439,
+       1
+      ],
+      "validated": null,
+      "all": "3/3"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "104/137",
+       "wrong_text_pages": "18/137",
+       "books": 137
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "german-lite",
+   "route": "agy-flash-low-read",
+   "page_id": "69bda08af6d63c9197488988",
+   "book_id": "69bda08af6d63c91974888d0",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "den / daß es nachgehends höher gestiegen sey: Er ware wahrhaftig und eigentlich der allgemeine Monarch",
+     "severity": "wrong_text",
+     "what": "Body text belongs to the following page (p. 168), which picks up from this page's catchword 'den/'. None of p. 167's text ('vor / wie die damalige Gelehrten mit diesem ehrwürdigen Patriarchen...' through 'Es ist gewiß / daß das Reich des Teuffels damahls zum höchsten gestiegen war / und wir werden nicht fin-') is transcribed."
+    }
+   ],
+   "note": "The transcription doesn't match the image: it gives the next page's text about the Flood, while the image is p. 167 (sig. L 4), on the scholars mocking Noah's ark and the Devil's power over mankind."
+  },
+  {
+   "cell": "german-lite",
+   "route": "agy-flash-low-read",
+   "page_id": "69bda143f6d63c919748f34d",
+   "book_id": "69bda143f6d63c919748f149",
+   "page_number": 516,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Weise, wie den Tag zuvor, nur mit dem / Umstande, daß er den kleinen Tisch nicht im",
+     "severity": "wrong_text",
+     "what": "The candidate transcribes the facing page (481), whose line starts show at the right edge (Weise/Umst/Vorzi/wo er…). The main leaf, p. 480, is not transcribed at all."
+    },
+    {
+     "class": "O5",
+     "quote": "Prise",
+     "severity": "wrong_text",
+     "what": "All of p. 480 is missing, from 'morgen borgen würde. Hierauf gieng er' to 'für die Frau vom Hause auf die nehmliche / Weise'."
+    }
+   ],
+   "note": "The text shown belongs to the next page (481). None of p. 480 ('Von den Nachtwandlern', the third scene with the Marquis) is transcribed, and the page number and header are wrong."
+  },
+  {
+   "cell": "german-lite",
+   "route": "agy-flash-low-read",
+   "page_id": "69f773f86028036f8e239727",
+   "book_id": "69c8716b6c6f3cc53c857589",
+   "page_number": 1191,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "exequiert der Keyser mit <unclear>dem</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'mit' at the visible right edge. 'dem' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "denselbigen tag <unclear>heraußhalff</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'tag'. 'heraußhalff' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "must der arm <unclear>Jud</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'arm'. 'Jud' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "gebott er <unclear>daß er</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'er'. 'daß er' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "gleich wie sie <unclear>den Sambstag</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'sie'. 'den Sambstag' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "Rossz vñ <unclear>Fuß in Meißner</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'vñ'. 'Fuß in Meißner' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "Augspurg ge<unclear>halten/ da die</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'ge-'. The rest is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "vñ <unclear>durch deß</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'vñ'. 'durch deß' is invented."
+    },
+    {
+     "class": "O1",
+     "quote": "Für<unclear>stenthumen auff</unclear>",
+     "severity": "wrong_text",
+     "what": "The line ends at 'Für-'. The rest is invented."
+    }
+   ],
+   "note": "The left edge is cropped, but the candidate adds made-up words, marked unclear, past the visible line ends at the right margin. Readers would take this invented text as the book's."
+  },
+  {
+   "cell": "german-lite",
+   "route": "agy-flash-low@4-read",
+   "page_id": "69bda08af6d63c9197488988",
+   "book_id": "69bda08af6d63c91974888d0",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "den / daß es nachgehends höher gestiegen sey: Er ware wahrhaftig und eigentlich der allgemeine Monarch",
+     "severity": "wrong_text",
+     "what": "Body text belongs to the following page (p. 168), which picks up from this page's catchword 'den/'. None of p. 167's text ('vor / wie die damalige Gelehrten mit diesem ehrwürdigen Patriarchen...' through 'Es ist gewiß / daß das Reich des Teuffels damahls zum höchsten gestiegen war / und wir werden nicht fin-') is transcribed."
+    }
+   ],
+   "note": "The transcription doesn't match the image: it gives the next page's text about the Flood, while the image is p. 167 (sig. L 4), on the scholars mocking Noah's ark and the Devil's power over mankind."
+  },
+  {
+   "cell": "german-lite",
+   "route": "agy-flash-low@4-read",
+   "page_id": "69bda143f6d63c919748f34d",
+   "book_id": "69bda143f6d63c919748f149",
+   "page_number": 516,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Weise, wie den Tag zuvor, nur mit dem / Umstande, daß er den kleinen Tisch nicht im",
+     "severity": "wrong_text",
+     "what": "The candidate transcribes the facing page (481), whose line starts show at the right edge (Weise/Umst/Vorzi/wo er…). The main leaf, p. 480, is not transcribed at all."
+    },
+    {
+     "class": "O5",
+     "quote": "Prise",
+     "severity": "wrong_text",
+     "what": "All of p. 480 is missing, from 'morgen borgen würde. Hierauf gieng er' to 'für die Frau vom Hause auf die nehmliche / Weise'."
+    }
+   ],
+   "note": "The text shown belongs to the next page (481). None of p. 480 ('Von den Nachtwandlern', the third scene with the Marquis) is transcribed, and the page number and header are wrong."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite",
+   "page_id": "69bda08af6d63c9197488988",
+   "book_id": "69bda08af6d63c91974888d0",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "den / daß es nachgehends höher gestiegen sey: Er ware wahrhaftig und eigentlich der allgemeine Monarch",
+     "severity": "wrong_text",
+     "what": "Body text belongs to the following page (p. 168), which picks up from this page's catchword 'den/'. None of p. 167's text ('vor / wie die damalige Gelehrten mit diesem ehrwürdigen Patriarchen...' through 'Es ist gewiß / daß das Reich des Teuffels damahls zum höchsten gestiegen war / und wir werden nicht fin-') is transcribed."
+    }
+   ],
+   "note": "The transcription doesn't match the image: it gives the next page's text about the Flood, while the image is p. 167 (sig. L 4), on the scholars mocking Noah's ark and the Devil's power over mankind."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite",
+   "page_id": "69bda143f6d63c919748f34d",
+   "book_id": "69bda143f6d63c919748f149",
+   "page_number": 516,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Weise, wie den Tag zuvor, nur mit dem / Umstande, daß er den kleinen Tisch nicht im",
+     "severity": "wrong_text",
+     "what": "The candidate transcribes the facing page (481), whose line starts show at the right edge (Weise/Umst/Vorzi/wo er…). The main leaf, p. 480, is not transcribed at all."
+    },
+    {
+     "class": "O5",
+     "quote": "Prise",
+     "severity": "wrong_text",
+     "what": "All of p. 480 is missing, from 'morgen borgen würde. Hierauf gieng er' to 'für die Frau vom Hause auf die nehmliche / Weise'."
+    }
+   ],
+   "note": "The text shown belongs to the next page (481). None of p. 480 ('Von den Nachtwandlern', the third scene with the Marquis) is transcribed, and the page number and header are wrong."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite",
+   "page_id": "69f6d9899aa852b491ba9550",
+   "book_id": "69c7f8226c6f3cc53c84228e",
+   "page_number": 122,
+   "defects": [
+    {
+     "class": "I4",
+     "quote": "<column-break/>\n\nSäure, welche das Acidum ist, in dem man das Volatile mit dem fixen Salze vermischet",
+     "severity": "wrong_text",
+     "what": "A whole second column was made up. The page has one column; this text is built from the cut-off word fragments of the facing page (Säu-, Acid, ti, u, de D) and does not appear on this leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "und so hält es sich in einer steten Circulation, ti, und so weiter.\n\n2. Die Art und Weise, wie man die Materie de D.",
+     "severity": "wrong_text",
+     "what": "Invented passages, including a numbered heading that is not on this page."
+    }
+   ],
+   "note": "The real single-column text is close to correct, but after it comes a made-up 'second column' (built from the facing page's cut-off edge) that is not on this page."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "page_id": "69c763626a0f3d112faf8d85",
+   "book_id": "69c75d9a6a0f3d112faf8b18",
+   "page_number": 453,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "<margin>Schlaff.</margin>",
+     "severity": "wrong_text",
+     "what": "the page has no marginal note here; this side-heading was made up"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>Ubung.</margin>",
+     "severity": "wrong_text",
+     "what": "the page has no marginal note here; this side-heading was made up"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>Stuelgang.</margin>",
+     "severity": "wrong_text",
+     "what": "the page has no marginal note here; this side-heading was made up"
+    }
+   ],
+   "note": "The main text is read accurately, but three marginal headings (Schlaff., Ubung., Stuelgang.) and the catchword 'zeit-' do not appear on the page; its margins are empty."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "page_id": "69bda08af6d63c9197488988",
+   "book_id": "69bda08af6d63c91974888d0",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "den / daß es nachgehends höher gestiegen sey: Er ware wahrhaftig und eigentlich der allgemeine Monarch",
+     "severity": "wrong_text",
+     "what": "Body text belongs to the following page (p. 168), which picks up from this page's catchword 'den/'. None of p. 167's text ('vor / wie die damalige Gelehrten mit diesem ehrwürdigen Patriarchen...' through 'Es ist gewiß / daß das Reich des Teuffels damahls zum höchsten gestiegen war / und wir werden nicht fin-') is transcribed."
+    }
+   ],
+   "note": "The transcription doesn't match the image: it gives the next page's text about the Flood, while the image is p. 167 (sig. L 4), on the scholars mocking Noah's ark and the Devil's power over mankind."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "page_id": "69bda143f6d63c919748f34d",
+   "book_id": "69bda143f6d63c919748f149",
+   "page_number": 516,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Weise, wie den Tag zuvor, nur mit dem / Umstande, daß er den kleinen Tisch nicht im",
+     "severity": "wrong_text",
+     "what": "The candidate transcribes the facing page (481), whose line starts show at the right edge (Weise/Umst/Vorzi/wo er…). The main leaf, p. 480, is not transcribed at all."
+    },
+    {
+     "class": "O5",
+     "quote": "Prise",
+     "severity": "wrong_text",
+     "what": "All of p. 480 is missing, from 'morgen borgen würde. Hierauf gieng er' to 'für die Frau vom Hause auf die nehmliche / Weise'."
+    }
+   ],
+   "note": "The text shown belongs to the next page (481). None of p. 480 ('Von den Nachtwandlern', the third scene with the Marquis) is transcribed, and the page number and header are wrong."
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "page_id": "69f6d9899aa852b491ba9550",
+   "book_id": "69c7f8226c6f3cc53c84228e",
+   "page_number": 122,
+   "defects": [
+    {
+     "class": "I4",
+     "quote": "<column-break/>\n\nSäure, welche das Acidum ist, in dem man das Volatile mit dem fixen Salze vermischet",
+     "severity": "wrong_text",
+     "what": "A whole second column was made up. The page has one column; this text is built from the cut-off word fragments of the facing page (Säu-, Acid, ti, u, de D) and does not appear on this leaf."
+    },
+    {
+     "class": "O1",
+     "quote": "und so hält es sich in einer steten Circulation, ti, und so weiter.\n\n2. Die Art und Weise, wie man die Materie de D.",
+     "severity": "wrong_text",
+     "what": "Invented passages, including a numbered heading that is not on this page."
+    }
+   ],
+   "note": "The real single-column text is close to correct, but after it comes a made-up 'second column' (built from the facing page's cut-off edge) that is not on this page."
+  },
+  {
+   "cell": "german-lite",
+   "route": "pero>agy-flash-low",
+   "page_id": "69bda08af6d63c9197488988",
+   "book_id": "69bda08af6d63c91974888d0",
+   "page_number": 184,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "den / daß es nachgehends höher gestiegen sey: Er ware wahrhaftig und eigentlich der allgemeine Monarch",
+     "severity": "wrong_text",
+     "what": "Body text belongs to the following page (p. 168), which picks up from this page's catchword 'den/'. None of p. 167's text ('vor / wie die damalige Gelehrten mit diesem ehrwürdigen Patriarchen...' through 'Es ist gewiß / daß das Reich des Teuffels damahls zum höchsten gestiegen war / und wir werden nicht fin-') is transcribed."
+    }
+   ],
+   "note": "The transcription doesn't match the image: it gives the next page's text about the Flood, while the image is p. 167 (sig. L 4), on the scholars mocking Noah's ark and the Devil's power over mankind."
+  },
+  {
+   "cell": "german-lite",
+   "route": "pero>agy-flash-low",
+   "page_id": "69bda143f6d63c919748f34d",
+   "book_id": "69bda143f6d63c919748f149",
+   "page_number": 516,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Weise, wie den Tag zuvor, nur mit dem / Umstande, daß er den kleinen Tisch nicht im",
+     "severity": "wrong_text",
+     "what": "The candidate transcribes the facing page (481), whose line starts show at the right edge (Weise/Umst/Vorzi/wo er…). The main leaf, p. 480, is not transcribed at all."
+    },
+    {
+     "class": "O5",
+     "quote": "Prise",
+     "severity": "wrong_text",
+     "what": "All of p. 480 is missing, from 'morgen borgen würde. Hierauf gieng er' to 'für die Frau vom Hause auf die nehmliche / Weise'."
+    }
+   ],
+   "note": "The text shown belongs to the next page (481). None of p. 480 ('Von den Nachtwandlern', the third scene with the Marquis) is transcribed, and the page number and header are wrong."
+  }
+ ],
+ "by_script_cells": {
+  "french-lite|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "56/60",
+     "wrong_text_pages": "2/60",
+     "classes_k_of_n": {
+      "O8": "25/60",
+      "E2": "13/60",
+      "O6": "10/60",
+      "O11": "8/60",
+      "O16": "7/60",
+      "O7": "3/60",
+      "O5": "2/60",
+      "D1": "2/60",
+      "O10": "1/60",
+      "O12": "1/60",
+      "O2": "1/60",
+      "T6": "1/60",
+      "O15": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "55/60",
+     "wrong_text_pages": "2/60",
+     "classes_k_of_n": {
+      "O8": "20/60",
+      "E2": "14/60",
+      "O6": "10/60",
+      "O11": "5/60",
+      "O16": "5/60",
+      "O12": "4/60",
+      "T6": "2/60",
+      "O9": "2/60",
+      "O5": "1/60",
+      "O10": "1/60",
+      "I4": "1/60",
+      "O7": "1/60",
+      "O14": "1/60",
+      "O13": "1/60",
+      "D1": "1/60",
+      "T5": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "54/60",
+     "wrong_text_pages": "2/60",
+     "classes_k_of_n": {
+      "O8": "22/60",
+      "O6": "13/60",
+      "E2": "10/60",
+      "O16": "7/60",
+      "O12": "4/60",
+      "O11": "3/60",
+      "O5": "3/60",
+      "T6": "3/60",
+      "D1": "2/60",
+      "O10": "2/60",
+      "O7": "2/60",
+      "I4": "1/60",
+      "O14": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    },
+    "lite": {
+     "n": 60,
+     "books": 60,
+     "accept": "42/60",
+     "wrong_text_pages": "13/60",
+     "classes_k_of_n": {
+      "O6": "23/60",
+      "O8": "23/60",
+      "O16": "18/60",
+      "E2": "16/60",
+      "O11": "7/60",
+      "I4": "7/60",
+      "O5": "7/60",
+      "O12": "5/60",
+      "T6": "5/60",
+      "O10": "2/60",
+      "O7": "2/60",
+      "O9": "1/60",
+      "O1": "1/60",
+      "D1": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "47/60",
+     "wrong_text_pages": "8/60",
+     "classes_k_of_n": {
+      "O8": "19/60",
+      "O6": "16/60",
+      "O16": "14/60",
+      "E2": "12/60",
+      "O5": "4/60",
+      "O11": "3/60",
+      "O12": "3/60",
+      "I4": "3/60",
+      "T6": "2/60",
+      "O7": "2/60",
+      "O10": "1/60",
+      "O14": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 150,
+     "books": 150,
+     "accept": "123/150",
+     "wrong_text_pages": "13/150",
+     "classes_k_of_n": {
+      "O8": "81/150",
+      "O6": "57/150",
+      "E2": "41/150",
+      "O11": "16/150",
+      "O16": "14/150",
+      "O7": "14/150",
+      "T6": "9/150",
+      "O12": "8/150",
+      "D1": "5/150",
+      "O5": "5/150",
+      "O10": "3/150",
+      "I4": "3/150",
+      "I1": "2/150",
+      "O1": "2/150",
+      "O17": "1/150"
+     },
+     "script_basis": {
+      "page": 150
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 150,
+     "books": 150,
+     "accept": "123/150",
+     "wrong_text_pages": "14/150",
+     "classes_k_of_n": {
+      "O8": "84/150",
+      "O6": "54/150",
+      "E2": "36/150",
+      "O16": "17/150",
+      "O7": "12/150",
+      "O11": "12/150",
+      "O12": "9/150",
+      "T6": "9/150",
+      "O5": "8/150",
+      "D1": "7/150",
+      "O10": "3/150",
+      "I4": "3/150",
+      "I1": "2/150",
+      "O9": "1/150",
+      "O14": "1/150"
+     },
+     "script_basis": {
+      "page": 150
+     }
+    },
+    "lighton>agy-flash-low": {
+     "n": 13,
+     "books": 13,
+     "accept": "9/13",
+     "wrong_text_pages": "2/13",
+     "classes_k_of_n": {
+      "O8": "5/13",
+      "O12": "4/13",
+      "O6": "3/13",
+      "E2": "3/13",
+      "O16": "2/13",
+      "O7": "2/13",
+      "O11": "1/13",
+      "I3": "1/13",
+      "O5": "1/13"
+     },
+     "script_basis": {
+      "page": 13
+     }
+    },
+    "lite": {
+     "n": 150,
+     "books": 150,
+     "accept": "83/150",
+     "wrong_text_pages": "42/150",
+     "classes_k_of_n": {
+      "O8": "105/150",
+      "O6": "89/150",
+      "E2": "46/150",
+      "O11": "34/150",
+      "O16": "32/150",
+      "O5": "30/150",
+      "O12": "22/150",
+      "O7": "20/150",
+      "T6": "18/150",
+      "I4": "13/150",
+      "O10": "4/150",
+      "T10": "2/150",
+      "I1": "2/150",
+      "O4": "1/150",
+      "O1": "1/150",
+      "D1": "1/150",
+      "O14": "1/150"
+     },
+     "script_basis": {
+      "page": 150
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 150,
+     "books": 150,
+     "accept": "108/150",
+     "wrong_text_pages": "22/150",
+     "classes_k_of_n": {
+      "O8": "99/150",
+      "O6": "61/150",
+      "E2": "38/150",
+      "O11": "19/150",
+      "O5": "17/150",
+      "O16": "16/150",
+      "T6": "14/150",
+      "O7": "13/150",
+      "O12": "11/150",
+      "I4": "4/150",
+      "O10": "3/150",
+      "D1": "2/150",
+      "O1": "2/150",
+      "I1": "2/150"
+     },
+     "script_basis": {
+      "page": 150
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 137,
+     "books": 137,
+     "accept": "104/137",
+     "wrong_text_pages": "18/137",
+     "classes_k_of_n": {
+      "O8": "73/137",
+      "O6": "48/137",
+      "E2": "41/137",
+      "O11": "22/137",
+      "O7": "16/137",
+      "O12": "15/137",
+      "O16": "14/137",
+      "O5": "13/137",
+      "T6": "11/137",
+      "I4": "7/137",
+      "O10": "3/137",
+      "T10": "2/137",
+      "I1": "2/137",
+      "I3": "1/137",
+      "D1": "1/137"
+     },
+     "script_basis": {
+      "page": 137
+     }
+    }
+   }
+  }
+ }
+}

@@ -20,7 +20,7 @@ import {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-core.mjs';
-import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
+import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, cliBookFilter, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
 import { getTranslateModelForBook as getTranslateModelForBookTs } from '../../src/lib/types/ai-models';
 
 type Route = { engine: string; default?: boolean; families?: Record<string, { from: string; hidden?: boolean }> };
@@ -140,7 +140,7 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(translateEngineFor(t, { language: 'Pali' })).toBe(MODEL_FLASH);
     expect(tableRowFor(t, { language: 'Pali' })?.id).toBe('flash-measured');
     expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
-    expect(translateLaneForBook(t, { language: 'Latin' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
+    expect(translateLaneForBook(t, { language: 'Spanish' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
   });
 
   // #7075 (2026-10-25): Greek and Ancient Greek go to the agy reader; every other flash-measured language stays on Batch.
@@ -150,7 +150,9 @@ describe('Translation: both routers read translation-routing-table.json', () => 
       expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli' });
       expect(translateEngineFor(t, { language })).toBe(MODEL_FLASH);
     }
-    for (const language of ['Hebrew', 'Arabic', 'Sanskrit', 'Latin; Greek']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    for (const language of ['Hebrew', 'Arabic', 'Sanskrit']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    // "Latin; Greek" is not Greek (first label); it is Latin, and Latin has its own cli row since #7263.
+    expect(translateLaneForBook(t, { language: 'Latin; Greek' })).toMatchObject({ channel: 'cli', row: { id: 'latin-cli-agy4' } });
     expect(translateLaneForBook(t, { language: 'Pali' })).toMatchObject({ channel: 'cli', engine: 'claude-opus-5-5' });
   });
 
@@ -169,6 +171,106 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect(v(cliRow({ unless: {} }))).toThrow(/title_words/);
     expect(v(cliRow({ unless: { title_word: ['loeb'] } }))).toThrow(/title_words/);
     expect(() => validateTranslationTable(withCli(cliRow({ unless: { title_words: ['loeb'] } })), [MODEL_FLASH, MODEL_LITE])).not.toThrow();
+  });
+
+  // #7263 (Derek 2026-11-02): Latin, German, Italian and French first translation go to agy Flash-low at 4 pages a call
+  // (PR #7909 beat the served Flash-Lite lane in all four print cells). A cli row overlays EVERY batch row, so these
+  // carry `unless: { providers: ['bph'] }`: BPH keeps its own row.
+  it('the live table sends Latin, German, Italian and French to agy@4, and leaves BPH and the Batch engine alone', () => {
+    const t = TRANSLATION_ROUTING_TABLE;
+    for (const [language, id] of [['Latin', 'latin-cli-agy4'], ['German, Latin', 'german-cli-agy4'], ['Italian', 'italian-cli-agy4'], ['French', 'french-cli-agy4'], ['Latin-German', 'latin-cli-agy4']]) {
+      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id, per_call: 4 } });
+      expect(translateEngineFor(t, { language })).toBe(MODEL_LITE);
+    }
+    for (const language of ['Latin', 'German', 'Latin. French. English']) {
+      expect(translateLaneForBook(t, { language, image_source: { provider: 'bph' } })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH, row: { id: 'bph' } });
+    }
+    // Not the tested cells: other first labels, and the Greek row keeps its own reader (no per_call).
+    for (const language of ['Old French', 'Middle High German', 'Neo-Latin', 'Spanish']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    expect(translateLaneForBook(t, { language: 'Greek, Latin' }).row.id).toBe('greek-cli-gemini38');
+    expect(translateLaneForBook(t, { language: 'Greek' }).row.per_call).toBeUndefined();
+  });
+
+  it('unless.providers and per_call are validated', () => {
+    const v = (row: Record<string, unknown>) => () => validateTranslationTable(withCli(row), [MODEL_FLASH, MODEL_LITE]);
+    const agy = { engine: 'gemini-3.8-flash+agy-cli' };
+    expect(v(cliRow({ unless: { providers: [] } }))).toThrow(/providers/);
+    expect(v(cliRow({ unless: { providers: ['bph'] } }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 4 }))).not.toThrow();
+    expect(v(cliRow({ ...agy, per_call: 5 }))).toThrow(/per_call/);
+    expect(v(cliRow({ ...agy, per_call: 2.5 }))).toThrow(/per_call/);
+    expect(v(cliRow({ per_call: 4 }))).toThrow(/per_call/);   // an Opus row: claude-translate has its own --per-call
+    expect(v({ id: 'b', match: { language_prefix: ['latin'] }, engine: MODEL_LITE, per_call: 4, evidence: [{ issue: 1 }] })).toThrow(/per_call/);
+    const t = validateTranslationTable(withCli(cliRow({ ...agy, unless: { providers: ['bph'] } })), [MODEL_FLASH, MODEL_LITE]);
+    expect(translateLaneForBook(t, { language: 'Pali', image_source: { provider: 'bph' } }).row?.id).not.toBe('pali-test');
+    expect(translateLaneForBook(t, { language: 'Pali', image_source: { provider: 'mdz' } }).row.id).toBe('pali-test');
+  });
+
+  it('the lane reads a per_call row with the block reader its sample measured, and any other agy row as before', async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore — plain-JS module, no declarations
+    const { readerArgs } = await import('../../scripts/batch/cli-translate-lane.mjs');
+    const t = TRANSLATION_ROUTING_TABLE;
+    const a = readerArgs(translateLaneForBook(t, { language: 'Latin' }), { ids: 'i.json', dir: 'd', job: 'j' }) as string[];
+    expect(path.relative(ROOT, a[0])).toBe('scripts/batch/claude-translate.mjs');
+    expect(a).toEqual(expect.arrayContaining(['read', '--cli=agy', '--per-call=4', '--model=gemini-3.8-flash-low', '--job=j']));
+    const g = readerArgs(translateLaneForBook(t, { language: 'Greek' }), { ids: 'i.json', dir: 'd', job: 'j' }) as string[];
+    expect(path.relative(ROOT, g[0])).toBe('scripts/batch/cli-translate.mjs');
+    expect(g.some((x) => x.startsWith('--per-call'))).toBe(false);
+  });
+
+  it('cliBookFilter selects exactly the books translateLaneForBook sends to a cli lane (#7263)', () => {
+    // A matcher for the only shapes cliBookFilter writes: a RegExp, a string, { $nin }, { $not: RegExp }.
+    type Clause = Record<string, unknown>;
+    const get = (b: Record<string, unknown>, k: string) => k.split('.').reduce<unknown>((o, p) => (o as Record<string, unknown> | undefined)?.[p], b);
+    const fits = (b: Record<string, unknown>, c: Clause) => Object.entries(c).every(([k, cond]) => {
+      const v = get(b, k);
+      if (cond instanceof RegExp) return typeof v === 'string' && cond.test(v);
+      if (typeof cond === 'string') return v === cond;
+      const o = cond as { $nin?: string[]; $not?: RegExp };
+      if (o.$nin) return !o.$nin.includes(v as string);
+      if (o.$not) return !(typeof v === 'string' && o.$not.test(v));
+      throw new Error(`unexpected condition on ${k}`);
+    });
+    const t = TRANSLATION_ROUTING_TABLE;
+    const f = cliBookFilter(t) as { $or: Clause[] };
+    const books: Record<string, unknown>[] = [];
+    for (const language of ['Latin', 'latin', 'Latin; Greek', 'Neo-Latin', 'German', 'Middle High German', 'French', 'Italian', 'Greek', 'Ancient Greek', 'Greek, Latin', 'Pali', 'Hebrew', 'Tibetan', 'English', 'Spanish', '']) {
+      for (const image_source of [undefined, { provider: 'bph' }, { provider: 'mdz' }]) {
+        for (const extra of [{}, { title: 'Plutarch Loeb' }, { publisher: 'William Heinemann' }]) books.push({ language, ...(image_source ? { image_source } : {}), ...extra });
+      }
+    }
+    for (const b of books) {
+      expect([b, f.$or.some((c) => fits(b, c))]).toEqual([b, translateLaneForBook(t, b).channel === 'cli']);
+    }
+    expect(cliBookFilter({ default: t.default, rows: t.rows.filter((r: { channel?: string }) => r.channel !== 'cli') })).toBeNull();
+  });
+
+  it('under the translate brake, Phase 4 holds books for their CLI lane and dispatches nothing to an API lane (#7263)', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/workers/pipeline-orchestrator.mjs'), 'utf8');
+    expect(src).toMatch(/const cliOnly = translateGate\.paused && CLI_TRANSLATE_BOOK_FILTER != null;/);
+    const hold = src.indexOf('const held = await routeBookToCliTranslateLane(');
+    const stop = src.indexOf('if (cliOnly) {', hold);
+    expect(hold).toBeGreaterThan(-1);
+    expect(stop).toBeGreaterThan(hold);
+    expect(stop).toBeLessThan(src.indexOf("if (phase4Lane(book) === 'chained')", hold));
+    // A book it cannot act on stays put, so the cap is on holds, not on books selected (else the refused ones starve the rest).
+    expect(src).toMatch(/if \(cliOnly && cliHolds >= TRANSLATE_SUBMIT_LIMIT\) break;/);
+    expect(src).toMatch(/if \(\(cliOnly \|\| freshBooks\.length === 0\) && gapLimit > 0\)/);
+  });
+
+  it('the CLI translation lane asks the OCR-first gate before a book takes budget, and refunds a refused read (#7263)', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/batch/cli-translate-lane.mjs'), 'utf8');
+    const loop = src.slice(src.indexOf('let budget = MAX;'));
+    const gate = loop.indexOf('await gateBeforeRead(db, take,');
+    expect(gate).toBeGreaterThan(-1);
+    expect(gate).toBeLessThan(loop.indexOf('budget -= take.length;'));
+    expect(loop).toMatch(/if \(read === 2\) budget \+= take\.length;/);
+  });
+
+  it('the correction lane keeps the books the CLI translation lane waits on (its OCR-first gate) in its frame', () => {
+    const src = fs.readFileSync(path.join(ROOT, 'scripts/batch/cli-ocr-lane.mjs'), 'utf8');
+    expect(src).toMatch(/\{ 'pipeline_auto\.status': HOLD_STATUS, 'pipeline_auto\.hold\.reason': CLI_TRANSLATE_HOLD\.reason \}/);
   });
 
   it('a cli row must name a CLI reader and carry its blind sample; a batch row may not name one', () => {

@@ -20,7 +20,7 @@ And inside it:
 - you are changing which OCR engine reads a language
 - someone asks "why isn't this book moving?" or "what is the line working on?"
 
-**Status:** design.
+**Status:** design. **Not running as of 2026-10-29 (#7759):** the standing driver (`pipeline-driver.mjs`), the alarms (`pipeline-alarms.mjs`), the re-check (`pipeline-recheck.mjs`) and per-lane budgets (`lane_budgets`, 0 rows) do not exist; the standing quality gate ran once, by hand (2026-10-10, NO-GO), and has no scheduler. What runs today: `book-process.md`.
 - Revision 1 is dated 2026-10-01 (PR #5471).
 - Revision 2 is dated 2026-10-04. It was prompted by one day of running translation by hand (the #5469 comment of 2026-10-04).
 - Tracking issue is #5469, under the consolidation program #5302.
@@ -268,6 +268,8 @@ In the week to 2026-10-23 about 85% of page translations came from subscription 
 
 ## The standing driver (new in revision 2)
 
+> Design, not running (2026-10-29).
+
 **One driver per step, always on, never copied.** `scripts/workers/pipeline-driver.mjs --step <step>` runs on the scheduler every 10 min. It replaces the per-run drivers (readable-20k, translate300, preview-stubs-4719), their `DONE` files and their chain scripts.
 
 Each tick:
@@ -308,6 +310,8 @@ A cohort that must go first (a partner collection, a deadline) gets a **queue bo
 
 ### One budget per lane
 
+> Design, not running (2026-10-29): `lane_budgets` has no rows.
+
 The budget is `processing_control.lane_budgets.<step> = { usd_per_day, by, at }`, written with versioning like `set-scope`.
 - **The spend guard checks a lane's measured spend against that lane's budget.** Spend is attributed by **gate label**, meaning the lane that asked, not by book id. A dollar therefore counts once, which ends the stubs4719 double count.
 - **The global dial stays as the ceiling over the sum.** With every lane budget at 0, behaviour is exactly what it is today.
@@ -323,6 +327,8 @@ From revision 2, every envelope carries `purpose`, `issue` and `expires_at` (def
 
 ## Alarms (new in revision 2)
 
+> Design, not running (2026-10-29).
+
 `scripts/workers/pipeline-alarms.mjs` runs every 15 min. It reads the driver ticks, the daily snapshot and the spend meter, and pushes to **ntfy topic `sourcelibrary-uptime`**. It pushes **once per state change** (the `traffic-anomaly-alert.mjs` pattern), with a one-line cause and the `/admin/pipeline` link. It spends nothing.
 
 | alarm | fires when | what it would have caught on 2026-10-03/04 |
@@ -336,6 +342,8 @@ From revision 2, every envelope carries `purpose`, `issue` and `expires_at` (def
 `pipeline-health-alert.mjs` keeps its daily email checks. Its check 5, translation throughput stall, becomes `lane_silent` and leaves the email.
 
 ## The standing quality gate (new in revision 2)
+
+> Design, not running (2026-10-29).
 
 Spend happens at enrolment, so the gate stops enrolment, not spend after the fact.
 

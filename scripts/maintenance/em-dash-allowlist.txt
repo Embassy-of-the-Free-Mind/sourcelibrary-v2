@@ -313,7 +313,7 @@ src/app/prototype/deep-zoom/DeepZoomViewer.tsx 1  # rewritten in a #6215 copy PR
 src/app/prototype/deep-zoom/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/prototype/prehistoric-art/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/quality/methods/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/quality/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/record/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/read/gilgamesh/page.tsx 8  # Thompson 1930 translation text; rest rewritten in a #6215 copy PR
 src/app/research/atlas/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/research/canon-gap/diagrams.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -504,3 +504,4 @@ src/app/articles/one-sentence-of-hermes/page.tsx 2  # added on main after the 20
 src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/articles/aliveness/page.tsx 2  # verbatim quotation: Helen Wilmans, A Search for Freedom (1898), p. 88, prints 'I was — in my own way — tremendously alive'
+src/app/articles/agrippa-against-himself/page.tsx 4  # em dashes inside SourceQuote quotations, kept as the library's translation prints them (Derek, 2026-10-28)

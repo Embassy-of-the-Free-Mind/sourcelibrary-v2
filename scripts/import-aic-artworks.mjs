@@ -20,7 +20,7 @@ import { makeBookDoc } from './lib/book-docs.mjs';
 
 const AIC_API = 'https://api.artic.edu/api/v1';
 const AIC_IIIF = 'https://www.artic.edu/iiif/2';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const THUMB_WIDTH = 600;
 const MIN_DIMENSION = 800;

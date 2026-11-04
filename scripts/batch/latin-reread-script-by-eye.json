@@ -1,0 +1,5 @@
+{
+ "_doc": "By-eye script verdicts for the Latin re-read (cli-ocr-lane.mjs, header: LATIN RE-READ, #7263): books before 1550 or undated with Flash-Lite pages that carry no script tag. print: their untagged pages may be read. manuscript: the book stays out (Opus reader, #7947). A book in neither list keeps its untagged pages out. PRIOR ART: scripts/lib/ocr-trust-gate.mjs reads the tags and has no by-eye list.",
+ "print": {},
+ "manuscript": {}
+}

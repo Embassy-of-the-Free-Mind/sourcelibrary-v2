@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { Book, Page } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { resolveRepeatKeeper, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
 
 // Shared book+page lookup for the reader segment's shells.
 //
@@ -32,6 +33,8 @@ export const PAGE_META_PROJECTION = {
   // An archived split parent (negative page_number) names its leaves here;
   // the reader redirects to the first one (#5842).
   split_into: 1,
+  // A hidden repeat capture names the page kept in its place (#5056).
+  repeat_of: 1,
 };
 
 /**
@@ -62,6 +65,48 @@ export const getSplitLeafId = cache(async function getSplitLeafId(bookId: string
       leafId = leaf.split_into[0];
     }
     return null;
+  } catch {
+    return null;
+  }
+});
+
+/**
+ * The page a hidden repeat capture should redirect to, or null (#5056).
+ * Only a page in the same book answers; the rule (chains, a keeper split after
+ * the hide) is resolveRepeatKeeper in src/lib/reader-pages.ts.
+ */
+export const getRepeatKeeperId = cache(async function getRepeatKeeperId(bookId: string, repeatOf: string): Promise<string | null> {
+  try {
+    const db = await getReadDb();
+    return await resolveRepeatKeeper(
+      (id) => db.collection('pages').findOne({ id, book_id: bookId }, { projection: REPEAT_KEEPER_PROJECTION }),
+      repeatOf,
+    );
+  } catch {
+    return null;
+  }
+});
+
+/**
+ * The real page behind a page id with junk stuck to its end, or null.
+ *
+ * not_found_reports logged ~200 of these a month (from 2026-09-12): a valid
+ * 24-hex page id followed by extra characters, e.g. `…cab155` + `26`, all
+ * with no referrer — links copied or retyped by people and chat assistants.
+ * 161 of 200 resolved, in the same book, to their first 24 characters. Only
+ * a page in the SAME book answers, so a stray id can never land a reader in
+ * another book.
+ */
+export const getTrimmedPageId = cache(async function getTrimmedPageId(bookId: string, pageId: string): Promise<string | null> {
+  const m = /^([0-9a-f]{24}).+$/i.exec(pageId);
+  if (!m) return null;
+  try {
+    const db = await getReadDb();
+    const page = await db.collection('pages').findOne(
+      { id: m[1].toLowerCase(), book_id: bookId },
+      { projection: { _id: 0, id: 1 } },
+    );
+    return page ? (page.id as string) : null;
   } catch {
     return null;
   }

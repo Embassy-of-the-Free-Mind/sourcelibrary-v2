@@ -67,6 +67,12 @@ jobs:
       # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
       - name: No new em dashes in reader-facing copy
         run: node scripts/maintenance/check-em-dashes.mjs
+      # Static source check (#5942): a NEW file that reads pages.translation.data directly fails;
+      # the book's words come through getTranslationText() (src/lib/translation-text.ts and its
+      # scripts/lib twin), which checks translation.text against the data it was parsed from.
+      # Baseline in scripts/lib/translation-data-readers-baseline.json, a list to shrink.
+      - name: No new direct readers of translation.data
+        run: node scripts/audit/translation-data-readers.mjs
       # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
       # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
       # other classes compare the code with the decisions ledger and are filed as issues by

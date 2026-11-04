@@ -1,0 +1,1092 @@
+{
+  "generated": "2026-10-30",
+  "recent_window": [
+    1980,
+    2025
+  ],
+  "pools": {
+    "window": {
+      "T": 6744,
+      "G": 158737
+    },
+    "full": {
+      "T": 9830,
+      "G": 356375
+    }
+  },
+  "editions_counted": {
+    "window": 238696,
+    "full": 499507
+  },
+  "audited_clusters": 1000,
+  "sl_inputs": {
+    "readable": 6420,
+    "sl_first": 5766,
+    "readable_works": 5234,
+    "sl_first_works": 4837
+  },
+  "variants": {
+    "paper": {
+      "window": {
+        "clusters": {
+          "point": 165481,
+          "lo": 165481,
+          "hi": 165481
+        },
+        "ren_composed": {
+          "point": 141896.0333,
+          "lo": 137677.2841,
+          "hi": 145869.3762
+        },
+        "ren_share": {
+          "point": 0.8575,
+          "lo": 0.832,
+          "hi": 0.8815
+        },
+        "translated_all": {
+          "point": 24960.9302,
+          "lo": 21058.7746,
+          "hi": 29304.5683
+        },
+        "translated_all_share": {
+          "point": 0.1508,
+          "lo": 0.1273,
+          "hi": 0.1771
+        },
+        "translated_ren": {
+          "point": 9530.2762,
+          "lo": 6885.7524,
+          "hi": 12428.9492
+        },
+        "translated_ren_share": {
+          "point": 0.0672,
+          "lo": 0.0486,
+          "hi": 0.0875
+        },
+        "untranslated_ren": {
+          "point": 132365.7571,
+          "lo": 127516.0063,
+          "hi": 136901.1
+        },
+        "capture_ren": {
+          "point": 0.154,
+          "lo": 0.1079,
+          "hi": 0.2233
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 45.8085,
+          "lo": 19.7786,
+          "hi": 77.2683
+        },
+        "capture_ren_recent": {
+          "point": 0.163,
+          "lo": 0.0692,
+          "hi": 0.3979
+        },
+        "years_to_finish_ren": {
+          "point": 2889.5487,
+          "lo": 1702.2101,
+          "hi": 6740.17
+        },
+        "editions_model": {
+          "point": 232884.1937,
+          "lo": 219097.3889,
+          "hi": 247139.3317
+        },
+        "editions_translated_share": {
+          "point": 0.1785,
+          "lo": 0.148,
+          "hi": 0.2116
+        },
+        "editions_ren_translated_share": {
+          "point": 0.1005,
+          "lo": 0.0719,
+          "hi": 0.1319
+        },
+        "years_to_finish_ren_works": {
+          "point": 4454.2672,
+          "lo": 2475.9923,
+          "hi": 11834.8378
+        },
+        "works_corrected": {
+          "point": 119489.7273,
+          "lo": 114853.8973,
+          "hi": 124441.0824
+        },
+        "works_corrected_no_overmerge": {
+          "point": 116462.785,
+          "lo": 112195.7899,
+          "hi": 120595.1443
+        },
+        "works_translated": {
+          "point": 9463.2609,
+          "lo": 7464.9017,
+          "hi": 11778.1325
+        },
+        "works_translated_share": {
+          "point": 0.0792,
+          "lo": 0.0616,
+          "hi": 0.0991
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.0813,
+          "lo": 0.0634,
+          "hi": 0.1016
+        },
+        "works_ren": {
+          "point": 109957.9861,
+          "lo": 104696.7849,
+          "hi": 115314.6132
+        },
+        "works_ren_translated": {
+          "point": 4341.8155,
+          "lo": 2926.7785,
+          "hi": 5951.119
+        },
+        "works_ren_translated_share": {
+          "point": 0.0395,
+          "lo": 0.0266,
+          "hi": 0.0543
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 23.7112,
+          "lo": 8.9607,
+          "hi": 42.5026
+        },
+        "over_merge_rate": {
+          "point": 0.0192,
+          "lo": 0.0097,
+          "hi": 0.0301
+        },
+        "split_rate": {
+          "point": 0.442,
+          "lo": 0.4051,
+          "hi": 0.4791
+        },
+        "mean_k_translated": {
+          "point": 6.0418,
+          "lo": 5.1155,
+          "hi": 7.1511
+        },
+        "mean_k_untranslated": {
+          "point": 2.1389,
+          "lo": 1.9304,
+          "hi": 2.3705
+        }
+      },
+      "full": {
+        "clusters": {
+          "point": 366205,
+          "lo": 366205,
+          "hi": 366205
+        },
+        "ren_composed": {
+          "point": 316549.8148,
+          "lo": 307089.4378,
+          "hi": 325373.0622
+        },
+        "ren_share": {
+          "point": 0.8644,
+          "lo": 0.8386,
+          "hi": 0.8885
+        },
+        "translated_all": {
+          "point": 51859.1931,
+          "lo": 43101.0185,
+          "hi": 61475.6614
+        },
+        "translated_all_share": {
+          "point": 0.1416,
+          "lo": 0.1177,
+          "hi": 0.1679
+        },
+        "translated_ren": {
+          "point": 20240.5225,
+          "lo": 14356.2302,
+          "hi": 26827.0172
+        },
+        "translated_ren_share": {
+          "point": 0.0639,
+          "lo": 0.0455,
+          "hi": 0.0843
+        },
+        "untranslated_ren": {
+          "point": 296309.2923,
+          "lo": 285470.4563,
+          "hi": 306491.4352
+        },
+        "capture_ren": {
+          "point": 0.1057,
+          "lo": 0.0728,
+          "hi": 0.1573
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 96.9636,
+          "lo": 38.4452,
+          "hi": 167.7792
+        },
+        "capture_ren_recent": {
+          "point": 0.1122,
+          "lo": 0.046,
+          "hi": 0.3002
+        },
+        "years_to_finish_ren": {
+          "point": 3055.8828,
+          "lo": 1754.905,
+          "hi": 7810.558
+        },
+        "editions_model": {
+          "point": 509293.0622,
+          "lo": 479026.0714,
+          "hi": 540372.4206
+        },
+        "editions_translated_share": {
+          "point": 0.1611,
+          "lo": 0.1318,
+          "hi": 0.1941
+        },
+        "editions_ren_translated_share": {
+          "point": 0.0903,
+          "lo": 0.0634,
+          "hi": 0.1204
+        },
+        "years_to_finish_ren_works": {
+          "point": 4568.0979,
+          "lo": 2507.6409,
+          "hi": 12287.6848
+        },
+        "works_corrected": {
+          "point": 266593.2544,
+          "lo": 256193.494,
+          "hi": 277699.3347
+        },
+        "works_corrected_no_overmerge": {
+          "point": 259833.3011,
+          "lo": 250282.9068,
+          "hi": 269122.3142
+        },
+        "works_translated": {
+          "point": 20176.0687,
+          "lo": 15635.7727,
+          "hi": 25374.3738
+        },
+        "works_translated_share": {
+          "point": 0.0757,
+          "lo": 0.0582,
+          "hi": 0.0956
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.0777,
+          "lo": 0.0598,
+          "hi": 0.098
+        },
+        "works_ren": {
+          "point": 246042.5467,
+          "lo": 234362.8179,
+          "hi": 258041.6558
+        },
+        "works_ren_translated": {
+          "point": 9347.6919,
+          "lo": 6196.8122,
+          "hi": 12940.5441
+        },
+        "works_ren_translated_share": {
+          "point": 0.038,
+          "lo": 0.0251,
+          "hi": 0.0527
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 51.8148,
+          "lo": 19.4816,
+          "hi": 94.26
+        },
+        "over_merge_rate": {
+          "point": 0.0192,
+          "lo": 0.0096,
+          "hi": 0.0301
+        },
+        "split_rate": {
+          "point": 0.4358,
+          "lo": 0.3984,
+          "hi": 0.4737
+        },
+        "mean_k_translated": {
+          "point": 5.7768,
+          "lo": 4.7916,
+          "hi": 6.954
+        },
+        "mean_k_untranslated": {
+          "point": 2.1271,
+          "lo": 1.9183,
+          "hi": 2.3581
+        }
+      },
+      "sl": {
+        "readable_share_of_prior": {
+          "point": 0.1238,
+          "lo": 0.1044,
+          "hi": 0.149
+        },
+        "readable_works_share_of_prior_works": {
+          "point": 0.2594,
+          "lo": 0.2064,
+          "hi": 0.3347
+        },
+        "sl_first_expected_with_uncatalogued_translation": {
+          "point": 713.8857,
+          "lo": 576.6,
+          "hi": 869.4762
+        },
+        "gap_stratum_missed_rate": {
+          "point": 0.1238,
+          "lo": 0.1,
+          "hi": 0.1508
+        }
+      },
+      "sample": {
+        "well_posed": {
+          "T": 216,
+          "G": 630
+        },
+        "ren_translated": {
+          "T": 47,
+          "G": 32
+        },
+        "ren_recent_first_translations": {
+          "T": [
+            "T89",
+            "T100",
+            "T109",
+            "T147",
+            "T150",
+            "T172",
+            "T190",
+            "T192",
+            "T218",
+            "T268",
+            "T294"
+          ],
+          "G": [
+            "G118",
+            "G231",
+            "G281",
+            "G501",
+            "G637",
+            "G640",
+            "G643"
+          ]
+        },
+        "ren_years_missing": []
+      }
+    },
+    "strict": {
+      "window": {
+        "clusters": {
+          "point": 165481,
+          "lo": 165481,
+          "hi": 165481
+        },
+        "ren_composed": {
+          "point": 142932.594,
+          "lo": 138869.216,
+          "hi": 146864.3904
+        },
+        "ren_share": {
+          "point": 0.8637,
+          "lo": 0.8392,
+          "hi": 0.8875
+        },
+        "translated_all": {
+          "point": 20355.8583,
+          "lo": 16832.1026,
+          "hi": 24139.0439
+        },
+        "translated_all_share": {
+          "point": 0.123,
+          "lo": 0.1017,
+          "hi": 0.1459
+        },
+        "translated_ren": {
+          "point": 6601.6788,
+          "lo": 4458.1226,
+          "hi": 9029.1607
+        },
+        "translated_ren_share": {
+          "point": 0.0462,
+          "lo": 0.0311,
+          "hi": 0.063
+        },
+        "untranslated_ren": {
+          "point": 136330.9152,
+          "lo": 131763.6102,
+          "hi": 140582.3324
+        },
+        "capture_ren": {
+          "point": 0.1985,
+          "lo": 0.1315,
+          "hi": 0.3075
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 39.1183,
+          "lo": 15.1239,
+          "hi": 68.5901
+        },
+        "capture_ren_recent": {
+          "point": 0.1599,
+          "lo": 0.0596,
+          "hi": 0.4322
+        },
+        "years_to_finish_ren": {
+          "point": 3485.0971,
+          "lo": 1960.6472,
+          "hi": 8999.722
+        },
+        "editions_model": {
+          "point": 231768.8777,
+          "lo": 217939.1145,
+          "hi": 246279.4076
+        },
+        "editions_translated_share": {
+          "point": 0.1382,
+          "lo": 0.1119,
+          "hi": 0.1663
+        },
+        "editions_ren_translated_share": {
+          "point": 0.0666,
+          "lo": 0.0441,
+          "hi": 0.0927
+        },
+        "years_to_finish_ren_works": {
+          "point": 5931.1882,
+          "lo": 3234.04,
+          "hi": 16825.2792
+        },
+        "works_corrected": {
+          "point": 119801.481,
+          "lo": 115031.5968,
+          "hi": 124804.4334
+        },
+        "works_corrected_no_overmerge": {
+          "point": 116899.4452,
+          "lo": 112569.0799,
+          "hi": 121109.2477
+        },
+        "works_translated": {
+          "point": 8003.8897,
+          "lo": 6045.3319,
+          "hi": 10080.7318
+        },
+        "works_translated_share": {
+          "point": 0.0668,
+          "lo": 0.0502,
+          "hi": 0.0842
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.0685,
+          "lo": 0.0514,
+          "hi": 0.0862
+        },
+        "works_ren": {
+          "point": 110673.5744,
+          "lo": 105342.6987,
+          "hi": 116267.6149
+        },
+        "works_ren_translated": {
+          "point": 3273.3443,
+          "lo": 1980.3051,
+          "hi": 4726.4349
+        },
+        "works_ren_translated_share": {
+          "point": 0.0296,
+          "lo": 0.0179,
+          "hi": 0.0429
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 18.1077,
+          "lo": 6.4811,
+          "hi": 32.7626
+        },
+        "over_merge_rate": {
+          "point": 0.0177,
+          "lo": 0.0086,
+          "hi": 0.0282
+        },
+        "split_rate": {
+          "point": 0.4388,
+          "lo": 0.4023,
+          "hi": 0.4769
+        },
+        "mean_k_translated": {
+          "point": 5.9971,
+          "lo": 4.967,
+          "hi": 7.1763
+        },
+        "mean_k_untranslated": {
+          "point": 2.246,
+          "lo": 2.0112,
+          "hi": 2.491
+        }
+      },
+      "full": {
+        "clusters": {
+          "point": 366205,
+          "lo": 366205,
+          "hi": 366205
+        },
+        "ren_composed": {
+          "point": 318854.3559,
+          "lo": 309657.1767,
+          "hi": 327619.001
+        },
+        "ren_share": {
+          "point": 0.8707,
+          "lo": 0.8456,
+          "hi": 0.8946
+        },
+        "translated_all": {
+          "point": 41773.8285,
+          "lo": 33914.2167,
+          "hi": 50212.3599
+        },
+        "translated_all_share": {
+          "point": 0.1141,
+          "lo": 0.0926,
+          "hi": 0.1371
+        },
+        "translated_ren": {
+          "point": 13789.2615,
+          "lo": 9024.3038,
+          "hi": 19206.4466
+        },
+        "translated_ren_share": {
+          "point": 0.0432,
+          "lo": 0.0284,
+          "hi": 0.06
+        },
+        "untranslated_ren": {
+          "point": 305065.0944,
+          "lo": 294789.7762,
+          "hi": 314634.975
+        },
+        "capture_ren": {
+          "point": 0.1385,
+          "lo": 0.0895,
+          "hi": 0.2238
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 82.8986,
+          "lo": 30.6712,
+          "hi": 148.4361
+        },
+        "capture_ren_recent": {
+          "point": 0.11,
+          "lo": 0.0396,
+          "hi": 0.3307
+        },
+        "years_to_finish_ren": {
+          "point": 3679.9778,
+          "lo": 2029.1462,
+          "hi": 9980.1525
+        },
+        "editions_model": {
+          "point": 507072.1427,
+          "lo": 476652.0018,
+          "hi": 539182.4545
+        },
+        "editions_translated_share": {
+          "point": 0.1226,
+          "lo": 0.0977,
+          "hi": 0.1496
+        },
+        "editions_ren_translated_share": {
+          "point": 0.0584,
+          "lo": 0.0377,
+          "hi": 0.0821
+        },
+        "years_to_finish_ren_works": {
+          "point": 6117.985,
+          "lo": 3306.6957,
+          "hi": 17781.2579
+        },
+        "works_corrected": {
+          "point": 267282.4547,
+          "lo": 256583.7922,
+          "hi": 278370.8986
+        },
+        "works_corrected_no_overmerge": {
+          "point": 260803.7715,
+          "lo": 251105.1163,
+          "hi": 270229.9412
+        },
+        "works_translated": {
+          "point": 16957.0248,
+          "lo": 12554.3512,
+          "hi": 21619.9447
+        },
+        "works_translated_share": {
+          "point": 0.0634,
+          "lo": 0.0468,
+          "hi": 0.0809
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.065,
+          "lo": 0.0479,
+          "hi": 0.0829
+        },
+        "works_ren": {
+          "point": 247631.2227,
+          "lo": 235641.0807,
+          "hi": 260067.8703
+        },
+        "works_ren_translated": {
+          "point": 6988.0115,
+          "lo": 4108.4102,
+          "hi": 10253.5489
+        },
+        "works_ren_translated_share": {
+          "point": 0.0282,
+          "lo": 0.0166,
+          "hi": 0.0415
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 39.3337,
+          "lo": 13.7602,
+          "hi": 71.4779
+        },
+        "over_merge_rate": {
+          "point": 0.0176,
+          "lo": 0.0084,
+          "hi": 0.0283
+        },
+        "split_rate": {
+          "point": 0.4326,
+          "lo": 0.3956,
+          "hi": 0.4714
+        },
+        "mean_k_translated": {
+          "point": 5.7082,
+          "lo": 4.6192,
+          "hi": 6.9584
+        },
+        "mean_k_untranslated": {
+          "point": 2.2283,
+          "lo": 1.9957,
+          "hi": 2.4725
+        }
+      },
+      "sl": {
+        "readable_share_of_prior": {
+          "point": 0.1537,
+          "lo": 0.1279,
+          "hi": 0.1894
+        },
+        "readable_works_share_of_prior_works": {
+          "point": 0.3087,
+          "lo": 0.2422,
+          "hi": 0.4169
+        },
+        "sl_first_expected_with_uncatalogued_translation": {
+          "point": 558.2952,
+          "lo": 430.1619,
+          "hi": 695.581
+        },
+        "gap_stratum_missed_rate": {
+          "point": 0.0968,
+          "lo": 0.0746,
+          "hi": 0.1206
+        }
+      },
+      "sample": {
+        "well_posed": {
+          "T": 211,
+          "G": 630
+        },
+        "ren_translated": {
+          "T": 41,
+          "G": 21
+        },
+        "ren_recent_first_translations": {
+          "T": [
+            "T89",
+            "T100",
+            "T109",
+            "T147",
+            "T150",
+            "T190",
+            "T192",
+            "T218",
+            "T294"
+          ],
+          "G": [
+            "G118",
+            "G281",
+            "G501",
+            "G637",
+            "G640",
+            "G643"
+          ]
+        },
+        "ren_years_missing": []
+      }
+    },
+    "sonnet": {
+      "window": {
+        "clusters": {
+          "point": 165481,
+          "lo": 165481,
+          "hi": 165481
+        },
+        "ren_composed": {
+          "point": 139733.4588,
+          "lo": 135504.9285,
+          "hi": 143809.1984
+        },
+        "ren_share": {
+          "point": 0.8444,
+          "lo": 0.8189,
+          "hi": 0.869
+        },
+        "translated_all": {
+          "point": 18286.2713,
+          "lo": 14994.8208,
+          "hi": 21668.7948
+        },
+        "translated_all_share": {
+          "point": 0.1105,
+          "lo": 0.0906,
+          "hi": 0.1309
+        },
+        "translated_ren": {
+          "point": 4496.4879,
+          "lo": 2835.3332,
+          "hi": 6398.4997
+        },
+        "translated_ren_share": {
+          "point": 0.0322,
+          "lo": 0.0203,
+          "hi": 0.0456
+        },
+        "untranslated_ren": {
+          "point": 135236.971,
+          "lo": 130676.5104,
+          "hi": 139525.7156
+        },
+        "capture_ren": {
+          "point": 0.2477,
+          "lo": 0.1598,
+          "hi": 0.3942
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 21.6476,
+          "lo": 5.8905,
+          "hi": 42.0026
+        },
+        "capture_ren_recent": {
+          "point": 0.2721,
+          "lo": 0.0997,
+          "hi": 1
+        },
+        "years_to_finish_ren": {
+          "point": 6247.1966,
+          "lo": 3188.0834,
+          "hi": 23240.383
+        },
+        "editions_model": {
+          "point": 233915.049,
+          "lo": 220877.9442,
+          "hi": 248642.6639
+        },
+        "editions_translated_share": {
+          "point": 0.1355,
+          "lo": 0.1089,
+          "hi": 0.164
+        },
+        "editions_ren_translated_share": {
+          "point": 0.0531,
+          "lo": 0.0327,
+          "hi": 0.077
+        },
+        "years_to_finish_ren_works": {
+          "point": 9561.4097,
+          "lo": 4315.0515,
+          "hi": 65357.2214
+        },
+        "works_corrected": {
+          "point": 118218.5059,
+          "lo": 113588.1406,
+          "hi": 123115.1934
+        },
+        "works_corrected_no_overmerge": {
+          "point": 115180.7911,
+          "lo": 111074.9004,
+          "hi": 119311.782
+        },
+        "works_translated": {
+          "point": 6795.8622,
+          "lo": 5017.4212,
+          "hi": 8719.2315
+        },
+        "works_translated_share": {
+          "point": 0.0575,
+          "lo": 0.0423,
+          "hi": 0.0738
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.059,
+          "lo": 0.0436,
+          "hi": 0.0757
+        },
+        "works_ren": {
+          "point": 107854.8203,
+          "lo": 102639.5646,
+          "hi": 113226.3672
+        },
+        "works_ren_translated": {
+          "point": 2690.826,
+          "lo": 1486.6896,
+          "hi": 4101.6565
+        },
+        "works_ren_translated_share": {
+          "point": 0.0249,
+          "lo": 0.0138,
+          "hi": 0.0379
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 10.9988,
+          "lo": 1.6435,
+          "hi": 24.2352
+        },
+        "over_merge_rate": {
+          "point": 0.0188,
+          "lo": 0.0097,
+          "hi": 0.0299
+        },
+        "split_rate": {
+          "point": 0.4516,
+          "lo": 0.4156,
+          "hi": 0.4874
+        },
+        "mean_k_translated": {
+          "point": 6.494,
+          "lo": 5.4292,
+          "hi": 7.7537
+        },
+        "mean_k_untranslated": {
+          "point": 2.2859,
+          "lo": 2.0703,
+          "hi": 2.5186
+        }
+      },
+      "full": {
+        "clusters": {
+          "point": 366205,
+          "lo": 366205,
+          "hi": 366205
+        },
+        "ren_composed": {
+          "point": 311932.6569,
+          "lo": 302520.0297,
+          "hi": 321022.276
+        },
+        "ren_share": {
+          "point": 0.8518,
+          "lo": 0.8261,
+          "hi": 0.8766
+        },
+        "translated_all": {
+          "point": 37118.2557,
+          "lo": 29831.4554,
+          "hi": 44712.2436
+        },
+        "translated_all_share": {
+          "point": 0.1014,
+          "lo": 0.0815,
+          "hi": 0.1221
+        },
+        "translated_ren": {
+          "point": 9217.6932,
+          "lo": 5524.2877,
+          "hi": 13425.463
+        },
+        "translated_ren_share": {
+          "point": 0.0296,
+          "lo": 0.0178,
+          "hi": 0.0428
+        },
+        "untranslated_ren": {
+          "point": 302714.9637,
+          "lo": 292512.4258,
+          "hi": 312331.19
+        },
+        "capture_ren": {
+          "point": 0.1762,
+          "lo": 0.1099,
+          "hi": 0.297
+        },
+        "recent_ren_first_translations_per_year": {
+          "point": 43.9617,
+          "lo": 8.586,
+          "hi": 90.1753
+        },
+        "capture_ren_recent": {
+          "point": 0.1953,
+          "lo": 0.0671,
+          "hi": 1
+        },
+        "years_to_finish_ren": {
+          "point": 6885.8785,
+          "lo": 3337.6751,
+          "hi": 35693.987
+        },
+        "editions_model": {
+          "point": 511806.7279,
+          "lo": 483524.9624,
+          "hi": 544415.6722
+        },
+        "editions_translated_share": {
+          "point": 0.1193,
+          "lo": 0.0941,
+          "hi": 0.1466
+        },
+        "editions_ren_translated_share": {
+          "point": 0.045,
+          "lo": 0.027,
+          "hi": 0.0668
+        },
+        "years_to_finish_ren_works": {
+          "point": 10126.5985,
+          "lo": 4435.7598,
+          "hi": 100512.1197
+        },
+        "works_corrected": {
+          "point": 263753.2063,
+          "lo": 253410.0421,
+          "hi": 274716.2808
+        },
+        "works_corrected_no_overmerge": {
+          "point": 256978.91,
+          "lo": 247783.18,
+          "hi": 266240.6655
+        },
+        "works_translated": {
+          "point": 14291.4744,
+          "lo": 10320.5646,
+          "hi": 18594.9417
+        },
+        "works_translated_share": {
+          "point": 0.0542,
+          "lo": 0.039,
+          "hi": 0.0707
+        },
+        "works_translated_share_no_overmerge": {
+          "point": 0.0556,
+          "lo": 0.0401,
+          "hi": 0.0723
+        },
+        "works_ren": {
+          "point": 241370.3329,
+          "lo": 229686.8073,
+          "hi": 253377.5326
+        },
+        "works_ren_translated": {
+          "point": 5725.0722,
+          "lo": 3046.3328,
+          "hi": 8879.9478
+        },
+        "works_ren_translated_share": {
+          "point": 0.0237,
+          "lo": 0.0127,
+          "hi": 0.0365
+        },
+        "recent_ren_first_translations_per_year_works": {
+          "point": 23.2699,
+          "lo": 2.3956,
+          "hi": 52.7974
+        },
+        "over_merge_rate": {
+          "point": 0.0186,
+          "lo": 0.0095,
+          "hi": 0.03
+        },
+        "split_rate": {
+          "point": 0.4455,
+          "lo": 0.409,
+          "hi": 0.4817
+        },
+        "mean_k_translated": {
+          "point": 6.1548,
+          "lo": 5.0413,
+          "hi": 7.4896
+        },
+        "mean_k_untranslated": {
+          "point": 2.2737,
+          "lo": 2.0572,
+          "hi": 2.5073
+        }
+      },
+      "sl": {
+        "readable_share_of_prior": {
+          "point": 0.173,
+          "lo": 0.1437,
+          "hi": 0.2152
+        },
+        "readable_works_share_of_prior_works": {
+          "point": 0.3662,
+          "lo": 0.2815,
+          "hi": 0.5073
+        },
+        "sl_first_expected_with_uncatalogued_translation": {
+          "point": 482.6941,
+          "lo": 368.6027,
+          "hi": 605.5616
+        },
+        "gap_stratum_missed_rate": {
+          "point": 0.0837,
+          "lo": 0.0639,
+          "hi": 0.105
+        }
+      },
+      "sample": {
+        "well_posed": {
+          "T": 224,
+          "G": 657
+        },
+        "ren_translated": {
+          "T": 37,
+          "G": 14
+        },
+        "ren_recent_first_translations": {
+          "T": [
+            "T150",
+            "T294",
+            "T147",
+            "T202",
+            "T100",
+            "T143",
+            "T89",
+            "T218",
+            "T109"
+          ],
+          "G": [
+            "G281",
+            "G337",
+            "G260"
+          ]
+        },
+        "ren_years_missing": []
+      }
+    }
+  },
+  "ft_audit_bound": {
+    "rate": {
+      "point": 0.1797,
+      "lo": 0.1473,
+      "hi": 0.2173
+    },
+    "sl_first_expected_with_prior": {
+      "point": 1036,
+      "lo": 850,
+      "hi": 1253
+    }
+  }
+}

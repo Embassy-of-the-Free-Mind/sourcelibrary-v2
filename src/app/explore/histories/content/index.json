@@ -1,0 +1,3700 @@
+{
+ "generated": "2026-10-28",
+ "audit": {
+  "all": {
+   "n": 175,
+   "rejected": 47,
+   "pct": 27,
+   "lo": 21,
+   "hi": 34,
+   "date": "2026-10-28"
+  },
+  "judge": {
+   "caught": 46,
+   "planted": 50,
+   "pct": 92,
+   "lo": 81,
+   "hi": 97
+  }
+ },
+ "concepts": [
+  {
+   "slug": "aliveness",
+   "title": "Aliveness",
+   "question": "What did people take life to be? Each era’s definition of being alive, the words that carried it in each language, and what people did to make, keep or prolong life.",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-lexicon",
+     "title": "01. The lexicon: what \"aliveness\" means, and how that changed"
+    },
+    {
+     "slug": "02-turning-points",
+     "title": "2. Turning points: where the meaning of aliveness changed"
+    },
+    {
+     "slug": "03-making-aliveness",
+     "title": "3. Making aliveness: how each era tried to create or prolong life"
+    },
+    {
+     "slug": "04-life-as-soul",
+     "title": "4. Life as soul: anima, psychē, the world soul, Aristotle's kinds of soul"
+    },
+    {
+     "slug": "05-life-beyond-europe",
+     "title": "5. Life beyond Europe: ik', tonalli, cama, mauri, ẹ̀mí, niya, sěmangat"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "ζωή",
+     "translit": "zōē",
+     "lang": "grc",
+     "gloss": "life as the living do it, shared with animals: nourishing, growing, breathing; set against bios",
+     "avoid": [
+      "life force",
+      "vitality"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-zoe-bios-zuniga-1519"
+    },
+    {
+     "term": "βίος",
+     "translit": "bios",
+     "lang": "grc",
+     "gloss": "the life one leads: rational life, a lifetime, livelihood and means",
+     "avoid": [
+      "biological life",
+      "organic life"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-zoe-bios-zuniga-1519"
+    },
+    {
+     "term": "ψυχή",
+     "translit": "psychē",
+     "lang": "grc",
+     "gloss": "what makes a body alive (that by which we live, perceive and think); in Aristotle the first entelecheia of an organic body, so plants have it too",
+     "avoid": [
+      "mind",
+      "living being",
+      "soul"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-deanima-ensouled-distinguished-by-living"
+    },
+    {
+     "term": "πνεῦμα",
+     "translit": "pneuma",
+     "lang": "grc",
+     "gloss": "breath, air in motion; for the Stoics a warm, fiery breath holding body and cosmos together; in Galen the vital and psychic pneuma of arteries and brain",
+     "avoid": [
+      "vital spirit",
+      "spirit",
+      "breath of life"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-stoic-soul-warm-fiery-pneuma"
+    },
+    {
+     "term": "τὸ ἔμφυτον θερμόν",
+     "translit": "emphyton thermon",
+     "lang": "grc",
+     "gloss": "the inborn heat, greatest in the young, fed by food, guarded by breathing, seated in the heart",
+     "avoid": [
+      "vital heat",
+      "vital energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-hippocrates-growing-bodies-most-innate-heat"
+    },
+    {
+     "term": "ἐντελέχεια",
+     "translit": "entelecheia",
+     "lang": "grc",
+     "gloss": "in Aristotle the soul as the first actuality of an organic body: what the body is when it can live, not an agent added to it",
+     "avoid": [
+      "vital principle",
+      "vital force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-deanima-soul-first-entelechy-organic-body"
+    },
+    {
+     "term": "φύσις",
+     "translit": "physis",
+     "lang": "grc",
+     "gloss": "in the Stoic and Galenic grades, the power that governs plants and works growth and nutrition, below psychē and above hexis",
+     "avoid": [
+      "vegetative soul",
+      "nature"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/ancient#anc-stoic-hexis-physis-psyche-grades"
+    },
+    {
+     "term": "נֶפֶשׁ",
+     "translit": "nefesh",
+     "lang": "he",
+     "gloss": "the living creature, shared with animals, 'in the blood'; also person, will; in kabbalah the lowest soul-name",
+     "avoid": [
+      "life force",
+      "breath",
+      "soul"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/hebrew-christian#heb-gen27-nishmat-hayyim-nefesh-hayyah"
+    },
+    {
+     "term": "רוּחַ",
+     "translit": "ruach",
+     "lang": "he",
+     "gloss": "one word for wind, breath and spirit; later the middle of the three soul-names",
+     "avoid": [
+      "spirit",
+      "breath"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/hebrew-christian#heb-ezekiel37-one-ruach-three-englishes"
+    },
+    {
+     "term": "נְשָׁמָה",
+     "translit": "neshamah",
+     "lang": "he",
+     "gloss": "the breath God blew into Adam (nishmat ḥayyim); in kabbalah the highest of the three soul-names",
+     "avoid": [
+      "breath"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/hebrew-christian#heb-gen27-nishmat-hayyim-nefesh-hayyah"
+    },
+    {
+     "term": "روح",
+     "translit": "rūḥ",
+     "lang": "ar",
+     "gloss": "in medicine a subtle, hot body, made in the heart, that carries the faculties through the passages",
+     "avoid": [
+      "spirit",
+      "soul"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/medieval#med-avicenna-ruh-vehicle-of-faculties"
+    },
+    {
+     "term": "calor innatus",
+     "translit": "calor innatus",
+     "lang": "la",
+     "gloss": "the inborn heat (also calor naturalis, calor nativus) that lives in the radical moisture and consumes it 'as the flame of a lamp consumes oil'",
+     "avoid": [
+      "vital energy",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/medieval#med-bacon-heat-consumes-its-own-oil"
+    },
+    {
+     "term": "viriditas",
+     "translit": "viriditas",
+     "lang": "la",
+     "gloss": "greenness: the green of earth and grasses that herbs draw in at sunrise",
+     "avoid": [
+      "life force",
+      "life-force",
+      "vital force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/medieval#med-hildegard-herbs-suck-viriditas"
+    },
+    {
+     "term": "Archeus",
+     "translit": "Archeus",
+     "lang": "de",
+     "gloss": "Paracelsus's smith and kitchen in the stomach that makes flesh from food; in van Helmont the efficient cause in seeds",
+     "avoid": [
+      "vital force",
+      "vital principle"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/alchemy-medicine#alch-meteororum-archeus-smith-in-stomach"
+    },
+    {
+     "term": "balsamum",
+     "translit": "balsamum",
+     "lang": "la",
+     "gloss": "the natural balsam (Paracelsus's balsamic mumia) that preserves the body from rotting",
+     "avoid": [
+      "life force",
+      "life-force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/alchemy-medicine#alch-croll-natural-balsam-gloss-life-force"
+    },
+    {
+     "term": "vis vitalis",
+     "translit": "vis vitalis",
+     "lang": "la",
+     "gloss": "the force of living (vivendi vis); in 18th-century physiology the specific force of the living that Haeckel calls erroneous",
+     "avoid": [
+      "life force",
+      "life-force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/vitalism#vit-vital-force-haeckel"
+    },
+    {
+     "term": "Lebenskraft",
+     "translit": "Lebenskraft",
+     "lang": "de",
+     "gloss": "the force whose activity is life (c. 1790–1850 German physiology), using itself up as it acts; by 1904 'unscientific'",
+     "avoid": [
+      "life force",
+      "life-force",
+      "energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/vitalism#vit-wenzel-1800-life-gradual-dying"
+    },
+    {
+     "term": "lebendige Kraft",
+     "translit": "lebendige Kraft",
+     "lang": "de",
+     "gloss": "'living force', vis viva: the mechanical quantity of a body's motion, which Fechner ties to the life of body and soul",
+     "avoid": [
+      "kinetic energy",
+      "energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/romantic-naturphilosophie#rom-fechner-1851-lebendige-kraft-kinetic-energy"
+    },
+    {
+     "term": "Bildungstrieb",
+     "translit": "Bildungstrieb",
+     "lang": "de",
+     "gloss": "Blumenbach's formative drive of organised matter, which Kant keeps apart from the merely mechanical Bildungskraft",
+     "avoid": [
+      "formative force",
+      "formative power",
+      "vital force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/vitalism#vit-kant-bildungstrieb-not-bildungskraft"
+    },
+    {
+     "term": "élan vital",
+     "translit": "élan vital",
+     "lang": "fr",
+     "gloss": "Bergson's finite impulse, given once for all, that traverses matter",
+     "avoid": [
+      "vital force",
+      "vital principle",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/vitalism#vit-bergson-elan-finite"
+    },
+    {
+     "term": "प्राण",
+     "translit": "prāṇa",
+     "lang": "sa",
+     "gloss": "breath, 'the oldest and the best' of the faculties; the commentators gloss it vāyu, wind",
+     "avoid": [
+      "life-force",
+      "life force",
+      "energy",
+      "vital energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-prana-hyp-vayu"
+    },
+    {
+     "term": "वायु",
+     "translit": "vāyu",
+     "lang": "sa",
+     "gloss": "wind, air; the commentators' gloss for prāṇa and for viśvāyu; the body's winds",
+     "avoid": [
+      "life-force",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-visvayu-sayana-vayu"
+    },
+    {
+     "term": "आयुस्",
+     "translit": "āyus",
+     "lang": "sa",
+     "gloss": "lifespan; in Caraka the union of body, senses, mind and self",
+     "avoid": [
+      "life-force",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-ayus-rigveda-lifeforce"
+    },
+    {
+     "term": "ओजस्",
+     "translit": "ojas",
+     "lang": "sa",
+     "gloss": "cool, white, oily, 'the best seat of life'; the quintessence of the bodily tissues, increased by rasāyana",
+     "avoid": [
+      "vital power",
+      "vital energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-ojas-sushruta"
+    },
+    {
+     "term": "रसायन",
+     "translit": "rasāyana",
+     "lang": "sa",
+     "gloss": "rejuvenation therapy that keeps off ageing; in the rasa texts worked with perfected mercury",
+     "avoid": [
+      "alchemy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-rasayana-charaka"
+    },
+    {
+     "term": "氣",
+     "translit": "qi",
+     "lang": "zh",
+     "gloss": "breath, vapour, what fills the body and the world; its gathering is life, its scattering death; 'all under heaven is one qi'",
+     "avoid": [
+      "vital energy",
+      "energy",
+      "life force",
+      "life-force",
+      "vital life force",
+      "breath-energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-zhuangzi-life-gathering-of-qi"
+    },
+    {
+     "term": "神",
+     "translit": "shen",
+     "lang": "zh",
+     "gloss": "spirit, the end of the jing → qi → shen series, 'the child of qi'; also the gods and spirits of a place",
+     "avoid": [
+      "spirit-energy",
+      "vital energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-jing-to-qi-to-shen-daoyan"
+    },
+    {
+     "term": "命",
+     "translit": "ming",
+     "lang": "zh",
+     "gloss": "allotted life, what is given at birth; in neidan 'pre-heaven utmost essence, one qi in dense mist', paired with xing in xingming",
+     "avoid": [
+      "life-force",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-ming-xingming-guizhi-lifeforce"
+    },
+    {
+     "term": "生",
+     "translit": "sheng",
+     "lang": "zh",
+     "gloss": "plain 'life', birth, to live; 生生, ceaseless generation",
+     "avoid": [
+      "life-force",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-sheng-zhuangzi-dasheng"
+    },
+    {
+     "term": "魂",
+     "translit": "hun",
+     "lang": "zh",
+     "gloss": "the yang spirit in the warm qi that follows the po at birth, by which mouth and nose breathe; dispersed at death it becomes shen",
+     "avoid": [
+      "ethereal soul",
+      "soul"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#soul-wd-hun-po-first-transformation"
+    },
+    {
+     "term": "རླུང",
+     "translit": "rlung",
+     "lang": "bo",
+     "gloss": "wind: one of the three faults in medicine, and the winds that move in the channels; renders Skt. prāṇa and vāyu",
+     "avoid": [
+      "vital energy",
+      "energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-rlung-rendered-wind"
+    },
+    {
+     "term": "སྲོག",
+     "translit": "srog",
+     "lang": "bo",
+     "gloss": "sustenance, life as what is kept going (Skt. jīva); what the yogi draws into the central channel",
+     "avoid": [
+      "life-force",
+      "life force",
+      "breath-energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-srog-sustenance-tengyur"
+    },
+    {
+     "term": "ཚེ",
+     "translit": "tshe",
+     "lang": "bo",
+     "gloss": "lifespan, the length of a life that longevity rites summon back (bla tshe, srog tshe, gzugs tshe, dbugs tshe)",
+     "avoid": [
+      "life-essence",
+      "vital-longevity"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/asian#asia-bla-tshe-two-renderings"
+    },
+    {
+     "term": "mana",
+     "translit": "mana",
+     "lang": "poz",
+     "gloss": "a power 'not physical', originating with personal beings, known only by its results and shown by success",
+     "avoid": [
+      "force",
+      "impersonal force",
+      "energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/animism-ethnography#anim-codrington-mana-not-physical"
+    },
+    {
+     "term": "manitou",
+     "translit": "manitou",
+     "lang": "alg",
+     "gloss": "a general term for spiritual beings, and the living spirit of a class of natural things",
+     "avoid": [
+      "supreme being",
+      "god",
+      "energy"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/animism-ethnography#anim-tylor-lafitau-manitou-supreme-being"
+    },
+    {
+     "term": "mauri",
+     "translit": "mauri",
+     "lang": "mi",
+     "gloss": "the life-principle of a person, forest, river or crop, often lodged in a hidden stone or object that keeps its hau",
+     "avoid": [
+      "life-force",
+      "life force"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/oceania#world-maori-grey-karakia-mauri-ora-food"
+    },
+    {
+     "term": "àṣẹ",
+     "translit": "àṣẹ",
+     "lang": "yo",
+     "gloss": "the power that makes speech come to pass, received from Olodumare; also the closing 'so be it'",
+     "avoid": [
+      "authority"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/africa#world-yoruba-ase-rendered-authority-farrow"
+    },
+    {
+     "term": "ẹ̀mí",
+     "translit": "ẹ̀mí",
+     "lang": "yo",
+     "gloss": "life, breath and the length of a life; Olodumare as Elemi, 'Owner of Breath', lends it",
+     "avoid": [
+      "spirit",
+      "soul"
+     ],
+     "evidence": "/explore/histories/aliveness/claims/africa#world-yoruba-emi-life-breath-crowther"
+    }
+   ],
+   "domains": [
+    "alchemy-medicine",
+    "early-modern-science",
+    "critique",
+    "ancient",
+    "hebrew-christian",
+    "animism-ethnography",
+    "asian",
+    "vitalism",
+    "romantic-naturphilosophie",
+    "medieval",
+    "renaissance",
+    "modern",
+    "africa",
+    "americas",
+    "north-inner-asia",
+    "oceania"
+   ],
+   "counts": {
+    "verified": 1043,
+    "partial": 35,
+    "dropped": 98,
+    "essays": 5
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 7,
+    "pct": 28,
+    "lo": 14,
+    "hi": 48,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  },
+  {
+   "slug": "consciousness",
+   "title": "Consciousness",
+   "question": "Where did each tradition put experience: in the soul, the body, their union, a lower vehicle, a faculty, an act of attention, the One? From aisthēsis, synaisthēsis and cit to Cudworth’s and Locke’s “consciousness”, Bewusstsein and the hard problem.",
+   "map": "/explore/histories/consciousness/sources",
+   "essays": [
+    {
+     "slug": "01-the-arc",
+     "title": "1. The arc of consciousness: where experience was put, and when it became one thing"
+    },
+    {
+     "slug": "02-soul-is-not-experience",
+     "title": "2. \"Soul is not experience\": an observation tested"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "αἴσθησις",
+     "translit": "aisthēsis",
+     "lang": "grc",
+     "gloss": "sensing, perception by the senses; in Aristotle first described as being moved and affected",
+     "avoid": [
+      "consciousness",
+      "awareness",
+      "experience"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/greek#grk-aristotle-aisthesis-being-moved-affected"
+    },
+    {
+     "term": "πάθος",
+     "translit": "pathos",
+     "lang": "grc",
+     "gloss": "being affected, what is undergone; in the Platonists it belongs to the composite, not the soul",
+     "avoid": [
+      "emotion",
+      "passion",
+      "feeling"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/greek#grk-aristotle-aisthesis-being-moved-affected"
+    },
+    {
+     "term": "ἀντίληψις",
+     "translit": "antilēpsis",
+     "lang": "grc",
+     "gloss": "apprehension, grasping an impression; in Plotinus how 'we' take in what the composite perceives",
+     "avoid": [
+      "consciousness",
+      "conscious apprehension",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/neoplatonic-hermetic#neo-plotinus-i1-composite-perceives-we-apprehend"
+    },
+    {
+     "term": "συναίσθησις",
+     "translit": "synaisthēsis",
+     "lang": "grc",
+     "gloss": "co-perception: perceiving oneself along with the object (Stoics, Hierocles), the world's self-perception (Proclus); Cudworth's 'con-sense'",
+     "avoid": [
+      "consciousness",
+      "self-awareness",
+      "internal self-awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/greek#grk-hierocles-synaisthesis-self-perception"
+    },
+    {
+     "term": "παρακολούθησις",
+     "translit": "parakolouthēsis",
+     "lang": "grc",
+     "gloss": "following along with one's own act or impressions; in Epictetus human-only understanding of how impressions are used, in Plotinus an optional reflection",
+     "avoid": [
+      "consciousness",
+      "awareness",
+      "conscious awareness",
+      "conscious grasp"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/greek#grk-epictetus-use-vs-parakolouthesis"
+    },
+    {
+     "term": "προσεκτικόν",
+     "translit": "prosektikon",
+     "lang": "grc",
+     "gloss": "the attentive part of the soul, which says 'I saw', 'I was angry' (late commentators on De anima III.2)",
+     "avoid": [
+      "consciousness",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/neoplatonic-hermetic#neo-philoponus-three-answers-who-perceives-seeing"
+    },
+    {
+     "term": "ὄχημα",
+     "translit": "ochēma",
+     "lang": "grc",
+     "gloss": "the soul's vehicle, a body finer than flesh that carries the soul and takes on the irrational lives (Proclus)",
+     "avoid": [
+      "astral body",
+      "subtle body",
+      "aura"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/neoplatonic-hermetic#neo-proclus-in-tim-vehicle-irrational-life"
+    },
+    {
+     "term": "συνείδησις",
+     "translit": "syneidēsis",
+     "lang": "grc",
+     "gloss": "co-knowledge, knowing with (oneself or another); in Christian Greek moral conscience",
+     "avoid": [
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/critique#crit-albertuni-synderesis-scribal"
+    },
+    {
+     "term": "conscientia",
+     "translit": "conscientia",
+     "lang": "la",
+     "gloss": "co-knowledge; in Jerome and Aquinas moral conscience, an act applying knowledge to what we do; in Descartes the inner witness by which we are aware of our thoughts",
+     "avoid": [
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/christian-latin#lat-aquinas-conscientia-names-an-act"
+    },
+    {
+     "term": "sensus communis",
+     "translit": "sensus communis",
+     "lang": "la",
+     "gloss": "the common sense: an inner faculty that receives all five senses' forms and senses the act of sensing (Aristotle's koinē aisthēsis via Avicenna's al-ḥiss al-mushtarak)",
+     "avoid": [
+      "common sense",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/christian-latin#lat-aquinas-common-sense-senses-the-act"
+    },
+    {
+     "term": "sensus interior",
+     "translit": "sensus interior",
+     "lang": "la",
+     "gloss": "the interior sense: in Augustine the sense by which one knows one's own life and judges the outer senses; in the scholastics the inner senses",
+     "avoid": [
+      "consciousness",
+      "inner awareness",
+      "introspection"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/christian-latin#lat-augustine-own-life-interior-sensu"
+    },
+    {
+     "term": "idolum",
+     "translit": "idolum",
+     "lang": "la",
+     "gloss": "the soul's image-power in Ficino and Agrippa: the knot of body and soul and the origin of the senses",
+     "avoid": [
+      "idol",
+      "image",
+      "astral body"
+     ]
+    },
+    {
+     "term": "apperception",
+     "translit": "apperception",
+     "lang": "fr",
+     "gloss": "Leibniz's reflective knowledge of the monad's own inner state, against perception without it; Kant's unity of the 'I think'",
+     "avoid": [
+      "consciousness",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/early-modern#em-leibniz-perception-not-apperception"
+    },
+    {
+     "term": "Bewusstsein",
+     "translit": "Bewusstsein",
+     "lang": "de",
+     "gloss": "being-aware, the German noun for consciousness (Wolff's 'das bewust seyn', 1720)",
+     "avoid": [],
+     "evidence": "/explore/histories/consciousness/claims/modern#mod-wolff-1720-bewust-seyn-mark"
+    },
+    {
+     "term": "चित्",
+     "translit": "cit",
+     "lang": "sa",
+     "gloss": "the light of awareness itself; in the Pratyabhijñā citi, free and singular, is the cause of the world",
+     "avoid": [
+      "consciousness",
+      "mind",
+      "thought"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-pratyabhijna-citi-svatantra"
+    },
+    {
+     "term": "चैतन्य",
+     "translit": "caitanya",
+     "lang": "sa",
+     "gloss": "sentience, the nature of cit as the freedom of knowing and acting (Śiva-sūtra 1.1, caitanyam ātmā)",
+     "avoid": [
+      "consciousness",
+      "Consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-shivasutra-caitanyam-atma"
+    },
+    {
+     "term": "साक्षिन्",
+     "translit": "sākṣin",
+     "lang": "sa",
+     "gloss": "the witness: the self that watches the qualities without acting (Śvetāśvatara 6.11; Sāṃkhya's puruṣa)",
+     "avoid": [
+      "observer",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-svet-witness-sole-thinker"
+    },
+    {
+     "term": "पुरुष",
+     "translit": "puruṣa",
+     "lang": "sa",
+     "gloss": "in Sāṃkhya the conscious, inactive spectator who undergoes experience while prakṛti acts",
+     "avoid": [
+      "soul",
+      "spirit",
+      "self",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-sankhya-cetana-purusha-suffers"
+    },
+    {
+     "term": "विज्ञान",
+     "translit": "vijñāna",
+     "lang": "sa",
+     "gloss": "discerning cognition, one of the five aggregates, a relation of subject to object, not a self (Pali viññāṇa)",
+     "avoid": [
+      "consciousness",
+      "mind"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/buddhist#bud-compendium-vinnana-as-relation"
+    },
+    {
+     "term": "आलयविज्ञान",
+     "translit": "ālayavijñāna",
+     "lang": "sa",
+     "gloss": "the store-cognition, the eighth vijñāna of Yogācāra",
+     "avoid": [
+      "store consciousness",
+      "unconscious",
+      "subconscious"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/buddhist#bud-kuiji-eight-shi"
+    },
+    {
+     "term": "प्रकाश",
+     "translit": "prakāśa",
+     "lang": "sa",
+     "gloss": "manifesting light: that by which anything appears at all",
+     "avoid": [
+      "consciousness",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-shivasutra-caitanyam-atma"
+    },
+    {
+     "term": "विमर्श",
+     "translit": "vimarśa",
+     "lang": "sa",
+     "gloss": "reflective self-grasping of prakāśa; without it light would be an inert crystal",
+     "avoid": [
+      "reflective awareness",
+      "self-consciousness",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/indic#ind-ipk-vimarsa-not-crystal"
+    },
+    {
+     "term": "識",
+     "translit": "shi",
+     "lang": "zh",
+     "gloss": "discerning cognition (Chinese for vijñāna); in Yogācāra eight kinds",
+     "avoid": [
+      "consciousness",
+      "consciousnesses"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/buddhist#bud-kuiji-eight-shi"
+    },
+    {
+     "term": "覺",
+     "translit": "jue",
+     "lang": "zh",
+     "gloss": "awakening; in benjue 本覺 original awakening, in which the world arises",
+     "avoid": [
+      "consciousness",
+      "awareness",
+      "enlightenment"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/buddhist#bud-surangama-benjue-world-arises"
+    },
+    {
+     "term": "知覺",
+     "translit": "zhijue",
+     "lang": "zh",
+     "gloss": "perceiving and being sentient; in Zhu Xi a capacity of being alive that humans share with animals, and with nature it makes up xin",
+     "avoid": [
+      "consciousness",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/chinese-east-asian#chn-zhuxi-xuling-zhijue-one"
+    },
+    {
+     "term": "心",
+     "translit": "xin",
+     "lang": "zh",
+     "gloss": "the heart, the organ of feeling and thought; in Mencius 2A6 the xin of commiseration, in Zhang Zai nature plus zhijue",
+     "avoid": [
+      "mind",
+      "heart-mind",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/chinese-east-asian#chn-mencius-2a6-xin-as-feeling"
+    },
+    {
+     "term": "شعور",
+     "translit": "shuʿūr",
+     "lang": "ar",
+     "gloss": "being aware of, noticing; in Avicenna every animal is aware (yashʿuru) of itself, and the floating man is mustashʿir of himself",
+     "avoid": [
+      "consciousness",
+      "perception"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/islamic#isl-avicenna-floating-man-mustashir"
+    },
+    {
+     "term": "إدراك",
+     "translit": "idrāk",
+     "lang": "ar",
+     "gloss": "perception, apprehension, attaining an object; the soul 'always perceives its essence' (tudriku dāʾiman dhātahā)",
+     "avoid": [
+      "consciousness",
+      "awareness"
+     ],
+     "evidence": "/explore/histories/consciousness/claims/islamic#isl-avicenna-soul-always-perceives-its-essence"
+    }
+   ],
+   "domains": [
+    "indic",
+    "buddhist",
+    "chinese-east-asian",
+    "critique",
+    "renaissance",
+    "early-modern",
+    "greek",
+    "neoplatonic-hermetic",
+    "christian-latin",
+    "islamic",
+    "modern",
+    "contemporary",
+    "machine",
+    "proposals"
+   ],
+   "counts": {
+    "verified": 101,
+    "partial": 22,
+    "dropped": 0,
+    "essays": 2
+   },
+   "audit": null
+  },
+  {
+   "slug": "harmony",
+   "title": "Harmony",
+   "question": "What did people take harmony and resonance to be, from Philolaus and the Chinese classics to Kepler, Helmholtz and the free-energy principle? Ratio and consonance, unlike things joined in one whole, and strings that answer each other.",
+   "map": "/explore/histories/harmony/sources",
+   "essays": [
+    {
+     "slug": "01-diversity-in-wholeness",
+     "title": "1. Harmony is diversity in wholeness"
+    },
+    {
+     "slug": "02-harmony-is-not-lock",
+     "title": "2. Harmony is fit that keeps its tension; lock is fit without it"
+    },
+    {
+     "slug": "03-levels-of-wholeness",
+     "title": "3. Harmony is hierarchical: levels of wholeness"
+    },
+    {
+     "slug": "04-two-harmonies-of-number",
+     "title": "4. Number holds two harmonies, and the cosmos expresses both"
+    },
+    {
+     "slug": "05-ratios-as-one-manifestation",
+     "title": "5. Ratios are one manifestation: five phenomena behind the word \"harmony\""
+    },
+    {
+     "slug": "06-feeling-and-number",
+     "title": "6. Feeling harmony and thinking it: the thousand-year question"
+    },
+    {
+     "slug": "07-research-programme",
+     "title": "7. Harmony as a research programme, like natural selection and spectroscopy"
+    },
+    {
+     "slug": "08-mechanism-free-energy",
+     "title": "8. From metaphor to mechanism: harmony at a temperature above zero"
+    },
+    {
+     "slug": "09-intelligence-is-harmonizing",
+     "title": "9. Intelligence is harmonizing"
+    },
+    {
+     "slug": "10-alignment-as-harmony",
+     "title": "10. Human–AI–nature alignment as harmony"
+    },
+    {
+     "slug": "11-wellbeing-peace-sustainability",
+     "title": "11. Wellbeing, peace and sustainability as nested harmonizing"
+    },
+    {
+     "slug": "12-resonance-and-harmony",
+     "title": "12. Resonance is like answering like; harmony is unlike fitted together"
+    },
+    {
+     "slug": "lexicon",
+     "title": "Words for harmony across languages, and the distinctions they force"
+    },
+    {
+     "slug": "schools",
+     "title": "Schools and lineages of harmony"
+    },
+    {
+     "slug": "timeline",
+     "title": "Harmony by author, through time"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "ἁρμονία",
+     "translit": "harmonia",
+     "lang": "grc",
+     "gloss": "a fitting-together of unlike parts (a carpenter's joint); in harmonics the octave or attunement, a scale or mode, and in Vitruvius the enharmonic genus; never simultaneous chords",
+     "avoid": [
+      "harmony",
+      "harmonies",
+      "chord",
+      "chords"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-philolaus-unlike-need-harmony"
+    },
+    {
+     "term": "συμφωνία",
+     "translit": "symphonia",
+     "lang": "grc",
+     "gloss": "a sounding-together; in harmonics the consonant interval (fourth, fifth, octave), so a relation of two sounds, not a whole; of persons, agreement. Latin consonantia/concentus",
+     "avoid": [
+      "harmony",
+      "harmonies",
+      "harmonious",
+      "symphony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-vitruvius-six-concords-after-tetrachords"
+    },
+    {
+     "term": "ὁμόνοια",
+     "translit": "homonoia",
+     "lang": "grc",
+     "gloss": "same-mindedness: civic or ecclesial concord, an agreement of wills that needs no unlike parts",
+     "avoid": [
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-maximus-church-unconfused-union-of-the-different"
+    },
+    {
+     "term": "συμπάθεια",
+     "translit": "sympatheia",
+     "lang": "grc",
+     "gloss": "co-affection: one part of a single body or cosmos affected by another (Stoics, Plotinus), and bodily contagion such as catching a yawn (Problemata VII); Porta's Latin consensus",
+     "avoid": [
+      "sympathy",
+      "compassion",
+      "resonance"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-chrysippus-krasis-pneuma-whole-sympathetic-with-itself"
+    },
+    {
+     "term": "σύμπνοια",
+     "translit": "sympnoia",
+     "lang": "grc",
+     "gloss": "breathing-together: the continuity of one pneuma through the cosmos (Stoics, Marcus); in Pachymeres a blend that keeps the natures it joins",
+     "avoid": [
+      "sympathy",
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-stoic-cosmos-one-pneuma-sympnoia-syntonia"
+    },
+    {
+     "term": "λόγος",
+     "translit": "logos",
+     "lang": "grc",
+     "gloss": "in harmonics a ratio between numbers or pitches (Latin ratio, proportio); elsewhere account, argument, theory",
+     "avoid": [
+      "reason",
+      "word"
+     ],
+     "evidence": "/explore/histories/harmony/claims/social#soc-metochites-no-harmony-without-grades"
+    },
+    {
+     "term": "συμμετρία",
+     "translit": "symmetria",
+     "lang": "grc",
+     "gloss": "commensurability: parts measured by a common unit and in proportion to the whole (Latin symmetria in Vitruvius); not mirror symmetry",
+     "avoid": [
+      "symmetry"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-suda-voice-rhythm-harmony-diction"
+    },
+    {
+     "term": "κόσμος",
+     "translit": "kosmos",
+     "lang": "grc",
+     "gloss": "an ordered arrangement, also an adornment; the world as order",
+     "avoid": [
+      "world",
+      "universe"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-philolaus-unlike-need-harmony"
+    },
+    {
+     "term": "τόνος",
+     "translit": "tonos",
+     "lang": "grc",
+     "gloss": "tension, stretching: in the Stoics the tensile motion of pneuma that holds bodies together; in harmonics a pitch or key, and the 9:8 whole tone",
+     "avoid": [
+      "tone"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-alexander-what-is-the-tonos-of-the-pneuma"
+    },
+    {
+     "term": "εὐρυθμία",
+     "translit": "eurythmia",
+     "lang": "grc",
+     "gloss": "in Vitruvius the graceful look of a building whose members are well composed, the visible face of symmetria",
+     "avoid": [
+      "eurythmy"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-vitruvius-eurythmy-symmetry-defined"
+    },
+    {
+     "term": "concordia",
+     "translit": "concordia",
+     "lang": "la",
+     "gloss": "concord: an agreement of hearts or wills, civic or religious; in Boethius consonance as the 'concord of dissimilar sounds'",
+     "avoid": [
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/critique#crit-spinoza-concord-by-fear-and-flattery"
+    },
+    {
+     "term": "concentus",
+     "translit": "concentus",
+     "lang": "la",
+     "gloss": "a singing-together; the sound of several voices or instruments, and in Vitruvius the consonant intervals (Greek symphoniae)",
+     "avoid": [
+      "concert",
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-asclepius-music-is-knowing-order"
+    },
+    {
+     "term": "concordantia",
+     "translit": "concordantia",
+     "lang": "la",
+     "gloss": "in music theory a consonant interval (Gaffurius's imperfect concordantiae are thirds and sixths); in Llull the accord of the dignities, which needs plurality",
+     "avoid": [
+      "concordance"
+     ],
+     "evidence": "/explore/histories/harmony/claims/music#mus-gaffurius-counterpoint-rules"
+    },
+    {
+     "term": "musica mundana",
+     "translit": "musica mundana",
+     "lang": "la",
+     "gloss": "Boethius's music of the world: the ordered proportion of heavens, elements and seasons, first of his three musics (with musica humana and instrumental music)",
+     "avoid": [
+      "music of the spheres"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-boethius-three-musics"
+    },
+    {
+     "term": "Stimmung",
+     "translit": "Stimmung",
+     "lang": "de",
+     "gloss": "tuning, being in tune; hence the attunement of a subject to a whole, and in Heidegger the mood in which a world is disclosed",
+     "avoid": [
+      "mood",
+      "atmosphere",
+      "vibe"
+     ],
+     "evidence": "/explore/histories/harmony/claims/art#mus-lipps-1903-gesetz-resonanz-des-gleichartigen"
+    },
+    {
+     "term": "Einfühlung",
+     "translit": "Einfühlung",
+     "lang": "de",
+     "gloss": "in Lipps, feeling oneself into a perceived form or sound, inwardly joining in it (Mitfreuen)",
+     "avoid": [
+      "empathy"
+     ],
+     "evidence": "/explore/histories/harmony/claims/art#mus-lipps-1903-einfuehlung-mitfreuen"
+    },
+    {
+     "term": "和",
+     "translit": "he",
+     "lang": "zh",
+     "gloss": "a blending of unlike things that supplies what is lacking and tempers excess (Yanzi's soup); also the response of voices, and concord within rite",
+     "avoid": [
+      "harmony",
+      "harmonious",
+      "harmonize",
+      "affable",
+      "ease"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-zuozhuan-he-like-soup"
+    },
+    {
+     "term": "同",
+     "translit": "tong",
+     "lang": "zh",
+     "gloss": "sameness: water added to water, a zither on one note; the foil of 和",
+     "avoid": [
+      "harmony",
+      "harmonize",
+      "unity",
+      "assent",
+      "adulation"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-zuozhuan-tong-water-with-water"
+    },
+    {
+     "term": "中和",
+     "translit": "zhonghe",
+     "lang": "zh",
+     "gloss": "centre and 和: feelings that, once aroused, each hit their measure, with nothing perverse",
+     "avoid": [
+      "equilibrium and harmony",
+      "equilibrium"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-xunzi-music-great-equalizer"
+    },
+    {
+     "term": "太和",
+     "translit": "taihe",
+     "lang": "zh",
+     "gloss": "Zhang Zai's name for the Way: qi holding floating and sinking, motion and rest that stir and press each other, 'like wild horses'",
+     "avoid": [
+      "supreme harmony",
+      "great harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-zhangzai-taihe-is-dao"
+    },
+    {
+     "term": "禮",
+     "translit": "li",
+     "lang": "zh",
+     "gloss": "rite: the ritual order of rank that bounds and regulates 和",
+     "avoid": [
+      "propriety",
+      "etiquette",
+      "ceremony",
+      "courtesy"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-analects-he-bounded-by-li"
+    },
+    {
+     "term": "感應",
+     "translit": "ganying",
+     "lang": "zh",
+     "gloss": "stimulus and response: one thing's stirring calls forth another's answer, in Han texts between things of a kind (gong answering gong); Japanese kannō",
+     "avoid": [
+      "resonance",
+      "sympathetic resonance",
+      "sympathy",
+      "harmonize"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-dong-zhongshu-zither-ganying"
+    },
+    {
+     "term": "和",
+     "translit": "wa",
+     "lang": "ja",
+     "gloss": "Shōtoku's Article 1 concord: avoidance of faction inside a fixed order of lord and vassal",
+     "avoid": [
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/critique#crit-asian-shotoku-wa-concord-in-hierarchy"
+    },
+    {
+     "term": "ऋत",
+     "translit": "ṛta",
+     "lang": "sa",
+     "gloss": "the fixed order of the cosmos and of the rite, regularity, paired with satya (truth)",
+     "avoid": [
+      "law",
+      "truth",
+      "righteousness"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-rgveda-rta-cosmic-order"
+    },
+    {
+     "term": "रस",
+     "translit": "rasa",
+     "lang": "sa",
+     "gloss": "taste, relish: the single aesthetic savour produced from many combined elements and tasted by the spectator",
+     "avoid": [
+      "sentiment",
+      "emotion",
+      "mood"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-natyashastra-rasa-from-combination"
+    },
+    {
+     "term": "اعتدال",
+     "translit": "iʿtidāl",
+     "lang": "ar",
+     "gloss": "straightness, the temperate mean between excesses (of climate, humours, character)",
+     "avoid": [
+      "harmony",
+      "moderation"
+     ],
+     "evidence": "/explore/histories/harmony/claims/social#soc-khaldun-itidal-central-climates"
+    },
+    {
+     "term": "תפארת",
+     "translit": "tiferet",
+     "lang": "he",
+     "gloss": "beauty, splendour: the central sefirah, drawn between Chesed and Gevurah; as mediator also called Rachamim (compassion)",
+     "avoid": [
+      "harmony",
+      "balance"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ancient#anc-cordovero-tiferet-between-chesed-gevurah"
+    },
+    {
+     "term": "согласие",
+     "translit": "soglasie",
+     "lang": "ru",
+     "gloss": "co-voicing: concord, agreement, as among the members of one community or species",
+     "avoid": [
+      "harmony"
+     ],
+     "evidence": "/explore/histories/harmony/claims/ecology#eco-kropotkin-1918-harmony-within-communities"
+    },
+    {
+     "term": "མཐུན་པ",
+     "translit": "mthun pa",
+     "lang": "bo",
+     "gloss": "being in accord: conformity with a teaching (anuloma, 'in accordance with'), and the sangha's concord of one rule and one recitation (samagra)",
+     "avoid": [
+      "harmony",
+      "harmonious",
+      "in harmony with"
+     ],
+     "evidence": "/explore/histories/harmony/claims/asian#asian-tib-anuloma-mthun-pa-act-in-accordance"
+    },
+    {
+     "term": "hózhó",
+     "translit": "hózhó",
+     "lang": "nv",
+     "gloss": "in Matthews's Navajo texts, beauty, happiness, a happy old age, sought by exact repetition of ritual",
+     "avoid": [
+      "harmony",
+      "balance"
+     ],
+     "evidence": "/explore/histories/harmony/claims/social#soc-navajo-hozho-matthews-gloss"
+    },
+    {
+     "term": "pono",
+     "translit": "pono",
+     "lang": "haw",
+     "gloss": "rightness, being well: in the hula prayer, well with the devotee and with devotee and goddess together",
+     "avoid": [
+      "harmony",
+      "balance"
+     ],
+     "evidence": "/explore/histories/harmony/claims/social#soc-emerson-pono-well-with-us-both"
+    }
+   ],
+   "domains": [
+    "ai",
+    "critique",
+    "ancient",
+    "music",
+    "art",
+    "asian",
+    "economics",
+    "philsci",
+    "social",
+    "physics",
+    "ecology",
+    "lomas",
+    "neuro",
+    "proposals"
+   ],
+   "counts": {
+    "verified": 901,
+    "partial": 104,
+    "dropped": 18,
+    "essays": 15
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 6,
+    "pct": 24,
+    "lo": 11,
+    "hi": 43,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  },
+  {
+   "slug": "magic",
+   "title": "Magic",
+   "question": "What counted as magic, how was it said to work, and who drew the line? Hidden virtues and sympathy, stars and images, spirits, words and names, divination, the witch and her trial, and the power of mind.",
+   "map": "/explore/histories/magic/sources",
+   "essays": [
+    {
+     "slug": "01-what-counts-as-magic",
+     "title": "What counts as magic"
+    },
+    {
+     "slug": "02-how-it-works",
+     "title": "How it works"
+    },
+    {
+     "slug": "03-stars-and-images",
+     "title": "Stars and images"
+    },
+    {
+     "slug": "04-spirits",
+     "title": "Spirits"
+    },
+    {
+     "slug": "05-words-names-letters",
+     "title": "Words names letters"
+    },
+    {
+     "slug": "06-natural-magic-and-experiment",
+     "title": "Natural magic and experiment"
+    },
+    {
+     "slug": "07-the-witch",
+     "title": "The witch"
+    },
+    {
+     "slug": "08-law",
+     "title": "Law"
+    },
+    {
+     "slug": "09-beyond-europe",
+     "title": "Beyond Europe"
+    },
+    {
+     "slug": "10-revival-and-its-historians",
+     "title": "Revival and its historians"
+    },
+    {
+     "slug": "11-magical-thinking",
+     "title": "Magical thinking"
+    },
+    {
+     "slug": "12-the-supernatural",
+     "title": "The supernatural"
+    },
+    {
+     "slug": "13-superintelligence-and-magic",
+     "title": "Superintelligence and magic"
+    },
+    {
+     "slug": "14-modern-magic-now",
+     "title": "Modern magic now"
+    },
+    {
+     "slug": "15-math-above-nature",
+     "title": "Math above nature"
+    },
+    {
+     "slug": "16-daimon",
+     "title": "Daimon"
+    },
+    {
+     "slug": "17-music-and-resonance-magic",
+     "title": "Music and resonance magic"
+    },
+    {
+     "slug": "18-divination",
+     "title": "Divination: oracles and the -mancies"
+    },
+    {
+     "slug": "19-new-thought",
+     "title": "New Thought and the law of attraction"
+    },
+    {
+     "slug": "20-intelligible-realm",
+     "title": "The intelligible realm, and what the mathematicians said"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "δαίμων",
+     "translit": "daimon",
+     "lang": "grc",
+     "gloss": "a divine power; for Plato and the Middle Platonists an intermediary between gods and mortals, good or bad by adjective",
+     "avoid": [
+      "demon",
+      "devil"
+     ],
+     "evidence": "/explore/histories/magic/claims/ancient#dai1-symposium-eros-metaxy"
+    },
+    {
+     "term": "daemon",
+     "translit": "daemon",
+     "lang": "la",
+     "gloss": "the Latin form of daimon: in Apuleius a living, rational, aerial being between gods and men; in Ficino and Agrippa a person's guardian",
+     "avoid": [
+      "demon",
+      "devil"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#dai2-apuleius-dds-five-part-definition"
+    },
+    {
+     "term": "δαιμόνιον",
+     "translit": "daimonion",
+     "lang": "grc",
+     "gloss": "'the daimonic thing': Socrates' divine sign, a voice that only holds him back; plural daimonia, divinities",
+     "avoid": [
+      "demon",
+      "devil"
+     ],
+     "evidence": "/explore/histories/magic/claims/ancient#dai1-daimonion-apotropaic-voice"
+    },
+    {
+     "term": "εὐδαιμονία",
+     "translit": "eudaimonia",
+     "lang": "grc",
+     "gloss": "'having a good daimon': in Aristotle the human good, an activity of soul in accordance with virtue",
+     "avoid": [
+      "happiness"
+     ],
+     "evidence": "/explore/histories/magic/claims/ancient#dai1-aristotle-eudaimonia-activity"
+    },
+    {
+     "term": "μαγεία",
+     "translit": "mageia",
+     "lang": "grc",
+     "gloss": "the art of the magoi; in the Suda the invocation of benevolent daimones for some good, set against goeteia and pharmakeia",
+     "avoid": [
+      "magic",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#lexw-suda-goeteia-mageia-pharmakeia"
+    },
+    {
+     "term": "μάγος",
+     "translit": "magos",
+     "lang": "grc",
+     "gloss": "a Persian priest-sage; glossed by Porphyry and Pico as 'interpreter and worshipper of divine things', by Martius as a wise man",
+     "avoid": [
+      "magician",
+      "sorcerer"
+     ],
+     "evidence": "/explore/histories/magic/claims/natural-magic#lexw-martius-magos-wise-vs-zauberey"
+    },
+    {
+     "term": "γοητεία",
+     "translit": "goeteia",
+     "lang": "grc",
+     "gloss": "the art of wailing at tombs: rites with chthonic, material daimones that show their phantoms; the low term of the Greek split",
+     "avoid": [
+      "magic",
+      "witchcraft"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#lexw-psellus-goeteia-chthonic-phantoms"
+    },
+    {
+     "term": "φαρμακεία",
+     "translit": "pharmakeia",
+     "lang": "grc",
+     "gloss": "drug-craft: the use of drugs and potions, above all poisoning; in the Suda a deadly potion given by taste",
+     "avoid": [
+      "sorcery",
+      "witchcraft",
+      "magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#lexw-suda-goeteia-mageia-pharmakeia"
+    },
+    {
+     "term": "θεουργία",
+     "translit": "theourgia",
+     "lang": "grc",
+     "gloss": "'god-work': ritual acts and symbols known only to the gods that unite the soul with them, not by thinking",
+     "avoid": [
+      "magic",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#lat-iamblichus-theurgy-not-thought"
+    },
+    {
+     "term": "ὑπερφυής",
+     "translit": "hyperphyes",
+     "lang": "grc",
+     "gloss": "above (bodily) nature in rank, as the pure soul is in Iamblichus; Latin supernaturalis, glossed 'supersubstantially'",
+     "avoid": [
+      "supernatural"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#suph-iamblichus-soul-hyperphyes"
+    },
+    {
+     "term": "supernaturalis",
+     "translit": "supernaturalis",
+     "lang": "la",
+     "gloss": "above created nature in rank or power: proper to divinity or grace (Dionysius, Eriugena), not 'marvellous' or 'ghostly'",
+     "avoid": [
+      "supernatural"
+     ],
+     "evidence": "/explore/histories/magic/claims/medieval#suph-dionysius-commentary-supersubstantialiter"
+    },
+    {
+     "term": "praeternaturalis",
+     "translit": "praeternaturalis",
+     "lang": "la",
+     "gloss": "beside the course of nature: in medicine simply the pathological ('a preternatural constitution of the spirits'); later also the marvellous middle zone",
+     "avoid": [
+      "supernatural",
+      "preternatural"
+     ],
+     "evidence": "/explore/histories/magic/claims/historiography#suph-praeternatural-medical-sense"
+    },
+    {
+     "term": "maleficium",
+     "translit": "maleficium",
+     "lang": "la",
+     "gloss": "evil-doing, harm done; in the Malleus also etymologised as 'thinking ill of the faith', making it a heresy",
+     "avoid": [
+      "witchcraft",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/demonology#lexw-malleus-malefic-name"
+    },
+    {
+     "term": "veneficium",
+     "translit": "veneficium",
+     "lang": "la",
+     "gloss": "poisoning, potion-making; Vives classes goetia as 'an incantation and a species of veneficium'",
+     "avoid": [
+      "sorcery",
+      "witchcraft"
+     ],
+     "evidence": "/explore/histories/magic/claims/late-antique#lexw-suda-goeteia-mageia-pharmakeia"
+    },
+    {
+     "term": "praestigium",
+     "translit": "praestigium",
+     "lang": "la",
+     "gloss": "illusion, a blinding of the eyes (Isidore); the sense of Weyer's De praestigiis daemonum",
+     "avoid": [
+      "magic",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/medieval#lexw-isidore-praestigium-blinds-eyes"
+    },
+    {
+     "term": "superstitio",
+     "translit": "superstitio",
+     "lang": "la",
+     "gloss": "in Aquinas worship offered by excess, to whom or in a way one should not; a vice against religio, not a kind of magic",
+     "avoid": [
+      "magic",
+      "superstition"
+     ],
+     "evidence": "/explore/histories/magic/claims/medieval#lexw-aquinas-superstitio-excess"
+    },
+    {
+     "term": "سحر",
+     "translit": "siḥr",
+     "lang": "ar",
+     "gloss": "the nearest Arabic umbrella: in the Picatrix whatever has a cause hidden from most minds; in theology and common usage a largely satanic art, set against the prophet's muʿjiza and the saint's karāma",
+     "avoid": [
+      "magic",
+      "witchcraft"
+     ],
+     "evidence": "/explore/histories/magic/claims/arabic#ara-khaldun-miracle-vs-sorcery"
+    },
+    {
+     "term": "كرامة",
+     "translit": "karāma",
+     "lang": "ar",
+     "gloss": "a saint's wonder, a mark of divine favour that needs no challenge (taḥaddī), unlike the prophet's muʿjiza",
+     "avoid": [
+      "miracle"
+     ],
+     "evidence": "/explore/histories/magic/claims/arabic#ara-khaldun-miracle-vs-sorcery"
+    },
+    {
+     "term": "جن",
+     "translit": "jinn",
+     "lang": "ar",
+     "gloss": "beings made of the fire of the samūm, between men and angels, morally divided ('some of us are Muslims'); shayṭān is a rank within them",
+     "avoid": [
+      "demon",
+      "devil",
+      "genie"
+     ],
+     "evidence": "/explore/histories/magic/claims/arabic#dai4-jahiz-jinn-samum-fire"
+    },
+    {
+     "term": "כישוף",
+     "translit": "kishuf",
+     "lang": "he",
+     "gloss": "sorcery as a real deed: the mekhashef (מכשף) liable to death performs an act, unlike one who only 'seizes the eyes'; graded like Sabbath law",
+     "avoid": [
+      "witchcraft",
+      "magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/jewish#jew-mishnah-sorcerer-deed-not-illusion"
+    },
+    {
+     "term": "סגולה",
+     "translit": "segullah",
+     "lang": "he",
+     "gloss": "an efficacious remedy or charm, the practitioner's own heading, working 'by the help of the Blessed Name'",
+     "avoid": [
+      "magic",
+      "spell"
+     ],
+     "evidence": "/explore/histories/magic/claims/jewish#lexw-gaster-segulah-heading"
+    },
+    {
+     "term": "אלילים",
+     "translit": "elilim",
+     "lang": "he",
+     "gloss": "'nothings', worthless gods (Ps 96:5), which the Septuagint renders daimonia",
+     "avoid": [
+      "demons"
+     ],
+     "evidence": "/explore/histories/magic/claims/demonology#dai2-bekker-elilim-nothings"
+    },
+    {
+     "term": "असुर",
+     "translit": "asura",
+     "lang": "sa",
+     "gloss": "a lord, a mighty divine being (Varuṇa in the Ṛgveda); Avestan ahura is the supreme God",
+     "avoid": [
+      "demon"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#dai4-sayana-varuna-asura-lord"
+    },
+    {
+     "term": "यक्ष",
+     "translit": "yakṣa",
+     "lang": "sa",
+     "gloss": "a local deity, tree-spirit or guardian with retinues (藥叉 in Chinese, Pali yakkha); ambivalent, from protector to man-eater",
+     "avoid": [
+      "demon",
+      "ogre"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#dai4-peacock-yaksha-deities"
+    },
+    {
+     "term": "माया",
+     "translit": "māyā",
+     "lang": "sa",
+     "gloss": "a god's power of contrivance or illusion, praised (Indra's māyā), not a condemned human rite",
+     "avoid": [
+      "magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-sayana-maya-indra"
+    },
+    {
+     "term": "सिद्धि",
+     "translit": "siddhi",
+     "lang": "sa",
+     "gloss": "attainment, the result sought by sādhanā, worldly or spiritual",
+     "avoid": [
+      "magic power",
+      "magical powers"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-woodroffe-siddhi-result"
+    },
+    {
+     "term": "विद्या",
+     "translit": "vidyā",
+     "lang": "sa",
+     "gloss": "knowledge, a science; in the Kathāsaritsāgara a (supernatural) science won by austerities",
+     "avoid": [
+      "magic",
+      "magic sciences"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-kathasarit-vidya-magic-sciences"
+    },
+    {
+     "term": "अभिचार",
+     "translit": "abhicāra",
+     "lang": "sa",
+     "gloss": "the hostile rite, against bheṣaja and śānti; with kṛtyā, judged by its victim, and in the tantras the fourth sanctioned activity (Tibetan drag po)",
+     "avoid": [
+      "black magic",
+      "witchcraft",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-manu-mulakarman-krtya-abhicara"
+    },
+    {
+     "term": "मूलकर्मन्",
+     "translit": "mūlakarman",
+     "lang": "sa",
+     "gloss": "a rite with roots (herbs) to bring a person into one's power; fined against strangers, permitted against a husband or relative",
+     "avoid": [
+      "magic rites",
+      "magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-manu-mulakarman-krtya-abhicara"
+    },
+    {
+     "term": "དྲག་པོའི་ལས",
+     "translit": "drag po'i las",
+     "lang": "bo",
+     "gloss": "fierce activity, the fourth of the four sanctioned tantric activities (pacifying, increasing, subjugating, fierce), done with offerings and the gurus' permission",
+     "avoid": [
+      "black magic",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-thadrak-four-activities"
+    },
+    {
+     "term": "鬼",
+     "translit": "gui",
+     "lang": "zh",
+     "gloss": "the dead, and spirits of heaven, mountains and waters; with shen (鬼神 guishen) spiritual beings who reward and punish justly",
+     "avoid": [
+      "demon",
+      "devil"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#dai4-mozi-three-kinds-gui"
+    },
+    {
+     "term": "巫",
+     "translit": "wu",
+     "lang": "zh",
+     "gloss": "a spirit-medium or ritualist holding a recognised office; condemned only when the state judges the cult heterodox",
+     "avoid": [
+      "sorcery",
+      "sorcerer",
+      "shaman",
+      "witch"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-zishi-wu-heterodox-execution"
+    },
+    {
+     "term": "巫蠱",
+     "translit": "wugu",
+     "lang": "zh",
+     "gloss": "a capital court charge of harming by wu rites and gu poison (Han 91 BCE; Korea 1701)",
+     "avoid": [
+      "witchcraft"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-degroot-wugu-91bce"
+    },
+    {
+     "term": "蠱",
+     "translit": "gu",
+     "lang": "zh",
+     "gloss": "a poison bred by sealing vermin in a vessel to devour one another; by extension a charge of poisoning, seductive charm, and decay (the hexagram Gu)",
+     "avoid": [
+      "sorcery",
+      "venomous magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-zhubing-gu-definition"
+    },
+    {
+     "term": "幻術",
+     "translit": "huanshu",
+     "lang": "zh",
+     "gloss": "the art of illusion, conjuring",
+     "avoid": [
+      "magic",
+      "magical arts"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-soushen-huanshu"
+    },
+    {
+     "term": "術",
+     "translit": "shu",
+     "lang": "zh",
+     "gloss": "an art or technique, of any kind; Zuo Ci's arts were condemned for 'deluding the multitude', not for their technique",
+     "avoid": [
+      "magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-soushen-huanshu"
+    },
+    {
+     "term": "妖術",
+     "translit": "yaoshu",
+     "lang": "zh",
+     "gloss": "'methods of demonry' (de Groot): the state's name for forbidden arts",
+     "avoid": [
+      "black magic",
+      "witchcraft"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-degroot-yaoshu-xieshu"
+    },
+    {
+     "term": "邪術",
+     "translit": "xieshu",
+     "lang": "zh",
+     "gloss": "heterodox arts, everything contrary to the Tao, including harmless or benevolent rites and juggling, punished as such",
+     "avoid": [
+      "sorcery",
+      "black magic"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-degroot-yaoshu-xieshu"
+    },
+    {
+     "term": "呪術",
+     "translit": "zhoushu",
+     "lang": "zh",
+     "gloss": "an incantation, a dhāraṇī recited under moral discipline; Chinese Buddhists explain the Atharvaveda by it. Later Japanese jujutsu",
+     "avoid": [
+      "magic",
+      "sorcery"
+     ],
+     "evidence": "/explore/histories/magic/claims/asian#lexa-siyi-zhoushu-dharani"
+    }
+   ],
+   "domains": [
+    "ai",
+    "critique",
+    "ancient",
+    "anthropology",
+    "arabic",
+    "asian",
+    "cognitive",
+    "contemporary",
+    "late-antique",
+    "demonology",
+    "renaissance",
+    "early-modern-science",
+    "medieval",
+    "modern",
+    "jewish",
+    "historiography",
+    "grimoire",
+    "natural-magic",
+    "divination",
+    "music"
+   ],
+   "counts": {
+    "verified": 925,
+    "partial": 87,
+    "dropped": 33,
+    "essays": 20
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 6,
+    "pct": 24,
+    "lo": 11,
+    "hi": 43,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  },
+  {
+   "slug": "markets",
+   "title": "Markets",
+   "question": "How did the market come to be thought of as a self-ordering, wealth-creating process rather than a place, a moral hazard, a royal privilege or a zero-sum game, from the agora, the Guanzi and the Arthashastra to Smith, Babbage and Marx?",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-the-arc",
+     "title": "1. The arc of the market: from the agora to the stationary state, and what the texts do to that story"
+    },
+    {
+     "slug": "02-progress-studies",
+     "title": "2. What this history says to progress studies"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "χρηματιστική",
+     "translit": "chrematistike",
+     "lang": "grc",
+     "gloss": "the art of acquiring goods and money; Aristotle splits it into a natural, limited kind that serves the household and an unlimited kind whose end is money itself",
+     "avoid": [
+      "money-making",
+      "moneymaking",
+      "business",
+      "economics"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-arist-pol-natural-acquisition-has-limit"
+    },
+    {
+     "term": "οἰκονομία",
+     "translit": "oikonomia",
+     "lang": "grc",
+     "gloss": "management of the household (oikos): its people, land and stores; not the economy of a country",
+     "avoid": [
+      "economy",
+      "economics",
+      "the economy"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-xen-oec-buy-neglected-land-resell"
+    },
+    {
+     "term": "τόκος",
+     "translit": "tokos",
+     "lang": "grc",
+     "gloss": "interest on a loan; literally 'offspring', so money born of money, the pun on which Aristotle's condemnation turns",
+     "avoid": [
+      "interest"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-arist-pol-tokos-money-begets-money"
+    },
+    {
+     "term": "ἀγορά",
+     "translit": "agora",
+     "lang": "grc",
+     "gloss": "the open civic centre of a Greek city: assembly place, court and market at once",
+     "avoid": [
+      "market",
+      "marketplace"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-plato-rep-agora-nomisma-symbol"
+    },
+    {
+     "term": "νόμισμα",
+     "translit": "nomisma",
+     "lang": "grc",
+     "gloss": "coined money; money that is what it is by convention (nomos), a token (symbolon) of exchange",
+     "avoid": [
+      "currency"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-plato-rep-agora-nomisma-symbol"
+    },
+    {
+     "term": "χρεία",
+     "translit": "chreia",
+     "lang": "grc",
+     "gloss": "need: in Nicomachean Ethics V.5 what holds exchange together and what money stands in for",
+     "avoid": [
+      "demand",
+      "utility"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-arist-ne-money-measure-by-convention"
+    },
+    {
+     "term": "καπηλεία",
+     "translit": "kapeleia",
+     "lang": "grc",
+     "gloss": "retail dealing, the small trade of the kapelos (huckster, shopkeeper), held in contempt; kapelike is the art of it",
+     "avoid": [
+      "commerce",
+      "business"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-plato-laws-retail-honourable-if-incorruptible"
+    },
+    {
+     "term": "ἐμπορία",
+     "translit": "emporia",
+     "lang": "grc",
+     "gloss": "wholesale trade by sea between cities, carried by the emporos; set against kapeleia",
+     "avoid": [
+      "commerce",
+      "business"
+     ],
+     "evidence": "/explore/histories/markets/claims/ancient-greek#anc-plato-laws-retail-honourable-if-incorruptible"
+    },
+    {
+     "term": "nundinae",
+     "translit": "nundinae",
+     "lang": "la",
+     "gloss": "the Roman market day every ninth day, when country people came to the city to sell and to hear laws; in early-modern Latin, the great fairs",
+     "avoid": [
+      "fair",
+      "fairs",
+      "week"
+     ],
+     "evidence": "/explore/histories/markets/claims/roman#anc-macrobius-nundinae-market-and-law"
+    },
+    {
+     "term": "mercatura",
+     "translit": "mercatura",
+     "lang": "la",
+     "gloss": "trade as an occupation, buying and carrying goods to sell; for Cicero small mercatura is sordid, large tolerable",
+     "avoid": [
+      "business",
+      "commerce"
+     ],
+     "evidence": "/explore/histories/markets/claims/roman#anc-cicero-off-small-trade-sordid-great-tolerable"
+    },
+    {
+     "term": "negotiatio",
+     "translit": "negotiatio",
+     "lang": "la",
+     "gloss": "trading: buying in order to sell dearer; for Aquinas it has a certain baseness (turpitudo) in itself",
+     "avoid": [
+      "business",
+      "marketing",
+      "commerce"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#med-aquinas-trade-baseness"
+    },
+    {
+     "term": "pretium iustum",
+     "translit": "pretium iustum",
+     "lang": "la",
+     "gloss": "the just price: for Aquinas and the Salamanca theologians a range set by common estimation at a place and time, not a fixed or cost-based price",
+     "avoid": [
+      "fair price",
+      "fair value",
+      "current market price"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#med-aquinas-just-price-estimation"
+    },
+    {
+     "term": "communis aestimatio",
+     "translit": "communis aestimatio",
+     "lang": "la",
+     "gloss": "the common estimation of what a thing is worth in a place and time, by which the just price is set",
+     "avoid": [
+      "market value",
+      "market price",
+      "public opinion"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#med-aquinas-just-price-estimation"
+    },
+    {
+     "term": "usura",
+     "translit": "usura",
+     "lang": "la",
+     "gloss": "any gain demanded on a loan (mutuum) beyond the principal, however small; distinct from interesse, the lawful compensation for loss",
+     "avoid": [
+      "usury",
+      "interest"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#med-aquinas-usury-money-consumed"
+    },
+    {
+     "term": "lucrum cessans",
+     "translit": "lucrum cessans",
+     "lang": "la",
+     "gloss": "profit forgone by the lender, who could have employed the money; argued over as a title to compensation beyond the principal",
+     "avoid": [
+      "opportunity cost"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#med-aquinas-damnum-yes-lucrum-no"
+    },
+    {
+     "term": "cambium",
+     "translit": "cambium",
+     "lang": "la",
+     "gloss": "exchange of money, by hand (cambium minutum) or by bills (cambium per litteras); a contract suspected as disguised usura",
+     "avoid": [
+      "foreign exchange",
+      "banking",
+      "currency trading"
+     ],
+     "evidence": "/explore/histories/markets/claims/scholastic#emod-scaccia-cambium-division"
+    },
+    {
+     "term": "ius commercii",
+     "translit": "ius commercii",
+     "lang": "la",
+     "gloss": "Vitoria's right to trade, derived from natural society and communication (ius communicationis) under the law of nations",
+     "avoid": [
+      "free trade"
+     ],
+     "evidence": "/explore/histories/markets/claims/salamanca#emod-vitoria-ius-commercii-title"
+    },
+    {
+     "term": "avaritia",
+     "translit": "avaritia",
+     "lang": "la",
+     "gloss": "the vice of the inordinate love of having, one of the capital sins; in Poggio's dialogue defended as the workshop of cities",
+     "avoid": [
+      "self-interest",
+      "profit motive",
+      "greed"
+     ],
+     "evidence": "/explore/histories/markets/claims/merchant-practice#emod-poggio-states-workshops-of-avarice"
+    },
+    {
+     "term": "حسبة",
+     "translit": "ḥisba",
+     "lang": "ar",
+     "gloss": "the office of commanding good and forbidding wrong, exercised above all in the market: weights, measures, quality and fraud",
+     "avoid": [
+      "edileship",
+      "market inspection",
+      "police"
+     ],
+     "evidence": "/explore/histories/markets/claims/islamic#med-ibnkhaldun-hisba-office"
+    },
+    {
+     "term": "محتسب",
+     "translit": "muḥtasib",
+     "lang": "ar",
+     "gloss": "the holder of the ḥisba, appointed by the ruler with religious as well as market authority",
+     "avoid": [
+      "market inspector",
+      "edile",
+      "police officer"
+     ],
+     "evidence": "/explore/histories/markets/claims/islamic#med-maqrizi-muhtasib-cairo-1341"
+    },
+    {
+     "term": "ربا",
+     "translit": "ribā",
+     "lang": "ar",
+     "gloss": "any stipulated increase on a loan, or unequal exchange of like for like (dirhams for dirhams)",
+     "avoid": [
+      "usury",
+      "interest"
+     ],
+     "evidence": "/explore/histories/markets/claims/islamic#med-ghazali-hoarding-and-riba"
+    },
+    {
+     "term": "輕重",
+     "translit": "qingzhong",
+     "lang": "zh",
+     "gloss": "'light and heavy': the Guanzi's art by which the ruler moves the relative worth of grain, goods and coin by buying and selling",
+     "avoid": [
+      "supply and demand",
+      "price theory",
+      "economics"
+     ],
+     "evidence": "/explore/histories/markets/claims/chinese#anc-guanzi-qingzhong-no-fixed-number"
+    },
+    {
+     "term": "平準",
+     "translit": "pingzhun",
+     "lang": "zh",
+     "gloss": "'balanced standard': Han officials buying goods when cheap and selling when dear, so that great merchants could not corner them",
+     "avoid": [
+      "price stabilisation",
+      "price stabilization"
+     ],
+     "evidence": "/explore/histories/markets/claims/chinese#anc-yantie-comm-pingzhun-buy-cheap-sell-dear"
+    },
+    {
+     "term": "義",
+     "translit": "yi",
+     "lang": "zh",
+     "gloss": "what is right and fitting; in the Analects and Mencius set against li (profit)",
+     "avoid": [
+      "righteousness"
+     ],
+     "evidence": "/explore/histories/markets/claims/chinese#anc-analects-yi-li-4-16"
+    },
+    {
+     "term": "利",
+     "translit": "li",
+     "lang": "zh",
+     "gloss": "profit, advantage, benefit; the small man's concern in Analects 4.16",
+     "avoid": [
+      "self-interest",
+      "profit motive"
+     ],
+     "evidence": "/explore/histories/markets/claims/chinese#anc-analects-yi-li-4-16"
+    },
+    {
+     "term": "本末",
+     "translit": "ben / mo",
+     "lang": "zh",
+     "gloss": "'root and branch': agriculture as the root of the state, trade and crafts as the branch",
+     "avoid": [
+      "primary and secondary sectors",
+      "agriculture and industry"
+     ],
+     "evidence": "/explore/histories/markets/claims/chinese#anc-yantie-literati-suppress-branch-profit"
+    },
+    {
+     "term": "laissez-faire",
+     "translit": "laissez-faire",
+     "lang": "fr",
+     "gloss": "'let them do': the call, physiocratic and then liberal, to leave trade free of the state's regulation",
+     "avoid": [
+      "free market",
+      "free enterprise",
+      "capitalism"
+     ],
+     "evidence": "/explore/histories/markets/claims/physiocracy#enl-boisguilbert-nature-breathes-liberty"
+    },
+    {
+     "term": "doux commerce",
+     "translit": "doux commerce",
+     "lang": "fr",
+     "gloss": "Montesquieu's 'gentle commerce': trade that softens manners and makes nations depend on one another and so keep peace",
+     "avoid": [
+      "sweet commerce",
+      "free trade",
+      "globalisation"
+     ],
+     "evidence": "/explore/histories/markets/claims/political-economy#enl-montesquieu-doux-commerce"
+    },
+    {
+     "term": "police",
+     "translit": "police",
+     "lang": "fr",
+     "gloss": "in eighteenth-century French and Scots English, the internal regulation and good order of a state, its provisioning and trade included",
+     "avoid": [
+      "policing",
+      "law enforcement",
+      "policy"
+     ],
+     "evidence": "/explore/histories/markets/claims/physiocracy#enl-quesnay-police-is-liberty"
+    },
+    {
+     "term": "produit net",
+     "translit": "produit net",
+     "lang": "fr",
+     "gloss": "the physiocrats' net product: what agriculture yields beyond its costs, for them the only true surplus",
+     "avoid": [
+      "net income",
+      "profit",
+      "GDP"
+     ],
+     "evidence": "/explore/histories/markets/claims/critique#enl-quesnay-tableau-assumes-liberty"
+    },
+    {
+     "term": "entrepreneur",
+     "translit": "entrepreneur",
+     "lang": "fr",
+     "gloss": "Cantillon's undertaker: one who buys at a certain price to sell at an uncertain one, 'au hazard'",
+     "avoid": [
+      "businessman",
+      "innovator",
+      "capitalist"
+     ],
+     "evidence": "/explore/histories/markets/claims/political-economy#enl-cantillon-entrepreneur-au-hazard"
+    },
+    {
+     "term": "industry",
+     "translit": "industry",
+     "lang": "en",
+     "gloss": "before c. 1820, diligence and labour applied to work ('domestic industry' is labour employed at home), not a sector of manufacture",
+     "avoid": [
+      "manufacturing",
+      "the industrial sector"
+     ],
+     "evidence": "/explore/histories/markets/claims/scottish-enlightenment#enl-hume-commerce-avarice-industry"
+    },
+    {
+     "term": "improvement",
+     "translit": "improvement",
+     "lang": "en",
+     "gloss": "seventeenth- and eighteenth-century English: making land or a thing yield more by labour, experiment or invention; gradual, cumulative betterment, before 'progress' and 'growth'",
+     "avoid": [
+      "economic growth",
+      "innovation",
+      "progress"
+     ],
+     "evidence": "/explore/histories/markets/claims/technology-and-improvement#ind-hartlib-experiment-improvement"
+    },
+    {
+     "term": "jealousy of trade",
+     "translit": "jealousy of trade",
+     "lang": "en",
+     "gloss": "Hume's name for treating every trading nation as a rival that can flourish only at one's own expense",
+     "avoid": [
+      "protectionism",
+      "trade war"
+     ],
+     "evidence": "/explore/histories/markets/claims/scottish-enlightenment#enl-hume-jealousy-of-trade"
+    },
+    {
+     "term": "invisible hand",
+     "translit": "invisible hand",
+     "lang": "en",
+     "gloss": "Smith's figure (WN IV.ii) for an end promoted that was no part of the agent's intention; one use in the Wealth of Nations, about preferring domestic industry",
+     "avoid": [
+      "market mechanism",
+      "price mechanism",
+      "the market"
+     ],
+     "evidence": "/explore/histories/markets/claims/scottish-enlightenment#enl-smith-wn-invisible-hand"
+    },
+    {
+     "term": "stationary state",
+     "translit": "stationary state",
+     "lang": "en",
+     "gloss": "the classical economists' end-point of accumulation, where wealth and population stop growing; dull for Smith, desirable for Mill",
+     "avoid": [
+      "stagnation",
+      "recession",
+      "steady state"
+     ],
+     "evidence": "/explore/histories/markets/claims/scottish-enlightenment#ind-smith-stationary-dull"
+    }
+   ],
+   "domains": [
+    "ancient-greek",
+    "scholastic",
+    "critique",
+    "roman",
+    "chinese",
+    "indic",
+    "modern-scholarship",
+    "salamanca",
+    "political-economy",
+    "merchant-practice",
+    "mercantilism",
+    "physiocracy",
+    "scottish-enlightenment",
+    "technology-and-improvement",
+    "islamic"
+   ],
+   "counts": {
+    "verified": 138,
+    "partial": 23,
+    "dropped": 2,
+    "essays": 2
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 7,
+    "pct": 28,
+    "lo": 14,
+    "hi": 48,
+    "date": "2026-10-28",
+    "corrected": false
+   }
+  },
+  {
+   "slug": "nous",
+   "title": "Intelligence (nous)",
+   "question": "What was a mind taken to be: a faculty, a cosmic principle, a divine attribute, a skill? And how did the word “intelligence” travel from the celestial Intelligences to superintelligence?",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-what-intelligence-was-taken-to-be",
+     "title": "1. What intelligence was taken to be: faculty, cosmic principle, divine attribute, skill"
+    },
+    {
+     "slug": "02-intellect-vs-reason",
+     "title": "2. Intellect vs reason: grasp and process"
+    },
+    {
+     "slug": "03-one-shared-mind",
+     "title": "3. One mind or many: the agent intellect, monopsychism, and what it says about AI"
+    },
+    {
+     "slug": "04-intelligence-and-the-good",
+     "title": "4. Intelligence and the good: does knowing the good make one good?"
+    },
+    {
+     "slug": "05-awareness-and-machines",
+     "title": "5. Intelligence without awareness, and the old machine tests"
+    },
+    {
+     "slug": "06-testing-intelligence-is-harmonizing",
+     "title": "6. Testing \"intelligence is the harmonizing\" from the side of intelligence"
+    },
+    {
+     "slug": "07-measuring-minds",
+     "title": "7. Measuring minds: from *ingenium* to *g* to skill-acquisition efficiency"
+    },
+    {
+     "slug": "08-the-word-intelligence",
+     "title": "8. The word \"intelligence\": from the celestial Intelligences to superintelligence"
+    },
+    {
+     "slug": "lexicon",
+     "title": "Words for mind and intelligence across the traditions"
+    },
+    {
+     "slug": "schools",
+     "title": "Schools and lineages of mind"
+    },
+    {
+     "slug": "timeline",
+     "title": "Mind and intelligence by author, through time"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "νοῦς",
+     "translit": "nous",
+     "lang": "grc",
+     "gloss": "the power that grasps directly; in Anaxagoras the unmixed principle that orders the cosmos, in Plotinus the second hypostasis (Ionic νόος, noos)",
+     "avoid": [
+      "mind",
+      "intelligence",
+      "reason",
+      "intellect"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-anaxagoras-nous-unmixed"
+    },
+    {
+     "term": "νόησις",
+     "translit": "noēsis",
+     "lang": "grc",
+     "gloss": "intellection: the act of nous, the top section of Plato's divided line; Aristotle's god is νόησις νοήσεως, thinking of thinking",
+     "avoid": [
+      "thought",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-plato-divided-line"
+    },
+    {
+     "term": "διάνοια",
+     "translit": "dianoia",
+     "lang": "grc",
+     "gloss": "discursive thinking-through, step by step from hypotheses; second section of the divided line, below noēsis",
+     "avoid": [
+      "understanding",
+      "intellect",
+      "sense"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-plato-divided-line"
+    },
+    {
+     "term": "λόγος",
+     "translit": "logos",
+     "lang": "grc",
+     "gloss": "account, word, ratio; in Heraclitus the common order of things, in CH IV the speech given to all humans, in Philo the divine Word as place of the ideas",
+     "avoid": [
+      "reason",
+      "word",
+      "speech"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-heraclitus-logos-common"
+    },
+    {
+     "term": "φρόνησις",
+     "translit": "phronēsis",
+     "lang": "grc",
+     "gloss": "practical wisdom: a true state, with logos, about what is good and bad for a human; impossible without being good",
+     "avoid": [
+      "prudence",
+      "understanding",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-aristotle-phronesis-def"
+    },
+    {
+     "term": "ἐπιστήμη",
+     "translit": "epistēmē",
+     "lang": "grc",
+     "gloss": "demonstrative knowledge of what cannot be otherwise; one of Aristotle's five truth-attaining states",
+     "avoid": [
+      "science"
+     ],
+     "evidence": "/explore/histories/nous/claims/greek#grk-aristotle-ne-five-states"
+    },
+    {
+     "term": "intellectus",
+     "translit": "intellectus",
+     "lang": "la",
+     "gloss": "the understanding: the simple grasp of truth, related to ratio as rest to motion; Eriugena's equivalent of νοῦς",
+     "avoid": [
+      "intelligence",
+      "reason"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-aquinas-ratio-motion-intellectus-rest"
+    },
+    {
+     "term": "intelligentia",
+     "translit": "intelligentia",
+     "lang": "la",
+     "gloss": "the highest knowing; in Boethius the divine power above human ratio; in the Liber de causis and Dante a separate Intelligence that moves a heaven (an angel)",
+     "avoid": [
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-boethius-ratio-human-intelligentia-divine"
+    },
+    {
+     "term": "mens",
+     "translit": "mens",
+     "lang": "la",
+     "gloss": "mind: the knowing summit of the soul (Isidore: from eminere or meminisse); in Macrobius and Ficino the Latin for νοῦς; in Cusanus named from mensura",
+     "avoid": [
+      "intellect"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-isidore-mens"
+    },
+    {
+     "term": "ratio",
+     "translit": "ratio",
+     "lang": "la",
+     "gloss": "discursive reason, reckoning: going from one thing understood to another; human, where intelligentia is divine",
+     "avoid": [
+      "reason"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-aquinas-same-power"
+    },
+    {
+     "term": "ingenium",
+     "translit": "ingenium",
+     "lang": "la",
+     "gloss": "native wit, inventive talent a person has more or less of; Italian ingegno, Spanish ingenio (Huarte)",
+     "avoid": [
+      "intelligence",
+      "genius"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-augustine-ingenium-measured"
+    },
+    {
+     "term": "intellectus materialis",
+     "translit": "intellectus materialis",
+     "lang": "la",
+     "gloss": "the receptive (possible) intellect, matter-like only in being able to receive every form, itself immaterial; for Averroes one in number for all humans",
+     "avoid": [
+      "material intellect"
+     ],
+     "evidence": "/explore/histories/nous/claims/islamic#isl-averroes-one-material-intellect"
+    },
+    {
+     "term": "عقل",
+     "translit": "ʿaql",
+     "lang": "ar",
+     "gloss": "intellect (root sense: to bind, restrain); in falsafa a ladder of intellects from potential to acquired (al-ʿaql al-mustafād)",
+     "avoid": [
+      "reason",
+      "intelligence",
+      "mind"
+     ],
+     "evidence": "/explore/histories/nous/claims/islamic#isl-kindi-terms-editor"
+    },
+    {
+     "term": "العقل الفعال",
+     "translit": "al-ʿaql al-faʿʿāl",
+     "lang": "ar",
+     "gloss": "the agent (active) intellect: separate, always in act, giving the intelligible forms; to the soul as the sun to sight; Latin intelligentia agens / intellectus agens",
+     "avoid": [
+      "agent intelligence",
+      "creative intellect"
+     ],
+     "evidence": "/explore/histories/nous/claims/islamic#isl-avicenna-agent-intelligence-sun"
+    },
+    {
+     "term": "שכל",
+     "translit": "sekhel",
+     "lang": "he",
+     "gloss": "intellect, the faculty that uses no bodily organ; the image of God in Maimonides; God as sekhel, maskil, muskal",
+     "avoid": [
+      "intelligence",
+      "reason"
+     ],
+     "evidence": "/explore/histories/nous/claims/jewish#jew-maimonides-image-is-intellect"
+    },
+    {
+     "term": "חכמה",
+     "translit": "ḥokhmah",
+     "lang": "he",
+     "gloss": "wisdom; in Kabbalah the second sefirah, the 'Father', the point or seed that makes Binah pregnant with the ideas",
+     "avoid": [
+      "wisdom"
+     ],
+     "evidence": "/explore/histories/nous/claims/jewish#jew-chokhmah-seed-binah-pregnant"
+    },
+    {
+     "term": "בינה",
+     "translit": "binah",
+     "lang": "he",
+     "gloss": "understanding; the third sefirah, the 'Mother', the expansion of Ḥokhmah's point into the world's ideas",
+     "avoid": [
+      "intelligence",
+      "understanding"
+     ],
+     "evidence": "/explore/histories/nous/claims/jewish#jew-zohar-wisdom-father-binah-mother"
+    },
+    {
+     "term": "דעת",
+     "translit": "daʿat",
+     "lang": "he",
+     "gloss": "knowledge as union: the conjunction of Ḥokhmah and Binah",
+     "avoid": [
+      "knowledge"
+     ],
+     "evidence": "/explore/histories/nous/claims/jewish#jew-kd-daat-conjunction"
+    },
+    {
+     "term": "बुद्धि",
+     "translit": "buddhi",
+     "lang": "sa",
+     "gloss": "the deciding, ascertaining faculty (adhyavasāya); the charioteer in the Katha; in Sāṃkhya an unconscious evolute of prakṛti",
+     "avoid": [
+      "intellect",
+      "reason",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/indian#ind-sankhya-buddhi-adhyavasaya"
+    },
+    {
+     "term": "मनस्",
+     "translit": "manas",
+     "lang": "sa",
+     "gloss": "the coordinating mind, the reins of the senses, below buddhi; Pali mano",
+     "avoid": [
+      "mind"
+     ],
+     "evidence": "/explore/histories/nous/claims/indian#ind-katha-chariot-buddhi"
+    },
+    {
+     "term": "चित्त",
+     "translit": "citta",
+     "lang": "sa",
+     "gloss": "mind-stuff whose fluctuations (vṛtti) yoga restrains; in Yogācāra a near-synonym of vijñāna",
+     "avoid": [
+      "thought",
+      "thinking principle",
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/nous/claims/indian#ind-yoga-citta-vrtti-nirodha"
+    },
+    {
+     "term": "प्रज्ञा",
+     "translit": "prajñā",
+     "lang": "sa",
+     "gloss": "insight that cuts: discriminating wisdom, not a quantity; Pali paññā, Tibetan ཤེས་རབ shes rab",
+     "avoid": [
+      "wisdom",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/buddhist#bud-milinda-reasoning-wisdom"
+    },
+    {
+     "term": "विज्ञान",
+     "translit": "vijñāna",
+     "lang": "sa",
+     "gloss": "cognition, discriminating consciousness; ālaya-vijñāna is the storehouse of seeds, itself without intellection; Pali viññāṇa",
+     "avoid": [
+      "consciousness"
+     ],
+     "evidence": "/explore/histories/nous/claims/buddhist#bud-trimsika-alaya-manas"
+    },
+    {
+     "term": "पुरुष",
+     "translit": "puruṣa",
+     "lang": "sa",
+     "gloss": "in Sāṃkhya the inactive witness (sākṣin), pure seeing, set apart from the material buddhi",
+     "avoid": [
+      "soul",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/nous/claims/indian#ind-sankhya-split"
+    },
+    {
+     "term": "心",
+     "translit": "xin",
+     "lang": "zh",
+     "gloss": "heart-mind: the organ whose office is to think and which rules the body; feeling and thinking in one",
+     "avoid": [
+      "mind",
+      "heart"
+     ],
+     "evidence": "/explore/histories/nous/claims/chinese#chn-mencius-xin-office-thinks"
+    },
+    {
+     "term": "智",
+     "translit": "zhi",
+     "lang": "zh",
+     "gloss": "discernment of right and wrong, one of Mencius' four sprouts; in the Daodejing and Zhuangzi the calculating cleverness to be abandoned",
+     "avoid": [
+      "knowledge",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/chinese#chn-mencius-shifei-sprout-of-zhi"
+    },
+    {
+     "term": "良知",
+     "translit": "liangzhi",
+     "lang": "zh",
+     "gloss": "knowing that comes without deliberation; in Wang Yangming the innate moral knowing one extends (致良知)",
+     "avoid": [
+      "intuition",
+      "intuitive knowledge",
+      "conscience"
+     ],
+     "evidence": "/explore/histories/nous/claims/chinese#chn-mencius-liangzhi"
+    },
+    {
+     "term": "神",
+     "translit": "shen",
+     "lang": "zh",
+     "gloss": "the numinous, what is unfathomable in yin and yang; in 神明 shenming the spirit-brightness the heart-mind masters",
+     "avoid": [
+      "spirit",
+      "god",
+      "divine"
+     ],
+     "evidence": "/explore/histories/nous/claims/chinese#chn-xici-shen-unfathomable"
+    },
+    {
+     "term": "靈",
+     "translit": "ling",
+     "lang": "zh",
+     "gloss": "numinous efficacy; what makes humans the most ling of the ten thousand things; Zhuangzi's 靈臺, the numinous tower",
+     "avoid": [
+      "intelligent",
+      "intelligence",
+      "spiritual"
+     ],
+     "evidence": "/explore/histories/nous/claims/chinese#chn-shujing-ling-man-intelligent"
+    },
+    {
+     "term": "རིག་པ",
+     "translit": "rig pa",
+     "lang": "bo",
+     "gloss": "awareness, open knowing; in Dzogchen the nature of mind, opposed to ma rig pa, not-knowing",
+     "avoid": [
+      "intelligence",
+      "intellect",
+      "knowledge"
+     ],
+     "evidence": "/explore/histories/nous/claims/tibetan#tib-pemalingpa-rigpa-own-forms"
+    },
+    {
+     "term": "སེམས",
+     "translit": "sems",
+     "lang": "bo",
+     "gloss": "ordinary, dualistic mind; in Dzogchen contrasted with rig pa",
+     "avoid": [
+      "mind"
+     ],
+     "evidence": "/explore/histories/nous/claims/tibetan#tib-khamtrul-sems-rangrig"
+    },
+    {
+     "term": "Vernunft",
+     "translit": "Vernunft",
+     "lang": "de",
+     "gloss": "in Kant the faculty of principles, above Verstand (the faculty of rules), whose ideas only regulate; in Hegel purposive activity",
+     "avoid": [
+      "reason"
+     ],
+     "evidence": "/explore/histories/nous/claims/modern-phil#mph-kant-vernunft-principles"
+    },
+    {
+     "term": "Geist",
+     "translit": "Geist",
+     "lang": "de",
+     "gloss": "in Hegel the self-knowing whole, 'I that is We': mind as collective and historical, not a ghost",
+     "avoid": [
+      "mind",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/nous/claims/modern-phil#mph-hegel-i-we"
+    },
+    {
+     "term": "intelletto universale",
+     "translit": "intelletto universale",
+     "lang": "it",
+     "gloss": "Bruno's universal intellect: the innermost faculty of the world-soul, the efficient cause that fills and orders the whole",
+     "avoid": [
+      "universal intelligence"
+     ],
+     "evidence": "/explore/histories/nous/claims/latin#lat-bruno-intelletto-universale"
+    }
+   ],
+   "domains": [
+    "chinese",
+    "critique",
+    "early-modern",
+    "modern-phil",
+    "greek",
+    "hermetic",
+    "latin",
+    "islamic",
+    "cogsci",
+    "ai",
+    "jewish",
+    "indian",
+    "buddhist",
+    "tibetan"
+   ],
+   "counts": {
+    "verified": 243,
+    "partial": 8,
+    "dropped": 6,
+    "essays": 11
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 4,
+    "pct": 16,
+    "lo": 6,
+    "hi": 35,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  },
+  {
+   "slug": "soul",
+   "title": "Soul",
+   "question": "What is a soul made of, where does it sit, how many does a person have, who has one, does it survive death, and could a machine have one? What each tradition meant by the word we translate “soul”.",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-made-of",
+     "title": "1. What is a soul made of?"
+    },
+    {
+     "slug": "02-where-it-sits",
+     "title": "2. Where does the soul sit?"
+    },
+    {
+     "slug": "03-how-many-parts",
+     "title": "3. How many parts, or how many souls?"
+    },
+    {
+     "slug": "04-who-has-one",
+     "title": "4. Who has a soul?"
+    },
+    {
+     "slug": "05-where-souls-come-from",
+     "title": "5. Where souls come from"
+    },
+    {
+     "slug": "06-survival",
+     "title": "6. Does it survive death, and as what?"
+    },
+    {
+     "slug": "07-soul-mind-spirit-life",
+     "title": "7. How do soul, mind, spirit and life differ?"
+    },
+    {
+     "slug": "08-machine",
+     "title": "8. Could a machine have a soul?"
+    },
+    {
+     "slug": "09-many-souls",
+     "title": "9. Many souls: the traditions that count more than one"
+    },
+    {
+     "slug": "lexicon",
+     "title": "Lexicon. The soul's words: term × language × era, with Source Library's English"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "ψυχή",
+     "translit": "psyche",
+     "lang": "grc",
+     "gloss": "in Homer the shade that leaves a man at death and goes to Hades, not a thinking self; in the philosophers what moves and perceives",
+     "avoid": [
+      "soul",
+      "souls",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#crit-x-render-psyche-souls-iliad1"
+    },
+    {
+     "term": "θυμός",
+     "translit": "thymos",
+     "lang": "grc",
+     "gloss": "the feeling, driving breath of the chest in the living; it leaves at death but is not what goes to Hades. Plato's thymoeides is the 'thymos-like' kind in one soul",
+     "avoid": [
+      "spirit",
+      "passion"
+     ],
+     "evidence": "/explore/histories/soul/claims/greek#grk-homer-thymos-rendered-spirit-and-life"
+    },
+    {
+     "term": "νοῦς",
+     "translit": "nous",
+     "lang": "grc",
+     "gloss": "mind, intellect; in Homer the sense that stays fixed through a change of body (Circe's swine); in the Hermetica what becomes a daimon",
+     "avoid": [
+      "intelligence",
+      "intellect"
+     ],
+     "evidence": "/explore/histories/soul/claims/greek#grk-homer-circe-noos-stays-in-swine"
+    },
+    {
+     "term": "πνεῦμα",
+     "translit": "pneuma",
+     "lang": "grc",
+     "gloss": "breath; for the Stoics the warm connate breath that is the soul, a body; for the Neoplatonists the soul's first body and the body of daimones",
+     "avoid": [
+      "spirit",
+      "breath of life"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#neo-crit-spirit-merges-three-words"
+    },
+    {
+     "term": "δαίμων",
+     "translit": "daimon",
+     "lang": "grc",
+     "gloss": "a divine power; in Plato an intermediary between gods and mortals; in CH X what a mind becomes when it takes a fiery body",
+     "avoid": [
+      "demon",
+      "devil",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/neoplatonic-hermetic#neo-hermetica-ch10-daimon-rendered-spirit"
+    },
+    {
+     "term": "animus",
+     "translit": "animus",
+     "lang": "la",
+     "gloss": "the mind, the seat of thought and intent, as against anima the life-principle; for Jung the contrasexual soul-image of a woman",
+     "avoid": [
+      "spirit",
+      "spirits",
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/greek#grk-lucretius-animos-rendered-spirits"
+    },
+    {
+     "term": "spiritus",
+     "translit": "spiritus",
+     "lang": "la",
+     "gloss": "breath, wind; for Tertullian the stuff of the soul; for Schlegel the Gītā's 'embodied one'; the Latin of pneuma",
+     "avoid": [
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/christian#chr-tertullian-soul-shape-of-its-body"
+    },
+    {
+     "term": "נפש",
+     "translit": "nefesh",
+     "lang": "he",
+     "gloss": "the living creature, man or beast, counted as a person; it can name a corpse; in the Zohar the soul-level that stays in the tomb with the bones",
+     "avoid": [
+      "soul",
+      "souls",
+      "living soul",
+      "immortal soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/hebrew-kabbalah#heb-exod15-seventy-nefesh-counts-persons"
+    },
+    {
+     "term": "רוח",
+     "translit": "ruach",
+     "lang": "he",
+     "gloss": "breath, wind; in Qohelet the breath man shares with the beast; in the Zohar the middle soul-level that goes to the earthly Garden",
+     "avoid": [
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/hebrew-kabbalah#heb-eccl3-one-ruach-man-and-beast"
+    },
+    {
+     "term": "נשמה",
+     "translit": "neshamah",
+     "lang": "he",
+     "gloss": "breath (Gen 2:7 nishmat ḥayyim); in the kabbalah the highest soul-level, the 'true intellect' that returns above",
+     "avoid": [
+      "soul",
+      "breath"
+     ],
+     "evidence": "/explore/histories/soul/claims/hebrew-kabbalah#heb-disputatio-neshamah-true-intellect"
+    },
+    {
+     "term": "גלגול",
+     "translit": "gilgul",
+     "lang": "he",
+     "gloss": "'rolling': a soul's return in a new body to repair what it left undone; Latin revolutio animarum. Not gilgul meḥilot, the dead rolled underground at the resurrection",
+     "avoid": [
+      "transmigration",
+      "metempsychosis",
+      "reincarnation",
+      "revolution"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#crit-heb-gilgul-is-not-metempsychosis"
+    },
+    {
+     "term": "עיבור",
+     "translit": "ibbur",
+     "lang": "he",
+     "gloss": "a second, righteous soul joined to a living one, 'like light from light'",
+     "avoid": [
+      "impregnation"
+     ],
+     "evidence": "/explore/histories/soul/claims/hebrew-kabbalah#heb-disputatio-ibbur-righteous-soul-poured-in"
+    },
+    {
+     "term": "שאול",
+     "translit": "Sheol",
+     "lang": "he",
+     "gloss": "the pit where the dead go as joyless shades (rephaim) who do not praise God",
+     "avoid": [
+      "hell",
+      "hades"
+     ],
+     "evidence": "/explore/histories/soul/claims/hebrew-kabbalah#heb-menasseh-mortalists-psalms-pit"
+    },
+    {
+     "term": "نفس",
+     "translit": "nafs",
+     "lang": "ar",
+     "gloss": "for the philosophers the rational soul, a substance that does not perish; for the Sufis the lower self, the enemy to discipline",
+     "avoid": [
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/islamic#isl-hujwiri-nafs-source-of-evil"
+    },
+    {
+     "term": "روح",
+     "translit": "rūḥ",
+     "lang": "ar",
+     "gloss": "what is 'from the command of my Lord' (Qur'an 17:85), created, not eternal; in medicine and Ibn Ṭufayl the hot vapour in the heart's cavity",
+     "avoid": [
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/islamic#isl-quran-17-85-spirit-from-command"
+    },
+    {
+     "term": "आत्मन्",
+     "translit": "ātman",
+     "lang": "sa",
+     "gloss": "the self (a reflexive word): in the Upaniṣads the inner controller, the unseen seer, which is Brahman; in Nyāya a substance known by its qualities",
+     "avoid": [
+      "soul",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-render-atman-self-vs-soul"
+    },
+    {
+     "term": "जीव",
+     "translit": "jīva",
+     "lang": "sa",
+     "gloss": "Jain: the living, conscious substance marked by upayoga, as large as its body, in every element and plant",
+     "avoid": [
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-render-jiva-ghoshal-refuses-soul"
+    },
+    {
+     "term": "पुरुष",
+     "translit": "puruṣa",
+     "lang": "sa",
+     "gloss": "Sāṃkhya: the witness, one per being, eternal, which never acts",
+     "avoid": [
+      "soul",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-sankhya-plurality-of-purushas"
+    },
+    {
+     "term": "देहिन्",
+     "translit": "dehin",
+     "lang": "sa",
+     "gloss": "'the one who has a body', the embodied one that changes bodies like clothes (Gītā II.22)",
+     "avoid": [
+      "spirit",
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-gita-dehin-changes-bodies"
+    },
+    {
+     "term": "attā",
+     "translit": "attā",
+     "lang": "pi",
+     "gloss": "the self (Sanskrit ātman) whose existence in the five khandhas the Buddha denies (anattā, 'not-self')",
+     "avoid": [
+      "soul",
+      "no soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-vinaya-anattalakkhana"
+    },
+    {
+     "term": "puggala",
+     "translit": "puggala",
+     "lang": "pi",
+     "gloss": "the person, a conventional designation for the khandhas, like 'chariot' for its parts",
+     "avoid": [
+      "soul",
+      "permanent individuality"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#ind-render-puggala-no-soul"
+    },
+    {
+     "term": "བླ",
+     "translit": "bla",
+     "lang": "bo",
+     "gloss": "the wandering soul that can stray or be stolen, and is summoned back or ransomed",
+     "avoid": [
+      "soul-longevity",
+      "life-essence"
+     ],
+     "evidence": "/explore/histories/soul/claims/indic#world-tibet-bla-tshe-summoned-back"
+    },
+    {
+     "term": "魂",
+     "translit": "hun",
+     "lang": "zh",
+     "gloss": "the yang qi of a person, light and clear, that rises and disperses at death; in Daoist practice three hun to be held in the body",
+     "avoid": [
+      "soul",
+      "spirit",
+      "ethereal soul",
+      "spiritual soul",
+      "cloud-soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#chn-crit-soul-flattens-hun-po"
+    },
+    {
+     "term": "魄",
+     "translit": "po",
+     "lang": "zh",
+     "gloss": "the bodily, yin configuration of qi that comes first at birth, sits in the senses' acuity and sinks to earth at death; seven po",
+     "avoid": [
+      "animal soul",
+      "bodily soul",
+      "corporeal soul",
+      "physical soul",
+      "white-soul",
+      "vital spirits"
+     ],
+     "evidence": "/explore/histories/soul/claims/chinese-east-asian#chn-zichan-po-first-then-hun"
+    },
+    {
+     "term": "魂魄",
+     "translit": "hunpo",
+     "lang": "zh",
+     "gloss": "hun and po together: two configurations of qi that part in opposite directions at death; no single surviving subject",
+     "avoid": [
+      "soul",
+      "dual soul",
+      "soul and spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#chn-crit-soul-flattens-hun-po"
+    },
+    {
+     "term": "神",
+     "translit": "shen",
+     "lang": "zh",
+     "gloss": "the numinous, spirit-brightness; qi extending (伸); in the Huiyuan–Fan Zhen debate what does or does not perish with the form (形 xing)",
+     "avoid": [
+      "spirit",
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/chinese-east-asian#chn-huiyuan-fire-firewood"
+    },
+    {
+     "term": "鬼神",
+     "translit": "guishen",
+     "lang": "zh",
+     "gloss": "gui (歸, returning, contracting qi) and shen (伸, extending qi): for Zhu Xi and Zhang Zai phases of qi, not beings",
+     "avoid": [
+      "ghosts and spirits",
+      "ghosts",
+      "demons"
+     ],
+     "evidence": "/explore/histories/soul/claims/chinese-east-asian#chn-zhuxi-guishen-only-qi"
+    },
+    {
+     "term": "氣",
+     "translit": "qi",
+     "lang": "zh",
+     "gloss": "the stuff hun, po and shen are made of; ancestors' qi is continuous with the living descendant's",
+     "avoid": [
+      "energy",
+      "vital energy",
+      "ether"
+     ],
+     "evidence": "/explore/histories/soul/claims/chinese-east-asian#chn-zhuxi-guishen-only-qi"
+    },
+    {
+     "term": "bꜣ",
+     "translit": "ba",
+     "lang": "egy",
+     "gloss": "the mobile, bird-formed power that goes out by day and must rejoin the body; gods have ba too",
+     "avoid": [
+      "soul",
+      "heart-soul",
+      "personality"
+     ],
+     "evidence": "/explore/histories/soul/claims/critique#egy-crit-soul-for-ba-unstable"
+    },
+    {
+     "term": "kꜣ",
+     "translit": "ka",
+     "lang": "egy",
+     "gloss": "a vital power of the person, fed with offerings and housed in the tomb or statue; its sense is unresolved in the field",
+     "avoid": [
+      "double",
+      "genius",
+      "soul",
+      "spirit"
+     ],
+     "evidence": "/explore/histories/soul/claims/egyptian-ane#egy-budge-1898-ka-double-eidolon"
+    },
+    {
+     "term": "ꜣḫ",
+     "translit": "akh",
+     "lang": "egy",
+     "gloss": "the shining, transfigured dead (Budge's khu)",
+     "avoid": [
+      "spirit-soul",
+      "spirit soul",
+      "spirit",
+      "intelligence"
+     ],
+     "evidence": "/explore/histories/soul/claims/egyptian-ane#egy-budge-1913-khu-spirit-soul"
+    },
+    {
+     "term": "sꜥḥ",
+     "translit": "sahu",
+     "lang": "egy",
+     "gloss": "what grows from the mummified body after the rites and ascends to the gods",
+     "avoid": [
+      "spiritual body"
+     ],
+     "evidence": "/explore/histories/soul/claims/egyptian-ane#egy-budge-1898-khat-sahu-spiritual-body"
+    },
+    {
+     "term": "eṭemmu",
+     "translit": "etemmu",
+     "lang": "akk",
+     "gloss": "the shade of the dead, fed by the living, which returns to haunt if unburied or unfed (older reading ekimmu)",
+     "avoid": [
+      "spirit",
+      "demon"
+     ],
+     "evidence": "/explore/histories/soul/claims/egyptian-ane#egy-jastrow-unburied-spirit-hunger"
+    },
+    {
+     "term": "Seelenlehre",
+     "translit": "Seelenlehre",
+     "lang": "de",
+     "gloss": "'doctrine of the soul': the German name of psychology, rational (Kant) and empirical (Erfahrungsseelenlehre, Fechner)",
+     "avoid": [
+      "psychology"
+     ],
+     "evidence": "/explore/histories/soul/claims/modern#mod-kant-paralogism-sophisma-figurae-dictionis"
+    },
+    {
+     "term": "tonalli",
+     "translit": "tonalli",
+     "lang": "nci",
+     "gloss": "heat and day-sign sent from Ometecuhtli's heaven into the child at conception; can be strengthened or lost",
+     "avoid": [
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/americas#world-nahua-tonalli-from-twelfth-heaven"
+    },
+    {
+     "term": "pixan",
+     "translit": "pixan",
+     "lang": "yua",
+     "gloss": "'a thing that is covered'; the friars' Maya word for the Christian soul",
+     "avoid": [
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/americas#world-maya-pixan-friar-soul"
+    },
+    {
+     "term": "ol",
+     "translit": "ol",
+     "lang": "yua",
+     "gloss": "the heart, the inner centre of a person or a plant: the seat of will, mood and health",
+     "avoid": [
+      "spirit",
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/americas#world-maya-perez-ol-heart-will"
+    },
+    {
+     "term": "supay",
+     "translit": "supay",
+     "lang": "qu",
+     "gloss": "a spirit (of the dead) that could be good or bad: alli çupay 'good supay' is the good angel in 1560",
+     "avoid": [
+      "devil",
+      "demon"
+     ],
+     "evidence": "/explore/histories/soul/claims/americas#world-andes-supay-good-and-bad-angel"
+    },
+    {
+     "term": "ọkàn",
+     "translit": "okan",
+     "lang": "yo",
+     "gloss": "the heart; in Ellis also the ghost-man that goes to the Land of the Dead",
+     "avoid": [
+      "soul",
+      "spirit",
+      "conscience"
+     ],
+     "evidence": "/explore/histories/soul/claims/africa#world-yoruba-okan-soul-heart-crowther"
+    },
+    {
+     "term": "kra",
+     "translit": "kra",
+     "lang": "ak",
+     "gloss": "an indwelling guardian spirit whose tie to the man ends at his death; it becomes a sisa",
+     "avoid": [
+      "soul"
+     ],
+     "evidence": "/explore/histories/soul/claims/africa#world-akan-kra-not-soul-ellis"
+    },
+    {
+     "term": "wairua",
+     "translit": "wairua",
+     "lang": "mi",
+     "gloss": "the shadowy self that wanders in dreams, leaves at death and goes to Te Po; it outlives the mauri, the life that dies",
+     "avoid": [
+      "soul",
+      "astral body"
+     ],
+     "evidence": "/explore/histories/soul/claims/oceania#world-maori-best-wairua-dream-wanderer"
+    }
+   ],
+   "domains": [
+    "chinese-east-asian",
+    "critique",
+    "christian",
+    "early-modern",
+    "egyptian-ane",
+    "greek",
+    "hebrew-kabbalah",
+    "indic",
+    "islamic",
+    "modern",
+    "neoplatonic-hermetic",
+    "soul-and-machine",
+    "africa",
+    "americas",
+    "north-inner-asia",
+    "oceania"
+   ],
+   "counts": {
+    "verified": 414,
+    "partial": 4,
+    "dropped": 10,
+    "essays": 10
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 7,
+    "pct": 28,
+    "lo": 14,
+    "hi": 48,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  },
+  {
+   "slug": "sympathy",
+   "title": "Sympathy",
+   "question": "Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?",
+   "map": null,
+   "essays": [
+    {
+     "slug": "01-the-arc",
+     "title": "1. The arc of sympathy: from the cosmos to the brain, and what the texts do to that story"
+    },
+    {
+     "slug": "02-like-and-unlike",
+     "title": "2. Like and unlike: the line between resonance and harmony is drawn again in every sense of sympathy"
+    }
+   ],
+   "keepTerms": [
+    {
+     "term": "συμπάθεια",
+     "translit": "sympatheia",
+     "lang": "grc",
+     "gloss": "co-affection, 'suffering together': in the Stoics and Plotinus the affection of one part of a single living cosmos by another, even at a distance; in Galen one organ affected through another (opposed to idiopatheia)",
+     "avoid": [
+      "sympathy",
+      "compassion",
+      "resonance"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/stoic#anc-cicero-latin-renderings-of-sympatheia"
+    },
+    {
+     "term": "ἰδιοπάθεια",
+     "translit": "idiopatheia",
+     "lang": "grc",
+     "gloss": "an affection arising in the part itself, not through another (Galen's contrast to sympatheia)",
+     "avoid": [
+      "idiopathy",
+      "idiopathic"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/medical-ancient#anc-galen-frenzy-brain-by-sympathy-not-idiopathy"
+    },
+    {
+     "term": "sympathia",
+     "translit": "sympathia",
+     "lang": "la",
+     "gloss": "the hidden agreement of natural things by which like acts on like at a distance (magnet, unison string, weapon-salve); a natural, not a felt, relation",
+     "avoid": [
+      "sympathy",
+      "sympathetic"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/natural-magic#em-fracastoro-sympathy-hidden-agreement"
+    },
+    {
+     "term": "antipathia",
+     "translit": "antipathia",
+     "lang": "la",
+     "gloss": "the hidden disagreement or natural enmity of things, sympathia's pair (the chick and the kite, wolf and sheep)",
+     "avoid": [
+      "antipathy",
+      "aversion",
+      "hatred"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/natural-magic#em-fracastoro-sympathy-hidden-agreement"
+    },
+    {
+     "term": "qualitas occulta",
+     "translit": "qualitas occulta",
+     "lang": "la",
+     "gloss": "a quality hidden from the senses (occultus, hidden), known only by its effects, as opposed to the manifest qualities hot, cold, wet, dry",
+     "avoid": [
+      "occult",
+      "occult quality",
+      "occult property",
+      "supernatural"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/medicine#em-fracastoro-against-occult-property"
+    },
+    {
+     "term": "contagio",
+     "translit": "contagio",
+     "lang": "la",
+     "gloss": "a natural link by contact (from tango, touch); Cicero's word for sympatheia in De fato and De divinatione II",
+     "avoid": [
+      "contagion",
+      "infection"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/stoic#anc-cicero-fato-contagio-granted-not-fate"
+    },
+    {
+     "term": "consensus",
+     "translit": "consensus",
+     "lang": "la",
+     "gloss": "a feeling-together of parts: Cicero's and Galen's Latin for sympatheia; in Fracastoro the co-affection of bodily members and the cohesion of the whole universe against a vacuum",
+     "avoid": [
+      "consensus",
+      "agreement",
+      "consent"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/natural-magic#em-fracastoro-first-consensus-no-vacuum"
+    },
+    {
+     "term": "concentus",
+     "translit": "concentus",
+     "lang": "la",
+     "gloss": "singing together; Cicero's musical word in his gloss of sympatheia (quasi concentus atque consensus)",
+     "avoid": [
+      "harmony",
+      "concert"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/stoic#anc-cicero-latin-renderings-of-sympatheia"
+    },
+    {
+     "term": "magnetismus",
+     "translit": "magnetismus",
+     "lang": "la",
+     "gloss": "the magnetic, i.e. sympathetic, action at a distance invoked for the weapon-salve cure (magnetica curatio)",
+     "avoid": [
+      "magnetism",
+      "animal magnetism"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/medicine#em-helmont-dispute-natural-or-satanic"
+    },
+    {
+     "term": "spiritus",
+     "translit": "spiritus",
+     "lang": "la",
+     "gloss": "a subtle bodily vapour carrying life and power (spiritus insitus, the implanted spirit), not an immaterial ghost",
+     "avoid": [
+      "spirit",
+      "ghost"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/medicine#em-sennert-sympathy-from-implanted-spirit"
+    },
+    {
+     "term": "感應",
+     "translit": "ganying",
+     "lang": "zh",
+     "gloss": "stimulus and response: one thing's stirring (gan 感) calls forth another's answer (ying 應); in Han texts between things of a kind, in the Song Neo-Confucians mostly between opposites",
+     "avoid": [
+      "resonance",
+      "sympathetic resonance",
+      "sympathy",
+      "correspondence"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-zhuxi-ganying-pattern-of-all-change"
+    },
+    {
+     "term": "類",
+     "translit": "lei",
+     "lang": "zh",
+     "gloss": "kind: things of one kind summon and answer one another (各從其類, each follows its kind)",
+     "avoid": [
+      "species",
+      "genus"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-lushi-yingtong-lei-xiangzhao"
+    },
+    {
+     "term": "同類相動",
+     "translit": "tonglei xiangdong",
+     "lang": "zh",
+     "gloss": "things of the same kind move each other (title of Chunqiu fanlu 57), a causal rule the text says is 'not spirit-work'",
+     "avoid": [
+      "sympathetic magic",
+      "sympathetic resonance"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-cfl-rainmaking-yin-moves-yin"
+    },
+    {
+     "term": "同氣相求",
+     "translit": "tongqi xiangqiu",
+     "lang": "zh",
+     "gloss": "like qi seek each other; paired with 同聲相應 tongsheng xiangying, like sounds answer each other (Yijing, Wenyan)",
+     "avoid": [
+      "sympathy",
+      "resonance"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-yijing-wenyan-tongsheng-xiangying"
+    },
+    {
+     "term": "氣",
+     "translit": "qi",
+     "lang": "zh",
+     "gloss": "the stuff of things in its varying states, by which things of a kind are joined and move each other",
+     "avoid": [
+      "energy",
+      "ether",
+      "vital force"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-lushi-yingtong-tongqi-ranks-rulers"
+    },
+    {
+     "term": "自然",
+     "translit": "ziran",
+     "lang": "zh",
+     "gloss": "so of itself, spontaneous; what happens without an evident maker",
+     "avoid": [
+      "nature",
+      "natural"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-cfl-not-spontaneous-something-makes-it"
+    },
+    {
+     "term": "五行",
+     "translit": "wuxing",
+     "lang": "zh",
+     "gloss": "the five phases (wood, fire, earth, metal, water) that succeed and overcome one another",
+     "avoid": [
+      "five elements",
+      "elements"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-lushi-yingtong-heaven-shows-omens"
+    },
+    {
+     "term": "精誠",
+     "translit": "jingcheng",
+     "lang": "zh",
+     "gloss": "concentrated essence and intent, a quasi-physical potency of a person that can reach Heaven",
+     "avoid": [
+      "sincerity"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/chinese#ch-huainanzi-shikuang-sincerity-moves-heaven"
+    },
+    {
+     "term": "律",
+     "translit": "lü",
+     "lang": "zh",
+     "gloss": "pitch-pipe; one of the twelve standard pitches (Dalü, Yize)",
+     "avoid": [
+      "law",
+      "statute",
+      "rule"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/physics#ch-zhuzaiyu-dalu-yize-tongsheng"
+    },
+    {
+     "term": "Einfühlung",
+     "translit": "Einfühlung",
+     "lang": "de",
+     "gloss": "feeling-into: Vischer's and Lipps's projection of one's own activity into a form or person; Stein's experience of another's consciousness as other",
+     "avoid": [
+      "empathy",
+      "sympathy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/psychology#feel-titchener-1909-coins-empathy"
+    },
+    {
+     "term": "Einsfühlung",
+     "translit": "Einsfühlung",
+     "lang": "de",
+     "gloss": "feeling-as-one: identification in which the difference between self and other is lost (Scheler, Stein)",
+     "avoid": [
+      "empathy",
+      "sympathy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/critique#mor-stein-1917-not-einsfuehlung"
+    },
+    {
+     "term": "Mitgefühl",
+     "translit": "Mitgefühl",
+     "lang": "de",
+     "gloss": "feeling-with about something (Mitfreude, Mitleid), in which the other's feeling stays the other's; Scheler's fellow-feeling, kept apart from contagion and Einsfühlung",
+     "avoid": [
+      "sympathy",
+      "empathy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/moral-philosophy#feel-scheler-1913-four-forms"
+    },
+    {
+     "term": "Mitleid",
+     "translit": "Mitleid",
+     "lang": "de",
+     "gloss": "suffering-with: Schopenhauer's direct participation in another's suffering, the sole basis of moral worth; Nietzsche's target (Mit-Leid)",
+     "avoid": [
+      "pity",
+      "compassion",
+      "sympathy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/moral-philosophy#mor-schopenhauer-1840-compassion-sole-moral-worth"
+    },
+    {
+     "term": "Mitschwingen",
+     "translit": "Mitschwingen",
+     "lang": "de",
+     "gloss": "vibrating-with: Helmholtz's term (also Mittönen) for a body answering a tone it is tuned to; Lipps's image for kindred experiences within one mind",
+     "avoid": [
+      "sympathetic resonance",
+      "resonance",
+      "sympathy"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/physics#res-helmholtz-mitschwingen-term"
+    },
+    {
+     "term": "Resonanz",
+     "translit": "Resonanz",
+     "lang": "de",
+     "gloss": "in Lipps, the psychic echo of the kindred (Resonanz des Gleichartigen); in Rosa, an answering relation to the world in which each side keeps its own voice",
+     "avoid": [
+      "resonance"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/social-theory#res-rosa-resonance-own-voice"
+    },
+    {
+     "term": "Unverfügbarkeit",
+     "translit": "Unverfügbarkeit",
+     "lang": "de",
+     "gloss": "Rosa's thesis that resonance cannot be produced or commanded at will",
+     "avoid": [
+      "uncontrollability",
+      "unavailability"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/social-theory#res-rosa-resonance-own-voice"
+    },
+    {
+     "term": "pitié",
+     "translit": "pitié",
+     "lang": "fr",
+     "gloss": "Rousseau's natural, pre-reflective repugnance at seeing a fellow creature suffer, shared with animals and preceding reason",
+     "avoid": [
+      "pity"
+     ],
+     "evidence": "/explore/histories/sympathy/claims/moral-philosophy#mor-rousseau-1755-pitie-precedes-reflection"
+    }
+   ],
+   "domains": [
+    "stoic",
+    "medical-ancient",
+    "neoplatonic",
+    "critique",
+    "ancient",
+    "chinese",
+    "physics",
+    "natural-magic",
+    "medicine",
+    "early-modern-science",
+    "historiography",
+    "psychology",
+    "aesthetics",
+    "neuro",
+    "moral-philosophy",
+    "social-theory"
+   ],
+   "counts": {
+    "verified": 96,
+    "partial": 34,
+    "dropped": 4,
+    "essays": 2
+   },
+   "audit": {
+    "n": 25,
+    "rejected": 10,
+    "pct": 40,
+    "lo": 23,
+    "hi": 59,
+    "date": "2026-10-28",
+    "corrected": true
+   }
+  }
+ ]
+}

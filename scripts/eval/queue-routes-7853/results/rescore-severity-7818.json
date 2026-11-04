@@ -1,0 +1,124 @@
+{
+ "generated_at": "2026-10-31T16:25:25.000Z",
+ "study": "#7818",
+ "source": "correction-pass-7818/results/release (verdicts-opus rep 1)",
+ "weights": {
+  "cosmetic": 1,
+  "misleads": 5,
+  "wrong_text": 25
+ },
+ "contrasts": {
+  "P/de: served (correction ON) vs draft (OFF)": {
+   "n": 60,
+   "severity_per_1000": {
+    "a": 140.281,
+    "b": 108.76,
+    "mean_diff": -31.521,
+    "ci95": [
+     -52.496,
+     -14.873
+    ],
+    "wilcoxon": {
+     "n": 39,
+     "w_plus": 56,
+     "z": -4.654,
+     "p": 0.00000326
+    },
+    "better": 34,
+    "worse": 5
+   },
+   "accept": {
+    "a": "37/60",
+    "b": "45/60",
+    "gained": 8,
+    "lost": 0,
+    "mcnemar_exact_p": 0.00781
+   },
+   "binary_missed": "no: both agree on significance"
+  },
+  "P/fr: served (correction ON) vs draft (OFF)": {
+   "n": 43,
+   "severity_per_1000": {
+    "a": 298.576,
+    "b": 282.998,
+    "mean_diff": -15.578,
+    "ci95": [
+     -27.889,
+     -6.283
+    ],
+    "wilcoxon": {
+     "n": 21,
+     "w_plus": 18,
+     "z": -3.371,
+     "p": 0.000748
+    },
+    "better": 18,
+    "worse": 3
+   },
+   "accept": {
+    "a": "27/43",
+    "b": "34/43",
+    "gained": 7,
+    "lost": 0,
+    "mcnemar_exact_p": 0.0156
+   },
+   "binary_missed": "no: both agree on significance"
+  },
+  "W/de: served (correction ON) vs draft (OFF)": {
+   "n": 40,
+   "severity_per_1000": {
+    "a": 52.626,
+    "b": 22.687,
+    "mean_diff": -29.939,
+    "ci95": [
+     -60.865,
+     -8.839
+    ],
+    "wilcoxon": {
+     "n": 20,
+     "w_plus": 20,
+     "z": -3.155,
+     "p": 0.00161
+    },
+    "better": 18,
+    "worse": 2
+   },
+   "accept": {
+    "a": "23/40",
+    "b": "31/40",
+    "gained": 8,
+    "lost": 0,
+    "mcnemar_exact_p": 0.00781
+   },
+   "binary_missed": "no: both agree on significance"
+  },
+  "W/fr: served (correction ON) vs draft (OFF)": {
+   "n": 38,
+   "severity_per_1000": {
+    "a": 11.332,
+    "b": 7.953,
+    "mean_diff": -3.379,
+    "ci95": [
+     -6.361,
+     -1.077
+    ],
+    "wilcoxon": {
+     "n": 10,
+     "w_plus": 0,
+     "z": -2.752,
+     "p": 0.00592
+    },
+    "better": 10,
+    "worse": 0
+   },
+   "accept": {
+    "a": "36/38",
+    "b": "36/38",
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_exact_p": 1
+   },
+   "binary_missed": "yes: severity differs at p < 0.05 where accept does not"
+  }
+ }
+}

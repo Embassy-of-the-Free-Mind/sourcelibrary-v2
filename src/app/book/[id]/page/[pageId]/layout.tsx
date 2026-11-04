@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
 // serves the whole request.
-import { getPageData } from './page-data';
-import { type Locale } from '@/lib/locale-path';
+import { getPageData, getTrimmedPageId } from './page-data';
+import { type Locale, localePath } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle, hasLocalizedEdition } from '@/lib/localized';
 
@@ -121,6 +121,15 @@ export default async function PageLayout({ children, params, lang = 'en' }: Layo
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  // A real page id with junk on its end (a mangled copied link) goes to that
+  // page instead of a 404 — same book only (getTrimmedPageId).
+  if (book && !page) {
+    const bookKey = (book as unknown as { id?: string }).id;
+    const trimmed = bookKey ? await getTrimmedPageId(bookKey, pageId) : null;
+    if (trimmed) {
+      permanentRedirect(localePath(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${trimmed}`, lang));
+    }
+  }
   if (!book || !page) notFound();
 
   // A localized URL is a promise the page is in that language, so a book with

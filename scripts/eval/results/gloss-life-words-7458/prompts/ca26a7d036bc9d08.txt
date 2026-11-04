@@ -1,0 +1,154 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Latin
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: On Astronomical Predictions | Author: Ptolemy; Philip Melanchthon (ed.) | Date: 1553
+
+**Note:** This is a public domain work published in 1553. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>Latin</language>
+<page-type>text</page-type>
+<page-num>249</page-num>
+<header>Præd. astr. Lib. IIII.</header>
+<sig>q 5</sig>
+<meta>catchword: futura</meta>
+
+diem, numerabimus à locis men-
+sium, tribuentes cuilibet signo, ordine
+dies duos & dimidium.
+
+Animaduertendum etiam, quæ stel-
+lę potissimũ generales locos transeãt.
+Non enim parum ad deprehendenda
+tẽpora euentuũ momenti adferunt. In
+generalibus autẽ locis præcipua uis est
+Saturni, Iouis in annuis: Martis & So-
+lis, Veneris & Mercurij, in menstruis:
+Lunę uerò transitus in diurnis. Notan
+dum & hoc, quòd generales temporũ
+arbitri præcipuè euentus producunt &
+gubernant: particulares uerò, uel adiu-
+uant illorum actiones, uel impediunt,
+pro naturę suę conuenientia aut diuer
+sitate. Transitus stellarum uel augẽt
+intenduntq́;, uel relaxant & minuunt
+accidentia. Etenim generaliter proro-
+gatoris locus, & generalium temporũ
+dominus, assumpto etiam participe fi-
+nium domino, accidentium qualitatẽ
+& durationem significant. Retinent e-
+nim singulę stellę conuenientiam cum
+illis geniturę locis, quorũ dominium
+initio acquisiuerunt. Vtrum prospera
+
+<vocab>Prædictio astronomica, Saturnus, Iouis, Mars, Sol, Venus, Mercurius, Luna, prorogator, genitura</vocab>
+
+**At the page break:** The word «lem» at the head of this page repeats the previous page's catchword and has been removed; it is not translated twice. The catchword «futura» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.
+
+**Previous page translation for continuity:**
+## Cl. Ptolemaei
+
+wise: and at the same time, the planets that are in their own bounds <note>also called terms, these are specific subdivisions of a zodiac sign ruled by a particular planet</note> should be taken as the rulers <note>also called "dispositors," these are planets that exercise control over a specific point or another planet in the zodiac</note>.
+
+When the prorogation <note>a method of advancing a point in the chart to determine the timing of events</note> is taken from the horoscope <note>here meaning the ascendant or the point rising on the eastern horizon</note>, years are give
+[…]
+s <note>the time it takes for a sign of the zodiac to rise above the horizon at a specific latitude</note> of each climate <note>a geographic latitude or zone used to calculate how the stars rise</note>. But if the prorogation is taken from the midheaven <note>the highest point of the zodiac at the moment of birth, often abbreviated as MC</note>, years are given equal to the ascensions of the midheaven. And until a pivot <note>one of the four main angles of a chart, namely the ascendant, descendant, midheaven, or lower midheaven</note> is reached, years are given in a similar way, according to the proportion compared to the ascensions, or descensions, or the transit in the midheaven: just as was said above concerning the times of life.
+
+We shall therefore establish the principal and universal givers of times in this way, which I have reviewed. But we will establish the years in this way: by counting the number of years of the person born according to the succession of the signs from the place of the prorogator, assigning one year to each degree, and taking the last degree as the ruler <note>the planet that governs that specific point in the zodiac</note>. We shall do the same for the months, counting the number of months from birth, starting from the place that rules the year you are calculating: and we shall assign twenty-eight days to each sign. Likewise, the days after birth
+<summary>Ptolemy explains how to calculate the timing of life events by converting the movement of planetary points into years, months, and days. He links these calculations to the rising times of zodiac signs at specific latitudes.</summary>
+<keywords>prorogation, ascensions, midheaven, horoscope, planetary rulers, time lords, astrology, mathematics</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

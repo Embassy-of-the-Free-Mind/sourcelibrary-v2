@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { getReadDb } from '@/lib/mongodb';
 import { textRoleRank } from '@/lib/text-role';
@@ -690,7 +691,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
 
           const pagePipeline = (stage: ReturnType<typeof buildPageSearchStage>, max: number) => [
             stage,
-            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
+            { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES }, ...NOT_REPEAT_CAPTURE } },
             { $limit: max },
             {
               $project: {

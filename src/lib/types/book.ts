@@ -386,7 +386,7 @@ export interface SourceWorkDate {
 
 // Provenance entry for a single metadata field
 export interface FieldProvenanceEntry {
-  source: string;  // 'ai_enrichment' | 'import' | 'metadata_verification' | 'admin_edit' | 'manual' | 'ustc_catalog' | 'bph_catalogue' | 'cross_reference' | 'ai_generation' | 'ustc_enrichments'
+  source: string;  // 'ai_enrichment' | 'import' | 'metadata_verification' | 'admin_edit' | 'manual' | 'ustc_catalog' | 'bph_catalogue' | 'cross_reference' | 'ai_generation' | 'ustc_enrichments' | 'source_catalogue'
   model?: string;
   date?: string | Date;
   confidence?: 'high' | 'medium' | 'low';

@@ -23,6 +23,7 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/import/ia-manifest-direct.mjs --manifest scripts/import/manifests/<x>.json --dry-run
  *   node scripts/import/ia-manifest-direct.mjs --manifest <x>.json --commit [--limit N] [--only <ia-id>] [--hold <reason>]
+ *     --hold needs --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD (#7860)
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
@@ -30,7 +31,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
-import { holdBook } from '../lib/pipeline-hold.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen } from '../lib/pipeline-hold.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const argAfter = (flag) => { const i = process.argv.indexOf(flag); return i > 0 ? process.argv[i + 1] : null; };
@@ -49,8 +50,11 @@ const OUT = path.join(HERE, '..', '..', 'scratchpad', 'acq', `${IMPORTER}-result
 const HOLD = HOLD_REASON ? {
   reason: HOLD_REASON,
   release: `Held at import by ia-manifest-direct.mjs (--hold ${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release_when: parseReleaseWhen(argAfter('--release-when')),
   source: IMPORTER,
 } : null;
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 const UA = 'SourceLibrary acquisition (contact: derek@sourcelibrary.org)';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 

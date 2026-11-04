@@ -54,6 +54,7 @@ export const BOOK_EVENT = 'paddle_zh_reocr';
 /** `pipeline_auto.hold.reason` for every book the lane touches. */
 export const HOLD_REASON = process.env.PADDLE_ZH_HOLD || 'paddle-zh-5600-ocr-only';
 export const HOLD_RELEASE = process.env.PADDLE_ZH_HOLD_RELEASE || 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: process.env.PADDLE_ZH_HOLD_DECISION || `release ${HOLD_REASON}` });
 /** Below this many Han characters a Paddle read is textless: it replaces a loop, never a reading. */
 export const MIN_HAN = 8;
 

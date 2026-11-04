@@ -47,7 +47,7 @@ const getArg = (name) => args.find(a => a.startsWith(`--${name}=`))?.split('=')[
 const SCAN_ONLY = hasFlag('scan');
 const FIX = hasFlag('fix');
 const LIMIT = parseInt(getArg('limit') || '0', 10);
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 if (!SCAN_ONLY && !FIX) {
   console.error('Usage: --scan (detect) or --fix (clear + re-archive)');

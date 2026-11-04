@@ -1,0 +1,86 @@
+{
+ "69ea3e6b300d991d0f1d337d": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed śloka verse (Rājataraṅgiṇī tarangas 4 and 7), all Sanskrit"
+ },
+ "6a0f06c5900fb4799cef25f2": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed Tantric verse with mantras; worn, uneven type"
+ },
+ "69d7e185e9e5e67989c377ec": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed sūtra + Vimarśinī commentary, Sanskrit footnotes"
+ },
+ "69e80578fdad300064d9dcb5": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed verse with Sanskrit variant-reading apparatus (Latin sigla A/B/D/F only)"
+ },
+ "69de13058a46d0c97eedc04e": {
+  "pass": false,
+  "format": "print",
+  "language": "Sanskrit + Hindi",
+  "why": "Sanskrit verses each followed by a full Hindi translation, plus Hindi footnotes; Hindi is about half or more of each page (borderline)"
+ },
+ "69dea5b74d19ec2e9ba76fc5": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed Vedic text with accent marks + Sanskrit bhāṣya"
+ },
+ "6a0eb388283b678bc95b97a9": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed verse + Sanskrit commentary"
+ },
+ "69e80677fdad300064d9f438": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed two-column verse + Sanskrit commentary, dense layout"
+ },
+ "69e13a960dae29249d20bb00": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed sūtra + commentary, Sanskrit variant footnotes; one-line English digitizer stamp"
+ },
+ "69de98eb1b234a773e439877": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed prose + verse; English only in running heads and line numbers"
+ },
+ "69ef251385daccce30f2af4f": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed śloka verse (Yuddhakāṇḍa), all Sanskrit, unusual early type"
+ },
+ "69e13cf5998131d6a99c10eb": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed commentary + verse, Sanskrit variant footnotes"
+ },
+ "69e75a8e095c302d3fdded9e": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed drama with Sanskrit commentary; heavily degraded, broken print, hard to read"
+ },
+ "69ee89ff4501bec89654730c": {
+  "pass": true,
+  "format": "print",
+  "language": "Sanskrit",
+  "why": "Devanagari printed accented saṃhitā + padapāṭha + Sāyaṇa bhāṣya"
+ }
+}

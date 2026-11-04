@@ -1,0 +1,79 @@
+{
+ "report": {
+  "Chinese": {
+   "blocks": 10,
+   "pages": 40,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 40
+   }
+  },
+  "French": {
+   "blocks": 10,
+   "pages": 40,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 40
+   }
+  },
+  "German": {
+   "blocks": 10,
+   "pages": 40,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 40
+   }
+  },
+  "Italian": {
+   "blocks": 10,
+   "pages": 40,
+   "unparsed": 0,
+   "anchor_missing": 0,
+   "refused_pages": {
+    "anchor-next": 1
+   },
+   "blocks_refused": 1,
+   "anchor_verdicts": {
+    "own": 39,
+    "next": 1
+   }
+  },
+  "Latin": {
+   "blocks": 9,
+   "pages": 36,
+   "unparsed": 1,
+   "anchor_missing": 0,
+   "refused_pages": {},
+   "blocks_refused": 0,
+   "anchor_verdicts": {
+    "own": 36
+   }
+  }
+ },
+ "total": {
+  "blocks": 49,
+  "pages": 196,
+  "anchor_refused": 1,
+  "refused": 1,
+  "blocks_refused": 1
+ },
+ "refusals": [
+  {
+   "lang": "Italian",
+   "book_id": "695573c1f63a757109172835",
+   "page": 121,
+   "reason": "anchor-next",
+   "detail": "halves own 1 prev 1 next 2",
+   "raw": "Italian/raw/guard-5021-dry-json-695573c1f63a757109172835-119-4-0.txt"
+  }
+ ]
+}

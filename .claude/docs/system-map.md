@@ -44,6 +44,8 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 
 ## Data Pipeline Flow
 
+> **Out of date (2026-10-29, #7759):** this section shows the orchestrator line only. Most OCR and translation now runs in subscription lanes (agy Flash, Opus via `claude -p`) and on the GPU box. The process today: `book-process.md`. Live lanes and counts: https://sourcelibrary.org/admin/pipeline/now.
+
 The pipeline has **13+ phases** managed by `pipeline-orchestrator.mjs` (every 2 min) and `enrich-worker.mjs` (every 5 min) on Hetzner. Books flow through `pipeline_auto.status` states:
 
 ```
@@ -121,7 +123,7 @@ Museum artwork imports alongside historical texts. ~18K artworks. Mixed collecti
 
 Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections support `collection_type` field. Gemini Vision cataloging, CLIP embeddings (3072d), semantic search.
 
-## MongoDB Collections (73)
+## MongoDB Collections (75)
 
 ### Core Data
 | Collection | Purpose | Key Fields |
@@ -141,6 +143,7 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `jobs` | Processing job queue |
 | `batch_jobs` | Batch OCR/translation jobs |
 | `page_revisions` | OCR/translation history (MUST create before writes) |
+| `page_annotations` | The notes layer (#5942): one doc per page, source and run, never overwritten (a re-run inserts its own; undo deletes only its run's) — the model's notes and the page's marks, anchored to `pages.translation.text` by exact/prefix/suffix + offsets, with the `data_hash` of the `translation.data` they were parsed from. Read via `getPageAnnotations` (`scripts/lib/translation-text.mjs`), never served when the hash is stale. |
 | `gemini_usage` | AI cost tracking (single source of truth) |
 | `system_config` | Global settings (`processing_control` with `paused` flag) |
 
@@ -174,6 +177,11 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 
 ### Research & Experiments
 `experiments`, `ocr_experiments`, `ocr_judgments`, `pipeline_experiments`, `pipeline_judgments`, `split_models`, `split_training_examples`, `split_adjustments`
+
+| Collection | Purpose |
+|------------|---------|
+| `reader_check_tokens` | One row per personal `/check/<token>` link for the blind human check (#7573): `_id` = sha256 of the token (the token is never stored), `reader_id` (HMAC of the email, same as invite tokens), `reader` {language, level, credit, credit_name, consent_publish}, `packet`, `items[]` (page, both arm texts, A/B order). Minted by `scripts/email/mint-reader-check-links.mjs`; read only by `/check/[token]` and `/api/check/[token]` |
+| `reader_check_judgements` | One row per (link, page): `_id` = `<token_id>:<index>`, choice A/B/same/cannot_tell, `preferred_arm`, `invented`, `note`, `arms_shown`, the reader's stated language/level/credit, `control`, `test`. Written by `POST /api/check/[token]`; no public surface reads it |
 
 ### Other
 `external_catalog` (IIIF union catalog), `editions`, `kdp_publications`, `book_metadata_changelog`, `prompts`, `libraries`, `volunteers`, `contributions`, `feedback`, `beta_subscribers`, `email_drafts`, `comparisons`, `entity_aliases`, `translation_catalogs`, `curation_drafts`, `curator_sessions`

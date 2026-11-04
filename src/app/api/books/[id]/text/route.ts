@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
@@ -7,7 +8,7 @@ import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
 import { isBookReadable } from '@/lib/book-access';
-import { CONTENT_LICENSE } from '@/lib/license-info';
+import { CONTENT_LICENSE, AI_TRAINING_NOTICE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
@@ -341,7 +342,8 @@ export const GET = withApiAuth(async (
     const effectiveToPage = pageCaps.length ? Math.min(...pageCaps) : undefined;
 
     const effectiveFromPage = localizedChapterRange?.from ?? fromPage;
-    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
+    // A repeat capture (#5056) is a second copy of a leaf already served; leave it out.
+    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId, ...NOT_REPEAT_CAPTURE };
     if (effectiveFromPage !== undefined || effectiveToPage !== undefined) {
       pageFilter.page_number = {};
       if (effectiveFromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = effectiveFromPage;
@@ -408,6 +410,7 @@ export const GET = withApiAuth(async (
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
       lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
+      lines.push(`# ${AI_TRAINING_NOTICE}`);
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.

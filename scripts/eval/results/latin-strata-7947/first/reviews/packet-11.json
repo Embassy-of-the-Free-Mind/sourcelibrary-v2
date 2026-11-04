@@ -1,0 +1,683 @@
+[
+  {
+    "book_id": "69e41e88d0364cb0bcf78875",
+    "slot": 92,
+    "title": "De Amore (The Art of Courtly Love)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Andreas Capellanus, De Amore — belongs in arlima (medieval literature); a canonical medieval Latin text.",
+    "rights_flag": true,
+    "structure_note": "213 pages, 213 OCR, 209 translated; printed page numbers track the image index (scan 53 = p.35, 105 = p.87, 157 = p.139), so the run is consistent. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 53,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "[71] Nuntius sum quidem vobis ab amoris aula trans-",
+            "english": "I am indeed a messenger sent to you from the court of love, who commands your prudence to untie the knot of a certain doubt: namely, whose probity is more to be praised, that of the woman noble by blood, or of her who is known to be destitute of the nobility of lineage?",
+            "problem": "the translation runs on past the page's last word and includes a sentence from the next leaf (lookahead)",
+            "severity": "moderate",
+            "class": "T5"
+          },
+          {
+            "source": "Regulariter enim tibi trado, Gualteri",
+            "english": "For I teach you regularly, Gualterius",
+            "problem": "'regulariter' means 'as a rule', not 'regularly'",
+            "severity": "minor"
+          },
+          {
+            "source": "quod tam prudenter omnibus pro meritis respondere voluistis",
+            "english": "because you wished to respond so prudently to all my merits",
+            "problem": "the Latin means 'to answer everyone according to their merits'; the translation narrows it to 'my merits'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 105,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "tituunt merita potiorem, etsi alter a vobis spem largitam suscepisset amoris.",
+            "english": "(omitted)",
+            "problem": "the page's opening clause, which ends the sentence carried over from the previous leaf, is not translated",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "suis nitimini probitatem iniuste meritis defraudare",
+            "english": "you strive to defraud integrity of its unjustly earned merits",
+            "problem": "'iniuste' qualifies the defrauding ('you unjustly try to cheat worth of its merits'), not the merits; the translation says the merits were unjustly earned",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "qui sua coram",
+            "english": "who would not hesitate to propose his rights or request the gifts of love in your presence. That, however, you said that the betterness of another ought not to generate prejudice ... the petition of a worthier person who comes later.",
+            "problem": "two sentences from the next leaf are added after the page's last word (lookahead)",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "other": [
+          {
+            "note": "the editor's bracketed passage '[nisi forte amoris ... denegare petenti]' is wrapped in a <note>…</note> tag in the translation, so a reader sees the editor's bracketed text as a translator's note",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "note": "running head 'DE AMORE 87' is translated as the first line of the reader text",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 157,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "**Capitulum VII. — De variis iudiciis amoris**",
+            "image": "[271] Capitulum VII. — De variis iudiciis amoris",
+            "problem": "editor's section numbers [271] and [272] (inside 'ef[272]ficiar') dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "a raw '<header>DE AMORE 139</header>' tag is the first line of the translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean OCR of a 1929 edition, and the translations are faithful in substance. But two of three pages carry sentences from the next leaf, a leaked <header> tag, and the editor's brackets turned into a <note>. Readable, but the seams show."
+  },
+  {
+    "book_id": "69b4188d2b0edf3eaa2dd39d",
+    "slot": 63,
+    "title": "Lapis Philosophicus (PH436)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "BPH manuscript of an alchemical florilegium (Sententiae of Bonellus, Clangor Buccinae, Rasis, Albertus Magnus) — squarely on the alchemy shelf.",
+    "rights_flag": null,
+    "structure_note": "206 pages, 206 OCR, 199 translated; written page numbers 43/93/143 track image indices 51/101/151 (constant offset 8), so the run is consistent.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "suam morediatur aquam",
+            "image": "suam ingrediatur aquam ('mgrediatur')",
+            "problem": "'ingrediatur' (enters its water) misread as a non-word; the translation then guesses 'feed on <note>or moderate</note>'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>37. 44. 47.\np. 20.</margin>",
+            "image": "pencil '37. 44. 47. p. 50. 20' (later hand)",
+            "problem": "later pencil cross-references transcribed as margins, slightly misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "suam morediatur aquam",
+            "english": "should feed on <note>or 'moderate'</note> its own water",
+            "problem": "the meaning is 'should enter its own water'; the translation guesses from the misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ut Solis nigredo deleatur",
+            "english": "so that the blackness of the Sun <note>referring to the central matter or Gold</note>",
+            "problem": "translator's interpretive note inserted inline",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<term>/<gloss>/<note> wrappers inline in the reader text; the pencil margins are moved to the end of the page",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "nihil tamen addit forma, nec materia, nec virtutis",
+            "image": "nihil tamen addit formae, nec materiae, nec virtutis",
+            "problem": "genitives normalised to nominatives",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(no margin)",
+            "image": "pencil '138.143' in the right margin",
+            "problem": "later-hand cross-reference dropped (while the pencil 'tria.' was kept)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quae posterior absque primo nihil efficit",
+            "english": "which the latter effects nothing without the former",
+            "problem": "ungrammatical English",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with '<meta>continues from previous page</meta>' and ends with a <summary> and a <keywords> block; all three leak into the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 151,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(no margin)",
+            "image": "ink marginal 'con. de' beside 'artem', plus pencil cross-references (76, p. 138.93, 87, p. 145.151, 149, 137.15 ...)",
+            "problem": "marginalia dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Sed ad Sententias.",
+            "english": "But to the Opinions.",
+            "problem": "'Sententiae' was rendered 'Maxims' on p.51; inconsistent",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A fair, legible italic hand, read well; the translations are faithful. The defects are one misread verb carried into a guessed translation and leaked <meta>/<summary>/<keywords> blocks on p.101. Showable after the markup is cleaned."
+  },
+  {
+    "book_id": "699062f1ef12272ffdc8e56e",
+    "slot": 24,
+    "title": "Contra Celsum (1481 editio princeps)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Origen against Celsus in Persona's Latin, Rome 1481 incunable; it belongs with late-antique pagan/Christian polemic and is adjacent to the Hermetica.",
+    "rights_flag": null,
+    "structure_note": "538 pages, all OCR'd, 524 translated; no printed foliation is visible on these leaves. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 135,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ut Celſus exiſtimat",
+            "image": "uti Celſus exiſtimat",
+            "problem": "small slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "niſi dementibus & freneſi laborãtibus: uel furentibus",
+            "english": "except to those suffering from madness, frenzy, or madness",
+            "problem": "doubled 'madness'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with a '<meta>Continuity: Continues the defense of the resurrection…</meta>' line shown as reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 270,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "…demonſtrabimus: quis autem qui moderatior ſit … ut condita fuerint hec omnia demõſtrare.",
+            "english": "\"But so that I may not speak only of the Jews … we will demonstrate more openly what was said above. For who, being more moderate … not more for the sake of men than for brute animals.\"",
+            "problem": "the closing quotation mark is misplaced, so Origen's own rebuttal ('who … would not suppress the impudence of this man…') is printed as Celsus's words",
+            "severity": "moderate",
+            "class": "other:quote-boundary"
+          },
+          {
+            "source": "in quibus ſibi amãtiſſimi quidam collaudant̃",
+            "english": "in which they themselves are highly praised by their most loving friends",
+            "problem": "inverted: it is their dearest friends who are praised for the same things",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 404,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "quādoq̄ d̄e parētes",
+            "image": "quādoqdē parētes (quandoquidem)",
+            "problem": "'quandoquidem' (since) split; the translation then reads it as 'sometimes … when'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quādoq̄ d̄e parētes ipſi & filiis ī ſe decertātibus ſiue cōfecti iã ſenio nulli uſui ſint: ſiue delirēt",
+            "english": "which quails sometimes enter into between themselves, when the parents themselves and the sons are struggling against each other, or if they are already worn out by old age",
+            "problem": "the sense is 'since the parents, while their sons fight, are either worn out by age … or senile'; the clause is muddled",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "dense <term> wrappers around common names (Marcion, Jesus, Celsus, Christian religion) and '...' added at the start and end",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Good abbreviation-resolving OCR of a hard incunable type, and translations that are mostly faithful. One misplaced quotation boundary puts Origen's words in Celsus's mouth, and a <meta> continuity line leaks on p.135."
+  },
+  {
+    "book_id": "69f3394f876dd827cbc54be6",
+    "slot": 34,
+    "title": "Catalogus ingenuorum iuvenum … in Collegio D. Nicolai … in Bruck …",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A manuscript register of student pledges to Bishop Johannes Fabri's Vienna college (St Nicholas), 1536–1540: an institutional/university-history document with no collection or tradition attached, outside the library's esoteric and early-science core.",
+    "rights_flag": null,
+    "structure_note": "All three sampled images are two-page openings that were never split; the OCR labels each as '<columns>2</columns>' with a <column-break/>, so each 'page' is really two leaves (I3). 36 pages / 35 translated. The entries are dated 1536 (p.11) and 1540 (p.28), consistent with a register kept over years.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "p que ad ort fadoque uua fide ac religio, / ue uelim dicere",
+            "image": "q[uod] nu[n]q[uam] ab ort[h]odoxa n[ost]ra fide ac religio-/ne velim deficere",
+            "problem": "the pledge never to desert the orthodox faith is garbled into nonsense",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "totum et manum scriptum uiuum",
+            "image": "Actum et manu p[ro]pria scriptum Vienn[a]e",
+            "problem": "'Done and written by my own hand at Vienna' misread; the place is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quod me ex lecto mirali / tangua summo sublata",
+            "image": "quod me ex luto triviali tanquam humo sublatum",
+            "problem": "'lifted as if from the ground' misread as 'from the highest'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "in me amphora testatu esse collaturum",
+            "image": "in me ampliora [beneficia?] … esse collaturum",
+            "problem": "'ampliora' read as 'amphora'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "proprio meo chirographo recognosco",
+            "image": "proprio meo charactere recognosco",
+            "problem": "normalised to the expected formula",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "p que ad ort fadoque uua fide ac religio, ue uelim dicere",
+            "english": "and that I am faithful to his religion, as I wish to say",
+            "problem": "a fluent sentence built over garbled OCR; the source pledges never to desert the orthodox faith",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "quod me ex lecto mirali tangua summo sublata",
+            "english": "he snatched me from the miserable bed, as if lifted from the highest",
+            "problem": "the sense ('raised me from the common mud, as if from the ground') is reversed",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "in me amphora testatu esse collaturum",
+            "english": "I am to contribute to the amphora in my testimony",
+            "problem": "nonsense rendered fluently",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "a <column-break/> tag is shown in the translation; two leaves presented as one page",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Sc[ilicet] locm[?] fabri / Aristotem. Vienn[ensis]",
+            "image": "Sc[ilice]t loann[em] Fabri / Antistitem Vienn[ensem]",
+            "problem": "'Antistitem' (bishop) misread as 'Aristotem'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Deinde iartum sua amplitudini bona fide promitto",
+            "image": "Primu[m] igitur suae amplitudini bona fide promitto",
+            "problem": "'First' read as 'Then', so the pledge's numbered sequence (First / Then / Third) is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nec insuper p[ro]fulem[?] prudentiss[imus] latore poterat sese et multos esse benefici[um] demmere",
+            "image": "Nec insuper p[rae]sulem prudentiss[imum] latere poterat sese q[uam] multos eide[m] beneficio devincere",
+            "problem": "garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Sc[ilicet] locm[?] fabri Aristotem. Vienn[ensis]",
+            "english": "the place of Fabri, the Viennese Aristotle",
+            "problem": "invented epithet: the source calls Fabri the Bishop (Antistes) of Vienna",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Nec insuper … latore poterat sese et multos esse benefici[um] demmere",
+            "english": "Nor, moreover, could he, a most prudent man, be a beneficiary to himself and to many others",
+            "problem": "the sense ('nor could it escape the wise prelate how many he was binding by the same benefit') is lost or inverted",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "atrox aralia katos",
+            "english": "<note>a classical allusion to the taming power of gratitude</note>",
+            "problem": "an invented interpretive note over an unread phrase",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> blocks ('St. Nicholas College', which is not on this page) leak at the end of the translation; <column-break/> is shown",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Non minus utile quam eleganter publicis / minis scripta reliquit",
+            "image": "Non minus utile q[uam] eleganter Publi[us] / Mimus scriptu[m] reliquit",
+            "problem": "the author named, Publilius (Publius) Mimus, is read as 'publicis minis'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "non possum non praefidendum studium suscipere et semixari et comparatio ingratitudinis",
+            "image": "non possum non gratitudinis studium suscipere et venerari et e contrario ingratitudinem",
+            "problem": "'gratitudinis' and 'e contrario ingratitudinem' misread, inverting the sentence's structure",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Non minus utile quam eleganter publicis minis scripta reliquit",
+            "english": "It is no less useful than it is elegant that the ancients left writings for the public",
+            "problem": "the attribution to Publilius Mimus is lost",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "et animo ualno non possum non praefidendum studium suscipere et semixari et comparatio ingratitudinis",
+            "english": "with a wounded mind I cannot help but undertake a cautious study and to consider, and in every way detest and abominate, the comparison of ingratitude",
+            "problem": "the point ('I cannot but embrace gratitude and, conversely, detest ingratitude') becomes muddle",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "senarium",
+            "english": "hexameter",
+            "problem": "a senarius is an iambic six-foot line, not a hexameter",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Difficult 16th-century cursive, read at 2–3 out of 5 and translated fluently over the gaps. Invented sense (the 'Viennese Aristotle', 'lifted from the highest', 'the amphora') would mislead a reader, the spreads are unsplit, and the book sits outside the library's shelves."
+  },
+  {
+    "book_id": "69b52caf8a30f8bb13661450",
+    "slot": 12,
+    "title": "Boethius De consolatione philosophiae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "13th-century glossed manuscript of Boethius; core medieval philosophy (no collection assigned).",
+    "rights_flag": null,
+    "structure_note": "158 pages, 150 OCR, 136 translated: 8 leaves have no OCR and 14 OCR'd leaves are untranslated, so coverage is uneven. The foliation (35 on image 81) fits a codex with front matter.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Itaque cum hec auribus insonare desierint, insit animo meror qui insidet",
+            "image": "insitus animu[m] meror p[rae]gravat",
+            "problem": "'insitus animum maeror praegravat' replaced by an invented clause",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "His si pie tecum fortuna loqueretur",
+            "image": "His si ip[s]e tecu[m] fortuna loqueret[ur]",
+            "problem": "'ipse' read as 'pie'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(left marginal commentary absent)",
+            "image": "a full column of glossing commentary down the left margin",
+            "problem": "the left marginal commentary is dropped entirely; the top and bottom commentary are given as low-confidence guesses studded with <unclear>",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "insit animo meror qui insidet",
+            "english": "the grief that is seated within persists in the mind",
+            "problem": "follows the confabulated OCR; Boethius has 'an ingrained grief weighs down the mind'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the glosses and commentary are not translated, so a reader of the English pane sees only the main text",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 81,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "uerū aut atq; pfectū bonū conferre nō possum.",
+            "image": "uerū aut atq; pfectū bonū conferre nō possunt.",
+            "problem": "'possunt' (they cannot) read as 'possum' (I cannot); the translation makes the speaker the subject",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "phia allegauit inuocationē trinitatis ut ad hoc perueniat",
+            "image": "phia allegauit platonē i timeo ut ad hoc perueniret",
+            "problem": "the commentary cites Plato's Timaeus; the OCR invents an 'invocation of the Trinity'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Dic dicit qd t̄. Nihil mouet … ex p̄terit.",
+            "image": "dense commentary below the poem (causes efficient/formal/final, Augustine, etc.)",
+            "problem": "the lower commentary is largely confabulated or dropped",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "phia allegauit inuocationē trinitatis",
+            "english": "Philosophy alleged the invocation of the Trinity",
+            "problem": "carries the invented Trinity reference into the English commentary",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "uerū aut atq; pfectū bonū conferre nō possum",
+            "english": "but I cannot confer the true and perfect good",
+            "problem": "the subject is the false goods ('they cannot'), not 'I'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Inuocandū inquā rerū oūm patrē",
+            "english": "It must be invoked, I said, [as] the father of all things",
+            "problem": "should be 'We must invoke the Father of all things'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the gloss and margin wrappers are interleaved line by line with the verse in the English pane, with glosses displaced from their words; garbled commentary is rendered with '[?]' guesses ('Loto', 'deulo-quio')",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 120,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "&amp; qa hoc muneculũ maxime p̃turbat edisseras",
+            "image": "& q[ui]a hoc miraculũ maxime p[er]turbat edisseras",
+            "problem": "'miraculum' misread as 'muneculum'; the translation drops the word",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<unclear>...cum cunctis... ...propter... ...zima...</unclear>",
+            "image": "left-margin and bottom commentary blocks",
+            "problem": "the commentary is reduced to lists of guessed words",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Cedat inscitiae nubilus error.",
+            "english": "Let the cloudy error yield to ignorance.",
+            "problem": "reversed: the line means 'let the cloudy error of ignorance give way'",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "qa hoc muneculũ maxime p̃turbat edisseras",
+            "english": "explain what it is that especially troubles this",
+            "problem": "'this miracle (of fortune's injustice)' is lost",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "cui uix exhausti qcqidã satis sit",
+            "english": "to which not even a lifetime of exhaustion would be enough",
+            "problem": "'lifetime' added",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The main Boethius text is read well, but the heavy glossing is dropped or confabulated, an invented 'invocation of the Trinity' sits in the commentary, and a verse line is reversed ('error yield to ignorance'). Show the text, not the apparatus."
+  }
+]

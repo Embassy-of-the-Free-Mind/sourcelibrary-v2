@@ -1,0 +1,1139 @@
+# Typed Derge Kangyur pages with no English, ranked for translation (#6948, job tib-good-ocr-translate-6948, Mongo 2026-10-27 ~15:20Z).
+# toh: from pages.ocr.text_edition.tohoku on a text's first page, carried forward to the following pages and volumes (toh_cont=1).
+# status_84000: 84000/data-tei: translations/ file = published; placeholder availability 2.x/3 = in progress; other placeholder = not started; no file = no record.
+# tier: opus = claude-translate.mjs --per-call=1 (public pages, then hidden not started / no record); agy = cli-translate.mjs read, gemini-3.8-flash-low (the other hidden texts).
+tier	rank	toh	toh_cont	status_84000	name_84000	derge_vol	section	book_id	shelf	page_first	page_last	pages_no_english
+opus	1	304	0	not started	the sutra examining the virtuous and nonvirtuous effects of the collection of five downfalls	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	255	259	1
+opus	2	316	0	not started	the sutra on the four truths	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	339	339	1
+opus	3	356	0	not started	from the sutra of the questions of candragarbha showing how the buddhas teaching abides and perishes	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	431	439	1
+opus	4	374	0	not started	the arising of heruka	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	2	66	65
+opus	5	375	0	not started	the manifesting of yoginis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	67	87	21
+opus	6	376	0	not started	the tantra of union with the four yoginis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	88	103	16
+opus	7	382	0	not started	the seminal drop of union	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	316	367	52
+opus	8	383	0	not started	guhyavajra a sovereign tantra	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	368	372	5
+opus	9	385	0	not started	the tantra of the inconceivable secrets of cakrasamvara	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	391	396	1
+opus	10	389	0	not started	the tantra of the jewel garland	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	416	425	1
+opus	11	391	0	not started	the tantra of great power	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	431	436	6
+opus	12	395	0	not started	the tantra of the garland of the moon	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	445	447	1
+opus	13	399	0	not started	the secret tantra of vajradaka	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	459	461	1
+opus	14	405	0	not started	the tantra king of desire	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	479	483	1
+opus	15	407	0	not started	the tantra of the garland of fire	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	488	489	1
+opus	16	410	0	not started	the tantra of the mighty king of gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	495	497	1
+opus	17	413	0	not started	the tantra of the amazing ornament of the charnel ground	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	508	517	1
+opus	18	415	0	not started	the tantra of samvara who is equal to space	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	522	525	1
+opus	19	421	0	not started	the tantra of the essence of gnosis	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	181	191	11
+opus	20	422	0	not started	the tilaka forehead mark of gnosis a yogini tantra	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	192	271	80
+opus	21	423	0	not started	the tantra of the lamp of reality	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	272	284	13
+opus	22	429	0	not started	the tantra in four parts the mantra portion	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	462	518	2
+opus	23	439	0	not started	a section of the root tantra of vajrakilaya	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	86	89	4
+opus	24	445	0	not started	the garland of vajras	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	415	553	2
+opus	25	450	0	not started	compendium of vajra gnosis	82	རྒྱུད་འབུམ།	6ac0b910f427c9bb0692d126	public	2	70	69
+opus	26	476	0	not started	the tantra of ekajata	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	489	493	1
+opus	27	482	0	not started	the great sovereign of practices the victory over the three worlds	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	19	115	1
+opus	28	486	0	not started	the tantra summarizing consecration	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	292	299	8
+opus	29	492	0	not started	the tantra of the array of secret ornaments	86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	166	239	1
+opus	30	508	0	not started	incantation of the hundred thousand ornaments of the essence of awakening	88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	14	47	1
+opus	31	707	0	not started		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	343	345	3
+opus	32	724	0	not started	the root manual of the rites of the blessed noble tara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	402	609	1
+opus	33	832	0	not started	the secret nucleus definitive with respect to the real the 22 chapter guhyagarbha tantra	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	220	263	1
+opus	34	833	0	not started	the magical net of vajrasattva the mirror of all secrets	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	264	395	132
+opus	35	834	0	not started	the secret nucleus definitive with respect to the real the 80 chapter guhyagarbha tantra	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	396	596	1
+opus	36	836	0	not started	the tantra of the great magical net of the goddess	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	2	67	1
+opus	37	838	0	not started	the secret tantra of the wheel of manjusris four activities	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	119	152	34
+opus	38	839	0	not started	the great tantra of asvottamas display	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	153	258	1
+opus	39	840	0	not started	the most profound secret tantra of sri herukas compassionate display	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	259	400	142
+opus	40	843	0	not started	root tantra of vajramantrabhiru	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	503	532	1
+opus	41	489	0	no 84000 record		85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	531	538	8
+opus	42	489	1	no 84000 record		86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	1	1	1
+opus	43	491	0	no 84000 record		86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	164	165	2
+opus	44	511	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	70	76	7
+opus	45	512	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	77	84	8
+opus	46	520	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	115	116	2
+opus	47	525	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	123	140	18
+opus	48	526	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	141	141	1
+opus	49	527	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	142	169	28
+opus	50	530	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	184	187	4
+opus	51	531	0	no 84000 record		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	188	189	2
+opus	52	721	0	no 84000 record		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	354	392	39
+opus	53	739	0	no 84000 record		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	459	467	9
+opus	54	745	0	no 84000 record		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	532	535	4
+opus	55	847	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	7	107	101
+opus	56	848	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	108	110	3
+opus	57	849	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	111	119	9
+opus	58	850	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	120	123	4
+opus	59	851	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	124	125	1
+opus	60	852	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	126	133	8
+opus	61	853	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	134	140	7
+opus	62	854	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	141	144	4
+opus	63	855	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	145	147	3
+opus	64	856	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	148	150	3
+opus	65	857	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	151	154	4
+opus	66	858	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	155	166	12
+opus	67	859	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	167	169	3
+opus	68	864	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	171	171	1
+opus	69	866	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	172	172	1
+opus	70	868	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	173	173	1
+opus	71	871	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	174	180	7
+opus	72	872	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	181	187	7
+opus	73	873	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	188	196	8
+opus	74	874	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	197	201	5
+opus	75	875	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	202	204	3
+opus	76	876	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	205	210	6
+opus	77	877	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	211	217	7
+opus	78	878	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	218	223	6
+opus	79	879	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	224	230	7
+opus	80	880	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	231	234	4
+opus	81	881	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	235	239	5
+opus	82	882	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	240	241	2
+opus	83	883	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	242	253	12
+opus	84	884	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	254	266	13
+opus	85	885	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	267	314	48
+opus	86	886	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	315	318	4
+opus	87	887	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	319	321	3
+opus	88	888	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	322	326	5
+opus	89	890	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	327	327	1
+opus	90	892	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	329	329	1
+opus	91	893	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	330	330	1
+opus	92	895	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	331	331	1
+opus	93	897	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	332	405	74
+opus	94	898	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	406	421	16
+opus	95	899	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	422	426	1
+opus	96	900	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	427	430	4
+opus	97	901	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	431	442	12
+opus	98	902	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	443	448	6
+opus	99	903	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	449	452	4
+opus	100	904	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	453	457	5
+opus	101	905	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	458	459	2
+opus	102	906	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	460	461	2
+opus	103	907	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	462	473	12
+opus	104	908	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	474	475	2
+opus	105	909	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	476	478	3
+opus	106	910	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	479	479	1
+opus	107	912	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	480	480	1
+opus	108	913	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	481	484	4
+opus	109	914	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	485	505	21
+opus	110	915	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	506	516	11
+opus	111	916	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	517	517	1
+opus	112	917	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	518	519	2
+opus	113	918	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	520	520	1
+opus	114	919	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	521	523	3
+opus	115	920	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	524	525	2
+opus	116	921	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	526	526	1
+opus	117	922	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	527	529	3
+opus	118	923	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	530	532	3
+opus	119	924	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	533	537	5
+opus	120	925	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	538	540	3
+opus	121	926	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	541	542	2
+opus	122	927	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	543	547	5
+opus	123	928	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	548	550	3
+opus	124	929	0	no 84000 record		100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	551	551	1
+opus	125	301	0	in progress	the sutra on going forth	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	2	248	247
+opus	126	306	0	in progress	teaching the practice of austerities from the path of liberation	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	262	276	15
+opus	127	318	0	in progress	the dharma discourse on the vast meaning	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	375	386	12
+opus	128	326	0	in progress	chapters of utterances on specific topics	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	417	505	89
+opus	129	332	0	in progress	the penthouse sutra	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	519	525	7
+opus	130	348	0	in progress	the account of the noble deeds of candraprabha	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	43	61	19
+opus	131	351	0	in progress	the sutra of prince arthasiddhi	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	110	139	30
+opus	132	352	0	in progress	the sutra of brahmas net	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	140	170	31
+opus	133	353	0	in progress	the sutra of repaying the kindness of the buddha who has great skill in means	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	171	394	224
+opus	134	359	0	in progress	the sutra of the twelve eyes	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	554	561	8
+opus	135	359	0	in progress	the sutra of the twelve eyes	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	562	578	16
+opus	136	373	1	in progress	the tantra of the arising of samvara	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	1	1	1
+opus	137	377	0	in progress	the awakening of varahi	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	104	119	16
+opus	138	378	0	in progress	the preeminence of varahi a sovereign tantra	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	120	140	21
+opus	139	379	0	in progress	the supplementary tantra to the tantra the preeminence of varahi	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	141	143	3
+opus	140	380	0	in progress	the propitiation ritual of vajrayogini	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	144	145	2
+opus	141	387	0	in progress	the tantra of the great khasama	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	403	405	3
+opus	142	388	0	in progress	the tantra of body speech and mind	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	406	415	10
+opus	143	390	0	in progress	the tantra of the great vow	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	426	430	5
+opus	144	392	0	in progress	the secret tantra of gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	437	439	3
+opus	145	393	0	in progress	the tantra of the garland of gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	440	442	3
+opus	146	394	0	in progress	the tantra of blazing gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	443	444	2
+opus	147	398	0	in progress	the tantra of the king of gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	457	458	2
+opus	148	404	0	in progress	the tantra of the mind of gnosis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	477	478	2
+opus	149	406	0	in progress	the tantra of the protection by the dakinis	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	484	487	4
+opus	150	412	0	in progress	the tantra of the meaning of the essential nature of the mind	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	502	507	6
+opus	151	414	0	in progress	the unsullied a sovereign tantra	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	518	521	4
+opus	152	416	0	in progress	the tantra of the protector the arising of secret accomplishments	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	526	583	58
+opus	153	416	1	in progress	the tantra of the protector the arising of secret accomplishments	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	1	1	1
+opus	154	417	0	in progress	the hevajra tantra	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	2	25	24
+opus	155	418	0	in progress	the tantra of hevajra he who affords protection through nets of dakinis	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	26	58	33
+opus	156	419	0	in progress	the tantra of the vajra cage	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	59	130	72
+opus	157	420	0	in progress	tantra of the tilaka forehead mark of mahamudra	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	131	180	50
+opus	158	424	0	in progress	the tantra of buddhakapala	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	285	332	48
+opus	159	426	0	in progress	the tantra of vajrarali	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	341	350	10
+opus	160	427	0	in progress	the tantra of rigyarali	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	351	360	10
+opus	161	428	0	in progress	the sovereign tantra in four parts	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	361	461	101
+opus	162	432	0	in progress	the tantra of the practice of acala	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	2	23	22
+opus	163	433	0	in progress	the secret tantra of the mantras for the wrathful kings	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	24	27	4
+opus	164	434	0	in progress	the secret acalatantra	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	28	31	4
+opus	165	435	0	in progress	the vajramrta	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	32	52	1
+opus	166	441	0	in progress	the extant khasama tantra	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	172	178	7
+opus	167	442	0	in progress	guhyasamaja	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	179	294	116
+opus	168	443	0	in progress	the supplementary tantra	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	295	314	20
+opus	169	444	0	in progress	the tantra the prophecy of the intent	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	315	414	100
+opus	170	446	0	in progress	the questions of the four goddesses	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	554	562	9
+opus	171	447	0	in progress	the tantra compendium of vajra gnosis	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	563	571	9
+opus	172	448	0	in progress	the tantra of tarayogini	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	572	588	17
+opus	173	449	0	in progress	the supplementary tantra of tarayogini	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	589	614	26
+opus	174	449	1	in progress	the supplementary tantra of tarayogini	82	རྒྱུད་འབུམ།	6ac0b910f427c9bb0692d126	public	1	1	1
+opus	175	451	0	in progress	the tantra of the ornament of the vajra essence	82	རྒྱུད་འབུམ།	6ac0b910f427c9bb0692d126	public	71	115	45
+opus	176	452	0	in progress	victory by means of nondual equality a sovereign practice	82	རྒྱུད་འབུམ།	6ac0b910f427c9bb0692d126	public	116	204	1
+opus	177	453	0	in progress	the beginning chapter of the supremely great vajra	82	རྒྱུད་འབུམ།	6ac0b910f427c9bb0692d126	public	205	660	456
+opus	178	453	1	in progress	the beginning chapter of the supremely great vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	1	1	1
+opus	179	454	0	in progress	the tantra of vajrapanis triple dreadful training	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	2	5	4
+opus	180	455	0	in progress	the triple dreadful taming a division of the secret tantras	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	6	14	9
+opus	181	456	0	in progress	the tantra of the vajra staff of vajrapani	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	15	22	8
+opus	182	457	0	in progress	the tantra of vajrapani conquest of the triple world	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	23	28	6
+opus	183	458	0	in progress	the secret tantra the wrathful thought of the vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	29	59	31
+opus	184	459	0	in progress	the later secret tantra the wrathful thought of the vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	60	71	12
+opus	185	461	0	in progress	the tantra of the flame of the vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	79	129	51
+opus	186	462	0	in progress	the incantation of the vajra flame	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	130	134	5
+opus	187	463	0	in progress	the secret revelation of vajrapani	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	135	136	2
+opus	188	464	0	in progress	the tantra of the secret revelation of vajrapani	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	137	179	1
+opus	189	466	0	in progress	the net of magical illusion	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	187	267	81
+opus	190	468	0	in progress	the tantra of the great vajrabhairava	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	302	326	25
+opus	191	469	0	in progress	the tantra of black yamari in three chapters	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	327	333	7
+opus	192	470	0	in progress	the tantra of the practice of vajrabhairava	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	334	345	12
+opus	193	473	0	in progress	the cycle accomplishing all the actions of black yamari a sovereign tantra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	349	370	22
+opus	194	474	0	in progress	the tantra of red yamari	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	371	428	58
+opus	195	475	0	in progress	the tantra of red yamari	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	429	488	60
+opus	196	477	0	in progress	the tantra of the secret ornament of the moon	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	494	605	112
+opus	197	478	0	in progress	the tantra of red yamari	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	606	672	66
+opus	198	480	1	in progress	the great secret yogatantra the tip of the vajra	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	1	1	1
+opus	199	481	0	in progress	the tantra the universal secret	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	2	18	17
+opus	200	483	0	in progress	the tantra purifying evil destinies	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	116	190	75
+opus	201	484	0	in progress	the actions to be practiced	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	191	191	1
+opus	202	485	0	in progress	a portion of the practice of the sovereign tantra purifying evil destinies	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	192	291	100
+opus	203	487	0	in progress	the supreme	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	300	344	45
+opus	204	488	0	in progress	a section of the chapter on mantras of the supreme	85	རྒྱུད་འབུམ།	6ac197d40bfddaf1932d4b8d	public	345	530	186
+opus	205	490	0	in progress	the tantra the ornament of the vajra essence	86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	2	163	162
+opus	206	493	0	in progress	the sutra of the secret jewel ornament	86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	240	303	64
+opus	207	494	0	in progress	the tantra of the complete enlightenment of vairocana	86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	304	521	218
+opus	208	495	0	in progress	the practice described as the taming	86	རྒྱུད་འབུམ།	6ac0bdbef427c9bb0692d885	public	522	641	120
+opus	209	506	1	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	1	1	1
+opus	210	510	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	50	69	20
+opus	211	517	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	100	106	7
+opus	212	518	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	107	110	4
+opus	213	519	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	111	114	4
+opus	214	523	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	120	122	3
+opus	215	529	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	180	183	4
+opus	216	532	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	190	197	8
+opus	217	541	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	202	202	1
+opus	218	542	0	in progress		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	203	208	6
+opus	219	687	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	109	111	3
+opus	220	688	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	112	116	5
+opus	221	689	0	in progress	procedures for the king of practices of amoghapasa	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	117	124	8
+opus	222	690	0	in progress	detailed procedures for the thousandarmed thousandeyed avalokitesvara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	125	181	57
+opus	223	691	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	182	251	70
+opus	224	692	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	252	267	16
+opus	225	693	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	268	271	1
+opus	226	694	0	in progress	the incantation the essence of the spell of elevenfaced avalokitesvara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	272	287	16
+opus	227	696	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	288	288	1
+opus	228	697	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	289	291	3
+opus	229	698	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	292	292	1
+opus	230	699	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	293	297	5
+opus	231	700	0	in progress	the practice of lokesvara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	298	307	10
+opus	232	701	0	in progress	the lotus diadem tantra	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	308	321	14
+opus	233	708	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	346	347	2
+opus	234	709	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	348	348	1
+opus	235	711	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	349	349	1
+opus	236	714	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	350	350	1
+opus	237	716	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	351	351	1
+opus	238	718	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	352	352	1
+opus	239	720	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	353	353	1
+opus	240	722	0	in progress		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	393	395	3
+opus	241	723	0	in progress	a summary of the benefits of the incantation of avalokitsvara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	396	401	6
+opus	242	727	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	433	436	4
+opus	243	733	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	449	449	1
+opus	244	734	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	450	452	3
+opus	245	735	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	453	455	3
+opus	246	737	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	457	457	1
+opus	247	742	0	in progress		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	470	470	1
+opus	248	744	0	in progress	the tantra of vajrapatala	94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	473	531	59
+opus	249	830	1	in progress	the lightning wheel of magnificent gnosis	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	1	1	1
+opus	250	831	0	in progress	the sutra of allgathering awareness	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	2	219	218
+opus	251	835	0	in progress	the noble lasso of methods the lotus garland	98	རྙིང་རྒྱུད།	6ac0ceadf427c9bb0692f4ff	public	597	622	25
+opus	252	835	1	in progress	the noble lasso of methods the lotus garland	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	1	1	1
+opus	253	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	401	402	2
+opus	254	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	403	411	9
+opus	255	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	412	414	3
+opus	256	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	415	420	6
+opus	257	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	421	423	3
+opus	258	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	424	428	5
+opus	259	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	429	436	8
+opus	260	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	437	440	4
+opus	261	841	0	in progress	the sap of the five amrtas quintessence of great accomplishment	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	441	443	3
+opus	262	842	0	in progress	tantra of the flaming dakini	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	444	502	59
+opus	263	844	0	in progress	the tantra of lokastotrapuja	99	རྙིང་རྒྱུད།	6ac0cf0df427c9bb0692f770	public	533	570	36
+opus	264	844	1	in progress	the tantra of lokastotrapuja	100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	1	2	1
+opus	265	350	0	partly published	the history of kanakavarna	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	99	109	11
+opus	266	440	0	partly published	the tantra of mahakala	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	90	171	82
+opus	267	460	0	partly published	the supplementary tantra to the later secret tantra the wrathful thought of the vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	72	77	6
+opus	268	460	0	partly published	the supplementary tantra to the later secret tantra the wrathful thought of the vajra	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	78	78	1
+opus	269	467	0	partly published	the tantra of black yamari	83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	268	301	34
+opus	270	539	0	partly published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	200	200	1
+opus	271	705	0	partly published		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	336	338	3
+opus	272	706	0	partly published	the hundred and eight names of avalokitesvara	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	339	342	4
+opus	273	740	0	partly published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	468	468	1
+opus	274	741	0	partly published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	469	469	1
+opus	275	300	1	published	reliance upon virtuous spiritual friend	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	1	1	1
+opus	276	302	0	published	what medicants hold most dear	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	249	252	4
+opus	277	303	0	published	the sutra on having moral discipline	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	253	254	2
+opus	278	305	0	published	sutra of the highest designation	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	260	261	2
+opus	279	307	0	published	sutra on the limits of lifes duration	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	277	289	13
+opus	280	308	0	published	questions regarding death and transmigration	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	290	308	19
+opus	281	309	0	published	sutra on Impermanence	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	309	309	1
+opus	282	310	0	published	the sutra on impermanence	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	310	312	3
+opus	283	311	0	published	teaching the eleven thoughts	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	313	313	1
+opus	284	312	0	published		72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	314	321	8
+opus	285	313	0	published		72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	322	325	4
+opus	286	314	0	published	the sutra of the entry into the gloomy forest	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	326	336	11
+opus	287	315	0	published	the sutra on ones father and mother	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	337	338	2
+opus	288	317	0	published	distinctly ascertaining the meanings	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	340	374	35
+opus	289	319	0	published	the marvelous dharma discourse	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	387	392	6
+opus	290	320	0	published	the dharma discourse describing the benefits of establishing representations of the tathagatha	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	393	395	3
+opus	291	321	0	published	the verses on circumambulating shrines	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	396	400	5
+opus	292	322	0	published	verses for prasenajit	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	401	406	6
+opus	293	324	0	published	the four stanzas	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	407	407	1
+opus	294	325	0	published	verses of naga king drum	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	408	416	9
+opus	295	327	0	published	the good person	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	506	507	2
+opus	296	328	0	published	the sutra of nandas going forth	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	508	512	5
+opus	297	329	0	published	the devata sutra	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	513	515	3
+opus	298	330	0	published	the shorter devata sutra	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	516	517	2
+opus	299	331	0	published	the sutra of the moon	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	518	518	1
+opus	300	333	0	published	the sutra of vasistha	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	526	534	9
+opus	301	334	0	published	the sutra of nandika	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	535	540	6
+opus	302	335	0	published	the khakkhara sutra	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	541	546	6
+opus	303	336	0	published	the rite of the commitment to bear the mendicants staff	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	547	548	2
+opus	304	337	0	published	wheel of dharma	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	549	552	4
+opus	305	338	0	published	the exposition of karma	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	553	595	43
+opus	306	339	0	published	dharma scripture exposition of karma	72	མདོ་སྡེ།	6ac0aa09f427c9bb0692b8a3	public	596	620	24
+opus	307	346	1	published	the account of the noble deeds of sumagadha	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	1	1	1
+opus	308	347	0	published	the exemplary tale of punyabala	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	2	42	41
+opus	309	349	0	published	the exemplary tale of srisena	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	62	98	37
+opus	310	354	0	published	teaching the causes and results of good and ill	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	395	416	22
+opus	311	355	0	published	the sutra that teaches the ripening of virtuous and nonvirtuous actions	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	417	430	14
+opus	312	357	0	published	the prophecy of gosrnga	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	440	463	24
+opus	313	358	0	published	the exemplary tale of sardulakarna	76	མདོ་སྡེ།	6ac0afecf427c9bb0692c231	public	464	553	90
+opus	314	381	0	published	the emergence from samputa	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	146	315	170
+opus	315	384	0	published	glorious king tantra resolves all secrets	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	373	390	18
+opus	316	386	0	published	the tantra Equal to the Sky	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	397	402	6
+opus	317	409	0	published	the fearsome vajra of destruction	79	རྒྱུད་འབུམ།	6ac0b3aff427c9bb0692c9c7	public	493	494	2
+opus	318	425	0	published	mahamaya tantra	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	333	340	8
+opus	319	431	0	published	the tantra of candamaharosana	80	རྒྱུད་འབུམ།	6ac0b529f427c9bb0692cc11	public	608	681	74
+opus	320	431	1	published	the tantra of candamaharosana	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	1	1	1
+opus	321	437	0	published	practice manual of kurukulla	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	58	83	26
+opus	322	438	0	published	the praise of tara in twentyone homages	81	རྒྱུད་འབུམ།	6ac0b6fff427c9bb0692cebd	public	84	85	2
+opus	323	471	0	published		83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	346	346	1
+opus	324	472	0	published		83	རྒྱུད་འབུམ།	6ac0ba11f427c9bb0692d3bd	public	347	348	2
+opus	325	507	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	2	13	12
+opus	326	509	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	48	49	2
+opus	327	513	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	85	87	3
+opus	328	514	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	88	91	4
+opus	329	515	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	92	94	3
+opus	330	516	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	95	99	5
+opus	331	522	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	117	119	3
+opus	332	528	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	170	179	10
+opus	333	535	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	198	198	1
+opus	334	538	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	199	199	1
+opus	335	540	0	published		88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	201	201	1
+opus	336	543	0	published	the root tantra of manjusri	88	རྒྱུད་འབུམ།	6ac0c0fef427c9bb0692dd73	public	209	702	493
+opus	337	686	1	published	the sovereign ritual of amoghapasa	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	1	108	108
+opus	338	702	0	published	the simhanada tantra	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	322	323	2
+opus	339	703	0	published	the dharani of avalokitesvara simhanada	93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	324	334	11
+opus	340	704	0	published		93	རྒྱུད་འབུམ།	6ac0c746f427c9bb0692e956	public	335	335	1
+opus	341	725	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	400	402	3
+opus	342	726	0	published	the tantra on the origin of all rites of tara mother of all the tathagatas	94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	403	432	30
+opus	343	728	0	published	the hundred and eight names of the goddess tara	94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	437	442	6
+opus	344	730	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	443	443	1
+opus	345	731	0	published	the sutra of tara who protects from the eight dangers	94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	444	447	4
+opus	346	732	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	448	448	1
+opus	347	736	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	456	456	1
+opus	348	738	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	458	458	1
+opus	349	743	0	published		94	རྒྱུད་འབུམ།	6ac0c90ef427c9bb0692ebba	public	471	472	2
+opus	350	846	0	published	the threefold invocation ritual	100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	3	6	4
+opus	351	862	0	published	the essential dharani of the tathagata bhaisajyaguru	100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	170	170	1
+opus	352	891	0	published	the dharani of avaranaviskambhin	100	གཟུངས་འདུས།	6ac03d7ed2d554a6d39b3050	public	328	328	1
+opus	353	22	0	not started		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	291	293	3
+opus	354	31	0	not started	the sutra of turning the wheel of dharma	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	360	364	5
+opus	355	32	0	not started	account of the previous lives of the buddha	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	365	498	134
+opus	356	33	0	not started	sutra of atanatiya	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	499	517	19
+opus	357	34	0	not started	sutra of the great assembly	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	518	524	7
+opus	358	35	0	not started	sutra on maitreya	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	525	538	14
+opus	359	36	0	not started	sutra on the meditation on loving kindness	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	539	540	2
+opus	360	38	0	not started	the sutra of giriyananda	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	551	556	6
+opus	361	39	0	not started	sutra of the taming of the naga king nandopananda	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	557	561	5
+opus	362	40	0	not started	the mahakasyapa sutra	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	562	562	1
+opus	363	43	0	not started	the sutra of great fortune	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	565	568	3
+opus	364	43	1	not started	the sutra of great fortune	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	1	1	1
+opus	365	221	0	not started	the sutra of advice to the king	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	155	167	13
+opus	366	363	0	not started	the essence of the higher tantra of kalacakra	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	257	287	31
+opus	367	365	0	not started	performance of the initiation	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	291	301	9
+opus	368	368	0	not started	the smaller samvara	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	426	492	67
+opus	369	371	0	not started	the supplementary tantra of vajradaka	78	རྒྱུད་འབུམ།	6ac0b19cf427c9bb0692c75d	hidden	250	272	23
+opus	370	500	0	not started	moving through the three vajra levels a sovereign practice	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	344	352	9
+opus	371	501	0	not started	blueclad vajrapani a tantra to tame the three worlds	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	353	360	8
+opus	372	602	0	not started		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	530	530	1
+opus	373	756	0	not started	the mantra praising the wrathful king bhurkumkuta	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	14	14	1
+opus	374	766	0	not started	practice of the sublime dancer chief of the army of yaksas	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	137	161	25
+opus	375	767	0	not started	tantra of the supreme dancer of the yaksas	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	162	176	15
+opus	376	806	0	not started	tantra of the procedures common to all mandalas	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	281	334	54
+opus	377	807	0	not started	the section on propitiation rituals in the great tantra susiddhikara	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	335	444	110
+opus	378	808	0	not started	the section on the higher states of meditative absorption	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	445	450	6
+opus	379	809	0	not started	the king of dedications the teaching on skillfulness in the great jewel	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	451	456	6
+opus	380	811	0	not started	a prayer from the great susiddhikaratantra	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	500	500	1
+opus	381	816	0	not started	the verses of wellwishing in the sutra on entering the city of vaisali cf toh 628	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	511	512	2
+opus	382	1067	0	not started	the sutra of the eight iluminations	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	473	479	7
+opus	383	1097	0	not started		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	536	538	3
+opus	384	1107	0	not started	verses expressing auspiciousness	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	553	554	2
+opus	385	1107	1	not started	verses expressing auspiciousness	102	དྲི་མེད་འོད།	6ac0d282f427c9bb0692fbda	hidden	1	2	1
+opus	386	90	0	no 84000 record		44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	364	418	55
+opus	387	553	0	no 84000 record		89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	31	33	3
+opus	388	554	0	no 84000 record		89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	34	37	3
+opus	389	611	0	no 84000 record		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	89	89	1
+opus	390	617	0	no 84000 record		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	111	115	5
+opus	391	628	0	no 84000 record		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	125	132	8
+opus	392	657	0	no 84000 record		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	325	349	25
+opus	393	658	0	no 84000 record		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	350	358	9
+opus	394	745	1	no 84000 record		95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	1	1	1
+opus	395	812	0	no 84000 record		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	501	504	4
+opus	396	929	1	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	1	2	1
+opus	397	946	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	3	62	60
+opus	398	947	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	63	84	22
+opus	399	948	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	85	86	2
+opus	400	949	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	87	88	2
+opus	401	950	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	89	91	3
+opus	402	951	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	92	92	1
+opus	403	952	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	93	93	1
+opus	404	954	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	95	101	7
+opus	405	955	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	102	102	1
+opus	406	956	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	103	104	2
+opus	407	957	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	105	107	3
+opus	408	958	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	108	112	5
+opus	409	959	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	113	113	1
+opus	410	960	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	114	114	1
+opus	411	961	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	115	115	1
+opus	412	962	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	116	116	1
+opus	413	963	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	117	118	2
+opus	414	964	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	119	161	43
+opus	415	965	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	162	164	3
+opus	416	966	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	165	168	4
+opus	417	967	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	169	169	1
+opus	418	968	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	170	172	3
+opus	419	969	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	173	173	1
+opus	420	970	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	174	175	2
+opus	421	972	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	176	179	4
+opus	422	973	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	180	181	2
+opus	423	974	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	182	185	4
+opus	424	975	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	186	191	6
+opus	425	976	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	192	193	2
+opus	426	978	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	194	194	1
+opus	427	979	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	195	199	5
+opus	428	980	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	200	200	1
+opus	429	981	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	201	201	1
+opus	430	982	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	202	222	21
+opus	431	983	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	223	241	19
+opus	432	984	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	242	250	9
+opus	433	985	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	251	268	18
+opus	434	986	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	269	278	10
+opus	435	988	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	286	287	2
+opus	436	989	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	288	288	1
+opus	437	990	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	289	290	2
+opus	438	991	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	291	294	4
+opus	439	992	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	295	295	1
+opus	440	993	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	296	297	2
+opus	441	994	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	298	299	2
+opus	442	995	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	300	300	1
+opus	443	996	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	301	301	1
+opus	444	997	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	302	308	7
+opus	445	998	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	309	313	5
+opus	446	999	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	314	316	3
+opus	447	1000	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	317	321	5
+opus	448	1002	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	322	322	1
+opus	449	1003	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	323	335	13
+opus	450	1004	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	336	343	8
+opus	451	1005	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	344	345	2
+opus	452	1006	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	346	346	1
+opus	453	1007	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	347	354	8
+opus	454	1008	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	355	357	3
+opus	455	1009	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	358	359	2
+opus	456	1011	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	360	360	1
+opus	457	1013	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	361	361	1
+opus	458	1014	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	362	362	1
+opus	459	1016	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	363	363	1
+opus	460	1018	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	364	364	1
+opus	461	1020	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	365	367	3
+opus	462	1028	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	370	370	1
+opus	463	1030	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	371	371	1
+opus	464	1034	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	372	372	1
+opus	465	1037	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	373	373	1
+opus	466	1038	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	374	374	1
+opus	467	1040	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	375	375	1
+opus	468	1043	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	376	376	1
+opus	469	1046	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	377	377	1
+opus	470	1048	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	378	378	1
+opus	471	1051	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	379	379	1
+opus	472	1054	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	380	380	1
+opus	473	1061	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	382	412	31
+opus	474	1062	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	413	433	21
+opus	475	1063	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	434	460	27
+opus	476	1064	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	461	470	10
+opus	477	1065	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	471	471	1
+opus	478	1068	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	480	480	1
+opus	479	1076	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	481	481	1
+opus	480	1078	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	482	482	1
+opus	481	1079	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	483	486	4
+opus	482	1080	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	487	491	5
+opus	483	1081	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	492	495	4
+opus	484	1082	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	496	496	1
+opus	485	1083	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	497	503	7
+opus	486	1084	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	504	505	2
+opus	487	1085	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	506	506	1
+opus	488	1086	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	507	507	1
+opus	489	1088	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	508	510	3
+opus	490	1089	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	511	511	1
+opus	491	1092	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	514	514	1
+opus	492	1093	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	515	523	9
+opus	493	1094	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	524	526	3
+opus	494	1098	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	539	540	2
+opus	495	1099	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	541	541	1
+opus	496	1100	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	542	543	2
+opus	497	1101	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	544	546	3
+opus	498	1102	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	547	547	1
+opus	499	1103	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	548	550	3
+opus	500	1104	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	551	551	1
+opus	501	1105	0	no 84000 record		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	552	552	1
+agy	1	8	0	published	the perfection of wisdom in one hundred thousand lines	14	འབུམ།	6ac053c7f427c9bb06922196	hidden	2	788	786
+agy	2	8	1	published	the perfection of wisdom in one hundred thousand lines	15	འབུམ།	6ac05464f427c9bb069224ad	hidden	1	801	381
+agy	3	8	1	published	the perfection of wisdom in one hundred thousand lines	16	འབུམ།	6ac0552bf427c9bb069227d1	hidden	1	779	152
+agy	4	8	1	published	the perfection of wisdom in one hundred thousand lines	17	འབུམ།	6ac05672f427c9bb06922adf	hidden	1	762	761
+agy	5	8	1	published	the perfection of wisdom in one hundred thousand lines	18	འབུམ།	6ac05724f427c9bb06922ddc	hidden	1	790	789
+agy	6	8	1	published	the perfection of wisdom in one hundred thousand lines	19	འབུམ།	6ac05814f427c9bb069230f5	hidden	1	757	325
+agy	7	8	1	published	the perfection of wisdom in one hundred thousand lines	21	འབུམ།	6ac05a25f427c9bb0692370a	hidden	1	778	778
+agy	8	8	1	published	the perfection of wisdom in one hundred thousand lines	22	འབུམ།	6ac05ad7f427c9bb06923a17	hidden	1	768	767
+agy	9	8	1	published	the perfection of wisdom in one hundred thousand lines	23	འབུམ།	6ac05c0af427c9bb06923d1a	hidden	1	774	773
+agy	10	8	1	published	the perfection of wisdom in one hundred thousand lines	24	འབུམ།	6ac05cd0f427c9bb06924023	hidden	1	778	268
+agy	11	8	1	published	the perfection of wisdom in one hundred thousand lines	25	འབུམ།	6ac05db7f427c9bb06924330	hidden	1	790	789
+agy	12	8	1	published	the perfection of wisdom in one hundred thousand lines	26	ཉི་ཁྲི།	6ac05ee1f427c9bb06924649	hidden	1	1	1
+agy	13	9	0	published	the perfection of wisdom in twenty five thousand lines	26	ཉི་ཁྲི།	6ac05ee1f427c9bb06924649	hidden	2	764	762
+agy	14	9	1	published	the perfection of wisdom in twenty five thousand lines	27	ཉི་ཁྲི།	6ac05f82f427c9bb06924948	hidden	1	786	785
+agy	15	9	1	published	the perfection of wisdom in twenty five thousand lines	28	ཉི་ཁྲི།	6ac06186f427c9bb06924c5d	hidden	1	762	761
+agy	16	9	1	published	the perfection of wisdom in twenty five thousand lines	29	ཁྲི་བརྒྱད།	6ac06363f427c9bb06924f5a	hidden	1	1	1
+agy	17	10	0	published	the perfection of wisdom in eighteen thousand lines	29	ཁྲི་བརྒྱད།	6ac06363f427c9bb06924f5a	hidden	2	600	598
+agy	18	10	1	published	the perfection of wisdom in eighteen thousand lines	30	ཁྲི་བརྒྱད།	6ac06565f427c9bb069251b5	hidden	1	608	607
+agy	19	10	1	published	the perfection of wisdom in eighteen thousand lines	31	ཁྲི་བརྒྱད།	6ac067fdf427c9bb06925418	hidden	1	413	410
+agy	20	11	0	published	perfection of wisdom in ten thousand lines	31	ཁྲི་བརྒྱད།	6ac067fdf427c9bb06925418	hidden	414	594	180
+agy	21	11	1	published	perfection of wisdom in ten thousand lines	32	ཁྲི་པ།	6ac06939f427c9bb0692566d	hidden	1	612	611
+agy	22	11	1	published	perfection of wisdom in ten thousand lines	33	བརྒྱད་སྟོང་པ།	6ac06bf5f427c9bb069258d4	hidden	1	1	1
+agy	23	19	0	published		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	283	285	3
+agy	24	21	0	published		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	288	290	3
+agy	25	26	0	published	the suryagarbha perfection of wisdom	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	350	351	2
+agy	26	27	0	published	the candragarbha perfection of wisdom	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	352	353	2
+agy	27	28	0	published	the samantabhadra perfection of wisdom	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	354	354	1
+agy	28	37	0	published	the benefits of the five precepts	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	541	550	10
+agy	29	41	0	published	the sutra of the sun	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	563	563	1
+agy	30	42	0	published	the sutra of the moon	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	564	564	1
+agy	31	46	0	published	the teaching on clearing the boundless gates	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	90	198	109
+agy	32	47	0	published	the secrets of the realized ones	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	199	405	207
+agy	33	48	0	published	the teaching on dreams	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	406	473	68
+agy	34	51	0	published	the teaching on the armor array	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	140	279	140
+agy	35	52	0	published	indivisible nature	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	280	326	47
+agy	36	54	0	published	the exposition on the universal gateway	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	368	389	22
+agy	37	55	0	published	the complete effulgence of light teaching	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	390	509	120
+agy	38	56	0	published	the collected teachings on the Bodhisatva	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	510	590	78
+agy	39	56	1	published	the collected teachings on the Bodhisatva	41	དཀོན་བརྩེགས།	6ac07890f427c9bb06926de2	hidden	1	409	408
+agy	40	58	0	published	the teaching to venerable nanda on entering the womb	41	དཀོན་བརྩེགས།	6ac07890f427c9bb06926de2	hidden	473	495	23
+agy	41	59	0	published	the array of virtues of the manjusri buddha realm	41	དཀོན་བརྩེགས།	6ac07890f427c9bb06926de2	hidden	496	594	98
+agy	42	59	1	published	the array of virtues of the manjusri buddha realm	42	དཀོན་བརྩེགས།	6ac07a04f427c9bb06927037	hidden	1	1	1
+agy	43	61	0	published	questions of purna	42	དཀོན་བརྩེགས།	6ac07a04f427c9bb06927037	hidden	336	452	117
+agy	44	62	0	published	the questions of rastrapala	42	དཀོན་བརྩེགས།	6ac07a04f427c9bb06927037	hidden	453	512	60
+agy	45	65	0	published	the prophecy for bhadra the illusionist	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	34	70	37
+agy	46	67	0	published	the great lions roar	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	135	228	94
+agy	47	68	0	published	ascertaining the discipline the sutra of upalis questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	229	260	32
+agy	48	69	0	published	inspiring determination	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	261	306	46
+agy	49	70	0	published	question of subahu	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	307	360	54
+agy	50	71	0	published	suratas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	361	386	26
+agy	51	72	0	published	sutra of viradattas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	387	407	21
+agy	52	73	0	published	king udayana of vatsas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	408	430	23
+agy	53	74	0	published	the inquiry of the girl sumati	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	431	442	12
+agy	54	75	0	published	the questions of gangottara	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	443	449	7
+agy	55	76	0	published	asokadattas prophecy	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	450	480	31
+agy	56	78	0	published	the sutra of gunaratnasankusumitas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	522	531	10
+agy	57	79	0	published	the sutra teaching the unfathomable sphere of a buddha	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	532	568	37
+agy	58	81	0	published	simhas questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	53	58	6
+agy	59	83	0	published	questions of bhadrapala	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	141	188	48
+agy	60	84	0	published	the sutra of the girl vimalasraddhas questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	189	207	19
+agy	61	85	0	published	question of maitreya	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	208	231	24
+agy	62	86	0	published	question of maitreya on eight qualities	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	232	237	6
+agy	63	93	0	published	the sutra of the rsi vyasas questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	555	598	43
+agy	64	93	1	published	the sutra of the rsi vyasas questions	45	མདོ་སྡེ།	6ac07e0ef427c9bb0692773a	hidden	1	1	1
+agy	65	94	0	published	sutra of the good eon	45	མདོ་སྡེ།	6ac07e0ef427c9bb0692773a	hidden	2	680	678
+agy	66	94	1	published	sutra of the good eon	46	མདོ་སྡེ།	6ac0800cf427c9bb069279e5	hidden	1	1	1
+agy	67	95	0	published	play in full	46	མདོ་སྡེ།	6ac0800cf427c9bb069279e5	hidden	2	432	431
+agy	68	96	0	published	the play of manjusri sutra	46	མདོ་སྡེ།	6ac0800cf427c9bb069279e5	hidden	433	482	50
+agy	69	97	0	published	the chapter on manjusris magical display	46	མདོ་སྡེ།	6ac0800cf427c9bb069279e5	hidden	483	514	32
+agy	70	99	0	published	infinite certainty	47	མདོ་སྡེ།	6ac081f7f427c9bb06927c14	hidden	2	550	549
+agy	71	100	0	published	ornament of the light of awareness	47	མདོ་སྡེ།	6ac081f7f427c9bb06927c14	hidden	551	605	55
+agy	72	100	1	published	ornament of the light of awareness	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	1	1	1
+agy	73	101	0	published	upholding the roots of virtue	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	2	452	451
+agy	74	103	0	published	the dharma discourse of the teaching on the boy acintyaprabhasa	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	547	567	21
+agy	75	104	0	published	describing the qualities of the buddhafield a dharma discourse	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	568	569	2
+agy	76	106	0	published	unravelling the intent	49	མདོ་སྡེ།	6ac0845cf427c9bb069280b5	hidden	2	110	109
+agy	77	109	0	published	gayasirsa hill	49	མདོ་སྡེ།	6ac0845cf427c9bb069280b5	hidden	566	581	15
+agy	78	109	1	published	gayasirsa hill	50	མདོ་སྡེ།	6ac086cbf427c9bb069282fd	hidden	1	1	1
+agy	79	112	0	published	the white lotus of compassion	50	མདོ་སྡེ།	6ac086cbf427c9bb069282fd	hidden	257	592	335
+agy	80	112	1	published	the white lotus of compassion	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	1	1	1
+agy	81	113	0	published	sutra of the white lotus of true dharma	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	2	360	359
+agy	82	114	0	published		51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	361	389	29
+agy	83	115	0	published	display of pure land of sukhavati	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	390	398	9
+agy	84	116	0	published	baskets display	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	399	494	96
+agy	85	118	0	published	the infinite jewels	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	580	596	16
+agy	86	118	1	published	the infinite jewels	52	མདོ་སྡེ།	6ac08aa4f427c9bb069287a7	hidden	1	677	677
+agy	87	118	1	published	the infinite jewels	53	མདོ་སྡེ།	6ac08bcdf427c9bb06928a4f	hidden	1	678	677
+agy	88	118	1	published	the infinite jewels	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	1	1	1
+agy	89	122	0	published	wisdom at hour of death	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	303	303	1
+agy	90	124	0	published	the mine of jewels	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	421	580	160
+agy	91	126	0	published	like gold dust	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	581	588	7
+agy	92	126	1	published	like gold dust	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	1	1	1
+agy	93	127	0	published	king of samadhis	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	2	340	339
+agy	94	128	0	published	appearing differently to all while not departing emptiness	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	341	347	7
+agy	95	129	0	published	the absorption of the miraculous ascertainment of peace	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	348	419	72
+agy	96	130	0	published	illusory absorption	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	420	459	40
+agy	97	131	0	published	absorption of the thus gone ones wisdom seal	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	460	505	46
+agy	98	134	0	published	absorption that encapsulates all merit	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	140	242	103
+agy	99	136	0	published	the four boys absorption	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	288	356	69
+agy	100	138	0	published	the great collection sutra of the incantations of ratnaketu	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	374	554	181
+agy	101	139	0	published	the dharani of the vajra quintessence	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	555	577	23
+agy	102	141	0	published		56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	597	600	3
+agy	103	141	1	published		57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	1	1	1
+agy	104	142	0	published	dharani entering into non conceptuality	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	2	11	10
+agy	105	144	0	published	the sutra on cultivating faith in the mahayana	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	12	66	55
+agy	106	145	0	published		57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	67	161	95
+agy	107	147	0	published	the sutra teaching the great compassion of the tathagatas	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	282	483	202
+agy	108	149	0	published	the question of maitreya 3	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	659	659	1
+agy	109	150	0	published	inquiry of avalokiteshvara on seven qualities	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	660	660	1
+agy	110	151	0	published	the sutra of the questions of pratibhanamati	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	661	687	26
+agy	111	151	1	published	the sutra of the questions of pratibhanamati	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	1	1	1
+agy	112	152	0	published	the sutra of the questions of sagaramati	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	2	228	227
+agy	113	153	0	published	the sutra of the questions of the naga king sagara 1	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	229	392	164
+agy	114	154	0	published	the sutra of the questions of the naga king sagara 2	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	393	406	14
+agy	115	155	0	published	questions of naga king sagara 3	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	407	408	2
+agy	116	156	0	published	the questions of the naga king anavatapta	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	409	504	96
+agy	117	157	0	published	questions of the kinnara king druma	58	མདོ་སྡེ།	6ac095d4f427c9bb069296cf	hidden	505	635	131
+agy	118	157	1	published	questions of the kinnara king druma	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	1	1	1
+agy	119	159	0	published	the sutra of the questions of brahmadatta	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	20	44	25
+agy	120	160	0	published	the sutra of the questions of brahmavisesacintin	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	45	200	156
+agy	121	162	0	published	the sutra of the questions of srivasu	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	278	286	9
+agy	122	163	0	published	the sutra of the questions of ratnajalin	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	287	318	32
+agy	123	164	0	published	the sutra of the questions of ratnacandra	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	319	333	15
+agy	124	165	0	published	question of ksemamkara	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	334	341	8
+agy	125	166	0	published	the sutra of the questions of rastrapala	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	342	349	8
+agy	126	170	0	published	the questions of srimati the brahmin woman	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	612	617	6
+agy	127	171	0	published	questions of old lady	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	618	626	8
+agy	128	171	1	published	questions of old lady	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	1	1	1
+agy	129	172	0	published	the question of manjusri	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	2	9	8
+agy	130	173	0	published	the sutra of the questions of nairatma	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	10	13	4
+agy	131	174	0	published	the inquiry of lokadhara	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	14	156	143
+agy	132	175	0	published	the sutra of the teaching of aksayamati	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	157	348	192
+agy	133	176	0	published	teaching of vimalakirti	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	349	478	130
+agy	134	177	0	published	manjusris teaching	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	479	479	1
+agy	135	178	0	published	teaching on the aids to enlightenment	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	480	487	8
+agy	136	179	0	published	teaching the relative and ultimate truths	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	488	532	45
+agy	137	180	0	published	the sutra teaching how all phenomena are without any origin	60	མདོ་སྡེ།	6ac09817f427c9bb06929bc2	hidden	533	592	59
+agy	138	180	1	published	the sutra teaching how all phenomena are without any origin	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	1	1	1
+agy	139	181	0	published	teaching the five perfections	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	2	152	151
+agy	140	182	0	published	the sutra on the perfection of generosity	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	153	189	37
+agy	141	183	0	published	the teaching on the benefits of generosity	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	190	191	2
+agy	142	184	0	published	the sutra teaching the conduct of a bodhisattva	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	192	210	19
+agy	143	185	0	published	the sutra teaching the deployment of the inconceivable qualities and gnosis of the tathagatas on their objects	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	211	285	75
+agy	144	186	0	published	miracle of attaining the buddhas powers	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	286	314	29
+agy	145	188	0	published	the sutra of the prophecy by dipamkara	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	382	397	16
+agy	146	189	0	published	the prediction for brahmasri	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	398	400	3
+agy	147	190	0	published	the sutra of the prophecy concerning strivivarta	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	401	447	47
+agy	148	192	0	published	the prophecy of ksemavati	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	486	490	5
+agy	149	193	0	published		61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	491	499	9
+agy	150	194	0	published	inquiry of jayamati	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	500	500	1
+agy	151	195	0	published	the sutra of avalokini	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	501	531	31
+agy	152	196	0	published	the dwelling place of manjusri	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	532	541	10
+agy	153	197	0	published	the nectar of speech	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	542	547	6
+agy	154	198	0	published	maitreyas setting out	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	548	591	44
+agy	155	199	0	published	the sutra on the bodhisattva maitreya taking birth in tusita	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	592	604	13
+agy	156	201	0	published	the seal of engagement in kindling the power of faith	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	2	124	123
+agy	157	202	0	published	evaluating whether progress is certain or uncertain	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	125	154	30
+agy	158	203	0	published	the seal of dharma	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	155	161	7
+agy	159	205	0	published	the city beggar woman	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	183	186	4
+agy	160	206	0	published	pure sustenance of food	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	187	188	2
+agy	161	207	0	published	the strength of the elephant	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	189	216	28
+agy	162	208	0	published	the great rumble	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	217	221	5
+agy	163	210	0	published	rice seedling	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	231	245	15
+agy	164	211	0	published	sutra teaching fundamental exposition and detailed analysis of dependent arising	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	246	248	3
+agy	165	212	0	published		62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	249	250	2
+agy	166	214	0	published	advice for the king 1	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	409	414	6
+agy	167	215	0	published	advice for the king 2	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	415	417	3
+agy	168	216	0	published	eliminating ajatasatrus remorse	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	418	531	114
+agy	169	217	0	published	srigupta sutra	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	532	561	30
+agy	170	218	0	published	purification of karmic obscurations	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	562	588	27
+agy	171	219	0	published	putting an end to karmic obscurations	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	589	609	20
+agy	172	219	1	published	putting an end to karmic obscurations	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	1	1	1
+agy	173	220	0	published	eliminating those with corrupted discipline	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	2	154	153
+agy	174	224	0	published	the episode of drdhadhyasaya	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	327	346	20
+agy	175	225	0	published	the sutra on the threefold going for refuge	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	347	348	2
+agy	176	226	0	published	the sutra on transmigration through existences	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	349	352	4
+agy	177	229	0	published	discussions of thus gone ones	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	452	530	79
+agy	178	231	0	published	the jewel cloud sutra	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	2	224	223
+agy	179	232	0	published	the great cloud 1	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	225	428	204
+agy	180	235	0	published		64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	500	524	25
+agy	181	238	0	published	the dharma council	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	2	198	197
+agy	182	241	0	published	the sutra of the wheel of meditative concentration	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	603	604	2
+agy	183	244	0	published	proper dharma conduct	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	30	53	24
+agy	184	245	0	published	the sections of dharma	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	54	64	11
+agy	185	246	0	published	the sutra of the victory of the ultimate dharma	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	65	83	19
+agy	186	247	0	published	distinguishing phenomena and what is meaningful	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	84	91	8
+agy	187	248	0	published	the accomplishment of the sets of four qualities the bodhisattvas pratimoksa	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	92	116	25
+agy	188	249	0	published	the sutra teaching four factors	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	117	117	1
+agy	189	250	0	published	the four factors	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	118	119	2
+agy	190	251	0	published	the noble mahayana sutra on the four factors	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	120	120	1
+agy	191	252	0	published	the fourfold accomplishment	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	121	137	17
+agy	192	254	0	published	the sutra of dharmaketu	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	140	140	1
+agy	193	255	0	published	the ocean of the dharma	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	141	146	6
+agy	194	257	0	published	the sutra of the quintessence of the sun	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	182	489	308
+agy	195	259	0	published	the sutra on the quintessence that illuminates the basket without words	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	518	526	9
+agy	196	260	0	published	akashagarbha sutra	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	527	565	39
+agy	197	263	0	published	the acceptance that tames beings with the sky colored method of perfect conduct	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	179	418	240
+agy	198	266	0	published	bouquet of flowers	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	575	638	63
+agy	199	266	1	published	bouquet of flowers	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	1	1	1
+agy	200	267	0	published	calling witness with hundred prostrations	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	2	9	8
+agy	201	268	0	published	the sutra of king of the inconceivable	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	10	12	3
+agy	202	269	0	published	dispelling the darkness of the ten directions	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	13	25	13
+agy	203	270	0	published		68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	26	33	8
+agy	204	271	0	published	the eight buddhas	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	34	41	8
+agy	205	273	0	published		68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	51	57	7
+agy	206	276	0	published	the sutra on not rejecting the buddha	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	88	97	10
+agy	207	278	0	published	the eight auspicious ones	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	104	107	4
+agy	208	282	0	published	sutra on threefold training	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	110	110	1
+agy	209	283	0	published	sutra on three bodies	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	111	112	2
+agy	210	285	0	published	the dedication fulfilling all aspirations	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	153	157	5
+agy	211	286	0	published	the dedication protecting all beings	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	158	162	5
+agy	212	287	0	published	mindfulness of the true dharma	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	163	636	472
+agy	213	287	1	published	mindfulness of the true dharma	69	མདོ་སྡེ།	6ac0a680f427c9bb0692b162	hidden	1	614	613
+agy	214	287	1	published	mindfulness of the true dharma	70	མདོ་སྡེ།	6ac0a78ff427c9bb0692b3cb	hidden	1	624	623
+agy	215	287	1	published	mindfulness of the true dharma	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	1	458	458
+agy	216	288	0	published	the mahasutra illusions net	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	459	487	29
+agy	217	292	0	published	the mahasutra the crest insignia 1	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	523	529	7
+agy	218	293	0	published	the mahasutra the crest insignia (2)	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	530	533	4
+agy	219	297	0	published	multitude of constituents	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	593	601	9
+agy	220	298	0	published	gandi sutra	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	602	605	4
+agy	221	299	0	published	the sutra on timings for the gandhi	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	606	607	2
+agy	222	300	0	published	reliance upon virtuous spiritual friend	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	608	610	2
+agy	223	339	1	published	dharma scripture exposition of karma	73	མདོ་སྡེ།	6ac0aabef427c9bb0692bb12	hidden	1	1	1
+agy	224	340	0	published	the hundred deeds	73	མདོ་སྡེ།	6ac0aabef427c9bb0692bb12	hidden	2	618	616
+agy	225	340	1	published	the hundred deeds	74	མདོ་སྡེ།	6ac0ac93f427c9bb0692bd7f	hidden	1	257	256
+agy	226	342	0	published	the questions of dirghanakha the wandering mendicant	74	མདོ་སྡེ།	6ac0ac93f427c9bb0692bd7f	hidden	596	600	4
+agy	227	342	1	published	the questions of dirghanakha the wandering mendicant	75	མདོ་སྡེ།	6ac0adfcf427c9bb0692bfda	hidden	1	1	1
+agy	228	344	0	published	the sutra of jnanaka	75	མདོ་སྡེ།	6ac0adfcf427c9bb0692bfda	hidden	573	577	5
+agy	229	345	0	published	the exemplary tale about a sow	75	མདོ་སྡེ།	6ac0adfcf427c9bb0692bfda	hidden	578	581	4
+agy	230	346	0	published	the account of the noble deeds of sumagadha	75	མདོ་སྡེ།	6ac0adfcf427c9bb0692bfda	hidden	582	596	14
+agy	231	361	0	published	summary of empowerment	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	27	43	15
+agy	232	497	0	published		87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	313	314	2
+agy	233	498	0	published	blue clad blessed vajrapani	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	315	332	18
+agy	234	503	0	published	the sutra describing in full the specific previous vows of the seven tathagatas	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	496	546	51
+agy	235	504	0	published	the sutra describing in full the specific previous vows of bhaisajyaguruvaiduryaprabha	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	547	566	20
+agy	236	505	0	published	the vaiduryaprabha dharani	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	567	570	4
+agy	237	505	0	published	the vaiduryaprabha dharani	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	571	571	1
+agy	238	543	1	published	the root tantra of manjusri	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	1	1	1
+agy	239	544	0	published	tantra of siddhaikavira	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	2	24	23
+agy	240	545	0	published		89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	25	25	1
+agy	241	546	0	published		89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	26	26	1
+agy	242	547	0	published	the incantation the promise of manjusri	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	27	27	1
+agy	243	550	0	published		89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	28	28	1
+agy	244	551	0	published	in praise of the acuity of manjusri	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	29	29	1
+agy	245	552	0	published	the eight maidens praise of manjusri	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	30	30	1
+agy	246	555	0	published	the sutra of the sublime golden light 1	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	38	301	264
+agy	247	556	0	published	the sutra of the sublime golden light 2	89	རྒྱུད་འབུམ།	6ac0c2a9f427c9bb0692e034	hidden	302	542	241
+agy	248	556	1	published	the sutra of the sublime golden light 2	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	1	1	1
+agy	249	557	0	published	the sutra of the sublime golden light 3	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	2	123	122
+agy	250	558	0	published	destroyer of the great trichiliocosm	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	124	171	48
+agy	251	559	0	published	the queen of incantations the great peahen	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	172	230	59
+agy	252	561	0	published	the great amulet	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	232	273	42
+agy	253	562	0	published	the sutra of great cool grove	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	274	297	24
+agy	254	563	0	published	upholding the great secret mantra	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	298	310	12
+agy	255	564	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	311	313	2
+agy	256	565	0	published	the king of ritual manuals from the tantra of maya maricis arising	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	314	327	14
+agy	257	566	0	published	the mandala rites of marici	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	328	368	41
+agy	258	576	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	402	402	1
+agy	259	579	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	403	403	1
+agy	260	590	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	407	421	15
+agy	261	591	0	published	the supreme accomplishment of invincible averting sitatapatra born from the usnisa of the tathagata	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	422	434	13
+agy	262	592	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	435	445	11
+agy	263	593	0	published	the invincible sitatapatra 2	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	446	456	11
+agy	264	594	0	published	the usnisavijaya dharani with its ritual manual	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	457	471	15
+agy	265	595	0	published	the usnisavijaya dharani with its ritual manual	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	472	480	9
+agy	266	596	0	published	the incantation and practice of usnisavijaya	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	481	483	3
+agy	267	597	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	484	492	9
+agy	268	598	0	published	the practice of the incantation of usnisavijaya	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	493	496	4
+agy	269	601	0	published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	517	529	13
+agy	270	605	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	71	72	2
+agy	271	612	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	90	91	2
+agy	272	613	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	92	93	2
+agy	273	639	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	236	242	7
+agy	274	642	0	published	one hundred and eight names of manjusri	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	251	253	3
+agy	275	643	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	254	254	1
+agy	276	646	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	259	263	5
+agy	277	647	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	264	266	3
+agy	278	660	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	360	365	6
+agy	279	661	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	366	370	5
+agy	280	665	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	384	384	1
+agy	281	666	0	published	the ganapati tantra	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	385	396	12
+agy	282	667	0	published	the mahakala tantra	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	397	401	5
+agy	283	668	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	402	402	1
+agy	284	669	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	403	403	1
+agy	285	671	0	published	the royal tantra praises to sridevi kali	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	404	417	14
+agy	286	672	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	418	420	3
+agy	287	674	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	422	430	9
+agy	288	675	0	published	the aparimitayurjnana sutra 2	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	431	439	9
+agy	289	676	0	published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	440	443	4
+agy	290	686	0	published	the sovereign ritual of amoghapasa	92	རྒྱུད་འབུམ།	6ac0c59af427c9bb0692e6db	hidden	2	632	630
+agy	291	747	0	published	the tantra of vajrapani bhutadamara	95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	475	525	51
+agy	292	750	0	published		95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	530	532	3
+agy	293	805	0	published	the tantra the questions of subahu	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	235	280	46
+agy	294	813	0	published		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	505	506	2
+agy	295	953	0	published	the dharani of vajrapani the yaksa%20 lord	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	94	94	1
+agy	296	1024	0	published	the dharani that pacifies all suffering	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	368	369	2
+agy	297	1059	0	published	mantra for enchanting medicines extracted from destroyer of the great trichiliocosm	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	381	381	1
+agy	298	1066	0	published	the dharani of the supreme stem ornament	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	472	472	1
+agy	299	1090	0	published		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	512	512	1
+agy	300	1091	0	published	in praise of the goddess revati	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	513	513	1
+agy	301	1095	0	published		101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	527	533	7
+agy	302	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	3	261	259
+agy	303	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	262	442	181
+agy	304	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	443	474	32
+agy	305	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	475	502	28
+agy	306	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	503	554	52
+agy	307	1	0	partly published	chapter 5 on leather	1	འདུལ་བ།	6ac03d7cd2d554a6d39b2ddf	hidden	555	622	68
+agy	308	1	1	partly published	chapter 5 on leather	2	འདུལ་བ།	6ac04266f427c9bb069205db	hidden	1	634	633
+agy	309	1	1	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	1	97	97
+agy	310	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	98	228	131
+agy	311	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	229	245	17
+agy	312	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	246	266	21
+agy	313	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	267	278	12
+agy	314	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	279	328	50
+agy	315	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	329	351	23
+agy	316	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	352	361	10
+agy	317	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	362	371	10
+agy	318	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	372	441	70
+agy	319	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	442	508	67
+agy	320	1	0	partly published	chapter 5 on leather	3	འདུལ་བ།	6ac044a9f427c9bb06920858	hidden	509	587	76
+agy	321	1	1	partly published	chapter 5 on leather	4	འདུལ་བ།	6ac045baf427c9bb06920aa6	hidden	1	603	597
+agy	322	1	1	partly published	chapter 5 on leather	5	འདུལ་བ།	6ac048c4f427c9bb06920d04	hidden	1	1	1
+agy	323	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	2	128	127
+agy	324	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	129	165	37
+agy	325	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	166	175	10
+agy	326	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	176	202	27
+agy	327	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	203	205	3
+agy	328	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	206	207	2
+agy	329	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	208	209	2
+agy	330	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	210	222	13
+agy	331	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	223	289	67
+agy	332	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	290	311	22
+agy	333	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	312	349	38
+agy	334	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	350	367	18
+agy	335	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	368	380	13
+agy	336	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	381	405	25
+agy	337	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	406	419	14
+agy	338	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	420	437	18
+agy	339	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	438	474	37
+agy	340	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	475	478	4
+agy	341	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	479	488	10
+agy	342	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	489	514	26
+agy	343	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	515	520	6
+agy	344	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	521	568	48
+agy	345	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	569	593	25
+agy	346	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	594	597	4
+agy	347	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	598	608	11
+agy	348	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	609	665	57
+agy	349	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	666	693	28
+agy	350	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	694	735	42
+agy	351	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	736	749	14
+agy	352	44	0	partly published	chapter 1 the ornaments of all the lords of the world	35	ཕལ་ཆེན།	6ac06e82f427c9bb06925d4e	hidden	750	786	36
+agy	353	44	1	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	1	330	330
+agy	354	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	331	564	234
+agy	355	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	565	577	13
+agy	356	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	578	711	134
+agy	357	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	712	734	23
+agy	358	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	735	767	33
+agy	359	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	768	785	18
+agy	360	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	786	787	2
+agy	361	44	0	partly published	chapter 1 the ornaments of all the lords of the world	36	ཕལ་ཆེན།	6ac070adf427c9bb06926063	hidden	788	792	4
+agy	362	44	1	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	1	1	1
+agy	363	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	2	81	80
+agy	364	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	82	110	29
+agy	365	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	111	124	14
+agy	366	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	125	148	24
+agy	367	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	149	281	133
+agy	368	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	282	547	266
+agy	369	44	0	partly published	chapter 1 the ornaments of all the lords of the world	37	ཕལ་ཆེན།	6ac071aef427c9bb0692637e	hidden	548	792	244
+agy	370	44	1	partly published	chapter 1 the ornaments of all the lords of the world	38	ཕལ་ཆེན།	6ac07420f427c9bb06926699	hidden	1	726	725
+agy	371	44	1	partly published	chapter 1 the ornaments of all the lords of the world	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	1	1	1
+agy	372	57	0	partly published	the teaching to nanda on entering the womb	41	དཀོན་བརྩེགས།	6ac07890f427c9bb06926de2	hidden	410	472	63
+agy	373	64	0	partly published	the sutra of vidyutpraptas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	2	33	32
+agy	374	158	0	partly published	the sutra of the questions of brahma	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	2	19	18
+agy	375	191	0	partly published	the sutra of the prophecy concening the girl candrottara	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	448	485	38
+agy	376	586	0	partly published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	405	405	1
+agy	377	589	0	partly published		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	406	406	1
+agy	378	609	0	partly published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	82	84	3
+agy	379	673	0	partly published		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	421	421	1
+agy	380	761	0	partly published	the incantation of lohatunda	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	103	104	2
+agy	381	762	0	partly published	the incantation of lohatunda	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	105	106	2
+agy	382	987	0	partly published	the tantra of the play of the goddess usnisavijaya	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	279	285	7
+agy	383	539	0	partly published		103	དཀར་ཆག	6ac0d300f427c9bb0692fe10	hidden	294	344	48
+agy	384	2	0	in progress	pratimoksa sutra	5	འདུལ་བ།	6ac048c4f427c9bb06920d04	hidden	2	40	39
+agy	385	3	0	in progress	detailed explanations of discipline	5	འདུལ་བ།	6ac048c4f427c9bb06920d04	hidden	41	583	543
+agy	386	3	1	in progress	detailed explanations of discipline	6	འདུལ་བ།	6ac049a8f427c9bb06920f4e	hidden	1	574	573
+agy	387	3	1	in progress	detailed explanations of discipline	7	འདུལ་བ།	6ac04a97f427c9bb0692118f	hidden	1	536	516
+agy	388	3	1	in progress	detailed explanations of discipline	8	འདུལ་བ།	6ac04c0bf427c9bb069213aa	hidden	1	537	535
+agy	389	3	1	in progress	detailed explanations of discipline	9	འདུལ་བ།	6ac04cdff427c9bb069215c6	hidden	1	1	1
+agy	390	4	0	in progress	bhiksunis pratimoksa sutra	9	འདུལ་བ།	6ac04cdff427c9bb069215c6	hidden	2	49	48
+agy	391	5	0	in progress	detailed explanations on nuns discipline	9	འདུལ་བ།	6ac04cdff427c9bb069215c6	hidden	50	655	605
+agy	392	5	1	in progress	detailed explanations on nuns discipline	10	འདུལ་བ།	6ac04e09f427c9bb06921858	hidden	1	1	1
+agy	393	6	0	in progress	finer points of discipline	10	འདུལ་བ།	6ac04e09f427c9bb06921858	hidden	2	616	612
+agy	394	6	1	in progress	finer points of discipline	11	འདུལ་བ།	6ac0500cf427c9bb06921ac3	hidden	1	666	665
+agy	395	6	1	in progress	finer points of discipline	12	འདུལ་བ།	6ac05209f427c9bb06921d60	hidden	1	1	1
+agy	396	7	0	in progress	preeminent account of discipline	12	འདུལ་བ།	6ac05209f427c9bb06921d60	hidden	2	602	600
+agy	397	7	1	in progress	preeminent account of discipline	13	འདུལ་བ།	6ac052fff427c9bb06921fbd	hidden	1	470	468
+agy	398	7	1	in progress	preeminent account of discipline	14	འབུམ།	6ac053c7f427c9bb06922196	hidden	1	1	1
+agy	399	12	0	in progress	the perfection of wisdom in eight thousand lines	33	བརྒྱད་སྟོང་པ།	6ac06bf5f427c9bb069258d4	hidden	2	572	570
+agy	400	12	1	in progress	the perfection of wisdom in eight thousand lines	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	1	1	1
+agy	401	13	0	in progress	the verses that summarize the perfection of wisdom	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	2	38	37
+agy	402	14	0	in progress	the perfection of wisdom teachings the questions of suvikrantavikramin	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	39	206	168
+agy	403	15	0	in progress	the perfection of wisdom in five hundred lines	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	207	240	34
+agy	404	16	0	in progress	the sutra on the perfection of wisdom the diamond cutter the diamond sutra	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	241	264	24
+agy	405	17	0	in progress		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	265	277	13
+agy	406	18	0	in progress	the illustrious perfection of wisdom in fifty lines	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	278	282	5
+agy	407	20	0	in progress		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	286	287	2
+agy	408	23	0	in progress	the perfection of wisdom mother in one syllable	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	294	294	1
+agy	409	24	0	in progress		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	295	346	52
+agy	410	25	0	in progress		34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	347	349	3
+agy	411	29	0	in progress	the perfection of wisdom for vajrapani	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	355	355	1
+agy	412	30	0	in progress	the perfection of wisdom for vajraketu	34	ཤེས་རབ་སྣ་ཚོགས།	6ac06d6bf427c9bb06925b13	hidden	356	359	2
+agy	413	45	0	in progress	the chapter explaining the three vows	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	2	89	88
+agy	414	49	0	in progress	the array of amitabha	39	དཀོན་བརྩེགས།	6ac074ecf427c9bb06926972	hidden	474	540	66
+agy	415	49	1	in progress	the array of amitabha	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	1	1	1
+agy	416	50	0	in progress	the array of the tathagata aksobhya	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	2	139	138
+agy	417	53	0	in progress	the ten dharmas	40	དཀོན་བརྩེགས།	6ac076eff427c9bb06926b91	hidden	327	367	41
+agy	418	60	0	in progress	the meeting of father and son	42	དཀོན་བརྩེགས།	6ac07a04f427c9bb06927037	hidden	2	335	334
+agy	419	63	0	in progress	the sutra of ugras questions	42	དཀོན་བརྩེགས།	6ac07a04f427c9bb06927037	hidden	513	570	58
+agy	420	63	1	in progress	the sutra of ugras questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	1	1	1
+agy	421	66	0	in progress	the teaching of the great magical display	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	71	134	64
+agy	422	77	0	in progress	the sutra of vimaladattas questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	481	521	41
+agy	423	80	0	in progress	the sutra of the devaputra susthitamatis questions	43	དཀོན་བརྩེགས།	6ac07c25f427c9bb06927274	hidden	569	618	49
+agy	424	80	1	in progress	the sutra of the devaputra susthitamatis questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	1	52	52
+agy	425	82	0	in progress	the sutra of the chapter of the bodhisattva jnanottaras questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	59	140	82
+agy	426	87	0	in progress	the discourse for kasyapa	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	238	302	65
+agy	427	88	0	in progress	the mass of jewels	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	303	349	47
+agy	428	89	0	in progress	the sutra of aksayamatis questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	350	363	14
+agy	429	91	0	in progress	the sutra of ratnacudas questions	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	419	508	90
+agy	430	92	0	in progress	the lions roar of srimaladevi	44	དཀོན་བརྩེགས།	6ac07d46f427c9bb069274e1	hidden	509	554	46
+agy	431	98	0	in progress		46	མདོ་སྡེ།	6ac0800cf427c9bb069279e5	hidden	515	556	41
+agy	432	98	1	in progress		47	མདོ་སྡེ།	6ac081f7f427c9bb06927c14	hidden	1	1	1
+agy	433	102	0	in progress	the condensed sutra a dharma discourse	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	453	546	94
+agy	434	105	0	in progress	the dharma discourse on the eight mandalas	48	མདོ་སྡེ།	6ac08302f427c9bb06927e74	hidden	570	574	4
+agy	435	105	1	in progress	the dharma discourse on the eight mandalas	49	མདོ་སྡེ།	6ac0845cf427c9bb069280b5	hidden	1	1	1
+agy	436	107	0	in progress	the sutra on the descent into lanka	49	མདོ་སྡེ།	6ac0845cf427c9bb069280b5	hidden	111	382	272
+agy	437	108	0	in progress	the quintessence of the speech of all the buddhas a chapter from the descent into lanka sutra	49	མདོ་སྡེ།	6ac0845cf427c9bb069280b5	hidden	383	565	182
+agy	438	110	0	in progress	the sutra of the dense array	50	མདོ་སྡེ།	6ac086cbf427c9bb069282fd	hidden	2	110	109
+agy	439	111	0	in progress	the white lotus of great compassion	50	མདོ་སྡེ།	6ac086cbf427c9bb069282fd	hidden	111	256	146
+agy	440	117	0	in progress	the basket of the three jewels	51	མདོ་སྡེ།	6ac088b4f427c9bb06928550	hidden	495	579	85
+agy	441	120	0	in progress	the mahayana sutra of the great parinirvana	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	2	298	297
+agy	442	121	0	in progress	the sutra of the great parinirvana	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	299	302	4
+agy	443	123	0	in progress	words of the dharma the treasury of the buddhas	54	མདོ་སྡེ།	6ac08c9df427c9bb06928cf8	hidden	304	420	117
+agy	444	132	0	in progress	the sutra on the samadhi of valiant progress	55	མདོ་སྡེ།	6ac08f92f427c9bb06928f47	hidden	506	632	126
+agy	445	132	1	in progress	the sutra on the samadhi of valiant progress	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	1	1	1
+agy	446	133	0	in progress	the sutra on the samadhi in which the buddhas of the present all stand before one	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	2	139	138
+agy	447	135	0	in progress	the words of the dharma on the vajra samadhi	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	243	287	45
+agy	448	137	0	in progress	the supreme samadhi	56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	357	373	17
+agy	449	140	0	in progress		56	མདོ་སྡེ།	6ac09110f427c9bb069291c2	hidden	578	596	19
+agy	450	146	0	in progress	the sutra teaching the miracles in the domain of skillful means that the bodhisattvas have at their disposition	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	162	281	120
+agy	451	148	0	in progress	the sutra of the questions of gaganaganja	57	མདོ་སྡེ།	6ac093adf427c9bb0692941d	hidden	484	658	175
+agy	452	161	0	in progress	the sutra of the questions of devaputra suvikrantacinta	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	201	277	77
+agy	453	167	0	in progress	the sutra of the questions of vikurvanaraja	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	350	420	71
+agy	454	168	0	in progress	the questions of vimalaprabha	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	421	518	98
+agy	455	169	0	in progress	instruction on the mahayana	59	མདོ་སྡེ།	6ac0970bf427c9bb0692994d	hidden	519	611	90
+agy	456	187	0	in progress	the teaching on the inconceivable properties of the buddhas	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	315	381	67
+agy	457	200	0	in progress	the sutra on concordance with the world	61	མདོ་སྡེ།	6ac09a9ef427c9bb06929e15	hidden	605	616	11
+agy	458	200	1	in progress	the sutra on concordance with the world	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	1	1	1
+agy	459	204	0	in progress	the sutra on offering lamps	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	162	182	21
+agy	460	209	0	in progress	the sutra proclaiming the lions roar	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	222	230	9
+agy	461	213	0	in progress	the sutra for the benefit of angulimala	62	མདོ་སྡེ།	6ac09b8ef427c9bb0692a080	hidden	251	408	158
+agy	462	222	0	in progress	the sutra of the chapter on tib the great drum skt the bearer of the great drum	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	168	252	85
+agy	463	223	0	in progress	the sutra of the chapter on the thirtythree	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	253	326	74
+agy	464	227	0	in progress	the sutra gathering all fragments	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	353	376	24
+agy	465	228	0	in progress	the sutra on the the buddhas deliberations	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	377	451	75
+agy	466	230	0	in progress	the sutra on the splendid commitments of the tathagatas	63	མདོ་སྡེ།	6ac09c93f427c9bb0692a2e4	hidden	531	594	63
+agy	467	230	1	in progress	the sutra on the splendid commitments of the tathagatas	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	1	1	1
+agy	468	233	0	in progress	the chapter from the great cloud sutra on the great playful festival of the oceanic gathering of the bodhisattvas of the ten directions	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	429	490	62
+agy	469	234	0	in progress		64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	491	499	9
+agy	470	236	0	in progress	the tenth chapter from amongst the ten thousand chapters of the sutra on the heroic way	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	525	572	48
+agy	471	237	0	in progress	a minor chapter on demons	64	མདོ་སྡེ།	6ac09f72f427c9bb0692a539	hidden	573	598	25
+agy	472	237	1	in progress	a minor chapter on demons	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	1	1	1
+agy	473	239	0	in progress	the sutra of the ten wheels of ksitigarbha	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	199	481	283
+agy	474	240	0	in progress	the sutra of the wheel of no reversions	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	482	602	121
+agy	475	242	0	in progress	the sutra of the wheel of dedication	65	མདོ་སྡེ།	6ac0a17cf427c9bb0692a792	hidden	605	612	7
+agy	476	242	1	in progress	the sutra of the wheel of dedication	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	1	1	1
+agy	477	243	0	in progress	the sutra of the king of the true dharma	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	2	29	28
+agy	478	253	0	in progress	the sutra on the threefold teaching	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	138	139	2
+agy	479	256	0	in progress	the seal of the dharma	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	147	181	35
+agy	480	258	0	in progress	the sutra on the tathagata essence	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	490	517	28
+agy	481	261	0	in progress	the sutra on skill in means	66	མདོ་སྡེ།	6ac0a2b8f427c9bb0692a9f9	hidden	566	614	49
+agy	482	261	1	in progress	the sutra on skill in means	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	1	1	1
+agy	483	262	0	in progress	the five thousand four hundred and fiftythree names of the buddha	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	2	178	177
+agy	484	264	0	in progress	the sutra on liberation	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	419	526	108
+agy	485	265	0	in progress	the minor chapters on the rituals of homage and the clearing away of remorse in the noble sutra of the great realization	67	མདོ་སྡེ།	6ac0a462f427c9bb0692ac62	hidden	527	574	48
+agy	486	272	0	in progress	the sutra of the ten buddhas	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	42	50	9
+agy	487	274	0	in progress	the sutra of the crown ornament of the buddhas	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	58	70	13
+agy	488	275	0	in progress	the sutra on buddhahood	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	71	87	17
+agy	489	277	0	in progress	the sutra of the eight mandalas	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	98	103	6
+agy	490	279	0	in progress	being mindful of the buddha	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	108	108	1
+agy	491	280	0	in progress	being mindful of the dharma	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	109	109	1
+agy	492	284	0	in progress	the sutra of the three heaps	68	མདོ་སྡེ།	6ac0a4f6f427c9bb0692aee3	hidden	113	152	40
+agy	493	289	0	in progress	the great sutra of bimbisaras going out to meet the buddha	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	488	498	11
+agy	494	290	0	in progress	the great sutra on emptiness	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	499	505	7
+agy	495	291	0	in progress	the great sutra on great emptiness	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	506	522	17
+agy	496	294	0	in progress	the great sutra on the five and three views	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	534	550	17
+agy	497	295	0	in progress	the sutra of throwing stones	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	551	589	39
+agy	498	296	0	in progress	the sutra on examples of youth	71	མདོ་སྡེ།	6ac0a985f427c9bb0692b63e	hidden	590	592	3
+agy	499	341	0	in progress	the sutra of the wise and foolish	74	མདོ་སྡེ།	6ac0ac93f427c9bb0692bd7f	hidden	258	595	338
+agy	500	343	0	in progress	the hundred accounts of noble deeds beginning with that of purna	75	མདོ་སྡེ།	6ac0adfcf427c9bb0692bfda	hidden	2	572	571
+agy	501	359	1	in progress	the sutra of the twelve eyes	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	1	1	1
+agy	502	360	0	in progress	reciting the names of manjusri	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	2	26	25
+agy	503	362	0	in progress	kalacakra	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	44	256	213
+agy	504	364	0	in progress	the essence of the tantra of kalacakra	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	288	290	3
+agy	505	366	0	in progress	the higher tantra of the deity dakinijalasamvara who is the union of all the buddhas	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	302	384	83
+agy	506	367	0	in progress	the supplementary tantra to the the higher tantra of the deity dakinijalasamvara who is the union of all the buddhas	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	385	425	39
+agy	507	369	0	in progress	appendix to the discourse tantra	77	རྒྱུད་འབུམ།	6ac0b0d3f427c9bb0692c476	hidden	493	740	247
+agy	508	369	1	in progress	appendix to the discourse tantra	78	རྒྱུད་འབུམ།	6ac0b19cf427c9bb0692c75d	hidden	1	1	1
+agy	509	370	0	in progress	vajradaka	78	རྒྱུད་འབུམ།	6ac0b19cf427c9bb0692c75d	hidden	2	249	248
+agy	510	372	0	in progress	ocean of dakas a yoginitantra	78	རྒྱུད་འབུམ།	6ac0b19cf427c9bb0692c75d	hidden	273	528	256
+agy	511	373	0	in progress	the tantra of the arising of samvara	78	རྒྱུད་འབུམ།	6ac0b19cf427c9bb0692c75d	hidden	529	615	87
+agy	512	478	1	in progress	the tantra of red yamari	84	རྒྱུད་འབུམ།	6ac0baf0f427c9bb0692d660	hidden	1	1	1
+agy	513	479	0	in progress	the compendium of realities	84	རྒྱུད་འབུམ།	6ac0baf0f427c9bb0692d660	hidden	2	282	281
+agy	514	480	0	in progress	the great secret yogatantra the tip of the vajra	84	རྒྱུད་འབུམ།	6ac0baf0f427c9bb0692d660	hidden	283	546	264
+agy	515	495	1	in progress	the practice described as the taming	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	1	1	1
+agy	516	496	0	in progress	the vajrapani empowerment	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	2	312	311
+agy	517	499	0	in progress	the tantra of blueclad vajrapani vajrapatala	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	333	343	11
+agy	518	502	0	in progress	the sovereign tantra orderly arrangement of the three vows	87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	361	495	133
+agy	519	506	0	in progress		87	རྒྱུད་འབུམ།	6ac0bf6df427c9bb0692db09	hidden	572	615	44
+agy	520	560	0	in progress	the essence of the peahen queen of spells	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	231	231	1
+agy	521	567	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	369	379	11
+agy	522	568	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	380	386	7
+agy	523	569	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	387	389	3
+agy	524	570	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	390	392	3
+agy	525	571	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	393	394	2
+agy	526	572	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	395	396	2
+agy	527	574	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	397	400	4
+agy	528	575	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	401	401	1
+agy	529	582	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	404	404	1
+agy	530	599	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	497	516	20
+agy	531	603	0	in progress		90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	531	534	4
+agy	532	604	0	in progress	the secret tantra of the wrathful conqueror	90	རྒྱུད་འབུམ།	6ac0c360f427c9bb0692e255	hidden	535	572	37
+agy	533	604	1	in progress	the secret tantra of the wrathful conqueror	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	1	70	70
+agy	534	606	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	73	76	4
+agy	535	607	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	77	79	3
+agy	536	608	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	80	81	2
+agy	537	610	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	85	88	4
+agy	538	614	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	94	102	9
+agy	539	615	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	103	103	1
+agy	540	616	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	104	110	7
+agy	541	618	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	116	116	1
+agy	542	619	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	117	119	3
+agy	543	620	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	120	120	1
+agy	544	621	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	121	122	2
+agy	545	622	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	123	123	1
+agy	546	625	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	124	124	1
+agy	547	629	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	133	133	1
+agy	548	630	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	134	134	1
+agy	549	631	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	135	160	26
+agy	550	632	0	in progress	the shorter tantra for the practice of the king of vajra wrath	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	161	204	44
+agy	551	633	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	205	208	4
+agy	552	634	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	209	213	5
+agy	553	635	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	214	216	3
+agy	554	636	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	217	222	6
+agy	555	637	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	223	230	8
+agy	556	638	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	231	235	5
+agy	557	640	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	243	246	4
+agy	558	641	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	247	250	4
+agy	559	644	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	255	256	2
+agy	560	645	0	in progress	the incantation the production of ambrosia	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	257	258	2
+agy	561	648	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	267	270	4
+agy	562	649	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	271	271	1
+agy	563	651	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	272	272	1
+agy	564	653	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	273	290	18
+agy	565	654	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	291	296	6
+agy	566	655	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	297	297	1
+agy	567	656	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	298	324	27
+agy	568	659	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	359	359	1
+agy	569	662	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	371	378	8
+agy	570	663	0	in progress	the practice of vasudhara	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	379	380	2
+agy	571	664	0	in progress	the practice of the incantation of vasudhara	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	381	383	3
+agy	572	678	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	444	444	1
+agy	573	680	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	445	447	1
+agy	574	681	0	in progress	the web of lotuses the root tantra of avalokitesvara	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	448	555	108
+agy	575	682	0	in progress		91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	556	567	12
+agy	576	683	0	in progress	the incantation the essence of amoghapasa	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	568	573	6
+agy	577	684	0	in progress	the incantation the questions of narayana	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	574	578	5
+agy	578	685	0	in progress	the incantation of nagadatta the essence of the nagas	91	རྒྱུད་འབུམ།	6ac0c3edf427c9bb0692e494	hidden	579	580	2
+agy	579	685	1	in progress	the incantation of nagadatta the essence of the nagas	92	རྒྱུད་འབུམ།	6ac0c59af427c9bb0692e6db	hidden	1	1	1
+agy	580	746	0	in progress	the great tantra of supreme knowledge	95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	2	474	473
+agy	581	748	0	in progress		95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	526	527	2
+agy	582	749	0	in progress		95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	528	529	2
+agy	583	751	0	in progress		95	རྒྱུད་འབུམ།	6ac0ca39f427c9bb0692edd4	hidden	533	583	51
+agy	584	751	1	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	1	1	1
+agy	585	752	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	2	7	6
+agy	586	753	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	8	8	1
+agy	587	754	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	9	10	2
+agy	588	755	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	11	13	3
+agy	589	757	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	15	36	22
+agy	590	758	0	in progress	the practice of the tantra of vajrasrnkhala	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	37	53	17
+agy	591	759	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	54	98	45
+agy	592	760	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	99	102	4
+agy	593	763	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	107	110	4
+agy	594	764	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	111	111	1
+agy	595	765	0	in progress	the practice of the yaksa manibhadra	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	112	136	25
+agy	596	768	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	177	177	1
+agy	597	769	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	178	178	1
+agy	598	770	0	in progress	the extant practice of jambhalajalendra	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	179	206	28
+agy	599	771	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	207	209	3
+agy	600	772	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	210	222	13
+agy	601	773	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	223	223	1
+agy	602	776	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	224	224	1
+agy	603	777	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	225	225	1
+agy	604	780	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	226	226	1
+agy	605	784	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	227	227	1
+agy	606	788	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	228	228	1
+agy	607	791	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	229	229	1
+agy	608	794	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	230	230	1
+agy	609	797	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	231	231	1
+agy	610	802	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	232	232	1
+agy	611	804	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	233	234	1
+agy	612	810	0	in progress	the king of dedications	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	457	499	43
+agy	613	814	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	507	507	1
+agy	614	815	0	in progress	a prayer from the series of gifts	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	508	510	3
+agy	615	817	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	513	515	3
+agy	616	818	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	516	517	2
+agy	617	819	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	518	518	1
+agy	618	820	0	in progress	the verses of auspiciousness for the thirtyseven deities	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	519	520	2
+agy	619	821	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	521	521	1
+agy	620	823	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	522	522	1
+agy	621	825	0	in progress	auspiciousness for the three families	96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	523	523	1
+agy	622	826	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	524	525	2
+agy	623	827	0	in progress		96	རྒྱུད་འབུམ།	6ac0cc27f427c9bb0692f01e	hidden	526	528	2
+agy	624	827	1	in progress		97	རྙིང་རྒྱུད།	6ac0cca5f427c9bb0692f231	hidden	1	1	1
+agy	625	828	0	in progress	the sovereign allcreating mind of enlightenment	97	རྙིང་རྒྱུད།	6ac0cca5f427c9bb0692f231	hidden	2	171	170
+agy	626	829	0	in progress	the sutra of allgathering awareness or the sutra that gathers all intentions	97	རྙིང་རྒྱུད།	6ac0cca5f427c9bb0692f231	hidden	172	578	407
+agy	627	830	0	in progress	the lightning wheel of magnificent gnosis	97	རྙིང་རྒྱུད།	6ac0cca5f427c9bb0692f231	hidden	579	715	136
+agy	628	1096	0	in progress	the prayer of maitreya	101	གཟུངས་འདུས།	6ac0d0cef427c9bb0692f9ad	hidden	534	535	2
+agy	629	845	0	in progress	stainless light kalacakra commentary	102	དྲི་མེད་འོད།	6ac0d282f427c9bb0692fbda	hidden	3	233	231
+agy	630	845	0	in progress	stainless light kalacakra commentary	102	དྲི་མེད་འོད།	6ac0d282f427c9bb0692fbda	hidden	234	399	166
+agy	631	845	0	in progress	stainless light kalacakra commentary	102	དྲི་མེད་འོད།	6ac0d282f427c9bb0692fbda	hidden	400	518	119
+agy	632	845	0	in progress	stainless light kalacakra commentary	102	དྲི་མེད་འོད།	6ac0d282f427c9bb0692fbda	hidden	519	563	45
+agy	633		0	catalogue	catalogue (dkar chag)	103	དཀར་ཆག	6ac0d300f427c9bb0692fe10	hidden	1	293	293

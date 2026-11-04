@@ -110,9 +110,11 @@ export default function TermsPage() {
             Large-Scale AI & Commercial Use
           </h2>
           <p className="text-secondary mb-4">
-            If your organization serves <strong>more than 5 million users</strong> and
-            you want to incorporate Source Library content into AI training data,
-            model outputs, or commercial products, we ask that you work with us directly.
+            Training, fine-tuning or building AI models on Source Library content, and
+            bulk text-and-data-mining for those purposes, requires a separate license,
+            whatever the size of your organization. Terms and rates are on our{' '}
+            <Link href="/licensing" className="text-accent-rust hover:underline">AI &amp; Data-Mining Licensing</Link>{' '}
+            page. If you want to build our content into a commercial product, please work with us directly.
           </p>
           <div className="bg-cream rounded-lg p-6 mb-4">
             <p className="text-secondary font-medium mb-2">What we&rsquo;re looking for:</p>
@@ -178,8 +180,10 @@ export default function TermsPage() {
             </div>
           </div>
           <p className="text-secondary text-sm">
-            API access is free and does not require a license, regardless of organization size.
-            We ask that you respect reasonable rate limits and attribute content to Source Library.
+            API access for reading, research and individual use is free and needs no
+            license, within the posted rate limits; please attribute content to Source Library.
+            Using the API to gather training data for AI models is covered by the
+            training license above, not by free access.
           </p>
         </section>
 

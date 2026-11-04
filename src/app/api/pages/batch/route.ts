@@ -6,6 +6,8 @@ import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { poolRefFor } from '@/lib/suspected-pool';
+import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
+import { takeReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
 
 export const preferredRegion = 'fra1';
 
@@ -42,8 +44,12 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     let pages = await db.collection('pages').find(
       filter,
-      { projection: { detected_images: 0 } }
+      { projection: PAGE_API_LAYER_PROJECTION }
     ).toArray();
+
+    // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
+    const taken = await takeReaderTextLayers(db, pages);
+    pages = taken.pages;
 
     // Metered reader (#4357): strip gated text for anonymous callers beyond
     // each book's free sample. Tenant-scoped requests are exempt. No-op
@@ -60,7 +66,7 @@ export async function POST(request: NextRequest) {
     // flagged proxy pool also gets its extraction ref (#6950) and a
     // private, no-store response.
     const ref = await poolRefFor(request);
-    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest, undefined, { ref }));
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(applyReaderTextLayer(rest, taken.layers), undefined, { ref }));
 
     // With metering on, the body depends on who asked (session vs anon) —
     // never let a shared cache serve one caller's variant to another. POSTs
