@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
@@ -244,6 +245,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const quotable = resolveQuoteText(page, book.id, requestedLang, { book });
 
     // A caller that explicitly said include_original=false wants English we

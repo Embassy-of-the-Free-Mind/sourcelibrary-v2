@@ -1,4 +1,5 @@
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -270,6 +271,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   //
   // The notes layer (#7965) goes in first: a page with a current translation.text and a page_annotations doc
   // for it is read from the layer; any other page is served exactly as before.
+  await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
   return (
