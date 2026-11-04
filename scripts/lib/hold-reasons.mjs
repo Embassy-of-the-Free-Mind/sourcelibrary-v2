@@ -7,3 +7,9 @@
 // held count on /admin, where 409K of them hid the ~55K holds that are decisions (#7860 group 1).
 export const NOT_ACQUIRED_HOLD_REASONS = Object.freeze(['manifest-only-lazy-pages', 'acquisition-wave-2026-10b']);
 export const isNotAcquiredReason = (reason) => NOT_ACQUIRED_HOLD_REASONS.includes(reason);
+
+// The books siku-translate-lane.mjs owns and translates while they stay held (#5600). Here so the reader-request lane
+// can name them without a cycle: the Siku lane reads that lane's request judge (#7690).
+// zh-histories-7546: the Four Histories (Shiji, Hanshu, Hou Hanshu, Sanguozhi), Siku copies OCR'd by the Paddle lane on
+// 2026-10-28 (#7546). Derek 2026-10-29: "get more chinese translated". They go first, his 10-27 priority volumes first.
+export const SIKU_LANE_HOLDS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']);
