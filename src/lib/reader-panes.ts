@@ -13,7 +13,6 @@
  * just image").
  */
 import type { Page } from '@/lib/types';
-import { getTranslationText } from '@/lib/translation-text';
 
 /**
  * True when the text panes would only say that the page has no text yet.
@@ -29,7 +28,7 @@ export function pageHasNoTextToShow(page: Page): boolean {
   if (page.translation_withheld) return false;
   const texts = [
     page.ocr?.data,
-    getTranslationText(page),
+    page.translation?.data,
     page.modernized?.data,
     page.modernized_spelling?.data,
   ];
