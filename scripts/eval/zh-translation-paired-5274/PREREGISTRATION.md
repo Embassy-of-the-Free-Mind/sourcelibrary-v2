@@ -77,3 +77,49 @@ only when the judge accepted it, gave it no wrong_text defect, and prefers it to
 fidelity and fewer severity-weighted defects), and the page's stored English is unchanged since the draw. Among the
 arms, the best by (accept, fidelity, fewer weighted defects) is written; a tie goes to N. Human edits are never
 touched (the door refuses them, and the frame has none).
+
+## Amendment 1 (2026-11-04 ~11:25Z): arm F4, four pages a call (Derek's inbox notes of 11:10Z and 11:12Z)
+
+Committed before any F4 page is read. **At this commit arm N was fully read (60/60) and arm F was 52/60 read; no
+verdict of any arm had been made** (the judge had not started). The F/N design above is unchanged.
+
+**Arm F4.** `gemini-3.8-flash-low` through agy, **4 pages a call**, `claude-translate.mjs read --cli=agy --per-call=4
+--fresh` (reply `json`, the #5021 anchor guard on, the production block guards: anchors, absorption, number vote,
+in-block drift, leaf seam; a refused page is read again alone), `CANDIDATE_READS=off`, on the same 60 drawn pages.
+Each judged page sits in a block of its real neighbours (`f4.mjs blocks`, seed 20261104): the block's position is
+tried mid-block first (positions 2 and 3 in a seeded order), then 1 and 4, then blocks of 3 and 2, and the first
+block the book allows is used (all its pages in the book, translatable, OCR ≥ 200 characters each, ≤ 20,000 in total,
+so `planBlocks` keeps it whole). Position and block size are recorded per page.
+
+**What context F4 sends** (recorded from each meta's `context`): the production block prompt, the stored English of
+the page BEFORE THE BLOCK (the 3 Flash English, as the live lane sends for the first block of a run), the OCR of the
+page before and the page after the block, and the other pages of the block as source. F and N send one page with the
+previous page's stored English (F) or without it (N), and the neighbours' OCR.
+
+**Factor matrix** (which factor each comparison changes):
+
+| comparison | model tier | pages per call | previous-page English | source draft | stratum |
+|---|---|---|---|---|---|
+| F vs S | 3 Flash → 3.8 Flash low | 1 (S: as stored) | as stored → stored | Paddle (same) | ref + prose |
+| N vs F | same | 1 | yes → no | same | same |
+| F4 vs F | same | 1 → 4 | yes (page before the block, as the live lane sends) | same | same |
+| test 2 (zh-ocr-gap) | same (3.8 low) | 1 | no | Paddle / Opus / Flash correction | 佩文韻府 family only |
+
+F4 vs N is not a pages-per-call effect and no interaction is claimed: there is no N4 arm.
+
+**Judge.** The same blind Opus judge and prompt, arm names hidden; the F4 reads join the same packet (new ids). The
+10 retests are drawn from the S/F/N items only, as before F4 existed. F4 is compared with F paired (gained/lost, exact
+McNemar), and reported: accepted k/n, wrong-text pages, major rate, weighted defects per 1,000 words, tokens and calls
+per page against F, guard refusals by reason (`calls.jsonl` `guard`, refused calls by class). A judged page that was
+refused in its block and read again alone (`call_pages` 1) is what would be served: it is scored in F4 and also
+reported separately. F4 does not enter the S/F/N decision rule; it decides whether the Siku lane moves to 4 a call.
+
+**Slip screen.** Every page of every F4 block (~240) is screened by Sonnet (`claude -p --model sonnet`, sealed, the
+scans of n−1, n and n+1 and the F4 English of n): does the English carry text that belongs to the leaf before or
+after (wrong-leaf), and how many sentences are finished on the wrong side of a page break. Every flag is confirmed by
+Opus with the same three scans. Reported: confirmed slip pages, and blocks with a confirmed slip, with Wilson 95%
+intervals; wrong-side sentence count; and the slip rate this n would still miss (the rate at which P(0 of n) = 0.05,
+i.e. 3/n by the rule of three). Opus calls for F4 (60 verdicts + confirmations) stay under 100.
+
+**Useful pages.** F4 reads of judged pages are candidates under the useful-page rule like F and N; F4 reads of the
+unjudged neighbours are never written.

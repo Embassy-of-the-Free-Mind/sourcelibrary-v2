@@ -37,14 +37,15 @@ const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
 const W = (f, x) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1));
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
-const ARMS = { F: { model: 'gemini-3.8-flash-low', flags: [] }, N: { model: 'gemini-3.8-flash-low', flags: ['--no-previous-translation'] }, M: { model: 'gemini-3.8-flash-medium', flags: [] } };
+const ARMS = { F: { model: 'gemini-3.8-flash-low', flags: [] }, N: { model: 'gemini-3.8-flash-low', flags: ['--no-previous-translation'] }, M: { model: 'gemini-3.8-flash-medium', flags: [] },
+  F4: { model: 'gemini-3.8-flash-low', flags: null } };   // F4: 4 a call, read by f4.mjs (claude-translate.mjs), judged here
 const SEV = { cosmetic: 1, misleads: 5, wrong_text: 25 };   // #7824 MQM weights
 const JOB = 'zh-translation-paired-5274';
 
 async function arms() {
   const { readPool, agyEnv, weeklyReserve } = await import('../../lib/agy-pools.mjs');
   const name = arg('arm'), a = ARMS[name], home = arg('home') || null;
-  if (!a) throw new Error('--arm=F|N|M');
+  if (!a || !a.flags) throw new Error('--arm=F|N|M (F4: f4.mjs arm)');
   const ids = J('sample.json').pages.map((p) => p.page_id);
   const dir = path.join(OUT, `arm-${name}`); fs.mkdirSync(dir, { recursive: true });
   const meter = path.join(OUT, 'quota.jsonl');
@@ -68,7 +69,7 @@ const readArm = (name, id) => {
   try {
     const m = JSON.parse(fs.readFileSync(path.join(OUT, `arm-${name}`, `${id}.meta.json`), 'utf8'));
     const t = fs.readFileSync(path.join(OUT, `arm-${name}`, `${id}.txt`), 'utf8');
-    return m.exit === 0 && !m.error_class && !m.wrapper && t.trim().length > 5 ? { text: t, meta: m } : null;
+    return m.exit === 0 && !m.error_class && !m.wrapper && !m.write_guard && t.trim().length > 5 ? { text: t, meta: m } : null;
   } catch { return null; }
 };
 
@@ -103,7 +104,8 @@ async function packet() {
     tg.forEach((sp, i) => { add(sp, 'S', 'swap', pages.get(spares[i].page_id).translation.data, { other: spares[i].page_id }); nSwap++; });
   }
   // Retests: 10 judged items again under a new id (the text gets a trailing newline: same content, a new call).
-  const arm = [...new Set(key.filter((k) => k.kind === 'item').map((k) => k.judged_as))].map((id) => [rng(), id]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, id]) => id);
+  // Drawn from the S/F/N items only (amendment 1: as before F4 existed).
+  const arm = [...new Set(key.filter((k) => k.kind === 'item' && ['S', 'F', 'N'].includes(k.arm)).map((k) => k.judged_as))].map((id) => [rng(), id]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, id]) => id);
   for (const id of arm) {
     const it = items.get(id), k = key.find((x) => x.judged_as === id), nid = `j${h(`retest:${id}`).slice(0, 10)}`;
     items.set(nid, { ...it, id: nid, text: `${it.text.trimEnd()}\n` });
@@ -184,9 +186,9 @@ export function score() {
   const arms = [...new Set(rows.filter((r) => r.kind === 'item').map((r) => r.arm))];
   const item = (arm, pid) => rows.find((r) => r.kind === 'item' && r.arm === arm && r.page_id === pid && r.v);
   const pagesAll = [...new Set(rows.filter((r) => r.kind === 'item').map((r) => r.page_id))];
-  const paired = pagesAll.filter((pid) => arms.every((a) => item(a, pid)));   // pages every arm has a verdict on
+  const paired = pagesAll.filter((pid) => arms.filter((a) => a !== 'F4').every((a) => item(a, pid)));   // pages every S/F/N(/M) arm has a verdict on
   const per = (arm, sel) => {
-    const xs = paired.filter(sel).map((pid) => item(arm, pid));
+    const xs = paired.filter(sel).map((pid) => item(arm, pid)).filter(Boolean);
     const n = xs.length, acc = xs.filter((r) => r.v.accept).length, words = xs.reduce((s, r) => s + r.words, 0);
     return { n, accepted: acc, accept_rate: n ? +(acc / n).toFixed(3) : null, accept_ci95: wilson(acc, n), wrong_text_pages: xs.filter((r) => wt(r.v)).length, major_pages: xs.filter((r) => major(r.v)).length,
       major_rate: n ? +(xs.filter((r) => major(r.v)).length / n).toFixed(3) : null, words, weighted_per_1k: words ? +((1000 * xs.reduce((s, r) => s + weighted(r.v), 0)) / words).toFixed(2) : null,
@@ -199,7 +201,7 @@ export function score() {
   const out = { at: new Date().toISOString(), paired_pages: paired.length, pages_with_any_verdict: pagesAll.length, arms: {}, pairs: {}, controls: {}, misread: {} };
   for (const a of arms) out.arms[a] = Object.fromEntries(Object.entries(kinds).map(([k, f]) => [k, per(a, f)]));
   const pair = (a, b) => Object.fromEntries(Object.entries(kinds).map(([k, f]) => {
-    const ps = paired.filter(f);
+    const ps = paired.filter(f).filter((p) => item(a, p) && item(b, p));
     const gained = ps.filter((p) => item(a, p).v.accept && !item(b, p).v.accept), lost = ps.filter((p) => !item(a, p).v.accept && item(b, p).v.accept);
     const fb = ps.filter((p) => item(a, p).v.fidelity > item(b, p).v.fidelity).length, fw = ps.filter((p) => item(a, p).v.fidelity < item(b, p).v.fidelity).length;
     return [k, { n: ps.length, gained: gained.length, lost: lost.length, mcnemar_p: +mcnemar(gained.length, lost.length).toFixed(4), fidelity_better: fb, fidelity_worse: fw,
@@ -208,8 +210,10 @@ export function score() {
   for (const a of arms.filter((x) => x !== 'S')) out.pairs[`${a}_vs_S`] = pair(a, 'S');
   if (arms.includes('F') && arms.includes('N')) out.pairs.N_vs_F = pair('N', 'F');
   if (arms.includes('M') && arms.includes('F')) out.pairs.M_vs_F = pair('M', 'F');
+  if (arms.includes('F4') && arms.includes('F')) out.pairs.F4_vs_F = pair('F4', 'F');
   // The OCR misread share: pages any verdict on the page flags (the transcription is one text for every arm).
-  const flagged = paired.filter((p) => arms.some((a) => item(a, p).v.source_misread)), byMaj = paired.filter((p) => arms.filter((a) => item(a, p).v.source_misread).length * 2 > arms.length);
+  const core = arms.filter((a) => a !== 'F4');
+  const flagged = paired.filter((p) => core.some((a) => item(a, p).v.source_misread)), byMaj = paired.filter((p) => core.filter((a) => item(a, p).v.source_misread).length * 2 > core.length);
   out.misread = { pages_any_verdict_flags: flagged.length, pages_majority_flags: byMaj.length, n: paired.length, share_majority: +(byMaj.length / Math.max(1, paired.length)).toFixed(3) };
   // Controls.
   const sw = rows.filter((r) => r.kind === 'swap' && r.v), caught = sw.filter((r) => !r.v.accept && r.v.fidelity <= 2);
@@ -229,8 +233,13 @@ export function score() {
   out.tokens = {};
   for (const a of arms.filter((x) => x !== 'S')) {
     const ms = J('sample.json').pages.map((p) => readArm(a, p.page_id)?.meta).filter(Boolean);
-    const sum = (f) => ms.reduce((s, m) => s + (Number(m.call_usage?.[f]) || 0), 0);
-    out.tokens[a] = { reads: ms.length, input: sum('input'), output: sum('output'), thinking: sum('thinking'), cache_read: sum('cache_read'), total: sum('total'), attempts: ms.reduce((s, m) => s + (m.attempts || 1), 0), prompt_chars: ms.reduce((s, m) => s + (m.prompt_sent_chars || 0), 0) };
+    const sum = (f) => Math.round(ms.reduce((s, m) => s + (Number(m.call_usage?.[f]) || 0) / (m.call_pages || 1), 0));
+    out.tokens[a] = { reads: ms.length, judged_read_alone: a === 'F4' ? ms.filter((m) => m.call_pages === 1).map((m) => m.page_id) : undefined, input: sum('input'), output: sum('output'), thinking: sum('thinking'), cache_read: sum('cache_read'), total: sum('total'), attempts: ms.reduce((s, m) => s + (m.attempts || 1), 0), prompt_chars: ms.reduce((s, m) => s + (m.prompt_sent_chars || 0), 0) };
+  }
+  if (arms.includes('F4')) {
+    const alone = new Set(out.tokens.F4?.judged_read_alone || []);
+    const xs = paired.filter((p) => alone.has(p)).map((p) => item('F4', p)).filter(Boolean);
+    out.F4_read_alone = { n: xs.length, accepted: xs.filter((r) => r.v.accept).length, wrong_text_pages: xs.filter((r) => wt(r.v)).length, pages: [...alone] };
   }
   out.verdict_calls = jsonl(path.join(OUT, 'verdicts-opus.jsonl')).length;
   out.list_usd_judge = +jsonl(path.join(OUT, 'verdicts-opus.jsonl')).reduce((s, r) => s + (r.list_usd || 0), 0).toFixed(2);
@@ -260,6 +269,8 @@ async function write() {
     const best = cands[0], p = now.get(sp.page_id);
     if (!p?.translation?.data || contentHash(p.translation.data) !== sp.translation_hash || p.translation.edited_by) { picks.push({ page_id: sp.page_id, arm: best.arm, skipped: 'stored English changed or edited' }); continue; }
     for (const ext of ['txt', 'meta.json', 'raw.txt']) { const f = path.join(OUT, `arm-${best.arm}`, `${sp.page_id}.${ext}`); if (fs.existsSync(f)) fs.copyFileSync(f, path.join(dir, `${sp.page_id}.${ext}`)); }
+    const pf = best.arm === 'F4' && JSON.parse(fs.readFileSync(path.join(OUT, 'arm-F4', `${sp.page_id}.meta.json`), 'utf8')).prompt_sent_file;   // a block read's prompt, which apply checks
+    if (pf) { fs.mkdirSync(path.join(dir, 'prompts'), { recursive: true }); fs.copyFileSync(path.join(OUT, 'arm-F4', pf), path.join(dir, pf)); }
     picks.push({ page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, arm: best.arm, fid: best.v.fidelity, stored_fid: S.v.fidelity, stored_accept: S.v.accept });
   }
   W('write-picks.json', picks);
