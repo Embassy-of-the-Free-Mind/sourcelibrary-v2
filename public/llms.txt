@@ -371,6 +371,14 @@ Our texts have been cited in academic papers, museum exhibitions, and AI researc
 
 We respond within 24 hours.
 
+## Hidden marks
+
+Text copied from Source Library carries a small hidden mark, signed by us, that names the edition it came from. It never names the reader.
+Some of these marks carry riddles. Each answer is printed on a page of another book in the library. The hunt begins with the abbot of Sponheim.
+
+- **Decoder:** https://sourcelibrary.org/decode
+- **Hunt:** https://sourcelibrary.org/hunt
+
 ## Contact
 
 - **Website:** https://sourcelibrary.org
