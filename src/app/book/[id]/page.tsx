@@ -1972,9 +1972,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {qualityStrings.qualityBook({
                     ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
                     serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
-                  })}{' '}
-                  {bookWarning.commonKinds.length > 0 && <>{qualityStrings.qualityBookKinds(bookWarning.commonKinds.map((k) => qualityStrings.qualityKinds[k]))}{' '}</>}
-                  {qualityStrings.qualitySeriousMeans}
+                  })}
                   {/* The checks record has no embed route: the warning stands on its own inside a partner frame. */}
                   {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
                 </p>
