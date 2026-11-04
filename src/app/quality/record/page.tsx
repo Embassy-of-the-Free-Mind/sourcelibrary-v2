@@ -136,16 +136,8 @@ const grades = servedGrades as typeof servedGrades & {
   grade_label: Record<string, string>;
   grades: Record<string, { pages: number; share: number; ci95: [number, number] }>;
 };
-/** The reader-facing order, worst last, each row saying what a reader can do with such a page. */
-const LADDER: { key: string; can: string }[] = [
-  { key: 'fit_to_quote', can: 'Quote it; check the scan before a formal citation' },
-  { key: 'fit_to_read', can: 'Read it; check the scan before quoting' },
-  { key: 'search_only', can: 'Read it with the scan: a word changes the sense' },
-  { key: 'wrong_span', can: 'Read it with the scan: a word, number or line differs from the page' },
-  { key: 'from_elsewhere', can: 'Do not rely on that part: it is from somewhere else' },
-  { key: 'mostly_wrong', can: 'Do not rely on it: most of the page is wrong or missing' },
-  { key: 'not_this_page', can: 'Do not rely on it: it is another page’s text' },
-];
+/** The grades in reader-facing order, worst last. The table states what was found, never what a reader may do with the page. */
+const LADDER = ['fit_to_quote', 'fit_to_read', 'search_only', 'wrong_span', 'from_elsewhere', 'mostly_wrong', 'not_this_page'];
 /** Plain names for the reading methods the draw happened to catch; a route not here shows its own id. */
 const READER_NAME: Record<string, string> = {
   lite: 'Gemini Flash-Lite', '3flash': 'Gemini 3 Flash', paddle: 'PaddleOCR-VL', yigdzin: 'Yig-dzin (Tibetan)',
@@ -417,19 +409,17 @@ export default function QualityCenterPage() {
               <caption className="sr-only">Share of pages in each grade, weighted back to the library, with 95% intervals</caption>
               <thead>
                 <tr>
-                  <th className={th}>What a reader can do with the page</th>
                   <th className={th}>What the reviewer found</th>
                   <th className={th}>Pages</th>
                   <th className={th}>Share of the library (95% interval)</th>
                 </tr>
               </thead>
               <tbody>
-                {LADDER.map(({ key, can }) => {
+                {LADDER.map((key) => {
                   const g = grades.grades[key];
                   return (
                     <tr key={key}>
-                      <td className={`${td} font-semibold text-stone-900 w-[26%]`}>{can}</td>
-                      <td className={`${td} w-[36%]`}>{grades.grade_label[key]}</td>
+                      <td className={`${td} font-semibold text-stone-900 w-[50%]`}>{grades.grade_label[key]}</td>
                       <td className={td}>{g.pages}</td>
                       <td className={td}>
                         <b className="text-stone-900">{pct(g.share, g.share < 0.05 ? 1 : 0)}</b>{' '}
@@ -448,7 +438,7 @@ export default function QualityCenterPage() {
             {n(servedDraw.books.pages_judged)} verdicts as <A href={`${BLOB}${SERVED_RECORD}`}>the record</A> (
             <IssueLink num={7866} />, <IssueLink num={7933} />). The four grades are{' '}
             <a href="#the-grades" className={LINK}>our own published rubric</a>; the last three rows split what it calls{' '}
-            <i>not usable</i>, because
+            <i>not the page&rsquo;s text</i>, because
             a wrong word and another book&rsquo;s page are not the same failure. Books were drawn in four groups and
             weighted back to the library; the interval is a bootstrap over books. The reviewer turned down{' '}
             {kOfN(servedDraw.instrument.wrong_page)} pages shown with another page&rsquo;s text, and caught{' '}
