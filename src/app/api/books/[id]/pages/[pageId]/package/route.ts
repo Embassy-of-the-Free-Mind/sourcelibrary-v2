@@ -127,14 +127,17 @@ function buildReadme(opts: {
   lines.push(
     prov
       ? `Transcription: ${transcriptProvenanceLabel(prov, info, 'full')}`
-      : page.ocr?.data ? `Transcription: ${info.machineTranscript}` : 'Transcription: not yet produced.'
+      : page.ocr?.data ? 'Transcription: included.' : 'Transcription: not yet produced.'
   );
   lines.push(
     !page.translation?.data
       ? 'Translation: not yet produced.'
       : trCorpus
         ? `Translation: ${info.corpusTranslation(trCorpus.name)}`
-        : page.translation.edited_by || page.translation.edited_at
+        // No model means not ours to call AI (e.g. Sefaria's own English, `source: 'manual'`).
+        : !page.translation.model
+          ? 'Translation: included.'
+          : page.translation.edited_by || page.translation.edited_at
           ? `Translation: ${info.machineTranslationEdited}`
           : `Translation: ${info.machineTranslation}`
   );
