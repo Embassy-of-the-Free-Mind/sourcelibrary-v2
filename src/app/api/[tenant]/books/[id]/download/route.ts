@@ -104,7 +104,7 @@ async function generateTxtDownload(db: Db, book: Book, pages: Page[], format: 't
   lines.push(`License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)`);
   lines.push(AI_TRAINING_NOTICE);
   lines.push('');
-  lines.push('Source Library, created by Derek Lomas. Amsterdam, 2026.');
+  lines.push('From Source Library. Amsterdam, 2026.');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
   lines.push('This edition carries a Trithemian imprimatur, an invisible');
@@ -379,7 +379,7 @@ async function generateEpubDownload(
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
       <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
-      <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+      <p>From Source Library. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -426,7 +426,7 @@ async function generateEpubDownload(
   // Add colophon chapter at the end
   const colophon = `
     <h1>About This Edition</h1>
-    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
     <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
@@ -496,7 +496,7 @@ async function generateParallelFlowEpubDownload(
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
       <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
-      <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+      <p>From Source Library. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -536,7 +536,7 @@ async function generateParallelFlowEpubDownload(
   const colophon = `
     <h1>About This Edition</h1>
     <p>This parallel text edition was prepared by the <strong>Source Library</strong>, presenting the original ${book.language} text and its English translation together, page by page.</p>
-    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
     <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
@@ -824,7 +824,7 @@ p:first-of-type {
           <p style="text-indent:0;text-align:center;">Original ${escapeXml(book.language)} with English translation</p>
         </div>
         <div class="colophon">
-          <p style="text-indent:0;text-align:center;">Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+          <p style="text-indent:0;text-align:center;">From Source Library. Amsterdam, 2026.</p>
           <p style="text-indent:0;text-align:center;">CC BY-NC-SA 4.0</p>
         </div>
       </div>
@@ -2121,7 +2121,7 @@ async function generateScholarlyEpubDownload(
     <p><strong>Contributors:</strong></p>
     ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})</p>`).join('\n    ')}
     <p>&#160;</p>
-    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p>&#160;</p>
     <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
   </div>
@@ -2377,7 +2377,7 @@ async function generateScholarlyEpubDownload(
 <body>
   <div class="colophon">
     <h1>About This Edition</h1>
-    <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
     <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
     <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'}</p>
