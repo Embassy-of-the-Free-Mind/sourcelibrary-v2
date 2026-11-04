@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
@@ -7,7 +8,7 @@ import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
-import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
+import { type HomeLang, COLLECTION_NAMES, NATIVE_SHELF_LANGUAGE, NATIVE_SHELF_LEAD_IDS, NATIVE_SHOWCASE_SLUGS, NATIVE_SUBJECT_SHELVES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
 import { localizedEditionFilterIndexed, localizedCollection, hasLocalizedEdition, type LocalizedCollectionMap } from '@/lib/localized';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
@@ -555,12 +556,29 @@ const NATIVE_SHELF_COUNT = 15;
  * language. Scans-only books count: a reader of Latin or Chinese reads the
  * page image, and serving those readers is why these sites exist (Derek,
  * 2026-10-22; #7176 published ~16K such books). Real covers, one card per work.
+ * `leadIds` open the shelf in the order given (NATIVE_SHELF_LEAD_IDS); one that
+ * has since been hidden simply drops out.
  */
-async function getNativeShelf(language: string): Promise<CatalogBook[]> {
-  const { books } = await browseBooks({ language, sort: 'popular', limit: 200, skipCount: true });
+async function getNativeShelf(language: string, leadIds: string[] = []): Promise<CatalogBook[]> {
+  const [{ books }, leadRows] = await Promise.all([
+    browseBooks({ language, sort: 'popular', limit: 200, skipCount: true }),
+    leadIds.length
+      ? getReadDb().then((db) => db.collection('books')
+          .find({
+            // By `id` OR `_id`: a re-minted `_id` hides a book from an `_id`-only lookup (book-deletion-and-identity.md).
+            $or: [{ id: { $in: leadIds } }, { _id: { $in: leadIds.filter((id) => ObjectId.isValid(id)).map((id) => new ObjectId(id)) } }],
+            visible: true,
+            pages_count: { $gt: 0 },
+          }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 })
+          .toArray()) as unknown as Promise<CatalogBook[]>
+      : Promise.resolve([] as CatalogBook[]),
+  ]);
+  const lead = JSON.parse(JSON.stringify(
+    leadIds.flatMap((id) => leadRows.filter((b) => b.id === id)),
+  )) as CatalogBook[];
   const seen = new Set<string>();
   const out: CatalogBook[] = [];
-  for (const b of books) {
+  for (const b of [...lead, ...books]) {
     if (!hasRenderableCover(b)) continue;
     const key = workKey(b);
     if (seen.has(key)) continue;
@@ -1112,7 +1130,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getCuratedShowcase(lang), 8000, emptyShowcase),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
     localizedCountsPromise,
-    NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
+    NATIVE_SHELF_LANGUAGE[lang] ? withTimeout(getNativeShelf(NATIVE_SHELF_LANGUAGE[lang]!, NATIVE_SHELF_LEAD_IDS[lang]), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
     Promise.all(subjectConfig.map((s) => withTimeout(getSubjectShelf(s.slug, nativeFirst!), 20000, [] as CatalogBook[]))),
     lang === 'la' ? withTimeout<UntranslatedShelf | null>(getUntranslatedShelf('Latin'), 20000, null) : Promise.resolve(null),
