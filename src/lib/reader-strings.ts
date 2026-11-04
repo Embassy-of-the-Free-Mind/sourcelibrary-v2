@@ -75,6 +75,12 @@ export interface ReaderStrings {
     next: string;
     close: string;
     jumpToPage: string;
+    /** The number printed on the leaf, beside the frame position, where a run was confirmed on the images (#8041). */
+    printedPage: (printed: string) => string;
+    /** The frame position, named where it has to be told from a printed number. */
+    scanPage: (n: number) => string;
+    /** Heading of the choice when the page box matches more than one page. */
+    whichPage: string;
     backToTheBook: string;
     backToTheBookPage: string;
     backToTheReader: string;
@@ -747,6 +753,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Next',
       close: 'Close',
       jumpToPage: 'Jump to page',
+      printedPage: (x) => `printed ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Which page?',
       backToTheBook: 'Back to the book',
       backToTheBookPage: 'Back to the book page',
       backToTheReader: 'Back to the reader',
@@ -1235,6 +1244,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Siguiente',
       close: 'Cerrar',
       jumpToPage: 'Ir a una página',
+      printedPage: (x) => `impresa ${x}`,
+      scanPage: (n) => `imagen ${n}`,
+      whichPage: '¿Qué página?',
       backToTheBook: 'Volver al libro',
       backToTheBookPage: 'Volver a la página del libro',
       backToTheReader: 'Volver al lector',
@@ -1760,6 +1772,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Sequens',
       close: 'Claude',
       jumpToPage: 'Paginam pete',
+      printedPage: (x) => `impressa ${x}`,
+      scanPage: (n) => `imago ${n}`,
+      whichPage: 'Quam paginam?',
       backToTheBook: 'Ad librum redi',
       backToTheBookPage: 'Ad paginam libri redi',
       backToTheReader: 'Ad lectionem redi',
@@ -2263,6 +2278,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Volgende',
       close: 'Sluiten',
       jumpToPage: 'Naar pagina',
+      printedPage: (x) => `gedrukt ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Welke pagina?',
       backToTheBook: 'Terug naar het boek',
       backToTheBookPage: 'Terug naar de boekpagina',
       backToTheReader: 'Terug naar de lezer',
@@ -2760,6 +2778,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: '下一个',
       close: '关闭',
       jumpToPage: '跳转到页',
+      printedPage: (x) => `印本第 ${x} 页`,
+      scanPage: (n) => `扫描第 ${n} 张`,
+      whichPage: '哪一页？',
       backToTheBook: '返回本书',
       backToTheBookPage: '返回本书页面',
       backToTheReader: '返回阅读器',
