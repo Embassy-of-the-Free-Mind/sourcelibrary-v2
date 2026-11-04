@@ -74,7 +74,15 @@ const EDITS = {
     ],
   },
 };
-const FALSE_NAMES = /Ricci|Aleni|Ten Chapters of an Extraordinary Man/;
+/** Found by scripts/audit/identity-repair-summary-scope.mjs after the first four were applied. */
+EDITS['69af12630092756351e449f9'] = {
+  why: 'This book is the Mozi, not Guide to Calculation (#6660)',
+  'index.bookSummary.abstract': [['The *Guide to Calculation* presents', 'The *Mozi* presents']],
+};
+const FALSE_NAMES = /Ricci|Aleni|Ten Chapters of an Extraordinary Man|Guide to Calculation/;
+// Re-running after a partial apply: name the books still to do.
+const ONLY = process.argv.find((a) => a.startsWith('--book='))?.split('=')[1];
+if (ONLY) for (const k of Object.keys(EDITS)) if (k !== ONLY) delete EDITS[k];
 
 const get = (o, p) => p.split('.').reduce((x, k) => x?.[k], o);
 
