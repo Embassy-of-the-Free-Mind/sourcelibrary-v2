@@ -75,6 +75,15 @@ export const PARTNERS_HTML = `
         </table>
         <p class="ds-note">Reviewed by AI, not by people; samples for some languages are small. Methods and intervals are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</p>
       </div>
+      <div class="ds-block">
+        <h3>Review records</h3>
+        <table class="ds-mini">
+          <tr><td>First-translation searches</td><td>90,769 records of whether a work is already in English, with written reasoning</td></tr>
+          <tr><td>Page judgements</td><td>8,017 judgements against the page photograph, with defects quoted and explained</td></tr>
+          <tr><td>Book checks</td><td>1,350 checks, with notes and page findings</td></tr>
+        </table>
+        <p class="ds-note">The findings are on the quality page. The records behind them come with a licence, separately from the text, and what a licensee may do with a record depends on the model that wrote it. Counted 4 November 2026.</p>
+      </div>
       <div class="ds-block ds-tagblock">
         <dl class="ds-tags">
           <div><dt>Modalities</dt><dd><span>Text</span><span>Image</span></dd></div>
