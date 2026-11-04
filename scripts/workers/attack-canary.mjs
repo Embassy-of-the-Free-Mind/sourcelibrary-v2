@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 /**
  * Attack canary: play every scraper trick we have blocked, and every kind of
@@ -128,13 +129,25 @@ async function newestProductionBuildHost() {
  * decoder page loses PROVENANCE_SECRET_KEY, or if the two disagree on the
  * scheme. Two requests; no key needed, the decoder holds it.
  */
+function internalKey() {
+  try {
+    return process.env.SL_INTERNAL_KEY || readFileSync('/root/.sl-internal-key', 'utf8').trim() || null;
+  } catch {
+    return null;
+  }
+}
+
 const QUOTE_PATH = '/api/books/the-cabinet-of-minerals-vreeswyk/quote?page=10';
 
 async function markRoundTrip() {
   const row = { host: 'sourcelibrary.org', name: 'quote text verifies in /decode', rule: 'provenance mark (#8150)', expect: 'authentic' };
   try {
     const headers = { 'user-agent': UA.ours };
-    const q = await fetch(`https://sourcelibrary.org${QUOTE_PATH}&_canary=attack`, { headers, signal: AbortSignal.timeout(30_000) });
+    // The box's anonymous page budget is shared with every other job on it and
+    // is often spent (first run: quote 429). Read with the box's own key when it
+    // has one; the decoder call needs none.
+    const key = internalKey();
+    const q = await fetch(`https://sourcelibrary.org${QUOTE_PATH}&_canary=attack`, { headers: key ? { ...headers, authorization: `Bearer ${key}` } : headers, signal: AbortSignal.timeout(30_000) });
     if (!q.ok) return { ...row, got: `quote ${q.status}`, ok: false };
     const text = (await q.json())?.quote?.translation;
     if (typeof text !== 'string' || !text) return { ...row, got: 'no quote text', ok: false };
