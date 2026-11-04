@@ -15,6 +15,7 @@ import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
 import { artworkTypeLabel } from '@/lib/artwork-record';
+import { displayPublished } from '@/lib/publication-date';
 import { hasLocalizedCollectionName, localizedCollection, localizedTitle } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed, useRoomResultHref } from '@/lib/EmbedContext';
@@ -2365,7 +2366,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
                       return <>{t.editedByAbbrev} <HighlightedText text={byline.editor} query={query} /></>;
                     }
                     return <HighlightedText text={result.author} query={query} />;
-                  })()} · {result.published}
+                  })()}{displayPublished(result.published) ? ` · ${displayPublished(result.published)}` : ''}
                 </p>
               </div>
               {result.has_doi && result.doi && (
@@ -2564,7 +2565,7 @@ function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: 
             const byline = getEffectiveByline(result);
             if (byline.role === 'editor') return `${t.editedByAbbrev} ${byline.editor}`;
             return result.author || '';
-          })()}{result.published ? `, ${result.published}` : ''}
+          })()}{displayPublished(result.published) ? `, ${displayPublished(result.published)}` : ''}
           {result.type === 'page' && result.page_number && <span> &middot; {t.pageAbbrev(result.page_number)}</span>}
         </p>
         {text && (

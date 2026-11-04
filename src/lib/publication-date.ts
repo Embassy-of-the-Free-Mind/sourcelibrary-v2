@@ -37,7 +37,7 @@
 const QUICKSTATEMENTS_TAIL = /date\s*QS:[\s\S]*$/i;
 
 /** Values that assert "we do not know" — never worth showing or citing. */
-const NOT_A_DATE = /^(unknown(\s+date)?|undated|no\s+date|n\.?\s*d\.?|s\.?\s*d\.?|date\s+of\s+publication\s+not\s+identified|not\s+identified|none|null)$/i;
+const NOT_A_DATE = /^(unknown(\s+date)?|undated|no\s+date|n\.?\s*d\.?|s\.?\s*d\.?|date\s+of\s+publication\s+not\s+identified|not\s+identified|none|null|\?+|[-—]+)$/i;
 
 /** A bare year, 3-4 digits. The only form safe to assert as a date. */
 const BARE_YEAR = /^\d{3,4}$/;

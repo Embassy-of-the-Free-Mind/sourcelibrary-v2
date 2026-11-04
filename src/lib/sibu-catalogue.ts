@@ -174,7 +174,38 @@ export function sibuPartCount(part: SibuPart): SibuCount {
   return tally(ROWS.filter((r) => r.cls?.startsWith(part.code)));
 }
 
+let rowByKr: Map<string, SibuRow> | null = null;
+
+/**
+ * The catalogue row of a work, from `books.work_id` ("kr:KR3k0059"). Only rows that carry a
+ * Kanripo number: a row filed by title alone has no id to join on, and answers nothing here.
+ */
+export function sibuRowForWork(workId: unknown): SibuRow | null {
+  if (typeof workId !== 'string' || !workId.startsWith('kr:')) return null;
+  if (!rowByKr) rowByKr = new Map(ROWS.filter((r) => r.kr).map((r) => [r.kr as string, r]));
+  return rowByKr.get(workId.slice(3)) ?? null;
+}
+
 /** Every code with a page: a class we hold, an empty Siku class, and the outside list. */
 export function sibuCodes(): string[] {
   return [...SIBU_PARTS.flatMap((p) => p.classes.map((c) => c.code)), OUTSIDE_CODE];
+}
+
+/**
+ * Whether a search query names a part of a multi-volume work (卷三, 第二册, vol. 2, juan 3). If
+ * so, the volume the search found is the answer and must not be replaced by the first.
+ */
+export function asksForOneVolume(query: string): boolean {
+  return /[卷册冊第]|\b(?:vol|juan|tom|ce)\b|\d/i.test(query);
+}
+
+/**
+ * The dynasty to print before a book's byline, or null. A row's dynasty is its catalogue author's,
+ * so it prints only beside that author. Measured 2026-11-04: of 890 joined works, 2 credit someone
+ * else on the record (月溪法師, a modern commentator, on a row dated 唐), and a Western edition of
+ * the same work credits its translator.
+ */
+export function bylineDynasty(row: SibuRow | null, author: unknown): string | null {
+  if (!row?.dynasty || !row.author || typeof author !== 'string' || !author) return null;
+  return author.includes(row.author) || row.author.includes(author) ? row.dynasty : null;
 }
