@@ -39,17 +39,18 @@ const DIR = process.env.ZD_DIR || path.join(process.env.JOB_SCRATCH || '/data/sc
 const STEP = process.argv[2];
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const PER_CALL = Number(arg('per-call', 10));
+const MODEL = arg('model', 'opus');   // the pilot decides: opus unless sonnet met the bar (#5274 inbox 07:37Z)
 const DRY = process.argv.includes('--dry');
 const WAVE_CALLS = Number(arg('wave-calls', 12));
 const CONCURRENCY = Number(arg('concurrency', 3));
 const WEEKLY_STOP = 92;
 const CEILING_POINTS = Number(arg('ceiling-points', 250));
-export const LANE = 'zh-ditto-opus-5274';
+export const LANE = `zh-ditto-${MODEL}-5274`;
 export const STALE_LANE = 'zh-ditto-5274';
 export const OK_HOLDS = new Set(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'paddle-zh-6388-ocr-only']);
 const FAM = '佩文韻府|韻府拾遺|駢字類編';
 const MIN_HAN = 300;
-const REASON = '#5274: restore the 丨 ditto marks lost by Paddle (zero-丨 pages), Opus correction of the stored text on the stored image with the ditto instruction (P2-r2, pilot 2026-11-04)';
+const REASON = `#5274: restore the 丨 ditto marks lost by Paddle (zero-丨 pages), ${MODEL} correction of the stored text on the stored image with the ditto instruction (P2-r2, pilot 2026-11-04)`;
 const ISSUE = 5274;
 const F = (n) => path.join(DIR, n);
 fs.mkdirSync(path.join(DIR, 'waves'), { recursive: true });
@@ -128,7 +129,7 @@ async function runLoop() {
   const db = client.db('bookstore');
   const waveNo = () => fs.readdirSync(path.join(DIR, 'waves')).length;
   let stopWhy = null;
-  log(`runner start: per-call ${PER_CALL}, wave ${WAVE_CALLS} calls, concurrency ${CONCURRENCY}${DRY ? ', DRY' : ''}`);
+  log(`runner start: ${MODEL}, per-call ${PER_CALL}, wave ${WAVE_CALLS} calls, concurrency ${CONCURRENCY}${DRY ? ', DRY' : ''}`);
   for (;;) {
     if (fs.existsSync(F('STOP'))) { stopWhy = `STOP file (${fs.readFileSync(F('STOP'), 'utf8').trim()})`; break; }
     // pace: this login's week
@@ -150,7 +151,7 @@ async function runLoop() {
     fs.mkdirSync(wd, { recursive: true });
     fs.writeFileSync(path.join(wd, 'manifest.jsonl'), wave.map((p) => JSON.stringify(p)).join('\n') + '\n');
     log(`wave ${path.basename(wd)}: ${wave.length} pages, ${new Set(wave.map((p) => p.book_id)).size} books; weekly ${m.weekly}%, ${used} points used`);
-    const code = await run('node', [`--env-file=${ENV}`, 'scripts/batch/ocr-convergence/correct.mjs', `--set-dir=${wd}`, '--model=opus', `--per-call=${PER_CALL}`, `--concurrency=${CONCURRENCY}`, `--job=${STALE_LANE}`, '--language=Chinese', `--instruction-file=${path.join(HERE, 'ditto-instruction.txt')}`], path.join(wd, 'correct.log'));
+    const code = await run('node', [`--env-file=${ENV}`, 'scripts/batch/ocr-convergence/correct.mjs', `--set-dir=${wd}`, `--model=${MODEL}`, `--per-call=${PER_CALL}`, `--concurrency=${CONCURRENCY}`, `--job=${STALE_LANE}`, '--language=Chinese', `--instruction-file=${path.join(HERE, 'ditto-instruction.txt')}`], path.join(wd, 'correct.log'));
     // what the reads say, page by page
     const metas = wave.map((p) => { try { return JSON.parse(fs.readFileSync(path.join(wd, 'reads', `${p.page_id}.meta.json`), 'utf8')); } catch { return null; } });
     const corrected = [], rows = [];

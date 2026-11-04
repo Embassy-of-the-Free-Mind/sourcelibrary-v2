@@ -132,6 +132,66 @@ if (STEP === 'score') {
   console.log(JSON.stringify(out.sets, null, 1));
 }
 
+// score-arms: every arm on the 70 scored pages ($P/w/pages.json), by the same marks measure, + the blind judge's verdicts
+// from each judge dir given (--judge=judge5,judge-fm). → $P/arms.json. Paired gained/lost are against OC (Opus correct).
+if (STEP === 'score-arms') {
+  const { armText } = await import('./judge-multi.mjs');
+  const { by } = kanripoLeaves();
+  const W = path.join(P, 'w'); const pages = JSON.parse(fs.readFileSync(path.join(W, 'pages.json'), 'utf8'));
+  const ARMS = ['P0', 'OC', 'SC', 'FL', 'FM', 'FR'];
+  const judges = (process.argv.find((a) => a.startsWith('--judge='))?.slice(8) || 'judge5').split(',').filter((d) => fs.existsSync(path.join(W, d, 'key.json')));
+  const verdict = {}; // `${arm}|${slug}` → verdict word (first judge dir that judged it); swap controls → caught/not
+  const swaps = [];
+  for (const d of judges) {
+    const key = JSON.parse(fs.readFileSync(path.join(W, d, 'key.json'), 'utf8'));
+    for (const [uid, k] of Object.entries(key)) {
+      let j; try { j = JSON.parse(fs.readFileSync(path.join(W, d, `${uid}.json`), 'utf8')).verdict; } catch { continue; }
+      if (!j) continue;
+      for (const [l, arm] of Object.entries(k.labels)) {
+        if (k.swap?.arm === arm) swaps.push({ judge: d, uid, arm, verdict: j[l]?.verdict, not_this_leaf: j[l]?.not_this_leaf, caught: j[l]?.verdict === 'misleading' || j[l]?.not_this_leaf === true });
+        else if (!k.swap && !(`${arm}|${uid}` in verdict)) verdict[`${arm}|${uid}`] = { v: j[l]?.verdict, ntl: j[l]?.not_this_leaf, judge: d };
+      }
+    }
+  }
+  const rows = [];
+  for (const p of pages) {
+    const leaf = by.get(readJsonl(path.join(P, p.per_call, 'manifest.jsonl')).find((m) => m.page_id === p.page_id).pb);
+    const draft = armText('P0', p);
+    for (const arm of ARMS) {
+      const t = armText(arm, p);
+      const row = { arm, slug: p.slug, page_id: p.page_id, kind: p.set, per_call: p.per_call, answered: t != null, judge: verdict[`${arm}|${p.slug}`] ?? null };
+      if (t != null) Object.assign(row, measure(t, draft, leaf.text)); else row.usable = false;
+      rows.push(row);
+    }
+  }
+  const sum = (R) => {
+    const n = R.length, u = R.filter((x) => x.usable).length, J = R.filter((x) => x.judge?.v);
+    return { n, answered: R.filter((x) => x.answered).length, usable: u, usable_ci: wilson(u, n),
+      marks_rec: R.reduce((a, x) => a + Math.min(x.marks ?? 0, x.truth ?? 0), 0) / Math.max(1, R.reduce((a, x) => a + (x.truth ?? 0), 0)),
+      marks_prec: R.reduce((a, x) => a + Math.min(x.marks ?? 0, x.truth ?? 0), 0) / Math.max(1, R.reduce((a, x) => a + (x.marks ?? 0), 0)),
+      median_cer: median(R.filter((x) => x.cer != null).map((x) => x.cer)),
+      judged: J.length, misleading: J.filter((x) => x.judge.v === 'misleading').length, flawed: J.filter((x) => x.judge.v === 'flawed').length, sound: J.filter((x) => x.judge.v === 'sound').length,
+      not_this_leaf: J.filter((x) => x.judge.ntl).length };
+  };
+  const out = { at: new Date().toISOString(), judges, swaps, arms: {}, paired_vs_OC: {} };
+  for (const arm of ARMS) {
+    const R = rows.filter((x) => x.arm === arm); if (!R.some((x) => x.answered)) continue;
+    out.arms[arm] = { zero_60: sum(R.filter((x) => x.kind === 'zero')), keep_10: sum(R.filter((x) => x.kind === 'keep')),
+      zero_s1: sum(R.filter((x) => x.kind === 'zero' && x.per_call === 's1')), zero_s10: sum(R.filter((x) => x.kind === 'zero' && x.per_call === 's10')) };
+    if (arm !== 'OC') {
+      const oc = new Map(rows.filter((x) => x.arm === 'OC').map((x) => [x.slug, x]));
+      const Z = R.filter((x) => x.kind === 'zero');
+      const mis = (x) => x?.judge?.v === 'misleading';
+      out.paired_vs_OC[arm] = { usable_gained: Z.filter((x) => x.usable && !oc.get(x.slug).usable).map((x) => x.slug), usable_lost: Z.filter((x) => !x.usable && oc.get(x.slug).usable).map((x) => x.slug),
+        misleading_added: Z.filter((x) => mis(x) && oc.get(x.slug).judge && !mis(oc.get(x.slug))).map((x) => x.slug), misleading_removed: Z.filter((x) => x.judge && !mis(x) && mis(oc.get(x.slug))).map((x) => x.slug),
+        usable_diff: (Z.filter((x) => x.usable).length - Z.filter((x) => oc.get(x.slug).usable).length) / Z.length };
+    }
+  }
+  out.rows = rows;
+  fs.writeFileSync(path.join(P, 'arms.json'), JSON.stringify(out, null, 1));
+  console.log(JSON.stringify({ judges, swaps: swaps.map((s) => `${s.arm}:${s.caught ? 'caught' : 'MISSED'}`), arms: Object.fromEntries(Object.entries(out.arms).map(([a, v]) => [a, { zero: `${v.zero_60.usable}/${v.zero_60.n}`, keep: `${v.keep_10.usable}/${v.keep_10.n}`, rec: v.zero_60.marks_rec.toFixed(3), prec: v.zero_60.marks_prec.toFixed(3), mis: `${v.zero_60.misleading}/${v.zero_60.judged}`, keep_mis: `${v.keep_10.misleading}/${v.keep_10.judged}` }])), paired: Object.fromEntries(Object.entries(out.paired_vs_OC).map(([a, v]) => [a, { gained: v.usable_gained.length, lost: v.usable_lost.length, mis_added: v.misleading_added.length, mis_removed: v.misleading_removed.length, diff: v.usable_diff.toFixed(3) }])) }, null, 1));
+}
+
 // judge-prep: the 70 scored pages in judge.mjs's layout ($P/w: pages.json, p0/, C/, img/ia/), so the eval's blind judge
 // runs unchanged with JOB_SCRATCH=$P: `judge.mjs P0,C`. C is the served correction (UNCHANGED = the draft).
 if (STEP === 'judge-prep') {
