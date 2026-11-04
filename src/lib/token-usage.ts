@@ -26,11 +26,26 @@ export interface UsageDoc {
   days: DayRow[]; signals: SignalRow[]; jobs: JobRow[]; jobs_omitted: number; jobs_omitted_cost: number;
 }
 export interface MeterSeries { account: string; points: { hour: string; pct: number }[] }
-export interface LimitReading {
-  key: string; percent: number; resets_at: string | null; budget_pct_per_h: number | null;
-  burn_pct_per_h: number | null; pace_hits_in_s: number | null; unused_at_reset_pct: number | null;
+export interface MeterReading { account: string; percent: number; resets_at: string | null; checked_at: string }
+export interface MeterDoc { box: string; generated_at: string; series: MeterSeries[]; readings: MeterReading[] }
+
+/** Main and the laptop poll separately and a login can lapse on either: take each account's freshest. */
+export function mergeMeters(docs: MeterDoc[]): { series: MeterSeries[]; readings: MeterReading[] } {
+  const series = new Map<string, MeterSeries>();
+  const readings = new Map<string, MeterReading>();
+  const lastHour = (s: MeterSeries) => s.points[s.points.length - 1]?.hour ?? '';
+  for (const d of docs) {
+    for (const s of d.series) {
+      const had = series.get(s.account);
+      if (!had || lastHour(s) > lastHour(had)) series.set(s.account, s);
+    }
+    for (const r of d.readings) {
+      const had = readings.get(r.account);
+      if (!had || r.checked_at > had.checked_at) readings.set(r.account, r);
+    }
+  }
+  return { series: [...series.values()], readings: [...readings.values()] };
 }
-export interface LimitsDoc { checked_at: string; accounts: { email: string; ok: boolean; limits: LimitReading[] | null }[] }
 
 /** A box runs hourly and should never be this old. The laptop sleeps, so it gets a day. */
 const STALE_HOURS: Record<string, number> = { laptop: 26 };
@@ -60,9 +75,38 @@ export function pointsUsed(series: MeterSeries, sinceHour: string): number {
 }
 
 export interface AccountWeek {
-  account: string; percent: number | null; resets_at: string | null; pace_percent: number | null;
+  account: string; percent: number | null; reading_age_hours: number | null; resets_at: string | null; pace_percent: number | null;
   budget: number | null; burn: number | null; caps_in_hours: number | null; unused_at_reset: number | null;
   points_7d: number; transcript_7d: number; per_point: number | null;
+}
+
+/** A reading older than this says little about where an account stands now. */
+export const READING_STALE_HOURS = 3;
+
+/** Points per hour over the last `hours`. */
+export function burnRate(series: MeterSeries | undefined, now: Date, hours: number): number | null {
+  if (!series?.points.length) return null;
+  return pointsUsed(series, new Date(now.getTime() - hours * 3600e3).toISOString().slice(0, 13)) / hours;
+}
+
+/**
+ * What the current burn means before the reset. Sustainable is what is left over the hours left.
+ * The cap forecast uses the last 6 h, because a cap is near-term. The unused forecast uses 24 h, so one
+ * quiet evening does not read as a wasted week.
+ */
+export function forecast(percent: number | null, resetsAt: string | null, series: MeterSeries | undefined, now: Date) {
+  const burn = burnRate(series, now, 6);
+  const left = resetsAt ? (Date.parse(resetsAt) - now.getTime()) / 3600e3 : NaN;
+  if (percent == null || !(left > 0)) return { burn, budget: null, caps_in_hours: null, unused_at_reset: null };
+  const room = Math.max(0, 100 - percent);
+  const capsIn = burn && burn > 0 ? room / burn : null;
+  const dayBurn = burnRate(series, now, 24);
+  return {
+    burn,
+    budget: room / left,
+    caps_in_hours: capsIn != null && capsIn < left ? capsIn : null,
+    unused_at_reset: dayBurn == null ? null : Math.max(0, room - dayBurn * left),
+  };
 }
 
 const WEEK_HOURS = 168;
@@ -77,27 +121,26 @@ export function evenPacePercent(resetsAt: string | null, now: Date): number | nu
 
 export const dayOffset = (now: Date, days: number) => new Date(now.getTime() - days * 86400e3).toISOString().slice(0, 10);
 
-export function accountWeeks(docs: UsageDoc[], meter: MeterSeries[], limits: LimitsDoc | null, now: Date): AccountWeek[] {
+export function accountWeeks(docs: UsageDoc[], meters: MeterDoc[], now: Date): AccountWeek[] {
+  const { series: meter, readings } = mergeMeters(meters);
   const sinceHour = new Date(now.getTime() - 7 * 86400e3).toISOString().slice(0, 13);
   const sinceDay = sinceHour.slice(0, 10);
   const cost = new Map<string, number>();
   for (const d of docs) for (const r of d.days) if (r.day >= sinceDay) cost.set(r.account, (cost.get(r.account) || 0) + r.cost);
 
-  const names = new Set<string>([...cost.keys(), ...meter.map(m => m.account), ...(limits?.accounts || []).map(a => a.email)]);
+  const names = new Set<string>([...cost.keys(), ...meter.map(m => m.account), ...readings.map(r => r.account)]);
   return [...names].filter(a => a !== 'unknown').sort().map(account => {
     const series = meter.find(m => m.account === account);
-    const week = limits?.accounts.find(a => a.email === account)?.limits?.find(l => l.key === 'weekly_all:all') ?? null;
+    const reading = readings.find(r => r.account === account) ?? null;
     const points = series ? pointsUsed(series, sinceHour) : 0;
     const transcript = cost.get(account) || 0;
     return {
       account,
-      percent: week?.percent ?? null,
-      resets_at: week?.resets_at ?? null,
-      pace_percent: evenPacePercent(week?.resets_at ?? null, now),
-      budget: week?.budget_pct_per_h ?? null,
-      burn: week?.burn_pct_per_h ?? null,
-      caps_in_hours: week?.pace_hits_in_s != null ? week.pace_hits_in_s / 3600 : null,
-      unused_at_reset: week?.unused_at_reset_pct ?? null,
+      percent: reading?.percent ?? null,
+      reading_age_hours: reading ? (now.getTime() - Date.parse(reading.checked_at)) / 3600e3 : null,
+      resets_at: reading?.resets_at ?? null,
+      pace_percent: evenPacePercent(reading?.resets_at ?? null, now),
+      ...forecast(reading?.percent ?? null, reading?.resets_at ?? null, series, now),
       points_7d: points,
       transcript_7d: transcript,
       per_point: points > 0 ? transcript / points : null,

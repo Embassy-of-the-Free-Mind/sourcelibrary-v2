@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { requireSpendViewer } from '@/lib/spend-report';
 import {
-  accountWeeks, dollarsPerPoint, freshness, mergeJobs, mergeSignals, usageCells, type AccountWeek,
+  accountWeeks, dollarsPerPoint, freshness, mergeJobs, mergeSignals, READING_STALE_HOURS, usageCells, type AccountWeek,
 } from '@/lib/token-usage';
 import { getTokenUsage } from '@/lib/token-usage-read';
 import { JobTable, UsageOverTime, WasteTrends } from './TokenCharts';
@@ -36,12 +36,15 @@ function Section({ title, intro, children }: { title: string; intro?: ReactNode;
 
 /** One account's week: the state in words, because a colour alone says nothing to a colour-blind reader. */
 function weekState(w: AccountWeek, now: Date): { label: string; tone: string } {
+  if (w.percent == null) return { label: 'No meter reading', tone: 'text-red-700' };
+  if (w.reading_age_hours != null && w.reading_age_hours > READING_STALE_HOURS) return { label: `Meter last read ${hours(w.reading_age_hours)} ago`, tone: 'text-red-700' };
+  if (w.percent >= 100) return { label: 'At its cap', tone: 'text-red-700' };
+  if (w.caps_in_hours != null) return { label: `Caps in ${hours(w.caps_in_hours)}, before its reset`, tone: w.caps_in_hours <= 48 ? 'text-red-700' : 'text-amber-700' };
   const left = w.resets_at ? (Date.parse(w.resets_at) - now.getTime()) / 3600e3 : null;
-  if (w.percent != null && w.percent >= 100) return { label: 'At its cap', tone: 'text-red-700' };
-  if (w.caps_in_hours != null && left != null && w.caps_in_hours < left) return { label: `Caps in ${hours(w.caps_in_hours)}, before its reset`, tone: 'text-red-700' };
-  if (w.unused_at_reset != null && w.unused_at_reset >= 5) return { label: `About ${Math.round(w.unused_at_reset)}% will go unused`, tone: 'text-amber-700' };
-  if (w.percent != null && w.pace_percent != null && w.percent < w.pace_percent) return { label: 'Under even pace', tone: 'text-stone-600' };
-  return { label: 'On pace', tone: 'text-stone-600' };
+  // Early in a week a low burn is not yet waste: only call it when the reset is close enough to matter.
+  if (w.unused_at_reset != null && w.unused_at_reset >= 5 && left != null && left <= 48) return { label: `About ${Math.round(w.unused_at_reset)}% will go unused`, tone: 'text-amber-700' };
+  if (w.pace_percent != null && w.percent < w.pace_percent) return { label: 'Under even pace', tone: 'text-stone-600' };
+  return { label: 'Over even pace', tone: 'text-stone-600' };
 }
 
 function WeekMeter({ w, now }: { w: AccountWeek; now: Date }) {
@@ -59,7 +62,7 @@ function WeekMeter({ w, now }: { w: AccountWeek; now: Date }) {
       </div>
       <div className={`text-xs font-medium ${state.tone}`}>{state.label}</div>
       <div className="text-[11px] text-stone-500 leading-snug">
-        {w.burn != null && w.budget != null ? `Burning ${w.burn.toFixed(1)}%/h, sustainable ${w.budget.toFixed(1)}%/h` : 'No burn reading'}
+        {w.burn != null && w.budget != null ? `Burning ${w.burn.toFixed(1)}%/h (last 6 h), sustainable ${w.budget.toFixed(1)}%/h` : 'No burn figure'}
         {left != null && left > 0 ? ` · resets in ${hours(left)}` : ''}
       </div>
     </div>
@@ -68,7 +71,7 @@ function WeekMeter({ w, now }: { w: AccountWeek; now: Date }) {
 
 export default async function TokensPage() {
   await requireSpendViewer();
-  const { docs, meter, limits } = await getTokenUsage();
+  const { docs, meters } = await getTokenUsage();
   const now = new Date();
 
   if (!docs.length) {
@@ -82,7 +85,7 @@ export default async function TokensPage() {
 
   const machines = freshness(docs, now);
   const stale = machines.filter(m => m.stale);
-  const weeks = accountWeeks(docs, meter, limits, now);
+  const weeks = accountWeeks(docs, meters, now);
   const perPoint = dollarsPerPoint(weeks, machines);
   const signals = mergeSignals(docs).slice(-14);
   const jobs = mergeJobs(docs, now);

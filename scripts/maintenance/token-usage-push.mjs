@@ -11,7 +11,8 @@
  *
  *   node --env-file=.env.production.local scripts/maintenance/token-usage-push.mjs --box main [--meter] [--dry-run]
  *
- * --meter also pushes the weekly-meter history of ~/.claude-limits/history.jsonl (one machine only).
+ * --meter also pushes this machine's ~/.claude-limits history and latest reading (main and the laptop poll
+ * separately; a login can lapse on either, so the page takes each account's freshest).
  *
  * Units: $-eq is API list price, a common unit and not money paid; the subscriptions are flat.
  * Privacy: job labels, account addresses and counts only. Never a prompt, a transcript line or a path.
@@ -63,8 +64,9 @@ export function priceUsage(usage, model) {
 
 /** A project folder name, as Claude Code flattens the cwd, to a job label that carries no path. */
 export function jobLabel(dir) {
-  const m = dir.match(/worktrees-(?:job-)?(.+)$/) || dir.match(/-jobs-([^-].*?)(?:-tmp-.*)?$/);
-  if (m) return m[1].slice(0, 80);
+  const m = dir.match(/worktrees-(?:job-)?(.+)$/) || dir.match(/-jobs-([^-].*)$/);
+  // A per-page lane opens one folder per call inside its job's scratch: all of them are that job.
+  if (m) return m[1].replace(/-(?:tmp|claude-ws)-.*$/, '').slice(0, 80);
   if (/^-(private-)?(var-folders|tmp)/.test(dir)) return '(scripted, temp folder)';
   if (/^-(root|Users-[^-]+)-sourcelibrary$/.test(dir) || /-sl-sourcelibrary$/.test(dir)) return '(main checkout)';
   return dir.replace(/^-(root|Users-[^-]+)-/, '').slice(0, 80) || '(unknown)';
@@ -268,6 +270,16 @@ export function meterSeries(historyText, sinceIso) {
   return [...by.entries()].map(([account, m]) => ({ account, points: [...m.entries()].map(([hour, pct]) => ({ hour, pct })) }));
 }
 
+/** Each account's latest weekly reading and reset time. An account this machine cannot read is left out. */
+function meterReadings(file) {
+  let latest;
+  try { latest = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return []; }
+  return (latest.accounts || []).flatMap(a => {
+    const week = a.ok && Array.isArray(a.limits) ? a.limits.find(l => l.key === 'weekly_all:all') : null;
+    return week ? [{ account: a.email, percent: week.percent, resets_at: week.resets_at || null, checked_at: a.checked_at || latest.checked_at }] : [];
+  });
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const box = args[args.indexOf('--box') + 1];
@@ -284,7 +296,7 @@ async function main() {
   let meter = null;
   if (args.includes('--meter')) {
     const f = path.join(os.homedir(), '.claude-limits', 'history.jsonl');
-    meter = { _id: 'token-usage-meter', type: 'token-usage-meter', generated_at: doc.generated_at, series: meterSeries(fs.readFileSync(f, 'utf8'), new Date(sinceMs).toISOString()) };
+    meter = { _id: `token-usage-meter:${box}`, type: 'token-usage-meter', box, generated_at: doc.generated_at, series: meterSeries(fs.readFileSync(f, 'utf8'), new Date(sinceMs).toISOString()), readings: meterReadings(path.join(os.homedir(), '.claude-limits', 'latest.json')) };
   }
 
   const week = started - 7 * 86400e3;

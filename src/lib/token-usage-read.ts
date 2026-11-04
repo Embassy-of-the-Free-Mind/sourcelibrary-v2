@@ -6,18 +6,13 @@
  */
 import { getDb } from '@/lib/mongodb';
 import { OPS_REPORTS_COLLECTION } from '@/lib/spend-report';
-import type { LimitsDoc, MeterSeries, UsageDoc } from '@/lib/token-usage';
+import type { MeterDoc, UsageDoc } from '@/lib/token-usage';
 
-export async function getTokenUsage(): Promise<{ docs: UsageDoc[]; meter: MeterSeries[]; limits: LimitsDoc | null }> {
+export async function getTokenUsage(): Promise<{ docs: UsageDoc[]; meters: MeterDoc[] }> {
   const reports = (await getDb()).collection(OPS_REPORTS_COLLECTION);
-  const [docs, meter, limits] = await Promise.all([
+  const [docs, meters] = await Promise.all([
     reports.find({ type: 'token-usage' }).toArray(),
-    reports.findOne({ _id: 'token-usage-meter' as never }),
-    reports.findOne({ _id: 'claude-limits:latest' as never }),
+    reports.find({ type: 'token-usage-meter' }).toArray(),
   ]);
-  return {
-    docs: docs as unknown as UsageDoc[],
-    meter: ((meter as unknown as { series?: MeterSeries[] } | null)?.series) || [],
-    limits: limits as unknown as LimitsDoc | null,
-  };
+  return { docs: docs as unknown as UsageDoc[], meters: meters as unknown as MeterDoc[] };
 }

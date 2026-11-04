@@ -79,3 +79,5 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # Monthly page integrity draw (#8040): same line as scripts/workers/crontab.production; runs here.
 0 5 1 * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; [ "$(hostname)" = gex45-1 ] || exit 0; f=/root/sourcelibrary/scripts/audit/page-integrity-draw.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-page-integrity.lock timeout 12h node --no-warnings --env-file=.env.production.local $f --seed $(date +\%Y\%m\%d) --out /root/jobs/page-integrity-monthly/$(date +\%F) --land >> /var/log/sourcelibrary/page-integrity.log 2>&1  # #8040
+# Token use for /admin/tokens (#8201): reads local transcripts, calls no model.
+44 * * * * flock -n /tmp/sl-token-usage.lock nice -n 19 bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/token-usage-push.mjs --box gex45' >> /var/log/sourcelibrary/token-usage-push.log 2>&1

@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error plain .mjs script, no declarations
 import { feedLine, finishRollup, jobLabel, meterSeries, newRollup, parseEstimate, priceUsage } from '../../scripts/maintenance/token-usage-push.mjs';
-import { dollarsPerPoint, estimateVerdict, evenPacePercent, freshness, pointsUsed, type AccountWeek, type UsageDoc } from '@/lib/token-usage';
+import { dollarsPerPoint, estimateVerdict, evenPacePercent, forecast, freshness, mergeMeters, pointsUsed, type AccountWeek, type MeterDoc, type UsageDoc } from '@/lib/token-usage';
 
 const T = '2026-11-04T10:00:00.000Z';
 const ctx = { account: 'a@x', label: 'job', session: 's1', isSub: false, since: Date.parse('2026-11-01T00:00:00Z') };
@@ -97,6 +97,11 @@ describe('jobLabel', () => {
     expect(jobLabel('-root-worktrees-job-authors-7660')).toBe('authors-7660');
     expect(jobLabel('-mnt-HC-Volume-105839809-worktrees-job-read-surface-6740')).toBe('read-surface-6740');
   });
+  it('folds the per-call folders of a page lane into their job', () => {
+    expect(jobLabel('-data-scratch-sl-jobs-ocr-context-8182-tmp-zhpl-Zwt5qZ')).toBe('ocr-context-8182');
+    expect(jobLabel('-root-worktrees-job-tib-diffqa-t1-6740-claude-ws-tib-diffqa-t1-6740-69e7aae15f1a22ab19a8eded')).toBe('tib-diffqa-t1-6740');
+    expect(jobLabel('-mnt-HC-Volume-105839809-jobs-convergent-audit-6420-tmp-second-reader-sealed-2026-11-02-opus-p058')).toBe('convergent-audit-6420');
+  });
   it('folds temp folders and the main checkout', () => {
     expect(jobLabel('-tmp')).toBe('(scripted, temp folder)');
     expect(jobLabel('-root-sourcelibrary')).toBe('(main checkout)');
@@ -130,6 +135,38 @@ describe('meter', () => {
   });
   it('does not count the rise into the first hour of the period', () => {
     expect(pointsUsed({ account: 'a', points: [{ hour: 'h1', pct: 50 }, { hour: 'h2', pct: 55 }] }, 'h2')).toBe(5);
+  });
+});
+
+describe('forecast', () => {
+  const now = new Date('2026-11-04T12:00:00Z');
+  const hourAgo = (h: number) => new Date(now.getTime() - h * 3600e3).toISOString().slice(0, 13);
+  const series = (rows: [number, number][]) => ({ account: 'a', points: rows.map(([h, pct]) => ({ hour: hourAgo(h), pct })) });
+
+  it('warns of a cap only when it comes before the reset', () => {
+    const fast = series([[7, 70], [6, 70], [3, 76], [0, 82]]); // 2 points an hour, 18 left: 9 h
+    expect(forecast(82, '2026-11-06T12:00:00Z', fast, now).caps_in_hours).toBeCloseTo(9);
+    expect(forecast(82, '2026-11-04T15:00:00Z', fast, now).caps_in_hours).toBeNull();
+  });
+  it('says an idle account near its reset will leave quota unused, and no cap', () => {
+    const idle = series([[30, 91], [10, 91], [0, 91]]);
+    const f = forecast(91, '2026-11-05T12:00:00Z', idle, now);
+    expect(f.unused_at_reset).toBeCloseTo(9);
+    expect(f.caps_in_hours).toBeNull();
+    expect(f.budget).toBeCloseTo(9 / 24);
+  });
+  it('makes no forecast from a reset already past or from no meter', () => {
+    expect(forecast(50, '2026-11-01T00:00:00Z', series([[1, 50]]), now).budget).toBeNull();
+    expect(forecast(50, '2026-11-06T00:00:00Z', undefined, now).burn).toBeNull();
+    expect(forecast(50, '2026-11-06T00:00:00Z', undefined, now).unused_at_reset).toBeNull();
+    expect(forecast(null, '2026-11-06T00:00:00Z', series([[1, 50]]), now).budget).toBeNull();
+  });
+  it('takes each account from whichever machine read it last', () => {
+    const meter = (box: string, hour: string, checked_at: string, percent: number) =>
+      ({ box, generated_at: checked_at, series: [{ account: 'a', points: [{ hour, pct: percent }] }], readings: [{ account: 'a', percent, resets_at: null, checked_at }] }) as MeterDoc;
+    const merged = mergeMeters([meter('main', '2026-10-27T15', '2026-10-27T15:00:00Z', 97), meter('laptop', '2026-11-04T21', '2026-11-04T21:00:00Z', 81)]);
+    expect(merged.readings[0].percent).toBe(81);
+    expect(merged.series[0].points[0].pct).toBe(81);
   });
 });
 
