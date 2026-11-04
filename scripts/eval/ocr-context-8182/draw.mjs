@@ -59,7 +59,7 @@ const s8171 = JSON.parse(execSync('git show origin/main:scripts/eval/zh-planted-
 for (const p of s8171.passages.filter((x) => x.group === 'B' || x.group === 'C')) {
   const pg = await db.collection('pages').findOne({ book_id: p.book_id, page_number: p.page_number }, { projection: { 'ocr.model': 1, archived_photo: 1, image_width: 1, image_height: 1 } });
   out.pages.push({ group: p.group === 'B' ? 'ZB' : 'ZC', sub: p.sub, book_id: p.book_id, title: p.work, page_number: p.page_number, slug8171: p.slug,
-    served_model: pg?.ocr?.model ?? null, w: pg?.image_width ?? null, h: pg?.image_height ?? null, image: pg?.archived_photo ?? null, used: !!pg?.archived_photo });
+    served_model: pg?.ocr?.model ?? null, w: pg?.image_width ?? null, h: pg?.image_height ?? null, image: pg?.archived_photo ?? null, used: !!pg?.archived_photo }); // image-pick-ok: test material only — N/S/W are composed from units of whatever image this is, so a whole spread is still a fair same-pixels comparison (stated in the record)
 }
 served.end(); await c.close();
 fs.writeFileSync(path.join(HERE, 'draw.json'), JSON.stringify(out, null, 1) + '\n');

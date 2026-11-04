@@ -73,8 +73,9 @@ on the text lines on most pages; S shows real glyphs in an order that never exis
 leaf with half its lines missed (235 units); one TT leaf where a single box spans all 7 lines, so its units are
 column slices, not stacks; one small-print TO leaf with only ~3 lines boxed. In Chinese, the large main-text characters
 and the small interlinear commentary both become units, so S mixes sizes within a column (N does too); on a recipe
-page many units are two-character fragments of small print. These pages stay in (same units in N and S, so the
-comparison stays fair).
+page many units are two-character fragments of small print. Four of the ten Chinese pages opened are whole two-page
+spreads (the image is the page's `archived_photo`, which keeps the spread for split pages), so their units come from
+both leaves. These pages stay in (same units in N, S and W, so the comparison stays fair).
 
 ### Instrument checks (preregistered, before any conclusion)
 
