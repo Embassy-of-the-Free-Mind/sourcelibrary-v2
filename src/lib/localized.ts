@@ -299,6 +299,11 @@ type CollectionLike = {
 };
 
 /** Collection copy for `lang`, with a flag per field saying whether it fell back to English. */
+/** True when a collection carries its own name in `lang`, not the English fallback. */
+export function hasLocalizedCollectionName(doc: CollectionLike, lang: Locale): boolean {
+  return lang !== 'en' && !!doc.localized?.[lang]?.name;
+}
+
 export function localizedCollection(doc: CollectionLike, lang: Locale): {
   name: string; subtitle?: string; description?: string; descriptionIsEnglish: boolean;
 } {
