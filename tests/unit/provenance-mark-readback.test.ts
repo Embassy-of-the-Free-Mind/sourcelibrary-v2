@@ -20,11 +20,11 @@ function noiseScan(width: number, height: number, amplitude: number) {
   return sharp(raw, { raw: { width, height, channels: 3 } }).jpeg({ quality: 90 }).toBuffer();
 }
 
-/** Random high-contrast 6px tiles over the top 30% of the page, flat paper below. */
+/** Random high-contrast 6px tiles over the top 15% of the page, flat paper below. */
 function thinDensePage(width: number, height: number) {
   const raw = Buffer.alloc(width * height * 3, 235);
   let s = 777;
-  for (let ty = 0; ty < Math.floor(height * 0.3); ty += 6) {
+  for (let ty = 0; ty < Math.floor(height * 0.15); ty += 6) {
     for (let tx = 0; tx < width; tx += 6) {
       s = (s * 1103515245 + 12345) & 0x7fffffff;
       const v = 28 + ((s >> 16) % 200);
