@@ -1962,8 +1962,13 @@ async function generateScholarlyEpubDownload(
     manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
 
     // Build contributors list
-    const contributors = edition?.contributors || [
-      { name: 'Source Library', role: 'translator', type: 'ai' as const, model: 'Gemini AI' }
+    // AI contributors print by kind, one per role, never by vendor or model (#7263). The edition
+    // record (and its Zenodo deposit) keeps each model; only what the reader sees changes.
+    const recorded = edition?.contributors || [{ name: 'Source Library', role: 'translator' as const, type: 'ai' as const }];
+    const aiRoles = [...new Set(recorded.filter(c => c.type === 'ai').map(c => c.role))];
+    const contributors = [
+      ...recorded.filter(c => c.type !== 'ai'),
+      ...aiRoles.map(role => ({ name: 'Source Library, using AI', role })),
     ];
 
     // OPF
@@ -2112,7 +2117,7 @@ async function generateScholarlyEpubDownload(
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>
     <p><strong>Contributors:</strong></p>
-    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
+    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})</p>`).join('\n    ')}
     <p>&#160;</p>
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p>&#160;</p>
