@@ -21,6 +21,9 @@ const GUARDED = [
   'src/lib/purchases.ts',
   'src/lib/types/image-source.ts',
   'src/app/book/[id]/page.tsx',
+  // The reader's Download drawer kept its own copy of the rule, on year_published
+  // and two other absent fields, until 2026-11-04 (#8098).
+  'src/components/reader-v2/Reader2C.tsx',
 ];
 
 describe('image-access gate reads a field that exists', () => {
