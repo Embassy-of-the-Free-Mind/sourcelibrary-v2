@@ -37,12 +37,12 @@ function locate(pg, left, right) {
   return best;
 }
 async function panel(uid, it) {
-  const f = path.join(ROOT, 'img', `${uid}.jpg`), m = await sharp(f).metadata(), loc = locate(pages[uid], it.left, it.right);
+  const f = path.join(ROOT, 'img', `${uid}.jpg`), m = await sharp(f).metadata(), loc = locate(pages[uid], it.left, it.right), wide = Math.max([...(it.typed || '')].length, [...(it.ocr || '')].length) > 1 ? 2 : 1;
   let box, how = 'crop';
   if (loc.score >= 4) {
     const [x0, y0, x1, y1] = loc.row.box, cw = Math.min(x1 - x0, y1 - y0), vertical = (y1 - y0) >= (x1 - x0), frac = (loc.p + 0.5) / Math.max(1, loc.n);
     const cx = vertical ? (x0 + x1) / 2 : x0 + frac * (x1 - x0), cy = vertical ? y0 + frac * (y1 - y0) : (y0 + y1) / 2;
-    const hw = Math.max(cw * 1.8, m.width * 0.05), hh = hw * (PANEL.h / PANEL.w);
+    const hw = Math.max(cw * 1.8, m.width * 0.05) * wide, hh = hw * (PANEL.h / PANEL.w);
     box = { left: Math.max(0, Math.round(cx - hw)), top: Math.max(0, Math.round(cy - hh)) };
     box.width = Math.min(m.width - box.left, Math.round(hw * 2)); box.height = Math.min(m.height - box.top, Math.round(hh * 2));
   } else { box = { left: 0, top: 0, width: m.width, height: m.height }; how = 'page'; }
@@ -58,7 +58,10 @@ for (const uid of uids) {
   const take = shuffled(judged, rng).slice(0, CAP); counts[uid].judged = take.length;
   for (const d of take) add({ kind: 'real', uid, typed: d.t, ocr: d.o, left: d.left, right: d.right });
 }
-/** An agreed site with clean context; near = only characters that have a lookalike. */
+/** An agreed site with clean context; near = only characters that have a lookalike. A site is dealt once, and no two control sites
+ * share a neighbourhood: a plant and a decoy on one passage would expose each other, and a real difference nearby would expose both. */
+const taken = {};
+for (const uid of uids) taken[uid] = pages[uid].diffs.map((d) => d.k);
 function site(near) {
   for (let t = 0; t < 4000; t++) {
     const uid = uids[Math.floor(rng() * uids.length)], pg = pages[uid], a = pg.agreed[Math.floor(rng() * pg.agreed.length)];
@@ -66,13 +69,15 @@ function site(near) {
     const left = pg.consensus(a.k, -1, 8), right = pg.consensus(a.k, 1, 8), c = pg.ocr[a.j];
     if (left.includes('□') || right.includes('□') || left.length < 6 || right.length < 6) continue;
     if (near && !nearOf(c).length) continue;
+    if (taken[uid].some((k) => Math.abs(k - a.k) < 9)) continue;
+    taken[uid].push(a.k);
     return { uid, c, typedC: pg.typed[a.i], left, right };
   }
   return null;
 }
-for (let i = 0; i < N.plants; i++) { const s = site(true), w = nearOf(s.c)[0]; add({ kind: 'plant_typed', uid: s.uid, typed: w, ocr: s.c, truth: s.c, left: s.left, right: s.right }); }
-for (let i = 0; i < N.decoys; i++) { const s = site(true), w = nearOf(s.c)[0]; add({ kind: 'decoy_ocr', uid: s.uid, typed: s.c, ocr: w, truth: s.c, left: s.left, right: s.right }); }
-for (let i = 0; i < N.neither; i++) { let s; do { s = site(true); } while (nearOf(s.c).length < 2); const [w1, w2] = nearOf(s.c); add({ kind: 'neither', uid: s.uid, typed: w1, ocr: w2, truth: s.c, left: s.left, right: s.right }); }
+for (let i = 0; i < N.plants; i++) { const s = site(true), w = shuffled(nearOf(s.c), rng)[0]; add({ kind: 'plant_typed', uid: s.uid, typed: w, ocr: s.c, truth: s.c, left: s.left, right: s.right }); }
+for (let i = 0; i < N.decoys; i++) { const s = site(true), w = shuffled(nearOf(s.c), rng)[0]; add({ kind: 'decoy_ocr', uid: s.uid, typed: s.c, ocr: w, truth: s.c, left: s.left, right: s.right }); }
+for (let i = 0; i < N.neither; i++) { let s; do { s = site(true); } while (nearOf(s.c).length < 2); const [w1, w2] = shuffled(nearOf(s.c), rng); add({ kind: 'neither', uid: s.uid, typed: w1, ocr: w2, truth: s.c, left: s.left, right: s.right }); }
 for (let i = 0; i < N.wrongcrop; i++) { const s = site(false), other = uids.filter((u) => u !== s.uid)[Math.floor(rng() * (uids.length - 1))]; const w = nearOf(s.c)[0] || '之'; add({ kind: 'wrong_crop', uid: s.uid, crop_uid: other, typed: w, ocr: s.c, left: s.left, right: s.right }); }
 for (let i = 0; i < N.agreed; i++) { const s = site(i % 2 === 0); add({ kind: 'agreed', stratum: i % 2 === 0 ? 'near' : 'any', uid: s.uid, typed: s.typedC, ocr: s.c, left: s.left, right: s.right }); }
 
