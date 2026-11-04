@@ -159,7 +159,7 @@ export const visionContent: VisionContent = {
           'We hold **another 73,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and cataloged. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac. Quality comes first: each kind of page gets the engine that reads it best in our measurements, and the hardest pages are read twice. [The reading plan](/research/reading-plan) shows what that costs and what we are still testing.',
           'The rest of the first year builds the organization that makes those translations trustworthy: the foundation and its legal footing, a director, a part-time engineer to run the pipeline, and the hosting that keeps every page online.',
         ],
-        promise: 'By next summer, every one of the 93,000 books we hold has a first translation, and there is an organization responsible for it. We will also publish how many of those books have reached our quality bar, language by language.',
+        promise: 'By next summer, every one of the 93,000 books we hold has a first translation, and there is an organization responsible for it. We will also publish how many of those books have reached our quality bar, language by language. Claude Opus does the evaluating, checking sampled pages against their images, and we will publish how often it is wrong.',
       },
       {
         years: 'Years 2–3',
