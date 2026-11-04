@@ -19,6 +19,7 @@ import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
 import { getBookIndex } from '@/lib/book-index';
+import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
@@ -2428,6 +2429,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
       anonCapKey = anonymousDownloadCapKey(request.headers);
     }
+
+    // A protected partner's book: agree to its terms first. Ahead of the cap, so being asked costs nothing.
+    const termsRefusal = await partnerTermsRefusal(
+      request,
+      await (await getDb()).collection('books').findOne({ id, tenantId }, { projection: { id: 1, tenantId: 1 } }) as { id?: string; tenantId?: string | null } | null,
+      { userId, format },
+    );
+    if (termsRefusal) return termsRefusal;
 
     // Get optional edition_id for scholarly format
     const editionId = searchParams.get('edition_id');
