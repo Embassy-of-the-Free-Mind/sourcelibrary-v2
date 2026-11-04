@@ -72,9 +72,7 @@ for (const b of todo) {
   if (!(await head(url))) { skip('head_fail'); continue; }
 
   const update = buildCoverUpdate(page, { source: SWEEP, method: how, actor: 'script', confidence: how === 'same-leaf' ? 0.95 : 0.7, detail: `#7743 R2 copy of the IA cover leaf` });
-  // A dotted key, so the book's other field_provenance entries survive the $set.
-  update['field_provenance.thumbnail'] = { ...update.field_provenance.thumbnail, previous: b.thumbnail };
-  delete update.field_provenance;
+  update['field_provenance.thumbnail'] = { ...update['field_provenance.thumbnail'], previous: b.thumbnail };
   update.updated_at = new Date();
   tally[how === 'same-leaf' ? 'same_leaf' : 'fallback']++;
   if (n <= 10) console.log(`  ${how} ${b.id} p${page.page_number} ${String(b.title || '').slice(0, 40)} -> ${url}`);
