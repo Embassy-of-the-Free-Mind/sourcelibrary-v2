@@ -1010,8 +1010,8 @@ export async function proxy(request: NextRequest) {
     // embed UI policy (cross-reference rails off). Deeper paths (/page/<id>,
     // /overview, …) stay on the global routes; the lockdown guard below still
     // covers them. The admission check runs HERE because this branch returns
-    // before that guard, and the embed route's own refusal would be a soft 200
-    // under /embed/[tenant]/loading.tsx.
+    // before that guard. (book/ no longer sits under a loading.tsx, so the embed
+    // route's own refusal is now a real 404 too, #5056; the proxy check stays the gate.)
     let refuseBook = false;
     const bookRoot = pathname.match(/^\/book\/([^/]+)\/?$/);
     if (bookRoot && !request.nextUrl.searchParams.has('page')) {
