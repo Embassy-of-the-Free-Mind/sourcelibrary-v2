@@ -22,7 +22,7 @@ import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
 import { isProtectedSurface, surfaceRefusal, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
-import { isTrustedByUserAgent } from '@/lib/bot-gate';
+import { isTrustedByUserAgent, namesUserFetchAgent } from '@/lib/bot-gate';
 import { getToken } from 'next-auth/jwt';
 import { pageStatusFor } from '@/lib/page-status';
 import { pageStatusDecision } from '@/lib/page-status-gate';
@@ -996,6 +996,21 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = '/articles/in-memoriam';
     return NextResponse.redirect(url, 308);
+  }
+
+  // /search is a client page: without JavaScript it has no results in it. An
+  // assistant reading for a person gets the same search as readable HTML (#8161).
+  // A name is enough, because a forged one gets nothing /api/search does not give,
+  // with the same limits. Everyone else keeps the page served from cache.
+  if (
+    !tenant
+    && pathname === '/search'
+    && request.nextUrl.searchParams.get('q')
+    && namesUserFetchAgent(request.headers.get('user-agent'))
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/search/text';
+    return NextResponse.rewrite(url);
   }
 
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).

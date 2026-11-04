@@ -182,6 +182,9 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   '/api/embassy',
   '/api/decode',
   '/api/hunt',
+  // Not under /api, but a route handler with no page, like its twin /api/search.
+  // It searches the whole library, while a partner's /search stays scoped (#8161).
+  '/search/text',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
