@@ -17,7 +17,9 @@
  *   recent  objects written in the window, by anything except the backfill (is the leak closed?)
  *
  * DENOMINATOR. Pages whose display_photo is an object on R2. Pages with no R2 display are reported
- * beside it (`noR2Display`): they are served through /api/image or from the source, not from a
+ * beside it (`noR2Display`) and so are pages whose variant the reader never loads (`notServed`: a
+ * cropped_photo page, a variant of another image), since a mark there is not on what readers see.
+ * Those with no R2 display are served through /api/image or from the source, not from a
  * variant we could mark. A page with under 16 textured block pairs (blank paper) cannot carry the
  * watermark by design and is reported as `uncarryable`, outside the denominator. It is measured,
  * not assumed: the detector returns the pair count.
@@ -54,6 +56,7 @@ import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { detectWatermark, markImage } from '../lib/provenance-mark.mjs';
+import { READER_DISPLAY_FIELDS, readerServesDisplay } from '../lib/reader-display.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const arg = (n, d) => { const a = process.argv.find((x) => x.startsWith(`--${n}=`)); return a ? a.split('=').slice(1).join('=') : d; };
@@ -120,6 +123,7 @@ function eraOf({ page, key, metadata, exif }) {
 async function measurePage(page) {
   const key = keyOf(page.display_photo);
   if (!key || !key.startsWith('pages/')) return { status: 'noR2Display' };
+  if (!readerServesDisplay(page)) return { status: 'notServed', key };
   let o;
   try { o = await readObject(key); }
   catch (e) { return { status: e?.$metadata?.httpStatusCode === 404 ? 'objectMissing' : 'readError', key }; }
@@ -158,14 +162,14 @@ function summarise(rows) {
   }
   return {
     sampled: rows.length, n, marked, unmarked, rate: n ? marked / n : null,
-    uncarryable: count('uncarryable'), noR2Display: count('noR2Display'), objectMissing: count('objectMissing'),
+    uncarryable: count('uncarryable'), noR2Display: count('noR2Display'), notServed: count('notServed'), objectMissing: count('objectMissing'),
     readError: count('readError'), undecodable: count('undecodable'), eras,
     // A number names a writer; these name objects, so the next person can open one.
     unmarkedExamples: rows.filter((r) => r.status === 'unmarked').slice(0, 25).map(({ key, era, width, bytes, z, pairs, month }) => ({ key, era, width, bytes, z, pairs, month })),
   };
 }
 
-const PAGE_PROJECTION = { book_id: 1, page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1 };
+const PAGE_PROJECTION = { ...READER_DISPLAY_FIELDS, book_id: 1, page_number: 1, display_photo: 1, archived_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1 };
 
 async function randomPage(pages, b) {
   const n = 1 + Math.floor(Math.random() * Math.max(1, b.pages_count));
@@ -307,7 +311,7 @@ async function main() {
   const pct = (s) => (s.rate == null ? 'n/a' : `${(100 * s.rate).toFixed(1)}%`);
   for (const f of ['books', 'pages', 'recent']) {
     const s = report[f];
-    console.log(`\n${f}: ${pct(s)} detected (${s.marked}/${s.n})  uncarryable=${s.uncarryable} noR2Display=${s.noR2Display} missing=${s.objectMissing} readErr=${s.readError} undecodable=${s.undecodable}`);
+    console.log(`\n${f}: ${pct(s)} detected (${s.marked}/${s.n})  uncarryable=${s.uncarryable} noR2Display=${s.noR2Display} notServed=${s.notServed} missing=${s.objectMissing} readErr=${s.readError} undecodable=${s.undecodable}`);
     for (const [era, e] of Object.entries(s.eras).sort((a, b) => (b[1].marked + b[1].unmarked) - (a[1].marked + a[1].unmarked))) {
       const months = Object.entries(e.months).sort().map(([m, c]) => `${m}:${c}`).join(' ');
       console.log(`  ${String(e.marked).padStart(4)} marked ${String(e.unmarked).padStart(4)} unmarked  ${era}  [${months}]`);
