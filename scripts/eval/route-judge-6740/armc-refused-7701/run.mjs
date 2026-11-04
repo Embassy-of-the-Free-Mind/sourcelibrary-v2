@@ -235,7 +235,7 @@ function apply() {
     const ids = x.rows.filter((r) => r.accept && !r.wrong_text).map((r) => r.page_id), dir = dirOf(cell), only = path.join(dir, 'only-best.json');
     if (!ids.length) { res[cell] = { pages: 0 }; continue; }
     fs.writeFileSync(only, JSON.stringify(ids));
-    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, '--print-only', '--reason=#7701 armc-refused cell test: the arm c read the #7695 guards refused, written because a blind Opus judge accepted it against the image (job armc-refused-judge-7701)', ...(APPLY ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
+    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, '--first-read-only', '--print-only', '--reason=#7701 armc-refused cell test: the arm c read the #7695 guards refused, written because a blind Opus judge accepted it against the image (job armc-refused-judge-7701)', ...(APPLY ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
     const tail = r.stdout.trim().split('\n').filter((l) => /^(written|would write)|run id|run_id/i.test(l));
     res[cell] = { pages: ids.length, ids, exit: r.status, summary: tail, stderr: r.stderr?.slice(-400) };
     console.log(`${cell}: ${ids.length} -> ${tail.join(' | ')}`);
