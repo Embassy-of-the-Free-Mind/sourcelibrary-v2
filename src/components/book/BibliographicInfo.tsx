@@ -448,7 +448,7 @@ export default function BibliographicInfo({
                               <p className="text-stone-400">{book.translation_verification.reasoning}</p>
                             )}
                             <p className="text-stone-600 text-[10px]">
-                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'}
+                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} by an AI search of library catalogues
                               {showExternalLinks && <>{' '}&middot;{' '}<a href="/articles/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
                             </p>
                           </div>
@@ -691,9 +691,6 @@ export default function BibliographicInfo({
                           )}
                         </div>
                         <div className="flex flex-col gap-0.5 pl-0.5">
-                          {prov.model && (
-                            <span className="text-xs text-stone-500 font-mono">{prov.model}</span>
-                          )}
                           {prov.provider_name && (
                             <span className="text-xs text-stone-500">{prov.provider_name}</span>
                           )}

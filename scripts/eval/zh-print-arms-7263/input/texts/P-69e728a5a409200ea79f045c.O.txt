@@ -1,0 +1,24 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>聊齋志異新評卷三</header>
+<page-num><unclear>廿二</unclear></page-num>
+<meta>Red circle punctuation and red marks beside the columns are not transcribed. The block-centre fold also carries a short, indistinct section title between the header and the leaf number, not transcribed.</meta>
+
+<margin><unclear>閒</unclear>說其醜机更有甚於索此物者</margin>
+
+異史氏曰平原獨無亦中流之砥柱也學使而求呈進
+固當奉之以此由是得免冤哉
+
+<margin>形容絕肖</margin>
+
+朱公子青耳錄云東萊一明經遲司訓沂水性顛癡
+凡同人咸集時皆默勿語遲坐片時不覺五官俱動
+笑啼並作旁若無人焉者若聞人笑聲則頓止儉鄙
+自奉積金百餘兩自理齋房妻子亦不使知一日獨
+坐忽手足自動少刻云作惡結怨受凍忍飢好容易
+積蓄者今在齋房倘有人知覺如何如此再四一門
+斗在旁殊亦不覺次日遲出門斗入掘取而去過二一
+
+<vocab>異史氏, 朱公子青, 耳錄, 東萊, 明經, 司訓, 沂水, 齋房, 門斗, 聊齋志異新評</vocab>

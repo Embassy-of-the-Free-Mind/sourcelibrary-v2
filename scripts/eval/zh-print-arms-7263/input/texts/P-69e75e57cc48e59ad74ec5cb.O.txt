@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>一</page-num>
+<header>笠翁偶集 卷之六</header>
+<meta>Woodblock print (block-printed text). Features traditional Chinese vertical layout with small circle punctuation (句讀).</meta>
+
+<margin>
+王左車云
+造物不仁
+全賴<unclear>寵是</unclear>
+</margin>
+
+疾病顛連。名韁利鎖。驚風駭浪。阻人燕遊。使
+徒有百歲之虛名。並無一歲二歲享生人應
+有之福之實際乎。又况此百年以内。日日死
+亡。相告。謂先我而生者。死矣。後我而生者。亦
+死矣。與我同庚比算。互稱弟兄者。又死矣。噫。
+死。是何物。而可知凶不諱。日令不能無死者。
+驚見于目。而怛聞于耳乎。是千古不仁未有
+甚于造物者矣。雖然殆有說焉。不仁者。仁之
+至也。知我不能無死。而日以死亡相告。是恐
+
+<sig>藏板</sig>
+
+<vocab>造物者, 不仁, 疾病, 名韁利鎖, 同庚</vocab>

@@ -1,6 +1,6 @@
 # Quality rubric and sampling plan: what every quality number means, and which pages it is measured on
 
-> **The grade ladder of §5 has been computed once; the standing sample has not (checked 2026-11-02, #7933).** `scripts/eval/confidence-7866/regrade.mjs` grades #7866's 800 drawn pages (160 live books, 5 pages each, one Opus judge) on §5's four grades, from the judge's own MQM severities, and `/quality` leads with that distribution. Everything else below — the standing monthly draw and its strata (§6), the human calibration of the grade boundaries (§5.3) — is still design, run by no lane. The checks that do run are listed in `book-process.md`.
+> **The grade ladder of §5 has been computed once; the standing sample has not (checked 2026-11-02, #7933).** `scripts/eval/confidence-7866/regrade.mjs` grades #7866's 800 drawn pages (160 live books, 5 pages each, one Opus judge) on §5's five grades, from the judge's own MQM severities, and `/quality` leads with that distribution. Everything else below — the standing monthly draw and its strata (§6), the human calibration of the grade boundaries (§5.3) — is still design, run by no lane. The checks that do run are listed in `book-process.md`.
 
 PRIOR ART: `.claude/docs/eval-design.md` (the measure vocabulary, registry, reference rules, decision cards; it says how a number is *stored and compared*, not what a page's grade *is* or how a corpus-wide sample is drawn and weighted), `.claude/docs/page-error-taxonomy.md` (the 44 classes, by eye, presence only, no severity scale), #5438 (quality round 1: a one-off 12-cell backlog sample with a ship rule), #4925 (decision-grade reference plan, OCR only), #3499 (the held-out reserve policy for unpublished books), #5274 / #5301 (the monthly served-translation audit this plan extends), #5914 (the monthly image-and-book arm). None of them adopts a published rubric or sizes and weights a standing sample over the whole served corpus. This doc does both and links them rather than restating them.
 
@@ -170,7 +170,7 @@ None of these appears in MQM, OCR-D, olmOCR-bench or OmniDocBench. olmOCR-bench'
 
 ## 5. One reader-facing page grade
 
-### 5.1 The four grades
+### 5.1 The five grades
 
 A page gets the **lowest** grade any lane earns. The lanes are leaf, transcription and translation (if the page has English).
 
@@ -178,15 +178,19 @@ A page gets the **lowest** grade any lane earns. The lanes are leaf, transcripti
 |---|---|---|
 | **No serious error found** (`fit_to_quote`) | Reviewers found no error that changes the sense. They miss some. | Leaf right. No critical and no major error in any lane. Transcription minors ≤ 2 on the page, none of them in a sentence the reader would quote. Where a reference exists, Level 2 CER ≤ 1%. |
 | **Small slips only** (`fit_to_read`) | The page says what the leaf says, with slips that do not change the sense. | Leaf right. No critical and no major error. Any number of minors. |
-| **A reading that changes the sense** (`search_only`) | Mostly right, with at least one error that changes the meaning. | Leaf right. No critical error. One or more majors. The transcription is in the right script and mostly the right words (Level 1 CER ≤ 10% where a reference exists; by eye: a reader searching a word on the page would find it). |
-| **Not the page’s text** | Another page’s text, words that are not on the page, or most of the page wrong or missing. | Any critical: wrong leaf, invented or recited text, wrong script, echoed source, fluent prose over unreadable text, most of the page missing. Also a refusal or empty output on a leaf that has text. |
+| **Some errors that may change the meaning** (`some_errors`) | Mostly right, with 1 or 2 errors that may change the meaning. | Leaf right, and no critical from elsewhere (below). **1 or 2** spans on the page that are major, or critical of the misread kind (a word, number or phrase the page does not carry). The transcription is in the right script and mostly the right words (Level 1 CER ≤ 10% where a reference exists; by eye: a reader searching a word on the page would find it). |
+| **Many errors that may change the meaning** (`many_errors`) | Mostly the right words, with 3 or more errors that may change the meaning. | As above, with **3 or more** such spans on the page. |
+| **Not the page’s text** | Another page’s text, words invented or recited from elsewhere, or most of the page wrong or missing. | Any critical from elsewhere: wrong leaf, invented or recited text, wrong script, the model's reply stored as text (O1, O2, O3, I1, T17), or most of the page missing. Also a refusal or empty output on a leaf that has text. |
+
+**Why the middle is split by count, not by kind (#7263, 2026-11-04).** It used to be two grades: one or more majors (*a reading that changes the sense*, `search_only`), and any critical of the misread kind (`wrong_span`, then filed under *not the page's text*). The line between major and critical is the unstable one: a blind re-read moved 17 of 40 majors to critical (#6740), and a second reader cut Sanskrit's serious calls by more than half (#7991). The count of serious spans is the steadier measure, and "may" says what it is. `regrade.mjs` keeps `gradeOf()` and its keys (other studies import them) and derives the band from it with `bandOf()`; served-grades.json carries both, `bands` for readers. On #7866's 800 pages: 197 middle pages with 1 or 2 spans, 130 with 3 or more (weighted 25.7% and 16.2%). A rate instead of a count (10+ per 1,000 units) would move 78 of the 327 pages, short pages up and long pages down (`band_sensitivity` in the file); the count is kept because it is what a reader sees on the page.
 
 A page with no ink that is served as blank is **no serious error found**: there is nothing to read, and nothing false. A blank page served with text is **not usable** (O1).
 
-The 1% and 10% lines and the "≤ 2 minors" line are **judgement calls**, chosen here:
+The 1% and 10% lines, the "≤ 2 minors" line and the "3 or more" line are **judgement calls**, chosen here:
 - 1% is about one wrong letter in a printed line of 80–100 characters;
 - 10% is about where the #5660 by-eye pages stop being searchable;
-- the minors cap keeps "no serious error found" meaning what it says.
+- the minors cap keeps "no serious error found" meaning what it says;
+- 3 serious spans is where "some" stops reading as true of a page; on a page of about 300 words, a typical Latin page, it is also 10 per 1,000.
 
 They are tested in §5.3 and changed only by a later commit to this doc, never after looking at a month's data.
 
@@ -201,7 +205,7 @@ They are tested in §5.3 and changed only by a later commit to this doc, never a
 
 The grade inherits the judge's unmeasured error (eval-design §2.1, §10.2 "Human calibration"). Before the first published headline:
 1. Two readers of the language grade ≥ 34 judge-sound and ≥ 35 judge-defective pages (`HUMAN-CALIBRATION.md` §7a counts) with the ESA protocol (§3.3).
-2. Agreement is reported per grade boundary: quote/read, read/search, search/unusable.
+2. Agreement is reported per grade boundary: quote/read, read/some, some/many, many/unusable.
 3. If readers and the judge disagree on more than 1 page in 5 at a boundary, the boundary's rule is revised and the calibration rerun.
 
 Until then the grade is published as "model-judged, not yet checked by readers", as `/quality` does today for the judge column.
@@ -298,7 +302,7 @@ It **extends the existing monthly audit** (`translation-corpus-audit/MONTHLY.md`
 | "Rated 4 or 5 of 5 by a model judge" | `/quality`, #5274 | Kept for comparison. The judge's defects are re-read as MQM severities: fidelity ≤ 3 with a major defect ≈ "fit for search only" or worse in the translation lane. The page grade replaces it as the headline once §5.3 is done |
 | "Pages at 4 or 5 against a published translation" | `/quality`, #5695 | Unchanged as `judged_vs_reference`; a diagnostic per language, not the page grade |
 | "Serious errors per 100 pages" | #5914 | "Serious" = major + critical in §3.4 terms; reported as the MQM penalty diagnostic |
-| "Major-defect rate ≤ 10% on n ≥ 20" ship rule | #5438 | Restated as "share of pages graded *a reading that changes the sense* or *not the page’s text* ≤ 10%", with the interval printed (at 2 of 20 it is about 3–30%, eval-design §2.1) |
+| "Major-defect rate ≤ 10% on n ≥ 20" ship rule | #5438 | Restated as "share of pages graded *some* or *many errors that may change the meaning*, or *not the page’s text*, ≤ 10%", with the interval printed (at 2 of 20 it is about 3–30%, eval-design §2.1) |
 
 ## 8. Inventory: what is measured today, per stratum, and what it costs to fill
 

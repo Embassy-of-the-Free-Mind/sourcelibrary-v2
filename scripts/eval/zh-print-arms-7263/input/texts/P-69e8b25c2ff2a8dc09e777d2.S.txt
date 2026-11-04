@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>Chinese, French</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>100</page-num>
+<header>LAO-TSEU-TAO-TE-KING.</header>
+
+# CHAPITRE XXVII.
+
+| | | | | | | | |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 善 | 不 | 開 | 聖 | 救 | 人 | 資 | 迷 |
+| 行 | 用 | 善 | 人 | 物 | 不 | 不 | 是 |
+| 無 | 籌 | 結 | 常 | 故 | 善 | 貴 | 謂 |
+| 轍 | 策 | 無 | 善 | 無 | 人 | 其 | 要 |
+| 善 | 閉 | 繩 | 救 | 棄 | 之 | 師 | 妙 |
+| 言 | 無 | 約 | 人 | 物 | 師 | 不 | |
+| 無 | 關 | 而 | 故 | 是 | 不 | 愛 | |
+| 瑕 | 鍵 | 不 | 無 | 謂 | 善 | 其 | |
+| 謫 | 而 | 可 | 棄 | 襲 | 人 | 資 | |
+| 善 | 不 | 解 | 人 | 明 | 之 | 雖 | |
+| 計 | 可 | 是 | 常 | 故 | | 智 | |
+| | | 以 | 善 | 善 | | 大 | |
+
+<note>The text in the left margin reads: 第二十七章</note>
+
+Celui qui sait marcher (dans le Tao) ne laisse pas de traces⁽¹⁾; celui qui sait parler ne commet point de fautes; celui qui sait compter ne se sert point d’instruments de calcul ⁽²⁾; celui qui sait fermer (quelque chose) ne se sert point de verrou ⁽³⁾, et il est impossible de l’ouvrir; celui
+
+<vocab>Tao, Lao-Tseu, Tao-Te-King, Chapitre XXVII, 道德經</vocab>

@@ -18,6 +18,9 @@
 # start, while the children of the running ones still get their own pool and cannot deadlock behind them (#7869).
 # Burn comes from the densest samples there are: climits' 5-min history.jsonl beside the meter (main), else the
 # meter's own burn_pct_per_h (box.sh push-limits adds it), else this box's samples, needing 30 min of them.
+# When the meter cannot speak for this login (climits' own grant revoked, mesh down), the week comes from the login's
+# usage endpoint, at most every 5 min, with its access token as it stands: never refreshed here, because a refresh
+# rotates the token under the running CLI (#8168). The login is what a box always has while its jobs can run at all.
 # Waiting spends nothing. A caller that kills a waiting call after its own timeout gets a failure and retries, so
 # drivers should still lower their own parallelism — this is the backstop that holds when they do not.
 #
@@ -56,7 +59,7 @@ if [ -n "${CLAUDE_PACE_AGENT:-}" ]; then unset CLAUDE_PACE_AGENT; pool=main; age
 
 # Decide the slot count for this account (cached a minute; one python start per call is cheap next to a model call).
 decide() { python3 - "$METER" "$DIR" "${CLAUDE_CONFIG_DIR:-$HOME}" <<'PY'
-import json, os, sys, time, datetime as dt
+import json, os, socket, sys, time, urllib.request, datetime as dt
 meter, d, cfg = sys.argv[1:4]
 MAX, MIN = int(os.environ.get("PACE_MAX_SLOTS", 12)), int(os.environ.get("PACE_MIN_SLOTS", 2))
 try:
@@ -74,8 +77,11 @@ def t(s):
     try: return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
     except Exception: return None
 now = dt.datetime.now(dt.timezone.utc)
-out = (MAX, "no-meter")
-try:
+def write(path, text):   # several calls decide at once: a shared .tmp lost the replace, and the race read as fail-open
+    tmp = f"{path}.{os.getpid()}.tmp"
+    with open(tmp, "w") as f: f.write(text)
+    os.replace(tmp, path)
+def from_meter():
     m = json.load(open(meter))
     seen = t(m.get("checked_at") or "")
     if seen is None or seen.tzinfo is None: raise ValueError("checked_at-unparseable")
@@ -86,16 +92,48 @@ try:
     acc = next((a for a in m.get("accounts", []) if a.get("email", "").lower() == email), None)
     if acc is None: raise ValueError("account-not-in-meter")
     if not acc.get("ok"): raise ValueError("account-not-ok-in-meter")  # climits could not read it: re-login there
-    w = next(l for l in acc["limits"] if l["key"].startswith("weekly_all"))
+    return m["checked_at"], next(l for l in acc["limits"] if l["key"].startswith("weekly_all")), ""
+def from_login():
+    # PRIOR ART: scripts/eval/lane-judge-sampler.mjs claudeMeter, the same read. A failed read is cached too, so a
+    # 429 is not asked again every minute.
+    f = os.path.join(d, email + ".usage")
+    try:
+        r = json.load(open(f)) if time.time() - os.path.getmtime(f) < 300 else None
+    except (OSError, ValueError):
+        r = None
+    if r is None:
+        try:
+            for c in (os.path.join(cfg, ".credentials.json"), os.path.join(cfg, ".claude", ".credentials.json")):
+                if os.path.exists(c): break
+            o = json.load(open(c))["claudeAiOauth"]
+            if not o.get("expiresAt", 0) > (time.time() + 60) * 1000: raise ValueError("token-expired")
+            req = urllib.request.Request(os.environ.get("CLAUDE_PACE_USAGE_URL", "https://api.anthropic.com/api/oauth/usage"),
+                                         headers={"Authorization": "Bearer " + o["accessToken"], "anthropic-beta": "oauth-2025-04-20"})
+            w = json.load(urllib.request.urlopen(req, timeout=10))["seven_day"]
+            r = {"at": now.isoformat(), "percent": w["utilization"], "resets_at": w["resets_at"]}
+        except Exception as e:
+            r = {"error": type(e).__name__ + ":" + str(e)[:40]}
+        write(f, json.dumps(r))
+    if "error" in r: raise ValueError("login-unread:" + r["error"])
+    return r["at"], {"key": "weekly_all:all", "percent": r["percent"], "resets_at": r["resets_at"]}, ",src=login"
+out = (MAX, "no-meter")
+try:
+    try:
+        at, w, via = from_meter()
+    except Exception as e:
+        try:
+            at, w, via = from_login()
+        except Exception as e2:
+            raise ValueError(f"{e}+{e2}")
+    seen = t(at)
     pct, reset = w.get("percent") or 0, t(w.get("resets_at") or "")
     # Keep our own samples: a box that only receives the meter (no climits history) still gets a burn rate.
     hist = os.path.join(d, email + ".hist")
     rows = [l.split() for l in open(hist)] if os.path.exists(hist) else []
-    if not rows or rows[-1][0] != m["checked_at"]:
-        rows.append([m["checked_at"], str(pct)])
+    if not rows or rows[-1][0] != at:
+        rows.append([at, str(pct)])
         rows = rows[-200:]
-        with open(hist + ".tmp", "w") as f: f.write("".join(f"{a} {b}\n" for a, b in rows))
-        os.replace(hist + ".tmp", hist)
+        write(hist, "".join(f"{a} {b}\n" for a, b in rows))
     # This box's samples exist only for minutes a paced call ran, so after any quiet gap the 3h window held one
     # sample and said burn-unknown for the first hour of the next burst (gex45, 2026-11-04: 15:00 -> 08:55 gap,
     # dereklomas at 4%/h read unknown until 09:55). Where climits runs (main) its 5-min history is read every time.
@@ -127,16 +165,43 @@ try:
             burn, src = float(w["burn_pct_per_h"]), ",src=meter"
         if burn is not None:
             slots = MAX if burn <= budget else max(MIN, int(MAX * budget / burn))
-            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%{src}")
+            out = (slots, f"burn={burn:.2f}%/h,budget={budget:.2f}%/h,week={pct}%{src}{via}")
         else:
-            out = (MAX, f"burn-unknown:span={span:.2f}h,samples={len(rows)}")
+            out = (MAX, f"burn-unknown:span={span:.2f}h,samples={len(rows)}{via}")
 except Exception as e:
-    out = (MAX, f"meter-error:{type(e).__name__}:{str(e)[:60]}".replace(" ", "_"))
-open(cache, "w").write(f"{out[0]} {out[1]}\n")
+    out = (MAX, f"meter-error:{type(e).__name__}:{str(e)[:120]}".replace(" ", "_"))
+write(cache, f"{out[0]} {out[1]}\n")
 # Fail-open stays (a blind meter must not stop work), but it is written down where `claude-job.sh where` and a
 # person can see it: one line a minute at most, because the cache above runs this at most once a minute.
-if not out[1].startswith("burn="):
+# failopen.log alone is a record nobody reads: 281 lines in 6.5 h went unnoticed on cloudlayer (#8168). So a guard that
+# has failed open for over an hour pages, and again each day it lasts. "Over an hour" means calls kept coming through
+# it: a gap of an hour between decisions is a quiet account, which is spending nothing, so the clock starts again.
+def page(title, prio, body):
+    try:
+        urllib.request.urlopen(urllib.request.Request(os.environ.get("CLAUDE_PACE_NTFY", "https://ntfy.sh/sourcelibrary-uptime"),
+                               data=body.encode(), headers={"Title": title, "Priority": prio}), timeout=5)
+        return True
+    except Exception:
+        return False
+state, tnow = os.path.join(d, email + ".failopen"), time.time()
+try:
+    since, last, paged = (float(x) for x in open(state).read().split())
+except (OSError, ValueError):
+    since, last, paged = tnow, tnow, 0
+box = socket.gethostname()
+if out[1].startswith("burn="):
+    if os.path.exists(state):
+        if paged: page(f"Pace guard back: {email} on {box}", "low", f"Paced again: {out[1]}")
+        os.remove(state)
+else:
     with open(os.path.join(d, "failopen.log"), "a") as f: f.write(f"{now:%FT%TZ} {email} {out[1]}\n")
+    if tnow - last > 3600: since, paged = tnow, 0
+    if tnow - since > 3600 and tnow - paged > 86400 and page(f"Pace guard failing open: {email} on {box}", "high",
+            f"For {(tnow - since) / 3600:.1f} h this account's `claude -p` calls have run at {out[0]} slots with no pacing. "
+            f"Why: {out[1]}. account-not-ok plus login-unread means climits and the box's login are both blind: "
+            f"run `climits add {email}` on main and check the login on {box}. /root/claude-pace/failopen.log has the record (#8168)."):
+        paged = tnow
+    write(state, f"{since} {tnow} {paged}\n")
 print(email, *out)
 PY
 }

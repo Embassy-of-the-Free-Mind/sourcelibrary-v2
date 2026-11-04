@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>The page features red punctuation/emphasis marks (dots and lines) added to the woodblock printed text. There are also two marginal notes in smaller script at the top.</meta>
+
+<margin>
+駱丞檄喑嗚則山嶽崩頽叱咤則風雲變色何法本此
+</margin>
+
+<margin>
+大意謂禮俗無常各隨其鄉未必目覩者卽為是也
+</margin>
+
+管仲勉齊桓公因游遼口俱之其國幾尅舉隰朋
+諫曰君舍齊國之廣人民之衆山川之觀殖物之
+阜禮義之盛章服之美妖靡盈庭忠良滿朝肆咤
+則徒卒百萬視撝則諸侯從命亦奚羨於彼而棄
+齊國之社稷從戎夷之國乎此仲父之耄奈何從
+之桓公乃止以隰朋之言告管仲仲曰此固非朋
+之所及也臣恐彼國之不可升之也齊國之富奚
+戀隰朋之言奚顧南國之人祝髮而裸北國之人
+鞨巾而裘中國之人冠冕而裳九土所資或農或
+
+<vocab>管仲, 齊桓公, 隰朋, 遼口, 社稷, 戎夷, 祝髮, 鞨巾, 冠冕, 九土, 說苑</vocab>

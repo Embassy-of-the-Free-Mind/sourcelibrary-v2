@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+| 諸田 | 諸貨 | 正布 |
+| :--- | :--- | :--- |
+| 水渡衙田田司田無陵夫 | | 一 |
+| 大田祿並惠粢我軍田 | | 一 |
+| 田崇田無民田享國田水田官 | | |
+| 長義公稅署內供行則夫院屯 | 張 | 匹 |
+| 田殿須寺種需上水自田田田 | | |
+| 副田田田藥司諸陸耕守津馬 | | |
+| 者遭經喪前者職 | | 匹 |
+| 亦喪遞身五給田 | | |
+| 給身差死十則遞以十 | | |
+| 死者至日視前月 | | |
+| 限限內職受晦 | | |
+| 後未遭限職日 | | |
+| 收貧公屯官 | | |
+| 稅民田田屯 | | |
+| 並及田 | | |
+| 給屬外數 | | |
+
+<vocab>Korean Buddhist Text, 1481, woodblock, administrative records, land tax, official cloth</vocab>

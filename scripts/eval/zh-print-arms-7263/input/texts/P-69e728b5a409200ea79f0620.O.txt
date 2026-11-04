@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>五 十六之五</page-num>
+<header>聊齋志異新評卷十六 眞生</header>
+<meta>The text is printed in vertical columns, reading from right to left. Punctuation is indicated by small red circles next to characters. The block-centre margin on the left gives the title, chapter and leaf numbering.</meta>
+
+益眞曰。我言君貪。如何。如何。賈思明告。必不可得。將乘
+其醉睡。竊石而要之。一日。飲既臥。賈潛起。搜之衣底。眞
+覺之。曰。子眞喪心。不可處矣。遂辭別。移居而去。後年餘。
+賈遊河干。見一石。瑩潔絕類眞生物。拾之珍藏。若寶。過
+數日。眞忽至。<unclear>欿</unclear>然若有所失。賈慰問之。眞曰。君前所見。
+乃仙人點金石也。曩從抱眞子游。彼憐我介。以此相貽。
+醉後失去。隱卜。當在君所。如有還帶之恩。不敢忘報。賈
+笑曰。僕生平不敢欺友朋。誠如所卜。但知管仲之貧者。
+莫如鮑叔。君且柰何。眞請以百金爲贈。賈曰。百金非少。
+
+<vocab>點金石, 抱眞子, 管仲, 鮑叔</vocab>

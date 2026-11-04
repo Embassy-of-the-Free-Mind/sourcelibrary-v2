@@ -35,6 +35,7 @@ import { getPageSource } from '../../lib/page-image-url.mjs';
 import { armOf } from './arm.mjs';
 import { LANE, RUN, gradeOf, bucketOf, eraOf } from '../confidence-7866/regrade.mjs';
 import { words } from '../route-judge-6740/defect-rate.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true] : []).filter(Boolean));
 const OUT = args.out || 'scripts/eval/results/translation-on-7866-draw';
@@ -61,7 +62,7 @@ const db = client.db('bookstore');
 const pagesC = db.collection('pages'), booksC = db.collection('books');
 
 // 1. The 800 verdicts.
-const recs = (await db.collection('lane_judge_verdicts').find({ lane: LANE, run_id: RUN, kind: 'item' }).toArray()).filter((r) => r.verdict);
+const recs = (await db.collection('lane_judge_verdicts').find(verdictQuery({ lane: LANE, run_id: RUN, kind: 'item' })).toArray()).filter((r) => r.verdict);
 recs.sort((a, b) => String(a._id).localeCompare(String(b._id)));
 console.error(`${recs.length} #7866 verdicts`);
 

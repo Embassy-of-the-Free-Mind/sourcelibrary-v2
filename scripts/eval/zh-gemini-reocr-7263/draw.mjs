@@ -25,6 +25,7 @@ import { isInterior, lastPageNumber } from '../../batch/cli-ocr-lane.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { bodyCharCount } from '../../lib/paddle-print-lane.mjs';
 import { evidenceSources } from '../router-confirm/confirm.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const EVAL = path.resolve(HERE, '..');
@@ -67,7 +68,8 @@ console.log(`frame books ${frame.rows.length}; print-eligible ${elig.length}; ${
 
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const db = c.db('bookstore');
-for (const b of await db.collection('lane_judge_verdicts').distinct('book_id')) ev.add(b);
+// all origins: books to keep out of the draw; a test's books count as seen.
+for (const b of await db.collection('lane_judge_verdicts').distinct('book_id', verdictQuery({}, { tests: true }))) ev.add(b);
 const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
 fs.mkdirSync(path.join(OUT, 'texts'), { recursive: true });
 const sel = [], skipped = {}; let tried = 0;

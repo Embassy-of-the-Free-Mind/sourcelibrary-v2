@@ -168,7 +168,8 @@ export type TranscriptProvenance =
   /** Written or corrected by a person; `model` is what they started from, if known. */
   | { kind: 'manual'; model: string | null }
   /** Syriac read by a specialist Kraken model (#4883): Sophro Mhiro for
-   *  manuscripts, omnisyr for print. Named, with its measured accuracy. */
+   *  manuscripts, omnisyr for print. The drawer names these scholarly models, with
+   *  their measured accuracy; the chip says only "machine transcription". */
   | { kind: 'kraken'; route: 'manuscript' | 'print' }
   /** Read from the scan by a model in the ordinary pipeline. */
   | { kind: 'model'; model: string };
@@ -211,9 +212,9 @@ export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvena
 }
 
 /**
- * A model id as a reader would say it: `gemini-3.1-flash-lite-preview` →
- * "Gemini 3.1 Flash-Lite". Unknown ids pass through untouched — the exact id is
- * the honest fallback, never a guess.
+ * A model id as a staff page would say it: `gemini-3.1-flash-lite-preview` →
+ * "Gemini 3.1 Flash-Lite". Not for the book reader, which names the kind of text
+ * and never the model (#7263). Unknown ids pass through untouched.
  */
 export function modelDisplayName(model: string): string {
   const m = /^gemini-(\d+(?:\.\d+)?)-(flash-lite|flash|pro)(?:-preview)?(?:-\d{2}-\d{2})?$/i.exec(model.trim());
@@ -243,17 +244,18 @@ export function transcriptProvenanceLabel(
         : t.corpusTranscript(prov.corpus.name, prov.corpus.org);
     case 'ia':
       return form === 'short'
-        ? t.transcriptChipIa(prov.engine)
-        : t.iaTranscript(prov.engine, prov.year, prov.agreement);
+        ? t.transcriptChipIa
+        : t.iaTranscript(prov.year, prov.agreement);
     case 'manual':
       return form === 'short'
         ? t.transcriptChipManual
-        : t.manualTranscript(prov.model ? modelDisplayName(prov.model) : null);
+        // A model id here is what the person started from; 'human'/'manual' are not a machine.
+        : t.manualTranscript(!!prov.model && !/^(human|manual|hand)\b/i.test(prov.model));
     case 'kraken':
       return form === 'short'
-        ? (prov.route === 'print' ? 'omnisyr (Kraken)' : 'Sophro Mhiro (Kraken)')
+        ? t.transcriptChipMachine
         : t.krakenTranscript(prov.route);
     case 'model':
-      return form === 'short' ? modelDisplayName(prov.model) : t.transcribedBy(prov.model);
+      return form === 'short' ? t.transcriptChipMachine : t.machineTranscript;
   }
 }

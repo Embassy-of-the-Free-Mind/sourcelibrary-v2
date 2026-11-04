@@ -1,0 +1,906 @@
+{
+ "dev_books": 176,
+ "dev_books_5page": 126,
+ "dev_bad_5page": 59,
+ "families": {
+  "B": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.687,
+   "auc_ci": [
+    0.589,
+    0.779
+   ],
+   "logloss": 0.5948,
+   "logloss_ci": [
+    0.535,
+    0.655
+   ],
+   "slope": 1.108,
+   "slope_ci": [
+    0.714,
+    1.638
+   ],
+   "brier": 0.2069
+  },
+  "B+T": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.791,
+   "auc_ci": [
+    0.71,
+    0.864
+   ],
+   "logloss": 0.5383,
+   "logloss_ci": [
+    0.465,
+    0.614
+   ],
+   "slope": 1.045,
+   "slope_ci": [
+    0.767,
+    1.53
+   ],
+   "brier": 0.1839
+  },
+  "B+I": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.669,
+   "auc_ci": [
+    0.565,
+    0.767
+   ],
+   "logloss": 0.6408,
+   "logloss_ci": [
+    0.574,
+    0.716
+   ],
+   "slope": 0.842,
+   "slope_ci": [
+    0.346,
+    1.547
+   ],
+   "brier": 0.2222
+  },
+  "B+M": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.772,
+   "auc_ci": [
+    0.686,
+    0.849
+   ],
+   "logloss": 0.5312,
+   "logloss_ci": [
+    0.464,
+    0.604
+   ],
+   "slope": 1.134,
+   "slope_ci": [
+    0.797,
+    1.66
+   ],
+   "brier": 0.1817
+  },
+  "B+R": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.788,
+   "auc_ci": [
+    0.706,
+    0.86
+   ],
+   "logloss": 0.5486,
+   "logloss_ci": [
+    0.468,
+    0.639
+   ],
+   "slope": 0.998,
+   "slope_ci": [
+    0.637,
+    1.589
+   ],
+   "brier": 0.1844
+  },
+  "all": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.829,
+   "auc_ci": [
+    0.757,
+    0.894
+   ],
+   "logloss": 0.4897,
+   "logloss_ci": [
+    0.413,
+    0.567
+   ],
+   "slope": 1.035,
+   "slope_ci": [
+    0.783,
+    1.438
+   ],
+   "brier": 0.1669
+  },
+  "all-T": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.783,
+   "auc_ci": [
+    0.701,
+    0.857
+   ],
+   "logloss": 0.5483,
+   "logloss_ci": [
+    0.47,
+    0.631
+   ],
+   "slope": 1.005,
+   "slope_ci": [
+    0.676,
+    1.515
+   ],
+   "brier": 0.1855
+  },
+  "all-I": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.826,
+   "auc_ci": [
+    0.755,
+    0.892
+   ],
+   "logloss": 0.4861,
+   "logloss_ci": [
+    0.41,
+    0.565
+   ],
+   "slope": 1.051,
+   "slope_ci": [
+    0.789,
+    1.491
+   ],
+   "brier": 0.1652
+  },
+  "all-M": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.812,
+   "auc_ci": [
+    0.738,
+    0.879
+   ],
+   "logloss": 0.5135,
+   "logloss_ci": [
+    0.435,
+    0.593
+   ],
+   "slope": 0.996,
+   "slope_ci": [
+    0.732,
+    1.454
+   ],
+   "brier": 0.1748
+  },
+  "all-R": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.817,
+   "auc_ci": [
+    0.74,
+    0.886
+   ],
+   "logloss": 0.5122,
+   "logloss_ci": [
+    0.438,
+    0.591
+   ],
+   "slope": 1.137,
+   "slope_ci": [
+    0.833,
+    1.632
+   ],
+   "brier": 0.1718
+  }
+ },
+ "final": {
+  "families": [
+   "B",
+   "T",
+   "M",
+   "R"
+  ],
+  "kind": "logit",
+  "logit": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.826,
+   "auc_ci": [
+    0.755,
+    0.892
+   ],
+   "logloss": 0.4861,
+   "logloss_ci": [
+    0.41,
+    0.565
+   ],
+   "slope": 1.051,
+   "slope_ci": [
+    0.789,
+    1.491
+   ],
+   "brier": 0.1652
+  },
+  "hgb": {
+   "n": 126,
+   "bad": 59,
+   "auc": 0.832,
+   "auc_ci": [
+    0.758,
+    0.896
+   ],
+   "logloss": 0.5247,
+   "logloss_ci": [
+    0.409,
+    0.654
+   ],
+   "slope": 0.709,
+   "slope_ci": [
+    0.485,
+    1.115
+   ],
+   "brier": 0.17
+  }
+ },
+ "within_cell": {
+  "zh Paddle manuscripts (7866 low/middle cell)": {
+   "books": 46,
+   "bad": 29,
+   "auc": 0.667,
+   "auc_ci": [
+    0.503,
+    0.821
+   ]
+  },
+  "Chinese": {
+   "books": 47,
+   "bad": 30,
+   "auc": 0.678,
+   "auc_ci": [
+    0.518,
+    0.82
+   ]
+  },
+  "Sanskrit": {
+   "books": 2,
+   "bad": 2,
+   "auc": null,
+   "auc_ci": null
+  },
+  "Latin": {
+   "books": 25,
+   "bad": 12,
+   "auc": 0.865,
+   "auc_ci": [
+    0.673,
+    0.994
+   ]
+  }
+ },
+ "within_cell_baseline": {
+  "zh Paddle manuscripts (7866 low/middle cell)": {
+   "books": 46,
+   "bad": 29,
+   "auc": 0.118,
+   "auc_ci": [
+    0.031,
+    0.24
+   ]
+  },
+  "Chinese": {
+   "books": 47,
+   "bad": 30,
+   "auc": 0.114,
+   "auc_ci": [
+    0.03,
+    0.225
+   ]
+  },
+  "Sanskrit": {
+   "books": 2,
+   "bad": 2,
+   "auc": null,
+   "auc_ci": null
+  },
+  "Latin": {
+   "books": 25,
+   "bad": 12,
+   "auc": 0.519,
+   "auc_ci": [
+    0.256,
+    0.778
+   ]
+  }
+ },
+ "false_reassurance": [
+  {
+   "t": 0.1,
+   "called_good": 17,
+   "share_called_good": 0.135,
+   "false_reassurance": 0.059,
+   "fr_ci": [
+    0.0,
+    0.176
+   ],
+   "D_among_called_good": 0
+  },
+  {
+   "t": 0.15,
+   "called_good": 25,
+   "share_called_good": 0.198,
+   "false_reassurance": 0.08,
+   "fr_ci": [
+    0.0,
+    0.2
+   ],
+   "D_among_called_good": 0
+  },
+  {
+   "t": 0.2,
+   "called_good": 29,
+   "share_called_good": 0.23,
+   "false_reassurance": 0.069,
+   "fr_ci": [
+    0.0,
+    0.172
+   ],
+   "D_among_called_good": 0
+  },
+  {
+   "t": 0.25,
+   "called_good": 37,
+   "share_called_good": 0.294,
+   "false_reassurance": 0.108,
+   "fr_ci": [
+    0.027,
+    0.216
+   ],
+   "D_among_called_good": 1
+  },
+  {
+   "t": 0.3,
+   "called_good": 39,
+   "share_called_good": 0.31,
+   "false_reassurance": 0.128,
+   "fr_ci": [
+    0.026,
+    0.231
+   ],
+   "D_among_called_good": 2
+  },
+  {
+   "t": 0.35,
+   "called_good": 44,
+   "share_called_good": 0.349,
+   "false_reassurance": 0.205,
+   "fr_ci": [
+    0.091,
+    0.341
+   ],
+   "D_among_called_good": 3
+  },
+  {
+   "t": 0.4,
+   "called_good": 52,
+   "share_called_good": 0.413,
+   "false_reassurance": 0.25,
+   "fr_ci": [
+    0.135,
+    0.365
+   ],
+   "D_among_called_good": 3
+  },
+  {
+   "t": 0.5,
+   "called_good": 70,
+   "share_called_good": 0.556,
+   "false_reassurance": 0.271,
+   "fr_ci": [
+    0.171,
+    0.386
+   ],
+   "D_among_called_good": 3
+  }
+ ],
+ "false_reassurance_baseline": [
+  {
+   "t": 0.1,
+   "called_good": 1,
+   "share_called_good": 0.008,
+   "false_reassurance": 0.0,
+   "fr_ci": null,
+   "D_among_called_good": 0
+  },
+  {
+   "t": 0.15,
+   "called_good": 12,
+   "share_called_good": 0.095,
+   "false_reassurance": 0.0,
+   "fr_ci": [
+    0.0,
+    0.0
+   ],
+   "D_among_called_good": 0
+  },
+  {
+   "t": 0.2,
+   "called_good": 18,
+   "share_called_good": 0.143,
+   "false_reassurance": 0.056,
+   "fr_ci": [
+    0.0,
+    0.167
+   ],
+   "D_among_called_good": 1
+  },
+  {
+   "t": 0.25,
+   "called_good": 20,
+   "share_called_good": 0.159,
+   "false_reassurance": 0.05,
+   "fr_ci": [
+    0.0,
+    0.15
+   ],
+   "D_among_called_good": 1
+  },
+  {
+   "t": 0.3,
+   "called_good": 22,
+   "share_called_good": 0.175,
+   "false_reassurance": 0.091,
+   "fr_ci": [
+    0.0,
+    0.227
+   ],
+   "D_among_called_good": 1
+  },
+  {
+   "t": 0.35,
+   "called_good": 31,
+   "share_called_good": 0.246,
+   "false_reassurance": 0.226,
+   "fr_ci": [
+    0.097,
+    0.387
+   ],
+   "D_among_called_good": 2
+  },
+  {
+   "t": 0.4,
+   "called_good": 45,
+   "share_called_good": 0.357,
+   "false_reassurance": 0.244,
+   "fr_ci": [
+    0.133,
+    0.378
+   ],
+   "D_among_called_good": 4
+  },
+  {
+   "t": 0.5,
+   "called_good": 61,
+   "share_called_good": 0.484,
+   "false_reassurance": 0.279,
+   "fr_ci": [
+    0.18,
+    0.393
+   ],
+   "D_among_called_good": 8
+  }
+ ],
+ "lolo": {
+  "final": {
+   "pooled_auc": 0.761,
+   "books": 161,
+   "by_language": {
+    "English": {
+     "books": 14,
+     "bad": 1,
+     "auc": 1.0,
+     "mean_pred": 0.368,
+     "observed_bad": 0.071
+    },
+    "Sanskrit": {
+     "books": 28,
+     "bad": 23,
+     "auc": 0.643,
+     "mean_pred": 0.58,
+     "observed_bad": 0.821
+    },
+    "Latin": {
+     "books": 25,
+     "bad": 12,
+     "auc": 0.885,
+     "mean_pred": 0.391,
+     "observed_bad": 0.48
+    },
+    "Chinese": {
+     "books": 70,
+     "bad": 50,
+     "auc": 0.654,
+     "mean_pred": 0.725,
+     "observed_bad": 0.714
+    },
+    "German": {
+     "books": 13,
+     "bad": 3,
+     "auc": 0.8,
+     "mean_pred": 0.226,
+     "observed_bad": 0.231
+    },
+    "Greek": {
+     "books": 6,
+     "bad": 4,
+     "auc": 1.0,
+     "mean_pred": 0.45,
+     "observed_bad": 0.667
+    },
+    "Tibetan": {
+     "books": 5,
+     "bad": 1,
+     "auc": 1.0,
+     "mean_pred": 0.625,
+     "observed_bad": 0.2
+    }
+   }
+  },
+  "baseline": {
+   "pooled_auc": 0.488,
+   "books": 161,
+   "by_language": {
+    "English": {
+     "books": 14,
+     "bad": 1,
+     "auc": 0.885,
+     "mean_pred": 0.504,
+     "observed_bad": 0.071
+    },
+    "Sanskrit": {
+     "books": 28,
+     "bad": 23,
+     "auc": 0.848,
+     "mean_pred": 0.388,
+     "observed_bad": 0.821
+    },
+    "Latin": {
+     "books": 25,
+     "bad": 12,
+     "auc": 0.657,
+     "mean_pred": 0.389,
+     "observed_bad": 0.48
+    },
+    "Chinese": {
+     "books": 70,
+     "bad": 50,
+     "auc": 0.367,
+     "mean_pred": 0.601,
+     "observed_bad": 0.714
+    },
+    "German": {
+     "books": 13,
+     "bad": 3,
+     "auc": 0.85,
+     "mean_pred": 0.496,
+     "observed_bad": 0.231
+    },
+    "Greek": {
+     "books": 6,
+     "bad": 4,
+     "auc": 0.625,
+     "mean_pred": 0.283,
+     "observed_bad": 0.667
+    },
+    "Tibetan": {
+     "books": 5,
+     "bad": 1,
+     "auc": 0.625,
+     "mean_pred": 0.696,
+     "observed_bad": 0.2
+    }
+   }
+  }
+ },
+ "coverage": {
+  "final": {
+   "n": 126,
+   "coverage_90": 0.921,
+   "coverage_ci": [
+    0.873,
+    0.96
+   ],
+   "median_width": 16.0,
+   "lower_bound_zero_share": 0.944
+  },
+  "baseline": {
+   "n": 126,
+   "coverage_90": 0.913,
+   "coverage_ci": [
+    0.857,
+    0.96
+   ],
+   "median_width": 23.0,
+   "lower_bound_zero_share": 0.976
+  }
+ },
+ "nb_dispersion": {
+  "final": 1.049,
+  "baseline": 1.143
+ },
+ "page_curve": {
+  "final_prior": {
+   "0": {
+    "books": 126,
+    "mean_lpd_pair": -2.3333,
+    "auc_any_on_pair": 0.659,
+    "bad_call_agrees_with_5_page_grade": 0.651
+   },
+   "1": {
+    "books": 126,
+    "mean_lpd_pair": -2.3579,
+    "auc_any_on_pair": 0.706,
+    "bad_call_agrees_with_5_page_grade": 0.794
+   },
+   "2": {
+    "books": 126,
+    "mean_lpd_pair": -2.4815,
+    "auc_any_on_pair": 0.703,
+    "bad_call_agrees_with_5_page_grade": 0.873
+   },
+   "3": {
+    "books": 126,
+    "mean_lpd_pair": -2.5557,
+    "auc_any_on_pair": 0.681,
+    "bad_call_agrees_with_5_page_grade": 0.881
+   },
+   "first_page_gain_by_uncertainty": [
+    {
+     "tercile": "most sure",
+     "books": 42,
+     "mean_lpd_gain": 0.0003
+    },
+    {
+     "tercile": "middle",
+     "books": 42,
+     "mean_lpd_gain": 0.0443
+    },
+    {
+     "tercile": "least sure",
+     "books": 42,
+     "mean_lpd_gain": -0.1183
+    }
+   ]
+  },
+  "baseline_prior": {
+   "0": {
+    "books": 126,
+    "mean_lpd_pair": -2.3984,
+    "auc_any_on_pair": 0.589,
+    "bad_call_agrees_with_5_page_grade": 0.556
+   },
+   "1": {
+    "books": 126,
+    "mean_lpd_pair": -2.4245,
+    "auc_any_on_pair": 0.685,
+    "bad_call_agrees_with_5_page_grade": 0.833
+   },
+   "2": {
+    "books": 126,
+    "mean_lpd_pair": -2.5429,
+    "auc_any_on_pair": 0.693,
+    "bad_call_agrees_with_5_page_grade": 0.905
+   },
+   "3": {
+    "books": 126,
+    "mean_lpd_pair": -2.5897,
+    "auc_any_on_pair": 0.679,
+    "bad_call_agrees_with_5_page_grade": 0.897
+   },
+   "first_page_gain_by_uncertainty": [
+    {
+     "tercile": "most sure",
+     "books": 42,
+     "mean_lpd_gain": -0.37
+    },
+    {
+     "tercile": "middle",
+     "books": 42,
+     "mean_lpd_gain": 0.1895
+    },
+    {
+     "tercile": "least sure",
+     "books": 42,
+     "mean_lpd_gain": 0.1023
+    }
+   ]
+  },
+  "flat_prior": {
+   "0": {
+    "books": 126,
+    "mean_lpd_pair": -2.4598,
+    "auc_any_on_pair": 0.48,
+    "bad_call_agrees_with_5_page_grade": 0.468
+   },
+   "1": {
+    "books": 126,
+    "mean_lpd_pair": -2.4393,
+    "auc_any_on_pair": 0.649,
+    "bad_call_agrees_with_5_page_grade": 0.817
+   },
+   "2": {
+    "books": 126,
+    "mean_lpd_pair": -2.5501,
+    "auc_any_on_pair": 0.673,
+    "bad_call_agrees_with_5_page_grade": 0.897
+   },
+   "3": {
+    "books": 126,
+    "mean_lpd_pair": -2.6028,
+    "auc_any_on_pair": 0.663,
+    "bad_call_agrees_with_5_page_grade": 0.889
+   },
+   "first_page_gain_by_uncertainty": [
+    {
+     "tercile": "most sure",
+     "books": 42,
+     "mean_lpd_gain": 0.0605
+    },
+    {
+     "tercile": "middle",
+     "books": 42,
+     "mean_lpd_gain": -0.1028
+    },
+    {
+     "tercile": "least sure",
+     "books": 42,
+     "mean_lpd_gain": 0.1038
+    }
+   ]
+  }
+ },
+ "page_model_many": {
+  "B": {
+   "pages": 680,
+   "many": 181,
+   "auc": 0.62,
+   "auc_ci": [
+    0.566,
+    0.671
+   ]
+  },
+  "B+T": {
+   "pages": 680,
+   "many": 181,
+   "auc": 0.748,
+   "auc_ci": [
+    0.703,
+    0.789
+   ]
+  },
+  "B+T+I+R": {
+   "pages": 680,
+   "many": 181,
+   "auc": 0.78,
+   "auc_ci": [
+    0.736,
+    0.817
+   ]
+  }
+ },
+ "coefficients": {
+  "C": 0.3,
+  "top": [
+   [
+    "R.agy_ned",
+    0.676
+   ],
+   [
+    "T.line_count",
+    0.621
+   ],
+   [
+    "M.year",
+    -0.521
+   ],
+   [
+    "T.tag_char_share",
+    0.521
+   ],
+   [
+    "route=lite",
+    0.451
+   ],
+   [
+    "T.tag_names",
+    0.431
+   ],
+   [
+    "T.mixed_tok",
+    -0.409
+   ],
+   [
+    "T.sq_tag",
+    0.4
+   ],
+   [
+    "route=3flash",
+    -0.392
+   ],
+   [
+    "R.agy_dis",
+    0.379
+   ],
+   [
+    "T.oov",
+    0.378
+   ],
+   [
+    "T.tok_len_mean",
+    0.376
+   ],
+   [
+    "T.max_oov",
+    -0.367
+   ],
+   [
+    "lang=English",
+    -0.366
+   ],
+   [
+    "M.route_measured",
+    0.355
+   ],
+   [
+    "M.route_wt_per1k",
+    0.341
+   ],
+   [
+    "engine=none",
+    -0.333
+   ],
+   [
+    "T.outside_script",
+    0.322
+   ],
+   [
+    "T.max_loop",
+    -0.319
+   ],
+   [
+    "T.tok_len_sd",
+    -0.317
+   ],
+   [
+    "T.no_vowel?missing",
+    0.301
+   ],
+   [
+    "T.trigram_xent",
+    0.298
+   ],
+   [
+    "T.max_near_empty",
+    -0.285
+   ],
+   [
+    "T.oov?missing",
+    0.273
+   ],
+   [
+    "R.rev_any_share",
+    -0.27
+   ]
+  ]
+ }
+}
