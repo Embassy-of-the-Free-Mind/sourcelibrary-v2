@@ -87,13 +87,14 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      // Inline, the list IS the panel and has no button to bring it back.
+      if (!inline && dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [inline]);
 
   const isNcFreeFormat = (f: BookDownloadFormats) =>
     imageAccess === 'nc-free' && isImageFormat(f);
@@ -182,7 +183,8 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
       document.body.removeChild(a);
 
       trackEvent('download', { bookId, format });
-      setIsOpen(false);
+      // Inline (the reader's Download drawer) the list stays, for the next format.
+      if (!inline) setIsOpen(false);
     } catch (error) {
       console.error('Download error:', error);
       toast.error('Download failed. Please try again.');
