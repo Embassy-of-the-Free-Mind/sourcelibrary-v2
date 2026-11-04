@@ -54,8 +54,12 @@ export const CELLS = {
   la: { lang: 'Latin', engine: 'pero' }, es: { lang: 'Spanish', engine: 'lo' }, it: { lang: 'Italian', engine: 'lo' },
   fr: { lang: 'French', engine: 'lo' }, de: { lang: 'German', engine: 'lo' }, en: { lang: 'English', engine: 'lo' },
   nl: { lang: 'Dutch', engine: 'lo' }, pt: { lang: 'Portuguese', engine: 'lo' },
+  // The fallback cell (stage `fallback`): the Latin pages the GPU-draft route left UNWRITTEN, read with no draft by the
+  // router's Latin print alternative, agy-flash-low four consecutive pages a call (the drawn page and the next three of
+  // its book; only the drawn page is judged).
+  la4: { lang: 'Latin', engine: 'none', perCall: 4 },
 };
-const routeOf = (cell) => `${CELLS[cell].engine === 'pero' ? 'pero' : 'lighton'}>agy-flash-low`;
+const routeOf = (cell) => (CELLS[cell].engine === 'none' ? `agy-flash-low@${CELLS[cell].perCall}` : `${CELLS[cell].engine === 'pero' ? 'pero' : 'lighton'}>agy-flash-low`);
 const corrDir = (cell) => path.join(OUT, 'corr', cell);
 
 /** cli-ocr-lane.mjs armcDraftText, copied (importing the lane module would run its CLI): the GPU read as the lane sends it. */
@@ -115,7 +119,7 @@ async function draw() {
 /** collect: PERO's JSON and LightOnOCR's JSONL → one gpu-draft file a cell ({_engine, <page_id>: {text, image_sha256}}). */
 async function collect() {
   const s = J('sample.json');
-  const sha = (id) => h(fs.readFileSync(path.join(OUT, 'img', `${id}.jpg`)));   // h() is sha256 hex over the bytes
+  const sha = (id) => crypto.createHash('sha256').update(fs.readFileSync(path.join(OUT, 'img', `${id}.jpg`))).digest('hex');   // the raw bytes: h() would String() them
   const pero = fs.existsSync(path.join(OUT, 'gpu/pero.json')) ? J('gpu/pero.json') : null;
   const lo = jsonl(path.join(OUT, 'gpu/out/LO.jsonl'));
   const loEngine = { name: 'lightonocr', model: 'lightonai/LightOnOCR-3-1B', ...(fs.existsSync(path.join(OUT, 'gpu/out-LO.engine.json')) ? J('gpu/out-LO.engine.json') : {}) };
@@ -135,6 +139,14 @@ function read() {
   if (h(text).slice(0, 16) !== TEMPLATE.hash) throw new Error('template hash mismatch');
   fs.writeFileSync(tpl, text);
   for (const cell of Object.keys(s.cells).filter((c) => !arg('cell') || arg('cell') === c)) {
+    if (CELLS[cell].engine === 'none') {
+      const dir = corrDir(cell); fs.mkdirSync(dir, { recursive: true });
+      const idf = path.join(dir, 'page-ids.json'); fs.writeFileSync(idf, JSON.stringify(s.cells[cell].read_ids));
+      console.log(`${cell}: reading ${s.cells[cell].read_ids.length} pages, ${CELLS[cell].perCall} a call`);
+      const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'read', `--page-ids-file=${idf}`, `--out=${dir}`, `--model=${MODEL}`, `--per-call=${CELLS[cell].perCall}`, '--job=jcb-1600-8049-cell', '--stop-on-quota', `--concurrency=${arg('concurrency') || 2}`], { cwd: ROOT, env: process.env, stdio: 'inherit' });
+      if (r.status !== 0) console.log(`${cell}: read exit ${r.status}`);
+      continue;
+    }
     const d = J(`drafts-${cell}.json`);
     const ids = s.cells[cell].pages.map((p) => p.page_id).filter((id) => d[id] && d[id].text.replace(/\W/g, '').length >= 30);
     const dir = corrDir(cell); fs.mkdirSync(dir, { recursive: true });
@@ -146,9 +158,10 @@ function read() {
 }
 
 function dryApply(cell, ids) {
+  const guard = CELLS[cell].engine === 'none' ? [] : ['--diff-guard=gpu-draft'];
   const dir = corrDir(cell), emit = path.join(dir, 'written-dry.jsonl'), only = path.join(dir, 'only-drawn.json');
   fs.rmSync(emit, { force: true }); fs.writeFileSync(only, JSON.stringify(ids));
-  const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test (dry run)', `--emit-written=${emit}`, '--diff-guard=gpu-draft', '--print-only'], { cwd: ROOT, env: process.env, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test (dry run)', `--emit-written=${emit}`, ...guard, '--print-only'], { cwd: ROOT, env: process.env, encoding: 'utf8' });
   if (r.status !== 0) throw new Error(`apply ${cell}: exit ${r.status}\n${r.stderr?.slice(-2000)}`);
   const sum = JSON.parse(fs.readFileSync(path.join(dir, 'apply-summary-dry.json'), 'utf8'));
   return { rows: new Map(jsonl(emit).map((x) => [x.page_id, x.text])), skipped: sum.skipped_pages || {}, diff_guard: sum.diff_guard ?? null };
@@ -262,11 +275,29 @@ function apply() {
     const ids = key.filter((k) => k.cell === cell && k.kind === 'item' && V.get(k.judged_as)?.accept).map((k) => k.page_id);
     if (!ids.length) continue;
     const only = path.join(corrDir(cell), 'accepted.json'); fs.writeFileSync(only, JSON.stringify(ids));
-    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${corrDir(cell)}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test: judge-accepted reads', '--diff-guard=gpu-draft', '--print-only', ...(process.argv.includes('--apply') ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
+    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${corrDir(cell)}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test: judge-accepted reads', ...(CELLS[cell].engine === 'none' ? [] : ['--diff-guard=gpu-draft']), '--print-only', ...(process.argv.includes('--apply') ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
     console.log(`${cell}: ${ids.length} accepted → apply exit ${r.status}${r.status ? `\n${r.stderr?.slice(-800)}` : ''}`);
   }
 }
 
-const STAGES = { draw, collect, read, written, packet, plant, score, apply };
+/** fallback --out=DIR --from=D1,D2: the la pages D1..Dn's GPU-draft route did not WRITE, as cell la4; each with the next
+ *  three pages of its book that still have no OCR, so a 4-a-call read sees the page among its neighbours. */
+async function fallback() {
+  const from = String(arg('from') || '').split(',').filter(Boolean).map((d) => path.resolve(d));
+  const pages = from.flatMap((d) => { const s = JSON.parse(fs.readFileSync(path.join(d, 'sample.json'), 'utf8')), w = JSON.parse(fs.readFileSync(path.join(d, 'written.json'), 'utf8')).la || {};
+    return s.cells.la.pages.filter((p) => !w[p.page_id]?.text).map((p) => ({ ...p, gpu_route_why: w[p.page_id]?.why ?? null, from: path.basename(d) })); });
+  const c = await mongo(), col = c.db('bookstore').collection('pages'), read_ids = [];
+  for (const p of pages) {
+    const next = await col.find({ book_id: p.book_id, page_number: { $gt: p.page_number, $lte: p.page_number + 3 } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).sort({ page_number: 1 }).toArray();
+    read_ids.push(p.page_id);
+    for (const q of next) { if (q.ocr?.data?.trim()) break; read_ids.push(q.id); }
+  }
+  await c.close();
+  fs.mkdirSync(OUT, { recursive: true });
+  W('sample.json', { drawn_at: new Date().toISOString(), from, cells: { la4: { lang: 'Latin', engine: 'none', route: routeOf('la4'), books: new Set(pages.map((p) => p.book_id)).size, pages, read_ids } } });
+  console.log(`la4: ${pages.length} drawn pages, ${read_ids.length} to read`);
+}
+
+const STAGES = { draw, collect, read, written, packet, plant, score, apply, fallback };
 if (!STAGES[STAGE]) { console.error(`stage must be one of ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
 await STAGES[STAGE]();
