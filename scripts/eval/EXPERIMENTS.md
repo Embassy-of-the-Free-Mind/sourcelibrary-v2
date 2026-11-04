@@ -160,6 +160,56 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-04 · A table-aware read for the Siku 表 volumes (#8053)
+
+PRIOR ART: `scripts/batch/claude-ocr.mjs` (Opus CLI read) and
+`scripts/batch/ocr-convergence/correct.mjs` (Opus corrects a draft) are the arms, both reused
+unchanged. `scripts/batch/cli-ocr.mjs apply` is the writer. The Paddle SKQS lane
+(`scripts/lib/paddle-zh-lane.mjs`) produced the stored drafts.
+
+**Who it is for.** A reader who opens 史記 vols 8–12 or 漢書 vols 5–11 and finds the chronological
+tables (年表, 表). Today those volumes are hidden, because their OCR is numeral loops, reversed
+lines, or grids that are not on the leaf. On the stored pages, 110 are more than 60% numerals and
+41 trip the loop guard.
+
+**Frame.** We drew 30 pages from the 12 表 volumes in three strata of 10: pages with no OCR, pages
+that are more than 60% numerals, and other table pages. Arms:
+- **stored-paddle:** what we serve today.
+- **flash:** a gemini-3-flash re-read.
+- **opus-read:** Opus reads the image with no draft.
+- **opus-correct:** Opus corrects the Paddle draft. This arm needs a draft, so n=20.
+
+Three Opus judges worked blind with the image open. Arm labels were shuffled per page. Each judge
+saw 5 planted decoys: a read of another page of the same volume. Each judge scored every read 1–5
+and named serious inventions (characters or numbers not on the leaf).
+
+| arm | n | mean | serve-grade | serious inventions |
+|---|---:|---:|---:|---:|
+| opus-correct | 20 | 4.35 | 15 | 0 |
+| opus-read | 30 | 4.2 | 22 | 1 |
+| stored-paddle | 20 | 1.6 | 1 | 12 |
+| flash | 30 | 2.3 | 0 | 8 |
+
+Best read per page: opus-read 21, opus-correct 6, flash 2, stored-paddle 1. The judges caught
+5/5 decoys. The best judged read was serve-ok on 25/30 pages (no-OCR 7/10, numeral 10/10,
+other 8/10). Both flash wins were on pages where no arm reached serve-ok.
+
+**Written in the test.** We wrote the best judged read of every page where it beat the stored text:
+24 pages, by eye, with revisions and `--mark-stale=zh-tables-8053`. The 5 pages that are not
+serve-ok miss small double-column notes, and they are listed in the job scratch (`cell/best.json`).
+
+**Route taken.** If a page has a Paddle draft, Opus corrects it, because that arm had zero serious
+inventions. If it has none, Opus reads the image. The whole set runs at $0 on the CLI:
+- 322 no-OCR table pages go to the read arm;
+- 1,738 Paddle-drafted table pages go to the correct arm.
+
+**Not done here.** No translation: the Siku lane is STOPPED (#7914), and the volumes stay hidden
+and held. Whether these volumes go public is a separate decision, made after the full set is
+applied.
+
+Artifacts (job scratch, archived to R2): `cell/score.py`, `cell/best.json`,
+`cell/judge/verdicts-{1,2,3}.json`, `cell/judge-key.json`, and `cell/byeye-*.jsonl`.
+
 ## 2026-11-04 · Which lane should read printed Chinese: Opus correction, Paddle > Flash, or an Opus fresh read? (#7263)
 
 Derek's notes of 2026-11-04 to job zh-print-correct-7263, after its pilot failed the bar (51/60 accepted, 6 wrong-text pages against a limit of 4). Same 60 pages as that pilot. Derek has since released print bulk on Opus at one page a call, as a decision and not a pass; that job does not wait for this one.
