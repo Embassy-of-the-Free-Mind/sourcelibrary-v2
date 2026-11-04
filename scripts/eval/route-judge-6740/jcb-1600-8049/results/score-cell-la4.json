@@ -1,0 +1,21 @@
+{
+ "scored_at": "2026-11-04T15:12:05.923Z",
+ "cells": {
+  "la4": {
+   "lang": "Latin",
+   "route": "agy-flash-low@4",
+   "drawn": 30,
+   "books": 30,
+   "written": 24,
+   "judged": 24,
+   "accepted": 18,
+   "wrong_text": 5,
+   "p_acc_ge_08": 0.221,
+   "all_drawn_accepted": "18/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "2/2",
+   "decision": "HOLD",
+   "why": "wrong text 5/24; P(acc>=0.8) 0.221"
+  }
+ }
+}
