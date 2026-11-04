@@ -20,42 +20,12 @@ import { isVisiblePage, hasOcr } from '../../lib/page-counts.mjs';
 import { verdictQuery } from '../lib/judge-rows.mjs';
 import { words } from '../route-judge-6740/defect-rate.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
-import { EX_OUT as OUT, EX_SEED, TARGET, MIN_LIVE, NO_TOPUP, SEV_CAL_DIR, LANG_ALIAS, shuffle, sha } from './expand-lib.mjs';
+import { EX_OUT as OUT, EX_SEED, TARGET, MIN_LIVE, NO_TOPUP, SEV_CAL_DIR, LANG_ALIAS, bookScripts, shuffle, sha } from './expand-lib.mjs';
 
 const c = new MongoClient(process.env.MONGODB_URI);
 const db = () => c.db('bookstore');
 const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
 const W = (f, x) => { fs.mkdirSync(OUT, { recursive: true }); fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1)); };
-
-/**
- * A book's script: books.book_class.class when it says printed or handwritten; else the majority (at least two thirds)
- * of its OCR'd pages' script_type; else unclassified (mixed, or no signal), which enters no cell and is counted.
- */
-async function bookScripts(books) {
-  const out = new Map(), ask = [];
-  for (const b of books) {
-    const k = b.book_class?.class;
-    if (k === 'printed') out.set(b.id, { script: 'print', basis: 'book_class' });
-    else if (k === 'handwritten') out.set(b.id, { script: 'manuscript', basis: 'book_class' });
-    else if (k === 'mixed') out.set(b.id, { script: 'unclassified', basis: 'book_class mixed' });
-    else ask.push(b.id);
-  }
-  for (let i = 0; i < ask.length; i += 300) {
-    const rows = await db().collection('pages').aggregate([
-      { $match: { book_id: { $in: ask.slice(i, i + 300) }, script_type: { $in: ['printed', 'handwritten'] } } },
-      { $group: { _id: { b: '$book_id', s: '$script_type' }, n: { $sum: 1 } } }]).toArray();
-    const by = new Map();
-    for (const r of rows) { const e = by.get(r._id.b) ?? { printed: 0, handwritten: 0 }; e[r._id.s] = r.n; by.set(r._id.b, e); }
-    for (const id of ask.slice(i, i + 300)) {
-      const e = by.get(id), n = e ? e.printed + e.handwritten : 0;
-      out.set(id, !n ? { script: 'unclassified', basis: 'no book_class, no page script_type' }
-        : e.printed / n >= 2 / 3 ? { script: 'print', basis: 'page script_type majority' }
-          : e.handwritten / n >= 2 / 3 ? { script: 'manuscript', basis: 'page script_type majority' }
-            : { script: 'unclassified', basis: 'page script_type split' });
-    }
-  }
-  return out;
-}
 
 /** Books already judged: #7866's 160 (lane_judge_verdicts, live rows) and severity-cal-7263's 60 (its sample file). */
 async function judgedBefore() {
@@ -73,7 +43,7 @@ async function frame() {
   const langs = Object.keys(liveBy).filter((L) => liveBy[L] >= MIN_LIVE).sort((a, b) => liveBy[b] - liveBy[a]);
   const books = (await db().collection('books').find({ ...FRAME, language: { $in: langs.flatMap((L) => labels[L]) } }, { projection: { id: 1, _id: 1, language: 1, 'book_class.class': 1 } }).toArray())
     .map((b) => ({ ...b, label: b.language, language: LANG_ALIAS[b.language] ?? b.language }));
-  const scripts = await bookScripts(books);
+  const scripts = await bookScripts(db(), books);
   const { c7866, sev } = await judgedBefore();
   // 7866 rows carry the book's _id string; a book is "already judged" if either id matches.
   const was7866 = (b) => c7866.has(b.id) || c7866.has(String(b._id));

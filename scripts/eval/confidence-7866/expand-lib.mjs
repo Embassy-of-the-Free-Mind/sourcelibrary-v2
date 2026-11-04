@@ -34,6 +34,36 @@ export function shuffle(xs, rng) {
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
+/**
+ * A book's script: books.book_class.class when it says printed or handwritten; else the majority (at least two thirds)
+ * of its OCR'd pages' script_type; else unclassified (mixed, or no signal), which enters no cell and is counted.
+ */
+export async function bookScripts(db, books) {
+  const out = new Map(), ask = [];
+  for (const b of books) {
+    const k = b.book_class?.class;
+    if (k === 'printed') out.set(b.id, { script: 'print', basis: 'book_class' });
+    else if (k === 'handwritten') out.set(b.id, { script: 'manuscript', basis: 'book_class' });
+    else if (k === 'mixed') out.set(b.id, { script: 'unclassified', basis: 'book_class mixed' });
+    else ask.push(b.id);
+  }
+  for (let i = 0; i < ask.length; i += 300) {
+    const rows = await db.collection('pages').aggregate([
+      { $match: { book_id: { $in: ask.slice(i, i + 300) }, script_type: { $in: ['printed', 'handwritten'] } } },
+      { $group: { _id: { b: '$book_id', s: '$script_type' }, n: { $sum: 1 } } }]).toArray();
+    const by = new Map();
+    for (const r of rows) { const e = by.get(r._id.b) ?? { printed: 0, handwritten: 0 }; e[r._id.s] = r.n; by.set(r._id.b, e); }
+    for (const id of ask.slice(i, i + 300)) {
+      const e = by.get(id), n = e ? e.printed + e.handwritten : 0;
+      out.set(id, !n ? { script: 'unclassified', basis: 'no book_class, no page script_type' }
+        : e.printed / n >= 2 / 3 ? { script: 'print', basis: 'page script_type majority' }
+          : e.handwritten / n >= 2 / 3 ? { script: 'manuscript', basis: 'page script_type majority' }
+            : { script: 'unclassified', basis: 'page script_type split' });
+    }
+  }
+  return out;
+}
+
 const LEDGER = () => path.join(EX_OUT, 'opus-calls.jsonl');
 export const opusUsed = () => jsonl(LEDGER()).length;
 export function noteOpus(stage, id, r) {
