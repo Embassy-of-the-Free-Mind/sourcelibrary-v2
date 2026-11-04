@@ -111,7 +111,7 @@ export const GET = withApiAuth(async (
     const enforce = process.env.API_AUTH_ENFORCE === '1';
     const budget = await checkPageBudget({ identity, request });
     if (enforce && !budget.allowed) {
-      return NextResponse.json(bulkBudgetExceededBody(budget), {
+      return NextResponse.json(bulkBudgetExceededBody(budget, `https://sourcelibrary.org/book/${encodeURIComponent(bookId)}`), {
         status: 429,
         headers: { 'Retry-After': '3600' },
       });

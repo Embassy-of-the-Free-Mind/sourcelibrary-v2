@@ -90,19 +90,28 @@ export async function checkPageBudget(input: {
   return { allowed: used < limit, used, limit, remaining, tier };
 }
 
-/** Friendly 429 body explaining what to do next. */
-export function bulkBudgetExceededBody(check: BudgetCheck) {
+/**
+ * Friendly 429 body explaining what to do next.
+ *
+ * `readOnSite` is the reader page for what the caller asked for. An assistant
+ * reading for someone cannot sign in or get a key, so without it the refusal is
+ * a dead end, while the reader page still opens: HTML is not metered by this
+ * budget (its limits are at the edge, see crawler-access-gate.md). That also
+ * keeps this from being a bulk path: one page, with the crawl brake in front.
+ */
+export function bulkBudgetExceededBody(check: BudgetCheck, readOnSite?: string) {
   const next = check.tier === 'apikey'
     ? `Your free Explorer key is capped at ${check.limit} pages/day on /text. Upgrade for uncapped access (see https://sourcelibrary.org/licensing), or bulk-export at https://sourcelibrary.org/api/dataset/v1/pages.`
     : check.tier === 'session'
     ? 'Generate a free API key at https://sourcelibrary.org/developers (no daily cap on /text).'
     : 'Sign in (free) at https://sourcelibrary.org/auth/signin for a higher limit, or grab an API key at https://sourcelibrary.org/developers.';
   return {
-    error: `Daily page budget reached (${check.used}/${check.limit} pages in the last 24h). ${next}`,
+    error: `Daily page budget reached (${check.used}/${check.limit} pages in the last 24h). ${readOnSite ? `You can still read this on the site, and that does not count: ${readOnSite} . ` : ''}${next}`,
     used: check.used,
     limit: check.limit,
     tier: check.tier,
     next_steps: {
+      ...(readOnSite ? { read_on_site: readOnSite } : {}),
       get_api_key: 'https://sourcelibrary.org/developers',
       upgrade: 'https://sourcelibrary.org/licensing',
       sign_in: 'https://sourcelibrary.org/auth/signin',
