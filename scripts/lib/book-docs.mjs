@@ -79,7 +79,7 @@ export const BOOK_FIELDS = Object.freeze([
   'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
   'is_translation', 'text_role', 'text_source', 'translation_status',
-  'content_type', 'work_id',
+  'content_type', 'work_id', 'work_id_source',
   // provenance / source
   'ia_identifier', 'source_fingerprint', 'source_fingerprints',
   'image_source', 'contributing_library',
