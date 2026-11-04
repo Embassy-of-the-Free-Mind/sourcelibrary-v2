@@ -78,6 +78,9 @@ const LANG_ROWS = servedGrades.by_language
   .sort((a, b) => b.says_what_the_page_says - a.says_what_the_page_says);
 const TR = (language: string) => qualityByLanguage.rows.find((r) => r.language === language)?.translation;
 const O6 = servedGrades.defect_classes.find((d) => d.class === 'O6');
+const Issue = ({ n }: { n: number }) => (
+  <a href={`https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${n}`}>#{n}</a>
+);
 
 function Table({ head, rows }: { head: string[]; rows: React.ReactNode[][] }) {
   return (
@@ -215,7 +218,7 @@ export default function AlchemicalProcessPage() {
           <strong>Arabic.</strong> This is our thinnest link, and I should say how thin. I reached the
           Arabic tradition only through Berthelot&rsquo;s French. Our own Arabic transcription is the
           reason: on the measure used below, none of the 10 Arabic pages drawn, from 2 books, says what
-          the page says. I would not build a claim on our Arabic text, and this note does not.
+          the page says. This note builds no claim on our Arabic text.
         </p>
 
         <p className={P}>
@@ -337,7 +340,7 @@ export default function AlchemicalProcessPage() {
 
         <p className={P}>
           The alchemy our work resembles is the practical one, plainly. Libavius, on that page of
-          1597, calls the art one of laboring well (<em>ars benè laborandi</em>) and of the segregation
+          1597, calls the art one of labouring well (<em>ars benè laborandi</em>) and of the segregation
           of the pure from the impure. That describes a text pipeline fairly, and it says nothing
           about the soul of a page. Derek&rsquo;s &ldquo;purification&rdquo; is the
           laboratory&rsquo;s word, and it should be heard that way.
@@ -348,11 +351,11 @@ export default function AlchemicalProcessPage() {
         <h3 className={H3}>The first matter, already tarnished</h3>
 
         <p className={P}>
-          Derek noticed that a pure source is the most disorganised thing we have. Our pages bear him
+          Derek noticed that a pure source is the most disorganised thing we have. Our pages bear that
           out. The scan of Dorn&rsquo;s 1602 page above has no stored transcription or English at all;
           I read its Latin by eye. And a scan can be wrong before anyone reads it. In one incident
           300 books wrote their images to a shared address with no book in it, so that our transcription
-          then read other books&rsquo; pages into them, 130,040 pages in all (#3362). The correction had
+          then read other books&rsquo; pages into them, 130,040 pages in all (<Issue n={3362} />). The correction had
           to reach the image, the text and everything derived from the text.
         </p>
 
@@ -382,13 +385,13 @@ export default function AlchemicalProcessPage() {
           shows laundry, and so does most of our correction. The largest defect class in our main
           study is a word read as another real word: {O6?.total.toLocaleString('en-GB')} of{' '}
           {servedGrades.defect_totals.all.toLocaleString('en-GB')} defects. Those are the ones proofreading
-          misses, because the wrong word still reads as a word. Beneath that are running heads and page
-          numbers carried into the text, and whole wrong leaves.
+          misses, because the wrong word still reads as a word. Further down the list are running heads
+          and page numbers carried into the text, and whole wrong leaves.
         </p>
 
         <p className={P}>
           Here are the measurements. On {servedGrades.pages} pages from {servedGrades.books} books
-          (#7933, regraded 4 November 2026) one AI reviewer read each transcription against its page
+          (<Issue n={7933} />, regraded 4 November 2026) one AI reviewer read each transcription against its page
           image. The draw was stratified by our confidence and then weighted back. No person has checked
           these verdicts. The bar for the first column is that the page has no slip that changes the
           sense and no text the page does not carry, whatever cosmetic slips remain.
@@ -402,7 +405,7 @@ export default function AlchemicalProcessPage() {
             pct(l.says_what_the_page_says),
             pct(l.misleads_somewhere),
             pct(l.text_not_on_the_page),
-            `${l.severe_per_1k.toFixed(2)} ${l.unit === 'words' ? 'words' : l.unit}`,
+            `${l.severe_per_1k.toFixed(2)} ${l.unit}`,
           ])}
         />
 
@@ -411,7 +414,7 @@ export default function AlchemicalProcessPage() {
           page says (95% interval {ci(B.says_what_the_page_says.ci95)}), {pct(B.misleads_somewhere.share)}{' '}
           have a reading that changes the sense, and {pct(B.text_not_on_the_page.share)} carry something
           the page does not have. About {pct(G.not_this_page.share)} of pages hold text that is not this
-          page&rsquo;s at all, roughly 1 in 60. Rows with 3 or 6 books are small. The spread by language is
+          page&rsquo;s at all, roughly 1 in 65. Rows with 6 books or fewer are small. The spread by language is
           wide: Russian and English at one end, Greek, Korean, Sanskrit and Arabic at the other.
         </p>
 
@@ -420,9 +423,9 @@ export default function AlchemicalProcessPage() {
           figure to {pct(RE.says_what_the_page_says.share)} ({ci(RE.says_what_the_page_says.ci95)}): of 40
           wrong-text tags, {RE.note.wrong_text.none} were in fact what the page says, and of 40 sense-changing
           tags, {RE.note.misleads.none} were. In the other direction, in an earlier test on print against a
-          1% character error bar, the judge caught 0.42 of the failures (0.23 to 0.64, #7263). Machine reading
-          of print here ran at 2.5 to 3.4 severe defects per 1,000 words, against 1.45 for a scholarly edition
-          typed by people. So the washing is not finished, and the water itself needs testing.
+          1% character error bar, the judge caught 0.42 of the failures (0.23 to 0.64, <Issue n={7263} />). Machine reading
+          of print here ran at 2.5 to 3.4 severe defects per 1,000 words, the higher figure including 1.2 of
+          that test&rsquo;s own noise, against 1.45 for a scholarly edition of the same pages typed by people. So the washing is not finished, and the water itself needs testing.
         </p>
 
         <h3 className={H3}>Translation</h3>
@@ -454,7 +457,7 @@ export default function AlchemicalProcessPage() {
           a reader (28.8 to 40.1;{' '}
           <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/2026-11-02-translation-on-7866-draw-7968.md">#7968</a>).
           A transcription error can wash out in English: of 109 confirmed errors, the English repaired 65%
-          (56 to 73) and carried 27% (19 to 36, #7929). A separate figure, which should not be subtracted
+          (56 to 73) and carried 27% (19 to 36, <Issue n={7929} />). A separate figure, which should not be subtracted
           from any of those, is the share of one-page samples that a model judge rated 4 or 5 out of 5:
           Latin {pct(TR('Latin')?.share ?? 0)} of {TR('Latin')?.books} books, Greek {pct(TR('Greek')?.share ?? 0)} of{' '}
           {TR('Greek')?.books}, Sanskrit {pct(TR('Sanskrit')?.share ?? 0)} of {TR('Sanskrit')?.books}. That is
@@ -503,7 +506,7 @@ export default function AlchemicalProcessPage() {
 
         <p className={P}>
           Both fit us. A search index multiplies a page&rsquo;s readers, and also whatever is wrong in its
-          text: after #3362, a poisoned read served another book&rsquo;s title to readers through derived
+          text: after <Issue n={3362} />, a poisoned read served another book&rsquo;s title to readers through derived
           summaries. Ripley has the aim and Norton the warning. Copying before assaying spreads the error.
         </p>
 
@@ -552,7 +555,7 @@ export default function AlchemicalProcessPage() {
           This is our false gold in a pure form. On that leaf the stored English said &ldquo;This wisdom,
           which we call the Philosophia Perennis, is the foundation of all true knowledge and the goal of
           all human striving.&rdquo; That sentence is not on the page. A model wrote it, in the book that
-          coined the phrase, because it had no text to translate and could write plausible Steuco (#8189).
+          coined the phrase, because it had no text to translate and could write plausible Steuco (<Issue n={8189} />).
           The transcription kept the right running head and page number, so a check on those passes.
         </p>
 
@@ -562,9 +565,9 @@ export default function AlchemicalProcessPage() {
           269 public books: 352 reasoning, 197 chat replies. One was the whole of a page in{' '}
           <Link href={at('ikhwan-al-safa-brethren-of-purity-dowson-translation-dowson', 14)}>Dowson&rsquo;s
           Ikhwan al-Safa</Link>: &ldquo;Please provide the OCR transcription you would like me to
-          modernize.&rdquo; (#6117; withheld.) And on blank leaves models have written fluent prose; one
+          modernize.&rdquo; (<Issue n={6117} />; withheld.) And on blank leaves models have written fluent prose; one
           book held 16 pages of Latin juridical text on leaves with nothing on them. The estimate at that
-          time was about 678 such pages across 21,481 live books (interval 211 to 1,145, #4149). Only the
+          time was about 678 such pages across 21,481 live books (interval 211 to 1,145, <Issue n={4149} />). Only the
           image can decide those.
         </p>
 
@@ -573,8 +576,8 @@ export default function AlchemicalProcessPage() {
           a &ldquo;<Link href={at(GEBER, 44)}>Soul easily opinionating every Phantasie; but what they
           believe they have found true, is all Phantastick</Link>.&rdquo; Our rule, since 7 October 2026,
           is that invented text found with the image open is withheld in the same run, with a snapshot
-          kept and the page left public with its image. We call that containment. The 50 issues with that label on 4 November (43 open) list what was
-          found, not what exists, and some are follow-ups.
+          kept and the page left public with its image. We call that containment. The 50 issues with that label on 4 November
+          (43 open) list what was found, not what exists, and some are follow-ups.
         </p>
 
         <h3 className={H3}>Puffers</h3>
@@ -599,9 +602,9 @@ export default function AlchemicalProcessPage() {
         <h3 className={H3}>Reiteration</h3>
 
         <p className={P}>
-          Maier, in the same discourse: &ldquo;someone could consume their entire life distilling and
-          re-distilling, even if they lived a thousand years, before they arrived at the truth through
-          experimentation alone.&rdquo; That is our case too. Reading a page twice with one engine gives
+          Maier, in the same discourse: &ldquo;<Link href={at(MAIER, 68)}>someone could consume their entire life
+          distilling and re-distilling, even if they lived a thousand years, before they arrived at the truth
+          through experimentation alone</Link>.&rdquo; That is our case too. Reading a page twice with one engine gives
           stability, and a second model gives agreement. Neither measures quality. A repeat helps only if
           something in it changes, or if it is compared to the page.
         </p>
@@ -664,7 +667,7 @@ export default function AlchemicalProcessPage() {
 
         <p className={P}>
           The next part is easy to tell as a replacement: the operator&rsquo;s virtue gave way to procedure and
-          witnesses in the seventeenth century. Derek corrected that, and the evidence agrees with him.
+          witnesses in the seventeenth century. Derek corrected that, and the evidence agrees.
           Procedure is a virtue, and Boyle shows it in print. His
           preface says he has &ldquo;
           <Link href={at(BOYLE, 21)}>endeavour&rsquo;d to deliver matters of Fact, so faithfully</Link>&rdquo;
@@ -715,7 +718,7 @@ export default function AlchemicalProcessPage() {
 
         <p className={P}>
           Alchemy&rsquo;s central promise is a change of substance. Maier&rsquo;s discourse is firm on this:
-          the Philosophers want the skin itself altered, &ldquo;truly and not deceitfully&rdquo;. Dorn&rsquo;s
+          the Philosophers want the skin itself altered, &ldquo;<Link href={at(MAIER, 69)}>truly and not deceitfully</Link>&rdquo;. Dorn&rsquo;s
           voice says &ldquo;be transformed&rdquo;. Nothing in this library is transformed. The page does not
           change. A translation adds a second object beside it, a draft of what the page may say, and our
           best reading of that draft is a measured error rate. If the frame leads anyone to think that a
