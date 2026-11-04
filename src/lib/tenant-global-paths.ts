@@ -185,6 +185,11 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Not under /api, but a route handler with no page, like its twin /api/search.
   // It searches the whole library, while a partner's /search stays scoped (#8161).
   '/search/text',
+  // Also a route handler with no page: the page list above is pinned to page.tsx
+  // files and filters the nav. From an Internet Archive item to our copy of it
+  // (#8161). It resolves against the whole library and redirects to
+  // sourcelibrary.org, so it has no place on a partner's host.
+  '/ia',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
