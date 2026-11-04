@@ -50,6 +50,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
   }
 
+  // One active free key per account: the daily page cap is per key, so unlimited
+  // self-serve keys would be an uncapped bulk route around it.
+  const existing = await listApiKeys(session.user.id);
+  if (existing.some((k) => k.tier === 'explorer' && k.status === 'active')) {
+    return NextResponse.json(
+      { error: 'This account already has a free key. Revoke it to make a new one, or write to team@sourcelibrary.org if you need more.' },
+      { status: 409 },
+    );
+  }
+
   const { key, doc } = await generateApiKey(session.user.id, tier, name, { termsVersion: PARTNER_TERMS_VERSION });
 
   return NextResponse.json({
