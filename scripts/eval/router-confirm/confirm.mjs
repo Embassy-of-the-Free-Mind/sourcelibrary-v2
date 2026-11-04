@@ -441,6 +441,7 @@ async function judge() {
       if (made + calls >= cap) { stop = `call cap ${cap}`; break; }
       const why = await paceCheck(limits, state);
       if (why) { stop = `pace: ${why}`; break; }
+      if (i >= todo.length) break;   // another worker took the last item during the await
       const it = todo[i++]; calls++;
       const s = bySel.get(it.key);
       const text = it.set === 'wrong_page' ? readT(it.text_of, it.arms[0]) : readT(it.key, it.arms[0]);
