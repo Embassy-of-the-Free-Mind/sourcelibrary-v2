@@ -29,19 +29,21 @@ cd "$REPO" || exit 1
 finished=0 stopped=0 restarted=()
 for ((i = 0; i < SHARDS; i++)); do
   tag="$i-of-$SHARDS"
-  if [ -f "$OUT/finished-$tag.txt" ]; then finished=$((finished + 1)); continue; fi
   if [ -f "$OUT/stopped-$tag.txt" ]; then stopped=$((stopped + 1)); continue; fi
+  if [ -f "$OUT/finished-$tag.txt" ]; then finished=$((finished + 1)); continue; fi
 
   # Anchored on node: unanchored, this matches any shell whose command line quotes the pattern, and then kills it.
   pid=$(pgrep -f "^node .*$SCRIPT .*--shard=$i/$SHARDS( |\$)" | head -1)
-  # The progress file is the heartbeat; before its first write, the log the shard opened at start.
+  # The progress file is the heartbeat; before its first write, the go file. Not the shard log: a shard that dies
+  # at startup appends to its log on every restart, so the log looks alive and the crash loop would never page.
   beat="$OUT/progress-$tag.json"
-  [ -f "$beat" ] || beat="$OUT/shard-$i.log"
+  [ -f "$beat" ] || beat="$OUT/go"
   stale=""
   [ -f "$beat" ] && [ -z "$(find "$beat" -mmin -$STALE_MIN)" ] && stale=1
   [ -n "$pid" ] && [ -z "$stale" ] && continue
 
-  [ -n "$pid" ] && kill "$pid" && sleep 5
+  # SIGKILL if SIGTERM did not land: two live writers on one shard would interleave its ledger.
+  if [ -n "$pid" ]; then kill "$pid"; sleep 5; kill -9 "$pid" 2>/dev/null; fi
   systemd-run --quiet --scope --slice=sourcelibrary.slice -- \
     nohup node --env-file=.env.production.local "$SCRIPT" --apply "--out=$OUT" "--shard=$i/$SHARDS" \
     "--budget-usd=$BUDGET" "--concurrency=$CONCURRENCY" >> "$OUT/shard-$i.log" 2>&1 &
