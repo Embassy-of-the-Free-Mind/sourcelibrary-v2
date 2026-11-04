@@ -1,4 +1,4 @@
-# Chinese library: a walkthrough as a Chinese reader, an English reader and an MCP user (2026-11-04)
+## 2026-11-04 · The Chinese library as a Chinese reader, an English reader and an MCP user meet it (#8035, #7537)
 
 PRIOR ART: `2026-11-03-chinese-translation-strata-5274.md` measures translation quality on a stratified
 sample and is not repeated here. This record covers what that one does not: what each kind of reader meets.
@@ -9,13 +9,13 @@ page scans opened by eye. **Not tested:** access from mainland China (GreatFire 
 vantage point inside the firewall), real readers, usage figures. **The pages read by eye are showcase books chosen
 by hand, not a random sample;** the quality rates remain those in the 2026-11-03 record.
 
-## Corpus (visible, `pages_count > 0`, Chinese + Classical Chinese)
+### Corpus (visible, `pages_count > 0`, Chinese + Classical Chinese)
 12,964 volumes, 1,318 distinct `work_id`, 1.95M pages. Any English: 22.4% of volumes (2,906). At least 90% in
 English: 17.8%. 12,058 volumes come from the Siku lane: 经 (KR1) 5,313, 子 (KR3) 6,487, 佛 (KR6) 258, none in 史 (KR2)
 or 集 (KR4). Whole classes are absent (#8053). A title regex over live books found no 漢書, 資治通鑑, 楚辭, 文選,
 杜工部集 or 永樂大典; a regex is not a holdings check, and `check_duplicate` cannot settle it (below).
 
-## By eye (10 scans opened for text, 2 star-map scans, 1 French page; of p.173–178, p.174–177 were opened and p.173 and 178 are their partners by the stored text)
+### By eye (10 scans opened for text, 2 star-map scans, 1 French page; of p.173–178, p.174–177 were opened and p.173 and 178 are their partners by the stored text)
 | Page | Transcription | English |
 |---|---|---|
 | 本草綱目 卷十六 p.56 (Siku, PaddleOCR) | matches the scan throughout | sound; 藏器 (an attribution) reads as a heading |
@@ -31,7 +31,7 @@ Chinese books show the pattern, which therefore bounds nothing. Together with p.
 are local stretches whose cause is not established. A clue: the search index still returns the correct English for
 p.175. Comparing the index text with Mongo at N±1 would be a $0 screen.
 
-## Chinese reader (/zh)
+### Chinese reader (/zh)
 Works: Simplified interface, 四部 entry at `/zh/collections`, 中文 pane by default, honest "not yet checked" line,
 no horizontal scroll on the phone, sign-in by email (Google is blocked in China, so this matters).
 
@@ -53,7 +53,7 @@ no horizontal scroll on the phone, sign-in by email (Google is blocked in China,
 | "Skip to main content" is English | page text |
 | One 500 on the phone reader, 0 of 3 on retest | not reproduced |
 
-## English reader
+### English reader
 Works: `/search?q=Tao Te Ching` leads with collections and clean suggestions; side-by-side reader; AI label on the
 English; cross-language concept search returns strong Daoist passages.
 
@@ -67,7 +67,7 @@ English; cross-language concept search returns strong Daoist passages.
 | Slugs like `/book/vol-3-32` on 88.7% of volumes | census |
 | A collection links to a book hidden for rights: `tiangong-kaiwu-exploitation-of-the-works-of-nature` is a 404 | `/collections/chinese-natural-knowledge` |
 
-## MCP user
+### MCP user
 Works: `search_concept`, `search_translations` (a copied unquoted Han phrase found its page, n=1), `concept_vocabulary`,
 continuity hints, shortlinks, three-layer quotes, a recovery message on `no_translation`.
 
@@ -83,6 +83,6 @@ continuity hints, shortlinks, three-layer quotes, a recovery message on `no_tran
 | `/connect` says "15,000 rare books" against 70,799 on `/languages`, English only | by eye |
 | The default client (Claude) is not offered in mainland China, so the MCP audience there is unclear | not measured |
 
-## Not established
+### Not established
 Mainland access and speed; how many pages share the 性命圭旨 text exchange; whether "newest translated" is driven by
 repair writes; how often readers hit any of this.
