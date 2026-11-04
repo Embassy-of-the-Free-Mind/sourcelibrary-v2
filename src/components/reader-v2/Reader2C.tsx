@@ -29,6 +29,7 @@ import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-clien
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import type { Book, Page } from '@/lib/types';
+import { imageAccessFor } from '@/lib/types/image-source';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { ReaderSettings } from './useReaderV2';
 import {
@@ -722,17 +723,9 @@ function DownloadsPanel({ page, book }: { page: Page; book: Book }) {
   const hasTranslations = verdict !== null
     ? verdict === 'complete' || verdict === 'translated'
     : Number(full?.pages_translated) > pagesCount / 2;
-  const imgLicense = full?.image_license as string | undefined;
-  const imgProvider = (full?.image_provider as string | undefined)?.toLowerCase();
-  const year = Number(full?.year_published) || undefined;
-  const imageAccess: 'open' | 'nc-free' | 'blocked' =
-    imgProvider === 'bph' || (year && year < 1930)
-      ? 'open'
-      : imgLicense && /\bnc\b/i.test(imgLicense)
-        ? 'nc-free'
-        : (!imgLicense || imgLicense === 'unknown')
-          ? 'blocked'
-          : 'open';
+  // The book page's rule (src/app/book/[id]/page.tsx). This panel used to keep
+  // its own copy, which read fields no book has and so blocked every scan.
+  const imageAccess = imageAccessFor((full ?? {}) as Parameters<typeof imageAccessFor>[0]);
 
   const rowCls = PANEL_ROW;
 
