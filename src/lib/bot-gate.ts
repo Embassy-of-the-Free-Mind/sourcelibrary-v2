@@ -13,6 +13,8 @@
 import { validateApiKey } from '@/lib/dataset/api-keys';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { FREE_PAGE_PERCENT, freeMaxPage } from '@/lib/free-preview';
+import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
+import { getClientIp } from '@/lib/rate-limit';
 
 // % of pages bots can read from each book — shared with the metered reader
 // (free-preview.ts) so the bot sample and the human sample can never drift.
@@ -39,9 +41,9 @@ const ALWAYS_ALLOW = ['sourcelibrary-mcp'];
 // Search-index crawlers we deliberately allow FULL read access. Discovery and
 // citability serve the mission, so these bypass the page gate; training/bulk
 // crawlers do NOT (they stay gated and must license bulk/training use). Matches
-// the robots.ts search-allow list and the /licensing policy. NB: this is UA-based
-// (honor system) — consistent with the rest of this gate, which only ever applied
-// to self-identifying bots; a scraper using a browser UA was never gated anyway.
+// the robots.ts search-allow list and the /licensing policy. A claim that can be
+// proven is proven before it is honoured (isTrustedBot, #8098); the others are UA-
+// based (honor system), like the rest of this gate.
 // NB: ccbot/bytespider appear in KNOWN_BOTS above but are hard-403'd at the
 // edge (proxy.ts BLOCKED_BOT_RE), so their entries here are unreachable
 // defense-in-depth — kept deliberately in case the edge rule changes (#4366).
@@ -79,8 +81,9 @@ export function isSearchCrawler(request: Request): boolean {
 }
 
 /**
- * The UA-only half of isTrustedBot — no API-key lookup, so it is safe on the
- * proxy's hot path (used there to label html rows in bot_reads, #4309).
+ * The UA-only half of isTrustedBot — no API-key or DNS lookup, so it is safe on
+ * the proxy's hot path (used there to label html rows in bot_reads, #4309). A
+ * label, never a grant: it believes the name.
  */
 export function isTrustedByUserAgent(request: Request): boolean {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
@@ -98,9 +101,16 @@ export function isTrustedByUserAgent(request: Request): boolean {
 /**
  * Check if the request is trusted (bypasses the page gate) — our own MCP, a
  * search-index crawler, or a valid API key (Bearer sl_data_...).
+ *
+ * Naming a provable crawler is not enough: an address that provably is not that
+ * crawler falls through to the key check. An inconclusive lookup keeps the name's
+ * trust, so a resolver failing never costs a real crawler the index (#8098).
  */
 export async function isTrustedBot(request: Request): Promise<boolean> {
-  if (isTrustedByUserAgent(request)) return true;
+  if (isTrustedByUserAgent(request)) {
+    const claim = provableClaimIn(request.headers.get('user-agent') || '');
+    if (!claim || (await verifyCrawlerClaim(claim, getClientIp(request))) !== 'forged') return true;
+  }
 
   // Check for API key — holders bypass bot gating on all endpoints
   const authHeader = request.headers.get('authorization');
