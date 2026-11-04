@@ -1,5 +1,5 @@
 ---
-stage: reader
+stage: pipeline
 measure: [none]
 languages: []
 scripts: []
