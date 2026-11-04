@@ -144,6 +144,7 @@ The router serves three readers:
 
 - **Why this measure:** an error rate alone could be met by polishing a little European print while most of the corpus stays unread. A count of books alone could be met by translating everything badly. This one moves only when both coverage and quality hold.
 - **The numbers come after the first grades.** X, Y and Z are not set yet. Z will probably sit near typed-edition rates for print and start looser for hard scripts.
+- **Opus does the evaluating** (Derek, 2026-11-04), reading the text against the page image. Record the judge's version with each grade, because a new version can move the count without any change to the books.
 - **Decision 3 below still stands** as the router's own outcome: it is the measure behind Z.
 
 ## Decisions (Derek, 2026-11-01: "defaults")
