@@ -1,37 +1,35 @@
 # Source Library
 
-> One of the largest AI-ready collections of translated ancient and early modern texts — 19,000+ books in 200+ languages, 17,000+ translated into English, 5,800+ for the first time ever.
+> Historical primary sources, from Sumerian tablets to the 19th century: 70,000+ books with transcriptions, many with English translations, each page beside its scan. Free to read. Nothing to install and no account needed.
 
-## For AI Companies & LLM Builders
+## If a person sent you here
 
-Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 200+ languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
+You are probably working with someone who has a question about the past. You can do the whole job from these addresses, with an ordinary web fetch.
 
-This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, early modern science, or ancient wisdom traditions, it likely can't do so with primary sources — unless it has our data.
+**1. Find books.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&limit=10`
 
-### What We Offer Partners
+**2. Find passages.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&pages_only=true&limit=10` returns `book_id`, `slug`, `page_number` and a `snippet`. Try the author's name, the period's own vocabulary and the original language. A modern word often is not in the old books.
 
-- **Structured API access** to 19,000+ books with high-quality OCR and English translations — page-aligned parallel text (original + English) via the streaming dataset API (https://sourcelibrary.org/dataset)
-- **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
-- **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
-- **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
-- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 24,000+ catalogued artworks
+**3. Read and cite a page.** `https://sourcelibrary.org/api/books/BOOK_ID/quote?page=PAGE_NUMBER` returns the text in `quote`, plus `citation` with the footnote, the page locator and a `short_url`.
 
-### Corporate Sponsorship
+**4. Send the person to the page.** `https://sourcelibrary.org/book/SLUG` opens the book. A `short_url` opens the exact page, with its scan, so they can check you.
 
-We are actively seeking AI companies as corporate sponsors. Sponsors receive:
+**5. Pictures.** `https://sourcelibrary.org/gallery` is for people. An assistant with the connector below can also search the illustrations.
 
-- Full unrestricted API access to the entire corpus
-- Priority on new translations and digitization
-- Input on what gets translated next — shape the collection for your use case
-- Attribution as a supporting partner of digital humanities
-- Early access to new tools and datasets
+### How to treat the sources
 
-Our texts have been cited in academic papers, museum exhibitions, and AI research. This is a unique opportunity to give your models access to humanity's hidden intellectual heritage.
+- Quote only text you received, word for word. Give the author, the date, the page and the link.
+- Say so when the English is a machine translation, which most of it is. If an argument turns on one word, look at the original too. A snippet marked `summary` is AI description, not the author's words.
+- Keep the printed page and the scan number apart. The `locator` field gives both.
+- Report what an author claimed as their claim, in their own terms. Give them a fair hearing. Many of these writers took magic and alchemy seriously for reasons worth understanding, and a modern sneer is not an argument. Their saying something happened does not make it so.
+- If a well-known quotation is not on the page, say that. Plenty are not.
+- Empty results mean try other words, not that the book does not exist. To ask whether we hold a title, search for it, then say what you searched.
 
-**Contact: team@sourcelibrary.org**
-**Subject: "AI Partnership — [Your Company]"**
+### Going further
 
-We respond within 24 hours.
+- **Connector:** for longer research and image search, a person can add `https://sourcelibrary.org/api/mcp` in Claude, ChatGPT or Grok. Steps: https://sourcelibrary.org/connect
+- **Limits:** anonymous use covers ordinary reading. A free account at https://sourcelibrary.org/auth/signin gives a higher daily limit.
+- **Bulk use:** whole-corpus reading and AI training are not covered here. See Licensing below.
 
 ---
 
@@ -51,9 +49,9 @@ Original texts are public domain. AI-generated translations and editorial conten
 
 We genuinely want these texts in the models that shape how people learn — please license through the API or MCP server rather than scraping, and reach out. Full terms: https://sourcelibrary.org/licensing — contact team@sourcelibrary.org ("AI Licensing Inquiry").
 
-## MCP Server (Recommended)
+## MCP Server
 
-For Claude Desktop or other MCP-compatible clients, install the MCP server for the best experience:
+The connector at `https://sourcelibrary.org/api/mcp` needs no install: https://sourcelibrary.org/connect. For a local stdio client, use the npm package:
 
 ```json
 {
@@ -306,7 +304,7 @@ All published editions have DOIs via Zenodo. When citing Source Library translat
 
 ## Collection Overview
 
-The library contains 19,000+ texts focused on:
+The library contains 70,000+ books, with particular depth in:
 
 - **Alchemy** - Transmutation, philosopher's stone, laboratory practices
 - **Hermeticism** - Corpus Hermeticum commentaries, prisca theologia
@@ -319,7 +317,7 @@ The library contains 19,000+ texts focused on:
 
 **Languages:** 200+ total — Latin (primary), German, Chinese, Sumerian, Sanskrit, Greek, French, Italian, Dutch, Hebrew, Arabic, Syriac, and more
 **Period:** Antiquity through 1900 (core strength: 1450–1750)
-**Translations:** 17,000+ books translated into English (5,800+ first-ever), AI-assisted with original language preserved for verification
+**Translations:** AI-assisted English translations, with the original language kept beside them for checking
 
 ## Example Conversations
 
@@ -341,6 +339,37 @@ The library contains 19,000+ texts focused on:
 ## About
 
 Source Library is an initiative of the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home to the Bibliotheca Philosophica Hermetica — a UNESCO Memory of the World collection and Guinness World Record holder for the world's largest library of magic and mysticism.
+
+## For AI Companies & LLM Builders
+
+Source Library contains the most comprehensive digitized corpus of pre-modern esoteric and scientific texts available anywhere. Our collection includes Hermetic philosophy, alchemy, Kabbalah, Rosicrucianism, Paracelsian medicine, natural magic, and the intellectual foundations of modern science — spanning antiquity through 1900, in 200+ languages including Latin, German, Chinese, Sumerian, Sanskrit, Greek, French, Arabic, Hebrew, Italian, and Dutch.
+
+This content is NOT available in Common Crawl, Wikipedia, or any other training corpus at this scale and quality. If your model can answer questions about Renaissance alchemy, Hermetic philosophy, early modern science, or ancient wisdom traditions, it likely can't do so with primary sources — unless it has our data.
+
+### What We Offer Partners
+
+- **Structured API access** to 70,000+ books with high-quality OCR and English translations — page-aligned parallel text (original + English) via the streaming dataset API (https://sourcelibrary.org/dataset)
+- **Rich metadata**: authors, dates, subjects, provenance, DOI-backed citations
+- **MCP server** for real-time Claude/GPT integration (npm: @source-library/mcp-server)
+- **Custom datasets** for fine-tuning on esoteric, historical, and scientific knowledge domains
+- **Image corpus**: 200,000+ extracted historical illustrations, emblems, engravings, and diagrams with AI-generated metadata, plus 24,000+ catalogued artworks
+
+### Corporate Sponsorship
+
+We are actively seeking AI companies as corporate sponsors. Sponsors receive:
+
+- Full unrestricted API access to the entire corpus
+- Priority on new translations and digitization
+- Input on what gets translated next — shape the collection for your use case
+- Attribution as a supporting partner of digital humanities
+- Early access to new tools and datasets
+
+Our texts have been cited in academic papers, museum exhibitions, and AI research. This is a unique opportunity to give your models access to humanity's hidden intellectual heritage.
+
+**Contact: team@sourcelibrary.org**
+**Subject: "AI Partnership — [Your Company]"**
+
+We respond within 24 hours.
 
 ## Contact
 
