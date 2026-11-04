@@ -51,6 +51,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { validateR2Key, assertBookScopedKey } from '../lib/r2-key.mjs';
@@ -371,7 +372,7 @@ for (const [i, p] of plan.entries()) {
   };
   const [fullUrl, displayUrl, thumbUrl] = await Promise.all([
     put(keys.full, full, bookIdStr),
-    put(keys.display, await sharp(full).resize({ width: DISPLAY_WIDTH, withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer(), bookIdStr),
+    put(keys.display, await markDisplay(await sharp(full).resize({ width: DISPLAY_WIDTH, withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer(), { bookId: bookIdStr, pageNumber }), bookIdStr),
     put(keys.thumb, await sharp(full).resize({ width: THUMB_WIDTH, withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer(), bookIdStr),
   ]);
   const meta = await sharp(full).metadata();

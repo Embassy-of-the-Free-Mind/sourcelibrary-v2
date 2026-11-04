@@ -9,6 +9,7 @@ import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
 import { checkAndRecordDownload } from '@/lib/download-cap';
 import { ANON_EMBED_DAILY_BOOK_CAP } from '@/lib/partner-embed-download';
 import { anonymousDownloadCapKey, ANON_EMBED_LIMIT_MESSAGE, isPartnerEmbedDownload } from '@/lib/partner-embed-download-server';
+import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveHoldingCopy } from '@/lib/holding-library';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
@@ -19,6 +20,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { runWithTraceRef, traceRefFor, tracedCopiesEnabled } from '@/lib/trace-ref';
 import { exportableTranslation } from '../../../../../../scripts/lib/model-only-translation.mjs';
 import { getTranslation } from '@/lib/page-translations';
 import { getBookIndex } from '@/lib/book-index';
@@ -1964,8 +1966,13 @@ async function generateScholarlyEpubDownload(
     manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
 
     // Build contributors list
-    const contributors = edition?.contributors || [
-      { name: 'Source Library', role: 'translator', type: 'ai' as const, model: 'Gemini AI' }
+    // AI contributors print by kind, one per role, never by vendor or model (#7263). The edition
+    // record (and its Zenodo deposit) keeps each model; only what the reader sees changes.
+    const recorded = edition?.contributors || [{ name: 'Source Library', role: 'translator' as const, type: 'ai' as const }];
+    const aiRoles = [...new Set(recorded.filter(c => c.type === 'ai').map(c => c.role))];
+    const contributors = [
+      ...recorded.filter(c => c.type !== 'ai'),
+      ...aiRoles.map(role => ({ name: 'Source Library, using AI', role })),
     ];
 
     // OPF
@@ -2114,7 +2121,7 @@ async function generateScholarlyEpubDownload(
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>
     <p><strong>Contributors:</strong></p>
-    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
+    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})</p>`).join('\n    ')}
     <p>&#160;</p>
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p>&#160;</p>
@@ -2391,7 +2398,7 @@ async function generateScholarlyEpubDownload(
   });
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+async function downloadGET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -2425,6 +2432,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
       anonCapKey = anonymousDownloadCapKey(request.headers);
     }
+
+    // A protected partner's book: agree to its terms first. Ahead of the cap, so being asked costs nothing.
+    const termsRefusal = await partnerTermsRefusal(
+      request,
+      await (await getDb()).collection('books').findOne({ id }, { projection: { id: 1, tenantId: 1 } }) as { id?: string; tenantId?: string | null } | null,
+      { userId, format },
+    );
+    if (termsRefusal) return termsRefusal;
 
     // Get optional edition_id for scholarly format
     const editionId = searchParams.get('edition_id');
@@ -2767,4 +2782,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Traced bulk copies (#8150 slice 8): a signed-in download carries an opaque
+ * account ref in every marked passage. DARK unless TRACED_COPIES=on, which
+ * waits on terms, sign-up disclosure and a GDPR check. Anonymous downloads are
+ * never traced. A traced response is never shared-cacheable.
+ */
+export async function GET(request: NextRequest, ctx: RouteParams) {
+  const ref = tracedCopiesEnabled() ? traceRefFor({ userId: (await auth())?.user?.id ?? null }) : undefined;
+  const res = await runWithTraceRef(ref, () => downloadGET(request, ctx));
+  if (ref) {
+    try { res.headers.set('Cache-Control', 'private, no-store'); } catch { /* immutable headers: route already no-cache */ }
+  }
+  return res;
 }

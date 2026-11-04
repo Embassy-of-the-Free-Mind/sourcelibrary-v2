@@ -1,0 +1,187 @@
+{
+ "at": "2026-11-04T11:06:05.173Z",
+ "ledger_rows": 27412,
+ "refused": 22777,
+ "written": 4635,
+ "by_reason": {
+  "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread": {
+   "outcome": "put_back_unsafe",
+   "pages": 8023,
+   "read_in_mongo_now": 0,
+   "unread_now": 8023,
+   "kept_usable_unread": 8023,
+   "books": 95,
+   "not_usable": {}
+  },
+  "GPU draft under N word characters": {
+   "outcome": "no_draft",
+   "pages": 754,
+   "read_in_mongo_now": 0,
+   "unread_now": 754,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "no local read": 754
+   }
+  },
+  "letters outside the book's scripts": {
+   "outcome": "other",
+   "pages": 442,
+   "read_in_mongo_now": 0,
+   "unread_now": 442,
+   "kept_usable_unread": 442,
+   "books": 37,
+   "not_usable": {}
+  },
+  "pero wrote no draft": {
+   "outcome": "no_draft",
+   "pages": 84,
+   "read_in_mongo_now": 0,
+   "unread_now": 84,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "no local read": 84
+   }
+  },
+  "reply wrapper: reply cut before <<<END>>>": {
+   "outcome": "other",
+   "pages": 208,
+   "read_in_mongo_now": 0,
+   "unread_now": 208,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "wrapper": 208
+   }
+  },
+  "corrector tags the page <script>mixed</script>: the GPU-draft route is print only": {
+   "outcome": "other",
+   "pages": 795,
+   "read_in_mongo_now": 0,
+   "unread_now": 795,
+   "kept_usable_unread": 795,
+   "books": 81,
+   "not_usable": {}
+  },
+  "only N% of its words are in the GPU draft: check by eye": {
+   "outcome": "other",
+   "pages": 6805,
+   "read_in_mongo_now": 0,
+   "unread_now": 6805,
+   "kept_usable_unread": 6805,
+   "books": 89,
+   "not_usable": {}
+  },
+  "corrector tags the page <script>handwritten</script>: the GPU-draft route is print only": {
+   "outcome": "other",
+   "pages": 82,
+   "read_in_mongo_now": 0,
+   "unread_now": 82,
+   "kept_usable_unread": 82,
+   "books": 49,
+   "not_usable": {}
+  },
+  "corrector tags the page <script>none</script>: the GPU-draft route is print only": {
+   "outcome": "other",
+   "pages": 1,
+   "read_in_mongo_now": 0,
+   "unread_now": 1,
+   "kept_usable_unread": 1,
+   "books": 1,
+   "not_usable": {}
+  },
+  "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays unread": {
+   "outcome": "put_back_unsafe",
+   "pages": 1592,
+   "read_in_mongo_now": 0,
+   "unread_now": 1592,
+   "kept_usable_unread": 1592,
+   "books": 82,
+   "not_usable": {}
+  },
+  "no image fetched": {
+   "outcome": "no_draft",
+   "pages": 2822,
+   "read_in_mongo_now": 0,
+   "unread_now": 2822,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "no local read": 2822
+   }
+  },
+  "corrector: CONTAIN (a claim to check by eye)": {
+   "outcome": "contain",
+   "pages": 17,
+   "read_in_mongo_now": 0,
+   "unread_now": 17,
+   "kept_usable_unread": 17,
+   "books": 13,
+   "not_usable": {}
+  },
+  "reply wrapper: no <<<BEGIN>>> marker": {
+   "outcome": "other",
+   "pages": 1,
+   "read_in_mongo_now": 0,
+   "unread_now": 1,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "wrapper": 1
+   }
+  },
+  "cli exit -N": {
+   "outcome": "other",
+   "pages": 1093,
+   "read_in_mongo_now": 0,
+   "unread_now": 1093,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "exit -9": 1093
+   }
+  },
+  "corrector: UNCHANGED (a headerless GPU draft is not written; the page stays unread)": {
+   "outcome": "unchanged",
+   "pages": 10,
+   "read_in_mongo_now": 0,
+   "unread_now": 10,
+   "kept_usable_unread": 10,
+   "books": 4,
+   "not_usable": {}
+  },
+  "cli exit N": {
+   "outcome": "other",
+   "pages": 42,
+   "read_in_mongo_now": 0,
+   "unread_now": 42,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "exit 1": 41,
+    "exit 3": 1
+   }
+  },
+  "more than one transcription header: restarted or refused read": {
+   "outcome": "other",
+   "pages": 5,
+   "read_in_mongo_now": 0,
+   "unread_now": 5,
+   "kept_usable_unread": 5,
+   "books": 5,
+   "not_usable": {}
+  },
+  "empty read (refusal or blank)": {
+   "outcome": "other",
+   "pages": 1,
+   "read_in_mongo_now": 0,
+   "unread_now": 1,
+   "kept_usable_unread": 0,
+   "books": 0,
+   "not_usable": {
+    "error empty": 1
+   }
+  }
+ }
+}

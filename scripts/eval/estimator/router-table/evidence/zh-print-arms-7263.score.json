@@ -1,0 +1,138 @@
+{
+ "generated_by": "scripts/eval/zh-print-arms-7263/analyze.mjs",
+ "provenance": "#7263 zh-print-arms: the Opus correction pilot's 60 judged pages; arms on the same pages; Opus judge blind to arm against the image; O and controls judged again in each sitting",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "mapping": "wrong_text = a wrong_text defect; accept = the judge accepts",
+ "cells": {
+  "chinese-gemini-print-arms-7263": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 60,
+   "frame": "the pilot's judged pages of Gemini-read printed Chinese",
+   "controls": {
+    "wrong_page": [
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     }
+    ]
+   },
+   "routes": {
+    "gemini-stored": {
+     "n": 60,
+     "books": 60,
+     "accept": "6/60",
+     "wrong_text_pages": "45/60",
+     "classes_k_of_n": {
+      "O6": "47/60",
+      "O5": "29/60",
+      "I6": "2/60",
+      "O1": "12/60",
+      "O12": "14/60",
+      "O7": "16/60",
+      "O8": "5/60",
+      "O10": "1/60",
+      "O11": "6/60",
+      "O16": "5/60",
+      "I1": "2/60",
+      "E2": "5/60",
+      "O4": "4/60",
+      "T10": "1/60",
+      "O17": "1/60",
+      "O13": "1/60",
+      "O14": "1/60"
+     },
+     "served": "gemini-stored"
+    },
+    "gemini>opus": {
+     "n": 60,
+     "books": 60,
+     "accept": "49/60",
+     "wrong_text_pages": "7/60",
+     "classes_k_of_n": {
+      "O6": "12/60",
+      "O1": "2/60",
+      "O10": "1/60",
+      "O11": "1/60",
+      "O5": "5/60",
+      "O16": "2/60",
+      "O7": "1/60",
+      "I1": "2/60",
+      "O12": "2/60",
+      "T10": "1/60",
+      "O4": "1/60",
+      "I6": "1/60",
+      "O8": "1/60"
+     },
+     "served": "gemini>opus"
+    },
+    "paddle>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "29/60",
+     "wrong_text_pages": "21/60",
+     "classes_k_of_n": {
+      "O6": "32/60",
+      "O12": "3/60",
+      "O8": "1/60",
+      "O5": "9/60",
+      "O10": "2/60",
+      "O1": "2/60",
+      "O7": "9/60",
+      "O3": "1/60",
+      "O17": "1/60",
+      "O11": "1/60"
+     },
+     "served": "paddle>agy-flash-low"
+    },
+    "opus-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "58/60",
+     "wrong_text_pages": "1/60",
+     "classes_k_of_n": {
+      "O6": "4/60",
+      "O8": "2/60"
+     },
+     "served": "opus-read"
+    }
+   }
+  }
+ }
+}

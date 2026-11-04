@@ -1,0 +1,10 @@
+<language>Classical Chinese</language>
+<page-type>text</page-type>
+
+而以遊行 亦未為難 於我滅後 若自書持
+若使人書 是則為難 若以大地 置足甲上
+升於梵天 亦未為難 佛滅度後 於惡世中
+暫讀此經 是則為難 假使劫燒 擔負乾草
+入中不燒 亦未為難 我滅度後 若持此經
+
+<vocab>滅後, 書持, 梵天, 滅度, 惡世, 劫燒, 乾草</vocab>

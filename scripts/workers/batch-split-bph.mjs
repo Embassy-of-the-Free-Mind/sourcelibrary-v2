@@ -29,6 +29,7 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from './lib/display-image.mjs';
 import { parseArgs } from 'util';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 
@@ -364,14 +365,14 @@ async function processBook(r2, db, book) {
       // Upload left half (overwrite existing full-res with cropped)
       const [leftFullUrl, leftDisplayUrl, leftThumbUrl] = await Promise.all([
         uploadToR2(r2, leftPaths.full, leftBuf),
-        uploadToR2(r2, leftPaths.display, leftDisplay),
+        uploadToR2(r2, leftPaths.display, await markDisplay(leftDisplay, { bookId: book.id, pageNumber: leftPageNum })),
         uploadToR2(r2, leftPaths.thumb, leftThumb),
       ]);
 
       // Upload right half
       const [rightFullUrl, rightDisplayUrl, rightThumbUrl] = await Promise.all([
         uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
-        uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
+        uploadToR2(r2, `${rightTempKey}.jpg`, await markDisplay(rightDisplay, { bookId: book.id, pageNumber: rightPageNum })),
         uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
       ]);
 

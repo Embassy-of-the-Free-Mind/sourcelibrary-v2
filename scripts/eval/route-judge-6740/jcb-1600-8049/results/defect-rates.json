@@ -1,0 +1,108 @@
+{
+ "issue": 8049,
+ "measured": "2026-11-04",
+ "note": "written pages judged; one page a book; blind Opus",
+ "study_cells": {
+  "la": {
+   "route": "pero>agy-flash-low",
+   "draws": [
+    "cell",
+    "cell-la2"
+   ],
+   "pages": 30,
+   "words": 8400,
+   "misleads_per_1k": 0.95,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.37
+  },
+  "es": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 18,
+   "words": 7051,
+   "misleads_per_1k": 1.42,
+   "wrong_text_per_1k": 0.14,
+   "fidelity_mean": 4.11
+  },
+  "it": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 27,
+   "words": 9880,
+   "misleads_per_1k": 0.71,
+   "wrong_text_per_1k": 0.4,
+   "fidelity_mean": 4.26
+  },
+  "fr": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell",
+    "cell-frpt"
+   ],
+   "pages": 55,
+   "words": 16596,
+   "misleads_per_1k": 0.3,
+   "wrong_text_per_1k": 0.12,
+   "fidelity_mean": 4.51
+  },
+  "de": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 19,
+   "words": 7997,
+   "misleads_per_1k": 2.13,
+   "wrong_text_per_1k": 0.63,
+   "fidelity_mean": 3.89
+  },
+  "en": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 25,
+   "words": 8467,
+   "misleads_per_1k": 0.94,
+   "wrong_text_per_1k": 0.59,
+   "fidelity_mean": 4.28
+  },
+  "nl": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 22,
+   "words": 10678,
+   "misleads_per_1k": 1.4,
+   "wrong_text_per_1k": 0.75,
+   "fidelity_mean": 3.91
+  },
+  "pt": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 29,
+   "words": 14178,
+   "misleads_per_1k": 1.2,
+   "wrong_text_per_1k": 0.14,
+   "fidelity_mean": 4.31
+  },
+  "la4": {
+   "route": "agy-flash-low@4",
+   "draws": [
+    "cell-la4"
+   ],
+   "pages": 24,
+   "words": 9297,
+   "misleads_per_1k": 2.04,
+   "wrong_text_per_1k": 0.97,
+   "fidelity_mean": 4.17
+  }
+ }
+}

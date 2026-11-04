@@ -174,6 +174,21 @@ describe('/api/[tenant]/books/[id] page windows (#6281)', () => {
     const { body, res } = await getTenantBook('?pageLimit=0');
     expect(body.pages).toHaveLength(100);
     expect(body.pages_window.total).toBe(TOTAL);
+  });
+
+  it('no session: the shared cache keeps no protected collection, and the switch restores it (#8098)', async () => {
+    const { res } = await getTenantBook();
+    expect(res.headers.get('cache-control')).toMatch(/^private/);
+
+    vi.stubEnv('BPH_BOT_GATE_ENFORCE', '0');
+    const off = await getTenantBook();
+    vi.unstubAllEnvs();
+    expect(off.res.headers.get('cache-control')).toMatch(/^public/);
+  });
+
+  it('no session: any other tenant stays in the shared cache', async () => {
+    const req = new NextRequest(`https://sourcelibrary.org/api/bhutan/books/${BOOK_ID}`);
+    const res = await TENANT_GET(req, { params: Promise.resolve({ tenant: 'bhutan', id: BOOK_ID }) });
     expect(res.headers.get('cache-control')).toMatch(/^public/);
   });
 

@@ -126,6 +126,12 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // assistant over its own shelf needs a different feature, not this one on
   // its domain. The header and footer filter on this list, so the link goes too.
   '/librarian',
+  // The hidden-mark decoder (#8150). It names the book a mark belongs to, from
+  // the whole library, and the riddles built on it lead into other books. A
+  // Source Library feature, not a partner's.
+  '/decode',
+  // The hunt built on those marks (#8150 slice 3): its riddles lead through global books.
+  '/hunt',
 ] as const;
 
 /**
@@ -174,6 +180,8 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Blocking only the page would leave the whole-library agent callable from
   // the partner host.
   '/api/embassy',
+  '/api/decode',
+  '/api/hunt',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

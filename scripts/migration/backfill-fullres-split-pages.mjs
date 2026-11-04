@@ -27,6 +27,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 
 const DISPLAY_WIDTH = 1200;
 const THUMB_WIDTH = 150;
@@ -98,10 +99,10 @@ async function processPage(db, page) {
     .jpeg({ quality: FULL_QUALITY, progressive: true })
     .toBuffer();
 
-  const displayBuffer = await sharp(fullResBuffer)
+  const displayBuffer = await markDisplay(await sharp(fullResBuffer)
     .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
-    .toBuffer();
+    .toBuffer(), { bookId: page.book_id, pageNumber: page.page_number });
   const thumbBuffer = await sharp(fullResBuffer)
     .resize(THUMB_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: THUMB_QUALITY, progressive: true })

@@ -17,7 +17,7 @@
  *
  * Cheaper correctors on the same prompt and image (zh-reocr-cheap-arms, correct.mjs --draft-dir, --cli=agy):
  *   PFL paddle>agy-flash-low   PFM paddle>agy-flash-medium   SFL stored>agy-flash-low   PSN paddle>sonnet   SSN stored>sonnet
- *   arms.mjs cheap-setup   --out=DIR             the arms in plan.json; set-<arm>/manifest.jsonl and drafts/<page_id>.txt.
+ *   arms.mjs cheap-setup   --out=DIR [--arms=A,B] the arms (all, or those named) in plan.json; set-<arm>/manifest.jsonl and drafts/<page_id>.txt.
  *                                                The Paddle draft is the read itself: Pu on print (guard off), P on Siku
  *   arms.mjs cheap-collect --out=DIR --arm=ARM   texts/<key>.ARM.txt: corrected, or UNCHANGED serves the draft;
  *                                                contain / no answer serves the stored text
@@ -117,14 +117,14 @@ if (stage === 'lane-plan') {
   }
   console.log(JSON.stringify(tally));
 } else if (stage === 'cheap-setup') {
-  for (const [arm, route, kind] of CHEAP) {
+  for (const [arm, route, kind] of CHEAP.filter(([a]) => !arg('arms') || arg('arms').split(',').includes(a))) {
     if (!P.arms.some((a) => a.arm === arm)) P.arms.push({ arm, route, kind: 'correct', calls_per_page: 1 });
     const dir = path.join(OUT, `set-${arm}`); fs.mkdirSync(path.join(dir, 'drafts'), { recursive: true });
     fs.writeFileSync(path.join(dir, 'manifest.jsonl'), P.selected.map((s) => JSON.stringify({ page_id: s.page_id, book_id: s.book_id, slug: s.key, page_number: s.page_number, why: 'zh-reocr-cheap-arms-7263', stored_model: s.stored_model })).join('\n') + '\n');
     for (const s of P.selected) fs.copyFileSync(T(s.key, draftArm(kind)), path.join(dir, 'drafts', `${s.page_id}.txt`));
   }
   fs.writeFileSync(planF, JSON.stringify(P, null, 1));
-  console.log(`${CHEAP.length} arms set up`);
+  console.log(`${P.arms.length} arms in the plan`);
 } else if (stage === 'cheap-collect') {
   const arm = arg('arm'), [, route, kind] = CHEAP.find((c) => c[0] === arm), tally = {};
   for (const s of P.selected) {

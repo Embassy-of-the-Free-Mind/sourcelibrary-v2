@@ -153,6 +153,8 @@
 10 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
+# Text hash snapshot + OpenTimestamps root, built from Sunday's corpus-text dump (#8150 slice 10; hashes only, no Atlas read)
+30 1 * * 1 flock -n /tmp/sl-hash-snapshot.lock /root/sourcelibrary/scripts/workers/hash-snapshot-weekly.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
 # RETIRED 2026-10-17 (#5660/#4534): every run since 2026-09-10 measured guttered=0 repaired=0; it re-scanned ~117K pages on 3 cores, around the clock. Re-enable only for a new damage cohort.
 # */30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)

@@ -43,7 +43,7 @@ hashes (`contentHash`) of the text the judge was given. `changed_since_check` sa
 against the image is the evidence `served-audit` and the fortnightly check already warn on; the warning names the stage
 (transcription or English), never an unstable class; and a rewritten page drops out by itself. The finding covers the
 page read, one page per book, so the reader is told "1 of 1 pages read". A clean read gives the book the "checked" line
-with the same count. Backfill on 2026-11-04: 38 live books of 50; new warnings on 10, the "checked" line on 27. A lane
+with the same count. Backfill on 2026-11-04: 50 live books of 50; new warnings on 11, the "checked" line on 36. A lane
 that should not warn yet passes `reader_warning: false` and its rows are kept for measurement only.
 
 **Known blind spots.** One reader, one read per page, no planted controls in the lane (the sampler has them, #7611). The

@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
+import { displayPublished } from '@/lib/publication-date';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '@/lib/page-frame';
@@ -1238,6 +1239,6 @@ export function themeAttr(theme: ReaderSettings['theme']): string | undefined {
 
 /** Book byline under the title in the top bars. */
 export function bookByline(book: Book): string {
-  const parts = [book.author, book.published].filter(Boolean);
+  const parts = [book.author, displayPublished(book.published)].filter(Boolean);
   return parts.join(' · ');
 }

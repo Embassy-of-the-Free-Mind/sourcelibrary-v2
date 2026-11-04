@@ -18,6 +18,8 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import { AI_TRAINING_NOTICE } from '@/lib/license-info';
+import { transcriptProvenance, transcriptProvenanceLabel, translationCorpus } from '@/lib/text-provenance';
+import { getReaderStrings } from '@/lib/reader-strings';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/package
@@ -115,17 +117,29 @@ function buildReadme(opts: {
   }
   lines.push('');
 
-  // Provenance — who/what produced the text, named plainly.
+  // Provenance — what kind of text each file is, named plainly. The same helper as the
+  // reader's drawer, so the package and the page say the same thing; the model is not
+  // named (#7263) — it stays in the record and in /api/books/[id]/text?include_metadata.
+  const info = getReaderStrings('en').info;
+  const prov = transcriptProvenance(page);
+  const trCorpus = translationCorpus(page);
   lines.push('PROVENANCE');
   lines.push(
-    page.ocr?.model
-      ? `Transcription produced by: ${page.ocr.model}`
-      : 'Transcription: not yet produced.'
+    prov
+      ? `Transcription: ${transcriptProvenanceLabel(prov, info, 'full')}`
+      : page.ocr?.data ? 'Transcription: included.' : 'Transcription: not yet produced.'
   );
   lines.push(
-    page.translation?.model
-      ? `Translation produced by: ${page.translation.model}`
-      : 'Translation: not yet produced.'
+    !page.translation?.data
+      ? 'Translation: not yet produced.'
+      : trCorpus
+        ? `Translation: ${info.corpusTranslation(trCorpus.name)}`
+        // No model means not ours to call AI (e.g. Sefaria's own English, `source: 'manual'`).
+        : !page.translation.model
+          ? 'Translation: included.'
+          : page.translation.edited_by || page.translation.edited_at
+          ? `Translation: ${info.machineTranslationEdited}`
+          : `Translation: ${info.machineTranslation}`
   );
   lines.push('');
 

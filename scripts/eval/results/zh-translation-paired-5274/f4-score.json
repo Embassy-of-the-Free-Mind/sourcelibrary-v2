@@ -1,0 +1,83 @@
+{
+ "at": "2026-11-04T14:29:32.237Z",
+ "blocks": {
+  "judged_pages": 60,
+  "with_block": 58,
+  "size_position": {
+   "4@3": 27,
+   "4@2": 23,
+   "4@4": 3,
+   "none": 2,
+   "4@1": 2,
+   "3@2": 2,
+   "2@1": 1
+  }
+ },
+ "reads": {
+  "pages": 228,
+  "ok": 228,
+  "failed": 0,
+  "read_alone": 21,
+  "judged_read_alone": [
+   "6a3c655839b4508b04e2e05d",
+   "6992c9022b03ab4dc6e12bda",
+   "6a3c654e39b4508b04e2dc10",
+   "6992ceca673ee1e40e32196b",
+   "6992ce4600291c2fcb634123",
+   "6a3c661e39b4508b04e321be",
+   "6992cb55d4d545ae73fef0b2"
+  ],
+  "truncated": 0
+ },
+ "calls": {
+  "total": 79,
+  "refused": 0,
+  "refused_by_class": {},
+  "guard_refusals_by_kind": {
+   "moved": 10,
+   "number-prev": 1,
+   "number-next": 1
+  },
+  "calls_per_page": 0.346
+ },
+ "tokens": {
+  "input": 809122,
+  "output": 158721,
+  "thinking": 0,
+  "cache_read": 105727,
+  "total": 967843,
+  "per_page": 4245
+ },
+ "context": {
+  "4p prev=stored prevOcr=true nextOcr=true": 188,
+  "4p prev=none prevOcr=true nextOcr=true": 12,
+  "1p prev=cli-read prevOcr=true nextOcr=true": 16,
+  "1p prev=stored prevOcr=true nextOcr=true": 5,
+  "3p prev=stored prevOcr=true nextOcr=true": 6,
+  "2p prev=stored prevOcr=true nextOcr=true": 1
+ },
+ "screen": {
+  "screened": 224,
+  "sonnet_flags": 17,
+  "sonnet_wrong_leaf": 2,
+  "opus_looked": 17,
+  "confirmed_wrong_leaf_pages": 1,
+  "confirmed_pages": [
+   "6a3c661739b4508b04e31c78"
+  ],
+  "page_rate_ci95": [
+   0.001,
+   0.025
+  ],
+  "blocks_with_confirmed_slip": 1,
+  "blocks": 58,
+  "block_rate_ci95": [
+   0.003,
+   0.091
+  ],
+  "wrong_side_sentences_opus": 11,
+  "wrong_side_sentences_sonnet": 17,
+  "missing_confirmed": 0,
+  "would_still_miss_rate_rule_of_three": 0.0134
+ }
+}

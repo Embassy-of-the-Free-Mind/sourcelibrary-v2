@@ -1,4 +1,5 @@
 import { Suspense, cache } from 'react';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
@@ -13,6 +14,7 @@ import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
 import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
+import { bylineDynasty, sibuClass, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -954,6 +956,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Text-only works serve their whole translation in one server render, so
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
       // English edition, English leaf: the transcription is the text (#7100).
       .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));
@@ -1124,6 +1127,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // keeps every link this layout builds inside /embed/<tenant>. Self-serve
   // reading rooms (no tenant, so no partnerV2) keep the layout below.
   // ============================================================================
+  const shownPublished = displayPublished(book.published) ?? undefined;
+
   if (!isEmbedded || partnerV2) {
     // The v2 link builder: the locale prefix, then the embed namespace when
     // embedded. Every in-book link below goes through it; a target with no
@@ -1350,13 +1355,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // composition ("written") date. Non-informative values ("Unknown", n.d.)
     // are dropped rather than shown.
     const compDateDisplay = book.source_work_dates?.find(l => l.type === 'composition')?.date_display?.trim();
-    const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
     const heroDate = (() => {
-      const pub = book.published ? String(book.published).trim() : '';
-      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: localizePublished(pub, lang) };
+      if (shownPublished) return { label: t.published, value: localizePublished(shownPublished, lang) };
       if (compDateDisplay) return { label: t.written, value: localizeDateDisplay(compDateDisplay, lang) };
       return null;
     })();
+    // Where the catalogue tradition files this work, and the author's dynasty (#8035). From the
+    // Kanripo-keyed 四部 snapshot, so only for a work that has a row: nothing is guessed.
+    const catalogueRow = sibuRowForWork(book.work_id);
+    const catalogueClass = catalogueRow?.cls ? sibuClass(catalogueRow.cls) : null;
     // Meta line: publisher/place, plus the source-work line ONLY when its author
     // differs from the byline (e.g. a translation crediting the original author
     // + date). For same-author originals the date already lives in the chip.
@@ -1367,7 +1374,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
       if (comp) {
         const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
-        if (!sameAuthor) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
+        // comp.author can be a romanised 宮夢仁 beside a Han byline, so `sameAuthor` misses it
+        // and the date ran twice: here, and in the chip below.
+        const alreadyInChip = !comp.author && heroDate?.value === localizeDateDisplay(comp.date_display, lang);
+        if (!sameAuthor && !alreadyInChip) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
       } else if (trans) {
         parts.push(`${trans.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(trans.date_display, lang)}`.trim());
       }
@@ -1444,7 +1454,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (book.published ? String(book.published) : '')).trim();
+    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (shownPublished ?? '')).trim();
     const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
     if (histInformative) {
       // Publisher/place only make sense for a printed impressum, not an ancient
@@ -1813,7 +1823,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {/* SaveToListButton renders nothing in an embed (no account inside a partner frame), so the bar drops its cell. */}
               <div className={`w-1/3 flex-shrink-0 ml-auto grid ${isEmbedded ? 'grid-cols-3' : 'grid-cols-4'} rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none`} style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={shownPublished} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
                   <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} bookTenantId={book.tenantId} variant="header" iconOnly />,
                   ...(isEmbedded ? [] : [<SaveToListButton key="save" targetType="book" targetId={book.id} size="sm" className="!text-stone-100" />]),
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
@@ -1833,7 +1843,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
               bookTitle={book.display_title || book.title}
               bookAuthor={book.author}
-              bookYear={book.published}
+              bookYear={shownPublished}
               pages={clientPages}
               trigger={
                 <div className="flex flex-col items-center md:items-start">
@@ -1858,6 +1868,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
+                  {lang === 'zh' && heroByline.role === 'author' && bylineDynasty(catalogueRow, book.author) && <span>【{bylineDynasty(catalogueRow, book.author)}】</span>}
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
@@ -1885,6 +1896,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 );
               })()}
               {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
+              {catalogueClass && embedPolicy.enableBookCollectionNavigation && (
+                <div className="text-[11.5px] md:text-[15px] mt-1" style={{ color: 'rgba(245,240,232,0.82)' }}>
+                  <Link href={lp(`/sibu/${catalogueClass.code}`)} className="hover:opacity-80 transition-opacity underline underline-offset-2 decoration-1">
+                    {lang === 'zh'
+                      ? `${catalogueClass.part.zh} · ${catalogueClass.zh}`
+                      : `${catalogueClass.part.en} · ${catalogueClass.en}`}
+                  </Link>
+                </div>
+              )}
 
               {/* Chips — borderless / padless inline items */}
               {(() => {
@@ -2016,7 +2036,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={shownPublished} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} bookTenantId={book.tenantId} variant="header" />
                   {/* Cover maker (concepts, admin only): sourcelibrary.org only, never on a partner embed or tenant room. */}
                   {!isEmbedded && !tenantSlug && pages.length > 0 && (
@@ -2026,7 +2046,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       </Link>
                     </AuthCheck>
                   )}
-                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={shownPublished} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
                     <BookAnalytics bookId={book.id} className="!text-stone-200" />
@@ -2203,7 +2223,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
                 bookTitle={book.display_title || book.title}
                 bookAuthor={book.author}
-                bookYear={book.published}
+                bookYear={shownPublished}
                 pages={clientPages}
               />
             </div>
@@ -2255,7 +2275,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {(() => {
                 const place = resolveImprintPlace(book)?.display; // family resolver, #4043
                 const publisher = book.publisher?.trim();
-                const year = book.published ? String(book.published).trim() : '';
+                const year = shownPublished ?? '';
                 const placePub = [place, publisher].filter(Boolean).join(': ');
                 const impressum = [placePub, year].filter(Boolean).join(', ');
                 if (!impressum) return null;
@@ -2308,8 +2328,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {book.source_work_dates.find(l => l.type === 'composition')
                         ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'composition')!.date_display, lang)}`.trim()
                         : ''}
-                      {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(String(book.published), lang)}</span>
+                      {book.source_work_dates.find(l => l.type === 'composition') && shownPublished
+                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(shownPublished ?? '', lang)}</span>
                         : ''}
                       {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
                         ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'translation')!.date_display, lang)}`.trim()
@@ -2507,7 +2527,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       title={book.title}
                       displayTitle={book.display_title}
                       author={book.author}
-                      year={book.published}
+                      year={shownPublished}
                       publisher={book.publisher}
                       placePublished={resolveImprintPlace(book)?.display}
                       format={book.format}
@@ -2535,7 +2555,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       bookId={book.slug || book.id}
                       title={book.display_title || book.title}
                       author={book.author || ''}
-                      year={book.published}
+                      year={shownPublished}
                       doi={book.doi}
                       tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"

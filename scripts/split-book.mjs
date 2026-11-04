@@ -24,6 +24,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
@@ -122,7 +123,7 @@ function spPath(bookId, pageNum, suffix) {
 async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
   const fullDim = { width, height };
-  const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), full),
@@ -134,7 +135,7 @@ async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
 
 async function uploadFullImage(buf, bookId, pageNum) {
   const fm = await sharp(buf).metadata();
-  const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), buf),

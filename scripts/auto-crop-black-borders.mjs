@@ -17,6 +17,7 @@
 
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -234,10 +235,10 @@ async function main() {
         });
 
         // Upload display-size (1200px wide) version
-        const displayBuffer = await sharp(result.croppedBuffer)
+        const displayBuffer = await markDisplay(await sharp(result.croppedBuffer)
           .resize({ width: DISPLAY_WIDTH, withoutEnlargement: true })
           .jpeg({ quality: DISPLAY_QUALITY })
-          .toBuffer();
+          .toBuffer(), { bookId: book.id, pageNumber: page.page_number });
 
         await storagePut(paths.display, displayBuffer, {
           contentType: 'image/jpeg',

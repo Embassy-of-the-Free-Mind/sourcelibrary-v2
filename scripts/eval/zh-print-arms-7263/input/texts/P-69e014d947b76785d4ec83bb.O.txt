@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>八</page-num>
+<header>經國大典二</header>
+
+| 楮貨 | 正布 |
+| :--- | :--- |
+| 一張 | 一匹 |
+| | |
+| | 一匹 |
+| | |
+
+**諸田** 官屯田馬田院田津夫田氷夫田守陵軍田則自耕無稅國行水陸田祭享供上諸司菜田內需司田惠民署種藥田並無稅寺田衙祿田公須田渡田崇義殿田水夫田長田副
+
+**職田** 十月晦日以前受職者給<unclear>遞則朔職</unclear>限前五十日內遭喪身死至限未經遞差者限後遭喪身死者亦給
+
+**官屯田** 數外屯田及屬公田並給貧民收稅
+
+<image-desc size="small" type="decorative" significance="low">Fish-tail ornaments in the block's centre column at the right edge.</image-desc>
+
+<vocab>諸田, 職田, 官屯田, 楮貨, 正布, 氷夫田, 守陵軍田, 內需司田, 惠民署, 崇義殿田, 公須田</vocab>

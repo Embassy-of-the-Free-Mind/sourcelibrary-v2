@@ -345,7 +345,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     pageAbbrev: (n) => `p. ${n}`,
     pagesCount: (n) => `${n} pages`,
     translatedCount: (n) => `${n} translated`,
-    workEditionsLink: (n) => `${n} editions & copies of this work`,
+    workEditionsLink: (n) => `${n} volumes & editions of this work`,
     translatedEditionLink: (title, published) => `Translated edition: ${title}${published ? `, ${published}` : ''}`,
     findPassages: 'Find passages',
     hidePassages: 'Hide passages',
@@ -782,7 +782,8 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     pageAbbrev: (n) => `第 ${n} 页`,
     pagesCount: (n) => `${n} 页`,
     translatedCount: (n) => `已英译 ${n} 页`,
-    workEditionsLink: (n) => `此作品的 ${n} 个版本与副本`,
+    // 册, not 版本: most of these are the volumes of one set (御定佩文韻府, 728).
+    workEditionsLink: (n) => `馆藏此作品共 ${n} 册`,
     translatedEditionLink: (title, published) => `译本：${title}${published ? `，${published}` : ''}`,
     findPassages: '查找段落',
     hidePassages: '收起段落',
