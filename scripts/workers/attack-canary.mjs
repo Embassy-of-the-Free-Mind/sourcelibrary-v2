@@ -23,7 +23,7 @@ import { ntfyPost } from '../lib/ntfy-send.mjs';
  * residential proxy. That passes, by design; the levers against it are the
  * breadth cap (#5995) and the edge detector, not a header rule.
  *
- * Cost: ~25 requests a week, from the Hetzner box. HTML page loads only, so no
+ * Cost: ~27 requests a week, from the Hetzner box. HTML page loads only, so no
  * analytics pageview is written (that needs our JavaScript). Each URL carries
  * ?_canary=attack so the edge logs can be filtered.
  *
@@ -121,6 +121,37 @@ async function newestProductionBuildHost() {
   return null;
 }
 
+/**
+ * The hidden-mark round trip (#8150): fetch a live quote the way a reader's
+ * copy would get it, hand it to the deployed public decoder, and require a
+ * verified signature. It fails if the quote path stops marking, if the
+ * decoder page loses PROVENANCE_SECRET_KEY, or if the two disagree on the
+ * scheme. Two requests; no key needed, the decoder holds it.
+ */
+const QUOTE_PATH = '/api/books/the-cabinet-of-minerals-vreeswyk/quote?page=10';
+
+async function markRoundTrip() {
+  const row = { host: 'sourcelibrary.org', name: 'quote text verifies in /decode', rule: 'provenance mark (#8150)', expect: 'authentic' };
+  try {
+    const headers = { 'user-agent': UA.ours };
+    const q = await fetch(`https://sourcelibrary.org${QUOTE_PATH}&_canary=attack`, { headers, signal: AbortSignal.timeout(30_000) });
+    if (!q.ok) return { ...row, got: `quote ${q.status}`, ok: false };
+    const text = (await q.json())?.quote?.translation;
+    if (typeof text !== 'string' || !text) return { ...row, got: 'no quote text', ok: false };
+    const d = await fetch('https://sourcelibrary.org/api/decode?_canary=attack', {
+      method: 'POST',
+      headers: { ...headers, 'content-type': 'application/json' },
+      body: JSON.stringify({ text }),
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!d.ok) return { ...row, got: `decode ${d.status}`, ok: false };
+    const got = (await d.json())?.status || 'no status';
+    return { ...row, got, ok: got === 'authentic' };
+  } catch (err) {
+    return { ...row, got: `error: ${err.message}`, ok: false };
+  }
+}
+
 function classify(res) {
   const mitigated = (res.headers.get('cf-mitigated') || '').toLowerCase();
   if (mitigated === 'challenge') return 'challenge';
@@ -164,6 +195,8 @@ async function main() {
   } else {
     rows.push({ host: 'github deployments', name: 'find newest production build', rule: 'canary input', expect: 'found', got: 'none', ok: false });
   }
+
+  rows.push(await markRoundTrip());
 
   const failed = rows.filter((r) => !r.ok);
   for (const r of rows) {

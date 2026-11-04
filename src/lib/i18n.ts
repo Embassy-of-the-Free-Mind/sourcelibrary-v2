@@ -178,6 +178,7 @@ export interface FooterStrings {
   researchNotes: string;
   privacy: string;
   cookieSettings: string;
+  hiddenMarks: string;
   terms: string;
   copyright: string;
   licensing: string;
@@ -397,6 +398,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Articles',
     privacy: 'Privacy',
     cookieSettings: 'Cookie settings',
+    hiddenMarks: 'Hidden marks',
     terms: 'Terms',
     copyright: 'Copyright & DMCA',
     licensing: 'Licensing',
@@ -451,6 +453,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Artículos',
     privacy: 'Privacidad',
     cookieSettings: 'Preferencias de cookies',
+    hiddenMarks: 'Marcas ocultas',
     terms: 'Términos',
     copyright: 'Derechos de autor y DMCA',
     licensing: 'Licencias',
@@ -506,6 +509,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Commentarii',
     privacy: 'De secreto',
     cookieSettings: 'Optiones crustulorum',
+    hiddenMarks: 'Notae occultae',
     terms: 'Condiciones',
     copyright: 'Ius auctoris et DMCA',
     licensing: 'Licentiae',
@@ -561,6 +565,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Artikelen',
     privacy: 'Privacy',
     cookieSettings: 'Cookie-instellingen',
+    hiddenMarks: 'Verborgen merktekens',
     terms: 'Voorwaarden',
     copyright: 'Auteursrecht en DMCA',
     licensing: 'Licenties',
@@ -615,6 +620,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: '文章',
     privacy: '隐私',
     cookieSettings: 'Cookie 设置',
+    hiddenMarks: '隐藏标记',
     terms: '条款',
     copyright: '版权与 DMCA',
     licensing: '许可',
