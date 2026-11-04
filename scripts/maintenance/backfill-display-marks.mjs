@@ -468,6 +468,7 @@ async function run(db) {
     fs.renameSync(`${progressFile}.tmp`, progressFile);
   };
 
+  let lastSave = Date.now();
   const rows = BOOKS ? [] : null;
   const ctx = { pages, ledger, bytes, rows, tally: (k) => { tallyO[k] = (tallyO[k] || 0) + 1; } };
   for (const id of order) {
@@ -478,7 +479,11 @@ async function run(db) {
       break;
     }
     const docs = await pages.find({ book_id: id }, { projection: PAGE_PROJECTION }).toArray();
-    await pool(docs, CONCURRENCY, (p) => processPage(p, ctx).catch((e) => { ctx.tally(`error:${e.name}`); console.warn(`[${tag}] ${id} p${p.page_number}: ${e.message}`); }));
+    await pool(docs, CONCURRENCY, async (p) => {
+      await processPage(p, ctx).catch((e) => { ctx.tally(`error:${e.name}`); console.warn(`[${tag}] ${id} p${p.page_number}: ${e.message}`); });
+      // A heartbeat per page, not per book: the watchdog restarts a shard whose file stops moving, and one large book can outlast its window.
+      if (Date.now() - lastSave > 60000) { lastSave = Date.now(); save(); }
+    });
     state.books++;
     state.pagesSeen += docs.length;
     if (doneFile && !BOOKS) fs.appendFileSync(doneFile, `${id}\n`);
