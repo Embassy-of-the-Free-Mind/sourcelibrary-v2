@@ -387,3 +387,5 @@
 
 # Partner frame check (#8054): book pages on the Embassy's real page must fit their frame. Pages ntfy on a failure or if it cannot run; silent when clean.
 20 6 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; cd /root/sourcelibrary && flock -n /tmp/sl-embed-frame.lock timeout 20m node scripts/audit/embed-frame-height.mjs --alert --shots /var/log/sourcelibrary/embed-frame >> /var/log/sourcelibrary/embed-frame-height.log 2>&1
+# Token use for /admin/tokens (#8201): reads local transcripts, calls no model.
+42 * * * * flock -n /tmp/sl-token-usage.lock nice -n 19 bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/token-usage-push.mjs --box main --meter' >> /var/log/sourcelibrary/token-usage-push.log 2>&1
