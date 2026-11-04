@@ -36,8 +36,8 @@ export const PARTNERS_HTML = `
       <header class="ds-head">
         <p class="ds-kicker">Dataset card</p>
         <h2 id="ds-title">Source Library historical corpus</h2>
-        <p class="ds-ver"><code>v0</code> · snapshot 30 October 2026</p>
-        <p class="ds-sum">Page images, transcriptions in the original language and aligned English translations of historical books and manuscripts, with rights and provenance on every record. This card describes the part of the public library offered for licence.</p>
+        <p class="ds-ver"><code>v0</code> · snapshot 30 October 2026 · quarterly refresh planned</p>
+        <p class="ds-sum">Page images, original-language transcriptions and aligned English translations, with rights and provenance on every record. This is the part of the public library offered for licence.</p>
         <dl class="ds-tags">
           <div><dt>Modalities</dt><dd><span>Text</span><span>Image</span></dd></div>
           <div><dt>Tasks</dt><dd><span>Image-to-text</span><span>Translation</span><span>Text-image retrieval</span><span>Object detection</span><span>Image classification</span></dd></div>
@@ -45,6 +45,8 @@ export const PARTNERS_HTML = `
           <div><dt>Size</dt><dd><span>1M–10M pages</span><span>100K–1M illustrations</span></dd></div>
           <div><dt>Languages</dt><dd><span>Latin</span><span>German</span><span>Greek</span><span>French</span><span>Chinese</span><span>+ 203 labels</span></dd></div>
           <div><dt>Licence</dt><dd><span>By rights tier</span><span>Translations: CC share-alike</span></dd></div>
+          <div><dt>Sources</dt><dd><span>59 libraries and aggregators</span></dd></div>
+          <div><dt>Period</dt><dd><span>79% of pages dated 1400–1899</span></dd></div>
         </dl>
       </header>
 
@@ -62,9 +64,10 @@ export const PARTNERS_HTML = `
               </tbody>
             </table>
           </div>
-          <p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library's manifest or record states no terms for its scans; most of these books come from the Internet Archive. Illustrations from U books dated before 1900 are offered. Tiers record what the library says about its scans, not the age of the work: about 20,600 illustrations held back in B also come from books dated before 1900. Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</p>
+          <p class="ds-note"><b>A</b>: cleared by the library. <b>B</b>: library terms on the scans, under legal review. <b>U</b>: no terms stated; illustrations from before 1900 are offered.</p>
 
-          <h3>Page record</h3>
+          <details class="ds-more"><summary>What the tiers mean</summary><p class="ds-note"><b>A</b>: the holding library states public domain, CC0, CC BY or CC BY-SA, or the scans are the Ritman Library's own. <b>B</b>: the library attaches non-commercial, no-derivatives or its own terms to its scans, or marks them in copyright; these are under legal review. <b>U</b>: the library's manifest or record states no terms for its scans; most of these books come from the Internet Archive. Illustrations from U books dated before 1900 are offered. Tiers record what the library says about its scans, not the age of the work: about 20,600 illustrations held back in B also come from books dated before 1900.</p></details>
+          <details class="ds-more"><summary>Page record</summary>
           <div class="ds-scroll">
             <table class="ds-t ds-schema">
               <thead><tr><th>Field</th><th>Type</th><th>Contents</th></tr></thead>
@@ -84,7 +87,8 @@ export const PARTNERS_HTML = `
             </table>
           </div>
 
-          <h3>Example row</h3>
+          </details>
+          <details class="ds-more"><summary>Example row</summary>
           <div class="ds-row">
             <a href="https://sourcelibrary.org/book/de-rege-et-regis-institutione-with-de-ponderibus-et-mensuris-mariana/page/6991e1a2339ebc850994a63e"><img src="/ai-partners/img/row-mariana.jpg" alt="Printed Latin page numbered 109, headed Liber Secundus" width="360" height="655" loading="lazy"></a>
             <div>
@@ -98,7 +102,8 @@ export const PARTNERS_HTML = `
           </div>
           <p class="ds-note">Juan de Mariana, <i>De rege</i>, 1599. Tier A, public domain, scan from the Internet Archive; transcription and translation by <code>gemini-3-flash-preview</code>. Text shortened here.</p>
 
-          <h3>Illustration record</h3>
+          </details>
+          <details class="ds-more"><summary>Illustration record</summary>
           <div class="ds-scroll">
             <table class="ds-t ds-schema">
               <thead><tr><th>Field</th><th>Type</th><th>Contents</th></tr></thead>
@@ -116,7 +121,8 @@ export const PARTNERS_HTML = `
             </table>
           </div>
 
-          <h3>Files</h3>
+          </details>
+          <details class="ds-more"><summary>Files</summary>
           <div class="ds-scroll">
             <table class="ds-t ds-schema">
               <thead><tr><th>File</th><th>Rows</th><th>Contents</th></tr></thead>
@@ -130,32 +136,18 @@ export const PARTNERS_HTML = `
           </div>
           <p class="ds-note">The full page text ships under a licence. The illustrations are not yet in the v0 files; we export them as a separate table on request. A second sample of ten complete books with notes is also available.</p>
 
-          <h3>Known limits</h3>
+          </details>
+          <details class="ds-more"><summary>Known limits</summary>
           <ul class="ds-limits">
+            <li>Words are whitespace-separated, so they undercount Chinese, Japanese, Tibetan and Thai; the manifest also gives characters (10.7B original, 11.1B English).</li>
             <li>The text is machine-written. Scholars check hard cases by language; most pages have had no human reader. Error rates are on the <a href="https://sourcelibrary.org/quality">quality page</a>.</li>
             <li>A page's text and image can be a leaf apart. A screen of 1,497 random books found text one page off its images in about 1% of books (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5803">open issue</a>). We have not measured how often the stored image is the wrong side.</li>
             <li>Catalogue years are often the date of composition, a series or a reprint. 11,930 books have none.</li>
             <li>The 208 languages are catalogue labels, including mixed ones such as Greek-Latin. Latin is 41% of the pages.</li>
             <li>Illustration types and scores are model output. One graded sample is on this page under <a href="#v2-illustrated">Illustrated</a>.</li>
           </ul>
+          </details>
         </div>
-
-        <aside class="ds-side" aria-label="Specifications">
-          <dl>
-            <div><dt>Books</dt><dd>28,700</dd></div>
-            <div><dt>Pages with text</dt><dd>4.86M</dd></div>
-            <div><dt>Pages with English</dt><dd>3.89M</dd></div>
-            <div><dt>Illustrations offered</dt><dd>~146,000</dd></div>
-            <div><dt>Sources</dt><dd>59 libraries and aggregators</dd></div>
-            <div><dt>Period</dt><dd>79% of pages dated 1400–1899; 9% undated</dd></div>
-            <div><dt>Tokens</dt><dd>Not measured for this subset. Whole corpus: about 21B</dd></div>
-            <div><dt>Transcription</dt><dd>Gemini 3 Flash 60%, 3.1 Flash-Lite 35%, PaddleOCR-VL 2%, other 3%</dd></div>
-            <div><dt>Translation</dt><dd>Gemini 3.1 Flash-Lite 63%, 3 Flash 36%, other under 1%</dd></div>
-            <div><dt>Excluded</dt><dd>41,256 held books; editions from 1930 on; 98,354 withheld pages; 46,933 pages written by Claude</dd></div>
-            <div><dt>Refresh</dt><dd>Planned quarterly</dd></div>
-          </dl>
-          <p class="cta"><a class="primary" href="mailto:derek@sourcelibrary.org?subject=Source%20Library%3A%20sample%20and%20datasheet">Request a sample</a><a href="https://sourcelibrary.org/licensing">Licensing terms</a></p>
-        </aside>
       </div>
     </article>
   </div>
