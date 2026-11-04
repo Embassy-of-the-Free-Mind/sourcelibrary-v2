@@ -6,7 +6,7 @@ PRIOR ART: none fits — `scripts/eval/DECISIONS.md` is one row per route, `EXPE
 
 ## In five sentences
 
-We are confident that the transcriptions of the Siku Quanshu manuscripts are close to the page. PaddleOCR-VL differs from an independent typed edition by a median 3.3% of characters (1,201 books), and on ordinary pages it does not make up text. We are just as confident that the English is the weak half. One Opus judge, reading 120 books against the images, found a major defect on about a third of translated pages, and on four in five pages translated by the older Gemini 3 Flash. Our readers do not appear to recall famous texts in place of reading our pages. The biggest thing we do not know is whether any route we can afford puts out English good enough to restart the stopped Siku translation lane, which has 1.3 million pages waiting. The test that should answer it (`zh-siku-route-matrix-7263`) has not reported.
+We are confident that the Siku Quanshu manuscript transcriptions are close to the page: PaddleOCR-VL differs from an independent typed edition by a median 3.3% of characters (1,201 books), and it does not make up text on ordinary pages. We are as confident that the English is the weak half: one Opus judge, reading 120 books against the images, found a major English defect on about a third of translated pages, and on about half of the pages translated by the older Gemini 3 Flash. Our readers do not appear to recall famous texts in place of reading our pages. The biggest thing we do not know is whether any route we can afford puts out English good enough to restart the stopped Siku translation lane, which has 1.3 million pages waiting. The test that should answer it (`zh-siku-route-matrix-7263`) has not reported.
 
 ## How to read this page
 
