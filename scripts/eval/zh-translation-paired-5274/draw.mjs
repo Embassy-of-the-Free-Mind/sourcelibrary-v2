@@ -61,7 +61,7 @@ console.log(`${all.length} live Chinese books; ${books.length} after the book ex
 // Frame census, one $group over the candidate books' 3 Flash pages (whole book, not only the interior).
 const census = await db.collection('pages').aggregate([
   { $match: { book_id: { $in: books.map((b) => b.id) }, 'translation.model': MODEL } },
-  { $project: { book_id: 1, om: '$ocr.model', os: '$ocr.source', pt: '$page_type', ts: '$translation.source', ed: { $or: [{ $gt: ['$translation.edited_by', null] }, { $gt: ['$ocr.edited_by', null] }] }, wh: { $gt: ['$translation_withheld', null] }, ol: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, tl: { $strLenCP: { $ifNull: ['$translation.data', ''] } } } },
+  { $project: { book_id: 1, om: '$ocr.model', os: '$ocr.source', pt: '$page_type', ts: '$translation.source', ed: { $or: [{ $gt: ['$translation.edited_by', null] }, { $gt: ['$ocr.edited_by', null] }] }, wh: { $gt: ['$translation_withheld', null] }, ol: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] }, tl: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $strLenCP: '$translation.data' }, 0] } } },
   { $group: { _id: { b: '$book_id', om: '$om', os: '$os', ok: { $and: [{ $in: ['$ts', ['ai', 'batch_api']] }, { $not: [{ $in: ['$pt', EXCLUDED_TYPES] }] }, { $gte: ['$ol', 200] }, { $gte: ['$tl', 100] }, { $not: ['$wh'] }] } }, n: { $sum: 1 }, ed: { $sum: { $cond: ['$ed', 1, 0] } } } },
 ], { allowDiskUse: true, maxTimeMS: 600000 }).toArray();
 // A book with a human edit on ANY page is out (the brief); check every page, not only 3 Flash ones.
