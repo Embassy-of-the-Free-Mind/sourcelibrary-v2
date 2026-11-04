@@ -103,6 +103,7 @@ export interface Book {
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_archived?: number;     // CACHED — pages with archived_photo on R2 (excludes failed archives)
   pages_translated_es?: number; // CACHED — pages with a Spanish edition (translations.es / legacy translation_es); synced by scripts/maintenance/sync-pages-translated-es.mjs
+  pages_translated_zh?: number; // CACHED — pages with a Chinese edition (translations.zh), written by the job that writes the text (#7537)
   translation_percent?: number; // Computed at read time from pages_translated/pages_ocr (never stored). Uses pages_ocr as denominator so blank pages don't penalize the percentage.
   created_at?: Date;
   updated_at?: Date;

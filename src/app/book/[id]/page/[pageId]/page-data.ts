@@ -23,6 +23,8 @@ export const BOOK_META_PROJECTION = {
   // Gates whether a LOCALIZED reader URL may exist for this book at all — see
   // the redirect in layout.tsx. Always projected, so its absence is an answer.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   // English edition? Its English leaves describe themselves by their own
   // words, not a stored rewording (#7100).
   'translation_state.english_original': 1,

@@ -95,6 +95,8 @@ const BOOK_NAV_PROJECTION = {
   // Gates whether this book may have a localized reader URL at all — see the
   // redirect below. Always read from Atlas here, so it can never be absent.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
