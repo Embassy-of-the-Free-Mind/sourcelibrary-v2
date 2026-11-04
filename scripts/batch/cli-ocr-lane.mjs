@@ -1054,11 +1054,13 @@ export const ARMC_CAMPAIGNS = Object.freeze({
   'jcb-1600-8049': {
     issue: 8049,
     // filled from the #8049 cell test (scripts/eval/route-judge-6740/jcb-1600-8049, RULE.md): a language is here only if it passed
-    // Latin only (2026-11-04): two draws pooled, 60 pages from 60 tier A/B books, 30 written, 29/30 judge-accepted, 0 wrong
-    // text, P(acc>=0.8) 0.99, wrong-page 4/4, plants 4/4. Every other language HELD (es 15/18, it 23/27, fr 25/28,
-    // de 13/19, en 19/25, nl 15/22, pt 26/29: wrong text over 4% or P under 0.9). Unwritten pages (half) are ledgered and wait.
+    // 2026-11-04, two draws pooled a language, one page a book, blind Opus judge: Latin 60 pages, 30 written, 29/30
+    // accepted, 0 wrong text, P(acc>=0.8) 0.99 (unwritten half ledgered, waits); French 60 pages, 55 written, 51/55
+    // accepted, 2 wrong text (3.6%), P 0.99. HELD (one draw): es 15/18, it 23/27, de 13/19, en 19/25, nl 15/22, pt 26/29
+    // (wrong text over 4% or P under 0.9; Portuguese has no unsampled A/B book left for a second draw).
     langs: {
       la: { language: /^Latin/, engine: 'pero', route: 'pero>agy-flash-low', evidence: '#8049 cell test, two draws pooled: 29/30 written accepted, 0 wrong text' },
+      fr: { language: /^French/, engine: 'lightonocr', route: LO_ROUTE, evidence: '#8049 cell test, two draws pooled: 51/55 written accepted, 2 wrong text' },
     },
   },
 });
