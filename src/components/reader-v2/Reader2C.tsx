@@ -1626,7 +1626,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model)}
+                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.machineTranscript}
                   {/* An open e-text's licence is the reader's to check (#5571). */}
                   {prov?.kind === 'text_source' && (prov.source.licenseUrl || prov.source.url) && (
                     <>
@@ -1643,7 +1643,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
-                  {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
+                  {trCorpus
+                    ? t.corpusTranslation(trCorpus.name)
+                    : page.translation.edited_by || page.translation.edited_at ? t.machineTranslationEdited : t.machineTranslation}
                   {isUnreviewedMachineTranslation(page) && (
                     <span className="block mt-0.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.machineDraftNotice}</span>
                   )}
