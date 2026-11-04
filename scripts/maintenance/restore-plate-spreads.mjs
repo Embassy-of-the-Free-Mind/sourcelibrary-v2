@@ -45,7 +45,7 @@ import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { recountBook } from '../lib/page-counts.mjs';
+import { recountBook, hasOcr, hasTranslation } from '../lib/page-counts.mjs';
 import { bboxToJoined, bboxUnion } from '../lib/plate-spread.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 
@@ -58,7 +58,7 @@ const REVERT = opt('revert');
 const RUN = REVERT || opt('run') || `plate8042-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
 const OUT = opt('out') || path.join(process.env.JOB_SCRATCH || '/tmp', `restore-plate-spreads-${RUN}`);
 const WRITTEN = ['cropped_photo', 'detected_images', 'repeat_of', 'repeat_of_meta'];
-const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, enhanced_photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, 'ocr.data': 1, 'translation.data': 1 };
+const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, photo: 1, photo_original: 1, enhanced_photo: 1, archived_photo: 1, cropped_photo: 1, crop: 1, split_from_spread: 1, split_side: 1, detected_images: 1, repeat_of: 1, repeat_of_meta: 1, plate_whole: 1, ocr: 1, translation: 1 };
 
 fs.mkdirSync(OUT, { recursive: true });
 const log = (file, row) => fs.appendFileSync(path.join(OUT, file), JSON.stringify(row) + '\n');
@@ -122,7 +122,7 @@ function remapDetections(kind, keep, retire, geo) {
 }
 
 function before(p) { const b = {}; for (const f of WRITTEN) b[f] = p[f] === undefined ? null : p[f]; return b; }
-const hasText = (p) => (p.ocr?.data || '').replace(/<[^>]+>/g, '').trim().length > 0 || (p.translation?.data || '').trim().length > 0;
+const hasText = (p) => hasOcr(p) || hasTranslation(p);
 
 async function revalidate(bookId) {
   const secret = process.env.REVALIDATE_SECRET || process.env.CRON_SECRET;
@@ -202,7 +202,7 @@ try {
 
         console.log(`  ${e.kind} p.${keep.page_number}+p.${retire.page_number}: keep ${keep.id} → ${whole}${geo ? ` (${geo.W}x${geo.H})` : ''}; retire ${retire.id} → repeat_of ${keep.id}`);
         log('actions.jsonl', { run: RUN, apply: APPLY, book: bookId, ...e, whole, geo, keep_before: before(keep), retire_before: before(retire) });
-        for (const p of [keep, retire]) if (hasText(p)) { log('needs-read.jsonl', { book: bookId, page_id: p.id, page_number: p.page_number, role: p === keep ? 'kept' : 'retired', ocr_chars: (p.ocr?.data || '').length, translation_chars: (p.translation?.data || '').length }); if (p === keep) summary.needsRead++; }
+        for (const p of [keep, retire]) if (hasText(p)) { log('needs-read.jsonl', { book: bookId, page_id: p.id, page_number: p.page_number, role: p === keep ? 'kept' : 'retired', has_ocr: hasOcr(p), has_translation: hasTranslation(p) }); if (p === keep) summary.needsRead++; }
         const gal = await db.collection('gallery_images').find({ page_id: { $in: [keep.id, retire.id] } }, { projection: { _id: 0, id: 1, page_id: 1 } }).toArray();
         for (const g of gal) log('gallery.jsonl', { book: bookId, ...g, role: g.page_id === keep.id ? 'kept' : 'retired' });
         summary.pairs++;
