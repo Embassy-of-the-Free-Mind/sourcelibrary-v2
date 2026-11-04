@@ -32,6 +32,8 @@ import { matchPassage, words, shingles } from '../../audit/match-passage.mjs';
 import { ObjectId } from 'mongodb';
 // @ts-expect-error untyped .mjs
 import { gatedTextCall } from '../../lib/agy-cli.mjs';
+// @ts-expect-error untyped .mjs
+import { getTranslationText } from '../../lib/translation-text.mjs';
 
 const arg = (n: string, d: string) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const OUT = arg('out', process.env.JOB_SCRATCH ? `${process.env.JOB_SCRATCH}/s9` : '/tmp/s9');
@@ -111,8 +113,8 @@ async function semLex(db: any, text: string, results: any[]) {
     // are not our translation.
     if (/^(en|eng|english)\b/i.test(String(r.book_language || ''))) continue;
     let pg: any = null;
-    try { pg = await db.collection('pages').findOne({ _id: new ObjectId(r.page_id) }, { projection: { 'translation.data': 1, 'ocr.data': 1 } }); } catch { /* non-ObjectId id */ }
-    const cs = shingles(words(pg?.translation?.data), 3);
+    try { pg = await db.collection('pages').findOne({ _id: new ObjectId(r.page_id) }, { projection: { translation: 1, 'ocr.data': 1 } }); } catch { /* non-ObjectId id */ }
+    const cs = shingles(words(getTranslationText(pg)), 3);
     const os = shingles(words(pg?.ocr?.data), 3);
     let hit = 0, inOcr = 0;
     for (const s3 of qs) { if (cs.has(s3)) hit++; if (os.has(s3)) inOcr++; }
@@ -135,6 +137,7 @@ function zwcLayer(text: string, bookId: string) {
   };
 }
 
+// The draw selects by the stored translation's length: the one direct read of the raw field here.
 async function drawPages(db: any) {
   const out: any[] = [];
   const cur = db.collection('books').aggregate([

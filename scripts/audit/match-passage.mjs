@@ -14,9 +14,10 @@
  * so with the corpus.
  *
  * Method. Normalise (strip zero-width and tags, NFKC, lower case, letters and digits only), take a few
- * 7-word probes spread across the passage, phrase-search each on `translation.data` (Atlas
- * `pages_search`), and score every candidate page by containment: the share of the passage's 5-word
- * shingles found on that page. A verdict needs containment >= MIN_CONTAINMENT and a book whose text
+ * 7-word probes spread across the passage, phrase-search each on the field the Atlas `pages_search`
+ * index maps (the raw translation: the one direct read, and the reason this file is in the
+ * translation-data-readers baseline), and score every candidate page by containment: the share of the passage's 5-word
+ * shingles found in that page's words (getTranslationText). A verdict needs containment >= MIN_CONTAINMENT and a book whose text
  * is a translation (not English: the English "translation" of an English book is its own text, and
  * public domain). Thresholds were set on the slice 9 false-positive set (independent public-domain
  * translations of works we hold, and unrelated English), not on the positives.
@@ -31,6 +32,7 @@
  */
 import { MongoClient } from 'mongodb';
 import { pathToFileURL } from 'url';
+import { getTranslationText } from '../lib/translation-text.mjs';
 
 export const SHINGLE = 5;
 export const PROBE_WORDS = 7;
@@ -90,13 +92,13 @@ export async function matchPassage(db, text) {
     const hits = await pages.aggregate([
       { $search: { index: 'pages_search', phrase: { query: p, path: 'translation.data' } } },
       { $limit: 8 },
-      { $project: { _id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 } },
+      { $project: { _id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1 } },
     ], { maxTimeMS: 20_000 }).toArray();
     for (const h of hits) if (!seen.has(String(h._id))) seen.set(String(h._id), h);
   }
   let best = null;
   for (const h of seen.values()) {
-    const cs = shingles(words(h.translation?.data));
+    const cs = shingles(words(getTranslationText(h)));
     let hit = 0;
     for (const s of qs) if (cs.has(s)) hit++;
     const c = hit / qs.size;
