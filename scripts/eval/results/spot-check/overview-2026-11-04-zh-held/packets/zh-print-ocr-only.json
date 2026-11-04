@@ -1,0 +1,692 @@
+[
+ {
+  "slot": 33,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "69aebb5e39a4307877774064",
+  "book_url": "https://sourcelibrary.org/book/69aebb5e39a4307877774064",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "author": "Zhu Xi (朱熹)",
+   "display_title": null,
+   "id": "69aebb5e39a4307877774064",
+   "image_source": {
+    "provider": "loc"
+   },
+   "language": "Chinese",
+   "pages_count": 331,
+   "pages_ocr": 324,
+   "pages_translated": 0,
+   "published": "1573",
+   "title": "楚辭集註 (Songs of Chu with Collected Annotations)"
+  },
+  "structure": {
+   "page_records": 331,
+   "distinct_page_numbers": 331,
+   "duplicate_records": 0,
+   "pages_with_ocr": 324,
+   "pages_translated": 0,
+   "with_printed_number": 1,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 331,
+   "pages_translated_field": 0
+  },
+  "run": [
+   46,
+   146,
+   229,
+   311
+  ],
+  "pages": [
+   {
+    "page_number": 46,
+    "page_id": "6a4a7105481e7a07cc01ad5a",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb5e39a4307877774064/46.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n命又文昌宫第四亦曰\n司命故有兩司命也\n蔣云筆是風\n人調度\n穐蘭兮麋蕪羅生兮堂下綠葉兮素枝芳菲\n菲兮襲予夫人兮自有美子蓀何以兮愁苦\n穐古秋字一作秋下同麋或從艸下叶音戸\n予叶音與夫音扶兮字一在自有字下蓀一\n作荃下同○麋蕪芎藭葉名似蛇床而香其\n苗四五月間生葉作叢而莖細其葉倍香七\n八月開白花羅生言二物並列而生也襲及\n也少司命亦陽神而少卑者故爲女巫之言\n以接之上四句與下二句也夫人猶言彼人\n如左傳之言不能見夫人也美子所美之人\n也蓀猶汝也蓋爲巫之自汝也言彼神之心\n自有所美而好之者矣汝何爲愁苦而必求\n其合\n也\n穐蘭兮靑靑綠葉兮紫莖滿堂兮美人\n忽獨與余兮目成\n靑音菁〇靑靑茂盛貌言\n美人並㑹盈滿於堂而司\n命獨與我睨而相視以成親好此亦上二句\n興下二句也至此則神降於巫而非復前章\n之意\n矣\n入不言兮出不辭乘囘風兮載雲旗悲\n莫悲兮生别離樂莫樂兮新相知\n辭一作詞\n〇此爲巫\n言司命初與巳善後乃徃來飄忽不言不辭\n乘風載雲以離於我適相知而遽相别悲莫\n甚焉於是乃復追念\n始者相知之樂也\n荷衣兮蕙帶鯈而來兮\n忽而逝夕宿兮帝郊君誰須兮雲之際\n帶叶\n丁計\n反鯈一作倐〇此亦爲巫言神之始也雖倐\n然不言而來今乃忽然不辭遂去而宿於天\n帝之郊不知其何所待於雲之\n際乎尢幸其有意而顧巳也\n與女遊兮九",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 146,
+    "page_id": "6a4a7106481e7a07cc01adbe",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb5e39a4307877774064/146.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n蘭薄當戸而種又以嘉木爲籬\n落也何遠爲言何以遠去爲哉\n室家遂宗食\n金云此下言飲饌盛\n劉云華妙奇鬱此貂錦\n耳非素手儲狡可就\n行些肥牛之腱臑若芳些和酸若苦陳吳羹\n些臑鼈炮羔有柘漿些鵠酸臇鳬煎鴻鶬些\n露雞臛蠵厲而不爽些\n稱音捉挐女居反醎\n一作鹹行叶胡郎反\n腱居言反臑仁珠反一作臑音耎一作胹音\n而又作而而兖反若一作弱羹叶音郎胹音\n而一作擩一作潘炮蒲交反柘一作蔗臇于\n兖反鶬音倉臛呼各反一作臇又音霍蠵一\n作蠵音携又以規煎圭二反爽叶音霜○室\n家宗族也宗尊也言君旣歸來則室家之衆\n皆來宗尊當爲設食其方法多端也稻今秫\n粳二米也粢稷也亦名稌稻釋也稻麥稻處\n種麥面擇取其先熟者也挐糅也黃梁出蜀\n漢商浙間亦種之香美逾於諸梁號爲竹根\n黃言此數種之米相雜爲飯也大苦豉也醎\n鹽也酸酢也辛謂椒薑也甘謂飴蜜也腱筋\n頭也臑若熟爛也或曰若謂杜若用以煑肉\n去腥而香也若苦之若則訓及也吳羹吳人\n工作羹也胹煑也羔羊子也炮合毛裹物而\n燒之也柘藷蔗也言取藷蔗之汁爲漿飲也\n鵠鴻鵠也酸以酢漿烹之爲羹也臇臛少汁\n也鳬野鴨也鴻鴻鴈也鶬鶬鶴也露雞露棲\n之雞也有菜曰羹無菜曰臛蠵大龜之属也\n厲列也爽敗也楚人名羹敗曰爽老子曰五\n味令人\n口爽\n粔籹蜜餌有餦餭些瑤漿靈勺實羽\n觴些挫糟凍飲酎清涼些華酌旣陳有瓊漿\n些歸反故室敬而無妨些\n粔音巨籹音女一\n音汝餦音張餭音",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 229,
+    "page_id": "6a4a7106481e7a07cc01ae11",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb5e39a4307877774064/229.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n明忘我實多將荅賦而不暇兮爰整駕而亟\n行瞻崑崙之巍巍兮臨縈河之洋洋伏靈龜\n以負坻兮亘螭龍之飛梁登閬風之曾城兮\n構不死而爲牀屑瑤縈以爲糇兮斟白水以\n爲漿抨巫咸以占夢兮廼貞吉之元符滋令\n德於正中兮含嘉秀以爲敷旣垂頴而顧本\n兮爾要思乎故居安和靜而隨時兮姑純懿\n之所廬戒庻寮以夙㑹兮僉恭職而並迓豐\n隆軒其震霆兮列缺爗其照夜雲師黮以交\n集兮凍雨沛其灑塗轅琱輿而樹葩兮擾應\n龍以服輅百神森其備從兮屯綺羅而星布\n振余袂而就車兮修劒揭以低昻冠咢咢其\n映蓋兮佩綝纚以煇煌僕夫儼其正策兮八\n乗攄而超驤氛旄溶以天旋兮蜺旌飄而飛\n揚撫軨軹而還睨兮心灼藥其如湯羨上都\n之赫戱兮何迷故而不忘左青琱以揵芝兮\n右素威以司鉦前長離使拂羽兮委水衡乎\n玄㝠屬箕伯以函風兮澂淟涊而爲清曳雲",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 311,
+    "page_id": "6a4a7106481e7a07cc01ae63",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb5e39a4307877774064/311.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n說以爲思其故居夫日之運行初無停息\n豈有故居之可思哉此旣明爲謬說而推\n言之者又以爲譏人君之迷而不復也則\n其穿鑿愈甚矣又觧聲色娛人爲言君有\n明德百姓皆注其耳目亦衍說且必若此\n則其下文緗瑟交鼓之云者又誰爲主而\n見其來之蔽日耶\n聲色娛人觀者忘歸正爲主祭迎日之人低\n囘顧懷而見其下方所陳之樂聲色之盛\n如此耳緪瑟交鼓靈保賢姱卽其事也或\n疑但爲日出之時聲光可愛如朱丞相秀\n水錄所載登州見曰初出時海波皆赤洶\n洶有聲者亦恐未必然也葢審若此則當\n言其燀赫震動之可畏不得以娛人爲言\n矣聊記其說以廣異聞\n北斗字舊音斗爲主以詩考之行葦主醹斗\n者爲韻卷阿厚主爲韻此類甚多但不知\n此非叶韻而舊音特出此字其字果何爲",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 34,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "69aebb3a39a43078777732aa",
+  "book_url": "https://sourcelibrary.org/book/69aebb3a39a43078777732aa",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "author": "Jiang, Fengyuan, jin shi 1613, pi ding",
+   "display_title": null,
+   "id": "69aebb3a39a43078777732aa",
+   "image_source": {
+    "provider": "loc"
+   },
+   "language": "Chinese",
+   "pages_count": 292,
+   "pages_ocr": 287,
+   "pages_translated": 0,
+   "published": "1630",
+   "title": "尚書韻 (Book of Documents)"
+  },
+  "structure": {
+   "page_records": 292,
+   "distinct_page_numbers": 292,
+   "duplicate_records": 0,
+   "pages_with_ocr": 287,
+   "pages_translated": 0,
+   "with_printed_number": 4,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 292,
+   "pages_translated_field": 0
+  },
+  "run": [
+   10,
+   138,
+   157,
+   267
+  ],
+  "pages": [
+   {
+    "page_number": 10,
+    "page_id": "6a4a710e481e7a07cc01bb0d",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb3a39a43078777732aa/10.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>preface</page-type>\n<warning>Handwritten Chinese semi-cursive script (Xingshu). The right page is blank except for the border and a small character in the margin.</warning>\n\n# 尚書韻叙\n\n翼世定自經生，言者湛生趣於\n經左也。虞秘書云：人不得易不可\n為宰。故予謂人非翼世定法出\n用尚書。言中帝造世二王造世三\n請不耳觀之。沈淡開不經觀之\n\n<column-break/>\n\n<margin>\n五\n</margin>\n\n<meta>The right page is a blank frame with a vertical line and the numeral 'five' (五) in the outer margin.</meta>\n\n<vocab>尚書韻, 叙, 經生, 虞秘書, 翼世</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 138,
+    "page_id": "6a4a710e481e7a07cc01bb8d",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb3a39a43078777732aa/138.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n象信爲君之明作哲聆天語信爲君之聰作謀卽欽爲若\n其奉君儼一奉天了由是明達徧徹亂民有實德民如何\n不從乂\n惟口節\n此下皆憲天聰明之實人主居上臨下大要只一聰明惟\n文誥武備命德討罪此聰明運用大段樞紐處自是治成\n衆職必僚長皆天工動出萬全則王猷卽玄化善能不有\n法天之虛事皆有備法天之健一私不狥法天之公究竟\n玄黙之居原提元化之軸由政究心纔見憲天聰明之極\n○高宗不言恭黙早知口爲德累了故先以示戒乂民莫\n大于修詞則口本作命誰知藻失于多浮卽羞之所起乂\n民又莫大于修備如甲胄本自衛誰知變生于有時即我\n之所起二句致謹之意凜然言外衣裳加有德何嘗少靳\n但恩光曾不輕假機權仍自中懸是未頒者在笥巳頒者\n亦在笥在笥兩字正極言其無輕予干戈加梗頑亦非濫\n及但聲敎果敷豈甘自外無論他無罪責躬卽彼有罪亦\n責躬省字便是虞世誕敷心胸此四者俱非虛虛戒謹乃\n心中實實了徹口自加宻備自加嚴命自不輕討自不僭",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 157,
+    "page_id": "6a4a710e481e7a07cc01bba0",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb3a39a43078777732aa/157.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n敎决難少越三事卽從五敎中提出玩惟字可見苟三者\n缺而五敎俱虧必三者完而五敎畢舉故經制以開其源\n品節以防其溢此皆惟字之神且人心眞僞之脉猶世道\n升降之關如信爲眞實無欺的一念必不可無亦原未常\n無特意澆則信衰今自朝廷及草野必皆至誠相對處心\n不薄卽詐誕全消其惇不必在號令上又如義爲公直無\n私的一念人所共有亦人所共喻特意晦則義衰今自躬\n行迄變化一皆至公不易昭如道路卽偏黨盡祛其明不\n必在紀法上此句是培人心崇德句是激人心使有德不\n崇有功不報雖錯置多冝意氣消阻故惟此爲致治收局\n實亦致治開局垂拱句正言從國本處維繫從心脉上培\n扶直握治源便同北辰之居所要知此都是他順天處\n洪範\n洪範\n訪箕節\n以是年剪亂卽以是年訪道旣無堯舜禹一中之靣受自\n應有天地人共貫之眞傳故稱十有三祀明其特急治源\n且更姓改物猶稱祀位號一新猶稱箕子安車可徵必爲\n就訪雖是遂其不屈實皆重道深神",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 267,
+    "page_id": "6a4a710e481e7a07cc01bc0e",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb3a39a43078777732aa/267.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n安危節\n周時天下只有個殷頑堪慮如後代方且遠處邊鄙周公\n反收陶近郊過卜之祚全係諸斯但驕恣未融陪京伏莽\n安危惟茲自亦確語惟競修德方荷永安不剛句又爲保\n釐摸畫謹毖令民畏則用剛寬和令民慕則用柔今酌由\n俗之政使徒謂剛柔相濟則剛柔名猶兩存未化惟寓癉\n于彰卽彰爲癉以威尋不得以恩尋亦不得何剛何柔共\n渾化于不可知之域始稱不剛不柔葢使民猶存畏慕情\n便未忘强修意惟直渾融其畏慕斯真暢適于閑中故日\n允修\n克愼節\n克愼節\n此直期以成終之美〇始焉反側不靖則密邇以謹毖中\n焉反側漸安則寬和以化導終焉愼和雙化使盡允修纔\n呌做成宇宙内只有個心脈往還于殷士閑其放心于公\n亦只求其協心心所運爲道道所敷爲政政所溥爲澤同\n底者都究到至理極處也理到極處便渾是此理融浹故\n曰洽澤潤生民者民自有這段有淑無慝的生理皆洗濯\n出來遠夷咸賴是安攘之略皆合在成字内",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 35,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "6a3c6bdfc4e8626320db2395",
+  "book_url": "https://sourcelibrary.org/book/6a3c6bdfc4e8626320db2395",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "id": "6a3c6bdfc4e8626320db2395",
+   "title": "春秋屬辭比事記",
+   "display_title": "春秋屬辭比事記",
+   "author": "毛奇齡",
+   "language": "Chinese",
+   "original_language": "Chinese",
+   "published": "",
+   "pages_count": 63,
+   "pages_ocr": 61,
+   "pages_translated": 0,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 63,
+   "distinct_page_numbers": 63,
+   "duplicate_records": 0,
+   "pages_with_ocr": 61,
+   "pages_translated": 0,
+   "with_printed_number": 4,
+   "printed_backsteps": 1,
+   "printed_repeats": 0,
+   "pages_count_field": 63,
+   "pages_translated_field": 0
+  },
+  "run": [
+   15,
+   21,
+   43,
+   56
+  ],
+  "pages": [
+   {
+    "page_number": 15,
+    "page_id": "6a3c6bdfc4e8626320db23a4",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bdfc4e8626320db2395/0015.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n耳\n莊五年秋郳黎來來朝\n郳國黎\n來名\n二十三年夏蕭叔朝公\n蕭國叔字小國\n例可字可名\n不書來朝而書朝公以公在齊而叔就朝之故也\n二十七年冬杞伯來朝\n僖五年春杞伯姬來朝其子\n帥其子\n來朝也\n七年夏小邾子來朝\n卽郳黎來也初封小邾\n子故修新君來朝禮\n十四年夏六月季姬及鄫子遇于防使鄫子來朝\n使\n其\n夫來\n朝也\n二十年夏郜子來朝\n二十七年春杞子來朝\n前衙伯北稱子\n爲時王所降也\n文十一年秋曹伯來朝\n十二年春杞伯來朝\n又爲時王\n所進也\n秋滕子來朝\n十五年夏曹伯來朝\n宣元年秋邾子來朝\n成四年三月杞伯來朝\n六年夏六月邾子來朝\n七年夏五月曹伯來朝\n十八年秋杞伯來朝\n春秋屬辭比事記",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 21,
+    "page_id": "6a3c6bdfc4e8626320db23aa",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bdfc4e8626320db2395/0021.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n卿可字可名\n文四年秋衞侯使甯兪來聘\n九年冬楚子使椒來聘\n子越椒不稱氏書例有此\n十二年秋秦伯使術來聘\n術卽西乞術亦不書氏\n成三年冬十有二月衞侯使孫良夫來聘\n四年春宋公使華元來聘\n宋共公\n新立\n襄元年冬衞侯使公孫剽來聘\n五年夏鄭伯使公子發來聘\n鄭僖公\n新立\n七年冬十月衞侯使孫林父來聘\n十五年春宋公使向戌來聘\n報\n聘\n二十九年夏吳子使札來聘\n吳季札也不書氏\n三十年春楚子使薳罷來聘\n郟敖\n新立\n昭十二年夏宋公使華定來聘\n宋元公\n新立\n歸脤\n定十四年秋天王使石尚來歸脤\n石氏\n尚名\n周禮大宗伯以脤膰親兄弟之國卽歸脤也\n錫命\n春秋屬辭比事記",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 43,
+    "page_id": "6a3c6bdfc4e8626320db23c0",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bdfc4e8626320db2395/0043.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n相命也有約言而不歃血謂之相命\n桓三年夏齊侯衞侯胥命于蒲\n齊衞于隱八年曾爲瓦屋之盟以平鄭此不知何\n事策書未詳\n平\n平卽成也傳多稱成而經多稱平要其義則一耳\n隱六年春鄭人來輸平\n宣四年春王正月公及齊侯平莒及郯莒人不肻公\n伐莒取向\n十五年夏五月宋人及楚人平\n昭七年春王正月曁齊平\n定十年春王正月及齊平\n十一年冬及鄭平\n成\n桓二年三月公會齊侯陳侯鄭伯于稷以成宋亂\n成\n華\n督弑君\n之亂\n侵伐\n軍禮爲五禮之一而侵與伐又祗得軍禮之二然\n而大槩可見者以潛師掠境與聲罪致討一陰一\n陽行軍之大致不過如此舊謂春秋皆征伐之書\n春秋屬辭比事記",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 56,
+    "page_id": "6a3c6bdfc4e8626320db23cd",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bdfc4e8626320db2395/0056.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n伐鄭\n十六年夏四月公會宋公衞侯陳侯蔡侯伐鄭\n莊三年春王正月溺會齊師伐衞\n五年冬公會齊人宋人陳人蔡人伐衞\n十四年夏單伯會伐宋\n齊桓假\n王命也\n二十六年秋公會宋人齊人伐徐\n宣元年宋公陳侯衞侯曹伯會晉師于棐林伐鄭\n七年夏公會齊侯伐萊\n十一年公孫歸父會齊人伐莒\n成三年春王正月公會晉侯宋公衞侯曹伯伐鄭\n八年叔孫僑如會晉士爕齊人郷人伐郯\n十年公會晉侯齊侯宋公衞侯曹伯伐鄭\n十三年夏五月公自京師遂會晉侯齊侯宋公衞侯\n鄭伯曹伯邾人滕人伐秦\n十六年公會尹子晉侯齊國佐邾人伐鄭\n晉假王\n命也\n十七年夏公會尹子單子晉侯齊侯宋公衞侯曹伯\n邾人伐鄭 冬公會單子晉侯宋公衞侯曹伯齊人\n邾人伐鄭\n襄九年公會晉侯宋公衞侯曹伯莒子邾子滕子薛\n伯杞伯小邾子齊世子光伐鄭\n春秋屬辭此事記",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 36,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "6a3c6cf8c4e8626320dbdace",
+  "book_url": "https://sourcelibrary.org/book/6a3c6cf8c4e8626320dbdace",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "id": "6a3c6cf8c4e8626320dbdace",
+   "title": "雲仙雜記",
+   "display_title": "雲仙雜記",
+   "author": "馮贄",
+   "language": "Chinese",
+   "original_language": "Chinese",
+   "published": "",
+   "pages_count": 83,
+   "pages_ocr": 81,
+   "pages_translated": 0,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 83,
+   "distinct_page_numbers": 83,
+   "duplicate_records": 0,
+   "pages_with_ocr": 81,
+   "pages_translated": 0,
+   "with_printed_number": 2,
+   "printed_backsteps": 1,
+   "printed_repeats": 0,
+   "pages_count_field": 83,
+   "pages_translated_field": 0
+  },
+  "run": [
+   9,
+   39,
+   56,
+   80
+  ],
+  "pages": [
+   {
+    "page_number": 9,
+    "page_id": "6a3c6cf8c4e8626320dbdad7",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cf8c4e8626320dbdace/0009.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n藁者號雙淸子諸倡曰鳳窠羣女又曰團雲隊曳雲\n仙\n出姑臧前後記\n地仙圓\n虢州别駕竇淝以當歸爲地仙圓曰使血海増光以\n棗木爲杵曰號金剛骨出三堂徃事\n涼物\n房壽六月召客坐糠竹簞凭狐文儿編香藤爲爼劑\n椰子爲杯搗蓮花製碧芳酒調羊酪造含風鮓皆涼\n物也壽勸吳田以轆轤瓮田懼其深曰俚見龍門\n木濯麴棗膓耳出叩頭錄\n木潛麴稟膚工\n梅粧閣\n郭元振落梅粧閣有婢數十人客至則拖鴛鴦橫裙\n衫一曲終則賞以糖雞卵明其聲也宴罷散九和握\n香出叙聞錄\n洛陽歲節\n洛陽人家正旦造絲雞葛燕粉荔枝正月十五日造\n火蛾兒食玉粱餻寒食裝萬花輿煑楊花粥端午木\n荑艾酒以花絲樓閣挿髩贈遺辟瘟扇乞巧使蜘蛛",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 39,
+    "page_id": "6a3c6cf8c4e8626320dbdaf5",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cf8c4e8626320dbdace/0039.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n凌虛宴\n齊文宣帝凌虛宴取香莆以供品味廣唐則出於石\n首銅官等處銅釘菌分絲菌自慶傳\n桃花醋\n唐世風俗貴重葫蘆醬桃花醋照水油晉公遺語\n蟣肝龍首\n毛重敎授於導江春日主人宴之賦散語曰蟣肝之\n奉何堪龍首之攀可望主人曰吾勸以陸源綉賞以\n柳綿肝文房寶飾\n<header>卷四</header>\n雲仙雜記卷五\n筆描窗竹影\n宗測樂閑靜好松竹嘗見日篩竹影上牕以筆備描\n之常新錄\n糖蜜莫逆交\n陳昉得蜀糖輒以蜜澆之曰與蜜本莫逆交\n傳芳略\n記\n風月常新印宮人臂\n明皇開元初宮人被進御者日印選以綢繆記印于\n臂上文曰風月常新印畢漬以桂紅膏則水洗色不",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 56,
+    "page_id": "6a3c6cf8c4e8626320dbdb06",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cf8c4e8626320dbdace/0056.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n満\n雲仙雜言\n梁福廬陵記\n硯中出白影珠\n侯道昌因雨置龜頭硯於簷下承溜以滌之俄而滌\n破硯硯中出白影珠十顆有患目者煑珠水洗之皆\n愈\n馮正雲金谿記\n陳蕃待客\n陳蕃待客拌飯以鹿脯芼羹以牛脯未嘗别爲異饌\n董愼續預章記\n桂人好食蝦蟆\n人好食蝦蟆仍重乾菌爲糝赴食者至以餘飯\n歸遺兒女雖污衫不耻張洞林桂林志\n霜露能染紅紫\n鴉管山霜可染紫白庶潭露能染紅爲天下冠恨人\n無知者常奉眞相潭記\n蒲桃髻\n小兒髪初生爲小髻十數其父母爲兒女相勝之辭\n曰蒲桃髻十穗勝五穗李明之衡山詩\n方囊盛金錢\n雲山雜記卷七",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 80,
+    "page_id": "6a3c6cf8c4e8626320dbdb1e",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cf8c4e8626320dbdace/0080.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n五花館\n荊南舊有五花館待賔之上地也故眩上成納詩曰\n不是上台憐姓字五花賔館敢從容南部新書\n烏龍\n曾稽人張然滯役經年不歸婦與奴私通然養一狗\n名曰烏龍後然歸奴懼事覺欲謀殺然狗淫睛視奴\n奴方興手烏龍盪奴奴失刀仗然取刀殺奴\n絕搜神\n記\n鬚髯如戟\n山隂公主滛恣悅褚彦囘以白帝帝召彦囘西\n循十日公主夜就之備見逼迫彥囘整身而立從夕\n至曉畧不移志公主謂曰君鬚髯如戟何無丈夫意\n彥囘曰雖不敏何敢首爲亂階通鑑\n田舍翁十斛麥\n李勣入見上問之曰朕欲立武昭儀爲后褚遂良固\n執以爲不可遂良旣顧命大臣事當且巳乎對曰此\n陛下家事何必更問外人上意遂决許敬宗宣言於\n朝曰田舍翁多收十斛麥尚欲易婦况天子立后何\n豫諸人事而妄生議乎同上",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 37,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "6a3c6bf4c4e8626320db3a11",
+  "book_url": "https://sourcelibrary.org/book/6a3c6bf4c4e8626320db3a11",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "id": "6a3c6bf4c4e8626320db3a11",
+   "title": "穆天子傳",
+   "display_title": "穆天子傳",
+   "author": "郭璞",
+   "language": "Chinese",
+   "original_language": "Chinese",
+   "published": "",
+   "pages_count": 85,
+   "pages_ocr": 83,
+   "pages_translated": 0,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 85,
+   "distinct_page_numbers": 85,
+   "duplicate_records": 0,
+   "pages_with_ocr": 83,
+   "pages_translated": 0,
+   "with_printed_number": 5,
+   "printed_backsteps": 3,
+   "printed_repeats": 0,
+   "pages_count_field": 85,
+   "pages_translated_field": 0
+  },
+  "run": [
+   19,
+   22,
+   45,
+   66
+  ],
+  "pages": [
+   {
+    "page_number": 19,
+    "page_id": "6a3c6bf4c4e8626320db3a24",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bf4c4e8626320db3a11/0019.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>1</page-num>\n<header>同昌公主傳</header>\n\n同昌公主傳\n唐 蘇鶚\n\n咸通九年同昌公主出降宅于廣化里錫錢五百萬貫仍罄內庫實貨以實其宅而房櫳戶牖無不以眾寶飾之更以金銀為井閼藥日食饌水槽鑄金盆甕之屬仍鏤金為花籠寶筐製水晶火齊琉璃玳瑁等牀悉支以金龜趺更琢五色玉為器什合百寶為圓案更賜金麥銀粟共敷斛此皆太宗朝條支國所獻也堂中設連珠之帳續真珠以成也都人為之語\n\n<column-break/>\n\n<warning>The right column is blank.</warning>\n\n<vocab>同昌公主, 唐朝, 咸通九年, 廣化里, 蘇鶚, 寶物, 太宗朝, 條支國</vocab>",
+    "ocr_engine": "pipeline_preview",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 22,
+    "page_id": "6a3c6bf4c4e8626320db3a27",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bf4c4e8626320db3a11/0022.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n八九尺似布輕細明薄可鑑云其中有龍涎故能消\n暑也韋氏諸宗好爲葉子戲夜則公主以紅瑠璃盤\n盛夜光珠令僧祁捧立堂中而光明如晝焉公主始\n有疾召術士來賓爲燈法乃以香蠟燭遺之來氏之\n鄰人覺香氣異常或請門詰其故賓則具以事對其\n獨方二寸其上披五彩文卷而熟之竟夕不盡邪烈\n之氣可聞于百步餘烟出其上卽成樓閣臺殿之狀\n或云燭中有蜃脂也公主疾旣甚醫者欲難藥餌奏\n云得紅蜜白猿膏食之可愈上令訪内庫得紅蜜數\n石本兜離國所貢白猿膏數筴本南海所獻也雖耳\n加餌終無其驗公主薨上哀痛甚遂自製挽歌詞令\n百官繼和及庭祭日百司與内官皆用金玉飾車輿\n服玩以焚于韋氏庭韋家爭取灰以擇金琻及葬于\n東郊上與淑妃御延興門出内庫金玉駝馬鳳凰麒麟\n麟各高數尺以爲儀其衣服玩具與人無異一物以\n上皆至一百二十昇刻木爲樓殿龍鳳花木人畜之\n象者不可勝計以絳羅裙綉絡金銀瑟瑟爲帳幕者\n千隊結爲幢節傘葢彌街翳日旌旗昇佩鹵簿率多",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 45,
+    "page_id": "6a3c6bf4c4e8626320db3a3e",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bf4c4e8626320db3a11/0045.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n中央黃老君三素高元君太上玉晨太道君太素三\n元君扶桑太帝君金闕後聖君各令使者致命授夫\n入玉扎金文位爲紫虛元君領上眞司命南岳夫人\n比秩仙公使治天台大霍山洞臺中主下訓奉道教\n授當爲仙者男曰眞人女曰元君夫人受錫事畢王\n母及金闕聖君南極元君各去使夫人於王屋小有\n天中更齋戒二月畢九微元君龜山王母三元夫人\n衆諸眞仙並降於小有清虛上四奏各命侍女陳鈞\n成之曲九靈合節八音靈際王母擊節而歌三元夫\n人彈雲璈而答歌餘眞各歌湏臾司命神仙諸隷屬\n及南岳迎官並至虎旂龍輦激耀百里中里母諸眞\n乃共與夫人東南而行俱詣天台霍山臺又道過\n句曲金壇茅叔申宴㑹二日二夕共適于霍山夫人\n安駕玉宇然後各别初王君告夫人曰學者當去疾\n除病因授甘草穀仙方夫人服之夫人能隸書小有\n王君並傳事甚詳悉又述黃庭内景注叙靑精健飯\n方後屢降茅山子璞後至侍中夫人令璞傳法于司\n徒瑯琊王舍人楊羲護軍長史許穆穆子玉斧並皆",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 66,
+    "page_id": "6a3c6bf4c4e8626320db3a53",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6bf4c4e8626320db3a11/0066.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n之於昔邪毅曰夙非姻好何以爲憶妻曰余卽洞庭\n君之女也涇川之辱君能救之自此誓心求報洎錢\n塘季父論親不從乖負宿心悵望成疾中間父母欲\n配嫁於濯銘小兒某遂閉戶剪髪以明無意雖君子\n棄絕分無見期而當初之心死不自替他日父母隣\n其志復欲馳白於君値君累娶張韓二氏理不可遣\n飽張韓繼卒君十居於玆故余之父母得以爲心矣\n誠不意今日獲奉君子感喜終世死無恨矣因咽泣\n晨久腹謂殺曰始不言者知君無重色之心今乃言\n者知君有愛子之意婦人匪薄不足以懽厚永心故\n因君愛子以託賤質未知君意如何愁懼兼心不能\n自解君附書之日笑謂妾曰他日歸洞庭愼無相避\n誠不知當此之際君豈有意於今日之事乎其後季\n父請於君君固不許君乃誠將不可邪抑忿然邪君\n其話之毅曰似有命者僕始見君於長涇之隅枉抑\n憔悴誠有不平之志然自約其心者達君之𡨚餘無\n及也初言愼勿相避者偶然耳豈有意哉洎錢塘逼\n迫之際唯理有不可直乃激人之怒耳夫始以義行",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 38,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "6a3c6be9c4e8626320db2f13",
+  "book_url": "https://sourcelibrary.org/book/6a3c6be9c4e8626320db2f13",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "id": "6a3c6be9c4e8626320db2f13",
+   "title": "井觀瑣言 (vol 1)",
+   "display_title": "井觀瑣言",
+   "author": "鄭瑗",
+   "language": "Chinese",
+   "original_language": "Chinese",
+   "published": "",
+   "pages_count": 116,
+   "pages_ocr": 114,
+   "pages_translated": 0,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 116,
+   "distinct_page_numbers": 116,
+   "duplicate_records": 0,
+   "pages_with_ocr": 114,
+   "pages_translated": 0,
+   "with_printed_number": 9,
+   "printed_backsteps": 3,
+   "printed_repeats": 5,
+   "pages_count_field": 116,
+   "pages_translated_field": 0
+  },
+  "run": [
+   27,
+   33,
+   63,
+   95
+  ],
+  "pages": [
+   {
+    "page_number": 27,
+    "page_id": "6a3c6be9c4e8626320db2f2e",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6be9c4e8626320db2f13/0027.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>preface</page-type>\n<warning>Show-through from the verso/facing leaf visible in the right blank portion of the block.</warning>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Woodblock-printed traditional Chinese book format with vertical column borders (jiehuaxian) and fish-tail foliation fold marking on the far right margin.</image-desc>\n\n### 泉隨筆\n\n->淮浦張綸<-\n\n愚嘗謂論孟之外，若干史若詩文辭賦，與夫異端方技術數之書，雖有純駁邪正淺深偏全之不同，然而吾心之體未始不該也。苟能覃思熟究，以求其是非得失之所以然，抑豈不可以為學之助乎！既又自以為太史公言六藝經傳以千萬數，累世不能通其學；當年不能究其理，博如司馬遷，然尚云爾，況今天下九流百氏之書，止則充棟宇，出則汗牛馬，窮鄉白屋\n\n<vocab>論孟, 淮浦張綸, 泉隨筆, 太史公, 司馬遷, 六藝經傳</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3.8-flash-low",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 33,
+    "page_id": "6a3c6be9c4e8626320db2f34",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6be9c4e8626320db2f13/0033.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n之說始于佛老漢以前未有也歐陽公平生不喜佛\n老詩文中未嘗不辨而斥之聖俞與公交最久而其\n言乃如此何耶\n朱子感興詩二十首雖云倣陳子昻感遇詩體而作\n然其辭嚴義正有補世敎非陳可得而髣髴也\n唐薛逢詩云病來猶作晉春秋郝氏註以桓彞稱褚\n裒之言當之愚謂作者撰述也皮裏春秋不過言其\n内有褒貶耳何撰述之有此葢指孫盛春秋以爲\n耳\n耳\n潮汐之說朱子極稱余氏之說最爲切當如其言自\n蚤晚大小之異則以爲繫於月葢以水良月皆陰類\n而氣相感故也余嘗遊婺州之屬邑曰浦江其地有\n泉名曰月泉其水晦日則涸月生明則漸瀉出未望\n則長既望則滿由是觀之小者如此大者亦然矣豐\n山之鍾霜降則鳴亦氣之相感也\n周子愛蓮說一篇僅百餘字形容蓮之可愛宛然如\n在目前蓋不必求太極于梅枝而全體呈露矣\n劉靜修夢吉之詩古選不減陶柳其歌行律詩直遡",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 63,
+    "page_id": "6a3c6be9c4e8626320db2f52",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6be9c4e8626320db2f13/0063.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n卑則稱行階卑官高則稱守官與階同則無行守字\n今制惟以官爲定爲是官則勲階爵隨之無復叙勞\n叙功之意顏魯公謂魚軍容階雖開府官卽監門將\n軍開府特進並是勛官用廕卽有高卑㑹燕合依次\n序然則唐之勛官惟以定廕而巳\n宋初承五代三省無專職臺省寺監無定員類以它\n官主判三省長官不預朝政六曹不釐本務給舍不\n領本職諫議無言責起居不注記司諫正言非特旨\n供職亦不任諫諍其官人之别有官有職差遣以登\n臺閣禁從爲顯宦不以官之遲速爲榮滯以差遣要\n劇爲貴途不以勲階爵邑爲輕重名之不正未有如\n宋之甚者也至元豐間始以唐六典定官制\n我朝六部之設倣周制六典最爲簡要有體然其名\n猶襲唐宋之舊唐以三省長官爲宰相謂中書令門\n下侍中尚書令左右僕射是也今中書省巳去特存\n中書舍人爲七品官職書翰而巳門下省巳去特存\n給事中雖七品而有封駁之權尚書省不復設令僕\n乃陞六司尚書分爲六部秩二品葢卽僕射之類也",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 95,
+    "page_id": "6a3c6be9c4e8626320db2f72",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6be9c4e8626320db2f13/0095.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n來邊常州曰來頭丹陽曰來箇無錫曰來上蘇州曰\n來打上聲\n蜀人呼長年者爲波猶言丈人也呂東萊有驚起何\n波理殘夢之句指同舍生何文舉也\n一箇十字四箇口字是圖字一箇口字四箇十字\n是\n畢\n字\n聚寶門舊有六樓來賔重譯輕烟淡粉梅妍柳翠下\n四名主女侍言\n張志淳南園漫錄言正德初內臣最寵狎者入老\n當\n去\n聲\n猶等輩也然實不計老少惟寵狎是尊余近訪\n知老兒當皆選年少俊秀小內臣爲之豈閎籍儒之\n類歟\n有白有唱者名雜劇用絃索者名套數扮演戲跳而\n不唱者名院本\n繖墩曹方湖爲江西南豐知縣時其地出小猿如小\n兒拳大人藏袖中爲戲土人名栗子猿第三乃郎子\n進說㓜隨任魯養玩之杜詩所謂爲致小如拳豈此\n類耶",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 39,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "6a3c6cdac4e8626320dbc955",
+  "book_url": "https://sourcelibrary.org/book/6a3c6cdac4e8626320dbc955",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "id": "6a3c6cdac4e8626320dbc955",
+   "title": "新編金匱要略方論",
+   "display_title": "新編金匱要略方論",
+   "author": "未詳 (Unknown)",
+   "language": "Chinese",
+   "original_language": "Chinese",
+   "published": "1598",
+   "pages_count": 241,
+   "pages_ocr": 236,
+   "pages_translated": 0,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 241,
+   "distinct_page_numbers": 241,
+   "duplicate_records": 0,
+   "pages_with_ocr": 236,
+   "pages_translated": 0,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 241,
+   "pages_translated_field": 0
+  },
+  "run": [
+   23,
+   112,
+   169,
+   187
+  ],
+  "pages": [
+   {
+    "page_number": 23,
+    "page_id": "6a3c6cdac4e8626320dbc96c",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cdac4e8626320dbc955/0023.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n麻黄醇酒湯\n驚悸吐衂下血胸滿瘀血第十六\n桂枝去芍藥加蜀漆牡蠣龍骨救逆湯\n半夏麻黄圓 栢葉湯\n黄土湯 瀉心湯\n嘔吐噦下利第十七\n茱萸湯 半夏瀉心湯\n黄芩加半夏生薑湯 猪苓散\n四逆湯 小柴胡湯\n大半夏湯 大黃甘草湯",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 112,
+    "page_id": "6a3c6cdac4e8626320dbc9c5",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cdac4e8626320dbc955/0112.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n細辛\n一兩千金\n作人參\n右六味末之内真朱爲色煉蜜丸如麻子大先\n食酒飲下三丸日再夜一服不知稍増之以知\n爲度\n腹痛脉弦而緊弦則衛氣不行卽惡寒緊則不欲食\n邪正相搏卽爲寒疝寒疝遶臍痛苦發則白津出手\n足厥冷其脉沉緊者大烏頭煎主之\n烏頭\n烏頭\n大者五故熬\n去皮不敗咀\n右以水三升煮取一升去滓内蜜二升煎令水",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 169,
+    "page_id": "6a3c6cdac4e8626320dbc9fe",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cdac4e8626320dbc955/0169.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n附方\n○千金翼小承氣湯治大便不通踧數謳語\n方見\n上\n○外臺黃芩湯治乾嘔下利\n黃芩 人參 乾姜\n各二\n兩\n桂枝\n大棗\n十二\n枚\n半夏\n半\n升\n右六味以水七升煑取三升温分三服\n○瘡癰腸癰浸淫病脉證并治第十八\n論一首 脉證三條 方六首\n諸浮數脉應當發熱而反酒淅惡寒若有痛處當發\n其癰師曰諸癰腫欲知有膿無膿以手掩腫上熱者",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 187,
+    "page_id": "6a3c6cdac4e8626320dbca10",
+    "image_url": "https://images.sourcelibrary.org/pages/6a3c6cdac4e8626320dbc955/0187.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n病解能食七八日更發熱者此爲胃實大承氣湯主\n之\n見痓\n病中\n產後腹中疔痛當歸生姜羊肉湯主之并治腹中寒\n疝虛勞不足\n○當歸生姜羊肉湯方\n見寒\n疝中\n產後腹痛煩滿不得臥枳實芍藥散主之\n○枳實芍藥散方\n枳實\n燒令黑\n勿大過\n芍藥\n等\n分\n右二味杵爲散服方寸七日三服并主癰膿以\n麥粥下之",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ },
+ {
+  "slot": 40,
+  "stratum": "zh-print-ocr-only",
+  "book_id": "69af121cf78a272df25b564a",
+  "book_url": "https://sourcelibrary.org/book/69af121cf78a272df25b564a",
+  "tradition": "zh-print-ocr-only",
+  "book": {
+   "author": "Johann Adam Schall von Bell",
+   "display_title": null,
+   "id": "69af121cf78a272df25b564a",
+   "image_source": {
+    "provider": "loc"
+   },
+   "language": "Chinese",
+   "pages_count": 17,
+   "pages_ocr": 17,
+   "pages_translated": 0,
+   "published": "1626",
+   "title": "遠鏡說 (On the Telescope)"
+  },
+  "structure": {
+   "page_records": 17,
+   "distinct_page_numbers": 17,
+   "duplicate_records": 0,
+   "pages_with_ocr": 17,
+   "pages_translated": 0,
+   "with_printed_number": 3,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 17,
+   "pages_translated_field": 0
+  },
+  "run": [
+   3,
+   5,
+   10,
+   14
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "6a4a6e67481e7a07cc015823",
+    "image_url": "https://images.sourcelibrary.org/archived/69af121cf78a272df25b564a/3.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>illustration</page-type>\n<page-num>111</page-num>\n<header>遠鏡說</header>\n\n<image-desc size=\"large\" type=\"engraving\" significance=\"high\">A woodcut illustration of a telescope mounted on a stand, positioned on a small mound of earth.</image-desc>\n\n<column-break/>\n\n藝海珠塵\n之原 一射線不二而遠鏡兼攝乎屈曲以為斜透之緣 一視象明而大者繇乎二鏡之合用\n次造法用法 一鏡 一筒 一遠近各得其宜 一避眩便觀 一安放調停 一衰目近視用訣 一借照作畫 一習用訣 一去垢訣\n\n由歐邏天學大士西泰利氏西洋鏡說\n\n<vocab>遠鏡說, 歐邏, 西泰利, 望遠鏡, 光學</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 5,
+    "page_id": "6a4a6e67481e7a07cc015825",
+    "image_url": "https://images.sourcelibrary.org/archived/69af121cf78a272df25b564a/5.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n\n利用計二端\n夫遠鏡何昉乎昉於大西洋天文士也其用之利勝\n言哉蓋凡人視近與大難遠與小難遠鏡則無遠近\n無大小者也約畧言之天象地形不出其照而至若山\n海之間尤為備盜之先資補益人世亦大矣奈何忽為\n悅目快心之具也今試姑舉一二以概其用\n\n<column-break/>\n\n月初四形 月上弦形\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Two circular diagrams showing the phases of the moon, labeled \"月上弦形\" (First Quarter Moon) and \"月初四形\" (Moon on the 4th day).</image-desc>\n\n一利用於仰觀計六條\n用以觀太陰則見本體有\n凸而明者有凹而暗者蓋\n如山之高處先得日光而\n明也又觀月時試一目用\n鏡一目不用鏡則大小迥\n別焉\n用以觀金星則見有消長\n有上弦下弦如月焉其消\n長上下弦變易於十年之\n<margin>藝海珠塵</margin>\n<margin>遠鏡說</margin>\n\n<vocab>遠鏡, 天文士, 大西洋, 太陰, 金星, 仰觀</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 10,
+    "page_id": "6a4a6e67481e7a07cc01582a",
+    "image_url": "https://images.sourcelibrary.org/archived/69af121cf78a272df25b564a/10.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>九</page-num>\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">A diagram showing the refraction of light rays through a lens, labeled with characters 甲, 乙, 丙, 丁, 戊, 己, 庚, 辛.</image-desc>\n\n高鏡視大之圖\n\n甲乙物體射於鏡而丙丁入目戊己目視\n象於丙丁兩界引長而至已庚已庚大\n乎已此意視者用高鏡物必大之故\n也\n\n則視物不能斂其象象形直\n射恍惚不真若用中高鏡則物\n形雖小而暗視之自大而顯矣\n一利於苦遠視者用之一條\n有書生目不去書史視不踰几\n席習慣成性喜三角形視近不\n耐平行視遠者亦有非緣習慣\n但眸子精力不開廣視物象不\n得員而滿者是二人者用遠鏡\n之中霍鏡則物象從鏡角形入\n\n物象從鏡三角形入目目乃合其習性視物自明矣\n之圖\n甲遠物之象\n乙形入目\n丙射鏡面\n一分用不如合用之無不利\n一條\n\n人有目精全衰視物全暗者則\n與無目同天日不能照固非鏡\n之所能與力也乃有目精至強\n之所能與力也乃有目精至強\n視物至明者用鏡亦反加翳焉\n何也吾人睛中有眸張閉自宜\n睛底有<image-desc size=\"small\" type=\"symbol\" significance=\"low\">A small circular symbol representing the pupil or iris.</image-desc>屈伸如性高窪二\n鏡自備目中何以鏡為若二鏡\n\n<vocab>遠鏡說, Johann Adam Schall von Bell, 光學, 望遠鏡, 視力</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   },
+   {
+    "page_number": 14,
+    "page_id": "6a4a6e67481e7a07cc01582e",
+    "image_url": "https://images.sourcelibrary.org/archived/69af121cf78a272df25b564a/14.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n前鏡近目照物之全分\n二鏡之性乃相反以相制者也\n前鏡遠目照物之一分\n獨用則偏並用則得中而成器\n焉夫遠物發象從平行線入目\n則目視遠物亦必須從平行線\n視象假若二鏡獨用其一則前\n鏡中高而聚象聚象之至則偏\n偏則不能平行後鏡中窪而散\n象散象之至則亦偏偏亦不能\n平行故二鏡合用則前鏡頼有\n後鏡自能分而散之得乎平行\n後鏡遠目以象之一分\n照物之體\n線之中而視物自明後鏡頓有\n後鏡近目以全象照物\n之體\n前鏡自能合而聚之得乎平行\n線之中而視物明且大也\n前鏡視遠去目如法物象每見\n其大焉蓋以全鏡之體照物體\n之分分則見其大矣若鏡目相\n近則雖鏡體得照全象分分不\n遺而象則小矣後鏡視遠近目\n如法視物每見其大焉蓋以全\n象視物之體若鏡目相遠則以",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "",
+    "translation_model": null,
+    "translation_source": null
+   }
+  ]
+ }
+]

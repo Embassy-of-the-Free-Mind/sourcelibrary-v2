@@ -17,6 +17,7 @@ import { auth } from '@/lib/auth';
 import { validateApiKey, checkKeyRequestRate } from '@/lib/dataset/api-keys';
 import { API_LIMITS } from '@/lib/api-limits';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { provableClaimIn, verifyCrawlerClaim } from '@/lib/crawler-verify';
 import { logApiUsage } from '@/lib/api-usage';
 import type { ApiKeyDoc } from '@/lib/dataset/types';
 
@@ -56,52 +57,19 @@ const VERIFIED_BOT_UAS = [
   'duckduckbot', 'applebot', 'mojeekbot',
 ];
 
-// Expected reverse-DNS suffixes per bot signature. A request claiming one of
-// these UAs must reverse-resolve to a matching host AND that host must forward-
-// resolve back to the request IP. Signatures absent here (duckduckbot, mojeek)
-// can't be rDNS-verified; they keep UA-trust (low volume, accepted risk).
-const VERIFIED_BOT_DOMAINS: Record<string, string[]> = {
-  googlebot: ['.googlebot.com', '.google.com'],
-  bingbot: ['.search.msn.com'],
-  msnbot: ['.search.msn.com'],
-  applebot: ['.applebot.apple.com'],
-};
-
 function detectVerifiedBot(ua: string): string | null {
   const lower = ua.toLowerCase();
   for (const sig of VERIFIED_BOT_UAS) if (lower.includes(sig)) return sig;
   return null;
 }
 
-// Forward-confirmed reverse DNS, cached per IP+signature. Fail-safe: any error,
-// timeout, or mismatch returns false (caller demotes the request to anon — never
-// a hard block). Lazy-imports node:dns so this module stays edge-safe until a
-// verified-bot UA actually hits a Node route.
-const rdnsCache = new Map<string, { ok: boolean; exp: number }>();
-const RDNS_TTL_MS = 60 * 60 * 1000;
-
-async function verifyBotByRdns(sig: string, ip: string): Promise<boolean> {
-  const domains = VERIFIED_BOT_DOMAINS[sig];
-  if (!domains) return true; // not rDNS-verifiable — keep UA-trust
-  if (!ip) return false;
-  const cacheKey = `${ip}|${sig}`;
-  const hit = rdnsCache.get(cacheKey);
-  if (hit && hit.exp > Date.now()) return hit.ok;
-
-  let ok = false;
-  try {
-    const dns = await import('node:dns/promises');
-    const hosts = await dns.reverse(ip);
-    const host = hosts.find((h) => domains.some((d) => h.toLowerCase().endsWith(d)));
-    if (host) {
-      const forward = await dns.resolve(host).catch(() => [] as string[]);
-      ok = forward.includes(ip);
-    }
-  } catch {
-    ok = false;
-  }
-  rdnsCache.set(cacheKey, { ok, exp: Date.now() + RDNS_TTL_MS });
-  return ok;
+// A provable claim needs forward-confirmed reverse DNS (crawler-verify.ts). A
+// failed or inconclusive check demotes the request to anon, never a hard block.
+// Signatures that cannot be proven (duckduckbot, mojeek) keep UA-trust (low
+// volume, accepted risk).
+async function verifiedBot(sig: string, ip: string): Promise<boolean> {
+  if (!provableClaimIn(sig)) return true;
+  return (await verifyCrawlerClaim(sig, ip)) === 'verified';
 }
 
 function sameOrigin(request: NextRequest): boolean {
@@ -174,7 +142,7 @@ export async function requireApiAccess(request: NextRequest): Promise<ApiAuthDec
   // gets the same access as a logged-out human, which is what they get today.
   const ua = request.headers.get('user-agent') || '';
   const bot = detectVerifiedBot(ua);
-  if (bot && (await verifyBotByRdns(bot, getClientIp(request)))) {
+  if (bot && (await verifiedBot(bot, getClientIp(request)))) {
     return { allowed: true, status: 200, identity: { kind: 'bot', bot } };
   }
   // A verified-bot UA that fails rDNS confirmation (likely spoofed) falls

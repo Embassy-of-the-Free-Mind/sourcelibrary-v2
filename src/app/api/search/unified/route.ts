@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
+import { foldSimplifiedHan } from '@/lib/search/han-fold';
 
 /** book_indexes fields the index-term lane reads (#5184). */
 const SEARCH_INDEX_PROJECTION = { _id: 0, book_id: 1, concepts: 1, people: 1, places: 1, keywords: 1 } as const;
@@ -102,7 +103,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const tenantContext = getTenantContextFromRequest(request.headers);
-    const query = searchParams.get('q') || '';
+    // Every lane below matches the corpus's traditional characters.
+    const query = foldSimplifiedHan(searchParams.get('q') || '');
 
     // Anonymous visitors get ANON_SEARCHES_PER_HOUR (10, Derek 2026-10-06; was 5) distinct searches/hour, then a sign-in prompt.
     // Counts distinct query strings (not raw requests) so typeahead and filter

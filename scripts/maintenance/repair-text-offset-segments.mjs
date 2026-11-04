@@ -35,7 +35,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { computeSegmentMoves, parseSegments, SHIFT_FIELDS } from '../lib/text-shift.mjs';
-import { labelNumber, slotOffsets, bookVerdict, offsetRuns } from '../lib/canvas-label-alignment.mjs';
+import { labelNumber, ordinalLabels, slotOffsets, bookVerdict, offsetRuns } from '../lib/canvas-label-alignment.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { isHumanEditedTranslation, resyncMirrors } from '../lib/translation-text-repair.mjs';
 
@@ -123,7 +123,8 @@ try {
   const book = await db.collection('books').findOne({ id: BOOK }, { projection: { id: 1, title: 1, image_source: 1 } });
   if (!book) throw new Error('book not found');
   const manifest = book.image_source?.iiif_manifest;
-  if (!manifest) { console.log('[REFUSE] no IIIF manifest to gate on'); process.exit(2); }
+  // No manifest (most Internet Archive books): only the by-eye gate can pass (#5803).
+  if (!manifest && !BY_EYE) { console.log('[REFUSE] no IIIF manifest to gate on (pass --by-eye with the opened slots)'); process.exit(2); }
   const done = await db.collection('book_events').findOne({ book_id: BOOK, type: 'text_shift_repair', 'details.segments': SPEC });
   if (done && !MIRRORS_ONLY && !SHORTLINKS_ONLY) { console.log('[SKIP] already repaired with this spec (book_events)'); process.exit(0); }
   if (SHORTLINKS_ONLY) {
@@ -144,9 +145,12 @@ try {
   }
 
   let labels = null;
-  try {
+  if (!manifest) console.log('  no IIIF manifest: gating by eye');
+  else try {
     const mj = await (await fetch(manifest, { signal: AbortSignal.timeout(60000) })).json();
     labels = (mj.sequences?.[0]?.canvases ?? mj.items ?? []).map((c) => labelNumber(c.label));
+    // Ordinal labels (every IA manifest) are not printed numbers: the labels cannot score this book.
+    if (ordinalLabels(labels)) { console.log('  manifest labels are canvas ordinals, not printed numbers: the labels cannot score'); labels = null; }
   } catch (e) {
     if (!BY_EYE) throw e;
     console.log(`  manifest unreadable here (${e.message.slice(0, 60)}): gating by eye`);
@@ -217,10 +221,17 @@ try {
   }
   for (let i = 0; i < revisions.length; i += 1000) await db.collection('page_revisions').insertMany(revisions.slice(i, i + 1000));
 
+  const unflagged = [];
   const ops = moves.map((m) => {
     const dst = byNum.get(m.page_number);
     const update = { $set: { ...m.set, updated_at: now, text_shift_repaired_at: now } };
     if (m.unset.length) update.$unset = Object.fromEntries(m.unset.map((f) => [f, '']));
+    // The #3368 flag says "this text was read from a shifted image". A page that now holds the text of
+    // its own leaf no longer is that (#5803); a cleared page keeps it, since it still needs a read.
+    if (m.src_page_number != null && dst.needs_reocr_reason === 'jp2-offset-repair-#3368') {
+      update.$unset = { ...(update.$unset || {}), needs_reocr: '', needs_reocr_reason: '' };
+      unflagged.push(m.page_number);
+    }
     return { updateOne: { filter: { _id: dst._id, 'ocr.updated_at': dst.ocr?.updated_at ?? null }, update } };
   });
   const res = await db.collection('pages').bulkWrite(ops, { ordered: true });
@@ -230,7 +241,7 @@ try {
   await recountBook(db, BOOK, { reason: 'repair-text-offset-segments', now });
   await db.collection('book_events').insertOne({
     book_id: BOOK, type: 'text_shift_repair', at: now, source: 'repair-text-offset-segments',
-    details: { segments: SPEC, gate, pages: moves.length, cleared, orphaned, revisions: revisions.length, revision_source: SOURCE, before, after: { histogram: afterV.histogram, zero_share: zeroShare }, issue: ISSUE, backup: backupFile },
+    details: { segments: SPEC, gate, pages: moves.length, cleared, orphaned, needs_reocr_cleared: unflagged, revisions: revisions.length, revision_source: SOURCE, before, after: { histogram: afterV.histogram, zero_share: zeroShare }, issue: ISSUE, backup: backupFile },
   });
 
   await redirectKnownShortlinks(pages, moves, now);

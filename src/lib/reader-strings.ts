@@ -75,6 +75,12 @@ export interface ReaderStrings {
     next: string;
     close: string;
     jumpToPage: string;
+    /** The number printed on the leaf, beside the frame position, where a run was confirmed on the images (#8041). */
+    printedPage: (printed: string) => string;
+    /** The frame position, named where it has to be told from a printed number. */
+    scanPage: (n: number) => string;
+    /** Heading of the choice when the page box matches more than one page. */
+    whichPage: string;
     backToTheBook: string;
     backToTheBookPage: string;
     backToTheReader: string;
@@ -747,6 +753,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Next',
       close: 'Close',
       jumpToPage: 'Jump to page',
+      printedPage: (x) => `printed ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Which page?',
       backToTheBook: 'Back to the book',
       backToTheBookPage: 'Back to the book page',
       backToTheReader: 'Back to the reader',
@@ -1235,6 +1244,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Siguiente',
       close: 'Cerrar',
       jumpToPage: 'Ir a una página',
+      printedPage: (x) => `impresa ${x}`,
+      scanPage: (n) => `imagen ${n}`,
+      whichPage: '¿Qué página?',
       backToTheBook: 'Volver al libro',
       backToTheBookPage: 'Volver a la página del libro',
       backToTheReader: 'Volver al lector',
@@ -1760,6 +1772,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Sequens',
       close: 'Claude',
       jumpToPage: 'Paginam pete',
+      printedPage: (x) => `impressa ${x}`,
+      scanPage: (n) => `imago ${n}`,
+      whichPage: 'Quam paginam?',
       backToTheBook: 'Ad librum redi',
       backToTheBookPage: 'Ad paginam libri redi',
       backToTheReader: 'Ad lectionem redi',
@@ -2263,6 +2278,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Volgende',
       close: 'Sluiten',
       jumpToPage: 'Naar pagina',
+      printedPage: (x) => `gedrukt ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Welke pagina?',
       backToTheBook: 'Terug naar het boek',
       backToTheBookPage: 'Terug naar de boekpagina',
       backToTheReader: 'Terug naar de lezer',
@@ -2760,6 +2778,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: '下一个',
       close: '关闭',
       jumpToPage: '跳转到页',
+      printedPage: (x) => `印本第 ${x} 页`,
+      scanPage: (n) => `扫描第 ${n} 张`,
+      whichPage: '哪一页？',
       backToTheBook: '返回本书',
       backToTheBookPage: '返回本书页面',
       backToTheReader: '返回阅读器',
@@ -2832,18 +2853,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: '扫描图',
       // The transcription IS the reading text on `/zh`, so the pane is named for
-      // what it holds rather than for how it was made.
-      viewOcr: '中文',
-      ocrPaneHeader: () => '中文原文',
+      // what it holds rather than for how it was made. 原文, never 中文: /zh also
+      // opens Latin and French books (中学西传), and the pane holds their own language.
+      viewOcr: '原文',
+      ocrPaneHeader: () => '原文',
       viewRoman: '罗马字',
       viewEnglish: '英文',
       visiblePanesAria: '当前显示的窗格',
       showPane: (label) => `显示${label}`,
       lastPaneShowing: '这是最后一个显示的窗格',
       pickPaneAria: '扫描图、原文或译文',
-      translatedFrom: () => '译自中文',
+      translatedFrom: () => '译自原文',
       viewTheScan: '查看扫描图',
-      viewTheText: () => '查看中文原文',
+      viewTheText: () => '查看原文',
 
       originalFallback: '原文',
       romanisedHeader: '罗马字转写',
@@ -2864,7 +2886,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
 
       originalScan: '原书扫描图',
       originalScanHint: '页面拍摄时的原貌',
-      transcriptionOf: () => '中文原文',
+      transcriptionOf: () => '原文',
       transcriptionHint: '印刷文字，由机器识读',
       englishTranslation: '英文译文',
       englishTranslationHint: '借助 AI 翻译',
@@ -2884,7 +2906,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       trace: '对照',
       turnTracingOff: '关闭对照',
       traceFallbackLanguage: '原文',
-      traceHint: () => '对照：点击任意短语，查看它在中文原文中的位置',
+      traceHint: () => '对照：点击任意短语，查看它在原文中的位置',
       traceAligning: '正在将本页与译文对齐…',
       traceUnavailable: '本页无法使用对照功能。',
       traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',

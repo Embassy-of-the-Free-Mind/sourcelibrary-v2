@@ -138,6 +138,14 @@ Replayed over the eight draw dates 2026-10-19 → 2027-01-25, the old filter put
 The new filter puts 0 there. It draws the same books, and every other book keeps the same run. Month 0's draw is in the
 ops repo and was not re-checked here.
 
+## Monthly page integrity draw (#8040): do a reader's image, text, English and number line up?
+
+One entry for the series, one row per run (newest first), appended by `scripts/audit/page-integrity-draw.mjs --land`, first of the month on gex45. Design and labels: `2026-11-04-page-integrity-draw-8040.md`. 200 random visible books, one served page each, a fresh seed, 38 planted controls, every flag asked again blind. measure = judged: AI reviewers, images opened, no human reference. A rate is k/n (95% Wilson). A row says whether its positives have been read by eye; until they have, it is the judge's count. The 2026-11-04 row judged the stored English with the model's notes still in it; later rows judge the words a reader gets.
+
+| date | n | text: neighbour's leaf | text: other | English: a neighbour | English: invents | stored number wrong | order backward / jumbled | two leaves in a frame | controls missed | flags repeated | positives read by eye |
+|---|---:|---|---|---|---|---|---|---|---|---|---|
+| 2026-11-04 | 200 | 0/121 (0–3.1) | 2/121 (0.5–5.8) | 0/67 (0–5.4) | 0/67 (0–5.4) | 1/35 (0.5–14.5) | 0/194 (0–1.9) / 0/194 (0–1.9) | 7/200 (1.7–7) | 4/38 | 11/11 | 7 of 10, all 7 upheld |
+
 ## Monthly translation corpus audit (#5301) — does the served defect rate move?
 
 One entry for the series, one row per month (newest first); the row is written by the stage-2 routine
@@ -152,6 +160,485 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-04 · Can the held Chinese histories be released? (#8053)
+<!-- PRIOR ART: .claude/skills/shelf-overview/SKILL.md (the procedure, followed as is); 2026-10-30-siku-translation-error-types-5600.md (the Siku lane diagnosis behind the #7914 stop; its arm B is the same encyclopaedias that dominate this run's control); scripts/lib/paddle-zh-lane.mjs (the Dice screen, whose stored ocr.qa_screen is read here, not recomputed). -->
+
+**Question.** About 24,602 pages of 史記, 漢書, 後漢書 and 三國志 sit hidden under hold `zh-histories-7546`, with OCR and English done. Are they worse than the Siku volumes readers can already open? Which can go live, and in what form?
+
+**Validity first.** `.claude/docs/measurement-validity.md` rates shelf-overview **unvalidated**: no planted controls were run in this round either. The absolute rates below are therefore not the evidence. The evidence is the comparison with a live control, read by the same reviewers with the same method, on the same day. Method `scripts/eval/methods/shelf-overview.md` v2 (8 books per stratum, plus an OCR-only stratum). Do not pool these rates with v1 or with other methods.
+
+### What is on the pages (provenance, Mongo, 2026-11-04)
+- **OCR, one route.** PaddleOCR-VL-1.6-0.9B, lane `paddle-zh-2026-10`, 2026-10-28 13:45–15:09Z: 23,853 pages. 749 pages have no OCR (史記 268, 漢書 292, 後漢書 108, 三國志 81).
+- **English, one route.** `gemini-3.8-flash-low` via `scripts/batch/cli-translate.mjs`, run by the Siku lane (`zh-histories-7546` is in `SIKU_LANE_HOLDS`), 2026-10-29 01:33–17:08Z: 22,072 pages. **All of them were written before the #7914 stop (2026-10-30 14:06Z); none after.** Note: the hold's release text says translation "is Derek's decision", yet the Siku lane translated these books while they were held.
+- Because each stage has only one route, the review is not broken down by route.
+
+### Sample and readers
+Seed 2026110401, `overview-draw.mjs --books 8 --bins 4`: 6 strata × 32 pages = 192 pages from 48 books. Stratum 5 needed an OCR-page draw, so `overview-draw.mjs` gained a narrow `pages: "ocr"` option (in this PR). The 史部 and 集部 volumes being imported under hold `zh-shi-ji-8053` are excluded from every frame. Readers: one Opus reviewer per stratum with the image open, no hints, verdicts unedited. Reread: a second full pass over 三國志. Second reader: every serious call went to a fresh Opus reader (`scripts/eval/spot-check/SECOND-READER.md`). Cost: $18.16 API-equivalent ($0.081/page) on the subscription; $0 cash.
+
+### Results (2026-11-04, n = 32 pages / 8 books per stratum; CIs by book bootstrap)
+
+| stratum | frame (books) | serious pages | wrong leaf | OCR / EN mean (1–5) | show / caveat / don't | serious calls confirmed by 2nd reader |
+|---|---|---|---|---|---|---|
+| 史記 KR2a0001 | 44 | 13% [3–22] | 0 | 4.53 / 4.47 | 2 / 6 / 0 | 7 of 7 |
+| 漢書 KR2a0007 | 57 | 13% [0–25] | 0 | 4.25 / 3.94 | 0 / 8 / 0 | 6 of 7 (1 real, not serious) |
+| 後漢書 KR2a0009 | 43 | 6% [0–19] | 0 | 4.09 / 4.16 | 0 / 8 / 0 | 4 of 4 |
+| 三國志 KR2a0012 | 23 | 6% [0–16] | 0 | 4.47 / 4.28 | 2 / 6 / 0 | 2 of 2 |
+| print OCR-only (paddle-print-6101) | 159 | 13% [3–22] | 0 | 3.94 / — | 2 / 6 / 0 | 4 of 4 |
+| **control: live Siku** | 1,965 | **19% [3–38]** | 0 | 4.00 / 3.69 | 2 / 2 / **4** | 10 of 11 (1 real, not serious) |
+
+Reclassified by the second reader: 0 in every stratum. **Reread κ (serious, 三國志) = 0.65 [0.00–1.00], below 0.7.** Raw agreement was 31 of 32 pages, OCR ρ 0.64, EN ρ 0.71, and the book verdict agreed 8 of 8. With so few serious pages, κ is fragile, so the per-stratum rates carry reader noise on top of sampling noise.
+
+**Serious errors by kind** (counts of errors, page-error-taxonomy classes):
+
+| stratum | serious | all errors (top) |
+|---|---|---|
+| 史記 | O11 furniture ×6, T8 sense inverted ×1 | O11 15, D1 7, T8 5, T5 3, O1 3, O6 3 |
+| 漢書 | O11 ×2, T10 invented note ×2, T7 fluent-over-garble ×2, T6 seam ×1 | O11 26, D1 17, T7 5, O6 4, T10 4 |
+| 後漢書 | T10 ×2, T7 ×2 | O11 33, O6 5, T10 4, D1 4 |
+| 三國志 | T10 ×1, T6 ×1 | O11 14, D1 8, T10 5, O6 3 |
+| print OCR-only | O5 omission, O6 misread (明→非), O7 dose dropped, O1 invented line (遠鏡說) | O6 19, O4 6, O5 5 |
+| control | T7 ×5, O4 ×3, T10, O5, O7 | T7 21, O6 15, O11 10, T10 6, O4 6 |
+
+The held histories have one recurring serious class that the control lacks. The margin title 欽定四庫全書 is read as a garbled body line (次定曰事全焉…), and the English then sometimes makes it into a commentator ("Ci Ding"), a lacuna, or a marginal note. This happened in 7 sampled pages across 6 books. The control's serious errors are of a different kind: invented poets and headwords translated from shredded OCR in 駢字類編 and 佩文韻府 (5 of the 8 control books are these encyclopaedias, as in #5600 arm B). This makes the control a hard bar in one respect and an easy one in another. It is not a like-for-like genre match.
+
+### Model-free, all 24,602 pages ($0, no sampling)
+- **Witness agreement.** These are Dice scores stored by the lane against the Kanripo WYG witness, not recomputed.
+  - 漢書: 7,561 pages screened, median 0.939, 769 below 0.6 (10.2%). Bins 0–.2:717 · .2–.5:31 · .5–.6:21 · .6–.8:58 · .8–.9:727 · .9–1:6,007. The low scores sit in the 表 volumes (6–11, plus some of 5).
+  - 後漢書: 6,188 screened, median 0.944, 89 below 0.6 (1.4%).
+  - 三國志: 3,598 screened, median 0.822, 1,662 below 0.6 (46%). This figure is an artefact. Kanripo KR2a0012 holds only 魏志 (files 000–030), so all 15 蜀志/吳志 volumes have no witness and score "low". 魏志 alone has about 150 pages below 0.6. **蜀志 and 吳志 are unscreened.**
+  - Unscreened (fewer than 20 Han characters): 104, 72 and 38 pages.
+  - 史記 has no WYG witness. It was screened against `master` (the TLS edition, Zhonghua 1959 base, **without** the 三家注 commentaries), so this is a different witness. 6,174 pages: median 0.43, IQR 0.20–0.67. Commentary that the witness lacks pulls the score down.
+- **What low Dice means here.** I opened the five lowest pages (≥100 Han characters, one per volume) by eye:
+  - 史記 vol 8 p188: a table. The OCR is a numeral loop that is not on the leaf; there is no English.
+  - vol 9 p24: a table. The OCR is a numeral grid that is not on the leaf, and the English translates it. **Contained.**
+  - vol 10 p23: a table. The OCR is the leaf's text with every line reversed.
+  - vol 44 p106: the 正義論例 phonetic glossary. The OCR is right; the TLS witness lacks this section.
+  - vol 1 p46: Qing editors' front matter. The OCR is right; the witness lacks it.
+  - So low Dice here means a table page, or content the witness does not carry. These five are not prose misreads.
+- **Coverage.**
+  - 749 pages have no OCR.
+  - 2,530 have no English. Of those, 1,781 are OCR'd but untranslated: 327 have under 20 Han characters, 718 have 20–99, and 736 have 100 or more. Almost all of the 736 are 表 volumes with no English at all: 史記 vols 8, 10, 11, 12 and 漢書 vols 6, 8, 9, 10, 11.
+  - English length is 3.83 / 7.74 / 10.61 Latin characters per source Han at p5 / p50 / p95. Only 2 pages are under 1×.
+- **Loop tells.** The lane's guard (`gpuLoopVerdict`) fires on 41 stored pages: tail_runaway 35, repetition_loop 2, repeated_lines 4. Character runs over 40: 0. Pages whose OCR is more than 60% numerals: 110, of which 106 are in 史記 vols 8, 9, 10.
+- **欽定四庫全書 margin garble** (counted per #5142, O11): 674 OCR'd pages (2.8%), of which 636 are translated. The English names "Ci Ding" or "Jin Ding" on 61 pages. The rule caught 6 of 7 positive controls, and 15 of 15 random hits were real, so 674 is a lower bound. Script: `model-free/garble-count.mjs`.
+
+### Juan questions (from the OCR text)
+- **漢書 juan 36–37 (#7546).** Volume 25 is labelled 33–35 but holds juan 36, leaves 1a–36a only; WYG 036 has 52 leaves. **Juan 36 leaves 36b–52b and all of juan 37 are missing from the set.**
+- **Other 漢書 mislabels.** vol 24, labelled 31–32, is 33–35. vol 26 is 38–40. vol 8 "15下" is juan 16. vol 12 "20上~下" is 21 (律曆志). vol 17 "二十五六" is 26.
+- **史記 vol 40** (6ae0bd884adf2ffb52f72549), labelled "卷一百七", is **juan 117**: p2 heads 史記卷一百十七 司馬相如列傳第五十七, and 50 page-centre headers read 卷一百十七.
+
+### Showcase pages (25 candidates, each opened by eye, 2026-11-04)
+I opened 5 candidates per releasable work and rejected none. Pages marked ✓ are clean enough to show. Pages marked ~ are fine to read but carry one small issue (named).
+- **史記:** ✓ [6ae0bca94adf2ffb52f71e1b p44](https://sourcelibrary.org/book/6ae0bca94adf2ffb52f71e1b?page=44) (Laozi biography) · ✓ [6ae0bd3d4adf2ffb52f72384 p85](https://sourcelibrary.org/book/6ae0bd3d4adf2ffb52f72384?page=85) · ✓ [6ae0bd8d4adf2ffb52f725c5 p108](https://sourcelibrary.org/book/6ae0bd8d4adf2ffb52f725c5?page=108) · ~ 6ae0bc1f4adf2ffb52f71a90 p37 (the folio number is rendered "Volume 18") · ~ 6ae0bd3a4adf2ffb52f722f9 p126 (garbled margin line in the OCR; the English drops it)
+- **漢書:** no clean page among the 5. ~ 6ae0c1554adf2ffb52f74035 p30 (以杖 read 以救) · ~ 6ae0c1f34adf2ffb52f74449 p11 (a Song Qi collation note is garbled in the English) · ~ 6ae0bdda4adf2ffb52f72939 p55, 6ae0be184adf2ffb52f729b9 p16 and 6ae0c1e14adf2ffb52f74326 p99 (garbled margin line; p99 also has 鋋殺 → "iron hammer")
+- **後漢書:** ✓ [6ae0c5b74adf2ffb52f75c45 p103](https://sourcelibrary.org/book/6ae0c5b74adf2ffb52f75c45?page=103) (Yuan Shao defies Dong Zhuo) · ✓ [6ae0c5bc4adf2ffb52f75cea p72](https://sourcelibrary.org/book/6ae0c5bc4adf2ffb52f75cea?page=72) · ~ 6ae0c2834adf2ffb52f747e5 p132 (a clause cut at the page end is completed wrongly) · ~ 6ae0c2ce4adf2ffb52f74a6e p76 (梁竦 and 梁松 are both rendered "Liang Song") · ~ 6ae0c4394adf2ffb52f75327 p27
+- **三國志:** ✓ [6ae0c6cf4adf2ffb52f76830 p121](https://sourcelibrary.org/book/6ae0c6cf4adf2ffb52f76830?page=121) (Hu Zhi) · ✓ [6ae0c71d4adf2ffb52f76b10 p145](https://sourcelibrary.org/book/6ae0c71d4adf2ffb52f76b10?page=145) (Xi Zheng's rhapsody) · ~ 6ae0c7164adf2ffb52f76a64 p27 (Jieting; 愀 read 慠, the English is right) · ~ 6ae0c7ef4adf2ffb52f76f4d p127 (突 read 災, the English is right) · ~ 6ae0c6694adf2ffb52f76286 p46
+- **Printed, OCR only:** ✓ [6a3c6bdfc4e8626320db2395 p21](https://sourcelibrary.org/book/6a3c6bdfc4e8626320db2395?page=21) · ✓ 6a3c6bf4c4e8626320db3a11 p45 (one character unconfirmed at this resolution) · ~ 69aebb3a39a43078777732aa p138 (有恃即戎 read 有時即我) · ~ 69aebb5e39a4307877774064 p229 · ~ 6a3c6cf8c4e8626320dbdace p39
+- Of the 20 manuscript candidates, 5 carry the margin garble in the OCR. In all 5 the English dropped it rather than inventing from it.
+
+### What the sample cannot rule out
+- **Rates:** with 8 books per stratum, any held stratum's true serious-page rate could be as high as about 25% (漢書's upper bound). It could also be as low as the control's lower bound.
+- **Wrong leaf:** 0 of 192 pages, so by the rule of three the true wrong-leaf rate could still be up to about 1.6%. A rare invented page, such as the one #7914 found in 1 of 10 pages, could be missed at that size.
+- **κ 0.65:** reader noise is not small.
+- **Coverage gaps:** 蜀志 and 吳志 have no model-free screen, and the table volumes were only lightly sampled.
+
+### Containment
+史記 vol 9 (6ae0bb3a4adf2ffb52f7136a) p24: a numeral grid that is not on the leaf, with English translating it. I withheld it by eye, with `--issue=8053`, and labelled #8053 `contained`. The 7 "Ci Ding" pages are an invented note on a page whose body is the leaf. Following #5600, these count as findings, not containment, and are counted on #5142.
+
+### Recommendation (Derek's decision; nothing was released)
+- **史記, 漢書, 後漢書, 三國志 → B (release with the English labelled draft), except the 表 volumes.** Every interval overlaps the control's. The don't-show count is 0 against the control's 4. The reader already labels AI English "AI translation, not yet reviewed by a scholar", and shows book_checks warnings (#6199).
+- **表 (table) volumes → C (keep held).** These are 史記 vols 8–12 (juan 13–22) and 漢書 vols 5–11 (the 表 juan). There, OCR is numeral loops, reversed lines or grids not on the leaf, most pages have no English, and 1 page was contained. Smallest fix: a table-aware read, or serving the Kanripo text for these juan.
+- **Printed OCR-only books → A (facsimile + OCR; there is no English to withhold).** 13% [3–22] against the control's 19% [3–38], OCR mean 3.94 against 4.00.
+- **Before any release:** fix the 漢書 and 史記 vol 40 juan labels, and add a catalogue note that 漢書 juan 36 (from 36b) and 37 are not held.
+- **How to release, whatever is chosen: publish, and keep the pipeline hold.**
+  - Do **not** use `hold-pipeline-books.mjs --release-held --to ocr_complete` as the release. I checked this in code (`scripts/workers/pipeline-orchestrator.mjs`). Once a book's status is `ocr_complete`:
+    - Phase 3.7 runs paid Gemini transliteration on non-Latin books.
+    - The translate phase sends Chinese to the `flash-measured` row on the Batch channel (paid API), which would translate the 1,781 OCR'd but untranslated pages, table garbage included.
+    - Finalize (around line 6139) auto-unhides any book that is `hidden: true` with no `hidden_reason`. These books have no `hidden_reason`.
+  - Use `setPublicationMany(db, ids, { state: 'public', by, issue: 8053, note })` from `scripts/lib/publication.mjs`, the one publication writer, over an id file that excludes the 表 volumes. `pipeline_auto.status` stays `held`, which no phase selects, so nothing is queued.
+  - **Residual risk:** `src/app/api/admin/bulk-ocr-new/route.ts` selects any non-deleted book with un-OCR'd pages. Its hold check only observes (#5480), so once the books are visible, the 749 un-OCR'd pages could be sent to a paid read. Make that guard refuse held books before release, or accept the risk explicitly.
+
+## 2026-11-04 · Does Opus correction restore the 丨 marks at scale? The pilot before the bulk (#5274)
+
+PRIOR ART:
+- `scripts/eval/experiments/2026-11-03-zh-ditto-restore-5274.md` and `scripts/eval/zh-ditto-restore-5274/` (the arms test:
+  which route restores the marks; this pilot does not re-run it).
+- `scripts/batch/ocr-convergence/correct.mjs` (the correction runner and its guards: own-leaf check, CONTAIN, keep every
+  read #7075). This job only adds `--instruction-file` and `--language`.
+- `scripts/batch/siku-translate-lane.mjs` (the detached wave lane with a ledger; the runner copies its shape).
+- `scripts/eval/flash-reread-5924/C-TASK.md` (the judge's words, as in the test).
+
+Code: `scripts/batch/zh-ditto-5274/` — `frame.mjs` (the zero-丨 frame from Mongo and the census), `pilot.mjs` (draw,
+score against the Kanripo leaf, per-arm scores, evidence export, side-by-side), `judge-multi.mjs` (blind multi-arm
+Opus judge, arm names hidden, swap controls), `runner.mjs` + `meter.mjs` (the bulk lane), `ditto-instruction.txt`.
+
+### Frame
+
+Built from Mongo and `results/zh-ditto-restore-5274/partial-census.json` on 2026-11-04: **20,265 zero-丨 body pages in
+756 books** (佩文韻府 18,788, 駢字類編 1,018, 韻府拾遺 459), the same number the census recorded. Of these 20,018 have
+a Kanripo leaf with marks, 237 have no own leaf, 10 have a leaf with no marks (left out of the bulk). None is
+human-edited. 18,987 carry English. 2,923 pages are in held books (below). The 8,808 partial-loss pages are out of scope.
+
+### Pilot
+
+60 new zero-丨 pages, one per book, not in the arms test (seed 5274): 30 corrected one page per call (s1) and 30 at
+ten pages per call (s10; each call carried nine more pages of the same book, so own leaf was checked on 300 pages).
+Plus 10 keep pages that kept their marks. Every arm read the same pages. Marks scored against the Kanripo leaf as in
+the test; a blind Opus judge saw the image and each arm's text with names hidden (5 swap controls, all caught).
+
+| arm | usable zero (s1 / s10) | marks recall / precision | keep usable | misleading, blind | list $ / 1,000 pages | $ / usable page |
+|---|---:|---:|---:|---:|---:|---:|
+| P0 stored Paddle | 0/60 | 0 / 0 | 10/10 | 57/60 | — | — |
+| **OC Opus correction** | **56/60** (27/30, 29/30) | 0.981 / 0.998 | 10/10 | **12/60** (10/30, 2/30) | 93 (s1), **99 (s10)** | 0.11 |
+| SC Sonnet correction | 40/60 (19/30, 21/30) | 0.971 / 0.969 | 9/10 | 39/60 (21/30, 18/30) | 62 (s1), 73 (s10) | 0.11 |
+| FL Flash 3.8 low, agy | 36/60 (18/30, 18/30) | 0.932 / 0.993 | 9/10 | 46/60 | ~27 | 0.045 |
+| FR Opus fresh read, image only | 43/60 (23/30, 20/30) | 0.964 / 0.993 | 5/10 | 47/60 | 104 | 0.15 |
+
+Usable = every mark recalled within the test's tolerance and no mark invented (`pilot.mjs score`). Wilson CIs are in
+`router-table/evidence/zh-ditto-5274-pilot.score.json`. Prices are list-equivalent from the CLI's own usage report;
+Claude arms ran on the subscription, cash $0. Flash's price assumes 10% cache.
+
+**Bar.** At least 54/60 usable, keep pages undamaged, misleading no worse than the test's 7/30. OC passes on all three.
+The judge rates every keep page the same as P0 or better.
+
+**Per call.** Ten pages a call is no worse than one: usable 29/30 vs 27/30, misleading 2/30 vs 10/30, own leaf 300/300
+(no page took its neighbour's text, the #5021 failure). The bulk runs at ten per call. Cost: about 120 pages per point
+of the box account's week, so the frame is about 170 points, 1.7 account-weeks, under the 2.5 ceiling.
+
+**Paired against OC.** Sonnet: gained 2, lost 18. Flash-low: gained 1, lost 21; −0.33 usable — not
+non-inferior within 0.08. Fresh read: gained 1, lost 14.
+
+**What the misleading verdicts are.** OC's 12 are Paddle glyph misreads the correction left in place (王/玉, 傳/傅,
+南/甫), not damage to the marks. Flash's are wrong mark counts (丨丨丨 read as 丨丨). Five disagreements checked with
+the image open and the Kanripo leaf: p35 (玉輿 / 誾誾 / 昔), p118 (黜: FL right, OC wrong), p100 (丨丨丨: OC right, FL
+drops one), p11 (甫), p76 (翬 / 汞). The judge was right every time.
+
+**Sonnet** (inbox, Derek 07:37). Sonnet had never been tested on ditto restoration. Same instruction, same pages, one and ten per call, same scoring and judge (its own pass, `judge-sc`, P0 / OC / SC blind, 5/5 swaps caught). It fails every part of the bar: 40/60 usable against 54, a keep page damaged (9/10), and misleading 39/60 against OC's 12/60 on the same pages (30 pages misleading under Sonnet that were not under Opus, 3 the other way). Its precision (0.969) is the tell: it invents marks where the page has the character. It is not cheaper per usable page (about $0.11, the same as Opus), so the bulk stays on Opus and its cost is unchanged.
+
+**Flash-medium** is scheduled after the agy quota resets (2026-11-05 10:15Z, one-shot timer `zh-ditto-5274-fm`); it
+comments its line on #5274. Eval only, as for every non-Opus arm: no production write from them.
+
+**lane_judge_verdicts.** Not written: its writer expects the route-judge-6740 shape (accept / fidelity / severity) and
+this judge returns misleading / flawed / sound. Mapping one onto the other would invent a verdict. The per-page
+verdicts are in `results/zh-ditto-correct-5274/side-by-side.md`.
+
+### Held books (TAKEN)
+
+paddle-zh-5600-ocr-only (2,544 pages / 126 books), paddle-zh-6388-ocr-only (9 / 2) and gpu-backlog-5660 (370 / 52)
+all allow OCR work under `pipeline-status-truth.md`: they keep the book out of translation, not out of OCR. They are
+corrected with the rest. No phase selects them for translation, and the runner re-checks the hold before each apply.
+
+### What reads a corrected page
+
+Posted before the first write (issuecomment-6626805056). In short: `mark-stale-translations` (07:30 daily) sets
+`translation_stale`; no reader hides English on it, and the English stays served. Orchestrator Phase 4 gap-fill (paid
+realtime) only selects books under 90% translated; a stale page still counts as translated, and the runner writes a
+book only while it is ≥90% translated, so **no paid re-translation is queued**. cli-translate, translate-worker and
+siku-translate-lane take untranslated pages only; embeddings skip translated pages; nothing re-derives metadata from
+an OCR change. Writes go only through `cli-ocr.mjs apply --lane=zh-ditto-opus-5274 --mark-stale=zh-ditto-5274`;
+every overwrite snapshots to `page_revisions`.
+
+### Bulk
+
+Detached systemd unit `zh-ditto-5274` (`runner.mjs run --per-call=10`, ledger in the job's scratch), waves of 120
+pages, sleeps at 92% of the week to the reset. It pages ntfy and comments on #5274 when the frame is done or it stops.
+
+## 2026-11-04 · Stranded text runs re-pointed to their own leaf (#5803)
+
+PRIOR ART: `scripts/maintenance/repair-text-offset-segments.mjs` (#7949, commit 333bc84bf) is the
+writer, reused; `scripts/audit/stranded-image-repair-text.mjs` (#5309) is the frame;
+`scripts/audit/ia-model-ocr-off-leaf.mjs` is the detector. New this run: the writer's by-eye gate
+works without a IIIF manifest (IA manifests carry ordinal labels, which never score), and
+`repoint-chapters-after-text-shift.mjs` handles lane 3 for chapters.
+
+**Who it is for.** Someone reading a page image next to a transcription and an English translation
+that belong to the page before. Derek, 2026-11-04: "pages not reflecting the text... a big issue".
+
+**Pre-registered** (written before any result was read): frame = live books with a #5309 stranded
+run of at least 5 pages (46 books). 10 were excluded before measuring: 9 had a live lane writing in
+the last 3 days, and Talmud Bavli is on the #5699 renumber list. That left 36 books. Repair rules:
+R1, at least 80% of scored pages share one offset k≠0, with a scored page within 3 slots of each end.
+R2, the shown R2 image is the source leaf. R3, by eye on at least 3 slots including both ends.
+R4, moves stay inside the run. R5, no human-edited text, no split pages, and text never leaves its book.
+
+**Detector (model-free).** The detector matched each page's text against the Archive's own OCR of
+leaves k−8..k+8. It found 113 runs of 5 or more pages (1,802 pages); 86 runs (1,032 pages,
+26 books) pass R1. Every passing run is k=−1 except one in Outline of the Vedanta (k=−3).
+The biggest-cluster artifact showed up as expected: the largest "stranded" run, Buddhism in
+Translations (528 pages), is Archive djvu text that the classifier counts, and the detector reads it
+as ALIGNED. The Path of Light is the same case. Neither is a defect, and neither was written.
+
+**By eye (R3).** Opus subagents, blind A/B: the source IIIF leaf (top half), the text that the move
+puts on the slot, and the text the slot holds now, in shuffled order. Each run was checked at its
+first slot, its middle and its last moved slot. The test book (Esoteric Christianity) was checked by
+hand at 6 slots. Results: 257 of 258 slots chose the moved text. One run failed: Lucifer Vol 3,
+334–338, whose head slot holds neither neighbour, so it is listed and not written. Run precision is
+85/86. There were 10 planted controls (aligned fresh slots: own text vs the next slot's text). 7
+chose their own text, 2 said "both" (the two slots carry the same text), and 1 chose the neighbour,
+which holds a duplicate of the same leaf (Kant 687/688). None contradicts the key. R2: the shown R2
+image matched the source leaf by dHash (distance 0) on every sampled slot in all 25 books.
+
+**A finding the rule did not anticipate.** At each run head the writer orphans one slot's text,
+which pre-registration assumed was a duplicate of the fresh read on the leaf before it. On 17 heads
+it was not, and 10 of those were opened by eye. In those 10 the fresh read of leaf a−1 is a stub:
+empty, or a header plus a keyword list with no body (Oct 01 reads). The stranded slot held the
+**only** full transcription of that leaf. Those segments were extended to start at a−1, checked by
+eye on the new slot: True History of the Conquest of Mexico ×8, Kritik der reinen Vernunft 654,
+Rajput Painting 38, and Vedanta 47 and 49–51. Nothing was orphaned that was not a duplicate or
+snapshotted.
+
+**Applied.** 26 books, 954 pages. That is 940 this session plus 14 on the test book, with 1,809 +
+28 `page_revisions` rows, each book's run id in `book_events`, mirrors synced, `page_translations`
+embeddings permuted with their text, `needs_reocr` cleared on pages that received their own text, and
+every book revalidated. Served HTML was read on 4 pages in 4 books: each now shows its own leaf's text.
+
+**Lane 3** (derived-metadata-lane.md). 46 chapter starts fell in a moved range. 31 of them had their
+heading on the new slot and not on the old, and were moved (9 books, old lists in `sweep_log`). The
+other 15 were left: their heading was not found on the new slot alone. **Not repaired:** `book_indexes`
+page citations in these books were derived from the shifted text, so citations inside the moved
+ranges point one page late. That needs a regenerated index, which is a model spend and is listed on
+the issue. Summaries do not depend on page addresses.
+
+**Left, in `needs-read.json`.** 9,044 live stranded pages in 294 books, each with a status and a
+route from the OCR lane decision tree:
+
+| status | books | pages |
+|---|---:|---:|
+| repaired runs; run tails and isolated stranded pages remain | 26 | 1,859 |
+| isolated stranded pages and runs under 5 (re-pointing cannot help: their own text is on no page) | 248 | 3,803 |
+| run ≥ 5, fails R1 (Talmud Yerushalmi, Avesta, Suggestive Inquiry abstain; Household Management, Lucifer 3 and 6 mixed; Buddhism in Translations and Path of Light read as aligned) | 10 | 1,601 |
+| deferred: live lane in the last 3 days | 9 | 1,340 |
+| deferred: #5699 renumber (Talmud Bavli) | 1 | 441 |
+
+The tail slot of each repaired run (about 85 pages) now carries a duplicate of the page before it.
+These pages stay flagged `needs_reocr` and are not withheld. Withholding a detector-defined set needs
+approval under containment-on-finding.md.
+
+**What the detector cannot see.** Books outside the Internet Archive. Pages where the Archive's OCR
+is junk (non-Latin scripts, plates). Isolated stranded pages. Text-side shifts that no image repair
+produced (#7949's canvas-label detector covers e-rara). Shifts by more than 8 leaves.
+
+## 2026-11-04 · Can the printed page number of a frame be confirmed from running heads and images? (#8041)
+
+<!-- PRIOR ART: 2026-10-03-printed-page-fit-4291 fits <page-num> into pages.printed_page, and #5699 showed that tag is invented on these books; 2026-10-08-which-flagged-books-are-stored-in-the-wrong-page-order-5699 opened the same books to judge order, not to map numbers. -->
+
+- **Question.** Which printed number does each frame carry, on the books where the frame number and the printed number differ most, without trusting `<page-num>`? And how far would the same method reach?
+- **Design.** `scripts/lib/printed-number-runs.mjs` fits straight lines, up or down one per frame, through the running-head markers of `scripts/eval/page-marker-order.mjs`. A run needs 5 markers exactly on the line, at most 10 frames apart, with at least half of the markers in its span agreeing. Opus then read the printed number off the images, blind: shuffled across books, opaque filenames, nothing about the expected number. Each run was opened at both ends, the middle, one frame between anchors, then a second look with whole pages at any blank and at frames between anchors on the side of the opening the anchors missed. Any number off the line rejects the whole run. An end showing no number moves inward. Kitab Manafi and Turris Babel carry almost no head markers, so every frame was read and the reads went through the same fit.
+- **Result (first set: 60 #5699 books + 2).** 177 runs proposed on 50 of the 60 books, 134 confirmed, plus 3 on the 2 read in full: **137 runs, 45 books, 10,346 rows** (4,227 read, 6,119 between anchors). No run on 10 books (most markers there are absent or other counters); runs on 7 more all rejected, including both Maqrizi volumes.
+- **Result (the check doing its work).** 41 of the 43 rejected runs showed a different number on the image. Reads between anchors: 452 showed a number, 15 of those were off the line and rejected their run (both Maqrizi volumes: frame 377 shows 352 where the line says 354, because the pairs are swapped and only one side of each opening had a marker). Fitting the markers alone would have numbered every other frame wrongly on those books.
+- **Result (holdout).** 70 rows drawn at random from the 6,119 between-anchor rows after writing, read blind: 67 agree, 2 show no number, 1 reads ٩٦ where the row says ٦٦ (Kitab al-Hayawan, glyph ambiguous on the image; the adjoining frames are numbered on the 66 line). 67/68, Wilson 95% lower bound 92%.
+- **Result (coverage, measured).** 300 visible books (`visible: true, pages_count > 0`, 70,942 live) by `$sample`: 49 have 10+ head markers, **20 have a run**, and 19 of those 20 keep at least one on image reads (first pass only: 44 of 46 runs). So **19/300 = 6.3% of books (Wilson 95%: 4.1–9.7%)**, 2,282 of 69,906 pages (3.3%); 8 of the 300 reach half their pages. Recent OCR holds the number in `<page-num>` and leaves it out of the body, so the head has nothing to read. The same line fit over `<page-num>` as a proposer only finds runs on 90 of the 300 (30%, 17.6% of pages); its confirmation rate is unmeasured.
+- **Caveats.** Page ids in `page_printed_numbers` are the key, so a renumber does not move them, but a later image swap on a page would leave a row stale. Three reads per run cannot see a local jump smaller than the anchor gap that cancels itself. Coverage runs had one between-anchor check, not the second look. The ٦ and ٩ of some Arabic founts read alike to the reader (several rejections trace to this), which makes the method conservative there. No folio or Hebrew-numeral run was confirmed on this set; the code paths are tested, not field-tested. Syriac letter numerals were out of scope.
+- *Replicated?* No. Run-level records: `scripts/eval/results/printed-numbers-8041/`.
+
+## 2026-11-04 · How many plates spanning a fold did our splitters cut into two pages, and what keeps them whole? (#8042)
+
+PRIOR ART: `scripts/maintenance/fix-false-split-portrait-pages.mjs` (single-leaf frames by aspect ratio: a plate across
+a fold is as wide as a real spread, so it cannot see these), `scripts/maintenance/hide-repeat-captures.mjs` (the
+`repeat_of` retire mechanism, reused), `split-book.mjs` Step 2.5 (the book-level `imgFrac` plate gate, which never looks
+at a single frame).
+
+### What was reported
+Feedback 6ae342a1 (Khunrath's Emerald Table split; "a number of the EFM books") and 6ae78ce2 (Piranesi Carceri
+page 69de98e21b234a773e439839 "should be unsplit").
+
+### Three shapes, all seen on the images
+1. **The source photographed the plate as two leaves.** IA `gri_33125010859573` (Piranesi, *Carceri*, 70 pages):
+   pages 6+7, 10+11, … 66+67 are the 16 plates, each as two leaf photos that compose without a seam. No splitter
+   of ours was involved. Repair: join the two images into one R2 object; the left page shows it, the right is retired.
+2. **split-book.mjs gutter-only cut a plate in a text book.** BPH `69ef33e2` (*Amphitheatrum*, run `spwmc8`,
+   2026-06-08): frame -127 (Emerald Table) became leaves 237/238 and frame -125 (another plate) became 233/234. The
+   frame's own read said `<page-type>illustration</page-type>` with `<split-position>null</split-position>`. The
+   book-level gate counted the book as text (imgFrac < 0.25) and the frame's read was never consulted.
+3. **The Dec-2025 in-app split** cropped one archived image 0–500 / 500–1000 into two pages (BIUSante Khunrath
+   `69487f16`, p.11/12, the Emerald Table; the book is hidden as a duplicate of `6952d086`).
+   The visible kept copy `6952d086` (Google scan) has the plate on leaves 267/268 whose images overlap (the text
+   block is in both). They do not join cleanly, so the pair is listed and was not touched.
+
+### Census (model-free)
+- **New era (split-book frames, `page_type: 'archived-spread'`, 200,596 frames):** `plateSpanVerdict()` flags
+  **74 frames in 35 books** (v2 rule). By eye, 20 of the 83 v1 flags: **19 were one image cut in two** (8 plates or
+  maps across a fold: Münster's *Cosmographey* BPH `69c8716b` alone has about 20 maps cut this way; 11 single leaves
+  or covers, which belong to fix-false-split-portrait-pages' class). **1 was a real two-leaf spread** (BPH `68679f27`
+  frame -3, a text page facing a title page, one detection box drawn round both). v2 no longer lets a text or
+  title-page read keep a frame whole, which removes it.
+  Books: 21 BPH, 4 Kloss collection, 10 with no tenant.
+- **Old era (crop pairs where both halves are plate-typed and a detected image touches the cut):** 100 pairs in
+  30 books (29 BPH). By eye **6 of 12** are plates across a fold. The other 6 are correct splits: two separate
+  woodcuts on facing pages. Too weak to apply without an eye on every pair.
+- **Source two-leaf photography (shape 1) outside Piranesi:** bbox-adjacency gives 772 tight candidate pairs in 132
+  books, which is noisy (the rule missed Piranesi 10/11 on a y-offset). None were checked by eye, so no total is
+  claimed.
+
+**What the signals cannot see:** a frame with no stored read and no detections; a plate whose read says `text`; a
+frame
+read by a single-page prompt (no `<split-position>`), unless a detection crosses the cut; and in the old era any pair
+whose halves were never typed as plates.
+
+### Repairs (by eye, `scripts/maintenance/restore-plate-spreads.mjs`)
+| book | pairs | run | state |
+|---|---|---|---|
+| Piranesi *Carceri* 69de98e2 | 16 joins | plate8042-pir-1 | applied; p.11 URL redirects to p.10, which shows the whole plate (headless check) |
+| Khunrath BIUSante 69487f16 (hidden duplicate) | 1 unsplit-crop | plate8042-biu-1 | applied |
+| Khunrath BPH 69ef33e2 | 2 unsplit-frame | (dry run) | **refused: tenant.** Asked on #8042 |
+| BPH 697c8e13 p66, 697d9ca2 p135 & p252, 698255e9 p377, 69a0278f p46 | 5 unsplit-crop | — | confirmed by eye, tenant, listed |
+
+Each kept page has `cropped_photo` set to the whole image and `plate_whole.before`; each retired page has
+`repeat_of` set to the kept page. Both are also logged in sweep_log. `--revert <run> --books …` restores them. 17 kept pages carry a read
+of half a plate: listed in `needs-read.jsonl` for a separate read job. Their gallery_images rows (31 for Piranesi)
+are listed for `regen-split-gallery-images.mjs`.
+
+## 2026-11-04 · A paired-arm judge recipe, checked against two stored tests (#6553)
+
+PRIOR ART: `scripts/eval/route-judge-6740/judge.mjs` (draw, packet, judge, score) and `defect-rate.py`. The recipe
+keeps their file format (`key.json`, `verdicts-<judge>.jsonl`, `packet.json`) and adds only the rules prose could not
+enforce. `2026-11-04-experiment-kinds-6553.md` §6 found that 94 of 137 paired-arm runs rebuilt their own judge script.
+
+### What it is
+
+- `node scripts/eval/route-judge-6740/paired-arm.mjs init --out=DIR` writes `recipe.json`, the design stated before judging.
+- `check --out=DIR` applies R1–R6: one page per book per arm, blind arm names, a wrong-page control per arm, a noise
+  floor (≥5 repeat rows or a named earlier measurement), batch size stated (tested if >1 page a call), and for a
+  which-leaf question, the neighbouring scans. Exit 1 if any rule fails without a waiver.
+- `score --out=DIR [--compare=score.json]` gives accept and wrong-text k/n per judge × cell × arm, with Wilson and
+  by-book intervals, controls and noise floor. With `--compare` it exits 1 on any k/n mismatch.
+- `skeleton --out=DIR --slug=S` writes a write-up with a valid header (`feeds`, `router_evidence`, `defect_rates`).
+- `.claude/skills/paired-arm-judge/SKILL.md` says when to use it and when not.
+- `claude-job.sh` takes an optional `Skill: <name>` brief line and prints it into the job prompt. The census found that
+  jobs use a skill only when their brief names it.
+
+### Verification 1: re-scoring router-tests-2026-10-28
+
+`paired-arm.mjs score --out=<copy> --compare=score.json` matched **20 of 20** k/n. The figures agree with
+`2026-10-28-router-tests-agy-flash-low-gpu-draft-7263.md`:
+
+| cell | k/n |
+|---|---|
+| zh-dice | 19/29 |
+| latin-gpu | 22/26 |
+| hebrew | 7/30, 7/28 |
+| arabic | 10/30, 13/29 |
+| chinese | 7/30, 6/30 |
+| zh-frame | 5/9, 19/30 |
+
+`check` on the same directory: latin-gpu is 8 books × 4 pages (R1 fail; its by-book interval is the honest one).
+There was no `recipe.json` and no noise floor (R4). Output: `scripts/eval/results/paired-arm-recipe-6553/router-tests-2026-10-28-rescore.json`.
+
+### Verification 2: the near-blank gate (#5274, PR #8029)
+
+`wrong-leaf-fix-5021.mjs` judged its gate in its own format. The adapter `near-blank-to-key.mjs` converts it to
+`key.json` and verdicts. The recipe is reconstructed after the fact (marked so in `recipe.json`), not preregistered.
+
+| rule | result |
+|---|---|
+| R1 one page per book | ok (30 books per gate) |
+| R2 blind arm names | ok (X/Y order) |
+| R3 wrong-page control | **fail**, none |
+| R4 noise floor | **fail**, none |
+| R5 batch | ok (1 page per call) |
+| R6 neighbouring leaves | ok (n−1, n+1 scans) |
+
+Score matches the published figures: gate 1 new 17/30, stored 0/30; gate 2 new 26/30, stored 3/30. The gate needed
+≥27/30 and got 26/30, with no noise floor. That is the case R4 exists for: one page's difference is inside any judge's
+repeat variance until that variance is measured. Fidelity in this gate is synthetic (the runner maps clean/not clean to
+5/3), so the fidelity mean is not comparable with judge.mjs runs. Output: `scripts/eval/results/paired-arm-recipe-6553/near-blank-gate/`.
+
+### The real experiment the brief named
+
+The brief asked to use the recipe on context-bleed-find-fix-5274's fix gate if it had not run yet. At 2026-11-04 that
+job was live on cloudlayer (`box.sh cloudlayer status`: running `wrong-leaf-fix-5021.mjs`), and its runner was judging
+its own gate. The mesh has no `note` verb to steer it, so I did not run a second, duplicate gate on the same pages.
+Instead the recipe was used on that job's predecessor gate (Verification 2). The next fix gate on that runner should
+start from `paired-arm.mjs init` and add a wrong-page control and repeat rows.
+
+### Recipes still to write
+
+cer-vs-reference, screen-with-controls, apply-gated-repair (listed in the skill). sample-and-review is already
+`spot-check-round` and `shelf-overview`.
+
+## 2026-11-04 · How often do a reader's page image, text, English and number disagree? (#8040)
+
+PRIOR ART:
+- `scripts/audit/leaf-shift-confirm-5021.mjs`: the sealed `claude -p` call and leaf fetch, reused. It asks about pages a screen already flagged, so it cannot give a rate.
+- `scripts/eval/spot-check/served-draw.mjs` and `REVIEWER.md`: one served page per book, but only pages with English, and it grades quality with no label for order, number or split.
+- `scripts/audit/page-integrity.mjs`, `leaf-order-sharpen.mjs`, `translation-leaf-shift.mjs`: $0 screens over text, no image, no rate.
+- `.claude/skills/spot-check-round/SKILL.md`: 3 pages a book, `book_checks` writes. Its reviewer does not fit these five labels, and a page's neighbours are not given as images.
+- Searched `gh issue list --search "reader's-eye draw"` (#7169: detector recall by class, not this) and `gh pr list --search 8040` (nothing).
+
+Code: `scripts/audit/page-integrity-draw.mjs`.
+
+**Pre-registration (committed in 33ef5b318, before any judge call). Unchanged below, except where the Result says so.**
+
+- **Frame.** `books`: `visible: true`, `pages_count > 0`, at the draw.
+- **Draw.** 200 books in a seeded order (`bookOrder`, `makeRng`), uniform per book. Seed 20261104. One served page per book, uniform over the book's pages with `page_number > 0`, no `repeat_of`, `page_type` not `blank`; a page whose own `<page-type>` tag says blank moves to the next served page. Pages inside a book are one observation, so never more than one. Pages with no transcription or no English stay in: `empty` and `none` are labels.
+- **Recorded per page.** Frame number, shown number (the toolbar's `p. N` is the frame; the flow reader and citations show `printed_page.label` when stored), OCR engine, translation engine, language, script, provider, tenant.
+- **Judge.** Opus via `claude -p` on the subscription, one call per page, `--restricted --tools Read`, no session, a folder holding only the three images. It gets the title, the catalogue language, the images and stored text of frames N-1, N and N+1, the English of frame N and both shown numbers. A verdict counts only if the transcript shows a Read of every image. The judge is not told the rates, the flags or the existence of controls.
+- **Labels per page.**
+  1. `text_leaf`: `this_leaf` / `prev_leaf` / `next_leaf` / `other` (another book, elsewhere, or on no visible leaf) / `empty` / `cannot_tell`. A bad misread of this leaf is `this_leaf`.
+  2. `english`: `this_text` / `prev_text` / `next_text` / `mixed` / `invents` / `none` / `cannot_tell`, against the transcription. A carried sentence, an omission or a mistranslation is `this_text`.
+  3. `number`: the number printed on the image, and whether it agrees with the frame (`agrees` / `disagrees` / `none_printed` / `cannot_tell`) and with the stored printed number. A frame that differs from the print is a fact about scans and is reported apart from a stored number that differs, which is a defect.
+  4. `order`: `forward` / `backward` / `jumbled` / `cannot_tell`.
+  5. `split`: `single_leaf` / `two_leaves` / `plate_cut` / `cannot_tell`.
+  6. `repeat` (added for #5056): a neighbour is a second capture of this leaf, `none` / `prev` / `next`.
+- **Controls, hidden in the judge's order.** 38 planted on books outside the 200, from windows with text and English: image of another book (5), a neighbour's text on the page (5), a one-leaf shift across the window (5), a neighbour's English (5), another book's English (5), neighbours swapped (5), two leaves composited into one frame (4), a number stamped on the frames (4). A class is caught only by its own label. Report catches per class. If a class catches under 4 of 5 (3 of 4), that defect's rate is printed as "not settled".
+- **Re-judge.** Every flagged page plus unflagged pages to reach at least 20 and at least 5 unflagged, in a fresh call with the same prompt, blind. Over-flag = flags not repeated.
+- **Read by eye.** At least 5 positives with the images open before any rate is stated.
+- **Report.** k/n with a Wilson 95% interval per defect, by language group (Latin, German, English, Romance + Dutch, other Latin script, CJK, other script), and by whether a repair has touched the book (#5021, #5803, #5699, #5056, from `sweep_log`, `book_events`, `page_revisions`, the pipeline hold and `repeat_of`). No single pass/fail share. Denominators: text over pages with a transcription, English over pages with English, stored number over pages where a number is printed and one is stored, order over pages not `cannot_tell`.
+- **Known limits, stated now.** Books are weighted equally, not by readers. Opus judges some Claude-made text (`ocr_engine` is recorded so it can be cut). One page per book reads a book-level fault once. This is `judged`: AI reviewers, no human reference.
+
+**Result (2026-11-04, seed 20261104, frame 70,942 books, n = 200, AI reviewers).** 121 pages carry a transcription, 67 carry English, 10 more have their English withheld, 36 have a stored printed number. Measure: `judged`, no human reference. Every call's transcript shows every image opened (238 of 238 calls, then 20 of 20 re-asks).
+
+| what a reader meets | k/n | % (95% Wilson) |
+|---|---:|---|
+| Transcription is a neighbour's leaf | 0/121 | 0 (0–3.1) |
+| Transcription is another book's, or from elsewhere | 2/121 | 1.7 (0.5–5.8) |
+| No transcription though the leaf has text | 76/200 | 38 (32–45) |
+| English renders a neighbour's transcription | 0/67 | 0 (0–5.4) |
+| English has no source in the three transcriptions | 0/67 | 0 (0–5.4) |
+| Stored printed number differs from the print | 1/35 | 2.9 (0.5–14.5) |
+| Leaf has a number and none is stored | 73/108 | 68 (58–76) |
+| The toolbar's `p. N` differs from the print | 103/108 | 95 (90–98) |
+| Order backward | 0/194 | 0 (0–1.9) |
+| Order jumbled | 0/194 | 0 (0–1.9) |
+| Two leaves in one frame | 7/200 | 3.5 (1.7–7) |
+| One plate cut in two | 0/200 | 0 (0–1.9) |
+| A neighbour is the same leaf | 1/200 | 0.5 (0.1–2.8) |
+
+The 76 empty pages are text not yet made, not a misalignment. Of the 200 pages, 85 carry no printed number and on 7 it could not be read. By language group and by repair: `scripts/eval/results/page-integrity/2026-11-04/report.md`. No language has more than one off-leaf page, so the language cut shows nothing but its intervals, apart from the split: 5 of the 7 two-leaf frames are Tibetan boards (5/18 of "other script", 12.5–50.9).
+
+**What it says about the repairs.** A random draw rarely lands in a repaired book: #5021 touched 0 of these 200 books, #5803 one, #5699 none, #5056 four, so the repair cut cannot show whether a repair worked. One of the two off-leaf pages was in a book #5803 already holds. The other was in no repair's scope.
+
+**The judge, both ways.**
+- *Misses.* By the registered rule it missed 4 of 38 planted controls (10.5%, 4.2–24.1), and no class fell under the bar, so no rate is marked not settled. Text-leaf controls caught 13/15, English 10/10, order 4/5, two leaves 4/4, stamped number 3/4. Read by eye, only one is a plain miss (order on faded leaves with handwritten numbers). One was flagged under the wrong class, and two were weak controls of my own making (a neighbour holding nearly the same text; a stamp the judge correctly said was not on the leaf). The registered figure stands; a fair reading is lower, on few controls.
+- *Over-flags.* 11 of 11 flags repeated on the blind re-ask, and 10 of 10 unflagged pages stayed clean. That is stability, not truth: a judge can repeat its own mistake.
+- *By eye.* 7 of the 10 positive pages opened: all 7 upheld. Not opened: 3 Tibetan boards of the same form. 2 unflagged pages opened: both agree. A third picked for this was a map and went unread, so there is no real-page miss rate beyond the planted one.
+- 3 pages hold Claude-made text and an Opus judge read them; none was flagged.
+
+**Positives.** Each with its owner; the full record is `by-eye.json`.
+
+| page | what | owner | state |
+|---|---|---|---|
+| [Greek Grammar of Roger Bacon f.22](https://sourcelibrary.org/book/69ac7fdd6a7dbd267e0cfe15/page-number/22) | stored images run one leaf behind the text in frames 15–17 and 20–22; also the one wrong stored number | #5803 | **contained today**: English withheld on the 6 frames; the book was already held. New to #5803. Frames past 40 not read |
+| [69aebfde… f.57](https://sourcelibrary.org/book/69aebfdee997cc01b0cab898/page-number/57) | English plate page with a Russian transcription | #5803 | English withheld 2026-10-18; **the transcription is still served** |
+| [Vat. ebr. 635 f.195](https://sourcelibrary.org/book/6ac4f7d2e4016f24bafabc80/page-number/195) | the same page captured twice | #5056, whose pairs come from OCR, so an image-only book is not seen | open |
+| 5 British Library Tibetan pages (f.1, 2, 2, 266, 444) | two leaves on one board; 3 not opened | none open (#5132 closed as a map entry) | open |
+| [Loeb Cicero f.175](https://sourcelibrary.org/book/6a089ad2c00e102b3bb2395c/page-number/175), [Allard Pierson f.9](https://sourcelibrary.org/book/69b525aa29577f283b57a5f6/page-number/9) | an opening in one frame; the Loeb is kept that way on purpose | none open (#2454 parked) | open |
+
+**What it can and cannot decide.**
+- *Alignment.* About 2 in 100 pages with a transcription (0.5–5.8) carry text from another leaf, in line with #5803's 1% of books from its Clef screen. This draw offers no case for a larger repair, and none against finishing those under way.
+- *Numbering.* This is where the draw finds most: the toolbar's number is the scan count, so it differs from the print on 95% of numbered leaves. A stored printed number is usually right (1 wrong of 35), but two in three numbered leaves have none. Owner: #4291.
+- *Whether it is falling.* A month of 200 will not show it. Telling 2% from 1% takes about 2,300 pages a side, roughly a year of monthly draws pooled. A single month can show a large jump in a defect, not a slow fall. Only 67 of 200 pages carry English, so its interval will stay the widest.
+
+**A method slip in this row, found after the run.** The judge was told it was reading the English shown to readers, but it got the stored model output, notes and tags included (`translation.data`), not the words the reader's parser leaves. On 62 of the 67 pages the two differ; the median page loses 24% of its characters, and the 4 largest cases read by hand lost notes and markup, not book text. One page (slot 149, a photograph of a hand) has only a note, so a reader gets no English there and the real n is nearer 66. The 0/67 was not re-judged. The words a reader gets are inside what the judge read, so the slip should not hide another leaf's English, but that is reasoning, not a measurement. From the next row the script goes through `getTranslationText`, so the judge reads what the reader gets, and a model's note can no longer count for or against a page.
+
+**Limits.** Books count equally, not by readers. A carried sentence is `this_text` by the registered definition, so the small page-edge drift of #5021 is not measured here. One page a book reads a book-level fault once, which is why 6 bad frames in one book count as 1. Withheld English is not judged: of the 10, 1 was withheld for another leaf's text and 9 for lane or stale reasons.
+
+**Changes after registration.** Fixed before the result was read as final, no verdict affected: `withheld` was recorded false on every page (the field is an object, not `true`); a stored language of `de` was grouped apart from German; the `#5021` coverage pattern also matched a `#5803` hold. Added to the report: the "none is stored" row, which the registration did not list.
+
+**Replicated?** No. First run. **Cost.** 258 `claude -p` Opus calls, about 15 s each, on the subscription: $24.61 API-equivalent, no paid API. The dereklomas@ weekly meter moved from 12% to 19% over the run, with this session and other jobs on the box included.
+
+Artifact: `scripts/eval/results/page-integrity/2026-11-04/`. Series: `_series-monthly-page-integrity.md`. Next run: `node --env-file=.env.production.local scripts/audit/page-integrity-draw.mjs --seed <new> --out <dir> --land`; cron on gex45, first of the month, 05:00 UTC.
+
 ## 2026-11-04 · The Opus-corrected Paddle table pages were served, after Claude arbitrated the Gemini flags (#6553)
 
 Derek's steer on 2026-10-15 made Gemini's review a recorded second opinion rather than a gate.
@@ -161,6 +648,103 @@ the arbitration: all 23 flagged spans are printed on the page, and the 4,379 pag
 
 Found by the status-against-production check in `2026-11-04-experiment-kinds-6553.md` (§7), re-checked
 against `origin/main` f193ddebc.
+
+## 2026-11-04 — Pace guard meters, #7872/#8018 measured, Sonnet main sessions, gex45 GPU (#7869)
+
+PRIOR ART: `~/sourcelibrary-ops/bin/opus-usage-by-job.py`, whose dedup and weighting (out×5 + in + cache_write×1.25 + cache_read×0.1) `scripts/eval/job-transcript-efficiency-7869.py` reuses. Also PR #7872's 45-transcript replay and PR #8018's 12% estimate, which are the forecasts tested here, and ops `costs/subscription/2026-10-31-value-audit.md`.
+
+Measured 2026-11-04 between 10:30 and 10:50Z on main (clawdbot) and gex45. From main I could not ssh into cloudlayer or l7a (`Permission denied (publickey)`), and the mesh does not run scripts, so those two boxes are reasoned about, not measured.
+
+## 1. Why the pace guard could not read its meters
+
+**gex45, `burn-unknown` while dereklomas burned about 4%/h.** The guard keeps its own samples (`/root/claude-pace/<email>.hist`), and it adds one only when a paced `claude -p` call runs. Its samples for dereklomas stop at 11-03 15:00 and resume at 11-04 08:55. After a gap like that, the 3-hour window holds less than an hour of samples, so for the first hour of every new burst the burn rate reads as unknown. The 10:28 `.slots` file was just the cache from the last paced call, at about 09:50, when the window spanned 0.92 h.
+
+Between 09:50 and 10:35 no paced call ran at all, yet the account rose from 18% to 21%. That spend came from job main sessions. On cloudlayer, l7a and gex45, `claude-job.sh` runs them with `CLAUDE_BIN=/root/.local/bin/claude`, the real CLI, so the guard never saw them. At the next paced call (10:37) the guard did cut: `2 burn=5.40%/h,budget=0.55%/h,week=21%`.
+
+**main, `burn-unknown` for team@.** The cause is the same sparse sampling. team@ reads 0% all day, and its samples sit at 01:30 and then 10:30.
+
+**cloudlayer, `meter-error`.** In climits on main, the grant for derek@playpowerlabs.com is revoked: `HTTP 400 … invalid_grant, Refresh token not found or invalid`. The account therefore reaches the meter as `ok: false`. The old guard looked for the account and its `ok` flag in one expression, so a missing account and an unreadable one gave the same bare `meter-error`. Code cannot fix this. Someone has to run `climits add derek@playpowerlabs.com` on main. The climits log also warns that the team@ and derek@sourcelibrary.org grants expire in under 3 days.
+
+**Does a home chosen with `JOB_CLAUDE_HOME` / `CLAUDE_CONFIG_DIR` get metered under its own account?** Yes. The guard reads `$CLAUDE_CONFIG_DIR/.claude.json`, and `claude-job.sh` exports the job's recorded home before every call. Two cases show it: on gex45, the milolomas jobs keep their own `.slots` beside dereklomas's, and this job on main is metered as team@. On the guests, though, that applied only to children until now, because the main session bypassed the guard whatever its home.
+
+**What changed (this PR):**
+- Burn comes from the densest samples available:
+  - on main, climits' 5-minute `history.jsonl`, read on every decision;
+  - else `burn_pct_per_h` in the meter, which `box.sh push-limits` now computes from that history before it copies the meter out (`job-where.sh` already read this field, but nothing had ever written it);
+  - else the box's own samples, with 30 minutes of them required instead of an hour.
+- A job's main session (`CLAUDE_PACE_AGENT=1`, set by `claude-job.sh` only when it calls through the guard) takes a slot from a separate `main` pool of the same size. An over-pace account then runs at most `slots` main sessions per box. The rest wait at their next stage start, re-deciding every minute and logging every 10 minutes. Their children use the child pool, so the two cannot deadlock.
+- On the guests, `claude-job.sh` now calls through the guard wherever `/usr/local/bin/claude` links to it.
+- `install-claude-job.sh` installs the guard wherever that link exists. The guard had been copied by hand once, on 10-27, and no later fix reached any box.
+- Fail-open stays, and it is now named:
+  - `.slots` gives the reason (`meter-error:ValueError:account-not-ok-in-meter`, `meter-error:ValueError:meter-stale:160m`, `burn-unknown:span=…`);
+  - every fail-open decision goes to `/root/claude-pace/failopen.log`;
+  - `claude-job.sh where` prints `pace=<slots>/<why>/<age>`.
+- No API calls were added. The guard reads only the meter file, which climits already polls every 5 minutes. The one call at job start (the login preflight, one Sonnet "OK") is now marked unpaced, so a full queue cannot hold it past its 120 s and get it misreported as a login failure.
+
+**Over-pace logins are cut. Before the install, this was shown with the patched guard against the live meter, the real accounts and a stub CLI:**
+
+| login | before (installed guard) | patched |
+|---|---|---|
+| derek@sourcelibrary.org (main) | `12 burn-unknown` | `2 burn=2.06%/h,budget=0.45%/h,week=84%` |
+| team@sourcelibrary.org (main) | `12 burn-unknown` | `12 burn=0.00%/h,budget=0.68%/h,week=0%` |
+| milolomas (main) | `6 burn=0.55%/h…` | `4 burn=0.69%/h,budget=0.26%/h,week=87%` |
+| dereklomas, guest path (pushed meter, empty own history) | `burn-unknown` for the first hour | `2 burn=3.77%/h,budget=0.55%/h,week=21%,src=meter` |
+| derek@playpowerlabs (cloudlayer) | `12 meter-error` | `12 meter-error:ValueError:account-not-ok-in-meter`, logged |
+
+Four main sessions on derek@ with 2 slots: two ran, and two waited until a slot freed (`waited=5s pool=main slots=2` in `waits.log`). The post-merge `.slots` from each box are in the issue comment.
+
+## 2. Did #7872 / #8018 land? (merged 11-03 20:02 and 20:10Z)
+
+Each line is a job's main-chain Opus turns, split at 11-03 20:10Z. "After" covers 38 h.
+
+| box | window | turns | mean context | median | turns > 300K | max | weighted tokens / turn |
+|---|---|---|---|---|---|---|---|
+| main | 10-28 → 11-03 20:10 | 5,026 | 228K | 179K | 25% | 834K | 30.5K |
+| main | after, 4 jobs, all on the new settings | 355 | **113K** | 100K | **0%** | 232K | **17.1K** |
+| gex45 | 10-28 → 11-03 20:10 | 6,721 | 206K | 197K | 20% | 581K | 27.7K |
+| gex45 | after, all jobs | 530 | 182K | 169K | 15% | 389K | |
+| gex45 | after, 6 jobs on the new settings | 377 | **136K** | | **0%** | 293K | 29.8K |
+
+There were 12 fresh-session restarts (main 2, gex45 10) and 6 compactions (all on gex45).
+
+**The 12%.** #8018 forecast about 12% of box Opus use from capping context at 300K. The cap itself is fully in effect: no turn on any job that ran with the settings went over 300K, against 20–25% of turns before. Whether that became a 12% saving does not show yet:
+- On main, the cost per turn fell 44%, more than forecast. But that rests on 4 jobs and different work, so it is not a controlled comparison.
+- On gex45, the cost per turn rose 8% even though context fell 34%. The most likely cause is the cache rewrite at every fresh start and compaction, but this run did not split it out.
+
+Jobs started before 20:10Z are still on the old wrapper (gex45 `wrong-leaf-find-5021`, at 296K mean after the cut). The week-over-week comparison on or after 11-10, already listed on the issue, is still the real test.
+
+## 3. Main sessions on Sonnet
+
+Main sessions take 97% of job Opus on main and 79% on gex45; the rest is subagents. A **wait turn** is a turn whose tool calls are all Bash commands that poll CI or a runner, sleep, merge, push, comment, or read a log tail. Wait turns take **8.1%** of main-chain Opus on main (486 of 5,381 turns) and **9.1%** on gex45 (624 of 7,251 turns).
+
+A per-job header cannot catch only those turns. Jobs with at least 20% wait weight account for 5.4% (main, leaving out the Opus-only `spare-audit-*` rounds) and 5.5% (gex45) of main-chain Opus. About half of those jobs are judgement work that happens to wait a lot (`repeat-check-judge`, `article-german-7954`, `tib-wave3-7263-mv`). The truly mechanical ones are runners and movers: `greek-cli-redo-5813` (54% wait), `spare-7341` (67%), `xfer-7611-texts` (51%), `land-7499`, `agy-drain-7911`.
+
+**Saving.** Assuming Sonnet draws on the weekly limit at its list-price ratio (3:5 of Opus; not measured on the subscription), a switched job costs 40% less:
+- the mechanical jobs alone: about 2–3% of main-chain Opus, so **about 1% of box job Opus**;
+- the ceiling, if every wait turn ran on Sonnet: about 3.5%.
+
+That is small next to the fresh-session work. **Risk:** a whole-job switch also moves that job's few judgement turns to Sonnet. The job may follow the headless rules (done file, state file, `-s` sign-off) less reliably. A missed done file costs a resume, which is worth more than the saving. So the header is opt-in, defaults to Opus, and is for runner, CI, merge and transfer briefs only. No existing job or lane changes.
+
+## 4. GPU on gex45, 24 h to 11-04 10:45Z (report only)
+
+There is no continuous GPU utilization log on the box. What it does log is `gpu-queue.log` (task start and end) and each SigLIP shard's `gpu_s` / `wall_s`.
+
+| | minutes | share |
+|---|---|---|
+| SigLIP2 full page run (22 runs, 20 of them yielded) | 601 | 42% |
+| Latin first-read arm c (PERO drafts, 20 chunks, 1.56 s/page) | 521 | 36% |
+| LaBSE, zh-ditto, zh re-OCR (one each) | 21 | 1% |
+| nothing running (47 gaps, mean 4.5 min, max 15) | 212 | 15% |
+
+The log window starts 11-03 12:09, so the rows sum to about 22.6 h.
+
+While SigLIP runs, the card is busy: across 119 shards, `gpu_s` is 95% of wall time, at 41.8 img/s against the 44 img/s design figure.
+
+**The queue is not starving.** SigLIP backfill chunks are always pending. The idle time is scheduler latency: the queue runs from cron every 5 minutes, and SigLIP yields to every OCR chunk the filler adds. Each yield costs a restart and a model reload. At 10:10Z the OCR filler logged `no enabled route has pages left`, so from then on SigLIP has the card to itself.
+
+The 0% sample came while the queue ran `153-zh-print-arms-7263`, a vLLM server holding 3.3 GB between requests, right after SigLIP had yielded at 10:44. Every task's logged `vram=2MiB` is read after the task exits, so it says nothing about use. PERO's GPU use during the arm-c chunks is not logged. The box's load average was 90–128 on 20 threads, so CPU, not the card, is the likely limit for PERO's feeders. That was not measured.
+
+Reproduce: `python3 scripts/eval/job-transcript-efficiency-7869.py 2026-10-28T10:40` on a box (or `ssh root@<box> python3 - … < script`). It writes JSON. The tables above come from that JSON, and the GPU table from `gpu-queue.log`.
 
 ## 2026-11-04 · The Flash-low correction of Neyphug rGyud Tsha was written after all (#6553)
 
