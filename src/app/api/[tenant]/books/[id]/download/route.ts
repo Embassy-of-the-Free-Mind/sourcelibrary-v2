@@ -3,6 +3,7 @@ import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
 import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
@@ -2487,7 +2488,7 @@ async function downloadGET(request: NextRequest, { params }: RouteParams) {
     // Member-or-purchased gate applies ONLY to premium formats (#3290). NC-free
     // image formats bypass this too (charging for an NC scan would cross the
     // commercial line).
-    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    if (isPremiumFormat(format) && downloadChargesEnabled() && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
