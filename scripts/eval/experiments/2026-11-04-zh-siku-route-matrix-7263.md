@@ -3,7 +3,7 @@ stage: ocr
 measure: [judged, judged_vs_reference]
 languages: [zh, lzh]
 scripts: [Hani]
-canons: [siku]
+canons: []
 n_books: 120
 n_pages: 120
 verdict: "On the Siku pages read by Gemini, nothing cheaper than an Opus read qualifies under the preregistered rule. Stored text gives 30/60 wrong-meaning English pages and 174 source-caused major defects; Paddle > Flash low 17 and 58; Opus fresh 8 and 13; Paddle > Opus 15 and 7; stored > Opus 11 and 15. The mixed route fails on set B (M-PO 9 and 16, M-O 8 and 21, best arms 4 and 3). The rule's answer is Paddle > Opus ($3.98 per 1,000 pages with translation), because only it passes the Kanripo test, and Kanripo governs. That choice among the three Opus routes is fragile: their differences are not separated on 60 pages. The gap between Opus and the cheap routes is. After an Opus read, the translator causes 51-64 major defects and the source 7-15."
@@ -13,7 +13,7 @@ superseded_by: null
 issue: [7263, 5274]
 feeds: route
 router_evidence: "none — exported to router-table/evidence/zh-siku-route-matrix-7263.score.json, which rules.json does not name; the brief moves no table"
-defect_rates: "scripts/eval/zh-siku-route-matrix-7263/results/score.json"
+defect_rates: "scripts/eval/zh-siku-route-matrix-7263/results/defect-rates.json"
 ---
 ## 2026-11-04 · Which route corrects the 93,277 Gemini-read Siku pages? Reader × draft, scored in English (#7263)
 

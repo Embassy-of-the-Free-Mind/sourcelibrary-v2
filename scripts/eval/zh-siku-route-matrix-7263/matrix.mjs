@@ -247,6 +247,9 @@ function score() {
   const out = { at: new Date().toISOString(), issue: 7263, prereg: 'scripts/eval/zh-siku-route-matrix-7263/PREREGISTRATION.md', cutoff: mix.cutoff, m_sent_set_b: mix.rows.filter((r) => r.send).length, voids, controls, retest, en_controls, transcription: O, m_transcription: mOcr, m_transcription_setA: mOcrA, cer: cerT, m_cer: mCer, english: table, english_setA: tableA, english_setB: tableB, english_setA_held_split: held60, m_english: mEn, m_english_setA: mEnA, rule, qualifying_by_price: qualifying, cheapest_qualifying: qualifying[0] ?? null, po, print_three: printWrong, price: pr, stale_english: stale, ledger };
   fs.mkdirSync(RES, { recursive: true });
   fs.writeFileSync(path.join(RES, 'score.json'), JSON.stringify(out, null, 1));
+  const rate = (e) => { const n = Object.entries(e.fidelity).reduce((x, [, c]) => x + c, 0), per = (k) => +((1000 * (e.severity[k] || 0)) / e.words).toFixed(2); return { pages: e.n, words: e.words, misleads_per_1k: per('misleads'), wrong_text_per_1k: per('wrong_text'), fidelity_mean: +(Object.entries(e.fidelity).reduce((x, [f, c]) => x + f * c, 0) / n).toFixed(2) }; };
+  const rates = (g) => Object.fromEntries(Object.entries(g).map(([a, e]) => [a, rate(e)]));
+  fs.writeFileSync(path.join(RES, 'defect-rates.json'), JSON.stringify({ about: '#7263: per route, misleads and wrong_text defects per 1,000 English words and mean fidelity, blind Opus judge with the scan, one fixed translator (3.8 Flash low). all60 = sets A + B; m_setB = the mixed route on set B.', cells: { all60: rates(out.english), m_setB: rates(out.m_english) } }, null, 1));
   fs.writeFileSync(path.join(RES, 'ledger.json'), JSON.stringify(ledger, null, 1));
   sideBySide(selected, ocr, en, enRow, sigB);
   evidence(out, allPages);
