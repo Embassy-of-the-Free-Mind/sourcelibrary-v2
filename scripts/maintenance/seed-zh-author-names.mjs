@@ -9,8 +9,8 @@
  * (#8035). `books.author` is the catalogue's record and is not changed; the name goes in `localized.zh.author`.
  *
  * Measured 2026-11-04: of 12,972 live Chinese books, 12,388 have a purely Han author, 357 mixed, 217 Latin only, 10 none.
- * Every key below was read by hand against the book's title. A name not here stays as stored: names I could not vouch
- * for (Shao Pingxuan, Qiu Weiling, Wang Xi, Plenck) are left out, not guessed.
+ * Every key below was read by hand against the book's title. A name not here stays as stored: names not established
+ * (Plenck, M. de Guignes) are left out, not guessed. Wang Xi was a byline error, corrected to 王希明 by zh-author-identity-8035.mjs.
  *
  *   node --env-file=.env.production.local scripts/maintenance/seed-zh-author-names.mjs           dry run
  *   ... --apply
@@ -209,6 +209,30 @@ export const ZH_AUTHOR = {
   'Kubo Tenzui (久保天随, 1875–1934)': '久保天随',
   'Endō Ryūkichi (遠藤隆吉, 1874–1946), ed.': '遠藤隆吉 編',
   '大正一切經刊行會 (Taishō Issaikyō Kankōkai)': '大正一切經刊行會',
+  // Left as stored by the first pass; read from the book. OCR unless a comment says otherwise.
+  'Shao Pingxuan': '邵平軒',
+  'Qiu Weiling': '邱煒萲', // page image 海澄 邱煒萲 菽園; "Weiling" misreads 萲
+  'Lei Feng': '雷豐',
+  'Chen Fuxin': '陳復心',
+  'Chen Zhizun': '陳之遵',
+  'Zhou Jinquan (pub.)': '周近泉 刊',
+  'Kunshan National Learning Association': '崑山國樂保存會 編校',
+  'M. Yang (engraver)': '石埭楊氏 刻',
+  // From knowledge of the work or the person, read against the title.
+  'Baegun (백운)': '白雲景閑',
+  'Ming Imperial compilation': '明 敕編',
+  'Paramiti (tr.); Shi Jiehuan': '般剌蜜帝 譯；釋戒環 解',
+  'Faying & Puhui (Song-Yuan)': '法應；普會 編',
+  'Porter, Henry Dwight, 1845-1916': '博恒理',
+  'Chen Huan-Chang': '陳煥章',
+  'Liezi (attrib.); Zhang Zhan (comm.); Japanese ed. 1912': '託名列子；張湛 注',
+  'Sun Zi': '孫子',
+  'Various Taoist Masters': '諸家',
+  'Various': '諸家',
+  'various (Daoist); incl. 譚峭 Tan Qiao': '譚峭等',
+  'Shi Hu yi; Lin Jie yin zao; Chen Tong kan (施護譯; 林傑印造; 陳通刊)': '施護 譯；林傑 印造；陳通 刊',
+  'Xuanzang yi; Chen Shi yin zao (玄奘譯; 陳實印造)': '玄奘 譯；陳實 印造',
+  '[Hsüan-tsang übers.] ([玄奬譯])': '玄奘 譯',
 };
 
 async function main() {
