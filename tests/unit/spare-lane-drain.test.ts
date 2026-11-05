@@ -34,6 +34,7 @@ m.DRY = True
 m.this_box_account = lambda: "a@x"
 m.account_limits = lambda: ("a@x", limits)
 m.lane_jobs = lambda: []
+m.os.getloadavg = lambda: (0.0, 0.0, 0.0)  # the lane waits on a busy machine, and a CI runner can be one
 m.pick_from_needs = lambda tried, area: ({"number": 1, "title": "an issue"}, "needs")
 m.pick_issue = lambda tried: {"number": 1, "title": "an issue"}
 m.log = lambda s: print(s.split(" ")[0] + " " + s.split(" ")[1])
