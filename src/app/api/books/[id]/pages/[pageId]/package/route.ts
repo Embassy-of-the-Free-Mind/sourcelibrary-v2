@@ -1,3 +1,4 @@
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import archiver from 'archiver';
@@ -212,7 +213,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     }
-    const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+    const isMember = sessionHasMemberBenefits(session?.user);
     const isExemptEditor = userId ? await isInnerCircle() : false;
     const isPurchased = !userId || isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', bookId);
     if (userId && !isMember && !isExemptEditor && !isPurchased) {
