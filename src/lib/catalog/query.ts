@@ -148,6 +148,17 @@ export async function browseCatalog(f: CatalogFilters, sort: CatalogSort, page =
   return { books: await attachCardVariants(rows), total: count || 0 };
 }
 
+/**
+ * Supabase sits behind Cloudflare, whose firewall refuses requests that look
+ * like SQL injection (`'; DROP TABLE books;--`, measured 2026-10-18) with an
+ * HTML block page. That is a search nothing can match, not a failure: callers
+ * answer it as an empty result rather than a 500.
+ */
+export function isUpstreamBlock(err: unknown): boolean {
+  const m = (err as Error)?.message ?? '';
+  return /Attention Required!|cf-error-details|Cloudflare/i.test(m);
+}
+
 /* ------------------------------------------------------------------- stats */
 
 export interface CatalogStats {

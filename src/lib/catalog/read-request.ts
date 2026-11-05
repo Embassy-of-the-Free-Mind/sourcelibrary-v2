@@ -50,6 +50,7 @@ const ERAS: [RegExp, number | undefined, number | undefined][] = [
   [/\benlightenment\b/, 1680, 1800],
 ];
 const STOP = new Set(('i im want wanted looking look find show give me some any anything all books book works work texts text ' +
+  'at their its his her them these those my your our very many lots kinds kind sort sorts pictures picture images image ' +
   'writings writing treatises treatise on about of the a an in and or for to with from that which are is was were by printed ' +
   'written published edition editions please something things stuff related regarding concerning have has been there what can you do').split(' '));
 const ALIASES: [RegExp, string][] = [
@@ -64,7 +65,8 @@ const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 export function readRequest(text: string, vocab: RequestVocabulary, opts: { stems?: boolean } = {}): ReadRequest {
   const stems = opts.stems !== false;
   const out: ReadRequest = { languages: [], topic: '' };
-  let t = ` ${text.toLowerCase().replace(/[“”"?!]/g, ' ')} `;
+  // Punctuation is never part of a filter or a search word ("mushrooms, edible").
+  let t = ` ${text.toLowerCase().replace(/[“”"?!,;:()]/g, ' ')} `;
   const cut = (re: RegExp | string) => { t = t.replace(re, ' '); };
   let m: RegExpMatchArray | null;
 
