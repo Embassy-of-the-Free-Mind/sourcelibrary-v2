@@ -282,6 +282,12 @@ const nextConfig: NextConfig = {
         source: '/fonts/google/:file',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      // The covers image behind the /about and homepage walls. Versioned file name,
+      // so a new image is a new URL and this one can be cached for good.
+      {
+        source: '/about/covers-atlas.v1.avif',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
@@ -486,6 +492,8 @@ const nextConfig: NextConfig = {
       { source: '/vision', destination: '/articles/vision', permanent: true },
       { source: '/specimen/aldine', destination: '/articles/aldine-roman', permanent: true },
       { source: '/collections/drebbel/beeckman', destination: '/articles/beeckman-on-drebbel', permanent: true },
+      // /about is English only for now; a language prefix would otherwise 404.
+      { source: '/:lang(es|la|nl|zh)/about', destination: '/about', permanent: false },
       { source: '/about/meaning', destination: '/articles/search-by-meaning', permanent: true },
       { source: '/about/by-the-numbers', destination: '/articles/by-the-numbers', permanent: true },
       { source: '/blog', destination: '/articles', permanent: true },
