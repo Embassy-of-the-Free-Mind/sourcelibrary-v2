@@ -341,6 +341,12 @@ const nextConfig: NextConfig = {
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
+      // The main-site catalogue moved to /library; /catalog above stays for partner hosts.
+      {
+        source: '/library',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
       {
         source: '/author/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
