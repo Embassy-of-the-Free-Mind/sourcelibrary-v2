@@ -1869,6 +1869,15 @@ const NO_SEARCH_DECLARATION: FunctionDeclaration = {
   },
 };
 
+/**
+ * What a follow-up's first round may call. Not present_choices, which ends the
+ * turn with no answer, and not add_to_notebook, which saves without looking.
+ */
+const FOLLOWUP_FIRST_ROUND_TOOLS = [
+  ...TOOL_DECLARATIONS.map(t => t.name as string).filter(n => n !== 'present_choices' && n !== 'add_to_notebook'),
+  NO_SEARCH_TOOL,
+];
+
 const FOLLOWUP_SEARCH_LINES = `**This is a follow-up, and a follow-up gets its own search.** Your earlier answers in this thread are only text now: the pages behind them are no longer in front of you, and quotes and links must come from a tool result this turn. So if this message asks anything about the texts, an author, an idea, a symbol, a picture or what the library holds, in any language and however short, call a tool this turn BEFORE you write the answer, even if your earlier answers or your own knowledge seem to cover it. Write the query from what the thread has established: "what does he say about it" has to become the author's name and the subject. A closer question about a book already discussed still needs its pages: search for it, then read_nearby_pages.
 
 Your first step this turn must be a tool call. When the message needs nothing from the library (thanks or small talk, or a request to rewrite, shorten, translate or reformat what you already wrote), call no_search_needed and then answer. Without a search, never say what the library holds or lacks.`;
@@ -2062,7 +2071,7 @@ export async function* streamAgenticResponse(
       contents,
       config: {
         tools: [{ functionDeclarations: mustChooseTool ? [...TOOL_DECLARATIONS, NO_SEARCH_DECLARATION] : TOOL_DECLARATIONS }],
-        ...(mustChooseTool && round === 0 ? { toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY } } } : {}),
+        ...(mustChooseTool && round === 0 ? { toolConfig: { functionCallingConfig: { mode: FunctionCallingConfigMode.ANY, allowedFunctionNames: FOLLOWUP_FIRST_ROUND_TOOLS } } } : {}),
         temperature: TEMPERATURE,
         ...(fastToolRounds ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } } : {}),
       },

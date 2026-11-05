@@ -66,6 +66,8 @@ So a turn that was searching anyway costs nothing extra. The price is paid by th
 
 Every dead slug came from a turn that had not searched, which is the mechanism this change removes. Author and page-number links were not checked: a first attempt over HTTP hit the site's rate limit (429), so that pass was discarded. No blank answers in either arm. Sourcing notes fell from 26 of 50 answers to 10.
 
-**Spend.** $1.66 by the turns' own usage numbers: A and P $0.968 on 100 turns, B $0.648 on 50, smoke $0.045 on 4. Side effects: one `ai_usage` row per turn and `embassy_errors` rows with `threadId` null when a citation was flagged, which the admin health count sees for 24 hours.
+**Spend.** $1.71 by the turns' own usage numbers: A and P $0.968 on 100 turns, B $0.648 on 50, smoke $0.045 on 4, final-code check $0.052 on 4. Side effects: one `ai_usage` row per turn and `embassy_errors` rows with `threadId` null when a citation was flagged, which the admin health count sees for 24 hours.
+
+**Changed after the run.** The first round's allowed tools now exclude `present_choices` and `add_to_notebook`, because the first ends a turn with no answer. Arm B ran before this. No B turn's first round called either tool, so the restriction would not have blocked any of them. 4 more B turns on the final code ran without error ($0.052).
 
 **Next.** Read `toolCalls` on real follow-ups once this ships: the share of research follow-ups with no search, the `no_search_needed` reasons, and `usage` tokens per turn. That is the production measure this replay could not make.
