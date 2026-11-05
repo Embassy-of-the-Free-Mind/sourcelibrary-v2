@@ -10,6 +10,10 @@ import { getPageData, getTrimmedPageId } from './page-data';
 import { type Locale, localePath } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle, hasLocalizedEdition } from '@/lib/localized';
+import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
+import { citationYear } from '@/lib/publication-date';
+import { getShortUrl } from '@/lib/shortlinks';
+import type { PrintedPage } from '@/lib/types';
 
 export const preferredRegion = 'fra1';
 
@@ -73,10 +77,28 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // for all; this gate controls *indexing*).
   const indexable = (page as unknown as { seo_indexable?: boolean }).seo_indexable === true;
 
+  // Reference managers read these to save a page with its book, author and page
+  // (#8161). Same rules as the book page's scholarMeta: a holder or issuer is no
+  // author, and only a bare year is a date. `citation_firstpage` is the number
+  // printed on the leaf; a scan index is not a page anyone can find, so a page
+  // without one says nothing. A partner's reading room keeps its own links.
+  const printedLabel = (page as unknown as { printed_page?: PrintedPage }).printed_page?.label?.trim();
+  const citeYear = citationYear(book.published);
+  const scholarMeta: Record<string, string> = ctx?.id ? {} : {
+    citation_title: book.title,
+    ...(book.author && bylineClaimsAuthorship(book.author) ? { citation_author: book.author } : {}),
+    ...(citeYear ? { citation_publication_date: citeYear } : {}),
+    ...(book.language ? { citation_language: book.language } : {}),
+    ...(printedLabel ? { citation_firstpage: printedLabel } : {}),
+    citation_fulltext_html_url: `https://sourcelibrary.org${pageUrl}`,
+    citation_public_url: getShortUrl((book as unknown as { id: string }).id, pageNum, pageId),
+  };
+
   return {
     title: `${title} - Source Library`,
     description,
     robots: { index: indexable, follow: true },
+    other: scholarMeta,
     alternates: {
       canonical: pageUrl,
     },

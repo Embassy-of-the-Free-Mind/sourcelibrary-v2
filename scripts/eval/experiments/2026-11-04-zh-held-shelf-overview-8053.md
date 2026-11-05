@@ -7,7 +7,8 @@ canons: []
 n_books: 48
 n_pages: 192
 verdict: "Held 史記, 漢書, 後漢書 and 三國志 Siku volumes (Paddle OCR 2026-10-28, gemini-3.8-flash-low English 2026-10-29, all written before the #7914 stop) were read against the image by Opus reviewers, 8 books × 4 pages per stratum. Serious-page rates: 13% [3–22], 13% [0–25], 6% [0–19] and 6% [0–16]. Live Siku control: 19% [3–38]. Printed OCR-only books under hold paddle-print-6101: 13% [3–22]. Every interval overlaps the control's. Wrong leaf 0 of 192 pages. Reread κ is 0.65 (below 0.7). The second reader confirmed 33 of 35 serious calls and reclassified none. Model-free over all 24,602 pages: the 表 (table) volumes are where low witness agreement and numeral garbage concentrate, and 674 pages carry the 欽定四庫全書 margin title garbled into body text. 2026-11-04."
-status: undecided
+status: adopted
+landed: "scripts/maintenance/publish-held-chinese-8053.mjs"
 decision: "Recommendation to Derek on #8053: release the four histories with the English labelled draft (B), but keep the 表 volumes held (C), and publish without lifting the pipeline hold so that nothing paid is queued. Release the printed OCR-only books as facsimile + OCR (A). One page was contained (史記 vol 9 p24)."
 feeds: [surface, detector]
 supersedes: []

@@ -15,7 +15,7 @@ export async function GET() {
         { 'membership.joined': true },
         { 'membership.active': true },
       ],
-      'membership.profile.visible': { $ne: false },
+      'membership.profile.visible': true,
     },
     {
       projection: {

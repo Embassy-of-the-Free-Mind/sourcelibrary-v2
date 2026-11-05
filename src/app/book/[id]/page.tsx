@@ -1,4 +1,5 @@
 import { Suspense, cache } from 'react';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
@@ -11,7 +12,7 @@ import { Book, Page, TranslationEdition, imageAccessFor } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
-import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, assertableYear, historicalTimelineDate } from '@/lib/publication-date';
 import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
 import { bylineDynasty, sibuClass, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
@@ -955,6 +956,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Text-only works serve their whole translation in one server render, so
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
       // English edition, English leaf: the transcription is the text (#7100).
       .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));
@@ -1448,17 +1450,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
     };
     const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
-    // Original (historical) publication / composition — always first. Prefer the
+    // Original (historical) composition / publication — always first. Prefer the
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
+    // The label follows the date actually shown: 成书/Written for a composition
+    // date, 出版/Published only for a printing (#8184).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (shownPublished ?? '')).trim();
-    const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
-    if (histInformative) {
+    const hist = historicalTimelineDate(compDate && localizeDateDisplay(compDate, lang), shownPublished);
+    if (hist) {
+      const isPrinting = hist.kind === 'publication';
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
-      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
-      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: t.published, detail });
+      const detail = isPrinting ? ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined) : undefined;
+      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: hist.text, label: isPrinting ? t.published : t.written, detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
     // A verified `prior_translation` credit carries the richest info; otherwise
@@ -1996,14 +2000,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </p>
               )}
 
-              {/* No serious finding standing (#7896): say the book was checked, or that it was not. One quiet line,
-                  so the absence of a warning is not read as a clean bill. Only where there is a transcription. */}
-              {!bookWarning && hasOcr && (
-                <p role="note" data-quality-check={bookChecked ? 'checked' : 'unchecked'} className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
-                  {bookChecked
-                    ? qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })
-                    : qualityStrings.qualityNotChecked}
-                  {bookChecked && !isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
+              {/* A completed check with no serious finding (#7896). A book with no check says nothing here:
+                  the notice beside the text in the reader already says it is an unreviewed AI translation. */}
+              {!bookWarning && hasOcr && bookChecked && (
+                <p role="note" data-quality-check="checked" className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                  {qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })}
+                  {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
                 </p>
               )}
 

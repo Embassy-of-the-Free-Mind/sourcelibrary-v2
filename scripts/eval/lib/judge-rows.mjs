@@ -24,6 +24,8 @@
  *               judge's own accept and wrong_text severity). Another scale stays null until a mapping is MEASURED
  *               (severity-cal-7263's Step T x route-judge cross-table), and outcome_null_reason says why.
  *   book_id     required. cost { judge_list_usd, candidate_list_usd, quota_points } (null = not measured).
+ *   router      { cell, route, script, basis } or null: the router-table cell and route the test meant this page to inform,
+ *               as the writer knew it. A HINT: build.py's pickup looks (test.evidence, cell, route) up in rules.json first.
  * The `draw` field stays what the sampler writes (its draw keys); `selection` is the draw KIND.
  */
 import crypto from 'node:crypto';
@@ -90,11 +92,12 @@ export function testRow(f) {
     page_id: f.page_id ?? null, book_id: f.book_id, page_number: f.page_number ?? null,
     cell: f.cell, route: f.route, lane: `test:${f.test.id}`, lang: f.lang ?? null, task: f.task ?? 'ocr',
     script_type: f.script_type ?? null, script_source: f.script_type ? (f.script_source ?? 'test record') : null,
-    test: { id: f.test.id, issue: f.test.issue ?? null, record: f.test.record ?? null, arm: f.test.arm ?? null, evidence: f.test.evidence ?? null, stratum: f.test.stratum ?? null, rep: f.rep ?? 0, judged_at: f.judged_at ?? null },
+    test: { id: f.test.id, issue: f.test.issue ?? null, record: f.test.record ?? null, arm: f.test.arm ?? null, evidence: f.test.evidence ?? null, stratum: f.test.stratum ?? null, rep: f.rep ?? 0, judged_at: f.judged_at ?? null, verdict_id: f.test.verdict_id ?? null },
     settings,
     judge: { instrument: f.judge.instrument, model: f.judge.model ?? null, model_reported: f.judge.model ?? null, prompt_sha: f.judge.prompt_sha ?? null },
     verdict: f.verdict, outcome, outcome_null_reason,
     text_hash: f.text_hash ?? null,
+    router: f.router ? { cell: f.router.cell, route: f.router.route, script: f.router.script ?? null, basis: f.router.basis ?? null } : null,
     cost: { judge_list_usd: f.cost?.judge_list_usd ?? null, candidate_list_usd: f.cost?.candidate_list_usd ?? null, quota_points: f.cost?.quota_points ?? null },
     // judged_at stays null on purpose: the sampler's validRecord requires it, so a checkout from before origin existed
     // (a box that has not pulled) still drops test rows from its export and its 7-day call count. The time is test.judged_at.

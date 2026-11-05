@@ -16,7 +16,7 @@
  *   arms.mjs opus      --out=DIR                  texts/<key>.O.txt from set/reads
  *
  * Cheaper correctors on the same prompt and image (zh-reocr-cheap-arms, correct.mjs --draft-dir, --cli=agy):
- *   PFL paddle>agy-flash-low   PFM paddle>agy-flash-medium   SFL stored>agy-flash-low   PSN paddle>sonnet   SSN stored>sonnet
+ *   PO paddle>opus (zh-siku-route-matrix-7263)   PFL paddle>agy-flash-low   PFM paddle>agy-flash-medium   SFL stored>agy-flash-low   PSN paddle>sonnet   SSN stored>sonnet
  *   arms.mjs cheap-setup   --out=DIR [--arms=A,B] the arms (all, or those named) in plan.json; set-<arm>/manifest.jsonl and drafts/<page_id>.txt.
  *                                                The Paddle draft is the read itself: Pu on print (guard off), P on Siku
  *   arms.mjs cheap-collect --out=DIR --arm=ARM   texts/<key>.ARM.txt: corrected, or UNCHANGED serves the draft;
@@ -38,7 +38,7 @@ const T = (k, a) => path.join(OUT, 'texts', `${k}.${a}.txt`);
 const logRow = (r) => fs.appendFileSync(path.join(OUT, 'arms.jsonl'), JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n');
 const read = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null);
 const stage = process.argv[2];
-const CHEAP = [['PFL', 'paddle>agy-flash-low', 'paddle'], ['PFM', 'paddle>agy-flash-medium', 'paddle'], ['SFL', 'gemini>agy-flash-low', 'stored'], ['PSN', 'paddle>sonnet', 'paddle'], ['SSN', 'gemini>sonnet', 'stored']];
+const CHEAP = [['PO', 'paddle>opus', 'paddle'], ['PFL', 'paddle>agy-flash-low', 'paddle'], ['PFM', 'paddle>agy-flash-medium', 'paddle'], ['SFL', 'gemini>agy-flash-low', 'stored'], ['PSN', 'paddle>sonnet', 'paddle'], ['SSN', 'gemini>sonnet', 'stored']];
 const draftArm = (kind) => (kind === 'stored' ? 'lite' : P.stratum === 'siku' ? 'P' : 'Pu');
 
 async function books() {

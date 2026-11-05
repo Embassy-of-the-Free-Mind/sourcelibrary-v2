@@ -132,7 +132,7 @@ own retention, and no script may run a bare `restic forget`** — always `--tag 
 
 | store | covered by | restic tag / where | frequency | retention |
 |---|---|---|---|---|
-| `books`, `deleted_books` | `backup-books.sh` → `/root/restic-backup.sh` (main) | `mongodump` | daily 04:00 | pruned by `restic-backup.sh` |
+| `books`, `deleted_books` | `backup-books.sh` → `/root/restic-backup.sh` (main) | `mongodump` | daily 04:00 — **empty 2026-10-02 → 11-03 (#8225, fixed 11-04: `278b4877` holds `books.bson.gz`, restore-proven)** | pruned by `restic-backup.sh` |
 | `pages`, `page_revisions`, `chapter_texts`, `entities`, `first_translation_attempts`, `gallery_images` | `backup-corpus-text.sh` (main) | `corpus-text`, streamed | weekly, Sun 06:00 | 6 weekly + 12 monthly |
 | **every other `bookstore` collection** (196 on 2026-10-29, ~44 GB: `audit_log`, `sweep_log`, `iiif_manifests`, `book_indexes`, `jobs`, `import_candidates`, users, collections, …) — enumerated with `listCollections` at run time, so new collections are included | `backup-mongo-rest.sh` (gex45, #7708) | `mongo-rest`, one uncompressed archive | weekly, Mon 03:00 | 8 weekly + 12 monthly |
 | `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | one snapshot at retirement (#5470) | same repo | once | — |
@@ -148,6 +148,27 @@ the script `restic dump`s the snapshot it just wrote and pipes it through
 the `-- PostgreSQL database dump` header and trailer, and counts every document per
 collection / row per table against the live estimates taken just before the dump. Results land
 in `/var/log/sourcelibrary/backup-rehearsals/` and a failure pages via ntfy.
+
+### Restore rehearsal, 2026-11-04 (#8196)
+
+A restore into a throwaway local mongod 8.0.4 (127.0.0.1:27018, aarch64, tools 100.10) worked for
+`books`, `deleted_books`, `books_warehouse`, `pages` and `page_revisions`: 0 failures, 600 random
+books (one page each) matched live text exactly wherever the page had not changed since the snapshot,
+and every stored `content_hash` was identical to live. What it also showed:
+
+- **The daily `mongodump` tag held nothing from 2026-10-02 to 11-03.** `/root/backups` became a symlink to
+  the Hetzner volume and restic stored the link, not the target (#8225). Fixed 2026-11-04: snapshot
+  `278b4877` (12.56 GiB) was restored the same day: 568,765 books + 3,200 deleted_books in 12 min, 1,000
+  sampled books all present live with equal title and author. Snapshots 10-02 … 11-03 stay empty.
+- **`restic dump` of the 18 GB pages archive takes ~21 min (~14 MB/s) and must not be run under a
+  foreground tool timeout**: a killed dump leaves a truncated file that `mongorestore` happily reads
+  as a shorter archive. Check the byte count against `restic stats <id> --mode restore-size`.
+- `pages` had 30.66M documents in the 2026-11-01 snapshot (not ~20.6M). Restore 16 min for the
+  documents, 23 min more to build 18 indexes: 39 min, 38 GB on disk. `page_revisions` (6.45M) 12 min streamed.
+- **Stored `content_hash` is not always `sha256(text)[:16]`**: about 10% of pages carrying a hash
+  (44 of 246 OCR, 39 of 290 translation in a 600-page sample) do not match the recomputed value,
+  identically in live. A restore reproduces that exactly; a hash check must compare restored against
+  live, not recompute and expect a match. About 45% of OCR texts carry no stored hash at all.
 
 ### How to restore each one
 

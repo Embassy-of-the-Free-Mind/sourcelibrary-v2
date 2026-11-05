@@ -9,7 +9,7 @@ import LanguageMenu, { HEADER_LANGUAGE_NAME } from './LanguageMenu';
 import SiteMenuPanel from './SiteMenuPanel';
 import { Search, X } from 'lucide-react';
 import { useChromeLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
-import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { catalogueHref, isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { trackEvent } from '@/lib/track-event';
@@ -38,8 +38,8 @@ interface NavLink {
 // the Library page).
 function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
   const links: NavLink[] = [
-    // The catalogue page. Moves to /library with #6866, which redirects /catalog.
-    { key: 'library', label: t.library, href: '/catalog', activePrefix: '/catalog' },
+    // A partner host swaps this for its own /catalog, below.
+    { key: 'library', label: t.library, href: '/library', activePrefix: '/library' },
     { key: 'gallery', label: t.gallery, href: '/gallery', activePrefix: '/gallery' },
     { key: 'collections', label: t.collections, href: '/collections', activePrefix: '/collections' },
     // Research notes, now Articles at /articles (#6887; /blog redirects there).
@@ -121,6 +121,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // `/explore` and a prefix-blind lookup would miss it.
   const isTenantHost = useIsEmbedded();
   const NAV_LINKS = buildNavLinks(t, locale)
+    .map(link => (link.key === 'library' && isTenantHost ? { ...link, href: catalogueHref(true), activePrefix: catalogueHref(true) } : link))
     .filter(link => !(isTenantHost && isGlobalOnlyNavHref(canonicalPath(link.href))));
   const isActive = (link: NavLink) => {
     const prefix = link.activePrefix || link.href;

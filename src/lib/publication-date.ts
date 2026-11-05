@@ -58,6 +58,31 @@ export function displayPublished(raw?: string | null): string | null {
 }
 
 /**
+ * The first entry on a book's history timeline, and WHICH KIND of date it is.
+ *
+ * The timeline prefers the work's composition date (when it was written) over
+ * the edition's `published` date (when this copy was printed). The label used
+ * to be "Published" either way, so /zh/book/vol-1-51 read
+ * "1657–1711，作者成年时期 / 出版": the author's adult years, called a
+ * publication date (#8184). Returning the kind with the text means the label
+ * is chosen from the same branch that chose the date, so a composition date
+ * cannot be labelled as a printing and vice versa — including when the
+ * composition value is a non-answer and the printed date is shown instead.
+ *
+ * `composition` is the (already localized) `date_display` of the composition
+ * layer; `published` is the raw `books.published`, cleaned here.
+ */
+export function historicalTimelineDate(
+  composition?: string | null,
+  published?: string | null,
+): { text: string; kind: 'composition' | 'publication' } | null {
+  const written = displayPublished(composition);
+  if (written) return { text: written, kind: 'composition' };
+  const printed = displayPublished(published);
+  return printed ? { text: printed, kind: 'publication' } : null;
+}
+
+/**
  * Year safe to put in a machine-readable citation field
  * (`citation_publication_date`, BibTeX `year`), or null.
  *

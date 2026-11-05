@@ -20,6 +20,7 @@ import { hasLocalizedCollectionName, localizedCollection, localizedTitle } from 
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed, useRoomResultHref } from '@/lib/EmbedContext';
 import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
+import { catalogueHref } from '@/lib/tenant-global-paths';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -1587,9 +1588,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                     </select>
                     <span>{t.perPage}</span>
                   </div>
-                  {/* /catalog has no localized twin; localePath returns it
+                  {/* The catalogue has no localized twin; localePath returns it
                       untouched, which is the honest outcome (i18n.md rule 5). */}
-                  <Link href={lp('/catalog')} className="text-sm text-accent-rust hover:underline">
+                  <Link href={lp(catalogueHref(isTenantSurface))} className="text-sm text-accent-rust hover:underline">
                     {t.browseFullCatalog}
                   </Link>
                 </div>
@@ -1845,7 +1846,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </>
           );
 
-          const bookSection = (
+          const conceptualSection = (
             <>
               {semanticDegraded && !semanticLoading && (
                 <p className="text-xs text-muted italic mt-2">{t.semanticDegraded}</p>
@@ -1859,6 +1860,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               {uniqueSemantic.map((sem: any) => (
                 <SemanticResultCard key={sem.book_id} result={sem} query={query} />
               ))}
+            </>
+          );
+
+          const textMatchSection = (
+            <>
               {hasBoth && (
                 <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
@@ -1987,7 +1993,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   ))}
                   {catalogTotal > 5 && (
                     <Link
-                      href={`${lp('/catalog')}?cq=${encodeURIComponent(query)}`}
+                      href={`${lp(catalogueHref(isTenantSurface))}?${isTenantSurface ? 'cq' : 'q'}=${encodeURIComponent(query)}`}
                       className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
                     >
                       {t.openAllCatalogueMatches(nf(catalogTotal))} <ChevronRight className="w-3.5 h-3.5" />
@@ -2018,33 +2024,29 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </div>
           );
 
+          // The query names what a keyword result IS (every word in its title or
+          // author, or an author page by that name): the reader came for that book,
+          // so it leads, ahead of essays about the subject and books like it.
+          const namesAKeywordResult = bookResults.length > 0 && (
+            namedLinks.some(r => r.page_type === 'author')
+            || assessMatchQuality(query, bookResults.map(b => [b.title, b.display_title, b.author].filter(Boolean).join(' '))) === 'strong'
+          );
+          const leadWithTextMatches = namesAKeywordResult && displayHint !== 'images_first';
+
           return (
             <div className="space-y-3">
               {weakMatchBanner}
               {namedSection}
+              {leadWithTextMatches && textMatchSection}
               {passageSection}
               {collectionCards}
               {siteSection}
               {narrationBlock}
-              {displayHint === 'images_first' ? (
-                <>
-                  {imageStrip}
-                  {bookSection}
-                  {catalogSection}
-                </>
-              ) : displayHint === 'not_in_collection' ? (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              ) : (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              )}
+              {displayHint === 'images_first' && imageStrip}
+              {conceptualSection}
+              {!leadWithTextMatches && textMatchSection}
+              {catalogSection}
+              {displayHint !== 'images_first' && imageStrip}
             </div>
           );
         })()}

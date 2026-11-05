@@ -11,7 +11,7 @@
  *
  * Writes OUT (default $JOB_SCRATCH/pooled-quality, else /tmp/pooled-quality):
  *   checks.json.gz      every book_checks row (projected) — page outcomes are derived in fit.py, not here
- *   verdicts.json.gz    every lane_judge_verdicts row (projected) — judged-pages and the confidence-7866 draw come from here
+ *   verdicts.json.gz    every live lane_judge_verdicts row (projected) — judged-pages and the confidence-7866 draw come from here
  *   convergence.json.gz the per-page decisions of every ocr-convergence set in the repo (scripts/batch/ocr-convergence/results)
  *   pages.json.gz       live state of every page any of the above read: script_type, OCR / translation model, updated_at,
  *                       content hash, and whether the judged text of a lane verdict is still the live text
@@ -27,6 +27,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { judgedTextIsLive } from '../../../maintenance/judge-verdicts-to-book-checks.mjs';
+import { verdictQuery } from '../../lib/judge-rows.mjs';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
 const arg = (k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
@@ -44,7 +45,8 @@ const checks = await db.collection('book_checks').find({}, { projection: {
   text_provenance: 1, exposure: 1, evidence_path: 1 } }).toArray();
 put('checks.json.gz', checks);
 
-const verdicts = await db.collection('lane_judge_verdicts').find({}, { projection: {
+// live rows only: origin:'test' rows (#7263) are per-page reads from finished tests, not what readers were served
+const verdicts = await db.collection('lane_judge_verdicts').find(verdictQuery({}), { projection: {
   kind: 1, page_id: 1, book_id: 1, page_number: 1, cell: 1, route: 1, lane: 1, run_id: 1, judged_at: 1, task: 1, stratum: 1,
   'judge.model_reported': 1, 'judge.model': 1, 'verdict.accept': 1, 'verdict.fidelity': 1, 'verdict.defects.severity': 1,
   'verdict.defects.class': 1, write: 1, plant: 1 } }).toArray();

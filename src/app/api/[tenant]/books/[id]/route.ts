@@ -62,6 +62,12 @@ export async function GET(
       // The reader's download panel: a partner's own book downloads without
       // sign-in inside the partner's embed (#7702).
       tenantId: 1,
+      // What the download panel offers. Without these the embed's drawer read
+      // a book with no pages and rendered no format at all (twin of the apex
+      // route's nav projection).
+      pages_count: 1, pages_ocr: 1, pages_translated: 1,
+      'translation_state.rung': 1, 'translation_state.english_original': 1,
+      year: 1, 'image_source.provider': 1, 'image_source.license': 1, 'image_source.rights_normalized': 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);

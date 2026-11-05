@@ -7,6 +7,8 @@ import { Search, Home, BookOpen } from 'lucide-react';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
+import { localeFromPathname, localePath } from '@/lib/locale-path';
+import { isResolvableSlug, parseDeadContentLink, searchTermFromSlug } from '@/lib/not-found-recovery';
 
 const QUOTES = [
   {
@@ -66,6 +68,8 @@ export default function NotFoundContent() {
   // Set after mount: each quote links to a book, and the server cannot know
   // whether a partner's subdomain is asking (its HTML would carry foreign books).
   const [quote, setQuote] = useState<(typeof QUOTES)[number] | null>(null);
+  // The closest book we hold for a dead /book/<slug> link (#8216).
+  const [suggestion, setSuggestion] = useState<{ href: string; title: string } | null>(null);
   const router = useRouter();
   const isEmbedded = useIsEmbedded();
   const embedHref = useEmbedHref();
@@ -82,6 +86,27 @@ export default function NotFoundContent() {
       body: JSON.stringify({ url, referrer }),
     }).catch(() => {});
   }, []);
+
+  // A dead link to a book or author usually names something we hold under
+  // another slug: Librarian answers, copied links, other AI clients. Never
+  // inside a partner's room, because the suggestion searches the whole library.
+  useEffect(() => {
+    if (isEmbedded) return;
+    const { pathname } = window.location;
+    const dead = parseDeadContentLink(pathname);
+    if (!dead) return;
+    setSearchQuery(searchTermFromSlug(dead.slug));
+    if (dead.kind !== 'book' || !isResolvableSlug(dead.slug)) return;
+    fetch(`/api/not-found/suggestion?slug=${encodeURIComponent(dead.slug)}`)
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => {
+        const held = data?.suggestion;
+        if (held?.slug) {
+          setSuggestion({ href: localePath(`/book/${held.slug}`, localeFromPathname(pathname)), title: held.title });
+        }
+      })
+      .catch(() => {});
+  }, [isEmbedded]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,6 +150,15 @@ export default function NotFoundContent() {
           </Link>
         ) : (
           <div className="mb-8 min-h-12" />
+        )}
+
+        {suggestion && (
+          <div className="bg-white rounded-xl border border-light p-5 mb-4 text-left">
+            <p className="text-sm text-muted mb-1">No book has this exact address. The closest we hold:</p>
+            <Link href={suggestion.href} className="font-serif text-lg text-accent-rust hover:underline">
+              {suggestion.title}
+            </Link>
+          </div>
         )}
 
         <div className="bg-white rounded-xl border border-light p-6 mb-6">

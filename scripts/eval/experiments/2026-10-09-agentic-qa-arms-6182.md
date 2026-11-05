@@ -7,7 +7,7 @@ canons: [chinese-buddhist, chinese-classics, sanskrit, pali]
 n_books: 111
 n_pages: 138
 verdict: "No verdict: the re-judged C38 anchor moved −0.12, past the 0.10 tolerance. Descriptively a Sonnet check on a Gemini draft adds +0.10 [+0.05, +0.16] fidelity and almost never worsens a page."
-status: undecided
+status: informational
 decision: null
 superseded_by: null
 issue: [6182, 6331]
