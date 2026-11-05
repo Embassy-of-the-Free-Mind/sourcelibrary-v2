@@ -13,6 +13,10 @@
  *   node                run.mjs judge     --out=DIR --judge=opus|flash [--home=...] [--concurrency=3]
  *   node --env-file=... run.mjs trace     --out=DIR --home=... --kr=DIR
  *   node                run.mjs score     --out=DIR
+ *
+ * Another set of arms (zh-siku-route-matrix-7263): --arms=tS=S,tF=F,... names the arms and sample.json's text fields. Then a
+ * source text a page already has from another arm is translated once; the packet carries one wrong-page swap and one repeat per
+ * arm with paired-arm.mjs's kind names and key fields; --floor=0.20 --max-calls=N --what=TEXT --shard=i/n apply. Without --arms nothing changes.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,7 +36,8 @@ const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
 const W = (f, x) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1));
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
-const SOURCES = { tP: 'P', tO: 'O', tFl: 'Fl' };
+const SOURCES = arg('arms') ? Object.fromEntries(arg('arms').split(',').map((x) => x.split('='))) : { tP: 'P', tO: 'O', tFl: 'Fl' };
+const CUSTOM = !!arg('arms'), FLOOR = Number(arg('floor', 0.35)), MAX_CALLS = Number(arg('max-calls', Infinity));
 const MODEL = 'gemini-3.8-flash-low';
 
 function draw() {
@@ -61,12 +66,19 @@ async function translate() {
   const s = J('sample.json'), file = path.join(OUT, 'translations.jsonl');
   const done = new Set(jsonl(file).filter((r) => r.text).map((r) => `${r.arm}:${r.page_id}`));
   const books = new Map();
+  const bySource = new Map(CUSTOM ? jsonl(file).filter((r) => r.text && !r.same_as).map((r) => [`${r.page_id}:${h(s.pages.find((p) => p.page_id === r.page_id)?.[SOURCES[r.arm]] ?? '')}`, r]) : []);
   let n = 0;
-  for (const p of s.pages) for (const [arm, src] of Object.entries(SOURCES)) {
+  const [shard, shards] = String(arg('shard', '0/1')).split('/').map(Number);   // --shard=i/n: two pools share the pages, each page wholly in one
+  for (const [pi, p] of s.pages.entries()) for (const [arm, src] of Object.entries(SOURCES)) {
+    if (pi % shards !== shard) continue;
     if (done.has(`${arm}:${p.page_id}`)) continue;
+    if (CUSTOM && p[src] == null) continue;   // an arm that served no text there: no English, counted not accepted
+    const twin = CUSTOM ? bySource.get(`${p.page_id}:${h(p[src])}`) : null;
+    if (twin) { fs.appendFileSync(file, JSON.stringify({ arm, page_id: p.page_id, text: twin.text, same_as: twin.arm, calls: 0 }) + '\n'); continue; }
+    if (n >= MAX_CALLS) { console.error(`--max-calls ${MAX_CALLS}: stopping`); process.exit(3); }
     if (n++ % 10 === 0) {
       const r = readPool(home || null);
-      const line = Math.max(0.35, weeklyReserve({ resetTime: r?.weeklyReset, lane: null }));
+      const line = Math.max(FLOOR, weeklyReserve({ resetTime: r?.weeklyReset, lane: null }));
       if (!r || r.weekly < line || (r.fiveHour ?? 0) < 0.25) { console.error(`pool under its floor ${JSON.stringify(r)}: stopping`); process.exit(3); }
       fs.appendFileSync(path.join(OUT, 'quota.jsonl'), JSON.stringify({ at: new Date().toISOString(), stage: 'translate', home, n, reading: r }) + '\n');
     }
@@ -76,6 +88,7 @@ async function translate() {
     const t0 = Date.now();
     const r = await gatedTextCall(sent, { model: MODEL, task: 'translate' });
     if (r.cls === 'quota') { console.error('quota reply: stopping'); process.exit(3); }
+    if (CUSTOM && !(r.cls || r.problem)) bySource.set(`${p.page_id}:${h(p[src])}`, { arm, text: r.answer });
     fs.appendFileSync(file, JSON.stringify({ arm, page_id: p.page_id, text: r.cls || r.problem ? null : r.answer, cls: r.cls ?? null, problem: r.problem ?? null, calls: r.calls, usage: agyUsage(r.usage), prompt_sent_chars: sent.length, prompt_ref: built.promptRef, secs: Math.round((Date.now() - t0) / 1000) }) + '\n');
     console.log(`  ${arm} ${p.slug}: ${r.cls || r.problem || 'ok'} ${String(r.answer || '').length} chars`);
   }
@@ -89,11 +102,23 @@ function packet() {
   const add = (p, arm, kind, text, extra = {}) => {
     const id = `g${h(`${kind}:${p.page_id}:${kind === 'item' ? h(text.trim()) : extra.other ?? extra.of ?? ''}`).slice(0, 10)}`;
     if (!items.has(id)) items.set(id, { id, page_id: p.page_id, text });
-    key.push({ judged_as: id, arm, kind, page_id: p.page_id, slug: p.slug, percall: p.percall, ...extra });
+    key.push({ judged_as: id, arm, kind, page_id: p.page_id, slug: p.slug, percall: p.percall, ...(CUSTOM && { id: `${kind}:${arm}:${p.page_id}`, route: arm, cell: 'zh-siku-route-matrix', book_id: p.book_id, set: p.set }), ...extra });
   };
   for (const p of s.pages) for (const arm of Object.keys(SOURCES)) { const t = tr.get(`${arm}:${p.page_id}`); if (t) add(p, arm, 'item', t); }
   const rng = makeRng(SEED + 1);
   const shuffled = s.pages.map((p) => [rng(), p]).sort((a, b) => a[0] - b[0]).map(([, p]) => p);
+  if (CUSTOM) {
+    Object.keys(SOURCES).forEach((arm, i) => {
+      const pairs = shuffled.map((p, j) => [p, shuffled[(j + 20) % shuffled.length]]);
+      const [p, o] = pairs[i * 2], t = tr.get(`${arm}:${o.page_id}`); if (t) add(p, arm, 'wrong_page', t, { other: o.page_id });
+      const k = key.filter((x) => x.kind === 'item' && x.arm === arm)[(i * 7 + 3) % 30]; const it = k && items.get(k.judged_as);
+      if (it) { const nid = `g${h(`retest:${arm}:${it.id}`).slice(0, 10)}`; items.set(nid, { ...it, id: nid, text: `${it.text.trimEnd()}\n` }); key.push({ ...k, id: `repeat:${arm}:${k.page_id}`, judged_as: nid, kind: 'repeat', of: k.judged_as }); }
+    });
+    const order = [...items.values()].map((it) => [h(`order:${SEED}:${it.id}`), it]).sort((a, b) => a[0].localeCompare(b[0])).map(([, it]) => it);
+    W('packet.json', { items: order }); W('key.json', key);
+    console.log(`packet: ${order.length} items (${key.filter((k) => k.kind === 'wrong_page').length} wrong-page, ${key.filter((k) => k.kind === 'repeat').length} repeats)`);
+    return;
+  }
   for (let i = 0; i < 10; i++) { const p = shuffled[i], o = shuffled[(i + 20) % shuffled.length]; const t = tr.get(`tO:${o.page_id}`); if (t) add(p, 'tO', 'swap', t, { other: o.page_id }); }
   const ids = [...new Set(key.filter((k) => k.kind === 'item').map((k) => k.judged_as))].map((id) => [rng(), id]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, id]) => id);
   for (const id of ids) { const it = items.get(id), k = key.find((x) => x.judged_as === id); const nid = `g${h(`retest:${id}`).slice(0, 10)}`; items.set(nid, { ...it, id: nid, text: `${it.text.trimEnd()}\n` }); key.push({ ...k, judged_as: nid, kind: 'retest', of: id }); }
@@ -182,10 +207,17 @@ async function trace() {
     (v.defects || []).forEach((d, j) => { if (d.severity === 'misleads' || d.severity === 'wrong_text') todo.push({ tid: `${k.judged_as}:${j}`, k, d }); });
   }
   console.log(`${todo.length} major defects to trace; ${done.size} done`);
+  let traced = 0;
+  const [shard, shards] = String(arg('shard', '0/1')).split('/').map(Number);   // --shard=i/n over the tid, so a defect belongs to one shard
+  const pools = CUSTOM ? await import('../../lib/agy-pools.mjs') : null;
+  const seen = new Set(done);   // arms with one identical English share a judged_as, so the defect is traced once and matrix.mjs joins by tid
   for (const t of todo.filter((x) => !done.has(x.tid))) {
-    const p = byPage.get(t.k.page_id), leaf = kanripoLeaf(kr, p.pb), src = p[SOURCES[t.k.arm]];
+    if (CUSTOM) { if (seen.has(t.tid)) continue; seen.add(t.tid); if (parseInt(crypto.createHash('sha1').update(t.tid).digest('hex').slice(0, 8), 16) % shards !== shard) continue; }
+    if (CUSTOM && traced % 20 === 0) { const q = pools.readPool(home || null); if (!q || q.weekly < FLOOR || (q.fiveHour ?? 0) < 0.25) { console.error(`pool under its floor ${JSON.stringify(q)}: stopping`); process.exit(3); } }
+    if (traced >= MAX_CALLS) { console.log(`--max-calls ${MAX_CALLS}: stopping`); break; }
+    const p = byPage.get(t.k.page_id), leaf = p.leaf ?? (kr && p.pb ? kanripoLeaf(kr, p.pb) : null), src = p[SOURCES[t.k.arm]];
     if (!leaf) { fs.appendFileSync(file, JSON.stringify({ tid: t.tid, arm: t.k.arm, page_id: p.page_id, cause: 'no-leaf' }) + '\n'); continue; }
-    const q = `An English translation of one page of a Chinese rhyme dictionary (佩文韻府 family) has a defect. Find where it comes from.
+    const q = `An English translation of one page of ${arg('what', 'a Chinese rhyme dictionary (佩文韻府 family)')} has a defect. Find where it comes from.
 
 DEFECT in the English: "${t.d.quote}" (${t.d.what || t.d.class})
 
@@ -203,6 +235,7 @@ ${leaf}
 2. "reference_span": copy the characters of the REFERENCE at the same place.
 3. "cause": "source" if the SOURCE differs from the REFERENCE there in a way that explains the defect (a wrong, missing, extra or misplaced character or 丨 mark), "translator" if the SOURCE agrees with the REFERENCE there (allowing variant character forms) and the English still gets it wrong, "unclear" if you cannot place it.
 Answer with one JSON object only: {"source_span": "...", "reference_span": "...", "cause": "source|translator|unclear", "why": "a few words"}`;
+    traced++;
     const r = await gatedTextCall(q + '\n\nDo not open, read or write any file and do not use any tool. Put the JSON between <<<BEGIN>>> and <<<END>>>.\n', { model: MODEL, task: 'translate' });
     if (r.cls === 'quota') { console.error('quota: stop'); process.exit(3); }
     let j = null; try { j = JSON.parse(String(r.answer || r.text).match(/\{[\s\S]*\}/)?.[0]); } catch { /* unparsed */ }
