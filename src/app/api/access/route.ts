@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, PurchaseType } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
 
 /**
  * Check if the current user can download a specific item.
@@ -35,8 +36,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ allowed: false, reason: 'signin', imageAccess });
   }
 
-  // Stripe disabled → signed-in is sufficient
-  if (!process.env.STRIPE_SECRET_KEY) {
+  // Download charges off → signed-in is sufficient
+  if (!downloadChargesEnabled()) {
     return NextResponse.json({ allowed: true, reason: 'free', imageAccess });
   }
 

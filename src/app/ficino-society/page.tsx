@@ -302,7 +302,7 @@ function FicinoSocietyContent() {
             funds the translation of texts that haven&apos;t been read
             in centuries.
           </p>
-          {status === 'authenticated' ? (
+          {status === 'authenticated' && process.env.NEXT_PUBLIC_MEMBERSHIP_CHECKOUT_ENABLED === 'true' ? (
             <button
               onClick={handleContribute}
               disabled={contributing || isContributor}
