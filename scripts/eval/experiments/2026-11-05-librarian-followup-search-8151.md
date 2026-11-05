@@ -2,6 +2,7 @@
 stage: pipeline
 measure: [none]
 feeds: prompt
+landed: src/lib/embassy/librarian.ts
 languages: []
 scripts: []
 canons: []
