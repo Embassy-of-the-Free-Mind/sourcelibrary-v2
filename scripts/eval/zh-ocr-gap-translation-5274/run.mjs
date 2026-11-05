@@ -208,9 +208,12 @@ async function trace() {
   }
   console.log(`${todo.length} major defects to trace; ${done.size} done`);
   let traced = 0;
+  const [shard, shards] = String(arg('shard', '0/1')).split('/').map(Number);   // --shard=i/n over the tid, so a defect belongs to one shard
+  const pools = CUSTOM ? await import('../../lib/agy-pools.mjs') : null;
   const seen = new Set(done);   // arms with one identical English share a judged_as, so the defect is traced once and matrix.mjs joins by tid
   for (const t of todo.filter((x) => !done.has(x.tid))) {
-    if (CUSTOM) { if (seen.has(t.tid)) continue; seen.add(t.tid); }
+    if (CUSTOM) { if (seen.has(t.tid)) continue; seen.add(t.tid); if (parseInt(crypto.createHash('sha1').update(t.tid).digest('hex').slice(0, 8), 16) % shards !== shard) continue; }
+    if (CUSTOM && traced % 20 === 0) { const q = pools.readPool(home || null); if (!q || q.weekly < FLOOR || (q.fiveHour ?? 0) < 0.25) { console.error(`pool under its floor ${JSON.stringify(q)}: stopping`); process.exit(3); } }
     if (traced >= MAX_CALLS) { console.log(`--max-calls ${MAX_CALLS}: stopping`); break; }
     const p = byPage.get(t.k.page_id), leaf = p.leaf ?? (kr && p.pb ? kanripoLeaf(kr, p.pb) : null), src = p[SOURCES[t.k.arm]];
     if (!leaf) { fs.appendFileSync(file, JSON.stringify({ tid: t.tid, arm: t.k.arm, page_id: p.page_id, cause: 'no-leaf' }) + '\n'); continue; }
