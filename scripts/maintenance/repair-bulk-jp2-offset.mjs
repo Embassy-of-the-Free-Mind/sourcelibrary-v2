@@ -202,7 +202,9 @@ async function repairBook(db, bookId) {
   const awaitingImages = book.archive_metadata?.jp2_text_shift_awaiting_image_rearchive === true;
   if (awaitingImages || BY_EYE) {
     // The text was moved after OCR, so OCR timing says nothing about this book (#8266).
-    const witness = halfRepairWitness(book, BY_EYE, bulk.map(p => p.page_number));
+    // The witness is about stored text, so "both ends" means both ends of the pages that have some.
+    const withText = bulk.filter(p => p.ocr?.updated_at || p.ocr?.created_at).map(p => p.page_number);
+    const witness = halfRepairWitness(book, BY_EYE, withText);
     if (!witness.ok) return console.log(`  [REFUSE] half-done text repair: ${witness.reason} (--text-matches-source-by-eye S1,S2)`);
     console.log(`  half-done text repair; text checked against the source leaf by eye at ${BY_EYE.join(',')}`);
     split = { ...split, visible: bulk.length, consistent: 0 };
