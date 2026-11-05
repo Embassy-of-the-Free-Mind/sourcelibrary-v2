@@ -44,6 +44,7 @@ Gates, all from the box's own climits poll (/root/.claude-limits/latest.json):
                         expires unused, and an unused point costs the same fee as a used one. No start
                         in the final hour, when a job would spill into the new week. It passes the job
                         wrapper's 90% refusal (JOB_IGNORE_LIMIT). Extra usage is off on every account.
+                        The work is always an Opus QA round (the fallback below), never an issue.
   box                   load1 < cores, at most MAX_JOBS lane jobs (1 on the shared guest boxes),
                         poll data < 15 min old on main, < 45 min old from Mongo on a guest
 """
@@ -395,6 +396,12 @@ def main():
         return
 
     state = load_state()
+    if draining(limits):
+        # Derek, 2026-11-05: an Opus QA check is always good. A round also fits the time left, where an issue
+        # job has a two-hour budget and may be stopped at 99% half done. Claude reviews here and writes no page
+        # text; translation stays on agy.
+        start_fallback_audit(email, limits, why, state)
+        return
     tried = {int(k) for k in state["tried"]}
     starts = state.get("starts", 0)
     picked = None if starts % OPPORTUNITY_EVERY == OPPORTUNITY_EVERY - 1 else pick_from_needs(tried, state.get("area", 0))

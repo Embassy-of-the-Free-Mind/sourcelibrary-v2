@@ -20,6 +20,39 @@ print(m.decide({"weekly_all": {"percent": ${percent}, "resets_at": reset}, "sess
   return r.stdout.trim();
 }
 
+/** Runs the real main() with the box stubbed out, and reports which kind of work it chose. */
+function chooses(percent: number, hoursLeft: number): string {
+  const code = `
+import importlib.util, datetime as dt
+spec = importlib.util.spec_from_file_location("spare_lane", "scripts/workers/spare-lane.py")
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+reset = (m.NOW + dt.timedelta(hours=${hoursLeft})).isoformat()
+limits = {"weekly_all": {"percent": ${percent}, "resets_at": reset}, "session": {"percent": 0}}
+m.STATE = "/nonexistent/state.json"
+m.DRY = True
+m.this_box_account = lambda: "a@x"
+m.account_limits = lambda: ("a@x", limits)
+m.lane_jobs = lambda: []
+m.pick_from_needs = lambda tried, area: ({"number": 1, "title": "an issue"}, "needs")
+m.pick_issue = lambda tried: {"number": 1, "title": "an issue"}
+m.log = lambda s: print(s.split(" ")[0] + " " + s.split(" ")[1])
+m.main()
+`;
+  const r = spawnSync('python3', ['-c', code], { encoding: 'utf8' });
+  expect(r.stderr).toBe('');
+  return r.stdout.trim();
+}
+
+describe('what the drain runs', () => {
+  it('is an Opus QA round in the last 6 hours, though an issue is eligible', () => {
+    expect(chooses(91, 5)).toContain('spare-audit-');
+  });
+  it('is still an issue before then', () => {
+    expect(chooses(85, 7)).toBe('start spare-1');
+  });
+});
+
 describe('spare lane decide()', () => {
   it('starts at 91% with 5 hours left, where it used to sit idle', () => {
     expect(decide(91, 5)).toBe('start');
