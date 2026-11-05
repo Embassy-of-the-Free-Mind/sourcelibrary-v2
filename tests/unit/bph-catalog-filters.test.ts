@@ -14,7 +14,7 @@
  * the fields.... This is an important feature, that we often! use!"
  */
 import { describe, it, expect } from 'vitest';
-import { readBphFilters, isUnfiltered, applyBphFilters, type SchemaCaps } from '../../src/lib/bph-catalog-filters';
+import { readBphFilters, isUnfiltered, applyBphFilters, parseBphSearchTerms, type SchemaCaps } from '../../src/lib/bph-catalog-filters';
 
 /** Records every builder call so the predicate can be asserted on. */
 function recorder() {
@@ -55,6 +55,55 @@ describe('readBphFilters', () => {
   it('leaves absent years null rather than NaN', () => {
     expect(parse('').yearFrom).toBeNull();
     expect(parse('').yearTo).toBeNull();
+  });
+});
+
+describe('parseBphSearchTerms', () => {
+  it('splits words and drops punctuation, so a name reads either way round', () => {
+    expect(parseBphSearchTerms('bruno giordano')).toEqual(['bruno', 'giordano']);
+    expect(parseBphSearchTerms('Fludd, Robert')).toEqual(['fludd', 'robert']);
+    expect(parseBphSearchTerms('Bhagavad-Gita')).toEqual(['bhagavad', 'gita']);
+  });
+
+  it('normalises each word the way search_norm is built', () => {
+    expect(parseBphSearchTerms('Böhme Aurora')).toEqual(['bohme', 'aurora']);
+  });
+
+  it('keeps a quoted phrase whole, and turns its reserved characters into wildcards', () => {
+    expect(parseBphSearchTerms('"aus gott und der natur" 1740')).toEqual(['aus gott und der natur', '1740']);
+    expect(parseBphSearchTerms('"Fludd, Robert"')).toEqual(['fludd% robert']);
+  });
+
+  it('treats an unclosed quote as ordinary words', () => {
+    expect(parseBphSearchTerms('"aus gott')).toEqual(['aus', 'gott']);
+  });
+
+  it('keeps shelf marks together, because a lone letter matches nearly everything', () => {
+    expect(parseBphSearchTerms('M 309')).toEqual(['m 309']);
+    expect(parseBphSearchTerms('PH 2')).toEqual(['ph 2']);
+    expect(parseBphSearchTerms('BPH 131')).toEqual(['bph 131']);
+    expect(parseBphSearchTerms('Myst Alg S')).toEqual(['myst', 'alg s']);
+  });
+
+  // "c.g. jung" found 34 works as a phrase and 1 when split into c, g, jung.
+  it('keeps initials as the record prints them', () => {
+    expect(parseBphSearchTerms('c.g. jung')).toEqual(['c.g.', 'jung']);
+    expect(parseBphSearchTerms('C. G. Jung')).toEqual(['c. g.', 'jung']);
+    expect(parseBphSearchTerms('j. dee')).toEqual(['j. dee']);
+    expect(parseBphSearchTerms('Fludd. Robert')).toEqual(['fludd', 'robert']);
+  });
+
+  it('does not glue a year to a longer word', () => {
+    expect(parseBphSearchTerms('hermes 1650')).toEqual(['hermes', '1650']);
+  });
+
+  it('keeps words in non-Latin scripts whole, marks included', () => {
+    expect(parseBphSearchTerms('भगवद् गीता')).toEqual(['भगवद्', 'गीता']);
+    expect(parseBphSearchTerms('Ψυχή σώμα')).toEqual(['ψυχη', 'σωμα']);
+  });
+
+  it('finds no terms in punctuation alone', () => {
+    expect(parseBphSearchTerms(', ()')).toEqual([]);
   });
 });
 
@@ -100,6 +149,20 @@ describe('applyBphFilters — the lanes that were reported as broken', () => {
     const { q, calls } = recorder();
     applyBphFilters(q as never, parse('q=Bohme'), NEW_SCHEMA);
     expect(calls.find((c) => c.startsWith('or('))).toContain('search_norm.ilike');
+  });
+
+  it('requires every word, in any order, and keeps the shelf-mark lane', () => {
+    const { q, calls } = recorder();
+    applyBphFilters(q as never, parse('q=bruno+giordano'), NEW_SCHEMA);
+    const orCall = calls.find((c) => c.startsWith('or('))!;
+    expect(orCall).toContain('and(search_norm.ilike.%bruno%,search_norm.ilike.%giordano%)');
+    expect(orCall).toContain('ubn.ilike.%bruno giordano%');
+  });
+
+  it('lets a year among the words match the year column', () => {
+    const { q, calls } = recorder();
+    applyBphFilters(q as never, parse('q=hermes+1650'), NEW_SCHEMA);
+    expect(calls.find((c) => c.startsWith('or('))).toContain('or(search_norm.ilike.%1650%,year.eq.1650)');
   });
 
   it('ignores a one-character query rather than scanning the corpus', () => {
