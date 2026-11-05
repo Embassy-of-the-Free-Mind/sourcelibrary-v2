@@ -123,8 +123,12 @@ async function fetchAssistants(day) {
   // One request per agent: all six in one request exceeds Cloudflare's limit on nodes per query.
   for (const { agent, role } of ASSISTANT_AGENTS) {
     const ua = `userAgent_like:"%${agent}%"`;
-    const parts = [`all: httpRequestsAdaptiveGroups(limit:100, filter:{${window}, ${ua}}, orderBy:[count_DESC]) {
-      count dimensions { clientAsn clientASNDescription edgeResponseStatus } }`];
+    // `total` has no dimensions, so it is one group and cannot be cut off by the limit on `all`.
+    const parts = [
+      `total: httpRequestsAdaptiveGroups(limit:1, filter:{${window}, ${ua}}) { count }`,
+      `all: httpRequestsAdaptiveGroups(limit:100, filter:{${window}, ${ua}}, orderBy:[count_DESC]) {
+      count dimensions { clientAsn clientASNDescription edgeResponseStatus } }`,
+    ];
     for (const [name, likes] of Object.entries(PATH_CLASSES)) {
       const paths = `OR:[${likes.map((p) => `{clientRequestPath_like:"${p}"}`).join(', ')}]`;
       parts.push(`${name}: httpRequestsAdaptiveGroups(limit:1, filter:{${window}, ${ua}, ${paths}}) { count }`);
@@ -132,9 +136,8 @@ async function fetchAssistants(day) {
     const zone = await cfQuery(`{viewer{zones(filter:{zoneTag:"${ZONE}"}){${parts.join('\n')}}}}`);
     const by_status = {};
     const networks = {};
-    let requests = 0;
+    const requests = zone.total[0]?.count ?? 0;
     for (const { count, dimensions: d } of zone.all) {
-      requests += count;
       by_status[d.edgeResponseStatus] = (by_status[d.edgeResponseStatus] || 0) + count;
       const network = `AS${d.clientAsn} ${d.clientASNDescription}`;
       networks[network] = (networks[network] || 0) + count;
