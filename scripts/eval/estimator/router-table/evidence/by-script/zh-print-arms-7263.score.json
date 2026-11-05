@@ -50,6 +50,26 @@
       "accept": false,
       "fidelity": 1,
       "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
+     },
+     {
+      "accept": false,
+      "fidelity": 1,
+      "passed": true
      }
     ]
    },
@@ -120,6 +140,26 @@
       "O11": "1/60"
      },
      "served": "paddle>agy-flash-low"
+    },
+    "paddle>agy-flash-medium": {
+     "n": 60,
+     "books": 60,
+     "accept": "30/60",
+     "wrong_text_pages": "24/60",
+     "classes_k_of_n": {
+      "O6": "30/60",
+      "O5": "11/60",
+      "O1": "4/60",
+      "O10": "1/60",
+      "O16": "2/60",
+      "O7": "9/60",
+      "O8": "5/60",
+      "O12": "6/60",
+      "O11": "1/60",
+      "O17": "1/60",
+      "O3": "1/60"
+     },
+     "served": "paddle>agy-flash-medium"
     },
     "opus-read": {
      "n": 60,

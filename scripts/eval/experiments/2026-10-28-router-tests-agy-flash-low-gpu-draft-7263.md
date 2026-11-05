@@ -7,7 +7,7 @@ canons: []
 n_books: 159
 n_pages: 180
 verdict: "No router cell switches to an agy or GPU route. agy 3.8 Flash-low as corrector: Chinese Paddle dice < 0.90 15/29 after the name check (Opus 26/30 stays the hold route); guarded-Paddle tables + mixed 19/30, 9 wrong text; Hebrew 3 Flash 7/28, Arabic 3 Flash 13/29, Chinese 3 Flash 6/30. A GPU draft (stock GLM-OCR on gex45) corrected by agy Flash-low reads Latin print at 22/26 delivered (4 replies cut), level with lite > agy Flash-low (24/30) and short of lite > Opus (30/30). The served 3 Flash text itself is poor in all three cells: Hebrew 7/30 accepted with invented text on 15/30, Chinese 7/30, Arabic 10/30; agy correction does not repair it (worse 3-6, better 5-6 pages per cell)."
-status: undecided
+status: informational
 decision: "Evidence only, in rules.json; table rebuilt as router-table/2026-10-28-agy-gpu-7263 (before: 2026-10-28-backfill-all, #7612). chinese-flash3, hebrew-flash3, arabic-flash3 and zh-frame-6871 go from keep (UNTESTED) to HOLD (no measured route reaches P(acc >= 0.8) >= 0.9). Under Derek's 2026-10-28 11:24Z rule (agy/GPU routes only; keep the served route if none clears the bar) nothing moves, so no routing-table PR. 26 served 3 Flash pages carry judge-flagged invented or wrong-leaf text (score.json contain_candidates): listed for a by-eye check, not contained."
 superseded_by: null
 issue: [7263, 6740, 7567]

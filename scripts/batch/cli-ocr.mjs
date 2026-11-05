@@ -82,7 +82,8 @@
  * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
  * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
  * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
- * `engine.input.by_eye`.
+ * `engine.input.by_eye`. A row may add `scripts_seen: ["Greek"]`: the scripts the checker saw printed on the leaf, which
+ * the foreign-script guard then accepts for this read only (#8189).
  *
  * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ the
  * moment it is made. Before calling, `read` asks for a kept read of the same page by the same model on the same prompt
@@ -685,7 +686,11 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // A staged split leaf (#7605) has no text of its own yet: the scripts its frame's text carries are the ones it may.
   const served = page.ocr?.data || (page.staged_split?.frame_id
     ? (await db.collection('pages').findOne({ id: page.staged_split.frame_id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data : '');
-  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served });
+  // A by-eye row on exactly this read may name scripts the checker saw printed on the leaf (#8189: Greek quotations in a
+  // Latin book whose stored read was garbage, so the stored text could not vouch for them). Only those scripts are lifted.
+  const seenRow = BY_EYE.get(page.id);
+  const scriptsSeen = seenRow?.read_sha256 === sha256(text) && seenRow?.verdict === 'read-matches-image' && Array.isArray(seenRow?.scripts_seen) ? seenRow.scripts_seen : [];
+  const foreign = foreignScriptReason(text, { languages: [...bookLanguages(await bookOf(page.book_id)), ...scriptsSeen], served });
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
@@ -791,6 +796,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
     }
   }
+  if (scriptsSeen.length) byEye = { verdict: seenRow.verdict, checked_by: seenRow.checked_by ?? null, at: seenRow.at ?? null, note: seenRow.note ?? null, read_sha256: seenRow.read_sha256, ...byEye, scripts_seen: scriptsSeen };
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
   if (m.prompt_extra_hash && contentHash(EXTRA) !== m.prompt_extra_hash) { skip(m, 'prompt-extra.txt is not the instruction this read was sent'); continue; }

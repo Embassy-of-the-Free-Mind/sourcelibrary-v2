@@ -21,6 +21,8 @@
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
  *          Writes no page or book (only the job's book list, lane_job_books, #7301). Skips pages already read, pages
  *          with no translatable OCR, and blank pages.
+ *          [--no-previous-translation]: leave the page before's English out of the prompt (#5274); recorded as the
+ *          read's prompt_variant and context.previous_translation false, and no folio-marker pairs.
  *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
  *          first read got wrong, named with its value from Beltrán's table). Recorded as `instruction` in the meta.
  *          [--own-leaf] (#5274): the page's OWN transcription only — no previous page's English, no neighbour OCR (no
@@ -99,7 +101,10 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-tran
 // #6523: the answer between <<<BEGIN>>> / <<<END>>> markers, nothing outside them (the OCR runner's config), with the
 // tool gate in the call's empty workspace (scripts/lib/agy-cli.mjs). A read made before that records no
 // `prompt_variant`; apply checks it with the chatter guard alone, as before.
-const PROMPT_VARIANT = 'sentinels-6523';
+// --no-previous-translation (#5274 paired test): the page before's English is left out of the prompt (its OCR, for the
+// page-break devices, stays). A different prompt, so a different variant: its reads are kept and reused apart.
+const NO_PREV_EN = process.argv.includes('--no-previous-translation');
+const PROMPT_VARIANT = NO_PREV_EN ? 'sentinels-6523+no-prev-en-5274' : 'sentinels-6523';
 // #7118: two consecutive Latin-script pages in one call, continuous English with folio markers (see readMarkedPair).
 const PROMPT_VARIANT_MARKED = 'sentinels-6523+folio-markers-7118';
 const MARKERS = cliFolioMarkersEnabled();
@@ -235,7 +240,7 @@ if (STAGE === 'read') {
     const near = await db.collection('pages').find({ book_id: p.book_id, page_number: { $in: [p.page_number - 1, p.page_number + 1] } }, { projection: PAGE_PROJECTION }).toArray();
     const prev = near.find((n) => n.page_number === p.page_number - 1), next = near.find((n) => n.page_number === p.page_number + 1);
     const prevRead = prev ? readOf(prev.id) : '';
-    const previousTranslation = OWN_LEAF ? null : prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
+    const previousTranslation = OWN_LEAF || NO_PREV_EN ? null : prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
     const built = OWN_LEAF
       ? buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation: null })
       : buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
@@ -253,7 +258,7 @@ if (STAGE === 'read') {
     // read too, go in ONE call as continuous English with <pb n="N"/> where each page begins; each page keeps its span.
     // Measured on Latin-script prose only, so only there. Any reply that does not split cleanly falls back to the
     // one-page read below, so a pair is never worse off than the lane without markers.
-    if (MARKERS && !OWN_LEAF && !instruction && i + 1 < ids.length) {
+    if (MARKERS && !OWN_LEAF && !NO_PREV_EN && !instruction && i + 1 < ids.length) {
       const pair = await readMarkedPair({ p, book, prev, previousTranslation, prevRead, nextId: ids[i + 1] });
       if (pair === 'read') { paired++; i++; continue; }
       if (pair === 'fallback') pairFallbacks++;

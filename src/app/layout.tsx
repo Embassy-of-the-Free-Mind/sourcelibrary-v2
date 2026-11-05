@@ -16,6 +16,7 @@ import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationL
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 import ScrollReveal from "@/components/layout/ScrollReveal";
 import PageStatusBar from "@/components/layout/PageStatusBar";
+import HuntConsoleNote from "@/components/providers/HuntConsoleNote";
 
 
 
@@ -177,6 +178,7 @@ export default async function RootLayout({
         <AnalyticsScripts />
         <PageTracker />
         <BrokenImageReporter />
+        <HuntConsoleNote />
       </body>
     </html>
   );

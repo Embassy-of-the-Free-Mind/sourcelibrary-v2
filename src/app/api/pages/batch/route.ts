@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
@@ -79,6 +80,7 @@ export async function POST(request: NextRequest) {
     // flagged proxy pool also gets its extraction ref (#6950) and a
     // private, no-store response.
     const ref = await poolRefFor(request);
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(applyReaderTextLayer(rest, taken.layers), undefined, { ref }));
 
     // With metering on, the body depends on who asked (session vs anon) —

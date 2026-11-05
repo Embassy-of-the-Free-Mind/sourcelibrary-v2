@@ -40,10 +40,18 @@ mistake: the result *omitted* something instead of *saying it was absent*.
    is NO page that lists exactly this filter. Do not write a browse link for
    it."*
 
-Only `/book/<slug>` links are verified after the fact (`citation-fixes.ts`
-rewrites bad book slugs; `LINK_PATTERNS` there does not cover `/author`,
-`/collections`, or anything else). **So every non-book URL has to be correct at
-the moment the model receives it** — there is no net under it.
+Links are checked after the answer streams, and the net is thin (#8216). A bad
+`/book/<slug>` is repointed (`citation-fixes.ts`); a dead `/author`, `/artwork`
+or `/collections` link loses its link and keeps its words (`applyLinkRemovals`).
+Anything else is not checked. Both reach the screen only as stream events, so a
+reader can still follow the bad link first. **So every URL still has to be correct
+at the moment the model receives it.** Where one is not, the destination recovers:
+the 404 page offers the closest book and prefills search, `/author` resolves a
+reordered name, and the proxy sends `/collection/<slug>` to the plural.
+
+A saved message that reads correctly does not show what the reader saw: on
+2026-11-04 both links in an answer were repaired in the store while a phone opened
+both dead URLs over a minute later. Join `embassy_errors` to `not_found_reports`.
 
 Rules that follow, for any new tool:
 

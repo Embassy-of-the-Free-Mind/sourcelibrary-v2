@@ -1,4 +1,5 @@
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -10,6 +11,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
 import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
@@ -57,7 +59,7 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: strin
       ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
       ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
     },
-    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
     isAccessibleForFree: true,
     ...(excerpt ? { text: excerpt } : {}),
   };
@@ -270,6 +272,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   //
   // The notes layer (#7965) goes in first: a page with a current translation.text and a page_annotations doc
   // for it is read from the layer; any other page is served exactly as before.
+  await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
   return (
@@ -332,14 +335,30 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         // the real pager, shoving the toolbar up the screen. It stays in the
         // DOM and in the accessibility tree, which is all #2266 needed; sighted
         // readers have the pager, the filmstrip and Contents for the same job.
+        // The citation an assistant repeats (#8161). Text fetchers usually drop
+        // <head>, so the meta tags alone do not reach it, and the Cite button is
+        // client-side. Same builder as the quote API, same sr-only reasoning as
+        // the nav below. Not in a partner's room: its links are its own.
+        const citation = ctx?.id ? null : generateCitations(
+          book, serializedPage.page_number, scopedBookId, pageId, 'https://sourcelibrary.org',
+          undefined, undefined, serializedPage.printed_page,
+          { transcription: !serializedPage.translation?.data },
+        );
         return (
+          <>
+          {citation && (
+            <p className="sr-only">
+              Cite this page: {citation.footnote} <a href={citation.short_url}>{citation.short_url}</a>
+            </p>
+          )}
           <nav aria-label={rs.pageNavigation} className="sr-only">
-            {prev && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            {prev &&<a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
             <a href={hrefPrefix + localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
             {/* No /overview twin exists under an embed or room prefix (embedPolicy.showBookOverviewLink). */}
             {!hrefPrefix && <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>}
             {next && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
+          </>
         );
       })()}
     </>

@@ -8,6 +8,7 @@ n_books: 30
 n_pages: 120
 verdict: "Siku lane (agy 3.8 Flash-low, Paddle OCR), 30 books drawn from the lane's cohort, blind Opus judge with the image (4/4 planted controls caught). 4 pages a call (B) holds quality (drawn pages: accept 21/30 vs 19/30 at 1/call, 0 wrong-leaf, 0 translator-invented by eye) but costs 0.53 calls and 0.65 of the token index per page (0.48 calls planned on whole books): above the 0.5 bar. Two leaf lines (C) cut margin furniture rendered as English from 12 to 7 of 120 pages, acceptance unchanged (79 vs 78/120)."
 status: adopted
+supersedes: [2026-10-27-agy-pages-per-call-siku-7503.md]
 decision: "B fails its quota bar, so D was not run and nothing goes to the router table; #7503 owns the 4/call switch. The leaf lines (C) go to the lane's 1/call reader via --instructions-file (lane-local)."
 superseded_by: null
 issue: [5600, 7503]

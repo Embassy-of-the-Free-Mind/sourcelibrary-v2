@@ -156,6 +156,13 @@
 .ai-partners .cta a.primary { background: var(--rust); color: var(--cream); }
 .ai-partners .cta a:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
 .ai-partners .hero .cta a:not(.primary) { color: var(--night-text); border-color: var(--night-muted); }
+/* The opening statement, in Derek's words: edit it only with him. */
+.ai-partners .hook { background: var(--ink); color: var(--night-text); border-top: 1px solid #3a322a; padding-block: 64px; }
+.ai-partners .hook .wrap { max-width: 820px; }
+.ai-partners .hook p { font-size: 21px; line-height: 1.55; margin: 0 0 20px; }
+.ai-partners .hook p:last-child { margin-bottom: 0; }
+.ai-partners .hook .hook-lead { font-family: var(--serif); font-size: clamp(32px, 4vw, 46px); font-weight: 600; line-height: 1.12; color: #fff; margin-bottom: 26px; text-wrap: balance; }
+.ai-partners .hook .hook-q { font-family: var(--serif); font-size: clamp(26px, 3vw, 34px); font-style: italic; line-height: 1.2; color: var(--gold); margin-block: 30px; text-wrap: balance; }
 /* The dataset card: a technical spec box in the manner of a Hugging Face dataset page. */
 .ai-partners .dsband { background: var(--warm); padding-block: 36px; scroll-margin-top: 60px; }
 .ai-partners .ds { --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: #fff; border: 1px solid var(--rule); border-radius: 8px; font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink); overflow: hidden; }

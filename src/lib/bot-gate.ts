@@ -59,6 +59,16 @@ const SEARCH_CRAWLERS = ['googlebot', 'bingbot', 'duckduckbot', 'claude-searchbo
 const USER_FETCH_AGENTS = ['claude-user', 'chatgpt-user', 'perplexity-user'];
 
 /**
+ * Does the User-Agent name an assistant reading for a person? A label for routing
+ * to a form it can read: it believes the name, so it must never grant anything a
+ * forged name should not get.
+ */
+export function namesUserFetchAgent(userAgent: string | null | undefined): boolean {
+  const ua = (userAgent || '').toLowerCase();
+  return USER_FETCH_AGENTS.some((agent) => ua.includes(agent));
+}
+
+/**
  * The KNOWN_BOTS token this request's UA matched, or null. Used to attribute
  * gated reads in `bot_reads` (src/lib/bot-reads.ts, #4309). Our own MCP server
  * returns null — it is logged separately in mcp_usage (#4306).

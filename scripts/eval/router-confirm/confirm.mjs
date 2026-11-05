@@ -427,7 +427,10 @@ async function judge() {
   const retest = String(arg('retest') || '').split(',').filter(Boolean);
   if (retest.length) {
     const again = (it) => ({ ...it, id: `${it.id}#${arg('retest-tag') || 'retest'}` });
-    items = shuffle([...items, ...items.filter((it) => it.arms.some((x) => retest.includes(x))).map(again)], makeRng(DEFAULT_SEED + 3));
+    // --retest-n=K: a seeded K of those texts, not all (zh-siku-route-matrix-7263: the Opus cap).
+    const pick = items.filter((it) => it.arms.some((x) => retest.includes(x)));
+    const some = arg('retest-n') ? shuffle(pick, makeRng(DEFAULT_SEED + 4)).slice(0, Number(arg('retest-n'))) : pick;
+    items = shuffle([...items, ...some.map(again)], makeRng(DEFAULT_SEED + 3));
     controls = [...controls, ...controls.map(again)];
   }
   const have = jsonl(VO()), done = new Set(have.filter((r) => r.verdict).map((r) => r.id));

@@ -57,7 +57,8 @@ const sentence = (s: string) => s.charAt(0).toUpperCase() + s.slice(1) + (/[.!?]
 
 function readerLine(r: BookCheck['reader']): string {
   if (r.kind === 'detector') return 'An automated check. No person or AI reviewer read these pages.';
-  const who = r.kind === 'human' ? 'A reviewer' : `An AI reviewer${r.model ? ` (${r.model})` : ''}`;
+  // The reviewer is named by kind, not model (#7263); `r.model` stays in the record.
+  const who = r.kind === 'human' ? 'A reviewer' : 'An AI reviewer';
   const how = r.image_opened === true ? 'reading each page against its image'
     : r.image_opened === false ? 'reading the text only, without the page image'
       : 'whether the page image was opened was not recorded';

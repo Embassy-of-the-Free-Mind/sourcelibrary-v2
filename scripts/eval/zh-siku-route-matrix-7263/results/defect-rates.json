@@ -1,0 +1,65 @@
+{
+ "about": "#7263: per route, misleads and wrong_text defects per 1,000 English words and mean fidelity, blind Opus judge with the scan, one fixed translator (3.8 Flash low). all60 = sets A + B; m_setB = the mixed route on set B.",
+ "cells": {
+  "all60": {
+   "tS": {
+    "pages": 60,
+    "words": 21675,
+    "misleads_per_1k": 6.04,
+    "wrong_text_per_1k": 5.91,
+    "fidelity_mean": 3.37
+   },
+   "tP": {
+    "pages": 60,
+    "words": 20590,
+    "misleads_per_1k": 4.08,
+    "wrong_text_per_1k": 3.74,
+    "fidelity_mean": 3.5
+   },
+   "tF": {
+    "pages": 60,
+    "words": 21849,
+    "misleads_per_1k": 2.7,
+    "wrong_text_per_1k": 0.55,
+    "fidelity_mean": 3.85
+   },
+   "tPO": {
+    "pages": 60,
+    "words": 21663,
+    "misleads_per_1k": 2.82,
+    "wrong_text_per_1k": 0.92,
+    "fidelity_mean": 3.8
+   },
+   "tO": {
+    "pages": 60,
+    "words": 21464,
+    "misleads_per_1k": 2.56,
+    "wrong_text_per_1k": 0.75,
+    "fidelity_mean": 3.9
+   },
+   "tPFL": {
+    "pages": 60,
+    "words": 21353,
+    "misleads_per_1k": 3.47,
+    "wrong_text_per_1k": 1.97,
+    "fidelity_mean": 3.67
+   }
+  },
+  "m_setB": {
+   "M-PO": {
+    "pages": 30,
+    "words": 10540,
+    "misleads_per_1k": 2.18,
+    "wrong_text_per_1k": 1.33,
+    "fidelity_mean": 3.73
+   },
+   "M-O": {
+    "pages": 30,
+    "words": 10848,
+    "misleads_per_1k": 2.86,
+    "wrong_text_per_1k": 1.11,
+    "fidelity_mean": 3.77
+   }
+  }
+ }
+}

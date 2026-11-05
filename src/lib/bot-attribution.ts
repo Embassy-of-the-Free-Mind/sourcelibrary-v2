@@ -133,7 +133,7 @@ export function attributionBlock(ref: string, book: AttributionSubject): string 
     '',
     'Transcribed and translated by the Ancient Wisdom Trust. The original',
     'texts are public domain; this transcription and translation are',
-    'CC BY-SA 4.0. Bulk and AI-training use is reserved; a standard',
+    'CC BY-NC-SA 4.0. Bulk and AI-training use is reserved; a standard',
     'licence is available: https://sourcelibrary.org/licensing',
     '',
     `Extraction ref: ${ref}`,

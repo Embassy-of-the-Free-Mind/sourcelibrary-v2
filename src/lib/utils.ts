@@ -179,6 +179,13 @@ export function getBookThumbnailUrl(
     return raw;
   }
 
+  // Munich's IIIF server honours a size in the URL. Covers imported from it ask for
+  // the whole scan (345 KB, measured on bsb11426583), which leaves a card blank on a
+  // weak phone connection. 400px wide fills any card at 2x.
+  if (raw.startsWith('https://api.digitale-sammlungen.de/iiif/image/')) {
+    return raw.replace('/full/full/0/', '/full/400,/0/');
+  }
+
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
   // Artwork URLs: use thumb variants for 'thumb' size, full for 'display'.
