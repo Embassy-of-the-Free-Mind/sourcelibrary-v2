@@ -142,11 +142,11 @@ export const posts: BlogPost[] = [
     slug: 'how-europe-read-mesoamerican-books',
     title: 'How Europe Read the Books of Mesoamerica',
     subtitle:
-      'From two books on a list of 1519 to the syllables of 1952: who saw one, who copied whom, and where the evidence stops.',
+      'From two books on a list of 1519 to the syllables of 1952: who saw one, who copied whom, and what the people who made them said.',
     summary:
-      'Two books on a list of 1519, then four centuries of misreading: Martyr, Landa, Horn, Humboldt, Stephens, Valentini and Brinton on Mesoamerican writing.',
-    date: '5 November 2026',
-    readTime: '15 min read',
+      'Two books on a list of 1519, then four centuries of misreading: Martyr, Landa, the Popol Vuh, Humboldt, Förstemann and Brinton on Mesoamerican writing.',
+    date: '6 November 2026',
+    readTime: '18 min read',
     kind: 'stories',
     image: '/articles/how-europe-read-mesoamerican-books/humboldt-plate-45.jpg',
     imageAlt:
