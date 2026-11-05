@@ -26,7 +26,6 @@ export type WrittenPastRow = {
   unit: string;
   /** First step at which the row appears. */
   step: number;
-  highlight?: boolean;
   estimate?: boolean;
   /** Bar runs off the end of the axis: the true size is uncounted. */
   open?: boolean;
@@ -41,7 +40,7 @@ export type WrittenPastRow = {
 const PRINTED = 'works printed before 1700';
 
 export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
-  { key: 'la', dates: 'to 1700', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 0, highlight: true, color: '#aa442b' },
+  { key: 'la', dates: 'to 1700', name: 'Latin', n: 444120, translated: 8644, unit: PRINTED, step: 0, color: '#aa442b' },
   { key: 'nl', dates: 'to 1700', name: 'Dutch', n: 82651, translated: 462, unit: PRINTED, step: 1, color: '#488acb' },
   { key: 'de', dates: 'to 1700', name: 'German', n: 295566, translated: 419, unit: PRINTED, step: 1, color: '#437224' },
   { key: 'fr', dates: 'to 1700', name: 'French', n: 194874, translated: 1615, unit: PRINTED, step: 1, color: '#bf6aa5' },

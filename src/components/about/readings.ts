@@ -8,7 +8,8 @@ export type Box = { l: number; t: number; w: number; h: number; side?: "l" | "r"
 export type Reading = {
   img: string; ar: number; title: string; meta: string; lang: string;
   line: Box; orig: string; en: string;
-  ents: (Box & { k: string; v: string })[];
+  // `also`: more boxes, for words that run over a line break.
+  ents: (Box & { k: string; v: string; also?: Box[] })[];
   terms: string[];
   plate: Box & { k: string; tags: string[] };
 };

@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import MarkedPage, { type Mark } from './MarkedPage';
+import MarkedPage from './MarkedPage';
+import MARKS from './marks.json';
 
 /**
  * Pages from books in the library with the Latin marked as they come into
@@ -11,11 +12,6 @@ import MarkedPage, { type Mark } from './MarkedPage';
 const link = 'underline decoration-1 underline-offset-[0.2em] decoration-accent-gold/70 hover:decoration-primary transition-colors';
 
 const WONDER_PAGE = '/book/plato-dialogues-ficino-translation-with-de-amore-translator/page/69b43d4006b196d69f66fcf0';
-const WONDER_MARKS: Mark[] = [
-  { x: 66.5, y: 35.2, w: 7, h: 1.4 },
-  { x: 16.7, y: 36.9, w: 56.5, h: 1.4 },
-  { x: 16.7, y: 38.4, w: 14, h: 1.4 },
-];
 
 /** Plato's Theaetetus in Ficino's Latin, from the manuscript of the dialogues dedicated to Lorenzo. */
 export function WonderFigure() {
@@ -26,7 +22,7 @@ export function WonderFigure() {
       h={1000}
       alt="A handwritten page of Plato's Theaetetus in Ficino's Latin, from a manuscript dedicated to Lorenzo de' Medici"
       href={WONDER_PAGE}
-      marks={WONDER_MARKS}
+      marks={MARKS.wonder}
       aside={(lit) => (
         <div>
           <p className="text-lg text-secondary">Socrates to the young Theaetetus, in Ficino&apos;s Latin:</p>
@@ -47,12 +43,6 @@ export function WonderFigure() {
 }
 
 const SOUL_PAGE = '/book/ficino-on-the-immortality-of-souls-ficino/page/69b52bf33dd6d9423027cd9b';
-const SOUL_MARKS: Mark[] = [
-  { x: 49.5, y: 59.3, w: 21.5, h: 1.8 },
-  { x: 17.8, y: 61.3, w: 53, h: 1.8 },
-  { x: 17.8, y: 63.3, w: 53, h: 1.8 },
-  { x: 17.8, y: 65.2, w: 53, h: 1.8 },
-];
 
 /** The first page of Ficino's Platonic Theology, in an illuminated copy dedicated to Lorenzo. */
 export function SoulFigure() {
@@ -63,7 +53,7 @@ export function SoulFigure() {
       h={1000}
       alt="The illuminated first page of Ficino's Platonic Theology on the immortality of souls"
       href={SOUL_PAGE}
-      marks={SOUL_MARKS}
+      marks={MARKS.soul}
       aside={(lit) => (
         <div>
           <p className="text-lg text-secondary">Ficino opens his great book on the soul:</p>

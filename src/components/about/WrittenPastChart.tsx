@@ -14,7 +14,7 @@ import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
  * has reached the end).
  */
 
-const STEP_MS = 5500;
+const STEP_MS = 8000;
 // Each row has its own hue (written-past-data.ts): solid for what is
 // translated, a tint of the same hue for what is not. The palette passed the
 // dataviz validator (lightness band, adjacent CVD and contrast) on cream; rows
@@ -195,7 +195,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
               aria-hidden={!on}
               title={r.unit}
             >
-              <span className={`truncate ${r.highlight ? 'font-semibold text-primary' : 'text-secondary'} ${solo ? 'text-xl' : 'text-sm'}`}>
+              <span className={`truncate ${r.step === step ? 'font-semibold text-primary' : 'text-secondary'} ${solo ? 'text-xl' : 'text-sm'}`}>
                 {r.name}
               </span>
               <span className={`hidden sm:block truncate text-muted tabular-nums ${solo ? 'text-base' : 'text-[13px]'}`}>{r.dates}</span>

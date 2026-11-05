@@ -138,6 +138,7 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
           <div className="absolute inset-0">
             {box(cur.line, 'line')}
             {cur.ents.map((e, i) => box(e, 'ent', e.k, i))}
+            {cur.ents.map((e, i) => e.also?.map((b, q) => box(b, 'ent', undefined, `also-${i}-${q}`)))}
             {box(cur.plate, 'plate', cur.plate.k.replace('Figure · ', ''))}
           </div>
         </div>

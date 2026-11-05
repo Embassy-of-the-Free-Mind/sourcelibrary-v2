@@ -278,7 +278,7 @@ export default async function AboutPage() {
                     <h2 className={h2}>AI has read Reddit,{' '}<br className="hidden md:inline" />but not the freethinkers</h2>
                   </Reveal>
                   <Reveal delay={120} className="mt-8 md:mt-10 max-w-2xl">
-                    <p className={lead}>AI is fast becoming how people look things up and think things through, but it learned from the open web. The thinkers who changed how we see the heavens, nature and the body are mostly missing, because their books were never scanned, translated or put online. We are translating them so AI can learn from them too.</p>
+                    <p className={lead}>AI is fast becoming how people look things up and think things through, but it learned from the open web. The thinkers who shaped science, art and how we see ourselves are mostly missing, because their books were never scanned, translated or put online. We are translating them so AI can learn from them too.</p>
                   </Reveal>
                 </div>
                 <Reveal className="mt-14 md:mt-20">

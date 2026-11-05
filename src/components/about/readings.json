@@ -7,36 +7,46 @@
     "lang": "Latin · manuscript",
     "line": {
       "l": 52,
-      "t": 17.3,
-      "w": 40,
-      "h": 21
+      "t": 18.9,
+      "w": 40.3,
+      "h": 29.3
     },
     "orig": "donec Pavonis cauda prorsus consumetur, et opus fiat album et perlucidum sicut margarita orientalis",
     "en": "until the peacock's tail is utterly consumed, and the work becomes white and transparent like an oriental pearl",
     "ents": [
       {
-        "l": 75,
-        "t": 18.3,
-        "w": 8,
-        "h": 4,
+        "l": 81.2,
+        "t": 20.1,
+        "w": 10.1,
+        "h": 4.8,
         "k": "Term",
-        "v": "peacock's tail"
+        "v": "peacock's tail",
+        "also": [
+          {
+            "l": 51.8,
+            "t": 26.3,
+            "w": 8,
+            "h": 4.9
+          }
+        ]
       },
       {
         "l": 59,
-        "t": 33.3,
-        "w": 20.5,
-        "h": 4.2,
+        "t": 39.5,
+        "w": 28.1,
+        "h": 8.4,
         "k": "Term",
-        "v": "oriental pearl"
+        "v": "oriental pearl",
+        "also": []
       },
       {
         "l": 52.3,
-        "t": 52.2,
-        "w": 6.8,
-        "h": 4.2,
+        "t": 52.6,
+        "w": 10,
+        "h": 7.8,
         "k": "Figure",
-        "v": "the Queen"
+        "v": "the Queen",
+        "also": []
       }
     ],
     "terms": [
@@ -44,10 +54,10 @@
       "the white work"
     ],
     "plate": {
-      "l": 17,
+      "l": 17.1,
       "t": 17.5,
-      "w": 33.5,
-      "h": 60.5,
+      "w": 33.7,
+      "h": 61.6,
       "k": "Figure · watercolour",
       "tags": [
         "Queen enthroned",
@@ -72,28 +82,31 @@
     "en": "Now that I have committed myself here to writing of the Fruits of the Land, I shall not depart from the subject just yet",
     "ents": [
       {
-        "l": 19.8,
-        "t": 49,
-        "w": 5.6,
-        "h": 3.2,
+        "l": 18.4,
+        "t": 48.5,
+        "w": 6.1,
+        "h": 3.8,
         "k": "Person",
-        "v": "Bacchus"
+        "v": "Bacchus",
+        "also": []
       },
       {
-        "l": 39,
-        "t": 49,
-        "w": 5.8,
-        "h": 3.2,
+        "l": 41.1,
+        "t": 49.3,
+        "w": 6.1,
+        "h": 3.3,
         "k": "Person",
-        "v": "Hermes"
+        "v": "Hermes",
+        "also": []
       },
       {
-        "l": 76.7,
+        "l": 70.4,
         "t": 82.4,
-        "w": 8.2,
+        "w": 7.8,
         "h": 3.4,
         "k": "Reference",
-        "v": "Psalm 23"
+        "v": "Psalm 23",
+        "also": []
       }
     ],
     "terms": [
@@ -129,20 +142,42 @@
     "en": "Here is the figure and demonstration of the twelve signs.",
     "ents": [
       {
-        "l": 52.5,
-        "t": 27.6,
-        "w": 33.5,
-        "h": 3.2,
+        "l": 76.2,
+        "t": 22.2,
+        "w": 10.8,
+        "h": 2.9,
         "k": "Terms",
-        "v": "the twelve signs"
+        "v": "the twelve signs",
+        "also": [
+          {
+            "l": 51.8,
+            "t": 24.3,
+            "w": 35.1,
+            "h": 2.1
+          },
+          {
+            "l": 51.8,
+            "t": 25.2,
+            "w": 4.3,
+            "h": 2.6
+          }
+        ]
       },
       {
         "l": 54,
-        "t": 59.8,
-        "w": 5.5,
-        "h": 3.8,
+        "t": 60,
+        "w": 4,
+        "h": 4,
         "k": "Term",
-        "v": "equinoctial"
+        "v": "equinoctial",
+        "also": [
+          {
+            "l": 63.3,
+            "t": 60.3,
+            "w": 4.2,
+            "h": 3.6
+          }
+        ]
       }
     ],
     "terms": [
@@ -172,7 +207,7 @@
       "l": 54.5,
       "t": 38,
       "w": 38,
-      "h": 11
+      "h": 12.1
     },
     "orig": "der Weg gezeiget, die Materia genennet, und der Process beschrieben wird, zu dem hohen Geheimniß der Universal-Tinctur zu kommen",
     "en": "the way is shown, the matter is named and the process described, to attain the high secret of the Universal Tincture",
@@ -183,25 +218,28 @@
         "w": 28,
         "h": 4,
         "k": "Person",
-        "v": "Lucas Jennis"
+        "v": "Lucas Jennis",
+        "also": []
       },
       {
-        "l": 57.5,
-        "t": 91.8,
-        "w": 13,
+        "l": 62.1,
+        "t": 92.2,
+        "w": 10,
         "h": 3.6,
         "k": "Place",
         "v": "Frankfurt",
-        "side": "l"
+        "side": "l",
+        "also": []
       },
       {
-        "l": 75,
+        "l": 76,
         "t": 94.8,
-        "w": 15,
+        "w": 13.2,
         "h": 3.4,
         "k": "Date",
         "v": "1743",
-        "side": "r"
+        "side": "r",
+        "also": []
       }
     ],
     "terms": [
@@ -228,37 +266,40 @@
     "meta": "Nicolas Flamel · manuscript, 18th century",
     "lang": "French · manuscript",
     "line": {
-      "l": 11,
-      "t": 21.8,
+      "l": 12,
+      "t": 18.2,
       "w": 38,
-      "h": 6.8
+      "h": 10.6
     },
     "orig": "La fable nous represente la pucelle Hesione preste a etre devorée par un monstre marin, que Hercée delivre apres avoir tué ce dragon.",
     "en": "Fable represents to us the maiden Hesione ready to be devoured by a sea monster, whom Hercée delivers after having killed this dragon.",
     "ents": [
       {
-        "l": 40.5,
+        "l": 32.9,
         "t": 38.8,
         "w": 6,
         "h": 3.2,
         "k": "Term",
-        "v": "Mercury"
+        "v": "Mercury",
+        "also": []
       },
       {
-        "l": 12.5,
-        "t": 41.8,
-        "w": 14.5,
+        "l": 25.8,
+        "t": 42.7,
+        "w": 12.8,
         "h": 3.2,
         "k": "Motif",
-        "v": "seven-headed dragon"
+        "v": "seven-headed dragon",
+        "also": []
       },
       {
-        "l": 36,
-        "t": 53.7,
-        "w": 9.5,
+        "l": 37.5,
+        "t": 52.5,
+        "w": 9.3,
         "h": 3.2,
         "k": "Term",
-        "v": "seven metals"
+        "v": "seven metals",
+        "also": []
       }
     ],
     "terms": [
