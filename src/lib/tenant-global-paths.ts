@@ -129,7 +129,7 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // The whole catalogue with search and Ask the librarian (moved from
   // /catalog, 2026-10-18). On a partner host /catalog is rewritten to that
   // partner's own catalogue; /library is the global one and must not answer
-  // there. The nav keeps linking /catalog, which is right on both hosts.
+  // there. Links shared by both hosts pick their target with catalogueHref.
   '/library',
   // The hidden-mark decoder (#8150). It names the book a mark belongs to, from
   // the whole library, and the riddles built on it lead into other books. A
@@ -207,6 +207,11 @@ const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
 
 /** Exact match or a path segment beneath it — `/explore` and `/explore/map`,
  *  but never `/exploration`. */
+/** The catalogue a shared link should open: a partner's own, or the whole library. */
+export function catalogueHref(isTenantHost: boolean): string {
+  return isTenantHost ? '/catalog' : '/library';
+}
+
 export function isGlobalOnlyTenantPath(pathname: string): boolean {
   return ALL_GLOBAL_ONLY_PATHS.some(
     p => pathname === p || pathname.startsWith(`${p}/`)

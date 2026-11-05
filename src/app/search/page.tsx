@@ -20,6 +20,7 @@ import { hasLocalizedCollectionName, localizedCollection, localizedTitle } from 
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed, useRoomResultHref } from '@/lib/EmbedContext';
 import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
+import { catalogueHref } from '@/lib/tenant-global-paths';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -1587,9 +1588,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                     </select>
                     <span>{t.perPage}</span>
                   </div>
-                  {/* /catalog has no localized twin; localePath returns it
+                  {/* The catalogue has no localized twin; localePath returns it
                       untouched, which is the honest outcome (i18n.md rule 5). */}
-                  <Link href={lp('/catalog')} className="text-sm text-accent-rust hover:underline">
+                  <Link href={lp(catalogueHref(isTenantSurface))} className="text-sm text-accent-rust hover:underline">
                     {t.browseFullCatalog}
                   </Link>
                 </div>
@@ -1992,7 +1993,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   ))}
                   {catalogTotal > 5 && (
                     <Link
-                      href={`${lp('/catalog')}?cq=${encodeURIComponent(query)}`}
+                      href={`${lp(catalogueHref(isTenantSurface))}?${isTenantSurface ? 'cq' : 'q'}=${encodeURIComponent(query)}`}
                       className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
                     >
                       {t.openAllCatalogueMatches(nf(catalogTotal))} <ChevronRight className="w-3.5 h-3.5" />

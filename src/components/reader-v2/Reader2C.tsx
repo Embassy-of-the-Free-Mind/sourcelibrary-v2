@@ -21,6 +21,7 @@ import PageDeepZoomButton from '@/components/reader/PageDeepZoomButton';
 import type { DeepZoomManifest } from '@/lib/types/book';
 import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { catalogueHref } from '@/lib/tenant-global-paths';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl, getPageThumbUrl, swapToFallback } from '@/lib/utils';
 import { framedThumbSourceWidth, pageImageFrame } from '@/lib/framed-image';
@@ -888,11 +889,12 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
     return () => { document.body.style.overflow = prev; };
   }, []);
 
+  const isTenantHost = useIsEmbedded();
   const destinations: Array<[string, string]> = [
     [t.collections, '/collections'],
     [t.gallery, '/gallery'],
     [t.browse, '/browse'],
-    [t.catalogue, '/catalog'],
+    [t.catalogue, catalogueHref(isTenantHost)],
     [t.works, '/works'],
     [t.explore, '/explore'],
     [t.librarian, '/librarian'],
