@@ -282,6 +282,12 @@ const nextConfig: NextConfig = {
         source: '/fonts/google/:file',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      // The covers image behind the /about and homepage walls. Versioned file name,
+      // so a new image is a new URL and this one can be cached for good.
+      {
+        source: '/about/covers-atlas.v1.avif',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
