@@ -70,3 +70,7 @@ F02, F03, W01, W03, W07, C03, C06, C10, U22, V01 (10; personal 2, work 3, civic 
 ## Addendum before any test-dilemma answer was judged: blocked writer replies
 
 Gemini's safety filter can return its own error text as the reply (C10 arm A: "This request was blocked by Gemini's filters…"). That is a failed call, not advice. Rule, written before any test score exists and applied to every arm alike: a reply carrying that text is moved to `answers-blocked.jsonl` and the call is retried, at most 3 attempts per cell. A cell still blocked after 3 attempts has no answer: its dilemma's pairs that need that cell are excluded, and the exclusion is reported by arm. A count of blocked replies by arm is reported, since the filter could fall unevenly on arms.
+
+## Note after the run: wrapper comment reworded
+
+`agy-exit-shim.mjs` ran as `0938a373cbcbb4667bd6cbc5f046fd86c6d53879b99de65a1b16fa838e89801d`. After the run, one word-level change to its header comment (no code) gave `b2c6a15ae7840c24fea6e6cabc2870c935c2df61f02f9295c5c4845d8ff6ad3e`, because `tests/unit/agy-gemini-only.test.ts` matched the comment's text as a spawn. The wrapper starts `/usr/local/bin/agy`, the guard.

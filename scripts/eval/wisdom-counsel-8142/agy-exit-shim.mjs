@@ -4,7 +4,7 @@
 // prompt, unchanged reply; it returns once the envelope is complete and kills the whole process group, which also
 // stops the orphans a SIGKILL of the guard's shell leaves behind. Frozen files stay byte-identical.
 // PRIOR ART: scripts/lib/agy-cli.mjs agyCall has its own timeout but no early return on a finished envelope, and
-// lib.mjs (frozen) calls spawn('agy') directly; scripts/workers/agy-guard.sh is the guard this still goes through.
+// lib.mjs (frozen) starts the bare command from PATH; scripts/workers/agy-guard.sh is the guard this still goes through.
 import { spawn } from 'node:child_process';
 
 const child = spawn('/usr/local/bin/agy', process.argv.slice(2), { stdio: ['ignore', 'pipe', 'inherit'], detached: true });
