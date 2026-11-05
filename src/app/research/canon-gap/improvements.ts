@@ -17,21 +17,21 @@ export type Measured = Omit<Improvement, 'inUse' | 'status' | 'source'> & {
 
 const MEASURED: Measured[] = [
   {
-    change: 'Sanskrit, Pali, Chinese: Flash-Lite → Flash', measure: 'reversed statements per 100 pages', before: 15.4, after: 5.9, lowerBetter: true,
+    change: 'Sanskrit, Pali, Chinese: the lightest model → the mid-tier model', measure: 'reversed statements per 100 pages', before: 15.4, after: 5.9, lowerBetter: true,
     inUseNote: 'in use for new translations since 4 Oct 2026', testedNote: 'tested; not adopted',
-    basis: '68 pages from 68 books, against published translations (SuttaCentral, CC0; public-domain translators); two blind Claude Opus judges; 3 Oct 2026',
+    basis: '68 pages from 68 books, against published translations (SuttaCentral, CC0; public-domain translators); two blind AI judges; 3 Oct 2026',
     file: '2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md',
   },
   {
     change: 'Tengyur: 8-page blocks → one page at a time', measure: 'pages whose English belongs to another page, per 100', before: 13.3, after: 0.9, lowerBetter: true,
     inUseNote: 'in use for the Tengyur draft', testedNote: 'tested; not adopted',
-    basis: '113 pages (15 vs 1), against 84000’s published translations; two blind Claude Opus judges; 3 Oct 2026',
+    basis: '113 pages (15 vs 1), against 84000’s published translations; two blind AI judges; 3 Oct 2026',
     file: '2026-10-03-tengyur-84000-reference-ab-5497.md',
   },
   {
-    change: 'Syriac: Gemini → Kraken (Sophro Mhiro)', measure: 'line error rate, %', before: 74, after: 19, lowerBetter: true,
+    change: 'Syriac: our general model → Kraken (Sophro Mhiro)', measure: 'line error rate, %', before: 74, after: 19, lowerBetter: true,
     inUseNote: 'in use for Syriac', testedNote: 'tested; not adopted',
-    basis: '40 manuscript pages with published transcriptions (Jerusalem SMMJ 36, ÖNB Cod. Syr. 1); Gemini arms 74–79%, lower shown; 16 Sep 2026',
+    basis: '40 manuscript pages with published transcriptions (Jerusalem SMMJ 36, ÖNB Cod. Syr. 1); general-model arms 74–79%, lower shown; 16 Sep 2026',
     file: '2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md',
   },
   {
@@ -41,22 +41,22 @@ const MEASURED: Measured[] = [
     file: '2026-10-02-ocr-v19-1-stamps-4195.md',
   },
   {
-    change: 'Sentences across a page turn: Flash-Lite → Flash', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 16, lowerBetter: true,
+    change: 'Sentences across a page turn: the lightest model → the mid-tier model', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 16, lowerBetter: true,
     inUseNote: 'in use for new translations in seven languages since 4 Oct 2026', testedNote: 'tested; not adopted',
     // The write-up's own question was the page markers (not adopted); its Flash arm is the change #5740 adopted.
-    inUseVia: { inUse: true, why: 'Flash translation routing, #5740' },
-    basis: '100 mid-sentence page breaks from 100 books, screened by eye; a defect counts only when both of two blind Claude Opus judges flag it; 3–4 Oct 2026',
+    inUseVia: { inUse: true, why: 'mid-tier model translation routing, #5740' },
+    basis: '100 mid-sentence page breaks from 100 books, screened by eye; a defect counts only when both of two blind AI judges flag it; 3–4 Oct 2026',
     file: '2026-10-04-seam-markers-confirm-5678.md',
   },
   {
-    change: 'Sentences across a page turn: Flash with page markers', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 11, lowerBetter: true,
-    inUseNote: 'in use', testedNote: 'tested; markers added too little beyond Flash to adopt',
-    inUseVia: { inUse: false, why: 'markers not adopted; Flash alone was' },
+    change: 'Sentences across a page turn: the mid-tier model with page markers', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 11, lowerBetter: true,
+    inUseNote: 'in use', testedNote: 'tested; markers added too little beyond the mid-tier model to adopt',
+    inUseVia: { inUse: false, why: 'markers not adopted; the mid-tier model alone was' },
     basis: 'same 100 breaks and judges as the row above; 3–4 Oct 2026',
     file: '2026-10-04-seam-markers-confirm-5678.md',
   },
   {
-    change: 'Persian manuscripts: Flash-Lite → Flash reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false,
+    change: 'Persian manuscripts: the lightest model → the mid-tier model reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false,
     inUseNote: 'in use for Persian since 4 Oct 2026; still below the 90% needed to translate these manuscripts',
     testedNote: 'tested; still below the 90% needed to translate',
     basis: 'manuscript pages of classical poetry located in Ganjoor (9 and 13 pages); 1 Oct 2026; a small sample',

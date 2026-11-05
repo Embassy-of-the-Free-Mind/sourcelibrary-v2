@@ -45,10 +45,10 @@ export const DRAW_7701 = {
   issue: 7701,
   frame: { books: 170, fraktur: 141, antiqua: 12, other: 17 },
   engines: [
-    { engine: 'Gemini 3.8 Flash (in use)', fraktur: [13, 15], antiqua: [8, 9], strong: true },
+    { engine: 'Current reading model (in use)', fraktur: [13, 15], antiqua: [8, 9], strong: true },
     { engine: 'PERO-OCR', fraktur: [3, 18], antiqua: [8, 11] },
-    { engine: 'LightOnOCR-3 1B', fraktur: [2, 18], antiqua: [11, 12] },
-    { engine: 'Kraken Fraktur model', fraktur: [0, 18], antiqua: null },
+    { engine: 'Small open model', fraktur: [2, 18], antiqua: [11, 12] },
+    { engine: 'Free open engine, Fraktur model', fraktur: [0, 18], antiqua: null },
   ],
   /** Pages with words the page does not print, Fraktur only. */
   wrongTextFraktur: { gemini: [0, 15], lighton: 10, pero: 7, kraken: [17, 18] },
@@ -65,13 +65,13 @@ export const CER_5660 = {
   pages: 29,
   fraktur: 21,
   rows: [
-    { engine: 'Gemini 3.1 Flash-Lite', cer: 0.5, strong: true },
+    { engine: 'Our lightest model', cer: 0.5, strong: true },
     { engine: 'dots.ocr', cer: 1.3 },
-    { engine: 'MinerU 2.5 Pro', cer: 2.5 },
+    { engine: 'Open engine A', cer: 2.5 },
     { engine: 'olmOCR 2', cer: 2.6 },
     { engine: 'Nanonets OCR2', cer: 2.9 },
-    { engine: 'GLM-OCR', cer: 4.2 },
-    { engine: 'PaddleOCR-VL 1.6', cer: 5.5 },
+    { engine: 'Open engine B', cer: 4.2 },
+    { engine: 'Open engine C', cer: 5.5 },
   ],
   krakenGeneric: 26.0,
 } as const;
@@ -86,8 +86,8 @@ export const CER_7818 = {
   issue: 7818,
   pages: 40,
   rows: [
-    { engine: 'Gemini 3.1 Flash-Lite', cer: 1.5, accepted: 23 },
-    { engine: 'Flash-Lite, then the correction pass', cer: 1.1, accepted: 31, strong: true },
+    { engine: 'Our lightest model', cer: 1.5, accepted: 23 },
+    { engine: 'Our lightest model, then the correction pass', cer: 1.1, accepted: 31, strong: true },
     { engine: 'PERO-OCR', cer: 8.8, accepted: 6 },
     { engine: 'PERO-OCR, then the correction pass', cer: 1.4, accepted: 33 },
   ],

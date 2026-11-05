@@ -78,7 +78,7 @@ const GATES: [CritiqueGate, CritiqueGate, CritiqueGate] = [
   {
     name: 'Against a human translation',
     result: '6.2 reversed statements per 100 pages by either of two AI judges, 3.4 by both',
-    basis: '354 pages that 84000 has also translated, from 8 texts, none of them Madhyamaka or Pramāṇa; two blind Claude Opus judges',
+    basis: '354 pages that 84000 has also translated, from 8 texts, none of them Madhyamaka or Pramāṇa; two blind AI judges',
     source: `${ISSUE_URL}5797#issuecomment-5978287405`,
     onThisPage: 'not in that sample: 84000 has published nothing from this section.',
   },
@@ -92,11 +92,11 @@ const GATES: [CritiqueGate, CritiqueGate, CritiqueGate] = [
   {
     name: 'AI specialist review against the Tibetan',
     result: 'on 150 random pages, 75% need only light edits; about 38 per 100 pages have a reversed statement or a wrong speaker or agent (95% CI 23–50)',
-    basis: 'a random draw from all 116,703 pages with English; two blind Claude Opus reviewers acting as Tibetologists; rate adjusted for the share of their findings that held up when checked',
+    basis: 'a random draw from all 116,703 pages with English; two blind AI reviewers acting as Tibetologists; rate adjusted for the share of their findings that held up when checked',
     source: `${ISSUE_URL}5829#issuecomment-5982612936`,
     onThisPage: (
       <>
-        a Claude reviewer reading the Tibetan removed a fifth item the draft had added to a four-part list (&ldquo;inherit their
+        an AI reviewer reading the Tibetan removed a fifth item the draft had added to a four-part list (&ldquo;inherit their
         karma&rdquo;) and moved the materialists&rsquo; reason back to its clause. <A href={`${ISSUE_URL}5800`}>#5800</A>
       </>
     ),
@@ -532,16 +532,16 @@ export default function CanonGapPage() {
             <li>
               <strong>Transcription.</strong> Where an open typed edition exists we use it, matched to our scans page
               by page: Esukhia for the Derge Tengyur and Kangyur, CBETA for the Chinese Buddhist canon, Sefaria for
-              Hebrew. Otherwise a model reads the page image: Google&rsquo;s Gemini 3 Flash and 3.1 Flash-Lite for most
-              scripts; BDRC&rsquo;s Yigdzin for Tibetan manuscripts, <A href={L.kraken}>Kraken</A> for Syriac, and
-              PaddleOCR-VL for Chinese brush manuscripts, where each measured better.
+              Hebrew. Otherwise a model reads the page image: our mid-tier and lightest models for most
+              scripts; a Tibetan model from BDRC for Tibetan manuscripts, <A href={L.kraken}>Kraken</A> for Syriac, and
+              an open engine for Chinese brush manuscripts, where each measured better.
             </li>
             <li>
-              <strong>English drafts</strong> are written by Gemini 3 Flash or 3.1 Flash-Lite. The Derge Tengyur is
-              drafted by Gemini 3 Flash, one page at a time.
+              <strong>English drafts</strong> are written by the mid-tier or the lightest model. The Derge Tengyur is
+              drafted by the mid-tier model, one page at a time.
             </li>
             <li>
-              <strong>Checking.</strong> Claude Opus and Sonnet score samples blind against published translations
+              <strong>Checking.</strong> AI judges score samples blind against published translations
               and typed editions, and we read the page images where scores are low.
             </li>
           </ul>

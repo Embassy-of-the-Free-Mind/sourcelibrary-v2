@@ -197,7 +197,7 @@ export default async function HowItWorksPage() {
 
         <TextRoutesFigure
           tengyurPages={TENGYUR.pages_with_text}
-          examplePage={{ model: record.text?.model ?? data.readBy, label: `${PAGE_LABEL} in the film below` }}
+          examplePage={{ model: data.readBy, label: `${PAGE_LABEL} in the film below` }}
         />
       </div>
 

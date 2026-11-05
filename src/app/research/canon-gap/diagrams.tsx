@@ -214,24 +214,24 @@ export type TraditionProgressRow = {
 // Plain names for the engine ids the page records carry.
 const ENGINE_NAMES: [RegExp, string][] = [
   [/^esukhia-derge/, 'Esukhia typed Derge text'],
-  [/^bdrc-yigdzin/, 'BDRC Yigdzin (Tibetan manuscript OCR)'],
+  [/^bdrc-yigdzin/, 'BDRC Tibetan model (manuscript OCR)'],
   [/^bdrc-woodblock/, 'BDRC woodblock OCR'],
   [/^cbeta/, 'CBETA typed text'],
   [/^sefaria/, 'Sefaria typed text'],
-  [/^gemini-3-flash/, 'Gemini 3 Flash'],
-  [/^gemini-3\.8-flash/, 'Gemini 3.8 Flash'],
-  [/^gemini-3\.1-flash-lite/, 'Gemini 3.1 Flash-Lite'],
-  [/^gemini-2\.5-flash/, 'Gemini 2.5 Flash'],
-  [/^PaddleOCR-VL/i, 'PaddleOCR-VL'],
+  [/^gemini-3-flash/, 'the mid-tier model'],
+  [/^gemini-3\.8-flash/, 'the current reading model'],
+  [/^gemini-3\.1-flash-lite/, 'the lightest model'],
+  [/^gemini-2\.5-flash/, 'an earlier mid-tier model'],
+  [/^PaddleOCR-VL/i, 'Open engine A'],
   [/^kraken/, 'Kraken'],
   [/^ia-/, 'Internet Archive OCR'],
-  [/^mineru/, 'MinerU'],
+  [/^mineru/, 'Open engine B'],
   [/^manual$/, 'hand-entered'],
   [/^(unrecorded|unknown)$/, 'model not recorded'],
 ];
 const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? id;
 
-/** "Gemini 3 Flash 62% · BDRC Yigdzin 31% · other 7%": merged by plain name, top three, shares of pages. */
+/** "The mid-tier model 62% · BDRC Tibetan model 31% · other 7%": merged by plain name, top three, shares of pages. */
 function engineLine(rows: [string, number][]) {
   const merged = new Map<string, number>();
   for (const [id, n] of rows) merged.set(engineName(id), (merged.get(engineName(id)) ?? 0) + n);

@@ -144,12 +144,12 @@ const grades = servedGrades as typeof servedGrades & {
 const LADDER = ['fit_to_quote', 'fit_to_read', 'some_errors', 'many_errors', 'from_elsewhere', 'mostly_wrong', 'not_this_page'];
 /** Plain names for the reading methods the draw happened to catch; a route not here shows its own id. */
 const READER_NAME: Record<string, string> = {
-  lite: 'Gemini Flash-Lite', '3flash': 'Gemini 3 Flash', paddle: 'PaddleOCR-VL', yigdzin: 'Yig-dzin (Tibetan)',
-  'yigdzin>agy-flash-low': 'Yig-dzin, then Gemini Flash', 'lite>agy-flash-low': 'Flash-Lite, then Gemini Flash',
-  'pero>agy-flash-low': 'PERO, then Gemini Flash', 'lighton-written': 'LightOnOCR (our GPU)',
+  lite: 'Our lightest model', '3flash': 'The mid-tier model', paddle: 'Open engine A', yigdzin: 'A Tibetan model',
+  'yigdzin>agy-flash-low': 'A Tibetan model, then the current reading model', 'lite>agy-flash-low': 'Our lightest model, then the current reading model',
+  'pero>agy-flash-low': 'PERO, then the current reading model', 'lighton-written': 'Open engine B (our GPU)',
   'import:ia_djvu': 'the Internet Archive’s own OCR', 'import:corpus': 'a typed edition',
-  'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'Claude Opus',
-  'model:gemini-2.5-flash': 'Gemini 2.5 Flash', 'model:none': 'no engine recorded',
+  'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'The strongest model tested',
+  'model:gemini-2.5-flash': 'An earlier mid-tier model', 'model:none': 'no engine recorded',
 };
 /** Languages with at least three books in the draw: fewer is one or two books, not a language. */
 const gradeLanguages = grades.by_language.filter(r => r.books >= 3);
@@ -402,7 +402,7 @@ export default function QualityCenterPage() {
             <p className="text-stone-700 leading-relaxed mb-3">
               On {longDate(servedDate)} we drew {n(servedDraw.books.drawn)} books from the {n(servedFrame)} live books that
               have a transcription — in four groups, by how much confidence our own records gave us in each, then weighted
-              back to the library — took five pages spread through each, and had an AI reviewer (Claude Opus) read each of
+              back to the library — took five pages spread through each, and had an AI reviewer read each of
               the {n(grades.pages)} pages against the photograph of the page. It marked every defect it found with a kind
               and one of three weights: a slip that misleads nobody, a reading that changes the sense, or text the page
               does not carry. Those weights give each page a grade, and this is how the {n(grades.pages)} pages fell.
@@ -620,7 +620,7 @@ export default function QualityCenterPage() {
           <div className="max-w-3xl">
             <p className="text-stone-700 leading-relaxed mb-3">
               A table of engines alone would mislead, because each engine was given different books: Greek and Sanskrit
-              went to Gemini 3 Flash, Korean to Flash-Lite, Chinese manuscripts to PaddleOCR. So this compares engines only
+              went to the mid-tier model, Korean to our lightest model, Chinese manuscripts to Open engine A. So this compares engines only
               within one language, and only where an engine read at least three books in the draw. The counts are pages,
               not shares of the library, and many cells are a handful of books.
             </p>
@@ -663,28 +663,28 @@ export default function QualityCenterPage() {
           </div>
           <Source>
             <A href={`${BLOB}${SERVED_GRADES}`}>served-grades.json</A>, <code>by_language_route</code>, unweighted. In Chinese
-            the engines read different material: PaddleOCR the manuscripts, the Gemini models printed books, so those
+            the engines read different material: Open engine A the manuscripts, the lightest and mid-tier models printed books, so those
             rows are not a contest. The full list, including engines that read one or two books, is in the file. The
             library&rsquo;s own mix of engines: <A href={`${BLOB}scripts/eval/experiments/2026-11-02-stock-by-engine-7933.md`}>the
             census</A>.
           </Source>
           <div className="max-w-3xl mt-6">
             <p className="text-stone-700 leading-relaxed mb-3">
-              Three things stand out. Gemini 3 Flash beats Flash-Lite where both read the same language: about 2 errors per
+              Three things stand out. The mid-tier model beats the lightest model where both read the same language: about 2 errors per
               1,000 words against 6 in German, and 5 against 13 in Latin. In English both are good. Engines built or chosen
-              for one kind of page do best: LightOnOCR, on our own GPU, found no meaning-changing error in ten English pages,
+              for one kind of page do best: Open engine B, on our own GPU, found no meaning-changing error in ten English pages,
               and the Tibetan pages taken from Esukhia&rsquo;s typed edition have about one error in 2,000 syllables. The
-              Internet Archive&rsquo;s own OCR, which we import for some English books, is worse than either Gemini model
+              Internet Archive&rsquo;s own OCR, which we import for some English books, is worse than either model
               on English. And general-purpose models are poor on Greek, Sanskrit and Korean, at one error in every 50 to 60
               words or characters. Those pages wait for an engine that has been tested on their script.
             </p>
             <p className="text-stone-700 leading-relaxed mb-3">
               <b className="text-stone-900">These are the reads already in the library, not the ones we make now.</b> In a
-              random sample of 28,053 live pages, Flash-Lite wrote 47% of the transcriptions and Gemini 3 Flash 22%; Gemini
-              3.8 Flash, which reads pages now, has written 1.5%. Latin is 72% Flash-Lite, and Latin printed before 1501 is
-              90%. The English follows the same pattern: Flash-Lite 52%, 3 Flash 44%, 3.8 Flash 2%. Where 3.8 Flash has re-read pages
-              Flash-Lite read, it cut the Latin pages a reviewer called misleading from 41% to 8% (250 pages,{' '}
-              <IssueLink num={5924} />). The draw also leans toward Gemini 3 Flash in Latin (80% of its Latin pages,
+              random sample of 28,053 live pages, the lightest model wrote 47% of the transcriptions and the mid-tier model 22%; the
+              current reading model, which reads pages now, has written 1.5%. Latin is 72% the lightest model, and Latin printed before 1501 is
+              90%. The English follows the same pattern: lightest model 52%, mid-tier 44%, current reading model 2%. Where the current reading model has re-read pages
+              the lightest model read, it cut the Latin pages a reviewer called misleading from 41% to 8% (250 pages,{' '}
+              <IssueLink num={5924} />). The draw also leans toward the mid-tier model in Latin (80% of its Latin pages,
               against 28% of the library&rsquo;s), so the Latin rate above is probably lower than the library&rsquo;s as
               it stands.
             </p>
@@ -696,10 +696,10 @@ export default function QualityCenterPage() {
               Alphabetic scripts only, so every rate is per 1,000 words. The dates and the manuscript label come from our
               records, which are often missing or wrong, so the early rows here likely hold manuscripts filed as print.
               In Latin, where each book&rsquo;s form was checked on its image, the difference is handwriting, not date
-              (<IssueLink num={7947} />). In this draw the early books read by Gemini 3
-              Flash and by Flash-Lite come out alike ({eraRoute('before 1501', '3flash')?.severe_per_1k} and{' '}
+              (<IssueLink num={7947} />). In this draw the early books read by the mid-tier
+              model and by the lightest model come out alike ({eraRoute('before 1501', '3flash')?.severe_per_1k} and{' '}
               {eraRoute('before 1501', 'lite')?.severe_per_1k} per 1,000), but those are different books, five or so each.
-              Where both engines read the same gothic pages, readers preferred the Flash reading on 14 of 15
+              Where both engines read the same gothic pages, readers preferred the mid-tier reading on 14 of 15
               (<IssueLink num={6375} />), so the engine still matters on early print. Languages are mixed in each row, so a
               row with more Greek in it looks worse for that reason.
             </p>
@@ -742,7 +742,7 @@ export default function QualityCenterPage() {
             <p className="text-stone-700 leading-relaxed mb-3">
               Readers mostly read the English. On the {n(englishOn7866.translator.fidelity_ge4_weighted.pages)} pages of
               this draw that carry an English translation ({n(englishOn7866.translator.fidelity_ge4_weighted.books)} books),
-              Claude Opus read each translation against its transcription and the photograph. Measured against the
+              An AI reviewer read each translation against its transcription and the photograph. Measured against the
               transcription it was made from, {pct(englishOn7866.translator.major_page_share_weighted.share)} of pages carry a
               major error in the English ({pct(englishOn7866.translator.major_page_share_weighted.ci95[0])}–
               {pct(englishOn7866.translator.major_page_share_weighted.ci95[1])}), about{' '}
@@ -1007,7 +1007,7 @@ export default function QualityCenterPage() {
             {twSource && (
               <>
                 Three-ways column: <A href={`${BLOB}${twSource}`}>{twSource.split('/').pop()}</A>, Wikisource and EEBO-TCP pages
-                of the same scan or edition, the current engine (flash-lite) on a plain transcription prompt; &ldquo;other&rdquo;
+                of the same scan or edition, the current engine (our lightest model) on a plain transcription prompt; &ldquo;other&rdquo;
                 is mostly marginal notes placed differently, and misreads.{' '}
               </>
             )}
@@ -1102,7 +1102,7 @@ export default function QualityCenterPage() {
             <Sub>Checked against the page image, {longDate(pageCheck.date)}</Sub>
           </div>
           <p className="text-stone-700 leading-relaxed max-w-3xl mb-3">
-            For four kinds of page we drew 30 pages for each way of reading them, and had Claude Opus, an AI reviewer,
+            For four kinds of page we drew 30 pages for each way of reading them, and had an AI reviewer
             read every text against the photograph of its page. A page is accepted when it could be published as that page&rsquo;s text: every line, in
             order, with the right words, names and numbers. A page has wrong text when it says something the page does not:
             words left out or added, another page&rsquo;s text, or a misread that changes the sense. Ways of reading we
@@ -1322,11 +1322,9 @@ export default function QualityCenterPage() {
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            The records below are working notes, and use three words of ours. A <i>route</i> is a way of reading a page: the
-            engine that reads it first, and any engine that then corrects it, joined by &gt;, as in{' '}
-            <i>lite&gt;opus</i>. A <i>cell</i> is a kind of page, a language with print or manuscript, as in{' '}
-            <i>latin-lite/print</i>. <i>agy</i> is Google&rsquo;s Antigravity command-line tool, through which we run Gemini
-            models on a subscription.
+            The records below are working notes, and use two words of ours. A <i>route</i> is a way of reading a page: the
+            engine that reads it first, and any engine that then corrects it, joined by &gt;. A <i>cell</i> is a kind of
+            page, a language with print or manuscript, as in <i>latin-lite/print</i>.
           </p>
 
           {MONTH_NOTE && (
@@ -1358,7 +1356,7 @@ export default function QualityCenterPage() {
             <Source>
               Generated from the benchmark results by{' '}
               <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
-              the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
+              the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the model-cost meter</A> and{' '}
               <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
               What we can run: <A href={`${GH}blob/main/scripts/eval/build-model-roster.mjs`}>scripts/eval/build-model-roster.mjs</A>.
               Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
@@ -1419,7 +1417,7 @@ export default function QualityCenterPage() {
               On {longDate(audit.date)} we checked whether the pages behind both sets of charts suit the measure. A script
               checked all {n(audit.checked.translation)} translation page slots and {n(audit.checked.ocr)} OCR pages.{' '}
               {audit.eye.pages} of them, one page per book, were read against the page image by {audit.eye.readers} AI
-              reviewers (Claude Opus). No scholar has read them yet.
+              reviewers. No scholar has read them yet.
             </p>
             <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl">
               <li>
@@ -1450,7 +1448,7 @@ export default function QualityCenterPage() {
               </li>
               <li>
                 <b>Famous texts.</b> Some pages come from texts whose published English is widely reproduced, so a model may
-                recall it rather than translate. Share of such pages in each language&rsquo;s chart of Gemini models:{' '}
+                recall it rather than translate. Share of such pages in each language&rsquo;s chart of general models:{' '}
                 {audit.famous.map((f, i) => (
                   <span key={f.language}>
                     {i > 0 && ', '}

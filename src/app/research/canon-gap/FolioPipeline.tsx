@@ -413,7 +413,7 @@ export default function FolioPipeline({
             aside={
               <>
                 <Fact k="Model" delay={0.5}>
-                  Gemini 3 Flash{f.draft.model.endsWith('-preview') ? ' (preview)' : ''}, drafted {date(f.draft.drafted_at)}
+                  The mid-tier model{f.draft.model.endsWith('-preview') ? ' (preview)' : ''}, drafted {date(f.draft.drafted_at)}
                 </Fact>
                 <Fact k="Cost" delay={1.5}>
                   ${tg.usdPerPage.toFixed(4)} a page ({centsPerPage}¢), averaged over the Tengyur run

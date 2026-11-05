@@ -181,7 +181,7 @@ export default async function AboutPage() {
         <ul className="space-y-3 text-secondary mb-12">
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1">•</span>
-            <span><strong>OCR:</strong> Gemini vision models read historical typefaces and handwriting</span>
+            <span><strong>OCR:</strong> AI vision models read historical typefaces and handwriting</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1">•</span>
