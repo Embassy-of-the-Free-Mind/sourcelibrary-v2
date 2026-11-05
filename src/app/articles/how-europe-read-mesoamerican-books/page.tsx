@@ -60,7 +60,6 @@ const BOWDITCH = '6abfbf413c453a90d66637dc';
 const SCHELLHAS = '6abfbf3d3c453a90d6663605';
 const MORLEY = '6abfbf433c453a90d66639d1';
 
-const IA = 'https://archive.org/details/';
 
 const RAH = <>Madrid, Real Academia de la Historia, MS 9/5153, Public Domain Mark on the Academy&rsquo;s record; the Academy&rsquo;s notice is on the scan</>;
 
@@ -142,7 +141,7 @@ export default function HowEuropeReadPage() {
       </SourceQuote>
 
       <Para>
-        That is all the list says. It gives no maker, no place and no description. The editors of the <a href={`${IA}coleccindedocu01madruoft/page/n476/mode/1up`}><em>Colección de documentos inéditos</em></a> printed it in 1842 with the variants of a second manuscript, the treasurer&rsquo;s manual at Seville, and marked where the Vienna copy falls short. They note no variant on this line. The same page of the list says the king received everything <Leaf book={CORTES} page={90}>at Valladolid in Holy Week 1520</Leaf>.
+        That is all the list says. It gives no maker, no place and no description. The editors of the <a href="/book/6aed15bda9e39de98104302f?page=477"><em>Colección de documentos inéditos</em></a> printed it in 1842 with the variants of a second manuscript, the treasurer&rsquo;s manual at Seville, and marked where the Vienna copy falls short. They note no variant on this line. The same page of the list says the king received everything <Leaf book={CORTES} page={90}>at Valladolid in Holy Week 1520</Leaf>.
       </Para>
       <Para>
         For the next four centuries Europeans argued about what such books were: writing, pictures, magic, or something between. Very few of them ever handled one. This article follows that argument through the pages the library holds, and says at each step who saw a book, who was repeating someone else, and what the people who made the books said about them.
@@ -182,7 +181,7 @@ export default function HowEuropeReadPage() {
       <Para>
         Two years later Martyr recorded the first doubt. A man called Ribera, a companion of Cortés, told him these were no books at all but pattern sheets for jewellers and embroiderers. Martyr would not have it. Lord Kingsborough printed the passage in an old English version, with his own puzzled comment that Ribera, who had spent two years in New Spain, must have known better.
       </Para>
-      <OutsideQuote cite={<>Peter Martyr, fifth Decade, ch. 10, <a href={`${IA}deorbenouopetrim00angh/page/n180/mode/1up`}><em>De orbe novo decades</em> (Alcalá, 1530), fol. 86</a>; English from the old version printed by Kingsborough, <a href={`${IA}AntiquitiesMexi6King/page/n279/mode/1up`}><em>Antiquities of Mexico</em>, vol. VI, p. 268</a></>}>
+      <OutsideQuote cite={<>Peter Martyr, fifth Decade, ch. 10, <a href="/book/6aed15a5a9e39de98104280b?page=181"><em>De orbe novo decades</em> (Alcalá, 1530), fol. 86</a>; English from the old version printed by Kingsborough, <a href="/book/6aed15afa9e39de981042a51?page=280"><em>Antiquities of Mexico</em>, vol. VI, p. 268</a></>}>
         <p className="italic mb-3">Quid credam in hac varietate non intelligo. Libros esse puto, charactheresque illos ac imagines aliud aliquid significare, cum Romae viderim in obeliscis eiusmodi res quae pro litteris habebantur.</p>
         What I should thinke in this variety I knowe not. I suppose them to bee bookes, and that those characters and images signifie some other thinge, seeinge I have seene the like thinges in the obeliskes and pillers at Rome, which were accounted letters.
       </OutsideQuote>
@@ -317,13 +316,13 @@ export default function HowEuropeReadPage() {
       </SourceQuote>
 
       <Para>
-        &ldquo;Without doubt&rdquo; is Götze&rsquo;s guess, with no name attached. A century later the position was the same: <a href={`${IA}palenquetabletin00rauc/page/53/mode/1up`}>Charles Rau wrote in 1879</a> that &ldquo;Nothing is known of the history of the codex, excepting that it was bought in 1739 at Vienna&rdquo;. Any link to Cortés is speculation.
+        &ldquo;Without doubt&rdquo; is Götze&rsquo;s guess, with no name attached. A century later the position was the same: <a href="/book/6aed15b7a9e39de981042e04?page=71">Charles Rau wrote in 1879</a> that &ldquo;Nothing is known of the history of the codex, excepting that it was bought in 1739 at Vienna&rdquo;. Any link to Cortés is speculation.
       </Para>
       <Para>
         William Robertson&rsquo;s <em>History of America</em> of 1777 gave English readers the settled view. Having had paintings copied for him at Vienna, he wrote that the Mexicans <Leaf book={ROBERTSON} page={291}>&ldquo;were not acquainted, it is true, with any other method of recording transactions, than that of delineating the objects which they wished to represent&rdquo;</Leaf>. He calls it picture-writing and blames <Leaf book={ROBERTSON} page={275}>the &ldquo;fanatical zeal of the monks&rdquo;</Leaf> for the loss.
       </Para>
       <Para>
-        Alexander von Humboldt saw that something was different. <Leaf book={HUMBOLDT_PLATES} page={96}>His plate 45</Leaf>, the picture at the head of this article, was made from a copy of five leaves he got through friends, and its caption names no people and no language. In his text he still calls it <a href={`${IA}vuesdescordille00humb/page/266/mode/1up`}>&ldquo;ce manuscrit aztèque&rdquo;</a>. Yet he notices that it resembles none of the Mexican ritual books he had just engraved. Here, he writes, <a href={`${IA}vuesdescordille00humb/page/267/mode/1up`}>&ldquo;un grand nombre d&rsquo;hiéroglyphes simples se suivent sans liaison, comme dans les hiéroglyphes égyptiens et dans les clefs des Chinois&rdquo;</a>, many simple hieroglyphs follow one another unlinked, as in Egyptian hieroglyphs and Chinese radicals. Of the dots and bars he declines to say whether they are numbers or real cursive characters: &ldquo;Nous ne déciderons pas&rdquo;.
+        Alexander von Humboldt saw that something was different. <Leaf book={HUMBOLDT_PLATES} page={96}>His plate 45</Leaf>, the picture at the head of this article, was made from a copy of five leaves he got through friends, and its caption names no people and no language. In his text he still calls it <a href="/book/6aed15b4a9e39de981042c81?page=294">&ldquo;ce manuscrit aztèque&rdquo;</a>. Yet he notices that it resembles none of the Mexican ritual books he had just engraved. Here, he writes, <a href="/book/6aed15b4a9e39de981042c81?page=295">&ldquo;un grand nombre d&rsquo;hiéroglyphes simples se suivent sans liaison, comme dans les hiéroglyphes égyptiens et dans les clefs des Chinois&rdquo;</a>, many simple hieroglyphs follow one another unlinked, as in Egyptian hieroglyphs and Chinese radicals. Of the dots and bars he declines to say whether they are numbers or real cursive characters: &ldquo;Nous ne déciderons pas&rdquo;.
       </Para>
 
       <H2>A fortune and a theory</H2>
@@ -334,7 +333,7 @@ export default function HowEuropeReadPage() {
       <PageFigure
         src="/articles/how-europe-read-mesoamerican-books/kingsborough-dresden-46-48.jpg"
         alt="Three leaves of the Dresden Codex, numbered 46 to 48, in a hand-coloured plate: columns of signs and bar-and-dot numbers beside painted panels of seated and striding gods"
-        credit={<>Kingsborough, <a href={`${IA}AntiquitiesMexiv3King/page/n200/mode/1up`}><em>Antiquities of Mexico</em>, vol. III</a> (London, 1831). Internet Archive copy, marked public domain by the holding library.</>}
+        credit={<>Kingsborough, <a href="/book/6aed15a9a9e39de98104290d?page=201"><em>Antiquities of Mexico</em>, vol. III</a> (London, 1831), from the Smithsonian Libraries copy, public domain.</>}
       >
         Leaves 46 to 48 of the Dresden Codex as Kingsborough&rsquo;s readers saw them. These are among the pages Förstemann would read as a table of Venus.
       </PageFigure>
@@ -443,9 +442,9 @@ export default function HowEuropeReadPage() {
 
       <H2>The answer, written down early</H2>
       <Para>
-        The right idea had already been stated, and had gone nowhere. David Stuart, the Maya epigrapher, drew attention in 2013 to <a href="https://mayadecipherment.com/2013/05/01/archives-daniel-brintons-letter-on-landas-alphabet/">a letter of 1879</a> from Brinton to Charles Rau, printed in Rau&rsquo;s book on the Palenque tablet. Nine years earlier <a href={`${IA}palenquetabletin00rauc/page/52/mode/1up`}>Brinton had been sure</a> the inscriptions would soon be easier to read than the cuneiform of Nineveh. Now he wrote this.
+        The right idea had already been stated, and had gone nowhere. David Stuart, the Maya epigrapher, drew attention in 2013 to <a href="https://mayadecipherment.com/2013/05/01/archives-daniel-brintons-letter-on-landas-alphabet/">a letter of 1879</a> from Brinton to Charles Rau, printed in Rau&rsquo;s book on the Palenque tablet. Nine years earlier <a href="/book/6aed15b7a9e39de981042e04?page=70">Brinton had been sure</a> the inscriptions would soon be easier to read than the cuneiform of Nineveh. Now he wrote this.
       </Para>
-      <OutsideQuote cite={<>Brinton to Rau, 4 March 1879, in Charles Rau, <a href={`${IA}palenquetabletin00rauc/page/53/mode/1up`}><em>The Palenque Tablet in the United States National Museum</em></a> (Washington, 1879), pp. 52-53</>}>
+      <OutsideQuote cite={<>Brinton to Rau, 4 March 1879, in Charles Rau, <a href="/book/6aed15b7a9e39de981042e04?page=71"><em>The Palenque Tablet in the United States National Museum</em></a> (Washington, 1879), pp. 52-53</>}>
         It appears more likely that the figures he gives represent compound sounds, syllabic or partly so, and that they are but fragments of a large repertory of phonetic signs, never reduced to the elements of sound, used by the Mayas of that age.
       </OutsideQuote>
       <Para>
@@ -460,7 +459,7 @@ export default function HowEuropeReadPage() {
       </SourceQuote>
 
       <Para>
-        Stuart&rsquo;s point stands: Brinton proposed no readings on that basis. By his <em>Primer</em> of 1895 he had settled for less, saying only that the alphabet was <Leaf book={BRINTON} page={18}>&ldquo;proof that some sort of phonetic writing was not unknown&rdquo;</Leaf>. In 1899 <a href={`${IA}glimpseatguatema00maud/page/255/mode/1up`}><em>A Glimpse at Guatemala</em></a>, by Alfred and Anne Maudslay, remarked in passing that whatever phonetic value the glyphs had &ldquo;was probably of a syllabic and not of an alphabetic character&rdquo;. <a href="https://mayadecipherment.com/2007/12/18/alfred-maudslays-insight/">Stuart calls it a lost insight</a>, because nobody followed it up.
+        Stuart&rsquo;s point stands: Brinton proposed no readings on that basis. By his <em>Primer</em> of 1895 he had settled for less, saying only that the alphabet was <Leaf book={BRINTON} page={18}>&ldquo;proof that some sort of phonetic writing was not unknown&rdquo;</Leaf>. In 1899 <a href="/book/6aed15baa9e39de981042e76?page=391"><em>A Glimpse at Guatemala</em></a>, by Alfred and Anne Maudslay, remarked in passing that whatever phonetic value the glyphs had &ldquo;was probably of a syllabic and not of an alphabetic character&rdquo;. <a href="https://mayadecipherment.com/2007/12/18/alfred-maudslays-insight/">Stuart calls it a lost insight</a>, because nobody followed it up.
       </Para>
       <Para>
         Stuart credits the breakthrough to Yuri Knorosov, who in 1952, in a Moscow journal, took the opposite line from Valentini and Morley. He defended the page itself.
@@ -490,7 +489,7 @@ export default function HowEuropeReadPage() {
       </ul>
 
       <p className="text-sm text-secondary mt-10 font-sans leading-relaxed">
-        <strong>A note on the sources.</strong> Every quotation from a book in the library was checked against its page image. Translations from Latin, Spanish, Italian, French and German are ours; long s is modernised and contractions are expanded. The Popol Vuh is quoted from Ximénez&rsquo;s Spanish, and the K&rsquo;iche&rsquo; words are given as they stand on the leaf. Several of these pages are still uncorrected machine readings: the stored English of Martyr fol. 73 misreads <em>multos</em> as &ldquo;many others&rdquo;, and the stored English of the <em>Cantares</em> is too weak to quote, so we give only single words from that leaf and a reader of Nahuatl should check them. <strong>From outside the library:</strong> Martyr&rsquo;s remark on Ribera is read in the Alcalá edition of 1530 (our 1533 volume stops at the third Decade), with the English printed by Kingsborough. Knorosov is read in the scan published by the Institute of Ethnology and Anthropology, Moscow. Humboldt&rsquo;s text volume, Rau, the Maudslays, the <em>Colección</em> (vol. I, p. 469; Nuttall cites p. 464) and Kingsborough vols. III and VI are read in Internet Archive copies. We have not found where the original inventory of 1519 is kept. Restall and Chuchiak, <em>Ethnohistory</em> 49 (2002), 651-669, are cited from the abstract, for the authorship dispute only. The Madrid dating is quoted from the Academy&rsquo;s catalogue record for MS 9/5153. The classing of Vienna and Nuttall as Mixtec is the modern consensus. <strong>Reach of the searches:</strong> Gómara&rsquo;s gift lists in his <em>Conquista</em> name no books; Herrera and Torquemada, which have no transcription in the library yet, were not read for this article. The John Carter Brown search covered about 340 books before 1600 through their Archive text, which misses plates and badly read pages. The Chilam Balam books of Chumayel, Tizimín, Calkiní, Kaua, Nah and Ixil and the Ritual of the Bacabs were searched for statements about books lost, burned or copied, by keyword over their transcriptions, without result.
+        <strong>A note on the sources.</strong> Every quotation from a book in the library was checked against its page image. Translations from Latin, Spanish, Italian, French and German are ours; long s is modernised and contractions are expanded. The Popol Vuh is quoted from Ximénez&rsquo;s Spanish, and the K&rsquo;iche&rsquo; words are given as they stand on the leaf. Several of these pages are still uncorrected machine readings: the stored English of Martyr fol. 73 misreads <em>multos</em> as &ldquo;many others&rdquo;, and the stored English of the <em>Cantares</em> is too weak to quote, so we give only single words from that leaf and a reader of Nahuatl should check them. <strong>From outside the library:</strong> Martyr&rsquo;s remark on Ribera is read in the Alcalá edition of 1530 (the 1533 volume stops at the third Decade), with the English printed by Kingsborough. Knorosov is read in the scan published by the Institute of Ethnology and Anthropology, Moscow. Humboldt&rsquo;s text volume, Rau, the Maudslays, the <em>Colección</em> (vol. I, p. 469; Nuttall cites p. 464), Kingsborough vols. III and VI and the Alcalá Martyr were added to the library for this article and are not yet transcribed. We have not found where the original inventory of 1519 is kept. Restall and Chuchiak, <em>Ethnohistory</em> 49 (2002), 651-669, are cited from the abstract, for the authorship dispute only. The Madrid dating is quoted from the Academy&rsquo;s catalogue record for MS 9/5153. The classing of Vienna and Nuttall as Mixtec is the modern consensus. <strong>Reach of the searches:</strong> Gómara&rsquo;s gift lists in his <em>Conquista</em> name no books; Herrera and Torquemada, which have no transcription in the library yet, were not read for this article. The John Carter Brown search covered about 340 books before 1600 through their Archive text, which misses plates and badly read pages. The Chilam Balam books of Chumayel, Tizimín, Calkiní, Kaua, Nah and Ixil and the Ritual of the Bacabs were searched for statements about books lost, burned or copied, by keyword over their transcriptions, without result.
       </p>
     </ContentPageLayout>
   );
