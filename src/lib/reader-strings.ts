@@ -392,6 +392,12 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /** machineDraftNotice with the month the translation was produced, when the record has one (#7263). */
+    machineDraftNoticeDated: (month: string) => string;
+    /** A month as a reader reads it. Spelled out per locale, not Intl: Latin has no ICU data, and server and browser must print the same words. */
+    producedMonth: (date: Date) => string;
+    /** A provenance label with that month: "Machine transcription of the scan, March 2026". */
+    producedLabel: (label: string, month: string) => string;
     /**
      * Printed pages absent between two scans, shown on the scans either side of the gap (#6675). `last` is null
      * when one page is missing. Derek's wording (2026-10-15): "Pages 41–44 are missing from this scan."
@@ -1003,6 +1009,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      machineDraftNoticeDated: (month) => `AI translation, ${month}, not yet reviewed by a scholar.`,
+      producedMonth: (date) => `${['January','February','March','April','May','June','July','August','September','October','November','December'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pages ${first}–${last} are missing from this scan.` : `Page ${first} is missing from this scan.`),
       qualityKinds: {
         wrong_page: 'the scan and the text are from different pages',
@@ -1501,6 +1510,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      machineDraftNoticeDated: (month) => `Traducción por IA, ${month}, aún no revisada por un especialista.`,
+      producedMonth: (date) => `${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][date.getUTCMonth()]} de ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Faltan en este escaneo las páginas ${first}–${last}.` : `Falta en este escaneo la página ${first}.`),
       qualityKinds: {
         wrong_page: 'la imagen y el texto son de páginas distintas',
@@ -2024,6 +2036,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      machineDraftNoticeDated: (month) => `Conversio intellegentiae artificialis, ${month}, a docto nondum recensita.`,
+      producedMonth: (date) => `mense ${['Ianuario','Februario','Martio','Aprili','Maio','Iunio','Iulio','Augusto','Septembri','Octobri','Novembri','Decembri'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Paginae ${first}–${last} in hac imagine desunt.` : `Pagina ${first} in hac imagine deest.`),
       // Latin has no neat "found that X, and that Y": each kind is a full
       // clause and the sentence frames them after a colon.
@@ -2530,6 +2545,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Tekst: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Tekst: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI-vertaling, nog niet door een wetenschapper nagekeken.',
+      machineDraftNoticeDated: (month) => `AI-vertaling, ${month}, nog niet door een wetenschapper nagekeken.`,
+      producedMonth: (date) => `${['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][date.getUTCMonth()]} ${date.getUTCFullYear()}`,
+      producedLabel: (label, month) => `${label}, ${month}`,
       missingPages: (first, last) => (last ? `Pagina's ${first}–${last} ontbreken in deze scan.` : `Pagina ${first} ontbreekt in deze scan.`),
       // Each kind is a subordinate clause (verb last): it follows "vond dat".
       qualityKinds: {
@@ -3031,6 +3049,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `文本：${shortName}，${license}`,
       textSourceTranscript: (name, license, version) => `文本：${name}${version ? `（${version}）` : ''}，${license}`,
       machineDraftNotice: 'AI 译文，尚未经学者审校。',
+      machineDraftNoticeDated: (month) => `AI 译文（${month}），尚未经学者审校。`,
+      producedMonth: (date) => `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月`,
+      producedLabel: (label, month) => `${label}（${month}）`,
       missingPages: (first, last) => (last ? `本扫描件缺第 ${first}–${last} 页。` : `本扫描件缺第 ${first} 页。`),
       qualityKinds: {
         wrong_page: '扫描图和文本来自不同的页面',
