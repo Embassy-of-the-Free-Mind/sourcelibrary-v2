@@ -46,7 +46,7 @@ export const DRAW_7701 = {
   frame: { books: 170, fraktur: 141, antiqua: 12, other: 17 },
   engines: [
     { engine: 'Current reading model (in use)', fraktur: [13, 15], antiqua: [8, 9], strong: true },
-    { engine: 'PERO-OCR', fraktur: [3, 18], antiqua: [8, 11] },
+    { engine: 'Open engine G', fraktur: [3, 18], antiqua: [8, 11] },
     { engine: 'Small open model', fraktur: [2, 18], antiqua: [11, 12] },
     { engine: 'Free open engine, Fraktur model', fraktur: [0, 18], antiqua: null },
   ],
@@ -66,10 +66,10 @@ export const CER_5660 = {
   fraktur: 21,
   rows: [
     { engine: 'Our lightest model', cer: 0.5, strong: true },
-    { engine: 'dots.ocr', cer: 1.3 },
+    { engine: 'Open engine D', cer: 1.3 },
     { engine: 'Open engine A', cer: 2.5 },
-    { engine: 'olmOCR 2', cer: 2.6 },
-    { engine: 'Nanonets OCR2', cer: 2.9 },
+    { engine: 'Open engine E', cer: 2.6 },
+    { engine: 'Open engine F', cer: 2.9 },
     { engine: 'Open engine B', cer: 4.2 },
     { engine: 'Open engine C', cer: 5.5 },
   ],
@@ -88,8 +88,8 @@ export const CER_7818 = {
   rows: [
     { engine: 'Our lightest model', cer: 1.5, accepted: 23 },
     { engine: 'Our lightest model, then the correction pass', cer: 1.1, accepted: 31, strong: true },
-    { engine: 'PERO-OCR', cer: 8.8, accepted: 6 },
-    { engine: 'PERO-OCR, then the correction pass', cer: 1.4, accepted: 33 },
+    { engine: 'Open engine G', cer: 8.8, accepted: 6 },
+    { engine: 'Open engine G, then the correction pass', cer: 1.4, accepted: 33 },
   ],
   peroMedian: 1.9,
   liteDiff: { points: -0.4, lo: -0.6, hi: -0.2 },

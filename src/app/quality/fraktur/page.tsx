@@ -230,13 +230,13 @@ export default function FrakturPage() {
             Fraktur is what separates the engines. The current reading model, which reads the German pages we have not yet
             transcribed, was accepted on 13 of the 15 Fraktur pages it wrote, with no page carrying words the page does not
             print. On Antiqua, a small open model was accepted on 11 of 12; on Fraktur, on 2 of 18, and 10 of
-            its Fraktur pages had wrong words. PERO-OCR was accepted on 3 of 18 Fraktur pages, and a free open engine's model trained
+            its Fraktur pages had wrong words. Open engine G was accepted on 3 of 18 Fraktur pages, and a free open engine's model trained
             on Fraktur newspapers on none of 18, with wrong text on 17.
           </p>
           <p>
             The errors of the open engines are mostly real German words in place of the printed ones, which a reader cannot
             catch without the scan: <em>Sarge</em> read as <em>Garge</em>, <em>Kotzen</em> (vomiting) as <em>Kosen</em>, the
-            free open engine&rsquo;s <em>zehen gepot halte</em> as <em>zelen gexotbalee</em>. PERO read the recipe sign ℞ as
+            free open engine&rsquo;s <em>zehen gepot halte</em> as <em>zelen gexotbalee</em>. Open engine G read the recipe sign ℞ as
             &ldquo;3&rdquo; or &ldquo;12&rdquo;, which looks like a quantity. The current reading model&rsquo;s Fraktur pages carried no wrong
             text in this test. In an earlier one, on 20 Fraktur pages from 5 books read four ways, it was judged usable on
             20 of 20 in two runs and 19 of 20 in the other two; the one miss was <em>Leyter</em> read as <em>Leyer</em>{' '}
@@ -284,7 +284,7 @@ export default function FrakturPage() {
             measure="of characters differ from the proofread transcription (average page)"
             source={
               <>
-                31 October 2026 (<Issue n={CER_7818.issue} />). PERO&rsquo;s median page was {CER_7818.peroMedian}%; a few pages it
+                31 October 2026 (<Issue n={CER_7818.issue} />). Open engine G&rsquo;s median page was {CER_7818.peroMedian}%; a few pages it
                 failed raise its average. Record: <Rec path={RECORDS.correction7818}>2026-10-31-correction-pass-paired-7818.md</Rec>.
               </>
             }
@@ -293,14 +293,14 @@ export default function FrakturPage() {
             Our lightest model, the engine that read much of the German already in the library, had a median of 0.5% of
             characters wrong on the first set, the lowest of the eight engines. On the second set its average was 1.5%, and
             the correction pass described below brought it to 1.1% (a difference of 0.4 points, 95% interval 0.2 to 0.6).
-            The same pass, run over PERO&rsquo;s reading, brought PERO from 8.8% to 1.4%.
+            The same pass, run over Open engine G&rsquo;s reading, brought it from 8.8% to 1.4%.
           </p>
           <p>
             <strong className="text-stone-900">What these numbers leave out.</strong> The Wikisource transcriptions modernise
             the letters: none of the 40 German pages had a single long s. So the scoring folds the long s into s, and also
             case, accents, u and v, i and j, and punctuation. A figure of 1% therefore counts wrong and missing words and
             letters; it does not count a long s printed as s, or an e-umlaut printed as ö. Character error and the
-            reviewer can also disagree: PERO&rsquo;s median page was 1.9% wrong, yet the reviewer accepted only 6 of its 40
+            reviewer can also disagree: Open engine G&rsquo;s median page was 1.9% wrong, yet the reviewer accepted only 6 of its 40
             pages, because a few wrong words in the wrong place are enough for it to turn a page down.
           </p>
         </Section>

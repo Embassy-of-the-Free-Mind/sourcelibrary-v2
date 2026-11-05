@@ -3,10 +3,10 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
-import byLanguage from '@/data/quality-by-language.json';
-import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
+import byLanguageData from '@/data/quality-by-language.json';
+import ocrEvidenceData from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
-import ocrRouting from '../../../../scripts/lib/ocr-routing-table.json';
+import ocrRoutingData from '../../../../scripts/lib/ocr-routing-table.json';
 import servedDraw from '../../../../scripts/eval/confidence-7866/results/score.json';
 import servedGrades from '../../../../scripts/eval/confidence-7866/results/served-grades.json';
 /* The English on the #7866 pages (#7968). scripts/eval/results/ is not deployed (.vercelignore), so the figures
@@ -29,6 +29,12 @@ import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropR
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../../research/quality/open/issues';
 import { GRADES, LEARNED, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from '../content';
 import ParetoCharts, { RosterLine, TRANSLATION } from '../ParetoCharts';
+import { plainEngineData } from '@/lib/plain-engine-words';
+
+// The data files keep their real names for the code and tests that read them; this page says roles (#7263).
+const byLanguage = plainEngineData(byLanguageData);
+const ocrEvidence = { translation_fidelity: plainEngineData(ocrEvidenceData.translation_fidelity) };
+const ocrRouting = plainEngineData(ocrRoutingData);
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -106,7 +112,7 @@ const defects = allIssues.filter(i => i.status === 'defect');
 const running = allIssues.filter(i => i.status === 'running');
 const planned = allIssues.filter(i => i.status === 'planned');
 
-const experiments = listExperiments();
+const experiments = plainEngineData(listExperiments());
 const STATUS_LABEL = {
   adopted: 'in use',
   rejected: 'not adopted',
@@ -146,7 +152,7 @@ const LADDER = ['fit_to_quote', 'fit_to_read', 'some_errors', 'many_errors', 'fr
 const READER_NAME: Record<string, string> = {
   lite: 'Our lightest model', '3flash': 'The mid-tier model', paddle: 'Open engine A', yigdzin: 'A Tibetan model',
   'yigdzin>agy-flash-low': 'A Tibetan model, then the current reading model', 'lite>agy-flash-low': 'Our lightest model, then the current reading model',
-  'pero>agy-flash-low': 'PERO, then the current reading model', 'lighton-written': 'Open engine B (our GPU)',
+  'pero>agy-flash-low': 'Open engine L, then the current reading model', 'lighton-written': 'Open engine B (our GPU)',
   'import:ia_djvu': 'the Internet Archive’s own OCR', 'import:corpus': 'a typed edition',
   'pipeline:derge-tengyur-import-5497': 'a typed edition (Esukhia)', 'model:claude-opus-5-5': 'The strongest model tested',
   'model:gemini-2.5-flash': 'An earlier mid-tier model', 'model:none': 'no engine recorded',

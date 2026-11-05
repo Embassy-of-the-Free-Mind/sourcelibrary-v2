@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { plainEngineWords } from '@/lib/plain-engine-words';
 import s from './FolioPipeline.module.css';
 
 /*
@@ -126,7 +127,7 @@ function Tracked({ f, delays }: { f: FolioSnapshot; delays: number[] }) {
         const pass = (died ?? born) as number;
         const cls = died != null ? s.del : s.ins;
         return (
-          <span key={i} className={cls} style={d(delays[pass] + 0.35 * n++)} title={f.repairs[pass]?.reason}>
+          <span key={i} className={cls} style={d(delays[pass] + 0.35 * n++)} title={f.repairs[pass] && plainEngineWords(f.repairs[pass].reason)}>
             {t}
           </span>
         );
@@ -474,7 +475,7 @@ export default function FolioPipeline({
                 ))}
               </ol>
             </div>
-            {reviewNote && <p className="sr-only">{reviewNote.reason}</p>}
+            {reviewNote && <p className="sr-only">{plainEngineWords(reviewNote.reason)}</p>}
           </Panel>
 
           {/* 5 · Human Review */}

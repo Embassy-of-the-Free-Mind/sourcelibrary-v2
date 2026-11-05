@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
-import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
+import gapStatusData from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
+import { plainEngineData } from '@/lib/plain-engine-words';
 import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-2026-10.json';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { IMPROVEMENTS } from './improvements';
@@ -25,6 +26,9 @@ export const metadata: Metadata = {
 };
 
 type Row = (typeof gapMap.rows)[number];
+// Status sentences keep their real names in the file; the page says roles (#7263).
+const gapStatus = plainEngineData(gapStatusData);
+
 type StatusRow = (typeof gapStatus.corpora)[number] & { done?: string };
 
 const ISSUE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/';

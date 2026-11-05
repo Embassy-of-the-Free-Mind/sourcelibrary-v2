@@ -140,15 +140,12 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
     },
     text: p.ocr?.model
       ? {
-          model: p.ocr.model,
           prompt: p.ocr.prompt_name ? `“${p.ocr.prompt_name}” v${p.ocr.prompt_version}` : undefined,
           at: day(p.ocr.updated_at),
         }
       : undefined,
     english: tr?.model
       ? {
-          model: tr.engine?.model ?? tr.model,
-          modelVersion: tr.engine?.model_version,
           prompt: tr.prompt_version ? `v${tr.prompt_version.replace(/^v/i, "")}` : undefined,
           api: tr.engine?.api === 'batch' ? 'Batch API' : undefined,
           batch: tr.batch_job_id,

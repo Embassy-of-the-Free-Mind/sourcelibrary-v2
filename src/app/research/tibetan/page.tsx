@@ -5,6 +5,7 @@ import { experiment } from '@/lib/experiments-index';
 import { TENGYUR_QUALITY } from '@/lib/tengyur-quality';
 import data from '@/data/tibetan-expert-page.json';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+import { plainEngineWords } from '@/lib/plain-engine-words';
 import { ENGLISH, NO_ENGLISH, Figure, Swatch, TraditionProgress, type TraditionProgressRow } from '../canon-gap/diagrams';
 
 // A briefing for Tibetologists whose feedback we are asking for: what we hold, how the Tibetan
@@ -194,8 +195,8 @@ function ExampleCard({
           <A href={readerUrl(e)}>
             {e.title}, page {e.page}
           </A>
-          {' · '}Tibetan: {e.tibetan_source}
-          {e.english_model ? ` · English: ${MODEL_NAMES[e.english_model] ?? e.english_model}` : ''}
+          {' · '}Tibetan: {e.tibetan_source && plainEngineWords(e.tibetan_source)}
+          {e.english_model ? ` · English: ${MODEL_NAMES[e.english_model] ?? plainEngineWords(e.english_model)}` : ''}
         </div>
         {(e.tibetan || e.english) && (
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 border-t border-stone-100 pt-4">

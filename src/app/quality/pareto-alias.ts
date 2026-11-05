@@ -9,6 +9,8 @@
  * Kept: the Syriac models, which are scholarly credit (Sophro Mhiro, Beth Mardutho; omnisyr; Qoruyo).
  */
 
+import { plainEngineWords } from '@/lib/plain-engine-words';
+
 /** Identifiers and paths, never shown as words. A link's target stays a link's target. */
 const CODE_KEYS = new Set(['engine', 'production_engine', 'source', 'files', 'writeup', 'kind', 'track', 'rule', 'id', 'group', 'agy_models']);
 
@@ -47,12 +49,6 @@ const PROSE: Array<[RegExp, string]> = [
 
 /** Anything still naming a model after the labels: no number to give it, so it says what it is. */
 const RESIDUE: Array<[RegExp, string]> = [
-  [/\bgemini-[\w.+-]*\w/gi, 'the same model'],
-  [/\b(Gemini|Claude)( [\d.]+)?( (Flash-Lite|Flash|Pro|Opus|Sonnet|Haiku|Argon)( [\d.]+)?)?( (low|high))?/g, 'a model'],
-  [/\b(Flash-Lite|flash-lite)\b/g, 'the lightest model'],
-  [/\b(Flash|flash)\b/g, 'the mid-tier model'],
-  [/\b(Opus|Sonnet|Haiku)( [\d.]+)?/g, 'a model'],
-  [/\bTesseract\b/g, 'One open engine'],
   [/\bKraken\b/g, 'an open engine'],
   [/\bGoogle\b/g, 'the vendor'],
 ];
@@ -85,6 +81,7 @@ export function buildEngineAliases(...files: Json[]): EngineAliases {
     // The census sentences drop this engine's version number.
     out = out.replace(/\bPaddleOCR-VL\b/g, aliasOf.get('PaddleOCR-VL 1.6') ?? 'an open engine');
     for (const [re, to] of PROSE) out = out.replace(re, to);
+    out = plainEngineWords(out);
     for (const [re, to] of RESIDUE) out = out.replace(re, to);
     return out.replace(/\u0000(\d+)\u0000/g, (_, i) => held[Number(i)]);
   };

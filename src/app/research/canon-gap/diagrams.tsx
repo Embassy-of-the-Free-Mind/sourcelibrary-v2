@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
+import { plainEngineWords } from '@/lib/plain-engine-words';
 
 // Static (server-rendered) diagrams for /research/canon-gap. No client JS: exact values
 // ride on `title` tooltips and on the per-canon rows further down the page, which act as
@@ -229,7 +230,7 @@ const ENGINE_NAMES: [RegExp, string][] = [
   [/^manual$/, 'hand-entered'],
   [/^(unrecorded|unknown)$/, 'model not recorded'],
 ];
-const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? id;
+const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? plainEngineWords(id);
 
 /** "The mid-tier model 62% · BDRC Tibetan model 31% · other 7%": merged by plain name, top three, shares of pages. */
 function engineLine(rows: [string, number][]) {
