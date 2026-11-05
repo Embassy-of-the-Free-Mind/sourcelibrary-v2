@@ -33,7 +33,7 @@ PRIOR ART: `scripts/eval/mcp-trigger-8154/` (does a model call the connector, wi
 3. **Opened us:** it fetched one of our pages. `our search` and `llms.txt` count whether it used the way in that we built for it.
 4. **Linked us:** the headline. Our URL is in the answer, and `--check-links` tests that each one opens. Gemini's grounding redirects are resolved to their real address first; any that fail to resolve are reported, not dropped.
 
-agy is a coding agent with a shell, and no flag removes it, so its prompt tells it to use web tools only and `shell runs` counts any run that did not comply.
+agy is a coding agent with a shell. In `--mode plan` it can search the web and its shell is auto-denied, which was tested on gex45. Its prompt also says to use web tools only, so it does not spend turns on denied commands, and `shell runs` counts any run that tried. **The baseline of 2026-11-05 ran with auto-approve on**, which `tests/unit/no-cli-auto-approve.test.ts` forbids; see the record.
 
 ## Rule, fixed before the first run
 

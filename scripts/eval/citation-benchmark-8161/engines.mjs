@@ -16,8 +16,8 @@ import { join } from 'path';
 export const FRAMING = 'You are a helpful assistant answering a person. You can search the web and open pages. '
   + 'When you rely on a source, link to it.';
 
-// agy cannot be limited to its web tools by flag, and a chat assistant has no shell. Its first pilot run made
-// 20 curl and Python calls. score.mjs counts any run that used a shell anyway.
+// A chat assistant has no shell. `--mode plan` lets agy search and auto-denies its shell, and this line
+// keeps it from spending turns on denied commands. score.mjs counts any run that tried one anyway.
 const AGY_WEB_ONLY = 'Use only your web search and page-reading tools. Do not run commands, write code or write files.';
 
 const TIMEOUT_MS = 300_000;
@@ -31,7 +31,7 @@ const COMMANDS = {
   ]],
   agy: (q) => ['agy', [
     '-p', `${FRAMING} ${AGY_WEB_ONLY}\n\n${q}`, '--model', 'gemini-3.8-flash-low', '--disable-slash-commands',
-    '--output-format', 'stream-json', '--print-timeout', '280s', '--dangerously-skip-permissions',
+    '--output-format', 'stream-json', '--print-timeout', '280s', '--mode', 'plan',
   ]],
 };
 

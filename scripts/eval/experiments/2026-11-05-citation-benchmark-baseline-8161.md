@@ -7,7 +7,8 @@ canons: []
 n_books: null
 n_pages: null
 verdict: "With web tools and no connector, Claude linked us on 13 of 50 history questions and Gemini on 0 of 50 (95% upper bound about 6%). Claude's rate splits sharply: 11 of 20 when asked for a named work we hold, 2 of 30 on a general question, and on those general questions it never linked a book or page. Told to use sourcelibrary.org, Claude linked a book or page on 10 of 10 but mostly could not reach the text; Gemini linked only the homepage. CLI agents, not chat products; 240 runs on 2026-11-05."
-status: adopted
+status: informational
+feeds: surface
 decision: "Under the rule fixed before the run: discovery volume is the lever for Claude, and the no-install promise fails when pointed, so no paste-this sentence on /connect yet. Fix the first failing step: nothing on the pages an assistant lands on says how to reach the text."
 issue: [8161]
 ---
@@ -54,5 +55,7 @@ Who else gets linked, runs across `topic` + `work`, of 100 per engine. Claude: u
 - **Accuracy.** Links were tested for opening. Quotations were not checked against pages.
 - **The panel's balance.** `topic` was written by the author, and volume slices were excluded from `work`, which under-samples Chinese.
 - **Isolation of the earlier test.** On the laptop, `--setting-sources ''` left the account's `@sourcelibrary.org` email and a session hook in the model's context. The #8154 trigger test ran with those flags from a checkout whose login I did not check, so it may have carried the same hint. Its paired comparison is less exposed than an absolute rate would be.
+
+**A safety fault in how this ran.** The Gemini arm ran with agy's auto-approve flag, as root on gex45, reading arbitrary web pages. `tests/unit/no-cli-auto-approve.test.ts` forbids this, and it caught the flag in CI, after the run. A page could have talked the model into running a command. The scored baseline shows 0 runs that used a shell. One earlier pilot run, before the web-only instruction, made about 20 `curl` and Python calls, the ones I read being to our own site; its raw stream was deleted when the pilot was reset, so that count is from the listing printed at the time. Later runs use `--mode plan`, where search works and the shell is auto-denied. The Gemini results should be comparable, since 119 of 120 runs used `search_web` alone, but a difference between this baseline and a later Gemini run may partly reflect that change.
 
 **Cost.** Subscription only. The account's weekly meter read 70% before and after, so under about one point. No paid API.
