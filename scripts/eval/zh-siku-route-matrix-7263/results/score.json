@@ -1,5 +1,5 @@
 {
- "at": "2026-11-05T02:24:52.165Z",
+ "at": "2026-11-05T02:30:00.513Z",
  "issue": 7263,
  "prereg": "scripts/eval/zh-siku-route-matrix-7263/PREREGISTRATION.md",
  "cutoff": 0.178392,
@@ -3679,9 +3679,9 @@
    },
    "FF": {
     "calls": 63,
-    "pages": 1,
+    "pages": 60,
     "mean_list_usd": 0.011,
-    "per_1k": 45.35
+    "per_1k": 0.76
    },
    "PFL": {
     "calls": 30,
@@ -3741,11 +3741,11 @@
     "usd_per_accepted_en_page_per_1k": 5.94
    },
    "FF": {
-    "ocr_per_1k": 45.35,
-    "with_translation_per_1k": 45.74,
-    "frame_usd": 4266,
+    "ocr_per_1k": 0.76,
+    "with_translation_per_1k": 1.15,
+    "frame_usd": 107,
     "opus_account_weeks": 0,
-    "agy_pool_weeks": 77.6
+    "agy_pool_weeks": 2
    },
    "PFL": {
     "ocr_per_1k": 1.53,
