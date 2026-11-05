@@ -152,7 +152,7 @@ async function main() {
     gzip.pipe(out);
 
     let exported = 0;
-    const cursor = col.find(filter);
+    const cursor = col.find(filter).batchSize(1000);
     for await (const doc of cursor) {
       const line = EJSON.stringify(doc) + '\n';
       if (!gzip.write(line)) {

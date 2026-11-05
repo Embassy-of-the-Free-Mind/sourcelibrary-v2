@@ -67,7 +67,7 @@ const iaByKey = new Map();
 let iaCount = 0;
 const cur = col.find(
   { source: 'ia_language', 'metadata.discovery_query': IA_QUERY, manifest_url: { $ne: null } },
-  { projection: { title: 1, manifest_url: 1, source_id: 1, 'metadata.access_restricted': 1 } });
+  { projection: { title: 1, manifest_url: 1, source_id: 1, 'metadata.access_restricted': 1 } }).batchSize(1000);
 for await (const d of cur) {
   const k = keyOf(d.title);
   if (!k) continue;

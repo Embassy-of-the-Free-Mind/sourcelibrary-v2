@@ -170,7 +170,7 @@ if (!flag('from-state')) { state.phase = 'done'; state.finished_at = new Date().
 const allBooks = new Set(Object.values(state.rows).flatMap(r => r.books));
 const lang = new Map();
 {
-  const cur = db.collection('books').find({}, { projection: { id: 1, language: 1 } });
+  const cur = db.collection('books').find({}, { projection: { id: 1, language: 1 } }).batchSize(1000);
   for await (const b of cur) {
     const l = typeof b.language === 'string' && b.language.trim() ? b.language.trim() : null;
     if (b.id && allBooks.has(String(b.id))) lang.set(String(b.id), l);

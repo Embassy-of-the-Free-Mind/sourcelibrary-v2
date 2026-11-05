@@ -27,6 +27,7 @@ import { execFileSync } from 'child_process';
 import { parseArgs } from 'util';
 import { join } from 'path';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 
 // --- Config ---
 const BPH_TENANT_ID = 'bce03f71-c18d-4460-b8ad-224c817f9aa0';
@@ -436,7 +437,7 @@ async function main() {
       const meta = await sharp(fullBuf).metadata();
       const [fullUrl, displayUrl, thumbUrl] = await Promise.all([
         uploadToR2(`${base}-full.jpg`, fullBuf),
-        uploadToR2(`${base}.jpg`, displayBuf),
+        uploadToR2(`${base}.jpg`, await markDisplay(displayBuf, { bookId: bookIdStr, pageNumber: pageNum })),
         uploadToR2(`${base}-thumb.jpg`, thumbBuf),
       ]);
       done++;

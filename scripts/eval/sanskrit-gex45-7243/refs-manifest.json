@@ -1,0 +1,818 @@
+{
+ "frozen_at": "2026-10-24T03:00:59.755151Z",
+ "normaliser": "deva-n@1",
+ "refs": [
+  {
+   "slug": "sa-30f2e4ed-p90",
+   "sha256": "b081bd150e30139a7908be27e9e0b3317e8edebb2c9d2ea7e23462ab8ceaab92",
+   "chars": 1290,
+   "kind": "print",
+   "catalogue_year": 1934,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.9,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-ee26ada9-p538",
+   "sha256": "5995cebc7c4b5f5ec9c730f049433185a5f93bb285c2d57bb68f290bd6cfd727",
+   "chars": 1425,
+   "kind": "print",
+   "catalogue_year": 1966,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 1.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-5d8c038d-p99",
+   "sha256": "ce7a3c496d176dfdf2abb4bb53c9e6bfd68db7e8e8bdca456610bfa06c55b991",
+   "chars": 1461,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.9,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-7b76611e-p276",
+   "sha256": "64097fcabcc307ae09bb8092ded58a7c9522e70bee54613f89c18b38faeeaa0a",
+   "chars": 1684,
+   "kind": "print",
+   "catalogue_year": 1965,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-347d21b6-p187",
+   "sha256": "cdf97d2b9481e79eae70617865eec169e77690e15950341e4f0d8127ad7010f9",
+   "chars": 1238,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-7bd9afc5-p393",
+   "sha256": "86db381eef54f0ffeb60ee8c4a9d4aee74c31458c91c9fc6eda31f5273386593",
+   "chars": 1809,
+   "kind": "print",
+   "catalogue_year": 1000,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-d69433d6-p121",
+   "sha256": "81d8d958f6a7d32bc601c8f0870b30d22de6d323c1fd47015c9b7dfe13bbd20c",
+   "chars": 973,
+   "kind": "print",
+   "catalogue_year": 1954,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e5a9d99f-p487",
+   "sha256": "4886b0a69a08a345f064f3188144126187c75785a2de53a1530d27473abd3f41",
+   "chars": 1703,
+   "kind": "print",
+   "catalogue_year": 1892,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-024f76ae-p621",
+   "sha256": "35bef1f216f4b1726ad8d1c12f2f6d8e1dcbbb013b0dc1bbcca32a602bd89fd4",
+   "chars": 2093,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-5744775b-p139",
+   "sha256": "989ac7541ca8a459501c0e4513f153cb314bd8dc28bc16a9acdfe010b3f8b4e4",
+   "chars": 2161,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-5d8bd83c-p21",
+   "sha256": "d918faf5e8a2f595413094bd96e0b2abf9ed4c710f768f4195a86da81534c795",
+   "chars": 1862,
+   "kind": "print",
+   "catalogue_year": 1969,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e625ae62-p64",
+   "sha256": "9ed688905d8afb3d795b6ec55767b2b79654181a4dc6c55744ad2c0439d0b404",
+   "chars": 868,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 6.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e5a9d0dc-p668",
+   "sha256": "63b5daa8eeaf2507e1120dc481d1b566f5a288fafc33abb04152b4e06a7b1bd9",
+   "chars": 1856,
+   "kind": "print",
+   "catalogue_year": 1900,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 11.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-05c7c5f3-p196",
+   "sha256": "13a16366517c0647630bd004fa95fe3666c0ad5cc9aa0f7d6f2ed4785ad0c677",
+   "chars": 877,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-91d25f36-p187",
+   "sha256": "3ae929ebb8b6b11d0578522e38d4336a3f817aa3cd4f4a1ec9c99e47895670ad",
+   "chars": 2197,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-a9a96a43-p165",
+   "sha256": "62531eaee40c7e29d900fc7d9f3eccbaa8ddcc88faa4dc9a25c95d4dc83108ac",
+   "chars": 1024,
+   "kind": "print",
+   "catalogue_year": 1928,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e625b010-p5",
+   "sha256": "6ce5258b22a73edac1064254ac06b2865f114d45633926164e3bbbf5e2b977d9",
+   "chars": 280,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 16.7,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-91d24943-p9",
+   "sha256": "21b3593a5ba8976fd5d91743871425be1012f7b3b74e9591fa7471fa8b4eb42b",
+   "chars": 380,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 23.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-de21a71e-p163",
+   "sha256": "5be1a3ae87221cb9320b8b4f1aec7b173deb5434fc1d4055ffd3f338ad502380",
+   "chars": 756,
+   "kind": "print",
+   "catalogue_year": 1960,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-9ba76960-p555",
+   "sha256": "13e4b21a551bfbb502106f4b0a5d23f2121288eacab733b06fb465fa82fc7428",
+   "chars": 2091,
+   "kind": "print",
+   "catalogue_year": 1849,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1697c6ed-p499",
+   "sha256": "f5067acdd222f63b3c9c5211c907983080b4a42415a6d8a42847ad5214b5153a",
+   "chars": 882,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1697bec1-p584",
+   "sha256": "cf7d910ae6108d81c3ab887f679ee607acd6a70eee4f59c276ba71c9d32348a2",
+   "chars": 879,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1697c43d-p421",
+   "sha256": "ab0d6fd22e388e794f8658e8008581b86d951ea467167f2b9b4e3e8beaf4b848",
+   "chars": 915,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e0f809e3-p1393",
+   "sha256": "ff8f2f1d2b50da52ff956fc170d678e93e6ec9b29551ae6663c238857a625a05",
+   "chars": 2059,
+   "kind": "print",
+   "catalogue_year": 2021,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-487f33e3-p412",
+   "sha256": "811dbb4e35b81a4861261d98d283075ded9e4af3dcaa4422a0f4c81bd6d5d2a9",
+   "chars": 2013,
+   "kind": "print",
+   "catalogue_year": 1917,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-7c60b19b-p202",
+   "sha256": "4fbd5f158af0c9aeced794fb5fd1eae5f7f52425ba8035dbaa4c55a32c475cde",
+   "chars": 1233,
+   "kind": "print",
+   "catalogue_year": 1910,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 3.9,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-2380f313-p419",
+   "sha256": "d87791aa309ea3d280984eef0e5a8f2b48ac2eb744a14fee917c447568c154fe",
+   "chars": 1193,
+   "kind": "print",
+   "catalogue_year": 1833,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1697d8cb-p58",
+   "sha256": "e6b0b5f5cb76c7a1d60f91f7d40ebbb6708fcffa2a237d3b3a952ffd91bc73ee",
+   "chars": 898,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-8eaa4560-p334",
+   "sha256": "f92a514c2005c4fb4829de83fca0b47c881f3c68464216845cd4eed317390f24",
+   "chars": 1037,
+   "kind": "print",
+   "catalogue_year": 1879,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 1.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-8eaa58d0-p117",
+   "sha256": "490c3610cdbfc372bb0dad5a933c901715ebb8c28378235354ce343cd783b662",
+   "chars": 3251,
+   "kind": "print",
+   "catalogue_year": 1890,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-0f19de12-p607",
+   "sha256": "128520f934b867e1f850bb103baf9c2717f1db59b6af39ec73e8a7087e75c481",
+   "chars": 4554,
+   "kind": "print",
+   "catalogue_year": 1938,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/gpu-sanskrit-7243/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-8eaa2441-p684",
+   "sha256": "6ad765db8be90177f2392921d50d3b29db463aad63f2eac705ff367acbf2c021",
+   "chars": 1134,
+   "kind": "print",
+   "catalogue_year": 1892,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 0.7,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-2a4369ae-p548",
+   "sha256": "a57300cc30e0d82e349e4054040b7240825404b04ae8bcf5707c2ecf1d6cb7fd",
+   "chars": 3303,
+   "kind": "print",
+   "catalogue_year": 1894,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 1.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1a8dfbde-p5",
+   "sha256": "745276c2992f90b2e1ed30568d8805314afae2df3ca548b56e745d91f9209380",
+   "chars": 508,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 11.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1a8e15ca-p1",
+   "sha256": "ea81a29cea5ddc600ce8fde601ed2bbea758e9901c051cac654703bbca0f07c9",
+   "chars": 441,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 4.7,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e6c258c2-p2",
+   "sha256": "ae54b7fa8874e67c327ad32b3bcdb7a2a299d774e4edaa513eadf7467649919e",
+   "chars": 701,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 5.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-87c61f7c-p2",
+   "sha256": "7225575bda67a18ad4a1b1a9683276cb30325558f3bfad1d35b9baf2123b102c",
+   "chars": 753,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 5.9,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-1a8e17d4-p5",
+   "sha256": "4e8b9366e07ed418569485c8bedb8a4be61f565c1a428a84a899abf6f3e42e19",
+   "chars": 1315,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 10.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-e64f2efd-p5",
+   "sha256": "f40805f4cecabc0c0128bc06ffc2c758adb3fae36a7ce73f1fd6170a5fbe279c",
+   "chars": 476,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 1.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  },
+  {
+   "slug": "sa-23bfb025-p5",
+   "sha256": "794f8703831afd6d9ca3c63af86d22da7695cf186febc0784d663348bae5eab5",
+   "chars": 1957,
+   "kind": "manuscript",
+   "catalogue_year": null,
+   "text_public": true,
+   "text_location": "repo",
+   "r1_r2_cer_N_pct": 7.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (Claude Code subagents)",
+    "method": "two independent reads from full-resolution tiles + adjudicator"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-10-24"
+   }
+  }
+ ],
+ "excluded": [
+  {
+   "slug": "sa-0f19d805-p339",
+   "reason": "script-sharada (found by both readers)",
+   "replaced_by": "sa-1697d8cb-p58"
+  },
+  {
+   "slug": "sa-82c808a7-p10",
+   "reason": "script-newar; reference unusable (R1-R2 56%)",
+   "replaced_by": "sa-5744775b-p139"
+  }
+ ]
+}

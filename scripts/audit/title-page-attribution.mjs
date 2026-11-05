@@ -105,7 +105,7 @@ const buckets = { AUTHOR_ON_PAGE: [], EDITOR_ONLY: [], SELF_NAMED: [], NO_NAME: 
 
 const cursor = books.find(query, {
   projection: { id: 1, title: 1, author: 1, author_id: 1, published: 1, year: 1, visible: 1, 'ai_metadata.author': 1 },
-});
+}).batchSize(1000);
 
 for await (const b of cursor) {
   const names = namesOnTitlePage(b.title);

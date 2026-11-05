@@ -10,16 +10,22 @@
  *    drift together with another defect is not.
  *  - --majors-wide: a major the edge bound refuses is placed under MAJORS_WIDE (flagged `wide`); a minor never is, and
  *    edgeRefusal's default bound is unchanged.
+ *  - Claude-free nights (#7118): over the weekly cap a Gemini night repairs and places with no Claude call and records
+ *    the run pending_verify; a night under the cap verifies pending runs oldest first and writes them through the write
+ *    path; a run older than 24 h is re-checked on the current text; a pending run past 14 days expires with a log line.
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { mapOntoRaw, mapProjected, edgeRefusal } from '../../scripts/maintenance/seam-repair-6742/seam-repair.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { lostWords, MAX_LOST, driftOnly, DRIFT_ONLY, placeRun, MAJORS_WIDE } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
+import { lostWords, MAX_LOST, driftOnly, DRIFT_ONLY, placeRun, MAJORS_WIDE, nightMode, run, pendingRuns, expirePending, currentTextRefusal, PENDING_TTL_DAYS } from '../../scripts/maintenance/seam-repair-6742/lean.mjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — plain-JS module
+import { sha } from '../../scripts/maintenance/seam-repair-6742/seam-repair.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { echoRepair } from '../../scripts/maintenance/seam-repair-6742/rules.mjs';
@@ -152,5 +158,98 @@ describe('--majors-wide (#7118)', () => {
     expect(placedRows.map((r: { id: string; wide?: boolean; normalRefusal?: string }) => [r.id, r.wide, r.normalRefusal])).toEqual([['M', true, 'edit-too-large']]);
     expect(refusals['edit-too-large']).toBe(1);
     fs.rmSync(out, { recursive: true, force: true });
+  });
+});
+
+describe('Claude-free nights (#7118)', () => {
+  type Row = Record<string, unknown>;
+  const usage = (weekly: number) => () => ({ email: 'x', weekly, session: 1, checked_at: '' });
+  const o = { maxJoins: 50, repairer: 'gemini', fallback: 'sonnet', pack: 1, conc: 2, verifyRate: 0.07, maxWeekly: 60, apply: true, majorsWide: false };
+  const runIdAt = (msAgo: number) => `lean-${new Date(Date.now() - msAgo).toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+  const readJ = (f: string): Row[] => fs.existsSync(f) ? fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
+  // the planted doubled sentence of the lostWords test: placeable at the edge, no content lost
+  const TA = 'In your memory. Who would deny this duty of a Friend?', HB = 'Who would deny this duty of a Friend? Provided that I live';
+  const cand = (id: string) => ({ id, book: 'b', p: 1, pB: 2, idA: `${id}A`, idB: `${id}B`, enTailA: TA, enHeadB: HB, srcTailA: 'x', srcHeadB: 'y', hashA: sha(TA), hashB: sha(HB), rules: {} });
+  const REP = { tail_old: '', tail_new: '', head_old: 'Who would deny this duty of a Friend? ', head_new: '' };
+  const geminiDup = async (pk: { id: string }[]) => ({ byId: new Map(pk.map(it => [it.id, { label: 'duplication', labels: ['duplication'], severity: 'minor', repair: REP }])), r: { secs: 1, cls: null } });
+  const noClaude = async () => { throw new Error('no Claude call on a Claude-free night'); };
+  // the blind judge, preferring every repair in both orders
+  const judge = (asked: string[]) => async (prompt: string) => { asked.push(prompt);
+    const pairs = [...prompt.matchAll(/##### PAIR (\S+)/g)].map(m => m[1]);
+    return { secs: 1, cls: null, model: 'opus', text: JSON.stringify(pairs.map(pair => ({ pair, better: pair.endsWith('cur-first') ? 'Q' : pair.endsWith('rep-first') ? 'P' : 'same' }))) }; };
+  let out = '';
+  const tmp = () => { out = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'lean-free-')); return out; };
+  afterEach(() => { if (out) fs.rmSync(out, { recursive: true, force: true }); out = ''; });
+
+  it('nightMode: a Gemini night over the cap (or with the meter unknown) runs Claude-free; a Claude repairer stops', () => {
+    expect(nightMode(usage(97)(), o)).toMatchObject({ claudeFree: true });
+    expect(nightMode(null, o)).toMatchObject({ claudeFree: true });
+    expect(nightMode(usage(97)(), { ...o, repairer: 'sonnet' }).skip).toBe('weekly 97% >= 60%: not starting');
+    expect(nightMode(usage(20)(), o)).toEqual({ claudeFree: false });
+  });
+
+  it('over the cap: Gemini repairs and places, no Claude call, the run is pending_verify and nothing is written', async () => {
+    tmp();
+    fs.writeFileSync(path.join(out, 'candidates.jsonl'), ['j1', 'j2'].map(id => JSON.stringify(cand(id))).join('\n') + '\n');
+    let wrote = 0;
+    await run(out, o, { usage: usage(97), gemini: geminiDup, agyOpen: () => true, claude: noClaude, writeRun: async () => { wrote++; } });
+    const last = readJ(path.join(out, 'runs.jsonl')).pop()!;
+    expect(last.skipped).toBeUndefined();
+    expect(last.pending_verify).toBe(true);
+    expect(last.placed).toBe(2);
+    expect(last.claudeFree).toMatch(/weekly 97%/);
+    expect(wrote).toBe(0);
+    expect(fs.existsSync(path.join(out, 'verify.jsonl'))).toBe(false);
+    expect(readJ(path.join(out, 'calls.jsonl')).map(c => c.arm)).toEqual(['gemini', 'gemini']);
+    expect(pendingRuns(out).map((r: Row) => r.run)).toEqual([last.run]);
+  });
+
+  it('under the cap: pending runs are verified oldest first by the blind judge, then written, then resolved', async () => {
+    tmp();
+    const older = runIdAt(3 * 86400e3), newer = runIdAt(2 * 86400e3);
+    fs.writeFileSync(path.join(out, 'candidates.jsonl'), ['a', 'b'].map(id => JSON.stringify(cand(id))).join('\n') + '\n');
+    fs.writeFileSync(path.join(out, 'repairs.jsonl'), [['b', newer], ['a', older]].map(([id, run]) => JSON.stringify({ id, run, tier: 2, arm: 'gemini', parsed: true, label: 'duplication', labels: ['duplication'], severity: 'minor', repair: REP })).join('\n') + '\n');
+    // runs.jsonl lists the newer first: the order must come from the run time, not the file
+    fs.writeFileSync(path.join(out, 'runs.jsonl'), [newer, older].map(run => JSON.stringify({ run, pending_verify: true, placed: 1 })).join('\n') + '\n');
+    const asked: string[] = [], written: string[] = [];
+    await run(out, o, { usage: usage(20), gemini: geminiDup, agyOpen: () => true, claude: judge(asked), writeRun: async (_o: string, runId: string) => { written.push(runId); return { written: 1, pagesWritten: 1 }; } });
+    expect(written).toEqual([older, newer]);
+    expect(asked.length).toBeGreaterThan(0);
+    expect(asked.every(p => !p.includes(older) || !p.includes(newer))).toBe(true);   // each run judged on its own
+    expect(readJ(path.join(out, 'verify.jsonl')).filter(v => v.run === older).map(v => v.order).sort()).toEqual(['aa-1', 'aa-2', 'cur-first', 'rep-first']);
+    expect(readJ(path.join(out, 'pending.jsonl')).map(r => [r.run, r.resolved])).toEqual([[older, 'written'], [newer, 'written']]);
+    expect(pendingRuns(out)).toEqual([]);
+  });
+
+  it('a pending run stays pending while the meter is over the cap', async () => {
+    tmp();
+    const r0 = runIdAt(86400e3);
+    fs.writeFileSync(path.join(out, 'candidates.jsonl'), JSON.stringify(cand('a')) + '\n');
+    fs.writeFileSync(path.join(out, 'repairs.jsonl'), JSON.stringify({ id: 'a', run: r0, tier: 2, arm: 'gemini', parsed: true, label: 'duplication', severity: 'minor', repair: REP }) + '\n');
+    fs.writeFileSync(path.join(out, 'runs.jsonl'), JSON.stringify({ run: r0, pending_verify: true, placed: 1 }) + '\n');
+    await run(out, o, { usage: usage(97), gemini: geminiDup, agyOpen: () => true, claude: noClaude, writeRun: async () => { throw new Error('no write over the cap'); } });
+    expect(pendingRuns(out).map((r: Row) => r.run)).toEqual([r0]);
+  });
+
+  it(`expires a pending run older than ${PENDING_TTL_DAYS} days with a logged row, and keeps a younger one`, () => {
+    tmp();
+    const old = runIdAt((PENDING_TTL_DAYS + 1) * 86400e3), young = runIdAt((PENDING_TTL_DAYS - 1) * 86400e3);
+    fs.writeFileSync(path.join(out, 'runs.jsonl'), [old, young].map(run => JSON.stringify({ run, pending_verify: true, placed: 3 })).join('\n') + '\n');
+    const lines: string[] = [];
+    expect(expirePending(out, Date.now(), (l: string) => lines.push(l))).toEqual([old]);
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toMatch(/expired/);
+    expect(readJ(path.join(out, 'pending.jsonl')).map(r => [r.run, r.resolved])).toEqual([[old, 'expired']]);
+    expect(pendingRuns(out).map((r: Row) => r.run)).toEqual([young]);
+  });
+
+  it('currentTextRefusal: a page changed since the run is refused; an unchanged one passes', () => {
+    const it0 = cand('a'), x = { repair: REP };
+    const A = { translation: { data: TA } }, B = { translation: { data: HB } };
+    expect(currentTextRefusal(it0, x, A, B)).toBeNull();
+    expect(currentTextRefusal(it0, x, A, { translation: { data: 'Provided that I live' } })).toBe('page-changed-since-run');
+    expect(currentTextRefusal(it0, x, A, null)).toBe('page-missing-now');
+    // the stored hash matching but the span not at the edge (an older run's candidate drawn from other text)
+    expect(currentTextRefusal({ ...it0, hashB: sha('Provided that I live') }, x, A, { translation: { data: 'Provided that I live' } })).toBe('current-text:head-old-not-at-edge');
   });
 });

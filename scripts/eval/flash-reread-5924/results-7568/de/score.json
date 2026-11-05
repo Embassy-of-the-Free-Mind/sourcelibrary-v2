@@ -1,0 +1,675 @@
+{
+ "lang": "de",
+ "pages": 250,
+ "books": 10,
+ "C_outcomes": {
+  "unchanged": 16,
+  "corrected": 233,
+  "contain": 1
+ },
+ "misleading": {
+  "L": [
+   63,
+   [
+    20.2,
+    30.9
+   ]
+  ],
+  "C": [
+   6,
+   [
+    1.1,
+    5.1
+   ]
+  ],
+  "R": [
+   23,
+   [
+    6.2,
+    13.4
+   ]
+  ]
+ },
+ "bar_a_halves": {
+  "C": true,
+  "R": true
+ },
+ "worse_than_L": {
+  "C": 1,
+  "R": 11
+ },
+ "bar_b_no_page_worse": {
+  "C": false,
+  "R": false
+ },
+ "bar_c_C_beats_R": true,
+ "prefer": {
+  "CR": {
+   "C": 167,
+   "R": 22,
+   "tie": 61,
+   "material_loss_R": 22,
+   "material_loss_C": 4
+  },
+  "CL": {
+   "C": 230,
+   "L": 0,
+   "tie": 20,
+   "material_loss_L": 59,
+   "material_loss_C": 0
+  },
+  "RL": {
+   "R": 185,
+   "L": 30,
+   "tie": 35,
+   "material_loss_L": 52,
+   "material_loss_R": 11
+  }
+ },
+ "sign_test_CR_p": 8.83e-29,
+ "route": "C: Opus correction",
+ "contains": [
+  {
+   "slug": "69b51cda48ba71898415bb2d-p264",
+   "true_contain": false,
+   "reason": "The image p05.jpg is a tiny, featureless dark thumbnail with no legible content, so the leaf cannot be read, and the draft (a Latin \"Archidoxae… Liber Primus, De Separatione Rerum\" text) is unconnected to this German book's pages and cannot be verified."
+  }
+ ],
+ "R_unread": 0,
+ "R_filter_cut": 2,
+ "books_failing_25_check_L": 9,
+ "strip": {
+  "visible": 38,
+  "in_L": 13,
+  "in_C": 0,
+  "in_R": 0
+ },
+ "identical_C_L_verdict_mismatch": 0,
+ "worse_C_list": [
+  {
+   "slug": "69b51cda48ba71898415bb2d-p264",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "Hard page: the image (both sizes) is an empty 267-byte JPEG. X and Z (identical) supply a fluent Latin 'LIBER PRIMUS De Separatione Rerum' page that cannot be read from it. Y reports a blank or corrupt image."
+  }
+ ],
+ "worse_R_list": [
+  {
+   "slug": "69b51cda48ba71898415bb2d-p165",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Z is a filter-refusal message after 'Nimb Arsen' and drops the whole page. Y has 'vnc.i.' and 'drach. i.' where the print has x (10), checked by zooming. X is right."
+  },
+  {
+   "slug": "6a20a168a16b41b8475fa9a3-p25",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y drops the negation: 'Spiritibus corporeis' for 'Spiritibus incorporeis'; X has 'wie ist bewiesen' for 'wie jtzt bewiesen' and a bogus catchword '14'; Z is faithful."
+  },
+  {
+   "slug": "69c84fab6c6f3cc53c852b5e-p19",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z drops the whole left page (\"für warnen/und den Weeg … Spitze der Vollkom-\"); X has \"einfältiglid\" and \"der Weeg\"."
+  },
+  {
+   "slug": "69c84fab6c6f3cc53c852b5e-p68",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Y \"recht zu beten\" for \"recht zu betrachten\" changes the sense; Z omits p. 62 entirely."
+  },
+  {
+   "slug": "69c84fab6c6f3cc53c852b5e-p122",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y transcribes only p. 170, omitting p. 171 (\"man von ihm wolle beten lernen … wer-\"); Z faithful."
+  },
+  {
+   "slug": "69c84fab6c6f3cc53c852b5e-p142",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z omits p. 210 entirely; Y normalises \"Herz\"."
+  },
+  {
+   "slug": "69c84fab6c6f3cc53c852b5e-p152",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Z omits p. 230 entirely; Y minor normalisation."
+  },
+  {
+   "slug": "69b51dfd47b06ecd581880bc-p184",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Fractions read by zoom as 1/5 and 1/5: X 4/5 (C), Y 2/3 and 1/2, Z ⅓ and ⅙ (marked unclear), so all three get the numbers wrong. X also stops mid-§31 with a Gemini 'request was blocked' message and loses all of col. 348. Z otherwise faithful ('stündet auf und an', 'ungeheure'); Y drops 'ungeheure' and has 'kündet'."
+  },
+  {
+   "slug": "69c80a866c6f3cc53c8464a4-p273",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Right edge cut. X faithful with [...]; Y normalises Bewme→Beume and leaves cuts unmarked; Z reads 'eychlzweig' (acorn/oak twig) for 'ohlzweig' (olive twig), breaking the 'Oeltrauben' rule."
+  },
+  {
+   "slug": "69c80a866c6f3cc53c8464a4-p293",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Right edge cut. Y marks every cut [...]; X joins over the cuts with a few unflagged guesses ('viel gerne', 'in zweyen stücken'); Z writes fluent invented completions ('Moräste', 'Lachen', 'Kälck art', 'abbrennen', 'in grossen stücken')."
+  },
+  {
+   "slug": "69c818716c6f3cc53c849091-p35",
+   "reasons": [
+    "R misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "X=Z, faithful but without the verse margins. Y keeps the margins but reads 'die Gnade Gottes stehet' where print has 'siehet' (sees -> stands)."
+  }
+ ],
+ "judge2": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "drawn": 30,
+  "parsed": 30,
+  "gemini_prefer": {
+   "C": 14,
+   "R": 15,
+   "tie": 1
+  },
+  "opus_prefer_same_pages": {
+   "C": 21,
+   "R": 1,
+   "tie": 8
+  },
+  "gemini_misleading": {
+   "C": 2,
+   "R": 1
+  },
+  "opus_misleading_same_pages": {
+   "C": 0,
+   "R": 1
+  },
+  "pages": [
+   {
+    "slug": "69b51dbdff09e4fe943a84b9-p81",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69b51cda48ba71898415bb2d-p165",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "misleading",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "misleading"
+   },
+   {
+    "slug": "69b51cda48ba71898415bb2d-p193",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p11",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p21",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p35",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p38",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p48",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p51",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "6a20a168a16b41b8475fa9a3-p85",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69c84fab6c6f3cc53c852b5e-p78",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69c84fab6c6f3cc53c852b5e-p111",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c84fab6c6f3cc53c852b5e-p132",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e759f8095c302d3fdde85d-p45",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e759f8095c302d3fdde85d-p63",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69e759f8095c302d3fdde85d-p152",
+    "gemini": "tie",
+    "gemini_C": "sound",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69e759f8095c302d3fdde85d-p175",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "R",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c80a866c6f3cc53c8464a4-p93",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c80a866c6f3cc53c8464a4-p141",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c818716c6f3cc53c849091-p46",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c818716c6f3cc53c849091-p99",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c818716c6f3cc53c849091-p106",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c818716c6f3cc53c849091-p114",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69a683f3256d25f466059b5c-p30",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69a683f3256d25f466059b5c-p37",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   },
+   {
+    "slug": "69a683f3256d25f466059b5c-p112",
+    "gemini": "C",
+    "gemini_C": "sound",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c8059e6c6f3cc53c845291-p27",
+    "gemini": "C",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c8059e6c6f3cc53c845291-p40",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "flawed",
+    "opus": "C",
+    "opus_C": "sound",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c8059e6c6f3cc53c845291-p118",
+    "gemini": "R",
+    "gemini_C": "flawed",
+    "gemini_R": "sound",
+    "opus": "C",
+    "opus_C": "flawed",
+    "opus_R": "flawed"
+   },
+   {
+    "slug": "69c8059e6c6f3cc53c845291-p313",
+    "gemini": "R",
+    "gemini_C": "misleading",
+    "gemini_R": "sound",
+    "opus": "tie",
+    "opus_C": "sound",
+    "opus_R": "sound"
+   }
+  ]
+ },
+ "claude_correction_tokens": {
+  "calls": 30,
+  "input": 630,
+  "output": 377370,
+  "cache_read": 4419842,
+  "list_cost_usd": 18.53
+ },
+ "by_book": [
+  {
+   "book_id": "69b51dbdff09e4fe943a84b9",
+   "title": "Von den natürlichen und ubernatürlichen Dingen : Auch von der ersten T",
+   "n": 25,
+   "L": 2,
+   "C": 0,
+   "R": 0,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 16,
+    "R": 2,
+    "tie": 7
+   },
+   "outcomes": {
+    "unchanged": 1,
+    "corrected": 24
+   }
+  },
+  {
+   "book_id": "69b51cda48ba71898415bb2d",
+   "title": "Archidoxa ex Theophrastia : Pars I",
+   "n": 25,
+   "L": 7,
+   "C": 1,
+   "R": 2,
+   "worse_C": 1,
+   "worse_R": 1,
+   "CR": {
+    "C": 19,
+    "R": 3,
+    "tie": 3
+   },
+   "outcomes": {
+    "corrected": 24,
+    "contain": 1
+   }
+  },
+  {
+   "book_id": "6a20a168a16b41b8475fa9a3",
+   "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+   "n": 25,
+   "L": 10,
+   "C": 0,
+   "R": 2,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 18,
+    "R": 0,
+    "tie": 7
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69c84fab6c6f3cc53c852b5e",
+   "title": "Schriftmässige Anweisung recht und Gott wohlgefällig zu beten",
+   "n": 25,
+   "L": 3,
+   "C": 0,
+   "R": 5,
+   "worse_C": 0,
+   "worse_R": 5,
+   "CR": {
+    "C": 16,
+    "R": 1,
+    "tie": 8
+   },
+   "outcomes": {
+    "corrected": 24,
+    "unchanged": 1
+   }
+  },
+  {
+   "book_id": "69b51dfd47b06ecd581880bc",
+   "title": "Kaiserlich privilegirter Reichs-Anzeiger. 1795, 1 ## 19.01.1795",
+   "n": 25,
+   "L": 18,
+   "C": 4,
+   "R": 5,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 18,
+    "R": 3,
+    "tie": 4
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69e759f8095c302d3fdde85d",
+   "title": "Nathan der Weise",
+   "n": 25,
+   "L": 0,
+   "C": 0,
+   "R": 0,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 9,
+    "R": 5,
+    "tie": 11
+   },
+   "outcomes": {
+    "corrected": 16,
+    "unchanged": 9
+   }
+  },
+  {
+   "book_id": "69c80a866c6f3cc53c8464a4",
+   "title": "Garten Ordnung",
+   "n": 25,
+   "L": 10,
+   "C": 1,
+   "R": 5,
+   "worse_C": 0,
+   "worse_R": 2,
+   "CR": {
+    "C": 21,
+    "R": 1,
+    "tie": 3
+   },
+   "outcomes": {
+    "corrected": 24,
+    "unchanged": 1
+   }
+  },
+  {
+   "book_id": "69c818716c6f3cc53c849091",
+   "title": "Erklärung der Offenbarung Johannis",
+   "n": 25,
+   "L": 4,
+   "C": 0,
+   "R": 4,
+   "worse_C": 0,
+   "worse_R": 1,
+   "CR": {
+    "C": 16,
+    "R": 5,
+    "tie": 4
+   },
+   "outcomes": {
+    "corrected": 22,
+    "unchanged": 3
+   }
+  },
+  {
+   "book_id": "69a683f3256d25f466059b5c",
+   "title": "Theatrum machinarum, Tomus III",
+   "n": 25,
+   "L": 2,
+   "C": 0,
+   "R": 0,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 10,
+    "R": 2,
+    "tie": 13
+   },
+   "outcomes": {
+    "unchanged": 1,
+    "corrected": 24
+   }
+  },
+  {
+   "book_id": "69c8059e6c6f3cc53c845291",
+   "title": "Abgenöthigtes jedoch Andern nicht wieder aufgenöthigtes Glaubens-Beken",
+   "n": 25,
+   "L": 7,
+   "C": 0,
+   "R": 0,
+   "worse_C": 0,
+   "worse_R": 0,
+   "CR": {
+    "C": 24,
+    "R": 0,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  }
+ ]
+}

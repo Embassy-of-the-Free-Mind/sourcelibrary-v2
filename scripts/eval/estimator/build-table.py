@@ -11,6 +11,8 @@ scored=false and never scored. Reads only committed result files; no model calls
 """
 import argparse, collections, glob, json, os
 
+from provenance import label_legacy  # every row says where it came from (#6740)
+
 R = 'scripts/eval/results'
 
 # arm label -> (model, family, route). Families follow the brief: gemini-lite / gemini-flash / gemini-pro;
@@ -203,6 +205,7 @@ def main():
     for t in (1, 2, 3, 4, 5):
         xlref(out, f'{R}/xlref-t{t}-2026-10/' + ('rows.jsonl' if t == 1 else 'pages.jsonl'), f'xlref-t{t}')
     ab5606(out, f'{R}/translation-ab-5606-2026-10-02')
+    out = [label_legacy(r, 'translation', [f"{r['experiment']}|{r['arm']}", r['experiment']]) for r in out]
     with open(a.out, 'w') as f:
         for r in out:
             f.write(json.dumps(r) + '\n')

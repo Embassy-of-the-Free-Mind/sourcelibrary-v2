@@ -1,0 +1,62 @@
+fatal: couldn't find remote ref job-grounding-6871a
+git fetch failed: using the code already placed in /root/jobs/grounding-6871a/code (a8cfe86dfb29b2dc295deefbc17e69c216f8847b)
+code at a8cfe86dfb29b2dc295deefbc17e69c216f8847b, 121 items
+{"wanted": 71, "fetched": 71}
+rows: main 121 rerun 121; GPU 2 MiB
+**#6871 row A, grounding check (job grounding-6871a): scored by its own gpu-queue task `55-grounding-6871a`.**
+Prereg: `scripts/eval/grounding-6871/PREREGISTRATION-AMENDMENT-6871a.md` (on top of the 2026-10-18 `PREREGISTRATION.md`); code at a8cfe86df.
+Scorer: Qwen2.5-VL-7B-Instruct-AWQ, per-token log p(read | image) − log p(read | no image), teacher-forced. R@P50 = the best span recall at unit precision ≥ 0.5.
+
+**Verdict: no cell clears the preregistered bar (B1 AUROC ≥ 0.75, B2 span recall ≥ 0.6 at precision ≥ 0.5, B3 beats repeat noise). No image-gain pre-screen in front of agy/Opus review on #6420: it neither replaces nor pre-filters a round.**
+
+**Real errors, #6420 lane B (Opus-marked spans), full set**
+
+| cell | pages (with a bad span) | bad units / units | AUROC gain (95% CI) | AUROC text-only perplexity | R@P50 gain (CI) | R@P50 perplexity / image surprisal | repeat noise: separation vs 2×median abs Δgain | bar |
+|---|---|---|---|---|---|---|---|---|
+| all | 2178 (1528) | 10868 / 776187 | **0.58** (0.56–0.60) | 0.56 | **0.00** (0.00–0.00) | 0.00 / 0.00 | 0.97 vs 2×0.01, rerun 0.61 | B1 n · B2 n · B3 n → **fail** |
+| arabic | 105 (80) | 934 / 38902 | **0.58** (0.55–0.62) | 0.63 | **0.00** (0.00–0.02) | 0.00 / 0.00 | 0.42 vs 2×0.01, rerun 0.59 | B1 n · B2 n · B3 y → **fail** |
+| chinese | 356 (179) | 751 / 35347 | **0.44** (0.40–0.48) | 0.68 | **0.01** (0.00–0.02) | 0.00 / 0.00 | -0.26 vs 2×0.01, rerun 0.45 | B1 n · B2 n · B3 n → **fail** |
+| german | 402 (320) | 1735 / 117977 | **0.58** (0.51–0.64) | 0.57 | **0.00** (0.00–0.00) | 0.00 / 0.00 | 1.00 vs 2×0.01, rerun 0.62 | B1 n · B2 n · B3 y → **fail** |
+| greek | 257 (199) | 1614 / 115381 | **0.63** (0.60–0.65) | 0.52 | **0.00** (0.00–0.01) | 0.00 / 0.00 | 0.53 vs 2×0.01, rerun 0.67 | B1 n · B2 n · B3 n → **fail** |
+| hebrew | 36 (28) | 231 / 24324 | **0.60** (0.54–0.67) | 0.53 | **0.00** (0.00–0.00) | 0.00 / 0.00 | — vs 2×0.01, rerun — | B1 n · B2 n · B3 n → no verdict (< 30 pages with a bad span) |
+| latin | 1022 (722) | 5603 / 444256 | **0.58** (0.56–0.61) | 0.57 | **0.00** (0.00–0.00) | 0.00 / 0.00 | 0.72 vs 2×0.01, rerun 0.59 | B1 n · B2 n · B3 y → **fail** |
+
+**Real errors, Chinese SKQS (differences from the Kanripo WYG text)**
+
+| cell | pages (with a bad span) | bad units / units | AUROC gain (95% CI) | AUROC text-only perplexity | R@P50 gain (CI) | R@P50 perplexity / image surprisal | repeat noise: separation vs 2×median abs Δgain | bar |
+|---|---|---|---|---|---|---|---|---|
+| all | 71 (60) | 455 / 4157 | **0.53** (0.48–0.57) | 0.60 | **0.03** (0.00–0.08) | 0.00 / 0.39 | 0.25 vs 2×0.00, rerun 0.53 | B1 n · B2 n · B3 y → **fail** |
+| paddleocr-vl-1.6 | 36 (27) | 126 / 2266 | **0.43** (0.38–0.49) | 0.62 | **0.00** (0.00–0.00) | 0.00 / 0.00 | -0.29 vs 2×0.00, rerun 0.43 | B1 n · B2 n · B3 n → **fail** |
+| gemini-3.1-flash-lite | 35 (33) | 329 / 1891 | **0.58** (0.53–0.62) | 0.59 | **0.08** (0.00–0.22) | 0.00 / 0.75 | 0.56 vs 2×0.00, rerun 0.58 | B1 n · B2 n · B3 y → **fail** |
+
+**Planted phrases (descriptive)**
+
+| cell | pages (with a bad span) | bad units / units | AUROC gain (95% CI) | AUROC text-only perplexity | R@P50 gain (CI) | R@P50 perplexity / image surprisal | repeat noise: separation vs 2×median abs Δgain | bar |
+|---|---|---|---|---|---|---|---|---|
+| all | 50 (50) | 310 / 7891 | **0.94** (0.92–0.96) | 0.69 | **0.98** (0.92–1.00) | 0.00 / 0.87 | 3.01 vs 2×0.00, rerun 0.94 | B1 y · B2 y · B3 y → **pass** |
+| greek | 13 (13) | 87 / 2995 | **0.95** (0.92–0.98) | 0.53 | **0.79** (0.40–1.00) | 0.00 / 0.00 | 1.57 vs 2×0.00, rerun 0.95 | B1 y · B2 y · B3 y → **pass** |
+| latin | 22 (22) | 147 / 3941 | **0.98** (0.96–0.99) | 0.78 | **0.98** (0.88–1.00) | 0.05 / 1.00 | 3.85 vs 2×0.00, rerun 0.98 | B1 y · B2 y · B3 y → **pass** |
+| skqs | 15 (15) | 76 / 955 | **0.97** (0.95–0.98) | 0.78 | **1.00** (1.00–1.00) | 0.00 / 1.00 | 5.08 vs 2×0.00, rerun 0.97 | B1 y · B2 y · B3 y → **pass** |
+
+**2026-10-18 plants (descriptive)**
+
+| cell | pages (with a bad span) | bad units / units | AUROC gain (95% CI) | AUROC text-only perplexity | R@P50 gain (CI) | R@P50 perplexity / image surprisal | repeat noise: separation vs 2×median abs Δgain | bar |
+|---|---|---|---|---|---|---|---|---|
+| all | 21 (21) | 63 / 3935 | **0.86** (0.80–0.91) | 0.63 | **0.35** (0.21–0.48) | 0.00 / 0.08 | — | B1 y · B2 n · B3 n → **fail** |
+| arabic | 2 (2) | 6 / 387 | **0.76** (0.69–0.85) | 0.63 | **0.33** (0.00–0.67) | 0.00 / 0.00 | — | B1 n · B2 n · B3 n → **fail** |
+| chinese | 2 (2) | 6 / 253 | **0.90** (0.69–0.99) | 0.63 | **0.17** (0.00–0.67) | 0.00 / 0.50 | — | B1 y · B2 n · B3 n → **fail** |
+| german | 5 (5) | 15 / 1148 | **0.89** (0.80–0.96) | 0.54 | **0.53** (0.27–0.73) | 0.00 / 0.13 | — | B1 y · B2 n · B3 n → **fail** |
+| greek | 4 (4) | 12 / 732 | **0.91** (0.84–0.97) | 0.54 | **0.50** (0.33–0.67) | 0.00 / 0.08 | — | B1 y · B2 n · B3 n → **fail** |
+| latin | 8 (8) | 24 / 1415 | **0.81** (0.67–0.93) | 0.72 | **0.29** (0.00–0.58) | 0.00 / 0.08 | — | B1 n · B2 n · B3 n → **fail** |
+| all | 20 (20) | 254 / 6042 | **0.97** (0.96–0.98) | 0.71 | **1.00** (1.00–1.00) | 0.15 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+| chinese | 3 (3) | 34 / 764 | **0.96** (0.92–0.99) | 0.77 | **1.00** (1.00–1.00) | 0.33 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+| german | 3 (3) | 59 / 694 | **0.99** (0.99–1.00) | 0.54 | **1.00** (1.00–1.00) | 0.33 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+| greek | 2 (2) | 26 / 796 | **0.99** (0.97–1.00) | 0.81 | **1.00** (1.00–1.00) | 0.50 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+| hebrew | 2 (2) | 24 / 1568 | **0.98** (0.97–0.99) | 0.78 | **1.00** (1.00–1.00) | 0.00 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+| latin | 10 (10) | 111 / 2220 | **0.96** (0.93–0.98) | 0.69 | **1.00** (1.00–1.00) | 0.10 / 1.00 | — | B1 y · B2 y · B3 n → **fail** |
+
+**Throughput (this card):** main.jsonl: 121 items in 134 s = 3,251 pp/h for the pair; rerun.jsonl: 121 items in 139 s = 3,134 pp/h for the pair.
+
+$0: no paid model, no rented GPU, nothing written to any store. Files: gex45 `/root/jobs/grounding-6871a/` (`new.json`, `real6420.json`, `main.jsonl`, `rerun.jsonl`). The experiment file in the repo should be updated from these numbers by the next job that touches row A.
+https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6871#issuecomment-6356331391
+https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6420#issuecomment-6356331671

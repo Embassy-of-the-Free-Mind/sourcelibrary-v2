@@ -77,7 +77,7 @@ async function main() {
   const cursor = books.find(
     { resource_type: { $exists: true } },
     { projection: { _id: 1, title: 1, display_title: 1, author: 1, 'enrichment.subject': 1 } }
-  );
+  ).batchSize(1000);
 
   for await (const doc of cursor) {
     const title = doc.title || '';

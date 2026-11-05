@@ -7,7 +7,9 @@ import { TenantSignIn } from './TenantSignIn';
 
 export default async function TenantLoginPage() {
   const ctx = await getTenantContext();
-  if (!ctx?.id) notFound();
+  // /login is the tenant sign-in. On the main site there is no tenant, and a
+  // bare /login is what people type, so send them to the global sign-in.
+  if (!ctx?.id) redirect('/auth/signin');
 
   const db = await getDb();
   const tenant = await db.collection('tenants').findOne({ id: ctx.id });

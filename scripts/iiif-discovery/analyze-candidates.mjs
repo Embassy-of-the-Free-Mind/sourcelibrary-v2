@@ -83,7 +83,7 @@ await withMongo(async (db) => {
     ...candidateFilter,
     status: 'discovered',
     manifest_url: { $in: [...manifestSet] },
-  });
+  }).batchSize(1000);
   for await (const dupe of manifestDupeCursor) {
     manifestDupes++;
     if (MARK_DUPES) {
@@ -110,7 +110,7 @@ await withMongo(async (db) => {
   const titleDupeCursor = candidates.find({
     ...candidateFilter,
     status: 'discovered',
-  }, { projection: { title: 1, author: 1, manifest_url: 1 } });
+  }, { projection: { title: 1, author: 1, manifest_url: 1 } }).batchSize(1000);
 
   for await (const cand of titleDupeCursor) {
     const normTitle = normalizeForDedup(cand.title);

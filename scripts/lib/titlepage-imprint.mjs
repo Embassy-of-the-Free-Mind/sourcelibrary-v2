@@ -27,7 +27,7 @@ export const IMPRINT_PROMPT_VERSION = 'titlepage-imprint-v1';
  * capitals ("B A S I L E A E"), apostrophic numerals ("clɔ Iɔ CXIV" = 1614), spaced or I-for-1 digits ("I 5 7 9"),
  * and a title quoted by its first line only. Re-checking the stored replies needs no model call (`--recheck`).
  */
-export const GUARD_VERSION = 'imprint-guard-v2';
+export const GUARD_VERSION = 'imprint-guard-v3';
 
 /** Page types that never carry an imprint; skipped in image mode where a page's type is known. */
 export const SKIP_IMAGE_TYPES = new Set(['blank', 'cover', 'binding', 'flyleaf', 'endpaper', 'colour-chart', 'color-chart', 'spine']);
@@ -210,6 +210,37 @@ export function quoteCarriesValue(quote, value, { fragment = false } = {}) {
   return qs.length >= 4 && vSolid.includes(qs);
 }
 
+/**
+ * Guard v3 (#7201): the wrong-date classes the by-eye labels of the first draw found, as checks on the QUOTE.
+ *   bracketed_year   "[1728]", "(1499)", "Basileae, [1554]": brackets are a cataloguer's or a pencil's convention,
+ *                    never the printer's (a digitiser's cover sheet, a library card, a handwritten note).
+ *   day_month_date   "ad VII. d. Junii An. M DC LXXXI.", "Rome Id. Nouemb. M.cccc.lxxxiiii.": a day and a month
+ *                    with no imprint word is the occasion inside an occasional title, or a dated dedication. A
+ *                    colophon that dates to the day ("Impressum … die xx. Octobris") keeps its imprint word.
+ * Returns the rejection reason or null.
+ */
+const MONTH = String.raw`(?:[ij]an(?:uar\w*)?|febr(?:uar\w*)?|mart(?:ii|ij|io|ius|is)?|m[äe]r[tz]z?|apr(?:il\w*)?|ma[ij](?:i|j|o|us|um)?|[ij][uv]n(?:ii|ij|io|ius|i|e)?|[ij][uv]l(?:ii|ij|io|ius|i|y)?|aug(?:usti|usto|ustus|ust)?|sept?(?:emb\w*)?|o[ck]t(?:ob\w*)?|no[uv](?:emb\w*)?|de[cz](?:emb\w*)?|march|jenner|hornung|janvier|f[eé]vrier|avril|juin|juillet|ao[uû]t|septembre|octobre|novembre|d[eé]cembre)(?![a-zà-ÿ])\.?`;
+const DAY_MONTH = new RegExp(String.raw`(?:\b(?:\d{1,2}|[ivxl]{1,7})\.?\s*(?:d\.\s*|die\s+)?${MONTH}|\b${MONTH}\s+\d{1,2}\b|\b(?:kal|calend|kalend|non|nonis|id|idib|idus)[a-z]*\.?\s+${MONTH}|\bdie\s+(?:\d{1,2}|[ivxl]{1,7})\b)`, 'i');
+const IMPRINT_WORD = /\b(?:apud|typis|typ\.|excud\w*|impress\w*|imprim\w*|gedruckt|druck\w*|printed|datum|data|geben|finit\w*|explicit\w*|chez|officina|aedibus|ædibus)\b/i;
+export function dateQuoteFault(quote) {
+  // ")(" is a printer's ornament round the year ("MUTINÆ, )( M. DC. XC. VIII. )("), not a bracket.
+  const q = String(quote ?? '').replace(/\)\s*\(/g, ' ');
+  if (/\[[^\]]*\]/.test(q) || /\(\s*[\dMDCLXVImdclxvi.,\s]{3,}\)/.test(q)) return 'bracketed_year';
+  if (DAY_MONTH.test(q) && !IMPRINT_WORD.test(q)) return 'day_month_date';
+  return null;
+}
+
+/** A Siku Quanshu cover label (四庫全書 子部 …) is the series, not the book's title (13 of 20 wrong titles, #7201). */
+export const SERIES_LABEL = /四庫全書|四库全书/;
+
+/**
+ * The transcriber's own note that a page is mirrored show-through from the other side of the leaf. Three live
+ * books carried an imprint invented on such a page (#7201 containment); nothing read from one is evidence.
+ */
+export function isShowThroughPage(prose) {
+  return /<warning>[^<]*(?:mirror|bleed-?through|show-?through|ghosting)/i.test(String(prose ?? ''));
+}
+
 export const YEAR_MIN = 600;
 export const YEAR_MAX = 2030;
 
@@ -230,6 +261,7 @@ export function checkImprint(parsed, { mode, pages }) {
   const citation = (field, o) => {
     if (!shown(o.page)) return 'page_not_shown';
     if (norm(o.quoted_line).length < 4) return 'no_quote';
+    if (mode === 'text' && isShowThroughPage(pages.get(Number(o.page)))) return 'show_through_page';
     if (mode === 'text') {
       if (!quoteIsOnPage(o.quoted_line, pages.get(Number(o.page)))) {
         const elsewhere = [...pages.values()].some((pr) => quoteIsOnPage(o.quoted_line, pr));
@@ -249,8 +281,10 @@ export function checkImprint(parsed, { mode, pages }) {
       else {
         checks.quote_has_year = quoteSupportsYear(o.quoted_line, o.year, o.calendar);
         if (checks.quote_has_year === false) reason = 'quote_lacks_year';
+        else reason = dateQuoteFault(o.quoted_line);
       }
     }
+    if (!reason && f === 'title' && (SERIES_LABEL.test(o.value ?? '') || SERIES_LABEL.test(o.quoted_line ?? ''))) reason = 'series_label';
     if (!reason && f !== 'date') {
       const val = f === 'title' ? o.value : o.as_printed;
       checks.quote_has_value = quoteCarriesValue(o.quoted_line, val, { fragment: f === 'title' });

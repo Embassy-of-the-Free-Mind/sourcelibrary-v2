@@ -1,0 +1,164 @@
+{
+ "generated_by": "scripts/eval/latin-ms-reader-7947/analyze.mjs (job latin-ms-reader-7947, #7947)",
+ "provenance": "#7947 reader test on the #7947 draw (no re-draw): lite-read manuscripts (26 books, 78 pages) and the 1450-1500 print cell (8 books, 24 pages); arms read on the same pages; one Opus reader per book judging every arm blind (neutral labels, shuffled), REVIEWER.md + JUDGE-ADDENDUM.md; every serious call re-read by a second Opus reader (SECOND-READER.md), blind to arm",
+ "judge": "claude-opus (claude -p), REVIEWER.md against the page image; confirmed = second reader confirmed or reclassified (still serious)",
+ "cells": {
+  "latin-manuscript-lite-7947": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "rule": "the #7947 draw: live Latin books, form on the image manuscript, all 3 drawn pages Flash-Lite, microfilm strips excluded; 3 pages a book at 25/50/75%",
+    "books": 26,
+    "pages": 78
+   },
+   "routes": {
+    "stored (Flash-Lite)": {
+     "n": 78,
+     "books": 26,
+     "accept": "38/78",
+     "wrong_text_pages": "5/78",
+     "sense_per_1000_words": {
+      "point": 5.07,
+      "ci95": [
+       3.56,
+       6.74
+      ]
+     },
+     "classes_k_of_n": {
+      "O6": "28/78",
+      "O7": "14/78",
+      "I4": "7/78",
+      "O8": "3/78",
+      "O10": "3/78",
+      "O5": "2/78",
+      "O1": "1/78"
+     },
+     "note": "the stored text, judged in the same packets"
+    },
+    "claude-opus (claude-ocr.mjs, 1 a call)": {
+     "n": 78,
+     "books": 26,
+     "accept": "77/78",
+     "wrong_text_pages": "0/78",
+     "sense_per_1000_words": {
+      "point": 0.06,
+      "ci95": [
+       0,
+       0.2
+      ]
+     },
+     "classes_k_of_n": {
+      "O7": "1/78"
+     },
+     "note": "served = the arm's read where usable, else the stored text (RULE.md); read on 78/78"
+    },
+    "agy-flash-low@4": {
+     "n": 78,
+     "books": 26,
+     "accept": "54/78",
+     "wrong_text_pages": "3/78",
+     "sense_per_1000_words": {
+      "point": 3,
+      "ci95": [
+       1.54,
+       4.88
+      ]
+     },
+     "classes_k_of_n": {
+      "O6": "16/78",
+      "O7": "8/78",
+      "O8": "3/78",
+      "O10": "2/78",
+      "I4": "1/78",
+      "O4": "1/78"
+     },
+     "note": "served = the arm's read where usable, else the stored text (RULE.md); read on 66/78"
+    },
+    "pero>agy-flash-low (arm c, E3 put-back)": {
+     "n": 78,
+     "books": 26,
+     "accept": "47/78",
+     "wrong_text_pages": "6/78",
+     "sense_per_1000_words": {
+      "point": 4.27,
+      "ci95": [
+       2.79,
+       5.88
+      ]
+     },
+     "classes_k_of_n": {
+      "O6": "21/78",
+      "O7": "13/78",
+      "O8": "3/78",
+      "O5": "2/78",
+      "O10": "2/78",
+      "I4": "2/78",
+      "O1": "1/78"
+     },
+     "note": "served = the arm's read where usable, else the stored text (RULE.md); read on 40/78"
+    }
+   }
+  },
+  "latin-incunabula-7947": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "rule": "the #7947 draw: live Latin books dated 1450-1500, printed (on the image); 3 pages a book at 25/50/75%",
+    "books": 8,
+    "pages": 24
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 24,
+     "books": 8,
+     "accept": "19/24",
+     "wrong_text_pages": "0/24",
+     "sense_per_1000_words": {
+      "point": 0.44,
+      "ci95": [
+       0.1,
+       0.85
+      ]
+     },
+     "classes_k_of_n": {
+      "O6": "5/24"
+     },
+     "note": "served = the arm's read where usable, else the stored text (RULE.md); read on 24/24"
+    },
+    "lite>opus (correct.mjs)": {
+     "n": 24,
+     "books": 8,
+     "accept": "24/24",
+     "wrong_text_pages": "0/24",
+     "sense_per_1000_words": {
+      "point": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "classes_k_of_n": {},
+     "note": "served = the arm's read where usable, else the stored text (RULE.md); read on 21/24"
+    },
+    "stored (Flash-Lite)": {
+     "n": 24,
+     "books": 8,
+     "accept": "12/24",
+     "wrong_text_pages": "0/24",
+     "sense_per_1000_words": {
+      "point": 1.92,
+      "ci95": [
+       0.86,
+       3.32
+      ]
+     },
+     "classes_k_of_n": {
+      "O5": "10/24",
+      "O6": "4/24"
+     },
+     "note": "the stored text, judged in the same packets"
+    }
+   }
+  }
+ }
+}

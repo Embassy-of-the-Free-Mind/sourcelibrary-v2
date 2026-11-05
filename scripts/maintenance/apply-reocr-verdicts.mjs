@@ -64,6 +64,7 @@ import { STALE_OCR_FIELDS } from '../lib/syriac-kraken-lane.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { insertLeafBreaks, foreignTags, LEAF_BREAK } from '../lib/leaf-break.mjs';
+import { recordFailedReads, fromTextless } from '../lib/ocr-failed-read.mjs';
 
 const ARG = (n, d) => {
   const a = process.argv.find((x) => x.startsWith(`${n}=`));
@@ -226,7 +227,12 @@ for (const [bookId, verdicts] of byBook) {
     if (!fs.existsSync(f)) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-no-text-file' }); continue; }
     const stem = `${bookId}_${String(v.page).padStart(5, '0')}`;
     const plain = fs.readFileSync(f, 'utf8').trim();
-    if (plain.split('་').length < MIN_SYL) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-too-short' }); continue; }
+    if (plain.split('་').length < MIN_SYL) {
+      totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-too-short' });
+      // the recognizer returned (next to) no text: a failed read of --model (#7378), timed by its text file
+      if (APPLY) await recordFailedReads(db, [fromTextless({ pageId: p.id, model: MODEL, engine: 'scripts/maintenance/apply-reocr-verdicts.mjs', chars: plain.length, at: fs.statSync(f).mtime })]);
+      continue;
+    }
     // Degeneration-loop guard (#4850) — never promote a looping read to SERVE. Judged on the
     // plain read; the seam marker added next is not text.
     if (loopVerdict(plain).refuse) {

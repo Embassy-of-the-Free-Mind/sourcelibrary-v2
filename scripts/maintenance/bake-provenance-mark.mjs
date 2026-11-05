@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 /**
+ * SUPERSEDED by scripts/maintenance/backfill-display-marks.mjs (#4406). This script fetches from
+ * institutions when R2 has no master, regenerates at 2000px, and decides "done" from a tag most
+ * marked files do not have. It refuses to run without --legacy.
+ *
  * Bake the Source Library provenance mark INTO the pre-sized R2 page variants
  * (`display_photo`, optionally `image_thumb`) — file-time marking.
  *
@@ -63,6 +67,11 @@ import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { Agent as HttpsAgent } from 'https';
 import { markImage } from '../lib/provenance-mark.mjs';
 sharp.concurrency(1);
+
+if (!process.argv.includes('--legacy')) {
+  console.error('Superseded by scripts/maintenance/backfill-display-marks.mjs (#4406). Pass --legacy to run this one anyway.');
+  process.exit(2);
+}
 
 const APPLY = process.argv.includes('--apply');
 const ALL = process.argv.includes('--all');

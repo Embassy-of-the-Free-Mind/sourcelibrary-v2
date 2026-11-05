@@ -1,5 +1,7 @@
 # Source Library Pipeline Architecture (v2)
 
+> **PARTLY SUPERSEDED (2026-10-29, #7759).** An August 2026 snapshot. The one door (`translate-core.mjs`) and the spend dial still hold; the lanes, where they run, and what carries the volume have changed (subscription and GPU lanes). For the process today read `book-process.md`; for live numbers read https://sourcelibrary.org/admin/pipeline/now.
+
 > The full line as of August 2026 — stages, the one door, the budget dial, the lanes,
 > and where things actually run. The v1 document (April 2026, the orchestrated era at
 > full throttle) is archived verbatim at `archive/pipeline-architecture-v1-2026-04.md`;

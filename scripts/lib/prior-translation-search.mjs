@@ -20,7 +20,7 @@
  * point of the exercise.
  */
 
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const norm = (s) => String(s ?? '').toLowerCase()
   .normalize('NFD').replace(/[̀-ͯ]/g, '')

@@ -1,0 +1,578 @@
+[
+  {
+    "book_id": "6a4a8b150cf770dd0072204e",
+    "slot": 53,
+    "title": "Xeniolum prudentia, pietate, eruditione ... a Johanne noetio juniore (1586)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A printed neo-Latin occasional poem (a New Year's 'xeniolum' to a town senator, retelling Creation, Fall and Nativity). No tradition or collection assigned; it is a devotional/humanist gift poem, not obviously within the library's esoteric/early-science core.",
+    "rights_flag": null,
+    "structure_note": "pages_count 30, pages_ocr 27, pages_translated 11: most OCR'd pages are untranslated. Page 6 carries signature 'A 4' and page 7 'A 3', yet page 6's catchword 'Jamq;' opens page 7, so the text runs on correctly; the signature order points to a misbound or misprinted signature, not a scan error. Page 10 is a blank verso (only mirrored show-through) that has been OCR'd and translated as if it held text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Qua misere in cunctos, mors truculenta, furit.",
+            "image": "Quæ miserè in cunctos, mors truculenta, furit.",
+            "problem": "'Quæ' read as 'Qua' (the relative refers to the realm/regnum); carried into the translation as 'Where'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<script>handwritten</script> / <warning>Handwritten Italian humanist hand</warning>",
+            "image": "printed italic type with signature 'A 4'",
+            "problem": "self-reported script tag wrong: this is a printed book",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Qua misere in cunctos, mors truculenta, furit.",
+            "english": "Where cruel death rages miserably against all.",
+            "problem": "follows the misread 'Qua'; should be 'which (realm) cruel death wretchedly rages over all' — small slip",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> / <warning>Handwritten [Humanist italic hand]</warning>",
+            "image": "printed italic type, signature 'A 3'",
+            "problem": "script tag wrong (printed, not handwritten)",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Rustica sed raro vimine tecta, domus.",
+            "english": "But covered with rare wicker, a rustic home.",
+            "problem": "'raro vimine' = loosely woven/sparse wicker, not 'rare'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<term>Logos</term> <gloss>Word</gloss>' markup in the reader text for the Greek λόγος",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<unclear>Ex Bibliotheca</unclear> <unclear>[...]</unclear> <unclear>Regis</unclear>\n<unclear>Jacobus</unclear> ... <unclear>Dominus</unclear>",
+            "image": "a blank verso: only mirrored show-through of the facing printed page (e.g. reversed 'Ergo sancte Pater...') and no ink of its own; no library mark, no 'Regis', no 'Jacobus'",
+            "problem": "confabulated provenance inscription on a blank page",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "<unclear>Ex Bibliotheca</unclear> ... <unclear>Regis</unclear> <unclear>Jacobus</unclear>",
+            "english": "From the Library ... of the King / James ... <note>The text contains cataloging marks likely added by later librarians or collectors, referencing a royal collection and the name James</note>",
+            "problem": "translates invented text and adds an invented provenance claim (a royal library, 'James') that is not on the page",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "(none)",
+            "english": "<meta>continues from previous page: The poem concludes with a prayer for the Church and a final doxology.</meta>",
+            "problem": "invented content summary for a blank page",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "other": [
+          {
+            "note": "A blank show-through page is presented as carrying a royal-library ownership inscription — invented manuscript/provenance facts, plus <summary>/<keywords> repeating them",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Pages 6–7 are a clean, faithful reading of the printed verse (only the 'handwritten' tag is wrong). But page 10, a blank verso, has an invented 'Ex Bibliotheca ... Regis Jacobus' provenance inscription with a translation that endorses it, and only 11 of 30 pages are translated."
+  },
+  {
+    "book_id": "69b418a62b0edf3eaa2dd7f1",
+    "slot": 84,
+    "title": "Cabbalistic Texts: Christoph Froschmayr von Scheibenhof (PH239)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century Latin manuscript of Christian-kabbalistic alchemy (Tiphereth/Geburah, gematria, Sulphur Martis, Matred/Mehetabel) from the BPH: squarely within the library's core.",
+    "rights_flag": null,
+    "structure_note": "Pages 169 OCR'd and 154 translated out of 172. The manuscript's page numbers run 37 (seq 45) → 76 (seq 84), one page per image, but then 76 → 174 (seq 122): 98 written pages over 38 images. That points to a gap in the scan or a jump in the scribe's numbering. It is worth checking, but these three pages cannot settle it.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "fumitatis aurea",
+            "image": "fumitatis au-reæ",
+            "problem": "case ending",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "sed vivum ex nudis emergens",
+            "english": "but living, emerging from nakedness",
+            "problem": "over-literal; sense is uncertain in the source, so this is only a small slip",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "sic <image-desc ...>Alchemical symbol for Sulfur</image-desc> erit diligenter paratum",
+            "image": "Sic [sulphur sign]ʳ ♂ⁱˢ erit diligenter paratum (Sulphur Martis)",
+            "problem": "the Mars sign + 'is' (Martis) after the sulphur sign is dropped, so 'Sulphur of Mars (iron)' becomes plain 'Sulphur'",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "Ut autem fiant <image-desc ...>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones",
+            "image": "Ut autem fiant ☿ˡⁱˢ Aquæ ignitiones (Mercurialis)",
+            "problem": "the Mercury sign is labelled as Sulfur",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Sulphur tandem siccatum",
+            "english": "the dried <term>Sulphur</term> <gloss>here referring to the extracted essence or combustible part</gloss>",
+            "problem": "gloss not supported by the page",
+            "severity": "minor"
+          },
+          {
+            "source": "Ut autem fiant [☿] Aqua ignitiones, id est acui",
+            "english": "However, so that the ignitions, that is, the sharpening",
+            "problem": "the Mercurial water is dropped from the clause",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<note>The alchemical symbol for Sulfur is used here.</note>' repeated four times inline in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 122,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "nec ex fontis hauriri",
+            "image": "nec ex fodinis hauriri",
+            "problem": "'from mines' read as 'from a fountain'; carried into the translation",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Uxor nominatur זהב מי Mehetabel: id est Aqua auri",
+            "image": "Uxor nominatur זהב מי |Mai Sahab| id est Aqua auri",
+            "problem": "the transliteration 'Mai Sahab' is replaced by the expected name 'Mehetabel', so the next clause ('quod superius Mehetabel fuit appellatum') becomes a tautology",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "<foreign lang=\"hebrew\">מים חיים</foreign>",
+            "image": "מקור מים חיים",
+            "problem": "Hebrew 'מקור' (source) dropped; the Latin 'Scaturigo' keeps the sense",
+            "severity": "minor",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "nec ex fontis [fodinis] hauriri",
+            "english": "nor is it drawn from a fountain",
+            "problem": "should be 'from mines'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Uxor nominatur ... Mehetabel ... quod superius Mehetabel fuit appellatum",
+            "english": "named Mehetabel ... which was previously called Mehetabel",
+            "problem": "the OCR substitution makes the passage circular; the reader loses 'Mai Sahab' (Water of Gold) as the name",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A good read of a hard 18th-century hand, with the Hebrew mostly right. The weak points are the alchemical signs (Sulphur Martis loses 'Martis'; ☿ is labelled sulphur) and one normalisation of 'Mai Sahab' to 'Mehetabel'; nothing a reader would be gravely misled by. The printed page numbers jump between seq 84 and 122, which should be checked."
+  },
+  {
+    "book_id": "6a06cd51c749b698e5b2b36e",
+    "slot": 59,
+    "title": "Horatius. M. Antonii Mureti in eum scholia. Aldi Manutii de metris horatianis ... (1561)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Aldine Horace (1561), in early-european-books / europeanlibraries: a fit for those general collections, though not for the esoteric core.",
+    "rights_flag": true,
+    "structure_note": "389 of 394 pages OCR'd, 382 translated; the three pages read follow the book's order (Carmina, Epistulae, Sermones). Nothing broken in the counts.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "(omitted)",
+            "image": "ode number '11' at the right above 'MERCVRI' and a handwritten marginal note by 'nunc &'",
+            "problem": "ode number and a later-hand note dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Nec uir Pieria pellice saucius",
+            "english": "Nor your husband, wounded by a Pierian <note>theatrical</note> mistress",
+            "problem": "invented gloss: 'Pieria' is Pierian/Thessalian, not 'theatrical'",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "Mercuri, nam te docilis magistro / Mouit Amphion",
+            "english": "Mercury, for with you as a docile teacher, Amphion moved",
+            "problem": "'docilis' qualifies Amphion (taught by you), not the teacher",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 199,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ut nec / Frigidior Thracam, nec purior ambiat Hebrus",
+            "english": "as neither / Cold enough to circle Thrace, nor purer than the Hebrus",
+            "problem": "garbled: Horace says the Hebrus that winds through Thrace is neither colder nor purer than this spring",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "<margin>Ouid. 4. de ponto eleg. 5. ...</margin>",
+            "english": "(omitted)",
+            "problem": "handwritten marginal reference dropped in translation",
+            "severity": "minor",
+            "class": "T13"
+          },
+          {
+            "source": "-> Dictitet: <- (catchword)",
+            "english": "-> They repeat: <-",
+            "problem": "catchword translated as if it were a line of text",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 295,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>\nElectram:\nHanc furiam\nPauper Opimius\nQui vecent.\n... \nSeruus Oppidius\n</margin>",
+            "image": "These are the clipped line-openings of the FACING page, visible at the right edge of the photograph; this page has no marginalia",
+            "problem": "neighbour-page strip read as this page's marginal content",
+            "severity": "serious",
+            "class": "I4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "<margin>Electram: / Hanc furiam / Pauper Opimius ...</margin>",
+            "english": "<note>Marginalia appears to be a list of keywords or characters associated with the section.</note> Electra: / This fury / Poor Opimius / ... / Servant Oppidius",
+            "problem": "29 lines of another page's fragments presented as marginalia and 'translated' as a keyword list, with an invented explanation",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "source": "nihil est, tercentum millibus, acre / Potet acetum",
+            "english": "there is nothing, [if] he drinks sharp vinegar for three hundred thousand",
+            "problem": "'nihil est' (no — say three hundred thousand [jars]) mistranslated; the sense becomes muddled",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Stray '<margin></margin>' and a closing '</margin>' tag leak into the reader translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The Horace text itself is read accurately and translated competently. But page 295 serves the facing page's clipped line-openings as 'marginalia', with an invented explanation and leaked tags. [rights note redacted]"
+  },
+  {
+    "book_id": "69dbc86f1040d1d5e20998a1",
+    "slot": 27,
+    "title": "De proprietatibus rerum (1491)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Bartholomaeus Anglicus's encyclopedia (incunable, BSB): medieval natural philosophy and medicine, adjacent to the library's early-science core.",
+    "rights_flag": null,
+    "structure_note": "520 pages, all OCR'd, 512 translated; the three pages read are in order (Liber VII medicine, XIIII geography, XVII plants). Nothing odd in the counts.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 131,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "uiret et digitus contrahicat aut recuruat",
+            "image": "vir etiam digitos complicant aut recuruant",
+            "problem": "'vir' misread as 'uiret' (grows green); carried into the translation",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et tetan qn in his tribus non est pfecta cura",
+            "image": "et tetan⁹ qn scz anteriores et posteriores contractionem patiunt. in his trib⁹ no est pfecta cura",
+            "problem": "the definition of tetanus ('when both front and back nerves contract') dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "ex calore plumete",
+            "image": "ex calore consumente",
+            "problem": "'consuming heat' read as a nonsense word; the translation turns it into 'heat of phlegm'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "redde/ Logruis igit medicinis",
+            "image": "redderet. et ideo predicto modo caute est procedendum. Congruis igitur medicinis",
+            "problem": "a sentence ('so one must proceed cautiously in that way') dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Cap. XII. / Cap. XIII.",
+            "image": "De spasmo Cap. XII / De paralisi Ca. XIII",
+            "problem": "chapter titles dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Uniuersal est q recte mediam pte occupat hois",
+            "english": "Universal is that which occupies the right half of the infirm body",
+            "problem": "'recte mediam' = exactly half (either side); the translation makes universal paralysis right-sided only",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "uiret et digitus contrahicat",
+            "english": "the finger becomes green and contracts",
+            "problem": "invented clinical sign from a misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Alias so medicinas quere in plac. et i viatico Constan.",
+            "english": "For other medicines, seek them in Plato and in the Viaticum of Constantinus",
+            "problem": "'Plat.' is Platearius (the medical author), not Plato",
+            "severity": "moderate"
+          },
+          {
+            "source": "et sic opacti effectuz ad dissolutos ... inobedient redde/",
+            "english": "and thus render the obstructed effect <note>even worse</note>",
+            "problem": "invented explanatory note over a garbled OCR passage",
+            "severity": "minor",
+            "class": "T7"
+          },
+          {
+            "source": "Cap. XIIII. De passionib oculorum. Olet dolor accidere oculis ...",
+            "english": "(omitted)",
+            "problem": "the start of chapter XIIII (eyes), present in the OCR, is not translated",
+            "severity": "moderate",
+            "class": "T1"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<note>A woodcut depicts a decorative initial A.</note>' — there is no initial A; the initials are S, P and S",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 260,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "hoies deserta dominu se questrantes",
+            "image": "hoies deserta solitudinis appetetes. se ab aspectu hominu sequestrantes",
+            "problem": "a half-line dropped and merged",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Fouea aut intra fouea a late rad modum cistule preparat.",
+            "image": "Fouea aut intra fouea a latere ad modu spelunce fodit i qua cauea quedam ponit que ad modu cistule preparat.",
+            "problem": "a full line dropped (the side cave with its cage), which garbles the trap description",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "nuc Auribiles nuc statine",
+            "image": "nuc fluxibiles nuc statiue",
+            "problem": "'flowing' read as 'horrible'; carried into the translation",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "squaloris. terra vastitatis et horroris ... ut dicit idem",
+            "english": "<meta>continues from previous page: ...assigned to the republic, belonging to no one, but assigned to the usage of all; and it is called a desert ...</meta>",
+            "problem": "the page's first paragraph is wrapped in a <meta> continuity block, prefixed with text that is not on this page",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "source": "Dicit becherem. mi. p contrariu ab bereo",
+            "english": "<note>Becheremius</note> says it is the opposite of bereo",
+            "problem": "invents an authority 'Becheremius' out of 'Dicitur heremus'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "fetibus aialiu nutriedis et occultadis est aptum",
+            "english": "suitable for nourishing and hiding the fetid odors of animals",
+            "problem": "'fetibus' (offspring) rendered as 'fetid odors'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "nuc Auribiles [fluxibiles]",
+            "english": "Now they are horrible",
+            "problem": "follows the misread",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 388,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "...que virga eorum insolentia coercetur. <column-break/> sum pullulat ...",
+            "image": "column 1 ends with the rubricated heading 'De virgulto Capl'm. CLXXVI' and ~10 lines ('Virgultum a virga est dictum fm Hug. ... pcisum rur/')",
+            "problem": "a whole chapter heading and its opening dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Corticem habet propter arboris lignum posse",
+            "image": "Corticem habet pro pelle arboris, lignum pro osse",
+            "problem": "'bark as skin, wood as bone' misread into nonsense",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Vitis aut ista maritime evenit",
+            "image": "Vitibus aut ista maxime pueniunt",
+            "problem": "'maxime conveniunt' read as 'maritime evenit'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Vitis aut ista maritime evenit. oblaqueatio ... Item eis evenit vindemiatio. et e vindemiare",
+            "english": "But this maritime vine happens... <note>The text describes viticulture practices: oblaqueatio ..., putatio ..., pampinatio ...</note>",
+            "problem": "about 25 lines of the vine chapter (trenching, pruning, staking, digging, pastinatio per Papias/Isidore, leaf-stripping) are replaced by a one-line summary note",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "Corticem habet propter arboris lignum posse",
+            "english": "it has bark because the wood of the tree is able",
+            "problem": "fluent nonsense over a garbled read",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Vitis aut ista maritime evenit",
+            "english": "But this maritime vine",
+            "problem": "an invented 'maritime vine' from the misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<note>A red paragraph mark (pilcrow) marks the start of the section on virgulto.</note>' — the virgultum section it points to was dropped",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A dense incunable read only fairly: lines and a whole chapter opening are dropped, and the translation papers over the garble with invented details ('the finger becomes green', 'Becheremius', 'Plato'). It misstates universal paralysis as right-sided, and summarises the vine chapter instead of translating it."
+  }
+]

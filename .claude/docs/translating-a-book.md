@@ -1,5 +1,7 @@
 # How to translate a book (collaborator runbook)
 
+> **SUPERSEDED (2026-10-29, #7759).** This runbook says the pipeline is paused. It is not: the subscription lanes translate thousands of pages a day, and the paid lane runs under the spend dial. To get one book translated today, find its cell in the router table and use the lane it names (`book-process.md`, Routing). Live state: https://sourcelibrary.org/admin/pipeline/now.
+
 You want a book OCR'd and translated. This is the short, reliable path — written
 so anyone (not just whoever set up the pipeline) can do it without re-discovering
 the gotchas. If you only read one thing: **don't try to "unpause the pipeline" —
@@ -28,7 +30,7 @@ run a one-off batch job for your single book instead.**
 - **Already imported (most common).** It has a `sourcelibrary.org/book/<slug>`
   page but no/partial translation. Skip to "Translate one book" below.
 - **Not in the library yet.** Import it first (use `/curator` or
-  `/library-curator`, follow `.claude/docs/import-workflow.md` — enumerate →
+  `/curator`, follow `.claude/docs/import-workflow.md` — enumerate →
   dedupe → import hidden → process → QA → visible). Then translate it.
 
 Don't guess which case you're in — check the book's state first (next section).
@@ -95,7 +97,7 @@ by its `book_id`.
 
 - `/batch-translate` skill (`.claude/skills/batch-translate/`) — the full
   crop → OCR → translate workflow with exact commands.
-- `memory/pipeline-ops.md` (or the `/pipeline-context` skill) — pipeline, cron,
+- `memory/pipeline-ops.md` — pipeline, cron,
   Lambda, OCR/translation internals.
 - `.claude/docs/import-workflow.md` — acquiring a book that isn't in the library.
 - The top-level `CLAUDE.md` — project invariants (visibility, quote integrity,

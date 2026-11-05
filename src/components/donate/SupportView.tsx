@@ -258,7 +258,7 @@ export default function SupportView({
             <div className="flex flex-wrap items-center gap-4">
               <Link href={homeHref} className="hover:text-stone-900 transition-colors">{s.home}</Link>
               <Link href="/licensing" className="hover:text-stone-900 transition-colors">
-                Public domain originals · CC BY-SA translations
+                Public domain originals · CC BY-NC-SA translations
               </Link>
               <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent-rust hover:text-accent-gold-dark transition-colors">
                 {CONTACT_EMAIL}

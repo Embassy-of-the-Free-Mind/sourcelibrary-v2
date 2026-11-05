@@ -1,0 +1,2914 @@
+{
+ "table": {
+  "rows": 12532,
+  "arabic_rows": 232,
+  "arabic_pages": 65,
+  "arabic_by_source": {
+   "gate-7341": 90,
+   "6544-setA": 90,
+   "6544-setB": 30,
+   "reocr-5700": 22
+  }
+ },
+ "diagnostics": {
+  "full": {
+   "rows": 12532,
+   "accuracy": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 58185.59805846352,
+    "elbo_change_last_10pct": -0.43987378125893883
+   },
+   "refusal": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 920.872738792818,
+    "elbo_change_last_10pct": -0.5681505742801392
+   }
+  },
+  "holdout-gate": {
+   "rows": 12442,
+   "accuracy": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 57820.13312215264,
+    "elbo_change_last_10pct": -1.4234622662625043
+   },
+   "refusal": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 908.4594929552072,
+    "elbo_change_last_10pct": -0.8838006157665177
+   }
+  },
+  "holdout-arabic": {
+   "rows": 12300,
+   "accuracy": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 56955.63073871577,
+    "elbo_change_last_10pct": -3.1672676141461125
+   },
+   "refusal": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 881.661011988572,
+    "elbo_change_last_10pct": -0.42948746646368363
+   }
+  },
+  "expert-keys": {
+   "rows": 12390,
+   "accuracy": {
+    "method": "SVI AutoNormal",
+    "steps": 15000,
+    "draws": 400,
+    "elbo_last": 57431.382363624114,
+    "elbo_change_last_10pct": -0.9489930682102568
+   },
+   "refusal": null
+  }
+ },
+ "ppc": {
+  "cells": 163,
+  "level_bias_median": 0.0074,
+  "level_bias_p10_p90": [
+   -0.0168,
+   0.0313
+  ],
+  "level_abs_median": 0.0107,
+  "pair_error_median_abs": 0.0136,
+  "pairs": 951,
+  "pair_sign_agrees": "753/796",
+  "arabic_cells": [
+   {
+    "chart": "arabic-manuscript",
+    "engine": "claude-opus-5-5",
+    "observed": 0.0843,
+    "fitted": 0.1017,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "arabic-manuscript",
+    "engine": "gemini-3.1-flash-lite",
+    "observed": 0.1828,
+    "fitted": 0.1948,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "arabic-manuscript",
+    "engine": "gemini-3.1-pro+antigravity-cli",
+    "observed": 0.1588,
+    "fitted": 0.1647,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "arabic-manuscript",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed": 0.1566,
+    "fitted": 0.1711,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "arabic-manuscript",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "observed": 0.1782,
+    "fitted": 0.2108,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "arabic-print",
+    "engine": "gemini-3-flash-preview",
+    "observed": 0.129,
+    "fitted": 0.111,
+    "share_cer_1": 0.077
+   },
+   {
+    "chart": "arabic-print",
+    "engine": "gemini-3.1-flash-lite",
+    "observed": 0.0483,
+    "fitted": 0.0773,
+    "share_cer_1": 0.0
+   }
+  ],
+  "arabic_by_source": [
+   {
+    "source": "6544-setA",
+    "engine": "claude-opus-5-5",
+    "pages": 18,
+    "observed_fail": "0/18",
+    "fitted_fail": 0.003,
+    "observed_cer": 0.134,
+    "fitted_cer": 0.1613
+   },
+   {
+    "source": "6544-setA",
+    "engine": "gemini-3.1-flash-lite",
+    "pages": 18,
+    "observed_fail": "0/18",
+    "fitted_fail": 0.019,
+    "observed_cer": 0.2403,
+    "fitted_cer": 0.2751
+   },
+   {
+    "source": "6544-setA",
+    "engine": "gemini-3.1-pro+antigravity-cli",
+    "pages": 18,
+    "observed_fail": "0/18",
+    "fitted_fail": 0.005,
+    "observed_cer": 0.1709,
+    "fitted_cer": 0.1686
+   },
+   {
+    "source": "6544-setA",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "pages": 18,
+    "observed_fail": "1/18",
+    "fitted_fail": 0.084,
+    "observed_cer": 0.1553,
+    "fitted_cer": 0.2025
+   },
+   {
+    "source": "6544-setA",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "pages": 18,
+    "observed_fail": "1/18",
+    "fitted_fail": 0.035,
+    "observed_cer": 0.1628,
+    "fitted_cer": 0.1962
+   },
+   {
+    "source": "6544-setB",
+    "engine": "claude-opus-5-5",
+    "pages": 6,
+    "observed_fail": "0/6",
+    "fitted_fail": 0.006,
+    "observed_cer": 0.205,
+    "fitted_cer": 0.1457
+   },
+   {
+    "source": "6544-setB",
+    "engine": "gemini-3.1-flash-lite",
+    "pages": 6,
+    "observed_fail": "2/6",
+    "fitted_fail": 0.036,
+    "observed_cer": 0.5291,
+    "fitted_cer": 0.3614
+   },
+   {
+    "source": "6544-setB",
+    "engine": "gemini-3.1-pro+antigravity-cli",
+    "pages": 6,
+    "observed_fail": "0/6",
+    "fitted_fail": 0.01,
+    "observed_cer": 0.1224,
+    "fitted_cer": 0.1528
+   },
+   {
+    "source": "6544-setB",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "pages": 6,
+    "observed_fail": "0/6",
+    "fitted_fail": 0.139,
+    "observed_cer": 0.2972,
+    "fitted_cer": 0.2658
+   },
+   {
+    "source": "6544-setB",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "pages": 6,
+    "observed_fail": "1/6",
+    "fitted_fail": 0.063,
+    "observed_cer": 0.2307,
+    "fitted_cer": 0.2604
+   },
+   {
+    "source": "gate-7341",
+    "engine": "claude-opus-5-5",
+    "pages": 30,
+    "observed_fail": "0/30",
+    "fitted_fail": 0.01,
+    "observed_cer": 0.0193,
+    "fitted_cer": 0.0458
+   },
+   {
+    "source": "gate-7341",
+    "engine": "gemini-3.1-flash-lite",
+    "pages": 30,
+    "observed_fail": "0/30",
+    "fitted_fail": 0.021,
+    "observed_cer": 0.0792,
+    "fitted_cer": 0.1038
+   },
+   {
+    "source": "gate-7341",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "pages": 30,
+    "observed_fail": "16/30",
+    "fitted_fail": 0.551,
+    "observed_cer": 0.0546,
+    "fitted_cer": 0.0496
+   },
+   {
+    "source": "reocr-5700",
+    "engine": "gemini-3-flash-preview",
+    "pages": 13,
+    "observed_fail": "0/13",
+    "fitted_fail": 0.01,
+    "observed_cer": 0.129,
+    "fitted_cer": 0.111
+   },
+   {
+    "source": "reocr-5700",
+    "engine": "gemini-3.1-flash-lite",
+    "pages": 9,
+    "observed_fail": "0/9",
+    "fitted_fail": 0.009,
+    "observed_cer": 0.0651,
+    "fitted_cer": 0.0939
+   }
+  ]
+ },
+ "terms": {
+  "kt": {
+   "corrected-served": [
+    -0.519,
+    -0.2206,
+    0.065
+   ],
+   "model": [
+    -0.6267,
+    -0.5073,
+    -0.3857
+   ],
+   "reference": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "b_self_mu": [
+   -0.6656,
+   -0.5399,
+   -0.3748
+  ],
+  "b_self_h": [
+   -1.8627,
+   -0.5174,
+   0.6242
+  ],
+  "group_mu": {
+   "Armn": [
+    -0.2048,
+    -0.0826,
+    0.0466
+   ],
+   "Grek": [
+    -0.0482,
+    -0.0261,
+    -0.0044
+   ],
+   "Hani": [
+    -0.025,
+    -0.0098,
+    0.0042
+   ],
+   "Latn": [
+    -0.8597,
+    -0.8382,
+    -0.8126
+   ],
+   "semitic-rtl": [
+    0.5383,
+    0.5841,
+    0.6202
+   ]
+  },
+  "kind_mu": {
+   "manuscript": [
+    -0.0086,
+    -0.0001,
+    0.0083
+   ],
+   "print": [
+    -0.0069,
+    -0.0002,
+    0.0065
+   ]
+  },
+  "b_alch": [
+   0.3825,
+   1.0051,
+   1.6077
+  ],
+  "alch_by_family": {
+   "archive-text": [
+    -1.8991,
+    0.9499,
+    3.8292
+   ],
+   "classic": [
+    -1.7322,
+    0.9016,
+    3.6949
+   ],
+   "claude": [
+    -2.0959,
+    0.2929,
+    2.2843
+   ],
+   "gemini-4": [
+    -1.8711,
+    0.9947,
+    3.8151
+   ],
+   "gemini-cli": [
+    2.3091,
+    3.3583,
+    4.872
+   ],
+   "gemini-flash": [
+    -1.506,
+    0.9404,
+    3.6169
+   ],
+   "gemini-lite": [
+    -2.8644,
+    -0.3994,
+    1.1357
+   ],
+   "open-vlm": [
+    -1.739,
+    1.1808,
+    4.2575
+   ],
+   "other": [
+    -1.5809,
+    0.938,
+    3.7574
+   ],
+   "specialist": [
+    -1.6047,
+    1.0429,
+    3.6768
+   ]
+  },
+  "tau": {
+   "grp": [
+    0.5487,
+    0.5592,
+    0.569
+   ],
+   "kind": [
+    0.0017,
+    0.0047,
+    0.0129
+   ],
+   "eg": [
+    0.0013,
+    0.0042,
+    0.0126
+   ],
+   "ek": [
+    0.0012,
+    0.0033,
+    0.0088
+   ],
+   "chart": [
+    0.7235,
+    0.7349,
+    0.746
+   ],
+   "ec": [
+    0.1116,
+    0.1181,
+    0.126
+   ],
+   "q_eg": [
+    0.021,
+    0.0583,
+    0.1583
+   ],
+   "q_ek": [
+    0.017,
+    0.0577,
+    0.1807
+   ]
+  }
+ },
+ "gate": [
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0897,
+   "key_self_share": 0.62,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0018,
+     0.0275
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.083,
+    0.409,
+    0.8268
+   ],
+   "cer_covered": true,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0017,
+     0.09
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     3.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 26,
+   "observed_fail": "16/26",
+   "observed_cer": 0.0743,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0001,
+     0.0011,
+     0.0098
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": false
+   },
+   "pred_cer_gate_key": [
+    0.0623,
+    0.3946,
+    0.8545
+   ],
+   "cer_covered": true,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0011,
+     0.0391
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": false
+   }
+  },
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0219,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0001,
+     0.0024,
+     0.0499
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0505,
+    0.3512,
+    0.8354
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0024,
+     0.1172
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     4.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0106,
+   "key_self_share": 0.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0019,
+     0.029
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0921,
+    0.4149,
+    0.8228
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0018,
+     0.0925
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.05
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0054,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0001,
+     0.0011,
+     0.0102
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0624,
+    0.3948,
+    0.8541
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0011,
+     0.0461
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-arabic",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0021,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0001,
+     0.0024,
+     0.0461
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0507,
+    0.3515,
+    0.836
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0025,
+     0.1088
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0897,
+   "key_self_share": 0.62,
+   "alchemy0": {
+    "pred_fail": [
+     0.0076,
+     0.0233,
+     0.0766
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     3.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.2227,
+    0.2897,
+    0.3693
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0012,
+     0.0219,
+     0.3016
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.5,
+     8.05
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 26,
+   "observed_fail": "16/26",
+   "observed_cer": 0.0743,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0077,
+     0.0275,
+     0.0883
+    ],
+    "pred_fail_count": [
+     0.0,
+     1.0,
+     3.0
+    ],
+    "fail_covered": false
+   },
+   "pred_cer_gate_key": [
+    0.1055,
+    0.1498,
+    0.2247
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0013,
+     0.0247,
+     0.3485
+    ],
+    "pred_fail_count": [
+     0.0,
+     1.0,
+     9.05
+    ],
+    "fail_covered": false
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0219,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0023,
+     0.0172
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0843,
+    0.1345,
+    0.2085
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0,
+     0.0022,
+     0.0986
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     3.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0106,
+   "key_self_share": 0.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0008,
+     0.0053,
+     0.03
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.2398,
+    0.3482,
+    0.4701
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0001,
+     0.0045,
+     0.1557
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0054,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0053,
+     0.033,
+     0.1567
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0852,
+    0.1594,
+    0.267
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0011,
+     0.0299,
+     0.4364
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     2.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "holdout-gate",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0021,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0029,
+     0.0237
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0765,
+    0.135,
+    0.2414
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0001,
+     0.0025,
+     0.1181
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0897,
+   "key_self_share": 0.62,
+   "alchemy0": {
+    "pred_fail": [
+     0.006,
+     0.0157,
+     0.0494
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     2.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0804,
+    0.1061,
+    0.143
+   ],
+   "cer_covered": true,
+   "alchemy1": {
+    "pred_fail": [
+     0.0009,
+     0.0104,
+     0.0629
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     2.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 26,
+   "observed_fail": "16/26",
+   "observed_cer": 0.0743,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0441,
+     0.083,
+     0.155
+    ],
+    "pred_fail_count": [
+     0.0,
+     2.0,
+     5.0
+    ],
+    "fail_covered": false
+   },
+   "pred_cer_gate_key": [
+    0.0435,
+    0.0595,
+    0.0895
+   ],
+   "cer_covered": true,
+   "alchemy1": {
+    "pred_fail": [
+     0.3222,
+     0.5658,
+     0.8228
+    ],
+    "pred_fail_count": [
+     8.0,
+     15.0,
+     22.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "pages": 26,
+   "observed_fail": "0/26",
+   "observed_cer": 0.0219,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0016,
+     0.0103
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.05
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0318,
+    0.0457,
+    0.0697
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0001,
+     0.0021,
+     0.038
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0106,
+   "key_self_share": 0.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0009,
+     0.0054,
+     0.0308
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0294,
+    0.0488,
+    0.0988
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0002,
+     0.0033,
+     0.0362
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0054,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.004,
+     0.0192,
+     0.0793
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0144,
+    0.0251,
+    0.0549
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0664,
+     0.281,
+     0.6266
+    ],
+    "pred_fail_count": [
+     0.0,
+     1.0,
+     3.0
+    ],
+    "fail_covered": true
+   }
+  },
+  {
+   "fit": "full",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "pages": 4,
+   "observed_fail": "0/4",
+   "observed_cer": 0.0021,
+   "key_self_share": 1.0,
+   "alchemy0": {
+    "pred_fail": [
+     0.0002,
+     0.0026,
+     0.021
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "fail_covered": true
+   },
+   "pred_cer_gate_key": [
+    0.0101,
+    0.018,
+    0.0545
+   ],
+   "cer_covered": false,
+   "alchemy1": {
+    "pred_fail": [
+     0.0001,
+     0.0038,
+     0.0551
+    ],
+    "pred_fail_count": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "fail_covered": true
+   }
+  }
+ ],
+ "posterior": [
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.1783,
+    0.4033,
+    0.6371
+   ],
+   "p_not_read": [
+    0.0,
+    0.0017,
+    0.09
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1617,
+    0.3738,
+    0.6028
+   ],
+   "p_not_read": [
+    0.0,
+    0.0011,
+    0.0391
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.013
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1589,
+    0.3654,
+    0.5967
+   ],
+   "p_not_read": [
+    0.0,
+    0.0034,
+    0.173
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.035
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1928,
+    0.4901,
+    0.8369
+   ],
+   "p_not_read": [
+    0.0,
+    0.0046,
+    0.1808
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.158
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1398,
+    0.3253,
+    0.5485
+   ],
+   "p_not_read": [
+    0.0,
+    0.0024,
+    0.1172
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.795
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1335,
+    0.3196,
+    0.5395
+   ],
+   "p_not_read": [
+    0.0,
+    0.002,
+    0.0898
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.1783,
+    0.4033,
+    0.6371
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0018,
+    0.0275
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1617,
+    0.3738,
+    0.6028
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0011,
+    0.0098
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.013
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1589,
+    0.3654,
+    0.5967
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0033,
+    0.0602
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.035
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1928,
+    0.4901,
+    0.8369
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0041,
+    0.0752
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.158
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1398,
+    0.3253,
+    0.5485
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0024,
+    0.0499
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.795
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1335,
+    0.3196,
+    0.5395
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0019,
+    0.0361
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.1795,
+    0.4066,
+    0.6385
+   ],
+   "p_not_read": [
+    0.0,
+    0.0018,
+    0.0925
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1614,
+    0.3748,
+    0.6
+   ],
+   "p_not_read": [
+    0.0,
+    0.0011,
+    0.0461
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1577,
+    0.365,
+    0.597
+   ],
+   "p_not_read": [
+    0.0,
+    0.0035,
+    0.1839
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1923,
+    0.4897,
+    0.8356
+   ],
+   "p_not_read": [
+    0.0,
+    0.0046,
+    0.1834
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1404,
+    0.3234,
+    0.5493
+   ],
+   "p_not_read": [
+    0.0,
+    0.0025,
+    0.1088
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1331,
+    0.3208,
+    0.5417
+   ],
+   "p_not_read": [
+    0.0001,
+    0.002,
+    0.0815
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 1.0
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.1795,
+    0.4066,
+    0.6385
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0019,
+    0.029
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1614,
+    0.3748,
+    0.6
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0011,
+    0.0102
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1577,
+    0.365,
+    0.597
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0034,
+    0.06
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1923,
+    0.4897,
+    0.8356
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0043,
+    0.0772
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1404,
+    0.3234,
+    0.5493
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0024,
+    0.0461
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-arabic",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1331,
+    0.3208,
+    0.5417
+   ],
+   "p_not_read": [
+    0.0001,
+    0.002,
+    0.0336
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 1.0
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2735,
+    0.3269,
+    0.3822
+   ],
+   "p_not_read": [
+    0.0012,
+    0.0219,
+    0.3016
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1883,
+    0.2261,
+    0.2668
+   ],
+   "p_not_read": [
+    0.0013,
+    0.0247,
+    0.3485
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.065
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1872,
+    0.2242,
+    0.2773
+   ],
+   "p_not_read": [
+    0.0012,
+    0.0244,
+    0.3213
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.085
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.153,
+    0.2059,
+    0.2689
+   ],
+   "p_not_read": [
+    0.0,
+    0.0018,
+    0.0694
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.41
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1533,
+    0.2036,
+    0.2668
+   ],
+   "p_not_read": [
+    0.0,
+    0.0022,
+    0.0986
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.44
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1477,
+    0.2151,
+    0.2939
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0054,
+    0.1135
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2735,
+    0.3269,
+    0.3822
+   ],
+   "p_not_read": [
+    0.0076,
+    0.0233,
+    0.0766
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1883,
+    0.2261,
+    0.2668
+   ],
+   "p_not_read": [
+    0.0077,
+    0.0275,
+    0.0883
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.065
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1872,
+    0.2242,
+    0.2773
+   ],
+   "p_not_read": [
+    0.0062,
+    0.0255,
+    0.0898
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.085
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.153,
+    0.2059,
+    0.2689
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0017,
+    0.0168
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.41
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1533,
+    0.2036,
+    0.2668
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0023,
+    0.0172
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.44
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1477,
+    0.2151,
+    0.2939
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0063,
+    0.0487
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2064,
+    0.2913,
+    0.3857
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0045,
+    0.1557
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.02
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1593,
+    0.2352,
+    0.3242
+   ],
+   "p_not_read": [
+    0.0011,
+    0.0299,
+    0.4364
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1461,
+    0.2348,
+    0.3455
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0057,
+    0.1305
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1353,
+    0.2086,
+    0.3111
+   ],
+   "p_not_read": [
+    0.0,
+    0.0022,
+    0.0869
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1247,
+    0.2027,
+    0.3099
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0025,
+    0.1181
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1275,
+    0.1881,
+    0.2636
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0053,
+    0.0853
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 0.98
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2064,
+    0.2913,
+    0.3857
+   ],
+   "p_not_read": [
+    0.0008,
+    0.0053,
+    0.03
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.02
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1593,
+    0.2352,
+    0.3242
+   ],
+   "p_not_read": [
+    0.0053,
+    0.033,
+    0.1567
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1461,
+    0.2348,
+    0.3455
+   ],
+   "p_not_read": [
+    0.0006,
+    0.0062,
+    0.0489
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1353,
+    0.2086,
+    0.3111
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0023,
+    0.0261
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1247,
+    0.2027,
+    0.3099
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0029,
+    0.0237
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "holdout-gate",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1275,
+    0.1881,
+    0.2636
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0054,
+    0.0305
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 0.98
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.1688,
+    0.2057,
+    0.2584
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0104,
+    0.0629
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1199,
+    0.1483,
+    0.1842
+   ],
+   "p_not_read": [
+    0.3222,
+    0.5658,
+    0.8228
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.02
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1125,
+    0.1424,
+    0.1916
+   ],
+   "p_not_read": [
+    0.1085,
+    0.3391,
+    0.723
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.045
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.0885,
+    0.1215,
+    0.1709
+   ],
+   "p_not_read": [
+    0.0045,
+    0.0485,
+    0.3129
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.372
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.0856,
+    0.1168,
+    0.1592
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0021,
+    0.038
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.562
+  },
+  {
+   "fit": "full",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.0829,
+    0.1303,
+    0.201
+   ],
+   "p_not_read": [
+    0.0008,
+    0.0159,
+    0.2289
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.3003,
+    0.3449,
+    0.3917
+   ],
+   "p_not_read": [
+    0.006,
+    0.0157,
+    0.0494
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.2211,
+    0.2571,
+    0.2966
+   ],
+   "p_not_read": [
+    0.0441,
+    0.083,
+    0.155
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.018
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.2117,
+    0.2488,
+    0.2972
+   ],
+   "p_not_read": [
+    0.0062,
+    0.0282,
+    0.0942
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.025
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1686,
+    0.2189,
+    0.2804
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0019,
+    0.0202
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.378
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1654,
+    0.2107,
+    0.2606
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0016,
+    0.0103
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.58
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1606,
+    0.2297,
+    0.31
+   ],
+   "p_not_read": [
+    0.0008,
+    0.0074,
+    0.0528
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.0489,
+    0.0771,
+    0.1314
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0033,
+    0.0362
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.115
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.0401,
+    0.0649,
+    0.1131
+   ],
+   "p_not_read": [
+    0.0664,
+    0.281,
+    0.6266
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.0356,
+    0.0639,
+    0.1269
+   ],
+   "p_not_read": [
+    0.016,
+    0.141,
+    0.5007
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.0303,
+    0.0532,
+    0.1124
+   ],
+   "p_not_read": [
+    0.0038,
+    0.0592,
+    0.3822
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.0272,
+    0.0477,
+    0.097
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0038,
+    0.0551
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.0319,
+    0.0505,
+    0.1117
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0156,
+    0.1965
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 0.885
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.0992,
+    0.1426,
+    0.2018
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0054,
+    0.0308
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.083
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.081,
+    0.1236,
+    0.1774
+   ],
+   "p_not_read": [
+    0.004,
+    0.0192,
+    0.0793
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.0738,
+    0.1207,
+    0.1982
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0071,
+    0.0561
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.0633,
+    0.0998,
+    0.1736
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0025,
+    0.0263
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.0569,
+    0.0932,
+    0.1556
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0026,
+    0.021
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "full",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.0651,
+    0.0994,
+    0.1455
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0062,
+    0.0339
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 0.917
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.3067,
+    0.3526,
+    0.3939
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0104,
+    0.0629
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.2191,
+    0.2585,
+    0.3016
+   ],
+   "p_not_read": [
+    0.3222,
+    0.5658,
+    0.8228
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.048
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.2242,
+    0.2567,
+    0.2993
+   ],
+   "p_not_read": [
+    0.1085,
+    0.3391,
+    0.723
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.05
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.227,
+    0.2715,
+    0.3413
+   ],
+   "p_not_read": [
+    0.0045,
+    0.0485,
+    0.3129
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.03
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1784,
+    0.2097,
+    0.2566
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0021,
+    0.038
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.873
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Jabir manuscripts (alchemy)",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1563,
+    0.2276,
+    0.3088
+   ],
+   "p_not_read": [
+    0.0008,
+    0.0159,
+    0.2289
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.3067,
+    0.3526,
+    0.3939
+   ],
+   "p_not_read": [
+    0.006,
+    0.0157,
+    0.0494
+   ],
+   "pages_read_in_chart": 48,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.2191,
+    0.2585,
+    0.3016
+   ],
+   "p_not_read": [
+    0.0441,
+    0.083,
+    0.155
+   ],
+   "pages_read_in_chart": 33,
+   "p_lowest_cer": 0.048
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.2242,
+    0.2567,
+    0.2993
+   ],
+   "p_not_read": [
+    0.0062,
+    0.0282,
+    0.0942
+   ],
+   "pages_read_in_chart": 22,
+   "p_lowest_cer": 0.05
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.227,
+    0.2715,
+    0.3413
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0019,
+    0.0202
+   ],
+   "pages_read_in_chart": 24,
+   "p_lowest_cer": 0.03
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1784,
+    0.2097,
+    0.2566
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0016,
+    0.0103
+   ],
+   "pages_read_in_chart": 50,
+   "p_lowest_cer": 0.873
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic-script manuscripts",
+   "chart": "arabic-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1563,
+    0.2276,
+    0.3088
+   ],
+   "p_not_read": [
+    0.0008,
+    0.0074,
+    0.0528
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2138,
+    0.3897,
+    0.5672
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0033,
+    0.0362
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1852,
+    0.3523,
+    0.5282
+   ],
+   "p_not_read": [
+    0.0664,
+    0.281,
+    0.6266
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1886,
+    0.3594,
+    0.5355
+   ],
+   "p_not_read": [
+    0.016,
+    0.141,
+    0.5007
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1884,
+    0.3629,
+    0.5476
+   ],
+   "p_not_read": [
+    0.0038,
+    0.0592,
+    0.3822
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1472,
+    0.2955,
+    0.4612
+   ],
+   "p_not_read": [
+    0.0001,
+    0.0038,
+    0.0551
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "Kraus 1935 (alchemy, print)",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1537,
+    0.2988,
+    0.4749
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0156,
+    0.1965
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 1.0
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-flash-lite",
+   "cer": [
+    0.2138,
+    0.3897,
+    0.5672
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0054,
+    0.0308
+   ],
+   "pages_read_in_chart": 13,
+   "p_lowest_cer": 0.0
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "cer": [
+    0.1852,
+    0.3523,
+    0.5282
+   ],
+   "p_not_read": [
+    0.004,
+    0.0192,
+    0.0793
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "cer": [
+    0.1886,
+    0.3594,
+    0.5355
+   ],
+   "p_not_read": [
+    0.0007,
+    0.0071,
+    0.0561
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3.1-pro+antigravity-cli",
+   "cer": [
+    0.1884,
+    0.3629,
+    0.5476
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0025,
+    0.0263
+   ],
+   "pages_read_in_chart": 0,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "claude-opus-5-5",
+   "cer": [
+    0.1472,
+    0.2955,
+    0.4612
+   ],
+   "p_not_read": [
+    0.0002,
+    0.0026,
+    0.021
+   ],
+   "pages_read_in_chart": 4,
+   "p_lowest_cer": null
+  },
+  {
+   "fit": "expert-keys",
+   "cell": "other Arabic print",
+   "chart": "arabic-print",
+   "engine": "gemini-3-flash-preview",
+   "cer": [
+    0.1537,
+    0.2988,
+    0.4749
+   ],
+   "p_not_read": [
+    0.0009,
+    0.0062,
+    0.0339
+   ],
+   "pages_read_in_chart": 11,
+   "p_lowest_cer": 1.0
+  }
+ ]
+}

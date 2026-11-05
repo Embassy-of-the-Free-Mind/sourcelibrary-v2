@@ -40,6 +40,14 @@ describe('paddle-zh-guarded-lane: what a page carries (#6871 row 3)', () => {
     expect((o.engine as { api: string; cli: unknown }).api).toBe('cli');
     expect(o.verdict).toMatchObject({ rule: 'guard_reject_flash_pass', paddle_flags: ['COLLAPSE'], reply_flags: [] });
   });
+  it('a FLASH page records the prompt TEMPLATE hash flash.py logged, and says not_recorded when it did not (#6740)', () => {
+    const route = { ...REC, route: 'FLASH', guard: { ...REC.guard, route: 'FLASH', flags: ['COLLAPSE'] } };
+    const sha = 'ab'.repeat(32);
+    const withHash = sub(pageSet(route, 'FLASH', { ...ctx, flash: { ...FLASH, prompt_sha256: sha } }).set);
+    expect((withHash.engine as { prompt: { hash: string } }).prompt.hash).toBe(sha.slice(0, 16));
+    const without = sub(pageSet(route, 'FLASH', { ...ctx, flash: FLASH }).set);
+    expect((without.engine as { prompt: { hash: string } }).prompt.hash).toBe('not_recorded');
+  });
   it('the works no engine reads are excluded, and the hold it requires is the backlog hold', () => {
     for (const t of ['欽定西域同文志·卷一 (vol 1)', '琴譜合璧·卷四 (vol 4)', '御製清文鑑·卷三']) expect(EXCLUDED_WORKS.test(t)).toBe(true);
     expect(EXCLUDED_WORKS.test('御製歷象考成·表·卷十五')).toBe(false);

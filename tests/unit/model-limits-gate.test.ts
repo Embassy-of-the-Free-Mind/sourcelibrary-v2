@@ -20,6 +20,7 @@ beforeAll(async () => {
   fs.mkdirSync(home, { recursive: true });
   fs.writeFileSync(path.join(home, '.claude.json'), JSON.stringify({ oauthAccount: { emailAddress: 'box@example.org' } }));
   process.env.HOME = home;
+  delete process.env.CLAUDE_CONFIG_DIR;   // the login comes from HOME here, not a second login dir (claudeLoginFiles)
   process.env.MODEL_LIMITS_DIR = path.join(dir, 'stops');
   process.env.AGY_QUOTA_STATUS = agyMeter;
   process.env.CLAUDE_LIMITS_FILE = claudeMeter;
@@ -74,6 +75,19 @@ describe('model-limits gate', () => {
   it('reads agy\'s quoted reset', () => {
     const t = Date.parse(lim.agyResetFromText('Individual quota reached. Resets in 2h30m0s'));
     expect(Math.abs(t - (Date.now() + 2.5 * 3600e3))).toBeLessThan(5000);
+  });
+
+  it('a second agy account (AGY_HOME) has its own locks, apart from the main account and its meter (#7517)', () => {
+    fs.writeFileSync(agyMeter, JSON.stringify({ locked_models: { 'gemini-3.8-flash-low': later } }));
+    lim.noteLimitHit('agy-gemini-3.8-flash-low', { until: later, reason: 'main account' });
+    process.env.AGY_HOME = '/root/.agy-james';
+    try {
+      expect(lim.agyLimitLane('gemini-3.8-flash-low')).toBe('agy@.agy-james-gemini-3.8-flash-low');
+      expect(lim.agyBlocked('gemini-3.8-flash-low')).toBeNull();
+      lim.noteLimitHit(lim.agyLimitLane('gemini-3.8-flash-low'), { until: later, reason: 'second account' });
+      expect(lim.agyBlocked('gemini-3.8-flash-low')).toMatchObject({ reason: 'second account' });
+    } finally { delete process.env.AGY_HOME; }
+    expect(lim.agyBlocked('gemini-3.8-flash-low')).toMatchObject({ reason: 'main account' });
   });
 
   it('a wait does not idle through a block that outlasts it', async () => {

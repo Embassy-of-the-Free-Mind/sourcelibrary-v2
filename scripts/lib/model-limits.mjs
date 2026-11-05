@@ -50,12 +50,22 @@ export function noteLimitHit(lane, { until, reason = '' } = {}) {
   } catch { /* a read-only home: the meter still gates */ }
 }
 
+/**
+ * The Claude login a `claude` child of this process uses: CLAUDE_CONFIG_DIR when set (a second login on one box,
+ * JOB-HOSTS.md: /root/.claude-milo holds .claude.json and .credentials.json), else ~/.claude.json and ~/.claude/.
+ */
+export function claudeLoginFiles(env = process.env) {
+  const dir = env.CLAUDE_CONFIG_DIR;
+  return dir ? { account: path.join(dir, '.claude.json'), credentials: path.join(dir, '.credentials.json') }
+    : { account: path.join(os.homedir(), '.claude.json'), credentials: path.join(os.homedir(), '.claude', '.credentials.json') };
+}
+
 /** This box's Claude account from the climits poll: { email, session, weekly, sessionReset, weeklyReset } or null. */
 export function claudeUsage() {
   const m = readJson(CLAUDE_METER);
   if (!m || !m.checked_at || Date.now() - Date.parse(m.checked_at) > 30 * 60e3) return null;
   let email = null;
-  try { email = (JSON.parse(fs.readFileSync(path.join(os.homedir(), '.claude.json'), 'utf8')).oauthAccount?.emailAddress || '').toLowerCase() || null; } catch { /* no login file */ }
+  try { email = (JSON.parse(fs.readFileSync(claudeLoginFiles().account, 'utf8')).oauthAccount?.emailAddress || '').toLowerCase() || null; } catch { /* no login file */ }
   email ||= m.claude_code_account;
   const a = (m.accounts || []).find((x) => x.ok && x.email === email);
   if (!a) return null;
@@ -78,8 +88,19 @@ export function claudeBlocked({ sessionMax = SESSION_MAX, weeklyMax = WEEKLY_MAX
   return null;
 }
 
+/**
+ * The agy account this process calls (#7517). AGY_HOME=<dir> (scripts/workers/agy-guard.sh) runs the CLI on a second
+ * Google login whose quota is its own: a quota reply there must not lock the main account's lanes, and the main
+ * account's meter (/root/agy-quota/status.json) says nothing about it. null = the main account.
+ */
+export const agyAccount = () => (process.env.AGY_HOME ? path.basename(process.env.AGY_HOME) : null);
+/** The local stop lane for an agy model on this process's account: `agy-<model>`, or `agy@<account>-<model>`. */
+export const agyLimitLane = (model) => (agyAccount() ? `agy@${agyAccount()}-${model}` : `agy-${model}`);
+
 /** Is `model` on agy (Gemini via the subscription CLI) locked right now? null = go ahead; else { until, reason }. */
 export function agyBlocked(model) {
+  const acct = agyAccount();
+  if (acct) return localStop(agyLimitLane(model)) || localStop(`agy@${acct}`);
   const stop = localStop(`agy-${model}`) || localStop('agy');
   if (stop) return stop;
   const s = readJson(AGY_METER);

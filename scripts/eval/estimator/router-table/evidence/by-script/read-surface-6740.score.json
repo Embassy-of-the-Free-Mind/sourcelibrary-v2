@@ -1,0 +1,52 @@
+{
+ "generated_by": "scripts/eval/read-surface-6740/confirm.mjs evidence (job read-surface-6740, #6740; no model calls in this step)",
+ "cells": {
+  "la-surface|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 12,
+     "books": 12,
+     "accept": "12/12",
+     "wrong_text_pages": "0/12",
+     "classes_k_of_n": {
+      "O6": "7/12",
+      "E2": "4/12",
+      "O11": "3/12",
+      "O8": "2/12",
+      "O16": "1/12",
+      "T6": "1/12",
+      "O15": "1/12"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-1600px-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "13/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "O6": "7/14",
+      "O8": "6/14",
+      "E2": "3/14",
+      "O11": "3/14",
+      "O12": "2/14",
+      "O9": "1/14",
+      "O16": "1/14",
+      "D1": "1/14"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-1600px-written|agy-flash-low@4-written": {
+     "n": 10,
+     "books": 10,
+     "both": 9,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0
+    }
+   }
+  }
+ }
+}

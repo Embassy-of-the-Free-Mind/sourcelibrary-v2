@@ -200,7 +200,7 @@ async function main() {
     const cursor = books.find(
       { $or: names.map(present) },
       { projection: { title: 1, ...Object.fromEntries(names.map((n) => [n, 1])) } }
-    );
+    ).batchSize(1000);
 
     const buckets = {};
     const examples = {};

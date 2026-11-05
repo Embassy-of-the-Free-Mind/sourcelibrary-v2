@@ -169,7 +169,7 @@ try {
     description: 1, 'index.bookSummary': 1, 'summary.data': 1,
     'reading_summary.overview': 1, 'reading_summary.detailed': 1, 'reading_summary.themes': 1,
     'ai_metadata.description': 1,
-  } });
+  } }).batchSize(1000);
   for await (const b of cur) {
     nb++;
     const themes = Array.isArray(b.reading_summary?.themes) ? b.reading_summary.themes.join(' ') : b.reading_summary?.themes;

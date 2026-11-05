@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: artwork records, not page images (#4406).
 /**
  * Import the University of Minnesota (Wangensteen Historical Library) Hashika-e
  * measles-prints collection as Source Library ARTWORK.

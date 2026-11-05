@@ -6,6 +6,7 @@ import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
+import { pageHasNoTextToShow } from '@/lib/reader-panes';
 import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
 import { isEnglishBook } from '@/lib/translation-pane-state';
 
@@ -27,7 +28,14 @@ export interface ReaderSettings {
   lineHeight: number;
   glosses: boolean;
   /** Which translation to read, when a page carries more than one. */
-  translationLang: 'en' | 'es';
+  translationLang: 'en' | 'es' | 'zh';
+  /**
+   * True once the reader has picked a text size themselves. The default went
+   * up a step (1 → 1.15, #7189), and a stored 1 written before that is far
+   * more likely the old default carried along by some other settings change
+   * than a choice; this is how the two are told apart.
+   */
+  textScaleChosen?: boolean;
 }
 
 export interface ViewState {
@@ -53,7 +61,9 @@ function persistSettings(next: ReaderSettings): ReaderSettings {
 
 export const DEFAULT_SETTINGS: ReaderSettings = {
   theme: 'light',
-  textScale: 1,
+  // One step up the settings scale (TEXT_SCALES in ReaderSettingsControls):
+  // "The default reading size should be bigger" (Derek, 2026-10-23, #7189).
+  textScale: 1.15,
   lineWidth: 'comfortable',
   typeface: 'serif',
   lineHeight: 1.7,
@@ -87,6 +97,7 @@ export function useReaderV2(
   // first. Only as an initial default: once they choose in the pane, the
   // stored preference wins, because the choice is theirs to keep.
   const spanishSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
+  const chineseSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/zh');
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
@@ -112,6 +123,26 @@ export function useReaderV2(
     }
   }, []);
 
+  // The scan is the other half of a page turn. Prefetching the page record
+  // alone left the next facsimile to start downloading on the turn itself,
+  // so the new text arrived beside the old scan (#7189). Warm the display
+  // image of the pages either side, once each.
+  const warmedScans = useRef<Set<string>>(new Set());
+  const warmScans = useCallback((index: number) => {
+    if (typeof window === 'undefined') return;
+    for (const i of [index + 1, index - 1]) {
+      const entry = pageList[i];
+      const page = entry && cacheRef.current.get(entry.id);
+      if (!page) continue;
+      const url = getPageDisplayUrl(page as unknown as Record<string, unknown>);
+      if (!url || warmedScans.current.has(url)) continue;
+      warmedScans.current.add(url);
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = url;
+    }
+  }, [pageList]);
+
   const prefetchAround = useCallback((index: number) => {
     const start = Math.max(0, index - 2);
     const end = Math.min(pageList.length - 1, index + 5);
@@ -120,13 +151,15 @@ export function useReaderV2(
       if (i === index) continue;
       if (!cacheRef.current.has(pageList[i].id)) wanted.push(pageList[i].id);
     }
+    warmScans(index);
     if (!wanted.length) return;
     pagesApi.getBatch(wanted).then((batch) => {
       for (const p of batch) cacheRef.current.set(p.id, p);
+      warmScans(index);
     }).catch(() => {
       for (const id of wanted) fetchPage(id);
     });
-  }, [pageList, fetchPage]);
+  }, [pageList, fetchPage, warmScans]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 
@@ -251,27 +284,45 @@ export function useReaderV2(
   }, [bookPath, variant, embedHref]);
 
   // ── navigation ─────────────────────────────────────────────────────────
+  /**
+   * Move to a page. When it is already cached, the page itself moves in the
+   * SAME update as the id. Left to the load effect, it arrived a commit later,
+   * so every cached turn painted one frame of the new page number over the
+   * old page: "it flickers but is actually the same page and then it
+   * switches" (Derek, 2026-10-04, #7189).
+   */
+  const moveTo = useCallback((pageId: string) => {
+    const cached = cacheRef.current.get(pageId);
+    if (cached) {
+      setCurrentPage(cached);
+      // A turn still waiting on an uncached page is superseded by this one.
+      setPageLoading(false);
+      setPageError(false);
+    }
+    setCurrentPageId(pageId);
+  }, []);
+
   const goToPage = useCallback((pageId: string, params?: Record<string, string>) => {
     if (!pageId || pageId === currentPageId) return;
-    setCurrentPageId(pageId);
+    moveTo(pageId);
     window.history.pushState(null, '', pageUrl(pageId, params));
     // Embedded readers mirror navigation to the host frame; without this the
     // partner page's own URL freezes on whatever page the iframe opened at.
     if (window.self !== window.top) {
       window.parent.postMessage({ type: 'sl-navigate', book: bookPath, page: pageId }, '*');
     }
-  }, [bookPath, currentPageId, pageUrl]);
+  }, [bookPath, currentPageId, pageUrl, moveTo]);
 
   // Scroll-driven position sync (2a's continuous column): same page swap but
   // with replaceState, so reading past a page break doesn't spam history.
   const syncCurrentPage = useCallback((pageId: string) => {
     if (!pageId || pageId === currentPageId) return;
-    setCurrentPageId(pageId);
+    moveTo(pageId);
     window.history.replaceState(null, '', pageUrl(pageId));
     if (window.self !== window.top) {
       window.parent.postMessage({ type: 'sl-navigate', book: bookPath, page: pageId }, '*');
     }
-  }, [bookPath, currentPageId, pageUrl]);
+  }, [bookPath, currentPageId, pageUrl, moveTo]);
 
   const goToIndex = useCallback((index: number) => {
     if (index < 0 || index >= pageList.length) return;
@@ -298,7 +349,12 @@ export function useReaderV2(
   }, [pageList, goToPage]);
 
   // ── views ──────────────────────────────────────────────────────────────
-  const viewsKeyBase = `sl-reader-v2-views-${variant}`;
+  // `-p2` (#7189): every key before this one was written while the
+  // transcription pane started ON for everyone, and the phone picker saved
+  // `ocr: true` on every tap whether or not the reader asked for it. Those
+  // stored states are the old default, not a choice, and they kept the
+  // transcription up on translated books after the default turned it off.
+  const viewsKeyBase = `sl-reader-v2-views-${variant}-p2`;
   // Phone and desktop keep SEPARATE stored choices. The layouts differ (three
   // stacked panes vs a grid), so a choice made on one is wrong on the other —
   // a desktop "everything on" followed the reader to their phone and buried
@@ -306,7 +362,20 @@ export function useReaderV2(
   // to OCR" (#4385). The ref is resolved client-side in the effect below;
   // toggleView only runs on interaction, well after that.
   const viewsKeyRef = useRef(viewsKeyBase);
-  const [views, setViews] = useState<ViewState>(defaultViews);
+  const [storedViews, setViews] = useState<ViewState>(defaultViews);
+  // A page with a scan and no text opens on the image alone: the text panes
+  // could only say "not transcribed yet". The reader's stored choice is left
+  // alone and returns on the next page that has text. Tapping OCR or English
+  // here is an explicit ask, and it holds for the rest of the visit, so someone
+  // working through untranscribed pages taps once. Computed from the page, so
+  // the server render is already right and nothing jumps on load.
+  const [textPanesAsked, setTextPanesAsked] = useState(false);
+  const imageOnly = !textPanesAsked
+    && !!getPageDisplayUrl(currentPage as unknown as Record<string, unknown>)
+    && pageHasNoTextToShow(currentPage);
+  const views: ViewState = imageOnly
+    ? { scan: true, ocr: false, en: false, translit: false }
+    : storedViews;
   useEffect(() => {
     // <lg — the same line where the stacked mobile layout begins.
     const isPhone = window.matchMedia('(max-width: 1023px)').matches;
@@ -359,6 +428,7 @@ export function useReaderV2(
       const qs = sp.toString();
       window.history.replaceState(window.history.state, '', `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`);
       if (next.scan || next.ocr || next.en) {
+        setTextPanesAsked(true);
         setViews(next);
         return;
       }
@@ -368,21 +438,31 @@ export function useReaderV2(
       return;
     }
     // On a phone the panes stack in one scroller, so a reader who has never
-    // chosen gets the whole page in reading order: the scan, then the
-    // original text, then the English below it. (#4385 had hidden the
-    // original here; Derek reversed that 2026-09-30 — scrolling down from
-    // the image should reveal the original first.) Not persisted: their
-    // first explicit toggle is what writes localStorage.
+    // chosen gets the page in reading order: the scan, then the text below
+    // it. Which text follows the caller's default — on a translated book the
+    // English, with the transcription one tap away ("By default Latin/ocr is
+    // off", Derek 2026-10-03 and again 2026-10-23, #7189, superseding the
+    // 2026-09-30 call to show the original here). Not persisted: their first
+    // explicit toggle is what writes localStorage.
     if (!hasChosen && isPhone) {
       // `defaultViews.en` is false only on the Latin site, where the original is
       // the reading text and the English is one tap away.
-      setViews({ ...stored, scan: hasScan, ocr: true, en: defaultViews.en });
+      setViews({ ...stored, scan: hasScan, ocr: defaultViews.ocr, en: defaultViews.en });
       return;
     }
     setViews(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const toggleView = useCallback((key: keyof ViewState) => {
+    if (imageOnly) {
+      // The scan is the only pane up, and the last pane stays on.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+      // Just the pane they tapped. Not persisted: their stored choice was not
+      // what was on screen here, so this tap says nothing about it.
+      setViews({ scan: true, ocr: false, en: false, translit: false, [key]: true });
+      return;
+    }
     setViews(prev => {
       const next = { ...prev, [key]: !prev[key] };
       // At least one pane must stay on — clicking the last active pane is a no-op
@@ -390,35 +470,50 @@ export function useReaderV2(
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
   /**
    * The phone's pane picker is a jump, not a filter (#5219). It used to show
    * the tapped pane and nothing else (#5062), so a reader on the translation
    * could not scroll up to the original or the scan without tapping again.
-   * A tap now puts the whole page back in the column — scan, original,
-   * translation, in reading order — plus the tapped pane if it is an extra
-   * (the romanisation); the caller scrolls to it.
+   * A tap now puts the whole page back in the column — scan and translation,
+   * in reading order — plus the tapped pane; the caller scrolls to it. The
+   * transcription stays as it was unless it is the pane tapped: forcing it
+   * on here is how a reader who only ever tapped "English" ended up with the
+   * transcription stored as their choice (#7189).
    */
   const revealView = useCallback((key: keyof ViewState, hasScan: boolean) => {
+    if (imageOnly) {
+      // Tapping Scan while the scan is all there is asks for nothing new.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+    }
     setViews(prev => {
-      const next: ViewState = { scan: hasScan, ocr: true, en: true, translit: prev.translit, [key]: true };
+      const next: ViewState = { scan: hasScan, ocr: prev.ocr, en: true, translit: prev.translit, [key]: true };
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
 
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
   useEffect(() => {
     const stored = window.localStorage.getItem(SETTINGS_KEY);
-    const base = loadStored(SETTINGS_KEY, DEFAULT_SETTINGS);
+    const loaded = loadStored(SETTINGS_KEY, DEFAULT_SETTINGS);
+    // A stored 100% that nobody picked is the old default, not a choice.
+    const base = !loaded.textScaleChosen && loaded.textScale === 1
+      ? { ...loaded, textScale: DEFAULT_SETTINGS.textScale }
+      : loaded;
     // On the Spanish site, open in Spanish — but only for a reader who has
     // never chosen. Once they have picked a language in the pane their stored
     // choice wins, because the choice is theirs to keep.
-    setSettings(spanishSite && !stored ? { ...base, translationLang: 'es' } : base);
-  }, [spanishSite]);
+    // The same on /zh for the few books with a Chinese edition (#7537); on a page
+    // without one the pane simply shows English.
+    const siteLang = spanishSite ? 'es' : chineseSite ? 'zh' : null;
+    setSettings(siteLang && !stored ? { ...base, translationLang: siteLang } : base);
+  }, [spanishSite, chineseSite]);
   const updateSettings = useCallback((patch: Partial<ReaderSettings>) => {
-    setSettings(prev => persistSettings({ ...prev, ...patch }));
+    const chosen = patch.textScale !== undefined ? { textScaleChosen: true } : null;
+    setSettings(prev => persistSettings({ ...prev, ...patch, ...chosen }));
   }, []);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -463,13 +558,13 @@ export function useReaderV2(
       if (!e.metaKey && !e.ctrlKey) return;
       if (e.key === '=' || e.key === '+') {
         e.preventDefault();
-        setSettings(prev => persistSettings({ ...prev, textScale: Math.min(2, Math.round(prev.textScale * 1.1 * 100) / 100) }));
+        setSettings(prev => persistSettings({ ...prev, textScale: Math.min(2, Math.round(prev.textScale * 1.1 * 100) / 100), textScaleChosen: true }));
       } else if (e.key === '-') {
         e.preventDefault();
-        setSettings(prev => persistSettings({ ...prev, textScale: Math.max(0.7, Math.round(prev.textScale / 1.1 * 100) / 100) }));
+        setSettings(prev => persistSettings({ ...prev, textScale: Math.max(0.7, Math.round(prev.textScale / 1.1 * 100) / 100), textScaleChosen: true }));
       } else if (e.key === '0') {
         e.preventDefault();
-        setSettings(prev => persistSettings({ ...prev, textScale: 1 }));
+        setSettings(prev => persistSettings({ ...prev, textScale: DEFAULT_SETTINGS.textScale, textScaleChosen: false }));
       }
     }
     window.addEventListener('keydown', onKey);
@@ -492,11 +587,11 @@ export function useReaderV2(
       const segments = window.location.pathname.split('/');
       const at = segments.lastIndexOf('page') + 1;
       const pid = segments[at];
-      if (pid && pageList.some(p => p.id === pid)) setCurrentPageId(pid);
+      if (pid && pageList.some(p => p.id === pid)) moveTo(pid);
     }
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
-  }, [pageList]);
+  }, [pageList, moveTo]);
 
   const totalPages = pageList.length;
   const progress = totalPages > 1 && currentIndex >= 0 ? currentIndex / (totalPages - 1) : 0;

@@ -1,0 +1,1343 @@
+[
+ {
+  "cell": "ita",
+  "name": "Italian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 30
+  },
+  "drawn": 30,
+  "skipped": 0,
+  "judged": 30,
+  "judge_cannot_read": 0,
+  "judge_partly": 2,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 30,
+   "scored": 30,
+   "median_cer": 0.0125,
+   "median_wer": 0.0475,
+   "serious": 9,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 0,
+   "fidelity_mean": null,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "spa",
+  "name": "Spanish",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 27,
+   "Hebr": 1
+  },
+  "drawn": 30,
+  "skipped": 2,
+  "judged": 28,
+  "judge_cannot_read": 1,
+  "judge_partly": 2,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 28,
+   "scored": 27,
+   "median_cer": 0.02,
+   "median_wer": 0.069,
+   "serious": 5,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 0,
+   "fidelity_mean": null,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "kor",
+  "name": "Korean",
+  "catalogue_script": "Kore",
+  "observed_scripts": {
+   "Kore": 30
+  },
+  "drawn": 30,
+  "skipped": 0,
+  "judged": 30,
+  "judge_cannot_read": 1,
+  "judge_partly": 18,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 30,
+   "scored": 27,
+   "median_cer": 0.115,
+   "median_wer": 0.115,
+   "serious": 25,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 30,
+   "scored": 27,
+   "median_cer": 0.059,
+   "median_wer": 0.059,
+   "serious": 12,
+   "non_text": 2
+  },
+  "tr": {
+   "n": 0,
+   "fidelity_mean": null,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "rus",
+  "name": "Russian",
+  "catalogue_script": "Cyrl",
+  "observed_scripts": {
+   "Cyrl": 28,
+   "Latn": 2
+  },
+  "drawn": 30,
+  "skipped": 0,
+  "judged": 30,
+  "judge_cannot_read": 1,
+  "judge_partly": 0,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 30,
+   "scored": 28,
+   "median_cer": 0.001,
+   "median_wer": 0.0075,
+   "serious": 6,
+   "non_text": 1
+  },
+  "agy": {
+   "n": 30,
+   "scored": 28,
+   "median_cer": 0,
+   "median_wer": 0,
+   "serious": 3,
+   "non_text": 3
+  },
+  "tr": {
+   "n": 30,
+   "fidelity_mean": 4.533,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 6
+  }
+ },
+ {
+  "cell": "por",
+  "name": "Portuguese",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 18,
+   "Grek": 1
+  },
+  "drawn": 19,
+  "skipped": 0,
+  "judged": 19,
+  "judge_cannot_read": 1,
+  "judge_partly": 4,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 19,
+   "scored": 18,
+   "median_cer": 0.024,
+   "median_wer": 0.088,
+   "serious": 7,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 18,
+   "fidelity_mean": 3.944,
+   "le2": 2,
+   "invention": 3,
+   "inherited": 7
+  }
+ },
+ {
+  "cell": "enm",
+  "name": "Middle English",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 9,
+   "Grek": 1
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 2,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 8,
+   "median_cer": 0.20450000000000002,
+   "median_wer": 0.3195,
+   "serious": 6,
+   "non_text": 3
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 2,
+   "le2": 2,
+   "invention": 0,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "gmh",
+  "name": "Middle High German",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 0,
+  "judge_partly": 8,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 9,
+   "median_cer": 0.224,
+   "median_wer": 0.399,
+   "serious": 9,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 1,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "frm",
+  "name": "Middle French",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 8
+  },
+  "drawn": 10,
+  "skipped": 2,
+  "judged": 8,
+  "judge_cannot_read": 0,
+  "judge_partly": 5,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 8,
+   "scored": 7,
+   "median_cer": 0.208,
+   "median_wer": 0.364,
+   "serious": 6,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3.5,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "tam",
+  "name": "Tamil",
+  "catalogue_script": "Taml",
+  "observed_scripts": {
+   "Taml": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 0,
+  "judge_partly": 5,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.035,
+   "median_wer": 0.32499999999999996,
+   "serious": 4,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.028,
+   "median_wer": 0.6990000000000001,
+   "serious": 1,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "hin",
+  "name": "Hindi",
+  "catalogue_script": "Deva",
+  "observed_scripts": {
+   "Deva": 8,
+   "Latn": 2
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 0,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.029,
+   "median_wer": 0.08099999999999999,
+   "serious": 0,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.009000000000000001,
+   "median_wer": 0.038000000000000006,
+   "serious": 2,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "ota",
+  "name": "Ottoman Turkish",
+  "catalogue_script": "Arab",
+  "observed_scripts": {
+   "Arab": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 0,
+  "judge_partly": 8,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.176,
+   "median_wer": 0.3255,
+   "serious": 7,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.14550000000000002,
+   "median_wer": 0.3915,
+   "serious": 2,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "tur",
+  "name": "Turkish",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Arab": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 1,
+  "judge_partly": 8,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 9,
+   "median_cer": 0.149,
+   "median_wer": 0.366,
+   "serious": 6,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 2.5,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "smp",
+  "name": "Samaritan Hebrew",
+  "catalogue_script": "Samr",
+  "observed_scripts": {
+   "Arab": 3,
+   "Hebr": 5,
+   "Latn": 2
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 7,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 3,
+   "median_cer": 0.307,
+   "median_wer": 1,
+   "serious": 9,
+   "non_text": 7
+  },
+  "agy": {
+   "n": 10,
+   "scored": 3,
+   "median_cer": 0.192,
+   "median_wer": 0.252,
+   "serious": 4,
+   "non_text": 7
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 1.5,
+   "le2": 2,
+   "invention": 2,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "yid",
+  "name": "Yiddish",
+  "catalogue_script": "Hebr",
+  "observed_scripts": {
+   "Latn": 1,
+   "Hebr": 8
+  },
+  "drawn": 10,
+  "skipped": 1,
+  "judged": 9,
+  "judge_cannot_read": 5,
+  "judge_partly": 2,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 9,
+   "scored": 3,
+   "median_cer": 0.122,
+   "median_wer": 0.287,
+   "serious": 7,
+   "non_text": 4
+  },
+  "agy": {
+   "n": 9,
+   "scored": 3,
+   "median_cer": 0.182,
+   "median_wer": 0.284,
+   "serious": 4,
+   "non_text": 6
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 1,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "dan",
+  "name": "Danish",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 10,
+   "median_cer": 0.004,
+   "median_wer": 0.0085,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "fro",
+  "name": "Old French",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 10
+  },
+  "drawn": 10,
+  "skipped": 0,
+  "judged": 10,
+  "judge_cannot_read": 1,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 10,
+   "scored": 9,
+   "median_cer": 0.069,
+   "median_wer": 0.082,
+   "serious": 4,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "nds",
+  "name": "nds",
+  "catalogue_script": null,
+  "observed_scripts": {
+   "Latn": 7
+  },
+  "drawn": 9,
+  "skipped": 2,
+  "judged": 7,
+  "judge_cannot_read": 0,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 7,
+   "scored": 7,
+   "median_cer": 0.018,
+   "median_wer": 0.143,
+   "serious": 3,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "pol",
+  "name": "Polish",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 5
+  },
+  "drawn": 9,
+  "skipped": 4,
+  "judged": 5,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 5,
+   "scored": 5,
+   "median_cer": 0.005,
+   "median_wer": 0.014,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "dum",
+  "name": "Middle Dutch",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 9
+  },
+  "drawn": 9,
+  "skipped": 0,
+  "judged": 9,
+  "judge_cannot_read": 0,
+  "judge_partly": 5,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 9,
+   "scored": 9,
+   "median_cer": 0.087,
+   "median_wer": 0.311,
+   "serious": 6,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "non",
+  "name": "Old Norse",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 8
+  },
+  "drawn": 8,
+  "skipped": 0,
+  "judged": 8,
+  "judge_cannot_read": 0,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 8,
+   "scored": 8,
+   "median_cer": 0.0305,
+   "median_wer": 0.069,
+   "serious": 3,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3.5,
+   "le2": 1,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "mri",
+  "name": "Maori",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 6
+  },
+  "drawn": 6,
+  "skipped": 0,
+  "judged": 6,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 6,
+   "scored": 6,
+   "median_cer": 0.010499999999999999,
+   "median_wer": 0.025,
+   "serious": 2,
+   "non_text": 1
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "ces",
+  "name": "Czech",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 4
+  },
+  "drawn": 5,
+  "skipped": 1,
+  "judged": 4,
+  "judge_cannot_read": 1,
+  "judge_partly": 0,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 4,
+   "scored": 2,
+   "median_cer": 0.009000000000000001,
+   "median_wer": 0.0375,
+   "serious": 1,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "haw",
+  "name": "Hawaiian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 5
+  },
+  "drawn": 5,
+  "skipped": 0,
+  "judged": 5,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 1,
+  "lite": {
+   "n": 5,
+   "scored": 4,
+   "median_cer": 0.05499999999999999,
+   "median_wer": 0.1,
+   "serious": 1,
+   "non_text": 1
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 4.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "ave",
+  "name": "Avestan",
+  "catalogue_script": "Avst",
+  "observed_scripts": {
+   "Avst": 3,
+   "Latn": 2
+  },
+  "drawn": 5,
+  "skipped": 0,
+  "judged": 5,
+  "judge_cannot_read": 4,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 5,
+   "scored": 1,
+   "median_cer": 0.012,
+   "median_wer": 0.034,
+   "serious": 4,
+   "non_text": 4
+  },
+  "agy": {
+   "n": 5,
+   "scored": 1,
+   "median_cer": 0.01,
+   "median_wer": 0.041,
+   "serious": 2,
+   "non_text": 2
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 2.5,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "mar",
+  "name": "Marathi",
+  "catalogue_script": "Deva",
+  "observed_scripts": {
+   "Deva": 4
+  },
+  "drawn": 4,
+  "skipped": 0,
+  "judged": 4,
+  "judge_cannot_read": 0,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 4,
+   "scored": 4,
+   "median_cer": 0.05,
+   "median_wer": 0.219,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 4,
+   "scored": 4,
+   "median_cer": 0.038,
+   "median_wer": 0.145,
+   "serious": 2,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "tsz",
+  "name": "tsz",
+  "catalogue_script": null,
+  "observed_scripts": {
+   "Latn": 4
+  },
+  "drawn": 4,
+  "skipped": 0,
+  "judged": 4,
+  "judge_cannot_read": 0,
+  "judge_partly": 3,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 4,
+   "scored": 4,
+   "median_cer": 0.053000000000000005,
+   "median_wer": 0.33599999999999997,
+   "serious": 2,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 2.5,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "urd",
+  "name": "Urdu",
+  "catalogue_script": "Arab",
+  "observed_scripts": {
+   "Arab": 3
+  },
+  "drawn": 3,
+  "skipped": 0,
+  "judged": 3,
+  "judge_cannot_read": 0,
+  "judge_partly": 2,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 3,
+   "scored": 3,
+   "median_cer": 0.097,
+   "median_wer": 0.285,
+   "serious": 3,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 3,
+   "scored": 3,
+   "median_cer": 0.046,
+   "median_wer": 0.082,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 2
+  }
+ },
+ {
+  "cell": "roh",
+  "name": "roh",
+  "catalogue_script": null,
+  "observed_scripts": {
+   "Latn": 1
+  },
+  "drawn": 3,
+  "skipped": 2,
+  "judged": 1,
+  "judge_cannot_read": 0,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 1,
+   "scored": 1,
+   "median_cer": 0.029,
+   "median_wer": 0.118,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "pra",
+  "name": "Prakrit",
+  "catalogue_script": "Deva",
+  "observed_scripts": {
+   "Latn": 3
+  },
+  "drawn": 3,
+  "skipped": 0,
+  "judged": 3,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 3,
+   "scored": 3,
+   "median_cer": 0.007,
+   "median_wer": 0.014,
+   "serious": 0,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 3,
+   "scored": 3,
+   "median_cer": 0.003,
+   "median_wer": 0.005,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "hrv",
+  "name": "Croatian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Cyrl": 1
+  },
+  "drawn": 3,
+  "skipped": 2,
+  "judged": 1,
+  "judge_cannot_read": 0,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 1,
+   "scored": 1,
+   "median_cer": 0.229,
+   "median_wer": 0.476,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "pan",
+  "name": "Punjabi",
+  "catalogue_script": "Guru",
+  "observed_scripts": {
+   "Guru": 3
+  },
+  "drawn": 3,
+  "skipped": 0,
+  "judged": 3,
+  "judge_cannot_read": 1,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 3,
+   "scored": 2,
+   "median_cer": 0.238,
+   "median_wer": 0.5515,
+   "serious": 3,
+   "non_text": 2
+  },
+  "agy": {
+   "n": 3,
+   "scored": 2,
+   "median_cer": 0.094,
+   "median_wer": 0.5225,
+   "serious": 2,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 2,
+   "le2": 1,
+   "invention": 1,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "slv",
+  "name": "Slovenian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 1
+  },
+  "drawn": 2,
+  "skipped": 1,
+  "judged": 1,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 1,
+   "scored": 1,
+   "median_cer": 0.128,
+   "median_wer": 0.404,
+   "serious": 0,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "tel",
+  "name": "Telugu",
+  "catalogue_script": "Telu",
+  "observed_scripts": {
+   "Telu": 2
+  },
+  "drawn": 2,
+  "skipped": 0,
+  "judged": 2,
+  "judge_cannot_read": 0,
+  "judge_partly": 2,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 2,
+   "scored": 2,
+   "median_cer": 0.0805,
+   "median_wer": 0.359,
+   "serious": 2,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 2,
+   "scored": 2,
+   "median_cer": 0.021,
+   "median_wer": 0.16299999999999998,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 2,
+   "fidelity_mean": 3.5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 1
+  }
+ },
+ {
+  "cell": "nor",
+  "name": "Norwegian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 2
+  },
+  "drawn": 2,
+  "skipped": 0,
+  "judged": 2,
+  "judge_cannot_read": 0,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 2,
+   "scored": 2,
+   "median_cer": 0.1585,
+   "median_wer": 0.23600000000000002,
+   "serious": 1,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 5,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "hun",
+  "name": "Hungarian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 1
+  },
+  "drawn": 1,
+  "skipped": 0,
+  "judged": 1,
+  "judge_cannot_read": 0,
+  "judge_partly": 0,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 1,
+   "scored": 1,
+   "median_cer": 0.014,
+   "median_wer": 0.06,
+   "serious": 0,
+   "non_text": 0
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 1,
+   "fidelity_mean": 4,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ },
+ {
+  "cell": "lav",
+  "name": "Latvian",
+  "catalogue_script": "Latn",
+  "observed_scripts": {
+   "Latn": 1
+  },
+  "drawn": 1,
+  "skipped": 0,
+  "judged": 1,
+  "judge_cannot_read": 0,
+  "judge_partly": 1,
+  "no_text_leaf": 0,
+  "lite": {
+   "n": 1,
+   "scored": 1,
+   "median_cer": 1,
+   "median_wer": 1,
+   "serious": 1,
+   "non_text": 1
+  },
+  "agy": {
+   "n": 0,
+   "scored": 0,
+   "median_cer": null,
+   "median_wer": null,
+   "serious": 0,
+   "non_text": 0
+  },
+  "tr": {
+   "n": 0,
+   "fidelity_mean": null,
+   "le2": 0,
+   "invention": 0,
+   "inherited": 0
+  }
+ }
+]

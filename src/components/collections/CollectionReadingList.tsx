@@ -35,21 +35,22 @@ import { READING_LIST_MATCH_LABEL, type ReadingListRow } from '@/lib/reading-lis
 interface Props {
   rows: ReadingListRow[];
   tenantSlug?: string | null;
+  /** From `readingListHeader()`: authored on the collection, or the defaults. */
+  heading: string;
+  intro: string;
 }
 
-export default function CollectionReadingList({ rows, tenantSlug }: Props) {
+export default function CollectionReadingList({ rows, tenantSlug, heading, intro }: Props) {
   if (rows.length === 0) return null;
 
   return (
     <section id="reading-list" className="bg-warm border-b border-border-light">
       <div className="max-w-[1500px] mx-auto px-6 py-10">
         <h2 className="text-2xl sm:text-3xl text-primary font-display mb-2">
-          The reading list
+          {heading}
         </h2>
         <p className="text-sm text-secondary leading-relaxed max-w-3xl mb-6">
-          {rows.length === 13 ? 'Thirteen' : rows.length.toLocaleString('en-US')} works this
-          collection was built around, and the witnesses asked for. Everything else on
-          this page is related work we hold.
+          {intro}
         </p>
 
         <ol className="divide-y divide-border-light border-y border-border-light max-w-5xl">
@@ -78,9 +79,13 @@ export default function CollectionReadingList({ rows, tenantSlug }: Props) {
                         >
                           {w.witness || w.book.display_title || w.book.title}
                         </Link>
-                        <span className="inline-block ml-2 align-middle text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                          {READING_LIST_MATCH_LABEL[w.match]}
-                        </span>
+                        {/* `volume` has no word: in a volume-by-volume list
+                            the same badge on every row says nothing. */}
+                        {READING_LIST_MATCH_LABEL[w.match] && (
+                          <span className="inline-block ml-2 align-middle text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
+                            {READING_LIST_MATCH_LABEL[w.match]}
+                          </span>
+                        )}
                         {/* Readability, stated rather than implied — the same
                             word the Further-reading cards use. */}
                         <span className={`ml-2 text-xs ${w.status.readable ? 'text-accent-gold-dark' : 'text-muted'}`}>

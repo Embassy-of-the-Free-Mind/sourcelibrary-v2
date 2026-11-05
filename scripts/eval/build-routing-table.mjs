@@ -195,7 +195,7 @@ async function refreshPages() {
   const { MongoClient } = await import('mongodb');
   const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
   const m = new Map();
-  for await (const b of client.db('bookstore').collection('books').find({ pages_count: { $gt: 0 } }, { projection: { language: 1, pages_count: 1, pages_ocr: 1, visible: 1, _id: 0 } })) {
+  for await (const b of client.db('bookstore').collection('books').find({ pages_count: { $gt: 0 } }, { projection: { language: 1, pages_count: 1, pages_ocr: 1, visible: 1, _id: 0 } }).batchSize(1000)) {
     const first = toLanguageCodes(b.language).codes[0]; const family = first ? codeFamily(first) : 'und';
     const r = m.get(family) || { family, name: family === 'und' ? 'und / unknown' : languageName(family), books: 0, pages: 0, hidden_ocr_owed: 0 };
     r.books++; r.pages += b.pages_count; if (b.visible !== true) r.hidden_ocr_owed += Math.max(0, b.pages_count - (b.pages_ocr || 0));

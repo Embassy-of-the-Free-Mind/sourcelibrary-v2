@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
 import type { StoredTranslationState } from '@/lib/translation-completeness';
@@ -130,6 +131,8 @@ function ModernizedSpelling({ text, label, note, page }: { text: string; label: 
 export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { page: Page; book: Book; kind: 'ocr' | 'translation'; unreadable?: boolean; withheld?: boolean }) {
   const { data: sessionData } = useStableSession();
   const pathname = usePathname();
+  // The pipeline page has no embed route: an editor inside a partner frame gets no link out of it.
+  const isEmbedded = useIsEmbedded();
   const t = getReaderStrings(useLocale()).paneEmpty;
   const [requested, setRequested] = useState(false);
   const [sending, setSending] = useState(false);
@@ -160,6 +163,17 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
   // been taken out of service. No request-translation CTA — the retranslation
   // is already owed, and offering a button that queues what is queued would be
   // a second untruth on a pane that exists to stop telling the first.
+  // A leaf now read as blank whose old English translated show-through (#5813,
+  // withhold reason `blank_source`) is simply a blank page to the reader —
+  // "translation withdrawn, a new one will follow" promises English that
+  // will never come.
+  if (withheld && page.page_type === 'blank') {
+    return (
+      <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
+        {t.blankPage}
+      </p>
+    );
+  }
   if (withheld) {
     return (
       <EmptyPane
@@ -332,9 +346,11 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
         label="Ready to translate"
         body="OCR is complete for this page. It has not been translated into English yet."
       >
-        <a href={`/book/${book.id}/pipeline?page=${encodeURIComponent(page.id)}`} className={actionButtonClass} style={actionButtonStyle}>
-          Open pipeline
-        </a>
+        {!isEmbedded && (
+          <a href={`/book/${book.id}/pipeline?page=${encodeURIComponent(page.id)}`} className={actionButtonClass} style={actionButtonStyle}>
+            Open pipeline
+          </a>
+        )}
       </EmptyPane>
     </AuthCheck>
   );

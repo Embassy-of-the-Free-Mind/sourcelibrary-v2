@@ -31,7 +31,7 @@ import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const MIN_UPGRADE_DIM = 800;
 const DISPLAY_WIDTH = 3840;
 const THUMB_WIDTH = 600;

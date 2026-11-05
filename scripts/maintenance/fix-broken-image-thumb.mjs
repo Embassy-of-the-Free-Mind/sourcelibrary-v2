@@ -61,7 +61,7 @@ async function main() {
       image_thumb: { $regex: '^https://images\\.sourcelibrary\\.org/pages/[a-f0-9-]+/\\d+-thumb\\.jpg$' },
     },
     { projection: { _id: 1, id: 1, slug: 1, title: 1, image_thumb: 1, thumbnail_blob: 1 } }
-  );
+  ).batchSize(1000);
 
   console.log(`mode: ${APPLY ? 'APPLY (writes will happen)' : 'DRY RUN (no writes)'}`);
 

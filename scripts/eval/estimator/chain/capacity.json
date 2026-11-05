@@ -1,0 +1,74 @@
+{
+ "_about": "Weekly capacity per channel and the capacity each route stage draws per page, the inputs allocate_v2.py plans with (#6740, #7263). Data, not code: change a figure here and re-run. Every figure names its meter and date. Plan FEES are not here and never are: allocate_v2.py allocates capacity, which needs no fee; `--fees <private file>` (ops cost ledger, as route_ocr_v1.py reads it) only adds a dollar column to a private table written outside the repo.",
+ "as_of": "2026-10-25",
+ "channels": {
+  "claude": {
+   "unit": "account-week",
+   "per_week": 4,
+   "free_share": 0.5,
+   "basis": "4 accounts in climits (/root/.claude-limits/latest.json, 2026-10-25T20:30Z: team@ 86% weekly, dereklomas@ 51%, derek@sourcelibrary 64%, derek@playpowerlabs not read: its refresh token is invalid, job zh-translate-route-6871). One account-week = 100 weekly points. free_share 0.5: half of each account is the lanes and sessions already running, the planner_v0 assumption; the measured weekly levels above (51-86% on the three read) say the free share is lower this week."
+  },
+  "agy": {
+   "unit": "call",
+   "per_week": 78116,
+   "free_share": 0.5,
+   "basis": "78,116 successful calls in the 7 days before the 2026-10-19 lock, /root/agy-quota on Hetzner main (brief for job estimator-v2-6740; #7263). Main's logs only, so a lower bound for the Google account. Second reading: meter_quota_share.py over calls.csv 2026-10-13 to 10-24, 229,190 calls per 30 days = 53,478 a week (route-costs.json). This box (cloudlayer) cannot read main's meter, so neither was re-read today. Every agy model counts as one call of one pool, as the meter counts them. Sensitivity: +-30%."
+  },
+  "gpu-gex45": {
+   "unit": "card-hour",
+   "per_week": 168,
+   "free_share": 0.5,
+   "basis": "one RTX PRO 4000 SFF card on gex45 (2026-10-18-gex45-capability-card-6871.md). Not drawn by any correction route here: their drafts already exist."
+  },
+  "batch": {
+   "unit": "usd",
+   "per_week": 35.0,
+   "free_share": 1.0,
+   "basis": "set-dial.mjs --show 2026-10-25: daily_budget_usd $5 (paused=false). Envelopes add to it: spend_daily ledger paid $24.47 a day over 2026-10-11..24 (14 days), $18.33 over the last 7. The dial is the standing weekly figure; envelopes are approved one by one."
+  }
+ },
+ "stages": {
+  "opus-5.5@10": {
+   "channel": "claude",
+   "per_page": 4.0e-05,
+   "range": [2.03e-05, 6.08e-05],
+   "basis": "correct.mjs, 10 pages a call: about 1% of an account-week per 250 Latin pages (2026-10-24, #7258, climits integer meter; the projection's 9-27 account-weeks for 444K pages is the range). Florentine (#6865): 130 pages in 14 calls moved the week by under 1 point."
+  },
+  "opus-5.5@1": {
+   "channel": "claude",
+   "per_page": 9.0e-05,
+   "range": [4.0e-05, 2.35e-04],
+   "basis": "one page a call (paddle-correct-6561 harness): 0.9% of an account-week per 100 pages, an upper bound on the share (#6667, shared account); #6561's own reading gives at least 4,250 pages an account-week (2.35e-4). Both readings are upper bounds on the share; the low end of the range is correct.mjs's 10-a-call rate, if that shape carried over (unmeasured on Chinese)."
+  },
+  "sonnet-5.5@1": {
+   "channel": "claude",
+   "per_page": 5.0e-05,
+   "basis": "0.5% per 100 pages, upper bound (#6667)"
+  },
+  "agy@1": {
+   "channel": "agy",
+   "per_page": 1.02,
+   "basis": "254 calls for 250 pages (Flash-low correction, #7269); one call a page for Argon low and Flash high (#6560, #6561)"
+  },
+  "agy-redo@1": {
+   "channel": "agy",
+   "per_page": 1.05,
+   "basis": "Flash re-read, 1.05 calls a page (#7242)"
+  },
+  "lite-batch": {
+   "channel": "batch",
+   "per_page": 0.0015,
+   "basis": "flash-lite as corrector, Batch price $0.97-1.93 per 1K pages (#7263, 2026-10-24-lite-corrects-gpu-drafts-7263.md)"
+  },
+  "opus-translate@10": {
+   "channel": "claude",
+   "per_page": 9.2e-06,
+   "basis": "claude-translate.mjs, 10 pages a call: 3% of an account-week per 3,250 pages (#7263). Not yet re-measured on the CLI lane. An early reading from job zh-translate-route-6871 (usage-trace.txt: weekly 7% -> 10% while about 400 Chinese pages were written, the same account also running other jobs) would be about 10x this; too short and too shared to use."
+  }
+ },
+ "translated_share": {
+  "_basis": "pages_translated / pages_ocr, planner/results/volumes-2026-10-23.json: a corrected page with English makes that English stale, so the route draws a retranslation for this share of its pages",
+  "latin": 0.875, "chinese": 0.16, "tibetan": 0.746, "german": 0.926, "greek": 0.949, "french": 0.935,
+  "italian": 0.952, "hebrew": 0.873, "arabic": 0.965, "chinese-frame-6871": 1.0
+ }
+}

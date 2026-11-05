@@ -340,7 +340,7 @@ async function apply(db, { write }) {
       'ocr.model': job.model,
       'ocr.language': job.language,
       'ocr.source': job.ocr_source || 'batch_api',
-      'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
+      'ocr.prompt_version': h.jobPromptVersion(job), // never a constant (#7499)
       'ocr.prompt_id': job.prompt_id,
       'ocr.prompt_hash': job.prompt_hash,
       'ocr.prompt_name': job.prompt_name,

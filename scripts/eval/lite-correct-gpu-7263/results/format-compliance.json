@@ -1,0 +1,3001 @@
+{
+ "p2-zh": {
+  "answers": {
+   "corrected": 110
+  },
+  "n": 110,
+  "compliant": 0,
+  "compliant_ignoring_hidden_meta": 84,
+  "page_type_not_1": 0,
+  "problem": {},
+  "extra_headers": 14,
+  "added": {
+   "vocab": 110,
+   "gloss": 0,
+   "warning": 4,
+   "note": 13
+  },
+  "not_compliant": [
+   {
+    "uid": "A-pil004",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil005",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil010",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil011",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil015",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil016",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil017",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil020",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil021",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil024",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil026",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil027",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil034",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil035",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil036",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil038",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil039",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil040",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil043",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil048",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil049",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil051",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil053",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil057",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil058",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil059",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil060",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil066",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil069",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil070",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil071",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil075",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil083",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil085",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil086",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil087",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil088",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil089",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil090",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil093",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B001",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B002",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B003",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B004",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B005",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B006",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B007",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B008",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B009",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B010",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B011",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B012",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B013",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B014",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B015",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B016",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B017",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B018",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B019",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B020",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B021",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B022",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B023",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B024",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B025",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B026",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B027",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B028",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B029",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B030",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B031",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B032",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B033",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B034",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B035",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B036",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B037",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B038",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B039",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B040",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B041",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B042",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B043",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B044",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B045",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B046",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B047",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B048",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B049",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B050",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B051",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B052",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B053",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B054",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B055",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B056",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B057",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B058",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B059",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B060",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B015-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B002-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B028-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B018-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B021-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B022-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B025-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B014-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B029-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B020-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   }
+  ]
+ },
+ "p2-tib": {
+  "answers": {
+   "corrected": 30
+  },
+  "n": 30,
+  "compliant": 0,
+  "compliant_ignoring_hidden_meta": 29,
+  "page_type_not_1": 0,
+  "problem": {},
+  "extra_headers": 0,
+  "added": {
+   "vocab": 30,
+   "gloss": 0,
+   "warning": 29,
+   "note": 1
+  },
+  "not_compliant": [
+   {
+    "uid": "69e7aaf75f1a22ab19a907e7_223",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abb65f1a22ab19a9cd4c_220",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ac225f1a22ab19aa42a0_96",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab635f1a22ab19a97eea_113",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab485f1a22ab19a95e06_223",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ac035f1a22ab19aa22e1_228",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aac65f1a22ab19a8d2bc_200",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab585f1a22ab19a970a0_149",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aba55f1a22ab19a9b8a4_233",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab3c5f1a22ab19a9514b_94",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab9e5f1a22ab19a9b03b_269",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab5f5f1a22ab19a978df_375",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aba75f1a22ab19a9bc2a_143",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abd15f1a22ab19a9eb6b_215",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abe05f1a22ab19a9ff10_300",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab385f1a22ab19a94da7_341",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab3a5f1a22ab19a94fa2_87",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab665f1a22ab19a98264_331",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab655f1a22ab19a98091_172",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab4c5f1a22ab19a9622c_310",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abfd5f1a22ab19aa1b31_259",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab185f1a22ab19a92d11_285",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab4f5f1a22ab19a96632_289",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abc55f1a22ab19a9dcfd_225",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ac155f1a22ab19aa3557_145",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab1d5f1a22ab19a93200_303",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aad75f1a22ab19a8e376_99",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abf75f1a22ab19aa12e0_164",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "69e7aad95f1a22ab19a8e519_163",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abc95f1a22ab19a9e04a_189",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   }
+  ]
+ },
+ "p2-tib-anchor": {
+  "answers": {
+   "corrected": 10
+  },
+  "n": 10,
+  "compliant": 0,
+  "compliant_ignoring_hidden_meta": 10,
+  "page_type_not_1": 0,
+  "problem": {},
+  "extra_headers": 0,
+  "added": {
+   "vocab": 10,
+   "gloss": 0,
+   "warning": 9,
+   "note": 0
+  },
+  "not_compliant": [
+   {
+    "uid": "69e7aaf75f1a22ab19a907e7_223",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ac035f1a22ab19aa22e1_228",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab585f1a22ab19a970a0_149",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aba55f1a22ab19a9b8a4_233",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abd15f1a22ab19a9eb6b_215",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab3a5f1a22ab19a94fa2_87",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab655f1a22ab19a98091_172",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7ab4c5f1a22ab19a9622c_310",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7abc55f1a22ab19a9dcfd_225",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "69e7aad95f1a22ab19a8e519_163",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "warning"
+    ],
+    "ok": false,
+    "ok_reader": true
+   }
+  ]
+ },
+ "p1-zh": {
+  "n": 110,
+  "compliant": 0,
+  "compliant_ignoring_hidden_meta": 85,
+  "page_type_not_1": 0,
+  "problem": {
+   "duplicated reply": 3
+  },
+  "extra_headers": 16,
+  "added": {
+   "vocab": 107,
+   "gloss": 1,
+   "warning": 0,
+   "note": 5
+  },
+  "header_rule_applies": true,
+  "not_compliant": [
+   {
+    "uid": "B001",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil004",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil011",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil010",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil015",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil016",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil017",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil005",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil020",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil024",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil021",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil027",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil026",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil035",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil034",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil036",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil038",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil043",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil040",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil048",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil051",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil049",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil053",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil058",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil059",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil060",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil066",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil069",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil070",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil071",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil075",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil085",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil086",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil087",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil088",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil039",
+    "page_type": 1,
+    "problem": "duplicated reply",
+    "extra_headers": false,
+    "added_tags": [],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil089",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil090",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "A-pil093",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B002",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B003",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B004",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B005",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B006",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B007",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B008",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B009",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B010",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B011",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B012",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B013",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B014",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B015",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "A-pil083",
+    "page_type": 1,
+    "problem": "duplicated reply",
+    "extra_headers": false,
+    "added_tags": [],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B017",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B018",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B019",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B022",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B021",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B020",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B023",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B024",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B025",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B026",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B027",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B028",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B029",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B031",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B030",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B032",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B033",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B034",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B035",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B036",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B037",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B038",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B039",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B040",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B041",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B042",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B043",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab",
+     "gloss"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B044",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B016",
+    "page_type": 1,
+    "problem": "duplicated reply",
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B047",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B048",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B046",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B045",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B050",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B051",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B049",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B054",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B055",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab",
+     "note"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B052",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B053",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B056",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B057",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B058",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B059",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B015-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B028-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B002-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B060",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B018-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B021-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B022-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B014-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B029-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": true,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": false
+   },
+   {
+    "uid": "B020-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   },
+   {
+    "uid": "B025-anc",
+    "page_type": 1,
+    "problem": null,
+    "extra_headers": false,
+    "added_tags": [
+     "vocab"
+    ],
+    "ok": false,
+    "ok_reader": true
+   }
+  ]
+ },
+ "p1-tib": {
+  "n": 30,
+  "compliant": 30,
+  "compliant_ignoring_hidden_meta": 30,
+  "page_type_not_1": 30,
+  "problem": {},
+  "extra_headers": 0,
+  "added": {
+   "vocab": 0,
+   "gloss": 0,
+   "warning": 0,
+   "note": 0
+  },
+  "header_rule_applies": false,
+  "not_compliant": []
+ }
+}

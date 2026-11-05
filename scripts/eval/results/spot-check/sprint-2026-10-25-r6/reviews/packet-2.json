@@ -1,0 +1,697 @@
+[
+  {
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "slot": 6,
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Lefèvre d'Étaples' 1505 Paris edition of Ficino's Pimander with commentary: core Hermetica. It has no collection assigned. The catalogue title also carries the typo 'de de sapientia'.",
+    "rights_flag": null,
+    "structure_note": "The book is foliated: only rectos carry a number ('16', '17'), so 78 of 164 pages have a printed number. The 12 backsteps and 17 repeats most likely come from the leaf-numbering scheme and misread numerals, not from a splice. The three sampled pages run in order. OCR and translation are complete.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "preter ipsum bonum restat",
+            "image": "pter ipsū bonū restitit",
+            "problem": "restitit normalised to restat",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "in hac sunt effeta",
+            "image": "in hac īsūt essētia",
+            "problem": "'insunt essentia' (in this essence) misread as 'sunt effeta'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Inquinat enim hoc bonum",
+            "image": "Inquinat' enī hoc bonū",
+            "problem": "passive abbreviation (inquinatur) dropped, so the sense turns active",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "malum efficit",
+            "image": "malū efficit'",
+            "problem": "efficitur read as efficit",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "homini adesto Esculapi",
+            "image": "hoī adest o Esculapi",
+            "problem": "'adest o' fused into imperative 'adesto'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Inquinat[ur] enim hoc bonum admixtione malorum. infectum vero ulterius bonum non permanet, sin minime permanet: malum efficit[ur]",
+            "english": "For this good pollutes with the admixture of evils; the good, however, does not remain further infected. If it does not remain at all, it makes evil.",
+            "problem": "The argument is garbled. The source says this good is polluted by evil, once infected it no longer stays good, and if it does not stay good it becomes evil. The translation inverts the agency and the logic, following the OCR misreads.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Quare solum boni nomen homini adest o Esculapi",
+            "english": "Wherefore, let the name of the good be present to man alone, O Asclepius",
+            "problem": "The statement that only the NAME of good belongs to man becomes a jussive, and 'solum' is misattached to 'man'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "nihil eorum que mala sunt in hac insunt essentia",
+            "english": "none of those things that are evil are contained in Him",
+            "problem": "'in this essence' rendered as 'in Him'; recoverable",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 32,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Deus autem boni vel boni dei exuberans plenitudo",
+            "image": "Deus autē boni vel bonū: dei exuberans plenitudo",
+            "problem": "bonum read as boni",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "vere et in numerose mala magnitudineque augeatur",
+            "image": "ve℞ & in nume℞ mala magnitudineq3 augeatur",
+            "problem": "abbreviations of 'verum et innumerorum malorum' misexpanded",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "vere et in numerose mala magnitudineque augeatur",
+            "english": "and may be increased in true and numerous evils and in magnitude",
+            "problem": "Should read 'but may be increased by countless evils and in their size'. 'True' comes from the OCR garble.",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "perfulges omnibus illustratus a deo",
+            "english": "You shine through all things, illuminated by God",
+            "problem": "acceptable; the conditional link to the previous clause is lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "pariter et pulchri potestis sapientisque natura",
+            "image": "pulchri potē tis/sapientisq3 naturā",
+            "problem": "potentis read as potestis",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "exuere indumentu inicitie/prauitatis fundamentu",
+            "image": "exuere indumentū inscitie/prauitatis fundamētū",
+            "problem": "inscitiae (ignorance) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Voruitis mortales ebrii: qui meru ignorantie bibistis",
+            "image": "Vo ruitis mortales ebrij: qui merū ignorantie cōbibistis",
+            "problem": "'Quo ruitis' (whither do you rush) fused; combibistis shortened",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "Quod si minus potestis:",
+            "image": "Quod si minus potestis omnes:",
+            "problem": "'omnes' dropped",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "exuere indumentum inscitie / prauitatis fundamentum",
+            "english": "strip off the garment you wear: the foundation of malice",
+            "problem": "'the garment of ignorance' and 'depravity' are lost. The list's first item, ignorance, is gone and 'malice' has been invented from the misread.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Quo ruitis mortales ebrii",
+            "english": "Drunken mortals",
+            "problem": "'Whither are you rushing' dropped",
+            "severity": "minor",
+            "class": "T9"
+          },
+          {
+            "source": "[ho]minum atque bona",
+            "english": "and good things",
+            "problem": "Word split across the page seam ('decora ho-|minum'), so 'of men' is lost",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "pulchri potentis sapientisque",
+            "english": "the beautiful and the wise",
+            "problem": "'powerful' dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation shows '<note>section/chapter</note>' inside the sentence 'The sixth <note>section/chapter</note> contends with this'",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "Printer's guide letters for the unprinted initials ('f', 'q') are tagged as margin text and carried into the translation as <margin>f</margin>",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text is the right leaves and readable. Contraction-heavy roman type causes misexpansions that the flash-lite translation carries into fluent but wrong philosophy: one passage on p31 garbles Hermes' argument that good, once mixed with evil, becomes evil. The book is usable, but a careful reader of the Hermetica would catch errors."
+  },
+  {
+    "book_id": "69b2232756715b0e32476687",
+    "slot": 7,
+    "title": "Claudian, Opera (Aldine Press)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Aldine 1523 Claudian in early-european-books; a classical poet, fine for that collection.",
+    "rights_flag": true,
+    "structure_note": "Leaf numbers appear only on rectos (p112 shows '30'), so the 41 backsteps and 34 repeats are probably numeral misreads or leaf-numbering, not a splice. The pages_translated field (356) is stale against the 372 pages counted as translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Aula choris, epulisque uacat",
+            "english": "The court is empty of dances and feasts",
+            "problem": "Sense inverted. 'vacat' + ablative here means the court has leisure for (is given over to) dances and feasts while the empire burns, so the satire is reversed.",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Vastior expulsis oriens squalebit aratris",
+            "english": "The rising expanse will grow foul, the plows having been driven out.",
+            "problem": "'oriens' is the East, which will lie waste more widely; 'rising expanse' is meaningless",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "quas urbes, & quanto tempore Martis / Ignaras uno rapuerunt prælia cursu",
+            "english": "what cities, and in what time of Mars, / Ignorant of war, they have seized",
+            "problem": "Should read 'cities so long ignorant of war'; 'quanto tempore' is misconstrued",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Præda sumus iam Bistoniis, Hæmoque niuali",
+            "english": "Are to the Bistones and the snowy tribes",
+            "problem": "Haemus (the mountain) rendered as 'snowy tribes'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "(absent)",
+            "image": "guide letter 'e' beside the unprinted initial of 'Continuant'",
+            "problem": "guide letter dropped; harmless",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Continuant superi pleno Romana fauore gaudia",
+            "english": "May the gods continue the Roman joys",
+            "problem": "indicative statement rendered as a wish",
+            "severity": "minor"
+          },
+          {
+            "source": "Consule defensæ surgunt Stilicone secures",
+            "english": "the axes of the consul rise up, defended by Stilicho",
+            "problem": "Should read 'with Stilicho as consul, the fasces he defended rise'; minor misconstrual",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR stores a model description ('The text is printed in an italic typeface with upright capital initials. There is some bleed-through...') in a <meta> tag",
+            "severity": "minor",
+            "class": "O15"
+          },
+          {
+            "note": "Centering arrows '->...<-' in the OCR around the opening lines",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Madius erit",
+            "image": "Maius erit",
+            "problem": "'Maius' (greater) misread as nonsense 'Madius'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Angelidam Thracem",
+            "image": "An gelidam Thracem",
+            "problem": "'An gelidam' (or shall I sing of icy Thrace) fused into a pseudo-name",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ipsaq; pierios lassant procliui currus",
+            "image": "procliuia",
+            "problem": "final -a dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "[quodcunque relinquam,] Maius erit",
+            "english": "It will be meager.",
+            "problem": "Sense reversed. The poet says whatever he leaves out will be GREATER; the translation invents 'meager' from the misread.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "An gelidam Thracem, decertatosque labores / Hebro teste canam?",
+            "english": "Shall I sing of the Thracian Angelida",
+            "problem": "Invented person 'Angelida' from the OCR fusion",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "cuius protendere famam ... Sufficeret natus Stilico",
+            "english": "Whose fame ... would be enough for his son Stilicho",
+            "problem": "Should read 'his son Stilicho alone would suffice to spread his fame'; the relation is inverted",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR of the Aldine italic is very good. The lite translation of Claudian's verse, though, makes sense-reversing errors on two of three pages ('the court is empty of feasts'; 'it will be meager'), and an invented 'Angelida' follows an OCR fusion. A Latinist would notice these at once."
+  },
+  {
+    "book_id": "69b302e53613a84e6806812d",
+    "slot": 8,
+    "title": "Schat der Gesontheyt",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Early modern medicine by Beverwijck fits early-european-books. The catalogue record, however, does not describe this scan (see structure_note).",
+    "rights_flag": true,
+    "structure_note": "Catalogue identity looks wrong (I7). The record says 'Schat der Gesontheyt', language Dutch, but every sampled page is Latin, with running heads 'THERAPEVTICE.' / 'MED. VET. PARS III.' and Latin chapter heads (Cap. II on plague). This looks like Beverwijck's Latin 'Idea medicinae veterum' (Leiden, 1637), not the Dutch Schat der Gesontheyt (identification inferred from the running heads; not verified against the title page). Printed numbering 193-195 is continuous; the 5 backsteps are probably misread numerals.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 210,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "(absent)",
+            "image": "side note 'Diæta.' beside 'Inedia sæpissime'",
+            "problem": "one marginal heading dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Ita Gallus, siue Pythagoras ... Lucian. Gallo.",
+            "english": "Thus the Gaul, or Pythagoras ... Lucian, The Gaul.",
+            "problem": "Lucian's dialogue is 'The Cock' (Gallus, the rooster who was once Pythagoras); 'the Gaul' is wrong",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Non igitur imitari debemus bonos naviculatores",
+            "english": "we must not imitate good sailors",
+            "problem": "acceptable; the irony of 'bonos' is flattened",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation field ends with <summary>…</summary> and <keywords>…</keywords> blocks; they are a leak if the reader does not strip them",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 211,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Declamas ager",
+            "image": "Declamas æger",
+            "problem": "ae-ligature dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "non dandum in febre, nisi veteribus ægris, vinum",
+            "english": "wine should not be given in a fever, except to aged patients",
+            "problem": "'veteres aegri' are long-standing (chronic) patients, not the aged; a dosing rule is misstated",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "declamas hemitritæus",
+            "english": "you declaim with a double tertian <note>a fever recurring every other day</note>",
+            "problem": "hemitritaeus is a semi-tertian fever, so both the translation and the added gloss are wrong",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 212,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Quibuſdam ⁷ φόινιος νόσος,",
+            "image": "Quibusdam & ⁷ φοίνιος σά- / λος",
+            "problem": "Sophocles' 'φοίνιος σάλος' (bloody surge) normalised to 'νόσος' (disease)",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "⁴ Λοιμὸς vel à λείπω",
+            "image": "⁴ Λοιγὸς vel à λείπω",
+            "problem": "λοιγός read as λοιμός",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "Peftis etymologia ... cauffæ, figna",
+            "image": "Pestis etymologia ... caussæ, signa",
+            "problem": "long-s read as f in the italic heading but as ſ in the body",
+            "severity": "minor",
+            "class": "O9"
+          },
+          {
+            "ocr": "efferata rabie lupus",
+            "image": "efferatus rabie lupus",
+            "problem": "ending misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "φοίνιος σάλος (OCR: φόινιος νόσος)",
+            "english": "phoinios nosos — blood-red disease",
+            "problem": "Carries the OCR substitution; Sophocles' phrase is 'bloody surge'",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR and translation of the pages are good, with a few moderate slips (chronic vs aged patients, 'the Gaul'). The book's identity is the problem: it is catalogued as the Dutch 'Schat der Gesontheyt', but the scan is a Latin 'Medicina veterum' work by the same author. A reader sees that mismatch at once."
+  },
+  {
+    "book_id": "6a4266e1dfbbb4d07aa70535",
+    "slot": 9,
+    "title": "De Memoria Artificiosa Libellus",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Magirus' 1603 art-of-memory catechism fits the library's early modern knowledge remit and early-european-books.",
+    "rights_flag": true,
+    "structure_note": "Printed pages 15-17 run in order and the single backstep is negligible. 5 of 54 pages are untranslated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "res magnæ, incredibiles, inuisæ, inauditæ",
+            "english": "large, incredible, ugly, unheard of",
+            "problem": "'inuisae' paired with 'inauditae' means unseen, not ugly",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "->Dacon-<-",
+            "image": "catchword 'Dacon-'",
+            "problem": "catchword placed in the body as centred text (also in meta)",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Voces similiter sunt duplices",
+            "english": "Voices are likewise twofold",
+            "problem": "'voces' here means words",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Running head 'DE ARTE' turned into an invented H1 heading '# ON THE ART'",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "note": "Empty centring arrows '-><-' left at the end of the translation (catchword removed, markup kept)",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "vt eò firmiùs imprimuntur",
+            "image": "imprimantur",
+            "problem": "mood normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Running head 'REMINISCENTIÆ.' rendered as an invented H1 heading '# REMINISCENCES.'",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean OCR and a largely faithful translation; one word ('inuisae' as 'ugly') is wrong. Running heads promoted to headings ('ON THE ART', 'REMINISCENCES.') and a stray '-><-' are visible blemishes."
+  },
+  {
+    "book_id": "6a4e5c0500c1250433dc2e93",
+    "slot": 10,
+    "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur ...",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 13-page Helmstedt (Academia Julia) student disputation on Roman-law quasi-contract (negotiorum gestio, tutela). It is a genuine early modern print but far from the library's core traditions and has no collection. The catalogue title also has the typo 'obligationlbus'.",
+    "rights_flag": null,
+    "structure_note": "13 pages, all OCR'd and translated, with no printed page numbers (signatures only), which matches a short disputation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "DOMINO GEORGIO ... DOMINO LEONI VVEISLANDIO, IURIS CONSULTO",
+            "image": "DN. GEORGIO ... DN. LEONI VVEISLANDIO, IC.",
+            "problem": "abbreviations silently expanded",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "Dedicat Dat.",
+            "image": "DD.",
+            "problem": "'DD.' expanded (order reversed: dat dedicat)",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "inclytae Argentinensium Academiae Professori codicis ordinario",
+            "english": "*illustrious* Professor of the Code in the Academy of Strasbourg",
+            "problem": "'inclytae' qualifies the Academy, not the professor",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Ornament description repeated as a <note> at the top of the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Paragraphus igitur cum quis Institutionibus hoc titulo lege si quis absens. Paragraphus in principio Digestis ...",
+            "image": "§.igitur cum quis Inst. h.t.l.si quis absentis. 5.in pr. ff de oblig. & actionib.",
+            "problem": "Legal sigla expanded into words and the law number '5' dropped; the citation is normalised, not transcribed",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "fortuitus casus interdum præstatur",
+            "english": "a fortuitous case is sometimes provided for",
+            "problem": "The legal sense is that the gestor is sometimes liable even for accident (casus); 'provided for' obscures it",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "de negotiis gestis",
+            "english": "on actions performed (negotiorum gestio)",
+            "problem": "Title of D.3.5 means 'on business managed'; recurring",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Every footnote marker becomes '<note>original: \"a\"</note>' in the reader text, cluttering each thesis",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "dicta lex s. paragraphus tutela quoque",
+            "image": "d.l.5. §.tutelæ quoque",
+            "problem": "law number 5 read as 's.'",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "lex 1. paragraphus 5 titulus Digestum de contraria tutela",
+            "image": "l.1.& t tit. ff. de contrar. tut.",
+            "problem": "citation garbled ('&' read as '5'); small type, low confidence",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "dicta lex s. (image: d.l.5.)",
+            "english": "the said Law 8",
+            "problem": "Invented law number '8' in the citation (neither image 5 nor OCR 's.')",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "in duplum cui rei persecutio inest, tenetur",
+            "english": "is held for double, to which is added the prosecution of the thing itself",
+            "problem": "The double INCLUDES recovery of the thing (actio mixta); 'is added' states the opposite legal rule",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "OCR and translation are serviceable for a dense legal disputation. The OCR expands sigla silently, the translation mangles a few legal technicalities and one citation number, and '<note>original: \"x\"</note>' clutter repeats throughout. It is on the margin of the library's scope."
+  }
+]

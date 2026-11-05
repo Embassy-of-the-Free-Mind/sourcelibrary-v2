@@ -1,0 +1,13 @@
+set -u
+N="node --env-file=/root/sourcelibrary/.env.production.local /mnt/HC_Volume_105839809/worktrees/job-lite-correct-gpu-7263/scripts/eval/lite-correct-gpu-7263/run-lite.mjs"
+cd /mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/zh
+$N --req=req-correct.jsonl --out=out-lite-correct.jsonl --arm=lite-correct --zh-agy-suffix
+$N --req=req-correct.jsonl --out=out-lite-noimg-correct.jsonl --arm=lite-noimg-correct --zh-agy-suffix --no-image
+$N --req=req-correct.jsonl --out=out-lite-correct-r2.jsonl --arm=lite-correct-r2 --zh-agy-suffix --uids=/mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/r2-zh.json
+cd /mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/tib
+$N --req=req/corr.jsonl --out=out/lite-corr.jsonl --arm=lite-corr
+$N --req=req/corr-anchor.jsonl --out=out/lite-corr-anchor.jsonl --arm=lite-corr-anchor
+$N --req=req/corr.jsonl --out=out/lite-noimg-corr.jsonl --arm=lite-noimg-corr --no-image
+$N --req=req/corr-anchor.jsonl --out=out/lite-noimg-corr-anchor.jsonl --arm=lite-noimg-corr-anchor --no-image
+$N --req=req/corr.jsonl --out=out/lite-corr-r2.jsonl --arm=lite-corr-r2 --uids=/mnt/HC_Volume_105839809/jobs/lite-correct-gpu-7263/r2-tib.json
+echo ALL_DONE

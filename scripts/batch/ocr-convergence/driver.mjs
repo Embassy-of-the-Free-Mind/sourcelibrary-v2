@@ -377,7 +377,7 @@ async function apply() {
   for (const [bookId, ds] of Object.entries(contain)) {
     const pages = ds.map((d) => d.page_number).sort((a, b) => a - b);
     const evidence = `#6420 lane B (${runId}): two OCR reads of different families disagree and an Opus reader of the image could not settle the page or found both reads wrong: ${ds.map((d) => `p.${d.page_number} ${d.why}${d.adj?.note ? ` (${d.adj.note.slice(0, 120)})` : ''}`).join('; ').slice(0, 1500)}`;
-    const h = await holdBook(db, bookId, { reason: 'ocr-unsettled-6420', issue: 6420, release: 'the contained pages are re-read and settled (a third read or a person), or a person releases them', source: 'scripts/batch/ocr-convergence/driver.mjs', detail: { pages, run: runId } }, { dryRun: !APPLY });
+    const h = await holdBook(db, bookId, { reason: 'ocr-unsettled-6420', issue: 6420, release: 'the contained pages are re-read and settled (a third read or a person), or a person releases them', release_when: { kind: 'issue', ref: 6420 }, source: 'scripts/batch/ocr-convergence/driver.mjs', detail: { pages, run: runId } }, { dryRun: !APPLY });
     const w = spawnSync('node', [path.join(REPO, 'scripts/maintenance/withhold-stale-translations.mjs'), `--book=${bookId}`, `--by-eye-pages=${pages.join(',')}`, `--evidence=${evidence}`, '--issue=6420', ...(APPLY ? ['--apply'] : [])], { encoding: 'utf8', env: process.env, maxBuffer: 64 * 1024 * 1024 });
     fs.appendFileSync(path.join(SETDIR, `apply-contain${APPLY ? '' : '.dry'}.log`), `\n== ${bookId} hold:${h.outcome} pages ${pages.join(',')}\n${w.stdout}${w.stderr}`);
     console.log(`  contain ${bookId} p.${pages.join(',')}: hold ${h.outcome}; withhold exit ${w.status}`);

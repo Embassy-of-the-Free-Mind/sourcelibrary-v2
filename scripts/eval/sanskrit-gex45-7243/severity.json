@@ -1,0 +1,2087 @@
+{
+ "per_page": {
+  "sa-30f2e4ed-p90": {
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   }
+  },
+  "sa-ee26ada9-p538": {
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 7,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-5d8c038d-p99": {
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 7,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   }
+  },
+  "sa-7b76611e-p276": {
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-347d21b6-p187": {
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 10,
+    "kind": "print"
+   }
+  },
+  "sa-7bd9afc5-p393": {
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 10,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   }
+  },
+  "sa-d69433d6-p121": {
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-e5a9d99f-p487": {
+   "D": {
+    "grade": 2,
+    "worst": "तदाव्ययीभावोऽनुप्रयुज्यत एकार्थस्यैकार्थ इति । यदा बहुवचन → तदा व्यवस्थीभावोज्युत्तरस्यै १० तदा बहुत्रचन (phrase dropped/garbled); also sūtra heading 'विभाषा समीपे' dropped",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "output is only '॥ ॥ ॥'",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "द्वन्द्वो → इन्द्रो (another real word); अथ → अयं; सख्यया → सत्यया",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "lines 19-20 (द्याचिख्यासायाम्… छाया बाहुल्ये [२२] इति वक्ष्यति) lost while 'न हि तदान्नमासस्य कर्मधारयस्य वा मा भूदिति। एतदपि नास्ति प्रयोजनम्' and 'हुल्ये … राजाम्' are repeated (loop)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "[ २१ ] → [११] (wrong sūtra number); एव तर्ह्यव्ययस्य → पर त्वध्ययस्य",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "द्वन्द्वो → इन्द्रो; एव → एतत्; footnote २५ → १५",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "२ । ४ । १६ → २ । ४ । १८ (wrong sūtra number); तर्ह्यव्ययस्य → तर्ह्यन्यस्य; अथ → अयं; कन्यान्त → कन्थान्तम्",
+    "n_ge2": 4,
+    "kind": "print"
+   }
+  },
+  "sa-024f76ae-p621": {
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-5744775b-p139": {
+   "Q": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 5,
+    "kind": "print"
+   }
+  },
+  "sa-5d8bd83c-p21": {
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   }
+  },
+  "sa-e625ae62-p64": {
+   "Q": {
+    "grade": 2,
+    "worst": "सुशीलः कामशास्त्रज्ञो → पुरुषोऽस्त्वाकाममात्रात्मनो; every verse number wrong (॥४२॥ → ॥८२॥ …)",
+    "n_ge2": 12,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "line-1 phrase looped into lines 2-3: कामशास्त्रज्ञो नारी मान्यश्चजायते / कामातुरो सत्यवादी रोगयुक्तो भवेन्नरः → क्षमत्वारोविद्वानपिभवेन्नः (x3)",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "whole line 2 lost: सुशीलः कामशास्त्रज्ञो नारी मान्यश्चजायते ॥४३॥ बुधेऽमे ख्यात ग्रंथकृबुद्धि पर → (missing)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "बुधेऽमे ख्यात ग्रंथकृबुद्धि → बुधेऽष्टेस्तद्गृहप्रवृद्धिश्च; दशमेच → लाभे च",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "कामशास्त्रज्ञो → कामशाश्वतो; लग्नेगुरौ → लक्ष्मणै",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 3,
+    "worst": "last line lost: जीवे सुखीलोकः सुभगो राजपूजितः … गुरुभक्तश्चजायते ॥५२॥ → (missing); verse numbers ॥४२॥ → ॥४॥",
+    "n_ge2": 7,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "page fragmented into 112 scrambled lines out of order with Latin noise (u8n म्यरमसेमपुदेचर्पविद्धिकीनर Rrलh …)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   }
+  },
+  "sa-e5a9d0dc-p668": {
+   "C": {
+    "grade": 2,
+    "worst": "headwords misread into other words: यजामि → यज्ञाग्नि, यजुः → यर्त्त, य॒ज्ञ॒ऽव॒र्ध॒न॒ → यज्ञऽमर्थम्; many wrong verse numbers (२३ → २९, ३५ → ४५)",
+    "n_ge2": 25,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "most of the page lost, replaced by a digit loop ('१; १७; १; १३; १; १४; १; १०, १;' repeated) and garbled headwords (य॒ज्ञ॒ऽआयु॒धैः → स्युज्जनयुज्ज्ञान:)",
+    "n_ge2": 20,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 3,
+    "worst": "the two columns are interleaved line by line, e.g. 'यजामि १. ३१, ३. यज्ञकामाः ७. १०८, १.'; also यजुःऽविदः → यजुःश्चिद्ः",
+    "n_ge2": 15,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "the two columns are interleaved and much is garbled or lost, e.g. 'यजामि १. ३१, २.' followed by 'यश्तकांमः ७ १०८,१'",
+    "n_ge2": 25,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "whole page lost: a counting loop '19; 20; 21; … 851' in Western digits instead of the page text",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "most of the page lost to a counting loop: यजी॑यान् ५. १२, ३… → 'यज्ञीयाम् ४, १२, १३, १४, … ३०.' and 'यज्ञी ७, १७, १८, … ७५१'",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "headwords misread into other words: यजुः → यज्ञी, य॒ज्ञ॒ऽप॒दी → यज्ञः पते, य॒ज्ञऽकृ॑तः → यज्ञः मृतः; many wrong verse numbers (५४, ९ → १४, ३)",
+    "n_ge2": 25,
+    "kind": "print"
+   }
+  },
+  "sa-05c7c5f3-p196": {
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 0,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 0,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-91d25f36-p187": {
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 4,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 25,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 7,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-a9a96a43-p165": {
+   "F": {
+    "grade": 2,
+    "worst": "काप्यमसन्दिग्धं → काव्यमसन्दिग्धं (real word kāvya replaces what the page prints)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "पञ्च वर्जयेत् → पक्ष वर्जियत्; स्मृता → रुचता; गोदुष्टं → गोदुहं",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "नाद्याढ्या → नाद्याख्या / मूर्छना → मूर्धना (other real words)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "verse numbers ४७६–४८६ → ८७६–८८६ (systematic); वर्णैर्या → वर्णैः (या dropped)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "चाभ्यञ्चि → चाभ्यञ्चिच",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "running head प्रबन्धाध्यायः । १५१ lost; रञ्जिनी → रस्तिनी",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "ग्राम्यं → गरस्य; वर्णे → वर्ण त (added syllable)",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-e625b010-p5": {
+   "P5": {
+    "grade": 3,
+    "worst": "most of the page lost to garble: lines 4-15 'कलत्रियाकहिनपनखना … षीअवलानिजनैनन॥बोल' → fragments 'वविमकवम / न / र / मैनिननाल'",
+    "n_ge2": 3,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": 4,
+    "worst": "whole page → 'मृत्युविषयम्' looped hundreds of times (text not on page)",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 4,
+    "worst": "'वहुरिमरछाकेरलमाई ३८९' → 'बहु बिस्तार का कह ल पाई ॥२९॥' (invented phrase + wrong verse number)",
+    "n_ge2": 7,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "'विपइषीइनकेवि' → 'विष्णुपीरुनकेवि'; verse no. '३८९' → 'इए'",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "verse no. '३८९' → '३८५' (and '३९' → '३८६')",
+    "n_ge2": 3,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 4,
+    "worst": "whole page → 'श्रुतिनिष्ठानां' looped (text not on page)",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "Bengali script loop 'শুরুত্বে…বল…' (wrong script)",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   }
+  },
+  "sa-91d24943-p9": {
+   "Q": {
+    "grade": 2,
+    "worst": "वीर्यंत्विदं → वीथीत्विदेः; चरमेनराः → चरम नगः (other real words)",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "खेटाःक्र → न्येच्छतिरेवोः ॥ ३ ॥ (invented verse number); पि[?][?]गा dropped",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": 4,
+    "worst": "चहिबुकंशोध्यं → चहिर्भक्षशास्त्रियमान्यायाः (invented words replacing the line end)",
+    "n_ge2": 7,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "last line (पि[?][?]गा माध्यंज्ञाडुततौस्तमचरसभात्पुष्टुंन्यजे[?][?]गाः दिवी) missing → चेत",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "प्रत्येग्रहा → स्वस्य प्रत्येका (added word); पि[?][?]गा dropped",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "whole page fragmented into ~30 garbled tokens with Latin 'a Z Z R EMm y'; most of the text lost",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": "DNR",
+    "worst": "Gemini filter notice",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   }
+  },
+  "sa-de21a71e-p163": {
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-9ba76960-p555": {
+   "C": {
+    "grade": 2,
+    "worst": "दक्षस्य → दृष्टस्य; also बलवंतमिंद्रं → बलवंतमिदं, प्रत्ता → प्रज्ञा, शुष्णं → श्रुष्वा, दुध्रो → दुग्धो",
+    "n_ge2": 7,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "page no. ५१८ → 496 and garbling throughout, e.g. यद्वा → यज्ञ, प्रत्ता → प्रजा, शत्रूणां → गच्छाएं",
+    "n_ge2": 20,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "पा० ७.१.५१.३. → १.१.५१.३.; इति सुक् → इति मुक्; सद्दीप्यते → सदीप्तं",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "शुष्णं → शृणुं; also बलवंतमिंद्रं → बलवंतमिदं, णम → णस",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "[अ०१. अ०४. व०२१. → [ऋ० ९. ऋ० ८. व० २९.; ५१८ → ४१८; दक्षस्य → देशस्य; गिरेर्भृष्टिर्न → गिरिभूषितेन",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "most of a line lost: बहुलमित्युत्त-रपदाद्युदात्तत्वं । परीणसः । णस कौटिल्य इत्ययं धातुर्गत्यर्थो धातूनामनेकार्थत्वात् → बहुलमिन्युस्त्रात्",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "शुष्णं → पुष्यं; सकारः → मकारः; heavy akṣara loss throughout (इंद्रस्तुर्वणिः → इंद्र्ुवएिः)",
+    "n_ge2": 8,
+    "kind": "print"
+   }
+  },
+  "sa-1697c6ed-p499": {
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-1697bec1-p584": {
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   }
+  },
+  "sa-1697c43d-p421": {
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   }
+  },
+  "sa-e0f809e3-p1393": {
+   "F": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   }
+  },
+  "sa-487f33e3-p412": {
+   "C": {
+    "grade": 2,
+    "worst": "अग्नेः स्वप्रकाशत्वं → अत्रैव स्वप्रकाशत्वं (also बुद्धिवृत्त्याख्यकरणाभावकाले → बुद्धिद्वयस्याप्यकरणभावावकाले; footnote lemmas rewritten)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "एकस्मिन्नुत्पत्तिक्षण → एकस्मिन्बुद्धिप्रतिष्ठान (also वृत्तिरूप → श्रुतिरूप, सत्यपरोक्षयोग्यत्वं → सत्यपरोक्षाधिगम्यत्वं)",
+    "n_ge2": 15,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "स्मृतिसंकरश्च ॥ २१ ॥ → समृतिसंकरश ॥ २९ ॥ (wrong sūtra number; also एकस्मिन्नुत्पत्तिक्षण → एकिससुवर्णिक्षण)",
+    "n_ge2": 14,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "स्वात्मप्रतिष्ठमाकाशमित्यस्यापरप्रतिष्ठ- → ...मित्यस्याप्रतिष्ठ- (also करोतीत्यग्नितो → करोतीत्याश्रितो)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "दग्धृत्ववत् → दृश्यत्ववत् (also footnote variant बुद्धिर्वृत्याख्य → बुद्धिवृत्त्याख्य, same as lemma)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "रा-गोऽमुत्र → रा-गोमुत्र (also मे → में)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "सामानाधिकरण्येन → सामान्याधिकरण्येन (also चरत्वात्स्वस्य → चरत्वात्सत्य)",
+    "n_ge2": 3,
+    "kind": "print"
+   }
+  },
+  "sa-7c60b19b-p202": {
+   "Q": {
+    "grade": 2,
+    "worst": "page number १७५ → १७४; also पश्चात्तं → पश्चात् (तं dropped), दह्यते → द्व्यात्",
+    "n_ge2": 9,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "अष्टांशेन → भगवान (another real word); line 2-3 heavily garbled word by word (चार्द्रपिण्डे → भाद्रिपछेज, ग्राहयेद्3दिवसे → पाधेयिर्४दिबंखं)",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "चार्द्रपिण्डे → घाट्टै पिष्टे; दद्याद्विचक्षणः → दयाद्विचलयः; fn (3) द्वतीय → वर्तमान",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "दत्त्वा → दक्षा, दह्यते → दद्यात् (other real words); fn (13) यावत् कदी न स्यात् → यावत् कन्दो न दद्यात्",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 2,
+    "worst": "page number १७५ → १७४ and verse number १२३ → १२२; fn (6) incomplete → complete",
+    "n_ge2": 7,
+    "kind": "print"
+   },
+   "F": {
+    "grade": "DNR",
+    "worst": "Gemini filter notice after the header line",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "चार्द्रपिण्डे → आर्द्रपिण्डे (च dropped); पश्चात् → पक्षात्; fn (15) सूतं → सूते",
+    "n_ge2": 3,
+    "kind": "print"
+   }
+  },
+  "sa-2380f313-p419": {
+   "C": {
+    "grade": 2,
+    "worst": "द्रव्य → द्वय (real word 'pair', systematic throughout the page)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "पुद्गल → पुस्तक; also अन्यवादी → अथवादि, तैसैं → तीस",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "अरु पुरुप दोऊ → अरुप दोऽ (word पुरुप dropped)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "द्रवंति → इवंति",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": "DNR",
+    "worst": "whole page → Latin-letter garbage (cWWcsesWcs I te lhe ...)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "दोऊहीकी सिद्धि ... द्रव्यका → 'दोऊद्वीकी' looped, rest of page (~9 lines) lost",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "कथंचित् → कल्पित; also न्यारे न्यारेही → न्यारेही",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-1697d8cb-p58": {
+   "S": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 1,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-8eaa4560-p334": {
+   "Q": {
+    "grade": 2,
+    "worst": "प्रवरास्तु सर्व्वाः → प्रवराश्च स्वार्थिः; also verse २७९ → २७४, पुण्यहीना → पुष्पच्छीना",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "verse numbers २७९/२८० → १७९/१८०; श्यांकुलके → द्विकालके; श्रियम्वा → श्यखता",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "verse line 7-8 scrambled: स्युर्व्रह्मवाक्षत्रववैश्यशूद्राः सर्पेषु जाताः प्रवरास्तु सर्व्वाः २८० → ु्वाववद्रः सपेघु सर्वाः २८० ॥ जाताः प्रवराखु (line content lost, words out of order)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "क्षत्रि → द्वन्द्वि (repeated in क्षत्रिबर्ण)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "क्षत्रि → दन्ति; गुञ्जा → गुच्छा; verse २७९ → २७६",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "रोसन → रोमन (another real word)",
+    "n_ge2": 1,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "verse २७९ → २७६; श्रियम्वा → श्रियञ्च",
+    "n_ge2": 2,
+    "kind": "print"
+   }
+  },
+  "sa-8eaa58d0-p117": {
+   "C": {
+    "grade": 2,
+    "worst": "कारयेन्मन्दिरान्तरम् → कारयेन्निद्रान्तरम्; महापुराणे → मन्त्रापुराणे; रक्षां → रत्नां (real-word misreads)",
+    "n_ge2": 15,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "whole lines unreadable/lost, e.g. 'दुष्टलिङ्गमिदं शम्भोः शान्तिरुद्धरणस्य चेत्' → 'दुर्धिब्जिमिदं यमो: सानिस्दर्ग्यासं चेत'; 'वैराजः पुष्पकश्चान्यः कैलासो मणिकस्तथा' → '...कौलांबो महाकालस्वा'",
+    "n_ge2": 30,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "कलशो गर्भः → कर्तव्यो गर्भं; दत्त्वार्घ्यञ्च → दृष्टार्थंज्ञ (real-word misreads); running head line dropped",
+    "n_ge2": 15,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "footnote 'ओं व्यापकं हृदयेश्वराय' → 'श्रों व्यापकेश्वराय हृदयेश्वराय' (word added); लिङ्गमन्यत् → लिष्ट्रमन्त्रत्; महापुराणे → मन्त्रापुराणे",
+    "n_ge2": 20,
+    "kind": "print"
+   },
+   "F": {
+    "grade": "DNR",
+    "worst": "Gemini filter notice, no text",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "two columns interleaved line by line: 'ततोऽन्यत्रापि संस्थाप्य…' preceded by right-column 'खङ्ग मन्त्रगणं न्यस्य…', chapter 104 verses mixed into chapter 103",
+    "n_ge2": 20,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "भित्तेर्भागेन → भिक्षुभागीन; वृत्तो वृत्तायत → वृक्षो वृक्षायत; नीत्वा → नीला; वहिः → वह्निः (real-word misreads)",
+    "n_ge2": 9,
+    "kind": "print"
+   }
+  },
+  "sa-0f19de12-p607": {
+   "P5": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 10,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 6,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 4,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "(quote withheld: post-1930 edition, #4809)",
+    "n_ge2": 9,
+    "kind": "print"
+   }
+  },
+  "sa-8eaa2441-p684": {
+   "F": {
+    "grade": 2,
+    "worst": "स्यात्त्रातव्यस्य → स्याद्भ्रातव्यस्य (another real word; also उदूढ → उद्गूढ)",
+    "n_ge2": 2,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "विस्मार्यं प्रत्याख्याताप्तमन्त्रितम् → विस्मार्थं प्रत्याख्यातात्ममन्त्रितम्",
+    "n_ge2": 3,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "भोजेन सार्धं शुद्धान्तं रड्डादेव्या → भोजन सार्य शुद्धात्त रहुद्यो (many words garbled or turned into other words, e.g. पद्मान् → पक्षात्)",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "verse numbers ३२४१–३२५२ → ३२८१–३२९२; राज्ञी/राज्ञा → राष्ट्री/राष्ट्रा",
+    "n_ge2": 5,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 1,
+    "worst": "क्ष्माभृद्घोषेत्य → क्षमाभृद्योषेत्य",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 1,
+    "worst": "प्रत्याख्याताप्तमन्त्रितम् → प्रत्याख्याताप्तमत्रितम्",
+    "n_ge2": 0,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "half-lines out of order: 'वीक्ष्य सौजन्यादि…' before 'कृतप्रणामस्तां'; 'नृपस्याप्तः' after ३२४५; 'युक्तं जेतुं' before 'पद्मान्…'; 'त्वमप्यस्य न' after the final verse number",
+    "n_ge2": 7,
+    "kind": "print"
+   }
+  },
+  "sa-2a4369ae-p548": {
+   "Q": {
+    "grade": 2,
+    "worst": "पृश्निपर्ण्याम् → पृथिव्यप्रत्याम्; उष्ट्रे त्रिका. → उद्ग्री विकारा; page ४८६ → ८८६",
+    "n_ge2": 18,
+    "kind": "print"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "दुःखवर्द्धनः → दुःखवर्जनः; पृश्निपर्ण्याम् → पृथिव्यास्तम्भाम्; क्षीर → चौर (throughout)",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "কত্তৃণে রামকর্পূর → कर्तृण्ये रा.नि.व.१५ (gloss replaced by a citation); রাজ অন্ন → रा.नि.व.४",
+    "n_ge2": 12,
+    "kind": "print"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "त्रिशतधनुः → त्रिंशद्धनुः; पाकश्च त्वक्स्थोऽसौ → पाकञ्च लभतेऽसौ; page ४८६ → ४९६",
+    "n_ge2": 8,
+    "kind": "print"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "columns interleaved line by line (col 1 and col 2 lines alternate), e.g. 'शोफी भवति पाकश्च…' placed after दीर्घस्कन्धः line",
+    "n_ge2": 25,
+    "kind": "print"
+   },
+   "PV": {
+    "grade": 2,
+    "worst": "दीर्घस्कन्धः → श्रीकी सच:; वृष्यं वृंहणमाग्नेयञ्च → ह्वंहंधमाप्रियच् (pervasive garble); page head → [82]",
+    "n_ge2": 40,
+    "kind": "print"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "अल्पधातुबलं → षत्स्त्रधातुबलं; रा.नि.व.६ → रा.नि.व.९; running head lost",
+    "n_ge2": 15,
+    "kind": "print"
+   }
+  },
+  "sa-1a8dfbde-p5": {
+   "S": {
+    "grade": 2,
+    "worst": "श्रुतेर्मुक्तस्य → शक्तेर्मुक्तस्य; also ज्ञानेरतं → शतं रतं, विरचिताज्ञान → विधिता वात, श्रीराम dropped",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "ब्रह्मसाम्य → ब्रह्मसमाप्त्य; also मुद्गराघातेन → मुक्तगायतेन, ज्ञानेरतं → शतंरते, ज्ञानदूषणी → श्रुतहृष्यणी, श्रीराम dropped",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "final line ॥ छ ॥ … श्रीराम → a loop of thousands of repeated ॥; also अतोब्रह्मविद्ब्रह्मैवेति… → अनीत्रलविद्वेशेवित्त्वाने…",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "after समाप्तिमगात् → a loop of hundreds of '8'; whole text garbled (पादकैर्विरोधापनेश्च → कृष्ठहृदप पार्टीवीरीधापन्यू)",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": "DNR",
+    "worst": "output is only repeated ॥ dandas, no letters",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "अतोब्रह्मविद्ब्रह्मैवेतिश्रुतेर् → अतोऽस्मद्विद्वेषैवेतिप्रकृतेर्; also दिष्टहतमुद्गराघातेन → दिक्सहस्रगुणघातेन",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "lines out of order: 'लीपुलाकन्यायेन…' placed after विचार्यचपुनः, 'पुनः' moved after इतिश्रीमन्नारायण; text largely garbled",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   }
+  },
+  "sa-1a8e15ca-p1": {
+   "P5": {
+    "grade": 3,
+    "worst": "whole text block lost to gibberish: 'पूर्वत्रासिद्धमितिरोरीत्यस्यासिद्धत्वादुत्वमेव मनोरथः एतत्तदोः' → 'वरिर्वनसदमाल्ोनो ्रायल वारवमेनामोरयणपनतटोः'; no line of the page is readable",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "'सशंभुः' (example) → 'शंभुः'; also 'अर्थवदधातु' → 'पूर्यवरधातु', 'सत्येव' → 'सवेव एके'",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "loop: 'पूर्वत्रासिद्धम्…' → 'द्राविडास्कृतिनित्यादिश्चास्त्रास्त्रास्त्र…' repeated to the end; whole page lost",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": "DNR",
+    "worst": "empty output",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "Tibetan script loop ('ཀེ་ལིའི་' repeated) instead of Devanagari",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "'अककारयोरेतत्तदोर्यः' → 'इदूतोः शसोरेतत्तदोर्यः'; also 'सइत्यस्यसोर्लोपःस्यादचिपादश्चेल्लोपेसत्येवपूर्येत समामविड्ढिप्रभृतिं' → 'से मामविढ ॥ सोचिपादस्य चेल्लोपेन तेनैव पूर्येत समामार्विढू पूर्यते'",
+    "n_ge2": 4,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "'अर्थवदधातुरप्र' → 'प्रथंवरुणः'; also 'सुस्तस्यलोपो' → 'सस्यलोपो', 'एषकोरुद्रः' → 'एषकोरुः'",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   }
+  },
+  "sa-e6c258c2-p2": {
+   "S": {
+    "grade": 2,
+    "worst": "सर्वरोगहराष्टकं → सर्वशेषा दूरा एकं (also विघ्नकरं → विध्वनु पुरं, श्रधयान्वितः → श्रव्यया वितः)",
+    "n_ge2": 12,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": "DNR",
+    "worst": "empty output",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "final danda row → loop of '।' repeated for ~15KB; text garbled throughout (नामषष्ठंकुसानीतथा → नामन् वंकृणोहितं थाप्सत्तंभी)",
+    "n_ge2": 15,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 4,
+    "worst": "(not on page) → श्रीमद्भगवद्गीता सप्तमोऽध्यायः appended after the colophon",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "मालाकंमंडलोपेतां → माणिक्यं भांडलोपेतां (also संदात् → संकटात्, verse nos. ११/१२/१३ → १२/१३/१४)",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "lines 9-12 (विधिनंदनः … संपूण) almost entirely missing; rest garbled",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "final danda row → loop of '।।' repeated for ~15KB; text garbled (विजयातथा → विज्ञानं त्वया, इत्युक्ता → इस्लाम)",
+    "n_ge2": 15,
+    "kind": "manuscript"
+   }
+  },
+  "sa-87c61f7c-p2": {
+   "P5": {
+    "grade": 3,
+    "worst": "line 1 'ॐ ईशानःसर्वविधानामीश्वरःसर्वभूतानांब्रह्माधिपती' → 'उप्रवीन रशन स्वयानमा र स्द रतानाजलाघिषती' (whole line unreadable/lost; fragments reordered, e.g. 'इत्युररें' before 'नतरमनायनमोमने')",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "'आयुस्यमग्र्यप्रतिमु…' → 'ज्ञायुस्यम्म्म्म्…' (loop of thousands of 'म्'; last ~9 lines of the page lost)",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "'सर्वभूतानां' → 'सर्वश्रुता नां'; 'मनोन्मनायनमः' → 'मनो नमताय नमः'; 'ब्रह्मणोधिपति' → 'ॐ ह्येणोधिपति'",
+    "n_ge2": 7,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": 2,
+    "worst": "'प्रजापात्तिऋषिँगाय' → 'प्रश्नापत्ति श्रविणाय'; 'ब्रह्मणोधिपतिर्ब्रह्मा' → 'र्ज हुलोधिपतिर्भुत्सा'",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "'प्रजापात्तिऋषिँगाय' → 'दिप्रजा पति श्येष्टायतम'; 'स्तुसदाशिवोम्' → 'स्फुटा शिवो म'; 'आयुस्यमग्र्य' → 'आयुस्य मग्नं'",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 4,
+    "worst": "page's 'श्री जसोपवी पवितंपरमंपवित्रंप्रजाआलेर्यः… चषुभ्रंरयसोपँतं… यसोपवितमिँसेयैस्लबारय ति' silently replaced by the standard mantra 'ॐ यज्ञोपवी पवित्रं परमं पवित्रं प्रजापतेर्य्यत्… शुभ्रं यज्ञोपवीतं… यज्ञोपवितमसि येनत्वारयति'",
+    "n_ge2": 3,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "lines 1-8 garbled past recovery, e.g. 'ईशानःसर्वविधानामीश्वरःसर्वभूतानां' → 'ईसांतःसंवैव्यानांनांघरःसबैचतांजोबलापिपतीः', 'बलप्रमथनायनमःसर्व' → 'वतम्नमधनाथनम्सवै' (whole lines effectively lost)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   }
+  },
+  "sa-1a8e17d4-p5": {
+   "S": {
+    "grade": 2,
+    "worst": "यथावृद्धि → यथावृष्टि (another real word); also wrong verse numbers ७४/७५/११९/१२०/१२१ → ७६/७७/११७/११८/११९",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "Tibetan-script text, no Devanagari",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "nearly the whole page is unreadable fragments (e.g. line 1 → 'मवकचककनयनन'); most sūtras lost",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "श्रुताश्रुतयोःश्रुते… श्रुतानुमितयोः → कृताकृतयोःकृते… कृतानुमितयोः; also विधिरेवडापात् → विधिरेवज्यायान् (standard reading, one word), ७२ → १०२",
+    "n_ge2": 7,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": "DNR",
+    "worst": "only a long string of dandas, no text",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "पपूरविधानाद् → उपपदविधाना (another real word); ताचछील्येतोचेछीली → तावच्छिन्त्ये ×3; श्रुत → अत throughout; verse numbers ७३/७४/७५ → ७७/७८/७९",
+    "n_ge2": 6,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 2,
+    "worst": "प्रधानाप्रधानयोः → प्रधानप्रवालयोः; संदेहेबहुवचनं → नरेद्वल्ल तुवचनं; many garbled words and wrong numbers (११८–१२१ → ११५–११८)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   }
+  },
+  "sa-e64f2efd-p5": {
+   "P5": {
+    "grade": 3,
+    "worst": "whole page garbled to non-words: तिर्य्यक्कृत्यगतः तिर्य्यक्कारम् समाप्य… → तिप्पकक्लगतःतक्रकारम्ासमा प्97नत्3 पवजकन्ा… (no line recoverable)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "अनेकंद्रव्यमेकंभूत्वा → अनेकद्रव्यमेकं कृत्वा; also स्वांगेतस्प्रत्यये → स्वाङ्गे तस्य प्रत्यये, नाधार्थ → नानार्थ, अनानाना नाना → अ नाना नाना, विनाकृत्य विनाकृत्वा → विनाकू त्वा विनाकृत्या",
+    "n_ge2": 5,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": 3,
+    "worst": "whole page garbled with intrusive words: मुखतोभूय मुखतोभूत्वा मुखतोभावम् → मुखत त्तं पप मुखत त्तं श्वा…; अनेकंद्रव्यमेकं → भगवन् उनने केंद्र",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   },
+   "D": {
+    "grade": 3,
+    "worst": "whole page garbled: तिर्य्यक्कृत्यगतः तिर्य्यक्कारम् → तिप्रेक्कल्पगतः तिपिक्ककारनः; एकधाभूय → देक्कधाभ्रम्ये … (no line reads correctly)",
+    "n_ge2": 10,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "loop: एकधाभूय एकधाभूत्वा … → 'एकधाम्स्था' repeated hundreds of times; rest of page lost/garbled",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "हिरुक्कृत्वा पृथक्कृत्वा → हि सूक्तं कृत्वा पृथक् भूत्वा; also अनेकं द्रव्यमेकं → अनेके द्रव्यमेके, तिर्य्यक् → तिप्रिक्तं",
+    "n_ge2": 4,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "पृथक्कृत्वा → एष कृत्वा; also काष्ठंगतः → कांक्षगतः, स्वांगेत → स्वर्गोत, अपवर्गे → अ पवर्ण",
+    "n_ge2": 4,
+    "kind": "manuscript"
+   }
+  },
+  "sa-23bfb025-p5": {
+   "D": {
+    "grade": 3,
+    "worst": "whole page (26 lines) → 2 lines of garble ending in a loop 'न्वयान्वयान्वयान्...' repeated thousands of times",
+    "n_ge2": 1,
+    "kind": "manuscript"
+   },
+   "F": {
+    "grade": 2,
+    "worst": "सत्ताख्यंमहासामान्यं → संज्ञानिर्वृत्तमहासामान्ये; also margin '...हिशब्दलक्षणमितिभावः' → '...द्रव्यवत्त्वमिति भावः', कपिलः → कपित्थः, 'पृच्छति कस्तर्हीति' dropped",
+    "n_ge2": 8,
+    "kind": "manuscript"
+   },
+   "P5": {
+    "grade": 3,
+    "worst": "nearly the whole page unreadable garble, e.g. 'यत्तर्हितत्शुक्लो नीलःकपिलःकपोतइति' → 'यत्नर्िंततशरकी नीलकैपिल्कपेोतरति'; commentary and main block effectively lost",
+    "n_ge2": 3,
+    "kind": "manuscript"
+   },
+   "Q": {
+    "grade": 3,
+    "worst": "main block 'नेत्याहद्रव्यंनामतत्...' collapses into a loop 'न्त्रेष्वेष्विन्त्रेष्वेष्वि...' repeated hundreds of times; rest of the main block and lower lines lost",
+    "n_ge2": 4,
+    "kind": "manuscript"
+   },
+   "C": {
+    "grade": 2,
+    "worst": "सत्ताख्यंमहासामान्यं → संज्ञारत्नमहासामान्य; also रामरामः → रामायणः, margin glosses rewritten ('क्रियागुणौचज्ञाताश्रयौ' → 'त्रिपायैर्गुणैर्विज्ञातव्यम्'), नित्यत्वं → तृतीयसत्त्व",
+    "n_ge2": 12,
+    "kind": "manuscript"
+   },
+   "PV": {
+    "grade": "DNR",
+    "worst": "empty output",
+    "n_ge2": 0,
+    "kind": "manuscript"
+   },
+   "S": {
+    "grade": 2,
+    "worst": "अनेनतुनित्यत्वं → अनेन तु विलयं; also सत्ताख्यं → संज्ञात्वे, 'आनर्थक्येतुप्रत्येकम्' → 'आत्तथैकप्रत्यंगात् अथ न यैकप्रत्यंगात्', रामरामः → रामायः",
+    "n_ge2": 9,
+    "kind": "manuscript"
+   }
+  }
+ },
+ "cells": {
+  "all": {
+   "S": {
+    "n": 40,
+    "DNR": 0,
+    "g": [
+     1,
+     15,
+     23,
+     1,
+     0
+    ],
+    "ge2": 24,
+    "loss": 87,
+    "share_ge2_of_all": 0.6,
+    "mean_loss_graded": 2.17
+   },
+   "PV": {
+    "n": 40,
+    "DNR": 6,
+    "g": [
+     0,
+     0,
+     22,
+     11,
+     1
+    ],
+    "ge2": 34,
+    "loss": 109,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3.21
+   },
+   "D": {
+    "n": 40,
+    "DNR": 4,
+    "g": [
+     0,
+     6,
+     20,
+     8,
+     2
+    ],
+    "ge2": 30,
+    "loss": 110,
+    "share_ge2_of_all": 0.85,
+    "mean_loss_graded": 3.06
+   },
+   "P5": {
+    "n": 40,
+    "DNR": 1,
+    "g": [
+     0,
+     6,
+     12,
+     21,
+     0
+    ],
+    "ge2": 33,
+    "loss": 105,
+    "share_ge2_of_all": 0.85,
+    "mean_loss_graded": 2.69
+   },
+   "F": {
+    "n": 40,
+    "DNR": 3,
+    "g": [
+     1,
+     9,
+     24,
+     1,
+     2
+    ],
+    "ge2": 27,
+    "loss": 104,
+    "share_ge2_of_all": 0.75,
+    "mean_loss_graded": 2.81
+   },
+   "Q": {
+    "n": 40,
+    "DNR": 0,
+    "g": [
+     0,
+     1,
+     27,
+     11,
+     1
+    ],
+    "ge2": 39,
+    "loss": 125,
+    "share_ge2_of_all": 0.975,
+    "mean_loss_graded": 3.13
+   },
+   "C": {
+    "n": 40,
+    "DNR": 0,
+    "g": [
+     0,
+     6,
+     33,
+     0,
+     1
+    ],
+    "ge2": 34,
+    "loss": 115,
+    "share_ge2_of_all": 0.85,
+    "mean_loss_graded": 2.88
+   }
+  },
+  "print": {
+   "S": {
+    "n": 30,
+    "DNR": 0,
+    "g": [
+     1,
+     15,
+     14,
+     0,
+     0
+    ],
+    "ge2": 14,
+    "loss": 57,
+    "share_ge2_of_all": 0.467,
+    "mean_loss_graded": 1.9
+   },
+   "PV": {
+    "n": 30,
+    "DNR": 2,
+    "g": [
+     0,
+     0,
+     22,
+     5,
+     1
+    ],
+    "ge2": 28,
+    "loss": 91,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3.25
+   },
+   "D": {
+    "n": 30,
+    "DNR": 0,
+    "g": [
+     0,
+     6,
+     19,
+     5,
+     0
+    ],
+    "ge2": 24,
+    "loss": 78,
+    "share_ge2_of_all": 0.8,
+    "mean_loss_graded": 2.6
+   },
+   "P5": {
+    "n": 30,
+    "DNR": 1,
+    "g": [
+     0,
+     6,
+     12,
+     11,
+     0
+    ],
+    "ge2": 23,
+    "loss": 75,
+    "share_ge2_of_all": 0.8,
+    "mean_loss_graded": 2.59
+   },
+   "F": {
+    "n": 30,
+    "DNR": 2,
+    "g": [
+     1,
+     9,
+     17,
+     1,
+     0
+    ],
+    "ge2": 18,
+    "loss": 63,
+    "share_ge2_of_all": 0.667,
+    "mean_loss_graded": 2.25
+   },
+   "Q": {
+    "n": 30,
+    "DNR": 0,
+    "g": [
+     0,
+     1,
+     24,
+     5,
+     0
+    ],
+    "ge2": 29,
+    "loss": 88,
+    "share_ge2_of_all": 0.967,
+    "mean_loss_graded": 2.93
+   },
+   "C": {
+    "n": 30,
+    "DNR": 0,
+    "g": [
+     0,
+     6,
+     24,
+     0,
+     0
+    ],
+    "ge2": 24,
+    "loss": 78,
+    "share_ge2_of_all": 0.8,
+    "mean_loss_graded": 2.6
+   }
+  },
+  "manuscript": {
+   "Q": {
+    "n": 10,
+    "DNR": 0,
+    "g": [
+     0,
+     0,
+     3,
+     6,
+     1
+    ],
+    "ge2": 10,
+    "loss": 37,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3.7
+   },
+   "D": {
+    "n": 10,
+    "DNR": 4,
+    "g": [
+     0,
+     0,
+     1,
+     3,
+     2
+    ],
+    "ge2": 6,
+    "loss": 32,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 5.33
+   },
+   "PV": {
+    "n": 10,
+    "DNR": 4,
+    "g": [
+     0,
+     0,
+     0,
+     6,
+     0
+    ],
+    "ge2": 6,
+    "loss": 18,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3
+   },
+   "F": {
+    "n": 10,
+    "DNR": 1,
+    "g": [
+     0,
+     0,
+     7,
+     0,
+     2
+    ],
+    "ge2": 9,
+    "loss": 41,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 4.56
+   },
+   "C": {
+    "n": 10,
+    "DNR": 0,
+    "g": [
+     0,
+     0,
+     9,
+     0,
+     1
+    ],
+    "ge2": 10,
+    "loss": 37,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3.7
+   },
+   "S": {
+    "n": 10,
+    "DNR": 0,
+    "g": [
+     0,
+     0,
+     9,
+     1,
+     0
+    ],
+    "ge2": 10,
+    "loss": 30,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3
+   },
+   "P5": {
+    "n": 10,
+    "DNR": 0,
+    "g": [
+     0,
+     0,
+     0,
+     10,
+     0
+    ],
+    "ge2": 10,
+    "loss": 30,
+    "share_ge2_of_all": 1,
+    "mean_loss_graded": 3
+   }
+  }
+ }
+}

@@ -23,6 +23,7 @@
 import { MongoClient } from 'mongodb';
 import { spawn } from 'child_process';
 import fs from 'fs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (n) => args.find(a => a.startsWith(`--${n}=`))?.split('=')[1];
@@ -48,7 +49,9 @@ async function main() {
   const books = c.db('bookstore').collection('books');
   // IA philosophy books needing archiving
   const q = { work_id: { $regex: '^(kr:|wd:)' }, hidden: true, 'image_source.provider': 'internet_archive',
-    $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
+    $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
+    // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+    ...PAGES_MATERIALIZED_FILTER };
   const list = await books.find(q, { projection: { id: 1, pages_count: 1, pages_archived: 1 } }).toArray();
   await c.close();
 

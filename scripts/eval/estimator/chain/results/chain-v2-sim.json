@@ -1,0 +1,185 @@
+{
+ "known_instrument_offsets": {
+  "made_worse:blind-judge": 0.0,
+  "made_worse:mechanical": 0.346,
+  "made_worse:leaf-audit-tiles": 1.009,
+  "made_worse:leaf-audit-frame": -0.307,
+  "made_worse:by-eye": -0.012,
+  "made_better:blind-judge": 0.0,
+  "made_better:mechanical": 0.488,
+  "made_better:leaf-audit-tiles": -0.717,
+  "made_better:leaf-audit-frame": -0.998,
+  "made_better:by-eye": 0.011
+ },
+ "reps": [
+  {
+   "rep": 0,
+   "fit": {
+    "divergences": 1,
+    "max_rhat": 1.002,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.96,
+   "cells": 100,
+   "median_abs_rate_error": 0.0292,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 1,
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.003,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.98,
+   "cells": 100,
+   "median_abs_rate_error": 0.041,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 2,
+   "fit": {
+    "divergences": 1,
+    "max_rhat": 1.006,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 1.0,
+   "cells": 100,
+   "median_abs_rate_error": 0.0414,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 3,
+   "fit": {
+    "divergences": 1,
+    "max_rhat": 1.003,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.94,
+   "cells": 100,
+   "median_abs_rate_error": 0.0278,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 4,
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.007,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.88,
+   "cells": 100,
+   "median_abs_rate_error": 0.044,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 5,
+   "fit": {
+    "divergences": 2,
+    "max_rhat": 1.007,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.91,
+   "cells": 100,
+   "median_abs_rate_error": 0.0453,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 6,
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.015,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.77,
+   "cells": 100,
+   "median_abs_rate_error": 0.0822,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": false,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": true
+   }
+  },
+  {
+   "rep": 7,
+   "fit": {
+    "divergences": 0,
+    "max_rhat": 1.005,
+    "chains": 4,
+    "draws_per_chain": 600
+   },
+   "cell_coverage_90": 0.97,
+   "cells": 100,
+   "median_abs_rate_error": 0.0281,
+   "instrument_covered": {
+    "made_worse:mechanical": true,
+    "made_worse:leaf-audit-tiles": true,
+    "made_worse:leaf-audit-frame": true,
+    "made_better:mechanical": true,
+    "made_better:leaf-audit-tiles": true,
+    "made_better:leaf-audit-frame": false
+   }
+  }
+ ],
+ "mean_cell_coverage_90": 0.926,
+ "instrument_coverage": {
+  "made_worse:mechanical": 8,
+  "made_worse:leaf-audit-tiles": 8,
+  "made_worse:leaf-audit-frame": 8,
+  "made_better:mechanical": 7,
+  "made_better:leaf-audit-tiles": 8,
+  "made_better:leaf-audit-frame": 7
+ }
+}

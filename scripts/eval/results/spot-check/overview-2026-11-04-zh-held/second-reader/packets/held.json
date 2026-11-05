@@ -1,0 +1,474 @@
+[
+ {
+  "book_id": "6ae0be184adf2ffb52f729b9",
+  "title": "前漢書·卷六~卷七 (Hanshu, Siku Quanshu, vol. 3 of 57)",
+  "page_number": 107,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0be184adf2ffb52f729b9/107.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n聞而憐之立煖為泗水王相内史皆下獄三月賜郡國\n所選有行義者涿郡韓福等五人帛人五十匹遣歸詔\n曰朕閔勞以官職之事\n鄧展曰閔哀韓福等不\n忍勞役以官職之事\n其務脩\n孝弟以教鄉里令郡縣常以正月賜羊酒有不幸者賜\n衣被一襲祠以中牢\n師古曰幸者吉而免凶也故死謂\n之不幸一襲一稱也猶今言一副\n也中牢即少\n牢謂羊豕也\n武都氐人反\n師古曰氐\n音丁奚反\n遣執金吾馬適建\n龍頟侯韓増\n師古曰姓馬適名建也龍頟漢書本或作\n雒字功臣侯表云弓高壯侯韓頽當子詭\n封龍雒侯元鼎五年坐酎金免後元元年詭弟子増紹\n封龍雒侯而荀悦漢紀龍雒皆為頟字崔浩曰雒音洛\n前漢書\n次定曰事人三等",
+  "translation": "<meta>continues from previous page</meta>When the Emperor heard of it, he took pity on him, established Luan as King of Sishui, and had the Chancellor and Senior Scribe cast into prison. In the third month, silk fabric was bestowed upon those selected by the commanderies and kingdoms for conduct and righteousness, including Han Fu of Zhuo Commandery and four others, fifty bolts per person, and they were sent home. An edict declared: \"We regret to wear them out with the burdens of official duties.\"\n\n<note>Deng Zhan states: \"The Emperor took pity and felt grief for Han Fu and the others, and could not bear to wear them out with labor and service in official duties.\"</note>\n\n\"Let them devote themselves to cultivating filial piety and brotherly respect in order to instruct their local communities. Let the commanderies and counties regularly grant them sheep and wine in the first month. If any among them meets with misfortune, grant them a single suit of clothing and quilts, and sacrifice to them with a <term>zhonglao</term> <gloss>secondary sacrificial offering of sheep and pig</gloss>.\"\n\n<note>Yan Shigu states: \"Fortunate means auspicious and avoiding misfortune; hence death is referred to as misfortune. A suit refers to a complete set, like saying a pair or set today. The <term>zhonglao</term> is the lesser offering <term>shaolao</term>, referring to a sheep and a pig.\"</note>\n\nThe Di people of Wudu rebelled.\n\n<note>Yan Shigu states: \"The character <term>Di</term> has the fanqie pronunciation of <term>ding</term> and <term>xi</term>.\"</note>\n\nThe Commander of the Capital Gendarmes <term>Zhi Jinwu</term> Ma Shi Jian and Marquis of Long'e Han Zeng were dispatched.\n\n<note>Yan Shigu states: \"The surname was Mashi and the personal name was Jian. For Long'e, editions of the Hanshu sometimes write the character <term>Luo</term>. The Table of Meritorious Officials and Marquises states that Han Tuodang, Marquis Zhuang of Gonggao, had a son named Gui who was enfeoffed as Marquis of Longluo. In the fifth year of the Yuanding era he was stripped of rank due to the gold offering offense. In the first year of the Houyuan era, Gui's younger brother's son Zeng succeeded to the enfeoffment as Marquis of Longluo. Xun Yue's Han Annals uses the character <term>E</term> for all instances of Longluo. Cui Hao says that <term>luo</term> is pronounced like <term>luo</term>.\"</note>\n\n<note>Former Han Annals commentary by Ciding: \"...serving others has three grades...\"</note>\n\n<summary>Emperor Zhao restores the Kingdom of Sishui for the posthumous prince Luan, punishes negligent officials, rewards virtuous elders with stipends, and dispatches generals to quell a Di rebellion in Wudu.</summary>\n<keywords>Emperor Zhao, Sishui, Luan, Han Fu, Zhuo Commandery, filial piety, zhonglao, Wudu, Di rebellion, Ma Shi Jian, Han Zeng, Long'e, Yan Shigu, Deng Zhan</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-hanshu|6ae0be184adf2ffb52f729b9|107|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "前漢書 / 次定曰事人三等",
+    "image": "the margin: 欽定四庫全書 … 前漢書 … 七",
+    "source": null,
+    "english": null,
+    "problem": "the margin title 欽定四庫全書 garbled into a sentence that reads like a commentator ('次定 said …'), and the folio number 七 lost",
+    "note": null,
+    "class": "O11"
+   },
+   {
+    "claim_id": "zh-hanshu|6ae0be184adf2ffb52f729b9|107|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "the garbled margin is translated as a commentary note: 'Former Han Annals commentary by Ciding: \"...serving others has three grades...\"'. There is no commentator Ciding and no such statement on the leaf.",
+    "class": "T10"
+   }
+  ],
+  "previous_page_ocr_tail": "長公主共養\n勞苦復以藍田益長公主湯沭邑泗水戴王前薨以母\n嗣國除後宮有遺腹子煖\n師古曰煖\n音許遠反\n相內史不奏言上",
+  "next_page_ocr_head": "<header>卷七</header>\n今河間龍雒村與弓高相近然此既地名無别\n指義各依書字而讀之斯則通矣譊音女交反\n大鴻臚"
+ },
+ {
+  "book_id": "6ae0c1f34adf2ffb52f74449",
+  "title": "前漢書·卷九十四上~卷九十五 (Hanshu, Siku Quanshu, vol. 52 of 57)",
+  "page_number": 40,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/40.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n一反已上\n二言\n卷九十匹下\n喙音許\n穢反\n至本始之初匈奴有桀心\n師古曰桀堅也\n言其起立不順\n欲掠\n烏孫侵公主廼發五將之師十五萬騎獵其南而長羅\n侯以烏孫五萬騎震其西皆至質而還\n師古曰質信\n也謂所期處\n時\n鮮有所獲\n師古曰鮮少\n也音先踐反\n徒奮揚威武明漢兵若雷風耳\n雖空行空反尚誅兩將軍故北狄不服中國未得髙枕\n安寢也逮至元康神爵之間大化神明鴻恩溥洽而匈\n奴内亂五單于争立曰逐呼韓邪攜國歸死扶伏稱臣\n師古曰伏\n音蒲北反\n然尚羈縻之計不顓制\n師古曰顓與專同專\n制謂以為臣妾也",
+  "translation": "<note>Yan Shigu says: ...the pronunciation is like the character <term>yi</term> combined with <term>fan</term>, as noted above. The two characters are combined.</note>\n\n### Volume 94, Part 2\n\n<note>Yan Shigu says: The character <term>hui</term> <gloss>beak/jaw</gloss> is pronounced like <term>xu</term> combined with <term>hui</term> <gloss>fan</gloss>.</note>\n\nBy the beginning of the Benshi reign <note>73–70 BCE</note>, the Xiongnu harbored treacherous and recalcitrant ambitions.\n\n<note>Yan Shigu says: <term>Jie</term> <gloss>obstinate/stubborn</gloss> means hard and rebellious. It signifies that they arose in disobedience.</note>\n\nThey wished to plunder the Wusun and violate the Han princess. Thereupon, five generals were dispatched leading an expeditionary army of 150,000 cavalry to hunt down the enemy across the south, while the Marquis of Changluo led 50,000 cavalry from the Wusun to strike awe throughout their western border. Both forces reached their agreed rendezvous points and returned.\n\n<note>Yan Shigu says: <term>Zhi</term> <gloss>pledge/rendezvous</gloss> means good faith; it refers to the appointed place.</note>\n\nAt that time, they captured little.\n\n<note>Yan Shigu says: <term>Xian</term> <gloss>rare</gloss> means few; it is pronounced like <term>xian</term> combined with <term>jian</term> <gloss>fan</gloss>.</note>\n\nThey merely displayed their martial prowess and manifested the might of Han forces like thunder and wind. Although they marched out and returned empty-handed, two generals were nevertheless executed for their failures. Therefore, the northern barbarians did not submit, and the Central Plains could not yet rest easy on high pillows.\n\nWhen it came to the Yuankang and Shenjue eras <note>65–58 BCE</note>, great spiritual virtue and majestic grace spread widely, while internal turmoil erupted within the Xiongnu. Five Chanyu competed for the throne. Rizhu and Huhanye brought their state to submit in desperation, prostrating themselves and declaring themselves subjects.\n\n<note>Yan Shigu says: <term>Fu</term> <gloss>prostrate</gloss> is pronounced like <term>pu</term> combined with <term>bei</term> <gloss>fan</gloss>.</note>\n\nYet the Han court still maintained the strategy of loose rein <note>jimi</note>, not assuming arbitrary and total control over them.\n\n<note>Yan Shigu says: The character <term>zhuan</term> is identical with <term>zhuan</term> <gloss>monopolize/dominate</gloss>. <term>Zhuanzhi</term> <gloss>exclusive control</gloss> refers to reducing them completely to subjects and bondservants.</note>\n\n<summary>Following minor frontier campaigns against the Xiongnu during the Benshi reign, internal civil war fractured the Xiongnu under five rival Chanyu, prompting Huhanye to submit to Han authority under the loose-rein policy.</summary>\n<keywords>Hanshu, Xiongnu, Wusun, Huhanye Chanyu, Benshi, Yuankang, Shenjue, Yan Shigu, Jimi policy</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-hanshu|6ae0c1f34adf2ffb52f74449|40|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "一反已上 / 二言 (OCR junk)",
+    "english": "<note>Yan Shigu says: ...the pronunciation is like the character yi combined with fan, as noted above. The two characters are combined.</note>",
+    "problem": "junk header lines translated into a Yan Shigu note that is not on the page",
+    "note": null,
+    "class": "T7"
+   }
+  ],
+  "previous_page_ocr_tail": "是以忍百萬之師以摧餓虎之喙運府庫之\n財填盧山之壑而不悔也\n師古曰喙口也摧百萬之師\n於獸口也盧山匈奴中山也\n<header>前漢書</header>\n<page-num>十九</page-num>",
+  "next_page_ocr_head": "自此之後欲朝者不距不欲者不强何者外國天性忿\n鷙\n師古曰鷙狠\n也音竹二反"
+ },
+ {
+  "book_id": "6ae0c1f34adf2ffb52f74449",
+  "title": "前漢書·卷九十四上~卷九十五 (Hanshu, Siku Quanshu, vol. 52 of 57)",
+  "page_number": 114,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/114.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n矢\n口\n下\n人\n人\n<page-num>一</page-num>\n言\n<header>卷九十五</header>\n助曰國新被寇使者行矣胡方日夜裝入見天子助去\n後其大臣諫胡曰漢興兵誅郢亦行以驚動南粵且先\n王言事天子期毋失禮要之不可以怵好語入見\n師古\n曰怵\n誘也不可被誘怵以好語\n而入漢朝也怵音先聿反\n入見則不得復歸亡國之埶\n也於是胡稱病竟不入見後十餘歲胡實病甚太子嬰\n齊請歸胡薨諡曰文王嬰齊嗣立即臧其先武帝文帝\n璽\n李奇曰去\n其僭號\n嬰齊在長安時取邯鄲摎氏女\n師古曰摎\n音居虬反\n生子興及即位上書請立摎氏女為后興為嗣漢數使",
+  "translation": "<header>Volume 95</header>\n\nZhu said: \"Our state has only recently suffered invasion. The envoy should depart; Hu is even now preparing day and night to enter the capital and have audience with the Son of Heaven.\"\n\nAfter Zhu departed, his ministers remonstrated with Hu, saying: \"The Han raised an army to execute Ying, but in truth they also acted to intimidate Southern Yue. Moreover, the late king stated that in serving the Son of Heaven, one should strive not to fail in protocol, but the crucial point is that one must not be seduced by flattering words into entering the capital for an audience.\"\n<gloss>Shigu says: \"Chu\" means to entice or induce. It means one must not be enticed and persuaded by sweet words to enter the Han court. The character is pronounced like the fanqie of xian and yu.</gloss>\n\"If you enter the capital for an audience, you will never be able to return; this would be the circumstance that brings ruin to our state.\"\n\nThereupon Hu claimed illness and ultimately did not go to the capital for an audience. More than ten years later, Hu fell genuinely and gravely ill. Crown Prince Yingqi requested permission to return home. When Hu died, he was given the posthumous title King Wen.\n\nYingqi succeeded to the throne. He immediately concealed the imperial seals of his predecessors, the Martial Emperor <note>Zhao Tuo</note> and the Civil Emperor <note>Zhao Hu</note>.\n<gloss>Li Qi says: He discarded their usurped imperial titles.</gloss>\n\nDuring his time in Chang'an, Yingqi had taken a woman of the Jiu clan from Handan as his wife.\n<gloss>Shigu says: Jiu is pronounced like the fanqie of ju and qiu.</gloss>\nShe bore a son named Xing. When Yingqi ascended the throne, he submitted a memorial requesting that the woman of the Jiu clan be established as queen and that Xing be made his heir. The Han repeatedly sent envoys\n\n<summary>Ministers convince King Hu of Southern Yue not to visit the Han court out of fear he will be detained, leading him to feign illness until his death, whereupon his heir Zhao Yingqi assumes the throne, conceals the former royal usurpation seals, and seeks Han recognition for his northern wife and son.</summary>\n<keywords>Zhao Hu, Yan Zhu, King Wen of Southern Yue, Zhao Yingqi, Zhao Xing, Jiu clan, Handan, Hanshu, Siku Quanshu, Yan Shigu, Li Qi, Western Han</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-hanshu|6ae0c1f34adf2ffb52f74449|114|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "(謂)助曰國新被寇使者行矣胡方日夜裝入見天子",
+    "english": "Zhu said: \"Our state has only recently suffered invasion. The envoy should depart; Hu is even now preparing day and night to enter the capital…\"",
+    "problem": "the speaker is King Hu addressing the envoy Yan Zhu (謂助曰, 謂 on the previous leaf); the English makes the Han envoy say it, so Hu's promise to go to court is put in Zhu's mouth",
+    "note": null,
+    "class": "T6"
+   }
+  ],
+  "previous_page_ocr_tail": "降於是罷兵天子使嚴助徃諭意南粵王胡頓首曰天\n子廼興兵誅閩粵死亡以報德遣太子嬰齊入宿衞謂\n竹\n菓\n書\n十五",
+  "next_page_ocr_head": "使者風諭\n師古曰風讀曰\n諷諷諭令入朝\n嬰齊猶尚樂擅殺生自恣懼"
+ },
+ {
+  "book_id": "6ae0bdda4adf2ffb52f72939",
+  "title": "前漢書·卷二~卷五 (Hanshu, Siku Quanshu, vol. 2 of 57)",
+  "page_number": 10,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0bdda4adf2ffb52f72939/10.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n之\n家\n乙亥夕而不見隴西地震夏旱郃陽侯仲薨\n師古曰\n高帝之\n兄吳王\n濞父也\n秋七月辛未相國何薨\n師古曰\n蕭何也\n三年春發長安六百里內男女十四萬六千人城長安\n三十日罷\n鄭氏曰城一\n面故速罷\n以宗室女爲公主嫁匈奴單于\n夏五月立閩越君搖爲東海王\n應劭曰搖越王勾踐之\n苗裔也帥百越之兵助\n高祖故封東海在吳郡東南濱\n海云師古曰即今泉州是其地\n六月發諸侯王列侯徒\n隸二萬人城長安秋七月都廐災南越王趙佗稱臣奉\n貢\n師古曰佗\n音徒何反\n次定曰事全焉\n五\n2023年1月1日",
+  "translation": "<meta>continues from previous page</meta>household.\n\nOn the day <term>yihai</term>, the moon was eclipsed in the evening and was not seen. An earthquake occurred in Longxi. In summer, there was a drought. Zhong, the Marquis of Heyang, died.\n\n<gloss>Yan Shigu stated: 'He was an elder brother of Emperor Gaozu and the father of Liu Pi, the King of Wu.'</gloss>\n\nIn autumn, in the seventh month, on the day <term>xinwei</term>, Chancellor of State Xiao He died.\n\n<gloss>Yan Shigu stated: 'This refers to Xiao He.'</gloss>\n\nIn the third year, in spring, 146,000 men and women from within six hundred <term>li</term> <gloss>Chinese miles</gloss> of Chang'an were conscripted to build the city walls of Chang'an. After thirty days, the work was halted.\n\n<gloss>Master Zheng stated: 'Only one side of the city wall was built; therefore, the work ceased quickly.'</gloss>\n\nA daughter of the imperial clan was designated as a princess and given in marriage to the <term>Chanyu</term> <gloss>supreme ruler</gloss> of the Xiongnu.\n\nIn summer, in the fifth month, Yao, the ruler of Minyue, was established as the King of Donghai.\n\n<gloss>Ying Shao stated: 'Yao was a descendant of Goujian, King of Yue. He led the troops of the Hundred Yue tribes to assist Emperor Gaozu; therefore, he was enfeoffed with Donghai. Donghai lay southeast of Wu Commandery, bordering the sea.' Yan Shigu stated: 'This is the modern region of Quanzhou.'</gloss>\n\nIn the sixth month, twenty thousand convict laborers and bondservants belonging to the tributary kings and full marquises were mobilized to build the city walls of Chang'an. In autumn, in the seventh month, a fire broke out in the metropolitan stables. Zhao Tuo, the King of Nanyue, declared himself a vassal and offered tribute.\n\n<gloss>Yan Shigu stated: 'Tuo is pronounced with the fanqie spelling tu-he.' Ci Ding stated: 'The affair was thus brought to completion.'</gloss>\n\n<unclear>五 2023年1月1日</unclear>\n\n<summary>In the second and third years of Emperor Hui, natural omens, noble deaths including Chancellor Xiao He, and construction of Chang'an's city walls occur alongside regional enfeoffments and diplomacy with the Xiongnu and southern kingdoms.</summary>\n<keywords>Emperor Hui, Longxi earthquake, Marquis of Heyang, Xiao He, Chang'an wall construction, Xiongnu marriage alliance, Minyue, King of Donghai, Zhao Tuo, Nanyue</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-hanshu|6ae0bdda4adf2ffb52f72939|10|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "次定曰事全焉",
+    "image": "the margin title 欽定四庫全書",
+    "source": null,
+    "english": null,
+    "problem": "the margin title garbled into a commentary-like sentence ('次定 said: the affair is complete') and placed after Yan Shigu's note",
+    "note": null,
+    "class": "O11"
+   },
+   {
+    "claim_id": "zh-hanshu|6ae0bdda4adf2ffb52f72939|10|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "乙亥夕而不見",
+    "english": "On the day yihai, the moon was eclipsed in the evening and was not seen.",
+    "problem": "the subject is the two dragons seen in a well at Lanling (previous page), which disappeared by the evening of yihai; the moon and the eclipse are invented",
+    "note": null,
+    "class": "T7"
+   },
+   {
+    "claim_id": "zh-hanshu|6ae0bdda4adf2ffb52f72939|10|tr_errors|1",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "次定曰事全焉",
+    "english": "Ci Ding stated: 'The affair was thus brought to completion.'",
+    "problem": "a garbled margin title translated as a statement by an invented commentator 'Ci Ding'",
+    "note": null,
+    "class": "T10"
+   }
+  ],
+  "previous_page_ocr_tail": "闗爲齊王母乎又張偃以母爲太后故封魯王太后非\n齊益\n明也\n春正月癸酉有兩龍見蘭陵家人井中\n師古曰家\n人言庶人",
+  "next_page_ocr_head": "<header>卷三</header>\n四年冬十月壬寅立皇后張氏\n師古曰張敖之女也史\n記漢書無名字皇甫謐"
+ },
+ {
+  "book_id": "6ae0c4544adf2ffb52f754d4",
+  "title": "後漢書[范煜…等撰]·卷六十八~卷七十下 (Hou Hanshu, Siku Quanshu, vol. 24 of 43)",
+  "page_number": 131,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/131.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n有攸司\n虎賁宿衛之臣贅衣主衣之官贅綴也音之銳\n反尚書曰綴衣虎賁閽尹閽寺並宦官周禮有\n閽人寺人陛戟執戟于陛也百重\n言多也攸所也司主也協韻音伺\n周廬千列徼道綺錯\n廬謂宿衛之廬周於宮也千列言多也史記衛令曰周\n廬設卒甚謹徼道徼廵之道綺錯交錯也前書曰中尉\n掌徼廵\n京師也\n輦路經營脩涂飛閣\n前書音義曰輦道閣道\n也涂亦塗也古字通用\n自\n未央而連桂宮北彌眀光而絙長樂陵墱道而超西墉\n混建章而外屬設璧門之鳳闕上柧棱而棲金雀\n未央\n宮在\n西長樂宮在東桂宮眀光宮在北言飛閣相連也墱陛\n級也音丁鄧反墉城也混同也建章宮在城西屬連也\n前書曰建章宮其東則鳳闕門髙二十餘丈其南有璧\n門之屬說文曰柧棱殿堂上最高之處也柧音孤棱音\n欠三句半之旨",
+  "translation": "<meta>continues from previous page</meta>had their assigned duties.\n\n<gloss>Brave imperial palace guards <note>original: \"huben\"</note> were ministers who maintained the night watch and garrisoned the palace. Attendants of robes <note>original: \"zhuiyi\"</note> were officials in charge of imperial attire; *zhui* <note>original: \"贅\"</note> means to stitch or attach <note>original: \"綴\"</note>, pronounced with the initial and final of *zhi* and *rui*. The *Classic of Documents* states: \"Attendants of imperial robes and brave imperial palace guards.\" Gatekeepers and eunuch chamberlains <note>original: \"hunyin\"</note> as well as private apartment eunuchs <note>original: \"hunsi\"</note> were both eunuch officials. The *Rites of Zhou* includes gatekeepers and chamberlain eunuchs. \"With halberds arrayed on the palace steps\" means clutching halberds while standing upon the palace steps. \"A hundred ranks\" indicates great numbers. *You* means place or that which; *si* means to take charge of. For rhyme, it is pronounced like *si* <note>meaning to watch over or wait upon</note>.</gloss>\n\nRound guard lodges in a thousand ranks, patrol lanes interlaced like patterned silk.\n\n<gloss>Guard lodges refer to the lodging quarters of the imperial night guard stationed around the palace perimeter. \"A thousand ranks\" signifies great abundance. The \"Statutes for the Palace Guard\" in the *Records of the Grand Historian* state: \"Round guard lodges were established with troops under exceedingly strict discipline.\" Patrol lanes were paths for making surveillance rounds. \"Interlaced like patterned silk\" means crisscrossing. The *History of the Former Han* states: \"The Commander of the Capital Guards held charge over patrols and inspections in the capital city.\"</gloss>\n\nImperial carriage thoroughfares wind and turn; extended roadways and soaring pavilions rise aloft.\n\n<gloss>The *Phonetic Meanings of the History of the Former Han* says: \"Carriage thoroughfares refer to raised corridors and elevated walkways.\" *Tu* <note>original: \"涂\"</note> also means road <note>original: \"塗\"</note>; these ancient characters were interchangeable.</gloss>\n\nReaching out from the Weiyang Palace to connect with the Gui Palace, extending northward past the Mingguang Palace and linking across to the Changle Palace; crossing over stepped pathways and rising above the western city wall; joined together with the Jianzhang Palace as an outer annex; erecting the Phoenix Watchtowers of the Jade Gate, where high upon the ridge beams roost golden sparrows.\n\n<gloss>The Weiyang Palace lay in the west, while the Changle Palace lay in the east. The Gui Palace and Mingguang Palace lay in the north. This describes elevated walkways interconnecting them. *Deng* refers to the flight of steps, pronounced with the initial and final of *ding* and *deng*. *Yong* means the city wall. *Hun* means unified together. The Jianzhang Palace was situated west of the walled city; *shu* means connected. The *History of the Former Han* states: \"To the east of the Jianzhang Palace stood the Phoenix Watchtower Gate, over twenty *zhang* high; to its south stood the Jade Gate and its annexes.\" The *Shuowen Jiezi* states: \"*Guling* refers to the highest vantage point atop a palace hall.\" *Gu* is pronounced like *gu*; *ling* is pronounced like... <note>original: \"欠三句半之旨\", the commentary text breaks off here with three and a half sentences missing</note></gloss>\n\n<summary>This page continues the Ban Gu commentary on the capital palaces and guard system, detailing the royal bodyguards, eunuch officers, night watchposts, and elevated covered corridors connecting the Weiyang, Changle, Gui, Mingguang, and Jianzhang palaces.</summary>\n<keywords>imperial guards, huben, zhuiyi, eunuchs, palace lodges, Weiyang Palace, Changle Palace, Gui Palace, Mingguang Palace, Jianzhang Palace, Phoenix Watchtowers, elevated walkways</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-houhanshu|6ae0c4544adf2ffb52f754d4|131|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "欠三句半之旨",
+    "english": "<note>… the commentary text breaks off here with three and a half sentences missing</note>",
+    "problem": "a lacuna is invented from misread margin junk; the commentary simply continues on the next leaf",
+    "note": null,
+    "class": "T10"
+   },
+   {
+    "claim_id": "zh-houhanshu|6ae0c4544adf2ffb52f754d4|131|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "invented manuscript fact: the English tells the reader that three and a half sentences of commentary are missing",
+    "class": "T10"
+   }
+  ],
+  "previous_page_ocr_tail": "官外星也宮衛之位亦象之\n嚴更之署行夜之司也禮官奉常也有博士掌試策考\n其優劣為甲乙之科即前書曰太常以公孫弘為下第\n是也言百郡舉全數\n前書又曰興㢘舉孝\n虎賁贅衣閹尹閽寺陛戟百重各",
+  "next_page_ocr_head": "金\n笑\n巨\n厂"
+ },
+ {
+  "book_id": "6ae0c4544adf2ffb52f754d4",
+  "title": "後漢書[范煜…等撰]·卷六十八~卷七十下 (Hou Hanshu, Siku Quanshu, vol. 24 of 43)",
+  "page_number": 199,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/199.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n四人有不俾而假素罔光度而遺章今其如台而獨闕\n也\n伊維也邃古猶逺古也楚詞曰邃古之初戾至也言\n自逺古以來至於此也作者謂封禪者史記管仲曰\n自古封禪七十二君并武帝及光武為七十四君俾使\n也有天下不使其封禪而假為竹素之文者無有光揚\n法度而棄其文章不封禪者也\n台我也今其如我何獨闕也\n是時聖上固巳垂精游\n神包舉蓺文屢訪羣儒諭咨故老與之乎斟酌道德之\n淵源肴覈仁義之林藪以望元符之臻焉\n聖上謂章帝\n也諭告咨謨\n也道德仁義人所常行故以酒食為喻焉淵源林藪喻\n深邃也元天也符瑞也詩曰肴核惟旅覈亦核也謂果\n實之\n屬\n既成羣后之讜辭又悉經五繇之碩慮矣將絣萬\n次定曰三十三司\n<header>後漢書</header>\n<page-num>二十五</page-num>",
+  "translation": "<meta>continues from previous page</meta>four persons. Has anyone ever not been enabled <note>to perform the sacrifices</note>, relying merely on bamboo and silk writings without magnifying laws and standards, or leaving behind texts without performing the Feng and Shan? How could it be only with regard to me that this alone is omitted?\n\n*Yi* means *wei* <note>an initial particle, \"now\" or \"contemplating\"</note>. *Suigu* is like *yuangu* <gloss>profound antiquity</gloss>. The *Songs of Chu* <note>original: \"Chuci\"</note> states: \"At the beginning of profound antiquity...\" *Li* means to arrive. This means: from profound antiquity down to the present. \"Those who have undertaken\" refers to those who performed the Feng and Shan sacrifices. The *Records of the Grand Historian* <note>original: \"Shiji\"</note> states that Guan Zhong said: \"From ancient times, seventy-two rulers performed the Feng and Shan.\" Adding Emperor Wu and Emperor Guangwu, they make seventy-four rulers. *Bi* means to cause or enable. Possessing the realm under Heaven without being enabled to perform the Feng and Shan, while relying merely on writings upon bamboo and silk: there has never been one who magnified laws and standards, or left behind literary compositions, who omitted the Feng and Shan sacrifices.\n\n*Tai* means me or myself. \"How could it be with regard to me that this alone is omitted?\"\n\nAt this time, the Sage Sovereign had already concentrated his refined spirit and wandered in contemplation, gathering all literary arts. Repeatedly he consulted the gathered scholars and took counsel with venerable elders, deliberating with them upon the deep source of the Way and Virtue, and examining the vast thicket of benevolence and righteousness, in hope that the primal auspicious tokens would arrive.\n\n\"Sage Sovereign\" refers to Emperor Zhang. *Yu* means to inform; *zi* means to deliberate and counsel. Because the Way, Virtue, benevolence, and righteousness are what people constantly practice, they are compared here to drink and food. \"Deep source\" and \"vast thicket\" are metaphors for profound depth. *Yuan* means Heaven. *Fu* means auspicious omen. The *Classic of Poetry* states: \"The meats and dried fruits are set out in order.\" *He* <note>覈</note> also means dried fruits and seeds <note>核</note>, referring to the category of fruits.\n\nHaving already achieved the upright words of the feudal lords, he thoroughly examined the profound reflections of the Five Divinations. About to weave together myriad...\n\n<note>marginal note at bottom:</note> <margin>the sequence was fixed as thirty-three officers</margin>\n\n<summary>This page continues the imperial commentary on the Feng and Shan sacrifices, noting that seventy-four sovereign rulers throughout history performed the rites, and describes Emperor Zhang consulting scholars and elders on moral governance in anticipation of auspicious heavenly tokens.</summary>\n<keywords>Hou Hanshu, Fan Ye, Feng and Shan sacrifices, Guan Zhong, Emperor Wu, Emperor Guangwu, Emperor Zhang, Songs of Chu, Classic of Poetry, auspicious tokens</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-houhanshu|6ae0c4544adf2ffb52f754d4|199|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "次定曰三十三司",
+    "english": "<margin>the sequence was fixed as thirty-three officers</margin>",
+    "problem": "a marginal note is invented by translating margin junk",
+    "note": null,
+    "class": "T7"
+   },
+   {
+    "claim_id": "zh-houhanshu|6ae0c4544adf2ffb52f754d4|199|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "invented marginal note in the English pane ('the sequence was fixed as thirty-three officers')",
+    "class": "T7"
+   }
+  ],
+  "previous_page_ocr_tail": "而且信次止也寤寐常止于聖心言不可忘之也前謂\n前代帝王後謂子孫也蔑輕也彈難也勑正也言封禪\n之事皆述祖宗之德今乃推讓豈輕清廟而難正天命\n乎尚書曰勑天\n之命惟時惟幾\n伊考自邃古乃降戾爰茲作者七十有",
+  "next_page_ocr_head": "卷七卜下\n嗣煬洪暉奮炎景扇遺風播芳烈久而愈新用而不竭\n汪汪乎丕天之大律其疇能亘之哉唐哉皇哉唐\n哉"
+ },
+ {
+  "book_id": "69aebb5e39a4307877774064",
+  "title": "楚辭集註 (Songs of Chu with Collected Annotations)",
+  "page_number": 146,
+  "image_url": "https://images.sourcelibrary.org/archived/69aebb5e39a4307877774064/146.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n蘭薄當戸而種又以嘉木爲籬\n落也何遠爲言何以遠去爲哉\n室家遂宗食\n金云此下言飲饌盛\n劉云華妙奇鬱此貂錦\n耳非素手儲狡可就\n行些肥牛之腱臑若芳些和酸若苦陳吳羹\n些臑鼈炮羔有柘漿些鵠酸臇鳬煎鴻鶬些\n露雞臛蠵厲而不爽些\n稱音捉挐女居反醎\n一作鹹行叶胡郎反\n腱居言反臑仁珠反一作臑音耎一作胹音\n而又作而而兖反若一作弱羹叶音郎胹音\n而一作擩一作潘炮蒲交反柘一作蔗臇于\n兖反鶬音倉臛呼各反一作臇又音霍蠵一\n作蠵音携又以規煎圭二反爽叶音霜○室\n家宗族也宗尊也言君旣歸來則室家之衆\n皆來宗尊當爲設食其方法多端也稻今秫\n粳二米也粢稷也亦名稌稻釋也稻麥稻處\n種麥面擇取其先熟者也挐糅也黃梁出蜀\n漢商浙間亦種之香美逾於諸梁號爲竹根\n黃言此數種之米相雜爲飯也大苦豉也醎\n鹽也酸酢也辛謂椒薑也甘謂飴蜜也腱筋\n頭也臑若熟爛也或曰若謂杜若用以煑肉\n去腥而香也若苦之若則訓及也吳羹吳人\n工作羹也胹煑也羔羊子也炮合毛裹物而\n燒之也柘藷蔗也言取藷蔗之汁爲漿飲也\n鵠鴻鵠也酸以酢漿烹之爲羹也臇臛少汁\n也鳬野鴨也鴻鴻鴈也鶬鶬鶴也露雞露棲\n之雞也有菜曰羹無菜曰臛蠵大龜之属也\n厲列也爽敗也楚人名羹敗曰爽老子曰五\n味令人\n口爽\n粔籹蜜餌有餦餭些瑤漿靈勺實羽\n觴些挫糟凍飲酎清涼些華酌旣陳有瓊漿\n些歸反故室敬而無妨些\n粔音巨籹音女一\n音汝餦音張餭音",
+  "translation": "",
+  "claims": [
+   {
+    "claim_id": "zh-print-ocr-only|69aebb5e39a4307877774064|146|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "室家遂宗食 / 行些肥牛之腱臑若芳些",
+    "image": "室家遂宗食多方些稻粢穱麥挐黃粱些大苦醎酸辛甘行些肥牛之腱",
+    "source": null,
+    "english": null,
+    "problem": "a whole line of main text (多方些稻粢穱麥挐黃粱些大苦醎酸辛甘) is missing; the commentary that follows glosses words the reader never sees",
+    "note": null,
+    "class": "O5"
+   }
+  ],
+  "previous_page_ocr_tail": "曰從君遊陂陁之中也軒曲輈藩車也輬臥\n車也皆輕車也低俛也凡車行之勢一低一\n昻詩所謂如輕如軒者也此則指其方低而\n未昻方輕而未軒之時而言耳徒行爲步乗\n馬爲騎羅列也言官属之從衛者羅列而待\n發也草木叢生曰薄瓊木嘉木之美名也言",
+  "next_page_ocr_head": "皇蠹古本如此今作蜜非是勺音酌又時斫\n反挫宗臥反酎直又反歸下一有來字一别\n有歸來歸來四字而反上亦無來字〇粔籹\n環餅也吳謂之膏環亦謂之寒具以蜜和米"
+ },
+ {
+  "book_id": "69aebb3a39a43078777732aa",
+  "title": "尚書韻 (Book of Documents)",
+  "page_number": 10,
+  "image_url": "https://images.sourcelibrary.org/archived/69aebb3a39a43078777732aa/10.jpg",
+  "crop": null,
+  "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>handwritten</script>\n<page-type>preface</page-type>\n<warning>Handwritten Chinese semi-cursive script (Xingshu). The right page is blank except for the border and a small character in the margin.</warning>\n\n# 尚書韻叙\n\n翼世定自經生，言者湛生趣於\n經左也。虞秘書云：人不得易不可\n為宰。故予謂人非翼世定法出\n用尚書。言中帝造世二王造世三\n請不耳觀之。沈淡開不經觀之\n\n<column-break/>\n\n<margin>\n五\n</margin>\n\n<meta>The right page is a blank frame with a vertical line and the numeral 'five' (五) in the outer margin.</meta>\n\n<vocab>尚書韻, 叙, 經生, 虞秘書, 翼世</vocab>",
+  "translation": "",
+  "claims": [
+   {
+    "claim_id": "zh-print-ocr-only|69aebb3a39a43078777732aa|10|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "故予謂人非翼世定法出",
+    "image": "於予謂人明翼世定法出",
+    "source": null,
+    "english": null,
+    "problem": "明 read as 非: the preface's claim is negated",
+    "note": null,
+    "class": "O6"
+   }
+  ],
+  "previous_page_ocr_tail": "姜夫子之後\n<column-break/>\n->梁谿馬世奇書<-\n<image-desc size=\"medium\" type=\"symbol\" significance=\"high\">Two red square intaglio seals. The top seal reads \"馬世奇印\" (Ma Shiqi yin). The bottom seal reads \"嶧山氏\" (Yishan shi).</image-desc>\n<meta>The right page contains a handwritten postscript or colophon. The left page contains the signature and seals of Ma Shiqi (1584–1644), a Ming dynasty scholar.</meta>\n<vocab>馬世奇, 梁谿, 銕板, 靈眼, 契賞</vocab>",
+  "next_page_ocr_head": "<scan-quality>good</scan-quality>\n<page-type>preface</page-type>\n<columns>2</columns>\n<warning>Handwritten semi-cursive script (Xing-Kai). The text is a preface to the \"Shangshu Yun\" (尚書韻).</warning>"
+ },
+ {
+  "book_id": "6a3c6cdac4e8626320dbc955",
+  "title": "新編金匱要略方論",
+  "page_number": 169,
+  "image_url": "https://images.sourcelibrary.org/pages/6a3c6cdac4e8626320dbc955/0169.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>printed</script>\n\n附方\n○千金翼小承氣湯治大便不通踧數謳語\n方見\n上\n○外臺黃芩湯治乾嘔下利\n黃芩 人參 乾姜\n各二\n兩\n桂枝\n大棗\n十二\n枚\n半夏\n半\n升\n右六味以水七升煑取三升温分三服\n○瘡癰腸癰浸淫病脉證并治第十八\n論一首 脉證三條 方六首\n諸浮數脉應當發熱而反酒淅惡寒若有痛處當發\n其癰師曰諸癰腫欲知有膿無膿以手掩腫上熱者",
+  "translation": "",
+  "claims": [
+   {
+    "claim_id": "zh-print-ocr-only|6a3c6cdac4e8626320dbc955|169|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "桂枝\\n大棗\\n十二\\n枚",
+    "image": "桂枝 一兩 / 大棗 十二枚",
+    "source": null,
+    "english": null,
+    "problem": "the dose of 桂枝 (一兩) in the 外臺黃芩湯 recipe is dropped",
+    "note": null,
+    "class": "O7"
+   }
+  ],
+  "previous_page_ocr_tail": "訶梨勒\n十枚\n煨\n右一味爲散粥飲和頓服\n疑非仲\n景方",
+  "next_page_ocr_head": "爲有膿不熱者爲無膿\n腸癰之爲病其身甲錯腹皮急按之濡如腫狀腹無\n積聚身無熱脉數此爲腸內有癰膿薏苡附子敗\n醬散主之"
+ },
+ {
+  "book_id": "69af121cf78a272df25b564a",
+  "title": "遠鏡說 (On the Telescope)",
+  "page_number": 3,
+  "image_url": "https://images.sourcelibrary.org/archived/69af121cf78a272df25b564a/3.jpg",
+  "crop": null,
+  "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>illustration</page-type>\n<page-num>111</page-num>\n<header>遠鏡說</header>\n\n<image-desc size=\"large\" type=\"engraving\" significance=\"high\">A woodcut illustration of a telescope mounted on a stand, positioned on a small mound of earth.</image-desc>\n\n<column-break/>\n\n藝海珠塵\n之原 一射線不二而遠鏡兼攝乎屈曲以為斜透之緣 一視象明而大者繇乎二鏡之合用\n次造法用法 一鏡 一筒 一遠近各得其宜 一避眩便觀 一安放調停 一衰目近視用訣 一借照作畫 一習用訣 一去垢訣\n\n由歐邏天學大士西泰利氏西洋鏡說\n\n<vocab>遠鏡說, 歐邏, 西泰利, 望遠鏡, 光學</vocab>",
+  "translation": "",
+  "claims": [
+   {
+    "claim_id": "zh-print-ocr-only|69af121cf78a272df25b564a|3|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "由歐邏天學大士西泰利氏西洋鏡說",
+    "image": "(not printed on this leaf; only faint show-through)",
+    "source": null,
+    "english": null,
+    "problem": "an invented line attributing the work to 西泰利氏 (Matteo Ricci). It is not on the page, and the work is Schall von Bell's",
+    "note": null,
+    "class": "O1"
+   }
+  ],
+  "previous_page_ocr_tail": "題\n目\n首利用一利用於仰觀一利用於直視\n次附分用之利一利於苦近視者用之一利於苦\n遠視者用之一分用不如合用之無不利\n次原繇一易象不同而遠鏡獨妙於斜透以爲利用",
+  "next_page_ocr_head": "<scan-quality>good</scan-quality>\n<page-type>illustration</page-type>\n<page-num>111</page-num>\n<header>遠鏡說</header>"
+ },
+ {
+  "book_id": "6ae0c6694adf2ffb52f76286",
+  "title": "三國志·魏志·卷四~卷五 (Sanguozhi, Siku Quanshu, vol. 3 of 23)",
+  "page_number": 18,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c6694adf2ffb52f76286/18.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金穴四尾全書</header>\n<header>卷四</header>\n心審賞罰以使之可絕後園習騎乗馬出必御輦乗車\n天下之福臣子之願也晏乂咸因闕以進規諫\n九年春二月衛將軍中書令孫資癸巳驃騎將軍中書\n監劉放三月甲午司徒衛臻各遜位以侯就第位特進\n四月以司空髙柔為司徒光祿大夫徐邈為司空固辭\n不受秋九月以車騎將軍王凌為司空冬十月大風發\n屋折樹\n嘉\n平\n元\n年\n春\n正\n月\n甲\n午\n車\n駕\n謁\n髙\n平\n陵\n孫盛魏世籍曰\n髙平陵在洛水",
+  "translation": "<meta>continues from previous page</meta>...in your imperial seat, maintaining fairness and rectitude, and carefully examining rewards and punishments so that they are properly applied. You should put an end to practicing horsemanship and riding in the imperial rear garden; whenever you go forth, you must ride in the imperial palanquin or chariot. This would be the blessing of all under heaven, and the earnest wish of your ministers and subjects.\" He Yan and Deng Yang all took advantage of the emperor's flaws and shortcomings to submit remonstrances and admonitions.\n\nIn the ninth year, in spring, in the second month, <term>General of the Guards</term> <gloss>Weijiangjun</gloss> and <term>Director of the Imperial Secretariat</term> <gloss>Zhongshuling</gloss> Sun Zi retired; on the <term>guisi</term> <gloss>thirtieth</gloss> day, <term>General of Agile Cavalry</term> <gloss>Piaoqijiangjun</gloss> and <term>Supervisor of the Imperial Secretariat</term> <gloss>Zhongshujian</gloss> Liu Fang retired; in the third month, on the <term>jiawu</term> <gloss>second</gloss> day, <term>Minister over the Masses</term> <gloss>Situ</gloss> Wei Zhen retired. Each yielded their positions and retired to their private estates with noble fiefs, being granted the status of <term>Tejin</term> <gloss>Specially Advanced</gloss>.\n\nIn the fourth month, <term>Minister of Works</term> <gloss>Sikong</gloss> Gao Rou was appointed <term>Minister over the Masses</term>. <term>Grandee of the Imperial Splendor</term> <gloss>Guanglu Dafu</gloss> Xu Miao was appointed <term>Minister of Works</term>, but he steadfastly declined and did not accept the appointment. In autumn, in the ninth month, <term>General of Chariots and Cavalry</term> <gloss>Cheqijiangjun</gloss> Wang Ling was appointed <term>Minister of Works</term>. In winter, in the tenth month, violent winds tore off roofs and broke trees.\n\nIn the first year of the Jiaping era <note>249 CE</note>, in spring, in the first month, on the <term>jiawu</term> day, the Emperor proceeded in the imperial carriage to pay ceremonial respects at the Gaoping Tomb <note>the mausoleum of Emperor Ming of Wei, Cao Rui</note>.\n\nSun Sheng's <term>Weishi Chunqiu</term> <gloss>Chronicles of the House of Wei</gloss> states:\nThe Gaoping Tomb is located near the Luo River.\n\n<summary>Emperor Cao Fang receives remonstrances to cease risky horse riding and maintain decorum, followed by high-level bureaucratic retirements and ministerial reshuffles in 248 CE. In the first month of 249 CE, the emperor departs the capital to visit the Gaoping Tomb, setting the stage for the Gaoping Tomb Incident.</summary>\n<keywords>Cao Fang, He Yan, Deng Yang, Sun Zi, Liu Fang, Wei Zhen, Gao Rou, Xu Miao, Wang Ling, Jiaping era, Gaoping Tomb, Sun Sheng, Weishi Chunqiu, Sanguozhi</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-sanguozhi|6ae0c6694adf2ffb52f76286|18|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "癸巳驃騎將軍…三月甲午司徒衛臻",
+    "english": "on the guisi <gloss>thirtieth</gloss> day ... in the third month, on the jiawu <gloss>second</gloss> day",
+    "problem": "sexagenary day names glossed as 'thirtieth' and 'second' day: jiawu is the 31st of the cycle, and neither is a day of the month; a reader takes these as calendar dates in an annal",
+    "note": null,
+    "class": "T10"
+   }
+  ],
+  "previous_page_ocr_tail": "為萬世法冬十二月散騎常侍諫議大夫孔晏乂奏曰\n禮天子之宮有斵礱之制無朱丹之飾宜循禮復古今\n天下巳平君臣之分明陛下但當不懈于位平公正之\n之曰曰\n魏志\n八",
+  "next_page_ocr_head": "南大石山去\n洛城九十里\n太傅司馬宣王奏免大將軍曹爽爽弟中\n領軍義武衛將軍訓散騎常侍彦官以侯就第戊戌有"
+ },
+ {
+  "book_id": "6ae0c67d4adf2ffb52f76459",
+  "title": "三國志·魏志·卷十~卷十一 (Sanguozhi, Siku Quanshu, vol. 6 of 23)",
+  "page_number": 45,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0c67d4adf2ffb52f76459/45.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n樹亭侯邑三百戶後轉封丘陽亭侯正始中追諡攸曰\n敬侯\n賈詡字文和武威姑臧人也少時人莫知唯漢陽閻忠\n異之謂詡有良平之奇\n九州春秋曰中平元年車騎將\n軍皇甫嵩既破黃巾威震天下\n閻忠時罷信都令說嵩曰夫難得而易失者時也時至\n而不旋踵者機也故聖人常順時而動智者必因機以\n發今將軍遭難得之運蹈易觧之機而踐運不撫臨機\n不發將何以享大名乎嵩曰何謂也忠曰天道無親百\n姓與能故有髙人之功者不受庸主之賞今將軍授鉞\n于初春收功于末冬兵動若神謀不再計旬日之間神\n兵電掃攻堅易于折枯推敵甚于湯雪七州席卷屠三\n十六萬方夷黃巾之師除邪害之患或封户刻石南向\n泥志\n王",
+  "translation": "<meta>continues from previous page</meta>shu Pavilion Marquis, with a fief of three hundred households. Later his fief was transferred to Qiuyang Pavilion Marquis. During the Zhengshi era <note>240-249 CE</note>, he was posthumously granted the posthumous title of Marquis Jing.\n\nJia Xu, courtesy name Wenhe, was a native of Guzang in Wuwei. In his youth, no one recognized his abilities, except Yan Zhong of Hanyang, who found him extraordinary and said that Xu possessed the marvelous talent of Liang and Ping <note>Zhang Liang and Chen Ping, chief strategists to Han founder Liu Bang</note>.\n\nThe <term>Jiuzhou Chunqiu</term> <gloss>Spring and Autumn Annals of the Nine Provinces</gloss> states:\nIn the first year of Zhongping <note>184 CE</note>, General of Chariots and Cavalry Huangfu Song crushed the Yellow Turbans, and his prestige shook the realm.\n\nYan Zhong, having been dismissed as Magistrate of Xindu, sought to persuade Song, saying: \"That which is difficult to obtain yet easy to lose is opportunity. That which arrives and allows no hesitation is a turning point. Therefore, the sage always acts according to the times, and the wise necessarily take advantage of turning points to launch their actions. Now, General, you have encountered a rare fortune and stepped upon an easily resolved turning point. Yet if you walk upon fortune without grasping it, and face a turning point without acting, how will you enjoy great renown?\"\n\nSong said: \"What do you mean?\"\n\nZhong replied: \"The Way of Heaven shows no favoritism; the common people align with capability. Therefore, one who achieves extraordinary merit does not accept reward from an ordinary ruler. Now, General, you were granted the battle-axe in early spring and gathered your success in late winter. Your military movements were like spirits, and your plans never required a second calculation. Within ten days, divine troops swept like lightning. Assaulting fortifications was easier than snapping dry branches, and overthrowing enemies was swifter than pouring hot water upon snow. Rolling across seven provinces, you slaughtered three hundred and sixty thousand troops, utterly leveling the army of Yellow Turbans and removing the calamity of wickedness and harm. Some seal their doors and carve stones, turning south to declare themselves king.\"\n\n<summary>Xun You is posthumously honored as Marquis Jing, followed by the introduction of Jia Xu, whose early genius was recognized by Yan Zhong as comparable to Zhang Liang and Chen Ping, leading into Yan Zhong urging Huangfu Song to seize power after crushing the Yellow Turbans.</summary>\n<keywords>Xun You, Jia Xu, Yan Zhong, Huangfu Song, Yellow Turban Rebellion, Jiuzhou Chunqiu, Sanguozhi, Book of Wei</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-sanguozhi|6ae0c67d4adf2ffb52f76459|45|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "或封户刻石南向",
+    "english": "Some seal their doors and carve stones, turning south to declare themselves king.",
+    "problem": "the page breaks off at 南向; the continuation (以報德) is that people face south to repay Huangfu Song's virtue. 'to declare themselves king' is invented at the page seam and gives a false sense",
+    "note": null,
+    "class": "T6"
+   }
+  ],
+  "previous_page_ocr_tail": "可謂近世大賢君子矣荀令君仁以立德明以舉賢行\n無謟黷謀能應機孟軻稱五百年而有王者興其間必\n有名世者其荀令君乎太祖稱荀令君之進\n善不進不休荀軍師之去惡不去不止也\n長子緝有\n攸風早没次子適嗣無子絕黃初中紹封攸孫彪為陵",
+  "next_page_ocr_head": "<header>欽定四庫全書</header>\n<header>卷十</header>\n以報德威震本朝風馳海外是以羣雄迴首百姓企踵\n雖湯武之舉未有髙于將軍者身建髙人之功北面以"
+ },
+ {
+  "book_id": "6ae0bd3d4adf2ffb52f72384",
+  "title": "史記·卷一百五~卷一百八 (Shiji, Siku Quanshu, vol. 37 of 44)",
+  "page_number": 25,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3d4adf2ffb52f72384/25.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金穴口座人三\n<header>卷一百五</header>\n不及九分至二分或四分五分此太過\n不滿一寸見八分或五分六分此不及\n經主病和者其\n病得之筋髓裏其代絕而脈賁者病得之酒且内所以\n知其後五日而蒭腫八日嘔膿死者切其脈時少陽初\n代代者經病病去過人人則去絡脈主病當其時少陽\n初關一分故中熱而膿未發也及五分則至少陽之界\n集解徐廣曰一作分下章曰肝與心相去五分故曰五\n日盡也正義王叔和脈經云分別三門鏡界脈候所主\n云從魚際至髙骨却行一寸其中名曰寸口其骨自髙\n從寸至尺名曰尺澤故曰尺寸後尺前名曰關陽出隂\n入以關爲界陽出三分故曰三隂三陽陽生於尺動於\n寸隂生於寸動於尺寸主射上焦出頭及皮毛竟手關",
+  "translation": "<meta>continues from previous page</meta>falling short of nine tenths of an inch, reaching only two tenths, or four or five tenths, this constitutes deficiency. When failing to reach a full inch behind the barrier, manifesting at only eight tenths, or five or six tenths, this constitutes deficiency. \n\nWhen the primary vessels govern the illness, there is harmony. \n\nWhen the illness is contracted within the sinews and bone marrow, and the pulse is intermittent while also surging, the illness is contracted from wine and sexual indulgence. The reason one knows that after five days an ulcerated swelling would form, and after eight days he would vomit pus and die, is that when examining his pulse, the lesser <term>yang</term> <gloss>active, exterior bodily principle</gloss> had begun to alternate. An alternating pulse indicates a disease of the primary vessel. When the illness passes, it moves to the human body; entering the human body, it moves into the collateral vessels governing the illness. At that time, the lesser yang pulse had first reached one tenth of an inch at the barrier position. Therefore, there was internal heat, but the pus had not yet erupted. When it reached five tenths of an inch, it reached the boundary of the lesser yang. \n\n<note>Collected Explanations: Xu Guang says: 'One' is also written as 'tenth'. The later chapter states that the liver and heart are five tenths of an inch apart, which is why it is said that after five days it is exhausted.</note> <note>Correct Meaning: Wang Shuhe's Pulse Classic states: 'Distinguishing the boundaries of the three gates and what the pulse signs govern: It is said that from the fish border to the high bone, moving backward one inch, the middle is called the cun mouth. From the high bone past the cun to the cubit, it is called the cubit marsh. Therefore it is called cun and cubit. Behind the cubit and in front of the cun is called the barrier. Yang emerges and yin enters, with the barrier serving as the boundary. Yang emerges three tenths of an inch, hence it is called three yin and three yang. Yang is born at the cubit and moves at the cun. Yin is born at the cun and moves at the cubit. The cun governs directing upward to the upper burner, emerging at the head and skin and hair, reaching the hands.'</note>\n\n<summary>This page records Chunyu Yi's diagnostic pulse analysis from the Records of the Grand Historian, explaining how the pulse positions and measurements reveal the progression of internal heat into fatal ulceration, accompanied by commentary on anatomical pulse boundaries from Xu Guang and the Pulse Classic.</summary>\n<keywords>Shiji, Chunyu Yi, Wang Shuhe, Xu Guang, pulse diagnosis, lesser yang, barrier pulse, cubit pulse, cun mouth, collateral vessels</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-shiji|6ae0bd3d4adf2ffb52f72384|25|tr_errors|0",
+    "list": "tr_errors",
+    "ocr": null,
+    "image": null,
+    "source": "不及九分至二分或四分五分此太過",
+    "english": "falling short of nine tenths of an inch, reaching only two tenths, or four or five tenths, this constitutes deficiency",
+    "problem": "The source says 此太過, 'this is EXCESS'. The English says 'deficiency', the opposite, so the pulse doctrine reads backwards.",
+    "note": null,
+    "class": "T8"
+   }
+  ],
+  "previous_page_ocr_tail": "爲外關内格此隂乗之脈也關以後者隂之動也脈當\n見一寸而沉過者法曰太過減者法曰不及遂入尺爲\n覆爲内關外格此陽乗之脈也故曰覆溢是其真藏之\n脈人不病而死也吕廣云過九分出一寸各名太過也\n<header>史記</header>\n<page-num>十二</page-num>",
+  "next_page_ocr_head": "主射中焦腹及於腰尺\n主射下焦少腹至足也\n及八日則嘔膿死故上二分而\n膿發至界而鬻腫盡泄而死熱上則熏陽明爛流絡流"
+ },
+ {
+  "book_id": "6ae0bd8d4adf2ffb52f725c5",
+  "title": "史記·卷一百十八~卷一百二十二 (Shiji, Siku Quanshu, vol. 41 of 44)",
+  "page_number": 59,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0bd8d4adf2ffb52f725c5/59.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n史記卷一百十九\n漢太史令司馬遷撰\n宋中郎外兵曹參軍裴駰集解\n唐國子博士弘文館學士司馬貞索隱\n唐諸王侍讀率府長史張守節正義\n循吏列傳第五十九\n索隱謂奉法\n循理之吏也\n也巳巳字一也\n<header>史記</header>",
+  "translation": "<header>Imperially Approved Complete Library in the Four Branches of Literature <note>original: \"欽定四庫全書\", Qinding Siku Quanshu</note></header>\nRecords of the Grand Historian, Volume 119 <note>original: \"史記卷一百十九\", Shiji Juan 119</note>\nComposed by Sima Qian, Grand Astrologer of the Han <note>original: \"漢太史令司馬遷撰\"</note>\nCollected Explanations by Pei Yin, General of the Palace Gentlemen and Military Advisor of the Song <note>original: \"宋中郎外兵曹參軍裴駰集解\"</note>\nSeeking the Obscure by Sima Zhen, Erudite of the Directorate of Education and Scholar of the Hongwen Academy of the Tang <note>original: \"唐國子博士弘文館學士司馬貞索隱\"</note>\nCorrect Meaning by Zhang Shoujie, Companion to the Princes and Commandant of the Guard of the Tang <note>original: \"唐諸王侍讀率府長史張守節正義\"</note>\nBiographies of Reasonable Officials, Number 59 <note>original: \"循吏列傳第五十九\", Xunli Liezhuan</note>\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: This refers to officials who uphold the law\nand comply with proper principles.\n\"Also\" <note>original: \"也\"</note> and \"already\" <note>original: \"巳\"</note>: the characters \"already\" <note>original: \"巳\"</note> and \"already\" <note>original: \"巳\"</note> are identical in form.\n<header>Records of the Grand Historian <note>original: \"史記\", Shiji</note></header>\n\n<summary>This page contains the title, authorship attributions, commentary credits, and opening section heading for the Biographies of Reasonable Officials in Volume 119 of the Records of the Grand Historian.</summary>\n<keywords>Records of the Grand Historian, Shiji, Sima Qian, Pei Yin, Sima Zhen, Zhang Shoujie, Reasonable Officials, Xunli, Siku Quanshu</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-shiji|6ae0bd8d4adf2ffb52f725c5|59|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "也巳巳字一也",
+    "image": "(nothing: no such line on the leaf)",
+    "source": null,
+    "english": null,
+    "problem": "An invented line at the foot of the transcription, probably the margin label misread as text.",
+    "note": null,
+    "class": "O11"
+   },
+   {
+    "claim_id": "zh-shiji|6ae0bd8d4adf2ffb52f725c5|59|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "The invented line is translated as a philological gloss in the reader text: '\"Also\" and \"already\": the characters \"already\" and \"already\" are identical in form.' This apparatus is not on the page.",
+    "class": "O11"
+   }
+  ],
+  "previous_page_ocr_tail": "<language>Chinese</language>\n<script>handwritten</script>\n金史四庫全書 卷一百十八考證\n史記卷一百一十八考證",
+  "next_page_ocr_head": "金\n久\n已\n压"
+ },
+ {
+  "book_id": "6ae0bb854adf2ffb52f7166f",
+  "title": "史記·卷二十三~卷二十四 (Shiji, Siku Quanshu, vol. 14 of 44)",
+  "page_number": 113,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0bb854adf2ffb52f7166f/113.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n文采節\n奏也\n獨樂其志不厭其道\n集解王肅曰樂能使仁\n人獨樂其志不厭倦其\n道也正義言武王諸將人各欣恱象武王\n有德天下之志並無厭干戈君臣之道\n備舉其道\n不私其欲\n正義縁人人不厭故作樂者事事法之欲\n備舉武王之道耳非為私情之所欲也\n是以情見而義立\n正義不厭武王之道其情既\n見則不私其欲義亦立也\n樂終\n而德尊\n正義為樂之理既終是象\n德之事其德亦尊顯也\n君子以好善小人\n以息過\n正義樂理周足象德可尊以此教世何往而\n不可君子聞之則好善小人聞之則改過也\n故曰生民之道樂為大焉\n正義此引舊語\n結樂道之為大\n君子曰禮\n樂不可以斯湏去身\n正義此第十章名為樂化章第\n十以化民故次賓牟賈成第十\n次定曰軍人三書",
+  "translation": "<meta>continues from previous page</meta>artistic adornment and regular rhythm.\n\nSolitary, delighting in his purpose without tiring of his Way.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Wang Su says: Music can cause a benevolent man to delight in his purpose in solitude, never growing weary of his Way.</note>\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This means that King Wu's various generals each rejoiced, symbolizing King Wu's virtue and his ambition for all under Heaven, none tiring of shields, daggers, or the proper Way between ruler and minister.</note>\n\nCompletely manifesting his Way, never indulging private desires.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Because everyone was untiring, the creators of the music modeled every single detail upon them, wishing only to display King Wu's Way in full, not out of personal selfish desire.</note>\n\nTherefore, genuine feelings are revealed and righteousness is established.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Not tiring of King Wu's Way, their true sentiments were revealed; thus, not indulging private desires, righteousness was established.</note>\n\nThe music concludes, and virtue is honored.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: When the principles of music reach their conclusion, they symbolize deeds of virtue; thus, virtue is honored and made illustrious.</note>\n\nThe noble person uses it to delight in goodness, while the common person uses it to halt transgression.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: The principles of music are complete and sufficient, symbolizing a virtue worthy of reverence. Using this to instruct the world, where could it fail? When the noble person hears it, he delights in goodness; when the common person hears it, he reforms his faults.</note>\n\nTherefore it is said: \"Among the ways of nurturing the people, music is greatest.\"\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This quotes ancient sayings to conclude that the Way of Music is greatest.</note>\n\nThe noble person says: \"Ritual and music cannot leave one's person for even an instant.\"\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This is Chapter Ten, entitled 'Chapter on Transforming through Music.' Because it transforms the people, it follows the Binmou Jia chapter, making it the tenth chapter. The next text notes: three books of military figures.</note>\n\n<summary>This passage from the Shiji Record of Music explains how martial music cultivates moral purpose, restrains selfish desires, and establishes righteousness among both leaders and commoners. It emphasizes that ritual and music must constantly guide a person, concluding that music is the greatest method for educating and transforming the people.</summary>\n<keywords>Shiji, Record of Music, King Wu, Way of Music, virtue, righteousness, ritual and music, moral transformation, Jijie commentary, Zhengyi commentary, Wang Su</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-shiji|6ae0bb854adf2ffb52f7166f|113|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "次定曰軍人三書",
+    "image": "(nothing: the margin label 欽定四庫全書 / 史記)",
+    "source": null,
+    "english": null,
+    "problem": "A line not on the page is appended to the last Zhengyi note.",
+    "note": null,
+    "class": "O11"
+   },
+   {
+    "claim_id": "zh-shiji|6ae0bb854adf2ffb52f7166f|113|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "The reader text ends a commentary note with 'The next text notes: three books of military figures.' This is invented apparatus made from the garbled margin label.",
+    "class": "O11"
+   }
+  ],
+  "previous_page_ocr_tail": "也伐紂時士卒歡喜奮迅急速以尚威勢猛而不傾\n側也今武舞亦奮迅\n急而速不傾倒象\n極幽而不隱\n集解鄭元曰極幽\n謂歌也正義皆謂",
+  "next_page_ocr_head": "卷二十匹\n也其章中皆言樂陶化為善也凡四叚一明人生禮\n樂恒與已俱也二明禮樂不可偏用各有一失也三\n明聖人制禮作樂之由也四明聖人制禮作樂天下"
+ },
+ {
+  "book_id": "6ae0bbcd4adf2ffb52f7185a",
+  "title": "史記·卷二十九~卷三十 (Shiji, Siku Quanshu, vol. 17 of 44)",
+  "page_number": 60,
+  "image_url": "https://images.sourcelibrary.org/archived/6ae0bbcd4adf2ffb52f7185a/60.jpg",
+  "crop": null,
+  "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n以振之其明年天子始巡郡國東渡河河東守不意行\n至不辦自殺行西踰隴隴西守以行往卒\n集解駰案漢\n書音義曰踰\n度也卒\n倉卒\n天子從官不得食隴西守自殺於是上北出蕭\n關從數萬騎獵新秦中以勒邊兵而歸新秦中或千里\n無亭徼\n集解如淳曰徼亦卒求盜之屬也晋灼曰徼塞\n也瓚曰既無亭候又不徼巡無衛邊之備也\n於是誅北地太守以下而令民得畜牧邊縣\n集解駰案\n漢書音義\n曰令民得畜牧於邊縣也瓚曰先是新秦中千里\n無民畏寇不敢畜牧令設亭徼故民得畜牧也\n官假\n馬母三歲而歸及息什一以除告緡用充仭新秦中\n集\n解\n次定曰章王書",
+  "translation": "<meta>continues from previous page</meta>to relieve them.\n\nThe following year, the Son of Heaven began his imperial tour of the commanderies and feudal kingdoms. Heading east, he crossed the Yellow River. The Administrator of Hedong did not anticipate the arrival of the imperial procession and was unable to supply provisions; he committed suicide. The procession traveled west and crossed the Long Mountains. The Administrator of Longxi, because the imperial procession had arrived suddenly,\n\n<note>Collected Explanations: Pei Yin notes: The Phonetic Meaning of the Han Shu says: \"<term>Yu</term> <gloss>to cross</gloss> means to pass over. <term>Zu</term> <gloss>sudden</gloss> means abrupt and unexpected.\"</note>\n\ncould not provide food for the Son of Heaven's retinue; the Administrator of Longxi committed suicide.\n\nThereupon, His Majesty traveled north through Xiao Pass. Leading tens of thousands of cavalry, he hunted across the region of Xinqinzhong in order to inspect and train the frontier troops, and then returned. In Xinqinzhong, there were areas of perhaps a thousand <term>li</term> without watchtowers or border patrols.\n\n<note>Collected Explanations: Ru Chun says: \"<term>Jiao</term> <gloss>border patrol</gloss> also refers to the class of soldiers who pursue thieves.\" Jin Zhuo says: \"<term>Jiao</term> means border barricades or fortifications.\" Chen Zan says: \"There were neither signal towers nor patrolling border guards; there was no defense prepared for guarding the frontier.\"</note>\n\nThereupon, the Grand Administrator of Beidi and those beneath him were executed. The common people were then permitted to graze and breed livestock in the border counties.\n\n<note>Collected Explanations: Pei Yin notes: The Phonetic Meaning of the Han Shu says: \"This ordered that the people be allowed to raise livestock in the border counties.\" Chen Zan says: \"Prior to this, in Xinqinzhong there were no inhabitants for a thousand <term>li</term>, as they feared barbarian raiders and did not dare to raise livestock. Once watchtowers and border patrols were established, the people were able to keep livestock.\"</note>\n\nThe government lent them breeding mares, to be returned after three years along with one tenth of the offspring as interest. In this way, the proceeds seized through the denunciation of concealed wealth <note>the <term>gaomin</term> system</note> were used to fill and enrich Xinqinzhong.\n\n<note>Collected Explanations: Ci Ding says: ...</note>\n\n<summary>Emperor Wu toured the empire and inspected the northern frontier at Xinqinzhong, punishing regional officials whose negligence left troops unsupplied or borders undefended. To secure and populate the territory, the court executed negligent administrators, stationed border patrols, and funded livestock colonization through confiscations of concealed wealth.</summary>\n<keywords>Emperor Wu, imperial tour, Hedong, Longxi, Xiao Pass, Xinqinzhong, Beidi, livestock breeding, gaomin, frontier defense, Sima Qian, Shiji</keywords>",
+  "claims": [
+   {
+    "claim_id": "zh-shiji|6ae0bbcd4adf2ffb52f7185a|60|ocr_errors|0",
+    "list": "ocr_errors",
+    "ocr": "集 / 解 / 次定曰章王書",
+    "image": "集解 [continues on next page]; margin label 欽定四庫全書",
+    "source": null,
+    "english": null,
+    "problem": "The garbled margin label is transcribed as the opening of a commentary.",
+    "note": null,
+    "class": "O11"
+   },
+   {
+    "claim_id": "zh-shiji|6ae0bbcd4adf2ffb52f7185a|60|other|0",
+    "list": "other",
+    "ocr": null,
+    "image": null,
+    "source": null,
+    "english": null,
+    "problem": null,
+    "note": "The reader text ends with '<note>Collected Explanations: Ci Ding says: ...</note>'. The commentator 'Ci Ding' is invented from the garbled 欽定 of the margin label.",
+    "class": "O11"
+   }
+  ],
+  "previous_page_ocr_tail": "集解應劭曰燒草\n下水種稻草與稻\n並生高七八寸因悉芟去復下水灌\n之草死獨稻長所謂火耕水耨也\n令飢民得流就食\n江淮間欲留之處遣使冠盖相屬於道護之下巴蜀粟",
+  "next_page_ocr_head": "<header>卷三十</header>\n李竒曰邊有官馬今令民能畜官母馬者滿三歲歸之\n也及有舊息與當出緡筭者皆復令居新泰中又充仭\n之也謂與民母馬令得為馬種令十母馬還官一駒此"
+ }
+]

@@ -2,9 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
-import { localePath, type Locale } from '@/lib/locale-path';
+import { localePath, hasBookPageForEveryBook, type Locale } from '@/lib/locale-path';
 import { getBookThumbnailUrl } from '@/lib/utils';
-import { hasLocalizedEdition, localizedCollection, type LocalizedCollectionMap } from '@/lib/localized';
+import { hasLocalizedEdition, localizedCollection, localizedTitle, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 import { HOME_STRINGS, collectionName } from '@/lib/home-i18n';
 
 interface FeaturedBook {
@@ -17,6 +17,7 @@ interface FeaturedBook {
   thumbnail_blob?: string;
   language?: string;
   pages_translated_es?: number;
+  localized?: LocalizedBookMap | null;
 }
 
 interface EditorialSpreadProps {
@@ -35,7 +36,10 @@ interface EditorialSpreadProps {
   lang?: Locale;
 }
 
-function bookTitle(book: { display_title?: string; title: string }): string {
+function bookTitle(book: { display_title?: string; title: string; localized?: LocalizedBookMap | null }, lang: Locale): string {
+  // Off English, the page's gloss else the ORIGINAL — never the English gloss
+  // under Spanish chrome (.claude/docs/i18n.md rule 4, #7496).
+  if (lang !== 'en') return localizedTitle(book, lang);
   const dt = book.display_title;
   return dt && dt !== 'None' ? dt : book.title;
 }
@@ -46,8 +50,10 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
   // A book with no edition in the page's language links straight to the page
   // its locale URL would redirect to, instead of a 307 hop (#7076). Unknown
   // (null) keeps the locale URL and lets the book page decide.
+  // Locales with a book page for every book (/es, /zh, #7496) keep the prefix;
+  // /la and /nl still send a book without an edition to English.
   const bookHref = (book: FeaturedBook) =>
-    hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
+    !hasBookPageForEveryBook(lang) && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false
       ? `${bookUrl(book)}?lang=${lang}`
       : lp(bookUrl(book));
   const copy = localizedCollection(collection, lang);
@@ -118,7 +124,7 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
                       {thumb ? (
                         <Image
                           src={thumb}
-                          alt={bookTitle(book)}
+                          alt={bookTitle(book, lang)}
                           fill
                           quality={80}
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -131,7 +137,7 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
                       )}
                     </div>
                     <p className="text-[11px] text-white/40 mt-1.5 line-clamp-2 group-hover:text-white/70 transition-colors leading-tight w-[100px] md:w-[120px]">
-                      {bookTitle(book)}
+                      {bookTitle(book, lang)}
                     </p>
                   </Link>
                 );

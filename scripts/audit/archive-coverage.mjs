@@ -2,7 +2,9 @@
 /**
  * The archive-coverage question, asked at all three tiers at once.
  *
- * READ-ONLY. Writes nothing; prints a report and optionally a JSON snapshot.
+ * READ-ONLY. Writes nothing; prints a report and optionally a JSON snapshot. The one exception is
+ * `--progress --record` / `--alert` (#5448 step 6), which write a snapshot and the alarm state to
+ * `ops_reports` and nothing else.
  *
  * #4239 asked for one metric because ≥15 archive writers each carry their own
  * notion of "archived". On 2026-08-30 three methods answered "how many pages
@@ -24,6 +26,10 @@
  *   node scripts/audit/archive-coverage.mjs --master-samples 150
  *   node scripts/audit/archive-coverage.mjs --by-host          # gap per source host (#4397 lanes)
  *   node scripts/audit/archive-coverage.mjs --json out.json
+ *   node scripts/audit/archive-coverage.mjs --progress          # pages/day + remaining + finish, per lane (#5448)
+ *   node scripts/audit/archive-coverage.mjs --progress --record --alert
+ *                                         # hourly (l7a cron): snapshot, then ntfy once for a lane
+ *                                         # that archived 0 pages in 6 h with a backlog above 0
  *   node scripts/audit/archive-coverage.mjs --campaign acquisition-wave-2026-10 --books 20000
  *                                         # one acquisition wave only (#5457); with --books >= the
  *                                         # wave's size the RECORD tier is a census, not a sample
@@ -35,6 +41,10 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { loadLaneTable } from '../catalog-coverage/archive-lanes.mjs';
+import {
+  measureByProvider, laneOfProvider, laneRates, quietLanes, alarmTransition, SNAPSHOT_TYPE, ALARM_ID, QUIET_HOURS,
+} from '../lib/archive-progress.mjs';
 import {
   classifyPageRecord,
   classifyPagePreservation,
@@ -69,6 +79,8 @@ async function main() {
   const db = mc.db('bookstore');
   const books = db.collection('books');
   const pages = db.collection('pages');
+
+  if (has('--progress')) { await progress(db); await mc.close(); return; }
 
   const started = new Date();
   console.log(`archive-coverage — ${started.toISOString()}${CAMPAIGN ? ` — scope: acquisition_campaign ${CAMPAIGN}` : ''}\n`);
@@ -211,6 +223,76 @@ async function main() {
   }
 
   await mc.close();
+}
+
+/** R2 bucket bytes from Cloudflare analytics (storage-stats.mjs's query), or null without a token. */
+async function r2BucketBytes(bucket = process.env.R2_BUCKET_NAME || 'sourcelibrary') {
+  if (!process.env.CF_ANALYTICS_TOKEN || !process.env.R2_ACCOUNT_ID) return null;
+  const since = new Date(Date.now() - 2 * 86400e3).toISOString();
+  const gql = `query { viewer { accounts(filter: {accountTag: "${process.env.R2_ACCOUNT_ID}"}) {
+    r2StorageAdaptiveGroups(limit: 100, filter: {datetime_geq: "${since}"}) { max { payloadSize objectCount } dimensions { bucketName } } } } }`;
+  try {
+    const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+      method: 'POST', headers: { Authorization: `Bearer ${process.env.CF_ANALYTICS_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: gql }), signal: AbortSignal.timeout(20_000),
+    }).then(r => r.json());
+    const row = (res?.data?.viewer?.accounts?.[0]?.r2StorageAdaptiveGroups ?? []).find(b => b.dimensions.bucketName === bucket);
+    return row ? { bytes: row.max.payloadSize, objects: row.max.objectCount } : null;
+  } catch { return null; }
+}
+
+/**
+ * Pages archived per lane per day, pages remaining and a projected finish (#5448 step 6). Read from
+ * hourly ops_reports snapshots; `--record` takes one first, `--alert` pages ntfy ONCE for each lane
+ * newly quiet for QUIET_HOURS with work left, and once when it resumes.
+ */
+async function progress(db) {
+  const reports = db.collection('ops_reports');
+  const table = loadLaneTable();
+  const laneOf = laneOfProvider(table);
+  const now = new Date();
+  if (has('--record')) {
+    const by_provider = await measureByProvider(db);
+    const r2 = await r2BucketBytes();
+    const id = `${SNAPSHOT_TYPE}:${now.toISOString().slice(0, 13)}`;
+    await reports.replaceOne({ _id: id }, { _id: id, type: SNAPSHOT_TYPE, at: now, by_provider, r2 }, { upsert: true });
+    console.log(`recorded ${id}${r2 ? ` (R2 ${(r2.bytes / 1e12).toFixed(3)} TB)` : ''}`);
+  }
+  const snaps = await reports.find({ type: SNAPSHOT_TYPE, at: { $gte: new Date(now.getTime() - 30 * 3600e3) } }).sort({ at: 1 }).toArray();
+  if (snaps.length === 0) { console.log('no archive-progress snapshots yet — run with --record'); return; }
+  const rates = laneRates(snaps, laneOf, { now });
+  const first = snaps[0], last = snaps[snaps.length - 1];
+  console.log(`archive progress per lane — ${snaps.length} snapshots, ${first.at.toISOString().slice(0, 16)} → ${last.at.toISOString().slice(0, 16)} UTC`);
+  if (first.r2 && last.r2) console.log(`R2 bucket: ${(last.r2.bytes / 1e12).toFixed(3)} TB (+${((last.r2.bytes - first.r2.bytes) / 1e9).toFixed(1)} GB over the window)`);
+  console.log('  lane                     pages/day   +24h(span h)   +6h   remaining    finish      books (lazy)');
+  const rows = Object.entries(rates).filter(([, r]) => r.remaining > 0 || r.added_24h > 0).sort((a, b) => b[1].remaining - a[1].remaining);
+  for (const [lane, r] of rows) {
+    console.log(`  ${lane.padEnd(24)} ${String(r.per_day ?? '—').padStart(9)}   ${String(r.added_24h).padStart(7)} (${String(r.span_24h).padStart(4)})  ${String(r.added_6h).padStart(6)}  ${num(r.remaining).padStart(10)}    ${(r.finish ?? '—').padEnd(10)}  ${num(r.books)} (${num(r.lazy_books)})`);
+  }
+  if (has('--json')) console.log(JSON.stringify({ at: last.at, rates }, null, 0));
+  if (!has('--alert')) return;
+  const quiet = quietLanes(rates, table.lanes);
+  const prev = await reports.findOne({ _id: ALARM_ID });
+  const t = alarmTransition(prev?.alarmed, quiet);
+  const topic = process.env.ARCHIVE_PROGRESS_TOPIC || 'https://ntfy.sh/sourcelibrary-uptime';
+  const page = async (title, body, priority) => {
+    const res = await fetch(topic, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'card_file_box' }, body, signal: AbortSignal.timeout(15_000) });
+    if (!res.ok) throw new Error(`ntfy HTTP ${res.status}`);
+  };
+  try {
+    if (t.fresh.length) {
+      await page(`Archive lane quiet ${QUIET_HOURS} h: ${t.fresh.map(q => q.lane).join(', ')}`,
+        t.fresh.map(q => `lane ${q.lane} (box ${q.box}): 0 pages archived in ${QUIET_HOURS} h, ${num(q.remaining)} pages owed. Check its log (lane-${q.lane}.log) and $STATE/${q.lane}.blocked. #5448`).join('\n'), 'high');
+    }
+    if (t.resumed.length) await page(`Archive lane moving again: ${t.resumed.join(', ')}`, `${t.resumed.join(', ')} archived pages again. #5448`, 'low');
+  } catch (e) {
+    // State is NOT advanced, so the next run pages again rather than going quiet.
+    console.error(`ntfy page failed (${e.message})`);
+    process.exitCode = 1;
+    return;
+  }
+  await reports.replaceOne({ _id: ALARM_ID }, { _id: ALARM_ID, type: 'archive-progress-alarm', at: now, alarmed: t.alarmed }, { upsert: true });
+  console.log(`alarm: ${t.alarmed.length ? `quiet ${t.alarmed.join(', ')}` : 'no quiet lane'}${t.fresh.length ? ` (paged: ${t.fresh.map(q => q.lane).join(', ')})` : ''}`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

@@ -19,6 +19,7 @@
  *   node --env-file=.env.production.local scripts/maintenance/page-frame-sweep.mjs \
  *     [--apply] [--book=<id>] [--pages=13,14] [--provider=bph] [--limit-books=N] \
  *     [--checkpoint=scratchpad/page-frame-sweep.done] [--stop-file=<path>] [--max-error-rate=0.05]
+ *     [--cache-bust]   (after an image repair, before the CDN purge: read the new bytes, not the edge's)
  *
  * Undo: --rollback [--since=<ISO>] [--book=<id>] [--ar-outside=0.5,2.2] [--apply]
  * removes the stored frames (see the --rollback block).
@@ -67,6 +68,9 @@ const PROBE = 5;
 // Parallel image reads per book; the work is network wait, not CPU.
 const CONCURRENCY = Number(arg('concurrency', '8'));
 const R2 = /^https:\/\/images\.sourcelibrary\.org\//;
+// --cache-bust: read past the edge. After an image repair the edge serves the old scan for up to
+// 7 days (max-age=604800) until purged, and a frame measured on it describes the wrong picture (#5924).
+const CACHE_BUST = process.argv.includes('--cache-bust') ? `_v=${Date.now()}` : null;
 
 if (PROVIDER && !ALLOWED_PROVIDERS.includes(PROVIDER)) {
   console.error(`provider ${PROVIDER} is not on the allow-list; check its dry-run sheet first`);
@@ -87,6 +91,7 @@ function imageOf(p, bookId) {
 }
 
 async function frameFor(url) {
+  if (CACHE_BUST) url += (url.includes('?') ? '&' : '?') + CACHE_BUST;
   const res = await fetch(url, { signal: AbortSignal.timeout(20000) });
   if (!res.ok) throw new Error(`http ${res.status}`);
   const buf = Buffer.from(await res.arrayBuffer());

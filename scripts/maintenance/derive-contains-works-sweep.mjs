@@ -63,7 +63,7 @@ const db = c.db('bookstore');
 const query = BOOK_ID
   ? { id: BOOK_ID }
   : { visible: true, pages_ocr: { $gt: 20 }, ...(ALL ? {} : { title: CONTAINER }) };
-const cursor = db.collection('books').find(query, { projection: { id: 1, title: 1, author: 1, pages_count: 1 } });
+const cursor = db.collection('books').find(query, { projection: { id: 1, title: 1, author: 1, pages_count: 1 } }).batchSize(1000);
 
 let seen = 0, derived = 0, insufficient = 0, multi = 0, written = 0;
 const started = Date.now();

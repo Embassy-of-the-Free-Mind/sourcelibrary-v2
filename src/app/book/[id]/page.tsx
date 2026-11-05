@@ -1,16 +1,20 @@
 import { Suspense, cache } from 'react';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { Metadata } from 'next';
 import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
 import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
+import { resolveReaderPages, LazyPagesNotReadyError } from '@/lib/lazy-pages';
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Book, Page, TranslationEdition } from '@/lib/types';
+import { Book, Page, TranslationEdition, imageAccessFor } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
-import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, assertableYear, historicalTimelineDate } from '@/lib/publication-date';
 import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
+import { bylineDynasty, sibuClass, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
@@ -39,6 +43,7 @@ import BphCatalogueRecord from '@/components/book/BphCatalogueRecord';
 import OriginalEditionNotice from '@/components/book/OriginalEditionNotice';
 import TranslatedSiblingNotice from '@/components/book/TranslatedSiblingNotice';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import VolumeSetStrip from '@/components/book/VolumeSetStrip';
 import IndexCatalogChip from '@/components/book/IndexCatalogChip';
 import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
@@ -61,9 +66,10 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import TranslationSearchNotice, { FRESH_SEARCH_METHOD, translationSearchNoticeKind, type FreshSearch } from '@/components/book/TranslationSearchNotice';
 import PreviewBadge from '@/components/book/PreviewBadge';
 import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
-import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
+import { cardLabel, cardOutranksSearchNotice, loadCard, type TranslationCard } from '@/lib/first-translation/card';
 import {
   classifyFirstTranslationClaim,
   type ScreenedBook,
@@ -91,7 +97,8 @@ import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
-import { localePath, PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import { localePath, PREFIXED_LOCALES, hasBookPageForEveryBook, type Locale } from '@/lib/locale-path';
+import { OG_LOCALE } from '@/lib/og-locale';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
@@ -480,13 +487,19 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
   // one book.
   const isTwin = lang !== 'en';
   const twinUrl = `/${lang}${bookUrl}`;
+  // A twin with no edition in its language (#7496): Spanish chrome over English text.
+  // Not the Spanish edition, so it neither claims to be (canonical → English, no
+  // hreflang pair) nor asks to be indexed beside the English page.
+  const twinWithoutEdition = isTwin && hasLocalizedEdition(book as unknown as Record<string, unknown>, lang) === false;
   const localizedDescription = localizedMeta?.summary?.slice(0, 200) || description;
 
   return {
     title: isTwin && localizedTitleText ? `${localizedTitleText} | Source Library` : seoTitle,
     description: isTwin ? localizedDescription : description,
-    ...(!shouldIndex && { robots: { index: false, follow: true } }),
-    alternates: isTwin
+    ...((!shouldIndex || twinWithoutEdition) && { robots: { index: false, follow: true } }),
+    alternates: twinWithoutEdition
+      ? { canonical: bookUrl }
+      : isTwin
       ? { canonical: twinUrl, languages: { en: bookUrl, [lang]: twinUrl, 'x-default': bookUrl } }
       : {
         canonical: bookUrl,
@@ -501,7 +514,7 @@ export async function generateMetadata({ params, lang = 'en' }: PageProps): Prom
       description: isTwin ? localizedDescription : description,
       type: 'article',
       siteName: 'Source Library',
-      locale: isTwin ? 'es_ES' : 'en_US',
+      locale: isTwin ? OG_LOCALE[lang] : 'en_US',
       url: isTwin ? twinUrl : bookUrl,
       // OG image generated by opengraph-image.tsx (branded 1200x630 card)
       ...(publishedDate && { publishedTime: publishedDate }),
@@ -543,7 +556,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; pageIdByNumber: Record<number, string> } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; freshSearch: FreshSearch | null; pageIdByNumber: Record<number, string> } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -613,14 +626,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
   // or an error renders the legacy panel, never an error state.
   const cardPromise = loadCard(db, (quickBook as { work_id?: string }).work_id).catch(() => null);
 
-  // All queries have maxTimeMS to fail fast during DB degradation
-  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard] = await Promise.all([
-    fullBookPromise,
-    // Use page_number >= 0 to skip archived-spread pages (negative numbers).
-    // This uses the {book_id, page_number} compound index efficiently.
-    // Digitizer-inserts are still filtered in JS (rare, no index benefit).
-    db.collection('pages')
-      .find({ book_id: bookId, page_number: { $gte: 0 } }, {
+  // Use page_number >= 0 to skip archived-spread pages (negative numbers).
+  // This uses the {book_id, page_number} compound index efficiently.
+  // Digitizer-inserts are still filtered in JS (rare, no index benefit).
+  const loadPreviewPages = (pagesDb: typeof db) =>
+    pagesDb.collection('pages')
+      .find(readerPageListFilter(bookId), {
         projection: {
           _id: 0,
           id: 1,
@@ -629,6 +640,11 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           photo_original: 1,
           archived_photo: 1,
           cropped_photo: 1,
+          // getPageImageUrl's pre-sized variants. Without display_photo every 'display' URL
+          // here (hero background, up to 40 pages) went through /api/image as the master,
+          // which refuses a page over 100 MP (Codex Sinaiticus facsimile, 413; #5448).
+          display_photo: 1,
+          enhanced_photo: 1,
           thumbnail: 1,
           thumbnail_blob: 1,
           image_display: 1,
@@ -653,7 +669,12 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
       .toArray()
-      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
+      .then(docs => docs.filter(isReaderListedPage).slice(0, 100));
+
+  // All queries have maxTimeMS to fail fast during DB degradation
+  const [fullBookResult, pagesFirstRead, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, translationCard, freshSearchDoc] = await Promise.all([
+    fullBookPromise,
+    loadPreviewPages(db),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     // Top 8 gallery images for preview row. Both this and the count below use
     // BOOK_GALLERY_SCOPE, which also builds the "view all" href — so the number
@@ -683,11 +704,32 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
         .catch(() => [])
       : Promise.resolve([]),
     cardPromise,
+    // The newest fresh prior-translation search (#7598); its notice outranks the card.
+    db.collection('first_translation_attempts')
+      .findOne(
+        { book_id: bookId, method: FRESH_SEARCH_METHOD },
+        { sort: { date: -1 }, projection: { _id: 0, date: 1, result: 1, queries: 1 }, maxTimeMS: 3000 },
+      )
+      .catch(() => null),
   ]);
 
   // Use the full Atlas book when available (has editions, translation_verification, etc.)
   // Fall back to the catalog book (Supabase) if Atlas fetch failed
   const book = fullBookResult?.book ?? quickBook;
+
+  // A manifest-only book (#7343 lazy pages) has its count and no (or only some)
+  // page docs: create them now, through the one materializer, and re-read from
+  // the primary. Only a book that is lazy — or, when the doc came from the
+  // catalog without `pages_state`, may be — pays anything. A lazy book whose
+  // pages cannot be created THROWS (LazyPagesNotReadyError, rethrown by
+  // BookInfo) so ISR never caches an empty or partial book.
+  const pagesRaw = await resolveReaderPages({
+    bookId,
+    book: book as { pages_count?: unknown; pages_state?: unknown },
+    bookDocIsComplete: Boolean(fullBookResult?.book) || !fromCatalog,
+    firstRead: pagesFirstRead,
+    reread: loadPreviewPages,
+  });
 
   // Author authority record (variants / VIAF / Wikidata) — only when the
   // book has been linked to an entity. Loaded in parallel with the index
@@ -770,7 +812,7 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
     ...(((serializedBook.index?.entries ?? []) as { pages?: number[] }[]).flatMap(e => (e.pages ?? []).length >= 2 ? (e.pages as number[]).slice(0, 8) : [])),
   ]);
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null, freshSearch: freshSearchDoc ? (JSON.parse(JSON.stringify(freshSearchDoc)) as FreshSearch) : null };
 }
 
 // Skeleton for book info while loading
@@ -811,16 +853,31 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = false, embedPathPrefix = '', partnerV2 = false, previewProposed = false, allowHidden = false, lang = 'en' }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy; isEmbedded?: boolean; embedPathPrefix?: string; partnerV2?: boolean; previewProposed?: boolean; allowHidden?: boolean; lang?: Locale }) {
   // Chrome words for this URL's language, and the link prefix that keeps a
   // reader on it. `lp` is registry-guarded (src/lib/i18n.ts): a path with no
   // Spanish twin comes back unprefixed rather than pointing at a 404.
   const t = BOOK_STRINGS[lang];
   const lp = (href: string) => localePath(href, lang);
+  // No edition in this URL's language (#7496): the reader would only 307 to the
+  // English page, so the Read buttons link there directly and say so.
+  const readLinks = (b: unknown) => {
+    // `book` here is getBook's FULL record (an exclusion projection), so an absent
+    // counter is a zero, not an unknown: books never translated into Spanish have
+    // no `pages_translated_es` field at all, and the helper reads absence as null.
+    const rec = { pages_translated_es: 0, ...(b as Record<string, unknown>) };
+    const englishOnly = lang !== 'en' && hasLocalizedEdition(rec, lang) === false;
+    return {
+      readLabel: englishOnly ? t.readThisBookInEnglish : t.readThisBook,
+      lpRead: (href: string) => (englishOnly ? `${href}?lang=${lang}` : lp(href)),
+    };
+  };
   let data;
   try {
     data = await getBook(id, tenantId, tenantSlug);
   } catch (err) {
+    // Never render (and cache for 24 h) a fallback for a book whose pages are being created.
+    if (err instanceof LazyPagesNotReadyError) throw err;
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
     return (
@@ -838,7 +895,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+  const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard, freshSearch } = data;
+  // A first-modern card (#7797) is the reviewed answer over an old translation
+  // the fresh search credited as a modern one; it outranks that notice.
+  const searchNotice = cardOutranksSearchNotice(translationCard, book as { pages_translated?: number | null })
+    ? null
+    : translationSearchNoticeKind(book, freshSearch);
   // `ocr_head` (1,200 characters of each page's OCR) is for the cover and
   // representative-page choice made on the server below; no client component
   // reads it. Strip it before the page list is serialised to the browser, so
@@ -886,7 +948,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   if ((book as { content_type?: string }).content_type === 'text') {
     const textDb = await getReadDb();
     const textPages = await textDb.collection('pages')
-      .find({ book_id: book.id, page_number: { $gte: 0 } }, {
+      .find(readerPageListFilter(book.id), {
         projection: { _id: 0, page_number: 1, part_title: 1, 'transliteration.data': 1, 'translation.data': 1, 'ocr.data': 1 },
         maxTimeMS: 5000,
       })
@@ -894,6 +956,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // Text-only works serve their whole translation in one server render, so
     // each page carries the reader-path provenance mark (deterministic,
     // ISR-safe; runs once per revalidation, not per request).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const markedTextPages = (JSON.parse(JSON.stringify(textPages)) as Record<string, unknown>[])
       // English edition, English leaf: the transcription is the text (#7100).
       .map((p) => markPageForReader(serveEnglishOriginalPage(p, book, { modernized: false }) as Record<string, unknown>, book.id));
@@ -1001,33 +1064,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const hasTranslations = verdict !== null
     ? verdict === 'complete' || verdict === 'translated'
     : translatedCount > totalPages / 2;
-  // Image-download access classification (mirrors classifyImageAccess in lib/purchases.ts):
+  // Image-download access: the same rule as classifyImageAccess in lib/purchases.ts
+  // (`imageAccessFor`, which reads `year`, never `year_published` — #4131).
   //  - 'open': PD / CC-BY / BPH / pre-1930 → flows through the normal member/pay gate
-  //  - 'nc-free': NC-licensed → free for any signed-in user, never charged
+  //  - 'nc-free': the library restricts reuse → free for any signed-in user, never charged
   //  - 'blocked': modern + unknown license + non-BPH → withheld entirely
-  const imgLicense = (book as any).image_source?.license || 'unknown';
-  const imgProvider = (book as any).image_source?.provider;
-  // `year`, NOT `year_published` (#4131). Every read in this file named a field
-  // that ZERO of 104,690 books have, so all of them silently evaluated to
-  // undefined: the pre-1930 image release below never fired once, and the
-  // DublinCoreMeta `year=` prop — the date library crawlers harvest — was empty
-  // on every book page, in both of this component's returns. `books.published`
-  // is the free-text twin and must not be parsed here (#3718); `year` is the
-  // numeric field, present on 49,959 books.
-  const yearPublished = (book as unknown as { year?: number }).year;
   // DC.date is a bibliographic claim, so it must not carry a year the record's
   // own provenance marks as an import placeholder (#3307). The image-access
-  // test below keeps the raw value: it is a rights heuristic, not a claim.
+  // rule below keeps the raw `year`: it is a rights heuristic, not a claim.
   const dcYear = assertableYear(book as unknown as Parameters<typeof assertableYear>[0]);
-  const isNcLicense = typeof imgLicense === 'string' && /\bnc\b/i.test(imgLicense);
-  const imageAccess: 'open' | 'nc-free' | 'blocked' =
-    imgProvider === 'bph' || (typeof yearPublished === 'number' && yearPublished < 1930)
-      ? 'open'
-      : isNcLicense
-        ? 'nc-free'
-        : (!imgLicense || imgLicense === 'unknown')
-          ? 'blocked'
-          : 'open';
+  const imageAccess = imageAccessFor(book as unknown as Parameters<typeof imageAccessFor>[0]);
   const imageRestricted = imageAccess === 'blocked';
   const candidate = (book as unknown as { summary_candidate?: { brief?: string; abstract?: string; detailed?: string } }).summary_candidate;
   const bookSummaryObj = previewProposed && candidate?.brief
@@ -1074,13 +1120,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   })();
 
   // ============================================================================
-  // Book page v2 layout (non-embed only). Tenant/embed reading rooms keep the
-  // proven layout below to preserve the Tenant Subdomain Lockdown invariants.
+  // Book page v2 layout. Partner embeds (/embed/<tenant>/…, and the tenant
+  // subdomains the proxy rewrites onto them) get it too since 2026-10-29:
+  // BPH/EFM asked, via Derek, for the same book page as sourcelibrary.org. The
+  // embedPolicy switches still hide every cross-library rail, and `lpv` below
+  // keeps every link this layout builds inside /embed/<tenant>. Self-serve
+  // reading rooms (no tenant, so no partnerV2) keep the layout below.
   // ============================================================================
-  if (!isEmbedded) {
+  const shownPublished = displayPublished(book.published) ?? undefined;
+
+  if (!isEmbedded || partnerV2) {
+    // The v2 link builder: the locale prefix, then the embed namespace when
+    // embedded. Every in-book link below goes through it; a target with no
+    // embed route (gallery, checks, author, admin) is not linked when embedded.
+    const lpv = (href: string) => {
+      const localized = lp(href);
+      // Root-relative only: an editor-set About link (about_visual.href) may be absolute.
+      return localized.startsWith('/') ? embedPathPrefix + localized : localized;
+    };
     // What a stored quality check found in this book (#6199). One indexed read; never throws.
     // Promise only; awaited together with the related-books / shelf / entity lookups below (#7057).
-    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id])).then(w => w.book);
+    const bookWarningP = getReadDb().then(wdb => getQualityWarnings(wdb, [book.id]));
     const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
@@ -1164,18 +1224,20 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const src = img.thumbnail_url || img.extracted_url || img.image_url;
       if (!src) return null;
       const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
-      const href = pageId ? lp(`/book/${bookSlug}/page/${pageId}`) : `/gallery/image/${img.id}`;
+      const href = pageId ? lpv(`/book/${bookSlug}/page/${pageId}`) : isEmbedded ? undefined : `/gallery/image/${img.id}`;
       return { src, fallback: img.extracted_url || img.image_url, href, label: img.description };
     }).filter((p): p is Plate => p !== null);
+    const { readLabel, lpRead: lpReadBare } = readLinks(book);
+    const lpRead = (href: string) => embedPathPrefix + lpReadBare(href);
     const readHref = (() => {
       if (pages.length === 0) return null;
       const firstChapterPageNumber = book.chapters?.length
         ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
         : null;
-      if (typeof firstChapterPageNumber === 'number') return lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber));
+      if (typeof firstChapterPageNumber === 'number') return lpRead(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber));
       const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
       const readPage = pages[skipTo] || pages[0];
-      return readPage ? lp(`/book/${bookSlug}/page/${readPage.id}`) : null;
+      return readPage ? lpRead(`/book/${bookSlug}/page/${readPage.id}`) : null;
     })();
     const hasContents = !!(book.chapters?.length || (book as unknown as { index?: { entries?: unknown[] } }).index?.entries?.length || hasSummary);
     // The related rail only shows books with a CSP-renderable cover (rehosted to
@@ -1268,9 +1330,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // The four lookups above are independent (entity terms, quality warning,
     // related books, holder shelf): run them concurrently instead of one after
     // another. Only synchronous code sits between their creation and this await.
-    const [summaryEntities, bookWarning, tagRelated, librarySection] = await Promise.all([
+    const [summaryEntities, qualityWarnings, tagRelated, librarySection] = await Promise.all([
       summaryEntitiesP, bookWarningP, tagRelatedP, librarySectionP,
     ]);
+    const { book: bookWarning, checked: bookChecked } = qualityWarnings;
     const hasRelated = tagRelated.length > 0;
 
     // Publisher / place only — the DATE is surfaced separately as a labelled
@@ -1292,13 +1355,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // composition ("written") date. Non-informative values ("Unknown", n.d.)
     // are dropped rather than shown.
     const compDateDisplay = book.source_work_dates?.find(l => l.type === 'composition')?.date_display?.trim();
-    const NONINFO_DATE = /^\s*(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)?\s*$/i;
     const heroDate = (() => {
-      const pub = book.published ? String(book.published).trim() : '';
-      if (pub && !NONINFO_DATE.test(pub)) return { label: t.published, value: localizePublished(pub, lang) };
+      if (shownPublished) return { label: t.published, value: localizePublished(shownPublished, lang) };
       if (compDateDisplay) return { label: t.written, value: localizeDateDisplay(compDateDisplay, lang) };
       return null;
     })();
+    // Where the catalogue tradition files this work, and the author's dynasty (#8035). From the
+    // Kanripo-keyed 四部 snapshot, so only for a work that has a row: nothing is guessed.
+    const catalogueRow = sibuRowForWork(book.work_id);
+    const catalogueClass = catalogueRow?.cls ? sibuClass(catalogueRow.cls) : null;
     // Meta line: publisher/place, plus the source-work line ONLY when its author
     // differs from the byline (e.g. a translation crediting the original author
     // + date). For same-author originals the date already lives in the chip.
@@ -1309,7 +1374,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const trans = book.source_work_dates?.find(l => l.type === 'translation');
       if (comp) {
         const sameAuthor = !!comp.author && !!bookAuthorName && comp.author.trim() === bookAuthorName;
-        if (!sameAuthor) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
+        // comp.author can be a romanised 宮夢仁 beside a Han byline, so `sameAuthor` misses it
+        // and the date ran twice: here, and in the chip below.
+        const alreadyInChip = !comp.author && heroDate?.value === localizeDateDisplay(comp.date_display, lang);
+        if (!sameAuthor && !alreadyInChip) parts.push(`${comp.author || ''} ${localizeDateDisplay(comp.date_display, lang)}`.trim());
       } else if (trans) {
         parts.push(`${trans.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(trans.date_display, lang)}`.trim());
       }
@@ -1340,7 +1408,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     // An editor-chosen About visual (BookAboutPicker) overrides the auto-pick.
     const aboutOverride = (book as unknown as { about_visual?: { src?: string; href?: string; caption?: string } | null }).about_visual;
     const sideVisual = (aboutOverride && aboutOverride.src)
-      ? { src: aboutOverride.src, href: lp(aboutOverride.href || `/book/${bookSlug}`), caption: aboutOverride.caption }
+      ? { src: aboutOverride.src, href: lpv(aboutOverride.href || `/book/${bookSlug}`), caption: aboutOverride.caption }
       : (() => {
       // Only use a gallery plate if a non-provenance one exists; otherwise fall
       // through to a real interior page rather than showing a bookplate.
@@ -1350,7 +1418,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         const src = plate.extracted_url || plate.image_url || plate.thumbnail_url;
         if (src) {
           const pageId = plate.id.match(/^(.+)[:\-]\d+$/)?.[1];
-          return { src, href: pageId ? lp(`/book/${bookSlug}/page/${pageId}`) : `/gallery/image/${plate.id}`, caption: plate.description };
+          return { src, href: pageId ? lpv(`/book/${bookSlug}/page/${pageId}`) : isEmbedded ? undefined : `/gallery/image/${plate.id}`, caption: plate.description };
         }
       }
       // Show a picture if the book has one WORTH showing, else a page of the
@@ -1365,7 +1433,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       for (const pg of [interiorIllusPage, interiorTextPage]) {
         if (!pg) continue;
         const src = getPageImageUrl(pg as Parameters<typeof getPageImageUrl>[0], 'display');
-        if (src && notCover(src)) return { src, href: lp(`/book/${bookSlug}/page/${pg.id}`), caption: pg.page_number ? t.pageAbbrev(pg.page_number) : undefined };
+        if (src && notCover(src)) return { src, href: lpv(`/book/${bookSlug}/page/${pg.id}`), caption: pg.page_number ? t.pageAbbrev(pg.page_number) : undefined };
       }
       return null;
     })();
@@ -1382,17 +1450,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
     };
     const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
-    // Original (historical) publication / composition — always first. Prefer the
+    // Original (historical) composition / publication — always first. Prefer the
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
+    // The label follows the date actually shown: 成书/Written for a composition
+    // date, 出版/Published only for a printing (#8184).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (book.published ? String(book.published) : '')).trim();
-    const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
-    if (histInformative) {
+    const hist = historicalTimelineDate(compDate && localizeDateDisplay(compDate, lang), shownPublished);
+    if (hist) {
+      const isPrinting = hist.kind === 'publication';
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
-      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
-      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: t.published, detail });
+      const detail = isPrinting ? ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined) : undefined;
+      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: hist.text, label: isPrinting ? t.published : t.written, detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
     // A verified `prior_translation` credit carries the richest info; otherwise
@@ -1555,6 +1625,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
 
     const readingDropdowns = (
       <>
+        {/* Volumes in this set (#7527) — first, because "which volume am I on,
+            and where is the next" is a navigation question. Renders nothing
+            unless the book is surely one volume of a set; tenant-gated like
+            RelatedEditions, which leaves these volumes out of its own list. */}
+        {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
+          <Suspense fallback={null}><VolumeSetStrip
+            bookId={book.id}
+            workId={(book as unknown as { work_id?: string }).work_id!}
+            locale={lang}
+          /></Suspense>
+        )}
         {hasReadingGuide && (
           <AISection kind="reading-guide" className="card reveal-in">
             <details className="group sl-collapse">
@@ -1581,7 +1662,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             {tocPage && (() => {
               const tocThumb = getPageImageUrl(tocPage as Parameters<typeof getPageImageUrl>[0], 'thumb');
               return (
-                <Link href={lp(`/book/${bookSlug}/page/${tocPage.id}`)} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
+                <Link href={lpv(`/book/${bookSlug}/page/${tocPage.id}`)} className="flex items-center gap-4 border px-4 py-3 mb-5 transition-colors" style={{ borderColor: '#e6e0d3', background: '#fdfbf6' }}>
                   <div className="w-[38px] h-[48px] flex-shrink-0 overflow-hidden border" style={{ borderColor: '#d8d0bf', background: '#fff' }}>
                     {tocThumb && (
                       /* eslint-disable-next-line @next/next/no-img-element */
@@ -1602,7 +1683,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
                   <Link
                     key={i}
-                    href={lp(typeof ch.pageNumber === 'number' ? pageNumberHref(bookSlug, ch.pageNumber, pageIdByNumber) : `/book/${bookSlug}`)}
+                    href={lpv(typeof ch.pageNumber === 'number' ? pageNumberHref(bookSlug, ch.pageNumber, pageIdByNumber) : `/book/${bookSlug}`)}
                     className="flex items-baseline justify-between gap-4 py-2 border-b transition-colors hover:bg-[#f4efe6]"
                     style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
                   >
@@ -1632,7 +1713,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <PlusToggle />
           </summary>
           <div className="px-4 pb-4 md:px-6 md:pb-6">
-            {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+            {searchNotice && freshSearch ? (
+              <TranslationSearchNotice
+                book={book}
+                search={freshSearch}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              />
+            ) : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
               <TranslationCardPanel
                 card={translationCard}
                 book={book as { pages_translated?: number | null }}
@@ -1651,7 +1738,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               && !['English', 'english', 'en', 'eng'].includes(book.language)
               && <TranslationHistoryUnresearched />
             )}
-            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} />
+            <BookBiblioPanel book={book} pagesCount={totalPages} showExternalLinks={embedPolicy.showExternalLinks} lang={lang} />
             {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
               <Suspense fallback={null}><RelatedEditions
                 bookId={book.id}
@@ -1660,6 +1747,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 editionKey={(book as unknown as { edition_key?: string }).edition_key}
                 editionKeyQuality={(book as unknown as { edition_key_quality?: string }).edition_key_quality}
                 locale={lang}
+                excludeSetVolumes
               /></Suspense>
             )}
             {embedPolicy.showIndexCatalogStatus && (
@@ -1731,14 +1819,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="flex items-center">
               {embedPolicy.showBookReadCta && readHref && (
                 <Link href={readHref} className="inline-flex items-center gap-2 px-4 py-2.5 text-[13px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
-                  <BookOpen className="w-4 h-4" />{t.readThisBook}
+                  <BookOpen className="w-4 h-4" />{readLabel}
                 </Link>
               )}
-              <div className="w-1/3 flex-shrink-0 ml-auto grid grid-cols-4 rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none" style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
+              {/* SaveToListButton renders nothing in an embed (no account inside a partner frame), so the bar drops its cell. */}
+              <div className={`w-1/3 flex-shrink-0 ml-auto grid ${isEmbedded ? 'grid-cols-3' : 'grid-cols-4'} rounded overflow-hidden divide-x [&_svg]:!w-[15px] [&_svg]:!h-[15px] [&_button]:!p-0 [&_button]:!w-full [&_button]:!h-full [&_button]:!justify-center [&_button]:!rounded-none`} style={{ border: '1px solid rgba(245,240,232,0.2)', borderColor: 'rgba(245,240,232,0.2)' }}>
                 {[
-                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
-                  <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" iconOnly />,
-                  <SaveToListButton key="save" targetType="book" targetId={book.id} size="sm" className="!text-stone-100" />,
+                  <CiteButton key="cite" bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={shownPublished} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100" iconOnly />,
+                  <DownloadButton key="dl" bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} bookTenantId={book.tenantId} variant="header" iconOnly />,
+                  ...(isEmbedded ? [] : [<SaveToListButton key="save" targetType="book" targetId={book.id} size="sm" className="!text-stone-100" />]),
                   <LikeButton key="like" targetType="book" targetId={book.id} size="sm" showCount={false} className="!text-stone-100" />,
                 ].map((el, i) => (
                   <div key={i} className="h-10 flex items-center justify-center" style={{ background: 'rgba(12,9,6,0.55)', borderColor: 'rgba(245,240,232,0.2)' }}>{el}</div>
@@ -1756,7 +1845,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
               bookTitle={book.display_title || book.title}
               bookAuthor={book.author}
-              bookYear={book.published}
+              bookYear={shownPublished}
               pages={clientPages}
               trigger={
                 <div className="flex flex-col items-center md:items-start">
@@ -1781,6 +1870,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             <div className="min-w-0" style={{ color: '#f7f2ea' }}>
               {(heroByline.role === 'author' || heroByline.role === 'editor') && (
                 <div className="uppercase text-[10.5px] md:text-[13px] tracking-[0.1em] font-medium mb-1.5 md:mb-2" style={{ color: '#d98a72' }}>
+                  {lang === 'zh' && heroByline.role === 'author' && bylineDynasty(catalogueRow, book.author) && <span>【{bylineDynasty(catalogueRow, book.author)}】</span>}
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
                       {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
@@ -1808,6 +1898,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 );
               })()}
               {heroMetaLine && <div className="text-[11.5px] md:text-[15px]" style={{ color: 'rgba(245,240,232,0.82)' }}>{heroMetaLine}</div>}
+              {catalogueClass && embedPolicy.enableBookCollectionNavigation && (
+                <div className="text-[11.5px] md:text-[15px] mt-1" style={{ color: 'rgba(245,240,232,0.82)' }}>
+                  <Link href={lp(`/sibu/${catalogueClass.code}`)} className="hover:opacity-80 transition-opacity underline underline-offset-2 decoration-1">
+                    {lang === 'zh'
+                      ? `${catalogueClass.part.zh} · ${catalogueClass.zh}`
+                      : `${catalogueClass.part.en} · ${catalogueClass.en}`}
+                  </Link>
+                </div>
+              )}
 
               {/* Chips — borderless / padless inline items */}
               {(() => {
@@ -1828,11 +1927,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }} title={hasScans ? t.scansTooltip : t.textEditionTooltip}>
                       <FileText className={chipIcon} />{hasScans ? t.scans(totalPages) : t.pagesOfText(totalPages)}
                     </span>
-                    {imageCount > 0 && (
+                    {/* The gallery has no embed route: a plain count inside a partner frame. */}
+                    {imageCount > 0 && (isEmbedded ? (
+                      <span className={chip} style={{ color: 'rgba(245,240,232,0.88)' }}>
+                        <Images className={chipIcon} />{t.images(imageCount)}
+                      </span>
+                    ) : (
                       <Link href={`/gallery?bookId=${book.id}`} className={`${chip} transition-colors hover:opacity-80`} style={{ color: 'rgba(245,240,232,0.88)' }}>
                         <Images className={chipIcon} />{t.images(imageCount)}
                       </Link>
-                    )}
+                    ))}
                   </div>
                 );
               })()}
@@ -1890,10 +1994,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {qualityStrings.qualityBook({
                     ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
                     serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
-                  })}{' '}
-                  {bookWarning.commonKinds.length > 0 && <>{qualityStrings.qualityBookKinds(bookWarning.commonKinds.map((k) => qualityStrings.qualityKinds[k]))}{' '}</>}
-                  {qualityStrings.qualitySeriousMeans}{' '}
-                  <Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link>
+                  })}
+                  {/* The checks record has no embed route: the warning stands on its own inside a partner frame. */}
+                  {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
+                </p>
+              )}
+
+              {/* A completed check with no serious finding (#7896). A book with no check says nothing here:
+                  the notice beside the text in the reader already says it is an unreviewed AI translation. */}
+              {!bookWarning && hasOcr && bookChecked && (
+                <p role="note" data-quality-check="checked" className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: 'rgba(245,240,232,0.6)' }}>
+                  {qualityStrings.qualityChecked({ ai: bookChecked.reader !== 'human', image: bookChecked.imageOpened, read: bookChecked.pagesRead, date: qualityDate(bookChecked.date, lang) })}
+                  {!isEmbedded && <>{' '}<Link href={`/book/${book.slug || book.id}/checks#${bookChecked.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link></>}
                 </p>
               )}
 
@@ -1913,7 +2025,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <div className="hidden md:flex flex-wrap items-center gap-2.5 mt-6">
                 {embedPolicy.showBookReadCta && readHref && (
                   <Link href={readHref} className="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:brightness-110" style={{ background: '#a5503d' }}>
-                    <BookOpen className="w-[18px] h-[18px]" />{t.readThisBook}
+                    <BookOpen className="w-[18px] h-[18px]" />{readLabel}
                   </Link>
                 )}
                 <div className="hidden md:flex flex-wrap items-center gap-1 px-1.5 py-1" style={{ background: 'rgba(12,9,6,0.82)', border: '1px solid rgba(245,240,232,0.16)' }}>
@@ -1924,8 +2036,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       <span className="flex items-center gap-1.5 px-3 py-1.5 cursor-not-allowed text-[13px]" style={{ color: 'rgba(245,240,232,0.4)' }} title="Complete OCR, translation & summary first"><BookMarked className="w-4 h-4" />Publish</span>
                     )}
                   </AuthCheck>
-                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
-                  <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={shownPublished} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} bookTenantId={book.tenantId} variant="header" />
                   {/* Cover maker (concepts, admin only): sourcelibrary.org only, never on a partner embed or tenant room. */}
                   {!isEmbedded && !tenantSlug && pages.length > 0 && (
                     <AuthCheck role="admin">
@@ -1934,7 +2046,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       </Link>
                     </AuthCheck>
                   )}
-                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
+                  <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={shownPublished} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
                     <BookAnalytics bookId={book.id} className="!text-stone-200" />
@@ -2032,7 +2144,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <h2 className="font-display font-medium text-2xl md:text-[28px] mb-1" style={{ color: '#2b2620' }}>{t.illustrations}</h2>
               <p className="text-sm md:text-[15px] mb-6" style={{ color: '#8a8170' }}>{t.illustrationsNote}</p>
               <GalleryMasonry plates={galleryPlates} />
-              {imageCount > galleryPlates.length && (
+              {imageCount > galleryPlates.length && !isEmbedded && (
                 <div className="mt-8 text-center">
                   {/* imageCount is counted at quality >= 0.7, the bar this section curates
                       to, but /gallery defaults to 0.5 — so "view all 141" opened a
@@ -2111,7 +2223,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 currentThumbnailBlob={getBookThumbnailUrl(book as Parameters<typeof getBookThumbnailUrl>[0], 'thumb') ?? undefined}
                 bookTitle={book.display_title || book.title}
                 bookAuthor={book.author}
-                bookYear={book.published}
+                bookYear={shownPublished}
                 pages={clientPages}
               />
             </div>
@@ -2163,7 +2275,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {(() => {
                 const place = resolveImprintPlace(book)?.display; // family resolver, #4043
                 const publisher = book.publisher?.trim();
-                const year = book.published ? String(book.published).trim() : '';
+                const year = shownPublished ?? '';
                 const placePub = [place, publisher].filter(Boolean).join(': ');
                 const impressum = [placePub, year].filter(Boolean).join(', ');
                 if (!impressum) return null;
@@ -2216,8 +2328,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       {book.source_work_dates.find(l => l.type === 'composition')
                         ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'composition')!.date_display, lang)}`.trim()
                         : ''}
-                      {book.source_work_dates.find(l => l.type === 'composition') && book.published
-                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(String(book.published), lang)}</span>
+                      {book.source_work_dates.find(l => l.type === 'composition') && shownPublished
+                        ? <span className="text-stone-500"> · {t.published.toLocaleLowerCase()} {localizePublished(shownPublished ?? '', lang)}</span>
                         : ''}
                       {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
                         ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} ${translatedAbbr(lang)} ${localizeDateDisplay(book.source_work_dates.find(l => l.type === 'translation')!.date_display, lang)}`.trim()
@@ -2254,7 +2366,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {humanReads.toLocaleString('en-US')} {humanReads === 1 ? 'read' : 'reads'}
                   </div>
                 )}
-                {imageCount > 0 && (
+                {imageCount > 0 && (isEmbedded ? (
+                  <div className="flex items-center gap-2">
+                    <Images className="w-4 h-4" />
+                    {imageCount} images
+                  </div>
+                ) : (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
@@ -2263,7 +2380,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     <Images className="w-4 h-4" />
                     {imageCount} images
                   </Link>
-                )}
+                ))}
               </div>
 
               {/* The Translation Card (#3881): when this book's work has a
@@ -2272,7 +2389,13 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   card renders → legacy panel does not (no side-by-side
                   contradiction). No card / unclean card → exactly the legacy
                   render this page had before. */}
-              {translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
+              {searchNotice && freshSearch ? (
+                <TranslationSearchNotice
+                  book={book}
+                  search={freshSearch}
+                  showExternalLinks={embedPolicy.showExternalLinks}
+                />
+              ) : translationCard && cardLabel(translationCard, book as { pages_translated?: number | null }) ? (
                 <TranslationCardPanel
                   card={translationCard}
                   book={book as { pages_translated?: number | null }}
@@ -2337,6 +2460,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
+                const { readLabel, lpRead } = readLinks(book);
                 // Prefer the first chapter's starting page. Route through the
                 // resilient page-number redirect (/page-number/<n>) rather than a
                 // stored pageId: ~716 books have a stale chapters[0].pageId (pages
@@ -2350,11 +2474,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   return (
                     <div className="mt-5">
                       <Link
-                        href={lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber))}
+                        href={lpRead(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber))}
                         className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                       >
                         <BookOpen className="w-5 h-5" />
-                        {t.readThisBook}
+                        {readLabel}
                       </Link>
                     </div>
                   );
@@ -2365,11 +2489,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 return (
                   <div className="mt-5">
                     <Link
-                      href={lp(`/book/${bookSlug}/page/${readPage.id}`)}
+                      href={lpRead(`/book/${bookSlug}/page/${readPage.id}`)}
                       className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                     >
                       <BookOpen className="w-5 h-5" />
-                      {t.readThisBook}
+                      {readLabel}
                     </Link>
                   </div>
                 );
@@ -2403,7 +2527,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       title={book.title}
                       displayTitle={book.display_title}
                       author={book.author}
-                      year={book.published}
+                      year={shownPublished}
                       publisher={book.publisher}
                       placePublished={resolveImprintPlace(book)?.display}
                       format={book.format}
@@ -2424,13 +2548,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                       hasImages={pages.length > 0}
                       imageRestricted={imageRestricted}
                       imageAccess={imageAccess}
+                      bookTenantId={book.tenantId}
                       variant="header"
                     />
                     <BookShare
                       bookId={book.slug || book.id}
                       title={book.display_title || book.title}
                       author={book.author || ''}
-                      year={book.published}
+                      year={shownPublished}
                       doi={book.doi}
                       tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
@@ -2625,12 +2750,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     Illustrations
                     <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
-                  <Link
-                    href={`/gallery?bookId=${book.id}`}
-                    className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
-                  >
-                    View All &rarr;
-                  </Link>
+                  {/* The gallery has no embed route: from a partner frame it would open sourcelibrary.org. */}
+                  {!isEmbedded && (
+                    <Link
+                      href={`/gallery?bookId=${book.id}`}
+                      className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
+                    >
+                      View All &rarr;
+                    </Link>
+                  )}
                 </div>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
                   {galleryImages.map((img) => {
@@ -2638,8 +2766,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     if (!src) return null;
                     const pageId = img.id.match(/^(.+)[:\-]\d+$/)?.[1];
                     const href = pageId
-                      ? `/book/${book.slug || book.id}/page/${pageId}`
-                      : `/gallery/image/${img.id}`;
+                      ? `${embedPathPrefix}/book/${book.slug || book.id}/page/${pageId}`
+                      : isEmbedded ? null : `/gallery/image/${img.id}`;
+                    if (!href) return null;
                     return (
                       <Link
                         key={img.id}
@@ -2723,6 +2852,14 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   const isEmbedded = ctx?.isEmbedded ?? false;
   const tenantId = ctx?.id ?? undefined;
   const tenantSlug = ctx?.slug ?? '';
+  // On /embed/<tenant>/… the URL bar shows the embed namespace, and a server-built
+  // link that drops it leaves the partner's frame for the global reader (EFM,
+  // 2026-10-29: illustration links opened Reader2C inside the Embassy iframe).
+  // On a tenant subdomain the proxy hides the prefix, so it stays empty there.
+  const embedPathPrefix = isEmbedded && ctx?.source === 'embed-path' && tenantSlug ? `/embed/${tenantSlug}` : '';
+  // A partner's frame gets the v2 book page whether it arrives as /embed/<tenant>/… or on the
+  // partner's subdomain (bph.sourcelibrary.org), which the proxy rewrites without the prefix.
+  const partnerV2 = isEmbedded && !!tenantSlug && (ctx?.source === 'embed-path' || ctx?.source === 'subdomain');
 
   // Existence + tenant-match check BEFORE streaming. notFound() called from
   // inside the Suspense boundary below renders the not-found UI but leaves the
@@ -2746,19 +2883,25 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
   // (not on a session check) keeps the public route statically cacheable.
   if (isHiddenBook(earlyBook) && !allowHidden) {
     // A hidden DUPLICATE sends readers to the copy dedup kept (#5029) instead of
-    // dead-ending. Not when embedded: /embed/[tenant]/book re-exports this
-    // component and a /book or /artwork target would leave the embed shell (same
-    // reason as the artwork canonicalisation below). The lookup runs only on
-    // this already-hidden branch, so the canonical path pays nothing.
-    if (!isEmbedded && !previewProposed) {
+    // dead-ending. The lookup runs only on this already-hidden branch, so the
+    // canonical path pays nothing.
+    if (!previewProposed) {
       const hiddenId = (earlyBook as { id?: string }).id ?? id;
       const keeper = await findVisibleDuplicateKeeper(await getReadDb(), hiddenId, ctx);
-      if (keeper) {
+      if (keeper && !isEmbedded) {
         permanentRedirect(
           keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}`
             : lang !== 'en' ? `/${lang}/book/${keeper.slug}`
             : `/book/${keeper.slug}`,
         );
+      }
+      // Embedded, the target stays inside the partner's frame (EFM's Atalanta
+      // Fugiens 404'd on the Embassy site, #7702). The keeper already passed the
+      // tenant's admission rule; there is no embed /artwork route, so an artwork
+      // keeper keeps the 404. A 307, not a 308: a partner may yet restore its own
+      // copy, and a browser would cache a permanent redirect away from it.
+      if (keeper && isEmbedded && !keeper.artworkSlug) {
+        redirect(`${embedPathPrefix}/book/${keeper.slug}`);
       }
     }
     notFound();
@@ -2815,7 +2958,12 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
     }
     // `?lang=` keeps the header in the reader's language on the English page (#6938).
-    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
+    // Locales with a book page for every book (/es, /zh since #7496) keep the twin:
+    // title, summary, contents and buttons in the language, the text labelled as
+    // English, and the metadata names the English page as canonical with no hreflang
+    // pair, so Google is never told it is that language's edition (the ~37.7K-URL
+    // problem above). /la and /nl still send a book not written in them away.
+    if (hasEdition === false && !hasBookPageForEveryBook(lang)) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
 
     // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
     // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
@@ -2890,7 +3038,7 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} isEmbedded={isEmbedded} embedPathPrefix={embedPathPrefix} partnerV2={partnerV2} previewProposed={previewProposed} allowHidden={allowHidden} lang={lang} />
       </Suspense>
       {!isEmbedded && (
         <SignUpCTA

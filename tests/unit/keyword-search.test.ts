@@ -203,10 +203,11 @@ describe('hydrateKeywordRows', () => {
       { id: 'p3', book_id: 'b9', page_number: 2, translation: { data: 'alchemy' } },                 // moved book
       { id: 'p4', book_id: 'b2', page_number: 1, page_type: 'title-page', translation: { data: 'alchemy' } },
       { id: 'p6', book_id: 'b3', page_number: 7, ocr: { data: 'Alchemia' } },
+      { id: 'p7', book_id: 'b1', page_number: 4, repeat_of: 'p1', translation: { data: 'alchemy here' } }, // hidden repeat (#5056)
     ];
     const find = vi.fn(() => ({ maxTimeMS: () => ({ toArray: async () => docs }) }));
     const db = { collection: () => ({ find }) } as any;
-    const rows = ['p6', 'p1', 'p2', 'p3', 'p4', 'p5'].map((id, i) => ({ page_id: id, book_id: id === 'p6' ? 'b3' : id === 'p4' ? 'b2' : 'b1', page_number: 1, score: 10 - i, src: 'main' as const }));
+    const rows = ['p6', 'p1', 'p2', 'p3', 'p4', 'p5', 'p7'].map((id, i) => ({ page_id: id, book_id: id === 'p6' ? 'b3' : id === 'p4' ? 'b2' : 'b1', page_number: 1, score: 10 - i, src: 'main' as const }));
     const out = await hydrateKeywordRows(db, rows, { query: 'alchemy' });
     expect(out.map(d => d.id)).toEqual(['p6', 'p1']);
     expect(out[1]).toMatchObject({ page_number: 3, searchScore: 9, highlights: [{ path: 'translation.data' }] });
@@ -231,6 +232,7 @@ describe('the service side stays in step with the Atlas lane', () => {
   it('pageRow skips pages the lane cannot match (page_number ≤ 0, no text)', () => {
     expect(pageRow({ id: 'p', book_id: 'b', page_number: 0, ocr: { data: 'x' } })).toBeNull();
     expect(pageRow({ id: 'p', book_id: 'b', page_number: 3 })).toBeNull();
+    expect(pageRow({ id: 'p', book_id: 'b', page_number: 3, repeat_of: 'k', ocr: { data: 'x' } })).toBeNull(); // #5056
     expect(pageRow({ id: 'p', book_id: 'b', page_number: 3, page_type: 'blank', ocr: { data: 'x' } })).toMatchObject({ i: 'p', b: 'b', n: 3, t: 'blank', o: 'x', tr: '' });
   });
 });

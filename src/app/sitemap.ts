@@ -3,6 +3,12 @@ import { getReadDb } from '@/lib/mongodb';
 import { posts as blogPostList, BLOG_KINDS } from '@/app/articles/posts';
 import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
+import { languageSlug } from '@/lib/language-utils';
+import { isLivePath } from '@/lib/page-status';
+import { isRepeatCapture } from '@/lib/page-counts';
+import { HISTORIES } from '@/app/explore/histories/histories';
+import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
+import { sibuCodes } from '@/lib/sibu-catalogue';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -165,11 +171,13 @@ export default async function sitemap({
   const chunkId = typeof rawId === 'string' ? parseInt(rawId, 10) : rawId;
 
   if (chunkId === 0) {
-    return [
+    return livePagesOnly([
       ...staticPages(),
       ...blogPosts(),
       ...categoryPages(),
-    ];
+      ...historyPages(),
+      ...sibuPages(),
+    ]);
   }
 
   if (chunkId === 1) {
@@ -180,7 +188,7 @@ export default async function sitemap({
       getWorks(),
       getAuthors(),
     ]);
-    return [...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages];
+    return livePagesOnly([...collectionPages, ...libraryPages, ...languagePages, ...workPages, ...authorPages]);
   }
 
   // Offset ranges — highest first, since each test is only a lower bound.
@@ -203,6 +211,13 @@ export default async function sitemap({
   return getBooks(bookChunkIndex);
 }
 
+// Internal, draft and archived pages (src/lib/page-status.ts) never go in the
+// sitemap. Applied to the hand-written and named-page chunks; the book, page,
+// gallery and artwork chunks are per-record and are not listed there.
+function livePagesOnly(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  return entries.filter((e) => isLivePath(new URL(e.url).pathname));
+}
+
 // --- Static content ---
 
 function staticPages(): MetadataRoute.Sitemap {
@@ -214,6 +229,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/developers`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -221,9 +237,10 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/gallery`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
     { url: `${BASE_URL}/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/libraries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/new-in-english`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
     { url: `${BASE_URL}/explore`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/explore/map`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/explore/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/gallery/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
@@ -261,6 +278,36 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The 四部 catalogue (#8035), in both languages: empty classes included, since the page says plainly what we lack.
+function sibuPages(): MetadataRoute.Sitemap {
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/sibu', 0.6),
+    at('/zh/sibu', 0.7),
+    at('/zh/collections', 0.7),
+    ...sibuCodes().flatMap((code) => [at(`/sibu/${code}`, 0.5), at(`/zh/sibu/${code}`, 0.6)]),
+  ];
+}
+
+// The conceptual histories (#7623): index, each concept, its essays, its
+// claims index, its sources view (#7646) and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
+// site_pages; it crawls the static routes plus this chunk, and these are dynamic.
+function historyPages(): MetadataRoute.Sitemap {
+  const lastModified = new Date(`${HISTORIES.generated}T00:00:00Z`);
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified, changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/explore/histories', 0.7),
+    ...HISTORIES.concepts.flatMap((c) => [
+      at(`/explore/histories/${c.slug}`, 0.7),
+      ...c.essays.map((e) => at(`/explore/histories/${c.slug}/${e.slug}`, 0.6)),
+      at(`/explore/histories/${c.slug}/claims`, 0.5),
+      // the sources view, where the concept has a map (#7646); its old /explore/maps/<c> address redirects here and is not listed
+      ...(() => { const t = mapThemeForConcept(c.slug); const href = t && sourcesHref(t); return href ? [at(href, 0.6)] : []; })(),
+      ...c.domains.map((d) => at(`/explore/histories/${c.slug}/claims/${d}`, 0.5)),
+    ]),
+  ];
 }
 
 function categoryPages(): MetadataRoute.Sitemap {
@@ -357,7 +404,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const pages = await pagesColl.find(
       { seo_indexable: true, _id: { $gte: start._id } },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1, repeat_of: 1 },
         sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
         hint: 'seo_indexable_id_partial',
@@ -377,7 +424,8 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
 
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
+      // A hidden repeat capture (#5056) 307s to its kept page: not a URL to list.
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id) && !isRepeatCapture(p))
       .map((p) => {
         let lastModified: Date;
         try {
@@ -390,7 +438,9 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
           url: `${BASE_URL}${p.seo_url}`,
           lastModified,
           changeFrequency: 'monthly' as const,
-          priority: 0.7,
+          // Below every book front page (0.5–0.9): the front page, with its
+          // contents and summary, is the place we want a crawler to rank first.
+          priority: 0.4,
         };
       });
   }, [] as MetadataRoute.Sitemap);
@@ -515,7 +565,7 @@ async function getLanguages(): Promise<MetadataRoute.Sitemap> {
     ], { maxTimeMS: 10000 }).toArray();
 
     return languages.map((lang) => ({
-      url: `${BASE_URL}/languages/${(lang._id as string).toLowerCase().replace(/\s+/g, '-')}`,
+      url: `${BASE_URL}/languages/${languageSlug(lang._id as string)}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,

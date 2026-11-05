@@ -1,0 +1,2068 @@
+{
+ "seed": 7968,
+ "at": "2026-11-02T22:23:11.725Z",
+ "source": {
+  "lane": "confidence-7866",
+  "run_id": "confidence-validation-7866",
+  "issue": 7866
+ },
+ "frame": 800,
+ "kept": 481,
+ "skipped": {
+  "no_translation": 319
+ },
+ "skipped_pages": [
+  {
+   "book_id": "6a3c6ae2af3c49b59c5eb179",
+   "page_number": 44,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c5e5340c88a541d8e0f82",
+   "page_number": 78,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_number": 30,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c66baaf3c49b59c5cce74",
+   "page_number": 19,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c740601fe4f593c1ed8cd",
+   "page_number": 55,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c789501fe4f593c2095b3",
+   "page_number": 78,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69af48642a821385be062737",
+   "page_number": 77,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69dc241f39623978967d80db",
+   "page_number": 53,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 37,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab2477c87d2180b7f5ea56f",
+   "page_number": 146,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c690e39b4508b04e3b94b",
+   "page_number": 83,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ad16ee93ba103d8eb309cfd",
+   "page_number": 28,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cee494701a906f10e7df5",
+   "page_number": 86,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7ac4a5f1a22ab19aa63f4",
+   "page_number": 166,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cef198642f0445b160a98",
+   "page_number": 133,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab246d287d2180b7f5e908c",
+   "page_number": 13,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3ce86e552d34d98411ba7e",
+   "page_number": 210,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c4039b4508b04e47d57",
+   "page_number": 170,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69dc241f39623978967d80db",
+   "page_number": 259,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 60,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 35,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742a01fe4f593c1eed13",
+   "page_number": 106,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c789501fe4f593c2095b3",
+   "page_number": 63,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3ce86e552d34d98411ba7e",
+   "page_number": 150,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742a01fe4f593c1eed13",
+   "page_number": 37,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6ae2af3c49b59c5eb179",
+   "page_number": 62,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 80,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a0c53ef99c52ea845a06388",
+   "page_number": 50,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 103,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c717039b4508b04e54364",
+   "page_number": 12,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c690e39b4508b04e3b94b",
+   "page_number": 74,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cef198642f0445b160a98",
+   "page_number": 68,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 11,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0d98642f0445b168124",
+   "page_number": 79,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbf6af9474f825c167fd4",
+   "page_number": 42,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c4039b4508b04e47d57",
+   "page_number": 21,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc04eec254ff6cae055ca",
+   "page_number": 131,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0d98642f0445b168124",
+   "page_number": 33,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a3faf3c49b59c5e5140",
+   "page_number": 45,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cef198642f0445b160a98",
+   "page_number": 102,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a5eaf3c49b59c5e6355",
+   "page_number": 11,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c66baaf3c49b59c5cce74",
+   "page_number": 100,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbf6af9474f825c167fd4",
+   "page_number": 30,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 13,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc0fcec254ff6cae0836e",
+   "page_number": 61,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e787a74a6785cfd60ccb4b",
+   "page_number": 48,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb61c57c1f37219c48b6c",
+   "page_number": 92,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb8223dce6cfad748b627",
+   "page_number": 96,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742501fe4f593c1ee9a5",
+   "page_number": 82,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 140,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cb63519ae103166961ce4",
+   "page_number": 10,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a905a9c785d9b40577f5c91",
+   "page_number": 10,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6de98b393fe0e2d475120",
+   "page_number": 1,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c77eb01fe4f593c2059aa",
+   "page_number": 24,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c5e5340c88a541d8e0f82",
+   "page_number": 98,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab2477c87d2180b7f5ea56f",
+   "page_number": 68,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c789501fe4f593c2095b3",
+   "page_number": 16,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbdffec254ff6cadfc2ed",
+   "page_number": 31,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_number": 112,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 17,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6b3539b4508b04e41c43",
+   "page_number": 18,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbf6af9474f825c167fd4",
+   "page_number": 103,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742501fe4f593c1ee9a5",
+   "page_number": 118,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 147,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c717039b4508b04e54364",
+   "page_number": 149,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 6,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c77eb01fe4f593c2059aa",
+   "page_number": 73,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 5,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c77eb01fe4f593c2059aa",
+   "page_number": 58,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cead3c895e71c6023cccb",
+   "page_number": 45,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c783401fe4f593c2078f6",
+   "page_number": 43,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab22f314ac37d55a2130b91",
+   "page_number": 87,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c709939b4508b04e4fd36",
+   "page_number": 61,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c783401fe4f593c2078f6",
+   "page_number": 83,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c800701fe4f593c21f0ba",
+   "page_number": 34,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c717039b4508b04e54364",
+   "page_number": 79,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a0c53ef99c52ea845a06388",
+   "page_number": 79,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7ac4a5f1a22ab19aa63f4",
+   "page_number": 32,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69aebc460d3d5e01e132c454",
+   "page_number": 23,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 83,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c709939b4508b04e4fd36",
+   "page_number": 17,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6b3539b4508b04e41c43",
+   "page_number": 96,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a905a9c785d9b40577f5c91",
+   "page_number": 21,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c67ebaf3c49b59c5d4a5b",
+   "page_number": 55,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69af48642a821385be062737",
+   "page_number": 206,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cef198642f0445b160a98",
+   "page_number": 51,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 27,
+   "lang": "Korean",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c783401fe4f593c2078f6",
+   "page_number": 102,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e787a74a6785cfd60ccb4b",
+   "page_number": 32,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6f0b01fe4f593c1c88df",
+   "page_number": 38,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c717039b4508b04e54364",
+   "page_number": 56,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a14e12d2f45ee330c273e25",
+   "page_number": 270,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a26d4dcf5273a8d907ae5b3",
+   "page_number": 9,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0d98642f0445b168124",
+   "page_number": 89,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbdffec254ff6cadfc2ed",
+   "page_number": 170,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c69f0af3c49b59c5e3dff",
+   "page_number": 135,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab22f314ac37d55a2130b91",
+   "page_number": 21,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6ae2af3c49b59c5eb179",
+   "page_number": 71,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbdffec254ff6cadfc2ed",
+   "page_number": 58,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a905a9c785d9b40577f5c91",
+   "page_number": 1,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc0fcec254ff6cae0836e",
+   "page_number": 34,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7ac4a5f1a22ab19aa63f4",
+   "page_number": 196,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbf6af9474f825c167fd4",
+   "page_number": 91,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a5eaf3c49b59c5e6355",
+   "page_number": 148,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb61c57c1f37219c48b6c",
+   "page_number": 63,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 135,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a26d4dcf5273a8d907ae5b3",
+   "page_number": 13,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c782401fe4f593c20707d",
+   "page_number": 10,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 130,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 67,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69dc241f39623978967d80db",
+   "page_number": 378,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c77eb01fe4f593c2059aa",
+   "page_number": 44,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 50,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cead3c895e71c6023cccb",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab246d287d2180b7f5e908c",
+   "page_number": 110,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a5eaf3c49b59c5e6355",
+   "page_number": 77,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbdffec254ff6cadfc2ed",
+   "page_number": 114,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7ac4a5f1a22ab19aa63f4",
+   "page_number": 313,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ad16ee93ba103d8eb309cfd",
+   "page_number": 103,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc06aec254ff6cae06603",
+   "page_number": 133,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c66baaf3c49b59c5cce74",
+   "page_number": 72,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 63,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 147,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab2477c87d2180b7f5ea56f",
+   "page_number": 356,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a26d4dcf5273a8d907ae5b3",
+   "page_number": 3,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c709939b4508b04e4fd36",
+   "page_number": 162,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 78,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a3faf3c49b59c5e5140",
+   "page_number": 98,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4ad79ad6371d99e7666afa",
+   "page_number": 373,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c782401fe4f593c20707d",
+   "page_number": 198,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4ad79ad6371d99e7666afa",
+   "page_number": 266,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 10,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a905a9c785d9b40577f5c91",
+   "page_number": 6,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742501fe4f593c1ee9a5",
+   "page_number": 193,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4ad79ad6371d99e7666afa",
+   "page_number": 51,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c69f0af3c49b59c5e3dff",
+   "page_number": 118,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e413312d8eeae8614a0296",
+   "page_number": 88,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a0c53ef99c52ea845a06388",
+   "page_number": 28,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c740601fe4f593c1ed8cd",
+   "page_number": 11,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3ce86e552d34d98411ba7e",
+   "page_number": 40,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6dbb4b393fe0e2d473db8",
+   "page_number": 66,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c5e5340c88a541d8e0f82",
+   "page_number": 142,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0f14701a906f10f42be",
+   "page_number": 37,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 97,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 42,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c740601fe4f593c1ed8cd",
+   "page_number": 134,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c782401fe4f593c20707d",
+   "page_number": 56,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 25,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4ad79ad6371d99e7666afa",
+   "page_number": 104,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e413312d8eeae8614a0296",
+   "page_number": 42,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7ac4a5f1a22ab19aa63f4",
+   "page_number": 83,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb61c57c1f37219c48b6c",
+   "page_number": 118,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 20,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c5e5340c88a541d8e0f82",
+   "page_number": 43,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 4,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69dc241f39623978967d80db",
+   "page_number": 132,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e413312d8eeae8614a0296",
+   "page_number": 103,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc04eec254ff6cae055ca",
+   "page_number": 15,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab22f314ac37d55a2130b91",
+   "page_number": 32,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc04eec254ff6cae055ca",
+   "page_number": 54,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6b3539b4508b04e41c43",
+   "page_number": 68,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742501fe4f593c1ee9a5",
+   "page_number": 160,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6ae2af3c49b59c5eb179",
+   "page_number": 103,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 20,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6dbb4b393fe0e2d473db8",
+   "page_number": 114,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 73,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc06aec254ff6cae06603",
+   "page_number": 30,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 12,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cee494701a906f10e7df5",
+   "page_number": 69,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ad16ee93ba103d8eb309cfd",
+   "page_number": 5,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb6b857c1f37219c4be66",
+   "page_number": 64,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c789501fe4f593c2095b3",
+   "page_number": 114,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6b3539b4508b04e41c43",
+   "page_number": 130,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbf6af9474f825c167fd4",
+   "page_number": 153,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6f0b01fe4f593c1c88df",
+   "page_number": 128,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbdffec254ff6cadfc2ed",
+   "page_number": 100,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3ce86e552d34d98411ba7e",
+   "page_number": 48,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 83,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cee494701a906f10e7df5",
+   "page_number": 42,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c690e39b4508b04e3b94b",
+   "page_number": 12,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0d98642f0445b168124",
+   "page_number": 10,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab246d287d2180b7f5e908c",
+   "page_number": 88,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 117,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3ce86e552d34d98411ba7e",
+   "page_number": 124,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c681caf3c49b59c5d6839",
+   "page_number": 37,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c717039b4508b04e54364",
+   "page_number": 138,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cead3c895e71c6023cccb",
+   "page_number": 63,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742a01fe4f593c1eed13",
+   "page_number": 127,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc0fcec254ff6cae0836e",
+   "page_number": 14,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a26d4dcf5273a8d907ae5b3",
+   "page_number": 4,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c681caf3c49b59c5d6839",
+   "page_number": 138,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a5eaf3c49b59c5e6355",
+   "page_number": 115,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69aebc460d3d5e01e132c454",
+   "page_number": 103,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a3faf3c49b59c5e5140",
+   "page_number": 10,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 66,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a49137aac0c339f55337966",
+   "page_number": 2,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb8223dce6cfad748b627",
+   "page_number": 39,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb61c57c1f37219c48b6c",
+   "page_number": 150,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ad16ee93ba103d8eb309cfd",
+   "page_number": 67,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6de98b393fe0e2d475120",
+   "page_number": 52,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0f14701a906f10f42be",
+   "page_number": 176,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6dbb4b393fe0e2d473db8",
+   "page_number": 92,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a14e12d2f45ee330c273e25",
+   "page_number": 153,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cef198642f0445b160a98",
+   "page_number": 21,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a14e1232f45ee330c27337d",
+   "page_number": 356,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 140,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c681caf3c49b59c5d6839",
+   "page_number": 115,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c681caf3c49b59c5d6839",
+   "page_number": 7,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab22f314ac37d55a2130b91",
+   "page_number": 81,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab2477c87d2180b7f5ea56f",
+   "page_number": 271,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69aebc460d3d5e01e132c454",
+   "page_number": 132,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab246d287d2180b7f5e908c",
+   "page_number": 66,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cead3c895e71c6023cccb",
+   "page_number": 123,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb61c57c1f37219c48b6c",
+   "page_number": 7,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c783401fe4f593c2078f6",
+   "page_number": 70,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c800701fe4f593c21f0ba",
+   "page_number": 3,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a3faf3c49b59c5e5140",
+   "page_number": 66,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_number": 88,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69af48642a821385be062737",
+   "page_number": 188,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a5eaf3c49b59c5e6355",
+   "page_number": 35,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 40,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc0fcec254ff6cae0836e",
+   "page_number": 106,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c69f0af3c49b59c5e3dff",
+   "page_number": 96,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6f0b01fe4f593c1c88df",
+   "page_number": 102,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c709939b4508b04e4fd36",
+   "page_number": 132,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc04eec254ff6cae055ca",
+   "page_number": 62,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb8223dce6cfad748b627",
+   "page_number": 48,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 2,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c67ebaf3c49b59c5d4a5b",
+   "page_number": 73,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a14e12d2f45ee330c273e25",
+   "page_number": 189,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb6b857c1f37219c4be66",
+   "page_number": 145,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c67ebaf3c49b59c5d4a5b",
+   "page_number": 141,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c4039b4508b04e47d57",
+   "page_number": 125,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6dbb4b393fe0e2d473db8",
+   "page_number": 16,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69dc241f39623978967d80db",
+   "page_number": 215,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 71,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 107,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6f0b01fe4f593c1c88df",
+   "page_number": 75,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cee494701a906f10e7df5",
+   "page_number": 9,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 36,
+   "lang": "Korean",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc04eec254ff6cae055ca",
+   "page_number": 87,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cead3c895e71c6023cccb",
+   "page_number": 8,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb8223dce6cfad748b627",
+   "page_number": 131,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cee494701a906f10e7df5",
+   "page_number": 120,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c800701fe4f593c21f0ba",
+   "page_number": 60,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6a3faf3c49b59c5e5140",
+   "page_number": 79,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c800701fe4f593c21f0ba",
+   "page_number": 86,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a26d4dcf5273a8d907ae5b3",
+   "page_number": 12,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c4039b4508b04e47d57",
+   "page_number": 54,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742a01fe4f593c1eed13",
+   "page_number": 82,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 26,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c740601fe4f593c1ed8cd",
+   "page_number": 170,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c69f0af3c49b59c5e3dff",
+   "page_number": 30,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e787a74a6785cfd60ccb4b",
+   "page_number": 23,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0f14701a906f10f42be",
+   "page_number": 87,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c681caf3c49b59c5d6839",
+   "page_number": 97,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c67ebaf3c49b59c5d4a5b",
+   "page_number": 17,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4ad79ad6371d99e7666afa",
+   "page_number": 427,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab2477c87d2180b7f5ea56f",
+   "page_number": 192,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69aebc460d3d5e01e132c454",
+   "page_number": 241,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6de98b393fe0e2d475120",
+   "page_number": 78,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb8223dce6cfad748b627",
+   "page_number": 172,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c789501fe4f593c2095b3",
+   "page_number": 46,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 113,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e413312d8eeae8614a0296",
+   "page_number": 46,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6de98b393fe0e2d475120",
+   "page_number": 93,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742501fe4f593c1ee9a5",
+   "page_number": 35,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6b3539b4508b04e41c43",
+   "page_number": 56,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 108,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c67ebaf3c49b59c5d4a5b",
+   "page_number": 107,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c69f0af3c49b59c5e3dff",
+   "page_number": 44,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c77eb01fe4f593c2059aa",
+   "page_number": 99,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c690e39b4508b04e3b94b",
+   "page_number": 43,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6ae2af3c49b59c5eb179",
+   "page_number": 7,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_number": 56,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 110,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c783401fe4f593c2078f6",
+   "page_number": 15,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 13,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc06aec254ff6cae06603",
+   "page_number": 57,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb6b857c1f37219c4be66",
+   "page_number": 65,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69e7965d80b52390feb195d8",
+   "page_number": 6,
+   "lang": "Tibetan",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0f14701a906f10f42be",
+   "page_number": 202,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c782401fe4f593c20707d",
+   "page_number": 184,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc0fcec254ff6cae0836e",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc06aec254ff6cae06603",
+   "page_number": 108,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c800701fe4f593c21f0ba",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6dbb4b393fe0e2d473db8",
+   "page_number": 44,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 173,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab246d287d2180b7f5e908c",
+   "page_number": 31,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 14,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c690e39b4508b04e3b94b",
+   "page_number": 111,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6f0b01fe4f593c1c88df",
+   "page_number": 22,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c3739b4508b04e4771c",
+   "page_number": 7,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c66baaf3c49b59c5cce74",
+   "page_number": 85,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c782401fe4f593c20707d",
+   "page_number": 101,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69af48642a821385be062737",
+   "page_number": 127,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 34,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c709939b4508b04e4fd36",
+   "page_number": 86,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0d98642f0445b168124",
+   "page_number": 64,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb6b857c1f37219c4be66",
+   "page_number": 23,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cc06aec254ff6cae06603",
+   "page_number": 96,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c742a01fe4f593c1eed13",
+   "page_number": 3,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a0c53ef99c52ea845a06388",
+   "page_number": 119,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cb6b857c1f37219c4be66",
+   "page_number": 113,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "69aebc460d3d5e01e132c454",
+   "page_number": 187,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ad16ee93ba103d8eb309cfd",
+   "page_number": 50,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6c4039b4508b04e47d57",
+   "page_number": 76,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c740601fe4f593c1ed8cd",
+   "page_number": 94,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c66baaf3c49b59c5cce74",
+   "page_number": 45,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a905a9c785d9b40577f5c91",
+   "page_number": 16,
+   "lang": "German",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 99,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 43,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 85,
+   "lang": "Chinese",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a4cb63519ae103166961ce4",
+   "page_number": 2,
+   "lang": "Latin",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab6de98b393fe0e2d475120",
+   "page_number": 25,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6ab22f314ac37d55a2130b91",
+   "page_number": 44,
+   "lang": "English",
+   "why": "no_translation"
+  },
+  {
+   "book_id": "6a3cf0f14701a906f10f42be",
+   "page_number": 125,
+   "lang": "Chinese",
+   "why": "no_translation"
+  }
+ ],
+ "weights": {
+  "Latin": {
+   "books": 27,
+   "translated_pages": 47819.140000000036,
+   "pages": 125,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "English": {
+   "books": 10,
+   "translated_pages": 11722.640000000005,
+   "pages": 46,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Chinese": {
+   "books": 14,
+   "translated_pages": 16918.899999999998,
+   "pages": 66,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Greek": {
+   "books": 6,
+   "translated_pages": 7645.200000000003,
+   "pages": 30,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Tibetan": {
+   "books": 9,
+   "translated_pages": 9285.440000000002,
+   "pages": 37,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Sanskrit": {
+   "books": 3,
+   "translated_pages": 3702.9000000000005,
+   "pages": 15,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "German": {
+   "books": 13,
+   "translated_pages": 23984.20000000001,
+   "pages": 64,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "French": {
+   "books": 3,
+   "translated_pages": 4292.2,
+   "pages": 15,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Korean": {
+   "books": 3,
+   "translated_pages": 3001.7000000000007,
+   "pages": 13,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Arabic": {
+   "books": 2,
+   "translated_pages": 2428.7000000000003,
+   "pages": 10,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Russian": {
+   "books": 3,
+   "translated_pages": 3822.600000000001,
+   "pages": 15,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Danish": {
+   "books": 1,
+   "translated_pages": 1274.2,
+   "pages": 5,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Demotic": {
+   "books": 1,
+   "translated_pages": 1274.2,
+   "pages": 5,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Armenian": {
+   "books": 2,
+   "translated_pages": 2548.4,
+   "pages": 10,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Italian": {
+   "books": 2,
+   "translated_pages": 2548.4,
+   "pages": 10,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Yucatec Maya": {
+   "books": 1,
+   "translated_pages": 1274.2,
+   "pages": 5,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Latin-English": {
+   "books": 1,
+   "translated_pages": 1994.5,
+   "pages": 5,
+   "note": "sum of #7866 draw weights over kept pages"
+  },
+  "Dutch": {
+   "books": 1,
+   "translated_pages": 1274.2,
+   "pages": 5,
+   "note": "sum of #7866 draw weights over kept pages"
+  }
+ },
+ "controls": {
+  "swap": 15,
+  "drop": 15,
+  "repeat": 15,
+  "swap_passes": 3
+ },
+ "control_pool": {
+  "extras": 60,
+  "by_language": {
+   "Latin": 15,
+   "Tibetan": 6,
+   "French": 3,
+   "English": 6,
+   "Arabic": 1,
+   "Chinese": 9,
+   "German": 6,
+   "Yucatec Maya": 1,
+   "Korean": 2,
+   "Danish": 1,
+   "Sanskrit": 1,
+   "Russian": 3,
+   "Latin-English": 1,
+   "Demotic": 1,
+   "Dutch": 1,
+   "Armenian": 2,
+   "Greek": 1
+  }
+ }
+}

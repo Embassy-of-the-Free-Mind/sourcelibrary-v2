@@ -1,0 +1,167 @@
+{
+  "seed": 20261103,
+  "at": "2026-11-03T12:11:59.835Z",
+  "quota": {
+    "Chinese": 18
+  },
+  "scale": 0,
+  "arm_quota": true,
+  "weights": {
+    "Chinese": {
+      "books": 2818,
+      "translated_pages": 345507
+    }
+  },
+  "visits": {
+    "Chinese": {
+      "visits": 3,
+      "taken": 0,
+      "extra": 3,
+      "arms": {
+        "lite": 0,
+        "flash": 0
+      }
+    }
+  },
+  "exclusions": {
+    "short_ocr": 2881,
+    "page_type": 703,
+    "short_translation": 3
+  },
+  "arms": {},
+  "zh_strata": {
+    "langs": [
+      "Chinese",
+      "Classical Chinese"
+    ],
+    "n": 120,
+    "min": 12,
+    "frame_books": 2904,
+    "weights": {
+      "total_pages": 354069,
+      "n_books": 2904,
+      "strata": {
+        "3-flash|paddle": {
+          "pages": 156288,
+          "books_with_pages": 1510,
+          "w_pages": 0.4414054887606653,
+          "w_books": 0.3978960604634932
+        },
+        "flash-lite|paddle": {
+          "pages": 25205,
+          "books_with_pages": 396,
+          "w_pages": 0.0711866896000497,
+          "w_books": 0.05216502887429212
+        },
+        "flash-lite|gemini": {
+          "pages": 24704,
+          "books_with_pages": 454,
+          "w_pages": 0.06977171116364324,
+          "w_books": 0.05285615955177199
+        },
+        "3-flash|gemini": {
+          "pages": 19585,
+          "books_with_pages": 607,
+          "w_pages": 0.055314077199641876,
+          "w_books": 0.04955162384094253
+        },
+        "3.8-flash|paddle": {
+          "pages": 95325,
+          "books_with_pages": 1365,
+          "w_pages": 0.26922718453182853,
+          "w_books": 0.3333636871957875
+        },
+        "3.8-flash|gemini": {
+          "pages": 6794,
+          "books_with_pages": 552,
+          "w_pages": 0.019188350293304412,
+          "w_books": 0.03085876475214146
+        },
+        "opus|gemini": {
+          "pages": 3691,
+          "books_with_pages": 177,
+          "w_pages": 0.010424521774004502,
+          "w_books": 0.010985337465642711
+        },
+        "3.8-flash|other": {
+          "pages": 1385,
+          "books_with_pages": 284,
+          "w_pages": 0.003911666934975951,
+          "w_books": 0.003847880252545478
+        },
+        "opus|paddle": {
+          "pages": 18277,
+          "books_with_pages": 181,
+          "w_pages": 0.05161988200040105,
+          "w_books": 0.049299685002865835
+        },
+        "3-flash|other": {
+          "pages": 2741,
+          "books_with_pages": 69,
+          "w_pages": 0.007741428930519193,
+          "w_books": 0.01896691289616575
+        }
+      },
+      "dropped": {
+        "flash-lite|other": {
+          "pages": 72,
+          "books_with_pages": 23,
+          "w_pages": 0.00020335019445362343,
+          "w_books": 0.0002074455252208378
+        },
+        "opus|other": {
+          "pages": 2,
+          "books_with_pages": 1,
+          "w_pages": 0.000005648616512600652,
+          "w_books": 0.000001414179125584763
+        }
+      }
+    },
+    "alloc": {
+      "3-flash|gemini": 12,
+      "3-flash|other": 12,
+      "3-flash|paddle": 12,
+      "3.8-flash|gemini": 12,
+      "3.8-flash|other": 12,
+      "3.8-flash|paddle": 12,
+      "flash-lite|gemini": 12,
+      "flash-lite|paddle": 12,
+      "opus|gemini": 12,
+      "opus|paddle": 12
+    },
+    "got": {
+      "3-flash|gemini": 12,
+      "3-flash|other": 12,
+      "3-flash|paddle": 12,
+      "3.8-flash|gemini": 12,
+      "3.8-flash|other": 12,
+      "3.8-flash|paddle": 12,
+      "flash-lite|gemini": 12,
+      "flash-lite|paddle": 12,
+      "opus|gemini": 12,
+      "opus|paddle": 12
+    },
+    "visits": {
+      "3-flash|gemini": 19,
+      "3-flash|other": 13,
+      "3-flash|paddle": 12,
+      "3.8-flash|gemini": 18,
+      "3.8-flash|other": 14,
+      "3.8-flash|paddle": 12,
+      "flash-lite|gemini": 24,
+      "flash-lite|paddle": 13,
+      "opus|gemini": 21,
+      "opus|paddle": 12
+    },
+    "kinds": {
+      "prose": 1687,
+      "reference": 1217
+    },
+    "extra": 48
+  },
+  "controls": {
+    "swap": 15,
+    "drop": 15,
+    "repeat": 15
+  }
+}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { generateApiKey, listApiKeys, revokeApiKey } from '@/lib/dataset/api-keys';
 import { DatasetTier, DATASET_TIERS } from '@/lib/dataset/types';
+import { PARTNER_TERMS_URL, PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
 
 /**
  * GET /api/dataset/v1/keys — List API keys for the authenticated user
@@ -33,6 +34,14 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const name = body.name || 'Default';
 
+  // A key opens more than a browser gets, so it is issued on an agreement.
+  if (body.accept_terms !== PARTNER_TERMS_VERSION) {
+    return NextResponse.json(
+      { error: 'Agree to the terms of use to create a key.', terms_required: true, terms_version: PARTNER_TERMS_VERSION, terms_url: PARTNER_TERMS_URL },
+      { status: 400 },
+    );
+  }
+
   // For now, anyone authenticated can create an explorer key.
   // Paid tiers will be gated by Stripe subscription (handled in webhook).
   const tier: DatasetTier = 'explorer';
@@ -41,7 +50,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
   }
 
-  const { key, doc } = await generateApiKey(session.user.id, tier, name);
+  // One active free key per account: the daily page cap is per key, so unlimited
+  // self-serve keys would be an uncapped bulk route around it.
+  const existing = await listApiKeys(session.user.id);
+  if (existing.some((k) => k.tier === 'explorer' && k.status === 'active')) {
+    return NextResponse.json(
+      { error: 'This account already has a free key. Revoke it to make a new one, or write to team@sourcelibrary.org if you need more.' },
+      { status: 409 },
+    );
+  }
+
+  const { key, doc } = await generateApiKey(session.user.id, tier, name, { termsVersion: PARTNER_TERMS_VERSION });
 
   return NextResponse.json({
     key, // Only returned once — user must save it

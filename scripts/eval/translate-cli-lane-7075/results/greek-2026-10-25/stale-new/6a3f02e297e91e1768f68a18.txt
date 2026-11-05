@@ -1,0 +1,37 @@
+<meta>continues from previous page</meta>
+> "You have come, Lycurgus, to my rich temple;
+> I ponder whether I shall prophesy that you are a god or a man."
+
+<margin>25</margin>
+And do not think, because she said "I ponder," that she was ignorant <note>I mean according to the false opinions of the Greeks</note> (for then the Pythia would have needed another Pythia), but rather because
+<margin>5</margin>
+by nature it was ambiguous whether Lycurgus was a god or a man. Now ambiguous things cannot be known in any other way except with ambiguity. For just as with that which is
+<margin>30</margin>
+lukewarm, being intermediate between cold and hot, if we call it hot, we speak falsely, and likewise if we call it cold; but if we say with ambiguity, 'I do not know what to call it, hot or cold,' we impart the notion to the hearer that
+<margin>10</margin>
+it partakes both of heat and of cold. Likewise also with gray,
+<margin>396</margin>
+which is intermediate between white and black: if we call it white, we speak falsely, and likewise if black; but if with ambiguity, it becomes clear to the hearer that it partakes of both. In this way too, if the Pythia had called him a god, she would have spoken falsely, since he was a man; and if she had called him a man, such as are the majority of the herd,
+<margin>5</margin>
+<margin>15</margin>
+she would have spoken falsely (for he was not such), but she declared him an inspired man. In like manner Plato also in the *Laws* introduces Socrates asking a Cretan and a Spartan citizen concerning Minos and Lycurgus, whom he knew to be lawgivers, Minos of the Cretans and Lycurgus of the Spartans: 'Has a god, strangers, or some man been responsible for the cause of your laws?' And the Cretan answered, as being
+<margin>10</margin>
+<margin>20</margin>
+more honorable: 'A god, stranger, a god.' For Minos was more honorable on account of Zeus: for the Greeks say that he went up to Zeus every nine years for the sake of revising the laws, and Homer hints at this when he says:
+> "Nine years he reigned, the confidant of great Zeus."
+<margin>15</margin>
+
+Such, then, does philosophy wish to show the human being to be upon the earth.
+<margin>25</margin>
+Since, therefore, we have learned what is the goal of philosophy and what is its subject matter, come, let us explain also how it is defined from these. One must know that there are six definitions of philosophy, neither more nor fewer: two from the subject matter, two from the goal, one from its preeminence, and one from its etymology. And their order is this: the last of all is the one from etymology, as dealing with mere words and saying nothing about the actual thing, since philosophy is passionately devoted to real beings. After it is the one from
+<margin>20</margin>
+<margin>30</margin>
+
+---
+
+| | | | |
+|---|---|---|---|
+| 1 ἤλθες P: ἥκεις Herod. I, 65 | ὦ λυκοῦργε P: ὦ λυκόοργε Herod.: ὧδε λυκοῦργε Brand. | 2 δίζω ex δείζω corr. C | εἰ] ἢ Herod. Dav. | ἠὲ καὶ ἄνδρα] ἢ ἄνθρωπον Herod. David. | 3 κατὰ τὰς Ἑλ. φ. ψευδ. δόξας inclusi <note>cf. p. 12, 1</note> | 5 εἰ] ἢ P | δὲ] γὰρ c | 5. 6 ἀμφιβαλόμενα P | 6 ἀμφιβάλειν CP | 7 εἴπομεν P | 9 καλέσω C | ἔνοιαν C | παρέχωμεν Cc | 11 ὂν om. P | εἴπομεν P | 13 ἐψεύδετε C | 14 αὐτὸν om. P | ἀγελαίων ex ἀγελέων corr. C | 15 αὐτὸν ἄνθρωπον colloc. Cc | 16 ὁ Πλάτων ἐν τοῖς Νόμοις] I, 1 p. 624 A | σωκράτην P | 17 μίνως] μίνωνος P | μίνω] μείνω P | 18 θεὸς ἤ τις ἀνθρώπων ὑμῖν, ὦ ξένοι, εἴληφε τὴν αἰτίαν τῶν νόμων διαθέσεως Plat., unde pro τῆς αἰτίας scribas τῆς διαθέσεως | 20 θεός, ὦ ξένε, θεός τιμιώτερος om. Cc | μίνος P | διὰ τῶν δία P | 21 ἐνέα <note>sic</note> supra scr. C² | 22 αἰνίτται C | Ὅμηρος] Odyssey 19.179 | 23 ἐννέωρος C²: ἐννέορος C¹P | βασιλεῦ P | ὀαριστής] ὁ ἀριστύς C: ὁ ἀρίστις P: ὀαριστύς c | 24 τῆς om. P | 27 οἱ ὁρισμοὶ c |
+
+<summary>Elias discusses how the Delphic oracle described Lycurgus and how Plato treated Minos, illustrating that philosophy seeks to elevate humanity toward the divine. He then introduces the six standard Neoplatonic definitions of philosophy based on subject matter, goal, preeminence, and etymology.</summary>
+<keywords>Lycurgus, Pythia, Delphi, Plato, Laws, Minos, Zeus, Homer, philosophy, definitions of philosophy, subject matter, goal, etymology</keywords>

@@ -1,0 +1,143 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: The Jewel-Garland of Astrology | Author: Shripati Bhatt | Date: 1800
+
+**Note:** This is a public domain work published in 1800. It is not under copyright.
+
+**Text to translate:**
+<lang>sa</lang>
+<page-num>५८</page-num>
+<meta>The manuscript is written in Devanagari script, primarily in Sanskrit. It appears to be a yogic or medical-astrological text discussing nadis (subtle energy channels), prana (breath), and perhaps physiognomy (signs of the body). The text is bounded by red vertical ruling.</meta>
+
+तुपारेचके स्थान्न नाडी समाज
+॥ ५४ ॥ नाड्याति स्रोत तन्ते नि:शेष
+विस्फुरन्त्यन्यनाडीभ्य एवं प्रसूता:
+सर्पाकारास्तत्र नाडी सेना जो नत्ते
+प्राणैक नाडी सुधीस्थं च ॥ ५५ ॥
+स्वगसि रत्न नु प्राणं विधये भवेत्से
+यो तो यजता हरे रक्त ॥ वरपास्त्यक्ते
+<margin>वरपा</margin> रश्मीक चय वन्वे हरयं विद्धि लोक प्राप्ति
+<margin>५८</margin> र्छ ॥ ५६ ॥ मूर्तिविधानता धनसरज से
+क्षये पुत्रसुक प्रिय सप परमो न ति विधि
+वता विर जीविता ॥ शुभ सतिर शील
+त वि वाध लधिरर्थ क्षय तनु प्रभ
+ति षु स्थिते भवति नरकरे योषितां ॥
+॥ ५७ ॥ प्राणग स्मृतिरर्थ संपदुन पंज्ञी
+तिप्रबंध कति वै पुत्री च स वै रितंच
+नियतं सपत्यना तव्य म स्त्री
+रति: परधर्म कृत मधिकार वि
+क्षय: सपदा स्यादि हा बु ध यालु
+
+<insert>
+कमान युग्मं च वलि निलयो स्थितां व गे हे शुभ मा दर्शोत् प
+लथा य हालों बल म म गे पि द य सान नै प रा घ क क्ष ॥ ५८ ॥
+</insert>
+
+<vocab>नाडी (nāḍī), प्राण (prāṇa), रेचक (recaka), मूर्तिविधान (mūrtividhāna), योषितां (yoṣitāṃ), सपत्नी (sapatnī)</vocab>
+
+**Previous page translation for continuity:**
+...[struck] by the planetary "kick" <term>latta</term>. <note>original: *latta*; a specific astrological affliction where a planet "kicks" or affects a lunar mansion (nakshatra) at a certain distance.</note> Afterward, seven or nine <note>referring to specific time units or counts of nakshatras</note> **10**
+
+When Rahu <note>the north node of the moon, often called the "shadow planet"</note> or Venus <note>original: *sita*</note> are in the fifth or twentieth positions, they should be avoided. The Moon <note>original: *uḍupa*</note> strikes the person’s form, but no other planet does so. **10*
+[…]
+ng new works</note>, no auspicious ceremonies <term>maṅgaleṣu</term> should be performed. Only after the disturbances of meteors <note>original: *ulkā*</note> or thunderbolts <note>original: *aśani*</note> have passed, and the experts deem the time to be clear <note>original: *nirmala*</note>, should one proceed for an auspicious purpose. **12**
+
+In the ritual of "taking the hand" <term>pāṇigrahe</term> <note>referring to the marriage ceremony</note>, the relationship of the sixth and eighth houses <note>original: *ṣaṣṭhāṣṭake*; a configuration known as Shashtashtaka, usually considered highly unfavorable as it signifies enmity or death</note> leads to death or loss of children. A relationship of the ninth and fifth houses <note>original: *nava-pañcame*</note> results in friendship, while the second and twelfth positions <note>original: *dhana-dvādaśake*</note> affect wealth and expenditure. However, love may still exist between the couple if the lords of their signs are the same. **13**
+
+If the lord of the bride’s sign <note>original: *bhuvanapati*</note> is a friend of the groom's, or if they share the same planetary ruler, then even with other afflictions, the marriage can be auspicious. This is especially true if there is purity of the stars <term>tārā-viśuddhau</term> <note>a calculation based on the couple's birth stars to ensure compatibility</note> for the groom. **14**
+<summary>This page details astrological prohibitions for marriage, focusing on malefic planetary "kicks" (Latta), the duration of bad omens like meteors, and the compatibility (Kuta) between the bride and groom's birth signs.</summary>
+<keywords>Latta, Rahu, Malefic planets (Krura), Auspicious rituals (Mangala), Meteors (Ulka), Marriage (Panigraha), Stellar purity (Tara-vishuddhi), Muhurta</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

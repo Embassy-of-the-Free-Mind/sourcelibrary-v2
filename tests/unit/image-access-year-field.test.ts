@@ -19,7 +19,11 @@ const stripComments = (src: string) =>
 
 const GUARDED = [
   'src/lib/purchases.ts',
+  'src/lib/types/image-source.ts',
   'src/app/book/[id]/page.tsx',
+  // The reader's Download drawer kept its own copy of the rule, on year_published
+  // and two other absent fields, until 2026-11-04 (#8098).
+  'src/components/reader-v2/Reader2C.tsx',
 ];
 
 describe('image-access gate reads a field that exists', () => {
@@ -30,10 +34,11 @@ describe('image-access gate reads a field that exists', () => {
     });
   }
 
-  it('purchases.ts still gates on a numeric year below 1930', () => {
+  it('the shared rule still gates on a numeric year below 1930, and purchases.ts projects it', () => {
+    // The rule lives in imageAccessFor() since #7771; deleting it would also make the above pass.
+    const rule = stripComments(readFileSync(join(repoRoot, 'src/lib/types/image-source.ts'), 'utf8'));
+    expect(rule).toMatch(/year\s*<\s*1930/);
     const code = stripComments(readFileSync(join(repoRoot, 'src/lib/purchases.ts'), 'utf8'));
-    // The rule itself must survive — deleting it would also make the above pass.
-    expect(code).toMatch(/year\s*<\s*1930/);
     expect(code).toMatch(/projection:\s*\{[^}]*\byear:\s*1/);
   });
 });

@@ -1,16 +1,17 @@
-import { notFound, permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import type { Book, Page } from '@/lib/types';
 import Reader2C from '@/components/reader-v2/Reader2C';
-import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
 import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
@@ -19,25 +20,30 @@ import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle } from '@/lib/localized';
 import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
-import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
+import { getPrintedNumbers } from '@/lib/printed-numbers';
 import { ocrMeasure } from '@/lib/ocr-measure';
-import { getSplitLeafId, isArchivedSplit } from '../page-data';
+import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
+import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
 // pages (same seo_indexable gate as robots, #2688) — structured data on a
 // noindex page is wasted. The excerpt is wrapper-stripped (the #2232 invariant:
 // never expose editorial <meta>/<summary>/… blocks as page text).
-function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string, unknown> | null {
+// isPartOf carries the book's URL and a BreadcrumbList names it, so a search
+// engine that indexes a page is pointed at the book's front page (contents and
+// summary) as the parent: the page is the way in, the book is the place.
+function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: string): Record<string, unknown> | null {
   if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
   const bookTitle = book.display_title || book.title;
   const raw = page.translation?.data || page.ocr?.data || '';
   const clean = stripEditorialWrappers(raw).trim();
   const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
-  return {
-    '@context': 'https://schema.org',
+  const work = {
     '@type': 'CreativeWork',
     name: `${bookTitle}, Page ${page.page_number}`,
     url: pageUrl,
@@ -47,14 +53,25 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string): Record<string
     ...(isEnglishOriginalBook(book) ? {} : { translator: { '@type': 'Organization', name: 'Source Library' } }),
     isPartOf: {
       '@type': 'Book',
+      '@id': bookUrl,
+      url: bookUrl,
       name: bookTitle,
       ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
       ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
     },
-    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
     isAccessibleForFree: true,
     ...(excerpt ? { text: excerpt } : {}),
   };
+  const breadcrumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Source Library', item: 'https://sourcelibrary.org' },
+      { '@type': 'ListItem', position: 2, name: bookTitle, item: bookUrl },
+      { '@type': 'ListItem', position: 3, name: `Page ${page.page_number}`, item: pageUrl },
+    ],
+  };
+  return { '@context': 'https://schema.org', '@graph': [work, breadcrumb] };
 }
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
@@ -80,6 +97,8 @@ const BOOK_NAV_PROJECTION = {
   // Gates whether this book may have a localized reader URL at all — see the
   // redirect below. Always read from Atlas here, so it can never be absent.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
@@ -110,20 +129,23 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav).
   // Inclusion list, not `{ detected_images: 0 }` — see reader-page-projection.ts.
-  const currentPage = await db.collection('pages').findOne(
+  const fetchedPage = await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
   );
+  const currentPage = withoutTextLayer(fetchedPage); // #5942: the stored text layer never reaches the payload
 
   if (!currentPage) {
     notFound();
   }
 
   // Step 2: Book lookup + nav pages + music transcriptions in parallel
-  const [bookResult, navPages, musicTranscriptions] = await Promise.all([
+  // The notes layer (#7965): read here, beside the book, while `fetchedPage` still carries translation.text;
+  // applied last, below, after the English-original swap and the metered gate.
+  const [bookResult, navPages, musicTranscriptions, textLayers] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
+      .find(readerPageListFilter(currentPage.book_id as string))
       // Image fields are part of the nav list because the reader's filmstrip
       // draws a thumbnail per page. Without them getPageThumbUrl has nothing
       // to resolve and every slot renders empty — books with no pre-sized
@@ -138,12 +160,13 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(isReaderListedPage))
       .catch((err) => {
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
       }),
     getTranscriptionsForPage(db, pageId),
+    loadReaderTextLayers(db, [fetchedPage]),
   ]);
 
   if (!bookResult) {
@@ -175,12 +198,37 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
     if (leafId) permanentRedirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${leafId}`, lang));
   }
 
+  // A hidden repeat capture goes to its kept capture (#5056), for the same
+  // embed/room reason. 307: the hide is reversible. /preview stays put.
+  if (!allowHidden && typeof currentPage.repeat_of === 'string') {
+    const keptId = await getRepeatKeeperId(scopedBookId, currentPage.repeat_of);
+    if (keptId) redirect(hrefPrefix + localePath(`/book/${book.slug || scopedBookId}/page/${keptId}`, lang));
+  }
+
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
-  // page turn needs no second request. Never throws; most books have no rows. Partner rooms keep the old reader.
+  // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
+  // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
-  const [qualityWarnings, scanGaps] = ctx?.isEmbedded
-    ? [undefined, undefined]
-    : await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
+  // The numbers printed on the leaves, where confirmed on the images (#8041): same shape again; no rows reads as today.
+  // A chapter whose stored pageId is a hidden repeat capture (#5056) opens the
+  // kept capture instead: one batched lookup per book, stored chapters untouched.
+  // The reader's contents panel turns pages client-side, so no redirect would
+  // catch it.
+  const chapters = (book.chapters ?? []) as { pageId?: string; pageNumber?: number }[];
+  const [qualityWarnings, scanGaps, printedNumbers, chapterKeepers] = await Promise.all([
+    getQualityWarnings(db, [scopedBookId]),
+    getScanGaps(db, scopedBookId),
+    getPrintedNumbers(db, scopedBookId),
+    resolveRepeatKeepers(
+      (ids) => db.collection('pages').find({ book_id: scopedBookId, id: { $in: ids } }, { projection: REPEAT_KEEPER_PROJECTION, maxTimeMS: 3000 }).toArray(),
+      chapters.map((ch) => ch.pageId).filter((id): id is string => typeof id === 'string'),
+    ).catch(() => new Map<string, string>()),
+  ]);
+  const readerChapters = mapChapterPageIds(chapters, chapterKeepers, (id) => {
+    const n = (navPages as { id?: string; page_number?: unknown }[]).find((p) => p.id === id)?.page_number;
+    return typeof n === 'number' ? n : undefined;
+  });
+  const readerBook = readerChapters === chapters ? book : ({ ...book, chapters: readerChapters } as Book);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   // On an English edition the leaf's own words are the text: a stored
@@ -193,7 +241,12 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   const bookPath = book.slug || scopedBookId;
   // JSON-LD is built from the UNMARKED page: the SEO excerpt stays free of
   // zero-width characters so search snippet matching is untouched.
-  const jsonLd = buildPageJsonLd(book, serializedPage, `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`);
+  const jsonLd = buildPageJsonLd(
+    book,
+    serializedPage,
+    `https://sourcelibrary.org${localePath(`/book/${bookPath}/page/${pageId}`, lang)}`,
+    `https://sourcelibrary.org${localePath(`/book/${bookPath}`, lang)}`,
+  );
 
   // Metered reader (#4357): beyond the free sample, the ISR HTML carries the
   // page WITHOUT its text — for everyone, which is what keeps it statically
@@ -216,7 +269,11 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // carries the invisible provenance imprimatur in the translation. It is
   // deterministic — content-keyed, no per-request input — so this page stays
   // safely ISR/CDN-cacheable. The editor save path strips it before storing.
-  const markedPage = markPageForReader(servedPage, scopedBookId);
+  //
+  // The notes layer (#7965) goes in first: a page with a current translation.text and a page_annotations doc
+  // for it is read from the layer; any other page is served exactly as before.
+  await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
+  const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
   return (
     <>
@@ -227,13 +284,15 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         />
       )}
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      {/* The redesign ships on sourcelibrary.org. Partner reading rooms —
-          BPH, EFM, every /embed/** iframe and tenant subdomain — stay on the
-          old reader until BPH have seen it and approved it. Not caution for
-          its own sake: the new reader's Cite and Share build absolute URLs
-          against sourcelibrary.org rather than the host page, so a scholar
-          citing a page inside a partner's site would be handed a URL pointing
-          away from it.
+      {/* One reader everywhere. Partner reading rooms (BPH, EFM, every
+          /embed/** iframe and tenant subdomain) stayed on the old reader
+          (PageEditorClient) until BPH had seen the redesign, because its Cite
+          and Share build URLs against sourcelibrary.org rather than the host
+          page. BPH/EFM approved the switch on 2026-10-29, via Derek: the
+          sourcelibrary.org permalink is the citation (persistent, DOI-backed,
+          the same everywhere), and the reader inside the Embassy frame should
+          be the one sourcelibrary.org shows. Reader2C hides the site menu and
+          WebMCP when embedded and routes its links through useEmbedHref.
           
           Books we hold a facsimile fount for are read in their own type
           (#4083); `display: contents` so this wrapper carries the font
@@ -243,22 +302,15 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         className={isAldineFount(book.id) ? `aldine-fount ${aldineVariables}` : undefined}
         style={isAldineFount(book.id) ? { display: 'contents' } : undefined}
       >
-        {ctx?.isEmbedded ? (
-          <PageEditorClient
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-          />
-        ) : (
-          <Reader2C
-            initialBook={book}
-            initialPage={markedPage}
-            initialPageList={serializedNavPages}
-            qualityWarnings={qualityWarnings}
-            scanGaps={scanGaps}
-            ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
-          />
-        )}
+        <Reader2C
+          initialBook={readerBook}
+          initialPage={markedPage}
+          initialPageList={serializedNavPages}
+          qualityWarnings={qualityWarnings}
+          scanGaps={scanGaps}
+          printedNumbers={printedNumbers}
+          ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
+        />
       </div>
       {musicTranscriptions.length > 0 && (
         <HymnPlayer transcriptions={musicTranscriptions} />
@@ -283,14 +335,30 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         // the real pager, shoving the toolbar up the screen. It stays in the
         // DOM and in the accessibility tree, which is all #2266 needed; sighted
         // readers have the pager, the filmstrip and Contents for the same job.
+        // The citation an assistant repeats (#8161). Text fetchers usually drop
+        // <head>, so the meta tags alone do not reach it, and the Cite button is
+        // client-side. Same builder as the quote API, same sr-only reasoning as
+        // the nav below. Not in a partner's room: its links are its own.
+        const citation = ctx?.id ? null : generateCitations(
+          book, serializedPage.page_number, scopedBookId, pageId, 'https://sourcelibrary.org',
+          undefined, undefined, serializedPage.printed_page,
+          { transcription: !serializedPage.translation?.data },
+        );
         return (
+          <>
+          {citation && (
+            <p className="sr-only">
+              Cite this page: {citation.footnote} <a href={citation.short_url}>{citation.short_url}</a>
+            </p>
+          )}
           <nav aria-label={rs.pageNavigation} className="sr-only">
-            {prev && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            {prev &&<a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
             <a href={hrefPrefix + localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
             {/* No /overview twin exists under an embed or room prefix (embedPolicy.showBookOverviewLink). */}
             {!hrefPrefix && <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>}
             {next && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
+          </>
         );
       })()}
     </>

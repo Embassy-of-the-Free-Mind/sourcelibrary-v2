@@ -14,6 +14,14 @@
  * century/language counts that the v5 lane does not produce.
  *   node retrieve/retrieve-aliveness-lexical.mjs [--per 40]
  *   node retrieve/retrieve-aliveness-lexical.mjs --probes probes/probes-animism-lexical.json --tag animism --per 60
+ * --counts-only rewrites lexical-counts and leaves the hits file (and the classified draw built from it) untouched.
+ * Counts leave out the translator's COMMENTARY: a page whose phrase occurs only inside an explanatory <note> is not
+ * counted. Glosses (<gloss>, the English for a <term> on the page: yakshas → "nature spirits") and notes giving the
+ * original word ("original: anima mundi") are counted, because they render a word the source has. Read 2026-10-25 on
+ * 32 note-only hits: about half glossed a source word, half were the translator explaining ("transplantation refers to
+ * the theory that metals grow"). Effect on the 2026-10-25 run: 12,501 of 163,957 hit pages (7.6%) were commentary
+ * only; century rates fell 5-10% (vital breath ~14%), dead matter alike, and no curve changed shape.
+ * pages_all keeps the raw FTS count and pages_body the count with every note and gloss removed.
  * With --tag the outputs are lexical-counts-<tag>.json / hits-lex-<tag>.jsonl and the draw uses makeRng (integer PRNG);
  * without it the script reproduces the original 2026-10-13 draw exactly.
  */
@@ -23,6 +31,7 @@ const CORPUS = process.env.SL_CORPUS || path.join(HOME, 'sl-corpus');
 const OUT = process.env.ALIVE_OUT || path.join(SL, 'scripts', 'output', 'experience-map', 'aliveness');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const PER = +arg('--per', 40);
+const COUNTS_ONLY = process.argv.includes('--counts-only');
 const TAG = arg('--tag', null); const sfx = TAG ? `-${TAG}` : '';
 const PROBES = arg('--probes', 'probes/probes-aliveness-lexical.json');
 const { stripEditorialWrappers } = await import(path.join(SL, 'scripts', 'lib', 'strip-editorial-wrappers.mjs'));
@@ -40,11 +49,12 @@ const denom = {}; for (const r of db.prepare('SELECT book_id, count(*) n FROM pa
 let seed = 6652; const lcg = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
 const rnd = TAG ? (await import(path.join(SL, 'scripts', 'eval', 'lib', 'paired-stats.mjs'))).makeRng(6652) : lcg;
 const q = db.prepare('SELECT p.book_id, p.p FROM pages_en e JOIN pages p ON p.rowid = e.rowid WHERE pages_en MATCH ?');
-const counts = {}; const zero = []; const picked = new Map();
+const counts = {}; const zero = []; const picked = new Map(); const allRows = {};
 for (const [dim, phrases] of Object.entries(dimensions)) {
   for (const ph of phrases) {
     const rows = q.all(`"${ph.replace(/"/g, '')}"`);
     const byC = {}, byL = {}; for (const r of rows) { const b = cat.get(r.book_id) || {}; const c = cent(b.year_num) ?? 'nd'; byC[c] = (byC[c] || 0) + 1; const L = b.language || '?'; byL[L] = (byL[L] || 0) + 1; }
+    allRows[ph] = rows.map((r) => [r.book_id, r.p]);
     counts[ph] = { dim, pages: rows.length, books: new Set(rows.map((r) => r.book_id)).size, byCentury: byC, byLanguage: Object.fromEntries(Object.entries(byL).sort((a, b) => b[1] - a[1]).slice(0, 12)) };
     if (!rows.length) { zero.push(ph); continue; }
     for (let i = rows.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [rows[i], rows[j]] = [rows[j], rows[i]]; }
@@ -53,16 +63,48 @@ for (const [dim, phrases] of Object.entries(dimensions)) {
   }
 }
 
+// body-only counts: re-read every hit page and drop those whose phrase sits only in <note>/<gloss> apparatus.
+// FTS5 matched on unicode61 tokens with diacritics removed, so compare on the same folding. A hit that cannot be
+// re-found in either form (no mirror file, folding mismatch) is kept, and tallied as unverified.
+const fold = (t) => ' ' + t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim() + ' ';
+const ALL_APPARATUS = /<(note|gloss)>[\s\S]*?<\/\1>/g;
+const COMMENTARY = /<note>(?!\s*\(?\s*original)[\s\S]*?<\/note>/gi;  // explanatory notes; keeps glosses and "original: …" notes
+const hitsByBook = new Map();
+for (const [ph, rows] of Object.entries(allRows)) for (const [b, p] of rows) { if (!hitsByBook.has(b)) hitsByBook.set(b, []); hitsByBook.get(b).push([ph, p]); }
+const body = {}; for (const ph of Object.keys(allRows)) body[ph] = { pages: 0, books: new Set(), byC: {}, byL: {}, notesOnly: 0, unverified: 0, bodyOnly: 0, byCBody: {} };
+let nb = 0;
+for (const [b, list] of hitsByBook) {
+  if (++nb % 2000 === 0) console.log(`body check: ${nb}/${hitsByBook.size} books`);
+  const f = path.join(CORPUS, 'books', `${b}.jsonl`); const pages = new Map();
+  if (fs.existsSync(f)) { const want = new Set(list.map(([, p]) => p)); for (const line of fs.readFileSync(f, 'utf8').split('\n')) { if (!line) continue; const pg = JSON.parse(line); if (want.has(pg.p) && pg.tr) pages.set(pg.p, pg.tr); } }
+  const c = cat.get(b) || {}; const k = cent(c.year_num) ?? 'nd'; const L = c.language || '?';
+  for (const [ph, p] of list) {
+    const B = body[ph]; const t = pages.get(p); const needle = fold(ph);
+    const found = t != null && fold(t).includes(needle);
+    if (!found || fold(t.replace(ALL_APPARATUS, ' ')).includes(needle)) { B.bodyOnly++; B.byCBody[k] = (B.byCBody[k] || 0) + 1; }
+    if (found && !fold(t.replace(COMMENTARY, ' ')).includes(needle)) { B.notesOnly++; continue; }
+    if (!found) B.unverified++;
+    B.pages++; B.books.add(b); B.byC[k] = (B.byC[k] || 0) + 1; B.byL[L] = (B.byL[L] || 0) + 1;
+  }
+}
+for (const [ph, B] of Object.entries(body)) {
+  const v = counts[ph];
+  Object.assign(v, { pages_all: v.pages, books_all: v.books, byCentury_all: v.byCentury, pages_body: B.bodyOnly, byCentury_body: B.byCBody, pages: B.pages, books: B.books.size, byCentury: B.byC,
+    byLanguage: Object.fromEntries(Object.entries(B.byL).sort((a, b) => b[1] - a[1]).slice(0, 12)), notes_only: B.notesOnly, unverified: B.unverified });
+}
+const tot = (k) => Object.values(counts).reduce((a, v) => a + (v[k] || 0), 0);
+console.log(`body check: ${tot('pages_all')} hit pages, ${tot('notes_only')} only in explanatory notes (dropped), ${tot('unverified')} not re-found (kept)`);
+
 // attach text, one read per book
 const byBook = new Map(); for (const [id, h] of picked) { if (!byBook.has(h.book_id)) byBook.set(h.book_id, []); byBook.get(h.book_id).push([id, h]); }
-const out = fs.createWriteStream(path.join(OUT, `hits-lex${sfx}.jsonl`)); let kept = 0, miss = 0;
-for (const [b, list] of byBook) {
+const out = COUNTS_ONLY ? null : fs.createWriteStream(path.join(OUT, `hits-lex${sfx}.jsonl`)); let kept = 0, miss = 0;
+if (!COUNTS_ONLY) for (const [b, list] of byBook) {
   const f = path.join(CORPUS, 'books', `${b}.jsonl`); if (!fs.existsSync(f)) { miss += list.length; continue; }
   const want = new Map(list.map(([id, h]) => [h.p, [id, h]])); const c = cat.get(b) || {};
   for (const line of fs.readFileSync(f, 'utf8').split('\n')) { if (!line) continue; const pg = JSON.parse(line); const w = want.get(pg.p); if (!w || !pg.tr) continue; const [id, h] = w;
     const text = stripEditorialWrappers(pg.tr).trim(); if (text.length < 150) continue;
     out.write(JSON.stringify({ page_id: id, book_id: b, page_number: pg.p, book_title: c.display_title || c.title || '', book_author: c.author || '', book_language: c.language || '', book_year: c.year_num ?? null, visible: !!c.visible, dim: h.dim, probe: h.phrase, slice: 'lexical', similarity: null, lane: TAG || 'lexical', text: text.slice(0, 3000) }) + '\n'); kept++; }
 }
-out.end();
+out?.end();
 fs.writeFileSync(path.join(OUT, `lexical-counts${sfx}.json`), JSON.stringify({ built: new Date().toISOString(), per_phrase_sample: PER, translated_pages_by_century: denom, zero_hit: zero, phrases: counts }, null, 1));
 console.log(`${Object.keys(counts).length} phrases (${zero.length} zero-hit: ${zero.join('; ')}); sampled ${picked.size} pages → ${kept} with text (${miss} no mirror file)`);

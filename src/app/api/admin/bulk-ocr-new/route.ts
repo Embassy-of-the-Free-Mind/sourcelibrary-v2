@@ -64,7 +64,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Build book filter
-    const bookFilter: Record<string, unknown> = { deleted: { $ne: true } };
+    // A held book is never read here, even by id: a hold is how a book goes public without buying
+    // a paid read of its un-OCR'd pages (#8053), so assertLaneGuards below observing it is not enough.
+    const bookFilter: Record<string, unknown> = {
+      deleted: { $ne: true },
+      'pipeline_auto.status': { $ne: 'held' },
+      'pipeline_auto.hold': { $exists: false },
+    };
     if (singleBookId) {
       bookFilter.id = singleBookId;
     }

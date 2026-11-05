@@ -196,7 +196,7 @@ async function select(db) {
     if (!isGold && usd + (b.pages_translated || 0) * 0.00005 > budget) return 'over-budget';
     const english = /^english$/i.test(b.language || '');
     const rows = [];
-    for await (const p of pagesOf(db).find({ book_id: b.id }).project(PAGE_PROJECTION).sort({ page_number: 1 })) {
+    for await (const p of pagesOf(db).find({ book_id: b.id }).batchSize(1000).project(PAGE_PROJECTION).sort({ page_number: 1 })) {
       const r = pageInput(p, english);
       if (r.skip) { skips[r.skip] = (skips[r.skip] || 0) + 1; continue; }
       rows.push({ page_id: String(p.id ?? p._id), book_id: b.id, page_number: p.page_number, tradition: b.tradition, source_field: r.source_field, text_hash: contentHash(r.text), text: r.text });
@@ -609,7 +609,7 @@ async function rebuild(db) {
     const out = fs.createWriteStream(af + '.tmp');
     let n = 0; let none = 0;
     for (let i = 0; i < bookIds.length; i += 20) {
-      const cur = pagesOf(db).find({ book_id: { $in: bookIds.slice(i, i + 20) }, 'concept_abstract.run': RUN })
+      const cur = pagesOf(db).find({ book_id: { $in: bookIds.slice(i, i + 20) }, 'concept_abstract.run': RUN }).batchSize(1000)
         .project({ id: 1, book_id: 1, page_number: 1, 'concept_abstract.data': 1, 'concept_abstract.none': 1, 'concept_abstract.content_hash': 1, 'concept_abstract.engine.batch_job_id': 1 });
       for await (const p of cur) {
         const ca = p.concept_abstract;

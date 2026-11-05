@@ -38,7 +38,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 
 async function downloadImage(url) {
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' },
+    headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
     signal: AbortSignal.timeout(30000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
@@ -124,7 +124,7 @@ async function main() {
 
   const cursor = db.collection('books').find(query, {
     projection: { _id: 1, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 },
-  });
+  }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   let processed = 0;

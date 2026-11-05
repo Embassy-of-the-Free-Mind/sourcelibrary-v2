@@ -1,12 +1,18 @@
 /**
  * The lane registry (scripts/lib/lanes.mjs, #5480) against the code it describes.
  *
- * 1. Coverage: every script a schedule runs — scripts/workers/crontab.production (live lines), the
- *    scheduler's WORKERS, vercel.json crons, and the routes cron-caller.mjs hits — that writes `books` or
- *    `pages`, itself or through a local import, is a registered lane or an EXEMPT entry with a reason.
+ * 1. Coverage: every script a schedule runs — the committed snapshot of EVERY box's live crontab
+ *    (CRONTAB_SNAPSHOTS: main's crontab.production, gex45, l7a; live lines), the scheduler's WORKERS, vercel.json
+ *    crons, and the routes cron-caller.mjs hits — that writes `books` or `pages`, itself or through a local import,
+ *    is a registered lane or an EXEMPT entry with a reason. A program a snapshot runs from OUTSIDE the repo is a
+ *    lane's `cron` line or an OFF_REPO_CRON entry with a reason, so a lane that exists only on a box fails CI (#7301).
  * 2. Claims: a declared pause key is present in the lane's source, and a `marker` hold claim is too. A
  *    lane that skips a check says why.
  * 3. Pause names: no lane claims a name nothing reads (DEAD_PAUSE_NAMES). Keys are pause.mjs's (#5492).
+ * 4. Subscription lanes (#7301): a `quota-share` budget names a meter and a share, its files gate on the meter, and
+ *    none of them can reach a paid model client — out of quota, the lane idles and the book waits.
+ * 5. Routes: the routing rows that hand a lane its books (the CLI holds, the cli translation engines, the OCR table's
+ *    lane files) all land on a registered lane.
  *
  * Static by design — importing a worker runs it. The write detector is a regex over source, so it can
  * miss a writer that builds a collection name at runtime; it errs toward flagging (a read-only importer
@@ -16,9 +22,15 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 // @ts-expect-error — scripts-side module, no types
-import { LANES, EXEMPT, PAUSE_KEYS, DEAD_PAUSE_NAMES, HOLD_MARKER_TEST, LANE_STEPS, registeredFiles } from '../../scripts/lib/lanes.mjs';
+import { LANES, EXEMPT, PAUSE_KEYS, DEAD_PAUSE_NAMES, HOLD_MARKER_TEST, LANE_STEPS, registeredFiles, CRONTAB_SNAPSHOTS, OFF_REPO_CRON, QUOTA_METERS } from '../../scripts/lib/lanes.mjs';
 
-type Lane = { name: string; serves: string; files: string[]; budget: string; respectsHold: string | false; pause: string | null; reason?: string };
+type Lane = {
+  name: string; serves: string; files: string[]; budget: string; respectsHold: string | false; pause: string | null; reason?: string;
+  quota?: { meter: string; share: number; paced?: boolean }; stamps?: { field: string; call_site: string; engine?: string }[];
+  routes?: { hold?: string; engines?: string[] }; cron?: string[];
+};
+
+const BUDGETS = ['dial', 'dial (scoped)', 'envelope', 'committed', 'gpu-lease', 'owned-gpu', 'free-cpu', 'quota-share', 'unmetered', 'none'];
 
 const ROOT = path.resolve(__dirname, '../..');
 const read = (f: string) => fs.readFileSync(path.join(ROOT, f), 'utf8');
@@ -61,11 +73,16 @@ function writersReachable(file: string, seen = new Set<string>()): string[] {
   return out;
 }
 
-/** Everything a schedule runs: crontab (uncommented lines), scheduler WORKERS, vercel crons, cron-caller targets. */
+/** The live (uncommented) lines of every box's crontab snapshot. */
+function cronLines(): { box: string; line: string }[] {
+  return (CRONTAB_SNAPSHOTS as { box: string; file: string }[]).flatMap(({ box, file }) =>
+    read(file).split('\n').filter((l) => l.trim() && !l.trim().startsWith('#') && !/^[A-Z_]+=/.test(l.trim())).map((line) => ({ box, line })));
+}
+
+/** Everything a schedule runs: crontab snapshots (uncommented lines), scheduler WORKERS, vercel crons, cron-caller targets. */
 function scheduledTargets(): string[] {
   const t = new Set<string>();
-  const cron = read('scripts/workers/crontab.production').split('\n').filter((l) => l.trim() && !l.trim().startsWith('#'));
-  for (const l of cron) {
+  for (const { line: l } of cronLines()) {
     for (const m of l.matchAll(/scripts\/[A-Za-z0-9_./-]+\.(?:mjs|js|ts|sh)/g)) t.add(m[0]);
     for (const m of l.matchAll(/cron-caller\.mjs (\S+?)["'\s]/g)) {
       const a = m[1];
@@ -86,6 +103,11 @@ describe('lane registry — shape', () => {
       names.add(l.name);
       if (!LANE_STEPS.includes(l.serves)) problems.push(`${l.name}: unknown step ${l.serves}`);
       for (const f of l.files) if (!fs.existsSync(path.join(ROOT, f))) problems.push(`${l.name}: missing file ${f}`);
+      if (!BUDGETS.includes(l.budget)) problems.push(`${l.name}: unknown budget ${l.budget}`);
+      if (l.budget === 'quota-share') {
+        if (!l.quota || !(QUOTA_METERS as Record<string, unknown>)[l.quota.meter]) problems.push(`${l.name}: quota-share without a known meter`);
+        if (!(l.quota?.share! > 0 && l.quota!.share <= 1)) problems.push(`${l.name}: quota share must be in (0, 1]`);
+      } else if (l.quota) problems.push(`${l.name}: a quota on a ${l.budget} lane`);
       const skips = [l.respectsHold === false && 'no hold check', l.pause == null && 'no pause key', l.budget === 'none' && 'no budget', l.respectsHold === 'status' && 'status-only hold']
         .filter(Boolean);
       if (skips.length && l.respectsHold !== 'status' && !l.reason?.trim()) problems.push(`${l.name}: ${skips.join(', ')} without a reason`);
@@ -109,6 +131,32 @@ describe('lane registry — coverage', () => {
       if (w.length && !registered.has(t)) unregistered.push(`${t} (writes via ${[...new Set(w)].slice(0, 3).join(', ')})`);
     }
     expect(unregistered, 'register these in scripts/lib/lanes.mjs (LANES, or EXEMPT with a reason)').toEqual([]);
+  });
+
+  it('every program a crontab snapshot runs from outside the repo is a lane\'s cron line or an OFF_REPO_CRON entry (#7301)', () => {
+    const known = [...(LANES as Lane[]).flatMap((l) => l.cron ?? []), ...(OFF_REPO_CRON as { match: string }[]).map((o) => o.match)];
+    const REPO = /^\/(?:root\/sourcelibrary|data\/scratch\/sl\/sourcelibrary)\//;
+    const SYSTEM = /^\/(?:usr\/bin|bin|usr\/sbin)\//;
+    const unknown: string[] = [];
+    for (const { box, line } of cronLines()) {
+      for (const m of line.matchAll(/(?:^|[\s;=('"])(\/(?:root|data|usr\/local|opt|home)\/[A-Za-z0-9_./-]+\.(?:mjs|js|ts|sh|py))(?![A-Za-z0-9])/g)) {
+        const p = m[1];
+        if (REPO.test(p) || SYSTEM.test(p)) continue;
+        if (!known.some((k) => line.includes(k))) unknown.push(`${box}: ${p}`);
+      }
+      // A binary in /root/bin or /usr/local/bin that is not a script file (oura-digest, gpu-queue.sh is covered above).
+      for (const m of line.matchAll(/(?:^|[\s;])(\/(?:root\/bin|usr\/local\/bin)\/[A-Za-z0-9_.-]+)(?=[\s;]|$)/g)) {
+        if (!/\.(?:mjs|js|ts|sh|py)$/.test(m[1]) && !known.some((k) => line.includes(k))) unknown.push(`${box}: ${m[1]}`);
+      }
+    }
+    expect([...new Set(unknown)], 'name it in a lane\'s `cron` (scripts/lib/lanes.mjs) or in OFF_REPO_CRON with a reason').toEqual([]);
+  });
+
+  it('every lane `cron` line and OFF_REPO_CRON entry still matches a live snapshot line (no stale entries)', () => {
+    const lines = cronLines().map((c) => c.line);
+    const stale = [...(LANES as Lane[]).flatMap((l) => (l.cron ?? []).map((c) => `${l.name}: ${c}`)), ...(OFF_REPO_CRON as { match: string }[]).map((o) => `OFF_REPO_CRON: ${o.match}`)]
+      .filter((e) => !lines.some((l) => l.includes(e.replace(/^[^:]+: /, ''))));
+    expect(stale).toEqual([]);
   });
 
   it('the write detector catches the shapes used in this repo (and not a read)', () => {
@@ -160,6 +208,54 @@ describe('lane registry — claims match the source', () => {
     const problems = (LANES as Lane[])
       .filter((l) => l.respectsHold === 'marker' && !HOLD_MARKER_TEST.test(sourceOf(l)))
       .map((l) => l.name);
+    expect(problems).toEqual([]);
+  });
+
+  it('a quota-share lane gates on its meter and can reach no paid model client (#7301: out of quota it idles, never the API)', () => {
+    const GATE = /agyBlocked\(|claudeBlocked\(|laneQuota\(|agyCall\(|gatedTextCall\(/;
+    const PAID = /getGeminiClient|gemini-script-client|@google\/genai|@google\/generative-ai|@anthropic-ai\/sdk|generateContent\(/;
+    const problems: string[] = [];
+    for (const l of (LANES as Lane[]).filter((x) => x.budget === 'quota-share')) {
+      const src = sourceOf(l);
+      if (!GATE.test(src)) problems.push(`${l.name}: no meter gate in its files`);
+      const scripts = l.files.filter((f) => !/\.sh$/.test(f));
+      for (const f of scripts) {
+        if (PAID.test(read(f))) problems.push(`${l.name}: ${f} names a paid model client`);
+        for (const imp of read(f).matchAll(/from\s*['"](\.[^'"]+)['"]/g)) {
+          const r = resolveImport(path.join(ROOT, f), imp[1]);
+          if (r && /agy-cli|model-limits|lane-quota/.test(r) && PAID.test(fs.readFileSync(r, 'utf8'))) problems.push(`${l.name}: ${path.relative(ROOT, r)} names a paid model client`);
+        }
+      }
+    }
+    expect(problems).toEqual([]);
+  });
+
+  it('the routing rows land on registered lanes: CLI holds, cli translation engines, OCR table lane files', async () => {
+    // @ts-expect-error — plain .mjs, no types
+    const { CLI_FLASH_OCR_HOLD, OCR_ROUTING_TABLE } = await import('../../scripts/lib/ocr-routing.mjs');
+    // @ts-expect-error — plain .mjs, no types
+    const { CLI_TRANSLATE_HOLD, CLI_TRANSLATE_LANES } = await import('../../scripts/lib/translation-routing.mjs');
+    const lanes = LANES as Lane[];
+    const holds = new Set(lanes.map((l) => l.routes?.hold).filter(Boolean));
+    const engines = new Set(lanes.flatMap((l) => l.routes?.engines ?? []));
+    const problems: string[] = [];
+    for (const h of [CLI_FLASH_OCR_HOLD.reason, CLI_TRANSLATE_HOLD.reason]) if (!holds.has(h)) problems.push(`hold ${h}: no lane drains it`);
+    for (const h of holds) if (![CLI_FLASH_OCR_HOLD.reason, CLI_TRANSLATE_HOLD.reason].includes(h)) problems.push(`a lane names hold ${h}, which no router writes`);
+    for (const e of Object.keys(CLI_TRANSLATE_LANES)) if (!engines.has(e)) problems.push(`cli translation engine ${e}: no lane reads for it`);
+    // Every lane file the OCR routing table names is a registered lane's file. Two rows name hand-run writers that are
+    // not lanes yet; each says why here, and the list fails when one of them is registered.
+    const NOT_YET = {
+      'scripts/maintenance/apply-reocr-verdicts.mjs': 'Tibetan Yigdzin re-OCR (#4523): a one-off adjudicated run, not a standing lane',
+      'scripts/batch/ocr-convergence/driver.mjs': 'two-reads-disagree (#6694): an experiment driver, run by hand',
+    } as Record<string, string>;
+    const files = new Set(lanes.flatMap((l) => l.files));
+    for (const row of OCR_ROUTING_TABLE.rows) {
+      const named = [row.code?.file, ...((row.route?.fallback ?? []).map((f: { lane: string }) => f.lane.split(' ')[0]))].filter(Boolean);
+      for (const f of named) {
+        if (files.has(f)) { if (NOT_YET[f]) problems.push(`${f} is registered now: drop it from NOT_YET`); continue; }
+        if (!NOT_YET[f]) problems.push(`routing row ${row.id} names ${f}, which no lane registers`);
+      }
+    }
     expect(problems).toEqual([]);
   });
 

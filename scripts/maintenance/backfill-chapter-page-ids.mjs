@@ -78,7 +78,7 @@ async function main() {
     const cursor = books.find(
       { chapters: { $exists: true, $ne: [] } },
       { projection: { id: 1, slug: 1, chapters: 1 } },
-    );
+    ).batchSize(1000);
 
     let booksScanned = 0;
     let chaptersTotal = 0;

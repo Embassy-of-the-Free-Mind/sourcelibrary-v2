@@ -28,6 +28,7 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/restore-withheld-translation.mjs --page=<pageId>
  *   … --book=<bookId>     every withheld page of one book
+ *   … --reason=<reason>   with --book: only pages whose translation_withheld.reason is this
  *   … --apply             write (default is a dry run that prints the text head)
  *   … --force             restore even though the page is still stale
  */
@@ -48,7 +49,11 @@ await mongo.connect();
 const db = mongo.db('bookstore');
 const pages = db.collection('pages');
 
-const query = PAGE_ID ? { id: PAGE_ID } : { book_id: BOOK_ID, 'translation_withheld.reason': { $exists: true } };
+// --reason=<withhold reason>: only pages withheld for THAT reason. A book can carry withholds for
+// different causes (#5924: 575 `invented_by_eye` pages that a mis-seated image explained, and one
+// `source_loop` page that nothing explained); undoing one cause must leave the other withheld.
+const REASON = ARG('--reason', null);
+const query = PAGE_ID ? { id: PAGE_ID } : { book_id: BOOK_ID, 'translation_withheld.reason': REASON ?? { $exists: true } };
 const docs = await pages.find(query).toArray();
 if (!docs.length) { console.error('no matching pages'); await mongo.close(); process.exit(1); }
 

@@ -12,7 +12,7 @@ One `/lane` call does what the route's lane does with up to four Atlas calls (RE
             6+ characters is fuzzy (1 edit, same first 4 characters, Lucene's blended scoring); an unquoted
             unspaced-script query also scores as a phrase, boosted (#6877); non-content pages dropped; top k.
   variants  pages printing another spelling of the person the query names (and a topic word, if any), the
-            query's own words still scoring; up to variant_k, minus pages already in main.
+            query's own words still scoring; the top variant_k, then minus pages already in main (as Atlas).
   counts    pages printing EVERY roll-up term (each a phrase), per book, top `buckets`.
   extra     the best content page per counted book the main/variant pages did not reach, up to max_books.
 Every list is confined to live books (the set sync-delta.mjs posts) and to `book_ids` when given.
@@ -257,8 +257,12 @@ class Engine:
                 cl.append((Occur.Must, self.any_terms(tw, boosts=False)))
             if toks:
                 cl.append((Occur.Should, self.any_terms(toks)))
+            # Atlas's contract: the variant query's top variant_k FIRST, then the route drops those already
+            # in main (often leaving 0-6). Excluding main before the cut returned ~10 new pages on every
+            # expanded query instead (290 vs 139 over the #2049 Check 5 panel, #6852).
             seen = {r["page_id"] for r in main}
-            variants = [dict(r, src="variant") for r in self.top(s, Q.boolean_query(cl), min(int(p.get("variant_k") or 10), 1000), allow, exclude=seen)]
+            variants = [dict(r, src="variant") for r in self.top(s, Q.boolean_query(cl), min(int(p.get("variant_k") or 10), 1000), allow)
+                        if r["page_id"] not in seen]
             ms["variants"] = round((time.perf_counter() - t) * 1000, 1)
 
         counts, extra = None, []

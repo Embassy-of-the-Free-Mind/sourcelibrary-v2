@@ -31,6 +31,10 @@ export interface DedupMatch {
    * than "same author, same title, same year". 81% of edition-key-only
    * decisions in `dedup_shadow_decisions` are that case. */
   matchedYear?: number | null;
+  /** The matched record's volume, or null when it states none. The gate treats a
+   *  missing volume as a duplicate (the safe error for imports); the holdings
+   *  answer must not call it the same volume (#7624). */
+  matchedVolume?: number | null;
 }
 
 export interface DedupResult {
@@ -442,6 +446,7 @@ export async function editionKeyTierMatches(
         matchedVisible: doc.visible === true,
         matchedCollection: cn,
         matchedYear: tmYear,
+        matchedVolume: tmVol,
       });
     }
   }
@@ -502,6 +507,7 @@ export async function titleAuthorTierMatches(
         matchedVisible: tm.visible === true,
         matchedCollection: cn,
         matchedYear: tmYear,
+        matchedVolume: tmVol,
       });
     }
   }

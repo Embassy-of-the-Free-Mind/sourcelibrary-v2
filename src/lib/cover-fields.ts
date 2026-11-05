@@ -80,7 +80,9 @@ export interface CoverUpdate {
   thumbnail_source: ThumbnailSource;
   cover_page?: number;
   cover_selected_at?: Date;
-  field_provenance?: { thumbnail: CoverProvenance };
+  // A dotted key, so a `$set` of this update leaves the book's other stamps alone.
+  // As `field_provenance: { thumbnail }` it replaced the whole map (#7673).
+  'field_provenance.thumbnail'?: CoverProvenance;
 }
 
 /**
@@ -139,14 +141,12 @@ export function buildCoverUpdate(
   }
 
   if (opts.method) {
-    update.field_provenance = {
-      thumbnail: {
-        source: opts.actor || 'admin',
-        method: opts.method,
-        confidence: opts.confidence ?? 1,
-        date: new Date(),
-        detail: opts.detail,
-      },
+    update['field_provenance.thumbnail'] = {
+      source: opts.actor || 'admin',
+      method: opts.method,
+      confidence: opts.confidence ?? 1,
+      date: new Date(),
+      detail: opts.detail,
     };
   }
 

@@ -1,0 +1,74 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/armc-refused-7701/run.mjs score + by hand from it and the two written rows (job armc-refused-judge-7701, #7701; no model calls in this step)",
+ "cells": {
+  "la-armc-tried|print": {
+   "routes": {
+    "pero>agy-flash-low-tried": {
+     "n": 70,
+     "books": 70,
+     "accept": "37/70",
+     "wrong_text_pages": "1/70",
+     "classes_k_of_n": {
+      "O8": "14/70",
+      "E2": "11/70",
+      "O7": "8/70",
+      "O6": "8/70",
+      "O11": "7/70",
+      "D1": "4/70",
+      "T6": "3/70",
+      "O12": "1/70",
+      "O16": "1/70",
+      "O1": "1/70"
+     },
+     "note": "REFUSALS COUNT (#7701, router paper \"Failures count\"): the DRAWN pages, a page the route refuses scores as not accepted. cheap-routes la-armc 18 accepted of 30 drawn (18 written), latin-paired-6740 19 of 40 drawn (22 written, 1 wrong text). These test frames still flatter the lane: they wrote 40/70 where production wrote 4,708 of 28,104 tried (16.8%, ledger at lane stop 2026-11-04), so 16.8% is the production upper bound of accept among tried; times 37/40 accepted among written, about 15.5%."
+    }
+   }
+  },
+  "la-armc-refused-share|print": {
+   "routes": {
+    "pero>agy-flash-low-kept": {
+     "n": 15,
+     "books": 15,
+     "accept": "7/15",
+     "wrong_text_pages": "8/15",
+     "classes_k_of_n": {
+      "O6": "12/15",
+      "O8": "7/15",
+      "O5": "4/15",
+      "O16": "3/15",
+      "E2": "3/15",
+      "O7": "3/15",
+      "T6": "2/15",
+      "O1": "1/15",
+      "O12": "1/15",
+      "O4": "1/15",
+      "T5": "1/15"
+     },
+     "note": "the kept Flash read of a page the route REFUSED (\"only N% of its words are in the GPU draft\"), judged blind against the image; not a route the lane can run as it stands, recorded so the refused share has a measured quality. RULE.md decision: re-read with read@4"
+    }
+   }
+  },
+  "la-armc-refused-putback|print": {
+   "routes": {
+    "pero>agy-flash-low-kept": {
+     "n": 15,
+     "books": 15,
+     "accept": "8/15",
+     "wrong_text_pages": "3/15",
+     "classes_k_of_n": {
+      "O6": "13/15",
+      "O7": "6/15",
+      "O8": "6/15",
+      "E2": "4/15",
+      "O12": "3/15",
+      "O11": "1/15",
+      "O2": "1/15",
+      "O16": "1/15",
+      "O14": "1/15"
+     },
+     "note": "the kept Flash read of a page the route REFUSED (put_back_unsafe), judged blind against the image; not a route the lane can run as it stands, recorded so the refused share has a measured quality. RULE.md decision: re-read with read@4"
+    }
+   }
+  }
+ }
+}

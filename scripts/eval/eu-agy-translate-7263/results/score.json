@@ -1,0 +1,5544 @@
+{
+ "at": "2026-11-01T23:50:16.868Z",
+ "seed": 72631101,
+ "judge": "claude -p --model opus, sealed, Read only, stream-json transcript (page.jpg opened checked); route-judge judgePrompt translation form, image + stored OCR; blind (no arm in the prompt)",
+ "cells": {
+  "Latin": {
+   "all": {
+    "n": 30,
+    "unjudged": 0,
+    "a": {
+     "k": 16,
+     "ci95": [
+      0.361,
+      0.698
+     ],
+     "wrong_text": 12,
+     "wrong_ci95": [
+      0.246,
+      0.577
+     ],
+     "written": 30
+    },
+    "r": {
+     "k": 11,
+     "ci95": [
+      0.219,
+      0.545
+     ],
+     "wrong_text": 14,
+     "wrong_ci95": [
+      0.302,
+      0.639
+     ],
+     "written": 30
+    },
+    "d": 0.167,
+    "d_ci95": [
+     0,
+     0.333
+    ],
+    "gained": 6,
+    "lost": 1,
+    "sign_p": 0.125,
+    "switch_bar": {
+     "within": 0.08,
+     "wrong_text_max": 0.04,
+     "passes": true,
+     "lower_bound_clears": true
+    }
+   },
+   "by_script": {
+    "print": {
+     "n": 28,
+     "unjudged": 0,
+     "a": {
+      "k": 16,
+      "ci95": [
+       0.391,
+       0.735
+      ],
+      "wrong_text": 10,
+      "wrong_ci95": [
+       0.207,
+       0.542
+      ],
+      "written": 28
+     },
+     "r": {
+      "k": 11,
+      "ci95": [
+       0.236,
+       0.576
+      ],
+      "wrong_text": 13,
+      "wrong_ci95": [
+       0.295,
+       0.642
+      ],
+      "written": 28
+     },
+     "d": 0.179,
+     "d_ci95": [
+      0,
+      0.357
+     ],
+     "gained": 6,
+     "lost": 1,
+     "sign_p": 0.125,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "mixed": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": false,
+      "lower_bound_clears": false
+     }
+    },
+    "unknown": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "by_ocr": {
+    "gemini-3.1-flash-lite": {
+     "n": 24,
+     "unjudged": 0,
+     "a": {
+      "k": 13,
+      "ci95": [
+       0.351,
+       0.721
+      ],
+      "wrong_text": 9,
+      "wrong_ci95": [
+       0.212,
+       0.573
+      ],
+      "written": 24
+     },
+     "r": {
+      "k": 10,
+      "ci95": [
+       0.245,
+       0.612
+      ],
+      "wrong_text": 10,
+      "wrong_ci95": [
+       0.245,
+       0.612
+      ],
+      "written": 24
+     },
+     "d": 0.125,
+     "d_ci95": [
+      -0.042,
+      0.292
+     ],
+     "gained": 4,
+     "lost": 1,
+     "sign_p": 0.375,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "gemini-3.1-flash-lite-preview": {
+     "n": 5,
+     "unjudged": 0,
+     "a": {
+      "k": 3,
+      "ci95": [
+       0.231,
+       0.882
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.118,
+       0.769
+      ],
+      "written": 5
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.036,
+       0.624
+      ],
+      "wrong_text": 3,
+      "wrong_ci95": [
+       0.231,
+       0.882
+      ],
+      "written": 5
+     },
+     "d": 0.4,
+     "d_ci95": [
+      0,
+      0.8
+     ],
+     "gained": 2,
+     "lost": 0,
+     "sign_p": 0.5,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "gemini-3-flash-preview": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "wp-la-6a4b7a2fc0fa233644e2ec2c-la-69b51e58ff09e4fe943acf86",
+     "lang": "Latin",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    },
+    {
+     "id": "wp-la-6a4b9608a25898ec8788ab7c-la-69b51e57cf111105c429b334",
+     "lang": "Latin",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    }
+   ],
+   "frame": {
+    "books": 260,
+    "drawn": 30,
+    "excluded": {
+     "hold ocr-wrong-leaf-6694": 1,
+     "loop_quarantine_hold": 5,
+     "hold wrong-leaf-clef-audit-5803": 2,
+     "hold leaked-reasoning-6117-awaits-guard": 1,
+     "hold served-audit-6691": 1,
+     "hold wrong-leaf-confidence-7866": 1
+    },
+    "skipped": {
+     "no owed interior page with 200+ chars": 28
+    }
+   },
+   "wrong_text_origin": {
+    "a": {
+     "wrong_pages": 12,
+     "ocr_carried_only": 1,
+     "translator": 11
+    },
+    "r": {
+     "wrong_pages": 14,
+     "ocr_carried_only": 7,
+     "translator": 7
+    }
+   }
+  },
+  "German": {
+   "all": {
+    "n": 30,
+    "unjudged": 0,
+    "a": {
+     "k": 22,
+     "ci95": [
+      0.556,
+      0.858
+     ],
+     "wrong_text": 5,
+     "wrong_ci95": [
+      0.073,
+      0.336
+     ],
+     "written": 29
+    },
+    "r": {
+     "k": 20,
+     "ci95": [
+      0.488,
+      0.808
+     ],
+     "wrong_text": 9,
+     "wrong_ci95": [
+      0.167,
+      0.479
+     ],
+     "written": 30
+    },
+    "d": 0.067,
+    "d_ci95": [
+     -0.1,
+     0.233
+    ],
+    "gained": 4,
+    "lost": 2,
+    "sign_p": 0.6875,
+    "switch_bar": {
+     "within": 0.08,
+     "wrong_text_max": 0.04,
+     "passes": true,
+     "lower_bound_clears": false
+    }
+   },
+   "by_script": {
+    "print": {
+     "n": 29,
+     "unjudged": 0,
+     "a": {
+      "k": 21,
+      "ci95": [
+       0.543,
+       0.853
+      ],
+      "wrong_text": 5,
+      "wrong_ci95": [
+       0.076,
+       0.345
+      ],
+      "written": 28
+     },
+     "r": {
+      "k": 19,
+      "ci95": [
+       0.473,
+       0.801
+      ],
+      "wrong_text": 9,
+      "wrong_ci95": [
+       0.173,
+       0.492
+      ],
+      "written": 29
+     },
+     "d": 0.069,
+     "d_ci95": [
+      -0.103,
+      0.241
+     ],
+     "gained": 4,
+     "lost": 2,
+     "sign_p": 0.6875,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "mixed": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "by_ocr": {
+    "gemini-3.1-flash-lite": {
+     "n": 17,
+     "unjudged": 0,
+     "a": {
+      "k": 14,
+      "ci95": [
+       0.59,
+       0.938
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.033,
+       0.343
+      ],
+      "written": 17
+     },
+     "r": {
+      "k": 12,
+      "ci95": [
+       0.469,
+       0.867
+      ],
+      "wrong_text": 5,
+      "wrong_ci95": [
+       0.133,
+       0.531
+      ],
+      "written": 17
+     },
+     "d": 0.118,
+     "d_ci95": [
+      -0.118,
+      0.353
+     ],
+     "gained": 3,
+     "lost": 1,
+     "sign_p": 0.625,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "gemini-3-flash-preview": {
+     "n": 12,
+     "unjudged": 0,
+     "a": {
+      "k": 7,
+      "ci95": [
+       0.32,
+       0.807
+      ],
+      "wrong_text": 3,
+      "wrong_ci95": [
+       0.089,
+       0.532
+      ],
+      "written": 11
+     },
+     "r": {
+      "k": 7,
+      "ci95": [
+       0.32,
+       0.807
+      ],
+      "wrong_text": 4,
+      "wrong_ci95": [
+       0.138,
+       0.609
+      ],
+      "written": 12
+     },
+     "d": 0,
+     "d_ci95": [
+      -0.25,
+      0.25
+     ],
+     "gained": 1,
+     "lost": 1,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "gemini-3.8-flash-low": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "wp-ge-6a26c7caaad44c98627e75f2-ge-69b51e42cf111105c42994dd",
+     "lang": "German",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    },
+    {
+     "id": "wp-ge-6a26d7db6be3d771538be985-ge-6a26da14863cf28d8f64c2a5",
+     "lang": "German",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    }
+   ],
+   "frame": {
+    "books": 352,
+    "drawn": 30,
+    "excluded": {
+     "hold russian-ocr-over-german-7522": 1
+    },
+    "skipped": {
+     "no owed interior page with 200+ chars": 4
+    }
+   },
+   "wrong_text_origin": {
+    "a": {
+     "wrong_pages": 5,
+     "ocr_carried_only": 3,
+     "translator": 2
+    },
+    "r": {
+     "wrong_pages": 9,
+     "ocr_carried_only": 3,
+     "translator": 6
+    }
+   }
+  },
+  "Italian": {
+   "all": {
+    "n": 23,
+    "unjudged": 0,
+    "a": {
+     "k": 17,
+     "ci95": [
+      0.535,
+      0.875
+     ],
+     "wrong_text": 4,
+     "wrong_ci95": [
+      0.07,
+      0.371
+     ],
+     "written": 23
+    },
+    "r": {
+     "k": 13,
+     "ci95": [
+      0.368,
+      0.744
+     ],
+     "wrong_text": 8,
+     "wrong_ci95": [
+      0.188,
+      0.551
+     ],
+     "written": 23
+    },
+    "d": 0.174,
+    "d_ci95": [
+     0,
+     0.391
+    ],
+    "gained": 5,
+    "lost": 1,
+    "sign_p": 0.2188,
+    "switch_bar": {
+     "within": 0.08,
+     "wrong_text_max": 0.04,
+     "passes": true,
+     "lower_bound_clears": true
+    }
+   },
+   "by_script": {
+    "unknown": {
+     "n": 6,
+     "unjudged": 0,
+     "a": {
+      "k": 3,
+      "ci95": [
+       0.188,
+       0.812
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.097,
+       0.7
+      ],
+      "written": 6
+     },
+     "r": {
+      "k": 2,
+      "ci95": [
+       0.097,
+       0.7
+      ],
+      "wrong_text": 4,
+      "wrong_ci95": [
+       0.3,
+       0.903
+      ],
+      "written": 6
+     },
+     "d": 0.167,
+     "d_ci95": [
+      0,
+      0.5
+     ],
+     "gained": 1,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "print": {
+     "n": 16,
+     "unjudged": 0,
+     "a": {
+      "k": 13,
+      "ci95": [
+       0.57,
+       0.934
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.035,
+       0.36
+      ],
+      "written": 16
+     },
+     "r": {
+      "k": 11,
+      "ci95": [
+       0.444,
+       0.858
+      ],
+      "wrong_text": 4,
+      "wrong_ci95": [
+       0.102,
+       0.495
+      ],
+      "written": 16
+     },
+     "d": 0.125,
+     "d_ci95": [
+      -0.125,
+      0.375
+     ],
+     "gained": 3,
+     "lost": 1,
+     "sign_p": 0.625,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "manuscript": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 1,
+     "d_ci95": null,
+     "gained": 1,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "by_ocr": {
+    "gemini-3-flash-preview": {
+     "n": 4,
+     "unjudged": 0,
+     "a": {
+      "k": 3,
+      "ci95": [
+       0.301,
+       0.954
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.046,
+       0.699
+      ],
+      "written": 4
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.046,
+       0.699
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.15,
+       0.85
+      ],
+      "written": 4
+     },
+     "d": 0.5,
+     "d_ci95": [
+      0,
+      1
+     ],
+     "gained": 2,
+     "lost": 0,
+     "sign_p": 0.5,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "ia-ocr/0.0.21": {
+     "n": 2,
+     "unjudged": 0,
+     "a": {
+      "k": 1,
+      "ci95": [
+       0.095,
+       0.905
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.658
+      ],
+      "written": 2
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.095,
+       0.905
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.095,
+       0.905
+      ],
+      "written": 2
+     },
+     "d": 0,
+     "d_ci95": [
+      0,
+      0
+     ],
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "gemini-3.1-flash-lite": {
+     "n": 12,
+     "unjudged": 0,
+     "a": {
+      "k": 11,
+      "ci95": [
+       0.646,
+       0.985
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.242
+      ],
+      "written": 12
+     },
+     "r": {
+      "k": 10,
+      "ci95": [
+       0.552,
+       0.953
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.015,
+       0.354
+      ],
+      "written": 12
+     },
+     "d": 0.083,
+     "d_ci95": [
+      -0.167,
+      0.333
+     ],
+     "gained": 2,
+     "lost": 1,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "gemini-3.1-flash-lite-preview": {
+     "n": 4,
+     "unjudged": 0,
+     "a": {
+      "k": 2,
+      "ci95": [
+       0.15,
+       0.85
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.15,
+       0.85
+      ],
+      "written": 4
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.046,
+       0.699
+      ],
+      "wrong_text": 3,
+      "wrong_ci95": [
+       0.301,
+       0.954
+      ],
+      "written": 4
+     },
+     "d": 0.25,
+     "d_ci95": [
+      0,
+      0.75
+     ],
+     "gained": 1,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "ia-ocr/0.0.14": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "wp-it-6a0b45f51615109dc53b2287-it-69b51e30cf111105c42982c1",
+     "lang": "Italian",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    },
+    {
+     "id": "wp-it-69f3372e876dd827cbc518f6-it-69b51e31768235dc6598db0f",
+     "lang": "Italian",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    }
+   ],
+   "frame": {
+    "books": 28,
+    "drawn": 23,
+    "excluded": {
+     "hold title-leaf-recitation-6297": 2
+    },
+    "skipped": {
+     "no owed interior page with 200+ chars": 5
+    }
+   },
+   "wrong_text_origin": {
+    "a": {
+     "wrong_pages": 4,
+     "ocr_carried_only": 0,
+     "translator": 4
+    },
+    "r": {
+     "wrong_pages": 8,
+     "ocr_carried_only": 2,
+     "translator": 6
+    }
+   }
+  },
+  "French": {
+   "all": {
+    "n": 30,
+    "unjudged": 0,
+    "a": {
+     "k": 20,
+     "ci95": [
+      0.488,
+      0.808
+     ],
+     "wrong_text": 6,
+     "wrong_ci95": [
+      0.095,
+      0.373
+     ],
+     "written": 30
+    },
+    "r": {
+     "k": 17,
+     "ci95": [
+      0.392,
+      0.726
+     ],
+     "wrong_text": 10,
+     "wrong_ci95": [
+      0.192,
+      0.512
+     ],
+     "written": 30
+    },
+    "d": 0.1,
+    "d_ci95": [
+     -0.067,
+     0.267
+    ],
+    "gained": 5,
+    "lost": 2,
+    "sign_p": 0.4531,
+    "switch_bar": {
+     "within": 0.08,
+     "wrong_text_max": 0.04,
+     "passes": true,
+     "lower_bound_clears": true
+    }
+   },
+   "by_script": {
+    "print": {
+     "n": 28,
+     "unjudged": 0,
+     "a": {
+      "k": 20,
+      "ci95": [
+       0.529,
+       0.847
+      ],
+      "wrong_text": 5,
+      "wrong_ci95": [
+       0.079,
+       0.356
+      ],
+      "written": 28
+     },
+     "r": {
+      "k": 16,
+      "ci95": [
+       0.391,
+       0.735
+      ],
+      "wrong_text": 10,
+      "wrong_ci95": [
+       0.207,
+       0.542
+      ],
+      "written": 28
+     },
+     "d": 0.143,
+     "d_ci95": [
+      0,
+      0.321
+     ],
+     "gained": 5,
+     "lost": 1,
+     "sign_p": 0.2188,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "manuscript": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.207,
+       1
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": -1,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 1,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": false,
+      "lower_bound_clears": false
+     }
+    },
+    "mixed": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 0,
+      "ci95": [
+       0,
+       0.793
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "by_ocr": {
+    "gemini-3.8-flash-low": {
+     "n": 2,
+     "unjudged": 0,
+     "a": {
+      "k": 2,
+      "ci95": [
+       0.342,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.658
+      ],
+      "written": 2
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.095,
+       0.905
+      ],
+      "wrong_text": 1,
+      "wrong_ci95": [
+       0.095,
+       0.905
+      ],
+      "written": 2
+     },
+     "d": 0.5,
+     "d_ci95": [
+      0,
+      1
+     ],
+     "gained": 1,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "gemini-3.1-flash-lite": {
+     "n": 17,
+     "unjudged": 0,
+     "a": {
+      "k": 12,
+      "ci95": [
+       0.469,
+       0.867
+      ],
+      "wrong_text": 2,
+      "wrong_ci95": [
+       0.033,
+       0.343
+      ],
+      "written": 17
+     },
+     "r": {
+      "k": 11,
+      "ci95": [
+       0.413,
+       0.827
+      ],
+      "wrong_text": 4,
+      "wrong_ci95": [
+       0.096,
+       0.473
+      ],
+      "written": 17
+     },
+     "d": 0.059,
+     "d_ci95": [
+      -0.176,
+      0.294
+     ],
+     "gained": 3,
+     "lost": 2,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    },
+    "gemini-3.1-flash-lite-preview": {
+     "n": 10,
+     "unjudged": 0,
+     "a": {
+      "k": 5,
+      "ci95": [
+       0.237,
+       0.763
+      ],
+      "wrong_text": 4,
+      "wrong_ci95": [
+       0.168,
+       0.687
+      ],
+      "written": 10
+     },
+     "r": {
+      "k": 4,
+      "ci95": [
+       0.168,
+       0.687
+      ],
+      "wrong_text": 5,
+      "wrong_ci95": [
+       0.237,
+       0.763
+      ],
+      "written": 10
+     },
+     "d": 0.1,
+     "d_ci95": [
+      0,
+      0.3
+     ],
+     "gained": 1,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": true
+     }
+    },
+    "gemini-3-flash-preview": {
+     "n": 1,
+     "unjudged": 0,
+     "a": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "r": {
+      "k": 1,
+      "ci95": [
+       0.207,
+       1
+      ],
+      "wrong_text": 0,
+      "wrong_ci95": [
+       0,
+       0.793
+      ],
+      "written": 1
+     },
+     "d": 0,
+     "d_ci95": null,
+     "gained": 0,
+     "lost": 0,
+     "sign_p": 1,
+     "switch_bar": {
+      "within": 0.08,
+      "wrong_text_max": 0.04,
+      "passes": true,
+      "lower_bound_clears": false
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "wp-fr-6a499d83d702014d1ddf825d-fr-69bc855d173577a33742071b",
+     "lang": "French",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    },
+    {
+     "id": "wp-fr-6a08f50d50bd891addfb81a9-fr-69ef289585daccce30f2d5ea",
+     "lang": "French",
+     "judged": true,
+     "accepted": false,
+     "fidelity": 1
+    }
+   ],
+   "frame": {
+    "books": 43,
+    "drawn": 30,
+    "excluded": {
+     "hold poison-cohort-3391": 1,
+     "loop_quarantine_hold": 1
+    },
+    "skipped": {
+     "no owed interior page with 200+ chars": 4
+    }
+   },
+   "wrong_text_origin": {
+    "a": {
+     "wrong_pages": 6,
+     "ocr_carried_only": 5,
+     "translator": 1
+    },
+    "r": {
+     "wrong_pages": 10,
+     "ocr_carried_only": 2,
+     "translator": 8
+    }
+   }
+  }
+ },
+ "usage": {
+  "agy_calls": 128,
+  "lite_calls": 118,
+  "lite_usd": 0.6693,
+  "judge_calls": 233,
+  "judge_opened": 233
+ },
+ "per_page": [
+  {
+   "key": "la-69b6313d1c1c21a373805efe",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b6313d1c1c21a373805ee1",
+   "page_id": "69b6313d1c1c21a373805efe",
+   "page_number": 29,
+   "title": "[Historiae tres de S. Anna, de S. Joachim et de S. Joseph]",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O6:cosmetic",
+     "E2:cosmetic",
+     "O11:cosmetic"
+    ],
+    "reader_note": "The translation is complete and accurate overall. One clause about Joachim's double gifts is misconstrued: the fields and wool become the place where people labour, when they are what he gave."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "T8:misleads",
+     "E2:cosmetic",
+     "O11:cosmetic"
+    ],
+    "reader_note": "A mostly fluent and complete translation, but the opening misreads 'indigne' as 'needy' and makes the honoured parents the devotee's own instead of Mary's, which skews the argument."
+   }
+  },
+  {
+   "key": "la-69b51ea6ff09e4fe943b2a81",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51ea6ff09e4fe943b29e5",
+   "page_id": "69b51ea6ff09e4fe943b2a81",
+   "page_number": 156,
+   "title": "Bibliotheca Hispana vetus, sive Hispanorum, qui usquam unquamve scripto aliquid ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:wrong_text",
+     "T9:wrong_text",
+     "T8:misleads",
+     "T8:cosmetic"
+    ],
+    "reader_note": "A reader would find that the list of 'four kings' names only three, with John I missing, and that Livy is wrongly placed among the sacred writers while St Gregory is left out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "T7:wrong_text",
+     "T8:wrong_text",
+     "O6:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "O6:misleads",
+     "O6:cosmetic",
+     "T9:cosmetic"
+    ],
+    "reader_note": "A reader would get the wrong list of the four kings, Livy wrongly called a sacred writer with St Gregory missing, 'dear to few' instead of 'dear as few were', and the loan of the codex running the wrong way. These errors come from following a garbled transcription instead of the page image."
+   }
+  },
+  {
+   "key": "la-69bd9bda46b01553e33bf52c",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69bd9bda46b01553e33bf343",
+   "page_id": "69bd9bda46b01553e33bf52c",
+   "page_number": 489,
+   "title": "Artis Auriferae quam Chemiam vocant, volumen primum",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the Sun–Moon epistle passage. The only gap is the opening seam, where the adjective split across from the previous page (-tilem) isn't translated."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "T10:cosmetic"
+    ],
+    "reader_note": "The page is translated in full and reads faithfully. Two small slips: the Moon's role as subject in the epistle clause is blurred, and 'vacare' is given as 'be free' instead of 'devote ourselves to'."
+   }
+  },
+  {
+   "key": "la-69b51de7efd8df28f2dad069",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b51de7efd8df28f2dacf1e",
+   "page_id": "69b51de7efd8df28f2dad069",
+   "page_number": 331,
+   "title": "Joh. Joach. Becheri ... Opvscvla Chymica Rariora",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:misleads",
+     "T10:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of Becher's account of the delayed privilege, the Mecklenburg journey and his own expenses. One clause is wrongly made conditional ('if' should be 'for'), and the gloss calls the privilege 'royal', which the page doesn't say."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T9:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the author's complaint that the privilege was held up during the Hague peace talks and that he paid for a year in Amsterdam out of his own pocket. The only roughness is at the opening seam, where the carried-over words 'had expected' are lost."
+   }
+  },
+  {
+   "key": "la-69b51e99768235dc659963ca",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e99768235dc659961f7",
+   "page_id": "69b51e99768235dc659963ca",
+   "page_number": 467,
+   "title": "Opera Poetica omnia. 4",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:misleads",
+     "T7:wrong_text",
+     "O6:misleads"
+    ],
+    "reader_note": "Mostly a sound verse translation, but the opening 'just as' simile is gone and the last line ends in an invented 'into the arms' where the page has 'instar' ('like')."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:misleads",
+     "O6:misleads",
+     "O6:wrong_text",
+     "T9:misleads",
+     "T10:misleads",
+     "O6:misleads",
+     "T9:cosmetic",
+     "O6:wrong_text",
+     "O6:misleads",
+     "T6:misleads"
+    ],
+    "reader_note": "This is the right page and it is complete, but the opening simile and the Bacchic cry are misconstrued, 'ador' and 'cortina' are mistranslated, and the note on Cirrha is wrong."
+   }
+  },
+  {
+   "key": "la-69b51e6e9a81ef7feb3d4e92",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e6e9a81ef7feb3d4bf2",
+   "page_id": "69b51e6e9a81ef7feb3d4e92",
+   "page_number": 672,
+   "title": "Antiquitates Graecae et Romanae. [1]",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "I4:wrong_text",
+     "T7:misleads",
+     "O5:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The plate's number, Tab. CXXXXII, is missing, and a faint passage showing through from another leaf is translated as if it were a margin note on this plate."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "I4:wrong_text",
+     "T7:misleads",
+     "T9:misleads",
+     "O11:cosmetic"
+    ],
+    "reader_note": "This is a plate (Tab. CXXXXII) of five engravings. The translation leaves out the plate number and presents bleed-through text from another page as a margin note on this one."
+   }
+  },
+  {
+   "key": "la-69b51d2ef23ccdcced306c60",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51d2ef23ccdcced306bab",
+   "page_id": "69b51d2ef23ccdcced306c60",
+   "page_number": 181,
+   "title": "Commentariorvm Alchymiae Andreae Libavii Med. D. Pars .... 2, Continens Tractatv",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "O12:misleads",
+     "O6:wrong_text",
+     "O6:misleads",
+     "T7:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "Most of the page reads well. However, a garbled margin note leaks 'natron according to Agricola' into the arthritis list, Stabiae becomes a 'wasting hospital', and Fabaria is placed in France."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O12:wrong_text",
+     "O12:wrong_text",
+     "O6:misleads",
+     "O6:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "The marginal note is mistranslated, and its 'Agricola' has been copied into the main text. Several names and qualities are misread: Sinuessa appears as 'Siefana', and the 'golden' waters of Pfäfers become 'dark'."
+   }
+  },
+  {
+   "key": "la-6a4f7fbb2a450f51978d0c9f",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4f7fbb2a450f51978d0be0",
+   "page_id": "6a4f7fbb2a450f51978d0c9f",
+   "page_number": 190,
+   "title": "Musicae practicae elementa in usum scholae Magdeburgensis edita, a M. Gallo dres",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:misleads",
+     "T10:cosmetic"
+    ]
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Both rules (IIII on rests, V on three adjacent figures) are translated accurately. The staff descriptions are loose and the catchword 'Exem' is missing, but neither changes the meaning."
+   }
+  },
+  {
+   "key": "la-6a4b9608a25898ec8788ab7c",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4b9608a25898ec8788ab12",
+   "page_id": "6a4b9608a25898ec8788ab7c",
+   "page_number": 66,
+   "title": "Architectonice Musices Universalis, Ex qua Melopoeam Per Universa Et Solida Fund",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O10:cosmetic",
+     "E2:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the end of the mode descriptions and the start of Chapter XXI on counterpoint. The Greek πλάγιος appears only in transliteration, and the sentence saying what 'counterpoint' means today is slightly ambiguous."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "T6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful translation of p. 56 (tones V–XII, plagal and authentic modes, and the start of Ch. XXI on counterpoint). It leaves out that the authentic tones are the 'odd' ones, and it supplies a verb the page doesn't have in the sentence cut off at the end of the page."
+   }
+  },
+  {
+   "key": "la-69b51d0147b06ecd58182ddf",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51d0147b06ecd58182c35",
+   "page_id": "69b51d0147b06ecd58182ddf",
+   "page_number": 426,
+   "title": "Singularium Andreae Libavii Pars .... 2, Multa Scitu Iucunda, Ac necessaria cont",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "The translation reads accurately overall, but the phrase 'univocally in the feminine manner' does not make sense. The page says 'by seed' (seminio), which the transcription misread."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "T7:misleads",
+     "T8:misleads",
+     "T9:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The page and the date 1599 at Rothenburg on the Tauber are right, but the translation says the author will decide the question when the Latin leaves it to each reader. It also turns 'by seed' into 'by the feminine' and adds a note explaining it."
+   }
+  },
+  {
+   "key": "la-69b51e67ff09e4fe943ae64f",
+   "lang": "Latin",
+   "script": "mixed",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e67ff09e4fe943ae3b4",
+   "page_id": "69b51e67ff09e4fe943ae64f",
+   "page_number": 667,
+   "title": "Confessio catholica. 2,2",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O12:misleads",
+     "T9:misleads",
+     "T6:wrong_text"
+    ],
+    "reader_note": "Readers would see a marginal note that isn't on the page, while the main text loses who approves the reasoning. The last line also finishes a sentence that the page leaves cut off."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O12:misleads",
+     "T6:misleads"
+    ],
+    "reader_note": "The body translation is accurate and complete. But it shows a marginal note that isn't on the page, and the last sentence is finished with invented wording ('purpose perpetually') where the page breaks off mid-word."
+   }
+  },
+  {
+   "key": "la-69b51d0c261c58d636648c7a",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51d0c261c58d636648948",
+   "page_id": "69b51d0c261c58d636648c7a",
+   "page_number": 818,
+   "title": "Singularium Andreae Libavii pars .... 3, Continens octo libros bituminum et affi",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "T7:cosmetic"
+    ],
+    "reader_note": "The body text is a faithful, complete translation, but the last margin note calls Nicander and Cardano's dispute an 'agreement', which contradicts the text beside it."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "O6:misleads",
+     "E2:misleads",
+     "T7:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "The reader is told that the Scottish coal fires burn without harming the inhabitants, but the page says the opposite. The margin note is turned into the author agreeing with Nicander and Cardanus, when it actually marks a dispute between them."
+   }
+  },
+  {
+   "key": "la-69b51e57cf111105c429b334",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e57cf111105c429b041",
+   "page_id": "69b51e57cf111105c429b334",
+   "page_number": 755,
+   "title": "Breviarium monasticum Pauli V. pont. max. jussu editum, pro omnibus sub regula S",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "T6:cosmetic"
+    ],
+    "reader_note": "This is a faithful and complete rendering of the end of the psalm, the antiphon, versicles, the red rubric on lessons and 1 Cor 4:1-7. The only additions are the completed blessing formulas, which the page gives only as opening words."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the end of the psalm, the versicles, the red rubric on when the Common's lessons are read, and 1 Cor 4:1-7 in Douay-like English. It breaks off correctly at the catchword 'ac-'. Only small wording slips in the rubric."
+   }
+  },
+  {
+   "key": "la-69b62fb51c1c21a3737f9968",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b62fb51c1c21a3737f9673",
+   "page_id": "69b62fb51c1c21a3737f9968",
+   "page_number": 757,
+   "title": "Historiae Augustae tomus V. Ab imperio Caroli Magni, ad Fridericum primum, cogno",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:wrong_text",
+     "O6:misleads",
+     "T7:misleads"
+    ],
+    "reader_note": "The sentence about Zengi besieging Edessa is missing and patched with a guessed 'attacked'. Conrad's courteous reception of Cardinal Guido is merged into the privilege grant, and the marginal note's 'like cattle to the slaughter' is lost."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O5:wrong_text",
+     "T7:misleads",
+     "T6:misleads",
+     "O6:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "Readers would be told that Sanguinus was an Armenian citizen living in a tower at Edessa. The page actually says he was the Saracen prince who besieged the city, and it was a separate Armenian who held the tower. The left margin note and the last word on the page are also garbled."
+   }
+  },
+  {
+   "key": "la-6a42f5a33ad4d80da1236a1b",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a42f5a33ad4d80da12369eb",
+   "page_id": "6a42f5a33ad4d80da1236a1b",
+   "page_number": 48,
+   "title": "Opus aureum. Musice castigatissimu. De Gregoriana.et figuratiua atque contrapuct",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 2,
+    "defects": [
+     "O6:misleads",
+     "T7:misleads",
+     "O6:misleads",
+     "O6:misleads",
+     "O17:misleads",
+     "O7:misleads",
+     "O6:misleads",
+     "O6:misleads",
+     "T8:misleads"
+    ],
+    "reader_note": "The verse and prose are roughly right, but the table and the closing rule give the wrong finals: F-fa-ut appears where the page has C-fa-ut, the rule numbers and rows are shifted, and mode 1 is said to end on mi."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "T7:wrong_text",
+     "T7:wrong_text",
+     "T7:wrong_text",
+     "O7:wrong_text",
+     "O17:misleads",
+     "T8:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "The modal-finals table and the commentary contain wrong note names ('L-fa-ut' for C-fa-ut, 'neutral' for deuterus), a misnumbered rule (3rd instead of 1st), and one cell rendered as nonsense, so the page's music theory comes out partly wrong."
+   }
+  },
+  {
+   "key": "la-6a42c73597284560a2b1106e",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a42c73597284560a2b11004",
+   "page_id": "6a42c73597284560a2b1106e",
+   "page_number": 106,
+   "title": "Musicae, id est, artis canendi libri duo. Autor sebaldus heyden.",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete. It covers the page's statements, the fractions 2/1, 4/2, 6/3 and 12/6, and the signs Φ, ¢, O2, C2 and Ɔ, all of which match the scan, though one phrase is worded loosely."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "T8:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation reads faithfully except that the definition of 'Duple' is reversed: the page says it makes two notes worth one, but the translation says it makes one worth two."
+   }
+  },
+  {
+   "key": "la-69b51e22261c58d6366500e5",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e22261c58d63664fed6",
+   "page_id": "69b51e22261c58d6366500e5",
+   "page_number": 527,
+   "title": "Istoria De' Poeti Greci Et Di Que' Che'n Greca Lingua han poetato",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads"
+    ],
+    "reader_note": "This is a faithful translation of the end of the Thespis entry, the Teucer note and the start of the Tiberius sketch. Only the opening run-on Latin quotation muddles who used the cart and added the actor."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "T8:misleads",
+     "E2:cosmetic",
+     "O12:cosmetic",
+     "O11:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the Thespis, Teucer and Tiberius entries. There are a few small slips: 'plures, certioresque' becomes 'more and more certain', 'Sassi solamente' becomes 'Know only', and it is unclear who contradicts Tiberius's opinion."
+   }
+  },
+  {
+   "key": "la-69b62ff21c1c21a3737fcb0e",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b62ff21c1c21a3737fc7af",
+   "page_id": "69b62ff21c1c21a3737fcb0e",
+   "page_number": 863,
+   "title": "L. Annaei Senecae epistolae CXXIII. M. Antonii Mureti notis et emendationibus il",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "T8:cosmetic",
+     "T9:cosmetic",
+     "O6:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete, and all the declaimers' names in the margins are kept. One line follows a transcription misreading: the speaker's own 'What shall I say?' is given as a question put to him, and there are a few small slips in person and wording."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:misleads",
+     "T7:wrong_text",
+     "T8:wrong_text",
+     "E2:misleads",
+     "O6:misleads",
+     "T7:misleads",
+     "T7:misleads",
+     "O6:cosmetic"
+    ],
+    "reader_note": "This is the right page and the whole page is there. But several sentences are mistranslated or garbled: the 'facinus indignum commissum' line, a reversed 'you/I do not fear' line, and a lament attributed to the opponent. The Latin is only partly reliable as a guide here."
+   }
+  },
+  {
+   "key": "la-69b51e61ff09e4fe943adf5f",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e61ff09e4fe943adea6",
+   "page_id": "69b51e61ff09e4fe943adf5f",
+   "page_number": 185,
+   "title": "Confessio fidei exhibita ... in Comitiis Augustae anno 1530",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the Apology's argument against 'fides formata', but the first line comes from a split-word fragment (misread as \"Et non\") and reads as a self-contained question instead of the end of the previous page's sentence."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful translation of the page. The only odd spot is the first sentence, 'And to one not noticing these voices?', which is really the end of a sentence carried over from the previous page."
+   }
+  },
+  {
+   "key": "la-69b62fca1c1c21a3737fab3e",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b62fca1c1c21a3737fa7b0",
+   "page_id": "69b62fca1c1c21a3737fab3e",
+   "page_number": 910,
+   "title": "Commentarii in Evangelium D. nostri Jesu Christi secundum Joannem, facili et per",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "T9:misleads",
+     "T10:cosmetic"
+    ],
+    "reader_note": "A faithful, readable rendering of the page. Two small things are lost: the servant is no longer called a 'flatterer', and the explicit 'he did none of these things' is missing."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "E2:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is fluent and mostly faithful, but it leaves out who is being refuted (the flatterer) and wrongly suggests that Christ was struck a second time."
+   }
+  },
+  {
+   "key": "la-69b51e58ff09e4fe943acf86",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e58ff09e4fe943ace4f",
+   "page_id": "69b51e58ff09e4fe943acf86",
+   "page_number": 311,
+   "title": "Mirabilia Fidei Divinae, Quae Deus Velut Tot Miracula In Quolibet Christiano, Qu",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "T8:misleads"
+    ],
+    "reader_note": "The page lists the reader's faults, but one is turned around: the original says the reader believes with too little simplicity, while the English says they believe 'far too simply'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful and complete rendering of the list of faults against faith, but the cross-reference to no. 246 is missing, so that clause looks like it points only to no. 258."
+   }
+  },
+  {
+   "key": "la-6a4b7a2fc0fa233644e2ec2c",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4b7a2fc0fa233644e2ebbb",
+   "page_id": "6a4b7a2fc0fa233644e2ec2c",
+   "page_number": 113,
+   "title": "Artis musicae, methodice legibus logicis informatae libri duo. Ad totum musices ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful translation of the page. The list of five pieces is correct: Herpold for 5 voices, Utendal for 6, Herpold for 5, Utendal for 4, Herpold for 5. So is the remark that Clemens's 'Qui consolabatur me' is assigned here by some but seems to the author more Ionian than Lydian. Both range-and-mediation headings and the canons at the unison for 4 and 3 voices are kept, and nothing is dropped or added."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:cosmetic",
+     "T10:misleads",
+     "T10:cosmetic"
+    ],
+    "reader_note": "The text, the incipits, the names and all the numbers (5, 6, 5, 4, 5; Fuga 4 and 3) are rendered faithfully; only the first music staff placeholder is missing, and the editorial note on 'Coniuncti' is loose."
+   }
+  },
+  {
+   "key": "la-69b51ece768235dc65998ec3",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51ece768235dc65998bfc",
+   "page_id": "69b51ece768235dc65998ec3",
+   "page_number": 711,
+   "title": "Tu en hagiois patros hēmōn Dionysiu tu Areiopagitu ta sōzomena panta. 2, Tomus S",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "O6:misleads",
+     "O8:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Readers would be told Dionysius quotes others, when the page says Isaac quotes Dionysius, which is the point being argued. The epithet 'the Syrian' is missing, and the page's misprinted date 338 has been silently changed to 378 in the text."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The Cabassut quotation is reversed: it says the Areopagite cites Isaac's books on the Angels, when the page says Isaac cites the Areopagite. It also loses 'the Syrian' from Isaac's name. The rest, including the page's own date of 338 for Ephrem's death and the notes, is rendered faithfully."
+   }
+  },
+  {
+   "key": "la-69b51e8a47b06ecd5819279c",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e8a47b06ecd581925d3",
+   "page_id": "69b51e8a47b06ecd5819279c",
+   "page_number": 457,
+   "title": "Polygraphia sacra : seu elucidarium Biblicum historico-mysticum, in quo omnes et",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:wrong_text",
+     "O12:misleads",
+     "T10:wrong_text",
+     "O12:cosmetic",
+     "T10:misleads",
+     "O3:cosmetic",
+     "O12:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "In the Acts section, the material on Paul's Areopagus speech ('Unknown God'), his defence before Felix and the storm at sea is missing or run together, and the margin note markers there are wrong."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "O5:wrong_text",
+     "O12:misleads",
+     "O4:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "T9:cosmetic",
+     "O6:misleads",
+     "O6:misleads",
+     "T7:misleads",
+     "O6:misleads",
+     "O12:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A reader would find a large passage on Paul missing (the Areopagus, Felix and the resurrection quote). Several margin notes are garbled or duplicated, and saints are rendered as 'the Lord'."
+   }
+  },
+  {
+   "key": "la-6a4302c54e06bc233ecfb553",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4302c54e06bc233ecfb52a",
+   "page_id": "6a4302c54e06bc233ecfb553",
+   "page_number": 41,
+   "title": "Quod Karolus IV. Augustus, non dissipaverit Imperii Patrimonium, quatenus pertin",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T10:misleads",
+     "T10:cosmetic",
+     "T10:misleads"
+    ],
+    "reader_note": "The translation follows the Latin closely and is complete. Only the editorial notes and summary have small slips: a wrong death date for Rettenpacher and an author name the page does not support."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "E2:cosmetic",
+     "E2:misleads",
+     "T16:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of Charles IV and the Kingdom of Arles. It has a few loose phrases, and the summary says the claim rests on the Westphalia and Nijmegen treaties, when the page says it was not given up in them."
+   }
+  },
+  {
+   "key": "la-69b62fcc1c1c21a3737faed8",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b62fcc1c1c21a3737fabf9",
+   "page_id": "69b62fcc1c1c21a3737faed8",
+   "page_number": 735,
+   "title": "Commentarii in Evangelium D. Nostri Jesu Christi secundum Lucam, facili et persp",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "T7:wrong_text"
+    ],
+    "reader_note": "Most of the page reads well, but the Greek grammar point at the end is garbled. The page says αὐτὸς refers back to οἶκος ('house'), which is masculine in Greek, but the translation has it referring to 'son', so the argument no longer makes sense."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:wrong_text",
+     "T7:wrong_text",
+     "O6:misleads",
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The Greek grammar note is garbled: the page says αὐτός refers back to οἶκος (house), but the translation says 'son', so the commentator's point about gender is lost."
+   }
+  },
+  {
+   "key": "la-69b52c933dd6d942302813fa",
+   "lang": "Latin",
+   "script": "unknown",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "69b52c933dd6d9423028136a",
+   "page_id": "69b52c933dd6d942302813fa",
+   "page_number": 144,
+   "title": "D. Augustini De musica libri VI",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "T9:wrong_text",
+     "O7:wrong_text",
+     "O6:misleads",
+     "O6:wrong_text",
+     "T7:wrong_text",
+     "O6:misleads",
+     "O7:misleads",
+     "O6:cosmetic",
+     "T7:misleads"
+    ],
+    "reader_note": "Several of the musical intervals and numbers are wrong: the twelfth should be the eleventh, the octave should be the tone, 'tone' is missing from the refuted claim, '81' is dropped, and a phantom '11' appears. A reader would learn the wrong music theory from this page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "O6:wrong_text",
+     "O7:wrong_text",
+     "O7:misleads",
+     "O7:misleads",
+     "O6:misleads",
+     "O7:misleads",
+     "O7:wrong_text",
+     "O6:misleads",
+     "T7:misleads",
+     "T8:misleads",
+     "T7:misleads"
+    ],
+    "reader_note": "I'd reject this translation. It follows a faulty transcription: the page joins a 9:8 tone to a 3:2 fifth over the terms 27, 18, 16, but the reader is told 4:3 and 12, 9, 8, and later passages are garbled, including the numbers 24.2 and 16.2 and a dropped 81."
+   }
+  },
+  {
+   "key": "la-6a4eb78eccea9baa4f496272",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4eb78eccea9baa4f496253",
+   "page_id": "6a4eb78eccea9baa4f496272",
+   "page_number": 31,
+   "title": "Oratio de divina origine, atque utIlitate Multiplici praestantissimae ac nobilis",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T6:misleads"
+    ],
+    "reader_note": "A faithful, complete translation of the discourse on music's inventors; only the guessed sense of the opening fragment 'cere' and the lost 'TVBAL' catchword stand out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the page: the conflicting accounts of who invented music (Tubal, Orpheus, Amphion), the references to Polydore Vergil (book 1, chapter 14) and Quintilian (book 1, chapter 16), and the argument that people cannot have lived without music from Adam to Tubal. The only small issues are that the Greek word μοῦσα becomes plain 'Muse' and the catchword TVBAL is left out, as is usual."
+   }
+  },
+  {
+   "key": "la-6a429d4a8e351c27eb860dd6",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a429d4a8e351c27eb860da5",
+   "page_id": "6a429d4a8e351c27eb860dd6",
+   "page_number": 49,
+   "title": "Discursus Iuris Publici, De Augustissimae Domus Austriacae Iuribus Ac Praeeminen",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T5:wrong_text",
+     "O6:misleads",
+     "T10:misleads",
+     "T9:cosmetic",
+     "T10:misleads"
+    ],
+    "reader_note": "The translation is mostly faithful, but its last sentence adds a prayer to 'God the Best and Greatest' that is not on the page, it misreads the Turkish war as 'only fierce war', and it gives Heuterus the wrong name."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "T8:misleads",
+     "T8:wrong_text",
+     "O7:misleads",
+     "E2:cosmetic",
+     "O12:cosmetic"
+    ],
+    "reader_note": "Two key statements are reversed: the Austrians are said to have sought a European monarchy, and our own arms are said to have been broken by the Turks. The claim that no emperor was a tyrant also loses its limit to the Austrian emperors."
+   }
+  },
+  {
+   "key": "la-6a45875031e306b784335a8f",
+   "lang": "Latin",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a45875031e306b7843359e4",
+   "page_id": "6a45875031e306b784335a8f",
+   "page_number": 171,
+   "title": "Enchiridion musices",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the counterpoint rules. The only gap is a possible 'fifth' left out of the seventh rule's list of intervals."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "O7:wrong_text",
+     "T8:misleads",
+     "O6:misleads",
+     "T9:cosmetic",
+     "T10:misleads",
+     "T6:cosmetic"
+    ]
+   }
+  },
+  {
+   "key": "ge-69bda06af6d63c91974875a8",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69bda06af6d63c919748703b",
+   "page_id": "69bda06af6d63c91974875a8",
+   "page_number": 1389,
+   "title": "Deutsches theatrum chemicum, auf welchem der berühmtesten Philosophen und Alchym",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T8:cosmetic",
+     "E2:cosmetic",
+     "T6:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the Geber, Arnold and Bernhardus citations; the only rough spots are how 'Cap. 4. 1. Rosar.' is read and the guessed ending of the last word, which continues on the next page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T9:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the page's Geber, Arnoldus and Bernhardus citations, with the chapter and book numbers correct. Only the split word at the end of the page is guessed rather than marked."
+   }
+  },
+  {
+   "key": "ge-6a26daa605d7c1d9b1088503",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26daa605d7c1d9b108849d",
+   "page_id": "6a26daa605d7c1d9b1088503",
+   "page_number": 102,
+   "title": "Die teuflische Magie existirt nicht : die Antwort des Landpfarrers an den Herr",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:misleads",
+     "T8:cosmetic",
+     "T9:cosmetic"
+    ],
+    "reader_note": "A close, complete translation of the page. The addressee 'H. Weltmann' appears in English as 'Mr. Worldly Man', which reads as an epithet rather than the name; the Apelles note is accurate."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "T9:cosmetic"
+    ],
+    "reader_note": "Reads faithfully overall: all three 'Wenn' paragraphs, Weltmann and both 'Cobbler, stick to your last' lines are there, but 'einreden' (to meddle) is twice rendered as 'talk out of', and the second time 'their duties' is added."
+   }
+  },
+  {
+   "key": "ge-6a26d6cff5273a8d907b668e",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d6cff5273a8d907b6688",
+   "page_id": "6a26d6cff5273a8d907b668e",
+   "page_number": 6,
+   "title": "Die ältere Geschichte des Gerichtes Asch, dessen ursprünglicher Reichs-Unmitte",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O8:cosmetic",
+     "T10:misleads",
+     "O6:misleads",
+     "O8:cosmetic"
+    ],
+    "reader_note": "A complete and accurate translation. The family name is made uniform as 'Neuburg' although the page spells it Neydberg, Neuburg and Neuberg, and the 'Virtus majestatica' gloss wrongly adds 'imperial'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete, faithful rendering of the Neuberg fief argument and the 14 Bohemian objections; only 'pretend' for 'prätendiren' (claim) and a singular holder turned plural would trip a careful reader."
+   }
+  },
+  {
+   "key": "ge-69b6b26a96dc15d4a16d3ecb",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.8-flash-low",
+   "book_id": "69b6b26a96dc15d4a16d3ebd",
+   "page_id": "69b6b26a96dc15d4a16d3ecb",
+   "page_number": 14,
+   "title": "Christliche Leich-predigt von rechter Sterb-kunst : gehalten in Mülhausen den 11",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful, complete translation of the page. All six reasons for comfort (men's wrath, bodily tribulation, loss of goods, sadness, tears, death) are kept, and every marginal Bible reference (Ps. 103:11, 17 through ibid. 5:24) matches the image. The heading for section 2 and its seam word 'When' are kept too."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a complete and faithful translation of page 13. The image confirms the transcription, all eight marginal scripture references (Ps. 103:11, 17 through ibid. 5:24) are correct and placed against the right lines, and the page ends on the same unfinished section heading \"2. … When\" as the original."
+   }
+  },
+  {
+   "key": "ge-6a26d7db6be3d771538be985",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d7db6be3d771538be97e",
+   "page_id": "6a26d7db6be3d771538be985",
+   "page_number": 7,
+   "title": "Das freudige Danck-Opfer Treuer Unterthanen wurde Wegen Höchstbeglückter Zurüc",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O3:misleads",
+     "O3:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is complete and accurate overall, but two Bible quotations use King James wording instead of this page's text, and one of them drops the darkness image the passage is about."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O3:misleads",
+     "T9:cosmetic"
+    ],
+    "reader_note": "The translation is complete and accurate except at Job 6:4, where it gives the King James 'poison … drinketh up' instead of the page's 'their wrath consumes my spirit'."
+   }
+  },
+  {
+   "key": "ge-6a26da14863cf28d8f64c2a5",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26da14863cf28d8f64c28b",
+   "page_id": "6a26da14863cf28d8f64c2a5",
+   "page_number": 26,
+   "title": "Tabelle über die Menge der auflöslichen Bestandtheile welche aus den Gewächsen d",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O5:wrong_text",
+     "O5:wrong_text",
+     "O7:wrong_text",
+     "O17:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O17:misleads",
+     "O17:misleads",
+     "O17:misleads",
+     "T10:misleads",
+     "T10:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "The translated plant names and habitats are mostly sound, but many extract fractions are wrong, missing or in the wrong column, rows are shifted, and the notes attribute the sigla to authors on no evidence from the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O5:wrong_text",
+     "O5:wrong_text",
+     "O17:wrong_text",
+     "O17:wrong_text",
+     "O7:wrong_text",
+     "O7:wrong_text",
+     "O17:wrong_text",
+     "O7:misleads",
+     "E2:misleads"
+    ],
+    "reader_note": "The names, places and flowering times are translated correctly, but many of the extract fractions in the last two columns are wrong, dropped or in the wrong cell, so the numbers can't be trusted."
+   }
+  },
+  {
+   "key": "ge-6a4942a5d2cbca6a18208247",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4942a5d2cbca6a18208213",
+   "page_id": "6a4942a5d2cbca6a18208247",
+   "page_number": 52,
+   "title": "Kurtzer Discurs, Darinnen die Natur, Lauff un[d] Bedröwung des Cometen, so Anno ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "T2:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The German prose is translated accurately, but Haly's Latin is left untranslated in a note, so the reader misses its main point (morning means the effect comes soon, evening means it comes late). The woodcut description also mentions one comet where the image shows three."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The text matches the page and ends mid-sentence at 'gesehen' as the page does. 'Affliction' is a loose rendering of 'bedröwung', which means the comet's threat, and the image note undercounts the comets."
+   }
+  },
+  {
+   "key": "ge-6a26dbd805d7c1d9b108fb4d",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26dbd805d7c1d9b108fb42",
+   "page_id": "6a26dbd805d7c1d9b108fb4d",
+   "page_number": 11,
+   "title": "Die Landwirthschaft des Königreichs Böhmen / 4,4 : ... von den Steinkohlen und",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "The translation is faithful and complete. All three numbered paragraphs on bituminous woods are fully rendered, with nothing dropped or changed. The added note glossing Teplitz as Teplice in Bohemia is accurate."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of §5 on bituminous woods. It covers all three numbered points, Teplitz, and jet, and adds or drops nothing."
+   }
+  },
+  {
+   "key": "ge-69aebe747dd4a7474d1f2c72",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aebe747dd4a7474d1f2b5e",
+   "page_id": "69aebe747dd4a7474d1f2c72",
+   "page_number": 276,
+   "title": "Erkenntnis und Irrtum: Skizzen zur Psychologie der Forschung",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic",
+     "T16:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation. The names, dates (1615, 1634, 1824), the threefold area ratio, the footnote and the reasoning about A, B and C all match the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete and faithful translation: the Archimedes example, the dates for Mersenne (1615) and Roberval (1634), Galileo's threefold area and the footnote all match the page."
+   }
+  },
+  {
+   "key": "ge-69aebc94bbaa08897384dc11",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aebc94bbaa08897384dbf0",
+   "page_id": "69aebc94bbaa08897384dc11",
+   "page_number": 33,
+   "title": "Psychologie und Erkenntnistheorie",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T16:cosmetic",
+     "T9:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the page. The only loss is the original's letter-spaced emphasis on 'processes', 'matter' and 'its own inner nature'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T16:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of p. 494 on natural necessity, Kant versus Hume, and where the concept of necessity comes from; only the original's spaced-type emphasis is missing."
+   }
+  },
+  {
+   "key": "ge-6a26c0cc499b6fd27da8f366",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26be390e247ebad6de6f6d",
+   "page_id": "6a26c0cc499b6fd27da8f366",
+   "page_number": 10,
+   "title": "Vom Cometen Anno 1596. Jm anfang des Monats Julij erschienen",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the comet passage: comets come from the macrocosm's imagination, compared to birthmarks caused by a pregnant woman's cravings. It ends mid-sentence at \"which\", as the page does."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the comet-and-imagination passage. The Latin terms are kept and glossed accurately, and it breaks off at 'which' just as the page does, so it isn't truncated."
+   }
+  },
+  {
+   "key": "ge-6a26c729aad44c98627e4a69",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26c729aad44c98627e4a5d",
+   "page_id": "6a26c729aad44c98627e4a69",
+   "page_number": 12,
+   "title": "Bileams Abfertigung, oder Gründliche Wiederlegung der Astrologie und aller anver",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "T6:misleads",
+     "T10:misleads"
+    ],
+    "reader_note": "Most of the page reads faithfully, but the key conclusion is reversed: the author says Scripture supports only the smallest part of astrology, and the translation says 'not the least part'. The last line also adds words that are not on the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "T5:wrong_text",
+     "E2:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The page translation is accurate overall until its final line. There it adds 'to prefigure the life and condition', which this page does not contain, and it renders 'zukunft Christi' as 'the future of Christ' instead of 'the coming of Christ'."
+   }
+  },
+  {
+   "key": "ge-69b51dcccf111105c42907ae",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51dcccf111105c42905a2",
+   "page_id": "69b51dcccf111105c42907ae",
+   "page_number": 524,
+   "title": "Compendium Chymico-Philosophicum. Das ist: Chymischer Kern und Außzug der allerf",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "O11:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete. The fire symbol △ is explained correctly in a note, and the running head 'Of the Secret of the World' appears as if it opened the paragraph."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful and complete translation of the page, including the running head, the fire symbol (△) with a correct gloss and the catchword 'Without'. A few phrases are very literal; for example, 'I consider no chatterer' reads a little stiffly but keeps the sense."
+   }
+  },
+  {
+   "key": "ge-6a905113ee2696c62355f116",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a905113ee2696c62355f08b",
+   "page_id": "6a905113ee2696c62355f116",
+   "page_number": 10,
+   "title": "Rath in pestilentz zeiten wie man die verhueten und in nothfall curiren sol zu n",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the page's plague precautions (third to seventh) and the start of the personal preservatives section, with all lists, times and the wagon-track distance kept."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "Mostly faithful translation of the plague-prevention rules. The sixth rule is mistranslated (it should say to appoint as few attendants as possible), and the fifth rule loses the word 'wares'."
+   }
+  },
+  {
+   "key": "ge-6a26d4e4f5273a8d907ae60a",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d4e4f5273a8d907ae5ff",
+   "page_id": "6a26d4e4f5273a8d907ae60a",
+   "page_number": 11,
+   "title": "Schreiben eines Holländischen Volontairs bey der Königlich-Preußischen Armee in ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the page. All times (10, half past 1, 3, half past 5, 6), the three assaults, the units, the places and Prince Ferdinand's graze match the image, and it ends correctly mid-sentence at 'The Saxon Prince' before the catchword 'Xaver'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:misleads",
+     "O6:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a complete and accurate account of the sortie from Prague; the reader may be puzzled by 'the small side' (Prague's Lesser Town) and by the attack that 'passed' the front, which on the page enveloped it."
+   }
+  },
+  {
+   "key": "ge-6a493dc0c73c0a4520238690",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a493dc0c73c0a4520238646",
+   "page_id": "6a493dc0c73c0a4520238690",
+   "page_number": 9,
+   "title": "Radius Mathematicus, Oder Erklärunge und Gebrauch deß Mathematischen Marchiersta",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic"
+    ],
+    "reader_note": "The page reads as a faithful, complete translation of the two-station height method and its use for width; the only rough spot is the sentence that breaks off at the foot of the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete down to the catchword 'gemesse-'; only one clause about retrying 'as at the first station' is slightly misrendered."
+   }
+  },
+  {
+   "key": "ge-6a494a4c824310de51ec01ff",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a494a4c824310de51ec01f4",
+   "page_id": "6a494a4c824310de51ec01ff",
+   "page_number": 10,
+   "title": "Observatio und bedeutunge des cometen so dieses M.D.LVI. jhar im anfange des Mer",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T15:misleads"
+    ],
+    "reader_note": "The translation matches the page closely, including the 11, 15 and 6 degree readings and the times of 12:30 and 2 o'clock; only the continuity note is wrong, since 'four degrees' is the catchword leading onto the next page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O7:wrong_text"
+    ],
+    "reader_note": "The fourth-day meridian transit is put at two o'clock when the page says one o'clock, so the observation time is wrong. The rest of the page is complete and accurate."
+   }
+  },
+  {
+   "key": "ge-6a26d97eb93c5428e7453349",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d97eb93c5428e7453341",
+   "page_id": "6a26d97eb93c5428e7453349",
+   "page_number": 8,
+   "title": "Einweihungs-Predigt, an dem ... Tage der feyerl. Einweihung des neuerbauten Gott",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O3:wrong_text",
+     "O3:misleads",
+     "O3:cosmetic",
+     "E2:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "The sermon text and footnote are translated faithfully, but the quoted prayer of Solomon (1 Kings 8:28–30) has been partly replaced with King James wording: 'praise' becomes 'cry' and 'be gracious' becomes 'forgive'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "O11:cosmetic",
+     "D1:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the sermon page, including Solomon's prayer, Isaiah 2:3 / Ps. 5:8 and the footnote about the house of prayer standing on a hill; only small tagging and wording nuances differ."
+   }
+  },
+  {
+   "key": "ge-6a26d148f5273a8d9079da8f",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d148f5273a8d9079da81",
+   "page_id": "6a26d148f5273a8d9079da8f",
+   "page_number": 14,
+   "title": "Königlich-Spannisches Manifest, Enthaltend Deß Königs in Spanien Prætension, So ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads"
+    ],
+    "reader_note": "The translation is faithful and complete. The only slip is in the last two words: 'and as' should be 'and there', because the page ends with 'all-' and the catchword 'da' completes it as 'allda'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "O6:misleads",
+     "O8:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering with all names and dates (1708, 1732, 1313, 1318, 1530) intact; only the last word misreads the split word 'all-/da' as 'as', and 'granted' softens the 1732 guarantee."
+   }
+  },
+  {
+   "key": "ge-6a26c7caaad44c98627e75f2",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26c7caaad44c98627e75ef",
+   "page_id": "6a26c7caaad44c98627e75f2",
+   "page_number": 3,
+   "title": "Sendschreiben von dem Vielfraß ... welcher aus Böhmen bürtig und sich eine Zeit ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T10:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful rendering of the 1702 title page (author, Tannstädt, the Bohemian glutton in Leipzig and Berlin, Käyser in Mühlhausen); only the summary's 'notorious' and some awkward closing syntax stand out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "T16:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful title-page translation: names, places, bookseller and the year 1702 are all correct. The phrasing is a little awkward ('Open Letter', 'spent some time ... staying')."
+   }
+  },
+  {
+   "key": "ge-6a4943ac3c715f5afcd53152",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4943ac3c715f5afcd53133",
+   "page_id": "6a4943ac3c715f5afcd53152",
+   "page_number": 6,
+   "title": "Eine Merckwürdige und Verwunderungs-wehrte Offenbahrung: Betreffend I. Die Rebel",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T10:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation that checks against the image: Gen. 18:17, the forty years, 1601, Dublin, Ezekiel 4:6 and the man's dislike of enthusiasts' visions are all right, and the split word 'Unge-' is sensibly rendered as 'ini-' (iniquity)."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:cosmetic",
+     "O3:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the page; the numbers, names and references (Gen. XVIII.17, 40 years, 1601, Ezech. IV.6, Dublin) are correct, and it ends on the 'un-' word break that continues on the next page."
+   }
+  },
+  {
+   "key": "ge-6a26d7526be3d771538bb54b",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26d7526be3d771538bb4c4",
+   "page_id": "6a26d7526be3d771538bb54b",
+   "page_number": 135,
+   "title": "Beyträge zur Wassergeschichte von Böhmen / 1",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of p. 97: the sulphur-rich iron ochre of the Bechin water, its red tincture and Balsamum Martis, the magnet attracting the iron only after calcination, and the near-absence of salts, alum, saltpetre and vitriol. Only 'iron mountain-yellow' reads awkwardly."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T8:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is complete and faithful to the page, which the transcription matches. The last sentence is unclear: it does not show that the author rejects other writers' claims that the earth contains alum, saltpeter or vitriol salt."
+   }
+  },
+  {
+   "key": "ge-69a683b0256d25f466059842",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69a683b0256d25f4660595df",
+   "page_id": "69a683b0256d25f466059842",
+   "page_number": 611,
+   "title": "Theatrum Machinarum Generale: Schau-Platz der Mechanischen Wissenschafften",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "All the engraved captions are translated correctly. The only real error is in the figure description: Fig. IV is called water-powered, but the plate clearly shows horses driving the mill."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "T10:misleads"
+    ],
+    "reader_note": "All the engraved captions are translated correctly. The only problems are in the editorial description and summary: they call the horse-driven mud mill water-powered and say Sturm made the improvements."
+   }
+  },
+  {
+   "key": "ge-69aebc970d3d5e01e132cbd0",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aebc970d3d5e01e132cb1b",
+   "page_id": "69aebc970d3d5e01e132cbd0",
+   "page_number": 181,
+   "title": "Die Anfänge der Musik",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O7:wrong_text",
+     "T5:wrong_text",
+     "O6:misleads",
+     "O8:cosmetic"
+    ],
+    "reader_note": "A reader would get the wrong alternative metre (3/8 instead of 3/2), would read 'quarter tones' where the page means quarter notes, and would see the unfinished last sentence given an object ('something exotic') that the page doesn't have."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O7:wrong_text",
+     "T5:wrong_text",
+     "T8:misleads"
+    ],
+    "reader_note": "The second time signature is wrong (the page says 6/4 and 3/2, not 3/8), and the last sentence finishes with an invented object, 'something exotic', even though the German breaks off unfinished at the page end."
+   }
+  },
+  {
+   "key": "ge-6a494309d2cbca6a182084bb",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a494309d2cbca6a182084b2",
+   "page_id": "6a494309d2cbca6a182084bb",
+   "page_number": 9,
+   "title": "Der Auffrichtige Unverfälschte Engelländische Wahrsager, Das ist: Ein Prognostic",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T8:misleads",
+     "T7:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the September–December forecasts; only the Brabant 'unless' and the 'Meuse' (the page reads 'Mütze') go beyond what the page says."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "T7:wrong_text",
+     "T6:cosmetic"
+    ],
+    "reader_note": "The October prophecy has the fox leap toward a 'mouse', but the page says 'Mütze' (cap). The rest of the page is translated faithfully and in full."
+   }
+  },
+  {
+   "key": "ge-6a26d86b6be3d771538c1d5b",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d86b6be3d771538c1d51",
+   "page_id": "6a26d86b6be3d771538c1d5b",
+   "page_number": 10,
+   "title": "Friedenstraktat Zwischen Ihrer Majestät der Kaiserinn, apostol. Königinn zu Unga",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O7:wrong_text",
+     "T8:misleads",
+     "O6:misleads",
+     "T7:misleads",
+     "T5:misleads",
+     "O6:cosmetic"
+    ],
+    "reader_note": "Mostly faithful to the page, but each instalment is given as 'two times one hundred and fifty thousand' gulden when the page says 250,000; 'in place of an equivalent' became 'as an equivalent'; and the last clause is completed from the next page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T3:wrong_text",
+     "T6:misleads",
+     "T9:cosmetic"
+    ],
+    "reader_note": "The preamble is hidden inside a meta note, so the visible translation seems to start at Article 1, and the last line adds 'Palatine-Bavarian lands', which the page cuts off at 'chur-'. Otherwise the figures (6 million guilders, 12 years, 500,000 a year, 4 January 1780) and the names are rendered accurately."
+   }
+  },
+  {
+   "key": "ge-6a26d6feefb0687b170ebb44",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26d6feefb0687b170ebb3d",
+   "page_id": "6a26d6feefb0687b170ebb44",
+   "page_number": 7,
+   "title": "Johann Christian Cramers Hochgräflich-Wied-Runkelischen Hof- und Consistorial-Ra",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "D1:cosmetic"
+    ],
+    "reader_note": "A faithful, complete title page: the author, his office, the question of whether Bohemia should precede Electoral Bavaria in the third class of the Chamber Court visitation deputation, the sources it draws on, and the 1769 Frankfurt imprint are all rendered correctly."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The title page is fully rendered with the correct names, place and 1769 date, but 'Execution of the Question' and 'Imperial and Imperial' read oddly and blur the title's meaning."
+   }
+  },
+  {
+   "key": "ge-6a26cc465ac5aecc53cef28e",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26cc465ac5aecc53cef27a",
+   "page_id": "6a26cc465ac5aecc53cef28e",
+   "page_number": 20,
+   "title": "Kurtzer Extract Aus (tit. tot.) Herrn D. Hoffmanns Medicinae Professoris zu Hall",
+   "a": {
+    "written": false,
+    "accept": false,
+    "wrong": false,
+    "fidelity": null,
+    "judged": false,
+    "why": "apply: copies the English printed on the page"
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "T9:wrong_text",
+     "E2:misleads",
+     "T10:misleads"
+    ],
+    "reader_note": "A reader gets only a woodcut description and is told the page is unreadable, but the page has a readable paragraph about Dr. Hoffmann recommending the Seydschütz spring water."
+   }
+  },
+  {
+   "key": "ge-6a4942add2cbca6a1820825f",
+   "lang": "German",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4942add2cbca6a18208253",
+   "page_id": "6a4942add2cbca6a1820825f",
+   "page_number": 11,
+   "title": "Zeichen am Himmel bey Brannschwig neulich gesehen durch den Superattendententem ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O3:cosmetic",
+     "E2:misleads"
+    ],
+    "reader_note": "A faithful, readable account of the man's flight, prayer and comfort from Matthew 11; there is a small added 'found him', and the summary mentions a 'heavenly sign' that isn't on this page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:misleads",
+     "T8:wrong_text",
+     "O3:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Most of the page reads well, but the opening misplaces the scene (the gallows outside the city becomes 'the city before the judgment') and one clause is reversed so that he hinders them in prayer instead of them hindering him."
+   }
+  },
+  {
+   "key": "ge-69b51e42cf111105c42994dd",
+   "lang": "German",
+   "script": "mixed",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e42cf111105c4299456",
+   "page_id": "69b51e42cf111105c42994dd",
+   "page_number": 135,
+   "title": "München, Hofbibliothek: Standortkatalog der hebräischen Handschriften und Drucke",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T10:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "This is a faithful translation of the catalogue entries and their shelf numbers (4.42–4.44). The only real issue is an added patronymic, 'son of Rabbi Moses', for Isaac of Corbeil, and the last word is left broken off even though it is complete on the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "T6:cosmetic"
+    ],
+    "reader_note": "This is a faithful rendering of four catalogue entries with shelf numbers 4.42 to 4.44. The 'Va-yelech of Moses' wording is slightly loose, and the image shows page 65, not the transcription's 68."
+   }
+  },
+  {
+   "key": "it-69b52ce265eba8acdb9c9370",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "69b52ce265eba8acdb9c9333",
+   "page_id": "69b52ce265eba8acdb9c9370",
+   "page_number": 61,
+   "title": "Vita Nova Dantis",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "O4:misleads",
+     "O6:cosmetic",
+     "T8:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The first line is mistranslated and doesn't introduce the sonnet. Several lines of the poem and the prose drift from the manuscript because they follow misreadings in the transcription, including a doubled \"forget... forgetting\" and the last sentence being joined to the wrong clause."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T2:misleads",
+     "T7:wrong_text",
+     "T7:misleads",
+     "T7:wrong_text",
+     "T7:wrong_text",
+     "T7:misleads",
+     "T8:misleads",
+     "O6:misleads",
+     "E2:misleads"
+    ],
+    "reader_note": "A reader gets the shape of Vita Nuova ch. XXXVII ('Color d'amore'). But the first line is left in Italian, and several readings from the bad transcription come through as confident English, such as 'the soul curses you' and 'it remained in my heart', which the page does not say."
+   }
+  },
+  {
+   "key": "it-6a0b45f51615109dc53b2287",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "ia-ocr/0.0.21",
+   "book_id": "6a0b45f51615109dc53b21a8",
+   "page_id": "6a0b45f51615109dc53b2287",
+   "page_number": 223,
+   "title": "Le commedie di Giambattista Della Porta, Vol. II (Spampanato critical edition)",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "E2:misleads",
+     "E2:misleads",
+     "O16:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The beating speech says 'he' throughout, but Don Flaminio's reply makes clear a woman did it, so the dialogue contradicts itself in English; the comic wine-and-capon cure is otherwise rendered faithfully."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "T10:wrong_text",
+     "O6:misleads",
+     "O6:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "Mostly fluent and complete, but the woman who beat Leccardo turns into a man, her father becomes 'his father', the 'lacrima' wine becomes tears, and the four capons become 'large slabs' with an invented explanatory note."
+   }
+  },
+  {
+   "key": "it-6a0b45ec1615109dc53b2056",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "ia-ocr/0.0.21",
+   "book_id": "6a0b45ec1615109dc53b2009",
+   "page_id": "6a0b45ec1615109dc53b2056",
+   "page_number": 77,
+   "title": "Le commedie di Giambattista Della Porta, Vol. I (Spampanato critical edition)",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "A complete and faithful translation of the whole page, from the run-on sentence at the top through the reunion and the start of Scene IV. Speakers, names and the spelling switch from Constanza to Costanza all match the page, and nothing is missing or added."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "O8:cosmetic"
+    ],
+    "reader_note": "This is a faithful and complete translation of the page. It ends at the bottom of the page in the middle of Constanza's speech, and the only change is that one variant spelling of a speaker's name was made consistent."
+   }
+  },
+  {
+   "key": "it-69b51e30cf111105c42982c1",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e30cf111105c4298181",
+   "page_id": "69b51e30cf111105c42982c1",
+   "page_number": 320,
+   "title": "La Russiade : Poema epico in Prosa",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "O8:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Faithful and complete overall, with names given their standard Russian spellings. The first word, 'political', is a guess at a word split across the page break that probably means 'ancient'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T13:misleads",
+     "T10:cosmetic",
+     "O8:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete list of Catherine's judges and the duties she gives them. But the word 'ancient' carried over from the previous page is missing, and the author's footnote 'Wiazemskoy' appears inline as if it were an editor's 'original' reading."
+   }
+  },
+  {
+   "key": "it-6a0b352d688e6a8e15f67b97",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a0b352d688e6a8e15f67ab4",
+   "page_id": "6a0b352d688e6a8e15f67b97",
+   "page_number": 227,
+   "title": "Delle commedie di Giovanbattista De La Porta — Tomo II (Chiappinaria, Cintia, Du",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "O11:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of Erasto confronting Cintio. It correctly reads the name as 'Amasia', which the transcription had misread as 'Amafia'. The only slip is that the running head is rendered as a 'FOURTH ACT' heading."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is an accurate, complete rendering of Act IV, Scene VIII. The only oddity is that the running head \"QUARTO\" is left in Italian. \"Amasia\" matches the print; the transcription's \"Amafia\" is a misread of the long s."
+   }
+  },
+  {
+   "key": "it-6a42714462d175ca9e4e2859",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a42714462d175ca9e4e274d",
+   "page_id": "6a42714462d175ca9e4e2859",
+   "page_number": 268,
+   "title": "Della filosofia naturale, di m. Alessandro Piccolomini. Parte prima",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful, complete translation of the page's argument that points can't be contiguous or continuous, even by fully penetrating one another. The note naming Piccolomini's Italian 'Sfera del mondo' (1540) fits the page's self-reference, and the translation correctly stops at 'of the' before the catchword 'detta'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the argument that points cannot be contiguous or continuous; it has only a few awkward phrases and drops 'said' from the final words, which run onto the next page."
+   }
+  },
+  {
+   "key": "it-69b51e12261c58d63664f23a",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e12261c58d63664efd4",
+   "page_id": "69b51e12261c58d63664f23a",
+   "page_number": 614,
+   "title": "Tomo primo delle divine lettere del Gran Marsilio Ficino. 1",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete rendering of the page. The one point to watch is the sentence about who repented: the candidate says Dionysius, but the Italian more likely refers to Aristippus."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete, faithful translation of the page about why philosophers should keep away from princes; only the clause about who repented of the reception is a little loose."
+   }
+  },
+  {
+   "key": "it-6a4eae4a8112cac04007b56b",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4eae4a8112cac04007b55e",
+   "page_id": "6a4eae4a8112cac04007b56b",
+   "page_number": 13,
+   "title": "Rime di Petruccio Vbaldino, cittadin Fiorentino",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "T13:cosmetic"
+    ],
+    "reader_note": "A faithful, fairly literal translation of the whole sonnet and its heading. It glosses 'virile' as 'virtuous' and leaves out the 'B 3' signature mark."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:cosmetic",
+     "T13:cosmetic"
+    ],
+    "reader_note": "A faithful line-by-line version of the sonnet against slanderous tongues. Only the closing tercet's 'neither he nor she' (Mercury and Minerva) is rendered awkwardly, and the 'B 3' signature is missing."
+   }
+  },
+  {
+   "key": "it-6aa1d50f77169abff16221ab",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6aa1d50d77169abff1622188",
+   "page_id": "6aa1d50f77169abff16221ab",
+   "page_number": 35,
+   "title": "Il maestro di camera trattato di Francesco Sestini da Bibbiena. Di nuouo ricorre",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful and complete translation of the second adoration at St Peter's and the start of Chapter XI on the red habit. The Latin phrase is glossed correctly, and the page ends on the same broken word (\"e dal-\" / \"and from\") as the original."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete. It covers the second adoration in St. Peter's and the opening of Chapter XI on the red habit, with literal phrasing in places such as 'at a good hour' for 'early'."
+   }
+  },
+  {
+   "key": "it-6a4f72b5a692969b9145b88e",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4f72b5a692969b9145b887",
+   "page_id": "6a4f72b5a692969b9145b88e",
+   "page_number": 7,
+   "title": "L'Oratione del'eccellentissimo Signore Giacobo Duca d'Ormondia, Signore Luogoten",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T7:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "This is a close and fluent rendering of the dedication. 'Distant acquaintance' should be 'distant propriety', and the small vessel is meant to hold the sea of praises, not the lady herself."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "T7:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "The English reads smoothly and is mostly faithful, but the opening says 'distant acquaintance' where the page has 'propriety', and the 'small vessel' image is wrongly applied to the lady instead of to the praises."
+   }
+  },
+  {
+   "key": "it-69de98ae1b234a773e43914b",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69de98ae1b234a773e439044",
+   "page_id": "69de98ae1b234a773e43914b",
+   "page_number": 263,
+   "title": "De' veri precetti della pittura",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the end of the cabinet-ornaments passage and the opening of Chapter XIV. The only slip a reader might notice is that the summary says 'palace' where the heading says houses."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "T6:cosmetic"
+    ],
+    "reader_note": "The translation is complete and faithful apart from 'stufe' being rendered as 'stoves' instead of heated bath rooms, so the advice to paint water scenes 'in stoves' reads oddly."
+   }
+  },
+  {
+   "key": "it-69de9c1d44c3c5480625be69",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69de9c1d44c3c5480625bb98",
+   "page_id": "69de9c1d44c3c5480625be69",
+   "page_number": 721,
+   "title": "L'idea dell'architettura universale",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:wrong_text",
+     "T9:misleads",
+     "T8:cosmetic"
+    ],
+    "reader_note": "The translation reads well, but in the mole-building passage it leaves out the page's alternative of Paduan lime mixed with gravel and coarse sand, and the 'Where the bottom is firm and sandy' sentence has no main verb."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O5:wrong_text",
+     "O5:misleads",
+     "T8:misleads",
+     "T9:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A reader would not learn about the page's Paduan-lime mortar option in the pier-building passage, and would meet an incomplete sentence where the main clause about building with long squared stones is missing."
+   }
+  },
+  {
+   "key": "it-69de9bc41ac4c04c63e41e32",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69de9bc41ac4c04c63e41c37",
+   "page_id": "69de9bc41ac4c04c63e41e32",
+   "page_number": 507,
+   "title": "Iconologia (1603 illustrated edition)",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "T9:wrong_text",
+     "T7:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Reads fluently, but in the Time passage it says the present 'surpasses' the mirror's false image when the page says it does not, it drops 'and extinguishes', and it turns Temperance's compasses into spectacles."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "T9:misleads",
+     "T3:misleads"
+    ],
+    "reader_note": "A reader would be told Time's present 'surpasses' the mirror's false image when the page says it does not, would miss that Time also 'extinguishes' the months and years, and might not see the opening elephant paragraph because it sits in a meta note."
+   }
+  },
+  {
+   "key": "it-69aec209d52cb53c46bfdc06",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aec209d52cb53c46bfdbab",
+   "page_id": "69aec209d52cb53c46bfdc06",
+   "page_number": 91,
+   "title": "Rime sacre del magnifico Lorenzo de Medici",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "T13:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the Laude stanzas. It adds a few small interpretive touches ('spouse', 'prodigal', 'lost'), and the margin stanza numbers are missing."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O11:cosmetic",
+     "O12:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete verse translation of the page; the only slips are in the page furniture (the catchword 'E chi' is tagged as signature 'E iij', and the margin stanza numbers are missing)."
+   }
+  },
+  {
+   "key": "it-69b21c7a429e087c6f864cfe",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "69b21c7a429e087c6f864c06",
+   "page_id": "69b21c7a429e087c6f864cfe",
+   "page_number": 248,
+   "title": "Discorsi e dimostrazioni matematiche",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful and complete translation of the page. It covers the end of the italic proposition, the construction (GH equal to N, BC is to CL as FH is to HG) and the proof up to 'since CM is double LC'. Every letter label and ratio is correct, and the sentence continues onto the next page as it does in the original."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "T5:wrong_text",
+     "T3:misleads",
+     "O6:misleads"
+    ],
+    "reader_note": "The translation runs past the end of the page, which stops mid-sentence at 'ad L C,'. It adds the rest of the proof and its conclusion from the following page, and it puts the opening italic lines in a note."
+   }
+  },
+  {
+   "key": "it-69b1c68949f47c4e327132c5",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "69b1c68949f47c4e32713245",
+   "page_id": "69b1c68949f47c4e327132c5",
+   "page_number": 128,
+   "title": "Esperienze intorno alla Generazione degl'Insetti",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T8:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of Redi's argument about 'rain-born' frogs, with Theophrastus, the 114th Olympiad, Ptolemy I and Photius's Bibliotheca all given correctly; the page ends mid-sentence before the catchword 'dove'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete, accurate translation of the page; the names, the 114th Olympiad and the reference to Photius are all correct, with only a couple of stiff literal phrasings."
+   }
+  },
+  {
+   "key": "it-6a08f4e750bd891addfb7a01",
+   "lang": "Italian",
+   "script": "unknown",
+   "ocr_model": "ia-ocr/0.0.14",
+   "book_id": "6a08f4e750bd891addfb776e",
+   "page_id": "6a08f4e750bd891addfb7a01",
+   "page_number": 659,
+   "title": "Vita di Benvenuto Cellini, orefice e scultore fiorentino, da lui medesimo (Milan",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "defects": [
+     "I1:wrong_text",
+     "T14:wrong_text",
+     "O5:wrong_text"
+    ],
+    "reader_note": "The English beside this scan has nothing to do with it: the page tells of Bandinello's marble and the Baccio–Benvenuto feud, but the translation is about casting the Perseus's foot."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "defects": [
+     "I1:wrong_text",
+     "T9:wrong_text",
+     "T5:wrong_text",
+     "T3:misleads",
+     "T13:cosmetic"
+    ],
+    "reader_note": "The English is from a different page (p. 327, the Perseus casting) and doesn't match the facing image (p. 320, the Bandinello/Baccio rivalry); its footnote also goes on past the end of its own source text."
+   }
+  },
+  {
+   "key": "it-69f3372e876dd827cbc518f6",
+   "lang": "Italian",
+   "script": "manuscript",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "69f3372e876dd827cbc518a3",
+   "page_id": "69f3372e876dd827cbc518f6",
+   "page_number": 83,
+   "title": "Vite de santi, Manoscritte con imagini",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "O6:cosmetic"
+    ],
+    "reader_note": "A complete, faithful rendering of the end of the previous saint's life and the start of Eustorgius's. It has one missing preposition, and the miniature note gets the sky and tower colours slightly wrong."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The text checks against the image and nothing is missing. But the key sentence is mistranslated: it says Eustorgio 'consented', when the page says the Emperor granted Eustorgio to Milan and later freed the city from tribute."
+   }
+  },
+  {
+   "key": "it-69b51e271cd2669798985a77",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e271cd2669798985931",
+   "page_id": "69b51e271cd2669798985a77",
+   "page_number": 326,
+   "title": "Discussioni Istoriche, Teologiche, e Filosofiche Di Constantino Grimaldi : Fatte",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O8:misleads",
+     "T9:cosmetic",
+     "O12:cosmetic",
+     "E2:cosmetic"
+    ]
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "O6:misleads",
+     "O6:misleads",
+     "T9:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Mostly faithful and complete, but Gassendi appears as 'Gaffendi', 'per esemplo' (for example) is missing, and 'prescritte' (prescribed) comes out as 'preferred'."
+   }
+  },
+  {
+   "key": "it-6a42ccc897284560a2b15674",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a42ccc897284560a2b15573",
+   "page_id": "6a42ccc897284560a2b15674",
+   "page_number": 257,
+   "title": "Delle frascherie di Antonio Abati fasci tre",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "O12:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the page on blind Homer, Seneca's bees, the Muscovite travel ban and hardship against luxury. Only the Hecate note's quote of a misread spelling and the Homer reference shown as an inline note stand out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T7:wrong_text",
+     "O6:misleads",
+     "T9:misleads",
+     "O12:cosmetic"
+    ],
+    "reader_note": "The Muscovite sentence makes no sense as given, 'fatigued' should be 'sated', and the last sentence leaves out that it is want (inopia) that shakes off the turbidity."
+   }
+  },
+  {
+   "key": "it-69de99581b234a773e43a974",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69de99581b234a773e43a889",
+   "page_id": "69de99581b234a773e43a974",
+   "page_number": 235,
+   "title": "Poetica d'Aristotele vulgarizzata et sposta",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T9:misleads",
+     "O10:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is an accurate, complete rendering of Castelvetro's argument about Romulus and Solon. The only thing that matters is that the name of Romulus's mother, Ilia, is missing, and the Greek quotation has been slightly smoothed."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:wrong_text",
+     "T8:misleads",
+     "O5:misleads",
+     "E2:misleads",
+     "O6:misleads",
+     "O10:cosmetic"
+    ],
+    "reader_note": "The text reads smoothly but has errors that change the meaning: 'bolt of the mind' for 'goodness of mind', 'because' where the page asks 'why', Ilia's name missing, and the Aristotle quotation in garbled Greek."
+   }
+  },
+  {
+   "key": "it-69b51e31768235dc6598db0f",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51e31768235dc6598d9ba",
+   "page_id": "69b51e31768235dc6598db0f",
+   "page_number": 341,
+   "title": "Della istoria d'Italia antica e moderna : con carte geografiche e tavole incise ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:cosmetic",
+     "E2:misleads",
+     "O8:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the page; only small wording slips ('elsewhere', 'that nation') that hardly change the sense."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O8:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete. The only change is that the page's 'war of Messina' appears as 'Messenian War' with no note."
+   }
+  },
+  {
+   "key": "it-69aec31f6a0dcd3e10f9ece7",
+   "lang": "Italian",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aec31f6a0dcd3e10f9ec96",
+   "page_id": "69aec31f6a0dcd3e10f9ece7",
+   "page_number": 81,
+   "title": "De gli Asolani",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful and complete translation of the page. It finishes Bembo's proem, has the company meet again in the garden, and starts Gismondo's reply to Perottino. It stops mid-sentence at 'whenever I reflect upon his many misfortunes,' exactly where the page itself breaks off."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the page, with Gismondo answering Perottino's lament. It sticks closely to the Italian, so a few words read oddly ('evils', 'study', 'sermons'), but nothing is left out or changed in meaning."
+   }
+  },
+  {
+   "key": "fr-6a8ee22490f5a0e4155eaa0b",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.8-flash-low",
+   "book_id": "6a8ee22390f5a0e4155ea8f7",
+   "page_id": "6a8ee22490f5a0e4155eaa0b",
+   "page_number": 276,
+   "title": "L'ordre naturel et essentiel des sociétés politiques",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete and faithful translation of p. 266. Every sentence of the page is there, including the italic 'acheter' rendered as *bought* and the final sentence breaking off at 'the property'. The only oddity is 'sensible' used in its older sense of 'perceptible'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is complete and faithful to the page, including the italic 'purchase'. The only small oddities are 'double taxation' and 'sensible' used to mean 'perceptible'."
+   }
+  },
+  {
+   "key": "fr-6a44283ba43aa84d74913cba",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a44283ba43aa84d74913b44",
+   "page_id": "6a44283ba43aa84d74913cba",
+   "page_number": 374,
+   "title": "Oeuvres diverses … Avec le traité du sublime ou du merveilleux dans le discours",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T5:misleads"
+    ],
+    "reader_note": "The translation is faithful and complete until the last line, which adds 'very serious' from the next page where the page itself stops at 'un Ar-'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "T5:wrong_text"
+    ],
+    "reader_note": "The translation is accurate until the last line. There it adds 'a very serious Decree', which goes beyond the page's final words 'afin de prévenir un Ar-'."
+   }
+  },
+  {
+   "key": "fr-69bda08ef6d63c9197488bc2",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69bda08ef6d63c9197488afb",
+   "page_id": "69bda08ef6d63c9197488bc2",
+   "page_number": 199,
+   "title": "Superstitions anciennes et modernes, préjugés vulgaires qui ont induit les peupl",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T3:cosmetic",
+     "O6:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A complete, faithful translation. It quietly corrects transcription errors from the image ('Rueus', 'pane', the dropped name 'Marbode'), though Marbode's name ends up in a note rather than the main text. There are a few small slips in the Latin verse note."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O5:wrong_text",
+     "T3:misleads",
+     "T8:misleads",
+     "O6:misleads",
+     "E2:cosmetic",
+     "T6:cosmetic",
+     "D1:cosmetic"
+    ],
+    "reader_note": "The eleventh-century versifier, Marbode, Bishop of Rennes, has vanished from the text, and the 'fifteenth day' in the Latin verse note has become 'after the tenth'."
+   }
+  },
+  {
+   "key": "fr-6a26da6605d7c1d9b10861c3",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3-flash-preview",
+   "book_id": "6a26da6605d7c1d9b10861b7",
+   "page_id": "6a26da6605d7c1d9b10861c3",
+   "page_number": 12,
+   "title": "Le Banquier et l'Alchymiste : Dialogue Faisant suite à L'Anti-Banquier",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T8:cosmetic",
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the dialogue. The figures (70 million lent over 10 years, 102 million in profits), the names and the negations are all correct; only small nuances are lost."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "T9:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a complete and faithful translation of the dialogue with the numbers right (70 million lent, 102 million in profits, 10 years), but the opening seam word is cut down to \"funds\", which loses the sense of \"providers of funds\"."
+   }
+  },
+  {
+   "key": "fr-69e7298da409200ea79f0828",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69e7298da409200ea79f0783",
+   "page_id": "69e7298da409200ea79f0828",
+   "page_number": 165,
+   "title": "Nouveaux contes des fées",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T15:misleads"
+    ],
+    "reader_note": "The translation is faithful and complete, and it stops correctly at the 'Don Ga-' catchword. Only the summary names a 'Don Louis' who does not appear on this page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T9:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete, matching the page from 'son cœur' through to the split word 'Don Ga-'. Only the small word 'toujours' (all along) is left out, and that does not change the meaning."
+   }
+  },
+  {
+   "key": "fr-69b9a2fc69930cad41a7622c",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b9a2fc69930cad41a76199",
+   "page_id": "69b9a2fc69930cad41a7622c",
+   "page_number": 147,
+   "title": "Le Tibet révolté: Vers Népémakö, la terre promise des Tibétains",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Faithful, complete translation of page 109 on Tibetan temple architecture, the Chinese contrast and the Litang temple, with only minor wording quirks."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the page; the header, all four paragraphs and the page number 109 match the image."
+   }
+  },
+  {
+   "key": "fr-69bc855d173577a33742071b",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69bc855d173577a3374206d5",
+   "page_id": "69bc855d173577a33742071b",
+   "page_number": 70,
+   "title": "La maison Plantin à Anvers",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "O12:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of the page: Plantin turning down the royal and Savoy offers, then the small library's books, furnishings and the Broukaerts painting, with all names and figures correct."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "I checked it against the page image: the translation is complete and accurate. All names, numbers, the Documents XXIII reference, door K and the painting title are kept, and the page opens mid-sentence just as the original does."
+   }
+  },
+  {
+   "key": "fr-69bda064f6d63c9197486d3b",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69bda064f6d63c9197486bbf",
+   "page_id": "69bda064f6d63c9197486d3b",
+   "page_number": 380,
+   "title": "Cérémonies et coutumes religieuses des peuples idolatres : avec une explication ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O8:cosmetic",
+     "T10:misleads"
+    ],
+    "reader_note": "The translation is complete and accurate, including the date 2563, but it names the holy man 'Fogisvara' where the page clearly prints 'Jogisvara', and one editorial gloss looks invented."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "E2:misleads",
+     "O6:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation, but the holy man is named 'Fogisvara' where the page prints 'Jogisvara', and the king is said to 'take' the magic shoe instead of putting it on."
+   }
+  },
+  {
+   "key": "fr-69b62fe61c1c21a3737fc008",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69b62fe61c1c21a3737fbc07",
+   "page_id": "69b62fe61c1c21a3737fc008",
+   "page_number": 1025,
+   "title": "Les espistres familieres de M.T. Ciceron, pere d'eloquence, contenant seize livr",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "T9:wrong_text",
+     "T9:cosmetic",
+     "T5:cosmetic"
+    ],
+    "reader_note": "Both columns read faithfully, except that the French column leaves out where the estate lies (the Fregellan territory), which the page states."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T9:wrong_text",
+     "T11:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "Reads well, but the French says where the estate is (the territory of Fregellae, 'au terroir Frezellon') and the translation leaves that out. The Latin parallel text is only copied into a note, with errors."
+   }
+  },
+  {
+   "key": "fr-69bda0e4f6d63c919748bad0",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69bda0e4f6d63c919748b99a",
+   "page_id": "69bda0e4f6d63c919748bad0",
+   "page_number": 310,
+   "title": "Histoire des diables de Loudun ou de la possession des religieuses ursulines et ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "I4:wrong_text",
+     "E2:misleads",
+     "O6:misleads",
+     "T8:misleads"
+    ],
+    "reader_note": "The single real column of page 292 is translated faithfully, but below it sits a column of meaningless word fragments taken from the edge of the facing page, and the summary wrongly calls them damaged print."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "I4:wrong_text",
+     "T7:wrong_text",
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The main text is translated faithfully, but a column of meaningless fragments from the facing page follows it as if it belonged to this page."
+   }
+  },
+  {
+   "key": "fr-69b4c0836248be021e01f456",
+   "lang": "French",
+   "script": "manuscript",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b4c0836248be021e01f25c",
+   "page_id": "69b4c0836248be021e01f456",
+   "page_number": 506,
+   "title": "Manly Palmer Hall Box 20",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "O6:wrong_text",
+     "T7:misleads",
+     "T7:misleads",
+     "O6:misleads",
+     "T9:cosmetic"
+    ]
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "T8:misleads",
+     "O6:misleads",
+     "T7:cosmetic"
+    ],
+    "reader_note": "The page is complete and broadly faithful through to the closing catchphrase. A few obscure alchemical clauses are smoothed over or slightly misconstrued (the 'champ/change' reading, 'until' rendered as 'for as long as', and the vivifying fire)."
+   }
+  },
+  {
+   "key": "fr-6aa35ce7b8b2420aa5934f26",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6aa35ce7b8b2420aa5934e00",
+   "page_id": "6aa35ce7b8b2420aa5934f26",
+   "page_number": 294,
+   "title": "Les Aventures de Télémaque",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic",
+     "T8:cosmetic"
+    ],
+    "reader_note": "A complete, faithful translation of the page's last paragraph of Book XVII and its closing line. It matches the image, which also shows the catchword LES at the foot of the page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic"
+    ],
+    "reader_note": "The translation is faithful and complete: the account of Telemachus's hard camp life, his frugal food and his body hardening, ending with 'End of the Seventeenth Book'. The first line continues a sentence from the previous page."
+   }
+  },
+  {
+   "key": "fr-69ef289585daccce30f2d5ea",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69ef289585daccce30f2d335",
+   "page_id": "69ef289585daccce30f2d5ea",
+   "page_number": 693,
+   "title": "Traité Universel des Drogues Simples",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4,
+    "defects": [
+     "O6:wrong_text"
+    ],
+    "reader_note": "The translation is faithful and complete until the last line, where the salamander's 'milky slobber' becomes 'venomous spit', a claim the page doesn't make."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T5:wrong_text",
+     "T9:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The last sentence finishes with words ('virulent, very acrid') that are not on this page, which ends mid-phrase at 'bave laiteuse,'. The rest is accurate, and 'only … from calcination' correctly follows the image's 'que', which the transcription dropped."
+   }
+  },
+  {
+   "key": "fr-6a499d83d702014d1ddf825d",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a499d83d702014d1ddf8256",
+   "page_id": "6a499d83d702014d1ddf825d",
+   "page_number": 7,
+   "title": "Discours de Maximilien Robespierre à l'Assemblée nationale",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete English version of page 7. It ends mid-sentence at 'give cause to', exactly where the page itself breaks off."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation is complete and faithful to page 7 of Robespierre's argument against re-election. The only slip is that the French 'Or' is rendered as English 'Or' instead of 'Now', which misleads no one."
+   }
+  },
+  {
+   "key": "fr-6a08f50d50bd891addfb81a9",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a08f50d50bd891addfb80d1",
+   "page_id": "6a08f50d50bd891addfb81a9",
+   "page_number": 216,
+   "title": "Les Confessions de J.J. Rousseau, Première[-seconde] partie (1782 first edition)",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T8:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a complete, accurate translation of the page, which matches the image. The only change a reader might notice is that 'caressing her image' is softened to 'cherishing'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "The translation is faithful and complete, and it follows the page from the opening fragment 'donné sur ma santé' through to the closing 'ce qui'. The French transcription matches the image."
+   }
+  },
+  {
+   "key": "fr-6a8ee2d790f5a0e4155eb6d8",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.8-flash-low",
+   "book_id": "6a8ee2d790f5a0e4155eb614",
+   "page_id": "6a8ee2d790f5a0e4155eb6d8",
+   "page_number": 196,
+   "title": "Harmonies économiques (2e édition, augmentée des manuscrits laissés par l'auteur",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete rendering of page 180: Bastiat's rebuttal of Proudhon's 'contradiction' and his utility/value distinction, with names, emphasis and negations preserved."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T8:wrong_text",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The opening sentence reverses Bastiat's claim: he says we see nothing but what is very natural, but the English says we see nothing natural. The rest of the page is faithful and complete."
+   }
+  },
+  {
+   "key": "fr-6a8ee2e090f5a0e4155eb8f9",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "page_id": "6a8ee2e090f5a0e4155eb8f9",
+   "page_number": 145,
+   "title": "Éléments d'économie politique pure, ou Théorie de la richesse sociale",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful and complete rendering of Walras's proportionality of values to raretés and his discontinuity example. Only two things stand out: the gloss repeats the phrase that follows it, and 'commodities' is missing from the opening seam."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "T5:wrong_text",
+     "T6:cosmetic"
+    ],
+    "reader_note": "The page's own text is translated faithfully, but the English runs well past the end of the French. It adds a paragraph and a half and all of section 134, none of which is on this page."
+   }
+  },
+  {
+   "key": "fr-69e72986a409200ea79f06f1",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69e72986a409200ea79f06be",
+   "page_id": "69e72986a409200ea79f06f1",
+   "page_number": 51,
+   "title": "Histoires du temps passé, ou les Contes de ma Mère l'Oye",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation of the steward deciding to kill the young Queen and then relenting. The French matches the scan. Only one idiom is awkward, and the opening sentence picks up mid-word from the previous page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the steward's attempt on the young Queen's life. The only oddity is that the page begins mid-sentence with no subject, because the word 'Steward' was split across the page break."
+   }
+  },
+  {
+   "key": "fr-69bd9e636120d54bd037cbe7",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69bd9e636120d54bd037cbbe",
+   "page_id": "69bd9e636120d54bd037cbe7",
+   "page_number": 41,
+   "title": "Poème philosophic de la verité de la phisique mineralle ...",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:misleads",
+     "T10:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The verse translation reads faithfully, but 'scor-' is left broken, and a note wrongly says the word continues on the next page, when '(piõ' is printed on this page as a turnover."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 3,
+    "defects": [
+     "T6:wrong_text",
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "In the scorpion simile, the scorpion has become an uncertain 'poison', so 'this little murderer' no longer points to anything. The rest of the translation is close."
+   }
+  },
+  {
+   "key": "fr-6a8ee2fc90f5a0e4155ebd7f",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a8ee2fc90f5a0e4155ebc35",
+   "page_id": "6a8ee2fc90f5a0e4155ebd7f",
+   "page_number": 330,
+   "title": "Physiocratie, ou Constitution naturelle du gouvernement le plus avantageux au ge",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "E2:misleads"
+    ],
+    "reader_note": "A faithful, complete translation of this table-of-contents page: every entry and page range (277-282, 282-288, 288-289) is kept, and it breaks off mid-sentence just as the page does. Only the attached summary misstates one point."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T6:cosmetic",
+     "T16:cosmetic"
+    ],
+    "reader_note": "The translation is a faithful, complete rendering of this table-of-contents page, with all page ranges correct. The only oddity is the first word, 'tories', a fragment of a word split from the previous page."
+   }
+  },
+  {
+   "key": "fr-6abfbf253c453a90d666324c",
+   "lang": "French",
+   "script": "mixed",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6abfbf253c453a90d6663239",
+   "page_id": "6abfbf253c453a90d666324c",
+   "page_number": 19,
+   "title": "Le Codex Troano et l'écriture hiératique de l'Amérique centrale",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "O17:misleads",
+     "O5:cosmetic",
+     "T3:cosmetic",
+     "T10:cosmetic"
+    ],
+    "reader_note": "Every word on the plate is translated correctly, but the comparison table is out of line by one row and the empty cartouche at the top left is missing, so the two series are paired wrongly (Ben shows up beside Ymic)."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3,
+    "defects": [
+     "O17:misleads",
+     "O5:misleads"
+    ],
+    "reader_note": "The text is translated correctly, but the side-by-side table is shifted by one row. Each exceptional-series day sign appears next to the wrong regular-series sign, and the empty first cartouche is missing."
+   }
+  },
+  {
+   "key": "fr-69de11b786e6d59321ba11c2",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69de11b786e6d59321ba101a",
+   "page_id": "69de11b786e6d59321ba11c2",
+   "page_number": 424,
+   "title": "Catalogue de l'oeuvre gravé de Félicien Rops",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O6:misleads",
+     "O6:misleads",
+     "E2:cosmetic",
+     "O5:cosmetic"
+    ],
+    "reader_note": "The caption 'The Temptation of Saint Anthony' is translated correctly. The engraving's description has mistakes: the pig is called a dog, Anthony's anguish is called contemplation, and the 'EROS' titulus is left out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O6:misleads",
+     "O1:cosmetic",
+     "E2:cosmetic",
+     "O5:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The caption 'THE TEMPTATION OF SAINT ANTHONY' is translated correctly. The only text on the page is that caption, which is partly faded. The added image description calls Saint Anthony's pig a dog and claims a fully legible 'Félicien Rops' signature, but the signature is only a scrawl."
+   }
+  },
+  {
+   "key": "fr-6a26d29bf5273a8d907a5a1f",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26d29bf5273a8d907a59ed",
+   "page_id": "6a26d29bf5273a8d907a5a1f",
+   "page_number": 50,
+   "title": "Description complete ou Second Avertissement sur les Grands Globes Terrestres Et",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "defects": [
+     "O18:wrong_text",
+     "I6:misleads",
+     "E2:misleads",
+     "O16:cosmetic",
+     "O6:misleads",
+     "T10:misleads"
+    ],
+    "reader_note": "A reader gets no translation at all, only a wrong claim that the page is illegible and probably a preface. The page is actually a mirrored scan of a Nuremberg Cosmographical Society receipt for an advance payment on globes (120 ducats, 1740 notice), sealed SOCIETAS COSMOGRAPHICA."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1,
+    "defects": [
+     "O18:wrong_text",
+     "O1:misleads",
+     "T9:wrong_text",
+     "O6:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The reader gets a note saying the page can't be read, but the mirrored text is clearly a Nuremberg Cosmographical Society receipt for a globe subscription, and none of it is translated; even the seal's legend is misread."
+   }
+  },
+  {
+   "key": "fr-6a26da52863cf28d8f64e281",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a26da52863cf28d8f64e265",
+   "page_id": "6a26da52863cf28d8f64e281",
+   "page_number": 28,
+   "title": "Notice de quelques ouvrages nouveaux des Grecs modernes, et notamment de la trad",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T10:misleads",
+     "E2:cosmetic"
+    ],
+    "reader_note": "The translation itself is faithful and complete, but an added note calls the Souliotes Christian. That contradicts the page, which says they are 'for the most part, Muslims'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "This is a faithful, complete translation of the end of the note and the printer's imprint. Names, numbers (note 7, chapter 138, vol. I, p. 243, verse 288, book 4, No. 133) and the negations all match the page."
+   }
+  },
+  {
+   "key": "fr-6a4ad95ed6371d99e7668b43",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "page_id": "6a4ad95ed6371d99e7668b43",
+   "page_number": 150,
+   "title": "Principes du droit naturel et politique",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful, complete translation of p. 129. It breaks off mid-sentence at \"we thus do not have\", the same place the page does (the catchword \"le\" leads onto the next page). The page italicises droit, approbation and obligation, and the translation drops that emphasis."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "The translation is faithful and complete. It stops mid-sentence at \"we do not have\", just as the page does at \"nous n'en ayons pas\", and leaves the catchword \"le\" to the next page."
+   }
+  },
+  {
+   "key": "fr-69b51ed3c35d928cea4efd3b",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "page_id": "69b51ed3c35d928cea4efd3b",
+   "page_number": 331,
+   "title": "Catalogue de la bibliotheque d'un amateur : avec notes bibliographiques, critiqu",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "O8:cosmetic",
+     "E2:cosmetic",
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation with every page number, date and title correct. The only change a reader might notice is that the page's 'Arbates de Magia' is rendered as 'Arbatel'."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T10:misleads",
+     "T10:cosmetic"
+    ],
+    "reader_note": "The body text is complete and accurate, but the editorial gloss on the first entry says the copy has gilt edges when 'n. r.' means it is uncut."
+   }
+  },
+  {
+   "key": "fr-69aebf557f4db3ff4c028da0",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "69aebf557f4db3ff4c028d76",
+   "page_id": "69aebf557f4db3ff4c028da0",
+   "page_number": 42,
+   "title": "La perception du changement",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This colophon is printed in English and the candidate copies it exactly ('OXFORD: HORACE HART, M.A. / PRINTER TO THE UNIVERSITY'), which is correct here. The faint French text at the top is show-through from the other side of the leaf, so it is rightly left out."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4,
+    "defects": [
+     "T10:misleads"
+    ],
+    "reader_note": "The imprint 'Oxford: Horace Hart, M.A., Printer to the University' is copied exactly, which is right because the page is already in English. The summary adds an unsupported claim that this is Bergson's 1911 book. Faint French text from the next leaf shows through but was rightly not transcribed."
+   }
+  },
+  {
+   "key": "fr-6a499d50d702014d1ddf824a",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "book_id": "6a499d50d702014d1ddf823d",
+   "page_id": "6a499d50d702014d1ddf824a",
+   "page_number": 13,
+   "title": "Les Droits de la femme (Déclaration des droits de la femme et de la citoyenne)",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful, complete translation of page 13 of Gouges's postamble. It runs from the 'cou-rageously' seam to the broken-off 'in-', with no omissions, additions or changes in meaning."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "T6:cosmetic"
+    ],
+    "reader_note": "The translation matches the page closely and leaves nothing out, including the negations, the 'Supreme Being' and the sentence cut off at 'in-'."
+   }
+  },
+  {
+   "key": "fr-69bda0bbf6d63c919748a930",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69bda0bbf6d63c919748a5d9",
+   "page_id": "69bda0bbf6d63c919748a930",
+   "page_number": 855,
+   "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des ",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [
+     "E2:cosmetic"
+    ],
+    "reader_note": "A faithful, complete translation that keeps the page's section numbers (VI, then V) as printed; only the keyword list adds 'projection', which isn't on this page."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5,
+    "defects": [],
+    "reader_note": "This is a faithful, complete translation of p. 149. The section numbers run VI then V, but that is also how the original page is printed, so the translation is right to keep them."
+   }
+  },
+  {
+   "key": "fr-69bda0d7f6d63c919748b79b",
+   "lang": "French",
+   "script": "print",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "book_id": "69bda0d7f6d63c919748b44a",
+   "page_id": "69bda0d7f6d63c919748b79b",
+   "page_number": 849,
+   "title": "Traité historique et dogmatique sur les apparitions, les visions & les révélatio",
+   "a": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "I4:wrong_text",
+     "O1:wrong_text",
+     "O1:wrong_text",
+     "O1:wrong_text",
+     "O1:wrong_text",
+     "O12:cosmetic"
+    ],
+    "reader_note": "Page 376 itself (title block and opening paragraph) is translated correctly, but the second half is the next page, invented from a clipped strip at the image edge."
+   },
+   "r": {
+    "written": true,
+    "judged": true,
+    "accept": false,
+    "wrong": true,
+    "fidelity": 2,
+    "defects": [
+     "O7:wrong_text",
+     "I4:wrong_text",
+     "O1:wrong_text",
+     "O1:wrong_text",
+     "O1:wrong_text",
+     "I4:wrong_text"
+    ],
+    "reader_note": "The numbered heading reads 'I.' where the page has 'XI.', and the second half of the translation is guessed from a cut-off strip of the facing page, not from text on page 376."
+   }
+  }
+ ]
+}

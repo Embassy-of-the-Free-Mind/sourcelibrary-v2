@@ -14,9 +14,9 @@ issue: [7119]
 ---
 PRIOR ART: 2026-10-23-whish147-stability-recall.md — measured that repeat reads of a leaf are bimodal (one read 0.34, best of 3 0.18) and that majority vote picks the poor read; a blind judge there RATED reads, it did not pick among them. This file tests picking, then applies it to the book.
 
-Part of #7119.
-
 ## 2026-10-23 · Can a judge pick the good read among several? (#7119)
+
+Part of #7119.
 
 **Question.** The stability test showed that three Opus reads of a leaf usually include one close to the published text, and that agreement does not find it. Can an Opus judge find it without the edition?
 
