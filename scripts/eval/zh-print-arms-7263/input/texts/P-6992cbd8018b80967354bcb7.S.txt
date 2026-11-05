@@ -1,0 +1,19 @@
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>4</page-num>
+<header>卷四五</header>
+<meta>catchword: 四</meta>
+
+花可食五種
+花葉及實皆可食二種
+葉皮及實皆可食二種
+莖可食三種
+笋可食一種
+笋及實皆可食一種
+
+---
+
+農政全書卷之四十五終
+
+<vocab>農政全書, 徐光啟, 食用植物, 農業</vocab>

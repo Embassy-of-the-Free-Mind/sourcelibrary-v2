@@ -127,7 +127,8 @@ const LOCALIZED_PATTERNS: Record<PrefixedLocale, RegExp[]> = {
   // and nothing is translated INTO Latin (#6254).
   la: BOOK_PATTERNS,
   nl: BOOK_PATTERNS,
-  zh: BOOK_PATTERNS,
+  // Chinese collection pages and the 四部 catalogue (#8035).
+  zh: [/^\/collections$/, /^\/collections\/[^/]+$/, /^\/sibu$/, /^\/sibu\/[^/]+$/, ...BOOK_PATTERNS],
 };
 
 function hasLocalizedPath(canonical: string, lang: PrefixedLocale): boolean {

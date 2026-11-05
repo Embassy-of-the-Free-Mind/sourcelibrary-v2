@@ -79,7 +79,7 @@ export const BOOK_FIELDS = Object.freeze([
   'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
   'is_translation', 'text_role', 'text_source', 'translation_status',
-  'content_type', 'work_id',
+  'content_type', 'work_id', 'work_id_source',
   // provenance / source
   'ia_identifier', 'source_fingerprint', 'source_fingerprints',
   'image_source', 'contributing_library',
@@ -140,6 +140,9 @@ export const BOOK_FIELDS = Object.freeze([
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
+  // pages carrying a Chinese edition (translations.zh), written by the job that writes
+  // the text (#7537, Flora Sinensis from the Latin); read by editionsForBook
+  'pages_translated_zh',
   // language-keyed metadata glosses { es: { title } } — ONE map, never title_<lang>
   // columns; written by scripts/maintenance/localize-metadata.mjs (src/lib/localized.ts)
   'localized',

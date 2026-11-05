@@ -1,0 +1,195 @@
+{
+  "_note": "PRIOR ART: none. The ten known-outcome dilemmas, chosen by recognition-check.mjs replies read by eye: a case counts as identified if the true case is among Flash's three guesses. V08 passed too and stays unused as the reserve.",
+  "selected": [
+    {
+      "id": "T01",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Vasa, Stockholm 1628",
+      "text": "I am chief engineer on a showpiece exhibition hall our region is building to impress foreign visitors. Part-way through the steelwork, the governor, who follows the project personally, ordered a second heavy roof terrace added high up. I have adjusted what I can. Last week a supervised trial, with workers moving as a crowd from side to side up there, made the frame sway so badly that it was stopped. Nobody in the room wants to tell the governor, who is abroad and expects the opening this summer. My career rests on it. What should I do?",
+      "risks": [
+        "The structure fails soon after opening, in ordinary conditions, because it is top-heavy",
+        "People in or on it are killed",
+        "The whole investment is lost at once, with public humiliation in front of those it was meant to impress",
+        "Nobody with knowledge of the problem tells the person who ordered the change, because they fear doing so",
+        "An inquiry afterwards cannot or will not assign responsibility"
+      ],
+      "flash_guesses": [
+        "William LeMessurier and the Citicorp Center roof garden/wind sway crisis (1978)",
+        "Eiffel Tower third platform / Exposition Universelle construction debate (1889)",
+        "Crystal Palace / Great Exhibition gallery load testing and swaying under crowd marching (1851)"
+      ]
+    },
+    {
+      "id": "T10",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Kodak and digital photography, 1975-2012",
+      "text": "I am head of strategy at a very profitable century-old seed company. Our customers must buy our hybrid seed again every season, at wonderful margins. One of our young breeders has produced a line that farmers could replant from their own harvest for many years with no loss of vigour. It is crude today, but it will improve. If we develop it we will kill our own margins, and thousands of jobs in our home town rest on them. Our board thinks the threat is decades away. What should I recommend?",
+      "risks": [
+        "The new technology improves faster than the company expects and replaces the core product",
+        "The company holds back to protect margins and loses the market to rivals",
+        "Mass layoffs devastate the home town",
+        "The company eventually goes bankrupt in spite of owning the early invention",
+        "Half-measures and attempts to diversify elsewhere drain money without replacing the lost profit"
+      ],
+      "flash_guesses": [
+        "Pioneer Hi-Bred's decision regarding apomixis / true-breeding hybrid corn in the 1990s",
+        "KWS SAAT's evaluation of apomictic sugar beet / cereal lines",
+        "Vilmorin's decision on open-pollinated vs. hybrid wheat and vegetable seed lines"
+      ]
+    },
+    {
+      "id": "T16",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Wang Laboratories succession, 1986",
+      "text": "I founded a manufacturing firm and built it over thirty-five years. I must now name a successor. My president is an experienced outsider who has driven our growth, and most of the board and customers assume it will be him. My son has worked here for years, and has been loyal but has made costly mistakes in his current role. I have always said I built this for my family, and my family's control would end with me otherwise. What should I do?",
+      "risks": [
+        "The passed-over executive leaves, and others follow",
+        "The heir proves unable to run the firm, and results fall sharply",
+        "The founder is forced to remove the heir",
+        "Key customers and investors lose confidence in the firm",
+        "The firm collapses or goes bankrupt within years, ending the family's control anyway"
+      ],
+      "flash_guesses": [
+        "Henry Ford choosing Edsel Ford over Charles Sorensen / Harry Bennett at Ford Motor Company",
+        "Thomas Watson Sr. choosing Thomas Watson Jr. over Albert Williams at IBM",
+        "Matsushita Konosuke choosing Masaharu Matsushita (son-in-law) over Arataro Takahashi at Matsushita Electric / Panasonic"
+      ]
+    },
+    {
+      "id": "U09",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Quebec Bridge collapse, 1907",
+      "text": "I am a young site inspector on the largest stadium roof ever attempted in this country. The design's consulting engineer is famous, elderly and in poor health, and he works from far away and has never visited. Some of the main steel members are visibly bending, a little more each day. The site managers say they were probably bent before installation and that work should continue, to finish before winter. There has been no independent check of the calculations, and the client has limited money. What should I do?",
+      "risks": [
+        "The structure collapses during construction",
+        "Many workers die, because they are still on it when it falls",
+        "The warning does not reach the right people quickly enough to stop the work",
+        "It later turns out that the loads were underestimated and the design was never independently checked",
+        "Divided authority, with a remote consultant and on-site managers, leaves nobody able to stop the work"
+      ],
+      "flash_guesses": [
+        "Collapse of the roof of the Hartford Civic Center (1978)",
+        "Collapse of the Kemper Arena roof (1979)",
+        "Collapse of the Pontiac Silverdome roof (1975)"
+      ]
+    },
+    {
+      "id": "U14",
+      "type": "known",
+      "means_tempting": false,
+      "case": "US Prohibition, 1920-33",
+      "text": "I am a minister in a small island republic. Tobacco is killing our people, and a strong coalition of churches, doctors and mothers' groups has the votes for a complete ban on its sale and manufacture. It would be the boldest public-health measure anywhere. The tax revenue from tobacco is large and our police are few. Smokers are a big minority, including many of our officials. I have the deciding voice in the cabinet. What should I do?",
+      "risks": [
+        "Smuggling and illegal supply grow quickly",
+        "Criminal gangs grow rich and violent on the trade",
+        "The state loses a large tax income",
+        "Corruption of police and officials spreads, and contempt for the law grows",
+        "Unregulated products poison people, and the ban is eventually repealed"
+      ],
+      "flash_guesses": [
+        "Iceland's proposed ban on the over-the-counter sale of tobacco (prescription-only tobacco proposal, 2011)",
+        "Nauru's cabinet debate on a complete ban on tobacco sales and importation (Tobacco Control Act deliberations)",
+        "Samoa's cabinet deliberations on prohibiting the sale and manufacture of tobacco products"
+      ]
+    },
+    {
+      "id": "U22",
+      "type": "known",
+      "means_tempting": true,
+      "case": "Newfoundland cod collapse, 1992",
+      "text": "I am the scientist who advises the water authority in a farming valley that depends on a very big underground aquifer. Our official model says that current pumping can go on. Older farmers tell me the wells are behaving differently, and a small study of ours suggests that the model may be overstating what is down there. Cutting allocations now would ruin many families and the politicians are unwilling. If we wait for firmer data it will take years. A colleague suggests quietly adjusting the next report's figures to show a steeper decline than we can yet support, which would force the cuts now. What should I do?",
+      "risks": [
+        "The resource collapses suddenly, after a long period in which the official numbers looked fine",
+        "The local users' warnings prove to be right and the model wrong",
+        "Late action forces a total shutdown, costing far more jobs than early cuts would have",
+        "The resource does not recover for decades, if at all",
+        "Politicians delay because of the short-term economic pain"
+      ],
+      "flash_guesses": [
+        "Ogallala Aquifer groundwater depletion disputes (High Plains, US)",
+        "San Joaquin Valley groundwater overdraft and California Sustainable Groundwater Management Act deliberations",
+        "Murray-Darling Basin groundwater sustainable diversion limits controversy (Australia)"
+      ]
+    },
+    {
+      "id": "V01",
+      "type": "known",
+      "means_tempting": true,
+      "case": "Mid Staffordshire NHS trust, 2005-09",
+      "text": "I am managing director of a regional rail operator. To win the long franchise that would give us freedom over our budget, we have to find ten per cent in savings this year, and the only large cost left is track and carriage maintenance staff. My deputies say the numbers can be met by cutting night and weekend shifts, and that the franchise assessors look mostly at finance and punctuality targets. Some staff and passengers have raised concerns already, and my deputies point out that inspection logs can be signed off in advance, before the work is done, to get us through the assessment. A long franchise would, over time, bring the money to improve everything. What should I do?",
+      "risks": [
+        "Standards of basic care and upkeep collapse in the cut-down operations",
+        "People are neglected or endangered, and some die or come to serious harm",
+        "Complaints from the public are ignored or brushed aside",
+        "Staff who speak up are bullied or punished",
+        "A public inquiry later condemns the board for putting targets and finance ahead of safety and care"
+      ],
+      "flash_guesses": [
+        "Hatfield rail crash (maintenance cuts and falsified inspection logs under Railtrack)",
+        "Potters Bar rail crash (Jarvis maintenance contract cuts and inspection sign-offs)",
+        "Eschede train disaster (cost-cutting and deferred wheel inspection by Deutsche Bahn)"
+      ]
+    },
+    {
+      "id": "V03",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Isaac Newton and the South Sea Bubble, 1720",
+      "text": "I farm four hundred acres. Two years ago, in the land boom here, I sold a back field to a syndicate at about double what it was worth, and felt clever. Since then prices have tripled again, and neighbours who held on are buying new machinery on the paper value of their land. Nothing about the soil or crop prices has changed, but the bank says this time is different. I am sixty, and I have the sale money and my retirement in cash. I would like to buy back in, with much more land this time, on a loan. What should I do?",
+      "risks": [
+        "The investor re-enters near the top with much more money than before",
+        "The price collapses suddenly, and the investor loses much of a life's savings",
+        "The fact that the investor sold early and profited gives false confidence",
+        "The backers and promoters turn out not to protect ordinary investors",
+        "The envy of neighbours' gains, rather than analysis, drives the decision, and regret follows for years"
+      ],
+      "flash_guesses": [
+        "1920s Florida land boom farm speculation decisions (e.g., 1924-1925 citrus/farmland sales)",
+        "1970s US Midwest Farm Belt land boom and debt crisis decisions (e.g., Iowa farmer expanding prior to the 1980s farm crisis)",
+        "1830s US public land speculation bubble decisions (prior to the Panic of 1837)"
+      ]
+    },
+    {
+      "id": "V04",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Gauguin leaving his family, 1885",
+      "text": "I am thirty-seven, a dentist with a good practice, a wife and five children. For years I have spent every holiday studying seabirds, and a few serious ornithologists say my notes are something rare. I am convinced I will never do real work living this way. I want to sell the practice and go alone to a far-off island where I can live cheaply and study them for years. My wife says she married a dentist. There would be little money left after debts, and her family would have to help. What should I do?",
+      "risks": [
+        "The spouse and children are left in real financial hardship, dependent on relatives",
+        "The writer stays poor and earns almost nothing from the work",
+        "The relationship with spouse and children breaks down and is never restored",
+        "The writer's health fails in a remote place, far from help",
+        "Any recognition of the work comes too late to help the writer or the family"
+      ],
+      "flash_guesses": [
+        "Ronald Lockley deciding to leave his farming/orthodontic ties to live on Skokholm Island",
+        "Oliver L. Austin Jr. deciding to leave his medical/orthodontic studies to become a full-time ornithologist researching Arctic and Antarctic seabirds",
+        "Paul Bartsch deciding to abandon medical practice for avian research"
+      ]
+    },
+    {
+      "id": "V05",
+      "type": "known",
+      "means_tempting": false,
+      "case": "Nile perch in Lake Victoria, 1950s-80s",
+      "text": "I am the forestry officer for a poor hill district. Its mixed native woods feed and fuel the villages but fetch little money. A consultant proposes clearing large areas and planting a fast-growing foreign timber tree that would support an export industry and bring in much-needed money. Some botanists fear for native species and water; others say the district is big enough to cope. Villagers are divided. There are few other development options here. What should I do?",
+      "risks": [
+        "The introduced species wipes out many native species",
+        "Villagers lose the cheap local food and fuel they always relied on",
+        "Profits go to outside processors and exporters rather than to local people",
+        "Processing the new product brings other environmental harm",
+        "The ecosystem shifts in ways that cannot be undone, and the new stock itself eventually declines"
+      ],
+      "flash_guesses": [
+        "The replacement of native broadleaf forests with chir pine or eucalyptus in Uttarakhand (Garhwal/Kumaon) leading up to the Chipko Movement (1970s)",
+        "The Bastar Pine Project (World Bank funded commercial pine plantation replacing sal forest in Madhya Pradesh, late 1970s)",
+        "The introduction of commercial eucalyptus plantations under social forestry in the Western Ghats/Karnataka (late 20th century)"
+      ]
+    }
+  ]
+}

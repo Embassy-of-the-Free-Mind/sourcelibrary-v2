@@ -8,6 +8,7 @@ n_books: 24859
 n_pages: 5736921
 verdict: "A number-vote detector with gappy runs flags 1,164 of 24,859 live translated books for English sitting on the wrong leaf; Opus, reading the scans of n-1, n, n+1 blind to the flagged direction, confirms 76 of 80 tier-A books (95%, 88-98) and 156 of 220 tier-B books (71%, 65-77), and calls a shift on 0 of 20 random unflagged windows. On the single-page v2/v5 lane, which cannot shift, only 3 of 22 flagged runs confirm. A third signal, absorption (one page's English as long as its own leaf plus the next), confirms 40 of 59 (68%, 55-78) and reaches 1,624 books the numbers do not flag."
 status: adopted
+supersedes: [2026-10-13-translation-leaf-shift-5021.md]
 decision: "Contained 2026-11-03 under the contain-on-finding rule: 298 Opus-confirmed wrong-leaf pages in 74 tier-A books withheld (snapshots in page_revisions, sweep_log 'withhold-by-eye'), books held with reason leaf-shift-5021, release-when issue:5021. 495 more confirmed pages in 157 books are listed and not withheld (the brief's 300-page cap); a DECISION row asks about them. Detector change: scripts/lib/leaf-shift.mjs gappy rule for the audit only; the write-time gate keeps the strict rule."
 superseded_by: null
 issue: [5021]

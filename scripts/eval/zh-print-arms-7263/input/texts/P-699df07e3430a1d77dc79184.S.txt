@@ -1,0 +1,33 @@
+<language>Chinese</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<sig>命理正宗卷之三</sig>
+
+<margin>支無會合</margin>
+<image-desc>Ten semi-circular arch diagrams arranged horizontally, each arching over a vertical column of two four-character phrases.</image-desc>
+提綱有用 沖運則吉 十干化氣 無中生有 格局推詳 制煞爲權 時殺無根 時煞多根 印綬比肩 印無比肩
+最忌刑沖 沖用則凶 有影無形 禍福難遷 以殺爲重 何愁損用 煞旺最貴 殺旺不利 喜行財鄉 畏行財鄉
+
+<margin>莫犯提綱</margin>
+<image-desc>Ten semi-circular arch diagrams arranged horizontally, each arching over a vertical column of two four-character phrases.</image-desc>
+三奇透露 其根有用 十惡大敗 若會財官 煞不離印 殺印相生 八月官星 卯丁剋破 財官印綬 傷官七殺
+日干要強 富貴榮昌 格中不忌 反成富貴 印不離煞 功名顯達 大忌卯丁 有情無情 大忌比肩 反助爲權
+
+<margin>禍福推別</margin>
+
+<column-break/>
+
+<margin>而益遠者</margin>
+<margin>庚日申時</margin>
+<image-desc>Ten semi-circular arch diagrams arranged horizontally, each arching over a vertical column of two four-character phrases.</image-desc>
+壬寅壬戌 不混官星 癸向巳宮 運至南方 癸日申提 年煞月劫 煞多有制 官星犯重 壬日戊提 運喜東方
+陽土透立 名崇祿顯 財官拘印 財名必振 卯寅歲時 林下孤陋 女人必貴 濁淫濫類 癸干未月 逢沖即絶
+
+<margin>柱中金局</margin>
+<image-desc>Ten semi-circular arch diagrams arranged horizontally, each arching over a vertical column of two four-character phrases.</image-desc>
+壬癸多金 土旺則貴 癸日巳亥 地合傷官 癸日干巳 無官混雜 陽火申提 有根南旺 乙日酉月 有根丑絶
+生於酉申 水旺則貧 殺財透露 有勞無富 陰煞重逢 名利富貴 無根從煞 脫根壽促 見水爲守 無根寅危
+
+<margin>壬日亥月</margin>
+
+<vocab>命理正宗, 壬寅, 壬戌, 官星, 煞, 印綬, 提綱, 十干化氣, 傷官, 七殺, 富貴, 卯丁, 財官</vocab>

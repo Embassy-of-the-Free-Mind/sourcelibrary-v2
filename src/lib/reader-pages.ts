@@ -109,3 +109,66 @@ export async function resolveRepeatKeeper(
   }
   return null;
 }
+
+/**
+ * `resolveRepeatKeeper` for many pages of ONE book at once: hidden repeat id ->
+ * kept page id, for those of `pageIds` that are hidden repeats with a keeper.
+ * A page that is not a repeat, or whose keeper cannot be resolved, is absent.
+ *
+ * For links rendered from stored data (chapters[].pageId, a printed page
+ * number's page): the stored data is left alone and the link is mapped at
+ * render time. `findByIds` loads pages of the book by id with at least
+ * REPEAT_KEEPER_PROJECTION; it runs twice in the usual case (the pages, then
+ * their keepers), and once more per hop only for a chain or a split keeper.
+ */
+export async function resolveRepeatKeepers(
+  findByIds: (ids: string[]) => Promise<object[]>,
+  pageIds: Iterable<string>,
+): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  const wanted = [...new Set([...pageIds].filter((id) => typeof id === 'string' && id))];
+  if (wanted.length === 0) return out;
+  const byId = new Map<string, KeeperCandidate>();
+  const load = async (ids: string[]) => {
+    const missing = ids.filter((id) => !byId.has(id));
+    if (missing.length === 0) return;
+    for (const row of (await findByIds(missing)) as KeeperCandidate[]) {
+      if (typeof row.id === 'string') byId.set(row.id, row);
+    }
+  };
+  await load(wanted);
+  const repeats = wanted.filter((id) => typeof byId.get(id)?.repeat_of === 'string');
+  if (repeats.length === 0) return out;
+  await load(repeats.map((id) => byId.get(id)!.repeat_of as string));
+  const lookup = async (id: string) => {
+    if (!byId.has(id)) await load([id]);
+    return byId.get(id) ?? null;
+  };
+  for (const id of repeats) {
+    const keeper = await resolveRepeatKeeper(lookup, byId.get(id)!.repeat_of as string);
+    if (keeper) out.set(id, keeper);
+  }
+  return out;
+}
+
+/**
+ * Chapters with every `pageId` that is a hidden repeat swapped for its keeper
+ * (`keepers` from resolveRepeatKeepers). `pageNumber` follows the keeper when
+ * `numberOf` knows it: the reader picks the current chapter by page_number, so
+ * a chapter left at the hidden page's number would not be "current" on the
+ * page its own link opens. Returns the same array when nothing changes; never
+ * mutates the stored chapters.
+ */
+export function mapChapterPageIds<T extends { pageId?: string; pageNumber?: number }>(
+  chapters: T[],
+  keepers: ReadonlyMap<string, string>,
+  numberOf?: (pageId: string) => number | undefined,
+): T[] {
+  if (keepers.size === 0 || !chapters.some((ch) => ch.pageId && keepers.has(ch.pageId))) return chapters;
+  return chapters.map((ch) => {
+    const keeper = ch.pageId ? keepers.get(ch.pageId) : undefined;
+    if (!keeper) return ch;
+    const n = numberOf?.(keeper);
+    return typeof ch.pageNumber === 'number' && typeof n === 'number' ? { ...ch, pageId: keeper, pageNumber: n } : { ...ch, pageId: keeper };
+  });
+}

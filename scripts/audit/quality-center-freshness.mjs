@@ -26,10 +26,16 @@
  * figures; a measured result that moves the headline has to be read into the prose
  * within a week.
  *
+ * A fifth (#6553) catches the ledger itself stopping: the newest date in the generated
+ * scripts/eval/experiments/index.json must not trail the newest write-up file by more than
+ * --max-index-lag-days (1). /quality reads index.json, not the files; when
+ * eval-ledgers-regenerate.yml fails (four times, the last for 37 hours, #8031) every new
+ * write-up is missing from the page while checks 1–4 still pass on the files.
+ *
  * No database, no secrets. Run weekly by .github/workflows/quality-center-watch.yml,
  * which files one issue when this fails and closes it when it passes again.
  *
- *   node scripts/audit/quality-center-freshness.mjs [--max-days 30] [--max-measured-days 7] [--today YYYY-MM-DD]
+ *   node scripts/audit/quality-center-freshness.mjs [--max-days 30] [--max-measured-days 7] [--max-index-lag-days 1] [--today YYYY-MM-DD]
  *
  * Exit 0: current. Exit 1: something is stale (printed). Exit 2: a date could not be read.
  */
@@ -46,8 +52,14 @@ const toDay = (d) => new Date(d).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
 
 /** Pure: given the four dates, list what is stale. Dates are ISO YYYY-MM-DD. */
-export function checkFreshness({ proseAsOf, openWorkAsOf, newestExperiment, newestMeasured, feedbackOn, today, maxDays = 30, maxMeasuredDays = 7 }) {
+export function checkFreshness({ proseAsOf, openWorkAsOf, newestExperiment, newestMeasured, newestIndexed, feedbackOn, today, maxDays = 30, maxMeasuredDays = 7, maxIndexLagDays = 1 }) {
   const findings = [];
+  if (newestIndexed !== undefined) {
+    const lag = newestIndexed ? daysBetween(newestIndexed, newestExperiment) : Infinity;
+    if (lag > maxIndexLagDays) {
+      findings.push(`scripts/eval/experiments/index.json is newest at ${newestIndexed ?? '(no entries)'} but the newest write-up file is ${newestExperiment}: the ledger has stopped regenerating, and /quality does not show anything since. Read the last eval-ledgers-regenerate.yml run's log, fix the file it names, and run the workflow.`);
+    }
+  }
   const behind = (label, date, file) => {
     const d = daysBetween(date, newestExperiment);
     if (d > maxDays) {
@@ -83,8 +95,15 @@ export function readDates(root = ROOT) {
     openWorkAsOf: Number.isNaN(openParsed) ? null : toDay(openParsed),
     newestExperiment: newest ?? null,
     newestMeasured: newestMeasured(dir, dated),
+    newestIndexed: newestIndexed(path.join(dir, 'index.json')),
     feedbackOn: readFeedbackOn(root),
   };
+}
+
+/** The newest entry date in the generated index.json, or null when it has none. */
+export function newestIndexed(file) {
+  const entries = JSON.parse(fs.readFileSync(file, 'utf8')).entries || [];
+  return entries.reduce((m, e) => (e.date && (!m || e.date > m) ? e.date : m), null);
 }
 
 /** The date of the newest write-up whose header has a whole-number n_books and a verdict. */
@@ -106,6 +125,7 @@ if (isMain) {
   const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
   const maxDays = Number(flag('max-days', 30));
   const maxMeasuredDays = Number(flag('max-measured-days', 7));
+  const maxIndexLagDays = Number(flag('max-index-lag-days', 1));
   const today = flag('today', toDay(Date.now()));
   let dates;
   try {
@@ -119,8 +139,8 @@ if (isMain) {
     console.error(`could not read: ${missing.join(', ')}`);
     process.exit(2);
   }
-  console.log(`prose ${dates.proseAsOf} · open work ${dates.openWorkAsOf} · newest experiment ${dates.newestExperiment} · newest measured ${dates.newestMeasured} · feedback ${dates.feedbackOn} · today ${today}`);
-  const findings = checkFreshness({ ...dates, today, maxDays, maxMeasuredDays });
+  console.log(`prose ${dates.proseAsOf} · open work ${dates.openWorkAsOf} · newest experiment ${dates.newestExperiment} · newest measured ${dates.newestMeasured} · newest indexed ${dates.newestIndexed} · feedback ${dates.feedbackOn} · today ${today}`);
+  const findings = checkFreshness({ ...dates, today, maxDays, maxMeasuredDays, maxIndexLagDays });
   for (const f of findings) console.log(`STALE: ${f}`);
   if (!findings.length) console.log('/quality is current.');
   process.exit(findings.length ? 1 : 0);

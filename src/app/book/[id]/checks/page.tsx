@@ -57,7 +57,8 @@ const sentence = (s: string) => s.charAt(0).toUpperCase() + s.slice(1) + (/[.!?]
 
 function readerLine(r: BookCheck['reader']): string {
   if (r.kind === 'detector') return 'An automated check. No person or AI reviewer read these pages.';
-  const who = r.kind === 'human' ? 'A reviewer' : `An AI reviewer${r.model ? ` (${r.model})` : ''}`;
+  // The reviewer is named by kind, not model (#7263); `r.model` stays in the record.
+  const who = r.kind === 'human' ? 'A reviewer' : 'An AI reviewer';
   const how = r.image_opened === true ? 'reading each page against its image'
     : r.image_opened === false ? 'reading the text only, without the page image'
       : 'whether the page image was opened was not recorded';
@@ -249,10 +250,9 @@ export default async function BookChecksPage({ params }: PageProps) {
                 {method?.issue && (
                   <>{' · '}<a href={issueUrl(method.issue)} target="_blank" rel="noreferrer" className="underline underline-offset-2">What the check looks for</a></>
                 )}
-                {' · '}
                 {evidence
-                  ? <a href={evidence} target="_blank" rel="noreferrer" className="underline underline-offset-2">Full review file</a>
-                  : <>The reviewer’s full notes are not public.</>}
+                  ? <>{' · '}<a href={evidence} target="_blank" rel="noreferrer" className="underline underline-offset-2">Full review file</a></>
+                  : isPublic ? null : <>{' · '}The reviewer’s full notes are not public.</>}
                 {' · '}<span className="font-mono text-[12px]">{row.run_id}</span>
               </p>
             </section>

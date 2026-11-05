@@ -84,8 +84,10 @@ export default function HistoriesIndexPage() {
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           Each history follows one idea through the words different languages used for it. The essays and the claims
           under them were drafted by AI (Claude) from the library’s pages. Every claim names the page it rests on, so you
-          can open the book and read the passage yourself. Only claims that were checked against their page are shown,
-          and the partly supported ones are marked. Each history says at its foot how far it was checked.
+          can open the book and read the passage yourself. Only claims marked as verified or partly supported when they
+          were written are shown, and the partly supported ones are marked. When AI reviewers later re-read a random
+          sample of {HISTORIES.audit.all.n} verified claims against their pages, they rejected {HISTORIES.audit.all.rejected} ({HISTORIES.audit.all.pct}%),
+          mostly as overstated. Each history says at its foot how far it was checked.
         </p>
       </section>
     </ContentPageLayout>

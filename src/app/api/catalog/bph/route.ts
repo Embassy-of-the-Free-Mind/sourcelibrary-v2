@@ -5,6 +5,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { bookIdsNamedBy, withReadableBookLinks } from '@/lib/bph-catalog-book-links';
 
 export const dynamic = 'force-dynamic';
 
@@ -219,23 +220,19 @@ export async function GET(req: NextRequest) {
     works = decorated.map((d) => d.row);
   }
 
-  // Attach the SL book cover URL for rows that are linked to a Source Library
-  // book. The grid view renders covers from this field; list view ignores it.
-  // Best-effort: any MongoDB lookup error simply leaves rows without covers.
-  const slBookIds = Array.from(
-    new Set(
-      works
-        .map((w) => (w as { sl_book_id?: string | null }).sl_book_id)
-        .filter((id): id is string => typeof id === 'string' && id.length > 0),
-    ),
-  );
-  if (slBookIds.length > 0) {
+  // A row can name a book no visitor can open: on a rights hold, hidden, or gone.
+  // The link and the cover go, so the list offers no dead button; the row still
+  // opens its record. Fails closed: a rights hold must not show on a Mongo error.
+  // Covers: the grid view renders them from this field, list view ignores them.
+  const linkedBookIds = bookIdsNamedBy(works);
+  if (linkedBookIds.length > 0) {
+    const covers = new Map<string, string | null>();
     try {
       const db = await getReadDb();
       const books = await db
         .collection('books')
         .find(
-          { id: { $in: slBookIds } },
+          { id: { $in: linkedBookIds }, visible: { $ne: false }, pages_count: { $gt: 0 } },
           {
             projection: {
               id: 1,
@@ -248,7 +245,6 @@ export async function GET(req: NextRequest) {
           },
         )
         .toArray();
-      const coverById = new Map<string, string | null>();
       for (const b of books as unknown as Array<{
         id: string;
         image_display?: string | null;
@@ -256,17 +252,12 @@ export async function GET(req: NextRequest) {
         thumbnail?: string | null;
         thumbnail_blob?: string | null;
       }>) {
-        coverById.set(b.id, getBookThumbnailUrl(b, 'display'));
+        covers.set(b.id, getBookThumbnailUrl(b, 'display'));
       }
-      works = works.map((w) => {
-        const row = w as { sl_book_id?: string | null };
-        const id = row.sl_book_id;
-        return id ? { ...row, sl_cover: coverById.get(id) ?? null } : w;
-      });
-    } catch {
-      // Covers are decorative for list view and non-essential for grid;
-      // skip silently rather than failing the catalogue query.
+    } catch (err) {
+      console.error('[catalog/bph] readable-book lookup failed', err);
     }
+    works = works.map((w) => withReadableBookLinks(w, covers));
   }
 
   const total = isPinnedDigitizedView ? BPH_DIGITIZED_PINNED_TOTAL : (result.count || 0);

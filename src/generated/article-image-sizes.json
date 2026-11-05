@@ -67,6 +67,76 @@
   "w": 800,
   "h": 715
  },
+ "/articles/beeckman-on-drebbel/beeckman-1620-boat.png": {
+  "w": 470,
+  "h": 243,
+  "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoQAAgAA4BaJZwAApY+aIwAAP72Qsngw2wm4HR0co1hbFLC30RyR340O7f1QUDYQAA="
+ },
+ "/articles/beeckman-on-drebbel/beeckman-fig-16.png": {
+  "w": 500,
+  "h": 688,
+  "blur": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADQAwCdASoQABYAPu1iqk2ppaQiMAgBMB2JaV2GSbABOsJeCgej3AAA/u/VWodvvrU0v482RBhMqandZzM/1qkEu6CZ8uu1aQTXiRPFx5Y1blXvQhPObLudK/f+eTMhJKwvsYL9QxSO4N8NebTWvaXB+vq/UUPwhbsrAAAA"
+ },
+ "/articles/beeckman-on-drebbel/beeckman-fig-48.png": {
+  "w": 400,
+  "h": 400,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQABAAA4BaJaQAD5UPuWMaueTAAP7wi+PoybEC2EH/Ff73T9DEpELNeNkaXXyEIezB0AHpr1hxqFF8sjZTLWPgUF+TwcsegSy4pVQgzzdCxAg9f70vCsAA"
+ },
+ "/articles/beeckman-on-drebbel/beeckman-fig-49.png": {
+  "w": 500,
+  "h": 352,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoQAAsAA4BaJaQAAp0sen9nYAD+8KXYVMiGD7sDUS0zZ5pAKuCnCw2qs4rM5kj0ZxZ17RpWuEQaFyN83Qqr7s/3EyGqRAAA"
+ },
+ "/articles/beeckman-on-drebbel/beeckman-fig-50.png": {
+  "w": 600,
+  "h": 692,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAwCdASoQABIAPu1iqU2ppaQiMAgBMB2JaVTAADc3YluAAP7vjs3isB5Y4KxrEYdOtcNY7WBXMW5E6/FuHtUDnlyHpKFKRX1bNTYeeEAAAA=="
+ },
+ "/articles/beeckman-on-drebbel/beeckman-fig-55.png": {
+  "w": 600,
+  "h": 594,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwAgCdASoQABAAA4BaJaQAD5GwkfspuynIAAD+8j2c7MFEOdh99YBs9NSa5ZbEnmiRZV4fsyIN2hKhxkW8P9Min2yY9c3kHISK82y4dDIdm2q2Cw4XdGHIv1acXJwA"
+ },
+ "/articles/beeckman-on-drebbel/borelli-1680-fig-9.jpg": {
+  "w": 757,
+  "h": 401,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAAgAA4BaJaQAD4tQj9iCOLl4AP5hS4Ag2t3UbhoUBd79mdOPRuNam3QtbAbaaMAd784vmrM6tpSwinOUawAA"
+ },
+ "/articles/beeckman-on-drebbel/fyfe-1902-p159.jpg": {
+  "w": 1400,
+  "h": 687,
+  "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAgAA4BaJZgCdAD2BGu0AAD2sMLMvAgvwKSYv7zXiD8SVmZ2tX9ggz+ShH6heC1PxiAG2yd3af3PQELk4t6qr/7loir+/PAAAA=="
+ },
+ "/articles/beeckman-on-drebbel/harsdoerffer-1651-p493.jpg": {
+  "w": 1200,
+  "h": 1576,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAABwAwCdASoQABUAPu1iqU2ppaOiMAgBMB2JQBYdggC/Mt9sbTAA8M44nApc+z1C0kLupFI5xlxN21HsGMWHh8nKbctttoEUvjQAjBmxx7NrY5NVyuZDSnGQAAA="
+ },
+ "/articles/beeckman-on-drebbel/hautefeuille-1681-p7.jpg": {
+  "w": 1000,
+  "h": 1315,
+  "blur": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQBACdASoQABUAPu1mqk4ppaOiMAgBMB2JYwCdMoADTrCZO8E6j8VKgAD945KC9dPEhQJiRDW7wuoLIMAq5DUhEbiCr+SPo6TKKm2PahJsZAAA"
+ },
+ "/articles/beeckman-on-drebbel/papin-1695-fig-25.jpg": {
+  "w": 620,
+  "h": 560,
+  "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAA4AA4BaJQBOgCFyBzHOAAD+jxlOHO/HyD5xSqPDLQr6eRUHZok1EchyE4tIh1wIlAAA"
+ },
+ "/articles/beeckman-on-drebbel/papin-1695-fig-26.jpg": {
+  "w": 820,
+  "h": 720,
+  "blur": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACQAQCdASoQAA4AA4BaJQBOgBKqBwAA/rXTx4fl5Z3xoNY2OROTgG+HtsVcawpAAAA="
+ },
+ "/articles/beeckman-on-drebbel/papin-1695-p126.jpg": {
+  "w": 1200,
+  "h": 1997,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABwAwCdASoQABsAPu1krU6ppaSiMAgBMB2JQBadDSdHVkyaQ+AA/f97KXSO6QOGJdVBHQtxN5OBBNJyGDORfQhq2aEs8a6ANt7PJa4Jxu/5w3N17/O6T9DXSKOEHMr4EeTokLPAAAA="
+ },
+ "/articles/beeckman-on-drebbel/papin-1695-p135.jpg": {
+  "w": 1200,
+  "h": 2032,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwBACdASoQABsAPu1iqU2ppaOiMAgBMB2JQBOgtQA250NcZZamm0RDAsAA/mfLHOpletRTR0oO4RB5omhmN49y0SQE3YZtWnBVI/Ql0UgV0rBOdCELcz50IIMSlPF4cgCSb3/vSZAAAA=="
+ },
  "/articles/drebbel/alkmaar-cartouche.jpg": {
   "w": 1100,
   "h": 657,
@@ -797,6 +867,11 @@
   "h": 992,
   "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAgCdASoQABoAPu1iqU2ppaOiMAgBMB2JYwAAfKAAAP7uzWcg6x7LH/pLpchomzS0Sz+C0Jur3MnSc3G0lRkUc7GWwAAA"
  },
+ "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$270/full/600,/0/default.jpg": {
+  "w": 600,
+  "h": 992,
+  "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoQABoAPu1iqU2ppaQiMAgBMB2JYwC06CHe93D5O5YIAAD+6oxm94wmkl8P7ivtCcsnBC+Uyg/Uo1P4WwAAAA=="
+ },
  "https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/600,/0/default.jpg": {
   "w": 600,
   "h": 992,
@@ -826,6 +901,10 @@
   "w": 2500,
   "h": 3400,
   "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoQABYAPu1iqU2ppaOiMAgBMB2JbACdABQxxkIpwVjhkS9iAAD+3G5auxVf+tL22MRY432r542oR6qr2FKNMrjg2lOXIDg1DRp+HgSVq0kYSasE+w8hTP7zjT0dmL8JcKnbnTgkCaPOsg9fifaLG8ZK8M76RYvKkXoAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/65c7583f-4866-4f74-8903-a37bd8f1de33/8.jpg": {
+  "w": 5292,
+  "h": 7904
  },
  "https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg": {
   "w": 5305,
@@ -882,10 +961,35 @@
   "h": 3164,
   "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAwCdASoQABgAPu1iqk2ppaQiMAgBMB2JZWHgRgAU/ZFsAAD+73IS0ncUyvYGO2anYRI+VombN4B44pDRuKAA"
  },
+ "https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/172.jpg": {
+  "w": 2296,
+  "h": 3655,
+  "blur": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoQABkAPu1krU6ppaSiMAgBMB2JZQCdACHfyHPrIqJgAP7rGhiJ/bpMmhUHkz65tVN4wInreItnFtCpYmPKS9AA"
+ },
+ "https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/473.jpg": {
+  "w": 2308,
+  "h": 3644,
+  "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAwCdASoQABkAPu1iqk2ppaQiMAgBMB2JZQC/OCKMx3QzxJKpMAD+53swYT5Ykavi8DXoKiI0qm9rSHJLnoYQOhLzvRxwbVwVWjcEIL8MCz7UAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/511.jpg": {
+  "w": 2308,
+  "h": 3644,
+  "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAwCdASoQABkAPu1iqk2ppaQiMAgBMB2JZTyFHuSH5HxTj4PgAAD+7s3WW3ZrLR1CeQ8QK0lYe++JjDjlqdHJ+JVWEHfc/Q7q5HsptTKdlhj/WSmzYAAA"
+ },
  "https://images.sourcelibrary.org/archived/69527376ab34727b1f04948a/727.jpg": {
   "w": 3077,
   "h": 4051,
   "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoQABUAPu1iqU2ppaQiMAgBMB2JQBOgBD3qHAhh4fEj4AD+vJzLGGRPz69W1ewt8fiHlRALgq2p1lU9z0YgA0OzD9oDNAT8+rX0gyQIiawAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695273a7ab34727b1f04a708/570.jpg": {
+  "w": 4381,
+  "h": 6680,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAACwAwCdASoQABgAPu1iqU2ppaQiMAgBMB2JaQAAW4/aWGSuIRBPIAD+8EDTlwyen1eCBxJZG5wDDLy0ankRnatSE+kalusQr55VWbzgIEac63UgrJrqgRkqyleyEWbxTqSPxJRiMF34a6xXeAAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/695273a7ab34727b1f04a708/64.jpg": {
+  "w": 4381,
+  "h": 6680,
+  "blur": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JaQAAUWQ1g9vI2eo9dTjQAAD+7eq0aPzim2Kpa1BLP/0FURso7XXxFv+mh/J/AqVyoY3pOqTaU/7GXKurnmgNbiHHjs4cUOl7gtUZ5fJIsIJR5Byb+SrN+BAAAA=="
  },
  "https://images.sourcelibrary.org/archived/695285cdab34727b1f04c25a/96.jpg": {
   "w": 3004,
@@ -922,6 +1026,21 @@
   "h": 3054,
   "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JQBOgAySOFsE/LWm4MsAAAP7G7AnYV7/MlY0y8R3NnrhbXH/k3YSPdoaKTzAc4HQR+o+VxOn7UcpApzwRQFwK/ZPzevrxe74MFjvwAAA="
  },
+ "https://images.sourcelibrary.org/archived/6952db5777f38f6761bc7519/13.jpg": {
+  "w": 1732,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwBACdASoQABcAPu1iqU2ppaOiMAgBMB2JZgCdL1yB0aS38u/DJmLXKaAAzYqVLBo+iW/M/APV/RksTqZ1KffcY9BxaEanPjFqwyVxxBklbb/sLIEJX9EfI2sPNPY9RMAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6952db5777f38f6761bc7519/133.jpg": {
+  "w": 1692,
+  "h": 2500,
+  "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABgAPu1iqk4ppaQiMAgBMB2JaQAAW9wxjQgxJ/FrAAD+8i7UkD2iMX55RH7cABIL2ckxLp95NqkAMotqqRrfwc9gq6oAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/695361a09c494f9f9f04278f/91.jpg": {
+  "w": 3239,
+  "h": 5464,
+  "blur": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAACwAwCdASoQABsAPu1iqU2ppaOiMAgBMB2JaQAAW+GrzvGLbzIAAAD9nX6S9k05U2YuR5Ytx6OUJDZ1Fswp/2zP0EyJIbH9eY9VnEZKKW818DkMMBSAc+a35DqN6C/IjHhjL+2F/PvwIoyhRxHkLB1nqX6ByLsAAAA="
+ },
  "https://images.sourcelibrary.org/archived/6953a93977f38f6761bd58f4/360.jpg": {
   "w": 1660,
   "h": 2587,
@@ -936,6 +1055,11 @@
   "w": 5467,
   "h": 8423,
   "blur": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAQBACdASoQABkAPu1iqk2ppaQiMAgBMB2JZQCdACHXSsNHHZbkqydsAADN7+qUmCJEJBUqi7KJIXAlMFHDBkrfS8c6GQK2kTA1IbJyg0xBcmyA40NBbkpM+XiXxnTCTo8yfDOhfV/GsMXgAAA="
+ },
+ "https://images.sourcelibrary.org/archived/6953e55c77f38f6761bf08ae/132.jpg": {
+  "w": 1423,
+  "h": 2513,
+  "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACQAwCdASoQABwAPu1iqU2ppaQiMAgBMB2JZQCdAB6PVU8GtEPQAP7Thc7iYun2sNj17fBUU+oUvxd+SOPHBlAA"
  },
  "https://images.sourcelibrary.org/archived/695434421479a63c11088c27/122.jpg": {
   "w": 1838,
@@ -1117,6 +1241,11 @@
   "h": 3000,
   "blur": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAwBACdASoQABkAPu1iqU2ppaOiMAgBMB2JaQAIEAPa/wNelNMrZJCAZrAA/vIyyxyyOCohwU8TTgYLyQGbKv3GPMa09rsFvW8p78ww1KKPnnEoR6c20zVMJu+8oy3nUW0StqI3Q6fxiqBFeqVf+mtLJYF+Ibdl4dXJkOiBl5wAAA=="
  },
+ "https://images.sourcelibrary.org/archived/6994383a6879ff0184cb803a/281.jpg": {
+  "w": 2166,
+  "h": 2995,
+  "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAgCdASoQABYAPu1iqU2tJaQiMAgBoB2JZQC/OC2xAAD+7/i2r0NpEHG+5FULjDBGJ2SFmSihaQ0AAAA="
+ },
  "https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/26.jpg": {
   "w": 2500,
   "h": 3625,
@@ -1182,6 +1311,11 @@
   "h": 2170,
   "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAwAA4BaJZQAAmiTcQnYHAAA/uu3ASuCFCB5heOsRpgqkGUS2Rn/aeEQB0SmXz0cxf3FOXgAAA=="
  },
+ "https://images.sourcelibrary.org/archived/69a5d7d74d84314297c07d7f/24.jpg": {
+  "w": 800,
+  "h": 1087,
+  "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAwCdASoQABYAPu1iqk2ppaQiMAgBMB2JZQC7ACHviIMKCjxKpHasAP7EaEI0YpSaUPBXB74jX7VEx2wbx/8ROQcw7zPTAvgAAA=="
+ },
  "https://images.sourcelibrary.org/archived/69a97a1bf3f3d2fb7de26ca4/226.jpg": {
   "w": 1714,
   "h": 2940,
@@ -1221,6 +1355,21 @@
   "w": 2697,
   "h": 3890,
   "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAwBACdASoQABcAPu1iqk2ppaQiMAgBMB2JQBOl65A6NC9lv0IFL0KjowAA/t4hTCAeaYQWv3Phb1l6V3rWAUBeiEFlm1YPmI78Szlhu1mc5iq5qHj8ygVOiZUc4T0gngUBwXmAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69aebe60c0472fef6455a8f3/207.jpg": {
+  "w": 2529,
+  "h": 3888,
+  "blur": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoQABkAPu1kq04ppaQiMAgBMB2JQBOgBDFRo6oM3/5dAAD9U/gKmTBoJx1hLifuTvtyVY3ALtEnp2/bNwPb/G/QXK2c86+ZJzNUj6DVgfzsHPtL8M7ic372DkeYjpxAAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69af0a0803e79fb33525bfff/21.jpg": {
+  "w": 2033,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoQABgAPu1mqk2ppaQiMAgBMB2JZQCdACHf7sCoGlvIAnA3AAD+kbRa6wo9ZvUxpoBBX6KW5P2+z5BNqoTfY7UB4xz448TzQtENti1dYy9Cec/GDXHVZsVgCzoFAAAA"
+ },
+ "https://images.sourcelibrary.org/archived/69af0a0803e79fb33525bfff/85.jpg": {
+  "w": 1993,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAwCdASoQABgAPu1mqk2ppaQiMAgBMB2JZwC2yCHHdwbV74gdnAAA/lvr1goexEiBFAIvJoBsDODTpROiquRpFO+L977TaRwoVs3qhdfghb88a5YHkCJPSEClR3QA"
  },
  "https://images.sourcelibrary.org/archived/69af0dab9f13b61d0a6c6105/309.jpg": {
   "w": 2145,
@@ -1262,6 +1411,11 @@
   "h": 5102,
   "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAgCdASoQABUAA4BaJZQCdAEO/+jxk4K1kAAA9r7TDeH5Bbq3oEceowV0O0D6ExdPtUtmBg3RDMGz2Wn997ZvO2XQYFkDstwAAA=="
  },
+ "https://images.sourcelibrary.org/archived/69b51d6d261c58d63664a896/3.jpg": {
+  "w": 1000,
+  "h": 1295,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoQABUAPu1iqU2ppaQiMAgBMB2JQBOmUI7gBCFi8fH1RauYAP5xYSymppXMRI87XfWA+HZ3LvhjyjUhCgNLTn7jqFtdgh7SSEC1GAGxrEaQAA=="
+ },
  "https://images.sourcelibrary.org/archived/69b51e19261c58d63664f8d4/367.jpg": {
   "w": 2133,
   "h": 3525,
@@ -1291,6 +1445,26 @@
   "w": 1822,
   "h": 2438,
   "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACQAwCdASoQABUAPu1kqk4ppaQiMAgBMB2JYwCdACHfv/TEmXNAAP5msGTIy6uHwSOZDpXrbYhYHY99+7pKNqe4HDd5pO+WBE7KGV5/o6LWjC5AAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69bd9cd86120d54bd037157c/166.jpg": {
+  "w": 1932,
+  "h": 2318,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoQABMAPu1iqk2ppaQiMAgBMB2JQBOmUABp18ZuNoNeHWMLgAD+lLyjBjlDah2nen7Et+BCXg5ugdqCIXT8WyQgkQfNoKCNpvcUeahXr2a4pty8AAA="
+ },
+ "https://images.sourcelibrary.org/archived/69bd9cd86120d54bd037157c/83.jpg": {
+  "w": 1932,
+  "h": 2388,
+  "blur": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoQABQAPu1iqk4ppaQiMAgBMB2JYwCdACHOoDOPpPYgaAAA/eOrsFE8Vk05+8MIOup+9UozDgObwcrFFFHybpp3F5yThUqigW8ZLz6r4gQOAtVsAAA="
+ },
+ "https://images.sourcelibrary.org/archived/69bd9ed6f6d63c919747ceb3/207.jpg": {
+  "w": 2271,
+  "h": 3086,
+  "blur": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoQABYAPu1iqk4ppaQiMAgBMB2JYwCo9CHfIMnBhw9mOkjzAAD5PvW54Awkyfzm8OIgEvz0XKGIw0Z/LFkwPlJVxdldOHX5tl2F5xDmNpNLA0/nWWMxUQAA"
+ },
+ "https://images.sourcelibrary.org/archived/69bd9ed6f6d63c919747ceb3/41.jpg": {
+  "w": 2110,
+  "h": 3086,
+  "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JYwCdACHf1gfCxVTP0QAA/PIkoY6v9ZPQfbndqN/6f4IEYaM5LR57Il+fjA2Imr927ZZHlqLqH5uqERXw92uvoysAAA=="
  },
  "https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/24.jpg": {
   "w": 2016,
@@ -1467,6 +1641,11 @@
   "h": 924,
   "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQAwCdASoQABcAPu1iqU2ppaOiMAgBMB2JaQAAW+wlkNRqOPmAAP7V5/z3pmqC4PLrnp8/8DUqc1tAOanCm0jhaVzD1xGfywUuNdL0zspobC5NmqFGQY7MGl+R+OYNV/6kZ4+L963WKcIfpTa8eH7CpFQ6AAAA"
  },
+ "https://images.sourcelibrary.org/archived/6a44359d0235c9147000dd12/50.jpg": {
+  "w": 2009,
+  "h": 3000,
+  "blur": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoQABgAPu1iqk4ppaQiMAgBMB2JaQAAXAYOZs9ZV7XyAAD+8d6VVWnCK6TyyNSbj1Q5+B6pTY4pAh5rKo70+QPZkKCCAAAA"
+ },
  "https://images.sourcelibrary.org/archived/6a4a3ea3f0f4a3b75e90cdbc/78.jpg": {
   "w": 1761,
   "h": 3000,
@@ -1486,6 +1665,11 @@
   "w": 1086,
   "h": 1795,
   "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACQAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JQBOgAm0FZ4ALp/jgAPboc30oH6qQhnLhtUnuPJtjG4GttIj4uMJj+qqyHRIZWGsxPDFxSneJlWajq9XokoVgogAAAA=="
+ },
+ "https://images.sourcelibrary.org/archived/6ab22cb0277b509c83e95be2/47.jpg": {
+  "w": 1916,
+  "h": 3128,
+  "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAABwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JZQCdAC0APWu4QAAA/uyxJBm2rWxGGfrWX1k6A73+D74iGgAAAA=="
  },
  "https://images.sourcelibrary.org/archived/6ab5a4019e89e2a1f4139282/171.jpg": {
   "w": 4309,
@@ -1752,6 +1936,26 @@
   "h": 3636,
   "blur": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoQABcAPu1kq04ppaQiMAgBMB2JYwCdACG582Hy7M2CVkAA/eOrkDRYlDtGmwehdR12d2ErEYaM7J3ohhwBK6BziL5zQnhwOtlNY955Jww2QAAA"
  },
+ "https://images.sourcelibrary.org/cropped/6970e3729b09d309d780a2a0/6974cdb4b04cb7e93b0b08da.jpg": {
+  "w": 1200,
+  "h": 1738,
+  "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACQAwCdASoQABcAPu1mq04ppaQiMAgBMB2JYwCw7CGVkCT9KQtgAP3jkuVTi69Ajpc6IrvooNaa2kQ7x7FiVY+IYtUnOUi3OPWJp/1Cet4XPn1IEZ1wAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/6975158ba88d83c830d99e24/6976343a91079d7f1981a1bd.jpg": {
+  "w": 1200,
+  "h": 1487,
+  "blur": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZQCsACHc1a3dNKoD5QAA/lv27L67/zzAz5mWwy9FbxXtc9g6j74+qX6/HVz7QRT9FcF282X9PMkImo+VmxfwO8u7hoyD64HOWriwWl0V8Z5HPAAAAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/6975158ba88d83c830d99e24/6976346b91079d7f1981a1c1.jpg": {
+  "w": 1200,
+  "h": 1492,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JZQC06CHfTCm91ewAAPlwZc6TQJqCPjgGRgK5LfY7Apmrhzgd0LOcbZ6gdzGjVAA="
+ },
+ "https://images.sourcelibrary.org/cropped/6975158ba88d83c830d99e24/6976346b91079d7f1981a1c2.jpg": {
+  "w": 1200,
+  "h": 1492,
+  "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoQABQAPu1orU6ppiSiMAgBMB2JZQCsACHfwGvYWGgA/eOSgvXQ78zLbXBJ+Qo66J/tLt7jKDk0b0CETXxZkOJYAAA="
+ },
  "https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6980bf6ac0fed4b65dfe5999.jpg": {
   "w": 1200,
   "h": 1381,
@@ -1786,6 +1990,11 @@
   "w": 2294,
   "h": 3051,
   "blur": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoQABUAPu1mqk4ppaOiMAgBMB2JYwCdACG87AHPaDNSbNyAAP5b9vCxqx2ZomDt2a6BkRj5Sme0iC0MGJHp2oHO+f+Nd/A3e6IQQdGWndRgAA=="
+ },
+ "https://images.sourcelibrary.org/cropped/69c79da6732b9d1f2b38170b/69f727c09b6af70d44af56d7.jpg": {
+  "w": 2976,
+  "h": 4020,
+  "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoQABYAPu1iqU2ppaOiMAgBMB2JYwC7ACG+0ssXJiB1joAA/I/gv+GhTQhl0NfIAbFg5rqq0iDi+4q0cSu83Hta1n5FjUZzlyavtPUdjYe2NuSCNUJMAspCMAA="
  },
  "https://images.sourcelibrary.org/cropped/69c8716b6c6f3cc53c857589/69f7743f6028036f8e2397ab.jpg": {
   "w": 3301,
@@ -1966,6 +2175,11 @@
   "w": 1916,
   "h": 3108,
   "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoQABoAPu1iqU2ppaOiMAgBMB2JZQCsACHgbKGoYFoIzjQAAPffjplMKRF5v/bqxyNbp0R4LqvZ9e/vtS04/TkcDA+bWlKJ/3fv6Y+hP/CLVU/TTFzECEPaQAA="
+ },
+ "https://images.sourcelibrary.org/pages/6975158ba88d83c830d99e24/0031-full.jpg": {
+  "w": 2704,
+  "h": 3548,
+  "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQBACdASoQABUAPu1iqU2ppaQiMAgBMB2JZQC7ACHHeCk+iP7MjGTmAAD+W/bQXrpedpzJX3+m7c72ssCqRtroJP+TipDCSyveCg7Mh+WiP/184Vj9S/JhkmHlvcfyYbP4nYQQjAgAAA=="
  },
  "https://images.sourcelibrary.org/pages/697d9ca2e930671f09614566/0133.jpg": {
   "w": 1200,

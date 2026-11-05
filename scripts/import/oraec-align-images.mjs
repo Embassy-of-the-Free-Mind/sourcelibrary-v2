@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: this key holds the master (photo + archived_photo, no display_photo); display-backfill makes the marked variant at a sibling key (#4406).
 /**
  * Align Wikimedia Commons manuscript images with ORAEC paginated texts.
  *

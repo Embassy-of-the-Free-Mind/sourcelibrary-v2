@@ -1,0 +1,1045 @@
+[
+  {
+    "book_id": "6ae0c4394adf2ffb52f75327",
+    "slot": 17,
+    "title": "後漢書[范煜…等撰]·卷六十上~卷六十一 (Hou Hanshu, Siku Quanshu, vol. 21 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定巳尾全書",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "比音庇",
+            "english": "The pronunciation of \"bi\" <gloss>portent/comparison</gloss> is indicated here",
+            "problem": "the reading 庇 is dropped, leaving an empty sentence",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\n人\n下\n厂\n仁\n<page-num>三</page-num>\n<page-num>七</page-num>",
+            "image": "欽定四庫全書 in the margin; no folio 三/七 visible",
+            "problem": "running head split into five junk lines and two invented page numbers before the text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 85,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "小宣城",
+            "image": "宋宣城",
+            "problem": "dynasty 宋 misread as 小 in the author line",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "唐章懷大\n守范\n煜撰\n子\n賢\n注",
+            "image": "宋宣城太守范煜撰 / 唐章懷太子賢注 (two columns)",
+            "problem": "the two attribution columns are interleaved, so the transcription reads 唐章懷大守范煜撰",
+            "severity": "moderate",
+            "class": "O9"
+          },
+          {
+            "ocr": "前書曰解字翁伯河内軹人徙 … 也",
+            "image": "note continues at the top of the last column (徙茂陵也?)",
+            "problem": "end of the interlinear note around 茂陵 dropped; detail small, low confidence",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "宋宣城太守",
+            "english": "Grand Administrator of Xuanxing",
+            "problem": "宣城 is Xuancheng",
+            "severity": "moderate"
+          },
+          {
+            "source": "徙 … 武帝時以任俠聞",
+            "english": "He relocated during Emperor Wu's reign and was widely known as an errant knight",
+            "problem": "main-text clause 武帝時以任俠聞 (about Guo Jie) is folded into the commentary gloss",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金文巨座人三",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "卷六十",
+            "image": "卷六十一",
+            "problem": "running-head juan number truncated",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "遷右扶風",
+            "english": "promoted to Colonel-Director of Retainers of the Right <term>youfufeng</term>",
+            "problem": "右扶風 is the Right Supporter of the Capital (governor of the capital region), not a Colonel-Director of Retainers (司隸校尉)",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves, accurate body transcription of text and commentary, and a faithful English that keeps text and Li Xian's notes apart; the defects are garbled running heads and a few official titles mis-rendered.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      27,
+      39
+    ],
+    "reader_summary": "Juan 60 (Lang Yi and Xiang Kai's portent memorials) and juan 61 (Guo Ji, Wang Tang and others) of the Siku Quanshu Hou Hanshu. The transcription is the page's own text, main text and small-character commentary both, with junk lines where the OCR reads the margin. The English is close and usable, but check official titles (右扶風 rendered as Colonel-Director of Retainers) and place names against the Chinese."
+  },
+  {
+    "book_id": "6ae0c5b74adf2ffb52f75c45",
+    "slot": 18,
+    "title": "後漢書[范煜…等撰]·卷一百二~卷一百四上 (Hou Hanshu, Siku Quanshu, vol. 36 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "全\n人\n巳\n人\n<page-num>三</page-num>\n巨",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription (six junk lines and an invented page number)",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\n宍\n巳\n辰\n人\n<page-num>三</page-num>",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "偏將軍",
+            "english": "Minor General",
+            "problem": "偏將軍 is Lieutenant General (general of a wing); title imprecise",
+            "severity": "minor"
+          },
+          {
+            "source": "夷三族",
+            "english": "exterminating his clan to the third degree",
+            "problem": "三族 is the three branches of kin, not a degree",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 103,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "洛陽城東北面頭門也",
+            "english": "the first gate on the northeastern side of the city wall",
+            "problem": "the note means the northernmost gate of the east wall; slight",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 146,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定巴瓜人三",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "前書賈誼曰大臣特以簿書不報期會之間以為大故",
+            "english": "High officials were treated with severity merely over failure to report paperwork or schedules during meetings, which was regarded as a grave transgression",
+            "problem": "'treated with severity' is added; Jia Yi says the ministers regard only paperwork and deadlines as serious matters",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane opens with '<unclear>金定巴瓜人三</unclear>', a heading '# Volume 104, Part One' made from the running head, and '<unclear>渠廉</unclear>' with a 'phonetic gloss: fan' note for the tail of a fanqie 渠廉反 carried from the previous page",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves and a careful transcription of the Dong Zhuo / Yuan Shao chapters; the English is faithful. One page shows margin junk and a running head turned into a heading in the English pane.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      103
+    ],
+    "reader_summary": "Juan 102–104上 (Dong Zhuo, Yuan Shao) of the Siku Quanshu Hou Hanshu, with Li Xian's commentary. The transcription is the right text, apart from junk lines where the OCR reads the margin, and the English follows text and notes closely, including Chen Lin's proclamation against Cao Cao. Warn that running-head junk sometimes reaches the English pane."
+  },
+  {
+    "book_id": "6ae0c2834adf2ffb52f747e5",
+    "slot": 19,
+    "title": "後漢書[范煜…等撰]·卷一上~卷一下 (Hou Hanshu, Siku Quanshu, vol. 1 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<header>卷一</header>\n<header>卷二</header>\n<header>卷三</header>\n文之曰豆",
+            "image": "margin shows only 御製文 and folio 二; no 卷一/卷二/卷三 and no 文之曰豆 on the leaf",
+            "problem": "three juan headers and a phrase invented from the margin; text not on the page",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "English pane ends with 'Volume 1 / Volume 2 / Volume 3 / Recorded as Dou' as headers, translated from the invented OCR lines",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 71,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "江草",
+            "image": "江革 (the image glyph is close to 草 but the name is Jiang Ge)",
+            "problem": "name read as 草",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "火\n三\n勾\n主\n人\n三\n寸\n司\n後漢書\n主",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 二十七",
+            "problem": "ten junk lines from the fold margin",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "度尚 … 楊琁 … 趙咨",
+            "english": "each name followed by a <note> biography (e.g. Yang Xuan 'innovated tactical chemical warfare with lime carts')",
+            "problem": "biographical notes added that are not on the page; mostly accurate but unmarked as editorial",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane carries nine '<unclear>' tags, one per junk glyph (火, 三, 勾 …)",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "summary says the page lists Volume 68; only 卷六十九 and 卷七十上 appear",
+            "severity": "minor",
+            "class": "E1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 132,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 202,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "火\n三\n日\n<page-num>三</page-num>\n<page-num>三</page-num>\n日",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 七",
+            "problem": "junk lines and invented page numbers from the margin",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "中郎將來歙",
+            "english": "General of the Household Gentlemen Lai She",
+            "problem": "歙 in this name reads Xi (Lai Xi)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Volume 1 (the imperial essay and table of contents, then Guangwu's annals): the narrative pages are well transcribed and translated, but the front-matter pages turn margin junk into invented headers and <unclear> lists in the English, and the contents page gains invented biographical notes.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      132
+    ],
+    "reader_summary": "The first volume of the Siku Quanshu Hou Hanshu: an imperially composed essay (御製文), the table of contents, and the Annals of Guangwu, with Li Xian's notes. The annals pages are the right text and the English is faithful. The front-matter pages show junk headers, '<unclear>' strings and added notes that a reader should know are not from the page."
+  },
+  {
+    "book_id": "6ae0c5bc4adf2ffb52f75cea",
+    "slot": 20,
+    "title": "後漢書[范煜…等撰]·卷一百四下~卷一百六 (Hou Hanshu, Siku Quanshu, vol. 37 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定四庫全書",
+            "image": "欽定四庫全書",
+            "problem": "first character of the running head misread",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "譚擊之敗尚走保險譚追攻之",
+            "english": "Tan attacked him but was defeated. Shang retreated to hold defensible terrain, and Tan pursued",
+            "problem": "in the note Tan attacks and defeats Shang (擊之，敗尚), who flees; the English has Tan defeated, which contradicts Shang retreating and Tan pursuing",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 61,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "全書口匠全書",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "元惡既斃",
+            "english": "they struck down the chief evil. Once that chief malefactor was slain",
+            "problem": "one clause rendered twice",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 72,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "二、二、二、二、二\n後美書\n十二",
+            "image": "margin 後漢書, folio 十二",
+            "problem": "junk line; 漢 read as 美 in the margin title",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "州舉茂才",
+            "english": "Eminent Talent <note>… originally called Flourishing Talent</note>",
+            "problem": "added note garbles the 秀才/茂才 history (茂才 replaced 秀才)",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves, clean transcription of the Yuan Tan/Yuan Shang, Yuan Shu/Lü Bu and Wang Huan chapters, and a faithful English; one commentary note reverses who defeated whom.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      72,
+      61
+    ],
+    "reader_summary": "Juan 104下–106 of the Siku Quanshu Hou Hanshu (the later Yuan clan, Yuan Shu, Lü Bu, Sun Ce's letter, the good officials). The transcription is the page's text with minor margin junk. The English can be trusted for the main text; check battle outcomes in the commentary notes against the Chinese."
+  },
+  {
+    "book_id": "6ae0c52b4adf2ffb52f759a6",
+    "slot": 21,
+    "title": "後漢書[范煜…等撰]·卷九十上~卷九十二 (Hou Hanshu, Siku Quanshu, vol. 32 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "全六八正座全言",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "事\n表\n左",
+            "image": "事表左 (one phrase)",
+            "problem": "the phrase split into three lines",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "事表左",
+            "english": "Matter / Memorial / To the Left",
+            "problem": "事表左 ('the matters are set out at the left', i.e. listed below) rendered as three separate headings",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 139,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "笈莫書\n1几",
+            "image": "margin 後漢書, folio 十九",
+            "problem": "margin junk at the end",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "瓊初以父任為太子舍人",
+            "english": "In his youth, Qiong was appointed",
+            "problem": "初 is 'at first', not 'in his youth'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane ends with '<unclear>笈莫書 1几</unclear>'; two notes are split mid-sentence (\"The Bamboo Annals </note><note>original…</note> states:\") so commentary text spills into the main text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 184,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定巳辰金言",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "從事中郎",
+            "english": "Senior Clerk",
+            "problem": "從事中郎 is Attendant Officer of the General's staff; title imprecise",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane opens with '<unclear>欽定四庫全書</unclear>' and a heading '# Volume 92' made from the running head",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves and an accurate transcription of the Ma Rong, Cai Yong, Huang Qiong and Xun Shuang chapters; the English is faithful but shows <unclear> margin junk, split notes and one misparsed formula (事表左).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      2
+    ],
+    "reader_summary": "Juan 90–92 of the Siku Quanshu Hou Hanshu: Ma Rong, Cai Yong's seven memorials, Huang Qiong and Xun Shuang, with Li Xian's notes. The transcription is the right text and the English follows it well. Warn that junk from the margin and broken note markup sometimes show in the English pane."
+  },
+  {
+    "book_id": "6ae0c4544adf2ffb52f754d4",
+    "slot": 22,
+    "title": "後漢書[范煜…等撰]·卷六十八~卷七十下 (Hou Hanshu, Siku Quanshu, vol. 24 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\n欠\n匹\n压\n人\n<page-num>三</page-num>\n言",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "尚書朱穆",
+            "english": "Minister Zhu Mu",
+            "problem": "尚書 is Master of Writing",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "English ends with '<page-num>3</page-num>' and '<header>Scroll Sixty-Eight</header>' after the text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "遷五官中郎將",
+            "english": "Commander of the Five Officers of the Rapid Tiger Cadets",
+            "problem": "五官中郎將 is General of the Household Gentlemen of the Five Offices; 'Rapid Tiger Cadets' is invented",
+            "severity": "moderate"
+          },
+          {
+            "source": "中傅",
+            "english": "Grand Tutor",
+            "problem": "中傅 is Palace Tutor",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta> carries an invented continuation 'to subject her to the jarring motion of a cart'",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 131,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欠三句半之旨",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 二十一",
+            "problem": "margin read as a line of text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "欠三句半之旨",
+            "english": "<note>… the commentary text breaks off here with three and a half sentences missing</note>",
+            "problem": "a lacuna is invented from misread margin junk; the commentary simply continues on the next leaf",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented manuscript fact: the English tells the reader that three and a half sentences of commentary are missing",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 199,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次定曰三十三司",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 二十五",
+            "problem": "margin read as a line of text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "次定曰三十三司",
+            "english": "<margin>the sequence was fixed as thirty-three officers</margin>",
+            "problem": "a marginal note is invented by translating margin junk",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "肴覈仁義之林藪",
+            "english": "examining the vast thicket of benevolence and righteousness",
+            "problem": "the commentary on the same page explains 肴覈 as a food metaphor (meats and fruits); the English ignores it",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented marginal note in the English pane ('the sequence was fixed as thirty-three officers')",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves and good transcription of the Du Shang, Jiang Ge and Ban Gu chapters, but on two of four pages the English turns misread margin junk into invented apparatus (a lacuna 'three and a half sentences missing', a fake marginal note).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      23
+    ],
+    "reader_summary": "Juan 68–70 of the Siku Quanshu Hou Hanshu (Du Shang, the filial exemplars including Jiang Ge, and Ban Gu's rhapsodies with Li Xian's notes). The Chinese transcription is the right text. The English is mostly faithful, but on two of our four pages it invents scholarly apparatus from margin junk, and it misnames some offices, so a reader must not trust its notes about lacunae or marginalia."
+  },
+  {
+    "book_id": "6ae0c4ea4adf2ffb52f75886",
+    "slot": 23,
+    "title": "後漢書[范煜…等撰]·卷八十五~卷八十七 (Hou Hanshu, Siku Quanshu, vol. 30 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "父\n三\n曰\n<page-num>八</page-num>\n<page-num>二</page-num>\n与\n<header>後漢書</header>\n<page-num>五</page-num>",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 五",
+            "problem": "junk lines and invented page numbers",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "中傅",
+            "english": "junior tutor",
+            "problem": "中傅 is Palace Tutor",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane ends with '<unclear>father three said eight two with Book of the Later Han five</unclear>', the junk glyphs translated word by word",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "子斌貝嗣",
+            "image": "子贇嗣",
+            "problem": "one character 贇 split into 斌貝",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "欠\n二\n匀\n車\n入\n<page-num>二</page-num>\n<page-num>二</page-num>\n司\n<header>後漢書</header>\n古",
+            "image": "margin 欽定四庫全書 / 後漢書 / folio 十四",
+            "problem": "junk lines",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "子斌貝嗣",
+            "english": "his son Bin succeeded him",
+            "problem": "the heir is 贇 (Yun); name carried wrong from the OCR",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane ends with '<unclear>欠 二 匀 車 入 二 二 司 後漢書 古</unclear>'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>三</page-num>\n全上曰人正",
+            "image": "欽定四庫全書; no folio 三 visible",
+            "problem": "junk header and invented page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "公卿以下",
+            "english": "The ministers and high officials from the Nine Ministers down",
+            "problem": "公卿 is dukes and ministers",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "English pane opens with '<page-num>Three</page-num>', '<unclear>全上曰人正</unclear>' and '<header>Scroll 86</header>'",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 123,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "後奚書\n共",
+            "image": "margin 後漢書, folio 十六",
+            "problem": "margin junk",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "茂郎中上官資",
+            "english": "…rong, together with Gentleman Cadet Shangguan Zi … Mu Rong and Shangguan Zi were demoted",
+            "problem": "the official is Mu Mao (沐茂); 'Mu Rong' and the leading '…rong' are invented",
+            "severity": "moderate"
+          },
+          {
+            "source": "不足加罪",
+            "english": "does not merit capital punishment",
+            "problem": "'not worth punishing', not specifically capital punishment",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "model's editorial note shown in the English: '後奚書 <note>editorial note: corrupted character in woodblock line catch, likely Hou Han Shu</note>'",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves and a sound transcription of the princes' and Chen Qiu / Li Yun chapters, but every page shows margin junk in the English pane (once translated word by word, once with the model's own editorial note) and two personal names are wrong.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "Juan 85–87 of the Siku Quanshu Hou Hanshu (the sons of Emperor Zhang, Chen Qiu, Li Yun and Du Zhong). The transcription is the right text, with one name misread (贇 as 斌貝). The English follows the narrative faithfully, but each page carries margin garbage or a model note in the English pane, and two names (Yun, Mu Mao) are wrong."
+  },
+  {
+    "book_id": "6ae0c2ce4adf2ffb52f74a6e",
+    "slot": 24,
+    "title": "後漢書[范煜…等撰]·卷九~卷十下 (Hou Hanshu, Siku Quanshu, vol. 5 of 43)",
+    "tradition": "zh-houhanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Fan Ye's Hou Hanshu with Li Xian's commentary; belongs on a Hou Hanshu / Chinese dynastic-history shelf.",
+    "rights_flag": null,
+    "structure_note": "Page numbers start at 1; no duplicate records. The printed_backsteps/repeats counts look like misread folio numerals: the OCR turns the fold-margin running head (欽定四庫全書 / 後漢書 / folio number) into scattered single characters and spurious <page-num> tags on most pages, so 'printed numbers' are unreliable, not a scan splice. Pages without OCR/translation are a few (likely blanks/covers).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定巳辰人三",
+            "image": "欽定四庫全書",
+            "problem": "fold-margin running head 欽定四庫全書 garbled into a nonsense line in the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "李樂",
+            "english": "Li Yue",
+            "problem": "usually romanised Li Le",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 76,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "梁竦 … 梁松尚焉",
+            "english": "daughter of Liang Song … Liang Song married her",
+            "problem": "father 梁竦 and uncle 梁松 are both rendered 'Liang Song', so the English reads as if her father married the princess",
+            "severity": "moderate"
+          },
+          {
+            "source": "中姊",
+            "english": "her elder sister",
+            "problem": "中姊 is her second elder sister",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "蜀漠釦器 / 漠廣漠郡也 / 蜀廣漠",
+            "image": "蜀漢 / 漢廣漢郡也 / 蜀廣漢",
+            "problem": "漢 read as 漠 throughout the passage (the English recovers Guanghan)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "次三口車之与",
+            "image": "margin 欽定四庫全書",
+            "problem": "margin junk",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "English pane ends with '<unclear>次三口車之与</unclear>'; two notes split mid-sentence so commentary spills into the main text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 123,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "一\n二\n三\n四",
+            "image": "nothing at the head of the page",
+            "problem": "four numeral lines not on the leaf",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "中謁者僕射",
+            "english": "Palace Attendant Supervisor of the Palace Writers",
+            "problem": "中謁者僕射 is Supervisor of the Palace Internuncios",
+            "severity": "minor"
+          },
+          {
+            "source": "大長秋",
+            "english": "Grand Palace Grandee",
+            "problem": "rendered differently from elsewhere ('Chief Director of Palace Affairs'); Grand Prolonger / Empress's Chamberlain",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right leaves and a faithful transcription and English of Emperor Xian's annals and the empresses' biographies; the defects are 漢 misread as 漠 on one page, conflated names (梁竦/梁松), and margin junk.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      19,
+      76
+    ],
+    "reader_summary": "Juan 9–10 of the Siku Quanshu Hou Hanshu: the end of Emperor Xian's annals and the empresses' biographies (Empress Dou, Empress Deng), with Li Xian's notes. The transcription is the right text and the English is close and readable; warn that homophone names are not kept apart and that margin junk sometimes reaches the English pane."
+  }
+]

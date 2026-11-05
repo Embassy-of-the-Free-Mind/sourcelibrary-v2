@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: artwork records, not page images (#4406).
 /**
  * Targeted resolution upgrade for low-res Rijksmuseum artworks (~19 visible
  * under 1200px). Keyless, via the Rijks linked-art chain (same as the

@@ -1,0 +1,167 @@
+[
+ {
+  "k": "route-choice",
+  "n": 221,
+  "d30": 160,
+  "feeds": "route 216, data-repair 3, nothing 1",
+  "stage": "ocr 145, translation 67, metadata 6, image 3",
+  "status": "rejected 69, undecided 59, adopted 46, informational 38, superseded 9",
+  "subj_no_stage": 0,
+  "measure_none": 6,
+  "ver": "3/5 asked happened (n=10)"
+ },
+ {
+  "k": "quality-audit",
+  "n": 67,
+  "d30": 41,
+  "feeds": "published-figure 28, data-repair 24, route 5",
+  "stage": "translation 32, ocr 23, image 4, metadata 4, pipeline 4",
+  "status": "informational 52, adopted 6, undecided 5, superseded 3, rejected 1",
+  "subj_no_stage": 1,
+  "measure_none": 4,
+  "ver": "2/5 asked happened (n=10)"
+ },
+ {
+  "k": "detector-calibration",
+  "n": 59,
+  "d30": 38,
+  "feeds": "detector-threshold 47, invariant-guard 6, nothing 4",
+  "stage": "ocr 23, translation 23, metadata 6, pipeline 4, image 3",
+  "status": "adopted 20, rejected 16, informational 13, undecided 9, superseded 1",
+  "subj_no_stage": 3,
+  "measure_none": 6,
+  "ver": "6/8 asked happened (n=10)"
+ },
+ {
+  "k": "judge-validity",
+  "n": 41,
+  "d30": 31,
+  "feeds": "judge-rule 30, published-figure 6, plan 3",
+  "stage": "ocr 27, translation 10, pipeline 4",
+  "status": "informational 26, undecided 8, adopted 5, superseded 1, rejected 1",
+  "subj_no_stage": 37,
+  "measure_none": 3,
+  "ver": "3/6 asked happened (n=10)"
+ },
+ {
+  "k": "prompt-test",
+  "n": 36,
+  "d30": 19,
+  "feeds": "prompt 36",
+  "stage": "translation 21, ocr 12, pipeline 2, metadata 1",
+  "status": "rejected 16, adopted 9, undecided 5, informational 4, superseded 2",
+  "subj_no_stage": 2,
+  "measure_none": 0,
+  "ver": "4/6 asked happened (n=10)"
+ },
+ {
+  "k": "repair-log",
+  "n": 29,
+  "d30": 25,
+  "feeds": "data-repair 28, code-fix 1",
+  "stage": "translation 10, metadata 9, ocr 8, pipeline 1, null 1",
+  "status": "adopted 19, undecided 5, informational 4, null 1",
+  "subj_no_stage": 1,
+  "measure_none": 7,
+  "ver": "5/10 asked happened (n=10)"
+ },
+ {
+  "k": "search-retrieval",
+  "n": 28,
+  "d30": 26,
+  "feeds": "product-surface 26, plan 1, code-fix 1",
+  "stage": "pipeline 23, image 3, metadata 2",
+  "status": "adopted 12, informational 10, rejected 4, undecided 2",
+  "subj_no_stage": 28,
+  "measure_none": 4,
+  "ver": "3/5 asked happened (n=10)"
+ },
+ {
+  "k": "census",
+  "n": 19,
+  "d30": 14,
+  "feeds": "plan 9, published-figure 5, nothing 2",
+  "stage": "metadata 12, ocr 4, translation 3",
+  "status": "informational 15, adopted 2, superseded 1, undecided 1",
+  "subj_no_stage": 12,
+  "measure_none": 9,
+  "ver": "4/4 asked happened (n=10)"
+ },
+ {
+  "k": "capability-probe",
+  "n": 18,
+  "d30": 13,
+  "feeds": "nothing 16, plan 2",
+  "stage": "ocr 17, pipeline 1",
+  "status": "rejected 7, informational 6, undecided 4, superseded 1",
+  "subj_no_stage": 1,
+  "measure_none": 1,
+  "ver": "0/3 asked happened (n=10)"
+ },
+ {
+  "k": "reference-build",
+  "n": 12,
+  "d30": 8,
+  "feeds": "reference 11, plan 1",
+  "stage": "ocr 10, translation 2",
+  "status": "informational 10, adopted 1, undecided 1",
+  "subj_no_stage": 1,
+  "measure_none": 4,
+  "ver": "2/3 asked happened (n=10)"
+ },
+ {
+  "k": "plan-prereg",
+  "n": 11,
+  "d30": 10,
+  "feeds": "plan 10, nothing 1",
+  "stage": "ocr 6, pipeline 3, translation 2",
+  "status": "superseded 7, informational 4",
+  "subj_no_stage": 3,
+  "measure_none": 3,
+  "ver": "1/1 asked happened (n=10)"
+ },
+ {
+  "k": "pipeline-diagnosis",
+  "n": 11,
+  "d30": 8,
+  "feeds": "code-fix 6, invariant-guard 4, nothing 1",
+  "stage": "pipeline 5, translation 3, ocr 1, image 1, null 1",
+  "status": "informational 6, adopted 3, rejected 1, null 1",
+  "subj_no_stage": 5,
+  "measure_none": 4,
+  "ver": "6/7 asked happened (n=10)"
+ },
+ {
+  "k": "cost-throughput",
+  "n": 6,
+  "d30": 4,
+  "feeds": "route 4, plan 1, code-fix 1",
+  "stage": "pipeline 4, ocr 2",
+  "status": "adopted 5, informational 1",
+  "subj_no_stage": 3,
+  "measure_none": 5,
+  "ver": "5/5 asked happened (n=6)"
+ },
+ {
+  "k": "product-test",
+  "n": 6,
+  "d30": 6,
+  "feeds": "product-surface 5, code-fix 1",
+  "stage": "pipeline 6",
+  "status": "adopted 3, rejected 2, informational 1",
+  "subj_no_stage": 6,
+  "measure_none": 0,
+  "ver": "5/5 asked happened (n=6)"
+ },
+ {
+  "k": "retraction",
+  "n": 2,
+  "d30": 1,
+  "feeds": "code-fix 1, published-figure 1",
+  "stage": "translation 1, metadata 1",
+  "status": "informational 1, adopted 1",
+  "subj_no_stage": 2,
+  "measure_none": 1,
+  "ver": "0/2 asked happened (n=2)"
+ }
+]
